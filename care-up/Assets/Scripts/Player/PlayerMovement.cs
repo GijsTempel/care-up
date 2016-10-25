@@ -38,6 +38,7 @@ public class PlayerMovement : MonoBehaviour {
     public Camera mainCamera;
     public MovementSettings movementSettings = new MovementSettings();
     public CameraMovement cameraMovement = new CameraMovement();
+    public Crosshair crosshair;
 
     private CharacterController controller;
 
@@ -52,9 +53,6 @@ public class PlayerMovement : MonoBehaviour {
     void Update() {
         //avoids the mouse looking if the game is effectively paused
         if (Mathf.Abs(Time.timeScale) < float.Epsilon) return;
-
-        // get the rotation before it's changed
-        float oldYRotation = transform.eulerAngles.y;
 
         cameraMovement.Update(transform, mainCamera.transform);
     }
@@ -71,9 +69,14 @@ public class PlayerMovement : MonoBehaviour {
 
         Vector3 movementVector = mainCamera.transform.forward * inputVector.y +
                                  mainCamera.transform.right * inputVector.x;
-        movementVector *= movementSettings.CurrentTargetSpeed / 100.0f;
+        movementVector *= movementSettings.CurrentTargetSpeed;
         movementVector.y = 0.0f; 
 
-        controller.Move(movementVector);
+        controller.SimpleMove(movementVector);
 	}
+
+    void OnGUI()
+    {
+        crosshair.OnGUI();
+    }
 }

@@ -1,15 +1,18 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 
-public class Crosshair : MonoBehaviour {
+[Serializable]
+public class Crosshair {
 
     public Texture2D crosshairTexture;
+    public bool enabled = true;
 
     private Rect position;
 
-	void OnGUI () {
+    public void OnGUI() {
 
-        if (crosshairTexture == null)
+        if (crosshairTexture == null || !enabled)
             return;
 
         position = new Rect((Screen.width - crosshairTexture.width) / 2.0f,

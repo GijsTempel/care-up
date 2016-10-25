@@ -58,7 +58,7 @@ public class CameraMovement {
         {
             cursorLocked = false;
         }
-        else if ( Input.GetMouseButtonUp(0) ) // lmb
+        else if ( Input.GetMouseButtonUp(0) )
         {
             cursorLocked = true;
         }
