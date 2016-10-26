@@ -66,7 +66,10 @@ public class CameraMode : MonoBehaviour {
             currentMode = Mode.Free;
             playerScript.enabled = true;
 
-            inventory.PickItem(selectedObject);
+            if ( !inventory.PickItem(selectedObject) )
+            {
+                selectedObject.ToggleViewMode(false);
+            }
             selectedObject = null;
 
             Cursor.lockState = CursorLockMode.Locked;

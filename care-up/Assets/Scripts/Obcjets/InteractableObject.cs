@@ -32,7 +32,6 @@ public class InteractableObject : MonoBehaviour {
 
         if ( onMouseOverShader == null )
         {
-            //onMouseOverShader = Shader.Find("Unlit/Color");
             onMouseOverShader = Shader.Find("Outlined/Silhouetted Diffuse");
         }
 

@@ -110,17 +110,21 @@ public class HandsInventory : MonoBehaviour {
 
     }
 
-    public void PickItem(InteractableObject item)
+    public bool PickItem(InteractableObject item)
     {
         if ( leftHandObject == null )
         {
             leftHandObject = item;
-            return;
+            return true;
         }
         else if ( rightHandObject == null )
         {
             rightHandObject = item;
-            return;
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
