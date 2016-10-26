@@ -101,6 +101,7 @@ public class CameraMode : MonoBehaviour {
             GUIStyle style = GUI.skin.GetStyle("Label");
             style.alignment = TextAnchor.MiddleCenter;
             style.fontSize = 40;
+            style.normal.textColor = Color.white;
             GUI.Label(new Rect(0, 4*Screen.height/5, Screen.width, Screen.height/5), 
                 "Press Q to put down, Press E to pick up", style);
         }

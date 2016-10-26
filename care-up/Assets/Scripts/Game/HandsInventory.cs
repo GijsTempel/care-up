@@ -13,6 +13,8 @@ public class HandsInventory : MonoBehaviour {
     private CombinationManager combinationManager;
     private GameObject interactableObjects;
 
+    private ActionManager actionManager;
+
     void Start()
     {
         combinationManager = GameObject.Find("GameLogic").GetComponent<CombinationManager>();
@@ -20,6 +22,9 @@ public class HandsInventory : MonoBehaviour {
 
         interactableObjects = GameObject.Find("Interactable Objects");
         if (interactableObjects == null) Debug.LogError("No Interactable Objets object found");
+
+        actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
+        if (actionManager == null) Debug.LogError("No Action Manager found.");
     }
 	
 	void Update () {
@@ -67,6 +72,8 @@ public class HandsInventory : MonoBehaviour {
 
             if (combined)
             {
+                actionManager.OnCombineAction(leftName, rightName);
+
                 if (leftName != leftResult)
                 {
                     Destroy(leftHandObject.gameObject);
