@@ -6,8 +6,6 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Renderer))]
 public class InteractableObject : MonoBehaviour {
 
-    public string objectId;
-
     [Serializable]
     public class ViewSettings
     {
