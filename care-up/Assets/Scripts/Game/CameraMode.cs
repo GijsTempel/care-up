@@ -18,6 +18,11 @@ public class CameraMode : MonoBehaviour {
     private PlayerMovement playerScript;
     private HandsInventory inventory;
 
+    public Mode CurrentMode
+    {
+        get { return currentMode; }
+    }
+
     void Start()
     {
         playerScript = GameObject.Find("Player").GetComponent<PlayerMovement>();

@@ -24,6 +24,8 @@ public class InteractableObject : MonoBehaviour {
     static private Shader onMouseOverShader;
     static private Shader onMouseExitShader;
 
+    static private CameraMode cameraMode;
+
     private List<Vector3> framePositions = new List<Vector3>();
 
 	void Start () {
@@ -40,6 +42,9 @@ public class InteractableObject : MonoBehaviour {
             onMouseExitShader = Shader.Find("Standard");
         }
 
+        cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
+        if (cameraMode == null) Debug.LogError("No Camera Mode found.");
+
 	}
 
     void Update()
@@ -55,7 +60,7 @@ public class InteractableObject : MonoBehaviour {
 
     void OnMouseOver()
     {
-        if (!viewMode)
+        if (!viewMode && cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
             rend.material.shader = onMouseOverShader;
         }
@@ -63,7 +68,7 @@ public class InteractableObject : MonoBehaviour {
 
     void OnMouseExit()
     {
-        if (!viewMode)
+        if (!viewMode && cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
             rend.material.shader = onMouseExitShader;
         }
