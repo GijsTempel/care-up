@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Xml;
+using System.Linq;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,15 +12,34 @@ public class ActionManager : MonoBehaviour {
         ObjectUse
     };
 
+    public string actionListName;
+
     private List<Action> actionList = new List<Action>();
     
     private int points = 0;
     private int currentAction = 0;
 
 	void Start () {
-        actionList.Add(new CombineAction("Cube", "Cube", 0));
-        actionList.Add(new CombineAction("Cube", "Sphere", 0));
-        actionList.Add(new CombineAction("Rectangle", "FlatSphere", 1));
+
+        XmlDocument xmlFile = new XmlDocument();
+        xmlFile.Load("Assets/Resources/Xml/" + actionListName + ".xml");
+        XmlNodeList actions = xmlFile.FirstChild.NextSibling.ChildNodes; // xml is not a node, bug
+
+        foreach ( XmlNode action in actions )
+        {
+            int index;
+            int.TryParse(action.Attributes["index"].Value, out index);
+            string type = action.Attributes["type"].Value;
+
+            switch (type)
+            {
+                case "combine":
+                    string left = action.Attributes["left"].Value;
+                    string right = action.Attributes["right"].Value;
+                    actionList.Add(new CombineAction(left, right, index));
+                    break;
+            }
+        }
     }
 
     public void OnCombineAction(string leftHand, string rightHand)
