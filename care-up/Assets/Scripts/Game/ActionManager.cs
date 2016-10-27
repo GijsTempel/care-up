@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -16,25 +17,48 @@ public class ActionManager : MonoBehaviour {
     private int currentAction = 0;
 
 	void Start () {
-        actionList.Add(new CombineAction("Cube", "Cube"));
-        actionList.Add(new CombineAction("Cube", "Sphere"));
-        actionList.Add(new CombineAction("Rectangle", "FlatSphere"));
+        actionList.Add(new CombineAction("Cube", "Cube", 0));
+        actionList.Add(new CombineAction("Cube", "Sphere", 0));
+        actionList.Add(new CombineAction("Rectangle", "FlatSphere", 1));
     }
 
     public void OnCombineAction(string leftHand, string rightHand)
     {
         if (currentAction < actionList.Count)
         {
-            if (actionList[currentAction].Check(leftHand, rightHand))
+            string[] info = { leftHand, rightHand };
+            points += Check(info, ActionType.ObjectCombine) ? 1 : -1;
+        }
+    }
+
+    public bool Check(string[] info, ActionType type)
+    {
+        bool matched = false;
+
+        List<Action> sublist = actionList.Where(action =>
+            action.SubIndex == currentAction &&
+            action.matched == false).ToList();
+        int subcategoryLength = sublist.Count;
+        
+        sublist = sublist.Where(action => action.Type == type).ToList();
+        if (sublist.Count != 0)
+        {
+            foreach (Action action in sublist)
             {
-                points += 1; // correct
-                currentAction += 1; // next action from list
-            }
-            else
-            {
-                points -= 1; // incorrect
+                if (action.Compare(info))
+                {
+                    matched = true;
+                    action.matched = true;
+                }
             }
         }
+
+        if (matched && subcategoryLength <= 1)
+        {
+            currentAction += 1;
+        }
+
+        return matched;
     }
 
     void OnGUI()

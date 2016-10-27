@@ -4,15 +4,30 @@ using System.Collections;
 // idea test
 public abstract class Action
 {
+    public bool matched = false;
 
     protected ActionManager.ActionType type;
     
-    public Action(ActionManager.ActionType t)
+    private int subindex = 0;
+
+    public ActionManager.ActionType Type
     {
-        type = t;
+        get { return type; }
+    }
+   
+
+    public int SubIndex
+    {
+        get { return subindex; }
     }
 
-    public abstract bool Check(string left, string right);
+    public Action(ActionManager.ActionType t, int sub = 0)
+    {
+        type = t;
+        subindex = sub;
+    }
+    
+    public abstract bool Compare(string[] info);
 }
 
 public class CombineAction : Action
@@ -21,24 +36,26 @@ public class CombineAction : Action
     private string leftInput;
     private string rightInput;
 
-    public CombineAction(string left, string right)
-        : base(ActionManager.ActionType.ObjectCombine)
+    public CombineAction(string left, string right, int sub = 0)
+        : base(ActionManager.ActionType.ObjectCombine, sub)
     {
         leftInput = left;
         rightInput = right;
     }
 
-    public override bool Check(string left, string right)
+    public override bool Compare(string[] info)
     {
-        if (leftInput == left && rightInput == right ||
-            rightInput == left && leftInput == right)
+        bool same = false;
+        if (info.Length == 2)
         {
-            return true;
+            if (leftInput == info[0] && rightInput == info[1] ||
+                rightInput == info[0] && leftInput == info[1])
+            {
+                same = true;
+            }
         }
-        else
-        {
-            return false;
-        }
+        return same;
     }
+
 
 }
