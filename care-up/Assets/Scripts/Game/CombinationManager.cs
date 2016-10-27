@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,13 +15,28 @@ public class CombinationManager : MonoBehaviour {
         public string rightResult;
     };
 
-    public List<Combination> combinationList = new List<Combination>();
+    public string combinationListName;
+    private List<Combination> combinationList = new List<Combination>();
 
     private ActionManager actionManager;
 
     void Start()
     {
         actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
+
+        XmlDocument xmlFile = new XmlDocument();
+        xmlFile.Load("Assets/Resources/Xml/Combinations/" + combinationListName + ".xml");
+        XmlNodeList combinations = xmlFile.FirstChild.NextSibling.ChildNodes; 
+
+        foreach (XmlNode c in combinations)
+        {
+            Combination combination = new Combination();
+            combination.leftInput = c.Attributes["leftInput"].Value;
+            combination.rightInput = c.Attributes["rightInput"].Value;
+            combination.leftResult = c.Attributes["leftResult"].Value;
+            combination.rightResult = c.Attributes["rightResult"].Value;
+            combinationList.Add(combination);
+        }
     }
 
     public bool Combine(string leftInput, string rightInput, out string leftResult, out string rightResult)

@@ -22,7 +22,7 @@ public class ActionManager : MonoBehaviour {
 	void Start () {
 
         XmlDocument xmlFile = new XmlDocument();
-        xmlFile.Load("Assets/Resources/Xml/" + actionListName + ".xml");
+        xmlFile.Load("Assets/Resources/Xml/Actions/" + actionListName + ".xml");
         XmlNodeList actions = xmlFile.FirstChild.NextSibling.ChildNodes; // xml is not a node, bug
 
         foreach ( XmlNode action in actions )
