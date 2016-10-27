@@ -72,8 +72,6 @@ public class HandsInventory : MonoBehaviour {
 
             if (combined)
             {
-                actionManager.OnCombineAction(leftName, rightName);
-
                 if (leftName != leftResult)
                 {
                     Destroy(leftHandObject.gameObject);

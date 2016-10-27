@@ -45,8 +45,9 @@ public class CombinationManager : MonoBehaviour {
                 found = true;
             }
         }
-        
-        // if found send msg to action mng
+
+        // if found send msg to action manager
+        actionManager.OnCombineAction(leftInput, rightInput);
 
         return found;
     }
