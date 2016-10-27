@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-// idea test
 public abstract class Action
 {
     public bool matched = false;
@@ -56,6 +55,4 @@ public class CombineAction : Action
         }
         return same;
     }
-
-
 }

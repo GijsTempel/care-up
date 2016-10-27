@@ -30,15 +30,15 @@ public class CombinationManager : MonoBehaviour {
 
         bool found = false;
 
-        foreach( Combination c in combinationList )
+        foreach (Combination c in combinationList)
         {
-            if ( leftInput == c.leftInput && rightInput == c.rightInput )
+            if (leftInput == c.leftInput && rightInput == c.rightInput)
             {
                 leftResult = c.leftResult;
                 rightResult = c.rightResult;
                 found = true;
             }
-            else if ( leftInput == c.rightInput && rightInput == c.leftInput )
+            else if (leftInput == c.rightInput && rightInput == c.leftInput)
             {
                 leftResult = c.rightResult;
                 rightResult = c.leftResult;
@@ -46,8 +46,11 @@ public class CombinationManager : MonoBehaviour {
             }
         }
 
-        // if found send msg to action manager
-        actionManager.OnCombineAction(leftInput, rightInput);
+        
+        if (found)
+        {
+            actionManager.OnCombineAction(leftInput, rightInput);
+        }
 
         return found;
     }
