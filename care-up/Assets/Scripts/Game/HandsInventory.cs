@@ -117,20 +117,19 @@ public class HandsInventory : MonoBehaviour {
 
     public bool PickItem(InteractableObject item)
     {
+        bool picked = false;
         if ( leftHandObject == null )
         {
             leftHandObject = item;
-            return true;
+            picked = true;
         }
         else if ( rightHandObject == null )
         {
             rightHandObject = item;
-            return true;
+            picked = true;
         }
-        else
-        {
-            return false;
-        }
+
+        return picked;
     }
 
     private GameObject CreateObjectByName(string name, Vector3 position)

@@ -28,24 +28,26 @@ public class InteractableObject : MonoBehaviour {
 
     private List<Vector3> framePositions = new List<Vector3>();
 
-	void Start () {
-
+    void Start()
+    {
         rend = GetComponent<Renderer>();
 
-        if ( onMouseOverShader == null )
+        if (onMouseOverShader == null)
         {
             onMouseOverShader = Shader.Find("Outlined/Silhouetted Diffuse");
         }
 
-        if ( onMouseExitShader == null )
+        if (onMouseExitShader == null)
         {
             onMouseExitShader = Shader.Find("Standard");
         }
 
-        cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
-        if (cameraMode == null) Debug.LogError("No Camera Mode found.");
-
-	}
+        if (cameraMode == null)
+        {
+            cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
+            if (cameraMode == null) Debug.LogError("No Camera Mode found.");
+        }
+    }
 
     void Update()
     {
@@ -88,12 +90,13 @@ public class InteractableObject : MonoBehaviour {
             transform.localRotation = savedRotation;
         }
 
+        GetComponent<Collider>().enabled = !viewMode;
         Rigidbody body = GetComponent<Rigidbody>();
         if (body != null)
         {
             if ( viewMode )
             {
-                body.constraints = RigidbodyConstraints.FreezePosition;
+                body.constraints = RigidbodyConstraints.FreezeAll;
             }
             else
             {
@@ -102,6 +105,18 @@ public class InteractableObject : MonoBehaviour {
         }
 
         rend.material.shader = onMouseExitShader;
+
+        // making draw object on top of everything
+        if ( viewMode )
+        {
+            // ObjectView layer drawn only on OverlayCamera
+            gameObject.layer = 8; 
+        }
+        else
+        {
+            // default
+            gameObject.layer = 0;
+        }
     }
 
     public void ViewModeUpdate()
@@ -127,6 +142,8 @@ public class InteractableObject : MonoBehaviour {
     public void Drop()
     {
         viewMode = false;
+        gameObject.layer = 0;
+        GetComponent<Collider>().enabled = true;
 
         Rigidbody body = GetComponent<Rigidbody>();
         if (body != null)

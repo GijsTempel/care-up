@@ -20,6 +20,8 @@ public class CameraMode : MonoBehaviour {
     private PlayerMovement playerScript;
     private HandsInventory inventory;
 
+    private UnityStandardAssets.ImageEffects.BlurOptimized blur;
+
     public Mode CurrentMode
     {
         get { return currentMode; }
@@ -32,6 +34,9 @@ public class CameraMode : MonoBehaviour {
 
         inventory = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
         if (inventory == null) Debug.LogError("No inventory script found");
+
+        blur = Camera.main.GetComponent<UnityStandardAssets.ImageEffects.BlurOptimized>();
+        if (blur == null) Debug.Log("No Blur Attached to main camera.");
     }
 
     void Update()
@@ -52,6 +57,8 @@ public class CameraMode : MonoBehaviour {
 
                     Cursor.lockState = CursorLockMode.None;
                     Cursor.visible = true;
+
+                    blur.enabled = true;
                 }
             }
         }
@@ -66,6 +73,8 @@ public class CameraMode : MonoBehaviour {
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+
+            blur.enabled = false;
         }
 
         if ( Input.GetKeyDown(KeyCode.E) && currentMode == Mode.ObjectPreview )
@@ -81,6 +90,8 @@ public class CameraMode : MonoBehaviour {
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+
+            blur.enabled = false;
         }
 
         if ( currentMode == Mode.ObjectPreview )
