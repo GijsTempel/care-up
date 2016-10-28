@@ -9,6 +9,8 @@ public class CameraMode : MonoBehaviour {
         ObjectPreview
     };
 
+    public float pickUpDistance = 5.0f;
+
     private Mode currentMode;
 
     private InteractableObject selectedObject;
@@ -38,7 +40,7 @@ public class CameraMode : MonoBehaviour {
         {
             Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
             RaycastHit hit;
-            if ( Physics.Raycast(ray, out hit) )
+            if ( Physics.Raycast(ray, out hit, pickUpDistance) )
             {
                 selectedObject = hit.transform.GetComponent<InteractableObject>();
                 if ( selectedObject != null ) // if there is a component
