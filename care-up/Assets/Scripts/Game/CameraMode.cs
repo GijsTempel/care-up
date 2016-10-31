@@ -8,18 +8,16 @@ public class CameraMode : MonoBehaviour {
         Free,
         ObjectPreview
     };
-
-    public float pickUpDistance = 5.0f;
-
+    
     private Mode currentMode;
 
     private InteractableObject selectedObject;
     private Vector3 savedPosition;
     private Quaternion savedRotation;
 
+    private Controls controls;
     private PlayerMovement playerScript;
     private HandsInventory inventory;
-
     private UnityStandardAssets.ImageEffects.BlurOptimized blur;
 
     public Mode CurrentMode
@@ -29,6 +27,9 @@ public class CameraMode : MonoBehaviour {
 
     void Start()
     {
+        controls = GameObject.Find("GameLogic").GetComponent<Controls>();
+        if (controls == null) Debug.LogError("No controls script found");
+
         playerScript = GameObject.Find("Player").GetComponent<PlayerMovement>();
         if (playerScript == null) Debug.LogError("No Player script found");
 
@@ -41,14 +42,12 @@ public class CameraMode : MonoBehaviour {
 
     void Update()
     {
-        if ( Input.GetMouseButtonDown(0) && currentMode == Mode.Free )
+        if (Input.GetMouseButtonDown(0) && currentMode == Mode.Free)
         {
-            Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
-            RaycastHit hit;
-            if ( Physics.Raycast(ray, out hit, pickUpDistance) )
+            if (controls.SelectedObject)
             {
-                selectedObject = hit.transform.GetComponent<InteractableObject>();
-                if ( selectedObject != null ) // if there is a component
+                selectedObject = controls.SelectedObject.GetComponent<InteractableObject>();
+                if (selectedObject != null) // if there is a component
                 {
                     currentMode = Mode.ObjectPreview;
                     playerScript.enabled = false;

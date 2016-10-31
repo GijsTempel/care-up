@@ -38,6 +38,13 @@ public class ActionManager : MonoBehaviour {
                     string right = action.Attributes["right"].Value;
                     actionList.Add(new CombineAction(left, right, index));
                     break;
+                case "use":
+                    string use = action.Attributes["value"].Value;
+                    actionList.Add(new UseAction(use, index));
+                    break;
+                default:
+                    Debug.LogError("No action type found: " + type);
+                    break;
             }
         }
     }
@@ -49,6 +56,12 @@ public class ActionManager : MonoBehaviour {
             string[] info = { leftHand, rightHand };
             points += Check(info, ActionType.ObjectCombine) ? 1 : -1;
         }
+    }
+
+    public void OnUseAction(string useObject)
+    {
+        string[] info = { useObject };
+        points += Check(info, ActionType.ObjectUse) ? 1 : -1;
     }
 
     public bool Check(string[] info, ActionType type)
