@@ -80,3 +80,27 @@ public class UseAction : Action
         return same;
     }
 }
+
+public class TalkAction : Action
+{
+    private string topicInput; // ?
+
+    public TalkAction(string topic, int index)
+        : base(ActionManager.ActionType.PersonTalk, index)
+    {
+        topicInput = topic;
+    }
+
+    public override bool Compare(string[] info)
+    {
+        bool same = false;
+        if (info.Length == 1)
+        {
+            if ( info[0] == topicInput )
+            {
+                same = true;
+            }
+        }
+        return same;
+    }
+}

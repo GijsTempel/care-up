@@ -9,7 +9,8 @@ public class ActionManager : MonoBehaviour {
     public enum ActionType
     {
         ObjectCombine,
-        ObjectUse
+        ObjectUse,
+        PersonTalk
     };
 
     public string actionListName;
@@ -42,6 +43,10 @@ public class ActionManager : MonoBehaviour {
                     string use = action.Attributes["value"].Value;
                     actionList.Add(new UseAction(use, index));
                     break;
+                case "talk":
+                    //string topic = action.Attributes["topic"].Value;
+                    actionList.Add(new TalkAction("", index));
+                    break;
                 default:
                     Debug.LogError("No action type found: " + type);
                     break;
@@ -62,6 +67,12 @@ public class ActionManager : MonoBehaviour {
     {
         string[] info = { useObject };
         points += Check(info, ActionType.ObjectUse) ? 1 : -1;
+    }
+
+    public void OnTalkAction(string topic)
+    {
+        string[] info = { topic };
+        points += Check(info, ActionType.PersonTalk) ? 1 : -1;
     }
 
     public bool Check(string[] info, ActionType type)

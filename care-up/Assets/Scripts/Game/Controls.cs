@@ -25,6 +25,7 @@ public class Controls : MonoBehaviour {
             selectedObject = hit.transform.gameObject;
 
             HandleUseObjects();
+            HandleTalkPerson();
         }
         else
         {
@@ -40,6 +41,21 @@ public class Controls : MonoBehaviour {
         if ( usableObject && Input.GetMouseButtonDown(0) )
         {
             usableObject.Use();
+            flag = true;
+        }
+
+        return flag;
+    }
+
+    bool HandleTalkPerson()
+    {
+        bool flag = false;
+
+        PersonObject person = selectedObject.GetComponent<PersonObject>();
+        if ( person && Input.GetMouseButtonDown(0) )
+        {
+            person.Talk();
+            flag = true;
         }
 
         return flag;
