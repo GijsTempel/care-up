@@ -24,8 +24,11 @@ public class Controls : MonoBehaviour {
         {
             selectedObject = hit.transform.gameObject;
 
-            HandleUseObjects();
-            HandleTalkPerson();
+            if (Input.GetMouseButtonDown(0))
+            {
+                HandleUseObjects();
+                HandleTalkPerson();
+            }
         }
         else
         {
@@ -38,7 +41,7 @@ public class Controls : MonoBehaviour {
         bool flag = false;
 
         UsableObject usableObject = selectedObject.GetComponent<UsableObject>();
-        if ( usableObject && Input.GetMouseButtonDown(0) )
+        if ( usableObject )
         {
             usableObject.Use();
             flag = true;
@@ -52,7 +55,7 @@ public class Controls : MonoBehaviour {
         bool flag = false;
 
         PersonObject person = selectedObject.GetComponent<PersonObject>();
-        if ( person && Input.GetMouseButtonDown(0) )
+        if ( person )
         {
             person.Talk();
             flag = true;
