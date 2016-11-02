@@ -9,8 +9,9 @@ public class UsableObject : MonoBehaviour {
     static private CameraMode cameraMode;
 
     static private ActionManager actionManager;
+    static private Controls controls;
 
-	void Start () {
+    void Start () {
         actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
         if (actionManager == null) Debug.LogError("No action manager found");
 
@@ -31,21 +32,32 @@ public class UsableObject : MonoBehaviour {
             cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
             if (cameraMode == null) Debug.LogError("No Camera Mode found.");
         }
-    }
 
-    void OnMouseOver()
-    {
-        if (cameraMode.CurrentMode == CameraMode.Mode.Free)
+        if (controls == null)
         {
-            rend.material.shader = onMouseOverShader;
+            controls = GameObject.Find("GameLogic").GetComponent<Controls>();
+            if (controls == null) Debug.LogError("No Controls found");
         }
     }
 
-    void OnMouseExit()
+    void Update()
     {
         if (cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
-            rend.material.shader = onMouseExitShader;
+            if (controls.SelectedObject == gameObject)
+            {
+                if (rend.material.shader == onMouseExitShader)
+                {
+                    rend.material.shader = onMouseOverShader;
+                }
+            }
+            else
+            {
+                if (rend.material.shader != onMouseExitShader)
+                {
+                    rend.material.shader = onMouseExitShader;
+                }
+            }
         }
     }
 

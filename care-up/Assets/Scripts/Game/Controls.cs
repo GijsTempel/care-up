@@ -20,14 +20,16 @@ public class Controls : MonoBehaviour {
         // raycast only here
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, interactionDistance))
+        if (Physics.Raycast(ray, out hit))
         {
             selectedObject = hit.transform.gameObject;
-
-            if (Input.GetMouseButtonDown(0))
+            if (hit.distance <= interactionDistance)
             {
-                HandleUseObjects();
-                HandleTalkPerson();
+                if (Input.GetMouseButtonDown(0))
+                {
+                    HandleUseObjects();
+                    HandleTalkPerson();
+                }
             }
         }
         else

@@ -25,6 +25,7 @@ public class InteractableObject : MonoBehaviour {
     static private Shader onMouseExitShader;
 
     static private CameraMode cameraMode;
+    static private Controls controls;
 
     private List<Vector3> framePositions = new List<Vector3>();
 
@@ -47,6 +48,12 @@ public class InteractableObject : MonoBehaviour {
             cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
             if (cameraMode == null) Debug.LogError("No Camera Mode found.");
         }
+
+        if (controls == null)
+        {
+            controls = GameObject.Find("GameLogic").GetComponent<Controls>();
+            if (controls == null) Debug.LogError("No Controls found");
+        }
     }
 
     void Update()
@@ -58,9 +65,26 @@ public class InteractableObject : MonoBehaviour {
             framePositions.RemoveAt(0);
         }
 
+        if ( !viewMode && cameraMode.CurrentMode == CameraMode.Mode.Free )
+        {
+            if (controls.SelectedObject == gameObject)
+            {
+                if (rend.material.shader == onMouseExitShader)
+                {
+                    rend.material.shader = onMouseOverShader;
+                }
+            }
+            else
+            {
+                if (rend.material.shader != onMouseExitShader)
+                {
+                    rend.material.shader = onMouseExitShader;
+                }
+            }
+        }
     }
 
-    void OnMouseOver()
+    public void OnCrosshairOver()
     {
         if (!viewMode && cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
@@ -68,7 +92,7 @@ public class InteractableObject : MonoBehaviour {
         }
     }
 
-    void OnMouseExit()
+    public void OnCrosshairExit()
     {
         if (!viewMode && cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
