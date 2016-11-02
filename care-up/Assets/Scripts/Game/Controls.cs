@@ -11,13 +11,10 @@ public class Controls : MonoBehaviour {
     {
         get { return selectedObject; }
     }
-
-	void Start () {
-	
-	}
 	
 	void Update () {
-        // raycast only here
+        
+        // raycast only in this script
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))

@@ -12,12 +12,14 @@ public class CameraMovement {
 
     private Quaternion playerAngle;
     private Quaternion cameraAngle;
-    private bool cursorLocked = true;
 
     public void Init(Transform player, Transform camera)
     {
         playerAngle = player.localRotation;
         cameraAngle = camera.localRotation;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public void Update(Transform player, Transform camera)
@@ -56,20 +58,8 @@ public class CameraMovement {
     {
         if( Input.GetKeyUp(KeyCode.Escape) )
         {
-            cursorLocked = false;
-        }
-        else if ( Input.GetMouseButtonUp(0) )
-        {
-            cursorLocked = true;
-        }
-
-        if (cursorLocked)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
-        else
-        {
+            GameObject.Find("GameLogic").GetComponent<IngameMenu>().Open();
+       
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
