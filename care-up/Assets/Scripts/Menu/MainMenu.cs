@@ -41,7 +41,7 @@ public class MainMenu : MonoBehaviour
 
     void OnContinue()
     {
-        SceneManager.LoadScene("Main");
+        GameObject.Find("Preferences").GetComponent<SaveLoadManager>().LoadLevel();
     }
 
     void OnOptions()

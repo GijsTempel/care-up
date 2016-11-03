@@ -11,6 +11,11 @@ public class Controls : MonoBehaviour {
     {
         get { return selectedObject; }
     }
+
+    public void ResetObject()
+    {
+        selectedObject = null;
+    }
 	
 	void Update () {
         

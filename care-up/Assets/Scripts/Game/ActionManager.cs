@@ -16,6 +16,11 @@ public class ActionManager : MonoBehaviour {
     public string actionListName;
 
     private List<Action> actionList = new List<Action>();
+
+    public List<Action> ActionList
+    {
+        get { return actionList; }
+    }
     
     private int points = 0;
     private int currentAction = 0;
@@ -126,5 +131,16 @@ public class ActionManager : MonoBehaviour {
 
         GUI.Label(new Rect(0, 0, Screen.width / 8, Screen.height / 10),
         "Points: " + points, style);
+    }
+
+    public void SetActionStatus(List<bool> items)
+    {
+        if ( items.Count == actionList.Count )
+        {
+            for ( int i = 0; i < actionList.Count; ++i )
+            {
+                actionList[i].matched = items[i];
+            }
+        }
     }
 }

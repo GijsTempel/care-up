@@ -5,6 +5,12 @@ public class GameTimer : MonoBehaviour {
 
     private float currentTime = 0.0f;
 	
+    public float CurrentTime
+    {
+        get { return currentTime; }
+        set { currentTime = value < 0 ? 0 : value; }
+    }
+
 	void Update ()
     {
         currentTime += Time.deltaTime;

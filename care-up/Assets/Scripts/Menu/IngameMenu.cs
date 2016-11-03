@@ -32,6 +32,7 @@ public class IngameMenu : MonoBehaviour {
     public void Open()
     {
         UIFolder.transform.GetChild(0).gameObject.SetActive(true);
+        controls.ResetObject();
         controls.enabled = false;
         playerScript.enabled = false;
         timer.enabled = false;
@@ -43,18 +44,20 @@ public class IngameMenu : MonoBehaviour {
         controls.enabled = true;
         playerScript.enabled = true;
         timer.enabled = true;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public void OnContinue()
     {
         Close();
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 
     public void OnSave()
     {
-        Debug.Log("Ingame::Save");
+        GameObject.Find("Preferences").GetComponent<SaveLoadManager>().Save();
+        Close();
     }
 
     public void OnOptions()
