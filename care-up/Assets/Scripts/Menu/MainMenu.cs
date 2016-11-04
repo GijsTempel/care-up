@@ -36,7 +36,7 @@ public class MainMenu : MonoBehaviour
 
     void OnStart()
     {
-        SceneManager.LoadScene("Main");
+        SceneManager.LoadScene("Selection");
     }
 
     void OnContinue()
