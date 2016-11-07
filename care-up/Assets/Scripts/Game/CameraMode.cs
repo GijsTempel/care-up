@@ -11,7 +11,7 @@ public class CameraMode : MonoBehaviour {
     
     private Mode currentMode;
 
-    private InteractableObject selectedObject;
+    private PickableObject selectedObject;
     private Vector3 savedPosition;
     private Quaternion savedRotation;
 
@@ -46,7 +46,7 @@ public class CameraMode : MonoBehaviour {
         {
             if (controls.SelectedObject)
             {
-                selectedObject = controls.SelectedObject.GetComponent<InteractableObject>();
+                selectedObject = controls.SelectedObject.GetComponent<PickableObject>();
                 if (selectedObject != null) // if there is a component
                 {
                     currentMode = Mode.ObjectPreview;

@@ -7,8 +7,8 @@ public class HandsInventory : MonoBehaviour {
     public float horisontalOffset = 2.0f;
     public float distanceFromCamera = 3.0f;
 
-    private InteractableObject leftHandObject;
-    private InteractableObject rightHandObject;
+    private PickableObject leftHandObject;
+    private PickableObject rightHandObject;
 
     private CombinationManager combinationManager;
     private GameObject interactableObjects;
@@ -90,7 +90,7 @@ public class HandsInventory : MonoBehaviour {
                     if (leftResult != "")
                     {
                         GameObject leftObject = CreateObjectByName(leftResult, leftHandPosition);
-                        leftHandObject = leftObject.GetComponent<InteractableObject>();
+                        leftHandObject = leftObject.GetComponent<PickableObject>();
                     } 
                 }
 
@@ -102,7 +102,7 @@ public class HandsInventory : MonoBehaviour {
                     if (rightResult != "")
                     {
                         GameObject rightObject = CreateObjectByName(rightResult, rightHandPosition);
-                        rightHandObject = rightObject.GetComponent<InteractableObject>();
+                        rightHandObject = rightObject.GetComponent<PickableObject>();
                     }
                 }
             }
@@ -125,7 +125,7 @@ public class HandsInventory : MonoBehaviour {
 
     }
 
-    public bool PickItem(InteractableObject item, string hand = "")
+    public bool PickItem(PickableObject item, string hand = "")
     {
         bool picked = false;
         if (hand == "")

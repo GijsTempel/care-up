@@ -286,7 +286,7 @@ public class SaveLoadManager : MonoBehaviour {
                 interactableObjects.transform) as GameObject;
             obj.name = name; // prefent 'clone' in the name
 
-            inventory.PickItem(obj.GetComponent<InteractableObject>(), hand);
+            inventory.PickItem(obj.GetComponent<PickableObject>(), hand);
         }
         //end objects
 
