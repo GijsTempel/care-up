@@ -15,6 +15,16 @@ public class HandsInventory : MonoBehaviour {
 
     private ActionManager actionManager;
 
+    public GameObject LeftHandObject
+    {
+        get { return leftHandObject ? leftHandObject.gameObject : null; }
+    }
+
+    public GameObject RightHandObject
+    {
+        get { return rightHandObject ? rightHandObject.gameObject : null; }
+    }
+
     void Start()
     {
         combinationManager = GameObject.Find("GameLogic").GetComponent<CombinationManager>();
@@ -115,18 +125,37 @@ public class HandsInventory : MonoBehaviour {
 
     }
 
-    public bool PickItem(InteractableObject item)
+    public bool PickItem(InteractableObject item, string hand = "")
     {
         bool picked = false;
-        if ( leftHandObject == null )
+        if (hand == "")
         {
-            leftHandObject = item;
-            picked = true;
+            if (leftHandObject == null)
+            {
+                leftHandObject = item;
+                picked = true;
+            }
+            else if (rightHandObject == null)
+            {
+                rightHandObject = item;
+                picked = true;
+            }
         }
-        else if ( rightHandObject == null )
+        else if (hand == "left")
         {
-            rightHandObject = item;
-            picked = true;
+            if (leftHandObject == null)
+            {
+                leftHandObject = item;
+                picked = true;
+            }
+        }
+        else if (hand == "right")
+        {
+            if (rightHandObject == null)
+            {
+                rightHandObject = item;
+                picked = true;
+            }
         }
 
         return picked;

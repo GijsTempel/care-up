@@ -97,6 +97,7 @@ public class SaveLoadManager : MonoBehaviour {
 
         { // objects
             GameObject intObjects = GameObject.Find("Interactable Objects");
+            HandsInventory inv = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
             XmlNode objectsNode = doc.CreateElement("objects");
             save.AppendChild(objectsNode);
 
@@ -108,6 +109,19 @@ public class SaveLoadManager : MonoBehaviour {
                 XmlAttribute name = doc.CreateAttribute("name");
                 name.Value = child.name;
                 objectNode.Attributes.Append(name);
+
+                if (child.gameObject == inv.LeftHandObject)
+                {
+                    XmlAttribute hand = doc.CreateAttribute("hand");
+                    hand.Value = "left";
+                    objectNode.Attributes.Append(hand);
+                }
+                else if (child.gameObject == inv.RightHandObject)
+                {
+                    XmlAttribute hand = doc.CreateAttribute("hand");
+                    hand.Value = "right";
+                    objectNode.Attributes.Append(hand);
+                }
 
                 { // position
                     XmlNode positionNode = doc.CreateElement("position");
@@ -244,6 +258,7 @@ public class SaveLoadManager : MonoBehaviour {
         //Objects
         XmlNode objectsNode = playerNode.NextSibling;
         GameObject interactableObjects = GameObject.Find("Interactable Objects");
+        HandsInventory inventory = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
         foreach (Transform child in interactableObjects.transform)
         {
             Destroy(child.gameObject);
@@ -253,6 +268,7 @@ public class SaveLoadManager : MonoBehaviour {
         foreach (XmlNode item in objectList)
         {
             string name = item.Attributes["name"].Value;
+            string hand = item.Attributes["hand"] != null ? item.Attributes["hand"].Value : "none";
 
             XmlNode positionNode = item.FirstChild;
             float posX = float.Parse(positionNode.Attributes["x"].Value);
@@ -269,6 +285,8 @@ public class SaveLoadManager : MonoBehaviour {
                 new Vector3(posX, posY, posZ), new Quaternion(rotX, rotY, rotZ, rotW),
                 interactableObjects.transform) as GameObject;
             obj.name = name; // prefent 'clone' in the name
+
+            inventory.PickItem(obj.GetComponent<InteractableObject>(), hand);
         }
         //end objects
 
