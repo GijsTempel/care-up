@@ -16,16 +16,22 @@ public class ActionManager : MonoBehaviour {
     public string actionListName;
 
     private List<Action> actionList = new List<Action>();
+    
+    private int points = 0;
+    private int currentAction = 0;
 
     public List<Action> ActionList
     {
         get { return actionList; }
     }
-    
-    private int points = 0;
-    private int currentAction = 0;
 
-	void Start () {
+    public int Points
+    {
+        get { return points; }
+        set { points = value; }
+    }
+
+    void Start () {
 
         XmlDocument xmlFile = new XmlDocument();
         xmlFile.Load("Assets/Resources/Xml/Actions/" + actionListName + ".xml");

@@ -151,11 +151,11 @@ public class SaveLoadManager : MonoBehaviour {
             }
         } //end objects
 
+        ActionManager actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
         { //actions
             XmlNode scenario = doc.CreateElement("scenario");
             save.AppendChild(scenario);
 
-            ActionManager actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
             List<Action> actionList = actionManager.ActionList;
  
             foreach (Action item in actionList)
@@ -168,6 +168,15 @@ public class SaveLoadManager : MonoBehaviour {
                 actionNode.Attributes.Append(actionStatus);
             }
         } //end actions
+
+        { //points
+            XmlNode pointsNode = doc.CreateElement("points");
+            save.AppendChild(pointsNode);
+
+            XmlAttribute pointsValue = doc.CreateAttribute("points");
+            pointsValue.Value = actionManager.Points.ToString();
+            pointsNode.Attributes.Append(pointsValue);
+        } //emd points
 
         { // timer
             GameTimer timer = GameObject.Find("GameLogic").GetComponent<GameTimer>();
@@ -276,8 +285,13 @@ public class SaveLoadManager : MonoBehaviour {
         actionManager.SetActionStatus(statusList);
         //end scenario
 
+        //points
+        XmlNode points = scenario.NextSibling;
+        actionManager.Points = int.Parse(points.Attributes["points"].Value);
+        //end points
+
         //timer
-        XmlNode timer = scenario.NextSibling;
+        XmlNode timer = points.NextSibling;
         GameObject.Find("GameLogic").GetComponent<GameTimer>().CurrentTime =
             float.Parse(timer.Attributes["time"].Value);
         //end timer
