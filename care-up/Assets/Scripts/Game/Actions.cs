@@ -104,3 +104,29 @@ public class TalkAction : Action
         return same;
     }
 }
+
+public class UseOnAction : Action
+{
+    private string item;
+    private string target;
+
+    public UseOnAction(string i, string t, int index)
+        : base(ActionManager.ActionType.ObjectUseOn, index)
+    {
+        item = i;
+        target = t;
+    }
+
+    public override bool Compare(string[] info)
+    {
+        bool same = false;
+        if ( info.Length == 2 )
+        {
+            if ( info[0] == item && info[1] == target)
+            {
+                same = true;
+            }
+        }
+        return same;
+    }
+}

@@ -22,10 +22,19 @@ public class PickableObject : InteractableObject {
 
     private List<Vector3> framePositions = new List<Vector3>();
 
+    private static ActionManager actionManager;
+    private static Controls controls;
+
     protected override void Start()
     {
         base.Start();
         framePositions.Clear();
+
+        actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
+        if (actionManager == null) Debug.LogError("No action manager found");
+
+        controls = GameObject.Find("GameLogic").GetComponent<Controls>();
+        if (controls == null) Debug.LogError("No controls found");
     }
 
     protected override void Update()
@@ -120,6 +129,14 @@ public class PickableObject : InteractableObject {
                 deltaPosition = deltaPosition * 3 / Time.fixedDeltaTime;
                 body.AddForce(deltaPosition);
             }
+        }
+    }
+
+    public virtual void Use()
+    {
+        if (controls.SelectedObject.GetComponent<InteractableObject>())
+        {
+            actionManager.OnUseOnAction(name, controls.SelectedObject.name);
         }
     }
 }

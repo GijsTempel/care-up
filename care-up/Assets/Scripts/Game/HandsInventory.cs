@@ -57,22 +57,22 @@ public class HandsInventory : MonoBehaviour {
             rightHandObject.transform.position = rightHandPosition;
             rightHandObject.InHandUpdate(true);
         }
-        
-        if ( Input.GetKeyDown(KeyCode.Q) )
+
+        if (Input.GetKeyDown(KeyCode.Q))
         {
-            if ( leftHandObject )
+            if (leftHandObject)
             {
                 leftHandObject.Drop();
                 leftHandObject = null;
             }
-            
-            if ( rightHandObject )
+
+            if (rightHandObject)
             {
                 rightHandObject.Drop();
                 rightHandObject = null;
             }
         }
-        else if ( Input.GetKeyDown(KeyCode.R) )
+        else if (Input.GetKeyDown(KeyCode.R))
         {
             string leftName = leftHandObject ? leftHandObject.name : "";
             string rightName = rightHandObject ? rightHandObject.name : "";
@@ -86,19 +86,19 @@ public class HandsInventory : MonoBehaviour {
                 {
                     Destroy(leftHandObject.gameObject);
                     leftHandObject = null;
-                    
+
                     if (leftResult != "")
                     {
                         GameObject leftObject = CreateObjectByName(leftResult, leftHandPosition);
                         leftHandObject = leftObject.GetComponent<PickableObject>();
-                    } 
+                    }
                 }
 
                 if (rightName != rightResult)
                 {
                     Destroy(rightHandObject.gameObject);
                     rightHandObject = null;
-                    
+
                     if (rightResult != "")
                     {
                         GameObject rightObject = CreateObjectByName(rightResult, rightHandPosition);
@@ -120,6 +120,17 @@ public class HandsInventory : MonoBehaviour {
                             Quaternion.identity) as GameObject;
             sphereObject.transform.parent = interactableObjects.transform;
             sphereObject.name = "Sphere";
+        }
+        else if (Input.GetKeyDown(KeyCode.Z))
+        {
+            if (leftHandObject != null)
+            {
+                leftHandObject.Use();
+            } 
+            else if (rightHandObject)
+            {
+                rightHandObject.Use();
+            }
         }
 
 
