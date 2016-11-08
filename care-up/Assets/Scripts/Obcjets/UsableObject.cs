@@ -11,9 +11,12 @@ public class UsableObject : InteractableObject {
         actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
         if (actionManager == null) Debug.LogError("No action manager found");
     }
-    
+
     public void Use()
     {
-        actionManager.OnUseAction(gameObject.name);
+        if (!ViewModeActive())
+        {
+            actionManager.OnUseAction(gameObject.name);
+        }
     }
 }

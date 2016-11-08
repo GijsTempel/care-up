@@ -83,7 +83,7 @@ public class UseAction : Action
 
 public class TalkAction : Action
 {
-    private string topicInput; // ?
+    private string topicInput;
 
     public TalkAction(string topic, int index)
         : base(ActionManager.ActionType.PersonTalk, index)
@@ -123,6 +123,32 @@ public class UseOnAction : Action
         if ( info.Length == 2 )
         {
             if ( info[0] == item && info[1] == target)
+            {
+                same = true;
+            }
+        }
+        return same;
+    }
+}
+
+public class ExamineAction : Action
+{
+    private string item;
+    private string expected;
+
+    public ExamineAction(string i, string exp, int index)
+        : base(ActionManager.ActionType.ObjectExamine, index)
+    {
+        item = i;
+        expected = exp;
+    }
+
+    public override bool Compare(string[] info)
+    {
+        bool same = false;
+        if (info.Length == 2)
+        {
+            if (info[0] == item && info[1] == expected)
             {
                 same = true;
             }

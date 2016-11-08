@@ -11,7 +11,8 @@ public class ActionManager : MonoBehaviour {
         ObjectCombine,
         ObjectUse,
         PersonTalk,
-        ObjectUseOn
+        ObjectUseOn,
+        ObjectExamine
     };
 
     public string actionListName;
@@ -56,13 +57,18 @@ public class ActionManager : MonoBehaviour {
                     actionList.Add(new UseAction(use, index));
                     break;
                 case "talk":
-                    //string topic = action.Attributes["topic"].Value;
-                    actionList.Add(new TalkAction("", index));
+                    string topic = action.Attributes["topic"].Value;
+                    actionList.Add(new TalkAction(topic, index));
                     break;
                 case "useOn":
-                    string item = action.Attributes["item"].Value;
+                    string useItem = action.Attributes["item"].Value;
                     string target = action.Attributes["target"].Value;
-                    actionList.Add(new UseOnAction(item, target, index));
+                    actionList.Add(new UseOnAction(useItem, target, index));
+                    break;
+                case "examine":
+                    string exItem = action.Attributes["item"].Value;
+                    string expected = action.Attributes["expected"].Value;
+                    actionList.Add(new ExamineAction(exItem, expected, index));
                     break;
                 default:
                     Debug.LogError("No action type found: " + type);
@@ -96,6 +102,15 @@ public class ActionManager : MonoBehaviour {
     {
         string[] info = { item, target };
         points += Check(info, ActionType.ObjectUseOn) ? 1 : -1;
+    }
+
+    public void OnExamineAction(string item, string expected)
+    {
+        string[] info = { item, expected };
+        if ( Check(info, ActionType.ObjectExamine) )
+        {
+            points += 1; // no penalty
+        }
     }
 
     public bool Check(string[] info, ActionType type)

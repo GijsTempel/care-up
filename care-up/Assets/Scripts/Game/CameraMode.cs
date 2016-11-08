@@ -58,6 +58,12 @@ public class CameraMode : MonoBehaviour {
                     Cursor.visible = true;
 
                     blur.enabled = true;
+
+                    ExaminableObject examObj = selectedObject.GetComponent<ExaminableObject>();
+                    if ( examObj )
+                    {
+                        examObj.OnExamine();
+                    }
                 }
             }
         }
@@ -78,19 +84,22 @@ public class CameraMode : MonoBehaviour {
 
         if ( Input.GetKeyDown(KeyCode.E) && currentMode == Mode.ObjectPreview )
         {
-            currentMode = Mode.Free;
-            playerScript.enabled = true;
+            if ( selectedObject.GetComponent<ExaminableObject>() == null)
+            { 
+                currentMode = Mode.Free;
+                playerScript.enabled = true;
 
-            if ( !inventory.PickItem(selectedObject) )
-            {
-                selectedObject.ToggleViewMode(false);
+                if (!inventory.PickItem(selectedObject))
+                {
+                    selectedObject.ToggleViewMode(false);
+                }
+                selectedObject = null;
+
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+
+                blur.enabled = false;
             }
-            selectedObject = null;
-
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-
-            blur.enabled = false;
         }
 
         if ( currentMode == Mode.ObjectPreview )

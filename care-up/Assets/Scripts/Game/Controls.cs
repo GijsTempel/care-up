@@ -18,7 +18,7 @@ public class Controls : MonoBehaviour {
     }
 	
 	void Update () {
-        
+
         // raycast only in this script
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
         RaycastHit hit;
@@ -36,7 +36,7 @@ public class Controls : MonoBehaviour {
         }
         else
         {
-            selectedObject = null;
+            ResetObject();
         }
     }
 
@@ -61,7 +61,7 @@ public class Controls : MonoBehaviour {
         PersonObject person = selectedObject.GetComponent<PersonObject>();
         if ( person )
         {
-            person.Talk();
+            person.Talk("RollUpSleeves");
             flag = true;
         }
 

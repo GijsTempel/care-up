@@ -4,7 +4,7 @@ using System.Collections;
 [RequireComponent(typeof(AudioSource))]
 public class PersonObject : InteractableObject {
 
-    private string topic = "";
+    public GameObject hand; // temp
 
     private AudioSource audioClip;
     static private ActionManager actionManager;
@@ -19,8 +19,12 @@ public class PersonObject : InteractableObject {
         if (actionManager == null) Debug.LogError("No action manager found");
     }
 
-    public void Talk()
+    public void Talk(string topic = "")
     {
+        if (ViewModeActive())
+            return;
+
+        // play sound depending on topic (no sound yet)
         if (audioClip.clip)
         {
             audioClip.Play();
@@ -29,6 +33,21 @@ public class PersonObject : InteractableObject {
         {
             Debug.LogWarning("Audio clip not set.");
         }
+
+        switch (topic)
+        {
+            case "RollUpSleeves":
+                RollUpSleeves(true);
+                break;
+            default:
+                break;
+        }
+
         actionManager.OnTalkAction(topic);
+    }
+
+    private void RollUpSleeves(bool value)
+    {
+        hand.SetActive(value);
     }
 }

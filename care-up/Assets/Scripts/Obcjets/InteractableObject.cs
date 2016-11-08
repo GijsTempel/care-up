@@ -61,4 +61,9 @@ public class InteractableObject : MonoBehaviour {
     {
         rend.material.shader = onMouseExitShader;
     }
+
+    protected bool ViewModeActive()
+    {
+        return cameraMode.CurrentMode == CameraMode.Mode.ObjectPreview;
+    }
 }
