@@ -33,6 +33,12 @@ public class ActionManager : MonoBehaviour {
         set { points = value; }
     }
 
+    public int CurrentAction
+    {
+        get { return currentAction; }
+        set { currentAction = value; }
+    }
+
     void Start () {
 
         XmlDocument xmlFile = new XmlDocument();

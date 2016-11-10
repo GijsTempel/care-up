@@ -168,6 +168,15 @@ public class SaveLoadManager : MonoBehaviour {
         ActionManager actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
         { //actions
             XmlNode scenario = doc.CreateElement("scenario");
+
+            XmlAttribute currentAction = doc.CreateAttribute("current");
+            currentAction.Value = actionManager.CurrentAction.ToString();
+            scenario.Attributes.Append(currentAction);
+
+            XmlAttribute pointsValue = doc.CreateAttribute("points");
+            pointsValue.Value = actionManager.Points.ToString();
+            scenario.Attributes.Append(pointsValue);
+
             save.AppendChild(scenario);
 
             List<Action> actionList = actionManager.ActionList;
@@ -182,15 +191,6 @@ public class SaveLoadManager : MonoBehaviour {
                 actionNode.Attributes.Append(actionStatus);
             }
         } //end actions
-
-        { //points
-            XmlNode pointsNode = doc.CreateElement("points");
-            save.AppendChild(pointsNode);
-
-            XmlAttribute pointsValue = doc.CreateAttribute("points");
-            pointsValue.Value = actionManager.Points.ToString();
-            pointsNode.Attributes.Append(pointsValue);
-        } //emd points
 
         { // timer
             GameTimer timer = GameObject.Find("GameLogic").GetComponent<GameTimer>();
@@ -301,15 +301,13 @@ public class SaveLoadManager : MonoBehaviour {
 
         ActionManager actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
         actionManager.SetActionStatus(statusList);
+
+        actionManager.CurrentAction = int.Parse(scenario.Attributes["current"].Value);
+        actionManager.Points = int.Parse(scenario.Attributes["points"].Value);
         //end scenario
 
-        //points
-        XmlNode points = scenario.NextSibling;
-        actionManager.Points = int.Parse(points.Attributes["points"].Value);
-        //end points
-
         //timer
-        XmlNode timer = points.NextSibling;
+        XmlNode timer = scenario.NextSibling;
         GameObject.Find("GameLogic").GetComponent<GameTimer>().CurrentTime =
             float.Parse(timer.Attributes["time"].Value);
         //end timer

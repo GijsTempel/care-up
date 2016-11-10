@@ -8,8 +8,8 @@ public class InteractableObject : MonoBehaviour {
     static private Shader onMouseOverShader;
     static private Shader onMouseExitShader;
 
-    static private CameraMode cameraMode;
-    static private Controls controls;
+    static protected CameraMode cameraMode;
+    static protected Controls controls;
     
     protected virtual void Start () {
         rend = GetComponent<Renderer>();

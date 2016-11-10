@@ -6,10 +6,11 @@ public class CameraMode : MonoBehaviour {
 	public enum Mode
     {
         Free,
-        ObjectPreview
+        ObjectPreview,
+        SelectionDialogue
     };
     
-    private Mode currentMode;
+    private Mode currentMode = Mode.Free;
 
     private PickableObject selectedObject;
     private Vector3 savedPosition;
@@ -44,23 +45,17 @@ public class CameraMode : MonoBehaviour {
     {
         if (Input.GetMouseButtonDown(0) && currentMode == Mode.Free)
         {
-            if (controls.SelectedObject)
+            if (controls.SelectedObject && controls.CanInteract)
             {
                 selectedObject = controls.SelectedObject.GetComponent<PickableObject>();
                 if (selectedObject != null) // if there is a component
                 {
-                    currentMode = Mode.ObjectPreview;
-                    playerScript.enabled = false;
+                    ToggleCameraMode(Mode.ObjectPreview);
 
                     selectedObject.ToggleViewMode(true);
 
-                    Cursor.lockState = CursorLockMode.None;
-                    Cursor.visible = true;
-
-                    blur.enabled = true;
-
                     ExaminableObject examObj = selectedObject.GetComponent<ExaminableObject>();
-                    if ( examObj )
+                    if (examObj)
                     {
                         examObj.OnExamine();
                     }
@@ -70,35 +65,23 @@ public class CameraMode : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.Q) && currentMode == Mode.ObjectPreview)
         {
-            currentMode = Mode.Free;
-            playerScript.enabled = true;
+            ToggleCameraMode(Mode.Free);
 
             selectedObject.ToggleViewMode(false);
             selectedObject = null;
-
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-
-            blur.enabled = false;
         }
 
         if ( Input.GetKeyDown(KeyCode.E) && currentMode == Mode.ObjectPreview )
         {
             if ( selectedObject.GetComponent<ExaminableObject>() == null)
-            { 
-                currentMode = Mode.Free;
-                playerScript.enabled = true;
+            {
+                ToggleCameraMode(Mode.Free);
 
                 if (!inventory.PickItem(selectedObject))
                 {
                     selectedObject.ToggleViewMode(false);
                 }
                 selectedObject = null;
-
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-
-                blur.enabled = false;
             }
         }
 
@@ -113,6 +96,39 @@ public class CameraMode : MonoBehaviour {
                 selectedObject.ViewModeUpdate();
             }
         }
+    }
+
+    public void ToggleCameraMode(Mode mode)
+    {
+        if (currentMode == Mode.Free && mode == Mode.ObjectPreview)
+        {
+            playerScript.enabled = false;
+
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+            blur.enabled = true;
+        }
+        else if (currentMode == Mode.ObjectPreview && mode == Mode.Free)
+        {
+            playerScript.enabled = true;
+
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
+            blur.enabled = false;
+        }
+        else if (currentMode == Mode.Free && mode == Mode.SelectionDialogue)
+        {
+            playerScript.enabled = false;
+        }
+        else if (currentMode == Mode.SelectionDialogue && mode == Mode.Free)
+        {
+            playerScript.enabled = true;
+        }
+
+        currentMode = mode;
+        controls.ResetObject();
     }
 
     void OnGUI()

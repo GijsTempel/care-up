@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(AudioSource))]
 public class PersonObject : InteractableObject {
@@ -15,8 +16,37 @@ public class PersonObject : InteractableObject {
 
         audioClip = GetComponent<AudioSource>();
 
-        actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
-        if (actionManager == null) Debug.LogError("No action manager found");
+        if (actionManager == null)
+        {
+            actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
+            if (actionManager == null) Debug.LogError("No action manager found");
+        }
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        if (Input.GetMouseButtonDown(0) && cameraMode.CurrentMode == CameraMode.Mode.Free) {
+            if (controls.SelectedObject == gameObject && controls.CanInteract)
+            {
+                GameObject dialogueObject = Instantiate(Resources.Load<GameObject>("Prefabs/SelectionDialogue"),
+                    Camera.main.transform.position + Camera.main.transform.forward * 3.0f,
+                    Camera.main.transform.rotation) as GameObject;
+
+                SelectDialogue dialogue = dialogueObject.GetComponent<SelectDialogue>();
+                dialogue.Init();
+
+                List<SelectDialogue.DialogueOption> list = new List<SelectDialogue.DialogueOption>();
+
+                SelectDialogue.DialogueOption rollOption = 
+                    new SelectDialogue.DialogueOption("Show me your hand, please.", Talk, "RollUpSleeves");
+                list.Add(rollOption);
+
+                dialogue.AddOptions(list);
+
+                cameraMode.ToggleCameraMode(CameraMode.Mode.SelectionDialogue);
+            }
+        }
     }
 
     public void Talk(string topic = "")

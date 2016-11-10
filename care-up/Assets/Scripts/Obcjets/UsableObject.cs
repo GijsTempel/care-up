@@ -12,6 +12,19 @@ public class UsableObject : InteractableObject {
         if (actionManager == null) Debug.LogError("No action manager found");
     }
 
+    protected override void Update()
+    {
+        base.Update();
+
+        if (Input.GetMouseButtonDown(0) && cameraMode.CurrentMode == CameraMode.Mode.Free)
+        {
+            if (controls.SelectedObject == gameObject && controls.CanInteract)
+            {
+                Use();
+            }
+        }
+    }
+
     public void Use()
     {
         if (!ViewModeActive())

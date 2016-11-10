@@ -7,16 +7,21 @@ public class SelectDialogue : MonoBehaviour {
     
     public class DialogueOption
     {
-        public delegate void OptionAction(string debugMSG);
+        public delegate void OptionAction(string attr);
 
         public string text;
+
+        public string attribute;
         public OptionAction function;
+
         public OptionSide side;
 
-        public DialogueOption(string txt, OptionAction func)
+        public DialogueOption(string txt, OptionAction func, string attr)
         {
             text = txt;
+
             function = func;
+            attribute = attr;
         }
     };
 
@@ -44,20 +49,27 @@ public class SelectDialogue : MonoBehaviour {
     private Material selectedMaterial;
     private Material defaultMaterial;
 
+    private static CameraMode cameraMode;
+
     void Start()
     {
-        transform.position = Camera.main.transform.position 
-            + Camera.main.transform.forward * 3.0f;
-        transform.rotation = Camera.main.transform.rotation;
+        if (cameraMode == null)
+        {
+            cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
+            if (cameraMode == null) Debug.LogError("No camera mode found");
+        }
+    }
 
+    public void Init()
+    {
         selectedMaterial = Resources.Load<Material>("Materials/Object Material");
-        defaultMaterial = Resources.Load<Material>("Materials/Blue Material");
+        defaultMaterial = Resources.Load<Material>("Materials/Floor Material");
 
         top = transform.FindChild("Top").GetComponent<Renderer>();
         bottom = transform.FindChild("Bottom").GetComponent<Renderer>();
         right = transform.FindChild("Right").GetComponent<Renderer>();
         left = transform.FindChild("Left").GetComponent<Renderer>();
-        
+
         top.material = defaultMaterial;
         bottom.material = defaultMaterial;
         right.material = defaultMaterial;
@@ -67,27 +79,16 @@ public class SelectDialogue : MonoBehaviour {
         bottom.gameObject.SetActive(false);
         right.gameObject.SetActive(false);
         left.gameObject.SetActive(false);
+    }
 
-        AddOptions();
+    public void AddOptions(List<DialogueOption> list)
+    {
+        foreach(DialogueOption item in list )
+        {
+            options.Add(item);
+        }
+
         InitOptions();
-
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
-
-    private void OnOptionClick(string debugMSG)
-    {
-        Debug.Log(debugMSG + " clicked");
-    }
-
-    public void AddOptions()
-    {
-        // comment out to test 1-2-3-4 options
-        // if more then 4 - it will take 1st four as options
-        options.Add(new DialogueOption("Option 1", OnOptionClick));
-        options.Add(new DialogueOption("Option 2", OnOptionClick));
-        options.Add(new DialogueOption("Option 3", OnOptionClick));
-        //options.Add(new DialogueOption("Option 4", OnOptionClick));
     }
 
     private void InitOptions()
@@ -150,18 +151,14 @@ public class SelectDialogue : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-
         if (Input.GetMouseButtonDown(0) && currentOption != OptionSide.None)
         {
             DialogueOption option = options.Find(x => x.side == currentOption);
             if ( option != null )
             {
-                option.function(option.text);
+                option.function(option.attribute);
+                cameraMode.ToggleCameraMode(CameraMode.Mode.Free);
+                Destroy(gameObject);
             }
         }
 
