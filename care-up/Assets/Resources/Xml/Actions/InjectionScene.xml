@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+	<!-- examples of different type of actions 
+		<action index="0" type="combine" left="Cube" right="Cube"></action>
+		<action index="0" type="use" value="Switch"></action>
+		<action index="1" type="talk" topic="RollUpSleeves"></action>
+		<action index="2" type="examine" item="Hand" expected="clean"></action>
+		<action index="3" type="useOn" item="Rectangle" target="Hand"></action>
+		<action index="1" type="move" area="WorkFieldArea" value="false"></action>
+	-->
+<ActionList>
+	<!-- Step 1: Preform hand hygiene -->
+	<action index="0" type="use" value="HandCleaner"></action>
+	<!-- Step 2: Cleaning work field -->
+	<action index="1" type="move" area="WorkFieldArea" value="true"></action>
+	<!-- Step 3: Checking patient records -->
+	<action index="2" type="examine" item="PatientRecords" expected="good"></action>
+	<!-- Step 4: Checking medicine prescriptions -->
+	<action index="2" type="examine" item="Medicine" expected="good"></action>
+	
+	<!-- Step 5: Preparing the medicine -->
+		<!-- 1. Soak a cloth with alcohol -->
+		<action index="3" type="combine" left="Cloth" right="Alcohol"></action>
+		<!-- 2.	Disinfect the rubber cap of the medicine --> 
+		<action index="4" type="combine" left="DesinfectionCloth" right="Medicine"></action>
+		<!-- 3.	Place the absorption needle on the syringe -->
+		<action index="5" type="combine" left="Syringe" right="AbsorptionNeedle"></action>
+ 
+	<!-- Step 6: Prepare the syringe with the medicine and place the injection needle -->
+		<!-- 1.	Absorb the right amount of medicine in the syringe -->
+		<action index="6" type="combine" left="Medicine" right="SyringeWithAbsorptionNeedle"></action>
+		<!-- 2.	Vent the syringe -->
+		<action index="7" type="useOn" item="SyringeWithAbsorptionNeedle" target=""></action>
+		<!-- 3.	Remove the absorption needle off the syringe & put the needle in the needle cup (trashcan for needles) -->
+		<action index="8" type="combine" left="SyringeWithAbsorptionNeedle" right=""></action>
+		<action index="9" type="move" area="NeedleCup" value="true"></action>
+		<!-- 4.	Place the injection needle on the syringe -->
+		<action index="10" type="combine" left="Syringe" right="InjectionNeedle"></action>
+		
+	<!-- Step 8: Ask the patient to roll up his/her sleeve and show his/her arm. -->
+	<action index="11" type="talk" topic="RollUpSleeves"></action>
+	<!-- Step 9: Check if the injection spot on the arm is clean and dry. -->
+	<action index="12" type="examine" item="Hand" expected="clean"></action>
+	
+		<!-- animation sequence? -->
+		<action index="13" type="useOn" item="SyringeWithInjectionNeedle" target="Hand"></action>
+		<!-- Step 10: Hold the skin tight with thumb and pointer finger. -->
+		<!-- Step 11: Stick the needle in the arm with a fast motion at 90 degrees. -->
+		<!-- Step 12: Release the skin -->
+		<!-- Step 13: Secure the needle with the other hand to avoid sudden movement. -->
+		<!-- Step 14: pull the compression part of the needle back to see if no blood vessels were hit. -->
+		<!-- Step 15: Inject the medicine slow and steady -->
+		<!-- Step 16: Pull the needle out of the skin -->
+	
+	<!-- Step 17: Remove the injection needle and put the needle in the needle cup (trashcan for needles) -->
+	<action index="14" type="combine" left="SyringeWithInjectionNeedle" right=""></action>
+	<!-- Step 18: Clean up the materials you used. -->
+	<action index="15" type="move" area="WorkFieldArea" value="false"></action>
+	<!-- Step 19: Preform hand hygiene  -->
+	<action index="16" type="use" value="HandCleaner"></action>
+</ActionList>
