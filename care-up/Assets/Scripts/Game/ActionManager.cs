@@ -85,29 +85,30 @@ public class ActionManager : MonoBehaviour {
 
     public void OnCombineAction(string leftHand, string rightHand)
     {
-        if (currentAction < actionList.Count)
-        {
-            string[] info = { leftHand, rightHand };
-            points += Check(info, ActionType.ObjectCombine) ? 1 : -1;
-        }
+        string[] info = { leftHand, rightHand };
+        points += Check(info, ActionType.ObjectCombine) ? 1 : -1;
+        CheckScenarioCompleted();
     }
 
     public void OnUseAction(string useObject)
     {
         string[] info = { useObject };
         points += Check(info, ActionType.ObjectUse) ? 1 : -1;
+        CheckScenarioCompleted();
     }
 
     public void OnTalkAction(string topic)
     {
         string[] info = { topic };
         points += Check(info, ActionType.PersonTalk) ? 1 : -1;
+        CheckScenarioCompleted();
     }
     
     public void OnUseOnAction(string item, string target)
     {
         string[] info = { item, target };
         points += Check(info, ActionType.ObjectUseOn) ? 1 : -1;
+        CheckScenarioCompleted();
     }
 
     public void OnExamineAction(string item, string expected)
@@ -117,6 +118,7 @@ public class ActionManager : MonoBehaviour {
         {
             points += 1; // no penalty
         }
+        CheckScenarioCompleted();
     }
 
     public bool Check(string[] info, ActionType type)
@@ -145,8 +147,17 @@ public class ActionManager : MonoBehaviour {
         {
             currentAction += 1;
         }
-
+       
         return matched;
+    }
+
+    private void CheckScenarioCompleted()
+    {
+        // no unmatched actions left
+        if (actionList.Find(action => action.matched == false) == null)
+        {
+            GameObject.Find("Preferences").GetComponent<EndScoreManager>().LoadEndScoreScene();
+        }
     }
 
     void OnGUI()
