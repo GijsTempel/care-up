@@ -3,7 +3,7 @@ using System.Collections;
 
 public class AnimationManager : MonoBehaviour {
 
-    private Animation anim;
+    private Animation anim = new Animation();
 
     public void PlayAnimation(string name)
     {

@@ -23,7 +23,6 @@ public class PickableObject : InteractableObject {
     private List<Vector3> framePositions = new List<Vector3>();
 
     private static ActionManager actionManager;
-    private static Controls controls;
 
     protected override void Start()
     {
@@ -32,9 +31,6 @@ public class PickableObject : InteractableObject {
 
         actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
         if (actionManager == null) Debug.LogError("No action manager found");
-
-        controls = GameObject.Find("GameLogic").GetComponent<Controls>();
-        if (controls == null) Debug.LogError("No controls found");
     }
 
     protected override void Update()
