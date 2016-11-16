@@ -8,6 +8,7 @@ public class EndScoreManager : MonoBehaviour {
     private int points;
     private int score;
     private float time;
+    private string wrongSteps;
 
     private ActionManager actionManager;    //points, steps
     private GameTimer gameTimer; // time
@@ -24,6 +25,17 @@ public class EndScoreManager : MonoBehaviour {
             GameObject.Find("Score").GetComponent<Text>().text = "Score: " + score;
             GameObject.Find("Points").GetComponent<Text>().text = "Points: " + points;
             GameObject.Find("Time").GetComponent<Text>().text = string.Format("Time: {0}:{1:00}", (int)time / 60, (int)time % 60);
+            GameObject.Find("Steps").GetComponent<Text>().text = wrongSteps;
+
+            if (score >= 3)
+            {
+                GameObject.Find("Star2").SetActive(true);
+            }
+
+            if (score == 5)
+            {
+                GameObject.Find("Star3").SetActive(true);
+            }
         }
     }
 
@@ -38,11 +50,11 @@ public class EndScoreManager : MonoBehaviour {
         points = actionManager.Points;
         score = Mathf.FloorToInt(5.0f * points / actionManager.ActionList.Count);
         time = gameTimer.CurrentTime;
+        wrongSteps = actionManager.WrongSteps;
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
         SceneManager.LoadScene("EndScore");
     }
-	
 }

@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ActionList>
-  <action index="0" type="combine" left="Cube" right="Cube"></action>
-  <action index="0" type="use" value="Switch"></action>
-  <action index="1" type="talk" topic="RollUpSleeves"></action>
-  <action index="2" type="examine" item="Hand" expected="clean"></action>
-  <action index="3" type="useOn" item="Rectangle" target="Hand"></action>
-  <action index="4" type="combine" left="Cube" right="Sphere"></action>
-  <action index="4" type="combine" left="Rectangle" right="FlatSphere"></action>
+  <action description="Step 1: Combine cubes into rectangle"
+	index="0" type="combine" left="Cube" right="Cube"></action>
+  <action description="Step 2: Use switch"
+	index="0" type="use" value="Switch"></action>
+  <action description="Step 3: Ask person to roll up sleeves"
+	index="1" type="talk" topic="RollUpSleeves"></action>
+  <action description="Step 4: Examine hand"
+	index="2" type="examine" item="Hand" expected="clean"></action>
+  <action description="Step 5: Use rectangle on the hand"
+	index="3" type="useOn" item="Rectangle" target="Hand"></action>
+  <action description="Step 6: Combine cube and sphere"
+	index="4" type="combine" left="Cube" right="Sphere"></action>
+  <action description="Step 7: Combine rectangle with flat sphere"
+	index="4" type="combine" left="Rectangle" right="FlatSphere"></action>
 </ActionList>

@@ -18,13 +18,25 @@ public class ActionManager : MonoBehaviour {
     public string actionListName;
 
     private List<Action> actionList = new List<Action>();
-    
+    private List<string> wrongStepsList = new List<string>();
+
     private int points = 0;
     private int currentAction = 0;
 
     public List<Action> ActionList
     {
         get { return actionList; }
+    }
+
+    public string WrongSteps
+    {
+        get
+        {
+            string wrongSteps = "";
+            foreach (string step in wrongStepsList)
+                wrongSteps += step + "\n";
+            return wrongSteps;
+        }
     }
 
     public int Points
@@ -50,31 +62,32 @@ public class ActionManager : MonoBehaviour {
             int index;
             int.TryParse(action.Attributes["index"].Value, out index);
             string type = action.Attributes["type"].Value;
+            string descr = action.Attributes["description"].Value;
 
             switch (type)
             {
                 case "combine":
                     string left = action.Attributes["left"].Value;
                     string right = action.Attributes["right"].Value;
-                    actionList.Add(new CombineAction(left, right, index));
+                    actionList.Add(new CombineAction(left, right, index, descr));
                     break;
                 case "use":
                     string use = action.Attributes["value"].Value;
-                    actionList.Add(new UseAction(use, index));
+                    actionList.Add(new UseAction(use, index, descr));
                     break;
                 case "talk":
                     string topic = action.Attributes["topic"].Value;
-                    actionList.Add(new TalkAction(topic, index));
+                    actionList.Add(new TalkAction(topic, index, descr));
                     break;
                 case "useOn":
                     string useItem = action.Attributes["item"].Value;
                     string target = action.Attributes["target"].Value;
-                    actionList.Add(new UseOnAction(useItem, target, index));
+                    actionList.Add(new UseOnAction(useItem, target, index, descr));
                     break;
                 case "examine":
                     string exItem = action.Attributes["item"].Value;
                     string expected = action.Attributes["expected"].Value;
-                    actionList.Add(new ExamineAction(exItem, expected, index));
+                    actionList.Add(new ExamineAction(exItem, expected, index, descr));
                     break;
                 default:
                     Debug.LogError("No action type found: " + type);
@@ -130,10 +143,10 @@ public class ActionManager : MonoBehaviour {
             action.matched == false).ToList();
         int subcategoryLength = sublist.Count;
         
-        sublist = sublist.Where(action => action.Type == type).ToList();
+        List<Action> subtypelist = sublist.Where(action => action.Type == type).ToList();
         if (sublist.Count != 0)
         {
-            foreach (Action action in sublist)
+            foreach (Action action in subtypelist)
             {
                 if (action.Compare(info))
                 {
@@ -146,6 +159,15 @@ public class ActionManager : MonoBehaviour {
         if (matched && subcategoryLength <= 1)
         {
             currentAction += 1;
+        }
+
+        if (!matched)
+        {
+            if ( sublist.Count > 0 && 
+                wrongStepsList.Find(step => step == sublist[0].description) == null )
+            {
+                wrongStepsList.Add(sublist[0].description);
+            }
         }
        
         return matched;
