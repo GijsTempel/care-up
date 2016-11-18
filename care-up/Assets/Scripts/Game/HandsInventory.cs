@@ -84,8 +84,11 @@ public class HandsInventory : MonoBehaviour {
             {
                 if (leftName != leftResult)
                 {
-                    Destroy(leftHandObject.gameObject);
-                    leftHandObject = null;
+                    if (leftHandObject != null)
+                    {
+                        Destroy(leftHandObject.gameObject);
+                        leftHandObject = null;
+                    }
 
                     if (leftResult != "")
                     {
@@ -96,8 +99,11 @@ public class HandsInventory : MonoBehaviour {
 
                 if (rightName != rightResult)
                 {
-                    Destroy(rightHandObject.gameObject);
-                    rightHandObject = null;
+                    if (rightHandObject != null)
+                    {
+                        Destroy(rightHandObject.gameObject);
+                        rightHandObject = null;
+                    }
 
                     if (rightResult != "")
                     {

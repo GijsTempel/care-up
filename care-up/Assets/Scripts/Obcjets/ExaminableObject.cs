@@ -2,7 +2,9 @@
 using System.Collections;
 
 public class ExaminableObject : InteractableObject {
-    
+
+    public string state = "good";
+
     private static ActionManager actionManager;
 
     protected override void Start()
@@ -18,7 +20,7 @@ public class ExaminableObject : InteractableObject {
 
     public void OnExamine()
     {
-        actionManager.OnExamineAction(name, "clean");
+        actionManager.OnExamineAction(name, state);
     }
 }
 

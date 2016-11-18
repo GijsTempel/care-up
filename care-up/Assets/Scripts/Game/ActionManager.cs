@@ -63,7 +63,7 @@ public class ActionManager : MonoBehaviour {
             int.TryParse(action.Attributes["index"].Value, out index);
             string type = action.Attributes["type"].Value;
             string descr = action.Attributes["description"].Value;
-
+           
             switch (type)
             {
                 case "combine":
@@ -99,38 +99,55 @@ public class ActionManager : MonoBehaviour {
     public void OnCombineAction(string leftHand, string rightHand)
     {
         string[] info = { leftHand, rightHand };
-        points += Check(info, ActionType.ObjectCombine) ? 1 : -1;
+        bool occured = Check(info, ActionType.ObjectCombine);
+        points += occured ? 1 : -1;
+
+        Debug.Log("Combine " + leftHand + " and " + rightHand + " with result " + occured);
+
         CheckScenarioCompleted();
     }
 
     public void OnUseAction(string useObject)
     {
         string[] info = { useObject };
-        points += Check(info, ActionType.ObjectUse) ? 1 : -1;
+        bool occured = Check(info, ActionType.ObjectUse);
+        points += occured ? 1 : -1;
+
+        Debug.Log("Use " + useObject + " with result " + occured);
+
         CheckScenarioCompleted();
     }
 
     public void OnTalkAction(string topic)
     {
         string[] info = { topic };
-        points += Check(info, ActionType.PersonTalk) ? 1 : -1;
+        bool occured = Check(info, ActionType.PersonTalk);
+        points += occured ? 1 : -1;
+
+        Debug.Log("Say " + topic + " with result " + occured);
+
         CheckScenarioCompleted();
     }
     
     public void OnUseOnAction(string item, string target)
     {
         string[] info = { item, target };
-        points += Check(info, ActionType.ObjectUseOn) ? 1 : -1;
+        bool occured = Check(info, ActionType.ObjectUseOn);
+        points += occured ? 1 : -1;
+
+        Debug.Log("Use " + item + " on " + target + " with result " + occured);
+
         CheckScenarioCompleted();
     }
 
     public void OnExamineAction(string item, string expected)
     {
         string[] info = { item, expected };
-        if ( Check(info, ActionType.ObjectExamine) )
-        {
-            points += 1; // no penalty
-        }
+        bool occured = Check(info, ActionType.ObjectExamine);
+        points += occured ? 1 : 0; // no penalty
+
+        Debug.Log("Examine " + item + " with state " + expected + " with result " + occured);
+
         CheckScenarioCompleted();
     }
 

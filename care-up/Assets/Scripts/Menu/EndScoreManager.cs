@@ -27,14 +27,19 @@ public class EndScoreManager : MonoBehaviour {
             GameObject.Find("Time").GetComponent<Text>().text = string.Format("Time: {0}:{1:00}", (int)time / 60, (int)time % 60);
             GameObject.Find("Steps").GetComponent<Text>().text = wrongSteps;
 
+            if (score >= 1)
+            {
+                GameObject.Find("Star1").GetComponent<Image>().color = Color.green;
+            }
+
             if (score >= 3)
             {
-                GameObject.Find("Star2").SetActive(true);
+                GameObject.Find("Star2").GetComponent<Image>().color = Color.green;
             }
 
             if (score == 5)
             {
-                GameObject.Find("Star3").SetActive(true);
+                GameObject.Find("Star3").GetComponent<Image>().color = Color.green;
             }
         }
     }

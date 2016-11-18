@@ -130,9 +130,15 @@ public class PickableObject : InteractableObject {
 
     public virtual void Use()
     {
-        if (controls.SelectedObject.GetComponent<InteractableObject>())
+        actionManager.OnUseOnAction(name, controls.SelectedObject == null ? "" : controls.SelectedObject.name);
+
+        if (controls.SelectedObject != null)
         {
-            actionManager.OnUseOnAction(name, controls.SelectedObject.name);
+            if ((name == "InjectionNeedle" || name == "AbsorptionNeedle")
+                && controls.SelectedObject.name == "NeedleCup")
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }
