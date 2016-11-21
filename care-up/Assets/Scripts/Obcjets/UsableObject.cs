@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class UsableObject : InteractableObject {
     
@@ -30,6 +31,16 @@ public class UsableObject : InteractableObject {
         if (!ViewModeActive())
         {
             actionManager.OnUseAction(gameObject.name);
+
+            switch(name)
+            {
+                case "Cheat Sheet":
+                    {
+                        transform.GetChild(0).GetChild(0).GetComponent<Text>().text 
+                            = actionManager.CurrentDescription;
+                    }
+                    break;
+            }
         }
     }
 }

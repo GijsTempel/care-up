@@ -51,6 +51,15 @@ public class ActionManager : MonoBehaviour {
         set { currentAction = value; }
     }
 
+    public string CurrentDescription
+    {
+        get {
+            return actionList.Where(action =>
+          action.SubIndex == currentAction &&
+          action.matched == false).First().description;
+        }
+    }
+
     void Start () {
 
         XmlDocument xmlFile = new XmlDocument();
