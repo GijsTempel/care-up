@@ -30,14 +30,19 @@ public class UsableObject : InteractableObject {
     {
         if (!ViewModeActive())
         {
-            actionManager.OnUseAction(gameObject.name);
-
             switch(name)
             {
                 case "Cheat Sheet":
                     {
-                        transform.GetChild(0).GetChild(0).GetComponent<Text>().text 
-                            = actionManager.CurrentDescription;
+                        Text hintText = transform.GetChild(0).GetChild(0).GetComponent<Text>();
+                        if ( hintText.text == actionManager.CurrentDescription )
+                        {
+                            return; // hint is not new, no action pefrormed
+                        }
+                        else
+                        {
+                            hintText.text = actionManager.CurrentDescription;
+                        }
                     }
                     break;
                 case "WorkField":
@@ -46,6 +51,7 @@ public class UsableObject : InteractableObject {
                     }
                     break;
             }
+            actionManager.OnUseAction(gameObject.name);
         }
     }
 }
