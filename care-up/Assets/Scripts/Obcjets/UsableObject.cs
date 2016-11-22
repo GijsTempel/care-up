@@ -40,6 +40,11 @@ public class UsableObject : InteractableObject {
                             = actionManager.CurrentDescription;
                     }
                     break;
+                case "WorkField":
+                    {
+                        GameObject.Find("Player").GetComponent<AnimationManager>().PlayAnimation("Clean_Table");
+                    }
+                    break;
             }
         }
     }
