@@ -12,6 +12,8 @@ public class HandsInventory : MonoBehaviour {
 
     private CombinationManager combinationManager;
     private GameObject interactableObjects;
+    private Controls controls;
+    private CameraMode cameraMode;
 
     private ActionManager actionManager;
 
@@ -35,6 +37,12 @@ public class HandsInventory : MonoBehaviour {
 
         actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
         if (actionManager == null) Debug.LogError("No Action Manager found.");
+
+        controls = GameObject.Find("GameLogic").GetComponent<Controls>();
+        if (controls == null) Debug.LogError("No controls found");
+
+        cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
+        if (cameraMode == null) Debug.LogError("No camera mode found");
     }
 	
 	void Update () {
@@ -58,62 +66,86 @@ public class HandsInventory : MonoBehaviour {
             rightHandObject.InHandUpdate(true);
         }
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (controls.keyPreferences.LeftDropKey.Pressed())
         {
             if (leftHandObject)
             {
                 leftHandObject.Drop();
                 leftHandObject = null;
             }
-
-            if (rightHandObject)
-            {
-                rightHandObject.Drop();
-                rightHandObject = null;
-            }
         }
-        else if (Input.GetKeyDown(KeyCode.R))
+
+        if (cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
-            string leftName = leftHandObject ? leftHandObject.name : "";
-            string rightName = rightHandObject ? rightHandObject.name : "";
-
-            string leftResult, rightResult;
-            bool combined = combinationManager.Combine(leftName, rightName, out leftResult, out rightResult);
-
-            if (combined)
+            if (controls.keyPreferences.RightDropKey.Pressed())
             {
-                if (leftName != leftResult)
+                if (rightHandObject)
                 {
-                    if (leftHandObject != null)
-                    {
-                        Destroy(leftHandObject.gameObject);
-                        leftHandObject = null;
-                    }
-
-                    if (leftResult != "")
-                    {
-                        GameObject leftObject = CreateObjectByName(leftResult, leftHandPosition);
-                        leftHandObject = leftObject.GetComponent<PickableObject>();
-                    }
+                    rightHandObject.Drop();
+                    rightHandObject = null;
                 }
+            }
 
-                if (rightName != rightResult)
+            if (controls.keyPreferences.CombineKey.Pressed())
+            {
+                string leftName = leftHandObject ? leftHandObject.name : "";
+                string rightName = rightHandObject ? rightHandObject.name : "";
+
+                string leftResult, rightResult;
+                bool combined = combinationManager.Combine(leftName, rightName, out leftResult, out rightResult);
+
+                if (combined)
                 {
-                    if (rightHandObject != null)
+                    if (leftName != leftResult)
                     {
-                        Destroy(rightHandObject.gameObject);
-                        rightHandObject = null;
+                        if (leftHandObject != null)
+                        {
+                            Destroy(leftHandObject.gameObject);
+                            leftHandObject = null;
+                        }
+
+                        if (leftResult != "")
+                        {
+                            GameObject leftObject = CreateObjectByName(leftResult, leftHandPosition);
+                            leftHandObject = leftObject.GetComponent<PickableObject>();
+                        }
                     }
 
-                    if (rightResult != "")
+                    if (rightName != rightResult)
                     {
-                        GameObject rightObject = CreateObjectByName(rightResult, rightHandPosition);
-                        rightHandObject = rightObject.GetComponent<PickableObject>();
+                        if (rightHandObject != null)
+                        {
+                            Destroy(rightHandObject.gameObject);
+                            rightHandObject = null;
+                        }
+
+                        if (rightResult != "")
+                        {
+                            GameObject rightObject = CreateObjectByName(rightResult, rightHandPosition);
+                            rightHandObject = rightObject.GetComponent<PickableObject>();
+                        }
                     }
                 }
             }
+
+            if (controls.keyPreferences.LeftUseKey.Pressed())
+            {
+                if (leftHandObject != null)
+                {
+                    leftHandObject.Use();
+                }
+            }
+
+            if (controls.keyPreferences.RightUseKey.Pressed())
+            {
+                if (rightHandObject)
+                {
+                    rightHandObject.Use();
+                }
+            }
         }
-        else if (Input.GetKeyDown(KeyCode.C))
+
+        if (Input.GetKeyDown(KeyCode.C))
         {
             GameObject cubeObject = Instantiate(Resources.Load<GameObject>("Prefabs\\Cube"),
                             new Vector3(1.0f, 10.0f, 1.0f),
@@ -127,19 +159,6 @@ public class HandsInventory : MonoBehaviour {
             sphereObject.transform.parent = interactableObjects.transform;
             sphereObject.name = "Sphere";
         }
-        else if (Input.GetKeyDown(KeyCode.Z))
-        {
-            if (leftHandObject != null)
-            {
-                leftHandObject.Use();
-            } 
-            else if (rightHandObject)
-            {
-                rightHandObject.Use();
-            }
-        }
-
-
     }
 
     public bool PickItem(PickableObject item, string hand = "")

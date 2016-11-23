@@ -63,7 +63,7 @@ public class CameraMode : MonoBehaviour {
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Q) && currentMode == Mode.ObjectPreview)
+        if (currentMode == Mode.ObjectPreview && controls.keyPreferences.LeftUseKey.Pressed())
         {
             ToggleCameraMode(Mode.Free);
 
@@ -71,7 +71,7 @@ public class CameraMode : MonoBehaviour {
             selectedObject = null;
         }
 
-        if ( Input.GetKeyDown(KeyCode.E) && currentMode == Mode.ObjectPreview )
+        if (currentMode == Mode.ObjectPreview && controls.keyPreferences.RightUseKey.Pressed())
         {
             if ( selectedObject.GetComponent<ExaminableObject>() == null)
             {
