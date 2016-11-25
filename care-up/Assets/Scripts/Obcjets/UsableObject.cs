@@ -4,15 +4,6 @@ using UnityEngine.UI;
 
 public class UsableObject : InteractableObject {
     
-    static private ActionManager actionManager;
-
-    protected override void Start () {
-        base.Start();
-
-        actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
-        if (actionManager == null) Debug.LogError("No action manager found");
-    }
-
     protected override void Update()
     {
         base.Update();

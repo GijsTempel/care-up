@@ -2,17 +2,16 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class IngameMenu : MonoBehaviour {
+public class IngameMenu : MonoBehaviour
+{
 
-    private GameObject UIFolder;
     private PlayerMovement playerScript;
 
     private static Controls controls;
     private static GameTimer timer;
 
-	void Start () {
-        UIFolder = GameObject.Find("InGameOptions");
-
+    void Start()
+    {
         playerScript = GameObject.Find("Player").GetComponent<PlayerMovement>();
         if (playerScript == null) Debug.LogError("No Player script found");
 
@@ -29,44 +28,25 @@ public class IngameMenu : MonoBehaviour {
         }
     }
 
-    public void Open()
+    void Update()
     {
-        UIFolder.transform.GetChild(0).gameObject.SetActive(true);
-        controls.ResetObject();
-        controls.enabled = false;
-        playerScript.enabled = false;
-        timer.enabled = false;
-    }
-
-    public void Close()
-    {
-        UIFolder.transform.GetChild(0).gameObject.SetActive(false);
-        controls.enabled = true;
-        playerScript.enabled = true;
-        timer.enabled = true;
-
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
-
-    public void OnContinue()
-    {
-        Close();
-    }
-
-    public void OnSave()
-    {
-        GameObject.Find("Preferences").GetComponent<SaveLoadManager>().Save();
-        Close();
-    }
-
-    public void OnOptions()
-    {
-        SceneManager.LoadScene("Options");
-    }
-
-    public void OnExit()
-    {
-        SceneManager.LoadScene("Menu");
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (controls.SelectedObject)
+            {
+                switch (controls.SelectedObject.name)
+                {
+                    case "Save":
+                        GameObject.Find("Preferences").GetComponent<SaveLoadManager>().Save();
+                        break;
+                    case "Options":
+                        SceneManager.LoadScene("Options");
+                        break;
+                    case "Exit":
+                        SceneManager.LoadScene("Menu");
+                        break;
+                }
+            }
+        }
     }
 }

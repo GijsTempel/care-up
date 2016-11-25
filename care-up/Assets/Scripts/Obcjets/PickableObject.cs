@@ -21,16 +21,11 @@ public class PickableObject : InteractableObject {
     private Quaternion savedRotation;
 
     private List<Vector3> framePositions = new List<Vector3>();
-
-    private static ActionManager actionManager;
-
+  
     protected override void Start()
     {
         base.Start();
         framePositions.Clear();
-
-        actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
-        if (actionManager == null) Debug.LogError("No action manager found");
     }
 
     protected override void Update()

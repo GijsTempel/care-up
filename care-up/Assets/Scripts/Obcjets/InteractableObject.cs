@@ -10,8 +10,10 @@ public class InteractableObject : MonoBehaviour {
 
     static protected CameraMode cameraMode;
     static protected Controls controls;
-    
-    protected virtual void Start () {
+    static protected ActionManager actionManager;
+
+    protected virtual void Start()
+    {
         rend = GetComponent<Renderer>();
 
         if (onMouseOverShader == null)
@@ -35,9 +37,16 @@ public class InteractableObject : MonoBehaviour {
             controls = GameObject.Find("GameLogic").GetComponent<Controls>();
             if (controls == null) Debug.LogError("No Controls found");
         }
+
+        if (actionManager == null)
+        {
+            actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
+            if (actionManager == null) Debug.LogError("No action manager found");
+        }
     }
-	
-	protected virtual void Update () {
+
+    protected virtual void Update() {
+        
         if (cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
             if (controls.SelectedObject == gameObject)

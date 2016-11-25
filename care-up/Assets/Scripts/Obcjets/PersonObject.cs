@@ -8,19 +8,12 @@ public class PersonObject : InteractableObject {
     public GameObject hand; // temp
 
     private AudioSource audioClip;
-    static private ActionManager actionManager;
 
     protected override void Start()
     {
         base.Start();
 
         audioClip = GetComponent<AudioSource>();
-
-        if (actionManager == null)
-        {
-            actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
-            if (actionManager == null) Debug.LogError("No action manager found");
-        }
     }
 
     protected override void Update()
