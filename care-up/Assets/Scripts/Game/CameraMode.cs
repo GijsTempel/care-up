@@ -12,9 +12,7 @@ public class CameraMode : MonoBehaviour {
     
     private Mode currentMode = Mode.Free;
 
-    private PickableObject selectedObject;
-    private Vector3 savedPosition;
-    private Quaternion savedRotation;
+    private ExaminableObject selectedObject;
 
     private Controls controls;
     private PlayerMovement playerScript;
@@ -47,18 +45,14 @@ public class CameraMode : MonoBehaviour {
         {
             if (controls.SelectedObject && controls.CanInteract)
             {
-                selectedObject = controls.SelectedObject.GetComponent<PickableObject>();
+                selectedObject = controls.SelectedObject.GetComponent<ExaminableObject>();
                 if (selectedObject != null) // if there is a component
                 {
                     ToggleCameraMode(Mode.ObjectPreview);
 
                     selectedObject.ToggleViewMode(true);
 
-                    ExaminableObject examObj = selectedObject.GetComponent<ExaminableObject>();
-                    if (examObj)
-                    {
-                        examObj.OnExamine();
-                    }
+                    selectedObject.OnExamine();
                 }
             }
         }
@@ -69,20 +63,6 @@ public class CameraMode : MonoBehaviour {
 
             selectedObject.ToggleViewMode(false);
             selectedObject = null;
-        }
-
-        if (currentMode == Mode.ObjectPreview && controls.keyPreferences.RightUseKey.Pressed())
-        {
-            if ( selectedObject.GetComponent<ExaminableObject>() == null)
-            {
-                ToggleCameraMode(Mode.Free);
-
-                if (!inventory.PickItem(selectedObject))
-                {
-                    selectedObject.ToggleViewMode(false);
-                }
-                selectedObject = null;
-            }
         }
 
         if ( currentMode == Mode.ObjectPreview )
@@ -140,7 +120,7 @@ public class CameraMode : MonoBehaviour {
             style.fontSize = 40;
             style.normal.textColor = Color.white;
             GUI.Label(new Rect(0, 4*Screen.height/5, Screen.width, Screen.height/5), 
-                "Press Q to put down, Press E to pick up", style);
+                "Press Q to put down", style);
         }
     }
 }

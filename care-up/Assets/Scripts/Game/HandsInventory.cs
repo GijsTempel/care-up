@@ -66,17 +66,29 @@ public class HandsInventory : MonoBehaviour {
             rightHandObject.InHandUpdate(true);
         }
 
-        if (controls.keyPreferences.LeftDropKey.Pressed())
+        if (Input.GetMouseButtonDown(0) && cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
-            if (leftHandObject)
+            if (controls.SelectedObject != null)
             {
-                leftHandObject.Drop();
-                leftHandObject = null;
+                PickableObject item = controls.SelectedObject.GetComponent<PickableObject>();
+                if ( item != null )
+                {
+                    PickItem(item);
+                }
             }
         }
-
+        
         if (cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
+            if (controls.keyPreferences.LeftDropKey.Pressed())
+            {
+                if (leftHandObject)
+                {
+                    leftHandObject.Drop();
+                    leftHandObject = null;
+                }
+            }
+
             if (controls.keyPreferences.RightDropKey.Pressed())
             {
                 if (rightHandObject)
@@ -192,6 +204,14 @@ public class HandsInventory : MonoBehaviour {
                 rightHandObject = item;
                 picked = true;
             }
+        }
+
+        if (picked)
+        {
+            if (leftHandObject)
+                leftHandObject.GetComponent<Rigidbody>().useGravity = false;
+            if (rightHandObject)
+                rightHandObject.GetComponent<Rigidbody>().useGravity = false;
         }
 
         return picked;
