@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Renderer))]
 public class InteractableObject : MonoBehaviour {
+
+    public string description;
 
     private Renderer rend;
     static private Shader onMouseOverShader;
@@ -11,6 +14,7 @@ public class InteractableObject : MonoBehaviour {
     static protected CameraMode cameraMode;
     static protected Controls controls;
     static protected ActionManager actionManager;
+    static protected GameObject itemDescription;
 
     protected virtual void Start()
     {
@@ -43,6 +47,21 @@ public class InteractableObject : MonoBehaviour {
             actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
             if (actionManager == null) Debug.LogError("No action manager found");
         }
+
+        if (itemDescription == null)
+        {
+            itemDescription = Instantiate(Resources.Load<GameObject>("Prefabs/ItemDescription"),
+                Vector3.zero, Quaternion.identity) as GameObject;
+            if (itemDescription == null)
+            {
+                Debug.LogError("No item description prefab found");
+            } 
+            else
+            {
+                itemDescription.name = "ItemDescription";
+                itemDescription.SetActive(false);
+            }
+        }
     }
 
     protected virtual void Update() {
@@ -54,6 +73,31 @@ public class InteractableObject : MonoBehaviour {
                 if (rend.material.shader == onMouseExitShader)
                 {
                     rend.material.shader = onMouseOverShader;
+
+                    itemDescription.GetComponentInChildren<Text>().text = (description == "") ? name : description;
+                    Transform icons = itemDescription.transform.GetChild(0);
+                    if (gameObject.GetComponent<UsableObject>() != null)
+                    {
+                        icons.FindChild("UseIcon").gameObject.SetActive(true);
+                    }
+                    if (gameObject.GetComponent<PersonObject>() != null)
+                    {
+                        icons.FindChild("TalkIcon").gameObject.SetActive(true);
+                    }
+                    if (gameObject.GetComponent<PickableObject>() != null)
+                    {
+                        icons.FindChild("PickIcon").gameObject.SetActive(true);
+                    }
+                    if (gameObject.GetComponent<ExaminableObject>() != null)
+                    {
+                        icons.FindChild("ExamIcon").gameObject.SetActive(true);
+                    }
+                    itemDescription.SetActive(true);
+                }
+                else
+                {
+                    itemDescription.transform.position = transform.position - Camera.main.transform.forward;
+                    itemDescription.transform.rotation = Camera.main.transform.rotation;
                 }
             }
             else
@@ -61,6 +105,12 @@ public class InteractableObject : MonoBehaviour {
                 if (rend.material.shader != onMouseExitShader)
                 {
                     rend.material.shader = onMouseExitShader;
+                    itemDescription.SetActive(false);
+                    Transform icons = itemDescription.transform.GetChild(0);
+                    for (int i = 0; i < icons.childCount; ++i)
+                    {
+                        icons.GetChild(i).gameObject.SetActive(false);
+                    }
                 }
             }
         }
