@@ -11,6 +11,9 @@ public class Options : MonoBehaviour {
 
     void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
         prefsManager = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
         if (prefsManager == null) Debug.LogError("No player prefs manager found");
 

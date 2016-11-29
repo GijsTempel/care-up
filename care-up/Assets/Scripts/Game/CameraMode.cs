@@ -49,20 +49,33 @@ public class CameraMode : MonoBehaviour {
                 if (selectedObject != null) // if there is a component
                 {
                     ToggleCameraMode(Mode.ObjectPreview);
-
                     selectedObject.ToggleViewMode(true);
-
                     selectedObject.OnExamine();
+                    controls.ResetObject();
                 }
             }
         }
 
-        if (currentMode == Mode.ObjectPreview && controls.keyPreferences.LeftUseKey.Pressed())
+        if (currentMode == Mode.ObjectPreview)
         {
-            ToggleCameraMode(Mode.Free);
+            if (controls.keyPreferences.LeftUseKey.Pressed())
+            {
+                ToggleCameraMode(Mode.Free);
 
-            selectedObject.ToggleViewMode(false);
-            selectedObject = null;
+                selectedObject.ToggleViewMode(false);
+                selectedObject = null;
+            }
+            else if (controls.keyPreferences.RightUseKey.Pressed())
+            {
+                PickableObject pickableObject = selectedObject.GetComponent<PickableObject>();
+                if (pickableObject != null)
+                {
+                    ToggleCameraMode(Mode.Free);
+                    pickableObject.GetComponent<ExaminableObject>().ToggleViewMode(false);
+                    inventory.PickItem(pickableObject);
+                    selectedObject = null;
+                }
+            }
         }
 
         if ( currentMode == Mode.ObjectPreview )
@@ -115,12 +128,19 @@ public class CameraMode : MonoBehaviour {
     {
         if ( currentMode == Mode.ObjectPreview )
         {
+            string putKey = controls.keyPreferences.LeftUseKey.mainKey.ToString();
+            string pickKey = controls.keyPreferences.RightUseKey.mainKey.ToString();
+
+            string text = (selectedObject.GetComponent<PickableObject>() != null) ?
+                "Press " + putKey + " to put down, Press " + pickKey + " to pick up" :
+                "Press " + putKey + " to put down";
+
             GUIStyle style = GUI.skin.GetStyle("Label");
             style.alignment = TextAnchor.MiddleCenter;
             style.fontSize = 40;
             style.normal.textColor = Color.white;
             GUI.Label(new Rect(0, 4*Screen.height/5, Screen.width, Screen.height/5), 
-                "Press Q to put down", style);
+                text, style);
         }
     }
 }

@@ -65,18 +65,6 @@ public class HandsInventory : MonoBehaviour {
             rightHandObject.transform.position = rightHandPosition;
             rightHandObject.InHandUpdate(true);
         }
-
-        if (Input.GetMouseButtonDown(0) && cameraMode.CurrentMode == CameraMode.Mode.Free)
-        {
-            if (controls.SelectedObject != null)
-            {
-                PickableObject item = controls.SelectedObject.GetComponent<PickableObject>();
-                if ( item != null )
-                {
-                    PickItem(item);
-                }
-            }
-        }
         
         if (cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
@@ -170,6 +158,22 @@ public class HandsInventory : MonoBehaviour {
                             Quaternion.identity) as GameObject;
             sphereObject.transform.parent = interactableObjects.transform;
             sphereObject.name = "Sphere";
+        }
+    }
+
+    void LateUpdate()
+    {
+        if (Input.GetMouseButtonDown(0) && cameraMode.CurrentMode == CameraMode.Mode.Free)
+        {
+            if (controls.SelectedObject != null)
+            {
+                PickableObject item = controls.SelectedObject.GetComponent<PickableObject>();
+                if (item != null)
+                {
+                    PickItem(item);
+                    controls.ResetObject();
+                }
+            }
         }
     }
 
