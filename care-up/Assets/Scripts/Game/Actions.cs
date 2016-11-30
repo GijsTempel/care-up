@@ -6,6 +6,7 @@ public abstract class Action
 {
     public bool matched = false;
     public string description;
+    public string audioHint;
 
     protected ActionManager.ActionType type;
     
@@ -22,11 +23,12 @@ public abstract class Action
         get { return subindex; }
     }
 
-    public Action(ActionManager.ActionType t, int index, string descr)
+    public Action(ActionManager.ActionType t, int index, string descr, string audio)
     {
         type = t;
         subindex = index;
         description = descr;
+        audioHint = audio;
     }
     
     public abstract bool Compare(string[] info);
@@ -37,8 +39,8 @@ public class CombineAction : Action
     private string leftInput;
     private string rightInput;
 
-    public CombineAction(string left, string right, int index, string descr)
-        : base(ActionManager.ActionType.ObjectCombine, index, descr)
+    public CombineAction(string left, string right, int index, string descr, string audio)
+        : base(ActionManager.ActionType.ObjectCombine, index, descr, audio)
     {
         leftInput = left;
         rightInput = right;
@@ -63,8 +65,8 @@ public class UseAction : Action
 {
     private string useInput;
 
-    public UseAction(string use, int index, string descr)
-        : base(ActionManager.ActionType.ObjectUse, index, descr)
+    public UseAction(string use, int index, string descr, string audio)
+        : base(ActionManager.ActionType.ObjectUse, index, descr, audio)
     {
         useInput = use;
     }
@@ -87,8 +89,8 @@ public class TalkAction : Action
 {
     private string topicInput;
 
-    public TalkAction(string topic, int index, string descr)
-        : base(ActionManager.ActionType.PersonTalk, index, descr)
+    public TalkAction(string topic, int index, string descr, string audio)
+        : base(ActionManager.ActionType.PersonTalk, index, descr, audio)
     {
         topicInput = topic;
     }
@@ -112,8 +114,8 @@ public class UseOnAction : Action
     private string item;
     private string target;
 
-    public UseOnAction(string i, string t, int index, string descr)
-        : base(ActionManager.ActionType.ObjectUseOn, index, descr)
+    public UseOnAction(string i, string t, int index, string descr, string audio)
+        : base(ActionManager.ActionType.ObjectUseOn, index, descr, audio)
     {
         item = i;
         target = t;
@@ -138,8 +140,8 @@ public class ExamineAction : Action
     private string item;
     private string expected;
 
-    public ExamineAction(string i, string exp, int index, string descr)
-        : base(ActionManager.ActionType.ObjectExamine, index, descr)
+    public ExamineAction(string i, string exp, int index, string descr, string audio)
+        : base(ActionManager.ActionType.ObjectExamine, index, descr, audio)
     {
         item = i;
         expected = exp;

@@ -23,19 +23,6 @@ public class UsableObject : InteractableObject {
         {
             switch(name)
             {
-                case "Cheat Sheet":
-                    {
-                        Text hintText = transform.GetChild(0).GetChild(0).GetComponent<Text>();
-                        if ( hintText.text == actionManager.CurrentDescription )
-                        {
-                            return; // hint is not new, no action pefrormed
-                        }
-                        else
-                        {
-                            hintText.text = actionManager.CurrentDescription;
-                        }
-                    }
-                    break;
                 case "WorkField":
                     {
                         GameObject.Find("Player").GetComponent<AnimationManager>().PlayAnimation("Clean_Table");

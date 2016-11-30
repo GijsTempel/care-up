@@ -50,6 +50,7 @@ public class Controls : MonoBehaviour {
         public InputKey LeftUseKey = new InputKey(KeyCode.Q);
         public InputKey RightUseKey = new InputKey(KeyCode.E);
         public InputKey CombineKey = new InputKey(KeyCode.R);
+        public InputKey GetHintKey = new InputKey(KeyCode.Space);
     };
 
     public KeyPreferences keyPreferences = new KeyPreferences();

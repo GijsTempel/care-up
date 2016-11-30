@@ -60,7 +60,22 @@ public class ActionManager : MonoBehaviour {
         }
     }
 
+    public string CurrentAudioHint
+    {
+        get
+        {
+            return actionList.Where(action =>
+          action.SubIndex == currentAction &&
+          action.matched == false).First().audioHint;
+        }
+    }
+
+    private Controls controls;
+
     void Start () {
+
+        controls = GameObject.Find("GameLogic").GetComponent<Controls>();
+        if (controls == null) Debug.LogError("No controls found");
 
         XmlDocument xmlFile = new XmlDocument();
         xmlFile.Load("Assets/Resources/Xml/Actions/" + actionListName + ".xml");
@@ -72,35 +87,47 @@ public class ActionManager : MonoBehaviour {
             int.TryParse(action.Attributes["index"].Value, out index);
             string type = action.Attributes["type"].Value;
             string descr = action.Attributes["description"].Value;
-           
+            string audio = action.Attributes["audioHint"].Value;
+            
             switch (type)
             {
                 case "combine":
                     string left = action.Attributes["left"].Value;
                     string right = action.Attributes["right"].Value;
-                    actionList.Add(new CombineAction(left, right, index, descr));
+                    actionList.Add(new CombineAction(left, right, index, descr, audio));
                     break;
                 case "use":
                     string use = action.Attributes["value"].Value;
-                    actionList.Add(new UseAction(use, index, descr));
+                    actionList.Add(new UseAction(use, index, descr, audio));
                     break;
                 case "talk":
                     string topic = action.Attributes["topic"].Value;
-                    actionList.Add(new TalkAction(topic, index, descr));
+                    actionList.Add(new TalkAction(topic, index, descr, audio));
                     break;
                 case "useOn":
                     string useItem = action.Attributes["item"].Value;
                     string target = action.Attributes["target"].Value;
-                    actionList.Add(new UseOnAction(useItem, target, index, descr));
+                    actionList.Add(new UseOnAction(useItem, target, index, descr, audio));
                     break;
                 case "examine":
                     string exItem = action.Attributes["item"].Value;
                     string expected = action.Attributes["expected"].Value;
-                    actionList.Add(new ExamineAction(exItem, expected, index, descr));
+                    actionList.Add(new ExamineAction(exItem, expected, index, descr, audio));
                     break;
                 default:
                     Debug.LogError("No action type found: " + type);
                     break;
+            }
+        }
+    }
+
+    void Update()
+    {
+        if (controls.keyPreferences.GetHintKey.Pressed())
+        {
+            if (Narrator.PlaySound(CurrentAudioHint)) // if sound played
+            {
+                points -= 1; // penalty for using hint
             }
         }
     }
@@ -194,6 +221,7 @@ public class ActionManager : MonoBehaviour {
             {
                 wrongStepsList.Add(sublist[0].description);
             }
+            Narrator.PlaySound("WrongAction");
         }
        
         return matched;

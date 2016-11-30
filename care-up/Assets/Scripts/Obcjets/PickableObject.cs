@@ -8,8 +8,7 @@ using System.Collections.Generic;
 public class PickableObject : InteractableObject {
     
     public Vector3 rotationInHand;
-
-    private bool viewMode = false;
+    
     private Vector3 savedPosition;
     private Quaternion savedRotation;
 
@@ -48,7 +47,6 @@ public class PickableObject : InteractableObject {
 
     public void Drop()
     {
-        viewMode = false;
         gameObject.layer = 0;
         GetComponent<Collider>().enabled = true;
        
