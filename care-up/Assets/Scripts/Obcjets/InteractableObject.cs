@@ -76,29 +76,17 @@ public class InteractableObject : MonoBehaviour {
 
                     itemDescription.GetComponentInChildren<Text>().text = (description == "") ? name : description;
                     Transform icons = itemDescription.transform.GetChild(0);
-                    if (gameObject.GetComponent<UsableObject>() != null)
-                    {
-                        icons.FindChild("UseIcon").gameObject.SetActive(true);
-                    }
-                    if (gameObject.GetComponent<PersonObject>() != null)
-                    {
-                        icons.FindChild("TalkIcon").gameObject.SetActive(true);
-                    }
-                    if (gameObject.GetComponent<PickableObject>() != null)
-                    {
-                        icons.FindChild("PickIcon").gameObject.SetActive(true);
-                    }
-                    if (gameObject.GetComponent<ExaminableObject>() != null)
-                    {
-                        icons.FindChild("ExamIcon").gameObject.SetActive(true);
-                    }
+                    icons.FindChild("UseIcon").gameObject.SetActive(gameObject.GetComponent<UsableObject>() != null);
+                    icons.FindChild("TalkIcon").gameObject.SetActive(gameObject.GetComponent<PersonObject>() != null);
+                    icons.FindChild("PickIcon").gameObject.SetActive(gameObject.GetComponent<PickableObject>() != null);
+                    icons.FindChild("ExamIcon").gameObject.SetActive(gameObject.GetComponent<ExaminableObject>() != null);
                     itemDescription.SetActive(true);
                 }
-                else
-                {
-                    itemDescription.transform.position = transform.position - Camera.main.transform.forward;
-                    itemDescription.transform.rotation = Camera.main.transform.rotation;
-                }
+                
+                itemDescription.transform.position = Camera.main.transform.position 
+                    + Camera.main.transform.forward * 5.0f - Camera.main.transform.up * 2.0f;
+                itemDescription.transform.rotation = Camera.main.transform.rotation;
+                
             }
             else
             {
@@ -106,11 +94,6 @@ public class InteractableObject : MonoBehaviour {
                 {
                     rend.material.shader = onMouseExitShader;
                     itemDescription.SetActive(false);
-                    Transform icons = itemDescription.transform.GetChild(0);
-                    for (int i = 0; i < icons.childCount; ++i)
-                    {
-                        icons.GetChild(i).gameObject.SetActive(false);
-                    }
                 }
             }
         }
