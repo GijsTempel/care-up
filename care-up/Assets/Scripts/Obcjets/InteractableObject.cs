@@ -75,18 +75,13 @@ public class InteractableObject : MonoBehaviour {
                     rend.material.shader = onMouseOverShader;
 
                     itemDescription.GetComponentInChildren<Text>().text = (description == "") ? name : description;
-                    Transform icons = itemDescription.transform.GetChild(0);
+                    Transform icons = itemDescription.transform.GetChild(0).GetChild(0);
                     icons.FindChild("UseIcon").gameObject.SetActive(gameObject.GetComponent<UsableObject>() != null);
                     icons.FindChild("TalkIcon").gameObject.SetActive(gameObject.GetComponent<PersonObject>() != null);
                     icons.FindChild("PickIcon").gameObject.SetActive(gameObject.GetComponent<PickableObject>() != null);
                     icons.FindChild("ExamIcon").gameObject.SetActive(gameObject.GetComponent<ExaminableObject>() != null);
                     itemDescription.SetActive(true);
                 }
-                
-                itemDescription.transform.position = Camera.main.transform.position 
-                    + Camera.main.transform.forward * 5.0f - Camera.main.transform.up * 2.0f;
-                itemDescription.transform.rotation = Camera.main.transform.rotation;
-                
             }
             else
             {
