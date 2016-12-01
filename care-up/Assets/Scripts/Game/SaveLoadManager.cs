@@ -170,7 +170,7 @@ public class SaveLoadManager : MonoBehaviour {
             XmlNode scenario = doc.CreateElement("scenario");
 
             XmlAttribute currentAction = doc.CreateAttribute("current");
-            currentAction.Value = actionManager.CurrentAction.ToString();
+            currentAction.Value = actionManager.CurrentActionIndex.ToString();
             scenario.Attributes.Append(currentAction);
 
             XmlAttribute pointsValue = doc.CreateAttribute("points");
@@ -302,7 +302,7 @@ public class SaveLoadManager : MonoBehaviour {
         ActionManager actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
         actionManager.SetActionStatus(statusList);
 
-        actionManager.CurrentAction = int.Parse(scenario.Attributes["current"].Value);
+        actionManager.CurrentActionIndex = int.Parse(scenario.Attributes["current"].Value);
         actionManager.Points = int.Parse(scenario.Attributes["points"].Value);
         //end scenario
 

@@ -6,13 +6,16 @@ public class UsableObject : InteractableObject {
     
     protected override void Update()
     {
-        base.Update();
-
-        if (Input.GetMouseButtonDown(0) && cameraMode.CurrentMode == CameraMode.Mode.Free)
+        if (actionManager.CurrentUseObject == name)
         {
-            if (controls.SelectedObject == gameObject && controls.CanInteract)
+            base.Update();
+
+            if (Input.GetMouseButtonDown(0) && cameraMode.CurrentMode == CameraMode.Mode.Free)
             {
-                Use();
+                if (controls.SelectedObject == gameObject && controls.CanInteract)
+                {
+                    Use();
+                }
             }
         }
     }
@@ -30,6 +33,7 @@ public class UsableObject : InteractableObject {
                     break;
             }
             actionManager.OnUseAction(gameObject.name);
+            ResetShader();
         }
     }
 }

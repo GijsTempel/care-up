@@ -21,7 +21,8 @@ public class ActionManager : MonoBehaviour {
     private List<string> wrongStepsList = new List<string>();
 
     private int points = 0;
-    private int currentAction = 0;
+    private int currentActionIndex = 0;
+    private Action currentAction;
 
     public List<Action> ActionList
     {
@@ -45,28 +46,28 @@ public class ActionManager : MonoBehaviour {
         set { points = value; }
     }
 
-    public int CurrentAction
+    public int CurrentActionIndex
     {
-        get { return currentAction; }
-        set { currentAction = value; }
+        get { return currentActionIndex; }
+        set { currentActionIndex = value; }
     }
 
     public string CurrentDescription
     {
-        get {
-            return actionList.Where(action =>
-          action.SubIndex == currentAction &&
-          action.matched == false).First().description;
-        }
+        get { return currentAction.description; }
     }
 
     public string CurrentAudioHint
     {
+        get { return currentAction.audioHint; }
+    }
+
+    public string CurrentUseObject
+    {
         get
         {
-            return actionList.Where(action =>
-          action.SubIndex == currentAction &&
-          action.matched == false).First().audioHint;
+            return (currentAction.Type == ActionType.ObjectUse) ?
+                ((UseAction)currentAction).GetObjectName() : "";
         }
     }
 
@@ -119,6 +120,7 @@ public class ActionManager : MonoBehaviour {
                     break;
             }
         }
+        currentAction = actionList.First();
     }
 
     void Update()
@@ -192,7 +194,7 @@ public class ActionManager : MonoBehaviour {
         bool matched = false;
 
         List<Action> sublist = actionList.Where(action =>
-            action.SubIndex == currentAction &&
+            action.SubIndex == currentActionIndex &&
             action.matched == false).ToList();
         int subcategoryLength = sublist.Count;
         
@@ -211,7 +213,7 @@ public class ActionManager : MonoBehaviour {
 
         if (matched && subcategoryLength <= 1)
         {
-            currentAction += 1;
+            currentActionIndex += 1;
         }
 
         if (!matched)
@@ -222,6 +224,12 @@ public class ActionManager : MonoBehaviour {
                 wrongStepsList.Add(sublist[0].description);
             }
             Narrator.PlaySound("WrongAction");
+        }
+        else
+        {
+            currentAction = actionList.Where(action =>
+                action.SubIndex == currentActionIndex &&
+                action.matched == false).First();
         }
        
         return matched;

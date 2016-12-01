@@ -83,6 +83,11 @@ public class UseAction : Action
         }
         return same;
     }
+
+    public string GetObjectName()
+    {
+        return useInput;
+    }
 }
 
 public class TalkAction : Action
