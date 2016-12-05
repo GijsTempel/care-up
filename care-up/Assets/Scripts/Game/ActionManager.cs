@@ -71,6 +71,22 @@ public class ActionManager : MonoBehaviour {
         }
     }
 
+    public string[] CurrentCombineObjects
+    {
+        get
+        {
+            string[] objects = new string [2];
+            if ( currentAction.Type == ActionType.ObjectCombine )
+            {
+                string left, right;
+                ((CombineAction)currentAction).GetObjects(out left, out right);
+                objects[0] = left;
+                objects[1] = right;
+            }
+            return objects;
+        }
+    }
+
     private Controls controls;
 
     void Start () {

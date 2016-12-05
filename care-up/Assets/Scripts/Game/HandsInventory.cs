@@ -94,7 +94,11 @@ public class HandsInventory : MonoBehaviour {
                 string leftResult, rightResult;
                 bool combined = combinationManager.Combine(leftName, rightName, out leftResult, out rightResult);
 
-                if (combined)
+                string[] currentObjects = actionManager.CurrentCombineObjects;
+                bool combineAllowed = (currentObjects[0] == leftName && currentObjects[1] == rightName)
+                    || (currentObjects[0] == rightName && currentObjects[1] == leftName);
+
+                if (combined && combineAllowed)
                 {
                     if (leftName != leftResult)
                     {

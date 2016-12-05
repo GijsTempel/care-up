@@ -59,6 +59,12 @@ public class CombineAction : Action
         }
         return same;
     }
+
+    public void GetObjects(out string left, out string right)
+    {
+        left = leftInput;
+        right = rightInput;
+    }
 }
 
 public class UseAction : Action
