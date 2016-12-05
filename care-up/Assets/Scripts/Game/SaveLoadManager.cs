@@ -122,6 +122,14 @@ public class SaveLoadManager : MonoBehaviour {
                     hand.Value = "right";
                     objectNode.Attributes.Append(hand);
                 }
+                
+                ExaminableObject exam = child.GetComponent<ExaminableObject>();
+                if (exam != null)
+                {
+                    XmlAttribute examState = doc.CreateAttribute("state");
+                    examState.Value = exam.state;
+                    objectNode.Attributes.Append(examState);
+                }
 
                 { // position
                     XmlNode positionNode = doc.CreateElement("position");
@@ -269,6 +277,7 @@ public class SaveLoadManager : MonoBehaviour {
         {
             string name = item.Attributes["name"].Value;
             string hand = item.Attributes["hand"] != null ? item.Attributes["hand"].Value : "none";
+            string examState = item.Attributes["state"] != null ? item.Attributes["state"].Value : "";
 
             XmlNode positionNode = item.FirstChild;
             float posX = float.Parse(positionNode.Attributes["x"].Value);
@@ -285,6 +294,11 @@ public class SaveLoadManager : MonoBehaviour {
                 new Vector3(posX, posY, posZ), new Quaternion(rotX, rotY, rotZ, rotW),
                 interactableObjects.transform) as GameObject;
             obj.name = name; // prefent 'clone' in the name
+            ExaminableObject exam = obj.GetComponent<ExaminableObject>();
+            if (exam != null)
+            {
+                exam.state = examState;
+            }
 
             inventory.PickItem(obj.GetComponent<PickableObject>(), hand);
         }
