@@ -51,7 +51,7 @@ public class ExaminableObject : InteractableObject {
             }
         }
 
-        ResetShader();
+        Reset();
 
         // making draw object on top of everything
         if (viewMode)

@@ -33,7 +33,7 @@ public class UsableObject : InteractableObject {
                     break;
             }
             actionManager.OnUseAction(gameObject.name);
-            ResetShader();
+            Reset();
         }
     }
 }

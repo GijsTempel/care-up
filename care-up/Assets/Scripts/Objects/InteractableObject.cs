@@ -94,9 +94,10 @@ public class InteractableObject : MonoBehaviour {
         }
     }
 
-    protected virtual void ResetShader()
+    protected virtual void Reset()
     {
         rend.material.shader = onMouseExitShader;
+        itemDescription.SetActive(false);
     }
 
     protected bool ViewModeActive()
