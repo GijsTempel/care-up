@@ -20,6 +20,7 @@ public class ActionManager : MonoBehaviour {
     private List<Action> actionList = new List<Action>();
     private List<string> wrongStepsList = new List<string>();
 
+    private int totalPoints = 0;
     private int points = 0;
     private int currentActionIndex = 0;
     private Action currentAction;
@@ -28,7 +29,7 @@ public class ActionManager : MonoBehaviour {
     {
         get { return actionList; }
     }
-
+    
     public string WrongSteps
     {
         get
@@ -44,6 +45,11 @@ public class ActionManager : MonoBehaviour {
     {
         get { return points; }
         set { points = value; }
+    }
+
+    public int TotalPoints
+    {
+        get { return totalPoints; }
     }
 
     public int CurrentActionIndex
@@ -87,6 +93,22 @@ public class ActionManager : MonoBehaviour {
         }
     }
 
+    public string[] CurrentUseOnInfo
+    {
+        get
+        {
+            string[] info = new string[2];
+            if (currentAction.Type == ActionType.ObjectUseOn)
+            {
+                string item, target;
+                ((UseOnAction)currentAction).GetInfo(out item, out target);
+                info[0] = item;
+                info[1] = target;
+            }
+            return info;
+        }
+    }
+
     private Controls controls;
 
     void Start () {
@@ -96,7 +118,9 @@ public class ActionManager : MonoBehaviour {
 
         XmlDocument xmlFile = new XmlDocument();
         xmlFile.Load("Assets/Resources/Xml/Actions/" + actionListName + ".xml");
-        XmlNodeList actions = xmlFile.FirstChild.NextSibling.ChildNodes; // xml is not a node, bug
+
+        totalPoints = int.Parse(xmlFile.FirstChild.NextSibling.Attributes["points"].Value);
+        XmlNodeList actions = xmlFile.FirstChild.NextSibling.ChildNodes; 
 
         foreach ( XmlNode action in actions )
         {
@@ -243,9 +267,10 @@ public class ActionManager : MonoBehaviour {
         }
         else
         {
-            currentAction = actionList.Where(action =>
+            List<Action> actionsLeft = actionList.Where(action =>
                 action.SubIndex == currentActionIndex &&
-                action.matched == false).First();
+                action.matched == false).ToList();
+            currentAction = actionsLeft.Count > 0 ? actionsLeft.First() : null;
         }
        
         return matched;

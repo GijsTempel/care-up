@@ -144,6 +144,12 @@ public class UseOnAction : Action
         }
         return same;
     }
+
+    public void GetInfo(out string i, out string t)
+    {
+        i = item;
+        t = target;
+    }
 }
 
 public class ExamineAction : Action

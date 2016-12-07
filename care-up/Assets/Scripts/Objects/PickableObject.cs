@@ -65,8 +65,6 @@ public class PickableObject : InteractableObject {
 
     public virtual void Use()
     {
-        actionManager.OnUseOnAction(name, controls.SelectedObject == null ? "" : controls.SelectedObject.name);
-
         if (controls.SelectedObject != null)
         {
             if ((name == "InjectionNeedle" || name == "AbsorptionNeedle")
@@ -74,6 +72,18 @@ public class PickableObject : InteractableObject {
             {
                 Destroy(gameObject);
             }
+            else if (name == "SyringeWithInjectionNeedle"
+                && controls.SelectedObject.name == "Hand")
+            {
+                string[] info = actionManager.CurrentUseOnInfo;
+                if (info[0] == "SyringeWithInjectionNeedle" && info[1] == "Hand")
+                {
+                    actionManager.OnUseOnAction("SyringeWithInjectionNeedle", "Hand");
+                    AnimationSequence animationSequence = new AnimationSequence("Injection");
+                    return;
+                }
+            }
         }
+        actionManager.OnUseOnAction(name, controls.SelectedObject == null ? "" : controls.SelectedObject.name);
     }
 }

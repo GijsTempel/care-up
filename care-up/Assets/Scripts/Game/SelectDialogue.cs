@@ -41,6 +41,8 @@ public class SelectDialogue : MonoBehaviour {
     private Vector2 mouseState = new Vector2();
     private OptionSide currentOption = OptionSide.None;
 
+    private bool destroy = true;
+
     private Renderer top;
     private Renderer bottom;
     private Renderer right;
@@ -60,11 +62,11 @@ public class SelectDialogue : MonoBehaviour {
         }
     }
 
-    public void Init()
+    public void Init(bool selfDestroy = true)
     {
         selectedMaterial = Resources.Load<Material>("Materials/Object Material");
         defaultMaterial = Resources.Load<Material>("Materials/Floor Material");
-
+      
         top = transform.FindChild("Top").GetComponent<Renderer>();
         bottom = transform.FindChild("Bottom").GetComponent<Renderer>();
         right = transform.FindChild("Right").GetComponent<Renderer>();
@@ -79,6 +81,12 @@ public class SelectDialogue : MonoBehaviour {
         bottom.gameObject.SetActive(false);
         right.gameObject.SetActive(false);
         left.gameObject.SetActive(false);
+
+        mouseState = Vector2.zero;
+        currentOption = OptionSide.None;
+        options.Clear();
+
+        destroy = selfDestroy;
     }
 
     public void AddOptions(List<DialogueOption> list)
@@ -154,11 +162,14 @@ public class SelectDialogue : MonoBehaviour {
         if (Input.GetMouseButtonDown(0) && currentOption != OptionSide.None)
         {
             DialogueOption option = options.Find(x => x.side == currentOption);
-            if ( option != null )
+            if (option != null)
             {
                 option.function(option.attribute);
-                cameraMode.ToggleCameraMode(CameraMode.Mode.Free);
-                Destroy(gameObject);
+                if (destroy)
+                {
+                    Destroy(gameObject);
+                    cameraMode.ToggleCameraMode(CameraMode.Mode.Free);
+                }
             }
         }
 

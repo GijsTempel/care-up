@@ -37,10 +37,13 @@ public class EndScoreManager : MonoBehaviour {
                 GameObject.Find("Star2").GetComponent<Image>().color = Color.green;
             }
 
-            if (score == 5)
+            if (score >= 5)
             {
                 GameObject.Find("Star3").GetComponent<Image>().color = Color.green;
             }
+
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
     }
 
@@ -53,13 +56,10 @@ public class EndScoreManager : MonoBehaviour {
         if (gameTimer == null) Debug.LogError("No timer found");
 
         points = actionManager.Points;
-        score = Mathf.FloorToInt(5.0f * points / actionManager.ActionList.Count);
+        score = Mathf.FloorToInt(5.0f * points / actionManager.TotalPoints);
         time = gameTimer.CurrentTime;
         wrongSteps = actionManager.WrongSteps;
-
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-
+        
         SceneManager.LoadScene("EndScore");
     }
 }
