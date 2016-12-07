@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class SelectDialogue : MonoBehaviour {
     
@@ -111,49 +112,49 @@ public class SelectDialogue : MonoBehaviour {
         {
             top.gameObject.SetActive(true);
             options[0].side = OptionSide.Top;
-            top.transform.GetChild(0).GetComponent<TextMesh>().text = options[0].text;
+            top.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = options[0].text;
         }
         else if (options.Count == 2)
         {
             left.gameObject.SetActive(true);
             options[0].side = OptionSide.Left;
-            left.transform.GetChild(0).GetComponent<TextMesh>().text = options[0].text;
+            left.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = options[0].text;
 
             right.gameObject.SetActive(true);
             options[1].side = OptionSide.Right;
-            right.transform.GetChild(0).GetComponent<TextMesh>().text = options[1].text;
+            right.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = options[1].text;
         }
         else if (options.Count == 3)
         {
             top.gameObject.SetActive(true);
             options[0].side = OptionSide.Top;
-            top.transform.GetChild(0).GetComponent<TextMesh>().text = options[0].text;
+            top.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = options[0].text;
 
             left.gameObject.SetActive(true);
             options[1].side = OptionSide.Left;
-            left.transform.GetChild(0).GetComponent<TextMesh>().text = options[1].text;
+            left.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = options[1].text;
 
             right.gameObject.SetActive(true);
             options[2].side = OptionSide.Right;
-            right.transform.GetChild(0).GetComponent<TextMesh>().text = options[2].text;
+            right.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = options[2].text;
         }
         else
         {
             top.gameObject.SetActive(true);
             options[0].side = OptionSide.Top;
-            top.transform.GetChild(0).GetComponent<TextMesh>().text = options[0].text;
+            top.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = options[0].text;
 
             left.gameObject.SetActive(true);
             options[1].side = OptionSide.Left;
-            left.transform.GetChild(0).GetComponent<TextMesh>().text = options[1].text;
+            left.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = options[1].text;
 
             right.gameObject.SetActive(true);
             options[2].side = OptionSide.Right;
-            right.transform.GetChild(0).GetComponent<TextMesh>().text = options[2].text;
+            right.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = options[2].text;
 
             bottom.gameObject.SetActive(true);
             options[3].side = OptionSide.Bottom;
-            bottom.transform.GetChild(0).GetComponent<TextMesh>().text = options[3].text;
+            bottom.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = options[3].text;
         }
     }
 

@@ -217,9 +217,15 @@ public class HandsInventory : MonoBehaviour {
         if (picked)
         {
             if (leftHandObject)
+            {
                 leftHandObject.GetComponent<Rigidbody>().useGravity = false;
+                leftHandObject.GetComponent<Collider>().enabled = false;
+            }
             if (rightHandObject)
+            {
                 rightHandObject.GetComponent<Rigidbody>().useGravity = false;
+                rightHandObject.GetComponent<Collider>().enabled = false;
+            }
         }
 
         return picked;
