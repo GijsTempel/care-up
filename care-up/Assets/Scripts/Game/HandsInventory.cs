@@ -243,4 +243,8 @@ public class HandsInventory : MonoBehaviour {
         return newObject;
     }
 
+    public bool Empty()
+    {
+        return (leftHandObject == null) && (rightHandObject == null);
+    }
 }
