@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(AudioSource))]
 public class PersonObject : InteractableObject {
@@ -31,9 +32,28 @@ public class PersonObject : InteractableObject {
 
                 List<SelectDialogue.DialogueOption> list = new List<SelectDialogue.DialogueOption>();
 
-                SelectDialogue.DialogueOption rollOption = 
-                    new SelectDialogue.DialogueOption("Show me your hand, please.", Talk, "RollUpSleeves");
-                list.Add(rollOption);
+                if (SceneManager.GetActiveScene().name == "Injection")
+                {
+                    SelectDialogue.DialogueOption rollOption =
+                        new SelectDialogue.DialogueOption("Show me your hand, please.", Talk, "RollUpSleeves");
+                    list.Add(rollOption);
+                }
+                else if(SceneManager.GetActiveScene().name == "Giving Medicine")
+                {
+                    SelectDialogue.DialogueOption rollOption;
+
+                    rollOption = new SelectDialogue.DialogueOption("Could you sit up straight please", Talk, "SitUpStraight");
+                    list.Add(rollOption);
+
+                    rollOption = new SelectDialogue.DialogueOption("Just sit back and relax", Talk, "SitBackRelax");
+                    list.Add(rollOption);
+
+                    rollOption = new SelectDialogue.DialogueOption("Could you please stand up", Talk, "StandUp");
+                    list.Add(rollOption);
+
+                    rollOption = new SelectDialogue.DialogueOption("Arch your back please", Talk, "ArchBack");
+                    list.Add(rollOption);
+                }
 
                 dialogue.AddOptions(list);
 

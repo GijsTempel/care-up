@@ -60,7 +60,7 @@ public class ActionManager : MonoBehaviour {
 
     public string CurrentDescription
     {
-        get { return currentAction.description; }
+        get { return currentAction != null ? currentAction.description : ""; }
     }
 
     public string CurrentAudioHint
@@ -72,8 +72,13 @@ public class ActionManager : MonoBehaviour {
     {
         get
         {
-            return (currentAction.Type == ActionType.ObjectUse) ?
-                ((UseAction)currentAction).GetObjectName() : "";
+            if (currentAction != null)
+            {
+                return (currentAction.Type == ActionType.ObjectUse) ?
+                    ((UseAction)currentAction).GetObjectName() : "";
+            }
+            else
+                return "";
         }
     }
 
