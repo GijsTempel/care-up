@@ -3,7 +3,20 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class UsableObject : InteractableObject {
-    
+
+    private static HandsInventory handsInventory;
+
+    protected override void Start()
+    {
+        base.Start();
+
+        if (handsInventory == null)
+        {
+            handsInventory = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
+            if (handsInventory == null) Debug.LogError("No inventory found");
+        }
+    }
+
     protected override void Update()
     {
         if (actionManager.CurrentUseObject == name)
@@ -14,7 +27,10 @@ public class UsableObject : InteractableObject {
             {
                 if (controls.SelectedObject == gameObject && controls.CanInteract)
                 {
-                    Use();
+                    if (handsInventory.Empty())
+                    {
+                        Use();
+                    }
                 }
             }
         }
