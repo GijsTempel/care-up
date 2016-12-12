@@ -83,6 +83,17 @@ public class PickableObject : InteractableObject {
                     return;
                 }
             }
+            else if (name == "InsulinPenWithNeedle"
+                && controls.SelectedObject.name == "Hand")
+            {
+                string[] info = actionManager.CurrentUseOnInfo;
+                if (info[0] == "InsulinPenWithNeedle" && info[1] == "Hand")
+                {
+                    actionManager.OnUseOnAction("InsulinPenWithNeedle", "Hand");
+                    AnimationSequence animationSequence = new AnimationSequence("InsulinInjection");
+                    return;
+                }
+            }
         }
         actionManager.OnUseOnAction(name, controls.SelectedObject == null ? "" : controls.SelectedObject.name);
     }

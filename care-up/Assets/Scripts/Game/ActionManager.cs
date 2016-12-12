@@ -261,7 +261,7 @@ public class ActionManager : MonoBehaviour {
             currentActionIndex += 1;
         }
 
-        if (!matched)
+        if (!matched && type != ActionType.ObjectExamine)
         {
             if ( sublist.Count > 0 && 
                 wrongStepsList.Find(step => step == sublist[0].description) == null )
