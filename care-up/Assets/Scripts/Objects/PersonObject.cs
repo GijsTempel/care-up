@@ -82,8 +82,6 @@ public class PersonObject : InteractableObject {
             SelectDialogue.DialogueOption option = new SelectDialogue.DialogueOption(description, Talk, topic);
             optionsList.Add(option);    
         }
-        //shuffle
-        optionsList = optionsList.OrderBy(x => Random.value).ToList();
     }
 
     private void CreateSelectionDialogue()
@@ -95,7 +93,7 @@ public class PersonObject : InteractableObject {
         SelectDialogue dialogue = dialogueObject.GetComponent<SelectDialogue>();
         dialogue.Init();
 
-        dialogue.AddOptions(optionsList);
+        dialogue.AddOptions(optionsList.OrderBy(x => Random.value).ToList());
 
         cameraMode.ToggleCameraMode(CameraMode.Mode.SelectionDialogue);
     }
