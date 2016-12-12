@@ -1,18 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.SceneManagement;
+using System.Xml;
+using System.Linq;
 
 [RequireComponent(typeof(AudioSource))]
 public class PersonObject : InteractableObject {
 
+    public string dialogueXml;
     public GameObject hand; // temp
 
+    private List<SelectDialogue.DialogueOption> optionsList;
     private AudioSource audioClip;
 
     protected override void Start()
     {
         base.Start();
+
+        optionsList = new List<SelectDialogue.DialogueOption>();
+        LoadDialogueOptions(dialogueXml);
 
         audioClip = GetComponent<AudioSource>();
     }
@@ -23,41 +29,7 @@ public class PersonObject : InteractableObject {
         if (Input.GetMouseButtonDown(0) && cameraMode.CurrentMode == CameraMode.Mode.Free) {
             if (controls.SelectedObject == gameObject && controls.CanInteract)
             {
-                GameObject dialogueObject = Instantiate(Resources.Load<GameObject>("Prefabs/SelectionDialogue"),
-                    Camera.main.transform.position + Camera.main.transform.forward * 3.0f,
-                    Camera.main.transform.rotation) as GameObject;
-
-                SelectDialogue dialogue = dialogueObject.GetComponent<SelectDialogue>();
-                dialogue.Init();
-
-                List<SelectDialogue.DialogueOption> list = new List<SelectDialogue.DialogueOption>();
-
-                if (SceneManager.GetActiveScene().name == "Injection")
-                {
-                    SelectDialogue.DialogueOption rollOption =
-                        new SelectDialogue.DialogueOption("Show me your hand, please.", Talk, "RollUpSleeves");
-                    list.Add(rollOption);
-                }
-                else if(SceneManager.GetActiveScene().name == "Giving Medicine")
-                {
-                    SelectDialogue.DialogueOption rollOption;
-
-                    rollOption = new SelectDialogue.DialogueOption("Could you sit up straight please", Talk, "SitUpStraight");
-                    list.Add(rollOption);
-
-                    rollOption = new SelectDialogue.DialogueOption("Just sit back and relax", Talk, "SitBackRelax");
-                    list.Add(rollOption);
-
-                    rollOption = new SelectDialogue.DialogueOption("Could you please stand up", Talk, "StandUp");
-                    list.Add(rollOption);
-
-                    rollOption = new SelectDialogue.DialogueOption("Arch your back please", Talk, "ArchBack");
-                    list.Add(rollOption);
-                }
-
-                dialogue.AddOptions(list);
-
-                cameraMode.ToggleCameraMode(CameraMode.Mode.SelectionDialogue);
+                CreateSelectionDialogue();
             }
         }
     }
@@ -92,5 +64,39 @@ public class PersonObject : InteractableObject {
     private void RollUpSleeves(bool value)
     {
         hand.SetActive(value);
+    }
+
+    private void LoadDialogueOptions(string filename)
+    {
+        optionsList.Clear();
+
+        XmlDocument xmlFile = new XmlDocument();
+        xmlFile.Load("Assets/Resources/Xml/PersonDialogues/" + filename + ".xml");
+        XmlNodeList xmlOptions = xmlFile.FirstChild.NextSibling.ChildNodes;
+
+        foreach (XmlNode xmlOption in xmlOptions)
+        {
+            string description = xmlOption.Attributes["text"].Value;
+            string topic = xmlOption.Attributes["topic"] != null ? xmlOption.Attributes["topic"].Value : "";
+
+            SelectDialogue.DialogueOption option = new SelectDialogue.DialogueOption(description, Talk, topic);
+            optionsList.Add(option);    
+        }
+        //shuffle
+        optionsList = optionsList.OrderBy(x => Random.value).ToList();
+    }
+
+    private void CreateSelectionDialogue()
+    {
+        GameObject dialogueObject = Instantiate(Resources.Load<GameObject>("Prefabs/SelectionDialogue"),
+                    Camera.main.transform.position + Camera.main.transform.forward * 3.0f,
+                    Camera.main.transform.rotation) as GameObject;
+
+        SelectDialogue dialogue = dialogueObject.GetComponent<SelectDialogue>();
+        dialogue.Init();
+
+        dialogue.AddOptions(optionsList);
+
+        cameraMode.ToggleCameraMode(CameraMode.Mode.SelectionDialogue);
     }
 }
