@@ -65,7 +65,7 @@ public class PickableObject : InteractableObject {
 
     public virtual void Use()
     {
-        if (controls.SelectedObject != null)
+        if (controls.SelectedObject != null && controls.CanInteract)
         {
             if ((name == "InjectionNeedle" || name == "AbsorptionNeedle")
                 && controls.SelectedObject.name == "NeedleCup")
@@ -95,6 +95,6 @@ public class PickableObject : InteractableObject {
                 }
             }
         }
-        actionManager.OnUseOnAction(name, controls.SelectedObject == null ? "" : controls.SelectedObject.name);
+        actionManager.OnUseOnAction(name, controls.SelectedObject != null && controls.CanInteract ? controls.SelectedObject.name : "");
     }
 }
