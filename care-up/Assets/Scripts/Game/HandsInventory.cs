@@ -237,6 +237,8 @@ public class HandsInventory : MonoBehaviour {
                             position, Quaternion.identity) as GameObject;
 
         newObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
+        newObject.GetComponent<Rigidbody>().useGravity = false;
+        newObject.GetComponent<Collider>().enabled = false;
         newObject.transform.parent = interactableObjects.transform;
         newObject.name = name;
 
