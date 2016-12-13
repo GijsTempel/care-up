@@ -323,4 +323,12 @@ public class ActionManager : MonoBehaviour {
             }
         }
     }
+
+    public void StepBack()
+    {
+        Action lastAction = actionList.Last(x => x.matched == true);
+        lastAction.matched = false;
+        currentActionIndex = lastAction.SubIndex;
+        currentAction = lastAction;
+    }
 }

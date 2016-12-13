@@ -20,6 +20,7 @@ public class AnimationSequence  {
 
     private List<List<SelectDialogue.DialogueOption>> steps = new List<List<SelectDialogue.DialogueOption>>();
     private int currentStep = 0;
+    private int pointsEarned = 1;
 
     private CameraMode cameraMode;
     private ActionManager actionManager;
@@ -27,6 +28,7 @@ public class AnimationSequence  {
     public AnimationSequence(string filename)
     {
         currentStep = 0;
+        pointsEarned = 1;
 
         cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
         if (cameraMode == null) Debug.LogError("No camera mode found");
@@ -35,8 +37,6 @@ public class AnimationSequence  {
         if (actionManager == null) Debug.LogError("No action manager found");
 
         LoadFromFile(filename);
-
-        NextStep();
     }
 
     private void LoadFromFile(string filename)
@@ -67,11 +67,8 @@ public class AnimationSequence  {
         {
             if (animation == "CM_Leave")
             {
-                if (currentStep != 1)
-                {
-                    Narrator.PlaySound("WrongAction");
-                    actionManager.Points--;
-                }
+                actionManager.StepBack();
+                actionManager.Points -= pointsEarned;
                 currentStep = steps.Count;
                 NextStep();
             }
@@ -79,6 +76,7 @@ public class AnimationSequence  {
             {
                 Debug.Log("Play animation: " + animation);
                 actionManager.Points++;
+                pointsEarned++;
                 NextStep();
             }
         }
@@ -89,7 +87,7 @@ public class AnimationSequence  {
         }
     }
 
-    private void NextStep()
+    public void NextStep()
     {
         GameObject dialogueObject = GameObject.Find("SelectionDialogue");
         if (currentStep < steps.Count)
