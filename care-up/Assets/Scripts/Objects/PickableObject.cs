@@ -86,13 +86,7 @@ public class PickableObject : InteractableObject {
             else if (name == "InsulinPenWithNeedle"
                 && controls.SelectedObject.name == "Hand")
             {
-                string[] info = actionManager.CurrentUseOnInfo;
-                if (info[0] == "InsulinPenWithNeedle" && info[1] == "Hand")
-                {
-                    actionManager.OnUseOnAction("InsulinPenWithNeedle", "Hand");
-                    AnimationSequence animationSequence = new AnimationSequence("InsulinInjection");
-                    return;
-                }
+                AnimationSequence animationSequence = new AnimationSequence("InsulinInjection");
             }
         }
         actionManager.OnUseOnAction(name, controls.SelectedObject != null && controls.CanInteract ? controls.SelectedObject.name : "");

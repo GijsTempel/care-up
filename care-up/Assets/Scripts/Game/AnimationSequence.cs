@@ -65,9 +65,22 @@ public class AnimationSequence  {
     {
         if (animation != "")
         {
-            Debug.Log("Play animation: " + animation);
-            actionManager.Points++;
-            NextStep();
+            if (animation == "CM_Leave")
+            {
+                if (currentStep != 1)
+                {
+                    Narrator.PlaySound("WrongAction");
+                    actionManager.Points--;
+                }
+                currentStep = steps.Count;
+                NextStep();
+            }
+            else
+            {
+                Debug.Log("Play animation: " + animation);
+                actionManager.Points++;
+                NextStep();
+            }
         }
         else
         {
