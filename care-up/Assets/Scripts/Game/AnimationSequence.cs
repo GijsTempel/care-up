@@ -54,10 +54,17 @@ public class AnimationSequence  {
                 string description = xmlOption.Attributes["text"].Value;
                 string animation = xmlOption.Attributes["animation"] != null ? xmlOption.Attributes["animation"].Value : "";
                 SelectDialogue.DialogueOption option = new SelectDialogue.DialogueOption(description, PlayAnimation, animation);
-                step.Add(option);
+                if (step.Count < 3) // add only 3 options as 4th is leaving
+                {
+                    step.Add(option);
+                }
             }
-            //shuffle
-            steps.Add(step.OrderBy(x => Random.value).ToList());
+            // shuffle
+            step = step.OrderBy(x => Random.value).ToList();
+            // add leave option
+            step.Add(new SelectDialogue.DialogueOption("Leave", PlayAnimation, "CM_Leave"));
+            
+            steps.Add(step);
         }
     }
 
@@ -68,7 +75,7 @@ public class AnimationSequence  {
             if (animation == "CM_Leave")
             {
                 actionManager.StepBack();
-                actionManager.Points -= pointsEarned;
+                actionManager.Points -= pointsEarned + (currentStep != 1 ? 1 : 0);
                 currentStep = steps.Count;
                 NextStep();
             }
