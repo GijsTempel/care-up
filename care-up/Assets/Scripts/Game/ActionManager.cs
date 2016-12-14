@@ -12,7 +12,8 @@ public class ActionManager : MonoBehaviour {
         ObjectUse,
         PersonTalk,
         ObjectUseOn,
-        ObjectExamine
+        ObjectExamine,
+        PickUp
     };
 
     public string actionListName;
@@ -160,6 +161,10 @@ public class ActionManager : MonoBehaviour {
                     string expected = action.Attributes["expected"].Value;
                     actionList.Add(new ExamineAction(exItem, expected, index, descr, audio));
                     break;
+                case "pickUp":
+                    string itemPicked = action.Attributes["item"].Value;
+                    actionList.Add(new PickUpAction(itemPicked, index, descr, audio));
+                    break;
                 default:
                     Debug.LogError("No action type found: " + type);
                     break;
@@ -230,6 +235,17 @@ public class ActionManager : MonoBehaviour {
         points += occured ? 1 : 0; // no penalty
 
         Debug.Log("Examine " + item + " with state " + expected + " with result " + occured);
+
+        CheckScenarioCompleted();
+    }
+
+    public void OnPickUpAction(string item)
+    {
+        string[] info = { item };
+        bool occured = Check(info, ActionType.PickUp);
+        points += occured ? 1 : 0; // no penalty
+
+        Debug.Log("Pick Up " + item + " with result " + occured);
 
         CheckScenarioCompleted();
     }

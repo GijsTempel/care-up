@@ -220,11 +220,13 @@ public class HandsInventory : MonoBehaviour {
             {
                 leftHandObject.GetComponent<Rigidbody>().useGravity = false;
                 leftHandObject.GetComponent<Collider>().enabled = false;
+                actionManager.OnPickUpAction(leftHandObject.name);
             }
             if (rightHandObject)
             {
                 rightHandObject.GetComponent<Rigidbody>().useGravity = false;
                 rightHandObject.GetComponent<Collider>().enabled = false;
+                actionManager.OnPickUpAction(rightHandObject.name);
             }
         }
 

@@ -13,6 +13,10 @@ public class PersonObject : InteractableObject {
     private List<SelectDialogue.DialogueOption> optionsList;
     private AudioSource audioClip;
 
+    private bool inhaling = false;
+    bool direction = true;
+    private float inhaleCounter = 1.0f;
+
     protected override void Start()
     {
         base.Start();
@@ -21,6 +25,10 @@ public class PersonObject : InteractableObject {
         LoadDialogueOptions(dialogueXml);
 
         audioClip = GetComponent<AudioSource>();
+
+        inhaling = false;
+        direction = true;
+        inhaleCounter = 1.0f;
     }
 
     protected override void Update()
@@ -31,6 +39,28 @@ public class PersonObject : InteractableObject {
             {
                 CreateSelectionDialogue();
             }
+        }
+
+        if (inhaling)
+        {
+            float inhaleSpeed = 1/17.0f * Time.deltaTime;
+            if ( direction )
+            {
+                inhaleCounter += inhaleSpeed;
+                if (inhaleCounter > 1.1f)
+                {
+                    direction = !direction;
+                }
+            }
+            else
+            {
+                inhaleCounter -= inhaleSpeed;
+                if ( inhaleCounter < 1.0f )
+                {
+                    direction = !direction;
+                }
+            }
+            transform.parent.localScale = Vector3.one * inhaleCounter;
         }
     }
 
@@ -53,6 +83,9 @@ public class PersonObject : InteractableObject {
         {
             case "RollUpSleeves":
                 RollUpSleeves(true);
+                break;
+            case "ComfortablePosition":
+                inhaling = true;
                 break;
             default:
                 break;

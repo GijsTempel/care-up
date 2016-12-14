@@ -177,3 +177,27 @@ public class ExamineAction : Action
         return same;
     }
 }
+
+public class PickUpAction : Action
+{
+    private string item;
+
+    public PickUpAction(string i, int index, string descr, string audio)
+        : base(ActionManager.ActionType.PickUp, index, descr, audio)
+    {
+        item = i;
+    }
+
+    public override bool Compare(string[] info)
+    {
+        bool same = false;
+        if (info.Length == 1)
+        {
+            if (info[0] == item)
+            {
+                same = true;
+            }
+        }
+        return same;
+    }
+}
