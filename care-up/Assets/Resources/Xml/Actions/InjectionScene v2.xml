@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ActionList points="26">
+	<action description="Step 1: Preform hand hygiene" audioHint="Injection/Step 1"
+		index="0" type="use" value="HandCleaner"></action>
+	<action description="Step 2: Cleaning work field" audioHint="Injection/Step 2"
+		index="1" type="use" value="WorkField"></action>
+	<action description="Step 3: Checking patient records" audioHint="Injection/Step 3"
+		index="2" type="examine" item="PatientRecords" expected="good"></action>
+	<action description="Step 4: Checking medicine prescriptions" audioHint="Injection/Step 4"
+		index="2" type="examine" item="Medicine" expected="good"></action>
+	
+	<action description="Step 5.1: Soak a cloth with alcohol" audioHint="Injection/Step 5.1"
+		index="3" type="combine" left="Cloth" right="Alcohol"></action>
+	<action description="Step 5.2: Disinfect the rubber cap of the medicine" audioHint="Injection/Step 5.2"
+		index="4" type="combine" left="DesinfectionCloth" right="Medicine"></action>
+	<action description="Step 5.3: Place the absorption needle on the syringe" audioHint="Injection/Step 5.3"
+		index="5" type="combine" left="Syringe" right="AbsorptionNeedle"></action>
+ 
+	<action description="Step 6.1: Absorb the right amount of medicine in the syringe" audioHint="Injection/Step 6.1"
+		index="6" type="combine" left="SyringeWithAbsorptionNeedle" right="Medicine"></action>
+	<action description="Step 6.2: Absorb 0,1 – 0,2 ML of air" audioHint="Injection/Step 6.2"
+		index="7" type="useOn" item="SyringeWithAbsorptionNeedle" target=""></action>
+	<action description="Step 6.3: Remove the absorption needle off the syringe" audioHint="Injection/Step 6.3"
+		index="8" type="combine" left="SyringeWithAbsorptionNeedle" right=""></action>
+	<action description="Step 6.4: Put the needle in the needle cup (trashcan for needles)" audioHint="Injection/Step 6.4"
+		index="9" type="useOn" item="AbsorptionNeedle" target="NeedleCup"></action>
+	<action description="Step 6.5: Place the injection needle on the syringe" audioHint="Injection/Step 6.5"
+		index="10" type="combine" left="Syringe" right="InjectionNeedle"></action>
+		
+	<action description="Step 8: Ask the patient to roll up his/her sleeve and show his/her arm." audioHint="Injection/Step 8"
+		index="11" type="talk" topic="RollUpSleeves"></action>
+	<action description="Step 9: Check if the injection spot on the arm is clean and dry."	audioHint="Injection/Step 9"
+		index="12" type="examine" item="Hand" expected="clean"></action>
+	
+	<action description="Step 10: Inject medicine into hand"	audioHint="Injection/Step 10"
+		index="13" type="useOn" item="SyringeWithInjectionNeedle" target="Hand"></action>
+	
+	<action description="Step 17: Remove the injection needle" audioHint="Injection/Step 17"
+		index="14" type="combine" left="SyringeWithInjectionNeedle" right=""></action>
+	<action description="Step 17: Put the needle in the needle cup (trashcan for needles)" audioHint="Injection/Step 17.2"
+		index="15" type="useOn" item="InjectionNeedle" target="NeedleCup"></action>
+	<action description="Step 18: Clean up the materials you used."  audioHint="Injection/Step 18"
+		index="15" type="use" value="WorkField"></action>
+	<action description="Step 19: Preform hand hygiene" audioHint="Injection/Step 19"
+		index="16" type="use" value="HandCleaner"></action>
+    <action description="Step 20: Write down information" audioHint="Injection/Step 20"
+        index="17" type="use" value="PaperAndPen"></action>
+</ActionList>

@@ -47,6 +47,11 @@ public class UsableObject : InteractableObject {
                         GameObject.Find("Player").GetComponent<AnimationManager>().PlayAnimation("Clean_Table");
                     }
                     break;
+                case "OldBandAid":
+                    {
+                        Destroy(gameObject);
+                    }
+                    break;
             }
             actionManager.OnUseAction(gameObject.name);
             Reset();

@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Renderer))]
 [RequireComponent(typeof(Rigidbody))]
@@ -72,6 +73,10 @@ public class PickableObject : InteractableObject {
             {
                 Destroy(gameObject);
             }
+            else if (name == "BandAid" && controls.SelectedObject.name == "Hand")
+            {
+                Destroy(gameObject);
+            }
             else if (name == "SyringeWithInjectionNeedle"
                 && controls.SelectedObject.name == "Hand")
             {
@@ -79,8 +84,21 @@ public class PickableObject : InteractableObject {
                 if (info[0] == "SyringeWithInjectionNeedle" && info[1] == "Hand")
                 {
                     actionManager.OnUseOnAction("SyringeWithInjectionNeedle", "Hand");
-                    AnimationSequence animationSequence = new AnimationSequence("Injection");
-                    animationSequence.NextStep();
+                    if (SceneManager.GetActiveScene().name == "Injection")
+                    {
+                        AnimationSequence animationSequence = new AnimationSequence("Injection");
+                        animationSequence.NextStep();
+                    }
+                    else if (SceneManager.GetActiveScene().name == "Injection Subcutaneous")
+                    {
+                        AnimationSequence animationSequence = new AnimationSequence("SubcutaneousInjection");
+                        animationSequence.NextStep();
+                    }
+                    else if (SceneManager.GetActiveScene().name == "Injection scene v2")
+                    {
+                        AnimationSequence animationSequence = new AnimationSequence("Injection v2");
+                        animationSequence.NextStep(); 
+                    }
                     return;
                 }
             }
