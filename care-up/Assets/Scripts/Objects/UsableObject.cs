@@ -36,7 +36,7 @@ public class UsableObject : InteractableObject {
         }
     }
 
-    public void Use()
+    public virtual void Use()
     {
         if (!ViewModeActive())
         {
