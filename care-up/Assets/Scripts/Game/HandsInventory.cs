@@ -149,24 +149,6 @@ public class HandsInventory : MonoBehaviour {
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            GameObject cubeObject = Instantiate(Resources.Load<GameObject>("Prefabs\\Cube"),
-                            new Vector3(1.0f, 10.0f, 1.0f),
-                            Quaternion.identity) as GameObject;
-            cubeObject.transform.parent = interactableObjects.transform;
-            cubeObject.name = "Cube";
-
-            GameObject sphereObject = Instantiate(Resources.Load<GameObject>("Prefabs\\Sphere"),
-                            new Vector3(-1.0f, 10.0f, -1.0f),
-                            Quaternion.identity) as GameObject;
-            sphereObject.transform.parent = interactableObjects.transform;
-            sphereObject.name = "Sphere";
-        }
-    }
-
-    void LateUpdate()
-    {
         if (Input.GetMouseButtonDown(0) && cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
             if (controls.SelectedObject != null)
@@ -174,8 +156,11 @@ public class HandsInventory : MonoBehaviour {
                 PickableObject item = controls.SelectedObject.GetComponent<PickableObject>();
                 if (item != null)
                 {
-                    PickItem(item);
-                    controls.ResetObject();
+                    if (item.GetComponent<ExaminableObject>() == null)
+                    {
+                        PickItem(item);
+                        controls.ResetObject();
+                    }
                 }
             }
         }

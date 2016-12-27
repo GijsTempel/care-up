@@ -76,7 +76,7 @@ public class Controls : MonoBehaviour {
         selectedObject = null;
     }
    
-	void Update () {
+	void LateUpdate () {
 
         // raycast only in this script
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
@@ -90,11 +90,7 @@ public class Controls : MonoBehaviour {
         {
             ResetObject();
         }
-    }
-    
-    void LateUpdate()
-    {
+
         keyUsed = false;
     }
-
 }

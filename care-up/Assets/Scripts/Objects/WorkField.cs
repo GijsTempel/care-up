@@ -31,8 +31,8 @@ public class WorkField : UsableObject {
                     obj.SetActive(toggle);
                 }
             }
-
             actionManager.OnUseAction(gameObject.name);
+            controls.ResetObject();
             Reset();
         }
     }

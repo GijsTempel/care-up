@@ -29,6 +29,7 @@ public class UsableObject : InteractableObject {
                 {
                     if (handsInventory.Empty())
                     {
+                        Debug.Log(controls.SelectedObject.name);
                         Use();
                     }
                 }
