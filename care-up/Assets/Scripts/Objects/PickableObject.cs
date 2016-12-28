@@ -75,7 +75,15 @@ public class PickableObject : InteractableObject {
             }
             else if (name == "BandAid" && controls.SelectedObject.name == "Hand")
             {
-                Destroy(gameObject);
+                string[] info = actionManager.CurrentUseOnInfo;
+                if (info[0] == "BandAid" && info[1] == "Hand")
+                {
+                    actionManager.OnUseOnAction("BandAid", "Hand");
+                    AnimationSequence animationSequence = new AnimationSequence("BandAid");
+                    animationSequence.NextStep();
+                    Destroy(gameObject);
+                    return;
+                }
             }
             else if (name == "SyringeWithInjectionNeedle"
                 && controls.SelectedObject.name == "Hand")
@@ -97,7 +105,7 @@ public class PickableObject : InteractableObject {
                     else if (SceneManager.GetActiveScene().name == "Injection scene v2")
                     {
                         AnimationSequence animationSequence = new AnimationSequence("Injection v2");
-                        animationSequence.NextStep(); 
+                        animationSequence.NextStep();
                     }
                     return;
                 }
