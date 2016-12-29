@@ -115,6 +115,15 @@ public class ActionManager : MonoBehaviour {
         }
     }
 
+    public string CurrentTopic
+    {
+        get
+        {
+            return (currentAction.Type == ActionType.PersonTalk) ? 
+                ((TalkAction)currentAction).Topic : "";
+        }
+    }
+
     private Controls controls;
 
     void Start () {

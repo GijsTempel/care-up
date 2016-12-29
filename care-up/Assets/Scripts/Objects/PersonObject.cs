@@ -79,16 +79,18 @@ public class PersonObject : InteractableObject {
             Debug.LogWarning("Audio clip not set.");
         }
 
-        switch (topic)
-        {
-            case "RollUpSleeves":
-                RollUpSleeves(true);
-                break;
-            case "ComfortablePosition":
-                inhaling = true;
-                break;
-            default:
-                break;
+        if (topic == actionManager.CurrentTopic) {
+            switch (topic)
+            {
+                case "RollUpSleeves":
+                    RollUpSleeves(true);
+                    break;
+                case "ComfortablePosition":
+                    inhaling = true;
+                    break;
+                default:
+                    break;
+            }
         }
 
         actionManager.OnTalkAction(topic);

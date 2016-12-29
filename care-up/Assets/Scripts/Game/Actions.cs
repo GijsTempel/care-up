@@ -118,6 +118,11 @@ public class TalkAction : Action
         }
         return same;
     }
+
+    public string Topic
+    {
+        get { return topicInput; }
+    }
 }
 
 public class UseOnAction : Action
