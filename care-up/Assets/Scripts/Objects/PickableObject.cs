@@ -68,7 +68,8 @@ public class PickableObject : InteractableObject {
     {
         if (controls.SelectedObject != null && controls.CanInteract)
         {
-            if ((name == "InjectionNeedle" || name == "AbsorptionNeedle")
+            if ((name == "InjectionNeedle" || name == "AbsorptionNeedle"
+                || name == "TestStrips" || name == "Lancet")
                 && controls.SelectedObject.name == "NeedleCup")
             {
                 Destroy(gameObject);
@@ -82,6 +83,17 @@ public class PickableObject : InteractableObject {
                     AnimationSequence animationSequence = new AnimationSequence("BandAid");
                     animationSequence.NextStep();
                     Destroy(gameObject);
+                    return;
+                }
+            }
+            else if (name == "PrickingPen" && controls.SelectedObject.name == "Finger")
+            {
+                string[] info = actionManager.CurrentUseOnInfo;
+                if (info[0] == "PrickingPen" && info[1] == "Finger")
+                {
+                    actionManager.OnUseOnAction("PrickingPen", "Finger");
+                    AnimationSequence animationSequence = new AnimationSequence("MeasureBloodGlucose");
+                    animationSequence.NextStep();
                     return;
                 }
             }
@@ -121,6 +133,13 @@ public class PickableObject : InteractableObject {
                     animationSequence.NextStep();
                     return;
                 }
+            }
+        }
+        else // cannot interact or target == ""
+        {
+            if ( name == "Gloves" )
+            {
+                GameObject.Find("GameLogic").GetComponent<HandsInventory>().GlovesToggle(true);
             }
         }
         actionManager.OnUseOnAction(name, controls.SelectedObject != null && controls.CanInteract ? controls.SelectedObject.name : "");

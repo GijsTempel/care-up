@@ -10,6 +10,10 @@ public class HandsInventory : MonoBehaviour {
     private PickableObject leftHandObject;
     private PickableObject rightHandObject;
 
+    private Vector3 leftHandPosition;
+    private Vector3 rightHandPosition;
+    private bool glovesOn = false;
+
     private CombinationManager combinationManager;
     private GameObject interactableObjects;
     private Controls controls;
@@ -43,14 +47,16 @@ public class HandsInventory : MonoBehaviour {
 
         cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
         if (cameraMode == null) Debug.LogError("No camera mode found");
+
+        glovesOn = false;
     }
 	
 	void Update () {
 
-        Vector3 leftHandPosition = Camera.main.transform.position +
+        leftHandPosition = Camera.main.transform.position +
                 Camera.main.transform.forward * distanceFromCamera +
                 Camera.main.transform.right * (-horisontalOffset);
-        Vector3 rightHandPosition = Camera.main.transform.position +
+        rightHandPosition = Camera.main.transform.position +
                 Camera.main.transform.forward * distanceFromCamera +
                 Camera.main.transform.right * horisontalOffset;
 
@@ -138,6 +144,11 @@ public class HandsInventory : MonoBehaviour {
                 {
                     leftHandObject.Use();
                 }
+                else if ( glovesOn && rightHandObject == null )
+                {
+                    actionManager.OnUseOnAction("", "");
+                    GlovesToggle(false);
+                }
             }
 
             if (controls.keyPreferences.RightUseKey.Pressed())
@@ -145,6 +156,11 @@ public class HandsInventory : MonoBehaviour {
                 if (rightHandObject)
                 {
                     rightHandObject.Use();
+                }
+                else if (glovesOn && leftHandObject == null)
+                {
+                    actionManager.OnUseOnAction("", "");
+                    GlovesToggle(false);
                 }
             }
         }
@@ -235,5 +251,31 @@ public class HandsInventory : MonoBehaviour {
     public bool Empty()
     {
         return (leftHandObject == null) && (rightHandObject == null);
+    }
+
+    public void GlovesToggle(bool value)
+    {
+        if ( value )
+        {
+            if (   (leftHandObject && !rightHandObject)
+                || (!leftHandObject && rightHandObject))
+            {
+                if (leftHandObject)
+                {
+                    Destroy(leftHandObject.gameObject);
+                }
+                else if (rightHandObject)
+                {
+                    Destroy(rightHandObject.gameObject);
+                }
+                glovesOn = value;
+            }
+        }
+        else
+        {
+            glovesOn = value;
+            GameObject leftObject = CreateObjectByName("Gloves", leftHandPosition);
+            leftHandObject = leftObject.GetComponent<PickableObject>();
+        }
     }
 }
