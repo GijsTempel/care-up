@@ -25,8 +25,8 @@ public class CameraMovement {
 
     public void Update(Transform player, Transform camera)
     {
-        float yRotation = Input.GetAxis("Mouse X") * sensetivity;
-        float xRotation = Input.GetAxis("Mouse Y") * sensetivity;
+        float yRotation = (Input.GetAxis("Mouse X") + Input.GetAxis("Joystick Right X")) * sensetivity;
+        float xRotation = (Input.GetAxis("Mouse Y") + Input.GetAxis("Joystick Right Y")) * sensetivity;
 
         playerAngle *= Quaternion.Euler(0f, yRotation, 0f);
         cameraAngle *= Quaternion.Euler(-xRotation, 0f, 0f);

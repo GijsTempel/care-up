@@ -8,11 +8,15 @@ public class Controls : MonoBehaviour {
     [Serializable]
     public class InputKey
     {
+        public KeyCode controllerKey;
+        public KeyCode altControllerKey;
         public KeyCode mainKey;
         public KeyCode helpKey;
 
-        public InputKey(KeyCode main, KeyCode help = KeyCode.None)
+        public InputKey(KeyCode controller, KeyCode main, KeyCode alt = KeyCode.None, KeyCode help = KeyCode.None)
         {
+            controllerKey = controller;
+            altControllerKey = alt;
             mainKey = main;
             helpKey = help;
         }
@@ -26,6 +30,13 @@ public class Controls : MonoBehaviour {
                 pressed = pressed && Input.GetKey(helpKey);
             }
             
+            pressed = Input.GetKeyDown(controllerKey) || pressed;
+
+            if (altControllerKey != KeyCode.None)
+            {
+                pressed = Input.GetKeyDown(altControllerKey) || pressed;
+            }
+        
             if (pressed)
             {
                 if (!Controls.keyUsed)
@@ -45,12 +56,12 @@ public class Controls : MonoBehaviour {
     [Serializable]
     public class KeyPreferences
     {
-        public InputKey LeftDropKey = new InputKey(KeyCode.Q, KeyCode.LeftShift);
-        public InputKey RightDropKey = new InputKey(KeyCode.E, KeyCode.LeftShift);
-        public InputKey LeftUseKey = new InputKey(KeyCode.Q);
-        public InputKey RightUseKey = new InputKey(KeyCode.E);
-        public InputKey CombineKey = new InputKey(KeyCode.R);
-        public InputKey GetHintKey = new InputKey(KeyCode.Space);
+        public InputKey LeftDropKey = new InputKey(KeyCode.Joystick1Button6, KeyCode.Q, KeyCode.None, KeyCode.LeftShift);
+        public InputKey RightDropKey = new InputKey(KeyCode.Joystick1Button7, KeyCode.E, KeyCode.None, KeyCode.LeftShift);
+        public InputKey LeftUseKey = new InputKey(KeyCode.Joystick1Button2, KeyCode.Q, KeyCode.Joystick1Button4);
+        public InputKey RightUseKey = new InputKey(KeyCode.Joystick1Button1, KeyCode.E, KeyCode.Joystick1Button5);
+        public InputKey CombineKey = new InputKey(KeyCode.Joystick1Button3, KeyCode.R);
+        public InputKey GetHintKey = new InputKey(KeyCode.Joystick1Button6, KeyCode.Space, KeyCode.Joystick1Button8);
     };
 
     public KeyPreferences keyPreferences = new KeyPreferences();
