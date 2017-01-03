@@ -59,7 +59,7 @@ public class InteractableObject : MonoBehaviour {
             if (itemDescription == null)
             {
                 Debug.LogError("No item description prefab found");
-            } 
+            }
             else
             {
                 itemDescription.name = "ItemDescription";
@@ -69,7 +69,7 @@ public class InteractableObject : MonoBehaviour {
     }
 
     protected virtual void Update() {
-        
+
         if (cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
             if (controls.SelectedObject == gameObject)
@@ -116,10 +116,21 @@ public class InteractableObject : MonoBehaviour {
     {
         if (!positionSaved)
         {
-            positionSaved = true;    
+            positionSaved = true;
 
             savedPosition = transform.position;
             savedRotation = transform.rotation;
+        }
+    }
+
+    public void SavePosition(Vector3 pos, Quaternion rot)
+    {
+        if (!positionSaved)
+        {
+            positionSaved = true;
+
+            savedPosition = pos;
+            savedRotation = rot;
         }
     }
 
@@ -127,5 +138,11 @@ public class InteractableObject : MonoBehaviour {
     {
         transform.position = savedPosition;
         transform.rotation = savedRotation;
+    }
+
+    public void GetSavesLocation(out Vector3 position, out Quaternion rotation)
+    {
+        position = savedPosition;
+        rotation = savedRotation;
     }
 }

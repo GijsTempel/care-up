@@ -108,8 +108,13 @@ public class HandsInventory : MonoBehaviour {
                 {
                     if (leftName != leftResult)
                     {
+                        Vector3 leftSavedPos = Vector3.zero;
+                        Quaternion leftSavedRot = Quaternion.identity;
+
                         if (leftHandObject != null)
                         {
+                            leftHandObject.GetSavesLocation(out leftSavedPos, out leftSavedRot);
+
                             Destroy(leftHandObject.gameObject);
                             leftHandObject = null;
                         }
@@ -118,13 +123,20 @@ public class HandsInventory : MonoBehaviour {
                         {
                             GameObject leftObject = CreateObjectByName(leftResult, leftHandPosition);
                             leftHandObject = leftObject.GetComponent<PickableObject>();
+
+                            leftHandObject.SavePosition(leftSavedPos, leftSavedRot);
                         }
                     }
 
                     if (rightName != rightResult)
                     {
+                        Vector3 rightSavedPos = Vector3.zero;
+                        Quaternion rightSavedRot = Quaternion.identity;
+
                         if (rightHandObject != null)
                         {
+                            rightHandObject.GetSavesLocation(out rightSavedPos, out rightSavedRot);
+
                             Destroy(rightHandObject.gameObject);
                             rightHandObject = null;
                         }
@@ -133,6 +145,8 @@ public class HandsInventory : MonoBehaviour {
                         {
                             GameObject rightObject = CreateObjectByName(rightResult, rightHandPosition);
                             rightHandObject = rightObject.GetComponent<PickableObject>();
+
+                            rightHandObject.SavePosition(rightSavedPos, rightSavedRot);
                         }
                     }
                 }
