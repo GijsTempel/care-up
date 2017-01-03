@@ -15,8 +15,6 @@ public class ExaminableObject : InteractableObject {
     public string state = "good";
     
     private bool viewMode = false;
-    private Vector3 savedPosition;
-    private Quaternion savedRotation;
 
     public void OnExamine()
     {
@@ -28,13 +26,11 @@ public class ExaminableObject : InteractableObject {
         viewMode = value;
         if (viewMode)
         {
-            savedPosition = transform.position;
-            savedRotation = transform.localRotation;
+            SavePosition();
         }
         else
         {
-            transform.position = savedPosition;
-            transform.localRotation = savedRotation;
+            LoadPosition();
         }
 
         GetComponent<Collider>().enabled = !viewMode;

@@ -9,9 +9,6 @@ using UnityEngine.SceneManagement;
 public class PickableObject : InteractableObject {
     
     public Vector3 rotationInHand;
-    
-    private Vector3 savedPosition;
-    private Quaternion savedRotation;
 
     private List<Vector3> framePositions = new List<Vector3>();
     private Rigidbody rigidBody;
@@ -55,11 +52,21 @@ public class PickableObject : InteractableObject {
         {
             rigidBody.useGravity = true;
             rigidBody.constraints = RigidbodyConstraints.None;
-            if (framePositions.Count > 0)
+            if (Vector3.Distance(transform.position, savedPosition) < 3.0f)
             {
-                Vector3 deltaPosition = framePositions[framePositions.Count - 1] - framePositions[0];
-                deltaPosition = deltaPosition * 3 / Time.fixedDeltaTime;
-                rigidBody.AddForce(deltaPosition);
+                LoadPosition();
+            }
+            else
+            {
+                Narrator.PlaySound("WrongAction");
+                actionManager.Points--;
+
+                if (framePositions.Count > 0)
+                {
+                    Vector3 deltaPosition = framePositions[framePositions.Count - 1] - framePositions[0];
+                    deltaPosition = deltaPosition * 3 / Time.fixedDeltaTime;
+                    rigidBody.AddForce(deltaPosition);
+                }
             }
         }
     }

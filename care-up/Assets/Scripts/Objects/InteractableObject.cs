@@ -11,6 +11,10 @@ public class InteractableObject : MonoBehaviour {
     static private Shader onMouseOverShader;
     static private Shader onMouseExitShader;
 
+    protected bool positionSaved = false;
+    protected Vector3 savedPosition;
+    protected Quaternion savedRotation;
+
     static protected CameraMode cameraMode;
     static protected Controls controls;
     static protected ActionManager actionManager;
@@ -106,5 +110,22 @@ public class InteractableObject : MonoBehaviour {
     protected bool ViewModeActive()
     {
         return cameraMode.CurrentMode == CameraMode.Mode.ObjectPreview;
+    }
+
+    public void SavePosition()
+    {
+        if (!positionSaved)
+        {
+            positionSaved = true;    
+
+            savedPosition = transform.position;
+            savedRotation = transform.rotation;
+        }
+    }
+
+    public void LoadPosition()
+    {
+        transform.position = savedPosition;
+        transform.rotation = savedRotation;
     }
 }

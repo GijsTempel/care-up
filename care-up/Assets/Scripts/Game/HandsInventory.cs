@@ -217,6 +217,8 @@ public class HandsInventory : MonoBehaviour {
 
         if (picked)
         {
+            item.SavePosition();
+
             if (leftHandObject)
             {
                 leftHandObject.GetComponent<Rigidbody>().useGravity = false;
