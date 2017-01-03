@@ -79,8 +79,13 @@ public class AnimationSequence  {
                 currentStep = steps.Count;
                 NextStep();
             }
-            else
+            else 
             {
+                if ( animation == "Inject Pricking pen" )
+                {
+                    GameObject.Find("GameLogic").GetComponent<HandsInventory>().PutAllOnTable();
+                }
+
                 Debug.Log("Play animation: " + animation);
                 actionManager.Points++;
                 pointsEarned++;

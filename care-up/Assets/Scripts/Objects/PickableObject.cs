@@ -43,16 +43,16 @@ public class PickableObject : InteractableObject {
         transform.localRotation = Quaternion.Euler(rotationInHand + Camera.main.transform.rotation.eulerAngles);
     }
 
-    public void Drop()
+    public void Drop(bool force = false)
     {
         gameObject.layer = 0;
         GetComponent<Collider>().enabled = true;
-       
+
         if (rigidBody != null)
         {
             rigidBody.useGravity = true;
             rigidBody.constraints = RigidbodyConstraints.None;
-            if (Vector3.Distance(transform.position, savedPosition) < 3.0f)
+            if (Vector3.Distance(transform.position, savedPosition) < 3.0f || force)
             {
                 LoadPosition();
             }

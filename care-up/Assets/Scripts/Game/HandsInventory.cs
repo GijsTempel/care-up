@@ -50,8 +50,8 @@ public class HandsInventory : MonoBehaviour {
 
         glovesOn = false;
     }
-	
-	void Update () {
+
+    void Update() {
 
         leftHandPosition = Camera.main.transform.position +
                 Camera.main.transform.forward * distanceFromCamera +
@@ -71,7 +71,7 @@ public class HandsInventory : MonoBehaviour {
             rightHandObject.transform.position = rightHandPosition;
             rightHandObject.InHandUpdate(true);
         }
-        
+
         if (cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
             if (controls.keyPreferences.LeftDropKey.Pressed())
@@ -103,7 +103,7 @@ public class HandsInventory : MonoBehaviour {
 
                 string leftResult, rightResult;
                 bool combined = combinationManager.Combine(leftName, rightName, out leftResult, out rightResult);
-                
+
                 if (combined && combineAllowed)
                 {
                     if (leftName != leftResult)
@@ -144,7 +144,7 @@ public class HandsInventory : MonoBehaviour {
                 {
                     leftHandObject.Use();
                 }
-                else if ( glovesOn && rightHandObject == null )
+                else if (glovesOn && rightHandObject == null)
                 {
                     actionManager.OnUseOnAction("", "");
                     GlovesToggle(false);
@@ -257,9 +257,9 @@ public class HandsInventory : MonoBehaviour {
 
     public void GlovesToggle(bool value)
     {
-        if ( value )
+        if (value)
         {
-            if (   (leftHandObject && !rightHandObject)
+            if ((leftHandObject && !rightHandObject)
                 || (!leftHandObject && rightHandObject))
             {
                 if (leftHandObject)
@@ -278,6 +278,21 @@ public class HandsInventory : MonoBehaviour {
             glovesOn = value;
             GameObject leftObject = CreateObjectByName("Gloves", leftHandPosition);
             leftHandObject = leftObject.GetComponent<PickableObject>();
+        }
+    }
+
+    public void PutAllOnTable()
+    {
+        if (leftHandObject)
+        {
+            leftHandObject.Drop(true);
+            leftHandObject = null;
+        }
+
+        if (rightHandObject)
+        {
+            rightHandObject.Drop(true);
+            rightHandObject = null;
         }
     }
 }
