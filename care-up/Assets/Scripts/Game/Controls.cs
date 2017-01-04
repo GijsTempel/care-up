@@ -104,4 +104,9 @@ public class Controls : MonoBehaviour {
 
         keyUsed = false;
     }
+
+    public bool MouseClicked()
+    {
+        return Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Joystick1Button0);
+    }
 }

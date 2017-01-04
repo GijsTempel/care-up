@@ -179,7 +179,7 @@ public class HandsInventory : MonoBehaviour {
             }
         }
 
-        if (Input.GetMouseButtonDown(0) && cameraMode.CurrentMode == CameraMode.Mode.Free)
+        if (controls.MouseClicked() && cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
             if (controls.SelectedObject != null)
             {

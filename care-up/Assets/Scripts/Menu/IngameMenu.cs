@@ -30,7 +30,7 @@ public class IngameMenu : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (controls.MouseClicked())
         {
             if (controls.SelectedObject)
             {

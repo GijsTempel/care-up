@@ -23,7 +23,7 @@ public class UsableObject : InteractableObject {
         {
             base.Update();
 
-            if (Input.GetMouseButtonDown(0) && cameraMode.CurrentMode == CameraMode.Mode.Free)
+            if (controls.MouseClicked() && cameraMode.CurrentMode == CameraMode.Mode.Free)
             {
                 if (controls.SelectedObject == gameObject && controls.CanInteract)
                 {

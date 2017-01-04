@@ -53,6 +53,7 @@ public class SelectDialogue : MonoBehaviour {
     private Material defaultMaterial;
 
     private static CameraMode cameraMode;
+    private static Controls controls;
 
     void Start()
     {
@@ -60,6 +61,12 @@ public class SelectDialogue : MonoBehaviour {
         {
             cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
             if (cameraMode == null) Debug.LogError("No camera mode found");
+        }
+
+        if (controls == null)
+        {
+            controls = GameObject.Find("GameLogic").GetComponent<Controls>();
+            if (controls == null) Debug.LogError("No controls found.");
         }
     }
 
@@ -160,7 +167,7 @@ public class SelectDialogue : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && currentOption != OptionSide.None)
+        if (controls.MouseClicked() && currentOption != OptionSide.None)
         {
             DialogueOption option = options.Find(x => x.side == currentOption);
             if (option != null)

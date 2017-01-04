@@ -41,7 +41,7 @@ public class CameraMode : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && currentMode == Mode.Free)
+        if (controls.MouseClicked() && currentMode == Mode.Free)
         {
             if (controls.SelectedObject && controls.CanInteract)
             {
