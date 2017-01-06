@@ -6,68 +6,26 @@ using System.Collections.Generic;
 public class Controls : MonoBehaviour {
     
     [Serializable]
-    public class InputKey
-    {
-        public KeyCode controllerKey;
-        public KeyCode altControllerKey;
-        public KeyCode mainKey;
-        public KeyCode helpKey;
-
-        public InputKey(KeyCode controller, KeyCode main, KeyCode alt = KeyCode.None, KeyCode help = KeyCode.None)
-        {
-            controllerKey = controller;
-            altControllerKey = alt;
-            mainKey = main;
-            helpKey = help;
-        }
-
-        public bool Pressed()
-        {
-            bool pressed = Input.GetKeyDown(mainKey);
-
-            if (helpKey != KeyCode.None)
-            {
-                pressed = pressed && Input.GetKey(helpKey);
-            }
-            
-            pressed = Input.GetKeyDown(controllerKey) || pressed;
-
-            if (altControllerKey != KeyCode.None)
-            {
-                pressed = Input.GetKeyDown(altControllerKey) || pressed;
-            }
-        
-            if (pressed)
-            {
-                if (!Controls.keyUsed)
-                {
-                    Controls.keyUsed = true;
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else return false;
-        }
-    }
-
-    [Serializable]
     public class KeyPreferences
     {
-        public InputKey LeftDropKey = new InputKey(KeyCode.Joystick1Button6, KeyCode.Q, KeyCode.None, KeyCode.LeftShift);
-        public InputKey RightDropKey = new InputKey(KeyCode.Joystick1Button7, KeyCode.E, KeyCode.None, KeyCode.LeftShift);
-        public InputKey LeftUseKey = new InputKey(KeyCode.Joystick1Button2, KeyCode.Q, KeyCode.Joystick1Button4);
-        public InputKey RightUseKey = new InputKey(KeyCode.Joystick1Button1, KeyCode.E, KeyCode.Joystick1Button5);
-        public InputKey CombineKey = new InputKey(KeyCode.Joystick1Button3, KeyCode.R);
-        public InputKey GetHintKey = new InputKey(KeyCode.Joystick1Button6, KeyCode.Space, KeyCode.Joystick1Button8);
+        public InputKey LeftDropKey  = new InputKey(new KeyBoardKey(KeyCode.Q, KeyCode.LeftShift), null,
+                                                    new ControllerAxisKey("ControllerDrop", -1));
+        public InputKey RightDropKey = new InputKey(new KeyBoardKey(KeyCode.E, KeyCode.LeftShift), null,
+                                                    new ControllerAxisKey("ControllerDrop", 1));
+        public InputKey LeftUseKey   = new InputKey(new KeyBoardKey(KeyCode.Q),
+                                                    new ControllerKey(KeyCode.Joystick1Button2, KeyCode.Joystick1Button4));
+        public InputKey RightUseKey  = new InputKey(new KeyBoardKey(KeyCode.E),
+                                                    new ControllerKey(KeyCode.Joystick1Button1, KeyCode.Joystick1Button5));
+        public InputKey CombineKey   = new InputKey(new KeyBoardKey(KeyCode.R),
+                                                    new ControllerKey(KeyCode.Joystick1Button3));
+        public InputKey GetHintKey   = new InputKey(new KeyBoardKey(KeyCode.Space),
+                                                    new ControllerKey(KeyCode.Joystick1Button6, KeyCode.Joystick1Button8));
     };
 
     public KeyPreferences keyPreferences = new KeyPreferences();
     public float interactionDistance = 5.0f;
 
-    static private bool keyUsed = false;
+    static public bool keyUsed = false;
 
     private GameObject selectedObject;
     private bool canInteract;

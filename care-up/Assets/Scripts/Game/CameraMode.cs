@@ -129,8 +129,8 @@ public class CameraMode : MonoBehaviour {
     {
         if ( currentMode == Mode.ObjectPreview )
         {
-            string putKey = controls.keyPreferences.LeftUseKey.mainKey.ToString();
-            string pickKey = controls.keyPreferences.RightUseKey.mainKey.ToString();
+            string putKey = "Q";
+            string pickKey = "E";
 
             string text = (selectedObject.GetComponent<PickableObject>() != null) ?
                 "Press " + putKey + " to put down, Press " + pickKey + " to pick up" :
