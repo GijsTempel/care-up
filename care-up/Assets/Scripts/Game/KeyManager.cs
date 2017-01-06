@@ -63,17 +63,15 @@ public class ControllerKey : Key
 public class ControllerAxisKey : Key
 {
     private string axisName;
-    private int value;
 
-    public ControllerAxisKey(string axis, int v)
+    public ControllerAxisKey(string axis)
     {
         axisName = axis;
-        value = v;
     }
 
     public override bool Pressed()
     {
-        return Input.GetAxis(axisName) == value;
+        return Input.GetAxis(axisName) != 0;
     }
 }
 

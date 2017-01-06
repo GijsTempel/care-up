@@ -9,9 +9,9 @@ public class Controls : MonoBehaviour {
     public class KeyPreferences
     {
         public InputKey LeftDropKey  = new InputKey(new KeyBoardKey(KeyCode.Q, KeyCode.LeftShift), null,
-                                                    new ControllerAxisKey("ControllerDrop", -1));
+                                                    new ControllerAxisKey("ControllerLeftTrigger"));
         public InputKey RightDropKey = new InputKey(new KeyBoardKey(KeyCode.E, KeyCode.LeftShift), null,
-                                                    new ControllerAxisKey("ControllerDrop", 1));
+                                                    new ControllerAxisKey("ControllerRightTrigger"));
         public InputKey LeftUseKey   = new InputKey(new KeyBoardKey(KeyCode.Q),
                                                     new ControllerKey(KeyCode.Joystick1Button2, KeyCode.Joystick1Button4));
         public InputKey RightUseKey  = new InputKey(new KeyBoardKey(KeyCode.E),
