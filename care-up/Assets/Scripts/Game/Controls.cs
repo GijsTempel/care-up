@@ -8,6 +8,7 @@ public class Controls : MonoBehaviour {
     [Serializable]
     public class KeyPreferences
     {
+        public InputKey mouseClickKey = new InputKey(null, new ControllerKey(KeyCode.Joystick1Button0));
         public InputKey LeftDropKey  = new InputKey(new KeyBoardKey(KeyCode.Q, KeyCode.LeftShift), null,
                                                     new ControllerAxisKey("ControllerLeftTrigger"));
         public InputKey RightDropKey = new InputKey(new KeyBoardKey(KeyCode.E, KeyCode.LeftShift), null,
@@ -65,6 +66,6 @@ public class Controls : MonoBehaviour {
 
     public bool MouseClicked()
     {
-        return Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Joystick1Button0);
+        return Input.GetMouseButtonDown(0) || keyPreferences.mouseClickKey.Pressed();
     }
 }

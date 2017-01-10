@@ -9,6 +9,9 @@ public class CameraMode : MonoBehaviour {
         ObjectPreview,
         SelectionDialogue
     };
+
+    public float minZoom = 1.0f;
+    public float maxZoom = 5.0f;
     
     private Mode currentMode = Mode.Free;
 
@@ -75,6 +78,34 @@ public class CameraMode : MonoBehaviour {
                     pickableObject.GetComponent<ExaminableObject>().ToggleViewMode(false);
                     inventory.PickItem(pickableObject);
                     selectedObject = null;
+                }
+            }
+            else if (controls.keyPreferences.mouseClickKey.Pressed() ||
+                Input.GetAxis("Mouse ScrollWheel") < 0)
+            {
+                if (Input.GetAxis("Mouse ScrollWheel") < 0)
+                {
+                    if (selectedObject.viewSettings.distanceFromCamera > minZoom)
+                        selectedObject.viewSettings.distanceFromCamera += Input.GetAxis("Mouse ScrollWheel");
+                }
+                else
+                {
+                    if (selectedObject.viewSettings.distanceFromCamera > minZoom)
+                        selectedObject.viewSettings.distanceFromCamera -= 0.5f;
+                }
+            }
+            else if (controls.keyPreferences.CombineKey.Pressed() ||
+                Input.GetAxis("Mouse ScrollWheel") > 0)
+            {
+                if (Input.GetAxis("Mouse ScrollWheel") > 0)
+                {
+                    if (selectedObject.viewSettings.distanceFromCamera < maxZoom)
+                        selectedObject.viewSettings.distanceFromCamera += Input.GetAxis("Mouse ScrollWheel");
+                }
+                else
+                {
+                    if (selectedObject.viewSettings.distanceFromCamera < maxZoom)
+                        selectedObject.viewSettings.distanceFromCamera += 0.5f;
                 }
             }
         }
