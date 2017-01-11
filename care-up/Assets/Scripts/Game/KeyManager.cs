@@ -79,8 +79,9 @@ public class ControllerAxisKey : Key
 public class InputKey
 {
     private List<Key> keyList;
+    private bool unrestricted = false;
 
-    public InputKey(KeyBoardKey kkey = null, ControllerKey ckey = null, ControllerAxisKey xkey = null)
+    public InputKey(KeyBoardKey kkey = null, ControllerKey ckey = null, ControllerAxisKey xkey = null, bool restr = false)
     {
         keyList = new List<Key>();
 
@@ -98,6 +99,8 @@ public class InputKey
         {
             keyList.Add(xkey);
         }
+
+        unrestricted = restr;
     }
 
     public bool Pressed()
@@ -116,7 +119,10 @@ public class InputKey
         {
             if (!Controls.keyUsed)
             {
-                Controls.keyUsed = true;
+                if (!unrestricted)
+                {
+                    Controls.keyUsed = true;
+                }
                 return true;
             }
             else

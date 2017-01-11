@@ -8,7 +8,7 @@ public class Controls : MonoBehaviour {
     [Serializable]
     public class KeyPreferences
     {
-        public InputKey mouseClickKey = new InputKey(null, new ControllerKey(KeyCode.Joystick1Button0));
+        public InputKey mouseClickKey = new InputKey(null, new ControllerKey(KeyCode.Joystick1Button0), null, true);
         public InputKey LeftDropKey  = new InputKey(new KeyBoardKey(KeyCode.Q, KeyCode.LeftShift), null,
                                                     new ControllerAxisKey("ControllerLeftTrigger"));
         public InputKey RightDropKey = new InputKey(new KeyBoardKey(KeyCode.E, KeyCode.LeftShift), null,
@@ -47,7 +47,6 @@ public class Controls : MonoBehaviour {
     }
    
 	void LateUpdate () {
-
         // raycast only in this script
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
         RaycastHit hit;
