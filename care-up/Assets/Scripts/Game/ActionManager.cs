@@ -130,9 +130,10 @@ public class ActionManager : MonoBehaviour {
 
         controls = GameObject.Find("GameLogic").GetComponent<Controls>();
         if (controls == null) Debug.LogError("No controls found");
-
+        
+        TextAsset textAsset = (TextAsset)Resources.Load("Xml/Actions/" + actionListName);
         XmlDocument xmlFile = new XmlDocument();
-        xmlFile.Load("Assets/Resources/Xml/Actions/" + actionListName + ".xml");
+        xmlFile.LoadXml(textAsset.text);
 
         totalPoints = int.Parse(xmlFile.FirstChild.NextSibling.Attributes["points"].Value);
         XmlNodeList actions = xmlFile.FirstChild.NextSibling.ChildNodes; 

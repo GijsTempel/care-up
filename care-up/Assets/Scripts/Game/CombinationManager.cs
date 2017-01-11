@@ -24,8 +24,9 @@ public class CombinationManager : MonoBehaviour {
     {
         actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
 
+        TextAsset textAsset = (TextAsset)Resources.Load("Xml/Combinations/" + combinationListName);
         XmlDocument xmlFile = new XmlDocument();
-        xmlFile.Load("Assets/Resources/Xml/Combinations/" + combinationListName + ".xml");
+        xmlFile.LoadXml(textAsset.text);
         XmlNodeList combinations = xmlFile.FirstChild.NextSibling.ChildNodes; 
 
         foreach (XmlNode c in combinations)

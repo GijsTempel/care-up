@@ -105,8 +105,9 @@ public class PersonObject : InteractableObject {
     {
         optionsList.Clear();
 
+        TextAsset textAsset = (TextAsset)Resources.Load("Xml/PersonDialogues/" + filename);
         XmlDocument xmlFile = new XmlDocument();
-        xmlFile.Load("Assets/Resources/Xml/PersonDialogues/" + filename + ".xml");
+        xmlFile.LoadXml(textAsset.text);
         XmlNodeList xmlOptions = xmlFile.FirstChild.NextSibling.ChildNodes;
 
         foreach (XmlNode xmlOption in xmlOptions)

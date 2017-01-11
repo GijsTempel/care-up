@@ -3,16 +3,18 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using System.IO;
 
 public class SaveLoadManager : MonoBehaviour {
 
-    private const string savePath = "Assets/Resources/Xml/SaveFiles/";
+    private const string savePath = "/Xml/SaveFiles/";
 
     private bool needLoad = false;
     private string needLoadName;
 
 	void Start()
     {
+        Directory.CreateDirectory(Application.dataPath + savePath);
         SceneManager.sceneLoaded += OnLoaded;
     }
 
@@ -25,13 +27,13 @@ public class SaveLoadManager : MonoBehaviour {
         }
     }
 
-    public void SetNeedLoad(string filename = "continue.xml")
+    public void SetNeedLoad(string filename = "continue")
     {
         needLoad = true;
         needLoadName = filename;
     }
 
-    public void Save(string filename = "continue.xml")
+    public void Save(string filename = "continue")
     {
         XmlDocument doc = new XmlDocument();
         XmlNode docNode = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
@@ -210,14 +212,15 @@ public class SaveLoadManager : MonoBehaviour {
             timeNode.Attributes.Append(timeValue);
         } //end timer
         
-        doc.Save(savePath + filename);
+        doc.Save(Application.dataPath + savePath + filename);
     }
 
-    public void LoadLevel(string filename = "continue.xml")
+    public void LoadLevel(string filename = "continue")
     {
         SetNeedLoad(filename);
+        
         XmlDocument doc = new XmlDocument();
-        doc.Load(savePath + filename);
+        doc.Load(Application.dataPath + savePath + filename);
 
         XmlNode docNode = doc.FirstChild;
         XmlNode save = docNode.NextSibling;
@@ -229,7 +232,7 @@ public class SaveLoadManager : MonoBehaviour {
     private void Load(string filename)
     {
         XmlDocument doc = new XmlDocument();
-        doc.Load(savePath + filename);
+        doc.Load(Application.dataPath + savePath + filename);
 
         XmlNode docNode = doc.FirstChild;
         XmlNode save = docNode.NextSibling;

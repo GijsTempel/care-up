@@ -41,8 +41,9 @@ public class AnimationSequence  {
 
     private void LoadFromFile(string filename)
     {
+        TextAsset textAsset = (TextAsset)Resources.Load("Xml/AnimationSequences/" + filename);
         XmlDocument xmlFile = new XmlDocument();
-        xmlFile.Load("Assets/Resources/Xml/AnimationSequences/" + filename + ".xml");
+        xmlFile.LoadXml(textAsset.text);
         XmlNodeList xmlSteps = xmlFile.FirstChild.NextSibling.ChildNodes;
 
         foreach (XmlNode xmlStep in xmlSteps)
