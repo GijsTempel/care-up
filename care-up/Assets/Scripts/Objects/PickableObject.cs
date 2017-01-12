@@ -141,6 +141,18 @@ public class PickableObject : InteractableObject {
                     return;
                 }
             }
+            else if (name == "Syringe"
+                && controls.SelectedObject.name == "Person")
+            {
+                string[] info = actionManager.CurrentUseOnInfo;
+                if (info[0] == "Syringe" && info[1] == "Person")
+                {
+                    actionManager.OnUseOnAction("Syringe", "Person");
+                    AnimationSequence animationSequence = new AnimationSequence("WingedNeedle");
+                    animationSequence.NextStep();
+                    return;
+                }
+            }
         }
         else // cannot interact or target == ""
         {

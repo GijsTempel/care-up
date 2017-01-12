@@ -82,7 +82,7 @@ public class AnimationSequence  {
             }
             else 
             {
-                if ( animation == "Inject Pricking pen" )
+                if ( animation == "Inject Pricking pen" || animation == "ThrowSyringe" )
                 {
                     GameObject.Find("GameLogic").GetComponent<HandsInventory>().PutAllOnTable();
                 }
