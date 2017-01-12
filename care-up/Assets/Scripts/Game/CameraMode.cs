@@ -62,14 +62,14 @@ public class CameraMode : MonoBehaviour {
 
         if (currentMode == Mode.ObjectPreview)
         {
-            if (controls.keyPreferences.LeftUseKey.Pressed())
+            if (controls.keyPreferences.closeObjectView.Pressed())
             {
                 ToggleCameraMode(Mode.Free);
 
                 selectedObject.ToggleViewMode(false);
                 selectedObject = null;
             }
-            else if (controls.keyPreferences.RightUseKey.Pressed())
+            else if (controls.keyPreferences.pickObjectView.Pressed())
             {
                 PickableObject pickableObject = selectedObject.GetComponent<PickableObject>();
                 if (pickableObject != null)

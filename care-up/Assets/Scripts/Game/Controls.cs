@@ -17,6 +17,10 @@ public class Controls : MonoBehaviour {
                                                     new ControllerKey(KeyCode.Joystick1Button2, KeyCode.Joystick1Button4));
         public InputKey RightUseKey  = new InputKey(new KeyBoardKey(KeyCode.E),
                                                     new ControllerKey(KeyCode.Joystick1Button1, KeyCode.Joystick1Button5));
+        public InputKey closeObjectView = new InputKey(new KeyBoardKey(KeyCode.Q),
+                                                    new ControllerKey(KeyCode.Joystick1Button1));
+        public InputKey pickObjectView = new InputKey(new KeyBoardKey(KeyCode.E),
+                                                    new ControllerKey(KeyCode.Joystick1Button2));
         public InputKey CombineKey   = new InputKey(new KeyBoardKey(KeyCode.R),
                                                     new ControllerKey(KeyCode.Joystick1Button3));
         public InputKey GetHintKey   = new InputKey(new KeyBoardKey(KeyCode.Space),
