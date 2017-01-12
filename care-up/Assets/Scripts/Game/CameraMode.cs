@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class CameraMode : MonoBehaviour {
 
@@ -18,7 +19,7 @@ public class CameraMode : MonoBehaviour {
     private ExaminableObject selectedObject;
 
     private Controls controls;
-    private PlayerMovement playerScript;
+    private RigidbodyFirstPersonController playerScript;
     private HandsInventory inventory;
     private UnityStandardAssets.ImageEffects.BlurOptimized blur;
 
@@ -32,7 +33,7 @@ public class CameraMode : MonoBehaviour {
         controls = GameObject.Find("GameLogic").GetComponent<Controls>();
         if (controls == null) Debug.LogError("No controls script found");
 
-        playerScript = GameObject.Find("Player").GetComponent<PlayerMovement>();
+        playerScript = GameObject.Find("Player").GetComponent<RigidbodyFirstPersonController>();
         if (playerScript == null) Debug.LogError("No Player script found");
 
         inventory = GameObject.Find("GameLogic").GetComponent<HandsInventory>();

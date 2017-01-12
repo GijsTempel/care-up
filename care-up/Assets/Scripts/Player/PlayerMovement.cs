@@ -38,7 +38,6 @@ public class PlayerMovement : MonoBehaviour {
     public Camera mainCamera;
     public MovementSettings movementSettings = new MovementSettings();
     public CameraMovement cameraMovement = new CameraMovement();
-    public Crosshair crosshair;
 
     private CharacterController controller;
 
@@ -74,9 +73,4 @@ public class PlayerMovement : MonoBehaviour {
 
         controller.SimpleMove(movementVector);
 	}
-
-    void OnGUI()
-    {
-        crosshair.OnGUI();
-    }
 }

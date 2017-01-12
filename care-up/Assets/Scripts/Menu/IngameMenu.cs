@@ -12,9 +12,6 @@ public class IngameMenu : MonoBehaviour
 
     void Start()
     {
-        playerScript = GameObject.Find("Player").GetComponent<PlayerMovement>();
-        if (playerScript == null) Debug.LogError("No Player script found");
-
         if (controls == null)
         {
             controls = GameObject.Find("GameLogic").GetComponent<Controls>();

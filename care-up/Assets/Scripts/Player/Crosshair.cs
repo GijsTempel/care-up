@@ -3,16 +3,15 @@ using UnityEngine;
 using System.Collections;
 
 [Serializable]
-public class Crosshair {
+public class Crosshair : MonoBehaviour{
 
     public Texture2D crosshairTexture;
-    public bool enabled = true;
 
     private Rect position;
 
     public void OnGUI() {
 
-        if (crosshairTexture == null || !enabled)
+        if (crosshairTexture == null)
             return;
 
         position = new Rect((Screen.width - crosshairTexture.width) / 2.0f,
