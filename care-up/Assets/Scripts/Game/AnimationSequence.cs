@@ -6,19 +6,50 @@ using UnityEngine;
 
 public class AnimationSequence  {
     
-    public class SequenceStep
+    public class RandomOption
     {
-        public string animationToPlay;
-        public List<SelectDialogue.DialogueOption> options;
+        public string audio;
+        public string animation;
 
-        public SequenceStep(string anim, List<SelectDialogue.DialogueOption> opt)
+        public RandomOption(string au, string an)
         {
-            animationToPlay = anim;
-            options = opt;
+            audio = au;
+            animation = an;
         }
     }
 
-    private List<List<SelectDialogue.DialogueOption>> steps = new List<List<SelectDialogue.DialogueOption>>();
+    public class SequenceStep
+    {
+        public List<SelectDialogue.DialogueOption> options;
+        public List<RandomOption> randomOptions;
+        public int correct;
+
+        public SequenceStep()
+        {
+            options = new List<SelectDialogue.DialogueOption>();
+            randomOptions = new List<RandomOption>();
+        }
+
+        public void GenerateCorrectOption()
+        {
+            if (randomOptions.Count > 0)
+            {
+                correct = Random.Range(0, randomOptions.Count);
+            }
+        }
+
+        public string GetCorrectAnimation()
+        {
+            return randomOptions.ElementAt(correct).animation;
+        }
+
+        public string GetCorrectAudio()
+        {
+            return randomOptions.ElementAt(correct).audio;
+        }
+    }
+
+    private List<SequenceStep> steps = new List<SequenceStep>();
     private int currentStep = 0;
     private int pointsEarned = 1;
 
@@ -48,23 +79,33 @@ public class AnimationSequence  {
 
         foreach (XmlNode xmlStep in xmlSteps)
         {
-            List<SelectDialogue.DialogueOption> step = new List<SelectDialogue.DialogueOption>();
+            SequenceStep step = new SequenceStep();
             XmlNodeList xmlOptions = xmlStep.ChildNodes;
-            foreach(XmlNode xmlOption in xmlOptions)
+            foreach (XmlNode xmlOption in xmlOptions)
             {
-                string description = xmlOption.Attributes["text"].Value;
-                string animation = xmlOption.Attributes["animation"] != null ? xmlOption.Attributes["animation"].Value : "";
-                SelectDialogue.DialogueOption option = new SelectDialogue.DialogueOption(description, PlayAnimation, animation);
-                if (step.Count < 3) // add only 3 options as 4th is leaving
+                if (xmlOption.Name == "option")
                 {
-                    step.Add(option);
+                    string description = xmlOption.Attributes["text"].Value;
+                    string animation = xmlOption.Attributes["animation"] != null ? xmlOption.Attributes["animation"].Value : "";
+                    SelectDialogue.DialogueOption option = new SelectDialogue.DialogueOption(description, PlayAnimation, animation);
+                    if (step.options.Count < 3) // add only 3 options as 4th is leaving
+                    {
+                        step.options.Add(option);
+                    }
+                }
+                else // randomoptions
+                {
+                    string audio = xmlOption.Attributes["audio"].Value;
+                    string animation = xmlOption.Attributes["animation"].Value;
+                    step.randomOptions.Add(new RandomOption(audio, animation));
+                    step.GenerateCorrectOption();
                 }
             }
             // shuffle
-            step = step.OrderBy(x => Random.value).ToList();
+            step.options = step.options.OrderBy(x => Random.value).ToList();
             // add leave option
-            step.Add(new SelectDialogue.DialogueOption("Leave", PlayAnimation, "CM_Leave"));
-            
+            step.options.Add(new SelectDialogue.DialogueOption("Leave", PlayAnimation, "CM_Leave"));
+
             steps.Add(step);
         }
     }
@@ -80,17 +121,35 @@ public class AnimationSequence  {
                 currentStep = steps.Count;
                 NextStep();
             }
-            else 
+            else
             {
-                if ( animation == "Inject Pricking pen" || animation == "ThrowSyringe" )
+                if (steps.ElementAt(currentStep-1).randomOptions.Count > 0)
                 {
-                    GameObject.Find("GameLogic").GetComponent<HandsInventory>().PutAllOnTable();
+                    if (animation == steps.ElementAt(currentStep-1).GetCorrectAnimation())
+                    {
+                        Debug.Log("Play animation: " + animation);
+                        actionManager.Points++;
+                        pointsEarned++;
+                        NextStep();
+                    }
+                    else
+                    {
+                        Narrator.PlaySound("WrongAction");
+                        actionManager.Points--;
+                    }
                 }
+                else
+                {
+                    if (animation == "Inject Pricking pen" || animation == "ThrowSyringe")
+                    {
+                        GameObject.Find("GameLogic").GetComponent<HandsInventory>().PutAllOnTable();
+                    }
 
-                Debug.Log("Play animation: " + animation);
-                actionManager.Points++;
-                pointsEarned++;
-                NextStep();
+                    Debug.Log("Play animation: " + animation);
+                    actionManager.Points++;
+                    pointsEarned++;
+                    NextStep();
+                }
             }
         }
         else
@@ -116,7 +175,12 @@ public class AnimationSequence  {
             SelectDialogue dialogue = dialogueObject.GetComponent<SelectDialogue>();
             dialogue.Init(false);
 
-            dialogue.AddOptions(steps[currentStep]);
+            if (steps.ElementAt(currentStep).randomOptions.Count > 0)
+            {
+                dialogue.SetText(steps.ElementAt(currentStep).GetCorrectAudio());
+            }
+
+            dialogue.AddOptions(steps.ElementAt(currentStep).options);
 
             cameraMode.ToggleCameraMode(CameraMode.Mode.SelectionDialogue);
         }

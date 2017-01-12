@@ -52,6 +52,8 @@ public class SelectDialogue : MonoBehaviour {
     private Material selectedMaterial;
     private Material defaultMaterial;
 
+    private string text;
+
     private static CameraMode cameraMode;
     private static Controls controls;
 
@@ -93,6 +95,8 @@ public class SelectDialogue : MonoBehaviour {
         mouseState = Vector2.zero;
         currentOption = OptionSide.None;
         options.Clear();
+
+        text = "";
 
         destroy = selfDestroy;
     }
@@ -250,6 +254,25 @@ public class SelectDialogue : MonoBehaviour {
                 break;
             default:
                 break;
+        }
+    }
+
+    public void SetText(string t)
+    {
+        text = t;
+    }
+
+    void OnGUI()
+    {
+        if (text != "")
+        {
+            GUIStyle style = GUI.skin.GetStyle("Label");
+            style.alignment = TextAnchor.LowerCenter;
+            style.fontSize = 30;
+            style.normal.textColor = Color.white;
+
+            GUI.Label(new Rect(0, 0, Screen.width, Screen.height),
+                text, style);
         }
     }
 }
