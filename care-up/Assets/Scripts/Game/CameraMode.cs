@@ -11,8 +11,8 @@ public class CameraMode : MonoBehaviour {
         SelectionDialogue
     };
 
-    public float minZoom = 1.0f;
-    public float maxZoom = 5.0f;
+    public float minZoom = 0.5f;
+    public float maxZoom = 2.0f;
     
     private Mode currentMode = Mode.Free;
 

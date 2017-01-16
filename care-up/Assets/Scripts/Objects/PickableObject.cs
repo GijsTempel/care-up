@@ -40,7 +40,9 @@ public class PickableObject : InteractableObject {
     
     public void InHandUpdate(bool right)
     {
-        transform.localRotation = Quaternion.Euler(rotationInHand + Camera.main.transform.rotation.eulerAngles);
+        Vector3 rotation = Camera.main.transform.eulerAngles;
+        rotation.z = rotation.x;  rotation.x = 0.0f;
+        transform.localRotation = Quaternion.Euler(rotationInHand + rotation);
     }
 
     public void Drop(bool force = false)

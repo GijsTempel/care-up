@@ -4,8 +4,8 @@ using System.Collections;
 public class HandsInventory : MonoBehaviour {
 
     // position in air 
-    public float horisontalOffset = 2.0f;
-    public float distanceFromCamera = 3.0f;
+    public float horisontalOffset = 0.5f;
+    public float distanceFromCamera = 1.0f;
 
     private PickableObject leftHandObject;
     private PickableObject rightHandObject;

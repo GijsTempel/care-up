@@ -7,7 +7,7 @@ public class ExaminableObject : InteractableObject {
     [Serializable]
     public class ViewSettings
     {
-        public float distanceFromCamera = 4.0f;
+        public float distanceFromCamera = 2.0f;
         public float rotationSensetivity = 90.0f;
     };
 
