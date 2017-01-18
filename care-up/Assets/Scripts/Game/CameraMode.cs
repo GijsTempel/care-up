@@ -37,7 +37,6 @@ public class CameraMode : MonoBehaviour {
         if (playerScript == null) Debug.LogError("No Player script found");
 
         inventory = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
-        if (inventory == null) Debug.LogError("No inventory script found");
 
         blur = Camera.main.GetComponent<UnityStandardAssets.ImageEffects.BlurOptimized>();
         if (blur == null) Debug.Log("No Blur Attached to main camera.");
