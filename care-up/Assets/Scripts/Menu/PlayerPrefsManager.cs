@@ -28,4 +28,10 @@ public class PlayerPrefsManager : MonoBehaviour
         get { return PlayerPrefs.GetFloat("Volume"); }
         set { PlayerPrefs.SetFloat("Volume", value); }
     }
+
+    public bool TutorialCompleted
+    {
+        get { return PlayerPrefs.GetInt("TutorialCompleted") == 1; }
+        set { PlayerPrefs.SetInt("TutorialCompleted", value ? 1 : 0); }
+    }
 }

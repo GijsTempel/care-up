@@ -20,16 +20,27 @@ public class SystemObject : InteractableObject {
 
     public virtual void Use()
     {
-        if (sceneName == "_Continue")
+        if (name == "Start")
         {
-            GameObject.Find("Preferences").GetComponent<SaveLoadManager>().LoadLevel();
-        }
-        else if (sceneName == "_Exit")
-        {
-            Application.Quit();
+            if ( !GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().TutorialCompleted )
+            {
+                Debug.LogWarning("Tutorial is not completed. Load tutorial level now.");
+                Debug.LogWarning("No tutorial level yet, so loading module selection.");
+                SceneManager.LoadScene("SceneSelection");
+            }
         }
         else {
-            SceneManager.LoadScene(sceneName);
+            if (sceneName == "_Continue")
+            {
+                GameObject.Find("Preferences").GetComponent<SaveLoadManager>().LoadLevel();
+            }
+            else if (sceneName == "_Exit")
+            {
+                Application.Quit();
+            }
+            else {
+                SceneManager.LoadScene(sceneName);
+            }
         }
     }
 }
