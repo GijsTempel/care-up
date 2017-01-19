@@ -76,7 +76,10 @@ public class InteractableObject : MonoBehaviour {
             {
                 if (rend.material.shader == onMouseExitShader)
                 {
-                    rend.material.shader = onMouseOverShader;
+                    foreach (Material m in rend.materials)
+                    {
+                        m.shader = onMouseOverShader;
+                    }
 
                     itemDescription.GetComponentInChildren<Text>().text = (description == "") ? name : description;
                     Transform icons = itemDescription.transform.GetChild(0).GetChild(0);
@@ -91,7 +94,10 @@ public class InteractableObject : MonoBehaviour {
             {
                 if (rend.material.shader != onMouseExitShader)
                 {
-                    rend.material.shader = onMouseExitShader;
+                    foreach (Material m in rend.materials)
+                    {
+                        m.shader = onMouseExitShader;
+                    }
                     itemDescription.SetActive(false);
                 }
             }
