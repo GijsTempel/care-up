@@ -73,7 +73,7 @@ public class PickableObject : InteractableObject {
         }
     }
 
-    public virtual void Use()
+    public virtual bool Use()
     {
         if (controls.SelectedObject != null && controls.CanInteract)
         {
@@ -92,7 +92,7 @@ public class PickableObject : InteractableObject {
                     AnimationSequence animationSequence = new AnimationSequence("BandAid");
                     animationSequence.NextStep();
                     Destroy(gameObject);
-                    return;
+                    return true;
                 }
             }
             else if (name == "PrickingPen" && controls.SelectedObject.name == "Finger")
@@ -103,7 +103,7 @@ public class PickableObject : InteractableObject {
                     actionManager.OnUseOnAction("PrickingPen", "Finger");
                     AnimationSequence animationSequence = new AnimationSequence("MeasureBloodGlucose");
                     animationSequence.NextStep();
-                    return;
+                    return true;
                 }
             }
             else if (name == "SyringeWithInjectionNeedle"
@@ -128,7 +128,7 @@ public class PickableObject : InteractableObject {
                         AnimationSequence animationSequence = new AnimationSequence("Injection v2");
                         animationSequence.NextStep();
                     }
-                    return;
+                    return true;
                 }
             }
             else if (name == "InsulinPenWithNeedle"
@@ -140,7 +140,7 @@ public class PickableObject : InteractableObject {
                     actionManager.OnUseOnAction("InsulinPenWithNeedle", "Hand");
                     AnimationSequence animationSequence = new AnimationSequence("InsulinInjection");
                     animationSequence.NextStep();
-                    return;
+                    return true;
                 }
             }
             else if (name == "Syringe"
@@ -152,7 +152,17 @@ public class PickableObject : InteractableObject {
                     actionManager.OnUseOnAction("Syringe", "Person");
                     AnimationSequence animationSequence = new AnimationSequence("WingedNeedle");
                     animationSequence.NextStep();
-                    return;
+                    return true;
+                }
+            }
+            else if (name == "SyringeWithAbsorptionNeedle"
+                && controls.SelectedObject.name == "Hand")
+            {
+                string[] info = actionManager.CurrentUseOnInfo;
+                if (info[0] == "SyringeWithAbsorptionNeedle" && info[1] == "Hand")
+                {
+                    actionManager.OnUseOnAction("SyringeWithAbsorptionNeedle", "Hand");
+                    return true; // for tutorial
                 }
             }
         }
@@ -162,7 +172,12 @@ public class PickableObject : InteractableObject {
             {
                 GameObject.Find("GameLogic").GetComponent<HandsInventory>().GlovesToggle(true);
             }
+            else
+            {
+                return false;
+            }
         }
         actionManager.OnUseOnAction(name, controls.SelectedObject != null && controls.CanInteract ? controls.SelectedObject.name : "");
+        return true;
     }
 }

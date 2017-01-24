@@ -24,8 +24,25 @@ public class SystemObject : InteractableObject {
         {
             if ( !GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().TutorialCompleted )
             {
-                Debug.LogWarning("Tutorial is not completed. Load tutorial level now.");
-                Debug.LogWarning("No tutorial level yet, so loading module selection.");
+                // dev part, if there's dev object in scene
+                if (GameObject.Find("_SkipTutorial"))
+                {
+                    Debug.LogWarning("TutorialSkip found! => Skipping tutorial");
+                    SceneManager.LoadScene("SceneSelection");
+                }
+                if (GameObject.Find("_LaunchTutorial"))
+                {
+                    Debug.LogWarning("TutorialLaunch found! => forcing tutorial launch");
+                    SceneManager.LoadScene("Tutorial");
+                }
+                // end dev part
+
+                Debug.Log("Tutorial is not completed.");
+                SceneManager.LoadScene("Tutorial");
+            }
+            else
+            {
+                Debug.Log("Tutorial completed.");
                 SceneManager.LoadScene("SceneSelection");
             }
         }

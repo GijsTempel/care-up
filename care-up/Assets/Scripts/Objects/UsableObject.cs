@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class UsableObject : InteractableObject {
 
+    public bool tutorial_used = false;
+
     private static HandsInventory handsInventory;
 
     protected override void Start()
@@ -53,6 +55,7 @@ public class UsableObject : InteractableObject {
                     }
                     break;
             }
+            tutorial_used = true;
             actionManager.OnUseAction(gameObject.name);
             Reset();
         }

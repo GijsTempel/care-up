@@ -3,6 +3,13 @@ using System.Collections;
 
 public class HandsInventory : MonoBehaviour {
 
+    public bool tutorial_pickedLeft = false;
+    public bool tutorial_pickedRight = false;
+    public bool tutorial_droppedLeft = false;
+    public bool tutorial_droppedRight = false;
+    public bool tutorial_combined = false;
+    public bool tutorial_itemUsedOn = false;
+
     // position in air 
     public float horisontalOffset = 0.5f;
     public float distanceFromCamera = 1.0f;
@@ -78,6 +85,7 @@ public class HandsInventory : MonoBehaviour {
             {
                 if (leftHandObject)
                 {
+                    tutorial_droppedLeft = true;
                     leftHandObject.Drop();
                     leftHandObject = null;
                 }
@@ -87,6 +95,7 @@ public class HandsInventory : MonoBehaviour {
             {
                 if (rightHandObject)
                 {
+                    tutorial_droppedRight = true;
                     rightHandObject.Drop();
                     rightHandObject = null;
                 }
@@ -106,6 +115,7 @@ public class HandsInventory : MonoBehaviour {
 
                 if (combined && combineAllowed)
                 {
+                    tutorial_combined = true;
                     if (leftName != leftResult)
                     {
                         Vector3 leftSavedPos = Vector3.zero;
@@ -156,7 +166,10 @@ public class HandsInventory : MonoBehaviour {
             {
                 if (leftHandObject != null)
                 {
-                    leftHandObject.Use();
+                    if (leftHandObject.Use())
+                    {
+                        tutorial_itemUsedOn = true;
+                    }
                 }
                 else if (glovesOn && rightHandObject == null)
                 {
@@ -169,7 +182,10 @@ public class HandsInventory : MonoBehaviour {
             {
                 if (rightHandObject)
                 {
-                    rightHandObject.Use();
+                    if (rightHandObject.Use())
+                    {
+                        tutorial_itemUsedOn = true;
+                    }
                 }
                 else if (glovesOn && leftHandObject == null)
                 {
@@ -235,12 +251,14 @@ public class HandsInventory : MonoBehaviour {
 
             if (leftHandObject)
             {
+                tutorial_pickedLeft = true;
                 leftHandObject.GetComponent<Rigidbody>().useGravity = false;
                 leftHandObject.GetComponent<Collider>().enabled = false;
                 actionManager.OnPickUpAction(leftHandObject.name);
             }
             if (rightHandObject)
             {
+                tutorial_pickedRight = true;
                 rightHandObject.GetComponent<Rigidbody>().useGravity = false;
                 rightHandObject.GetComponent<Collider>().enabled = false;
                 actionManager.OnPickUpAction(rightHandObject.name);

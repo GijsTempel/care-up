@@ -4,6 +4,9 @@ using System;
 
 public class ExaminableObject : InteractableObject {
 
+    public bool tutorial_picked = false;
+    public bool tutorial_closed = false;
+
     [Serializable]
     public class ViewSettings
     {
@@ -26,10 +29,12 @@ public class ExaminableObject : InteractableObject {
         viewMode = value;
         if (viewMode)
         {
+            tutorial_picked = true;
             SavePosition();
         }
         else
         {
+            tutorial_closed = true;
             LoadPosition();
         }
 

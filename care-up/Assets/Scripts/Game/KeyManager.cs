@@ -78,6 +78,8 @@ public class ControllerAxisKey : Key
 [Serializable]
 public class InputKey
 {
+    public bool locked = false;
+
     private List<Key> keyList;
     private bool unrestricted = false;
 
@@ -105,6 +107,11 @@ public class InputKey
 
     public bool Pressed()
     {
+        if (locked)
+        {
+            return false;
+        }
+
         bool pressed = false;
 
         foreach (Key k in keyList)

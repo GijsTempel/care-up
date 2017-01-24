@@ -25,6 +25,21 @@ public class Controls : MonoBehaviour {
                                                     new ControllerKey(KeyCode.Joystick1Button3));
         public InputKey GetHintKey   = new InputKey(new KeyBoardKey(KeyCode.Space),
                                                     new ControllerKey(KeyCode.Joystick1Button6, KeyCode.Joystick1Button8));
+
+        public bool mouseClickLocked = false;
+        public void SetAllLocked(bool value)
+        {
+            mouseClickLocked = value;
+            mouseClickKey.locked = value;
+            LeftDropKey.locked = value;
+            RightDropKey.locked = value;
+            LeftUseKey.locked = value;
+            RightUseKey.locked = value;
+            closeObjectView.locked = value;
+            pickObjectView.locked = value;
+            CombineKey.locked = value;
+            GetHintKey.locked = value;
+        }
     };
 
     public KeyPreferences keyPreferences = new KeyPreferences();
@@ -69,6 +84,11 @@ public class Controls : MonoBehaviour {
 
     public bool MouseClicked()
     {
+        if (keyPreferences.mouseClickLocked)
+        {
+            return false;
+        }
+
         return Input.GetMouseButtonDown(0) || keyPreferences.mouseClickKey.Pressed();
     }
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ActionList points="18">
+	<action description="Use HandCleaner" audioHint=""
+		index="0" type="use" value="HandCleaner" />
+	<action description="Examine medicine" audioHint=""
+		index="1" type="examine" item="Medicine" expected="good" />
+		
+	<action description="Combine syringe and needle" audioHint=""
+		index="2" type="combine" left="Syringe" right="AbsorptionNeedle" />
+	<action description="Combine syringe and medicine" audioHint=""
+		index="3" type="combine" left="SyringeWithAbsorptionNeedle" right="Medicine" />
+		
+	<action description="Use syringe on hand" audioHint=""
+		index="4" type="useOn" item="SyringeWithAbsorptionNeedle" target="Hand" />
+	
+	<action description="Finish tutorial" audioHint=""
+		index="5" type="use" value="__tutorialEnd" />
+</ActionList>

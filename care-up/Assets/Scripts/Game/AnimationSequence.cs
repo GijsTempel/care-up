@@ -56,6 +56,13 @@ public class AnimationSequence  {
     private CameraMode cameraMode;
     private ActionManager actionManager;
 
+    public bool cheated = false;
+
+    public bool Completed
+    {
+        get { return currentStep > steps.Count; }
+    }
+
     public AnimationSequence(string filename)
     {
         currentStep = 0;
@@ -180,7 +187,7 @@ public class AnimationSequence  {
                 dialogue.SetText(steps.ElementAt(currentStep).GetCorrectAudio());
             }
 
-            dialogue.AddOptions(steps.ElementAt(currentStep).options);
+            dialogue.AddOptions(steps.ElementAt(currentStep).options, cheated);
 
             cameraMode.ToggleCameraMode(CameraMode.Mode.SelectionDialogue);
         }
@@ -191,6 +198,21 @@ public class AnimationSequence  {
         }
 
         currentStep += 1;
+    }
+
+    public void TutorialLock(bool value)
+    {
+        SelectDialogue dialogue = GameObject.Find("SelectionDialogue").GetComponent<SelectDialogue>();
+        if ( value )
+        {
+            dialogue.tutorial_lock = true;
+        }
+        else
+        {
+            dialogue.tutorial_lock = false;
+            dialogue.ShowAnswer();
+        }
+        cheated = dialogue.cheated = true;
     }
 
 }

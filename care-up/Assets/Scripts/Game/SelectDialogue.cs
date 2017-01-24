@@ -5,7 +5,10 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class SelectDialogue : MonoBehaviour {
-    
+
+    public bool tutorial_lock = false;
+    public bool cheated = false;
+
     public class DialogueOption
     {
         public delegate void OptionAction(string attr);
@@ -41,6 +44,7 @@ public class SelectDialogue : MonoBehaviour {
 
     private Vector2 mouseState = new Vector2();
     private OptionSide currentOption = OptionSide.None;
+    private Material currentMaterial;
 
     private bool destroy = true;
 
@@ -51,6 +55,7 @@ public class SelectDialogue : MonoBehaviour {
 
     private Material selectedMaterial;
     private Material defaultMaterial;
+    private Material correctMaterial;
 
     private string text;
 
@@ -74,9 +79,10 @@ public class SelectDialogue : MonoBehaviour {
 
     public void Init(bool selfDestroy = true)
     {
-        selectedMaterial = Resources.Load<Material>("Materials/Object Material");
+        selectedMaterial = Resources.Load<Material>("Materials/Blue Material");
         defaultMaterial = Resources.Load<Material>("Materials/Floor Material");
-      
+        correctMaterial = Resources.Load<Material>("Materials/Object Material");
+
         top = transform.FindChild("Top").GetComponent<Renderer>();
         bottom = transform.FindChild("Bottom").GetComponent<Renderer>();
         right = transform.FindChild("Right").GetComponent<Renderer>();
@@ -94,20 +100,23 @@ public class SelectDialogue : MonoBehaviour {
 
         mouseState = Vector2.zero;
         currentOption = OptionSide.None;
+        currentMaterial = defaultMaterial;
         options.Clear();
 
         text = "";
+        cheated = false;
+        tutorial_lock = false;
 
         destroy = selfDestroy;
     }
 
-    public void AddOptions(List<DialogueOption> list)
+    public void AddOptions(List<DialogueOption> list, bool cheat = false)
     {
         foreach(DialogueOption item in list )
         {
             options.Add(item);
         }
-
+        cheated = cheat;
         InitOptions();
     }
 
@@ -167,6 +176,11 @@ public class SelectDialogue : MonoBehaviour {
             options[3].side = OptionSide.Bottom;
             bottom.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = options[3].text;
         }
+
+        if ( cheated )
+        {
+            ShowAnswer();
+        }
     }
 
     void Update()
@@ -191,7 +205,7 @@ public class SelectDialogue : MonoBehaviour {
             Input.GetAxis("Mouse Y")
         );
 
-        UpdateMouse(mouseInput);
+        UpdateMouse(tutorial_lock ? Vector2.zero : mouseInput);
     }
     
     private void UpdateMouse(Vector2 input)
@@ -241,16 +255,48 @@ public class SelectDialogue : MonoBehaviour {
         switch (option)
         {
             case OptionSide.Top:
-                top.material = state ? selectedMaterial : defaultMaterial;
+                if ( state )
+                {
+                    currentMaterial = top.material;
+                    top.material = selectedMaterial;
+                }
+                else
+                {
+                    top.material = currentMaterial;
+                }
                 break;
             case OptionSide.Bottom:
-                bottom.material = state ? selectedMaterial : defaultMaterial;
+                if (state)
+                {
+                    currentMaterial = bottom.material;
+                    bottom.material = selectedMaterial;
+                }
+                else
+                {
+                    bottom.material = currentMaterial;
+                }
                 break;
             case OptionSide.Right:
-                right.material = state ? selectedMaterial : defaultMaterial;
+                if (state)
+                {
+                    currentMaterial = right.material;
+                    right.material = selectedMaterial;
+                }
+                else
+                {
+                    right.material = currentMaterial;
+                }
                 break;
             case OptionSide.Left:
-                left.material = state ? selectedMaterial : defaultMaterial;
+                if (state)
+                {
+                    currentMaterial = left.material;
+                    left.material = selectedMaterial;
+                }
+                else
+                {
+                    left.material = currentMaterial;
+                }
                 break;
             default:
                 break;
@@ -273,6 +319,34 @@ public class SelectDialogue : MonoBehaviour {
 
             GUI.Label(new Rect(0, 0, Screen.width, Screen.height),
                 text, style);
+        }
+    }
+
+    public void ShowAnswer()
+    {
+        if ( cheated )
+        {
+            foreach (DialogueOption o in options)
+            {
+                if ( o.attribute != "" && o.attribute != "CM_Leave")
+                {
+                    switch (o.side)
+                    {
+                        case OptionSide.Bottom:
+                            bottom.material = correctMaterial;
+                            break;
+                        case OptionSide.Left:
+                            left.material = correctMaterial;
+                            break;
+                        case OptionSide.Right:
+                            right.material = correctMaterial;
+                            break;
+                        case OptionSide.Top:
+                            top.material = correctMaterial;
+                            break;
+                    }
+                }
+            }
         }
     }
 }

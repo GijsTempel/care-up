@@ -243,7 +243,7 @@ public class ActionManager : MonoBehaviour {
         string[] info = { item, expected };
         bool occured = Check(info, ActionType.ObjectExamine);
         points += occured ? 1 : 0; // no penalty
-
+        
         Debug.Log("Examine " + item + " with state " + expected + " with result " + occured);
 
         CheckScenarioCompleted();

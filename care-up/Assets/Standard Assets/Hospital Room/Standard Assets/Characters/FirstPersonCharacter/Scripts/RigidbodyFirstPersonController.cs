@@ -8,6 +8,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
     [RequireComponent(typeof (CapsuleCollider))]
     public class RigidbodyFirstPersonController : MonoBehaviour
     {
+        public bool tutorial_movementLock = false;
+        public float tutorial_totalLookAround = 0.0f;
+        public float tutorial_totalMoveAround = 0.0f;
+
         [Serializable]
         public class MovementSettings
         {
@@ -211,13 +215,16 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private Vector2 GetInput()
         {
-            
+            if (tutorial_movementLock)
+                return Vector2.zero;
+
             Vector2 input = new Vector2
                 {
                     x = CrossPlatformInputManager.GetAxis("Horizontal"),
                     y = CrossPlatformInputManager.GetAxis("Vertical")
                 };
 			movementSettings.UpdateDesiredTargetSpeed(input);
+            tutorial_totalMoveAround += input.magnitude;
             return input;
         }
 
@@ -230,7 +237,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             // get the rotation before it's changed
             float oldYRotation = transform.eulerAngles.y;
 
-            mouseLook.LookRotation (transform, cam.transform);
+            tutorial_totalLookAround += mouseLook.LookRotation (transform, cam.transform);
 
             if (m_IsGrounded || advancedSettings.airControl)
             {
