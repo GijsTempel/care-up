@@ -32,6 +32,7 @@ public abstract class Action
     }
     
     public abstract bool Compare(string[] info);
+    public abstract void ObjectNames(out string[] name);
 }
 
 public class CombineAction : Action
@@ -65,6 +66,12 @@ public class CombineAction : Action
         left = leftInput;
         right = rightInput;
     }
+
+    public override void ObjectNames(out string[] name)
+    {
+        string[] res = { leftInput, rightInput };
+        name = res;
+    }
 }
 
 public class UseAction : Action
@@ -94,11 +101,18 @@ public class UseAction : Action
     {
         return useInput;
     }
+
+    public override void ObjectNames(out string[] name)
+    {
+        string[] res = { useInput };
+        name = res;
+    }
 }
 
 public class TalkAction : Action
 {
     private string topicInput;
+    private string person = "Patient"; // TODO
 
     public TalkAction(string topic, int index, string descr, string audio)
         : base(ActionManager.ActionType.PersonTalk, index, descr, audio)
@@ -122,6 +136,12 @@ public class TalkAction : Action
     public string Topic
     {
         get { return topicInput; }
+    }
+
+    public override void ObjectNames(out string[] name)
+    {
+        string[] res = { person };
+        name = res;
     }
 }
 
@@ -155,6 +175,12 @@ public class UseOnAction : Action
         i = item;
         t = target;
     }
+
+    public override void ObjectNames(out string[] name)
+    {
+        string[] res = { item, target };
+        name = res;
+    }
 }
 
 public class ExamineAction : Action
@@ -181,6 +207,12 @@ public class ExamineAction : Action
         }
         return same;
     }
+
+    public override void ObjectNames(out string[] name)
+    {
+        string[] res = { item };
+        name = res;
+    }
 }
 
 public class PickUpAction : Action
@@ -204,5 +236,11 @@ public class PickUpAction : Action
             }
         }
         return same;
+    }
+
+    public override void ObjectNames(out string[] name)
+    {
+        string[] res = { item };
+        name = res;
     }
 }

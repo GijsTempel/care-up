@@ -25,6 +25,8 @@ public class ActionManager : MonoBehaviour {
     private int points = 0;
     private int currentActionIndex = 0;
     private Action currentAction;
+    
+    private List<GameObject> particleHints;
 
     public List<Action> ActionList
     {
@@ -128,6 +130,8 @@ public class ActionManager : MonoBehaviour {
 
     void Start () {
 
+        particleHints = new List<GameObject>();
+
         controls = GameObject.Find("GameLogic").GetComponent<Controls>();
         if (controls == null) Debug.LogError("No controls found");
         
@@ -189,6 +193,31 @@ public class ActionManager : MonoBehaviour {
         {
             if (Narrator.PlaySound(CurrentAudioHint)) // if sound played
             {
+                string[] obj;
+                currentAction.ObjectNames(out obj);
+                GameObject parent;
+                GameObject hintObject = Resources.Load<GameObject>("Prefabs/ParticleHint");
+                
+                if ( obj.Length > 0 )
+                {
+                    parent = GameObject.Find(obj[0]);
+                    if (parent != null)
+                    {
+                        particleHints.Add(Instantiate(hintObject, parent.transform.position,
+                             Quaternion.identity, parent.transform));
+                    }
+                }
+
+                if ( obj.Length == 2 )
+                {
+                    parent = GameObject.Find(obj[1]);
+                    if (parent != null)
+                    {
+                        particleHints.Add(Instantiate(hintObject, parent.transform.position,
+                             Quaternion.identity, parent.transform));
+                    }
+                }
+                
                 points -= 1; // penalty for using hint
             }
         }
@@ -309,6 +338,11 @@ public class ActionManager : MonoBehaviour {
 
     private void CheckScenarioCompleted()
     {
+        // clear hints
+        foreach (GameObject o in particleHints)
+            Destroy(o);
+        particleHints.Clear();
+
         // no unmatched actions left
         if (actionList.Find(action => action.matched == false) == null)
         {

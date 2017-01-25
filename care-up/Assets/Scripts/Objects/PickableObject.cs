@@ -173,6 +173,7 @@ public class PickableObject : InteractableObject {
                     actionManager.OnUseOnAction("SyringeWithAbsorptionNeedle", "");
                     return true; // fix for venting syringe
                 }
+            }
         }
         else // cannot interact or target == ""
         {
