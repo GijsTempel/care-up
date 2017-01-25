@@ -74,6 +74,7 @@ public class PickableObject : InteractableObject {
 
     public virtual bool Use()
     {
+        string[] info = actionManager.CurrentUseOnInfo;
         if (controls.SelectedObject != null && controls.CanInteract)
         {
             if ((name == "InjectionNeedle" || name == "AbsorptionNeedle"
@@ -84,7 +85,7 @@ public class PickableObject : InteractableObject {
             }
             else if (name == "BandAid" && controls.SelectedObject.name == "Hand")
             {
-                string[] info = actionManager.CurrentUseOnInfo;
+                info = actionManager.CurrentUseOnInfo;
                 if (info[0] == "BandAid" && info[1] == "Hand")
                 {
                     actionManager.OnUseOnAction("BandAid", "Hand");
@@ -96,7 +97,7 @@ public class PickableObject : InteractableObject {
             }
             else if (name == "PrickingPen" && controls.SelectedObject.name == "Finger")
             {
-                string[] info = actionManager.CurrentUseOnInfo;
+                info = actionManager.CurrentUseOnInfo;
                 if (info[0] == "PrickingPen" && info[1] == "Finger")
                 {
                     actionManager.OnUseOnAction("PrickingPen", "Finger");
@@ -108,7 +109,7 @@ public class PickableObject : InteractableObject {
             else if (name == "SyringeWithInjectionNeedle"
                 && controls.SelectedObject.name == "Hand")
             {
-                string[] info = actionManager.CurrentUseOnInfo;
+                info = actionManager.CurrentUseOnInfo;
                 if (info[0] == "SyringeWithInjectionNeedle" && info[1] == "Hand")
                 {
                     actionManager.OnUseOnAction("SyringeWithInjectionNeedle", "Hand");
@@ -133,7 +134,7 @@ public class PickableObject : InteractableObject {
             else if (name == "InsulinPenWithNeedle"
                 && controls.SelectedObject.name == "Hand")
             {
-                string[] info = actionManager.CurrentUseOnInfo;
+                info = actionManager.CurrentUseOnInfo;
                 if (info[0] == "InsulinPenWithNeedle" && info[1] == "Hand")
                 {
                     actionManager.OnUseOnAction("InsulinPenWithNeedle", "Hand");
@@ -145,7 +146,7 @@ public class PickableObject : InteractableObject {
             else if (name == "Syringe"
                 && controls.SelectedObject.name == "Person")
             {
-                string[] info = actionManager.CurrentUseOnInfo;
+                info = actionManager.CurrentUseOnInfo;
                 if (info[0] == "Syringe" && info[1] == "Person")
                 {
                     actionManager.OnUseOnAction("Syringe", "Person");
@@ -157,7 +158,7 @@ public class PickableObject : InteractableObject {
             else if (name == "SyringeWithAbsorptionNeedle"
                 && controls.SelectedObject.name == "Hand")
             {
-                string[] info = actionManager.CurrentUseOnInfo;
+                info = actionManager.CurrentUseOnInfo;
                 if (info[0] == "SyringeWithAbsorptionNeedle" && info[1] == "Hand")
                 {
                     actionManager.OnUseOnAction("SyringeWithAbsorptionNeedle", "Hand");
@@ -173,6 +174,7 @@ public class PickableObject : InteractableObject {
             }
         }
         actionManager.OnUseOnAction(name, controls.SelectedObject != null && controls.CanInteract ? controls.SelectedObject.name : "");
-        return true;
+
+        return (info[0] == name && controls.SelectedObject != null && info[1] == controls.SelectedObject.name);
     }
 }
