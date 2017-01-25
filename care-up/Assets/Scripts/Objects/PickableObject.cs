@@ -41,7 +41,6 @@ public class PickableObject : InteractableObject {
     public void InHandUpdate(bool right)
     {
         Vector3 rotation = Camera.main.transform.eulerAngles;
-        rotation.z = rotation.x;  rotation.x = 0.0f;
         transform.localRotation = Quaternion.Euler(rotationInHand + rotation);
     }
 
@@ -171,10 +170,6 @@ public class PickableObject : InteractableObject {
             if ( name == "Gloves" )
             {
                 GameObject.Find("GameLogic").GetComponent<HandsInventory>().GlovesToggle(true);
-            }
-            else
-            {
-                return false;
             }
         }
         actionManager.OnUseOnAction(name, controls.SelectedObject != null && controls.CanInteract ? controls.SelectedObject.name : "");
