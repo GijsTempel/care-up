@@ -165,6 +165,14 @@ public class PickableObject : InteractableObject {
                     return true; // for tutorial
                 }
             }
+            else if (name == "SyringeWithAbsorptionNeedle")
+            {
+                info = actionManager.CurrentUseOnInfo;
+                if (info[0] == "SyringeWithAbsorptionNeedle" && info[1] == "")
+                {
+                    actionManager.OnUseOnAction("SyringeWithAbsorptionNeedle", "");
+                    return true; // fix for venting syringe
+                }
         }
         else // cannot interact or target == ""
         {
