@@ -6,6 +6,8 @@ using System.Collections.Generic;
 
 public class ActionManager : MonoBehaviour {
 
+    public bool tutorial_hintUsed = false;
+
     public enum ActionType
     {
         ObjectCombine,
@@ -217,7 +219,8 @@ public class ActionManager : MonoBehaviour {
                              Quaternion.identity, parent.transform));
                     }
                 }
-                
+
+                tutorial_hintUsed = true;
                 points -= 1; // penalty for using hint
             }
         }
@@ -284,7 +287,10 @@ public class ActionManager : MonoBehaviour {
         bool occured = Check(info, ActionType.PickUp);
         points += occured ? 1 : 0; // no penalty
 
-        Debug.Log("Pick Up " + item + " with result " + occured);
+        if (occured)
+        {
+            Debug.Log("Pick Up " + item + " with result " + occured);
+        }
 
         CheckScenarioCompleted();
     }

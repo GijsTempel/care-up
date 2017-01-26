@@ -12,8 +12,8 @@ public class TutorialManager : MonoBehaviour {
         WalkAround,
         WalkToTable,
         UseHandCleaner,
-        ExamineMedicine,
-        CloseExamine,
+        ExamineRecords,
+        CloseRecords,
         PickItem,
         PickAnotherItem,
         DroppingExplanation,
@@ -24,6 +24,7 @@ public class TutorialManager : MonoBehaviour {
         DropBothItems,
         PickBothItemsAgain,
         CombineItems,
+        UseHint,
         PickMedicine,
         CombineItemsAgain,
         MoveToPatient,
@@ -46,13 +47,19 @@ public class TutorialManager : MonoBehaviour {
     private HandsInventory handsInventory;
     private Controls controls;
     private UsableObject handCleaner;
-    private ExaminableObject medicine;
+    private ExaminableObject patientRecords;
     private GameObject syringe;
     private GameObject needle;
+    private ExaminableObject medicine;
     private Transform tableTrigger;
     private Transform patientTrigger;
 
+    private GameObject particleHint;
+
 	void Start () {
+        particleHint = GameObject.Find("ParticleHint");
+        particleHint.SetActive(false);
+
         GameObject gameLogic = GameObject.Find("GameLogic");
         actionManager = gameLogic.GetComponent<ActionManager>();
         handsInventory = gameLogic.GetComponent<HandsInventory>();
@@ -60,6 +67,7 @@ public class TutorialManager : MonoBehaviour {
 
         player = GameObject.Find("Player").GetComponent<RigidbodyFirstPersonController>();
         handCleaner = GameObject.Find("HandCleaner").GetComponent<UsableObject>();
+        patientRecords = GameObject.Find("PatientRecords").GetComponent<ExaminableObject>();
         medicine = GameObject.Find("Medicine").GetComponent<ExaminableObject>();
         syringe = GameObject.Find("Syringe");
         needle = GameObject.Find("AbsorptionNeedle");
@@ -70,9 +78,6 @@ public class TutorialManager : MonoBehaviour {
 
         tableTrigger = GameObject.Find("__tableTrigger").transform;
         patientTrigger = GameObject.Find("__patientTrigger").transform;
-
-        tableTrigger.gameObject.SetActive(false);
-        patientTrigger.gameObject.SetActive(false);
 	}
 	
 	void Update () {
@@ -112,7 +117,8 @@ public class TutorialManager : MonoBehaviour {
                     {
                         actionManager.Points += 1;
                         currentStep = TutorialStep.WalkToTable;
-                        tableTrigger.gameObject.SetActive(true);
+                        particleHint.transform.position = tableTrigger.transform.position;
+                        particleHint.SetActive(true);
                         UItext = "Move to the table using W, A, S, D and the mouse";
                     }
                     break;
@@ -125,32 +131,37 @@ public class TutorialManager : MonoBehaviour {
                         currentStep = TutorialStep.UseHandCleaner;
                         controls.keyPreferences.mouseClickLocked = false;
                         controls.keyPreferences.mouseClickKey.locked = false;
+                        particleHint.transform.position = handCleaner.transform.position;
                         UItext = "You are able to use highlighted object when you see the hand icon by pressing the left mouse button. Let use the hand hygiene pump to wash our hands";
                     }
                     break;
                 case TutorialStep.UseHandCleaner:
                     if ( handCleaner.tutorial_used )
                     {
-                        currentStep = TutorialStep.ExamineMedicine;
-                        medicine.gameObject.SetActive(true);
+                        currentStep = TutorialStep.ExamineRecords;
+                        patientRecords.gameObject.SetActive(true);
+                        particleHint.transform.position = patientRecords.transform.position;
                         UItext = "Some object need to be examined, like patient records. When you see an magnifing icon it means you can examine the object";
                     }
                     break;
-                case TutorialStep.ExamineMedicine:
-                    if ( medicine.tutorial_picked )
+                case TutorialStep.ExamineRecords:
+                    if ( patientRecords.tutorial_picked )
                     {
-                        currentStep = TutorialStep.CloseExamine;
+                        currentStep = TutorialStep.CloseRecords;
                         controls.keyPreferences.closeObjectView.locked = false;
+                        particleHint.SetActive(false);
                         UItext = ": After examining an object you can put it back down by pressing Q";
                     }
                     break;
-                case TutorialStep.CloseExamine:
-                    if ( medicine.tutorial_closed )
+                case TutorialStep.CloseRecords:
+                    if ( patientRecords.tutorial_closed )
                     {
                         actionManager.Points += 1;
                         currentStep = TutorialStep.PickItem;
                         syringe.SetActive(true);
                         needle.SetActive(true);
+                        particleHint.transform.position = Vector3.Lerp(syringe.transform.position, needle.transform.position, 0.5f);
+                        particleHint.SetActive(true);
                         UItext = "You are able to pick up some highlighted object by pressing the left mouse button.";
                     }
                     break;
@@ -181,6 +192,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         if (handsInventory.tutorial_pickedRight)
                         {
+                            particleHint.SetActive(false);
                             actionManager.Points += 1;
                             UItext = "When you have an item in your left hand. The second item wil appear in your right hand. You are only able to hold 2 items at once.";
                             SetPauseTimer(3.0f);
@@ -260,11 +272,27 @@ public class TutorialManager : MonoBehaviour {
                 case TutorialStep.CombineItems:
                     if ( handsInventory.tutorial_combined )
                     {
+                        currentStep = TutorialStep.UseHint;
+                        controls.keyPreferences.GetHintKey.locked = false;
+                        medicine.gameObject.SetActive(true);
+                        UItext = "If you do not know what step you need to preform next, you can press the sapce bar to get a hit. Try this now";
+                    }
+                    break;
+                case TutorialStep.UseHint:
+                    if (TimerElapsed())
+                    {
                         currentStep = TutorialStep.PickMedicine;
                         controls.keyPreferences.pickObjectView.locked = false;
                         handsInventory.tutorial_pickedLeft =
                             handsInventory.tutorial_pickedRight = false;
                         UItext = "Now that we have the syringe prepared lets pick up the medicine";
+                    }
+                    else {
+                        if (actionManager.tutorial_hintUsed)
+                        {
+                            UItext = "You will think out loud about the next step. Also objects needed for the next step will be highlighted.";
+                            SetPauseTimer(3.0f);
+                        }
                     }
                     break;
                 case TutorialStep.PickMedicine:
@@ -279,7 +307,8 @@ public class TutorialManager : MonoBehaviour {
                     if ( handsInventory.tutorial_combined )
                     {
                         currentStep = TutorialStep.MoveToPatient;
-                        patientTrigger.gameObject.SetActive(true);
+                        particleHint.transform.position = patientTrigger.transform.position;
+                        particleHint.SetActive(true);
                         UItext = "Items can be used on other object like a patient. Let’s try this now. Move close enough to the patient.";
                     }
                     break;
@@ -291,12 +320,14 @@ public class TutorialManager : MonoBehaviour {
                         currentStep = TutorialStep.UseOnHand;
                         controls.keyPreferences.LeftUseKey.locked = false;
                         controls.keyPreferences.RightUseKey.locked = false;
+                        particleHint.transform.position = GameObject.Find("Hand").transform.position;
                         UItext = "now you can see an use icon on the patient. Depending on which hand hold your object. You can press “E” or “Q” to use your object. Try this now.";
                     }
                     break;
                 case TutorialStep.UseOnHand:
                     if ( handsInventory.tutorial_itemUsedOn )
                     {
+                        particleHint.SetActive(false);
                         currentStep = TutorialStep.SequenceExplanation;
                         animationSequence = new AnimationSequence("Injection");
                         animationSequence.NextStep();
