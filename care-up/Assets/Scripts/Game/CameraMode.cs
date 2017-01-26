@@ -8,7 +8,8 @@ public class CameraMode : MonoBehaviour {
     {
         Free,
         ObjectPreview,
-        SelectionDialogue
+        SelectionDialogue,
+        ConfirmUI
     };
 
     public float minZoom = 0.5f;
@@ -17,6 +18,9 @@ public class CameraMode : MonoBehaviour {
     private Mode currentMode = Mode.Free;
 
     private ExaminableObject selectedObject;
+    private SystemObject doorSelected;
+
+    private GameObject confirmUI;
 
     private Controls controls;
     private RigidbodyFirstPersonController playerScript;
@@ -40,10 +44,27 @@ public class CameraMode : MonoBehaviour {
 
         blur = Camera.main.GetComponent<UnityStandardAssets.ImageEffects.BlurOptimized>();
         if (blur == null) Debug.Log("No Blur Attached to main camera.");
+
+        confirmUI = (GameObject)Instantiate(Resources.Load("Prefabs/ConfirmUI"), Vector3.zero, Quaternion.identity);
+        confirmUI.SetActive(false);
     }
 
     void Update()
     {
+        if (currentMode == Mode.ConfirmUI)
+        {
+            if (controls.keyPreferences.mouseClickKey.Pressed()
+                || controls.MouseClicked())
+            {
+                doorSelected.Use(true);
+            }
+            else if (controls.keyPreferences.closeObjectView.Pressed()
+                || controls.RightMouseClicked())
+            {
+                ToggleCameraMode(Mode.Free);
+            }
+        }
+
         if (controls.MouseClicked() && currentMode == Mode.Free)
         {
             if (controls.SelectedObject && controls.CanInteract)
@@ -56,6 +77,15 @@ public class CameraMode : MonoBehaviour {
                     selectedObject.ToggleViewMode(true);
                     selectedObject.OnExamine();
                     controls.ResetObject();
+                }
+                else
+                {
+                    doorSelected = controls.SelectedObject.GetComponent<SystemObject>();
+                    if (doorSelected != null ) // door handle
+                    {
+                        ToggleCameraMode(Mode.ConfirmUI);
+                        controls.ResetObject();
+                    }
                 }
             }
         }
@@ -127,7 +157,7 @@ public class CameraMode : MonoBehaviour {
     {
         if (currentMode == Mode.Free && mode == Mode.ObjectPreview)
         {
-            playerScript.enabled = false;
+            TogglePlayerScript(false);
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
@@ -136,7 +166,7 @@ public class CameraMode : MonoBehaviour {
         }
         else if (currentMode == Mode.ObjectPreview && mode == Mode.Free)
         {
-            playerScript.enabled = true;
+            TogglePlayerScript(true);
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -145,15 +175,42 @@ public class CameraMode : MonoBehaviour {
         }
         else if (currentMode == Mode.Free && mode == Mode.SelectionDialogue)
         {
-            playerScript.enabled = false;
+            TogglePlayerScript(false);
         }
         else if (currentMode == Mode.SelectionDialogue && mode == Mode.Free)
         {
-            playerScript.enabled = true;
+            TogglePlayerScript(true);
+        }
+        else if (currentMode == Mode.Free && mode == Mode.ConfirmUI)
+        {
+            TogglePlayerScript(false);
+            confirmUI.transform.position = doorSelected.transform.position;
+            confirmUI.transform.rotation = doorSelected.transform.rotation;
+            confirmUI.transform.position += Camera.main.transform.forward * (-0.3f);
+            confirmUI.SetActive(true);
+        }
+        else if (currentMode == Mode.ConfirmUI && mode == Mode.Free)
+        {
+            TogglePlayerScript(true);
+            confirmUI.SetActive(false);
         }
 
         currentMode = mode;
         controls.ResetObject();
+    }
+
+    void TogglePlayerScript(bool value)
+    {
+        if (value)
+        {
+            playerScript.enabled = true;
+            playerScript.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+        }
+        else
+        {
+            playerScript.enabled = false;
+            playerScript.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        }
     }
 
     void OnGUI()

@@ -18,7 +18,7 @@ public class SystemObject : InteractableObject {
     }
 
 
-    public virtual void Use()
+    public virtual void Use(bool confirmed = false)
     {
         if (name == "Start")
         {
@@ -58,7 +58,13 @@ public class SystemObject : InteractableObject {
                 Application.Quit();
             }
             else {
-                SceneManager.LoadScene(sceneName);
+                if (confirmed)
+                {
+                    SceneManager.LoadScene(sceneName);
+                }
+                else {
+                    cameraMode.ToggleCameraMode(CameraMode.Mode.ConfirmUI);
+                }
             }
         }
     }
