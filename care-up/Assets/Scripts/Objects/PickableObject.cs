@@ -118,9 +118,18 @@ public class PickableObject : InteractableObject {
                         AnimationSequence animationSequence = new AnimationSequence("Injection");
                         animationSequence.NextStep();
                     }
-                    else if (SceneManager.GetActiveScene().name == "Injection Subcutaneous")
+                    else if (SceneManager.GetActiveScene().name == "Injection Subcutaneous" ||
+                        SceneManager.GetActiveScene().name == "Injection Subcutaneous_ampoule" ||
+                        SceneManager.GetActiveScene().name == "Injection Subcutaneous_desolve")
                     {
                         AnimationSequence animationSequence = new AnimationSequence("SubcutaneousInjection");
+                        animationSequence.NextStep();
+                    }
+                    else if (SceneManager.GetActiveScene().name == "Injection Subcutaneous v2" ||
+                        SceneManager.GetActiveScene().name == "Injection Subcutaneous v2_ampoule" ||
+                        SceneManager.GetActiveScene().name == "Injection Subcutaneous v2_desolve")
+                    {
+                        AnimationSequence animationSequence = new AnimationSequence("SubcutaneousInjection v2");
                         animationSequence.NextStep();
                     }
                     else if (SceneManager.GetActiveScene().name == "Injection scene v2")

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CombinationList>
+    <combination leftInput="Ampoule" rightInput="Cloth" leftResult="OpenedAmpoule" rightResult="Cloth" />
+    <combination leftInput="AbsorptionNeedle" rightInput="Syringe" leftResult="" rightResult="SyringeWithAbsorptionNeedle" />
+	<combination leftInput="SyringeWithAbsorptionNeedle" rightInput="OpenedAmpoule" leftResult="SyringeWithSolvent" rightResult="OpenedAmpoule" />
+	<combination leftInput="SyringeWithAbsorptionNeedle" rightInput="" leftResult="Syringe" rightResult="AbsorptionNeedle" />
+    <combination leftInput="Syringe" rightInput="InjectionNeedle" leftResult="SyringeWithInjectionNeedle" rightResult="" />
+	<combination leftInput="SyringeWithInjectionNeedle" rightInput="" leftResult="Syringe" rightResult="InjectionNeedle" />
+    <combination leftInput="SyringeWithSolvent" rightInput="Medicine" leftResult="SyringeWithAbsorptionNeedle" rightResult="Medicine" />
+    <combination leftInput="SyringeWithAbsorptionNeedle" rightInput="Medicine" leftResult="SyringeWithAbsorptionNeedle" rightResult="Medicine" />
+</CombinationList>
