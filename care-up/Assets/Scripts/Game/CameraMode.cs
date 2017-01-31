@@ -81,11 +81,11 @@ public class CameraMode : MonoBehaviour {
                 else
                 {
                     doorSelected = controls.SelectedObject.GetComponent<SystemObject>();
-                    if (doorSelected != null ) // door handle
+                    /*if (doorSelected != null ) // door handle
                     {
                         ToggleCameraMode(Mode.ConfirmUI);
                         controls.ResetObject();
-                    }
+                    }*/
                 }
             }
         }

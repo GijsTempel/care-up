@@ -35,18 +35,6 @@ public class SystemObject : InteractableObject {
                     SceneManager.LoadScene("Tutorial");
                 }
             }
-            else
-            {
-                if (GameObject.Find("_LaunchTutorial"))
-                {
-                    Debug.LogWarning("TutorialLaunch found! => forcing tutorial launch");
-                    SceneManager.LoadScene("Tutorial");
-                }
-                else {
-                    Debug.Log("Tutorial completed.");
-                    SceneManager.LoadScene("SceneSelection");
-                }
-            }
         }
         else {
             if (sceneName == "_Continue")
@@ -58,7 +46,7 @@ public class SystemObject : InteractableObject {
                 Application.Quit();
             }
             else {
-                if (confirmed)
+                if (confirmed || sceneName == "Tutorial" || sceneName == "Options")
                 {
                     SceneManager.LoadScene(sceneName);
                 }
