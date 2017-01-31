@@ -113,7 +113,9 @@ public class PickableObject : InteractableObject {
                 if (info[0] == "SyringeWithInjectionNeedle" && info[1] == "Hand")
                 {
                     actionManager.OnUseOnAction("SyringeWithInjectionNeedle", "Hand");
-                    if (SceneManager.GetActiveScene().name == "Injection")
+                    if (SceneManager.GetActiveScene().name == "Injection" ||
+                        SceneManager.GetActiveScene().name == "Injection_ampoule" ||
+                        SceneManager.GetActiveScene().name == "Injection_disolve")
                     {
                         AnimationSequence animationSequence = new AnimationSequence("Injection");
                         animationSequence.NextStep();

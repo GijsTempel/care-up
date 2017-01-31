@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Xml;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class LevelSelectionScene : MonoBehaviour {
     
@@ -24,7 +25,23 @@ public class LevelSelectionScene : MonoBehaviour {
             if (i < doors.Length)
             {
                 doors[i].gameObject.SetActive(true);
-                doors[i].sceneName = doors[i].description = scene.Attributes["name"].Value;
+
+                List<string> scenes = new List<string>();
+                scenes.Add(scene.Attributes["name"].Value);
+                if (scene.Attributes["alt1"] != null)
+                {
+                    scenes.Add(scene.Attributes["alt1"].Value);
+                }
+                if (scene.Attributes["alt2"] != null)
+                {
+                    scenes.Add(scene.Attributes["alt2"].Value);
+                }
+                if (scene.Attributes["alt3"] != null)
+                {
+                    scenes.Add(scene.Attributes["alt3"].Value);
+                }
+                
+                doors[i].sceneName = doors[i].description = scenes[Random.Range(0, scenes.Count)];
                 ++i;
             }
             else break;
