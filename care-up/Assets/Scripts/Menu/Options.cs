@@ -2,12 +2,14 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class Options : MonoBehaviour {
 
     private PlayerPrefsManager prefsManager;
 
     private Slider volumeSlider;
+    private Dropdown qualityOptions;
 
     void Start()
     {
@@ -20,6 +22,11 @@ public class Options : MonoBehaviour {
         volumeSlider = GameObject.Find("VolumeSlider").GetComponent<Slider>();
         volumeSlider.value = prefsManager.Volume;
         volumeSlider.onValueChanged.AddListener(OnVolumeChange);
+
+        qualityOptions = GameObject.Find("QualityDropdown").GetComponent<Dropdown>();
+        List<string> options = new List<string>(QualitySettings.names);
+        qualityOptions.AddOptions(options);
+        qualityOptions.value = QualitySettings.GetQualityLevel();
     }
 
     public void OnVolumeChange(float value)
@@ -36,6 +43,11 @@ public class Options : MonoBehaviour {
     private void SaveOptions()
     {
         prefsManager.Volume = volumeSlider.value;
+    }
+
+    public void OnQualityChange()
+    {
+        QualitySettings.SetQualityLevel(qualityOptions.value, true);
     }
 
 }
