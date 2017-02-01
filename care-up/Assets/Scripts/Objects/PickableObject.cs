@@ -106,7 +106,15 @@ public class PickableObject : InteractableObject {
                 if (info[0] == "PrickingPen" && info[1] == "Finger")
                 {
                     actionManager.OnUseOnAction("PrickingPen", "Finger");
-                    AnimationSequence animationSequence = new AnimationSequence("MeasureBloodGlucose");
+                    AnimationSequence animationSequence;
+                    if ( SceneManager.GetActiveScene().name == "Measuring Blood Glucose(Haemogluco)")
+                    {
+                        animationSequence = new AnimationSequence("MeasureBloodGlucose(haemogluco)");
+                    }
+                    else
+                    {
+                        animationSequence = new AnimationSequence("MeasureBloodGlucose");
+                    }
                     animationSequence.NextStep();
                     return true;
                 }
