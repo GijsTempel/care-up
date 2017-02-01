@@ -147,6 +147,11 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 136900121847772860, guid: 7d15994c70262564c9eba87c122588fa,
+        type: 2}
+      propertyPath: m_Height
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7d15994c70262564c9eba87c122588fa, type: 2}
   m_IsPrefabParent: 0
@@ -253,7 +258,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1392d1f9f96585a43895bdc6a7e4a151, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keyPreferences: {}
+  keyPreferences:
+    mouseClickKey:
+      locked: 0
+    LeftDropKey:
+      locked: 0
+    RightDropKey:
+      locked: 0
+    LeftUseKey:
+      locked: 0
+    RightUseKey:
+      locked: 0
+    closeObjectView:
+      locked: 0
+    pickObjectView:
+      locked: 0
+    CombineKey:
+      locked: 0
+    GetHintKey:
+      locked: 0
+    mouseClickLocked: 0
   interactionDistance: 5
 --- !u!114 &251147192
 MonoBehaviour:
@@ -277,6 +301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db8d3866634654545a3471c2c8f27c71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tutorial_hintUsed: 0
   actionListName: Applying band-aid
 --- !u!114 &251147194
 MonoBehaviour:
@@ -301,6 +326,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c552ab3f4c8d4b1499ad45a148be6070, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tutorial_pickedLeft: 0
+  tutorial_pickedRight: 0
+  tutorial_droppedLeft: 0
+  tutorial_droppedRight: 0
+  tutorial_combined: 0
+  tutorial_itemUsedOn: 0
   horisontalOffset: 2
   distanceFromCamera: 3
 --- !u!114 &251147196
@@ -373,6 +404,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   description: 
+  tutorial_picked: 0
+  tutorial_closed: 0
   viewSettings:
     distanceFromCamera: 4
     rotationSensetivity: 90
@@ -1966,6 +1999,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   description: 
+  tutorial_used: 0
 --- !u!23 &1878750968
 MeshRenderer:
   m_ObjectHideFlags: 0

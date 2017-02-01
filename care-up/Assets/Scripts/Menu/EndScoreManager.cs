@@ -9,6 +9,7 @@ public class EndScoreManager : MonoBehaviour {
     private int score;
     private float time;
     private string wrongSteps;
+    private string completedSceneName;
 
     private ActionManager actionManager;    //points, steps
     private GameTimer gameTimer; // time
@@ -44,6 +45,9 @@ public class EndScoreManager : MonoBehaviour {
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+
+            GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().SetSceneCompletionData(
+                completedSceneName, score, string.Format("Time: {0}m{1:00}s", (int)time / 60, (int)time % 60));
         }
     }
 
@@ -59,6 +63,7 @@ public class EndScoreManager : MonoBehaviour {
         score = Mathf.FloorToInt(5.0f * points / actionManager.TotalPoints);
         time = gameTimer.CurrentTime;
         wrongSteps = actionManager.WrongSteps;
+        completedSceneName = SceneManager.GetActiveScene().name;
         
         SceneManager.LoadScene("EndScore");
     }

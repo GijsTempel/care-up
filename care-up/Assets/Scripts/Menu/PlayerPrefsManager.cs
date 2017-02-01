@@ -4,7 +4,7 @@ using System.Collections;
 public class PlayerPrefsManager : MonoBehaviour
 {
     private static PlayerPrefsManager instance;
-
+    
     void Awake()
     {
         if ( instance )
@@ -33,5 +33,27 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         get { return PlayerPrefs.GetInt("TutorialCompleted") == 1; }
         set { PlayerPrefs.SetInt("TutorialCompleted", value ? 1 : 0); }
+    }
+
+    public void SetSceneCompletionData(string sceneName, int stars, string time)
+    {
+        PlayerPrefs.SetInt(sceneName + "_completed", 1);
+        PlayerPrefs.SetInt(sceneName + "_stars", stars);
+        PlayerPrefs.SetString(sceneName + "_time", time);
+    }
+
+    public bool GetSceneCompleted(string sceneName)
+    {
+        return PlayerPrefs.GetInt(sceneName + "_completed") == 1;
+    }
+
+    public int GetSceneStars(string sceneName)
+    {
+        return PlayerPrefs.GetInt(sceneName + "_stars");
+    }
+
+    public string GetSceneTime(string sceneName)
+    {
+        return PlayerPrefs.GetString(sceneName + "_time");
     }
 }

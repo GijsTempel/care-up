@@ -5,9 +5,14 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
 public class LevelSelectionScene : MonoBehaviour {
-    
+
+    private PlayerPrefsManager ppManager;
+
     void Start()
     {
+        ppManager = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
+        if (ppManager == null) Debug.LogError("No player preferences manager found");
+
         SystemObject[] doors = GameObject.Find("Interactable Objects").GetComponentsInChildren<SystemObject>();
         foreach (SystemObject door in doors)
         {
@@ -41,7 +46,19 @@ public class LevelSelectionScene : MonoBehaviour {
                     scenes.Add(scene.Attributes["alt3"].Value);
                 }
                 
-                doors[i].sceneName = doors[i].description = scenes[Random.Range(0, scenes.Count)];
+                doors[i].sceneName = scenes[Random.Range(0, scenes.Count)];
+                doors[i].transform.GetChild(0).FindChild("Name").GetComponent<TextMesh>().text = doors[i].sceneName;
+                if ( scene.Attributes["description"].Value != "" )
+                {
+                    doors[i].transform.GetChild(0).FindChild("Description").GetComponent<TextMesh>().text = scene.Attributes["description"].Value;
+                }
+                if (ppManager.GetSceneCompleted(doors[i].sceneName))
+                {
+                    string info = ppManager.GetSceneStars(doors[i].sceneName) + " stars; " +
+                        ppManager.GetSceneTime(doors[i].sceneName);
+                    doors[i].transform.GetChild(0).FindChild("Result").GetComponent<TextMesh>().text = info;
+                }
+
                 ++i;
             }
             else break;
