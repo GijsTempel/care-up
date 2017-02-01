@@ -83,6 +83,7 @@ public class PersonObject : InteractableObject {
             switch (topic)
             {
                 case "RollUpSleeves":
+                case "ExtendArmMakeFist":
                     RollUpSleeves(true);
                     break;
                 case "ComfortablePosition":

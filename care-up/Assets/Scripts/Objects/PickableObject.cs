@@ -78,8 +78,13 @@ public class PickableObject : InteractableObject {
         if (controls.SelectedObject != null && controls.CanInteract)
         {
             if ((name == "InjectionNeedle" || name == "AbsorptionNeedle"
-                || name == "TestStrips" || name == "Lancet")
+                || name == "TestStrips" || name == "Lancet" || name == "NeedleHolderWithNeedle")
                 && controls.SelectedObject.name == "NeedleCup")
+            {
+                Destroy(gameObject);
+            }
+            else if ((name == "Pad" || name == "Tourniquet") && 
+                controls.SelectedObject.name == "Person")
             {
                 Destroy(gameObject);
             }
@@ -162,6 +167,18 @@ public class PickableObject : InteractableObject {
                 {
                     actionManager.OnUseOnAction("Syringe", "Person");
                     AnimationSequence animationSequence = new AnimationSequence("WingedNeedle");
+                    animationSequence.NextStep();
+                    return true;
+                }
+            }
+            else if (name == "NeedleHolderWithNeedle"
+                && controls.SelectedObject.name == "Hand")
+            {
+                info = actionManager.CurrentUseOnInfo;
+                if (info[0] == "NeedleHolderWithNeedle" && info[1] == "Hand")
+                {
+                    actionManager.OnUseOnAction("NeedleHolderWithNeedle", "Hand");
+                    AnimationSequence animationSequence = new AnimationSequence("Venapunction");
                     animationSequence.NextStep();
                     return true;
                 }
