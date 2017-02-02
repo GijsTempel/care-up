@@ -51,7 +51,8 @@ public class Options : MonoBehaviour {
     public void OnBackButton()
     {
         SaveOptions();
-        SceneManager.LoadScene("Menu");
+        GameObject.Find("Preferences").GetComponent<LoadingScreen>().LoadLevel("Menu");
+        //SceneManager.LoadScene("Menu");
     }
 
     private void SaveOptions()

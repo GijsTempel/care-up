@@ -7,6 +7,16 @@ public class SystemObject : InteractableObject {
 
     public string sceneName;
 
+    private LoadingScreen loadingScreen;
+
+    protected override void Start()
+    {
+        base.Start();
+
+        loadingScreen = GameObject.Find("Preferences").GetComponent<LoadingScreen>();
+        if (loadingScreen == null) Debug.LogError("No loading screen found");
+    }
+
     protected override void Update()
     {
         base.Update();
@@ -27,12 +37,14 @@ public class SystemObject : InteractableObject {
                 if (GameObject.Find("_SkipTutorial"))
                 {
                     Debug.LogWarning("TutorialSkip found! => Skipping tutorial");
-                    SceneManager.LoadScene("SceneSelection");
+                    loadingScreen.LoadLevel("SceneSelection");
+                    //SceneManager.LoadScene("SceneSelection");
                 }
                 else
                 {
                     Debug.Log("Tutorial is not completed.");
-                    SceneManager.LoadScene("Tutorial");
+                    loadingScreen.LoadLevel("Tutorial");
+                    //SceneManager.LoadScene("Tutorial");
                 }
             }
         }
@@ -48,7 +60,8 @@ public class SystemObject : InteractableObject {
             else {
                 if (confirmed || sceneName == "Tutorial" || sceneName == "Options" || sceneName == "Menu")
                 {
-                    SceneManager.LoadScene(sceneName);
+                    loadingScreen.LoadLevel(sceneName);
+                    //SceneManager.LoadScene(sceneName);
                 }
                 else {
                     cameraMode.ToggleCameraMode(CameraMode.Mode.ConfirmUI);

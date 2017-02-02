@@ -226,7 +226,8 @@ public class SaveLoadManager : MonoBehaviour {
         XmlNode save = docNode.NextSibling;
         
         XmlNode sceneNode = save.FirstChild;
-        SceneManager.LoadScene(sceneNode.Attributes["name"].Value);
+        GameObject.Find("Preferences").GetComponent<LoadingScreen>().LoadLevel(sceneNode.Attributes["name"].Value);
+        //SceneManager.LoadScene(sceneNode.Attributes["name"].Value);
     }
 
     private void Load(string filename)

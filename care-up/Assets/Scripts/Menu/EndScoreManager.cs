@@ -64,7 +64,8 @@ public class EndScoreManager : MonoBehaviour {
         time = gameTimer.CurrentTime;
         wrongSteps = actionManager.WrongSteps;
         completedSceneName = SceneManager.GetActiveScene().name;
-        
-        SceneManager.LoadScene("EndScore");
+
+        GameObject.Find("Preferences").GetComponent<LoadingScreen>().LoadLevel("EndScore");
+        //SceneManager.LoadScene("EndScore");
     }
 }

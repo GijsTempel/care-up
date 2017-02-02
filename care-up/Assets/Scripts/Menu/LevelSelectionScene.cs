@@ -64,10 +64,4 @@ public class LevelSelectionScene : MonoBehaviour {
             else break;
         }
     }
-
-    public void GoToLevel(string levelname)
-    {
-        SceneManager.LoadScene(levelname);
-    }
-	
 }
