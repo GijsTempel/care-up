@@ -46,7 +46,7 @@ public class SystemObject : InteractableObject {
                 Application.Quit();
             }
             else {
-                if (confirmed || sceneName == "Tutorial" || sceneName == "Options")
+                if (confirmed || sceneName == "Tutorial" || sceneName == "Options" || sceneName == "Menu")
                 {
                     SceneManager.LoadScene(sceneName);
                 }
