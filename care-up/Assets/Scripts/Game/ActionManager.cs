@@ -3,6 +3,7 @@ using System.Linq;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class ActionManager : MonoBehaviour {
 
@@ -29,6 +30,7 @@ public class ActionManager : MonoBehaviour {
     private Action currentAction;
     
     private List<GameObject> particleHints;
+    private bool menuScene;
 
     public List<Action> ActionList
     {
@@ -132,6 +134,7 @@ public class ActionManager : MonoBehaviour {
 
     void Start () {
 
+        menuScene = SceneManager.GetActiveScene().name == "Menu";
         particleHints = new List<GameObject>();
 
         controls = GameObject.Find("GameLogic").GetComponent<Controls>();
@@ -358,6 +361,9 @@ public class ActionManager : MonoBehaviour {
 
     void OnGUI()
     {
+        if (menuScene)
+            return;
+
         GUIStyle style = GUI.skin.GetStyle("Label");
         style.alignment = TextAnchor.MiddleCenter;
         style.fontSize = 40;
