@@ -10,6 +10,7 @@ public class Options : MonoBehaviour {
 
     private Slider volumeSlider;
     private Dropdown qualityOptions;
+    private Dropdown resolutionOptions;
 
     void Start()
     {
@@ -24,9 +25,22 @@ public class Options : MonoBehaviour {
         volumeSlider.onValueChanged.AddListener(OnVolumeChange);
 
         qualityOptions = GameObject.Find("QualityDropdown").GetComponent<Dropdown>();
-        List<string> options = new List<string>(QualitySettings.names);
-        qualityOptions.AddOptions(options);
+        List<string> qOptions = new List<string>(QualitySettings.names);
+        qualityOptions.AddOptions(qOptions);
         qualityOptions.value = QualitySettings.GetQualityLevel();
+
+        resolutionOptions = GameObject.Find("ResolutionDropdown").GetComponent<Dropdown>();
+        Resolution[] resolutions = Screen.resolutions;
+        int currentResolution = 0;
+        for (; currentResolution < resolutions.Length; ++currentResolution)
+            if (resolutions[currentResolution].width == Screen.currentResolution.width 
+                && resolutions[currentResolution].height == Screen.currentResolution.height)
+                break;
+        List<string> rOptions = new List<string>();
+        foreach( Resolution r in resolutions )
+            rOptions.Add(r.ToString());
+        resolutionOptions.AddOptions(rOptions);
+        resolutionOptions.value = currentResolution;
     }
 
     public void OnVolumeChange(float value)
@@ -50,4 +64,10 @@ public class Options : MonoBehaviour {
         QualitySettings.SetQualityLevel(qualityOptions.value, true);
     }
 
+    public void OnResolutionChange()
+    {
+        Resolution[] resolutions = Screen.resolutions;
+        Screen.SetResolution(resolutions[resolutionOptions.value].width, 
+            resolutions[resolutionOptions.value].height, Screen.fullScreen);
+    }
 }

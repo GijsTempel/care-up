@@ -131,6 +131,7 @@ public class TutorialManager : MonoBehaviour {
                         currentStep = TutorialStep.UseHandCleaner;
                         controls.keyPreferences.mouseClickLocked = false;
                         controls.keyPreferences.mouseClickKey.locked = false;
+                        controls.keyPreferences.closeObjectView.locked = false;
                         particleHint.transform.position = handCleaner.transform.position;
                         UItext = "You are able to use highlighted object when you see the hand icon by pressing the left mouse button. Let use the hand hygiene pump to wash our hands";
                     }
@@ -148,7 +149,6 @@ public class TutorialManager : MonoBehaviour {
                     if ( patientRecords.tutorial_picked )
                     {
                         currentStep = TutorialStep.CloseRecords;
-                        controls.keyPreferences.closeObjectView.locked = false;
                         particleHint.SetActive(false);
                         UItext = ": After examining an object you can put it back down by pressing Q";
                     }
