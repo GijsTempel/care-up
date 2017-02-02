@@ -134,7 +134,8 @@ public class ActionManager : MonoBehaviour {
 
     void Start () {
 
-        menuScene = SceneManager.GetActiveScene().name == "Menu";
+        string sceneName = SceneManager.GetActiveScene().name;
+        menuScene = sceneName == "Menu" || sceneName == "SceneSelection" || sceneName == "EndScore";
         particleHints = new List<GameObject>();
 
         controls = GameObject.Find("GameLogic").GetComponent<Controls>();
