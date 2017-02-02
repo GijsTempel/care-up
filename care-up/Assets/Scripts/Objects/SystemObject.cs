@@ -47,6 +47,11 @@ public class SystemObject : InteractableObject {
                     //SceneManager.LoadScene("Tutorial");
                 }
             }
+            else
+            {
+                Debug.Log("Tutorial is completed.");
+                loadingScreen.LoadLevel("SceneSelection");
+            }
         }
         else {
             if (sceneName == "_Continue")
