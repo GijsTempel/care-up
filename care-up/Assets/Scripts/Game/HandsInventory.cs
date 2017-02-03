@@ -279,6 +279,11 @@ public class HandsInventory : MonoBehaviour {
         newObject.transform.parent = interactableObjects.transform;
         newObject.name = name;
 
+        GameObject wf = GameObject.Find("WorkField");
+        if (wf != null)
+        {
+            wf.GetComponent<WorkField>().objects.Add(newObject);
+        }
         return newObject;
     }
 
