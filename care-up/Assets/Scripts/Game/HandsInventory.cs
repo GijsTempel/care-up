@@ -362,4 +362,9 @@ public class HandsInventory : MonoBehaviour {
             rightHandObject = null;
         }
     }
+
+    public void PickTestStrips()
+    {
+        leftHandObject = GameObject.Find("TestStrips").GetComponent<PickableObject>();
+    }
 }

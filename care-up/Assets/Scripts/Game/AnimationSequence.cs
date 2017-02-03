@@ -152,6 +152,11 @@ public class AnimationSequence  {
                         GameObject.Find("GameLogic").GetComponent<HandsInventory>().PutAllOnTable();
                     }
 
+                    if (animation == "WaitAnotherMinute_heamogluco")
+                    {
+                        GameObject.Find("GameLogic").GetComponent<HandsInventory>().PickTestStrips();
+                    }
+
                     Debug.Log("Play animation: " + animation);
                     actionManager.Points++;
                     pointsEarned++;
