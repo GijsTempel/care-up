@@ -19,6 +19,8 @@ public class HandsInventory : MonoBehaviour {
 
     private Vector3 leftHandPosition;
     private Vector3 rightHandPosition;
+    private Vector3 glovesPosition;
+    private Quaternion glovesRotation;
     private bool glovesOn = false;
 
     private CombinationManager combinationManager;
@@ -116,15 +118,27 @@ public class HandsInventory : MonoBehaviour {
                 if (combined && combineAllowed)
                 {
                     tutorial_combined = true;
+                    
+                    Vector3 leftSavedPos = Vector3.zero;
+                    Quaternion leftSavedRot = Quaternion.identity;
+
+                    if (leftHandObject != null)
+                    {
+                        leftHandObject.GetSavesLocation(out leftSavedPos, out leftSavedRot);
+                    }
+
+                    Vector3 rightSavedPos = Vector3.zero;
+                    Quaternion rightSavedRot = Quaternion.identity;
+
+                    if (rightHandObject != null)
+                    {
+                        rightHandObject.GetSavesLocation(out rightSavedPos, out rightSavedRot);
+                    }
+
                     if (leftName != leftResult)
                     {
-                        Vector3 leftSavedPos = Vector3.zero;
-                        Quaternion leftSavedRot = Quaternion.identity;
-
                         if (leftHandObject != null)
                         {
-                            leftHandObject.GetSavesLocation(out leftSavedPos, out leftSavedRot);
-
                             Destroy(leftHandObject.gameObject);
                             leftHandObject = null;
                         }
@@ -134,19 +148,23 @@ public class HandsInventory : MonoBehaviour {
                             GameObject leftObject = CreateObjectByName(leftResult, leftHandPosition);
                             leftHandObject = leftObject.GetComponent<PickableObject>();
 
-                            leftHandObject.SavePosition(leftSavedPos, leftSavedRot);
+                            if (leftSavedPos != Vector3.zero)
+                            {
+                                leftHandObject.SavePosition(leftSavedPos, leftSavedRot);
+                            }
+                            else if (rightSavedPos != Vector3.zero)
+                            {
+                                float offset = rightHandObject.GetComponent<Renderer>().bounds.size.x
+                                    + leftHandObject.GetComponent<Renderer>().bounds.size.x; ;
+                                leftHandObject.SavePosition(rightSavedPos + new Vector3(offset, 0), rightSavedRot);
+                            }
                         }
                     }
 
                     if (rightName != rightResult)
                     {
-                        Vector3 rightSavedPos = Vector3.zero;
-                        Quaternion rightSavedRot = Quaternion.identity;
-
                         if (rightHandObject != null)
                         {
-                            rightHandObject.GetSavesLocation(out rightSavedPos, out rightSavedRot);
-
                             Destroy(rightHandObject.gameObject);
                             rightHandObject = null;
                         }
@@ -156,7 +174,16 @@ public class HandsInventory : MonoBehaviour {
                             GameObject rightObject = CreateObjectByName(rightResult, rightHandPosition);
                             rightHandObject = rightObject.GetComponent<PickableObject>();
 
-                            rightHandObject.SavePosition(rightSavedPos, rightSavedRot);
+                            if (rightSavedPos != Vector3.zero)
+                            {
+                                rightHandObject.SavePosition(rightSavedPos, rightSavedRot);
+                            }
+                            else if (leftSavedPos != Vector3.zero)
+                            {
+                                float offset = leftHandObject.GetComponent<Renderer>().bounds.size.x
+                                    + rightHandObject.GetComponent<Renderer>().bounds.size.x;
+                                rightHandObject.SavePosition(leftSavedPos + new Vector3(offset, 0), leftSavedRot);
+                            }
                         }
                     }
                 }
@@ -301,10 +328,12 @@ public class HandsInventory : MonoBehaviour {
             {
                 if (leftHandObject)
                 {
+                    leftHandObject.GetSavesLocation(out glovesPosition, out glovesRotation);
                     Destroy(leftHandObject.gameObject);
                 }
                 else if (rightHandObject)
                 {
+                    rightHandObject.GetSavesLocation(out glovesPosition, out glovesRotation);
                     Destroy(rightHandObject.gameObject);
                 }
                 glovesOn = value;
@@ -315,6 +344,7 @@ public class HandsInventory : MonoBehaviour {
             glovesOn = value;
             GameObject leftObject = CreateObjectByName("Gloves", leftHandPosition);
             leftHandObject = leftObject.GetComponent<PickableObject>();
+            leftHandObject.SavePosition(glovesPosition, glovesRotation);
         }
     }
 
