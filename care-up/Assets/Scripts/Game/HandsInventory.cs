@@ -224,7 +224,7 @@ public class HandsInventory : MonoBehaviour {
 
         if (controls.MouseClicked() && cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
-            if (controls.SelectedObject != null)
+            if (controls.SelectedObject != null && controls.CanInteract)
             {
                 PickableObject item = controls.SelectedObject.GetComponent<PickableObject>();
                 if (item != null)
