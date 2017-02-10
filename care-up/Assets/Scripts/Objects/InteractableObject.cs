@@ -11,6 +11,8 @@ public class InteractableObject : MonoBehaviour {
     static private Shader onMouseOverShader;
     static private Shader onMouseExitShader;
 
+    private bool descrActive = false;
+
     protected bool positionSaved = false;
     protected Vector3 savedPosition;
     protected Quaternion savedRotation;
@@ -74,13 +76,24 @@ public class InteractableObject : MonoBehaviour {
         {
             if (controls.SelectedObject == gameObject)
             {
-                if (rend.material.shader == onMouseExitShader)
+                if (rend.material.shader == onMouseExitShader && controls.CanInteract)
                 {
                     foreach (Material m in rend.materials)
                     {
                         m.shader = onMouseOverShader;
                     }
+                }
+                else if(!controls.CanInteract && rend.material.shader != onMouseExitShader)
+                {
+                    foreach (Material m in rend.materials)
+                    {
+                        m.shader = onMouseExitShader;
+                    }
+                }
 
+                if (!descrActive)
+                {
+                    Debug.Log("show descr");
                     itemDescription.GetComponentInChildren<Text>().text = (description == "") ? name : description;
                     Transform icons = itemDescription.transform.GetChild(0).GetChild(0);
                     icons.FindChild("UseIcon").gameObject.SetActive(gameObject.GetComponent<UsableObject>() != null);
@@ -88,6 +101,7 @@ public class InteractableObject : MonoBehaviour {
                     icons.FindChild("PickIcon").gameObject.SetActive(gameObject.GetComponent<PickableObject>() != null);
                     icons.FindChild("ExamIcon").gameObject.SetActive(gameObject.GetComponent<ExaminableObject>() != null);
                     itemDescription.SetActive(true);
+                    descrActive = true;
                 }
             }
             else
@@ -98,7 +112,12 @@ public class InteractableObject : MonoBehaviour {
                     {
                         m.shader = onMouseExitShader;
                     }
+                }
+
+                if (descrActive)
+                {
                     itemDescription.SetActive(false);
+                    descrActive = false;
                 }
             }
         }
