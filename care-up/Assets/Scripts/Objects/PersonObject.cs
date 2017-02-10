@@ -66,7 +66,7 @@ public class PersonObject : InteractableObject {
 
     public void Talk(string topic = "")
     {
-        if (ViewModeActive())
+        if (ViewModeActive() || topic == "")
             return;
 
         // play sound depending on topic (no sound yet)
@@ -74,12 +74,13 @@ public class PersonObject : InteractableObject {
         {
             audioClip.Play();
         }
-        else
+        else 
         {
             Debug.LogWarning("Audio clip not set.");
         }
 
-        if (topic == actionManager.CurrentTopic) {
+        if (topic == actionManager.CurrentTopic)
+        {
             switch (topic)
             {
                 case "RollUpSleeves":
@@ -111,14 +112,25 @@ public class PersonObject : InteractableObject {
         xmlFile.LoadXml(textAsset.text);
         XmlNodeList xmlOptions = xmlFile.FirstChild.NextSibling.ChildNodes;
 
+        int count = 0;
         foreach (XmlNode xmlOption in xmlOptions)
         {
             string description = xmlOption.Attributes["text"].Value;
             string topic = xmlOption.Attributes["topic"] != null ? xmlOption.Attributes["topic"].Value : "";
 
-            SelectDialogue.DialogueOption option = new SelectDialogue.DialogueOption(description, Talk, topic);
-            optionsList.Add(option);    
+            if (count < 3)
+            {
+                SelectDialogue.DialogueOption option = new SelectDialogue.DialogueOption(description, Talk, topic);
+                optionsList.Add(option);
+                ++count;
+            }
+            else
+            {
+                break;
+            }
         }
+        // for leave option
+        optionsList.Add(new SelectDialogue.DialogueOption("Close dialogue", Talk, ""));
     }
 
     private void CreateSelectionDialogue()
@@ -130,7 +142,7 @@ public class PersonObject : InteractableObject {
         SelectDialogue dialogue = dialogueObject.GetComponent<SelectDialogue>();
         dialogue.Init();
 
-        dialogue.AddOptions(optionsList.OrderBy(x => Random.value).ToList());
+        dialogue.AddOptions(optionsList);
 
         cameraMode.ToggleCameraMode(CameraMode.Mode.SelectionDialogue);
     }

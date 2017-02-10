@@ -93,7 +93,6 @@ public class InteractableObject : MonoBehaviour {
 
                 if (!descrActive)
                 {
-                    Debug.Log("show descr");
                     itemDescription.GetComponentInChildren<Text>().text = (description == "") ? name : description;
                     Transform icons = itemDescription.transform.GetChild(0).GetChild(0);
                     icons.FindChild("UseIcon").gameObject.SetActive(gameObject.GetComponent<UsableObject>() != null);
