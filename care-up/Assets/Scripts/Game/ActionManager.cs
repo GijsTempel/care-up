@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class ActionManager : MonoBehaviour {
 
     public bool tutorial_hintUsed = false;
+    private bool currentStepHintUsed = false;
 
     public enum ActionType
     {
@@ -203,8 +204,8 @@ public class ActionManager : MonoBehaviour {
                 currentAction.ObjectNames(out obj);
                 GameObject parent;
                 GameObject hintObject = Resources.Load<GameObject>("Prefabs/ParticleHint");
-                
-                if ( obj.Length > 0 )
+
+                if (obj.Length > 0)
                 {
                     parent = GameObject.Find(obj[0]);
                     if (parent != null)
@@ -214,7 +215,7 @@ public class ActionManager : MonoBehaviour {
                     }
                 }
 
-                if ( obj.Length == 2 )
+                if (obj.Length == 2)
                 {
                     parent = GameObject.Find(obj[1]);
                     if (parent != null)
@@ -225,7 +226,11 @@ public class ActionManager : MonoBehaviour {
                 }
 
                 tutorial_hintUsed = true;
-                points -= 1; // penalty for using hint
+                if (!currentStepHintUsed)
+                {
+                    points -= 1; // penalty for using hint
+                    currentStepHintUsed = true;
+                }
             }
         }
     }
@@ -319,6 +324,11 @@ public class ActionManager : MonoBehaviour {
                     action.matched = true;
                 }
             }
+        }
+
+        if (matched)
+        {
+            currentStepHintUsed = false;
         }
 
         if (matched && subcategoryLength <= 1)
