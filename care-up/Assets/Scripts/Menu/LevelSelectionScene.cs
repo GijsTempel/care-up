@@ -31,34 +31,55 @@ public class LevelSelectionScene : MonoBehaviour {
             {
                 doors[i].gameObject.SetActive(true);
 
-                List<string> scenes = new List<string>();
-                scenes.Add(scene.Attributes["name"].Value);
-                if (scene.Attributes["alt1"] != null)
+                if (scene.Attributes["multiple"] != null)
                 {
-                    scenes.Add(scene.Attributes["alt1"].Value);
-                }
-                if (scene.Attributes["alt2"] != null)
-                {
-                    scenes.Add(scene.Attributes["alt2"].Value);
-                }
-                if (scene.Attributes["alt3"] != null)
-                {
-                    scenes.Add(scene.Attributes["alt3"].Value);
-                }
-                
-                doors[i].sceneName = scenes[Random.Range(0, scenes.Count)];
-                doors[i].transform.GetChild(0).FindChild("Name").GetComponent<TextMesh>().text = doors[i].sceneName;
-                if ( scene.Attributes["description"].Value != "" )
-                {
-                    doors[i].transform.GetChild(0).FindChild("Description").GetComponent<TextMesh>().text = scene.Attributes["description"].Value;
-                }
-                if (ppManager.GetSceneCompleted(doors[i].sceneName))
-                {
-                    string info = ppManager.GetSceneStars(doors[i].sceneName) + " stars; " +
-                        ppManager.GetSceneTime(doors[i].sceneName);
-                    doors[i].transform.GetChild(0).FindChild("Result").GetComponent<TextMesh>().text = info;
-                }
+                    // general name
+                    doors[i].transform.FindChild("Name").gameObject.SetActive(true);
+                    doors[i].transform.FindChild("Name").GetComponent<TextMesh>().text
+                        = scene.Attributes["name"].Value;
 
+                    int count = 1;
+                    foreach (XmlNode variation in scene.ChildNodes)
+                    {
+                        string sceneName = variation.Attributes["name"].Value;
+                        if (count == 1)
+                        {
+                            doors[i].sceneName = doors[i].description = sceneName;
+                        }
+
+                        Transform descr = doors[i].transform.FindChild("Description_" + count++);
+                        descr.gameObject.SetActive(true);
+                        
+                        descr.FindChild("Name").GetComponent<TextMesh>().text 
+                            = variation.Attributes["displayname"].Value;
+                        
+                        descr.FindChild("Description").GetComponent<TextMesh>().text 
+                            = variation.Attributes["description"].Value;
+
+                        if (ppManager.GetSceneCompleted(sceneName))
+                        {
+                            string info = ppManager.GetSceneStars(sceneName) + " stars; " +
+                                ppManager.GetSceneTime(sceneName);
+                            descr.FindChild("Result").GetComponent<TextMesh>().text = info;
+                        }
+                    }
+                }
+                else
+                {
+                    doors[i].sceneName = doors[i].description = scene.Attributes["name"].Value;
+                    Transform descr = doors[i].transform.FindChild("Description_1");
+                    descr.FindChild("Name").GetComponent<TextMesh>().text = doors[i].sceneName;
+                    if (scene.Attributes["description"].Value != "")
+                    {
+                        descr.FindChild("Description").GetComponent<TextMesh>().text = scene.Attributes["description"].Value;
+                    }
+                    if (ppManager.GetSceneCompleted(doors[i].sceneName))
+                    {
+                        string info = ppManager.GetSceneStars(doors[i].sceneName) + " stars; " +
+                            ppManager.GetSceneTime(doors[i].sceneName);
+                        descr.FindChild("Result").GetComponent<TextMesh>().text = info;
+                    }
+                }
                 ++i;
             }
             else break;
