@@ -78,17 +78,11 @@ public class InteractableObject : MonoBehaviour {
             {
                 if (rend.material.shader == onMouseExitShader && controls.CanInteract)
                 {
-                    foreach (Material m in rend.materials)
-                    {
-                        m.shader = onMouseOverShader;
-                    }
+                    SetShaderTo(onMouseOverShader);
                 }
                 else if(!controls.CanInteract && rend.material.shader != onMouseExitShader)
                 {
-                    foreach (Material m in rend.materials)
-                    {
-                        m.shader = onMouseExitShader;
-                    }
+                    SetShaderTo(onMouseExitShader);
                 }
 
                 if (!descrActive)
@@ -107,10 +101,7 @@ public class InteractableObject : MonoBehaviour {
             {
                 if (rend.material.shader != onMouseExitShader)
                 {
-                    foreach (Material m in rend.materials)
-                    {
-                        m.shader = onMouseExitShader;
-                    }
+                    SetShaderTo(onMouseExitShader);
                 }
 
                 if (descrActive)
@@ -126,7 +117,7 @@ public class InteractableObject : MonoBehaviour {
     {
         if (rend)
         {
-            rend.material.shader = onMouseExitShader;
+            SetShaderTo(onMouseExitShader);
             itemDescription.SetActive(false);
         }
     }
@@ -168,5 +159,21 @@ public class InteractableObject : MonoBehaviour {
     {
         position = savedPosition;
         rotation = savedRotation;
+    }
+
+    private void SetShaderTo(Shader shader)
+    {
+        foreach (Material m in rend.materials)
+        {
+            m.shader = shader;
+        }
+        
+        /*foreach (Renderer r in GetComponentsInChildren<Renderer>())
+        {
+            foreach(Material m in r.materials)
+            {
+                m.shader = shader;
+            }
+        }*/
     }
 }
