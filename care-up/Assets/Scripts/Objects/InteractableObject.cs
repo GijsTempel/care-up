@@ -11,8 +11,6 @@ public class InteractableObject : MonoBehaviour {
     static private Shader onMouseOverShader;
     static private Shader onMouseExitShader;
 
-    private bool descrActive = false;
-
     protected bool positionSaved = false;
     protected Vector3 savedPosition;
     protected Quaternion savedRotation;
@@ -79,14 +77,7 @@ public class InteractableObject : MonoBehaviour {
                 if (rend.material.shader == onMouseExitShader && controls.CanInteract)
                 {
                     SetShaderTo(onMouseOverShader);
-                }
-                else if(!controls.CanInteract && rend.material.shader != onMouseExitShader)
-                {
-                    SetShaderTo(onMouseExitShader);
-                }
 
-                if (!descrActive)
-                {
                     itemDescription.GetComponentInChildren<Text>().text = (description == "") ? name : description;
                     Transform icons = itemDescription.transform.GetChild(0).GetChild(0);
                     icons.FindChild("UseIcon").gameObject.SetActive(gameObject.GetComponent<UsableObject>() != null);
@@ -94,7 +85,11 @@ public class InteractableObject : MonoBehaviour {
                     icons.FindChild("PickIcon").gameObject.SetActive(gameObject.GetComponent<PickableObject>() != null);
                     icons.FindChild("ExamIcon").gameObject.SetActive(gameObject.GetComponent<ExaminableObject>() != null);
                     itemDescription.SetActive(true);
-                    descrActive = true;
+                }
+                else if(!controls.CanInteract && rend.material.shader != onMouseExitShader)
+                {
+                    SetShaderTo(onMouseExitShader);
+                    itemDescription.SetActive(false);
                 }
             }
             else
@@ -102,12 +97,7 @@ public class InteractableObject : MonoBehaviour {
                 if (rend.material.shader != onMouseExitShader)
                 {
                     SetShaderTo(onMouseExitShader);
-                }
-
-                if (descrActive)
-                {
                     itemDescription.SetActive(false);
-                    descrActive = false;
                 }
             }
         }
