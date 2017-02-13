@@ -74,19 +74,25 @@ public class InteractableObject : MonoBehaviour {
         {
             if (controls.SelectedObject == gameObject)
             {
-                if (rend.material.shader == onMouseExitShader && controls.CanInteract)
+                if (controls.CanInteract)
                 {
-                    SetShaderTo(onMouseOverShader);
+                    if (rend.material.shader == onMouseExitShader)
+                    {
+                        SetShaderTo(onMouseOverShader);
+                    }
 
-                    itemDescription.GetComponentInChildren<Text>().text = (description == "") ? name : description;
-                    Transform icons = itemDescription.transform.GetChild(0).GetChild(0);
-                    icons.FindChild("UseIcon").gameObject.SetActive(gameObject.GetComponent<UsableObject>() != null);
-                    icons.FindChild("TalkIcon").gameObject.SetActive(gameObject.GetComponent<PersonObject>() != null);
-                    icons.FindChild("PickIcon").gameObject.SetActive(gameObject.GetComponent<PickableObject>() != null);
-                    icons.FindChild("ExamIcon").gameObject.SetActive(gameObject.GetComponent<ExaminableObject>() != null);
-                    itemDescription.SetActive(true);
+                    if (!itemDescription.activeSelf)
+                    {
+                        itemDescription.GetComponentInChildren<Text>().text = (description == "") ? name : description;
+                        Transform icons = itemDescription.transform.GetChild(0).GetChild(0);
+                        icons.FindChild("UseIcon").gameObject.SetActive(gameObject.GetComponent<UsableObject>() != null);
+                        icons.FindChild("TalkIcon").gameObject.SetActive(gameObject.GetComponent<PersonObject>() != null);
+                        icons.FindChild("PickIcon").gameObject.SetActive(gameObject.GetComponent<PickableObject>() != null);
+                        icons.FindChild("ExamIcon").gameObject.SetActive(gameObject.GetComponent<ExaminableObject>() != null);
+                        itemDescription.SetActive(true);
+                    }
                 }
-                else if(!controls.CanInteract && rend.material.shader != onMouseExitShader)
+                else if (!controls.CanInteract && rend.material.shader == onMouseOverShader)
                 {
                     SetShaderTo(onMouseExitShader);
                     itemDescription.SetActive(false);
@@ -94,7 +100,7 @@ public class InteractableObject : MonoBehaviour {
             }
             else
             {
-                if (rend.material.shader != onMouseExitShader)
+                if (rend.material.shader == onMouseOverShader)
                 {
                     SetShaderTo(onMouseExitShader);
                     itemDescription.SetActive(false);
