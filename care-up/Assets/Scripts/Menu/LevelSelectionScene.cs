@@ -38,18 +38,23 @@ public class LevelSelectionScene : MonoBehaviour {
                     doors[i].transform.FindChild("Name").GetComponent<TextMesh>().text
                         = scene.Attributes["name"].Value;
 
-                    int count = 1;
+                    int count = 0;
                     foreach (XmlNode variation in scene.ChildNodes)
                     {
                         string sceneName = variation.Attributes["name"].Value;
+                        Transform descr = doors[i].transform.FindChild("Description_" + ++count);
                         if (count == 1)
                         {
-                            doors[i].sceneName = doors[i].description = sceneName;
+                            descr.GetComponent<SelectionScene_DoorUI>().sceneName =
+                                doors[i].sceneName = doors[i].description = sceneName;
+                            descr.GetComponent<SelectionScene_DoorUI>().SetSelected(true);
+                        }
+                        else
+                        {
+                            descr.gameObject.SetActive(true);
+                            descr.GetComponent<SelectionScene_DoorUI>().sceneName = sceneName;
                         }
 
-                        Transform descr = doors[i].transform.FindChild("Description_" + count++);
-                        descr.gameObject.SetActive(true);
-                        
                         descr.FindChild("Name").GetComponent<TextMesh>().text 
                             = variation.Attributes["displayname"].Value;
                         
