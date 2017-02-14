@@ -26,7 +26,7 @@ public class InteractableObject : MonoBehaviour {
 
         if (onMouseOverShader == null)
         {
-            onMouseOverShader = Shader.Find("Outlined/Silhouetted Diffuse");
+            onMouseOverShader = Shader.Find("Outlined/Diffuse");
         }
 
         if (onMouseExitShader == null)
@@ -164,12 +164,12 @@ public class InteractableObject : MonoBehaviour {
             m.shader = shader;
         }
         
-        /*foreach (Renderer r in GetComponentsInChildren<Renderer>())
+        foreach (Renderer r in GetComponentsInChildren<Renderer>())
         {
             foreach(Material m in r.materials)
             {
                 m.shader = shader;
             }
-        }*/
+        }
     }
 }
