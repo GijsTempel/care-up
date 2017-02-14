@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 4000011202586516}
   - component: {fileID: 33482285600373186}
   - component: {fileID: 23000011647182554}
+  - component: {fileID: 65161353448980618}
+  - component: {fileID: 114863728360737632}
   m_Layer: 0
   m_Name: HandCleaner
   m_TagString: Untagged
@@ -34,8 +36,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013512722100}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 9.282172, y: 1.1709971, z: 10.577512}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -54,7 +56,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 40cf7e16046974bd6a9e14c2666ccfad, type: 2}
+  - {fileID: 2100000, guid: c6de2837149184e94b8d77810e957dec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -71,7 +73,6 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!33 &33482285600373186
 MeshFilter:
@@ -79,4 +80,29 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013512722100}
-  m_Mesh: {fileID: 4300000, guid: b468edbdd8d7640c5a8eb453fb2beb2b, type: 3}
+  m_Mesh: {fileID: 4300000, guid: f3d5cc04329294a2abf210b7ffe98c69, type: 3}
+--- !u!65 &65161353448980618
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013512722100}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.09187714, y: 0.053011093, z: 0.2646493}
+  m_Center: {x: 0, y: 0, z: 0.052535962}
+--- !u!114 &114863728360737632
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013512722100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3e6a197b70106d4baa62069a18baf92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: Hygiene pomp
+  tutorial_used: 0
