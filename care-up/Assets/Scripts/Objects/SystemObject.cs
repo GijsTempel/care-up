@@ -74,4 +74,12 @@ public class SystemObject : InteractableObject {
             }
         }
     }
+
+    protected override void SetShaderTo(Shader shader)
+    {
+        foreach (Material m in rend.materials)
+        {
+            m.shader = shader;
+        }
+    }
 }

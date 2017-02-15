@@ -6,9 +6,13 @@ using UnityEngine.UI;
 public class InteractableObject : MonoBehaviour {
 
     public string description;
+    public bool muplipleMesh = false;
 
-    private Renderer rend;
-    static private Shader onMouseOverShader;
+    protected Renderer rend;
+    protected Shader onMouseOverShader;
+
+    static private Shader onMouseOverShaderSihlouette;
+    static private Shader onMouseOverShadeOutline;
     static private Shader onMouseExitShader;
 
     protected bool positionSaved = false;
@@ -24,10 +28,17 @@ public class InteractableObject : MonoBehaviour {
     {
         rend = GetComponent<Renderer>();
 
-        if (onMouseOverShader == null)
+        if (onMouseOverShaderSihlouette == null)
         {
-            onMouseOverShader = Shader.Find("Outlined/Diffuse");
+            onMouseOverShaderSihlouette = Shader.Find("Outlined/Silhouetted Diffuse");
         }
+
+        if (onMouseOverShadeOutline == null)
+        {
+            onMouseOverShadeOutline = Shader.Find("Outlined/Diffuse");
+        }
+
+        onMouseOverShader = (muplipleMesh) ? onMouseOverShadeOutline : onMouseOverShaderSihlouette;
 
         if (onMouseExitShader == null)
         {
@@ -68,8 +79,8 @@ public class InteractableObject : MonoBehaviour {
         }
     }
 
-    protected virtual void Update() {
-
+    protected virtual void Update()
+    {
         if (cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
             if (controls.SelectedObject == gameObject)
@@ -157,7 +168,7 @@ public class InteractableObject : MonoBehaviour {
         rotation = savedRotation;
     }
 
-    private void SetShaderTo(Shader shader)
+    protected virtual void SetShaderTo(Shader shader)
     {
         foreach (Material m in rend.materials)
         {
