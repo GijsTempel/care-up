@@ -3,15 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(AudioSource))]
 public class PersonObject : InteractableObject {
-
+    
     public string dialogueXml;
     public GameObject hand; // temp
 
     private List<SelectDialogue.DialogueOption> optionsList;
     private AudioSource audioClip;
+
+    private List<GameObject> callers;
 
     private bool inhaling = false;
     bool direction = true;
@@ -21,6 +24,7 @@ public class PersonObject : InteractableObject {
     {
         base.Start();
 
+        callers = new List<GameObject>();
         optionsList = new List<SelectDialogue.DialogueOption>();
         LoadDialogueOptions(dialogueXml);
 
@@ -33,14 +37,9 @@ public class PersonObject : InteractableObject {
 
     protected override void Update()
     {
-        base.Update();
-        if (controls.MouseClicked() && cameraMode.CurrentMode == CameraMode.Mode.Free) {
-            if (controls.SelectedObject == gameObject && controls.CanInteract)
-            {
-                CreateSelectionDialogue();
-            }
-        }
-
+        CallerUpdate();
+        callers.Clear();
+        
         if (inhaling)
         {
             float inhaleSpeed = 1/17.0f * Time.deltaTime;
@@ -145,5 +144,63 @@ public class PersonObject : InteractableObject {
         dialogue.AddOptions(optionsList);
 
         cameraMode.ToggleCameraMode(CameraMode.Mode.SelectionDialogue);
+    }
+    
+    public void CallUpdate(GameObject caller)
+    {
+        callers.Add(caller);
+    }
+
+    private void CallerUpdate()
+    {
+        if (cameraMode.CurrentMode == CameraMode.Mode.Free)
+        {
+            bool flag = false;
+            foreach (GameObject caller in callers)
+            {
+                if (caller == controls.SelectedObject)
+                    flag = true;
+            }
+
+            if (flag)
+            {
+                if (controls.CanInteract)
+                {
+                    if (rend.material.shader == onMouseExitShader)
+                    {
+                        SetShaderTo(onMouseOverShader);
+                    }
+
+                    if (!itemDescription.activeSelf)
+                    {
+                        itemDescription.GetComponentInChildren<Text>().text = (description == "") ? name : description;
+                        Transform icons = itemDescription.transform.GetChild(0).GetChild(0);
+                        icons.FindChild("UseIcon").gameObject.SetActive(gameObject.GetComponent<UsableObject>() != null);
+                        icons.FindChild("TalkIcon").gameObject.SetActive(gameObject.GetComponent<PersonObject>() != null);
+                        icons.FindChild("PickIcon").gameObject.SetActive(gameObject.GetComponent<PickableObject>() != null);
+                        icons.FindChild("ExamIcon").gameObject.SetActive(gameObject.GetComponent<ExaminableObject>() != null);
+                        itemDescription.SetActive(true);
+                    }
+
+                    if (controls.MouseClicked())
+                    {
+                        CreateSelectionDialogue();
+                    }
+                }
+                else if (!controls.CanInteract && rend.material.shader == onMouseOverShader)
+                {
+                    SetShaderTo(onMouseExitShader);
+                    itemDescription.SetActive(false);
+                }
+            }
+            else
+            {
+                if (rend.material.shader == onMouseOverShader)
+                {
+                    SetShaderTo(onMouseExitShader);
+                    itemDescription.SetActive(false);
+                }
+            }
+        }
     }
 }

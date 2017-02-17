@@ -13,7 +13,7 @@ public class InteractableObject : MonoBehaviour {
 
     static private Shader onMouseOverShaderSihlouette;
     static private Shader onMouseOverShadeOutline;
-    static private Shader onMouseExitShader;
+    static protected Shader onMouseExitShader;
 
     protected bool positionSaved = false;
     protected Vector3 savedPosition;

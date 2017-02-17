@@ -122,7 +122,8 @@ public class PickableObject : InteractableObject {
                 }
             }
             else if (name == "SyringeWithInjectionNeedle"
-                && controls.SelectedObject.name == "Hand")
+                && controls.SelectedObject.name == "LeftForeArm" 
+                || controls.SelectedObject.name == "RightForeArm")
             {
                 info = actionManager.CurrentUseOnInfo;
                 if (info[0] == "SyringeWithInjectionNeedle" && info[1] == "Hand")
