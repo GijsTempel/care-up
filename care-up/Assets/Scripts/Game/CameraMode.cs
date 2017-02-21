@@ -72,8 +72,6 @@ public class CameraMode : MonoBehaviour {
                 selectedObject = controls.SelectedObject.GetComponent<ExaminableObject>();
                 if (selectedObject != null) // if there is a component
                 {
-                    ToggleCameraMode(Mode.ObjectPreview);
-                    selectedObject.ToggleViewMode(true);
                     selectedObject.OnExamine();
                     controls.ResetObject();
                 }

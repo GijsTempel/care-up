@@ -4,8 +4,12 @@ using System;
 
 public class ExaminableObject : InteractableObject {
 
+    [HideInInspector]
     public bool tutorial_picked = false;
+    [HideInInspector]
     public bool tutorial_closed = false;
+
+    public bool audioExamine = false;
 
     [Serializable]
     public class ViewSettings
@@ -21,7 +25,25 @@ public class ExaminableObject : InteractableObject {
 
     public void OnExamine()
     {
-        actionManager.OnExamineAction(name, state);
+        if (!audioExamine)
+        {
+            ToggleViewMode(true);
+            cameraMode.ToggleCameraMode(CameraMode.Mode.ObjectPreview);
+            actionManager.OnExamineAction(name, state);
+        }
+        else
+        {
+            if (name == "LeftForeArm" || name == "RightForeArm")
+            {
+                Narrator.PlaySound("ExamineArm");
+                actionManager.OnExamineAction("Hand", state);
+            }
+            else
+            {
+                Narrator.PlaySound("ExamineSmth?");
+                actionManager.OnExamineAction(name, state);
+            }
+        }
     }
 
     public void ToggleViewMode(bool value)

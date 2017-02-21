@@ -162,6 +162,8 @@ GameObject:
   - component: {fileID: 4059227763732122}
   - component: {fileID: 65224056535233040}
   - component: {fileID: 114082584586440096}
+  - component: {fileID: 23014348673496464}
+  - component: {fileID: 114164398974697988}
   m_Layer: 0
   m_Name: LeftForeArm
   m_TagString: Untagged
@@ -351,6 +353,8 @@ GameObject:
   - component: {fileID: 4948117492379638}
   - component: {fileID: 65212903462511574}
   - component: {fileID: 114444279043490490}
+  - component: {fileID: 23554675160056336}
+  - component: {fileID: 114646954191212768}
   m_Layer: 0
   m_Name: RightForeArm
   m_TagString: Untagged
@@ -2014,6 +2018,68 @@ Transform:
   m_Father: {fileID: 4076203966095586}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &23014348673496464
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1187415803965858}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!23 &23554675160056336
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1313607452300174}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!23 &23742581160156156
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -2351,7 +2417,6 @@ MonoBehaviour:
   description: 
   muplipleMesh: 1
   dialogueXml: InjectionPatient
-  hand: {fileID: 1175178389967366}
 --- !u!114 &114082584586440096
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2378,6 +2443,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: 
   muplipleMesh: 0
+--- !u!114 &114164398974697988
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1187415803965858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6095384fe7173243b9fb25bc8b25d06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: 
+  muplipleMesh: 0
+  tutorial_picked: 0
+  tutorial_closed: 0
+  audioExamine: 1
+  viewSettings:
+    distanceFromCamera: 2
+    rotationSensetivity: 90
+  state: clean
 --- !u!114 &114317846737821030
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2458,8 +2543,29 @@ MonoBehaviour:
   muplipleMesh: 0
   tutorial_picked: 0
   tutorial_closed: 0
+  audioExamine: 0
   viewSettings:
     distanceFromCamera: 4
+    rotationSensetivity: 90
+  state: clean
+--- !u!114 &114646954191212768
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1313607452300174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6095384fe7173243b9fb25bc8b25d06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: 
+  muplipleMesh: 0
+  tutorial_picked: 0
+  tutorial_closed: 0
+  audioExamine: 1
+  viewSettings:
+    distanceFromCamera: 2
     rotationSensetivity: 90
   state: clean
 --- !u!114 &114690164296515648

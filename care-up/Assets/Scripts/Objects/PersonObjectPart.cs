@@ -31,7 +31,8 @@ public class PersonObjectPart : InteractableObject {
         if (person != null)
         {
             person.CallUpdate(gameObject);
-        } else
+        }
+        else
         {
             Debug.Log("No person");
         }

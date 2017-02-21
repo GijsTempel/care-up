@@ -9,7 +9,6 @@ using UnityEngine.UI;
 public class PersonObject : InteractableObject {
     
     public string dialogueXml;
-    public GameObject hand; // temp
 
     private List<SelectDialogue.DialogueOption> optionsList;
     private AudioSource audioClip;
@@ -99,7 +98,8 @@ public class PersonObject : InteractableObject {
 
     private void RollUpSleeves(bool value)
     {
-        hand.SetActive(value);
+        Debug.Log("Patient:PlayAnimation:RollUpSleeves");
+        //GetComponent<Animator>().Play("RollUpSleeves");
     }
 
     private void LoadDialogueOptions(string filename)
@@ -156,10 +156,15 @@ public class PersonObject : InteractableObject {
         if (cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
             bool flag = false;
+            bool clickFlag = true;
             foreach (GameObject caller in callers)
             {
                 if (caller == controls.SelectedObject)
+                {
                     flag = true;
+                    if (caller.GetComponent<ExaminableObject>() != null)
+                        clickFlag = false;
+                }
             }
 
             if (flag)
@@ -182,7 +187,7 @@ public class PersonObject : InteractableObject {
                         itemDescription.SetActive(true);
                     }
 
-                    if (controls.MouseClicked())
+                    if (controls.MouseClicked() && clickFlag)
                     {
                         CreateSelectionDialogue();
                     }
