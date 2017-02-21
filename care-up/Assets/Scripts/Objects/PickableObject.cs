@@ -43,7 +43,8 @@ public class PickableObject : InteractableObject {
         Vector3 camRotation = Camera.main.transform.rotation.eulerAngles;
         Vector3 inHand = new Vector3(rotationInHand.x, 0.0f, rotationInHand.z);
         transform.localRotation = Quaternion.Euler(inHand + camRotation);
-        transform.Rotate(Camera.main.transform.forward, rotationInHand.y, Space.World);
+        transform.Rotate(Camera.main.transform.forward, 
+            (right ? -1.0f : 1.0f) * rotationInHand.y, Space.World);
     }
 
     public void Drop(bool force = false)
