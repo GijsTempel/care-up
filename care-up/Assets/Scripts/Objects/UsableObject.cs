@@ -44,6 +44,11 @@ public class UsableObject : InteractableObject {
         {
             switch(name)
             {
+                case "HandCleaner":
+                    {
+                        animationManager.PlayAnimation("UseHandCleaner");
+                    }
+                    break;
                 case "WorkField":
                     {
                         GameObject.Find("Player").GetComponent<AnimationManager>().PlayAnimation("Clean_Table");

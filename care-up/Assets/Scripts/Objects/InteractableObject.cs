@@ -23,6 +23,7 @@ public class InteractableObject : MonoBehaviour {
     static protected Controls controls;
     static protected ActionManager actionManager;
     static protected GameObject itemDescription;
+    static protected AnimationManager animationManager;
 
     protected virtual void Start()
     {
@@ -61,6 +62,12 @@ public class InteractableObject : MonoBehaviour {
         {
             actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
             if (actionManager == null) Debug.LogError("No action manager found");
+        }
+
+        if (animationManager == null)
+        {
+            animationManager = GameObject.Find("Player").GetComponent<AnimationManager>();
+            if (animationManager == null) Debug.LogError("No animationManager found");
         }
 
         if (itemDescription == null)

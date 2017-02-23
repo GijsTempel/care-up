@@ -13,6 +13,6 @@ public class AnimationManager : MonoBehaviour {
 
     public void PlayAnimation(string name)
     {
-        animationController.Play(name);
+        animationController.SetTrigger(name);
     }
 }
