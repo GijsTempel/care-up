@@ -3,6 +3,8 @@ using System.Collections;
 
 public class AnimationManager : MonoBehaviour {
 
+    public GameObject mountBone;
+
     private Animator animationController;
 
     void Start()
@@ -11,8 +13,12 @@ public class AnimationManager : MonoBehaviour {
         if (animationController == null) Debug.LogError("Animator not found");
     }
 
-    public void PlayAnimation(string name)
+    public void PlayAnimation(string name, GameObject interact = null)
     {
         animationController.SetTrigger(name);
+        if ( interact != null )
+        {
+            mountBone.transform.position = interact.transform.position;
+        }
     }
 }
