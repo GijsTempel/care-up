@@ -1,14 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(Animator))]
 public class AnimationManager : MonoBehaviour {
 
     private Animator animationController;
 
     void Start()
     {
-        animationController = GetComponent<Animator>();
+        animationController = GetComponentInChildren<Animator>();
         if (animationController == null) Debug.LogError("Animator not found");
     }
 
