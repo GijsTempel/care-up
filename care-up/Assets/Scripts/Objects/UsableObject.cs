@@ -46,7 +46,7 @@ public class UsableObject : InteractableObject {
             {
                 case "HandCleaner":
                     {
-                        animationManager.PlayAnimation("UseHandCleaner", gameObject);
+                        animationManager.PlayAnimation("UseHandCleaner", gameObject, gameObject);
                     }
                     break;
                 case "WorkField":

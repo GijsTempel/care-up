@@ -66,7 +66,7 @@ public class InteractableObject : MonoBehaviour {
 
         if (animationManager == null)
         {
-            animationManager = GameObject.Find("Player").GetComponent<AnimationManager>();
+            animationManager = GameObject.Find("Player").GetComponentInChildren<AnimationManager>();
             if (animationManager == null) Debug.LogError("No animationManager found");
         }
 
