@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AnimationManager : MonoBehaviour {
+public class PlayerAnimationManager : MonoBehaviour {
 
     public static bool ikActive = false;
 
-    private GameObject LeftInteractObject;
-    private GameObject rightInteractObject;
+    private static GameObject LeftInteractObject;
+    private static GameObject rightInteractObject;
 
-    private Animator animationController;
+    private static Animator animationController;
 
     void Start()
     {
@@ -16,7 +16,7 @@ public class AnimationManager : MonoBehaviour {
         if (animationController == null) Debug.LogError("Animator not found");
     }
 
-    public void PlayAnimation(string name, GameObject leftInteract = null, GameObject rightInteract = null)
+    public static void PlayAnimation(string name, GameObject leftInteract = null, GameObject rightInteract = null)
     {
         animationController.SetTrigger(name);
 

@@ -46,12 +46,12 @@ public class UsableObject : InteractableObject {
             {
                 case "HandCleaner":
                     {
-                        animationManager.PlayAnimation("UseHandCleaner", gameObject, gameObject);
+                        PlayerAnimationManager.PlayAnimation("UseHandCleaner", gameObject, gameObject);
                     }
                     break;
                 case "WorkField":
                     {
-                        GameObject.Find("Player").GetComponent<AnimationManager>().PlayAnimation("Clean_Table");
+                        PlayerAnimationManager.PlayAnimation("Clean_Table");
                     }
                     break;
                 case "OldBandAid":
