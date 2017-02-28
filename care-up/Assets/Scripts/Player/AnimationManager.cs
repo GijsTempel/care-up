@@ -2,7 +2,9 @@
 using System.Collections;
 
 public class AnimationManager : MonoBehaviour {
-    
+
+    public static bool ikActive = false;
+
     private GameObject LeftInteractObject;
     private GameObject rightInteractObject;
 
@@ -28,8 +30,6 @@ public class AnimationManager : MonoBehaviour {
     //a callback for calculating IK
     private void OnAnimatorIK(int layerIndex)
     {
-        Debug.Log("logIK"); // wtf no call
-        bool ikActive = true;
         //if the IK is active, set the position and rotation directly to the goal. 
         if (ikActive)
         {
@@ -50,7 +50,6 @@ public class AnimationManager : MonoBehaviour {
                 animationController.SetIKRotation(AvatarIKGoal.LeftHand, LeftInteractObject.transform.rotation);
             }
         }
-
         //if the IK is not active, set the position and rotation of the hand and head back to the original position
         else
         {
