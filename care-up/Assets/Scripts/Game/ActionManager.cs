@@ -5,11 +5,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// GameLogic script. Everything about actions is managed by this script.
+/// </summary>
 public class ActionManager : MonoBehaviour {
 
+    // tutorial variables - do not affect gameplay
+    // TODO: hide from editor
     public bool tutorial_hintUsed = false;
     private bool currentStepHintUsed = false;
-
+    
+    // list of types of actions
     public enum ActionType
     {
         ObjectCombine,
@@ -20,17 +26,21 @@ public class ActionManager : MonoBehaviour {
         PickUp
     };
 
+    // name of the xml file with actions
     public string actionListName;
 
+    // actual list of actions
     private List<Action> actionList = new List<Action>();
+    // list of descriptions of steps, player got penalty on
     private List<string> wrongStepsList = new List<string>();
 
-    private int totalPoints = 0;
-    private int points = 0;
-    private int currentActionIndex = 0;
-    private Action currentAction;
+    private int totalPoints = 0;         // max points of scene
+    private int points = 0;              // current points
+    private int currentActionIndex = 0;  // index of current action
+    private Action currentAction;        // current action instance
     
-    private List<GameObject> particleHints;
+    // GameObjects that show player next step when hint used
+    private List<GameObject> particleHints; 
     private bool menuScene;
 
     public List<Action> ActionList
@@ -38,6 +48,9 @@ public class ActionManager : MonoBehaviour {
         get { return actionList; }
     }
     
+    /// <summary>
+    /// List of wrong steps, merged into a string with line breaks.
+    /// </summary>
     public string WrongSteps
     {
         get
@@ -49,33 +62,52 @@ public class ActionManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Current points during runtime.
+    /// </summary>
     public int Points
     {
         get { return points; }
         set { points = value; }
     }
 
+    /// <summary>
+    /// Total max points player can get on the scene.
+    /// </summary>
     public int TotalPoints
     {
         get { return totalPoints; }
     }
 
+    /// <summary>
+    /// Index of current action.
+    /// </summary>
     public int CurrentActionIndex
     {
         get { return currentActionIndex; }
         set { currentActionIndex = value; }
     }
 
+    /// <summary>
+    /// Description of the current action.
+    /// </summary>
     public string CurrentDescription
     {
         get { return currentAction != null ? currentAction.description : ""; }
     }
 
+    /// <summary>
+    /// Name of the file of audioHint of current action.
+    /// </summary>
     public string CurrentAudioHint
     {
         get { return currentAction.audioHint; }
     }
 
+    /// <summary>
+    /// If current action is UseAction, returns the name of the object that needs to be used.
+    /// Returns empty string for every other case.
+    /// </summary>
     public string CurrentUseObject
     {
         get
@@ -90,6 +122,10 @@ public class ActionManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Returns string[] of names of objects that need to be combined.
+    /// Returns nothing if current action is not CombineAction.
+    /// </summary>
     public string[] CurrentCombineObjects
     {
         get
@@ -106,6 +142,11 @@ public class ActionManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Returns data if current action is UseOnAction.
+    /// string[0] = item that should be used on target
+    /// string[1] = target item
+    /// </summary>
     public string[] CurrentUseOnInfo
     {
         get
@@ -122,6 +163,9 @@ public class ActionManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Returns topic string if current action is TalkAction.
+    /// </summary>
     public string CurrentTopic
     {
         get
@@ -133,6 +177,9 @@ public class ActionManager : MonoBehaviour {
 
     private Controls controls;
 
+    /// <summary>
+    /// Set some variables and load info from xml file.
+    /// </summary>
     void Start () {
 
         string sceneName = SceneManager.GetActiveScene().name;
@@ -194,6 +241,10 @@ public class ActionManager : MonoBehaviour {
         currentAction = actionList.First();
     }
 
+    /// <summary>
+    /// Handle pressing "Get Hint" key.
+    /// Play audio hint, create particle hint, do penalty.
+    /// </summary>
     void Update()
     {
         if (controls.keyPreferences.GetHintKey.Pressed())
@@ -235,6 +286,11 @@ public class ActionManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Handle (trigger) Combine action.
+    /// </summary>
+    /// <param name="leftHand">Name of the object in left hand.</param>
+    /// <param name="rightHand">Name of the object in right hand.</param>
     public void OnCombineAction(string leftHand, string rightHand)
     {
         string[] info = { leftHand, rightHand };
@@ -246,6 +302,10 @@ public class ActionManager : MonoBehaviour {
         CheckScenarioCompleted();
     }
 
+    /// <summary>
+    /// Handle (trigger) UseAction.
+    /// </summary>
+    /// <param name="useObject">Name of the used object.</param>
     public void OnUseAction(string useObject)
     {
         string[] info = { useObject };
@@ -257,6 +317,10 @@ public class ActionManager : MonoBehaviour {
         CheckScenarioCompleted();
     }
 
+    /// <summary>
+    /// Handle (trigger) Talk action.
+    /// </summary>
+    /// <param name="topic">Chosen topic</param>
     public void OnTalkAction(string topic)
     {
         string[] info = { topic };
@@ -268,6 +332,11 @@ public class ActionManager : MonoBehaviour {
         CheckScenarioCompleted();
     }
     
+    /// <summary>
+    /// Handle (trigger) UseOn action.
+    /// </summary>
+    /// <param name="item">Item that is used on target</param>
+    /// <param name="target">Item that was targeted</param>
     public void OnUseOnAction(string item, string target)
     {
         string[] info = { item, target };
@@ -279,6 +348,11 @@ public class ActionManager : MonoBehaviour {
         CheckScenarioCompleted();
     }
 
+    /// <summary>
+    /// Handle (trigger) Examine aciton.
+    /// </summary>
+    /// <param name="item">Name of the examined item</param>
+    /// <param name="expected">State of the examined item</param>
     public void OnExamineAction(string item, string expected)
     {
         string[] info = { item, expected };
@@ -290,6 +364,11 @@ public class ActionManager : MonoBehaviour {
         CheckScenarioCompleted();
     }
 
+    /// <summary>
+    /// Handle (trigger) picking up action.
+    /// Is not penalised, but needs to be checked.
+    /// </summary>
+    /// <param name="item">Name of the picked item</param>
     public void OnPickUpAction(string item)
     {
         string[] info = { item };
@@ -304,6 +383,13 @@ public class ActionManager : MonoBehaviour {
         CheckScenarioCompleted();
     }
 
+    /// <summary>
+    /// Checks if triggered action is correct ( expected to be done in action list ).
+    /// Plays WrongAction sound from Narrator if wrong.
+    /// </summary>
+    /// <param name="info">Info passed from Handling functions.</param>
+    /// <param name="type">Type of the action</param>
+    /// <returns>True if action expected and correct. False otherwise.</returns>
     public bool Check(string[] info, ActionType type)
     {
         bool matched = false;
@@ -356,6 +442,11 @@ public class ActionManager : MonoBehaviour {
         return matched;
     }
 
+    /// <summary>
+    /// Check if every action from action list is done and scene is completed.
+    /// If yes - go to EndScore scene.
+    /// Runs after every action check and clears particle hints.
+    /// </summary>
     private void CheckScenarioCompleted()
     {
         // clear hints
@@ -370,6 +461,9 @@ public class ActionManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Display points on the top left corner of the screen.
+    /// </summary>
     void OnGUI()
     {
         if (menuScene)
@@ -396,6 +490,10 @@ public class ActionManager : MonoBehaviour {
         "Points: " + points, style);
     }
 
+    /// <summary>
+    /// Sets state of every action of the list.
+    /// </summary>
+    /// <param name="items">True = action completed</param>
     public void SetActionStatus(List<bool> items)
     {
         if ( items.Count == actionList.Count )
@@ -407,6 +505,9 @@ public class ActionManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Force a step back.
+    /// </summary>
     public void StepBack()
     {
         Action lastAction = actionList.Last(x => x.matched == true);
