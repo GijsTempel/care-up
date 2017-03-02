@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Object that loads certain scene or performs an action, not related to gameplay.
+/// </summary>
 public class SystemObject : InteractableObject {
 
     public string sceneName;
@@ -27,7 +30,7 @@ public class SystemObject : InteractableObject {
         }
     }
 
-
+    // called when player interacts with object
     public virtual void Use(bool confirmed = false)
     {
         if (name == "Start")

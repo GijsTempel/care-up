@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Class for YES/NO confirmation in selection scene
+/// </summary>
 [RequireComponent(typeof(Collider))]
 public class SelectionScene_DoorUI : MonoBehaviour {
 

@@ -2,6 +2,9 @@
 using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Class that draws crosshair texture on the screen
+/// </summary>
 [Serializable]
 public class Crosshair : MonoBehaviour{
 

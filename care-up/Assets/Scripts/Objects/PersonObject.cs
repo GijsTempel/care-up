@@ -5,6 +5,9 @@ using System.Xml;
 using System.Linq;
 using UnityEngine.UI;
 
+/// <summary>
+/// Player can perform Talk action to this object.
+/// </summary>
 [RequireComponent(typeof(AudioSource))]
 public class PersonObject : InteractableObject {
     
@@ -102,6 +105,10 @@ public class PersonObject : InteractableObject {
         //GetComponent<Animator>().Play("RollUpSleeves");
     }
 
+    /// <summary>
+    /// Loads available topics to talk from xml file.
+    /// </summary>
+    /// <param name="filename">Xml filename</param>
     private void LoadDialogueOptions(string filename)
     {
         optionsList.Clear();
@@ -117,7 +124,7 @@ public class PersonObject : InteractableObject {
             string description = xmlOption.Attributes["text"].Value;
             string topic = xmlOption.Attributes["topic"] != null ? xmlOption.Attributes["topic"].Value : "";
 
-            if (count < 3)
+            if (count < 3) // 3 options max, 4 is Close.
             {
                 SelectDialogue.DialogueOption option = new SelectDialogue.DialogueOption(description, Talk, topic);
                 optionsList.Add(option);
@@ -132,6 +139,9 @@ public class PersonObject : InteractableObject {
         optionsList.Add(new SelectDialogue.DialogueOption("Close dialogue", Talk, ""));
     }
 
+    /// <summary>
+    /// Creates an instance of dialogue, switches camera mode
+    /// </summary>
     private void CreateSelectionDialogue()
     {
         GameObject dialogueObject = Instantiate(Resources.Load<GameObject>("Prefabs/SelectionDialogue"),
@@ -146,6 +156,10 @@ public class PersonObject : InteractableObject {
         cameraMode.ToggleCameraMode(CameraMode.Mode.SelectionDialogue);
     }
     
+    /// <summary>
+    /// Person can consist of multiple parts, that should affect main Person class.
+    /// </summary>
+    /// <param name="caller">Part gameObject</param>
     public void CallUpdate(GameObject caller)
     {
         callers.Add(caller);

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// For cases when Person consists of multiple objects.
+/// </summary>
 [RequireComponent(typeof(Collider))]
 public class PersonObjectPart : InteractableObject {
 

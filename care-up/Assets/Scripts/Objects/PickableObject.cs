@@ -4,6 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Object that can be picked in hand
+/// </summary>
 [RequireComponent(typeof(Renderer))]
 [RequireComponent(typeof(Rigidbody))]
 public class PickableObject : InteractableObject {
@@ -38,6 +41,10 @@ public class PickableObject : InteractableObject {
         }
     }
     
+    /// <summary>
+    /// Handles potision and rotation of the object in hand
+    /// </summary>
+    /// <param name="right">True - right hand.</param>
     public void InHandUpdate(bool right)
     {
         Vector3 camRotation = Camera.main.transform.rotation.eulerAngles;
@@ -47,6 +54,10 @@ public class PickableObject : InteractableObject {
             (right ? -1.0f : 1.0f) * rotationInHand.y, Space.World);
     }
 
+    /// <summary>
+    /// Drops and object
+    /// </summary>
+    /// <param name="force">If true - forces load position instead of free dropping</param>
     public void Drop(bool force = false)
     {
         gameObject.layer = 0;
@@ -75,6 +86,10 @@ public class PickableObject : InteractableObject {
         }
     }
 
+    /// <summary>
+    /// Handle using of an object on another one.
+    /// </summary>
+    /// <returns>True if used</returns>
     public virtual bool Use()
     {
         string[] info = actionManager.CurrentUseOnInfo;

@@ -31,6 +31,8 @@ public class WorkField : UsableObject {
                     obj.SetActive(toggle);
                 }
             }
+            tutorial_used = true;
+            PlayerAnimationManager.PlayAnimation("Clean_Table");
             actionManager.OnUseAction(gameObject.name);
             controls.ResetObject();
             Reset();

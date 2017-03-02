@@ -2,8 +2,12 @@
 using System.Collections;
 using UnityEngine.UI;
 
+/// <summary>
+/// Static object that can be used
+/// </summary>
 public class UsableObject : InteractableObject {
 
+    [HideInInspector]
     public bool tutorial_used = false;
 
     private static HandsInventory handsInventory;
@@ -47,11 +51,6 @@ public class UsableObject : InteractableObject {
                 case "HandCleaner":
                     {
                         PlayerAnimationManager.PlayAnimation("UseHandCleaner", gameObject, gameObject);
-                    }
-                    break;
-                case "WorkField":
-                    {
-                        PlayerAnimationManager.PlayAnimation("Clean_Table");
                     }
                     break;
                 case "OldBandAid":

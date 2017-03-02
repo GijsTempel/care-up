@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Narrator class, that plays audiofile as playing 'thinks' about smth
+/// </summary>
 [RequireComponent(typeof(AudioSource))]
 public class Narrator : MonoBehaviour {
 
@@ -14,6 +17,11 @@ public class Narrator : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Plays sound clip
+    /// </summary>
+    /// <param name="sound">sound name</param>
+    /// <returns>True if played</returns>
     public static bool PlaySound(string sound)
     {
         if (audioSource.isPlaying)

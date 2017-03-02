@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Handle animation changes of the player
+/// </summary>
 public class PlayerAnimationManager : MonoBehaviour {
 
     public static bool ikActive = false;

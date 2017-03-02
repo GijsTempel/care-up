@@ -2,6 +2,9 @@
 using System.Collections;
 using UnityEngine.UI;
 
+/// <summary>
+/// General abstract class for objects.
+/// </summary>
 [RequireComponent(typeof(Renderer))]
 public class InteractableObject : MonoBehaviour {
 
@@ -79,6 +82,10 @@ public class InteractableObject : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Handle changing shader ( highlighting on aiming ) 
+    /// and showing Description at bottom of the screen.
+    /// </summary>
     protected virtual void Update()
     {
         if (cameraMode.CurrentMode == CameraMode.Mode.Free)

@@ -2,6 +2,9 @@
 using System.Collections;
 using System;
 
+/// <summary>
+/// Object that can be examined - opened in object preview.
+/// </summary>
 public class ExaminableObject : InteractableObject {
 
     [HideInInspector]
@@ -23,6 +26,9 @@ public class ExaminableObject : InteractableObject {
     
     private bool viewMode = false;
 
+    /// <summary>
+    /// Action examining, handles special cases aswell as switching camera modes.
+    /// </summary>
     public void OnExamine()
     {
         if (!audioExamine)
@@ -33,6 +39,7 @@ public class ExaminableObject : InteractableObject {
         }
         else
         {
+            // both hands are part of rig and should count as Hand
             if (name == "LeftForeArm" || name == "RightForeArm")
             {
                 Narrator.PlaySound("ExamineArm");
@@ -46,6 +53,10 @@ public class ExaminableObject : InteractableObject {
         }
     }
 
+    /// <summary>
+    /// Toggles object mode.
+    /// </summary>
+    /// <param name="value">True - Preview, False - closed</param>
     public void ToggleViewMode(bool value)
     {
         viewMode = value;
@@ -60,6 +71,7 @@ public class ExaminableObject : InteractableObject {
             LoadPosition();
         }
 
+        // disable/endable physics
         GetComponent<Collider>().enabled = !viewMode;
         Rigidbody body = GetComponent<Rigidbody>();
         if (body != null)
@@ -89,6 +101,9 @@ public class ExaminableObject : InteractableObject {
         }
     }
 
+    /// <summary>
+    /// Handles position/rotation while in preview mode
+    /// </summary>
     public void ViewModeUpdate()
     {
         transform.position = Camera.main.transform.position
