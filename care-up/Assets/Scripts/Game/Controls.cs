@@ -3,6 +3,9 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// Handles controls of the player
+/// </summary>
 public class Controls : MonoBehaviour {
     
     [Serializable]
@@ -74,6 +77,10 @@ public class Controls : MonoBehaviour {
         selectedObject = null;
     }
    
+    /// <summary>
+    /// Sets selectedObject to an object player is aimed at atm.
+    /// Sets canInteract based of distance to aimed object.
+    /// </summary>
 	void LateUpdate () {
         // raycast only in this script
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
@@ -91,6 +98,10 @@ public class Controls : MonoBehaviour {
         keyUsed = false;
     }
 
+    /// <summary>
+    /// Checks if "LeftMouse" clicked, including alternatives for gamepads.
+    /// </summary>
+    /// <returns>True if clicked.</returns>
     public bool MouseClicked()
     {
         if (keyPreferences.mouseClickLocked)
@@ -100,7 +111,10 @@ public class Controls : MonoBehaviour {
 
         return Input.GetMouseButtonDown(0) || keyPreferences.mouseClickKey.Pressed();
     }
-
+    /// <summary>
+    /// Checks if "RightMouse" clicked, including alternatives for gamepads.
+    /// </summary>
+    /// <returns>True if clicked.</returns>
     public bool RightMouseClicked()
     {
         return Input.GetMouseButtonDown(1) || keyPreferences.closeObjectView.Pressed();

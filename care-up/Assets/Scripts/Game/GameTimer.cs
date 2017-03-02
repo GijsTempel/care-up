@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Handles counting time for scene.
+/// </summary>
 public class GameTimer : MonoBehaviour {
 
     private float currentTime = 0.0f;
@@ -16,6 +19,9 @@ public class GameTimer : MonoBehaviour {
         currentTime += Time.deltaTime;
 	}
 
+    /// <summary>
+    /// Draws current time top right corner.
+    /// </summary>
     void OnGUI()
     {
         string timeString = string.Format("{0}:{1:00}", (int)currentTime / 60, (int)currentTime % 60);

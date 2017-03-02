@@ -2,6 +2,9 @@
 using System.Collections;
 using System;
 
+/// <summary>
+/// Abstract class Action. Inherit every time of action from this one.
+/// </summary>
 public abstract class Action
 {
     public bool matched = false;
@@ -23,6 +26,13 @@ public abstract class Action
         get { return subindex; }
     }
 
+    /// <summary>
+    /// C-tor of abstract action class. Used for creating aciton instance from xml.
+    /// </summary>
+    /// <param name="t">Action type (Use, Examine, etc)</param>
+    /// <param name="index">Index of action (see xml)</param>
+    /// <param name="descr">Sentence from xml, describing action</param>
+    /// <param name="audio">Name of audiofile, that will be played when hint used</param>
     public Action(ActionManager.ActionType t, int index, string descr, string audio)
     {
         type = t;
@@ -31,10 +41,19 @@ public abstract class Action
         audioHint = audio;
     }
     
+    /// <summary>
+    /// Abstract class
+    /// </summary>
+    /// <param name="info">Data of action. See overloaded functions.</param>
+    /// <returns>True if ==</returns>
     public abstract bool Compare(string[] info);
     public abstract void ObjectNames(out string[] name);
 }
 
+/// <summary>
+/// Action takes two names (can be empty) and outputs 2 names (can be empty)
+/// for left and right hand. Empty meanss - no object in hand.
+/// </summary>
 public class CombineAction : Action
 {
     private string leftInput;
@@ -47,6 +66,11 @@ public class CombineAction : Action
         rightInput = right;
     }
 
+    /// <summary>
+    /// Compares input values for left and right hands. Mirroring included.
+    /// </summary>
+    /// <param name="info">Object before combination</param>
+    /// <returns>True if values are same.</returns>
     public override bool Compare(string[] info)
     {
         bool same = false;
@@ -74,6 +98,9 @@ public class CombineAction : Action
     }
 }
 
+/// <summary>
+/// Action of using static object.
+/// </summary>
 public class UseAction : Action
 {
     private string useInput;
@@ -109,6 +136,9 @@ public class UseAction : Action
     }
 }
 
+/// <summary>
+/// Action interacting with person. Peformed when topic selected.
+/// </summary>
 public class TalkAction : Action
 {
     private string topicInput;
@@ -145,6 +175,9 @@ public class TalkAction : Action
     }
 }
 
+/// <summary>
+/// Action using one object on another.
+/// </summary>
 public class UseOnAction : Action
 {
     private string item;
@@ -157,6 +190,11 @@ public class UseOnAction : Action
         target = t;
     }
 
+    /// <summary>
+    /// Compares used objects.
+    /// </summary>
+    /// <param name="info">info[0] = item, info[1] = target</param>
+    /// <returns>True if values same</returns>
     public override bool Compare(string[] info)
     {
         bool same = false;
@@ -183,6 +221,9 @@ public class UseOnAction : Action
     }
 }
 
+/// <summary>
+/// Action examining object. Expected var - is required state of the object.
+/// </summary>
 public class ExamineAction : Action
 {
     private string item;
@@ -195,6 +236,11 @@ public class ExamineAction : Action
         expected = exp;
     }
 
+    /// <summary>
+    /// Compares values
+    /// </summary>
+    /// <param name="info">info[0] = item, info[1] = state</param>
+    /// <returns>True if values same</returns>
     public override bool Compare(string[] info)
     {
         bool same = false;
@@ -215,6 +261,9 @@ public class ExamineAction : Action
     }
 }
 
+/// <summary>
+/// Action picking item.
+/// </summary>
 public class PickUpAction : Action
 {
     private string item;

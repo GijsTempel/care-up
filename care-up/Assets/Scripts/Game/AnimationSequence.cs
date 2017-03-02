@@ -4,6 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Class for handling animation sequences.
+/// </summary>
 public class AnimationSequence  {
     
     public class RandomOption
@@ -63,6 +66,10 @@ public class AnimationSequence  {
         get { return currentStep > steps.Count; }
     }
 
+    /// <summary>
+    /// Main c-tor of class. Loads info from file and starts seqence.
+    /// </summary>
+    /// <param name="filename">Filename of Xml sequence info</param>
     public AnimationSequence(string filename)
     {
         currentStep = 0;
@@ -77,6 +84,10 @@ public class AnimationSequence  {
         LoadFromFile(filename);
     }
 
+    /// <summary>
+    /// Loads info from xml file and stores in list.
+    /// </summary>
+    /// <param name="filename">Name of the file</param>
     private void LoadFromFile(string filename)
     {
         TextAsset textAsset = (TextAsset)Resources.Load("Xml/AnimationSequences/" + filename);
@@ -117,10 +128,15 @@ public class AnimationSequence  {
         }
     }
 
+    /// <summary>
+    /// Handles result of selection of sequence step.
+    /// </summary>
+    /// <param name="animation">Data from selection.</param>
     private void PlayAnimation(string animation)
     {
         if (animation != "")
         {
+            // leave sequence
             if (animation == "CM_Leave")
             {
                 actionManager.StepBack();
@@ -130,8 +146,10 @@ public class AnimationSequence  {
             }
             else
             {
+                // if there's couple of correct options
                 if (steps.ElementAt(currentStep-1).randomOptions.Count > 0)
                 {
+                    // if animation is correct
                     if (animation == steps.ElementAt(currentStep-1).GetCorrectAnimation())
                     {
                         Debug.Log("Play animation: " + animation);
@@ -145,7 +163,7 @@ public class AnimationSequence  {
                         actionManager.Points--;
                     }
                 }
-                else
+                else //1 correct option
                 {
                     if (animation == "Inject Pricking pen" || animation == "ThrowSyringe")
                     {
@@ -164,13 +182,16 @@ public class AnimationSequence  {
                 }
             }
         }
-        else
+        else // no info means wrong choice
         {
             Narrator.PlaySound("WrongAction");
             actionManager.Points--;
         }
     }
 
+    /// <summary>
+    /// Goes to next step of sequence. Handles creating/changing Dialogue.
+    /// </summary>
     public void NextStep()
     {
         GameObject dialogueObject = GameObject.Find("SelectionDialogue");
@@ -205,6 +226,10 @@ public class AnimationSequence  {
         currentStep += 1;
     }
 
+    /// <summary>
+    /// Tutorial special func. Locks mouse movement or shows correct answer.
+    /// </summary>
+    /// <param name="value">True - lock mouse. False - unlock, show answer.</param>
     public void TutorialLock(bool value)
     {
         SelectDialogue dialogue = GameObject.Find("SelectionDialogue").GetComponent<SelectDialogue>();

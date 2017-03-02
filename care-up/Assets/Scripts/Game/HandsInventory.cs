@@ -1,8 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Handles things in hands.
+/// </summary>
 public class HandsInventory : MonoBehaviour {
 
+    // tutorial special variables.
+    // TODO: hide from unity editor.
     public bool tutorial_pickedLeft = false;
     public bool tutorial_pickedRight = false;
     public bool tutorial_droppedLeft = false;
@@ -62,6 +67,7 @@ public class HandsInventory : MonoBehaviour {
 
     void Update() {
 
+        // calculate position of objects in hands
         leftHandPosition = Camera.main.transform.position +
                 Camera.main.transform.forward * distanceFromCamera +
                 Camera.main.transform.right * (-horisontalOffset);
@@ -81,8 +87,10 @@ public class HandsInventory : MonoBehaviour {
             rightHandObject.InHandUpdate(true);
         }
 
+        // handle player actions in free mode
         if (cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
+            // drop left object
             if (controls.keyPreferences.LeftDropKey.Pressed())
             {
                 if (leftHandObject)
@@ -93,6 +101,7 @@ public class HandsInventory : MonoBehaviour {
                 }
             }
 
+            // drop right object
             if (controls.keyPreferences.RightDropKey.Pressed())
             {
                 if (rightHandObject)
@@ -103,6 +112,7 @@ public class HandsInventory : MonoBehaviour {
                 }
             }
 
+            // combine key pressed, if combine performed - handle object changes
             if (controls.keyPreferences.CombineKey.Pressed())
             {
                 string leftName = leftHandObject ? leftHandObject.name : "";
@@ -115,6 +125,7 @@ public class HandsInventory : MonoBehaviour {
                 string leftResult, rightResult;
                 bool combined = combinationManager.Combine(leftName, rightName, out leftResult, out rightResult);
 
+                // combine performed
                 if (combined && combineAllowed)
                 {
                     tutorial_combined = true;
@@ -135,6 +146,7 @@ public class HandsInventory : MonoBehaviour {
                         rightHandObject.GetSavesLocation(out rightSavedPos, out rightSavedRot);
                     }
 
+                    // object changed
                     if (leftName != leftResult)
                     {
                         if (leftHandObject != null)
@@ -161,6 +173,7 @@ public class HandsInventory : MonoBehaviour {
                         }
                     }
 
+                    // object changed
                     if (rightName != rightResult)
                     {
                         if (rightHandObject != null)
@@ -189,6 +202,7 @@ public class HandsInventory : MonoBehaviour {
                 }
             }
 
+            // use left object
             if (controls.keyPreferences.LeftUseKey.Pressed())
             {
                 if (leftHandObject != null)
@@ -205,6 +219,7 @@ public class HandsInventory : MonoBehaviour {
                 }
             }
 
+            // use right object
             if (controls.keyPreferences.RightUseKey.Pressed())
             {
                 if (rightHandObject)
@@ -222,6 +237,7 @@ public class HandsInventory : MonoBehaviour {
             }
         }
 
+        // handle picking items
         if (controls.MouseClicked() && cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
             if (controls.SelectedObject != null && controls.CanInteract)
@@ -238,7 +254,13 @@ public class HandsInventory : MonoBehaviour {
             }
         }
     }
-
+    
+    /// <summary>
+    /// Proper picking, left hand first, right second
+    /// </summary>
+    /// <param name="item">Object picked</param>
+    /// <param name="hand">If certain hand forced</param>
+    /// <returns></returns>
     public bool PickItem(PickableObject item, string hand = "")
     {
         bool picked = false;
@@ -271,7 +293,7 @@ public class HandsInventory : MonoBehaviour {
                 picked = true;
             }
         }
-
+        
         if (picked)
         {
             item.SavePosition();
@@ -295,6 +317,12 @@ public class HandsInventory : MonoBehaviour {
         return picked;
     }
 
+    /// <summary>
+    /// After combining a new object can appear on the scene.
+    /// </summary>
+    /// <param name="name">Name of the object</param>
+    /// <param name="position">Position of the object</param>
+    /// <returns>Object created.</returns>
     private GameObject CreateObjectByName(string name, Vector3 position)
     {
         GameObject newObject = Instantiate(Resources.Load<GameObject>("Prefabs\\" + name),
@@ -314,11 +342,19 @@ public class HandsInventory : MonoBehaviour {
         return newObject;
     }
 
+    /// <summary>
+    /// Checks if hands are empty
+    /// </summary>
+    /// <returns>True if empty</returns>
     public bool Empty()
     {
         return (leftHandObject == null) && (rightHandObject == null);
     }
 
+    /// <summary>
+    /// Puts on or takes of gloves.
+    /// </summary>
+    /// <param name="value">True - puts on, False - takes off</param>
     public void GlovesToggle(bool value)
     {
         if (value)
@@ -348,6 +384,9 @@ public class HandsInventory : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Forces drop both objects. Used during animation sequences.
+    /// </summary>
     public void PutAllOnTable()
     {
         if (leftHandObject)
@@ -363,6 +402,9 @@ public class HandsInventory : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Used during animation sequence to force pick.
+    /// </summary>
     public void PickTestStrips()
     {
         leftHandObject = GameObject.Find("TestStrips").GetComponent<PickableObject>();

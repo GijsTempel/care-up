@@ -4,6 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
+/// <summary>
+/// Instance of dialogue with up to 4 options.
+/// </summary>
 public class SelectDialogue : MonoBehaviour {
 
     public bool tutorial_lock = false;
@@ -120,6 +123,9 @@ public class SelectDialogue : MonoBehaviour {
         InitOptions();
     }
 
+    /// <summary>
+    /// Sets options sides based on how many are there.
+    /// </summary>
     private void InitOptions()
     {
         if (options.Count == 0)
@@ -128,12 +134,14 @@ public class SelectDialogue : MonoBehaviour {
             return;
         }
 
+        // 1 - top
         if (options.Count == 1)
         {
             top.gameObject.SetActive(true);
             options[0].side = OptionSide.Top;
             top.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = options[0].text;
         }
+        // 2 - left/right
         else if (options.Count == 2)
         {
             left.gameObject.SetActive(true);
@@ -144,6 +152,7 @@ public class SelectDialogue : MonoBehaviour {
             options[1].side = OptionSide.Right;
             right.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = options[1].text;
         }
+        // 3 - top/left/right
         else if (options.Count == 3)
         {
             top.gameObject.SetActive(true);
@@ -158,7 +167,7 @@ public class SelectDialogue : MonoBehaviour {
             options[2].side = OptionSide.Right;
             right.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = options[2].text;
         }
-        else
+        else // all 4 sides
         {
             top.gameObject.SetActive(true);
             options[0].side = OptionSide.Top;
@@ -249,7 +258,7 @@ public class SelectDialogue : MonoBehaviour {
             currentOption = option;
         }
     }
-
+    
     private void SetOptionTo(OptionSide option, bool state)
     {
         switch (option)

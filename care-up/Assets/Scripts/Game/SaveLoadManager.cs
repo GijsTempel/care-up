@@ -5,19 +5,22 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.IO;
 
+/// <summary>
+/// Handles saving/loading game state.
+/// </summary>
 public class SaveLoadManager : MonoBehaviour {
 
     private const string savePath = "/Xml/SaveFiles/";
 
     private bool needLoad = false;
     private string needLoadName;
-
+    
 	void Start()
     {
         Directory.CreateDirectory(Application.dataPath + savePath);
         SceneManager.sceneLoaded += OnLoaded;
     }
-
+    
     private void OnLoaded(Scene s, LoadSceneMode m)
     {
         if (needLoad)
@@ -33,6 +36,10 @@ public class SaveLoadManager : MonoBehaviour {
         needLoadName = filename;
     }
 
+    /// <summary>
+    /// Saves info from scene at current state.
+    /// </summary>
+    /// <param name="filename">Filename of savefile.</param>
     public void Save(string filename = "continue")
     {
         XmlDocument doc = new XmlDocument();
@@ -230,6 +237,10 @@ public class SaveLoadManager : MonoBehaviour {
         //SceneManager.LoadScene(sceneNode.Attributes["name"].Value);
     }
 
+    /// <summary>
+    /// Loads and sets everything in scene.
+    /// </summary>
+    /// <param name="filename">Filename of savefile</param>
     private void Load(string filename)
     {
         XmlDocument doc = new XmlDocument();

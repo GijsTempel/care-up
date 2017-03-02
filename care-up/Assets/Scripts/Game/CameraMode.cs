@@ -2,14 +2,17 @@
 using System.Collections;
 using UnityStandardAssets.Characters.FirstPerson;
 
+/// <summary>
+/// Class for handling specific camera configurations other, than default player.
+/// </summary>
 public class CameraMode : MonoBehaviour {
 
 	public enum Mode
     {
-        Free,
-        ObjectPreview,
-        SelectionDialogue,
-        ConfirmUI
+        Free,               // player moves freely
+        ObjectPreview,      // object in center, controls locked, close/pick
+        SelectionDialogue,  // selection dialogue, controls locked
+        ConfirmUI           // yes/no dialogue, controls locked
     };
 
     public float minZoom = 0.5f;
@@ -51,6 +54,7 @@ public class CameraMode : MonoBehaviour {
 
     void Update()
     {
+        // handle confirm mode
         if (currentMode == Mode.ConfirmUI)
         {
             if (controls.keyPreferences.mouseClickKey.Pressed()
@@ -65,6 +69,7 @@ public class CameraMode : MonoBehaviour {
             }
         }
 
+        // clicked on something in free mode, possibly change mode
         if (controls.MouseClicked() && currentMode == Mode.Free)
         {
             if (controls.SelectedObject && controls.CanInteract)
@@ -87,6 +92,7 @@ public class CameraMode : MonoBehaviour {
             }
         }
 
+        // handle object preview, close/pick,zoom
         if (currentMode == Mode.ObjectPreview)
         {
             if (controls.keyPreferences.closeObjectView.Pressed())
@@ -137,6 +143,7 @@ public class CameraMode : MonoBehaviour {
             }
         }
 
+        // handle object update in preview
         if ( currentMode == Mode.ObjectPreview )
         {
             if ( selectedObject == null )
@@ -150,6 +157,10 @@ public class CameraMode : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Switches properly mode setting controls locks, cursor, blur, etc.
+    /// </summary>
+    /// <param name="mode">Next mode.</param>
     public void ToggleCameraMode(Mode mode)
     {
         if (currentMode == Mode.Free && mode == Mode.ObjectPreview)
@@ -196,6 +207,10 @@ public class CameraMode : MonoBehaviour {
         controls.ResetObject();
     }
 
+    /// <summary>
+    /// Enables/disables player controls
+    /// </summary>
+    /// <param name="value">True - enable, False - disable</param>
     void TogglePlayerScript(bool value)
     {
         if (value)
@@ -210,6 +225,9 @@ public class CameraMode : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Draws text below an object in preview mode.
+    /// </summary>
     void OnGUI()
     {
         if ( currentMode == Mode.ObjectPreview )

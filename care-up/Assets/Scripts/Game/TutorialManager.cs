@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 
+/// <summary>
+/// Handles entire tutorial scene step by step.
+/// </summary>
 public class TutorialManager : MonoBehaviour {
 
     public enum TutorialStep

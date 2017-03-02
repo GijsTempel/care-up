@@ -4,6 +4,9 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// Handles all combinations in scene.
+/// </summary>
 public class CombinationManager : MonoBehaviour {
 
     [Serializable]
@@ -20,6 +23,9 @@ public class CombinationManager : MonoBehaviour {
 
     private ActionManager actionManager;
 
+    /// <summary>
+    /// Instantly loads xml file and stores all possible combination for the scene.
+    /// </summary>
     void Start()
     {
         actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
@@ -40,6 +46,14 @@ public class CombinationManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Handles combine. Checks if Combination possible for the scene.
+    /// </summary>
+    /// <param name="leftInput">Current object in left hand</param>
+    /// <param name="rightInput">Current object in right hand</param>
+    /// <param name="leftResult">If combine performed - object that should be in left hand</param>
+    /// <param name="rightResult">If combine performed - object that should be in right hand</param>
+    /// <returns>True if combine performed</returns>
     public bool Combine(string leftInput, string rightInput, out string leftResult, out string rightResult)
     {
         leftResult = "";
