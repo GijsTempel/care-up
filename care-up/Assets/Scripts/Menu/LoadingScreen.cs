@@ -3,14 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Handle loading screen. 
+/// </summary>
 public class LoadingScreen : MonoBehaviour {
 
+    // Texture to display during loading
     public Texture loadingTexture;
+    // Text to display while loading
     public string loadingText;
 
     private string sceneToLoad;
     private bool loading = false;
     
+    // Set some temporary texture and text
     void Start()
     {
         loadingTexture = Resources.Load<Texture>("Textures/loading_bg");
@@ -30,6 +36,9 @@ public class LoadingScreen : MonoBehaviour {
         loading = false;
     }
 
+    /// <summary>
+    /// Draw text and texture.
+    /// </summary>
     void OnGUI()
     {
         if ( loading )
@@ -44,6 +53,10 @@ public class LoadingScreen : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Loads scene async, launches screen.
+    /// </summary>
+    /// <param name="sceneName">Name of the scene to load.</param>
     public void LoadLevel(string sceneName)
     {
         sceneToLoad = sceneName;

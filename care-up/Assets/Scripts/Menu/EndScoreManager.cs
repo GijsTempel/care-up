@@ -3,6 +3,9 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// Handles EndScore scene.
+/// </summary>
 public class EndScoreManager : MonoBehaviour {
     
     private int points;
@@ -19,6 +22,9 @@ public class EndScoreManager : MonoBehaviour {
         SceneManager.sceneLoaded += OnLoaded;
     }
 
+    /// <summary>
+    /// Sets object variables in scene after loading.
+    /// </summary>
     private void OnLoaded(Scene s, LoadSceneMode m)
     {
         if (SceneManager.GetActiveScene().name == "EndScore")
@@ -51,6 +57,9 @@ public class EndScoreManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Gets necesarry variables and loads EndScore scene.
+    /// </summary>
     public void LoadEndScoreScene()
     {
         actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();

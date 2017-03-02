@@ -2,6 +2,10 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Handles ingame object as small menu.
+/// Save game | Options | Exit
+/// </summary>
 public class IngameMenu : MonoBehaviour
 {
 

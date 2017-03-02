@@ -4,10 +4,16 @@ using System.Xml;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
+/// <summary>
+/// Handles Scene selection module
+/// </summary>
 public class LevelSelectionScene : MonoBehaviour {
 
     private PlayerPrefsManager ppManager;
 
+    /// <summary>
+    /// Load xml file, set all door variables.
+    /// </summary>
     void Start()
     {
         ppManager = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();

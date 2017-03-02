@@ -4,6 +4,10 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
+/// <summary>
+/// Handling options scene.
+/// Volume | Graphics Quality | Resolution
+/// </summary>
 public class Options : MonoBehaviour {
 
     private PlayerPrefsManager prefsManager;

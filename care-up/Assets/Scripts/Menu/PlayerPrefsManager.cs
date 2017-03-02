@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Handles quick access to saved data.
+/// Volume | Tutorial completion | Scene completion + results
+/// </summary>
 public class PlayerPrefsManager : MonoBehaviour
 {
     private static PlayerPrefsManager instance;
