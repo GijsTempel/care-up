@@ -6,10 +6,14 @@ using System.Collections;
 /// </summary>
 public class PlayerAnimationManager : MonoBehaviour {
 
+    public float ikWeight = 1.0f;
+
     public static bool ikActive = false;
 
-    private static GameObject LeftInteractObject;
-    private static GameObject rightInteractObject;
+    private static Transform masterIK_hand;
+
+    private static Transform leftInteractObject;
+    private static Transform rightInteractObject;
 
     private static Animator animationController;
 
@@ -17,16 +21,36 @@ public class PlayerAnimationManager : MonoBehaviour {
     {
         animationController = GetComponent<Animator>();
         if (animationController == null) Debug.LogError("Animator not found");
+
+        masterIK_hand = GameObject.Find("masterIK_hand").transform;
+        if (masterIK_hand == null) Debug.LogError("No master IK bone");
     }
 
-    public static void PlayAnimation(string name, GameObject leftInteract = null, GameObject rightInteract = null)
+    public static void PlayAnimation(string name, Transform leftInteract = null, Transform rightInteract = null)
     {
         animationController.SetTrigger(name);
 
-        if (leftInteract || rightInteract)
+        if (leftInteract)
         {
-            LeftInteractObject = leftInteract;
-            rightInteractObject = rightInteract;
+            leftInteractObject = leftInteract;
+            if (rightInteract)
+            {
+                rightInteractObject = rightInteract;
+            }
+            else
+            {
+                rightInteractObject = leftInteract;
+            }
+        }
+    }
+
+    private void LateUpdate()
+    {
+        if (ikActive && leftInteractObject)
+        {
+            Debug.Log("up");
+            masterIK_hand.position = leftInteractObject.position;
+            masterIK_hand.rotation = leftInteractObject.rotation;
         }
     }
 
@@ -39,18 +63,19 @@ public class PlayerAnimationManager : MonoBehaviour {
             // Set the right hand target position and rotation, if one has been assigned
             if (rightInteractObject != null)
             {
-                animationController.SetIKPositionWeight(AvatarIKGoal.RightHand, 1);
-                animationController.SetIKRotationWeight(AvatarIKGoal.RightHand, 1);
-                animationController.SetIKPosition(AvatarIKGoal.RightHand, rightInteractObject.transform.position);
-                animationController.SetIKRotation(AvatarIKGoal.RightHand, rightInteractObject.transform.rotation);
+                animationController.SetIKPositionWeight(AvatarIKGoal.RightHand, ikWeight);
+                animationController.SetIKRotationWeight(AvatarIKGoal.RightHand, ikWeight);
+                animationController.SetIKPosition(AvatarIKGoal.RightHand, masterIK_hand.FindChild("IK_hand.R").transform.position);
+                animationController.SetIKRotation(AvatarIKGoal.RightHand, masterIK_hand.FindChild("IK_hand.R").transform.rotation);
+                Debug.Log(masterIK_hand.FindChild("IK_hand.R").transform.position);
             }
 
-            if (LeftInteractObject != null)
+            if (leftInteractObject != null)
             {
-                animationController.SetIKPositionWeight(AvatarIKGoal.LeftHand, 1);
-                animationController.SetIKRotationWeight(AvatarIKGoal.LeftHand, 1);
-                animationController.SetIKPosition(AvatarIKGoal.LeftHand, LeftInteractObject.transform.position);
-                animationController.SetIKRotation(AvatarIKGoal.LeftHand, LeftInteractObject.transform.rotation);
+                animationController.SetIKPositionWeight(AvatarIKGoal.LeftHand, ikWeight);
+                animationController.SetIKRotationWeight(AvatarIKGoal.LeftHand, ikWeight);
+                animationController.SetIKPosition(AvatarIKGoal.LeftHand, masterIK_hand.FindChild("IK_hand.L").transform.position);
+                animationController.SetIKRotation(AvatarIKGoal.LeftHand, masterIK_hand.FindChild("IK_hand.L").transform.rotation);
             }
         }
         //if the IK is not active, set the position and rotation of the hand and head back to the original position
