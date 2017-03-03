@@ -14,6 +14,8 @@ public class PlayerAnimationManager : MonoBehaviour {
 
     private static Transform leftInteractObject;
     private static Transform rightInteractObject;
+    private static Transform leftHand;
+    private static Transform rightHand;
 
     private static Animator animationController;
 
@@ -24,6 +26,9 @@ public class PlayerAnimationManager : MonoBehaviour {
 
         masterIK_hand = GameObject.Find("masterIK_hand").transform;
         if (masterIK_hand == null) Debug.LogError("No master IK bone");
+
+        leftHand = masterIK_hand.FindChild("IK_hand.L").transform;
+        rightHand = masterIK_hand.FindChild("IK_hand.R").transform;
     }
 
     public static void PlayAnimation(string name, Transform leftInteract = null, Transform rightInteract = null)
@@ -65,8 +70,8 @@ public class PlayerAnimationManager : MonoBehaviour {
             {
                 animationController.SetIKPositionWeight(AvatarIKGoal.RightHand, ikWeight);
                 animationController.SetIKRotationWeight(AvatarIKGoal.RightHand, ikWeight);
-                animationController.SetIKPosition(AvatarIKGoal.RightHand, masterIK_hand.FindChild("IK_hand.R").transform.position);
-                animationController.SetIKRotation(AvatarIKGoal.RightHand, masterIK_hand.FindChild("IK_hand.R").transform.rotation);
+                animationController.SetIKPosition(AvatarIKGoal.RightHand, rightHand.position);
+                animationController.SetIKRotation(AvatarIKGoal.RightHand, rightHand.rotation);
                 Debug.Log(masterIK_hand.FindChild("IK_hand.R").transform.position);
             }
 
@@ -74,8 +79,8 @@ public class PlayerAnimationManager : MonoBehaviour {
             {
                 animationController.SetIKPositionWeight(AvatarIKGoal.LeftHand, ikWeight);
                 animationController.SetIKRotationWeight(AvatarIKGoal.LeftHand, ikWeight);
-                animationController.SetIKPosition(AvatarIKGoal.LeftHand, masterIK_hand.FindChild("IK_hand.L").transform.position);
-                animationController.SetIKRotation(AvatarIKGoal.LeftHand, masterIK_hand.FindChild("IK_hand.L").transform.rotation);
+                animationController.SetIKPosition(AvatarIKGoal.LeftHand, leftHand.position);
+                animationController.SetIKRotation(AvatarIKGoal.LeftHand, leftHand.rotation);
             }
         }
         //if the IK is not active, set the position and rotation of the hand and head back to the original position
