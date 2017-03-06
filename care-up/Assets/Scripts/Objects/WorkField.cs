@@ -32,7 +32,7 @@ public class WorkField : UsableObject {
                 }
             }
             tutorial_used = true;
-            PlayerAnimationManager.PlayAnimation("Clean_Table");
+            PlayerAnimationManager.PlayAnimation("UseWorkField");
             actionManager.OnUseAction(gameObject.name);
             controls.ResetObject();
             Reset();

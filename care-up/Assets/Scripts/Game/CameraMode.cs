@@ -12,7 +12,8 @@ public class CameraMode : MonoBehaviour {
         Free,               // player moves freely
         ObjectPreview,      // object in center, controls locked, close/pick
         SelectionDialogue,  // selection dialogue, controls locked
-        ConfirmUI           // yes/no dialogue, controls locked
+        ConfirmUI,          // yes/no dialogue, controls locked
+        Cinematic           // playing animations, some controls disabled
     };
 
     public float minZoom = 0.5f;
@@ -24,6 +25,13 @@ public class CameraMode : MonoBehaviour {
     private SystemObject doorSelected;
 
     private GameObject confirmUI;
+
+    private int cinematicDirection = 1;
+    private float cinematicLength = 1.0f;
+    private float cinematicLerp = 0.0f;
+    private Vector3 cinematicPos;
+    private Quaternion cinematicRot;
+    private Transform cinematicTarget;
 
     private Controls controls;
     private RigidbodyFirstPersonController playerScript;
@@ -83,11 +91,6 @@ public class CameraMode : MonoBehaviour {
                 else
                 {
                     doorSelected = controls.SelectedObject.GetComponent<SystemObject>();
-                    /*if (doorSelected != null ) // door handle
-                    {
-                        ToggleCameraMode(Mode.ConfirmUI);
-                        controls.ResetObject();
-                    }*/
                 }
             }
         }
@@ -140,6 +143,34 @@ public class CameraMode : MonoBehaviour {
                     if (selectedObject.viewSettings.distanceFromCamera < maxZoom)
                         selectedObject.viewSettings.distanceFromCamera += 0.5f;
                 }
+            }
+        }
+
+        // handle player 'moving'
+        if ( currentMode == Mode.Cinematic )
+        {
+            if (cinematicDirection == -1 && cinematicLength > 0.0f)
+            {
+                cinematicLength -= Time.deltaTime;
+            }
+            else
+            {
+                cinematicLerp = Mathf.Clamp01(cinematicLerp + 2 * Time.deltaTime * cinematicDirection);
+            }
+
+            playerScript.transform.GetChild(0).transform.position =
+                Vector3.Lerp(cinematicPos, cinematicTarget.position, cinematicLerp);
+            playerScript.transform.GetChild(0).transform.rotation =
+                Quaternion.Lerp(cinematicRot, cinematicTarget.rotation, cinematicLerp);
+
+            if ( cinematicDirection == 1 && cinematicLerp == 1.0f )
+            {
+                cinematicDirection = -1;
+            }
+            else if ( cinematicDirection == -1 && cinematicLerp == 0.0f )
+            {
+                ToggleCameraMode(Mode.Free);
+                cinematicDirection = 1;
             }
         }
 
@@ -202,6 +233,19 @@ public class CameraMode : MonoBehaviour {
             TogglePlayerScript(true);
             confirmUI.SetActive(false);
         }
+        else if (currentMode == Mode.Free && mode == Mode.Cinematic)
+        {
+            TogglePlayerScript(false);
+            cinematicLerp = 0.0f;
+            cinematicDirection = 1;
+            cinematicPos = playerScript.transform.GetChild(0).transform.position;
+            cinematicRot = playerScript.transform.GetChild(0).transform.rotation;
+            cinematicTarget = controls.SelectedObject.transform.GetChild(0);
+        }
+        else if (currentMode == Mode.Cinematic && mode == Mode.Free)
+        {
+            TogglePlayerScript(true);
+        }
 
         currentMode = mode;
         controls.ResetObject();
@@ -223,6 +267,15 @@ public class CameraMode : MonoBehaviour {
             playerScript.enabled = false;
             playerScript.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         }
+    }
+
+    /// <summary>
+    /// Sets length of an animation
+    /// </summary>
+    /// <param name="length">length in sec</param>
+    public void SetCinematicLength(float length)
+    {
+        cinematicLength = length - .5f;
     }
 
     /// <summary>

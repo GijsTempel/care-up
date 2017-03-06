@@ -14,16 +14,23 @@ public class PlayerAnimationManager : MonoBehaviour {
     private static Transform rightInteractObject;
 
     private static Animator animationController;
+    private static CameraMode cameraMode;
 
     void Start()
     {
         animationController = GetComponent<Animator>();
         if (animationController == null) Debug.LogError("Animator not found");
+
+        cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
+        if (cameraMode == null) Debug.LogError("No camera mode");
     }
 
     public static void PlayAnimation(string name, Transform leftInteract = null, Transform rightInteract = null)
     {
+        cameraMode.ToggleCameraMode(CameraMode.Mode.Cinematic);
         animationController.SetTrigger(name);
+
+        cameraMode.SetCinematicLength(animationController.GetCurrentAnimatorClipInfo(0)[0].clip.length);
 
         if (leftInteract)
         {
