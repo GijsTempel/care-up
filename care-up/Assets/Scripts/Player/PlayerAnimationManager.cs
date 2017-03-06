@@ -10,12 +10,8 @@ public class PlayerAnimationManager : MonoBehaviour {
 
     public static bool ikActive = false;
 
-    private static Transform masterIK_hand;
-
     private static Transform leftInteractObject;
     private static Transform rightInteractObject;
-    private static Transform leftHand;
-    private static Transform rightHand;
 
     private static Animator animationController;
 
@@ -23,12 +19,6 @@ public class PlayerAnimationManager : MonoBehaviour {
     {
         animationController = GetComponent<Animator>();
         if (animationController == null) Debug.LogError("Animator not found");
-
-        masterIK_hand = GameObject.Find("masterIK_hand").transform;
-        if (masterIK_hand == null) Debug.LogError("No master IK bone");
-
-        leftHand = masterIK_hand.FindChild("IK_hand.L").transform;
-        rightHand = masterIK_hand.FindChild("IK_hand.R").transform;
     }
 
     public static void PlayAnimation(string name, Transform leftInteract = null, Transform rightInteract = null)
@@ -49,16 +39,6 @@ public class PlayerAnimationManager : MonoBehaviour {
         }
     }
 
-    private void LateUpdate()
-    {
-        if (ikActive && leftInteractObject)
-        {
-            Debug.Log("up");
-            masterIK_hand.position = leftInteractObject.position;
-            masterIK_hand.rotation = leftInteractObject.rotation;
-        }
-    }
-
     //a callback for calculating IK
     private void OnAnimatorIK(int layerIndex)
     {
@@ -69,28 +49,20 @@ public class PlayerAnimationManager : MonoBehaviour {
             if (rightInteractObject != null)
             {
                 animationController.SetIKPositionWeight(AvatarIKGoal.RightHand, ikWeight);
-                animationController.SetIKRotationWeight(AvatarIKGoal.RightHand, ikWeight);
-                animationController.SetIKPosition(AvatarIKGoal.RightHand, rightHand.position);
-                animationController.SetIKRotation(AvatarIKGoal.RightHand, rightHand.rotation);
-                Debug.Log(masterIK_hand.FindChild("IK_hand.R").transform.position);
+                animationController.SetIKPosition(AvatarIKGoal.RightHand, rightInteractObject.position);
             }
 
             if (leftInteractObject != null)
             {
                 animationController.SetIKPositionWeight(AvatarIKGoal.LeftHand, ikWeight);
-                animationController.SetIKRotationWeight(AvatarIKGoal.LeftHand, ikWeight);
-                animationController.SetIKPosition(AvatarIKGoal.LeftHand, leftHand.position);
-                animationController.SetIKRotation(AvatarIKGoal.LeftHand, leftHand.rotation);
+                animationController.SetIKPosition(AvatarIKGoal.LeftHand, leftInteractObject.position);
             }
         }
         //if the IK is not active, set the position and rotation of the hand and head back to the original position
         else
         {
             animationController.SetIKPositionWeight(AvatarIKGoal.RightHand, 0);
-            animationController.SetIKRotationWeight(AvatarIKGoal.RightHand, 0);
             animationController.SetIKPositionWeight(AvatarIKGoal.LeftHand, 0);
-            animationController.SetIKRotationWeight(AvatarIKGoal.LeftHand, 0);
-            animationController.SetLookAtWeight(0);
         }
     }
 }
