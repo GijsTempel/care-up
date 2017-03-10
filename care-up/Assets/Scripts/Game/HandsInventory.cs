@@ -351,6 +351,11 @@ public class HandsInventory : MonoBehaviour {
         return (leftHandObject == null) && (rightHandObject == null);
     }
 
+    public bool OneHandEmpty()
+    {
+        return (leftHandObject == null) || (rightHandObject == null);
+    }
+
     /// <summary>
     /// Puts on or takes of gloves.
     /// </summary>

@@ -223,7 +223,8 @@ public class PickableObject : InteractableObject {
             else if (name == "SyringeWithAbsorptionNeedle")
             {
                 info = actionManager.CurrentUseOnInfo;
-                if (info[0] == "SyringeWithAbsorptionNeedle" && info[1] == "")
+                if (info[0] == "SyringeWithAbsorptionNeedle" && info[1] == ""
+                    && inventory.OneHandEmpty() )
                 {
                     actionManager.OnUseOnAction("SyringeWithAbsorptionNeedle", "");
                     return true; // fix for venting syringe
