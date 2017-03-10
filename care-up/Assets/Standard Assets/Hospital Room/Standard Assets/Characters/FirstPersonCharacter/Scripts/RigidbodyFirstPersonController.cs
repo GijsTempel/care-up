@@ -8,8 +8,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
     [RequireComponent(typeof (CapsuleCollider))]
     public class RigidbodyFirstPersonController : MonoBehaviour
     {
+        [HideInInspector]
         public bool tutorial_movementLock = false;
+        [HideInInspector]
         public float tutorial_totalLookAround = 0.0f;
+        [HideInInspector]
         public float tutorial_totalMoveAround = 0.0f;
 
         [Serializable]

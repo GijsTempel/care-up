@@ -7,6 +7,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
     [Serializable]
     public class MouseLook
     {
+        [HideInInspector]
+        public bool lookOnly = false;
+
         public float XSensitivity = 2f;
         public float YSensitivity = 2f;
         public bool clampVerticalRotation = true;
@@ -33,23 +36,46 @@ namespace UnityStandardAssets.Characters.FirstPerson
             float yRot = CrossPlatformInputManager.GetAxis("Mouse X") * XSensitivity;
             float xRot = CrossPlatformInputManager.GetAxis("Mouse Y") * YSensitivity;
 
-            m_CharacterTargetRot *= Quaternion.Euler (0f, yRot, 0f);
-            m_CameraTargetRot *= Quaternion.Euler (-xRot, 0f, 0f);
+            if (lookOnly)
+            {
+                m_CameraTargetRot *= Quaternion.Euler(-xRot, yRot, 0f);
+                m_CameraTargetRot = Quaternion.Euler(m_CameraTargetRot.eulerAngles.x, m_CameraTargetRot.eulerAngles.y, 0f);
+            }
+            else
+            {
+                m_CharacterTargetRot *= Quaternion.Euler(0f, yRot, 0f);
+                m_CameraTargetRot *= Quaternion.Euler(-xRot, 0f, 0f);
+            }
 
             if(clampVerticalRotation)
                 m_CameraTargetRot = ClampRotationAroundXAxis (m_CameraTargetRot);
 
-            if(smooth)
+            if (lookOnly)
             {
-                character.localRotation = Quaternion.Slerp (character.localRotation, m_CharacterTargetRot,
-                    smoothTime * Time.deltaTime);
-                camera.localRotation = Quaternion.Slerp (camera.localRotation, m_CameraTargetRot,
-                    smoothTime * Time.deltaTime);
+                if (smooth)
+                {
+                    camera.localRotation = Quaternion.Slerp(camera.localRotation, m_CameraTargetRot,
+                        smoothTime * Time.deltaTime);
+                }
+                else
+                {
+                    camera.localRotation = m_CameraTargetRot;
+                }
             }
             else
             {
-                character.localRotation = m_CharacterTargetRot;
-                camera.localRotation = m_CameraTargetRot;
+                if (smooth)
+                {
+                    character.localRotation = Quaternion.Slerp(character.localRotation, m_CharacterTargetRot,
+                        smoothTime * Time.deltaTime);
+                    camera.localRotation = Quaternion.Slerp(camera.localRotation, m_CameraTargetRot,
+                        smoothTime * Time.deltaTime);
+                }
+                else
+                {
+                    character.localRotation = m_CharacterTargetRot;
+                    camera.localRotation = m_CameraTargetRot;
+                }
             }
 
             UpdateCursorLock();
@@ -111,6 +137,15 @@ namespace UnityStandardAssets.Characters.FirstPerson
             q.x = Mathf.Tan (0.5f * Mathf.Deg2Rad * angleX);
 
             return q;
+        }
+
+        public void SetMode(bool value)
+        {
+            lookOnly = value;
+            if (!value)
+            {
+                m_CameraTargetRot = Quaternion.Euler(0f, 0f, 0f);
+            }
         }
 
     }

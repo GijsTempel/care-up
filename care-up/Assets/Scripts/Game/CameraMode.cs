@@ -26,12 +26,14 @@ public class CameraMode : MonoBehaviour {
 
     private GameObject confirmUI;
 
+    [HideInInspector]
+    public bool animationEnded = false;
     private int cinematicDirection = 1;
-    private float cinematicLength = 1.0f;
     private float cinematicLerp = 0.0f;
     private Vector3 cinematicPos;
     private Quaternion cinematicRot;
     private Transform cinematicTarget;
+    private Transform cinematicControl;
 
     private Controls controls;
     private RigidbodyFirstPersonController playerScript;
@@ -149,29 +151,7 @@ public class CameraMode : MonoBehaviour {
         // handle player 'moving'
         if ( currentMode == Mode.Cinematic )
         {
-            if (cinematicDirection == -1 && cinematicLength > 0.0f)
-            {
-                cinematicLength -= Time.deltaTime;
-            }
-            else
-            {
-                cinematicLerp = Mathf.Clamp01(cinematicLerp + 2 * Time.deltaTime * cinematicDirection);
-            }
-
-            playerScript.transform.GetChild(0).transform.position =
-                Vector3.Lerp(cinematicPos, cinematicTarget.position, cinematicLerp);
-            playerScript.transform.GetChild(0).transform.rotation =
-                Quaternion.Lerp(cinematicRot, cinematicTarget.rotation, cinematicLerp);
-
-            if ( cinematicDirection == 1 && cinematicLerp == 1.0f )
-            {
-                cinematicDirection = -1;
-            }
-            else if ( cinematicDirection == -1 && cinematicLerp == 0.0f )
-            {
-                ToggleCameraMode(Mode.Free);
-                cinematicDirection = 1;
-            }
+            CinematicUpdate();
         }
 
         // handle object update in preview
@@ -235,16 +215,17 @@ public class CameraMode : MonoBehaviour {
         }
         else if (currentMode == Mode.Free && mode == Mode.Cinematic)
         {
-            TogglePlayerScript(false);
+            playerScript.mouseLook.SetMode(true);
             cinematicLerp = 0.0f;
             cinematicDirection = 1;
-            cinematicPos = playerScript.transform.GetChild(0).transform.position;
-            cinematicRot = playerScript.transform.GetChild(0).transform.rotation;
-            cinematicTarget = controls.SelectedObject.transform.GetChild(0);
+            cinematicControl = playerScript.transform.GetChild(0);
+            cinematicPos = cinematicControl.transform.position;
+            cinematicRot = cinematicControl.FindChild("Arms").transform.rotation;
+            cinematicTarget = controls.SelectedObject.transform.FindChild("CinematicTarget");
         }
         else if (currentMode == Mode.Cinematic && mode == Mode.Free)
         {
-            TogglePlayerScript(true);
+            playerScript.mouseLook.SetMode(false);
         }
 
         currentMode = mode;
@@ -268,16 +249,7 @@ public class CameraMode : MonoBehaviour {
             playerScript.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         }
     }
-
-    /// <summary>
-    /// Sets length of an animation
-    /// </summary>
-    /// <param name="length">length in sec</param>
-    public void SetCinematicLength(float length)
-    {
-        cinematicLength = length - .5f;
-    }
-
+    
     /// <summary>
     /// Draws text below an object in preview mode.
     /// </summary>
@@ -298,6 +270,33 @@ public class CameraMode : MonoBehaviour {
             style.normal.textColor = Color.white;
             GUI.Label(new Rect(0, 4*Screen.height/5, Screen.width, Screen.height/5), 
                 text, style);
+        }
+    }
+
+    /// <summary>
+    /// Chunck in update for handling cinematic
+    /// </summary>
+    void CinematicUpdate()
+    {
+        if (cinematicDirection == 1 || animationEnded)
+        {
+            cinematicLerp = Mathf.Clamp01(cinematicLerp + 2 * Time.deltaTime * cinematicDirection);
+        }
+
+        cinematicControl.transform.position =
+            Vector3.Lerp(cinematicPos, cinematicTarget.position, cinematicLerp);
+        cinematicControl.FindChild("Arms").transform.rotation =
+            Quaternion.Lerp(cinematicRot, cinematicTarget.rotation, cinematicLerp);
+
+        if (cinematicDirection == 1 && cinematicLerp == 1.0f)
+        {
+            cinematicDirection = -1;
+        }
+        else if (cinematicDirection == -1 && cinematicLerp == 0.0f)
+        {
+            ToggleCameraMode(Mode.Free);
+            cinematicDirection = 1;
+            animationEnded = false;
         }
     }
 }

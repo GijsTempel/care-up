@@ -25,13 +25,18 @@ public class PlayerAnimationManager : MonoBehaviour {
         if (cameraMode == null) Debug.LogError("No camera mode");
     }
 
+    private void Update()
+    {
+        if (animationController.GetNextAnimatorStateInfo(0).fullPathHash
+            == Animator.StringToHash("Base Layer.Armature|IdleN"))
+            cameraMode.animationEnded = true;
+    }
+
     public static void PlayAnimation(string name, Transform leftInteract = null, Transform rightInteract = null)
     {
         cameraMode.ToggleCameraMode(CameraMode.Mode.Cinematic);
         animationController.SetTrigger(name);
-
-        cameraMode.SetCinematicLength(animationController.GetCurrentAnimatorClipInfo(0)[0].clip.length);
-
+        
         if (leftInteract)
         {
             leftInteractObject = leftInteract;
