@@ -32,7 +32,8 @@ public class CameraMode : MonoBehaviour {
     private float cinematicLerp = 0.0f;
     private Vector3 cinematicPos;
     private Quaternion cinematicRot;
-    private Transform cinematicTarget;
+    private Vector3 cinematicTargetPos;
+    private Quaternion cinematicTargetRot;
     private Transform cinematicControl;
 
     private Controls controls;
@@ -216,16 +217,21 @@ public class CameraMode : MonoBehaviour {
         else if (currentMode == Mode.Free && mode == Mode.Cinematic)
         {
             playerScript.mouseLook.SetMode(true);
+            playerScript.tutorial_movementLock = true;
             cinematicLerp = 0.0f;
             cinematicDirection = 1;
             cinematicControl = playerScript.transform.GetChild(0);
             cinematicPos = cinematicControl.transform.position;
             cinematicRot = cinematicControl.FindChild("Arms").transform.rotation;
-            cinematicTarget = controls.SelectedObject.transform.FindChild("CinematicTarget");
+
+            Transform target = controls.SelectedObject.transform.FindChild("CinematicTarget");
+            cinematicTargetRot = target.rotation;
+            cinematicTargetPos = target.position;
         }
         else if (currentMode == Mode.Cinematic && mode == Mode.Free)
         {
             playerScript.mouseLook.SetMode(false);
+            playerScript.tutorial_movementLock = false;
         }
 
         currentMode = mode;
@@ -284,9 +290,9 @@ public class CameraMode : MonoBehaviour {
         }
 
         cinematicControl.transform.position =
-            Vector3.Lerp(cinematicPos, cinematicTarget.position, cinematicLerp);
+            Vector3.Lerp(cinematicPos, cinematicTargetPos, cinematicLerp);
         cinematicControl.FindChild("Arms").transform.rotation =
-            Quaternion.Lerp(cinematicRot, cinematicTarget.rotation, cinematicLerp);
+            Quaternion.Lerp(cinematicRot, cinematicTargetRot, cinematicLerp);
 
         if (cinematicDirection == 1 && cinematicLerp == 1.0f)
         {

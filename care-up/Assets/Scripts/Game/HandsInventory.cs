@@ -21,6 +21,8 @@ public class HandsInventory : MonoBehaviour {
 
     private PickableObject leftHandObject;
     private PickableObject rightHandObject;
+    private bool leftHold = false;
+    private bool rightHold = false;
 
     private Vector3 leftHandPosition;
     private Vector3 rightHandPosition;
@@ -67,25 +69,11 @@ public class HandsInventory : MonoBehaviour {
 
     void Update() {
 
-        // calculate position of objects in hands
-        leftHandPosition = Camera.main.transform.position +
-                Camera.main.transform.forward * distanceFromCamera +
-                Camera.main.transform.right * (-horisontalOffset);
-        rightHandPosition = Camera.main.transform.position +
-                Camera.main.transform.forward * distanceFromCamera +
-                Camera.main.transform.right * horisontalOffset;
+        if (leftHandObject && leftHold)
+            leftHandObject.transform.localPosition = Vector3.zero;
 
-        if (leftHandObject)
-        {
-            leftHandObject.transform.position = leftHandPosition;
-            leftHandObject.InHandUpdate(false);
-        }
-
-        if (rightHandObject)
-        {
-            rightHandObject.transform.position = rightHandPosition;
-            rightHandObject.InHandUpdate(true);
-        }
+        if (rightHandObject && rightHold)
+            rightHandObject.transform.localPosition = Vector3.zero;
 
         // handle player actions in free mode
         if (cameraMode.CurrentMode == CameraMode.Mode.Free)
@@ -95,9 +83,11 @@ public class HandsInventory : MonoBehaviour {
             {
                 if (leftHandObject)
                 {
+                    leftHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
                     tutorial_droppedLeft = true;
                     leftHandObject.Drop();
                     leftHandObject = null;
+                    leftHold = false;
                 }
             }
 
@@ -106,9 +96,11 @@ public class HandsInventory : MonoBehaviour {
             {
                 if (rightHandObject)
                 {
+                    rightHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
                     tutorial_droppedRight = true;
                     rightHandObject.Drop();
                     rightHandObject = null;
+                    rightHold = false;
                 }
             }
 
@@ -298,19 +290,21 @@ public class HandsInventory : MonoBehaviour {
         {
             item.SavePosition();
 
-            if (leftHandObject)
-            {
-                tutorial_pickedLeft = true;
-                leftHandObject.GetComponent<Rigidbody>().useGravity = false;
-                leftHandObject.GetComponent<Collider>().enabled = false;
-                actionManager.OnPickUpAction(leftHandObject.name);
-            }
             if (rightHandObject)
             {
                 tutorial_pickedRight = true;
                 rightHandObject.GetComponent<Rigidbody>().useGravity = false;
                 rightHandObject.GetComponent<Collider>().enabled = false;
                 actionManager.OnPickUpAction(rightHandObject.name);
+                PlayerAnimationManager.PlayAnimation("RightPick");
+            }
+            else if (leftHandObject)
+            {
+                tutorial_pickedLeft = true;
+                leftHandObject.GetComponent<Rigidbody>().useGravity = false;
+                leftHandObject.GetComponent<Collider>().enabled = false;
+                actionManager.OnPickUpAction(leftHandObject.name);
+                PlayerAnimationManager.PlayAnimation("LeftPick");
             }
         }
 
@@ -413,5 +407,27 @@ public class HandsInventory : MonoBehaviour {
     public void PickTestStrips()
     {
         leftHandObject = GameObject.Find("TestStrips").GetComponent<PickableObject>();
+    }
+
+    /// <summary>
+    /// Hold object now (from animation behaviour) at certain frame.
+    /// </summary>
+    /// <param name="hand">True = left, false = right</param>
+    public void SetHold(bool hand)
+    {
+        if (hand)
+        {
+            leftHold = true;
+            leftHandObject.transform.parent = GameObject.Find("toolHolder.L").transform;
+            leftHandObject.transform.localPosition = Vector3.zero;
+            leftHandObject.transform.localRotation = Quaternion.identity;
+        }
+        else
+        {
+            rightHold = true;
+            rightHandObject.transform.parent = GameObject.Find("toolHolder.R").transform;
+            rightHandObject.transform.localPosition = Vector3.zero;
+            rightHandObject.transform.localRotation = Quaternion.identity;
+        }
     }
 }

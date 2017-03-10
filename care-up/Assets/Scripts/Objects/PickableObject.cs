@@ -40,19 +40,6 @@ public class PickableObject : InteractableObject {
             framePositions.RemoveAt(0);
         }
     }
-    
-    /// <summary>
-    /// Handles potision and rotation of the object in hand
-    /// </summary>
-    /// <param name="right">True - right hand.</param>
-    public void InHandUpdate(bool right)
-    {
-        Vector3 camRotation = Camera.main.transform.rotation.eulerAngles;
-        Vector3 inHand = new Vector3(rotationInHand.x, 0.0f, rotationInHand.z);
-        transform.localRotation = Quaternion.Euler(inHand + camRotation);
-        transform.Rotate(Camera.main.transform.forward, 
-            (right ? -1.0f : 1.0f) * rotationInHand.y, Space.World);
-    }
 
     /// <summary>
     /// Drops and object
