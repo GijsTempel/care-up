@@ -151,6 +151,7 @@ public class HandsInventory : MonoBehaviour {
                         {
                             GameObject leftObject = CreateObjectByName(leftResult, leftHandPosition);
                             leftHandObject = leftObject.GetComponent<PickableObject>();
+                            SetHold(true);
 
                             if (leftSavedPos != Vector3.zero)
                             {
@@ -178,6 +179,7 @@ public class HandsInventory : MonoBehaviour {
                         {
                             GameObject rightObject = CreateObjectByName(rightResult, rightHandPosition);
                             rightHandObject = rightObject.GetComponent<PickableObject>();
+                            SetHold(false);
 
                             if (rightSavedPos != Vector3.zero)
                             {
