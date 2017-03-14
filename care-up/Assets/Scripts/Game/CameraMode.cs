@@ -311,8 +311,9 @@ public class CameraMode : MonoBehaviour {
         cinematicControl = playerScript.transform.GetChild(0);
         cinematicPos = cinematicControl.transform.position;
         cinematicRot = cinematicControl.FindChild("Arms").transform.rotation;
-        
-        cinematicTargetRot = target.GetChild(0).rotation;
-        cinematicTargetPos = target.GetChild(0).position;
+
+        Transform cTarget = target.FindChild("CinematicTarget");
+        cinematicTargetRot = cTarget.rotation;
+        cinematicTargetPos = cTarget.position;
     }
 }

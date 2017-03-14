@@ -50,7 +50,7 @@ public class UsableObject : InteractableObject {
             {
                 case "HandCleaner":
                     {
-                        PlayerAnimationManager.PlayAnimation("UseHandCleaner", gameObject.transform);
+                        PlayerAnimationManager.PlayAnimation("UseHandCleaner", transform);
                     }
                     break;
                 case "OldBandAid":
