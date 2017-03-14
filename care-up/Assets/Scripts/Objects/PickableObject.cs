@@ -207,31 +207,31 @@ public class PickableObject : InteractableObject {
                     return true; // for tutorial
                 }
             }
-            else if (name == "SyringeWithAbsorptionNeedle")
-            {
-                Debug.Log("vent");
-                info = actionManager.CurrentUseOnInfo;
-                if (info[0] == "SyringeWithAbsorptionNeedle" && info[1] == ""
-                    && (inventory.LeftHandEmpty() || inventory.RightHandEmpty()) )
-                {
-                    if (inventory.LeftHandEmpty())
-                    {
-                        PlayerAnimationManager.PlayAnimation("UseLeft SyringeWithAbsorptionNeedle");
-                    }
-                    else if(inventory.RightHandEmpty())
-                    {
-                        PlayerAnimationManager.PlayAnimation("UseRight SyringeWithAbsorptionNeedle");
-                    }
-                    actionManager.OnUseOnAction("SyringeWithAbsorptionNeedle", "");
-                    return true; // fix for venting syringe
-                }
-            }
         }
         else // cannot interact or target == ""
         {
             if ( name == "Gloves" )
             {
                 GameObject.Find("GameLogic").GetComponent<HandsInventory>().GlovesToggle(true);
+            }
+            else if (name == "SyringeWithAbsorptionNeedle")
+            {
+                Debug.Log("vent");
+                info = actionManager.CurrentUseOnInfo;
+                if (info[0] == "SyringeWithAbsorptionNeedle" && info[1] == ""
+                    && (inventory.LeftHandEmpty() || inventory.RightHandEmpty()))
+                {
+                    if (inventory.LeftHandEmpty())
+                    {
+                        PlayerAnimationManager.PlayAnimation("UseLeft SyringeWithAbsorptionNeedle");
+                    }
+                    else if (inventory.RightHandEmpty())
+                    {
+                        PlayerAnimationManager.PlayAnimation("UseRight SyringeWithAbsorptionNeedle");
+                    }
+                    actionManager.OnUseOnAction("SyringeWithAbsorptionNeedle", "");
+                    return true; // fix for venting syringe
+                }
             }
         }
         actionManager.OnUseOnAction(name, controls.SelectedObject != null && controls.CanInteract ? controls.SelectedObject.name : "");
