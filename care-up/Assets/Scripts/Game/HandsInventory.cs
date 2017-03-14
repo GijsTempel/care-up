@@ -138,6 +138,8 @@ public class HandsInventory : MonoBehaviour {
                         rightHandObject.GetSavesLocation(out rightSavedPos, out rightSavedRot);
                     }
 
+                    PlayerAnimationManager.PlayAnimation("Combine" + leftHandObject.name + rightHandObject.name);
+
                     // object changed
                     if (leftName != leftResult)
                     {
@@ -298,7 +300,7 @@ public class HandsInventory : MonoBehaviour {
                 rightHandObject.GetComponent<Rigidbody>().useGravity = false;
                 rightHandObject.GetComponent<Collider>().enabled = false;
                 actionManager.OnPickUpAction(rightHandObject.name);
-                PlayerAnimationManager.PlayAnimation("RightPick");
+                PlayerAnimationManager.PlayAnimation("RightPick", rightHandObject.transform);
             }
             else if (leftHandObject)
             {
@@ -306,7 +308,7 @@ public class HandsInventory : MonoBehaviour {
                 leftHandObject.GetComponent<Rigidbody>().useGravity = false;
                 leftHandObject.GetComponent<Collider>().enabled = false;
                 actionManager.OnPickUpAction(leftHandObject.name);
-                PlayerAnimationManager.PlayAnimation("LeftPick");
+                PlayerAnimationManager.PlayAnimation("LeftPick", leftHandObject.transform);
             }
         }
 

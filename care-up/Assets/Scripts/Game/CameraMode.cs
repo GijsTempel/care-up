@@ -218,15 +218,6 @@ public class CameraMode : MonoBehaviour {
         {
             playerScript.mouseLook.SetMode(true);
             playerScript.tutorial_movementLock = true;
-            cinematicLerp = 0.0f;
-            cinematicDirection = 1;
-            cinematicControl = playerScript.transform.GetChild(0);
-            cinematicPos = cinematicControl.transform.position;
-            cinematicRot = cinematicControl.FindChild("Arms").transform.rotation;
-
-            Transform target = controls.SelectedObject.transform.FindChild("CinematicTarget");
-            cinematicTargetRot = target.rotation;
-            cinematicTargetPos = target.position;
         }
         else if (currentMode == Mode.Cinematic && mode == Mode.Free)
         {
@@ -304,5 +295,19 @@ public class CameraMode : MonoBehaviour {
             cinematicDirection = 1;
             animationEnded = false;
         }
+    }
+
+    public void SetCinematicMode(Transform target)
+    {
+        ToggleCameraMode(Mode.Cinematic);
+
+        cinematicLerp = 0.0f;
+        cinematicDirection = 1;
+        cinematicControl = playerScript.transform.GetChild(0);
+        cinematicPos = cinematicControl.transform.position;
+        cinematicRot = cinematicControl.FindChild("Arms").transform.rotation;
+        
+        cinematicTargetRot = target.GetChild(0).rotation;
+        cinematicTargetPos = target.GetChild(0).position;
     }
 }

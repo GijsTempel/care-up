@@ -32,12 +32,16 @@ public class PlayerAnimationManager : MonoBehaviour {
             cameraMode.animationEnded = true;
     }
 
-    public static void PlayAnimation(string name, Transform leftInteract = null, Transform rightInteract = null)
+    public static void PlayAnimation(string name, Transform target = null)
     {
-        cameraMode.ToggleCameraMode(CameraMode.Mode.Cinematic);
         animationController.SetTrigger(name);
+
+        if (target)
+        {
+            cameraMode.SetCinematicMode(target);
+        }
         
-        if (leftInteract)
+        /*if (leftInteract)
         {
             leftInteractObject = leftInteract;
             if (rightInteract)
@@ -48,7 +52,7 @@ public class PlayerAnimationManager : MonoBehaviour {
             {
                 rightInteractObject = leftInteract;
             }
-        }
+        }*/
     }
 
     //a callback for calculating IK
