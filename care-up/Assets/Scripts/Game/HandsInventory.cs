@@ -23,9 +23,7 @@ public class HandsInventory : MonoBehaviour {
     private PickableObject rightHandObject;
     private bool leftHold = false;
     private bool rightHold = false;
-
-    private Vector3 leftHandPosition;
-    private Vector3 rightHandPosition;
+    
     private Vector3 glovesPosition;
     private Quaternion glovesRotation;
     private bool glovesOn = false;
@@ -151,7 +149,7 @@ public class HandsInventory : MonoBehaviour {
 
                         if (leftResult != "")
                         {
-                            GameObject leftObject = CreateObjectByName(leftResult, leftHandPosition);
+                            GameObject leftObject = CreateObjectByName(leftResult, Vector3.zero);
                             leftHandObject = leftObject.GetComponent<PickableObject>();
                             SetHold(true);
 
@@ -179,7 +177,7 @@ public class HandsInventory : MonoBehaviour {
 
                         if (rightResult != "")
                         {
-                            GameObject rightObject = CreateObjectByName(rightResult, rightHandPosition);
+                            GameObject rightObject = CreateObjectByName(rightResult, Vector3.zero);
                             rightHandObject = rightObject.GetComponent<PickableObject>();
                             SetHold(false);
 
@@ -266,11 +264,21 @@ public class HandsInventory : MonoBehaviour {
             {
                 leftHandObject = item;
                 picked = true;
+                tutorial_pickedLeft = true;
+                leftHandObject.GetComponent<Rigidbody>().useGravity = false;
+                leftHandObject.GetComponent<Collider>().enabled = false;
+                actionManager.OnPickUpAction(leftHandObject.name);
+                PlayerAnimationManager.PlayAnimation("LeftPick", leftHandObject.transform);
             }
             else if (rightHandObject == null)
             {
                 rightHandObject = item;
                 picked = true;
+                tutorial_pickedRight = true;
+                rightHandObject.GetComponent<Rigidbody>().useGravity = false;
+                rightHandObject.GetComponent<Collider>().enabled = false;
+                actionManager.OnPickUpAction(rightHandObject.name);
+                PlayerAnimationManager.PlayAnimation("RightPick", rightHandObject.transform);
             }
         }
         else if (hand == "left")
@@ -279,6 +287,11 @@ public class HandsInventory : MonoBehaviour {
             {
                 leftHandObject = item;
                 picked = true;
+                tutorial_pickedLeft = true;
+                leftHandObject.GetComponent<Rigidbody>().useGravity = false;
+                leftHandObject.GetComponent<Collider>().enabled = false;
+                actionManager.OnPickUpAction(leftHandObject.name);
+                PlayerAnimationManager.PlayAnimation("LeftPick", leftHandObject.transform);
             }
         }
         else if (hand == "right")
@@ -287,29 +300,17 @@ public class HandsInventory : MonoBehaviour {
             {
                 rightHandObject = item;
                 picked = true;
-            }
-        }
-        
-        if (picked)
-        {
-            item.SavePosition();
-
-            if (rightHandObject)
-            {
                 tutorial_pickedRight = true;
                 rightHandObject.GetComponent<Rigidbody>().useGravity = false;
                 rightHandObject.GetComponent<Collider>().enabled = false;
                 actionManager.OnPickUpAction(rightHandObject.name);
                 PlayerAnimationManager.PlayAnimation("RightPick", rightHandObject.transform);
             }
-            else if (leftHandObject)
-            {
-                tutorial_pickedLeft = true;
-                leftHandObject.GetComponent<Rigidbody>().useGravity = false;
-                leftHandObject.GetComponent<Collider>().enabled = false;
-                actionManager.OnPickUpAction(leftHandObject.name);
-                PlayerAnimationManager.PlayAnimation("LeftPick", leftHandObject.transform);
-            }
+        }
+
+        if (picked)
+        {
+            item.SavePosition();
         }
 
         return picked;
@@ -381,7 +382,7 @@ public class HandsInventory : MonoBehaviour {
         else
         {
             glovesOn = value;
-            GameObject leftObject = CreateObjectByName("Gloves", leftHandPosition);
+            GameObject leftObject = CreateObjectByName("Gloves", Vector3.zero);
             leftHandObject = leftObject.GetComponent<PickableObject>();
             leftHandObject.SavePosition(glovesPosition, glovesRotation);
         }

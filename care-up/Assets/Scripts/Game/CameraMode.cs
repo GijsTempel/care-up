@@ -154,6 +154,11 @@ public class CameraMode : MonoBehaviour {
         {
             CinematicUpdate();
         }
+        else
+        {
+            // clear unintended flag for non-cinematic animations
+            animationEnded = false;
+        }
 
         // handle object update in preview
         if ( currentMode == Mode.ObjectPreview )
