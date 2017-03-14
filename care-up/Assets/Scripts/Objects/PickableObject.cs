@@ -209,10 +209,19 @@ public class PickableObject : InteractableObject {
             }
             else if (name == "SyringeWithAbsorptionNeedle")
             {
+                Debug.Log("vent");
                 info = actionManager.CurrentUseOnInfo;
                 if (info[0] == "SyringeWithAbsorptionNeedle" && info[1] == ""
-                    && inventory.OneHandEmpty() )
+                    && (inventory.LeftHandEmpty() || inventory.RightHandEmpty()) )
                 {
+                    if (inventory.LeftHandEmpty())
+                    {
+                        PlayerAnimationManager.PlayAnimation("UseLeft SyringeWithAbsorptionNeedle");
+                    }
+                    else if(inventory.RightHandEmpty())
+                    {
+                        PlayerAnimationManager.PlayAnimation("UseRight SyringeWithAbsorptionNeedle");
+                    }
                     actionManager.OnUseOnAction("SyringeWithAbsorptionNeedle", "");
                     return true; // fix for venting syringe
                 }

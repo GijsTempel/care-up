@@ -136,7 +136,10 @@ public class HandsInventory : MonoBehaviour {
                         rightHandObject.GetSavesLocation(out rightSavedPos, out rightSavedRot);
                     }
 
-                    PlayerAnimationManager.PlayAnimation("Combine" + leftHandObject.name + rightHandObject.name);
+                    string combineAnimation = "Combine " +
+                        (leftHandObject ? leftHandObject.name : "_") + " " +
+                        (rightHandObject ? rightHandObject.name : "_");
+                    PlayerAnimationManager.PlayAnimation(combineAnimation);
 
                     // object changed
                     if (leftName != leftResult)
@@ -350,9 +353,14 @@ public class HandsInventory : MonoBehaviour {
         return (leftHandObject == null) && (rightHandObject == null);
     }
 
-    public bool OneHandEmpty()
+    public bool LeftHandEmpty()
     {
-        return (leftHandObject == null) || (rightHandObject == null);
+        return (leftHandObject == null);
+    }
+
+    public bool RightHandEmpty()
+    {
+        return (rightHandObject == null);
     }
 
     /// <summary>
