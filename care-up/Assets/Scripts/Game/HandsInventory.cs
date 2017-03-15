@@ -135,10 +135,10 @@ public class HandsInventory : MonoBehaviour {
                     {
                         rightHandObject.GetSavesLocation(out rightSavedPos, out rightSavedRot);
                     }
-
+                    
                     string combineAnimation = "Combine " +
-                        (leftHandObject ? leftHandObject.name : "_") + " " +
-                        (rightHandObject ? rightHandObject.name : "_");
+                        (leftHandObject ? FilterName(leftHandObject.name) : "_") + " " +
+                        (rightHandObject ? FilterName(rightHandObject.name) : "_");
                     PlayerAnimationManager.PlayAnimation(combineAnimation);
 
                     // object changed
@@ -442,5 +442,18 @@ public class HandsInventory : MonoBehaviour {
             rightHandObject.transform.localPosition = Vector3.zero;
             rightHandObject.transform.localRotation = Quaternion.identity;
         }
+    }
+
+    private string FilterName(string name)
+    {
+        if (name == "AbsorptionNeedle" || name == "InjectionNeedle")
+        {
+            return "Needle";
+        }
+        else if (name == "SyringeWithAbsorptionNeedle" || name == "SyringeWithInjectionNeedle")
+        {
+            return "SyringeWithNeedle";
+        }
+        else return name;
     }
 }
