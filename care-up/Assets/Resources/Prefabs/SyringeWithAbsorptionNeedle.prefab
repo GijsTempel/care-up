@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23000012848478868}
   - component: {fileID: 114000011738378636}
   - component: {fileID: 54000011920969042}
-  - component: {fileID: 65137265774958912}
+  - component: {fileID: 65961717673899672}
   m_Layer: 0
   m_Name: SyringeWithAbsorptionNeedle
   m_TagString: Untagged
@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 23260914622998428}
   - component: {fileID: 114059614432196840}
   - component: {fileID: 54354259834525770}
-  - component: {fileID: 65217837067651724}
+  - component: {fileID: 65740167990354224}
   m_Layer: 0
   m_Name: AbsorptionNeedle
   m_TagString: Untagged
@@ -91,8 +91,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010468456350}
-  m_LocalRotation: {x: -1, y: 0, z: 0, w: 0}
-  m_LocalPosition: {x: 9.3590355, y: 1.1295, z: 10.3417}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 9.206247, y: 1.2086486, z: 10.747672}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4607597117135592}
@@ -100,33 +100,33 @@ Transform:
   - {fileID: 4176220957216866}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -180, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: -90, z: 90}
 --- !u!4 &4176220957216866
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1947188715215766}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0, y: 0, z: -0.0865}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: -0.0869, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4000012333305106}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4607597117135592
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1309869304908040}
-  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: -0.0593}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.0602, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4000012333305106}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4874759547710620
 Transform:
   m_ObjectHideFlags: 1
@@ -134,7 +134,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1233461338986780}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.010199547}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4000012333305106}
@@ -322,19 +322,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &65137265774958912
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010468456350}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.04737696, y: 0.028737145, z: 0.1372615}
-  m_Center: {x: -0.000000014901161, y: 0, z: 0.011035623}
---- !u!65 &65217837067651724
+--- !u!65 &65740167990354224
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -344,8 +332,20 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.012519696, y: 0.012963041, z: 0.07367952}
-  m_Center: {x: -0.00016082963, y: 0, z: -0.021306586}
+  m_Size: {x: 0.012519696, y: 0.073679514, z: 0.01296304}
+  m_Center: {x: -0.00016082963, y: -0.021306584, z: -6.984918e-10}
+--- !u!65 &65961717673899672
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010468456350}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.04737696, y: 0.13726148, z: 0.028737139}
+  m_Center: {x: -0.000000014901161, y: 0.011035622, z: -0.0000000032596286}
 --- !u!114 &114000011738378636
 MonoBehaviour:
   m_ObjectHideFlags: 1

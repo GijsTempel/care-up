@@ -23,9 +23,24 @@ GameObject:
   - component: {fileID: 23000012848478868}
   - component: {fileID: 114000011738378636}
   - component: {fileID: 54000011106432380}
-  - component: {fileID: 65622917841327560}
+  - component: {fileID: 65162755208647376}
   m_Layer: 0
   m_Name: Syringe
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1260518873543076
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4968410017014896}
+  m_Layer: 0
+  m_Name: CinematicTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -54,14 +69,15 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010468456350}
-  m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -4.0374966, y: 1.1279877, z: 0.83699036}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 4968410017014896}
   - {fileID: 4734652712365654}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 180}
+  m_LocalEulerAnglesHint: {x: -90, y: -90, z: 90}
 --- !u!4 &4734652712365654
 Transform:
   m_ObjectHideFlags: 1
@@ -73,8 +89,21 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4000012333305106}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4968410017014896
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1260518873543076}
+  m_LocalRotation: {x: 0.66836065, y: 0.08640675, z: 0.7352939, w: -0.071908176}
+  m_LocalPosition: {x: -0.41614532, y: 0.33601922, z: -0.2607336}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4000012333305106}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 76.038, y: -202.32599, z: -203.51}
 --- !u!23 &23000012848478868
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -166,7 +195,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &65622917841327560
+--- !u!65 &65162755208647376
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -176,8 +205,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.04737696, y: 0.028737145, z: 0.1372615}
-  m_Center: {x: -0.000000014901161, y: 0, z: 0.011035623}
+  m_Size: {x: 0.04737696, y: 0.13726148, z: 0.028737139}
+  m_Center: {x: -0.000000014901161, y: 0.011035622, z: -0.0000000032596286}
 --- !u!114 &114000011738378636
 MonoBehaviour:
   m_ObjectHideFlags: 1
