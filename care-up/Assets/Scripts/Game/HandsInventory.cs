@@ -31,9 +31,7 @@ public class HandsInventory : MonoBehaviour {
     private PickableObject rightHandObject;
     private bool leftHold = false;
     private bool rightHold = false;
-
-    [HideInInspector]
-    public bool combineActivated = false;
+    
     private bool combineDelayed = false;
     private string leftCombineResult;
     private string rightCombineResult;
@@ -141,94 +139,7 @@ public class HandsInventory : MonoBehaviour {
                     PlayerAnimationManager.PlayAnimation(combineAnimation);
 
                     combineDelayed = true;
-                }
-            }
-
-            if (combineDelayed)
-            {
-                if (combineActivated)
-                {
-                    combineDelayed = false;
-                    combineActivated = false;
-
-                    string leftName = leftHandObject ? leftHandObject.name : "";
-                    string rightName = rightHandObject ? rightHandObject.name : "";
-
-                    Vector3 leftSavedPos = Vector3.zero;
-                    Quaternion leftSavedRot = Quaternion.identity;
-
-                    if (leftHandObject != null)
-                    {
-                        leftHandObject.GetSavesLocation(out leftSavedPos, out leftSavedRot);
-                    }
-
-                    Vector3 rightSavedPos = Vector3.zero;
-                    Quaternion rightSavedRot = Quaternion.identity;
-
-                    if (rightHandObject != null)
-                    {
-                        rightHandObject.GetSavesLocation(out rightSavedPos, out rightSavedRot);
-                    }
-
-                    // object changed
-                    if (leftName != leftCombineResult)
-                    {
-                        if (leftHandObject != null)
-                        {
-                            Destroy(leftHandObject.gameObject);
-                            leftHandObject = null;
-                        }
-
-                        PlayerAnimationManager.SetHandItem(true, leftCombineResult);
-
-                        if (leftCombineResult != "")
-                        {
-                            GameObject leftObject = CreateObjectByName(leftCombineResult, Vector3.zero);
-                            leftHandObject = leftObject.GetComponent<PickableObject>();
-                            SetHold(true);
-
-                            if (leftSavedPos != Vector3.zero)
-                            {
-                                leftHandObject.SavePosition(leftSavedPos, leftSavedRot);
-                            }
-                            else if (rightSavedPos != Vector3.zero)
-                            {
-                                float offset = rightHandObject.GetComponent<Renderer>().bounds.size.x
-                                    + leftHandObject.GetComponent<Renderer>().bounds.size.x; ;
-                                leftHandObject.SavePosition(rightSavedPos + new Vector3(offset, 0), rightSavedRot);
-                            }
-                        }
-                    }
-
-                    // object changed
-                    if (rightName != rightCombineResult)
-                    {
-                        if (rightHandObject != null)
-                        {
-                            Destroy(rightHandObject.gameObject);
-                            rightHandObject = null;
-                        }
-
-                        PlayerAnimationManager.SetHandItem(false, rightCombineResult);
-
-                        if (rightCombineResult != "")
-                        {
-                            GameObject rightObject = CreateObjectByName(rightCombineResult, Vector3.zero);
-                            rightHandObject = rightObject.GetComponent<PickableObject>();
-                            SetHold(false);
-
-                            if (rightSavedPos != Vector3.zero)
-                            {
-                                rightHandObject.SavePosition(rightSavedPos, rightSavedRot);
-                            }
-                            else if (leftSavedPos != Vector3.zero)
-                            {
-                                float offset = leftHandObject.GetComponent<Renderer>().bounds.size.x
-                                    + rightHandObject.GetComponent<Renderer>().bounds.size.x;
-                                rightHandObject.SavePosition(leftSavedPos + new Vector3(offset, 0), leftSavedRot);
-                            }
-                        }
-                    }
+                    controls.keyPreferences.SetAllLocked(true);
                 }
             }
 
@@ -494,5 +405,94 @@ public class HandsInventory : MonoBehaviour {
             return "SyringeWithNeedle";
         }
         else return name;
+    }
+    
+    public void ExecuteDelayedCombination()
+    {
+        if (combineDelayed)
+        {
+            combineDelayed = false;
+
+            controls.keyPreferences.SetAllLocked(false);
+
+            string leftName = leftHandObject ? leftHandObject.name : "";
+            string rightName = rightHandObject ? rightHandObject.name : "";
+
+            Vector3 leftSavedPos = Vector3.zero;
+            Quaternion leftSavedRot = Quaternion.identity;
+
+            if (leftHandObject != null)
+            {
+                leftHandObject.GetSavesLocation(out leftSavedPos, out leftSavedRot);
+            }
+
+            Vector3 rightSavedPos = Vector3.zero;
+            Quaternion rightSavedRot = Quaternion.identity;
+
+            if (rightHandObject != null)
+            {
+                rightHandObject.GetSavesLocation(out rightSavedPos, out rightSavedRot);
+            }
+
+            // object changed
+            if (leftName != leftCombineResult)
+            {
+                if (leftHandObject != null)
+                {
+                    Destroy(leftHandObject.gameObject);
+                    leftHandObject = null;
+                }
+
+                PlayerAnimationManager.SetHandItem(true, leftCombineResult);
+
+                if (leftCombineResult != "")
+                {
+                    GameObject leftObject = CreateObjectByName(leftCombineResult, Vector3.zero);
+                    leftHandObject = leftObject.GetComponent<PickableObject>();
+                    SetHold(true);
+
+                    if (leftSavedPos != Vector3.zero)
+                    {
+                        leftHandObject.SavePosition(leftSavedPos, leftSavedRot);
+                    }
+                    else if (rightSavedPos != Vector3.zero)
+                    {
+                        float offset = rightHandObject.GetComponent<Renderer>().bounds.size.x
+                            + leftHandObject.GetComponent<Renderer>().bounds.size.x; ;
+                        leftHandObject.SavePosition(rightSavedPos + new Vector3(offset, 0), rightSavedRot);
+                    }
+                }
+            }
+
+            // object changed
+            if (rightName != rightCombineResult)
+            {
+                if (rightHandObject != null)
+                {
+                    Destroy(rightHandObject.gameObject);
+                    rightHandObject = null;
+                }
+
+                PlayerAnimationManager.SetHandItem(false, rightCombineResult);
+
+                if (rightCombineResult != "")
+                {
+                    GameObject rightObject = CreateObjectByName(rightCombineResult, Vector3.zero);
+                    rightHandObject = rightObject.GetComponent<PickableObject>();
+                    SetHold(false);
+
+                    if (rightSavedPos != Vector3.zero)
+                    {
+                        rightHandObject.SavePosition(rightSavedPos, rightSavedRot);
+                    }
+                    else if (leftSavedPos != Vector3.zero)
+                    {
+                        float offset = leftHandObject.GetComponent<Renderer>().bounds.size.x
+                            + rightHandObject.GetComponent<Renderer>().bounds.size.x;
+                        rightHandObject.SavePosition(leftSavedPos + new Vector3(offset, 0), leftSavedRot);
+                    }
+                }
+            }
+        }
     }
 }

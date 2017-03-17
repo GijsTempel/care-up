@@ -10,14 +10,20 @@ public class AnimationCombine : StateMachineBehaviour {
 
 	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
+       
         frame = 0;
+
+        if (combineFrame == 0)
+        {
+            GameObject.Find("GameLogic").GetComponent<HandsInventory>().ExecuteDelayedCombination();
+        }
 	}
 
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
 	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         if (++frame == combineFrame)
         {
-            GameObject.Find("GameLogic").GetComponent<HandsInventory>().combineActivated = true;
+            GameObject.Find("GameLogic").GetComponent<HandsInventory>().ExecuteDelayedCombination();
         }
     }
 
