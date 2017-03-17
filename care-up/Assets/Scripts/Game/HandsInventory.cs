@@ -86,6 +86,7 @@ public class HandsInventory : MonoBehaviour {
                     leftHandObject.Drop();
                     leftHandObject = null;
                     leftHold = false;
+                    PlayerAnimationManager.SetHandItem(true, "");
                 }
             }
 
@@ -99,6 +100,7 @@ public class HandsInventory : MonoBehaviour {
                     rightHandObject.Drop();
                     rightHandObject = null;
                     rightHold = false;
+                    PlayerAnimationManager.SetHandItem(false, "");
                 }
             }
 
@@ -149,6 +151,8 @@ public class HandsInventory : MonoBehaviour {
                             Destroy(leftHandObject.gameObject);
                             leftHandObject = null;
                         }
+                        
+                        PlayerAnimationManager.SetHandItem(true, leftResult);
 
                         if (leftResult != "")
                         {
@@ -177,6 +181,8 @@ public class HandsInventory : MonoBehaviour {
                             Destroy(rightHandObject.gameObject);
                             rightHandObject = null;
                         }
+                        
+                        PlayerAnimationManager.SetHandItem(false, rightResult);
 
                         if (rightResult != "")
                         {
@@ -272,6 +278,7 @@ public class HandsInventory : MonoBehaviour {
                 leftHandObject.GetComponent<Collider>().enabled = false;
                 actionManager.OnPickUpAction(leftHandObject.name);
                 PlayerAnimationManager.PlayAnimation("LeftPick");
+                PlayerAnimationManager.SetHandItem(true, item.name);
             }
             else if (rightHandObject == null)
             {
@@ -282,6 +289,7 @@ public class HandsInventory : MonoBehaviour {
                 rightHandObject.GetComponent<Collider>().enabled = false;
                 actionManager.OnPickUpAction(rightHandObject.name);
                 PlayerAnimationManager.PlayAnimation("RightPick");
+                PlayerAnimationManager.SetHandItem(false, item.name);
             }
         }
         else if (hand == "left")
@@ -295,6 +303,7 @@ public class HandsInventory : MonoBehaviour {
                 leftHandObject.GetComponent<Collider>().enabled = false;
                 actionManager.OnPickUpAction(leftHandObject.name);
                 PlayerAnimationManager.PlayAnimation("LeftPick");
+                PlayerAnimationManager.SetHandItem(true, item.name);
             }
         }
         else if (hand == "right")
@@ -308,6 +317,7 @@ public class HandsInventory : MonoBehaviour {
                 rightHandObject.GetComponent<Collider>().enabled = false;
                 actionManager.OnPickUpAction(rightHandObject.name);
                 PlayerAnimationManager.PlayAnimation("RightPick");
+                PlayerAnimationManager.SetHandItem(false, item.name);
             }
         }
 

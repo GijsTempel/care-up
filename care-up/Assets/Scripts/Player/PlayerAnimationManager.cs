@@ -24,14 +24,7 @@ public class PlayerAnimationManager : MonoBehaviour {
         cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
         if (cameraMode == null) Debug.LogError("No camera mode");
     }
-
-    private void Update()
-    {
-        if (animationController.GetNextAnimatorStateInfo(0).fullPathHash
-            == Animator.StringToHash("Base Layer.Armature|IdleN"))
-            cameraMode.animationEnded = true;
-    }
-
+    
     public static void PlayAnimation(string name, Transform target = null)
     {
         animationController.SetTrigger(name);
@@ -40,5 +33,43 @@ public class PlayerAnimationManager : MonoBehaviour {
         {
             cameraMode.SetCinematicMode(target);
         }
+    }
+
+    /// <summary>
+    /// Sets the idle state of the hand, depending on object held.
+    /// </summary>
+    /// <param name="hand">True = left, False = right</param>
+    /// <param name="item">Name of the item</param>
+    public static void SetHandItem(bool hand, string item)
+    {
+        string handName = hand ? "LeftHandState" : "RightHandState";
+        int itemID = 0;
+
+        switch (item)
+        {
+            case "Alcohol":
+                itemID = 1;
+                break;
+            case "NeedleCup":
+                itemID = 2;
+                break;
+            case "AbsorptionNeedle":
+            case "InjectionNeedle":
+                itemID = 3;
+                break;
+            case "Syringe":
+            case "SyringeWithAbsorptionNeedle":
+            case "SyringeWithInjectionNeedle":
+                itemID = 4;
+                break;
+            case "Medicine":
+                itemID = 5;
+                break;
+            default:
+                itemID = 0;
+                break;
+        }
+
+        animationController.SetInteger(handName, itemID);
     }
 }
