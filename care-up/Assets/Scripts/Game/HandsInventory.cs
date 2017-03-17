@@ -7,17 +7,25 @@ using System.Collections;
 public class HandsInventory : MonoBehaviour {
 
     // tutorial special variables.
-    // TODO: hide from unity editor.
+    [HideInInspector]
     public bool tutorial_pickedLeft = false;
+    [HideInInspector]
     public bool tutorial_pickedRight = false;
+    [HideInInspector]
     public bool tutorial_droppedLeft = false;
+    [HideInInspector]
     public bool tutorial_droppedRight = false;
+    [HideInInspector]
     public bool tutorial_combined = false;
+    [HideInInspector]
     public bool tutorial_itemUsedOn = false;
 
     // position in air 
     public float horisontalOffset = 0.5f;
     public float distanceFromCamera = 1.0f;
+
+    public Transform leftToolHolder;
+    public Transform rightToolHolder;
 
     private PickableObject leftHandObject;
     private PickableObject rightHandObject;
@@ -441,14 +449,16 @@ public class HandsInventory : MonoBehaviour {
         if (hand)
         {
             leftHold = true;
-            leftHandObject.transform.parent = GameObject.Find("toolHolder.L").transform;
+            leftHandObject.transform.parent = (leftToolHolder == null) ?
+                GameObject.Find("toolHolder.L").transform : leftToolHolder;
             leftHandObject.transform.localPosition = Vector3.zero;
             leftHandObject.transform.localRotation = Quaternion.identity;
         }
         else
         {
             rightHold = true;
-            rightHandObject.transform.parent = GameObject.Find("toolHolder.R").transform;
+            rightHandObject.transform.parent = (rightToolHolder == null) ?
+                GameObject.Find("toolHolder.R").transform : rightToolHolder;
             rightHandObject.transform.localPosition = Vector3.zero;
             rightHandObject.transform.localRotation = Quaternion.identity;
         }
