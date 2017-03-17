@@ -139,7 +139,7 @@ public class HandsInventory : MonoBehaviour {
                     PlayerAnimationManager.PlayAnimation(combineAnimation);
 
                     combineDelayed = true;
-                    controls.keyPreferences.SetAllLocked(true);
+                    ToggleControls(true);
                 }
             }
 
@@ -406,6 +406,13 @@ public class HandsInventory : MonoBehaviour {
         }
         else return name;
     }
+
+    public void ToggleControls(bool value)
+    {
+        controls.keyPreferences.SetAllLocked(value);
+        controls.keyPreferences.mouseClickLocked = false;
+        controls.keyPreferences.mouseClickKey.locked = false;
+    }
     
     public void ExecuteDelayedCombination()
     {
@@ -413,7 +420,7 @@ public class HandsInventory : MonoBehaviour {
         {
             combineDelayed = false;
 
-            controls.keyPreferences.SetAllLocked(false);
+            ToggleControls(false);
 
             string leftName = leftHandObject ? leftHandObject.name : "";
             string rightName = rightHandObject ? rightHandObject.name : "";
