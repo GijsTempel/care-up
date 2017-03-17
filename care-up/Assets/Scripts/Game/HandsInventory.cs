@@ -410,8 +410,8 @@ public class HandsInventory : MonoBehaviour {
     public void ToggleControls(bool value)
     {
         controls.keyPreferences.SetAllLocked(value);
-        controls.keyPreferences.mouseClickLocked = false;
-        controls.keyPreferences.mouseClickKey.locked = false;
+        //controls.keyPreferences.mouseClickLocked = false;
+        //controls.keyPreferences.mouseClickKey.locked = false;
     }
     
     public void ExecuteDelayedCombination()
