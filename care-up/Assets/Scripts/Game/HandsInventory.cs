@@ -483,7 +483,7 @@ public class HandsInventory : MonoBehaviour {
         }
     }
 
-    private string FilterName(string name)
+    public static string FilterName(string name)
     {
         if (name == "AbsorptionNeedle" || name == "InjectionNeedle")
         {
