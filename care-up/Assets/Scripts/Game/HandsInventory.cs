@@ -31,6 +31,12 @@ public class HandsInventory : MonoBehaviour {
     private PickableObject rightHandObject;
     private bool leftHold = false;
     private bool rightHold = false;
+
+    [HideInInspector]
+    public bool combineActivated = false;
+    private bool combineDelayed = false;
+    private string leftCombineResult;
+    private string rightCombineResult;
     
     private Vector3 glovesPosition;
     private Quaternion glovesRotation;
@@ -121,15 +127,33 @@ public class HandsInventory : MonoBehaviour {
                 string[] currentObjects = actionManager.CurrentCombineObjects;
                 bool combineAllowed = (currentObjects[0] == leftName && currentObjects[1] == rightName)
                     || (currentObjects[0] == rightName && currentObjects[1] == leftName);
-
-                string leftResult, rightResult;
-                bool combined = combinationManager.Combine(leftName, rightName, out leftResult, out rightResult);
+                
+                bool combined = combinationManager.Combine(leftName, rightName, out leftCombineResult, out rightCombineResult);
 
                 // combine performed
                 if (combined && combineAllowed)
                 {
                     tutorial_combined = true;
                     
+                    string combineAnimation = "Combine " +
+                        (leftHandObject ? FilterName(leftHandObject.name) : "_") + " " +
+                        (rightHandObject ? FilterName(rightHandObject.name) : "_");
+                    PlayerAnimationManager.PlayAnimation(combineAnimation);
+
+                    combineDelayed = true;
+                }
+            }
+
+            if (combineDelayed)
+            {
+                if (combineActivated)
+                {
+                    combineDelayed = false;
+                    combineActivated = false;
+
+                    string leftName = leftHandObject ? leftHandObject.name : "";
+                    string rightName = rightHandObject ? rightHandObject.name : "";
+
                     Vector3 leftSavedPos = Vector3.zero;
                     Quaternion leftSavedRot = Quaternion.identity;
 
@@ -145,26 +169,21 @@ public class HandsInventory : MonoBehaviour {
                     {
                         rightHandObject.GetSavesLocation(out rightSavedPos, out rightSavedRot);
                     }
-                    
-                    string combineAnimation = "Combine " +
-                        (leftHandObject ? FilterName(leftHandObject.name) : "_") + " " +
-                        (rightHandObject ? FilterName(rightHandObject.name) : "_");
-                    PlayerAnimationManager.PlayAnimation(combineAnimation);
 
                     // object changed
-                    if (leftName != leftResult)
+                    if (leftName != leftCombineResult)
                     {
                         if (leftHandObject != null)
                         {
                             Destroy(leftHandObject.gameObject);
                             leftHandObject = null;
                         }
-                        
-                        PlayerAnimationManager.SetHandItem(true, leftResult);
 
-                        if (leftResult != "")
+                        PlayerAnimationManager.SetHandItem(true, leftCombineResult);
+
+                        if (leftCombineResult != "")
                         {
-                            GameObject leftObject = CreateObjectByName(leftResult, Vector3.zero);
+                            GameObject leftObject = CreateObjectByName(leftCombineResult, Vector3.zero);
                             leftHandObject = leftObject.GetComponent<PickableObject>();
                             SetHold(true);
 
@@ -182,19 +201,19 @@ public class HandsInventory : MonoBehaviour {
                     }
 
                     // object changed
-                    if (rightName != rightResult)
+                    if (rightName != rightCombineResult)
                     {
                         if (rightHandObject != null)
                         {
                             Destroy(rightHandObject.gameObject);
                             rightHandObject = null;
                         }
-                        
-                        PlayerAnimationManager.SetHandItem(false, rightResult);
 
-                        if (rightResult != "")
+                        PlayerAnimationManager.SetHandItem(false, rightCombineResult);
+
+                        if (rightCombineResult != "")
                         {
-                            GameObject rightObject = CreateObjectByName(rightResult, Vector3.zero);
+                            GameObject rightObject = CreateObjectByName(rightCombineResult, Vector3.zero);
                             rightHandObject = rightObject.GetComponent<PickableObject>();
                             SetHold(false);
 

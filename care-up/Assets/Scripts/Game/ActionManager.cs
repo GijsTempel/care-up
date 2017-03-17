@@ -11,7 +11,7 @@ using UnityEngine.SceneManagement;
 public class ActionManager : MonoBehaviour {
 
     // tutorial variables - do not affect gameplay
-    // TODO: hide from editor
+    [HideInInspector]
     public bool tutorial_hintUsed = false;
     private bool currentStepHintUsed = false;
     
