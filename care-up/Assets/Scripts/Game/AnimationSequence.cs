@@ -155,7 +155,8 @@ public class AnimationSequence  {
                         Debug.Log("Play animation: " + animation);
                         actionManager.Points++;
                         pointsEarned++;
-                        NextStep();
+                        Object.Destroy(GameObject.Find("SelectionDialogue"));
+                        PlayerAnimationManager.NextSequenceStep(false);
                     }
                     else
                     {
@@ -178,7 +179,8 @@ public class AnimationSequence  {
                     Debug.Log("Play animation: " + animation);
                     actionManager.Points++;
                     pointsEarned++;
-                    NextStep();
+                    Object.Destroy(GameObject.Find("SelectionDialogue"));
+                    PlayerAnimationManager.NextSequenceStep(false);
                 }
             }
         }

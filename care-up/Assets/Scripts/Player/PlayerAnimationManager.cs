@@ -16,6 +16,8 @@ public class PlayerAnimationManager : MonoBehaviour {
     private static Animator animationController;
     private static CameraMode cameraMode;
 
+    private static AnimationSequence animationSequence;
+
     void Start()
     {
         animationController = GetComponent<Animator>();
@@ -71,5 +73,26 @@ public class PlayerAnimationManager : MonoBehaviour {
         }
 
         animationController.SetInteger(handName, itemID);
+    }
+
+    public static void PlayAnimationSequence(string name, Transform target)
+    {
+        animationSequence = new AnimationSequence(name);
+        PlayAnimation(name + "Sequence");
+    }
+
+    public static void NextSequenceStep(bool flag)
+    {
+        if (flag)
+        {
+            if (animationSequence != null)
+            {
+                animationSequence.NextStep();
+            }
+        }
+        else
+        {
+            animationController.speed = 1f;
+        }
     }
 }

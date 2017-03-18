@@ -136,8 +136,7 @@ public class PickableObject : InteractableObject {
                         SceneManager.GetActiveScene().name == "Injection_ampoule" ||
                         SceneManager.GetActiveScene().name == "Injection_disolve")
                     {
-                        AnimationSequence animationSequence = new AnimationSequence("Injection");
-                        animationSequence.NextStep();
+                        PlayerAnimationManager.PlayAnimationSequence("Injection", GameObject.Find("Patient").transform.FindChild("CinematicTarget"));
                     }
                     else if (SceneManager.GetActiveScene().name == "Injection Subcutaneous" ||
                         SceneManager.GetActiveScene().name == "Injection Subcutaneous_ampoule" ||
