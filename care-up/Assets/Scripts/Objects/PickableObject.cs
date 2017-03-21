@@ -45,7 +45,7 @@ public class PickableObject : InteractableObject {
     /// Drops and object
     /// </summary>
     /// <param name="force">If true - forces load position instead of free dropping</param>
-    public void Drop(bool force = false)
+    public virtual void Drop(bool force = false)
     {
         gameObject.layer = 0;
         GetComponent<Collider>().enabled = true;
@@ -236,5 +236,10 @@ public class PickableObject : InteractableObject {
         actionManager.OnUseOnAction(name, controls.SelectedObject != null && controls.CanInteract ? controls.SelectedObject.name : "");
 
         return (info[0] == name && controls.SelectedObject != null && info[1] == controls.SelectedObject.name);
+    }
+
+    public virtual void Pick()
+    {
+        // callback for handling different OnPick mechanics
     }
 }

@@ -383,6 +383,7 @@ public class HandsInventory : MonoBehaviour {
                 GameObject.Find("toolHolder.L").transform : leftToolHolder;
             leftHandObject.transform.localPosition = Vector3.zero;
             leftHandObject.transform.localRotation = Quaternion.identity;
+            leftHandObject.Pick();
         }
         else
         {
@@ -391,6 +392,7 @@ public class HandsInventory : MonoBehaviour {
                 GameObject.Find("toolHolder.R").transform : rightToolHolder;
             rightHandObject.transform.localPosition = Vector3.zero;
             rightHandObject.transform.localRotation = Quaternion.identity;
+            rightHandObject.Pick();
         }
     }
 
