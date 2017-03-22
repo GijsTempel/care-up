@@ -79,10 +79,10 @@ public class PlayerAnimationManager : MonoBehaviour {
         animationController.SetInteger(handName, itemID);
     }
 
-    public static void PlayAnimationSequence(string name, Transform target)
+    public static void PlayAnimationSequence(string name, bool mirror, Transform target)
     {
         animationSequence = new AnimationSequence(name);
-        PlayAnimation(name + "Sequence");
+        PlayAnimation(name + (mirror ? "Sequence_M" : "Sequence") );
     }
 
     public static void NextSequenceStep(bool flag)
