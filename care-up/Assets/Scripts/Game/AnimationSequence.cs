@@ -175,8 +175,7 @@ public class AnimationSequence  {
                     {
                         GameObject.Find("GameLogic").GetComponent<HandsInventory>().PickTestStrips();
                     }
-
-                    Debug.Log("Play animation: " + animation);
+                    
                     actionManager.Points++;
                     pointsEarned++;
                     Object.Destroy(GameObject.Find("SelectionDialogue"));
@@ -222,7 +221,7 @@ public class AnimationSequence  {
         else
         {
             Object.Destroy(dialogueObject.gameObject);
-            cameraMode.ToggleCameraMode(CameraMode.Mode.Free);
+            cameraMode.ToggleCameraMode(CameraMode.Mode.Cinematic);
         }
 
         currentStep += 1;

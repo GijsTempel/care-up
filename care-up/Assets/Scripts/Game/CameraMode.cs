@@ -28,6 +28,8 @@ public class CameraMode : MonoBehaviour {
 
     [HideInInspector]
     public bool animationEnded = false;
+    [HideInInspector]
+    public bool cinematicToggle = false;
     private int cinematicDirection = 1;
     private float cinematicLerp = 0.0f;
     private Vector3 cinematicPos;
@@ -198,11 +200,11 @@ public class CameraMode : MonoBehaviour {
 
             blur.enabled = false;
         }
-        else if (currentMode == Mode.Free && mode == Mode.SelectionDialogue)
+        else if (mode == Mode.SelectionDialogue)
         {
             TogglePlayerScript(false);
         }
-        else if (currentMode == Mode.SelectionDialogue && mode == Mode.Free)
+        else if (currentMode == Mode.SelectionDialogue)
         {
             TogglePlayerScript(true);
         }
@@ -219,7 +221,7 @@ public class CameraMode : MonoBehaviour {
             TogglePlayerScript(true);
             confirmUI.SetActive(false);
         }
-        else if (currentMode == Mode.Free && mode == Mode.Cinematic)
+        else if (mode == Mode.Cinematic)
         {
             playerScript.mouseLook.SetMode(true);
             playerScript.tutorial_movementLock = true;
@@ -293,6 +295,8 @@ public class CameraMode : MonoBehaviour {
         if (cinematicDirection == 1 && cinematicLerp == 1.0f)
         {
             cinematicDirection = -1;
+            if ( cinematicToggle )
+            PlayerAnimationManager.ToggleAnimationSpeed();
         }
         else if (cinematicDirection == -1 && cinematicLerp == 0.0f)
         {
@@ -305,6 +309,11 @@ public class CameraMode : MonoBehaviour {
     public void SetCinematicMode(Transform target)
     {
         ToggleCameraMode(Mode.Cinematic);
+
+        if (cinematicToggle)
+        {
+            PlayerAnimationManager.ToggleAnimationSpeed();
+        }
 
         cinematicLerp = 0.0f;
         cinematicDirection = 1;

@@ -10,6 +10,14 @@ public class PersonObjectPart : InteractableObject {
 
     private PersonObject person = null;
 
+    public Transform Person
+    {
+        get
+        {
+            return person.transform;
+        }
+    }
+
     protected override void Start()
     {
         base.Start();

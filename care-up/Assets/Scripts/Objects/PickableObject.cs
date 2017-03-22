@@ -136,7 +136,8 @@ public class PickableObject : InteractableObject {
                         SceneManager.GetActiveScene().name == "Injection_ampoule" ||
                         SceneManager.GetActiveScene().name == "Injection_disolve")
                     {
-                        PlayerAnimationManager.PlayAnimationSequence("Injection", inventory.LeftHandObject == gameObject, GameObject.Find("Patient").transform.FindChild("CinematicTarget"));
+                        Transform target = controls.SelectedObject.GetComponent<PersonObjectPart>().Person;
+                        PlayerAnimationManager.PlayAnimationSequence("Injection", inventory.LeftHandObject == gameObject, target);
                     }
                     else if (SceneManager.GetActiveScene().name == "Injection Subcutaneous" ||
                         SceneManager.GetActiveScene().name == "Injection Subcutaneous_ampoule" ||
@@ -215,7 +216,6 @@ public class PickableObject : InteractableObject {
             }
             else if (name == "SyringeWithAbsorptionNeedle")
             {
-                Debug.Log("vent");
                 info = actionManager.CurrentUseOnInfo;
                 if (info[0] == "SyringeWithAbsorptionNeedle" && info[1] == ""
                     && (inventory.LeftHandEmpty() || inventory.RightHandEmpty()))

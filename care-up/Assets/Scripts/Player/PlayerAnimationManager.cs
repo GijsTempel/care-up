@@ -30,7 +30,7 @@ public class PlayerAnimationManager : MonoBehaviour {
     public static void PlayAnimation(string name, Transform target = null)
     {
         animationController.SetTrigger(name);
-
+        
         if (target)
         {
             cameraMode.SetCinematicMode(target);
@@ -82,7 +82,8 @@ public class PlayerAnimationManager : MonoBehaviour {
     public static void PlayAnimationSequence(string name, bool mirror, Transform target)
     {
         animationSequence = new AnimationSequence(name);
-        PlayAnimation(name + (mirror ? "Sequence_M" : "Sequence") );
+        cameraMode.cinematicToggle = true; //before play animation
+        PlayAnimation(name + (mirror ? "Sequence_M" : "Sequence"), target);
     }
 
     public static void NextSequenceStep(bool flag)
@@ -95,8 +96,13 @@ public class PlayerAnimationManager : MonoBehaviour {
             }
         }
         else
-        {
+        { 
             animationController.speed = 1f;
         }
+    }
+
+    public static void ToggleAnimationSpeed()
+    {
+        animationController.speed = (animationController.speed == 0) ? 1f : 0f;
     }
 }

@@ -19,11 +19,14 @@ public class AnimationSequenceState : StateMachineBehaviour {
 	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         if (keyFrame < keyFrames.Count)
         {
-            if (animator.speed != 0 && ++frame == keyFrames[keyFrame])
+            if (animator.speed != 0)
             {
-                PlayerAnimationManager.NextSequenceStep(true);
-                animator.speed = 0f;
-                ++keyFrame;
+                if (++frame == keyFrames[keyFrame])
+                {
+                    PlayerAnimationManager.NextSequenceStep(true);
+                    animator.speed = 0f;
+                    ++keyFrame;
+                }
             }
         }
 	}
@@ -31,8 +34,9 @@ public class AnimationSequenceState : StateMachineBehaviour {
 	// OnStateExit is called when a transition ends and the state machine finishes evaluating this state
 	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         CameraMode cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
-        cameraMode.ToggleCameraMode(CameraMode.Mode.Free);
+        cameraMode.ToggleCameraMode(CameraMode.Mode.Cinematic);
         cameraMode.animationEnded = true;
+        cameraMode.cinematicToggle = false;
     }
 
 	// OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here
