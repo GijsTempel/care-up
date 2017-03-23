@@ -217,19 +217,21 @@ public class PickableObject : InteractableObject {
             else if (name == "SyringeWithAbsorptionNeedle")
             {
                 info = actionManager.CurrentUseOnInfo;
-                if (info[0] == "SyringeWithAbsorptionNeedle" && info[1] == ""
-                    && (inventory.LeftHandEmpty() || inventory.RightHandEmpty()))
+                if (info[0] == "SyringeWithAbsorptionNeedle" && info[1] == "")
                 {
                     if (inventory.LeftHandEmpty())
                     {
                         PlayerAnimationManager.PlayAnimation("UseRight SyringeWithNeedle");
+                        actionManager.OnUseOnAction("SyringeWithAbsorptionNeedle", "");
+                        return true; // fix for venting syringe
                     }
                     else if (inventory.RightHandEmpty())
                     {
                         PlayerAnimationManager.PlayAnimation("UseLeft SyringeWithNeedle");
+                        actionManager.OnUseOnAction("SyringeWithAbsorptionNeedle", "");
+                        return true; // fix for venting syringe
                     }
-                    actionManager.OnUseOnAction("SyringeWithAbsorptionNeedle", "");
-                    return true; // fix for venting syringe
+                    else return false;
                 }
             }
         }
