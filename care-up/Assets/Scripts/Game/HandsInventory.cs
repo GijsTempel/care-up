@@ -422,8 +422,6 @@ public class HandsInventory : MonoBehaviour {
         {
             combineDelayed = false;
 
-            ToggleControls(false);
-
             string leftName = leftHandObject ? leftHandObject.name : "";
             string rightName = rightHandObject ? rightHandObject.name : "";
 
