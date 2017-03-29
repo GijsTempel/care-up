@@ -25,7 +25,7 @@ public class Syringe : PickableObject {
         {
             plunger.localPosition = new Vector3(
                 plunger.localPosition.x,
-                controlBone.localPosition.y,
+                Mathf.Lerp(-0.013f, 0.06f, controlBone.localPosition.y),
                 plunger.localPosition.z);
         }
     }
