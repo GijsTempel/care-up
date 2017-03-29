@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AnimationUseOn : StateMachineBehaviour
 {
-    private HandsInventory inv;
+    protected HandsInventory inv;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {

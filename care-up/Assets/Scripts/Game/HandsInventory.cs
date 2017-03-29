@@ -26,6 +26,8 @@ public class HandsInventory : MonoBehaviour {
 
     public Transform leftToolHolder;
     public Transform rightToolHolder;
+    public Transform leftControlBone;
+    public Transform rightControlBone;
 
     private PickableObject leftHandObject;
     private PickableObject rightHandObject;
@@ -214,6 +216,7 @@ public class HandsInventory : MonoBehaviour {
                 tutorial_pickedLeft = true;
                 leftHandObject.GetComponent<Rigidbody>().useGravity = false;
                 leftHandObject.GetComponent<Collider>().enabled = false;
+                leftHandObject.controlBone = leftControlBone;
                 actionManager.OnPickUpAction(leftHandObject.name);
                 PlayerAnimationManager.PlayAnimation("LeftPick");
                 PlayerAnimationManager.SetHandItem(true, item.name);
@@ -225,6 +228,7 @@ public class HandsInventory : MonoBehaviour {
                 tutorial_pickedRight = true;
                 rightHandObject.GetComponent<Rigidbody>().useGravity = false;
                 rightHandObject.GetComponent<Collider>().enabled = false;
+                rightHandObject.controlBone = rightControlBone;
                 actionManager.OnPickUpAction(rightHandObject.name);
                 PlayerAnimationManager.PlayAnimation("RightPick");
                 PlayerAnimationManager.SetHandItem(false, item.name);
@@ -239,6 +243,8 @@ public class HandsInventory : MonoBehaviour {
                 tutorial_pickedLeft = true;
                 leftHandObject.GetComponent<Rigidbody>().useGravity = false;
                 leftHandObject.GetComponent<Collider>().enabled = false;
+                rightHandObject.controlBone = rightControlBone;
+                leftHandObject.controlBone = leftControlBone;
                 actionManager.OnPickUpAction(leftHandObject.name);
                 PlayerAnimationManager.PlayAnimation("LeftPick");
                 PlayerAnimationManager.SetHandItem(true, item.name);
@@ -456,6 +462,7 @@ public class HandsInventory : MonoBehaviour {
                 {
                     GameObject leftObject = CreateObjectByName(leftCombineResult, Vector3.zero);
                     leftHandObject = leftObject.GetComponent<PickableObject>();
+                    leftHandObject.controlBone = leftControlBone;
                     SetHold(true);
 
                     if (leftSavedPos != Vector3.zero)
@@ -486,6 +493,7 @@ public class HandsInventory : MonoBehaviour {
                 {
                     GameObject rightObject = CreateObjectByName(rightCombineResult, Vector3.zero);
                     rightHandObject = rightObject.GetComponent<PickableObject>();
+                    rightHandObject.controlBone = rightControlBone;
                     SetHold(false);
 
                     if (rightSavedPos != Vector3.zero)

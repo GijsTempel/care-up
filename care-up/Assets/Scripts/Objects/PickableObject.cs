@@ -10,12 +10,13 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(Renderer))]
 [RequireComponent(typeof(Rigidbody))]
 public class PickableObject : InteractableObject {
+
+    public Transform controlBone;
     
-    public Vector3 rotationInHand;
+    protected static HandsInventory inventory;
 
     private List<Vector3> framePositions = new List<Vector3>();
     private Rigidbody rigidBody;
-    private static HandsInventory inventory;
   
     protected override void Start()
     {
@@ -124,43 +125,6 @@ public class PickableObject : InteractableObject {
                     return true;
                 }
             }
-            else if (name == "SyringeWithInjectionNeedle"
-                && controls.SelectedObject.name == "LeftForeArm" 
-                || controls.SelectedObject.name == "RightForeArm")
-            {
-                info = actionManager.CurrentUseOnInfo;
-                if (info[0] == "SyringeWithInjectionNeedle" && info[1] == "Hand")
-                {
-                    actionManager.OnUseOnAction("SyringeWithInjectionNeedle", "Hand");
-                    if (SceneManager.GetActiveScene().name == "Injection" ||
-                        SceneManager.GetActiveScene().name == "Injection_ampoule" ||
-                        SceneManager.GetActiveScene().name == "Injection_disolve")
-                    {
-                        Transform target = controls.SelectedObject.GetComponent<PersonObjectPart>().Person;
-                        PlayerAnimationManager.PlayAnimationSequence("Injection", inventory.LeftHandObject == gameObject, target);
-                    }
-                    else if (SceneManager.GetActiveScene().name == "Injection Subcutaneous" ||
-                        SceneManager.GetActiveScene().name == "Injection Subcutaneous_ampoule" ||
-                        SceneManager.GetActiveScene().name == "Injection Subcutaneous_desolve")
-                    {
-                        AnimationSequence animationSequence = new AnimationSequence("SubcutaneousInjection");
-                        animationSequence.NextStep();
-                    }
-                    else if (SceneManager.GetActiveScene().name == "Injection Subcutaneous v2" ||
-                        SceneManager.GetActiveScene().name == "Injection Subcutaneous v2_ampoule" ||
-                        SceneManager.GetActiveScene().name == "Injection Subcutaneous v2_desolve")
-                    {
-                        AnimationSequence animationSequence = new AnimationSequence("SubcutaneousInjection v2");
-                        animationSequence.NextStep();
-                    }
-                    else if (SceneManager.GetActiveScene().name == "Injection scene v2")
-                    {
-                        AnimationSequence animationSequence = new AnimationSequence("Injection v2");
-                        animationSequence.NextStep();
-                    }
-                    return true;
-                }
-            }
             else if (name == "InsulinPenWithNeedle"
                 && controls.SelectedObject.name == "Hand")
             {
@@ -169,18 +133,6 @@ public class PickableObject : InteractableObject {
                 {
                     actionManager.OnUseOnAction("InsulinPenWithNeedle", "Hand");
                     AnimationSequence animationSequence = new AnimationSequence("InsulinInjection");
-                    animationSequence.NextStep();
-                    return true;
-                }
-            }
-            else if (name == "Syringe"
-                && controls.SelectedObject.name == "Person")
-            {
-                info = actionManager.CurrentUseOnInfo;
-                if (info[0] == "Syringe" && info[1] == "Person")
-                {
-                    actionManager.OnUseOnAction("Syringe", "Person");
-                    AnimationSequence animationSequence = new AnimationSequence("WingedNeedle");
                     animationSequence.NextStep();
                     return true;
                 }
@@ -197,42 +149,12 @@ public class PickableObject : InteractableObject {
                     return true;
                 }
             }
-            else if (name == "SyringeWithAbsorptionNeedle"
-                && controls.SelectedObject.name == "Hand")
-            {
-                info = actionManager.CurrentUseOnInfo;
-                if (info[0] == "SyringeWithAbsorptionNeedle" && info[1] == "Hand")
-                {
-                    actionManager.OnUseOnAction("SyringeWithAbsorptionNeedle", "Hand");
-                    return true; // for tutorial
-                }
-            }
         }
         else // cannot interact or target == ""
         {
             if ( name == "Gloves" )
             {
                 GameObject.Find("GameLogic").GetComponent<HandsInventory>().GlovesToggle(true);
-            }
-            else if (name == "SyringeWithAbsorptionNeedle")
-            {
-                info = actionManager.CurrentUseOnInfo;
-                if (info[0] == "SyringeWithAbsorptionNeedle" && info[1] == "")
-                {
-                    if (inventory.LeftHandEmpty())
-                    {
-                        PlayerAnimationManager.PlayAnimation("UseRight SyringeWithNeedle");
-                        actionManager.OnUseOnAction("SyringeWithAbsorptionNeedle", "");
-                        return true; // fix for venting syringe
-                    }
-                    else if (inventory.RightHandEmpty())
-                    {
-                        PlayerAnimationManager.PlayAnimation("UseLeft SyringeWithNeedle");
-                        actionManager.OnUseOnAction("SyringeWithAbsorptionNeedle", "");
-                        return true; // fix for venting syringe
-                    }
-                    else return false;
-                }
             }
         }
         actionManager.OnUseOnAction(name, controls.SelectedObject != null && controls.CanInteract ? controls.SelectedObject.name : "");
