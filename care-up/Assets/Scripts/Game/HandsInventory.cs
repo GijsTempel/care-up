@@ -228,7 +228,7 @@ public class HandsInventory : MonoBehaviour {
                 tutorial_pickedRight = true;
                 rightHandObject.GetComponent<Rigidbody>().useGravity = false;
                 rightHandObject.GetComponent<Collider>().enabled = false;
-                rightHandObject.controlBone = rightControlBone;
+                rightHandObject.controlBone = leftControlBone; // TODO
                 actionManager.OnPickUpAction(rightHandObject.name);
                 PlayerAnimationManager.PlayAnimation("RightPick");
                 PlayerAnimationManager.SetHandItem(false, item.name);
@@ -243,7 +243,6 @@ public class HandsInventory : MonoBehaviour {
                 tutorial_pickedLeft = true;
                 leftHandObject.GetComponent<Rigidbody>().useGravity = false;
                 leftHandObject.GetComponent<Collider>().enabled = false;
-                rightHandObject.controlBone = rightControlBone;
                 leftHandObject.controlBone = leftControlBone;
                 actionManager.OnPickUpAction(leftHandObject.name);
                 PlayerAnimationManager.PlayAnimation("LeftPick");
@@ -259,6 +258,7 @@ public class HandsInventory : MonoBehaviour {
                 tutorial_pickedRight = true;
                 rightHandObject.GetComponent<Rigidbody>().useGravity = false;
                 rightHandObject.GetComponent<Collider>().enabled = false;
+                rightHandObject.controlBone = leftControlBone; // TODO
                 actionManager.OnPickUpAction(rightHandObject.name);
                 PlayerAnimationManager.PlayAnimation("RightPick");
                 PlayerAnimationManager.SetHandItem(false, item.name);
@@ -493,7 +493,7 @@ public class HandsInventory : MonoBehaviour {
                 {
                     GameObject rightObject = CreateObjectByName(rightCombineResult, Vector3.zero);
                     rightHandObject = rightObject.GetComponent<PickableObject>();
-                    rightHandObject.controlBone = rightControlBone;
+                    rightHandObject.controlBone = leftControlBone; // TODO
                     SetHold(false);
 
                     if (rightSavedPos != Vector3.zero)
