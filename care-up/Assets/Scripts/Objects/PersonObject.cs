@@ -86,7 +86,7 @@ public class PersonObject : InteractableObject {
             {
                 case "RollUpSleeves":
                 case "ExtendArmMakeFist":
-                    RollUpSleeves(true);
+                    GetComponent<Animator>().SetTrigger("ShowArm");
                     break;
                 case "ComfortablePosition":
                     inhaling = true;
@@ -98,13 +98,7 @@ public class PersonObject : InteractableObject {
 
         actionManager.OnTalkAction(topic);
     }
-
-    private void RollUpSleeves(bool value)
-    {
-        Debug.Log("Patient:PlayAnimation:RollUpSleeves");
-        //GetComponent<Animator>().Play("RollUpSleeves");
-    }
-
+    
     /// <summary>
     /// Loads available topics to talk from xml file.
     /// </summary>
