@@ -6,8 +6,8 @@ public class AnimationSequenceState : StateMachineBehaviour {
 
     public List<int> keyFrames = new List<int>();
 
-    private int keyFrame = 0;
-    private int frame = 0;
+    protected int keyFrame = 0;
+    protected int frame = 0;
 
 	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {

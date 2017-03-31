@@ -214,7 +214,7 @@ public class HandsInventory : MonoBehaviour {
                 leftHandObject = item;
                 picked = true;
                 tutorial_pickedLeft = true;
-                leftHandObject.GetComponent<Rigidbody>().useGravity = false;
+                leftHandObject.GetComponent<Rigidbody>().useGravity = false; 
                 leftHandObject.GetComponent<Collider>().enabled = false;
                 leftHandObject.controlBone = leftControlBone;
                 actionManager.OnPickUpAction(leftHandObject.name);
@@ -357,23 +357,40 @@ public class HandsInventory : MonoBehaviour {
     {
         if (leftHandObject)
         {
+            leftHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
             leftHandObject.Drop(true);
             leftHandObject = null;
+            leftHold = false;
         }
 
         if (rightHandObject)
         {
+            rightHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
             rightHandObject.Drop(true);
             rightHandObject = null;
+            rightHold = false;
         }
     }
 
-    /// <summary>
-    /// Used during animation sequence to force pick.
-    /// </summary>
-    public void PickTestStrips()
+    public void ForcePickItem(string name, bool hand)
     {
-        leftHandObject = GameObject.Find("TestStrips").GetComponent<PickableObject>();
+        if (hand)
+        {
+            leftHandObject = GameObject.Find(name).GetComponent<PickableObject>();
+            leftHandObject.GetComponent<Rigidbody>().useGravity = false;
+            leftHandObject.GetComponent<Collider>().enabled = false;
+            leftHandObject.controlBone = leftControlBone;
+            leftHandObject.SavePosition();
+        }
+        else
+        {
+            rightHandObject = GameObject.Find(name).GetComponent<PickableObject>();
+            rightHandObject.GetComponent<Rigidbody>().useGravity = false;
+            rightHandObject.GetComponent<Collider>().enabled = false;
+            rightHandObject.controlBone = leftControlBone;
+            rightHandObject.SavePosition();
+        }
+        SetHold(hand);
     }
 
     /// <summary>

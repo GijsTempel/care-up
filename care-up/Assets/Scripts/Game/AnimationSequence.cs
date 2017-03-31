@@ -173,7 +173,7 @@ public class AnimationSequence  {
 
                     if (animation == "WaitAnotherMinute_heamogluco")
                     {
-                        GameObject.Find("GameLogic").GetComponent<HandsInventory>().PickTestStrips();
+                        GameObject.Find("GameLogic").GetComponent<HandsInventory>().ForcePickItem("TestStrips", true);
                     }
                     
                     actionManager.Points++;

@@ -79,11 +79,11 @@ public class PlayerAnimationManager : MonoBehaviour {
         animationController.SetInteger(handName, itemID);
     }
 
-    public static void PlayAnimationSequence(string name, bool mirror, Transform target)
+    public static void PlayAnimationSequence(string name, Transform target)
     {
         animationSequence = new AnimationSequence(name);
         cameraMode.cinematicToggle = true; //before play animation
-        PlayAnimation(name + (mirror ? "Sequence_M" : "Sequence"), target);
+        PlayAnimation(name + "Sequence", target);
     }
 
     public static void NextSequenceStep(bool flag)

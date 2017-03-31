@@ -66,7 +66,7 @@ public class Syringe : PickableObject {
                         SceneManager.GetActiveScene().name == "Injection_disolve")
                     {
                         Transform target = controls.SelectedObject.GetComponent<PersonObjectPart>().Person;
-                        PlayerAnimationManager.PlayAnimationSequence("Injection", inventory.LeftHandObject == gameObject, target);
+                        PlayerAnimationManager.PlayAnimationSequence("Injection", target);
                     }
                     else if (SceneManager.GetActiveScene().name == "Injection Subcutaneous" ||
                         SceneManager.GetActiveScene().name == "Injection Subcutaneous_ampoule" ||
