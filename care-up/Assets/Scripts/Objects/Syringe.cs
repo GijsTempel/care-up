@@ -9,6 +9,12 @@ public class Syringe : PickableObject {
 
     private Transform plunger;
 
+    public Vector3 PlungerPosition
+    {
+        get { return plunger.localPosition; }
+        set { plunger.localPosition = value; }
+    }
+
     protected override void Start()
     {
         base.Start();

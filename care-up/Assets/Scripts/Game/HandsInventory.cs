@@ -481,8 +481,14 @@ public class HandsInventory : MonoBehaviour {
             // object changed
             if (rightName != rightCombineResult)
             {
+                Vector3 plungerPosition = new Vector3();
+
                 if (rightHandObject != null)
                 {
+                    if (rightHandObject.GetComponent<Syringe>() != null)
+                    {
+                        plungerPosition = rightHandObject.GetComponent<Syringe>().PlungerPosition;
+                    }
                     Destroy(rightHandObject.gameObject);
                     rightHandObject = null;
                 }
@@ -505,6 +511,11 @@ public class HandsInventory : MonoBehaviour {
                         float offset = leftHandObject.GetComponent<Renderer>().bounds.size.x
                             + rightHandObject.GetComponent<Renderer>().bounds.size.x;
                         rightHandObject.SavePosition(leftSavedPos + new Vector3(offset, 0), leftSavedRot);
+                    }
+
+                    if (rightHandObject.GetComponent<Syringe>() != null)
+                    {
+                        rightHandObject.GetComponent<Syringe>().PlungerPosition = plungerPosition;
                     }
                 }
             }
