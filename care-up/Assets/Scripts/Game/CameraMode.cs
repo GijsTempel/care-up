@@ -225,11 +225,13 @@ public class CameraMode : MonoBehaviour {
         {
             playerScript.mouseLook.SetMode(true);
             playerScript.tutorial_movementLock = true;
+            playerScript.mouseLook.clampHorisontalRotation = true;
         }
         else if (currentMode == Mode.Cinematic && mode == Mode.Free)
         {
             playerScript.mouseLook.SetMode(false);
             playerScript.tutorial_movementLock = false;
+            playerScript.mouseLook.clampHorisontalRotation = false;
         }
 
         currentMode = mode;
