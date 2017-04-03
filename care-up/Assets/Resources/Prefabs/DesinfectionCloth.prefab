@@ -20,10 +20,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4000013295583788}
   - component: {fileID: 33000012148976894}
-  - component: {fileID: 65000013864215834}
   - component: {fileID: 23000010949953858}
   - component: {fileID: 54000011796929106}
-  - component: {fileID: 114484601950226676}
+  - component: {fileID: 114772388169260472}
+  - component: {fileID: 65964490261819128}
   m_Layer: 0
   m_Name: DesinfectionCloth
   m_TagString: Untagged
@@ -37,13 +37,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011644965780}
-  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 9.359, y: 1.1148107, z: 10.721}
-  m_LocalScale: {x: 0.000055172968, y: 0.18003574, z: 0.16551878}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 9.376491, y: 1.1035217, z: 10.81798}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &23000010949953858
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -81,7 +81,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011644965780}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300002, guid: d1b9925ca37d0b545889b6b4f1b7399b, type: 3}
 --- !u!54 &54000011796929106
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -97,7 +97,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &65000013864215834
+--- !u!65 &65964490261819128
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -107,9 +107,9 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 130, y: 1, z: 1}
+  m_Size: {x: 0.18569778, y: 0.0018433597, z: 0.18569778}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114484601950226676
+--- !u!114 &114772388169260472
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -117,12 +117,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000011644965780}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa850f49ade906e458449516ddb0a1cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 9683ce8fd2daab5488955af11cfc9707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  description: Gaasje met alcohol
+  description: 
   muplipleMesh: 0
-  rotationInHand: {x: 0, y: 0, z: 0}
-  basic: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  basic: {fileID: 4300002, guid: d1b9925ca37d0b545889b6b4f1b7399b, type: 3}
   inHand: {fileID: 4300000, guid: a6328b44af9c587408fd8ce9328737d1, type: 3}
-  basicScale: {x: 0.00005517297, y: 0.1800357, z: 0.1655188}
+  controlBone: {fileID: 0}

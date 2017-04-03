@@ -20,10 +20,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4000013295583788}
   - component: {fileID: 33000012148976894}
-  - component: {fileID: 65000013864215834}
   - component: {fileID: 23000010949953858}
-  - component: {fileID: 114000010679037464}
   - component: {fileID: 54000012538692216}
+  - component: {fileID: 114811104448765242}
+  - component: {fileID: 65240547650120298}
   m_Layer: 0
   m_Name: Cloth
   m_TagString: Untagged
@@ -52,14 +52,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011644965780}
-  m_LocalRotation: {x: 0.5117044, y: 0.5117044, z: 0.48801506, w: 0.48801506}
-  m_LocalPosition: {x: -3.9384174, y: 1.1499822, z: 1.0108232}
-  m_LocalScale: {x: 0.000056908142, y: 0.18569781, z: 0.1707243}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.863, y: 1.1026, z: 1.0106}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4972332583100486}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4972332583100486
 Transform:
   m_ObjectHideFlags: 1
@@ -68,7 +68,7 @@ Transform:
   m_GameObject: {fileID: 1693767637453534}
   m_LocalRotation: {x: -0.09613842, y: 0.062475555, z: 0.70779526, w: -0.69705105}
   m_LocalPosition: {x: -3408.738, y: -3.0443969, z: -4.0919147}
-  m_LocalScale: {x: 7.057731, y: 16695.467, z: 880.90125}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4000013295583788}
   m_RootOrder: 0
@@ -84,7 +84,7 @@ MeshRenderer:
   m_ReceiveShadows: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
+  m_ReflectionProbeUsage: 2
   m_Materials:
   - {fileID: 2100000, guid: 0730668a555cf7c4fa4121a4382a268d, type: 2}
   m_StaticBatchInfo:
@@ -110,7 +110,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011644965780}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300002, guid: d1b9925ca37d0b545889b6b4f1b7399b, type: 3}
 --- !u!54 &54000012538692216
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -126,7 +126,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &65000013864215834
+--- !u!65 &65240547650120298
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -136,9 +136,9 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 130, y: 1, z: 1}
+  m_Size: {x: 0.18569778, y: 0.0018433597, z: 0.18569778}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114000010679037464
+--- !u!114 &114811104448765242
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -149,6 +149,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9683ce8fd2daab5488955af11cfc9707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  description: Gaasje
+  description: 
   muplipleMesh: 0
-  rotationInHand: {x: 0, y: 0, z: 0}
+  basic: {fileID: 4300002, guid: d1b9925ca37d0b545889b6b4f1b7399b, type: 3}
+  inHand: {fileID: 4300000, guid: a6328b44af9c587408fd8ce9328737d1, type: 3}
+  controlBone: {fileID: 0}
