@@ -361,6 +361,7 @@ public class HandsInventory : MonoBehaviour {
             leftHandObject.Drop(true);
             leftHandObject = null;
             leftHold = false;
+            PlayerAnimationManager.SetHandItem(true, "");
         }
 
         if (rightHandObject)
@@ -369,6 +370,7 @@ public class HandsInventory : MonoBehaviour {
             rightHandObject.Drop(true);
             rightHandObject = null;
             rightHold = false;
+            PlayerAnimationManager.SetHandItem(false, "");
         }
     }
 

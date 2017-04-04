@@ -25,6 +25,7 @@ public class InjectionSequence : AnimationSequenceState
         {
             inv.PutAllOnTable();
             inv.ForcePickItem("SyringeWithInjectionNeedle", false);
+            PlayerAnimationManager.SetHandItem(false, "SyringeWithInjectionNeedle");
             inv.RightHandObject.GetComponent<Syringe>().updatePlunger = true;
         }
 
