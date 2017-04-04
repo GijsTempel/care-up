@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class InjectionSequence : AnimationSequenceState
 {
+    public int dropClothFrame;
     public int takeSyringeFrame;
+    public int swapHandsFrame;
 
     private HandsInventory inv;
 
@@ -21,12 +23,19 @@ public class InjectionSequence : AnimationSequenceState
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (frame == takeSyringeFrame)
+        if (frame == dropClothFrame)
         {
             inv.PutAllOnTable();
+        }
+        else if (frame == takeSyringeFrame)
+        {
             inv.ForcePickItem("SyringeWithInjectionNeedle", false);
             PlayerAnimationManager.SetHandItem(false, "SyringeWithInjectionNeedle");
             inv.RightHandObject.GetComponent<Syringe>().updatePlunger = true;
+        }
+        else if (frame == swapHandsFrame)
+        {
+            inv.SwapHands();
         }
 
         if (keyFrame < keyFrames.Count)
@@ -48,7 +57,7 @@ public class InjectionSequence : AnimationSequenceState
     {
         base.OnStateExit(animator, stateInfo, layerIndex);
 
-        inv.RightHandObject.GetComponent<Syringe>().updatePlunger = false;
+        inv.LeftHandObject.GetComponent<Syringe>().updatePlunger = false;
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here

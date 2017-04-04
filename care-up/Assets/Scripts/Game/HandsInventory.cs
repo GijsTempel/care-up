@@ -273,6 +273,21 @@ public class HandsInventory : MonoBehaviour {
         return picked;
     }
 
+    public void SwapHands()
+    {
+        PickableObject t = leftHandObject;
+        leftHandObject = rightHandObject;
+        rightHandObject = t;
+
+        if (leftHandObject)
+            SetHold(true);
+        if (rightHandObject)
+            SetHold(false);
+
+        PlayerAnimationManager.SetHandItem(true, leftHandObject ? leftHandObject.name : "");
+        PlayerAnimationManager.SetHandItem(false, rightHandObject ? rightHandObject.name : "");
+    }
+
     /// <summary>
     /// After combining a new object can appear on the scene.
     /// </summary>
