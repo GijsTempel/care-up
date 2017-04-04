@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class InjectionSequence : AnimationSequenceState
 {
+    public int takeSyringeFrame;
+
     private HandsInventory inv;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -19,19 +21,19 @@ public class InjectionSequence : AnimationSequenceState
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        if (frame == takeSyringeFrame)
+        {
+            inv.PutAllOnTable();
+            inv.ForcePickItem("SyringeWithInjectionNeedle", false);
+            inv.RightHandObject.GetComponent<Syringe>().updatePlunger = true;
+        }
+
         if (keyFrame < keyFrames.Count)
         {
             if (animator.speed != 0)
             {
                 if (++frame == keyFrames[keyFrame])
                 {
-                    if (keyFrame == 1)
-                    {
-                        inv.PutAllOnTable();
-                        inv.ForcePickItem("SyringeWithInjectionNeedle", false);
-                        inv.RightHandObject.GetComponent<Syringe>().updatePlunger = true;
-                    }
-
                     PlayerAnimationManager.NextSequenceStep(true);
                     animator.speed = 0f;
                     ++keyFrame;
