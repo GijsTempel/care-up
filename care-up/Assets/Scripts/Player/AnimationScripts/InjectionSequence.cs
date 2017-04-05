@@ -17,7 +17,6 @@ public class InjectionSequence : AnimationSequenceState
 
         inv = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
         inv.PutAllOnTable();
-        inv.ForcePickItem("DesinfectionCloth", false);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -44,6 +43,11 @@ public class InjectionSequence : AnimationSequenceState
             {
                 if (++frame == keyFrames[keyFrame])
                 {
+                    if (keyFrame == 0)
+                    {
+                        inv.ForcePickItem("DesinfectionCloth", false);
+                    }
+
                     PlayerAnimationManager.NextSequenceStep(true);
                     animator.speed = 0f;
                     ++keyFrame;

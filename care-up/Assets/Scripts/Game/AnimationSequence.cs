@@ -221,7 +221,10 @@ public class AnimationSequence  {
         else
         {
             Object.Destroy(dialogueObject.gameObject);
+            CameraMode cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
             cameraMode.ToggleCameraMode(CameraMode.Mode.Cinematic);
+            cameraMode.animationEnded = true;
+            cameraMode.cinematicToggle = false;
         }
 
         currentStep += 1;
