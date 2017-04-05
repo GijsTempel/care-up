@@ -143,6 +143,7 @@ public class AnimationSequence  {
                 actionManager.Points -= pointsEarned + (currentStep != 1 ? 1 : 0);
                 currentStep = steps.Count;
                 NextStep();
+                PlayerAnimationManager.AbortSequence();
             }
             else
             {

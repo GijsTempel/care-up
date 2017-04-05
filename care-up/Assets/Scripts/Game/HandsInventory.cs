@@ -222,6 +222,7 @@ public class HandsInventory : MonoBehaviour {
                 actionManager.OnPickUpAction(leftHandObject.name);
                 PlayerAnimationManager.PlayAnimation("LeftPick");
                 PlayerAnimationManager.SetHandItem(true, item.name);
+                leftHold = false;
             }
             else if (rightHandObject == null)
             {
@@ -234,6 +235,7 @@ public class HandsInventory : MonoBehaviour {
                 actionManager.OnPickUpAction(rightHandObject.name);
                 PlayerAnimationManager.PlayAnimation("RightPick");
                 PlayerAnimationManager.SetHandItem(false, item.name);
+                rightHold = false;
             }
         }
         else if (hand == "left")

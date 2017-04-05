@@ -105,4 +105,10 @@ public class PlayerAnimationManager : MonoBehaviour {
     {
         animationController.speed = (animationController.speed == 0) ? 1f : 0f;
     }
+
+    public static void AbortSequence()
+    {
+        animationController.SetTrigger("AbortSequence");
+        animationController.speed = 1f;
+    }
 }

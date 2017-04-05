@@ -46,6 +46,7 @@ public class InjectionSequence : AnimationSequenceState
                     if (keyFrame == 0)
                     {
                         inv.ForcePickItem("DesinfectionCloth", false);
+                        PlayerAnimationManager.SetHandItem(false, "DesinfectionCloth");
                     }
 
                     PlayerAnimationManager.NextSequenceStep(true);
@@ -61,6 +62,7 @@ public class InjectionSequence : AnimationSequenceState
     {
         base.OnStateExit(animator, stateInfo, layerIndex);
 
+        if ( inv.LeftHandObject && inv.LeftHandObject.GetComponent<Syringe>())
         inv.LeftHandObject.GetComponent<Syringe>().updatePlunger = false;
     }
 
