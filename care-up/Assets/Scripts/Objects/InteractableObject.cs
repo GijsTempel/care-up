@@ -127,7 +127,7 @@ public class InteractableObject : MonoBehaviour {
         }
     }
 
-    protected virtual void Reset()
+    public virtual void Reset()
     {
         if (rend)
         {
