@@ -42,6 +42,8 @@ public class HandsInventory : MonoBehaviour {
     private Quaternion glovesRotation;
     private bool glovesOn = false;
 
+    private GameObject animationObject;
+
     private CombinationManager combinationManager;
     private GameObject interactableObjects;
     private Controls controls;
@@ -311,6 +313,29 @@ public class HandsInventory : MonoBehaviour {
             wf.GetComponent<WorkField>().objects.Add(newObject);
         }
         return newObject;
+    }
+
+    public void CreateAnimationObject(string name, bool hand)
+    {
+        animationObject = Instantiate(Resources.Load<GameObject>("Prefabs\\" + name),
+                            Vector3.zero, Quaternion.identity) as GameObject;
+
+        animationObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
+        animationObject.GetComponent<Rigidbody>().useGravity = false;
+        animationObject.GetComponent<Collider>().enabled = false;
+        animationObject.name = name;
+        
+        animationObject.transform.parent = hand ? leftToolHolder : rightToolHolder;
+        animationObject.transform.localPosition = Vector3.zero;
+        animationObject.transform.localRotation = Quaternion.identity;
+
+        animationObject.GetComponent<PickableObject>().Pick();
+    }
+
+    public void DeleteAnimationObject()
+    {
+        Destroy(animationObject);
+        animationObject = null;
     }
 
     /// <summary>

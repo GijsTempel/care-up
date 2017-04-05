@@ -23,14 +23,6 @@ public class WorkField : UsableObject {
     {
         if (!ViewModeActive())
         {
-            toggle = !toggle;
-            foreach (GameObject obj in objects)
-            {
-                if (obj)
-                {
-                    obj.SetActive(toggle);
-                }
-            }
             tutorial_used = true;
             PlayerAnimationManager.PlayAnimation("UseWorkField", transform);
             actionManager.OnUseAction(gameObject.name);
@@ -39,4 +31,15 @@ public class WorkField : UsableObject {
         }
     }
 
+    public void ToggleObjects()
+    {
+        toggle = !toggle;
+        foreach (GameObject obj in objects)
+        {
+            if (obj)
+            {
+                obj.SetActive(toggle);
+            }
+        }
+    }
 }
