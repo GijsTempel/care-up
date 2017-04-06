@@ -5,17 +5,26 @@ using UnityEngine;
 public class WorkField : UsableObject {
 
     public List<GameObject> objects = new List<GameObject>();
+    public List<GameObject> postObjects = new List<GameObject>();
 
+    private int toggleTime = 0;
     private bool toggle = false;
 
     protected override void Start()
     {
         base.Start();
 
+        toggleTime = 0;
         toggle = false;
+
         foreach (GameObject obj in objects)
         {
             obj.SetActive(toggle);
+        }
+
+        foreach (GameObject obj in postObjects)
+        {
+            obj.SetActive(false);
         }
     }
 
@@ -28,17 +37,37 @@ public class WorkField : UsableObject {
             actionManager.OnUseAction(gameObject.name);
             controls.ResetObject();
             Reset();
+
+            if ( toggleTime == 1 )
+            {
+                ToggleObjects();
+            }
         }
     }
 
     public void ToggleObjects()
     {
-        toggle = !toggle;
-        foreach (GameObject obj in objects)
+        if (toggleTime < 2)
         {
-            if (obj)
+            toggle = !toggle;
+            foreach (GameObject obj in objects)
             {
-                obj.SetActive(toggle);
+                if (obj)
+                {
+                    obj.SetActive(toggle);
+                }
+            }
+            
+            ++toggleTime;
+        }
+        else
+        {
+            foreach (GameObject obj in postObjects)
+            {
+                if (obj)
+                {
+                    obj.SetActive(true);
+                }
             }
         }
     }

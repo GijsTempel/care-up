@@ -14,7 +14,6 @@ public class screenAlign : MonoBehaviour
 
 	void Update ()
 	{
-		Vector3 tempScreenPosition = screenPosition;
 		//Vector3 tempScreenRotation = screenRotation;
 		//tempScreenPosition.z = -cameraUI.transform.position.z;
 		this.transform.rotation = cameraUI.transform.rotation;

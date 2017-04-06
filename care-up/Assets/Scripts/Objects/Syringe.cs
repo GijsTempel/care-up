@@ -9,7 +9,6 @@ public class Syringe : PickableObject {
 
     private Transform plunger;
 
-    private bool applySavedPos = false;
     private Vector3 plungerSavedPos;
 
     public Vector3 PlungerPosition
