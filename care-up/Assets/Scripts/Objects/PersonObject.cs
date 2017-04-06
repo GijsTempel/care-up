@@ -197,6 +197,7 @@ public class PersonObject : InteractableObject {
 
                     if (controls.MouseClicked() && clickFlag)
                     {
+                        Reset();
                         CreateSelectionDialogue();
                     }
                 }
