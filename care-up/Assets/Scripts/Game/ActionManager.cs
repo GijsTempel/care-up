@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 /// <summary>
 /// GameLogic script. Everything about actions is managed by this script.
@@ -14,6 +15,8 @@ public class ActionManager : MonoBehaviour {
     [HideInInspector]
     public bool tutorial_hintUsed = false;
     private bool currentStepHintUsed = false;
+
+    public Text pointsText;
     
     // list of types of actions
     public enum ActionType
@@ -284,6 +287,11 @@ public class ActionManager : MonoBehaviour {
                 }
             }
         }
+
+        if (!menuScene)
+        {
+            pointsText.text = points + " / " + totalPoints;
+        }
     }
 
     /// <summary>
@@ -459,35 +467,6 @@ public class ActionManager : MonoBehaviour {
         {
             GameObject.Find("Preferences").GetComponent<EndScoreManager>().LoadEndScoreScene();
         }
-    }
-
-    /// <summary>
-    /// Display points on the top left corner of the screen.
-    /// </summary>
-    void OnGUI()
-    {
-        if (menuScene)
-            return;
-
-        GUIStyle style = GUI.skin.GetStyle("Label");
-        style.alignment = TextAnchor.MiddleCenter;
-        style.fontSize = 40;
-
-        if (points > 0)
-        {
-            style.normal.textColor = Color.green;
-        }
-        else if (points < 0)
-        {
-            style.normal.textColor = Color.red;
-        }
-        else
-        {
-            style.normal.textColor = Color.white;
-        }
-
-        GUI.Label(new Rect(0, 0, Screen.width / 8, Screen.height / 10),
-        "Points: " + points, style);
     }
 
     /// <summary>
