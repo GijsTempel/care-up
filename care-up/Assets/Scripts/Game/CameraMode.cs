@@ -27,6 +27,8 @@ public class CameraMode : MonoBehaviour {
     private GameObject confirmUI;
 
     [HideInInspector]
+    public bool animating = false;
+    [HideInInspector]
     public bool animationEnded = false;
     [HideInInspector]
     public bool cinematicToggle = false;
