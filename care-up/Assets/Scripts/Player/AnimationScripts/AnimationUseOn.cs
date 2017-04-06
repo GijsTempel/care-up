@@ -5,12 +5,16 @@ using UnityEngine;
 public class AnimationUseOn : StateMachineBehaviour
 {
     protected HandsInventory inv;
+    protected CameraMode mode;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
 
         inv = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
         inv.ToggleControls(true);
+
+        mode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
+        mode.animating = true;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -22,6 +26,7 @@ public class AnimationUseOn : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
 
         inv.ToggleControls(false);
+        mode.animating = false;
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here
