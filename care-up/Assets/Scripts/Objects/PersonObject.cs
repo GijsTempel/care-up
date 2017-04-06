@@ -187,7 +187,7 @@ public class PersonObject : InteractableObject {
                     if (!itemDescription.activeSelf)
                     {
                         itemDescription.GetComponentInChildren<Text>().text = (description == "") ? name : description;
-                        Transform icons = itemDescription.transform.GetChild(0).GetChild(0);
+                        Transform icons = itemDescription.transform.GetChild(0);
                         icons.FindChild("UseIcon").gameObject.SetActive(gameObject.GetComponent<UsableObject>() != null);
                         icons.FindChild("TalkIcon").gameObject.SetActive(gameObject.GetComponent<PersonObject>() != null);
                         icons.FindChild("PickIcon").gameObject.SetActive(gameObject.GetComponent<PickableObject>() != null);

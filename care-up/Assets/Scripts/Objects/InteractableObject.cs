@@ -68,8 +68,10 @@ public class InteractableObject : MonoBehaviour {
 
         if (itemDescription == null)
         {
-            itemDescription = Instantiate(Resources.Load<GameObject>("Prefabs/ItemDescription"),
-                Vector3.zero, Quaternion.identity) as GameObject;
+            //itemDescription = Instantiate(Resources.Load<GameObject>("Prefabs/ItemDescription"),
+            //    Vector3.zero, Quaternion.identity) as GameObject;
+            itemDescription = GameObject.Find("ItemDescription");
+
             if (itemDescription == null)
             {
                 Debug.LogError("No item description prefab found");
@@ -78,6 +80,7 @@ public class InteractableObject : MonoBehaviour {
             {
                 itemDescription.name = "ItemDescription";
                 itemDescription.SetActive(false);
+                itemDescription.transform.SetParent(Camera.main.transform);
             }
         }
     }
@@ -102,7 +105,7 @@ public class InteractableObject : MonoBehaviour {
                     if (!itemDescription.activeSelf)
                     {
                         itemDescription.GetComponentInChildren<Text>().text = (description == "") ? name : description;
-                        Transform icons = itemDescription.transform.GetChild(0).GetChild(0);
+                        Transform icons = itemDescription.transform.GetChild(0);
                         icons.FindChild("UseIcon").gameObject.SetActive(gameObject.GetComponent<UsableObject>() != null);
                         icons.FindChild("TalkIcon").gameObject.SetActive(gameObject.GetComponent<PersonObject>() != null);
                         icons.FindChild("PickIcon").gameObject.SetActive(gameObject.GetComponent<PickableObject>() != null);
