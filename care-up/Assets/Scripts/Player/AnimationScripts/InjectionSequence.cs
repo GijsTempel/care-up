@@ -41,7 +41,7 @@ public class InjectionSequence : AnimationSequenceState
         {
             if (animator.speed != 0)
             {
-                if (++frame == keyFrames[keyFrame])
+                if (frame == keyFrames[keyFrame])
                 {
                     if (keyFrame == 0)
                     {
@@ -54,6 +54,11 @@ public class InjectionSequence : AnimationSequenceState
                     ++keyFrame;
                 }
             }
+        }
+
+        if (animator.speed != 0)
+        {
+            ++frame;
         }
     }
 
