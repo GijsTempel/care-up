@@ -58,9 +58,9 @@ public class Syringe : PickableObject {
                 && controls.SelectedObject.GetComponent<PersonObjectPart>() != null 
                 && controls.SelectedObject.GetComponent<PersonObjectPart>().Person.name == "Patient")
             {
-                if (info[0] == "SyringeWithInjectionNeedle" && info[1] == "Hand")
+                if (info[0] == "SyringeWithInjectionNeedle" && info[1] == "Patient")
                 {
-                    actionManager.OnUseOnAction("SyringeWithInjectionNeedle", "Hand");
+                    actionManager.OnUseOnAction("SyringeWithInjectionNeedle", "Patient");
                     if (SceneManager.GetActiveScene().name == "Injection" ||
                         SceneManager.GetActiveScene().name == "Injection_ampoule" ||
                         SceneManager.GetActiveScene().name == "Injection_disolve")
