@@ -6,41 +6,41 @@
 		index="1" type="use" value="WorkField"></action>
 	<action description="Stap 3: Controleer cliënt gegevens door te kijken naar de patientgegevens en op linkermuisknop te drukken." audioHint="Injection/H3-1"
 		index="2" type="examine" item="PatientRecords" expected="good"></action>
-	<action description="Stap 4: Controleer het medicijn door te kijken naar het medicijn en op linker muisknop te drukken." audioHint="Injection/H4-1"
+	<action description="Stap 4: Controleer het medicijn door te kijken naar het medicijn en op linker muisknop te drukken." audioHint="Injection/H3-1"
 		index="2" type="examine" item="Medicine" expected="good"></action>
 	
-	<action description="Stap 5.1: Overgiet een gaasje met alcohol door alcohol en een gaasje te pakken. Daarna druk je op de 'combineer' knop (R)" audioHint="Injection/H5-1"
+	<action description="Stap 5.1: Overgiet een gaasje met alcohol door alcohol en een gaasje te pakken. Daarna druk je op de 'combineer' knop (R)" audioHint="Injection/H4-1"
 		index="3" type="combine" left="Cloth" right="Alcohol"></action>
 	<action description="Stap 5.2: Desinfecteer de rubberen dop van het medicijn. (combineer alcohol gaasje met medicijn) " audioHint="Injection/H5-1"
 		index="4" type="combine" left="DesinfectionCloth" right="Medicine"></action>
-	<action description="Stap 5.3: Plaats opzuignaald op de spuit (combineer spuit met naald)" audioHint="Injection/H5-1"
+	<action description="Stap 5.3: Plaats opzuignaald op de spuit (combineer spuit met naald)" audioHint="Injection/H6-1"
 		index="5" type="combine" left="Syringe" right="AbsorptionNeedle"></action>
  
-	<action description="Step 6.1: Zuig de voorgeschreven hoeveelheid medicatie op in de spuit. (combineer spuit+opzuignaald met medicijn)" audioHint="Injection/H6-1"
+	<action description="Step 6.1: Zuig de voorgeschreven hoeveelheid medicatie op in de spuit. (combineer spuit+opzuignaald met medicijn)" audioHint="Injection/H7-1"
 		index="6" type="combine" left="SyringeWithAbsorptionNeedle" right="Medicine"></action>
-	<action description="Stap 6.2: Ontlucht de spuit. (door de 'gebruik' knop van de juiste arm te klikken !Andere hand moet niks vast houden)" audioHint="Injection/H6-1"
+	<action description="Stap 6.2: Ontlucht de spuit. (door de 'gebruik' knop van de juiste arm te klikken !Andere hand moet niks vast houden)" audioHint="Injection/H8-1"
 		index="7" type="useOn" item="SyringeWithAbsorptionNeedle" target=""></action>
-	<action description="Stap 6.3: Verwijder de opzuignaald.(Door de 'combineer' knop te klikken ! andere hand moet leeg zijn)" audioHint="Injection/H6-1"
+	<action description="Stap 6.3: Verwijder de opzuignaald.(Door de 'combineer' knop te klikken ! andere hand moet leeg zijn)" audioHint="Injection/H9-1"
 		index="8" type="combine" left="SyringeWithAbsorptionNeedle" right=""></action>
-	<action description="Stap 6.4: Doe de naald in de naaldenbeker." audioHint="Injection/H6-1"
+	<action description="Stap 6.4: Doe de naald in de naaldenbeker." audioHint="Injection/H10-1"
 		index="9" type="useOn" item="AbsorptionNeedle" target="NeedleCup"></action>
-	<action description="Stap 6.5: Plaats de injectienaald op de spuit." audioHint="Injection/H6-1"
+	<action description="Stap 6.5: Plaats de injectienaald op de spuit." audioHint="Injection/H11-1"
 		index="10" type="combine" left="Syringe" right="InjectionNeedle"></action>
 		
-	<action description="Stap 7: Vraag de cliënt de injectieplaats te ontbloten." audioHint="Injection/H7-1"
+	<action description="Stap 7: Vraag de cliënt de injectieplaats te ontbloten." audioHint="Injection/H12-1"
 		index="11" type="talk" topic="RollUpSleeves"></action>
 	
-	<action description="Stap 8: Start injecteren door spuit te gebruiken op arm."	audioHint="Injection/H8-1"
+	<action description="Stap 8: Start injecteren door spuit te gebruiken op arm."	audioHint="Injection/H13-1"
 		index="12" type="useOn" item="SyringeWithInjectionNeedle" target="Patient"></action>
 	
-	<action description="Stap 9: Verwijder de naald " audioHint="Injection/H9-1"
+	<action description="Stap 9: Verwijder de naald " audioHint="Injection/EAS1-1"
 		index="13" type="combine" left="SyringeWithInjectionNeedle" right=""></action>
-	<action description="Step 10: Doe de naald in de naaldenbeker door te kijken naar de naaldbeker en door de 'gebruik' knop te drukken van de juiste arm." audioHint="Injection/H10-1"
+	<action description="Step 10: Doe de naald in de naaldenbeker door te kijken naar de naaldbeker en door de 'gebruik' knop te drukken van de juiste arm." audioHint="Injection/EAS2-1"
 		index="14" type="useOn" item="InjectionNeedle" target="NeedleCup"></action>
-	<action description="Stap 11: Ruim de materialen op door te kijken naar de tafel met lege handen en op de linker muisknop te drukken."  audioHint="Injection/H11-1"
+	<action description="Stap 11: Ruim de materialen op door te kijken naar de tafel met lege handen en op de linker muisknop te drukken."  audioHint="Injection/EAS3-1"
 		index="14" type="use" value="WorkField"></action>
-	<action description="Stap 12: Pas handhygiëne toe" audioHint="Injection/H12-1"
+	<action description="Stap 12: Pas handhygiëne toe" audioHint=""
 		index="15" type="use" value="HandCleaner"></action>
-  <action description="Step 13: Write down results" audioHint="Injection/H13-1"
+  <action description="Step 13: Write down results" audioHint="Injection/EAS4-1"
     index="16" type="combine" left="Paper" right="Pen"></action>
 </ActionList>
