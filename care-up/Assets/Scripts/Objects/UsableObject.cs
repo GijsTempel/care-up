@@ -48,11 +48,6 @@ public class UsableObject : InteractableObject {
         {
             switch(name)
             {
-                case "HandCleaner":
-                    {
-                        PlayerAnimationManager.PlayAnimation("UseHandCleaner", transform);
-                    }
-                    break;
                 case "OldBandAid":
                     {
                         Destroy(gameObject);
@@ -61,6 +56,7 @@ public class UsableObject : InteractableObject {
             }
             tutorial_used = true;
             actionManager.OnUseAction(gameObject.name);
+            PlayerAnimationManager.PlayAnimation("Use " + name, transform);
             Reset();
         }
     }

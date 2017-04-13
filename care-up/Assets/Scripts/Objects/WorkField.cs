@@ -24,7 +24,7 @@ public class WorkField : UsableObject {
 
         foreach (GameObject obj in postObjects)
         {
-            obj.SetActive(false);
+            obj.SetActive(toggle);
         }
     }
 
@@ -33,7 +33,7 @@ public class WorkField : UsableObject {
         if (!ViewModeActive())
         {
             tutorial_used = true;
-            PlayerAnimationManager.PlayAnimation("UseWorkField", transform);
+            PlayerAnimationManager.PlayAnimation("Use WorkField", transform);
             actionManager.OnUseAction(gameObject.name);
             controls.ResetObject();
             Reset();
