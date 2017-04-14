@@ -462,13 +462,20 @@ public class ActionManager : MonoBehaviour {
             Destroy(o);
         particleHints.Clear();
 
+        StartCoroutine(DelayedCheck(5.0f));
+    }
+
+    private IEnumerator DelayedCheck(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        
         // no unmatched actions left
         if (actionList.Find(action => action.matched == false) == null)
         {
             GameObject.Find("Preferences").GetComponent<EndScoreManager>().LoadEndScoreScene();
         }
     }
-
+    
     /// <summary>
     /// Sets state of every action of the list.
     /// </summary>
