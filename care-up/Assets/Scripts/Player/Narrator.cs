@@ -42,7 +42,7 @@ public class Narrator : MonoBehaviour {
             }
             else
             {
-                AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position);
+                audioSource.PlayOneShot(clip);
             }
             return true;
         }
