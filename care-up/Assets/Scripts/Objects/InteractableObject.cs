@@ -80,7 +80,6 @@ public class InteractableObject : MonoBehaviour {
             {
                 itemDescription.name = "ItemDescription";
                 itemDescription.SetActive(false);
-                itemDescription.transform.SetParent(Camera.main.transform);
             }
         }
     }
@@ -110,6 +109,8 @@ public class InteractableObject : MonoBehaviour {
                         icons.FindChild("TalkIcon").gameObject.SetActive(gameObject.GetComponent<PersonObject>() != null);
                         icons.FindChild("PickIcon").gameObject.SetActive(gameObject.GetComponent<PickableObject>() != null);
                         icons.FindChild("ExamIcon").gameObject.SetActive(gameObject.GetComponent<ExaminableObject>() != null);
+                        itemDescription.transform.position = transform.position;
+                        itemDescription.transform.rotation = Camera.main.transform.rotation;
                         itemDescription.SetActive(true);
                     }
                 }
