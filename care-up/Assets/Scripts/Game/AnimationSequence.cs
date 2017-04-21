@@ -139,7 +139,7 @@ public class AnimationSequence  {
             // leave sequence
             if (animation == "CM_Leave")
             {
-                actionManager.StepBack();
+                actionManager.RollSequenceBack();
                 actionManager.Points -= pointsEarned + (currentStep != 1 ? 1 : 0);
                 currentStep = steps.Count;
                 NextStep();
@@ -153,8 +153,7 @@ public class AnimationSequence  {
                     // if animation is correct
                     if (animation == steps.ElementAt(currentStep-1).GetCorrectAnimation())
                     {
-                        Debug.Log("Play animation: " + animation);
-                        actionManager.Points++;
+                        actionManager.OnSequenceStepAction(animation);
                         pointsEarned++;
                         Object.Destroy(GameObject.Find("SelectionDialogue"));
                         PlayerAnimationManager.NextSequenceStep(false);
@@ -176,8 +175,8 @@ public class AnimationSequence  {
                     {
                         GameObject.Find("GameLogic").GetComponent<HandsInventory>().ForcePickItem("TestStrips", true);
                     }
-                    
-                    actionManager.Points++;
+
+                    actionManager.OnSequenceStepAction(animation);
                     pointsEarned++;
                     Object.Destroy(GameObject.Find("SelectionDialogue"));
                     PlayerAnimationManager.NextSequenceStep(false);
@@ -187,7 +186,7 @@ public class AnimationSequence  {
         else // no info means wrong choice
         {
             Narrator.PlaySound("WrongAction");
-            actionManager.Points--;
+            actionManager.OnSequenceStepAction(animation);
         }
     }
 

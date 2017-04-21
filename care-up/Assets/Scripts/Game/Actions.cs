@@ -293,3 +293,31 @@ public class PickUpAction : Action
         name = res;
     }
 }
+
+public class SequenceStepAction : Action
+{
+    private string stepName;
+
+    public SequenceStepAction(string name, int index, string descr, string audio)
+        : base(ActionManager.ActionType.SequenceStep, index, descr, audio)
+    {
+        stepName = name;
+    }
+
+    public override bool Compare(string[] info)
+    {
+        if (info.Length == 1)
+        {
+            Debug.Log(stepName + " : " + info[0]);
+            return info[0] == stepName;
+        }
+        else
+            return false;
+    }
+
+    public override void ObjectNames(out string[] name)
+    {
+        string[] res = { stepName };
+        name = res;
+    }
+}

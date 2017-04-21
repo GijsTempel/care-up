@@ -26,7 +26,8 @@ public class ActionManager : MonoBehaviour {
         PersonTalk,
         ObjectUseOn,
         ObjectExamine,
-        PickUp
+        PickUp,
+        SequenceStep
     };
 
     // name of the xml file with actions
@@ -196,7 +197,7 @@ public class ActionManager : MonoBehaviour {
         XmlDocument xmlFile = new XmlDocument();
         xmlFile.LoadXml(textAsset.text);
 
-        totalPoints = int.Parse(xmlFile.FirstChild.NextSibling.Attributes["points"].Value);
+        //totalPoints = int.Parse(xmlFile.FirstChild.NextSibling.Attributes["points"].Value);
         XmlNodeList actions = xmlFile.FirstChild.NextSibling.ChildNodes; 
 
         foreach ( XmlNode action in actions )
@@ -236,11 +237,16 @@ public class ActionManager : MonoBehaviour {
                     string itemPicked = action.Attributes["item"].Value;
                     actionList.Add(new PickUpAction(itemPicked, index, descr, audio));
                     break;
+                case "sequenceStep":
+                    string stepName = action.Attributes["value"].Value;
+                    actionList.Add(new SequenceStepAction(stepName, index, descr, audio));
+                    break;
                 default:
                     Debug.LogError("No action type found: " + type);
                     break;
             }
         }
+        totalPoints = actionList.Count();
         currentAction = actionList.First();
     }
 
@@ -385,8 +391,19 @@ public class ActionManager : MonoBehaviour {
 
         if (occured)
         {
-            Debug.Log("Pick Up " + item + " with result " + occured);
+            Debug.Log("Pick Up " + item);
         }
+
+        CheckScenarioCompleted();
+    }
+
+    public void OnSequenceStepAction(string stepName)
+    {
+        string[] info = { stepName };
+        bool occured = Check(info, ActionType.SequenceStep);
+        points += occured ? 1 : -1;
+
+        Debug.Log("Sequence step: " + stepName + " with result " + occured);
 
         CheckScenarioCompleted();
     }
@@ -492,11 +509,16 @@ public class ActionManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// Force a step back.
+    /// Rolls animation sequence back.
     /// </summary>
-    public void StepBack()
+    public void RollSequenceBack()
     {
         Action lastAction = actionList.Last(x => x.matched == true);
+        while (lastAction.Type == ActionType.SequenceStep)
+        {
+            lastAction.matched = false;
+            lastAction = actionList.Last(x => x.matched == true);
+        }
         lastAction.matched = false;
         currentActionIndex = lastAction.SubIndex;
         currentAction = lastAction;
