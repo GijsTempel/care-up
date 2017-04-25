@@ -155,6 +155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: 
   muplipleMesh: 0
+  descriptionOffset: {x: 0, y: 0, z: 0}
 --- !u!65 &31146386
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -655,6 +656,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: 
   muplipleMesh: 0
+  descriptionOffset: {x: 0, y: 0, z: 0}
 --- !u!4 &153833033 stripped
 Transform:
   m_PrefabParentObject: {fileID: 416248, guid: f873da293bd2ab248b418329fe95661f, type: 2}
@@ -680,6 +682,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: 
   muplipleMesh: 1
+  descriptionOffset: {x: 0, y: 0, z: 0}
   dialogueXml: InjectionPatient
 --- !u!82 &160716276
 AudioSource:
@@ -1581,26 +1584,6 @@ Prefab:
 GameObject:
   m_PrefabParentObject: {fileID: 166264, guid: 5de1d2068167189489bd6419129786f6, type: 2}
   m_PrefabInternal: {fileID: 908600304}
---- !u!114 &293519802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 293519801}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6095384fe7173243b9fb25bc8b25d06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  description: 
-  muplipleMesh: 0
-  tutorial_picked: 0
-  tutorial_closed: 0
-  audioExamine: 0
-  viewSettings:
-    distanceFromCamera: 2
-    rotationSensetivity: 90
-  state: good
 --- !u!4 &293519805 stripped
 Transform:
   m_PrefabParentObject: {fileID: 408962, guid: 5de1d2068167189489bd6419129786f6, type: 2}
@@ -2222,6 +2205,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: 
   muplipleMesh: 0
+  descriptionOffset: {x: 0, y: 0, z: 0}
 --- !u!1001 &378452730
 Prefab:
   m_ObjectHideFlags: 0
@@ -2554,6 +2538,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: 
   muplipleMesh: 0
+  descriptionOffset: {x: 0, y: 0, z: 0}
   basic: {fileID: 0}
   inHand: {fileID: 0}
   controlBone: {fileID: 0}
@@ -2601,6 +2586,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: 
   muplipleMesh: 0
+  descriptionOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &456544006 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100012, guid: a99ed095061348f419e2c0a92e465fd2, type: 3}
@@ -2943,6 +2929,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: 
   muplipleMesh: 0
+  descriptionOffset: {x: 0, y: 0, z: 0}
 --- !u!4 &514316903 stripped
 Transform:
   m_PrefabParentObject: {fileID: 401280, guid: e144076df9190de4dbfae4439a4f8b10, type: 2}
@@ -4470,6 +4457,26 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114489717341584376, guid: 5de1d2068167189489bd6419129786f6,
+        type: 2}
+      propertyPath: examineRotation.x
+      value: -95
+      objectReference: {fileID: 0}
+    - target: {fileID: 114489717341584376, guid: 5de1d2068167189489bd6419129786f6,
+        type: 2}
+      propertyPath: examineRotation.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 114489717341584376, guid: 5de1d2068167189489bd6419129786f6,
+        type: 2}
+      propertyPath: examineRotation.z
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114489717341584376, guid: 5de1d2068167189489bd6419129786f6,
+        type: 2}
+      propertyPath: audioExamine
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5de1d2068167189489bd6419129786f6, type: 2}
   m_IsPrefabParent: 0
@@ -5397,6 +5404,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: 
   muplipleMesh: 0
+  descriptionOffset: {x: 0, y: 0, z: 0}
 --- !u!4 &1076695130 stripped
 Transform:
   m_PrefabParentObject: {fileID: 441380, guid: a4bd55b261a920449b8dbfdc9b99dd53, type: 2}
@@ -5831,6 +5839,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: 
   muplipleMesh: 0
+  descriptionOffset: {x: 0, y: 0, z: 0}
 --- !u!64 &1094845903
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -5891,6 +5900,16 @@ Prefab:
     - target: {fileID: 136522, guid: c032fc62ede749f4c9a21d205b4b781d, type: 2}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114660307821524650, guid: c032fc62ede749f4c9a21d205b4b781d,
+        type: 2}
+      propertyPath: examineRotation.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 114660307821524650, guid: c032fc62ede749f4c9a21d205b4b781d,
+        type: 2}
+      propertyPath: examineRotation.z
+      value: 90
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c032fc62ede749f4c9a21d205b4b781d, type: 2}
@@ -8450,6 +8469,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: 
   muplipleMesh: 0
+  descriptionOffset: {x: 0, y: 0, z: 0}
 --- !u!1001 &1695200424
 Prefab:
   m_ObjectHideFlags: 0
@@ -8856,6 +8876,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: 
   muplipleMesh: 0
+  descriptionOffset: {x: 0, y: 0, z: 0}
 --- !u!64 &1765366417
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -9217,6 +9238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: 
   muplipleMesh: 0
+  descriptionOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &1880334206
 GameObject:
   m_ObjectHideFlags: 0
@@ -9647,6 +9669,11 @@ Prefab:
         type: 2}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114050206014620304, guid: 160c0d1fbef191045a350915d5992d54,
+        type: 2}
+      propertyPath: descriptionOffset.y
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 160c0d1fbef191045a350915d5992d54, type: 2}
