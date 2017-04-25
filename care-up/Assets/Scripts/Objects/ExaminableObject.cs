@@ -12,6 +12,7 @@ public class ExaminableObject : InteractableObject {
     [HideInInspector]
     public bool tutorial_closed = false;
 
+    public Vector3 examineRotation;
     public bool audioExamine = false;
 
     [Serializable]
@@ -64,6 +65,7 @@ public class ExaminableObject : InteractableObject {
         {
             tutorial_picked = true;
             SavePosition();
+            transform.localRotation = Camera.main.transform.rotation * Quaternion.Euler(examineRotation);
         }
         else
         {

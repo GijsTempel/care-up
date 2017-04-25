@@ -10,6 +10,7 @@ public class InteractableObject : MonoBehaviour {
 
     public string description;
     public bool muplipleMesh = false;
+    public Vector3 descriptionOffset;
 
     protected Renderer rend;
     protected Shader onMouseOverShader;
@@ -109,7 +110,7 @@ public class InteractableObject : MonoBehaviour {
                         icons.FindChild("TalkIcon").gameObject.SetActive(gameObject.GetComponent<PersonObject>() != null);
                         icons.FindChild("PickIcon").gameObject.SetActive(gameObject.GetComponent<PickableObject>() != null);
                         icons.FindChild("ExamIcon").gameObject.SetActive(gameObject.GetComponent<ExaminableObject>() != null);
-                        itemDescription.transform.position = transform.position;
+                        itemDescription.transform.position = transform.position + descriptionOffset;
                         itemDescription.transform.rotation = Camera.main.transform.rotation;
                         itemDescription.SetActive(true);
                     }
