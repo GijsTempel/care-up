@@ -263,15 +263,13 @@ public class ActionManager : MonoBehaviour {
                 string[] obj;
                 currentAction.ObjectNames(out obj);
                 GameObject parent;
-                GameObject hintObject = Resources.Load<GameObject>("Prefabs/ParticleHint");
 
                 if (obj.Length > 0)
                 {
                     parent = GameObject.Find(obj[0]);
                     if (parent != null)
                     {
-                        particleHints.Add(Instantiate(hintObject, parent.transform.position,
-                             Quaternion.Euler(-90f, 0f, 0f), parent.transform));
+                        CreateParticleHint(parent.transform);
                     }
                 }
 
@@ -280,8 +278,7 @@ public class ActionManager : MonoBehaviour {
                     parent = GameObject.Find(obj[1]);
                     if (parent != null)
                     {
-                        particleHints.Add(Instantiate(hintObject, parent.transform.position,
-                             Quaternion.Euler(-90f, 0f, 0f), parent.transform));
+                        CreateParticleHint(parent.transform);
                     }
                 }
 
@@ -298,6 +295,17 @@ public class ActionManager : MonoBehaviour {
         {
             pointsText.text = points + " / " + totalPoints;
         }
+    }
+
+    public void CreateParticleHint(Transform obj)
+    {
+        GameObject particles = Instantiate(Resources.Load<GameObject>("Prefabs/ParticleHint"),
+            obj.position, Quaternion.Euler(-90f, 0f, 0f), obj);
+        particles.transform.localScale = new Vector3(
+            particles.transform.localScale.x / particles.transform.lossyScale.x,
+             particles.transform.localScale.y / particles.transform.lossyScale.y,
+              particles.transform.localScale.z / particles.transform.lossyScale.z);
+        particleHints.Add(particles);
     }
 
     /// <summary>
