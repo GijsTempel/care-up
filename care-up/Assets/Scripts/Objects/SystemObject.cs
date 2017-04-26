@@ -16,8 +16,15 @@ public class SystemObject : InteractableObject {
     {
         base.Start();
 
-        loadingScreen = GameObject.Find("Preferences").GetComponent<LoadingScreen>();
-        if (loadingScreen == null) Debug.LogError("No loading screen found");
+        if (GameObject.Find("Preferences") != null)
+        {
+            loadingScreen = GameObject.Find("Preferences").GetComponent<LoadingScreen>();
+            if (loadingScreen == null) Debug.LogError("No loading screen found");
+        }
+        else
+        {
+            Debug.LogWarning("No 'preferences' found. Game needs to be started from first scene");
+        }
     }
 
     protected override void Update()
