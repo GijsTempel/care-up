@@ -305,6 +305,7 @@ public class ActionManager : MonoBehaviour {
             particles.transform.localScale.x / particles.transform.lossyScale.x,
              particles.transform.localScale.y / particles.transform.lossyScale.y,
               particles.transform.localScale.z / particles.transform.lossyScale.z);
+        particles.name = "ParticleHint";
         particleHints.Add(particles);
     }
 

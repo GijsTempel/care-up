@@ -189,9 +189,12 @@ public class InteractableObject : MonoBehaviour {
         
         foreach (Renderer r in GetComponentsInChildren<Renderer>())
         {
-            foreach(Material m in r.materials)
+            if (r.name != "ParticleHint")
             {
-                m.shader = shader;
+                foreach (Material m in r.materials)
+                {
+                    m.shader = shader;
+                }
             }
         }
     }
