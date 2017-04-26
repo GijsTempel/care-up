@@ -271,7 +271,7 @@ public class ActionManager : MonoBehaviour {
                     if (parent != null)
                     {
                         particleHints.Add(Instantiate(hintObject, parent.transform.position,
-                             Quaternion.identity, parent.transform));
+                             Quaternion.Euler(-90f, 0f, 0f), parent.transform));
                     }
                 }
 
@@ -281,7 +281,7 @@ public class ActionManager : MonoBehaviour {
                     if (parent != null)
                     {
                         particleHints.Add(Instantiate(hintObject, parent.transform.position,
-                             Quaternion.identity, parent.transform));
+                             Quaternion.Euler(-90f, 0f, 0f), parent.transform));
                     }
                 }
 
