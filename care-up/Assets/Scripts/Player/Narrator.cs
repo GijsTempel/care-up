@@ -47,4 +47,17 @@ public class Narrator : MonoBehaviour {
             return true;
         }
     }
+
+    public static void PlaySystemSound(string sound, float volume)
+    {
+        AudioClip clip = Resources.Load<AudioClip>("Audio/" + sound);
+        if (clip == null)
+        {
+            Debug.LogWarning("No audio clip " + sound + " found!");
+        }
+        else
+        {
+            audioSource.PlayOneShot(clip, volume);
+        }
+    }
 }

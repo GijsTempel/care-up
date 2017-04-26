@@ -318,7 +318,14 @@ public class ActionManager : MonoBehaviour {
     {
         string[] info = { leftHand, rightHand };
         bool occured = Check(info, ActionType.ObjectCombine);
-        points += occured ? 1 : -1;
+        if (occured)
+        {
+            AddPoint();
+        }
+        else
+        {
+            --points;
+        }
 
         Debug.Log("Combine " + leftHand + " and " + rightHand + " with result " + occured);
 
@@ -333,7 +340,14 @@ public class ActionManager : MonoBehaviour {
     {
         string[] info = { useObject };
         bool occured = Check(info, ActionType.ObjectUse);
-        points += occured ? 1 : -1;
+        if (occured)
+        {
+            AddPoint();
+        }
+        else
+        {
+            --points;
+        }
 
         Debug.Log("Use " + useObject + " with result " + occured);
 
@@ -348,7 +362,14 @@ public class ActionManager : MonoBehaviour {
     {
         string[] info = { topic };
         bool occured = Check(info, ActionType.PersonTalk);
-        points += occured ? 1 : -1;
+        if (occured)
+        {
+            AddPoint();
+        }
+        else
+        {
+            --points;
+        }
 
         Debug.Log("Say " + topic + " with result " + occured);
 
@@ -364,7 +385,14 @@ public class ActionManager : MonoBehaviour {
     {
         string[] info = { item, target };
         bool occured = Check(info, ActionType.ObjectUseOn);
-        points += occured ? 1 : (target == "" ? 0 : -1);
+        if (occured)
+        {
+            AddPoint();
+        }
+        else
+        {
+            points -= (target == "" ? 0 : 1);
+        }
 
         Debug.Log("Use " + item + " on " + target + " with result " + occured);
 
@@ -380,8 +408,11 @@ public class ActionManager : MonoBehaviour {
     {
         string[] info = { item, expected };
         bool occured = Check(info, ActionType.ObjectExamine);
-        points += occured ? 1 : 0; // no penalty
-        
+        if (occured)
+        {
+            AddPoint();
+        }
+
         Debug.Log("Examine " + item + " with state " + expected + " with result " + occured);
 
         CheckScenarioCompleted();
@@ -396,7 +427,10 @@ public class ActionManager : MonoBehaviour {
     {
         string[] info = { item };
         bool occured = Check(info, ActionType.PickUp);
-        points += occured ? 1 : 0; // no penalty
+        if (occured)
+        {
+            AddPoint();
+        }
 
         if (occured)
         {
@@ -410,7 +444,14 @@ public class ActionManager : MonoBehaviour {
     {
         string[] info = { stepName };
         bool occured = Check(info, ActionType.SequenceStep);
-        points += occured ? 1 : -1;
+        if (occured)
+        {
+            AddPoint();
+        }
+        else
+        {
+            --points;
+        }
 
         Debug.Log("Sequence step: " + stepName + " with result " + occured);
 
@@ -531,5 +572,11 @@ public class ActionManager : MonoBehaviour {
         lastAction.matched = false;
         currentActionIndex = lastAction.SubIndex;
         currentAction = lastAction;
+    }
+
+    public void AddPoint()
+    {
+        Narrator.PlaySystemSound("PointScored", 0.1f);
+        ++points;
     }
 }
