@@ -6,7 +6,6 @@ public class PaperAndPenAnimation : CinematicAnimation
 {
     public int pickPenFrame;
     public int dropPenFrame;
-    private int frame = 0;
 
     HandsInventory inv;
 
@@ -22,8 +21,6 @@ public class PaperAndPenAnimation : CinematicAnimation
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        base.OnStateUpdate(animator, stateInfo, layerIndex);
-
         if (frame == pickPenFrame)
         {
             inv.ForcePickItem("Pen", false);
@@ -34,7 +31,7 @@ public class PaperAndPenAnimation : CinematicAnimation
             inv.PutAllOnTable();
         }
 
-        ++frame;
+        base.OnStateUpdate(animator, stateInfo, layerIndex);
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

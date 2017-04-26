@@ -3,6 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CinematicAnimation : StateMachineBehaviour {
+    
+    public bool audio = false;
+    public string audioFileName;
+    public int audioFrame;
+    public string positionObjectName;
+    public float volume = 1f;
+
+    protected int frame = 0;
 
     static CameraMode cameraMode;
     
@@ -15,12 +23,31 @@ public class CinematicAnimation : StateMachineBehaviour {
             if (cameraMode == null) Debug.LogError("No camera mode");
         }
 
+        frame = 0;
+
 	}
 
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-	//override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-	//
-	//}
+	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
+	    
+        if (audio)
+        {
+            if (frame == audioFrame)
+            {
+                AudioClip clip = Resources.Load<AudioClip>("Audio/" + audioFileName);
+                if (positionObjectName != "")
+                {
+                    AudioSource.PlayClipAtPoint(clip, GameObject.Find(positionObjectName).transform.position, volume);
+                }
+                else
+                {
+                    AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position, volume);
+                }
+            }
+        }
+
+        ++frame;
+	}
 
 	// OnStateExit is called when a transition ends and the state machine finishes evaluating this state
 	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
