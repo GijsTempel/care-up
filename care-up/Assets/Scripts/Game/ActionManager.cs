@@ -318,18 +318,12 @@ public class ActionManager : MonoBehaviour {
     {
         string[] info = { leftHand, rightHand };
         bool occured = Check(info, ActionType.ObjectCombine);
-        if (occured)
-        {
-            AddPoint();
-        }
-        else
-        {
-            --points;
-        }
+        points += occured ? 1 : -1;
 
         Debug.Log("Combine " + leftHand + " and " + rightHand + " with result " + occured);
 
-        CheckScenarioCompleted();
+        if (!CheckScenarioCompleted() && occured)
+            PlayAddPointSound();
     }
 
     /// <summary>
@@ -340,18 +334,12 @@ public class ActionManager : MonoBehaviour {
     {
         string[] info = { useObject };
         bool occured = Check(info, ActionType.ObjectUse);
-        if (occured)
-        {
-            AddPoint();
-        }
-        else
-        {
-            --points;
-        }
+        points += occured ? 1 : -1;
 
         Debug.Log("Use " + useObject + " with result " + occured);
 
-        CheckScenarioCompleted();
+        if (!CheckScenarioCompleted() && occured)
+            PlayAddPointSound();
     }
 
     /// <summary>
@@ -362,18 +350,12 @@ public class ActionManager : MonoBehaviour {
     {
         string[] info = { topic };
         bool occured = Check(info, ActionType.PersonTalk);
-        if (occured)
-        {
-            AddPoint();
-        }
-        else
-        {
-            --points;
-        }
+        points += occured ? 1 : -1;
 
         Debug.Log("Say " + topic + " with result " + occured);
 
-        CheckScenarioCompleted();
+        if (!CheckScenarioCompleted() && occured)
+            PlayAddPointSound();
     }
     
     /// <summary>
@@ -385,18 +367,12 @@ public class ActionManager : MonoBehaviour {
     {
         string[] info = { item, target };
         bool occured = Check(info, ActionType.ObjectUseOn);
-        if (occured)
-        {
-            AddPoint();
-        }
-        else
-        {
-            points -= (target == "" ? 0 : 1);
-        }
-
+        points += occured ? 1 : (target == "" ? 0 : 1);
+     
         Debug.Log("Use " + item + " on " + target + " with result " + occured);
 
-        CheckScenarioCompleted();
+        if (!CheckScenarioCompleted() && occured)
+            PlayAddPointSound();
     }
 
     /// <summary>
@@ -408,14 +384,12 @@ public class ActionManager : MonoBehaviour {
     {
         string[] info = { item, expected };
         bool occured = Check(info, ActionType.ObjectExamine);
-        if (occured)
-        {
-            AddPoint();
-        }
+        points += occured ? 1 : 0; // no penalty
 
         Debug.Log("Examine " + item + " with state " + expected + " with result " + occured);
 
-        CheckScenarioCompleted();
+        if (!CheckScenarioCompleted() && occured)
+            PlayAddPointSound();
     }
 
     /// <summary>
@@ -427,35 +401,27 @@ public class ActionManager : MonoBehaviour {
     {
         string[] info = { item };
         bool occured = Check(info, ActionType.PickUp);
-        if (occured)
-        {
-            AddPoint();
-        }
+        points += occured ? 1 : 0; // no penalty
 
         if (occured)
         {
             Debug.Log("Pick Up " + item);
         }
 
-        CheckScenarioCompleted();
+        if (!CheckScenarioCompleted() && occured)
+            PlayAddPointSound();
     }
 
     public void OnSequenceStepAction(string stepName)
     {
         string[] info = { stepName };
         bool occured = Check(info, ActionType.SequenceStep);
-        if (occured)
-        {
-            AddPoint();
-        }
-        else
-        {
-            --points;
-        }
+        points += occured ? 1 : -1;
 
         Debug.Log("Sequence step: " + stepName + " with result " + occured);
 
-        CheckScenarioCompleted();
+        if (!CheckScenarioCompleted() && occured)
+            PlayAddPointSound();
     }
 
     /// <summary>
@@ -522,27 +488,29 @@ public class ActionManager : MonoBehaviour {
     /// If yes - go to EndScore scene.
     /// Runs after every action check and clears particle hints.
     /// </summary>
-    private void CheckScenarioCompleted()
+    private bool CheckScenarioCompleted()
     {
         // clear hints
         foreach (GameObject o in particleHints)
             Destroy(o);
         particleHints.Clear();
 
-        StartCoroutine(DelayedCheck(5.0f));
-    }
-
-    private IEnumerator DelayedCheck(float waitTime)
-    {
-        yield return new WaitForSeconds(waitTime);
-        
-        // no unmatched actions left
         if (actionList.Find(action => action.matched == false) == null)
         {
-            GameObject.Find("Preferences").GetComponent<EndScoreManager>().LoadEndScoreScene();
+            Narrator.PlaySystemSound("LevelComplete", 0.1f);
+            StartCoroutine(DelayedEndScene(5.0f));
+            return true;
         }
+        else return false;
     }
     
+
+    private IEnumerator DelayedEndScene(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        GameObject.Find("Preferences").GetComponent<EndScoreManager>().LoadEndScoreScene();
+    }
+
     /// <summary>
     /// Sets state of every action of the list.
     /// </summary>
@@ -574,9 +542,8 @@ public class ActionManager : MonoBehaviour {
         currentAction = lastAction;
     }
 
-    public void AddPoint()
+    public void PlayAddPointSound()
     {
         Narrator.PlaySystemSound("PointScored", 0.1f);
-        ++points;
     }
 }
