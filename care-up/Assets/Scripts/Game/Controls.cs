@@ -88,7 +88,11 @@ public class Controls : MonoBehaviour {
         if (Physics.Raycast(ray, out hit))
         {
             selectedObject = hit.transform.gameObject;
-            canInteract = (hit.distance <= interactionDistance) ? true : false;
+            //canInteract = (hit.distance <= interactionDistance) ? true : false;
+            canInteract = Vector2.Distance(
+                new Vector2(Camera.main.transform.position.x, Camera.main.transform.position.z),
+                new Vector2(hit.transform.position.x, hit.transform.position.z)) 
+                <= interactionDistance ? true : false;
         }
         else
         {

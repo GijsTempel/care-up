@@ -104,7 +104,8 @@ public class Syringe : PickableObject {
                 }
             }
             else if (name == "SyringeWithAbsorptionNeedle"
-                    && controls.SelectedObject.name == "Hand")
+                    && controls.SelectedObject.GetComponent<PersonObjectPart>() != null
+                    && controls.SelectedObject.GetComponent<PersonObjectPart>().Person.name == "Patient")
             {
                 info = actionManager.CurrentUseOnInfo;
                 if (info[0] == "SyringeWithAbsorptionNeedle" && info[1] == "Hand")

@@ -323,7 +323,7 @@ public class TutorialManager : MonoBehaviour {
                         currentStep = TutorialStep.UseOnHand;
                         controls.keyPreferences.LeftUseKey.locked = false;
                         controls.keyPreferences.RightUseKey.locked = false;
-                        particleHint.transform.position = GameObject.Find("Hand").transform.position;
+                        particleHint.transform.position = GameObject.Find("Patient").transform.position;
                         UItext = "now you can see an use icon on the patient. Depending on which hand hold your object. You can press “E” or “Q” to use your object. Try this now.";
                     }
                     break;
