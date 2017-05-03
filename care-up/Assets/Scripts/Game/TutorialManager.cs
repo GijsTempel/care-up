@@ -98,13 +98,13 @@ public class TutorialManager : MonoBehaviour {
                     if ( TimerElapsed() )
                     {
                         currentStep = TutorialStep.LookAround;
-                        UItext = "Use the mouse to look around the room.";
+                        UItext = "Gebruik de muis om rond te kijken door de kamer.";
                     }
                     else
                     {
                         controls.keyPreferences.SetAllLocked(true);
                         player.tutorial_movementLock = true;
-                        UItext = "Greetings in Care-Up tutorial!";
+                        UItext = "Welkom bij Care-Up";
                         SetPauseTimer(3.0f);
                     }
                     break;
@@ -114,7 +114,7 @@ public class TutorialManager : MonoBehaviour {
                         actionManager.Points += 1;
                         currentStep = TutorialStep.WalkAround;
                         player.tutorial_movementLock = false;
-                        UItext = "Use W, A, S, D buttons to move around.";
+                        UItext = "Gebruik de W, A, S, D toesten om te lopen ";
                     }
                     break;
                 case TutorialStep.WalkAround:
@@ -124,7 +124,7 @@ public class TutorialManager : MonoBehaviour {
                         currentStep = TutorialStep.WalkToTable;
                         particleHint.transform.position = tableTrigger.transform.position;
                         particleHint.SetActive(true);
-                        UItext = "Move to the table using W, A, S, D and the mouse";
+                        UItext = "Beweeg naar de tafel door W, A, S, D en de muis te gebruiken";
                     }
                     break;
                 case TutorialStep.WalkToTable:
@@ -138,7 +138,7 @@ public class TutorialManager : MonoBehaviour {
                         controls.keyPreferences.mouseClickKey.locked = false;
                         controls.keyPreferences.closeObjectView.locked = false;
                         particleHint.transform.position = handCleaner.transform.position;
-                        UItext = "You are able to use highlighted object when you see the hand icon by pressing the left mouse button. Let use the hand hygiene pump to wash our hands";
+                        UItext = "Oplichtende voorwerpen met een hand icoon kunnen worden gebruikt door ernaar te kijken en te drukken op de linker muisknop. Laten we onze handen wasen met de hygiene pomp";
                     }
                     break;
                 case TutorialStep.UseHandCleaner:
@@ -147,7 +147,7 @@ public class TutorialManager : MonoBehaviour {
                         currentStep = TutorialStep.ExamineRecords;
                         patientRecords.gameObject.SetActive(true);
                         particleHint.transform.position = patientRecords.transform.position;
-                        UItext = "Some object need to be examined, like patient records. When you see an magnifing icon it means you can examine the object";
+                        UItext = "Goed! Sommige objecten moeten worden gecontroleerd zoals de clientgegevens. Wanneer je een vergrootglas ziet boven een voorwerp, betekend dit dat je hem kunt bekijken door te killen op de linker muisknop. Bekijk de clientgegevens nu.";
                     }
                     break;
                 case TutorialStep.ExamineRecords:
@@ -155,7 +155,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         currentStep = TutorialStep.CloseRecords;
                         particleHint.SetActive(false);
-                        UItext = ": After examining an object you can put it back down by pressing Q";
+                        UItext = "We zijn nu in het voorwerpen overzicht. Na het controleren kun je met de 'Q' knop het object terugleggen";
                     }
                     break;
                 case TutorialStep.CloseRecords:
@@ -167,21 +167,21 @@ public class TutorialManager : MonoBehaviour {
                         needle.SetActive(true);
                         particleHint.transform.position = Vector3.Lerp(syringe.transform.position, needle.transform.position, 0.5f);
                         particleHint.SetActive(true);
-                        UItext = "You are able to pick up some highlighted object by pressing the left mouse button.";
+                        UItext = "Sommige opgelichtende voorwerpen kun je oppakken. Dit doe je door naar het voorwerp te kijken en op linker muisknop te drukken.";
                     }
                     break;
                 case TutorialStep.PickItem:
                     if (TimerElapsed())
                     {
                         currentStep = TutorialStep.PickAnotherItem;
-                        UItext = "You are able to pick up another highlighted object by pressing the left mouse button.";
+                        UItext = "Je kunt nog een voorwerp oppakken door ernaar te kijken en op de linker muisknop te drukken";
                     }
                     else
                     {
                         if (handsInventory.tutorial_pickedLeft)
                         {
                             actionManager.Points += 1;
-                            UItext = "When your hands are empty, the picked up item always apears in your left hand.";
+                            UItext = "Wanneer je handen leeg zijn en je pakt iets op. Zal het altijd in je linker hand verschijnen.";
                             SetPauseTimer(3.0f);
                         }
                     }
@@ -190,7 +190,7 @@ public class TutorialManager : MonoBehaviour {
                     if (TimerElapsed())
                     {
                         currentStep = TutorialStep.DroppingExplanation;
-                        UItext = "You are able to drop items if you do not need them anymore. Dropping an item is done by holding SHIFT and pressing Q or E depending on wich item you want to drop.";
+                        UItext = "Voorwerpen die je niet meer nodig hebt of niet meer gebruikt kun je weg zetten. Dit doe je de 'SHIFT' + 'Q' of 'SHIFT' + 'E' in te drukken. ";
                         SetPauseTimer(3.0f);
                     }
                     else
@@ -199,7 +199,7 @@ public class TutorialManager : MonoBehaviour {
                         {
                             particleHint.SetActive(false);
                             actionManager.Points += 1;
-                            UItext = "When you have an item in your left hand. The second item wil appear in your right hand. You are only able to hold 2 items at once.";
+                            UItext = "Wanner je in je linkerhand al een voorwerp vast hebt zal het tweede voorwerp altijd in de rechterhand komen";
                             SetPauseTimer(3.0f);
                         }
                     }
@@ -209,7 +209,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         currentStep = TutorialStep.DropItem;
                         controls.keyPreferences.LeftDropKey.locked = false;
-                        UItext = "Lets try to drop the item in our left had by pressing SHIFT + Q";
+                        UItext = "Laten we het voorwerp in onze linkerhand terugzetten door op 'SHIFT'+ 'Q' te drukken.";
                     }
                     break;
                 case TutorialStep.DropItem:
@@ -217,7 +217,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         currentStep = TutorialStep.DropAnotherItem;
                         controls.keyPreferences.RightDropKey.locked = false;
-                        UItext = "Lets try to do the same with our right hand but now using SHIFT + E";
+                        UItext = "Laten we hetzelfde doen met onze rechter hand door op 'SHIFT' = 'E' te drukken.";
                     }
                     break;
                 case TutorialStep.DropAnotherItem:
@@ -229,7 +229,7 @@ public class TutorialManager : MonoBehaviour {
                             handsInventory.tutorial_pickedRight =
                             handsInventory.tutorial_droppedLeft =
                             handsInventory.tutorial_droppedRight = false;
-                        UItext = "lets pick up both items again";
+                        UItext = "Laten we beide voorwerpen weer oppakken";
                     }
                     break;
                 case TutorialStep.PickBothItems:
@@ -237,21 +237,21 @@ public class TutorialManager : MonoBehaviour {
                     {
                         currentStep = TutorialStep.WalkAway;
                         player.tutorial_movementLock = false;
-                        UItext = "Now lets walk away from the table using the mouse and W, A, S ,D";
+                        UItext = "Laten we nu een stuk van de tafel af lopen door middel van de W,A,S,D toetsen.";
                     }
                     break;
                 case TutorialStep.WalkAway:
                     if ( Vector3.Distance(player.transform.position, tableTrigger.position) > 5.0f )
                     {
                         currentStep = TutorialStep.DropBothItems;
-                        UItext = "Great, now lets drop our items using Shift + Q or E";
+                        UItext = "Heel goed, laten we nu weer beide voorwerpen laten vallen door 'SHIFT' + 'Q' en 'SHIFT' + 'E'.";
                     }
                     break;
                 case TutorialStep.DropBothItems:
                     if (TimerElapsed())
                     {
                         currentStep = TutorialStep.PickBothItemsAgain;
-                        UItext = "Lets pick the items back up";
+                        UItext = "Laten we de voorwerpen weer oppakken";
                     }
                     else
                     {
@@ -259,7 +259,7 @@ public class TutorialManager : MonoBehaviour {
                         {
                             handsInventory.tutorial_pickedLeft =
                                 handsInventory.tutorial_pickedRight = false;
-                            UItext = "you can drop items anywhere but dropping it off the table gives you a penalty";
+                            UItext = "Voorwerpen kun je terugzetten/ laten vallen waar je wilt. Echter krijg je minpunten door voorwerpen naast de tafel te laten vallen";
                             SetPauseTimer(3.0f);
                         }
                     }
