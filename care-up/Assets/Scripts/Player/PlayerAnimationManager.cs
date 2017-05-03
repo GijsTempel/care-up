@@ -86,6 +86,13 @@ public class PlayerAnimationManager : MonoBehaviour {
         PlayAnimation(name + "Sequence", target);
     }
 
+    public static void PlayTutorialAnimationSequence(string name, Transform target)
+    {
+        animationSequence = new AnimationSequence(name);
+        cameraMode.cinematicToggle = true; //before play animation
+        PlayAnimation("Tutorial" + name + "Sequence", target);
+    }
+
     public static void NextSequenceStep(bool flag)
     {
         if (flag)
@@ -110,5 +117,18 @@ public class PlayerAnimationManager : MonoBehaviour {
     {
         animationController.SetTrigger("AbortSequence");
         animationController.speed = 1f;
+    }
+
+    public static void SequenceTutorialLock(bool value)
+    {
+        if (animationSequence != null)
+        {
+            animationSequence.TutorialLock(value);
+        }
+    }
+
+    public static bool SequenceCompleted
+    {
+        get { return animationSequence != null ? animationSequence.Completed : true; }
     }
 }

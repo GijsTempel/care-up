@@ -8,6 +8,8 @@ using UnityStandardAssets.Characters.FirstPerson;
 /// </summary>
 public class TutorialManager : MonoBehaviour {
 
+    public bool sequenceCompleted = false;
+
     public enum TutorialStep
     {
         StartTutorial,
@@ -42,9 +44,7 @@ public class TutorialManager : MonoBehaviour {
     private bool pauseEnabled = false;
     private float pauseTimer = 0.0f;
     private string UItext = "";
-
-    AnimationSequence animationSequence;
-
+    
     private RigidbodyFirstPersonController player;
     private ActionManager actionManager;
     private HandsInventory handsInventory;
@@ -332,16 +332,19 @@ public class TutorialManager : MonoBehaviour {
                     {
                         particleHint.SetActive(false);
                         currentStep = TutorialStep.SequenceExplanation;
-                        animationSequence = new AnimationSequence("Injection");
-                        animationSequence.NextStep();
-                        animationSequence.TutorialLock(true);
+
+                        Transform target = controls.SelectedObject.GetComponent<PersonObjectPart>().Person;
+                        target.GetComponent<InteractableObject>().Reset();
+                        controls.ResetObject();
+                        PlayerAnimationManager.PlayTutorialAnimationSequence("Injection", target);
                     }
                     break;
                 case TutorialStep.SequenceExplanation:
                     if ( TimerElapsed() )
                     {
                         currentStep = TutorialStep.CompleteSequence;
-                        animationSequence.TutorialLock(false);
+                        sequenceCompleted = false;
+                        PlayerAnimationManager.SequenceTutorialLock(false);
                         UItext = "";
                     }
                     else
@@ -351,7 +354,7 @@ public class TutorialManager : MonoBehaviour {
                     }
                     break;
                 case TutorialStep.CompleteSequence:
-                    if ( animationSequence.Completed )
+                    if ( sequenceCompleted )
                     {
                         currentStep = TutorialStep.TutorialEnd;
                         player.tutorial_movementLock = false;

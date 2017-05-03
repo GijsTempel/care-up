@@ -60,10 +60,11 @@ public class AnimationSequence  {
     private ActionManager actionManager;
 
     public bool cheated = false;
+    private bool completed = false;
 
     public bool Completed
     {
-        get { return currentStep > steps.Count; }
+        get { return completed; }
     }
 
     /// <summary>
@@ -74,6 +75,7 @@ public class AnimationSequence  {
     {
         currentStep = 0;
         pointsEarned = 1;
+        completed = false;
 
         cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
         if (cameraMode == null) Debug.LogError("No camera mode found");
@@ -219,7 +221,7 @@ public class AnimationSequence  {
             cameraMode.ToggleCameraMode(CameraMode.Mode.SelectionDialogue);
         }
         else
-        {
+        { // maybe obsolete
             Object.Destroy(dialogueObject.gameObject);
             CameraMode cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
             cameraMode.ToggleCameraMode(CameraMode.Mode.Cinematic);
