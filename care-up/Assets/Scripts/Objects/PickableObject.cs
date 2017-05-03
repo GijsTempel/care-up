@@ -49,7 +49,7 @@ public class PickableObject : InteractableObject {
     /// Drops and object
     /// </summary>
     /// <param name="force">If true - forces load position instead of free dropping</param>
-    public virtual void Drop(bool force = false)
+    public virtual bool Drop(bool force = false)
     {
 
         if (basic)
@@ -67,12 +67,10 @@ public class PickableObject : InteractableObject {
             if (Vector3.Distance(transform.position, savedPosition) < 3.0f || force)
             {
                 LoadPosition();
+                return true;
             }
             else
             {
-                Narrator.PlaySound("WrongAction");
-                actionManager.Points--;
-
                 if (framePositions.Count > 0)
                 {
                     Vector3 deltaPosition = framePositions[framePositions.Count - 1] - framePositions[0];
@@ -81,6 +79,8 @@ public class PickableObject : InteractableObject {
                 }
             }
         }
+
+        return false;
     }
 
     /// <summary>

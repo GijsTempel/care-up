@@ -81,6 +81,8 @@ public class TutorialManager : MonoBehaviour {
 
         tableTrigger = GameObject.Find("__tableTrigger").transform;
         patientTrigger = GameObject.Find("__patientTrigger").transform;
+
+        handsInventory.dropPenalty = false;
 	}
 	
 	void Update () {

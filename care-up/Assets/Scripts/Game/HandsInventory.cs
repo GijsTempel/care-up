@@ -23,6 +23,7 @@ public class HandsInventory : MonoBehaviour {
     // position in air 
     public float horisontalOffset = 0.5f;
     public float distanceFromCamera = 1.0f;
+    public bool dropPenalty = true;
 
     public Transform leftToolHolder;
     public Transform rightToolHolder;
@@ -99,7 +100,11 @@ public class HandsInventory : MonoBehaviour {
                 {
                     leftHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
                     tutorial_droppedLeft = true;
-                    leftHandObject.Drop();
+                    if (!leftHandObject.Drop() && dropPenalty)
+                    {
+                        Narrator.PlaySound("WrongAction");
+                        actionManager.Points--;
+                    }
                     leftHandObject = null;
                     leftHold = false;
                     PlayerAnimationManager.SetHandItem(true, "");
@@ -113,7 +118,11 @@ public class HandsInventory : MonoBehaviour {
                 {
                     rightHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
                     tutorial_droppedRight = true;
-                    rightHandObject.Drop();
+                    if (!rightHandObject.Drop() && dropPenalty)
+                    {
+                        Narrator.PlaySound("WrongAction");
+                        actionManager.Points--;
+                    }
                     rightHandObject = null;
                     rightHold = false;
                     PlayerAnimationManager.SetHandItem(false, "");
