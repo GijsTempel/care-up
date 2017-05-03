@@ -370,6 +370,7 @@ public class TutorialManager : MonoBehaviour {
                         currentStep = TutorialStep.None;
                         GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().TutorialCompleted = true;
                         actionManager.OnUseAction("__tutorialEnd");
+                        GameObject.Find("Preferences").GetComponent<LoadingScreen>().LoadLevel("Injection");
                     }
                     else
                     {
