@@ -201,7 +201,7 @@ public class TutorialManager : MonoBehaviour {
                             particleHint.SetActive(false);
                             actionManager.Points += 1;
                             UItext.GetComponent<Text>().text = "Wanneer je in je linkerhand al een voorwerp vast hebt zal het tweede voorwerp altijd in de rechterhand komen";
-                            SetPauseTimer(6.0f);
+                            SetPauseTimer(5.0f);
                         }
                     }
                     break;
@@ -261,7 +261,7 @@ public class TutorialManager : MonoBehaviour {
                             handsInventory.tutorial_pickedLeft =
                                 handsInventory.tutorial_pickedRight = false;
                             UItext.GetComponent<Text>().text = "Voorwerpen kun je terugzetten/ laten vallen waar je wilt. Echter krijg je minpunten door voorwerpen naast de tafel te laten vallen";
-                            SetPauseTimer(3.0f);
+                            SetPauseTimer(5.0f);
                         }
                     }
                     break;
@@ -297,7 +297,7 @@ public class TutorialManager : MonoBehaviour {
                         if (actionManager.tutorial_hintUsed)
                         {
                             UItext.GetComponent<Text>().text = "Je zult hardop denken over de volgende stap. Daarnaast worden voorwerpen, die nodig zijn voor de volgende stap, opgelicht.";
-                            SetPauseTimer(3.0f);
+                            SetPauseTimer(5.0f);
                         }
                     }
                     break;
