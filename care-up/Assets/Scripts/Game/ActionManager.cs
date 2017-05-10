@@ -16,7 +16,7 @@ public class ActionManager : MonoBehaviour {
     public bool tutorial_hintUsed = false;
     private bool currentStepHintUsed = false;
 
-    public Text pointsText;
+    private Text pointsText;
     
     // list of types of actions
     public enum ActionType
@@ -248,6 +248,8 @@ public class ActionManager : MonoBehaviour {
         }
         totalPoints = actionList.Count();
         currentAction = actionList.First();
+
+        pointsText = GameObject.Find("PointsText").GetComponent<Text>();
     }
 
     /// <summary>

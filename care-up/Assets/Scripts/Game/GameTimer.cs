@@ -7,7 +7,7 @@ using UnityEngine.UI;
 /// </summary>
 public class GameTimer : MonoBehaviour {
 
-    public Text timerText;
+    private Text timerText;
 
     private float currentTime = 0.0f;
 	
@@ -17,7 +17,12 @@ public class GameTimer : MonoBehaviour {
         set { currentTime = value < 0 ? 0 : value; }
     }
 
-	void Update ()
+    private void Start()
+    {
+        timerText = GameObject.Find("Time").GetComponent<Text>();
+    }
+
+    void Update ()
     {
         currentTime += Time.deltaTime;
 
