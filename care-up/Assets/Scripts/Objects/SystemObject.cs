@@ -42,26 +42,27 @@ public class SystemObject : InteractableObject {
     {
         if (name == "Start")
         {
+            // temporary until scene selection is designed
+            loadingScreen.LoadLevel("Tutorial");
+            /*
             if (!GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().TutorialCompleted)
             {
                 if (GameObject.Find("_SkipTutorial"))
                 {
                     Debug.LogWarning("TutorialSkip found! => Skipping tutorial");
                     loadingScreen.LoadLevel("SceneSelection");
-                    //SceneManager.LoadScene("SceneSelection");
                 }
                 else
                 {
                     Debug.Log("Tutorial is not completed.");
                     loadingScreen.LoadLevel("Tutorial");
-                    //SceneManager.LoadScene("Tutorial");
                 }
             }
             else
             {
                 Debug.Log("Tutorial is completed.");
                 loadingScreen.LoadLevel("SceneSelection");
-            }
+            }*/
         }
         else {
             if (sceneName == "_Continue")
