@@ -139,51 +139,51 @@ public class SelectDialogue : MonoBehaviour {
         {
             top.gameObject.SetActive(true);
             options[0].side = OptionSide.Top;
-            top.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = options[0].text;
+            top.transform.GetChild(0).GetChild(1).GetComponent<Text>().text = options[0].text;
         }
         // 2 - left/right
         else if (options.Count == 2)
         {
             left.gameObject.SetActive(true);
             options[0].side = OptionSide.Left;
-            left.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = options[0].text;
+            left.transform.GetChild(0).GetChild(1).GetComponent<Text>().text = options[0].text;
 
             right.gameObject.SetActive(true);
             options[1].side = OptionSide.Right;
-            right.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = options[1].text;
+            right.transform.GetChild(0).GetChild(1).GetComponent<Text>().text = options[1].text;
         }
         // 3 - top/left/right
         else if (options.Count == 3)
         {
             top.gameObject.SetActive(true);
             options[0].side = OptionSide.Top;
-            top.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = options[0].text;
+            top.transform.GetChild(0).GetChild(1).GetComponent<Text>().text = options[0].text;
 
             left.gameObject.SetActive(true);
             options[1].side = OptionSide.Left;
-            left.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = options[1].text;
+            left.transform.GetChild(0).GetChild(1).GetComponent<Text>().text = options[1].text;
 
             right.gameObject.SetActive(true);
             options[2].side = OptionSide.Right;
-            right.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = options[2].text;
+            right.transform.GetChild(0).GetChild(1).GetComponent<Text>().text = options[2].text;
         }
         else // all 4 sides
         {
             top.gameObject.SetActive(true);
             options[0].side = OptionSide.Top;
-            top.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = options[0].text;
+            top.transform.GetChild(0).GetChild(1).GetComponent<Text>().text = options[0].text;
 
             left.gameObject.SetActive(true);
             options[1].side = OptionSide.Left;
-            left.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = options[1].text;
+            left.transform.GetChild(0).GetChild(1).GetComponent<Text>().text = options[1].text;
 
             right.gameObject.SetActive(true);
             options[2].side = OptionSide.Right;
-            right.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = options[2].text;
+            right.transform.GetChild(0).GetChild(1).GetComponent<Text>().text = options[2].text;
 
             bottom.gameObject.SetActive(true);
             options[3].side = OptionSide.Bottom;
-            bottom.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = options[3].text;
+            bottom.transform.GetChild(0).GetChild(1).GetComponent<Text>().text = options[3].text;
         }
 
         if ( cheated )
