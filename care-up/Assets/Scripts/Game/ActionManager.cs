@@ -17,7 +17,7 @@ public class ActionManager : MonoBehaviour {
     private bool currentStepHintUsed = false;
 
     private Text pointsText;
-    
+
     // list of types of actions
     public enum ActionType
     {
@@ -42,16 +42,16 @@ public class ActionManager : MonoBehaviour {
     private int points = 0;              // current points
     private int currentActionIndex = 0;  // index of current action
     private Action currentAction;        // current action instance
-    
+
     // GameObjects that show player next step when hint used
-    private List<GameObject> particleHints; 
+    private List<GameObject> particleHints;
     private bool menuScene;
 
     public List<Action> ActionList
     {
         get { return actionList; }
     }
-    
+
     /// <summary>
     /// List of wrong steps, merged into a string with line breaks.
     /// </summary>
@@ -134,8 +134,8 @@ public class ActionManager : MonoBehaviour {
     {
         get
         {
-            string[] objects = new string [2];
-            if ( currentAction.Type == ActionType.ObjectCombine )
+            string[] objects = new string[2];
+            if (currentAction.Type == ActionType.ObjectCombine)
             {
                 string left, right;
                 ((CombineAction)currentAction).GetObjects(out left, out right);
@@ -174,7 +174,7 @@ public class ActionManager : MonoBehaviour {
     {
         get
         {
-            return (currentAction.Type == ActionType.PersonTalk) ? 
+            return (currentAction.Type == ActionType.PersonTalk) ?
                 ((TalkAction)currentAction).Topic : "";
         }
     }
@@ -184,7 +184,8 @@ public class ActionManager : MonoBehaviour {
     /// <summary>
     /// Set some variables and load info from xml file.
     /// </summary>
-    void Start () {
+    void Start()
+    {
 
         string sceneName = SceneManager.GetActiveScene().name;
         menuScene = sceneName == "Menu" || sceneName == "SceneSelection" || sceneName == "EndScore";
@@ -192,22 +193,22 @@ public class ActionManager : MonoBehaviour {
 
         controls = GameObject.Find("GameLogic").GetComponent<Controls>();
         if (controls == null) Debug.LogError("No controls found");
-        
+
         TextAsset textAsset = (TextAsset)Resources.Load("Xml/Actions/" + actionListName);
         XmlDocument xmlFile = new XmlDocument();
         xmlFile.LoadXml(textAsset.text);
 
         //totalPoints = int.Parse(xmlFile.FirstChild.NextSibling.Attributes["points"].Value);
-        XmlNodeList actions = xmlFile.FirstChild.NextSibling.ChildNodes; 
+        XmlNodeList actions = xmlFile.FirstChild.NextSibling.ChildNodes;
 
-        foreach ( XmlNode action in actions )
+        foreach (XmlNode action in actions)
         {
             int index;
             int.TryParse(action.Attributes["index"].Value, out index);
             string type = action.Attributes["type"].Value;
             string descr = action.Attributes["description"].Value;
             string audio = action.Attributes["audioHint"].Value;
-            
+
             switch (type)
             {
                 case "combine":
@@ -249,7 +250,10 @@ public class ActionManager : MonoBehaviour {
         totalPoints = actionList.Count();
         currentAction = actionList.First();
 
-        pointsText = GameObject.Find("PointsText").GetComponent<Text>();
+        if (GameObject.Find("PointsText") != null)
+        {
+            pointsText = GameObject.Find("PointsText").GetComponent<Text>();
+        }
     }
 
     /// <summary>

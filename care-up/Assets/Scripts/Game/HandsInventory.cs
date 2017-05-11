@@ -25,10 +25,10 @@ public class HandsInventory : MonoBehaviour {
     public float distanceFromCamera = 1.0f;
     public bool dropPenalty = true;
 
-    public Transform leftToolHolder;
-    public Transform rightToolHolder;
-    public Transform leftControlBone;
-    public Transform rightControlBone;
+    private Transform leftToolHolder;
+    private Transform rightToolHolder;
+    private Transform leftControlBone;
+    private Transform rightControlBone;
 
     private PickableObject leftHandObject;
     private PickableObject rightHandObject;
@@ -78,6 +78,25 @@ public class HandsInventory : MonoBehaviour {
 
         cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
         if (cameraMode == null) Debug.LogError("No camera mode found");
+
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("playerBone"))
+        {
+            switch (obj.name)
+            {
+                case "prop.L":
+                    leftControlBone = obj.transform;
+                    break;
+                case "prop.R":
+                    rightControlBone = obj.transform;
+                    break;
+                case "toolHolder.L":
+                    leftToolHolder = obj.transform;
+                    break;
+                case "toolHolder.R":
+                    rightToolHolder = obj.transform;
+                    break;
+            }
+        }
 
         glovesOn = false;
     }
@@ -454,6 +473,11 @@ public class HandsInventory : MonoBehaviour {
     {
         if (hand)
         {
+            if (leftToolHolder == null)
+            {
+                Debug.LogWarning("LeftToolHolder not set, can cause problems");
+            }
+
             leftHold = true;
             leftHandObject.transform.parent = (leftToolHolder == null) ?
                 GameObject.Find("toolHolder.L").transform : leftToolHolder;
@@ -463,6 +487,11 @@ public class HandsInventory : MonoBehaviour {
         }
         else
         {
+            if (rightToolHolder == null)
+            {
+                Debug.LogWarning("RightToolHolder not set, can cause problems");
+            }
+
             rightHold = true;
             rightHandObject.transform.parent = (rightToolHolder == null) ?
                 GameObject.Find("toolHolder.R").transform : rightToolHolder;

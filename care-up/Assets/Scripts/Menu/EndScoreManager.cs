@@ -29,10 +29,12 @@ public class EndScoreManager : MonoBehaviour {
     {
         if (SceneManager.GetActiveScene().name == "EndScore")
         {
-            GameObject.Find("Score").GetComponent<Text>().text = "Score: " + score;
-            GameObject.Find("Points").GetComponent<Text>().text = "Points: " + points;
-            GameObject.Find("Time").GetComponent<Text>().text = string.Format("Time: {0}:{1:00}", (int)time / 60, (int)time % 60);
-            GameObject.Find("Steps").GetComponent<Text>().text = wrongSteps;
+            Transform uiFolder = GameObject.Find("Canvas").transform;
+
+            uiFolder.GetChild(0).FindChild("Score").GetComponent<Text>().text = "Score: " + score;
+            uiFolder.GetChild(0).FindChild("Points").GetComponent<Text>().text = "Points: " + points;
+            uiFolder.GetChild(0).FindChild("Time").GetComponent<Text>().text = string.Format("Time: {0}:{1:00}", (int)time / 60, (int)time % 60);
+            uiFolder.GetChild(1).FindChild("Steps").GetComponent<Text>().text = wrongSteps;
 
             if (score >= 1)
             {
