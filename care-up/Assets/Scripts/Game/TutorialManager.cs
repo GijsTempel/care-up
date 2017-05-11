@@ -59,10 +59,13 @@ public class TutorialManager : MonoBehaviour {
     private Transform patientTrigger;
 
     private GameObject particleHint;
+    private GameObject particleHint_alt;
 
 	void Start () {
         particleHint = GameObject.Find("ParticleHint");
         particleHint.SetActive(false);
+        particleHint_alt = GameObject.Find("ParticleHint (1)");
+        particleHint_alt.SetActive(false);
 
         GameObject gameLogic = GameObject.Find("GameLogic");
         actionManager = gameLogic.GetComponent<ActionManager>();
@@ -236,6 +239,7 @@ public class TutorialManager : MonoBehaviour {
                             handsInventory.tutorial_pickedRight =
                             handsInventory.tutorial_droppedLeft =
                             handsInventory.tutorial_droppedRight = false;
+                        particleHint.SetActive(true);
                         UItext.text = "Laten we beide voorwerpen weer oppakken";
                     }
                     break;
@@ -244,6 +248,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         currentStep = TutorialStep.WalkAway;
                         player.tutorial_movementLock = false;
+                        particleHint.SetActive(false);
                         UItext.text = "Laten we nu een stuk van de tafel af lopen door middel van de W, A, S, D toetsen.";
                     }
                     break;
@@ -259,6 +264,10 @@ public class TutorialManager : MonoBehaviour {
                     {
                         currentStep = TutorialStep.PickBothItemsAgain;
                         UItext.text = "Laten we de voorwerpen weer oppakken";
+                        particleHint.transform.position = syringe.transform.position;
+                        particleHint_alt.transform.position = needle.transform.position;
+                        particleHint.SetActive(true);
+                        particleHint_alt.SetActive(true);
                     }
                     else
                     {
@@ -278,6 +287,8 @@ public class TutorialManager : MonoBehaviour {
                         controls.keyPreferences.CombineKey.locked = false;
                         controls.keyPreferences.LeftDropKey.locked = true;
                         controls.keyPreferences.RightDropKey.locked = true;
+                        particleHint.SetActive(false);
+                        particleHint_alt.SetActive(false);
                         UItext.text = "Sommige voorwerpen kun je combineren. Dit kun je doen door op de 'R' toets te drukken als je twee voorwerpen in je handen hebt die te combineren zijn. laten we de naald combineren met onze spuit zodat we straks het medicijn kunnen opzuigen";
                     }
                     break;
