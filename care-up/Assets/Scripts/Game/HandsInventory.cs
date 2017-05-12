@@ -516,9 +516,26 @@ public class HandsInventory : MonoBehaviour {
 
     public void ToggleControls(bool value)
     {
-        controls.keyPreferences.SetAllLocked(value);
-        //controls.keyPreferences.mouseClickLocked = false;
-        //controls.keyPreferences.mouseClickKey.locked = false;
+        TutorialManager manager = GameObject.Find("GameLogic").GetComponent<TutorialManager>();
+        if (manager != null)
+        {
+            controls.keyPreferences.mouseClickLocked =
+                controls.keyPreferences.mouseClickKey.locked = manager.mouseClickLocked;
+            controls.keyPreferences.closeObjectView.locked = manager.closeObjectViewLocked;
+            controls.keyPreferences.LeftDropKey.locked = manager.leftDropKeyLocked;
+            controls.keyPreferences.RightDropKey.locked = manager.rightDropKeyLocked;
+            controls.keyPreferences.CombineKey.locked = manager.combineKeyLocked;
+            controls.keyPreferences.GetHintKey.locked = manager.getHintKeyLocked;
+            controls.keyPreferences.pickObjectView.locked = manager.pickObjectViewKeyLocked;
+            controls.keyPreferences.LeftUseKey.locked = manager.leftUseKeyLocked;
+            controls.keyPreferences.RightUseKey.locked = manager.rightUseKeyLocked;
+        }
+        else
+        {
+            controls.keyPreferences.SetAllLocked(value);
+            //controls.keyPreferences.mouseClickLocked = false;
+            //controls.keyPreferences.mouseClickKey.locked = false;
+        }
     }
     
     public void ExecuteDelayedCombination()

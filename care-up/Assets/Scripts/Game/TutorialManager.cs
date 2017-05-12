@@ -11,6 +11,27 @@ public class TutorialManager : MonoBehaviour {
     public bool sequenceCompleted = false;
     public GameObject hintsPrefab;
 
+    [HideInInspector]
+    public bool movementLock = false;
+    [HideInInspector]
+    public bool mouseClickLocked = false;
+    [HideInInspector]
+    public bool closeObjectViewLocked = false;
+    [HideInInspector]
+    public bool leftDropKeyLocked = false;
+    [HideInInspector]
+    public bool rightDropKeyLocked = false;
+    [HideInInspector]
+    public bool combineKeyLocked = false;
+    [HideInInspector]
+    public bool getHintKeyLocked = false;
+    [HideInInspector]
+    public bool pickObjectViewKeyLocked = false;
+    [HideInInspector]
+    public bool leftUseKeyLocked = false;
+    [HideInInspector]
+    public bool rightUseKeyLocked = false;
+
     public enum TutorialStep
     {
         StartTutorial,
@@ -112,8 +133,8 @@ public class TutorialManager : MonoBehaviour {
                     }
                     else
                     {
-                        controls.keyPreferences.SetAllLocked(true);
-                        player.tutorial_movementLock = true;
+                        SetAllKeysLocked(true);
+                        player.tutorial_movementLock = movementLock = true;
                         UItext.text = "Welkom bij Care-Up";
                         SetPauseTimer(3.0f);
                     }
@@ -123,7 +144,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         actionManager.Points += 1;
                         currentStep = TutorialStep.WalkAround;
-                        player.tutorial_movementLock = false;
+                        player.tutorial_movementLock = movementLock = false;
                         UItext.text = "Gebruik de W, A, S, D toesten om te lopen ";
                     }
                     break;
@@ -142,11 +163,11 @@ public class TutorialManager : MonoBehaviour {
                     {
                         actionManager.Points += 1;
                         tableTrigger.gameObject.SetActive(false);
-                        player.tutorial_movementLock = true;
+                        player.tutorial_movementLock = movementLock = true;
                         currentStep = TutorialStep.UseHandCleaner;
-                        controls.keyPreferences.mouseClickLocked = false;
+                        controls.keyPreferences.mouseClickLocked = mouseClickLocked = false;
                         controls.keyPreferences.mouseClickKey.locked = false;
-                        controls.keyPreferences.closeObjectView.locked = false;
+                        controls.keyPreferences.closeObjectView.locked = closeObjectViewLocked = false;
                         particleHint.transform.position = handCleaner.transform.position;
                         UItext.text = "Oplichtende voorwerpen met een hand icoon kunnen worden gebruikt door ernaar te kijken en te drukken op de linkermuisknop. Laten we onze handen wassen met de hygienepomp";
                     }
@@ -218,7 +239,7 @@ public class TutorialManager : MonoBehaviour {
                     if (TimerElapsed())
                     {
                         currentStep = TutorialStep.DropItem;
-                        controls.keyPreferences.LeftDropKey.locked = false;
+                        controls.keyPreferences.LeftDropKey.locked = leftDropKeyLocked = false;
                         UItext.text = "Laten we het voorwerp in onze linkerhand terugzetten door op 'SHIFT'+ 'Q' te drukken.";
                     }
                     break;
@@ -226,7 +247,7 @@ public class TutorialManager : MonoBehaviour {
                     if ( handsInventory.tutorial_droppedLeft )
                     {
                         currentStep = TutorialStep.DropAnotherItem;
-                        controls.keyPreferences.RightDropKey.locked = false;
+                        controls.keyPreferences.RightDropKey.locked = rightDropKeyLocked = false;
                         UItext.text = "Laten we hetzelfde doen met onze rechterhand door op 'SHIFT' + 'E' te drukken.";
                     }
                     break;
@@ -247,7 +268,7 @@ public class TutorialManager : MonoBehaviour {
                     if ( handsInventory.tutorial_pickedLeft && handsInventory.tutorial_pickedRight )
                     {
                         currentStep = TutorialStep.WalkAway;
-                        player.tutorial_movementLock = false;
+                        player.tutorial_movementLock = movementLock = false;
                         particleHint.SetActive(false);
                         UItext.text = "Laten we nu een stuk van de tafel af lopen door middel van de W, A, S, D toetsen.";
                     }
@@ -284,9 +305,9 @@ public class TutorialManager : MonoBehaviour {
                     if ( handsInventory.tutorial_pickedLeft && handsInventory.tutorial_pickedRight)
                     {
                         currentStep = TutorialStep.CombineItems;
-                        controls.keyPreferences.CombineKey.locked = false;
-                        controls.keyPreferences.LeftDropKey.locked = true;
-                        controls.keyPreferences.RightDropKey.locked = true;
+                        controls.keyPreferences.CombineKey.locked = combineKeyLocked = false;
+                        controls.keyPreferences.LeftDropKey.locked = leftDropKeyLocked = true;
+                        controls.keyPreferences.RightDropKey.locked = rightDropKeyLocked = true;
                         particleHint.SetActive(false);
                         particleHint_alt.SetActive(false);
                         UItext.text = "Sommige voorwerpen kun je combineren. Dit kun je doen door op de 'R' toets te drukken als je twee voorwerpen in je handen hebt die te combineren zijn. laten we de naald combineren met onze spuit zodat we straks het medicijn kunnen opzuigen";
@@ -296,7 +317,7 @@ public class TutorialManager : MonoBehaviour {
                     if ( handsInventory.tutorial_combined )
                     {
                         currentStep = TutorialStep.UseHint;
-                        controls.keyPreferences.GetHintKey.locked = false;
+                        controls.keyPreferences.GetHintKey.locked = getHintKeyLocked = false;
                         medicine.gameObject.SetActive(true);
                         UItext.text = "Mocht je in het spel niet weten wat de volgende stap is dan kun je drukken op de spatiebalk voor een hint. Dit kost je echter wel punten.";
                     }
@@ -305,7 +326,7 @@ public class TutorialManager : MonoBehaviour {
                     if (TimerElapsed())
                     {
                         currentStep = TutorialStep.PickMedicine;
-                        controls.keyPreferences.pickObjectView.locked = false;
+                        controls.keyPreferences.pickObjectView.locked = pickObjectViewKeyLocked = false;
                         handsInventory.tutorial_pickedLeft =
                             handsInventory.tutorial_pickedRight = false;
                         UItext.text = "Nu de spuit klaar is voor gebruik. Laten we het medicijn oppakken.";
@@ -339,10 +360,10 @@ public class TutorialManager : MonoBehaviour {
                     if ( Vector3.Distance(player.transform.position, patientTrigger.position) < 1.0f)
                     {
                         patientTrigger.gameObject.SetActive(false);
-                        player.tutorial_movementLock = true;
+                        player.tutorial_movementLock = movementLock = true;
                         currentStep = TutorialStep.UseOnHand;
-                        controls.keyPreferences.LeftUseKey.locked = false;
-                        controls.keyPreferences.RightUseKey.locked = false;
+                        controls.keyPreferences.LeftUseKey.locked = leftUseKeyLocked = false;
+                        controls.keyPreferences.RightUseKey.locked = rightUseKeyLocked = false;
                         particleHint.transform.position = GameObject.Find("Patient").transform.position;
                         UItext.text = "We kunnen nu de spuit gebruiken op de client. Druk op 'Q'om een voorwerp in je linkerhand te gebruiken en op 'E' om een voorwerp in je rechterhand te gebruiken. Druk op de knop die hoort bij de hand die de spuit vast heeft.";
                     }
@@ -377,8 +398,8 @@ public class TutorialManager : MonoBehaviour {
                     if ( sequenceCompleted )
                     {
                         currentStep = TutorialStep.TutorialEnd;
-                        player.tutorial_movementLock = false;
-                        controls.keyPreferences.SetAllLocked(true);
+                        player.tutorial_movementLock = movementLock = false;
+                        SetAllKeysLocked(true);
                         UItext.text = "Goed gedaan. Dit was de uitleg over Care-Up. Succes bij je eerste BIG-handeling";
                     }
                     break;
@@ -392,7 +413,7 @@ public class TutorialManager : MonoBehaviour {
                     }
                     else
                     {
-                        SetPauseTimer(3.0f);
+                        SetPauseTimer(5.0f);
                     }
                     break;
                 default:
@@ -421,6 +442,20 @@ public class TutorialManager : MonoBehaviour {
         {
             return false;
         }
+    }
+
+    private void SetAllKeysLocked(bool value)
+    {
+        mouseClickLocked = value;
+        closeObjectViewLocked = value;
+        leftDropKeyLocked = value;
+        rightDropKeyLocked = value;
+        combineKeyLocked = value;
+        getHintKeyLocked = value;
+        pickObjectViewKeyLocked = value;
+        leftUseKeyLocked = value;
+        rightUseKeyLocked = value;
+        controls.keyPreferences.SetAllLocked(value);
     }
 
    /* void OnGUI()

@@ -233,7 +233,15 @@ public class CameraMode : MonoBehaviour {
         else if (currentMode == Mode.Cinematic && mode == Mode.Free)
         {
             playerScript.mouseLook.SetMode(false);
-            playerScript.tutorial_movementLock = false;
+            if (GameObject.Find("GameLogic").GetComponent<TutorialManager>() != null)
+            {
+                playerScript.tutorial_movementLock =
+                    GameObject.Find("GameLogic").GetComponent<TutorialManager>().movementLock;
+            }
+            else
+            {
+                playerScript.tutorial_movementLock = false;
+            }
             playerScript.mouseLook.clampHorisontalRotation = false;
             playerScript.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
         }
