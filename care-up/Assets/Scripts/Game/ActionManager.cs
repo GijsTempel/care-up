@@ -37,6 +37,7 @@ public class ActionManager : MonoBehaviour {
     private List<Action> actionList = new List<Action>();
     // list of descriptions of steps, player got penalty on
     private List<string> wrongStepsList = new List<string>();
+    private List<string> wrongStepsDescriptionList = new List<string>();
 
     private int totalPoints = 0;         // max points of scene
     private int points = 0;              // current points
@@ -55,15 +56,14 @@ public class ActionManager : MonoBehaviour {
     /// <summary>
     /// List of wrong steps, merged into a string with line breaks.
     /// </summary>
-    public string WrongSteps
+    public List<string> WrongSteps
     {
-        get
-        {
-            string wrongSteps = "";
-            foreach (string step in wrongStepsList)
-                wrongSteps += step + "\n";
-            return wrongSteps;
-        }
+        get { return wrongStepsList; }
+    }
+
+    public List<string> WrongStepsDescription
+    {
+        get { return wrongStepsDescriptionList; }
     }
 
     /// <summary>
@@ -475,6 +475,7 @@ public class ActionManager : MonoBehaviour {
                 wrongStepsList.Find(step => step == sublist[0].description) == null )
             {
                 wrongStepsList.Add(sublist[0].description);
+                wrongStepsDescriptionList.Add(sublist[0].description);
             }
             Narrator.PlaySound("WrongAction");
         }

@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 /// <summary>
 /// Handles EndScore scene.
@@ -11,8 +12,10 @@ public class EndScoreManager : MonoBehaviour {
     private int points;
     private int score;
     private float time;
-    private string wrongSteps;
     private string completedSceneName;
+    
+    private List<string> wrongSteps;
+    private List<string> wrongStepsDescr;
 
     private ActionManager actionManager;    //points, steps
     private GameTimer gameTimer; // time
@@ -34,7 +37,18 @@ public class EndScoreManager : MonoBehaviour {
             uiFolder.GetChild(0).FindChild("Score").GetComponent<Text>().text = "Score: " + score;
             uiFolder.GetChild(0).FindChild("Points").GetComponent<Text>().text = "Points: " + points;
             uiFolder.GetChild(0).FindChild("Time").GetComponent<Text>().text = string.Format("Time: {0}:{1:00}", (int)time / 60, (int)time % 60);
-            uiFolder.GetChild(1).FindChild("Steps").GetComponent<Text>().text = wrongSteps;
+
+            //uiFolder.GetChild(1).FindChild("Steps").GetComponent<Text>().text = wrongSteps;
+
+            Transform layoutGroup = uiFolder.GetChild(1).FindChild("LayoutGroup");
+            GameObject[] stepObjects = layoutGroup.GetComponentsInChildren<GameObject>();
+
+            for (int i = 0; i < wrongSteps.Count && i < stepObjects.Length; ++i)
+            {
+                stepObjects[i].GetComponent<Text>().text = wrongSteps[i];
+                stepObjects[i].GetComponent<EndScoreWrongStepDescr>().text = wrongStepsDescr[i];
+                stepObjects[i].SetActive(true);
+            }
 
             if (score >= 1)
             {
@@ -73,8 +87,10 @@ public class EndScoreManager : MonoBehaviour {
         points = actionManager.Points;
         score = Mathf.FloorToInt(5.0f * points / actionManager.TotalPoints);
         time = gameTimer.CurrentTime;
-        wrongSteps = actionManager.WrongSteps;
         completedSceneName = SceneManager.GetActiveScene().name;
+        
+        wrongSteps = actionManager.WrongSteps;
+        wrongStepsDescr = actionManager.WrongStepsDescription;
 
         GameObject.Find("Preferences").GetComponent<LoadingScreen>().LoadLevel("EndScore");
         //SceneManager.LoadScene("EndScore");
