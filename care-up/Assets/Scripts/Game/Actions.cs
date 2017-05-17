@@ -10,6 +10,7 @@ public abstract class Action
     public bool matched = false;
     public string description;
     public string audioHint;
+    public string extraDescr;
 
     protected ActionManager.ActionType type;
     
@@ -33,12 +34,13 @@ public abstract class Action
     /// <param name="index">Index of action (see xml)</param>
     /// <param name="descr">Sentence from xml, describing action</param>
     /// <param name="audio">Name of audiofile, that will be played when hint used</param>
-    public Action(ActionManager.ActionType t, int index, string descr, string audio)
+    public Action(ActionManager.ActionType t, int index, string descr, string audio, string extra)
     {
         type = t;
         subindex = index;
         description = descr;
         audioHint = audio;
+        extraDescr = extra;
     }
     
     /// <summary>
@@ -59,8 +61,8 @@ public class CombineAction : Action
     private string leftInput;
     private string rightInput;
 
-    public CombineAction(string left, string right, int index, string descr, string audio)
-        : base(ActionManager.ActionType.ObjectCombine, index, descr, audio)
+    public CombineAction(string left, string right, int index, string descr, string audio, string extra)
+        : base(ActionManager.ActionType.ObjectCombine, index, descr, audio, extra)
     {
         leftInput = left;
         rightInput = right;
@@ -105,8 +107,8 @@ public class UseAction : Action
 {
     private string useInput;
 
-    public UseAction(string use, int index, string descr, string audio)
-        : base(ActionManager.ActionType.ObjectUse, index, descr, audio)
+    public UseAction(string use, int index, string descr, string audio, string extra)
+        : base(ActionManager.ActionType.ObjectUse, index, descr, audio, extra)
     {
         useInput = use;
     }
@@ -144,8 +146,8 @@ public class TalkAction : Action
     private string topicInput;
     private string person = "Patient"; // TODO
 
-    public TalkAction(string topic, int index, string descr, string audio)
-        : base(ActionManager.ActionType.PersonTalk, index, descr, audio)
+    public TalkAction(string topic, int index, string descr, string audio, string extra)
+        : base(ActionManager.ActionType.PersonTalk, index, descr, audio, extra)
     {
         topicInput = topic;
     }
@@ -183,8 +185,8 @@ public class UseOnAction : Action
     private string item;
     private string target;
 
-    public UseOnAction(string i, string t, int index, string descr, string audio)
-        : base(ActionManager.ActionType.ObjectUseOn, index, descr, audio)
+    public UseOnAction(string i, string t, int index, string descr, string audio, string extra)
+        : base(ActionManager.ActionType.ObjectUseOn, index, descr, audio, extra)
     {
         item = i;
         target = t;
@@ -229,8 +231,8 @@ public class ExamineAction : Action
     private string item;
     private string expected;
 
-    public ExamineAction(string i, string exp, int index, string descr, string audio)
-        : base(ActionManager.ActionType.ObjectExamine, index, descr, audio)
+    public ExamineAction(string i, string exp, int index, string descr, string audio, string extra)
+        : base(ActionManager.ActionType.ObjectExamine, index, descr, audio, extra)
     {
         item = i;
         expected = exp;
@@ -268,8 +270,8 @@ public class PickUpAction : Action
 {
     private string item;
 
-    public PickUpAction(string i, int index, string descr, string audio)
-        : base(ActionManager.ActionType.PickUp, index, descr, audio)
+    public PickUpAction(string i, int index, string descr, string audio, string extra)
+        : base(ActionManager.ActionType.PickUp, index, descr, audio, extra)
     {
         item = i;
     }
@@ -298,8 +300,8 @@ public class SequenceStepAction : Action
 {
     private string stepName;
 
-    public SequenceStepAction(string name, int index, string descr, string audio)
-        : base(ActionManager.ActionType.SequenceStep, index, descr, audio)
+    public SequenceStepAction(string name, int index, string descr, string audio, string extra)
+        : base(ActionManager.ActionType.SequenceStep, index, descr, audio, extra)
     {
         stepName = name;
     }

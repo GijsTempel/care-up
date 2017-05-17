@@ -209,38 +209,44 @@ public class ActionManager : MonoBehaviour {
             string descr = action.Attributes["description"].Value;
             string audio = action.Attributes["audioHint"].Value;
 
+            string extra = "";
+            if (action.Attributes["extra"] != null)
+            {
+                extra = action.Attributes["extra"].Value;
+            }
+
             switch (type)
             {
                 case "combine":
                     string left = action.Attributes["left"].Value;
                     string right = action.Attributes["right"].Value;
-                    actionList.Add(new CombineAction(left, right, index, descr, audio));
+                    actionList.Add(new CombineAction(left, right, index, descr, audio, extra));
                     break;
                 case "use":
                     string use = action.Attributes["value"].Value;
-                    actionList.Add(new UseAction(use, index, descr, audio));
+                    actionList.Add(new UseAction(use, index, descr, audio, extra));
                     break;
                 case "talk":
                     string topic = action.Attributes["topic"].Value;
-                    actionList.Add(new TalkAction(topic, index, descr, audio));
+                    actionList.Add(new TalkAction(topic, index, descr, audio, extra));
                     break;
                 case "useOn":
                     string useItem = action.Attributes["item"].Value;
                     string target = action.Attributes["target"].Value;
-                    actionList.Add(new UseOnAction(useItem, target, index, descr, audio));
+                    actionList.Add(new UseOnAction(useItem, target, index, descr, audio, extra));
                     break;
                 case "examine":
                     string exItem = action.Attributes["item"].Value;
                     string expected = action.Attributes["expected"].Value;
-                    actionList.Add(new ExamineAction(exItem, expected, index, descr, audio));
+                    actionList.Add(new ExamineAction(exItem, expected, index, descr, audio, extra));
                     break;
                 case "pickUp":
                     string itemPicked = action.Attributes["item"].Value;
-                    actionList.Add(new PickUpAction(itemPicked, index, descr, audio));
+                    actionList.Add(new PickUpAction(itemPicked, index, descr, audio, extra));
                     break;
                 case "sequenceStep":
                     string stepName = action.Attributes["value"].Value;
-                    actionList.Add(new SequenceStepAction(stepName, index, descr, audio));
+                    actionList.Add(new SequenceStepAction(stepName, index, descr, audio, extra));
                     break;
                 default:
                     Debug.LogError("No action type found: " + type);
@@ -475,7 +481,7 @@ public class ActionManager : MonoBehaviour {
                 wrongStepsList.Find(step => step == sublist[0].description) == null )
             {
                 wrongStepsList.Add(sublist[0].description);
-                wrongStepsDescriptionList.Add(sublist[0].description);
+                wrongStepsDescriptionList.Add(sublist[0].extraDescr);
             }
             Narrator.PlaySound("WrongAction");
         }

@@ -41,13 +41,12 @@ public class EndScoreManager : MonoBehaviour {
             //uiFolder.GetChild(1).FindChild("Steps").GetComponent<Text>().text = wrongSteps;
 
             Transform layoutGroup = uiFolder.GetChild(1).FindChild("LayoutGroup");
-            GameObject[] stepObjects = layoutGroup.GetComponentsInChildren<GameObject>();
+            EndScoreWrongStepDescr[] stepObjects = layoutGroup.GetComponentsInChildren<EndScoreWrongStepDescr>();
 
             for (int i = 0; i < wrongSteps.Count && i < stepObjects.Length; ++i)
             {
                 stepObjects[i].GetComponent<Text>().text = wrongSteps[i];
-                stepObjects[i].GetComponent<EndScoreWrongStepDescr>().text = wrongStepsDescr[i];
-                stepObjects[i].SetActive(true);
+                stepObjects[i].text = wrongStepsDescr[i];
             }
 
             if (score >= 1)
