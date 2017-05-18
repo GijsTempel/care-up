@@ -134,6 +134,8 @@ public class TutorialManager : MonoBehaviour {
                     else
                     {
                         SetAllKeysLocked(true);
+                        controls.keyPreferences.mouseClickLocked = mouseClickLocked = false;
+                        controls.keyPreferences.mouseClickKey.locked = false;
                         player.tutorial_movementLock = movementLock = true;
                         UItext.text = "Welkom bij Care-Up";
                         SetPauseTimer(3.0f);
@@ -165,8 +167,6 @@ public class TutorialManager : MonoBehaviour {
                         tableTrigger.gameObject.SetActive(false);
                         player.tutorial_movementLock = movementLock = true;
                         currentStep = TutorialStep.UseHandCleaner;
-                        controls.keyPreferences.mouseClickLocked = mouseClickLocked = false;
-                        controls.keyPreferences.mouseClickKey.locked = false;
                         controls.keyPreferences.closeObjectView.locked = closeObjectViewLocked = false;
                         particleHint.transform.position = handCleaner.transform.position;
                         UItext.text = "Oplichtende voorwerpen met een hand icoon kunnen worden gebruikt door ernaar te kijken en te drukken op de linkermuisknop. Laten we onze handen wassen met de hygienepomp";
