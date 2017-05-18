@@ -388,7 +388,7 @@ public class ActionManager : MonoBehaviour {
     {
         string[] info = { item, target };
         bool occured = Check(info, ActionType.ObjectUseOn);
-        points += occured ? 1 : (target == "" ? 0 : 1);
+        points += occured ? 1 : (target == "" ? 0 : -1);
      
         Debug.Log("Use " + item + " on " + target + " with result " + occured);
 
