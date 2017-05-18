@@ -253,7 +253,16 @@ public class ActionManager : MonoBehaviour {
                     break;
             }
         }
-        totalPoints = actionList.Count();
+
+        if (xmlFile.FirstChild.NextSibling.Attributes["points"] != null)
+        {
+            totalPoints = int.Parse(xmlFile.FirstChild.NextSibling.Attributes["points"].Value);
+        }
+        else
+        {
+            totalPoints = actionList.Count();
+        }
+
         currentAction = actionList.First();
 
         if (GameObject.Find("PointsText") != null)
