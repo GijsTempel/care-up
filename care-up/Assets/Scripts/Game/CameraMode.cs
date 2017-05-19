@@ -98,6 +98,7 @@ public class CameraMode : MonoBehaviour {
                 else
                 {
                     doorSelected = controls.SelectedObject.GetComponent<SystemObject>();
+                    doorSelected.Use();
                 }
             }
         }
@@ -213,8 +214,6 @@ public class CameraMode : MonoBehaviour {
         else if (currentMode == Mode.Free && mode == Mode.ConfirmUI)
         {
             TogglePlayerScript(false);
-            //confirmUI.transform.position = doorSelected.transform.position;
-            //confirmUI.transform.rotation = doorSelected.transform.rotation;
             confirmUI.transform.position = Camera.main.transform.position + Camera.main.transform.forward * (0.3f);
             confirmUI.transform.rotation = Camera.main.transform.rotation;
             confirmUI.SetActive(true);

@@ -27,20 +27,10 @@ public class SystemObject : InteractableObject {
         }
     }
 
-    protected override void Update()
-    {
-        base.Update();
-
-        if (controls.MouseClicked() && controls.SelectedObject == gameObject && controls.CanInteract )
-        {
-            Use();
-        }
-    }
-
     // called when player interacts with object
     public virtual void Use(bool confirmed = false)
     {
-        if (name == "Start")
+        if (sceneName == "_Start")
         {
             // temporary until scene selection is designed
             loadingScreen.LoadLevel("Tutorial");
