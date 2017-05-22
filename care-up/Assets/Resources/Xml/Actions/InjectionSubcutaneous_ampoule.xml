@@ -30,18 +30,33 @@
 		
 	<action description="Step 8: Ask the patient to roll up his/her sleeve and show his/her arm." audioHint="InjectionSubcutaneous/Step 8"
 		index="10" type="talk" topic="RollUpSleeves"></action>
-	
-	<action description="Step 10: Inject medicine into hand"	audioHint="InjectionSubcutaneous/Step 10"
-		index="11" type="useOn" item="SyringeWithInjectionNeedle" target="Hand"></action>
+
+  <action description="Step 9: Inject medicine into hand"	audioHint="InjectionSubcutaneous/Step 10"
+		index="12" type="useOn" item="SyringeWithInjectionNeedle" target="Patient"></action>
+
+  <action description="Take syringe in injecting hand and remove needlecap" audioHint="Injection/AS1-2"
+		index="13" type="sequenceStep" value="Remove Cap" extra="inj1"></action>
+  <action description="Grab skin crease with non injection hand" audioHint="Injection/AS1-2"
+		index="14" type="sequenceStep" value="Grab crease" extra="inj2"></action>
+  <action description="Inject needle under an angle of 45 to 60 degree" audioHint="Injection/AS1-2"
+		index="15" type="sequenceStep" value="Inject Needle" extra="inj3"></action>
+  <action description="Release skin crease" audioHint="Injection/AS1-2"
+		index="16" type="sequenceStep" value="Release crease" extra="inj4"></action>
+  <action description="Fixate syringe and needle" audioHint="Injection/AS1-2"
+		index="17" type="sequenceStep" value="Fixate needle" extra="inj5"></action>
+  <action description="Inject medicine slow and steady" audioHint="Injection/AS1-2"
+		index="18" type="sequenceStep" value="Inject medicine" extra="inj6"></action>
+  <action description="Pull needle out of skin" audioHint="Injection/AS1-2"
+		index="19" type="sequenceStep" value="Pull needle" extra="inj7"></action>
 	
 	<action description="Step 17: Remove the injection needle" audioHint="InjectionSubcutaneous/Step 17"
-		index="12" type="combine" left="SyringeWithInjectionNeedle" right=""></action>
+		index="20" type="combine" left="SyringeWithInjectionNeedle" right=""></action>
 	<action description="Step 17: Put the needle in the needle cup (trashcan for needles)" audioHint="InjectionSubcutaneous/Step 17.2"
-		index="13" type="useOn" item="InjectionNeedle" target="NeedleCup"></action>
+		index="21" type="useOn" item="InjectionNeedle" target="NeedleCup"></action>
 	<action description="Step 18: Clean up the materials you used."  audioHint="InjectionSubcutaneous/Step 18"
-		index="14" type="use" value="WorkField"></action>
+		index="22" type="use" value="WorkField"></action>
 	<action description="Step 19: Preform hand hygiene" audioHint="InjectionSubcutaneous/Step 19"
-		index="15" type="use" value="HandCleaner"></action>
+		index="23" type="use" value="HandCleaner"></action>
     <action description="Step 20: Write down information" audioHint="InjectionSubcutaneous/Step 20"
-        index="16" type="use" value="PaperAndPen"></action>
+        index="24" type="use" value="PaperAndPen"></action>
 </ActionList>
