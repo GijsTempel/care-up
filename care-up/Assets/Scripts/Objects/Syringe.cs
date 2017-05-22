@@ -73,8 +73,10 @@ public class Syringe : PickableObject {
                         SceneManager.GetActiveScene().name == "Injection Subcutaneous_ampoule" ||
                         SceneManager.GetActiveScene().name == "Injection Subcutaneous_desolve")
                     {
-                        AnimationSequence animationSequence = new AnimationSequence("SubcutaneousInjection");
-                        animationSequence.NextStep();
+                        Transform target = controls.SelectedObject.GetComponent<PersonObjectPart>().Person;
+                        target.GetComponent<InteractableObject>().Reset();
+                        controls.ResetObject();
+                        PlayerAnimationManager.PlayAnimationSequence("SubcutaneousInjection", target);
                     }
                     else if (SceneManager.GetActiveScene().name == "Injection Subcutaneous v2" ||
                         SceneManager.GetActiveScene().name == "Injection Subcutaneous v2_ampoule" ||
