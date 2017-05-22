@@ -85,8 +85,10 @@ public class Syringe : PickableObject {
                     }
                     else if (SceneManager.GetActiveScene().name == "Injection scene v2")
                     {
-                        AnimationSequence animationSequence = new AnimationSequence("Injection v2");
-                        animationSequence.NextStep();
+                        Transform target = controls.SelectedObject.GetComponent<PersonObjectPart>().Person;
+                        target.GetComponent<InteractableObject>().Reset();
+                        controls.ResetObject();
+                        PlayerAnimationManager.PlayAnimationSequence("Injection v2", target);
                     }
                     return true;
                 }
