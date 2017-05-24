@@ -61,7 +61,7 @@ public class PersonObject : InteractableObject {
                     direction = !direction;
                 }
             }
-            transform.parent.localScale = Vector3.one * inhaleCounter;
+            transform.localScale = Vector3.one * inhaleCounter;
         }
     }
 

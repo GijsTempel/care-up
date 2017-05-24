@@ -95,7 +95,7 @@ public class CameraMode : MonoBehaviour {
                     selectedObject.OnExamine();
                     controls.ResetObject();
                 }
-                else
+                else if (controls.SelectedObject.GetComponent<SystemObject>() != null)
                 {
                     doorSelected = controls.SelectedObject.GetComponent<SystemObject>();
                     doorSelected.Use();
