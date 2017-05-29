@@ -115,22 +115,27 @@ public class PickableObject : InteractableObject {
                     return true;
                 }
             }
-            else if (name == "PrickingPen" && controls.SelectedObject.name == "Finger")
+            else if (name == "PrickingPen" && controls.SelectedObject.GetComponent<PersonObjectPart>() != null
+                && controls.SelectedObject.GetComponent<PersonObjectPart>().Person.name == "Patient")
             {
                 info = actionManager.CurrentUseOnInfo;
-                if (info[0] == "PrickingPen" && info[1] == "Finger")
+                if (info[0] == "PrickingPen" && info[1] == "Patient")
                 {
-                    actionManager.OnUseOnAction("PrickingPen", "Finger");
-                    AnimationSequence animationSequence;
+                    actionManager.OnUseOnAction("PrickingPen", "Patient");
                     if ( SceneManager.GetActiveScene().name == "Measuring Blood Glucose(Haemogluco)")
                     {
-                        animationSequence = new AnimationSequence("MeasureBloodGlucose(haemogluco)");
+                        Transform target = controls.SelectedObject.GetComponent<PersonObjectPart>().Person;
+                        target.GetComponent<InteractableObject>().Reset();
+                        controls.ResetObject();
+                        PlayerAnimationManager.PlayAnimationSequence("MeasureBloodGlucose(Haemogluco)", target);
                     }
                     else
                     {
-                        animationSequence = new AnimationSequence("MeasureBloodGlucose");
+                        Transform target = controls.SelectedObject.GetComponent<PersonObjectPart>().Person;
+                        target.GetComponent<InteractableObject>().Reset();
+                        controls.ResetObject();
+                        PlayerAnimationManager.PlayAnimationSequence("MeasureBloodGlucose", target);
                     }
-                    animationSequence.NextStep();
                     return true;
                 }
             }

@@ -17,27 +17,38 @@
 	
 	<action description="Step 7: put on gloves" audioHint="MeasureBloodGlucose/Step 7"
 		index="6" type="useOn" item="Gloves" target="" />
-	<action description="Step 8: Check if injectionspot is warm" audioHint="MeasureBloodGlucose/Step 8"
-		index="7" type="examine" item="Finger" expected="warm" />
 	
 	<action description="Step 9: Inject pricking pen on the side of the finger top" audioHint="MeasureBloodGlucose/Step 9"
-		index="8" type="useOn" item="PrickingPen" target="Finger" />
-	
-	<action description="Step 10: Read the blood glucose values of the blood glucose measuring tool" audioHint="MeasureBloodGlucose/Step 10"
-		index="9" type="combine" left="TestStripCasing" right="TestStrips" />
+		index="7" type="useOn" item="PrickingPen" target="Patient" />
+
+  <action description="Inject prickingpen on the side of the finger top" audioHint="Injection/AS1-2"
+		index="8" type="sequenceStep" value="Inject Pricking pen" extra="inj1" />
+  <action description="Do NOT push the vinger to get blood droplet" audioHint="Injection/AS1-2"
+      index="9" type="sequenceStep" value="NotPushVinger" extra="inj1" />
+  <action description="Whipe away the first blood droplet away with cloth" audioHint="Injection/AS1-2"
+		index="10" type="sequenceStep" value="WhipeBloodDroplet" extra="inj1" />
+  <action description="Fill teststrip with the blood drop, filling the whole testfield of the teststrip" audioHint="Injection/AS1-2"
+		index="11" type="sequenceStep" value="FillTestStrip" extra="inj1" />
+  <action description="Wait for one minute and remove the blood of the testfield" audioHint="Injection/AS1-2"
+		index="12" type="sequenceStep" value="WaitAndRemoveBlood" extra="inj1" />
+  <action description="Wait another minute" audioHint="Injection/AS1-2"
+		index="13" type="sequenceStep" value="WaitAnotherMinute_heamogluco" extra="inj1" />
+
+  <action description="Step 10: Read the blood glucose values of the blood glucose measuring tool" audioHint="MeasureBloodGlucose/Step 10"
+		index="14" type="combine" left="TestStripCasing" right="TestStrips" />
 	<action description="Step 11: write down the 2 values on a paper " audioHint="MeasureBloodGlucose/Step 11"
-		index="10" type="use" value="PaperAndPen" />
+		index="15" type="use" value="PaperAndPen" />
 	<action description="Step 12: Throw teststrip in the needle trashcan" audioHint="MeasureBloodGlucose/Step 12"
-		index="11" type="useOn" item="TestStrips" target="NeedleCup" />
+		index="16" type="useOn" item="TestStrips" target="NeedleCup" />
 	<action description="Step 13: Remove lancet from pricking pen" audioHint="MeasureBloodGlucose/Step 13"
-		index="12" type="combine" left="PrickingPen" right="" />
+		index="17" type="combine" left="PrickingPen" right="" />
 	<action description="Step 14: Throw lancet in the needle trashcan" audioHint="MeasureBloodGlucose/Step 14"
-		index="13" type="useOn" item="Lancet" target="NeedleCup" />
+		index="18" type="useOn" item="Lancet" target="NeedleCup" />
 	
 	<action description="Step 15: Remove gloves"  audioHint="MeasureBloodGlucose/Step 15"
-		index="14" type="useOn" item="" target="" />
+		index="19" type="useOn" item="" target="" />
 	<action description="Step 16: Preform hand hygiene" audioHint="MeasureBloodGlucose/Step 16"
-		index="15" type="use" value="HandCleaner" />
+		index="20" type="use" value="HandCleaner" />
 	<action description="Step 17: Write down values" audioHint="MeasureBloodGlucose/Step 17"
-		index="16" type="use" value="PaperAndPen" />
+		index="21" type="use" value="PaperAndPen" />
 </ActionList>

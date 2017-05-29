@@ -39,7 +39,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1692142691652964}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.969, y: 2.383, z: -8.518}
+  m_LocalPosition: {x: 10.168612, y: 2.004, z: 11.831793}
   m_LocalScale: {x: 0.1, y: 0.05, z: 0.3}
   m_Children: []
   m_Father: {fileID: 0}
@@ -75,6 +75,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!33 &33683224021615384
 MeshFilter:
@@ -97,7 +98,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!65 &65325623597621946
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -122,7 +123,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   description: 
-  rotationInHand: {x: 0, y: 0, z: 0}
+  muplipleMesh: 0
+  descriptionOffset: {x: 0, y: 0, z: 0}
+  basic: {fileID: 0}
+  inHand: {fileID: 0}
+  controlBone: {fileID: 0}
 --- !u!114 &114909126085833910
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -135,6 +140,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   description: 
+  muplipleMesh: 0
+  descriptionOffset: {x: 0, y: 0, z: 0}
+  tutorial_picked: 0
+  tutorial_closed: 0
+  examineRotation: {x: 0, y: 0, z: 0}
+  audioExamine: 0
   viewSettings:
     distanceFromCamera: 4
     rotationSensetivity: 90
