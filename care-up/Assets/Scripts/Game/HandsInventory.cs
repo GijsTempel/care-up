@@ -180,7 +180,7 @@ public class HandsInventory : MonoBehaviour {
             {
                 if (leftHandObject != null)
                 {
-                    if (leftHandObject.Use())
+                    if (leftHandObject.Use(false))
                     {
                         tutorial_itemUsedOn = true;
                     }
@@ -197,7 +197,7 @@ public class HandsInventory : MonoBehaviour {
             {
                 if (rightHandObject)
                 {
-                    if (rightHandObject.Use())
+                    if (rightHandObject.Use(true))
                     {
                         tutorial_itemUsedOn = true;
                     }
@@ -316,8 +316,28 @@ public class HandsInventory : MonoBehaviour {
         if (rightHandObject)
             SetHold(false);
 
+        UpdateHoldAnimation();
+    }
+
+    public void UpdateHoldAnimation()
+    {
         PlayerAnimationManager.SetHandItem(true, leftHandObject ? leftHandObject.name : "");
         PlayerAnimationManager.SetHandItem(false, rightHandObject ? rightHandObject.name : "");
+    }
+
+    public void RemoveHandObject(bool hand)
+    {
+        if (!hand)
+        {
+            Destroy(leftHandObject.gameObject);
+            leftHandObject = null;
+        }
+        else
+        {
+            Destroy(rightHandObject.gameObject);
+            rightHandObject = null;
+        }
+        UpdateHoldAnimation();
     }
 
     /// <summary>

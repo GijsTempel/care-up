@@ -48,7 +48,7 @@ public class Syringe : PickableObject {
         }
     }
 
-    public override bool Use()
+    public override bool Use(bool hand = false)
     {
         string[] info = actionManager.CurrentUseOnInfo;
         if (controls.SelectedObject != null && controls.CanInteract)

@@ -87,7 +87,7 @@ public class PickableObject : InteractableObject {
     /// Handle using of an object on another one.
     /// </summary>
     /// <returns>True if used</returns>
-    public virtual bool Use()
+    public virtual bool Use(bool hand)
     {
         string[] info = actionManager.CurrentUseOnInfo;
         if (controls.SelectedObject != null && controls.CanInteract)
@@ -96,12 +96,12 @@ public class PickableObject : InteractableObject {
                 || name == "TestStrips" || name == "Lancet" || name == "NeedleHolderWithNeedle")
                 && controls.SelectedObject.name == "NeedleCup")
             {
-                Destroy(gameObject);
+                inventory.RemoveHandObject(hand);
             }
             else if ((name == "Pad" || name == "Tourniquet") && 
                 controls.SelectedObject.name == "Person")
             {
-                Destroy(gameObject);
+                inventory.RemoveHandObject(hand);
             }
             else if (name == "BandAid" && controls.SelectedObject.name == "Hand")
             {
