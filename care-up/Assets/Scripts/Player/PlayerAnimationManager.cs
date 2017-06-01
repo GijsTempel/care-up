@@ -71,6 +71,10 @@ public class PlayerAnimationManager : MonoBehaviour {
             case "DesinfectionCloth":
                 itemID = 6;
                 break;
+            case "Ampoule":
+            case "OpenedAmpoule":
+                itemID = 7;
+                break;
             default:
                 itemID = 0;
                 break;
