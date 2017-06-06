@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.IO;
+using CareUp.Actions;
 
 /// <summary>
 /// Handles saving/loading game state.

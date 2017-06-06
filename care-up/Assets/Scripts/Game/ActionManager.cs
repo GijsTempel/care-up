@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using CareUpActions;
+using CareUp.Actions;
 
 /// <summary>
 /// GameLogic script. Everything about actions is managed by this script.

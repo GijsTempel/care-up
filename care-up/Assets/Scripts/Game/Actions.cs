@@ -2,7 +2,7 @@
 using System.Collections;
 using System;
 
-namespace CareUpActions
+namespace CareUp.Actions
 {
     /// <summary>
     /// Abstract class Action. Inherit every time of action from this one.
