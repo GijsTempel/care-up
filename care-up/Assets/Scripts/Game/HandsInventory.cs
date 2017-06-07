@@ -340,6 +340,76 @@ public class HandsInventory : MonoBehaviour {
         UpdateHoldAnimation();
     }
 
+    public void ReplaceHandObject(bool hand, string name)
+    {
+        if (!hand)
+        {
+            Vector3 leftSavedPos = Vector3.zero;
+            Quaternion leftSavedRot = Quaternion.identity;
+            leftHandObject.GetSavesLocation(out leftSavedPos, out leftSavedRot);
+            
+            Vector3 plungerPosition = new Vector3();
+            if (leftHandObject.GetComponent<Syringe>() != null)
+            {
+                plungerPosition = leftHandObject.GetComponent<Syringe>().PlungerPosition;
+            }
+
+            Destroy(leftHandObject.gameObject);
+            leftHandObject = null;
+
+            PlayerAnimationManager.SetHandItem(true, name);
+
+            GameObject leftObject = CreateObjectByName(name, Vector3.zero);
+            leftHandObject = leftObject.GetComponent<PickableObject>();
+            leftHandObject.controlBone = leftControlBone;
+            SetHold(true);
+
+            if (leftSavedPos != Vector3.zero)
+            {
+                leftHandObject.SavePosition(leftSavedPos, leftSavedRot);
+            }
+
+            if (leftHandObject.GetComponent<Syringe>() != null)
+            {
+                leftHandObject.GetComponent<Syringe>().PlungerPosition = plungerPosition;
+            }
+        }
+        else
+        {
+            Vector3 rightSavedPos = Vector3.zero;
+            Quaternion rightSavedRot = Quaternion.identity;
+            rightHandObject.GetSavesLocation(out rightSavedPos, out rightSavedRot);
+
+            Vector3 plungerPosition = new Vector3();
+            if (rightHandObject.GetComponent<Syringe>() != null)
+            {
+                plungerPosition = rightHandObject.GetComponent<Syringe>().PlungerPosition;
+            }
+
+            Destroy(rightHandObject.gameObject);
+            rightHandObject = null;
+
+            PlayerAnimationManager.SetHandItem(true, name);
+
+            GameObject rightObject = CreateObjectByName(name, Vector3.zero);
+            rightHandObject = rightObject.GetComponent<PickableObject>();
+            rightHandObject.controlBone = rightControlBone;
+            SetHold(true);
+
+            if (rightSavedPos != Vector3.zero)
+            {
+                rightHandObject.SavePosition(rightSavedPos, rightSavedRot);
+            }
+
+            if (rightHandObject.GetComponent<Syringe>() != null)
+            {
+                rightHandObject.GetComponent<Syringe>().PlungerPosition = plungerPosition;
+            }
+        }
+
+        UpdateHoldAnimation();
+    }
+
     /// <summary>
     /// After combining a new object can appear on the scene.
     /// </summary>

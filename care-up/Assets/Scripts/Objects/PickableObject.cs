@@ -103,6 +103,10 @@ public class PickableObject : InteractableObject {
             {
                 inventory.RemoveHandObject(hand);
             }
+            else if (name == "ClothWithAmpouleTop" && controls.SelectedObject.name == "NeedleCup")
+            {
+                inventory.ReplaceHandObject(hand, "Cloth");
+            }
             else if (name == "BandAid" && controls.SelectedObject.name == "Hand")
             {
                 info = actionManager.CurrentUseOnInfo;
