@@ -20,11 +20,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4000011655075550}
   - component: {fileID: 33000012240126630}
-  - component: {fileID: 65000950266976714}
   - component: {fileID: 23000011484917258}
   - component: {fileID: 54000011911057652}
   - component: {fileID: 114000010846255532}
   - component: {fileID: 114000013331270568}
+  - component: {fileID: 65815461931592098}
   m_Layer: 0
   m_Name: OpenedAmpoule
   m_TagString: Untagged
@@ -39,8 +39,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012863893672}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.044, y: 2.602, z: -8.31}
-  m_LocalScale: {x: 0.086953394, y: 0.26676345, z: -0.09804505}
+  m_LocalPosition: {x: 9.383147, y: 1.0989919, z: 10.592908}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -58,7 +58,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: ef17bd2ea11bebe48a5a66544ef27e80, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -75,6 +75,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!33 &33000012240126630
 MeshFilter:
@@ -82,7 +83,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012863893672}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: 87c45f9e0912d564b9d59fc1ec653fea, type: 3}
 --- !u!54 &54000011911057652
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -98,7 +99,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &65000950266976714
+--- !u!65 &65815461931592098
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -108,8 +109,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.015566929, y: 0.015566929, z: 0.04114264}
+  m_Center: {x: 0, y: 0, z: -0.012095617}
 --- !u!114 &114000010846255532
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -122,7 +123,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   description: 
-  rotationInHand: {x: 0, y: 0, z: 0}
+  muplipleMesh: 0
+  descriptionOffset: {x: 0, y: 0, z: 0}
+  basic: {fileID: 0}
+  inHand: {fileID: 0}
+  controlBone: {fileID: 0}
 --- !u!114 &114000013331270568
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -135,6 +140,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   description: 
+  muplipleMesh: 0
+  descriptionOffset: {x: 0, y: 0, z: 0}
+  tutorial_picked: 0
+  tutorial_closed: 0
+  examineRotation: {x: 0, y: 0, z: 0}
+  audioExamine: 0
   viewSettings:
     distanceFromCamera: 4
     rotationSensetivity: 90
