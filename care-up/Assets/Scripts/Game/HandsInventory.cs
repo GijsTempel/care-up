@@ -126,7 +126,7 @@ public class HandsInventory : MonoBehaviour {
                     }
                     leftHandObject = null;
                     leftHold = false;
-                    PlayerAnimationManager.SetHandItem(true, "");
+                    PlayerAnimationManager.SetHandItem(true, null);
                 }
             }
 
@@ -144,7 +144,7 @@ public class HandsInventory : MonoBehaviour {
                     }
                     rightHandObject = null;
                     rightHold = false;
-                    PlayerAnimationManager.SetHandItem(false, "");
+                    PlayerAnimationManager.SetHandItem(false, null);
                 }
             }
 
@@ -249,7 +249,7 @@ public class HandsInventory : MonoBehaviour {
                 leftHandObject.controlBone = leftControlBone;
                 actionManager.OnPickUpAction(leftHandObject.name);
                 PlayerAnimationManager.PlayAnimation("LeftPick");
-                PlayerAnimationManager.SetHandItem(true, item.name);
+                PlayerAnimationManager.SetHandItem(true, item.gameObject);
                 leftHold = false;
             }
             else if (rightHandObject == null)
@@ -262,7 +262,7 @@ public class HandsInventory : MonoBehaviour {
                 rightHandObject.controlBone = leftControlBone; // TODO
                 actionManager.OnPickUpAction(rightHandObject.name);
                 PlayerAnimationManager.PlayAnimation("RightPick");
-                PlayerAnimationManager.SetHandItem(false, item.name);
+                PlayerAnimationManager.SetHandItem(false, item.gameObject);
                 rightHold = false;
             }
         }
@@ -278,7 +278,7 @@ public class HandsInventory : MonoBehaviour {
                 leftHandObject.controlBone = leftControlBone;
                 actionManager.OnPickUpAction(leftHandObject.name);
                 PlayerAnimationManager.PlayAnimation("LeftPick");
-                PlayerAnimationManager.SetHandItem(true, item.name);
+                PlayerAnimationManager.SetHandItem(true, item.gameObject);
             }
         }
         else if (hand == "right")
@@ -293,7 +293,7 @@ public class HandsInventory : MonoBehaviour {
                 rightHandObject.controlBone = leftControlBone; // TODO
                 actionManager.OnPickUpAction(rightHandObject.name);
                 PlayerAnimationManager.PlayAnimation("RightPick");
-                PlayerAnimationManager.SetHandItem(false, item.name);
+                PlayerAnimationManager.SetHandItem(false, item.gameObject);
             }
         }
 
@@ -321,8 +321,8 @@ public class HandsInventory : MonoBehaviour {
 
     public void UpdateHoldAnimation()
     {
-        PlayerAnimationManager.SetHandItem(true, leftHandObject ? leftHandObject.name : "");
-        PlayerAnimationManager.SetHandItem(false, rightHandObject ? rightHandObject.name : "");
+        PlayerAnimationManager.SetHandItem(true, leftHandObject == null ? null : leftHandObject.gameObject);
+        PlayerAnimationManager.SetHandItem(false, rightHandObject == null ? null : rightHandObject.gameObject);
     }
 
     public void RemoveHandObject(bool hand)
@@ -356,13 +356,13 @@ public class HandsInventory : MonoBehaviour {
 
             Destroy(leftHandObject.gameObject);
             leftHandObject = null;
-
-            PlayerAnimationManager.SetHandItem(true, name);
-
+            
             GameObject leftObject = CreateObjectByName(name, Vector3.zero);
             leftHandObject = leftObject.GetComponent<PickableObject>();
             leftHandObject.controlBone = leftControlBone;
             SetHold(true);
+
+            PlayerAnimationManager.SetHandItem(true, leftObject);
 
             if (leftSavedPos != Vector3.zero)
             {
@@ -389,12 +389,12 @@ public class HandsInventory : MonoBehaviour {
             Destroy(rightHandObject.gameObject);
             rightHandObject = null;
 
-            PlayerAnimationManager.SetHandItem(true, name);
-
             GameObject rightObject = CreateObjectByName(name, Vector3.zero);
             rightHandObject = rightObject.GetComponent<PickableObject>();
             rightHandObject.controlBone = rightControlBone;
-            SetHold(true);
+            SetHold(false);
+
+            PlayerAnimationManager.SetHandItem(false, rightObject);
 
             if (rightSavedPos != Vector3.zero)
             {
@@ -521,7 +521,7 @@ public class HandsInventory : MonoBehaviour {
             leftHandObject.Drop(true);
             leftHandObject = null;
             leftHold = false;
-            PlayerAnimationManager.SetHandItem(true, "");
+            PlayerAnimationManager.SetHandItem(true, null);
         }
 
         if (rightHandObject)
@@ -530,7 +530,7 @@ public class HandsInventory : MonoBehaviour {
             rightHandObject.Drop(true);
             rightHandObject = null;
             rightHold = false;
-            PlayerAnimationManager.SetHandItem(false, "");
+            PlayerAnimationManager.SetHandItem(false, null);
         }
     }
 
@@ -669,14 +669,14 @@ public class HandsInventory : MonoBehaviour {
                     leftHandObject = null;
                 }
 
-                PlayerAnimationManager.SetHandItem(true, leftCombineResult);
-
                 if (leftCombineResult != "")
                 {
                     GameObject leftObject = CreateObjectByName(leftCombineResult, Vector3.zero);
                     leftHandObject = leftObject.GetComponent<PickableObject>();
                     leftHandObject.controlBone = leftControlBone;
                     SetHold(true);
+
+                    PlayerAnimationManager.SetHandItem(true, leftObject);
 
                     if (leftSavedPos != Vector3.zero)
                     {
@@ -694,6 +694,10 @@ public class HandsInventory : MonoBehaviour {
                         leftHandObject.GetComponent<Syringe>().PlungerPosition = plungerPosition;
                     }
                 }
+                else
+                {
+                    PlayerAnimationManager.SetHandItem(true, null);
+                }
             }
 
             // object changed
@@ -709,14 +713,14 @@ public class HandsInventory : MonoBehaviour {
                     rightHandObject = null;
                 }
 
-                PlayerAnimationManager.SetHandItem(false, rightCombineResult);
-
                 if (rightCombineResult != "")
                 {
                     GameObject rightObject = CreateObjectByName(rightCombineResult, Vector3.zero);
                     rightHandObject = rightObject.GetComponent<PickableObject>();
                     rightHandObject.controlBone = leftControlBone; // TODO
                     SetHold(false);
+
+                    PlayerAnimationManager.SetHandItem(false, rightObject);
 
                     if (rightSavedPos != Vector3.zero)
                     {
@@ -733,6 +737,10 @@ public class HandsInventory : MonoBehaviour {
                     {
                         rightHandObject.GetComponent<Syringe>().PlungerPosition = plungerPosition;
                     }
+                }
+                else
+                {
+                    PlayerAnimationManager.SetHandItem(false, null);
                 }
             }
         }

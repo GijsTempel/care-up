@@ -30,7 +30,7 @@ public class TutorialInjectionSequence : AnimationSequenceState
         else if (frame == takeSyringeFrame)
         {
             inv.ForcePickItem("SyringeWithAbsorptionNeedle", false);
-            PlayerAnimationManager.SetHandItem(false, "SyringeWithAbsorptionNeedle");
+            PlayerAnimationManager.SetHandItem(false, GameObject.Find("SyringeWithAbsorptionNeedle"));
             inv.RightHandObject.GetComponent<Syringe>().updatePlunger = true;
         }
         else if (frame == swapHandsFrame)

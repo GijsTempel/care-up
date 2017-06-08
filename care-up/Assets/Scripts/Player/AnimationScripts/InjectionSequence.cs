@@ -29,7 +29,7 @@ public class InjectionSequence : AnimationSequenceState
         else if (frame == takeSyringeFrame)
         {
             inv.ForcePickItem("SyringeWithInjectionNeedle", false);
-            PlayerAnimationManager.SetHandItem(false, "SyringeWithInjectionNeedle");
+            PlayerAnimationManager.SetHandItem(false, GameObject.Find("SyringeWithInjectionNeedle"));
             inv.RightHandObject.GetComponent<Syringe>().updatePlunger = true;
         }
         else if (frame == swapHandsFrame)
@@ -46,7 +46,7 @@ public class InjectionSequence : AnimationSequenceState
                     if (keyFrame == 0)
                     {
                         inv.ForcePickItem("DesinfectionCloth", false);
-                        PlayerAnimationManager.SetHandItem(false, "DesinfectionCloth");
+                        PlayerAnimationManager.SetHandItem(false, GameObject.Find("DesinfectionCloth"));
                     }
 
                     PlayerAnimationManager.NextSequenceStep(true);

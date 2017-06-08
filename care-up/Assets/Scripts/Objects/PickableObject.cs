@@ -10,11 +10,10 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(Renderer))]
 [RequireComponent(typeof(Rigidbody))]
 public class PickableObject : InteractableObject {
-
-    public Mesh basic;
-    public Mesh inHand;
-
+    
     public Transform controlBone;
+
+    public int holdAnimationID = 0;
     
     protected static HandsInventory inventory;
 
@@ -51,12 +50,6 @@ public class PickableObject : InteractableObject {
     /// <param name="force">If true - forces load position instead of free dropping</param>
     public virtual bool Drop(bool force = false)
     {
-
-        if (basic)
-        {
-            GetComponent<MeshFilter>().mesh = basic;
-        }
-
         gameObject.layer = 0;
         GetComponent<Collider>().enabled = true;
 
@@ -182,10 +175,6 @@ public class PickableObject : InteractableObject {
 
     public virtual void Pick()
     {
-        if(inHand)
-        {
-            GetComponent<MeshFilter>().mesh = inHand;
-        }
         // callback for handling different OnPick mechanics
     }
 }

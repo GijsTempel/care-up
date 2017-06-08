@@ -42,43 +42,16 @@ public class PlayerAnimationManager : MonoBehaviour {
     /// </summary>
     /// <param name="hand">True = left, False = right</param>
     /// <param name="item">Name of the item</param>
-    public static void SetHandItem(bool hand, string item)
+    public static void SetHandItem(bool hand, GameObject item)
     {
         string handName = hand ? "LeftHandState" : "RightHandState";
         int itemID = 0;
 
-        switch (item)
+        if (item != null)
         {
-            case "Alcohol":
-                itemID = 1;
-                break;
-            case "NeedleCup":
-                itemID = 2;
-                break;
-            case "AbsorptionNeedle":
-            case "InjectionNeedle":
-                itemID = 3;
-                break;
-            case "Syringe":
-            case "SyringeWithAbsorptionNeedle":
-            case "SyringeWithInjectionNeedle":
-                itemID = 4;
-                break;
-            case "Medicine":
-                itemID = 5;
-                break;
-            case "Cloth":
-            case "DesinfectionCloth":
-                itemID = 6;
-                break;
-            case "Ampoule":
-            case "OpenedAmpoule":
-                itemID = 7;
-                break;
-            default:
-                itemID = 0;
-                break;
+            itemID = item.GetComponent<PickableObject>().holdAnimationID;
         }
+        else itemID = 0;
 
         animationController.SetInteger(handName, itemID);
     }

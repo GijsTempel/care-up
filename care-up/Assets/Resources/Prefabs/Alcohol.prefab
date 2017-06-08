@@ -21,9 +21,9 @@ GameObject:
   - component: {fileID: 4000013474603844}
   - component: {fileID: 33000011785856660}
   - component: {fileID: 23000011289234144}
-  - component: {fileID: 114000012217981500}
   - component: {fileID: 54000013354198982}
   - component: {fileID: 65111157934068706}
+  - component: {fileID: 114337429439987186}
   m_Layer: 0
   m_Name: Alcohol
   m_TagString: Untagged
@@ -103,6 +103,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!33 &33000011785856660
 MeshFilter:
@@ -138,7 +139,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.10406163, y: 0.08597634, z: 0.26034078}
   m_Center: {x: 0.0000019073486, y: -0.0000019073486, z: -0.0011102782}
---- !u!114 &114000012217981500
+--- !u!114 &114337429439987186
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -146,9 +147,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000011566409918}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9683ce8fd2daab5488955af11cfc9707, type: 3}
+  m_Script: {fileID: 11500000, guid: ea621f565c1a6204f96232546f72405a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   description: Alcohol
   muplipleMesh: 0
-  rotationInHand: {x: 0, y: 0, z: 0}
+  descriptionOffset: {x: 0, y: 0, z: 0}
+  controlBone: {fileID: 0}
+  holdAnimationID: 1
+  basic: {fileID: 4300000, guid: 742cdcdce61d04cd6944fe88b6b65edd, type: 3}
+  inHand: {fileID: 4300000, guid: bcc21012acc1ac5478b231d2991dc465, type: 3}
