@@ -24,7 +24,8 @@ public class InjectionSequence : AnimationSequenceState
     {
         if (frame == dropClothFrame)
         {
-            inv.PutAllOnTable();
+            inv.DeleteAnimationObject();
+            //inv.PutAllOnTable();
         }
         else if (frame == takeSyringeFrame)
         {
@@ -45,8 +46,9 @@ public class InjectionSequence : AnimationSequenceState
                 {
                     if (keyFrame == 0)
                     {
-                        inv.ForcePickItem("DesinfectionCloth", false);
-                        PlayerAnimationManager.SetHandItem(false, GameObject.Find("DesinfectionCloth"));
+                        inv.CreateAnimationObject("Cloth", false);
+                        //inv.ForcePickItem("DesinfectionCloth", false);
+                        //PlayerAnimationManager.SetHandItem(false, GameObject.Find("DesinfectionCloth"));
                     }
 
                     PlayerAnimationManager.NextSequenceStep(true);
