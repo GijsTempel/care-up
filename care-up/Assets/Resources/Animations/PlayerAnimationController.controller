@@ -555,18 +555,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyFrames: 05000000610100009a010000570200005d02000089020000
---- !u!114 &114150959986580672
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4298b1dc010d39c43aeeea5a544c3740, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  combineFrame: 100
 --- !u!114 &114163186900458834
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1287,18 +1275,6 @@ MonoBehaviour:
   audioFrame: 0
   positionObjectName: 
   volume: 1
---- !u!114 &114530713939005968
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4298b1dc010d39c43aeeea5a544c3740, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  combineFrame: 100
 --- !u!114 &114537473875028198
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1323,6 +1299,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combineFrame: 100
+--- !u!114 &114558763301418188
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da9402f26549ae645bd220c7ec33f79d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  combineFrame: 100
+  hand: 0
+  plungerStart: 200
+  plungerEnd: 350
 --- !u!114 &114558884386547538
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1433,6 +1424,21 @@ MonoBehaviour:
   dropClothFrame: 268
   takeSyringeFrame: 311
   swapHandsFrame: 1265
+--- !u!114 &114612848387266286
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da9402f26549ae645bd220c7ec33f79d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  combineFrame: 100
+  hand: 1
+  plungerStart: 200
+  plungerEnd: 350
 --- !u!114 &114619335127782980
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -14357,7 +14363,7 @@ AnimatorState:
   m_Transitions:
   - {fileID: 1101527606989410974}
   m_StateMachineBehaviours:
-  - {fileID: 114150959986580672}
+  - {fileID: 114558763301418188}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -18170,7 +18176,7 @@ AnimatorState:
   m_Transitions:
   - {fileID: 1101144301250214580}
   m_StateMachineBehaviours:
-  - {fileID: 114530713939005968}
+  - {fileID: 114612848387266286}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
