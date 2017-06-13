@@ -188,10 +188,10 @@ public class PersonObject : InteractableObject {
                     {
                         itemDescription.GetComponentInChildren<Text>().text = (description == "") ? name : description;
                         Transform icons = itemDescription.transform.GetChild(0);
-                        icons.FindChild("UseIcon").gameObject.SetActive(gameObject.GetComponent<UsableObject>() != null);
-                        icons.FindChild("TalkIcon").gameObject.SetActive(gameObject.GetComponent<PersonObject>() != null);
-                        icons.FindChild("PickIcon").gameObject.SetActive(gameObject.GetComponent<PickableObject>() != null);
-                        icons.FindChild("ExamIcon").gameObject.SetActive(gameObject.GetComponent<ExaminableObject>() != null);
+                        icons.Find("UseIcon").gameObject.SetActive(gameObject.GetComponent<UsableObject>() != null);
+                        icons.Find("TalkIcon").gameObject.SetActive(gameObject.GetComponent<PersonObject>() != null);
+                        icons.Find("PickIcon").gameObject.SetActive(gameObject.GetComponent<PickableObject>() != null);
+                        icons.Find("ExamIcon").gameObject.SetActive(gameObject.GetComponent<ExaminableObject>() != null);
                         itemDescription.transform.position = transform.position;
                         itemDescription.transform.rotation = Camera.main.transform.rotation;
                         itemDescription.SetActive(true);

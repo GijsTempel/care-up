@@ -34,13 +34,13 @@ public class EndScoreManager : MonoBehaviour {
         {
             Transform uiFolder = GameObject.Find("Canvas").transform;
 
-            uiFolder.GetChild(0).FindChild("Score").GetComponent<Text>().text = "Score: " + score;
-            uiFolder.GetChild(0).FindChild("Points").GetComponent<Text>().text = "Points: " + points;
-            uiFolder.GetChild(0).FindChild("Time").GetComponent<Text>().text = string.Format("Time: {0}:{1:00}", (int)time / 60, (int)time % 60);
+            uiFolder.GetChild(0).Find("Score").GetComponent<Text>().text = "Score: " + score;
+            uiFolder.GetChild(0).Find("Points").GetComponent<Text>().text = "Points: " + points;
+            uiFolder.GetChild(0).Find("Time").GetComponent<Text>().text = string.Format("Time: {0}:{1:00}", (int)time / 60, (int)time % 60);
 
             //uiFolder.GetChild(1).FindChild("Steps").GetComponent<Text>().text = wrongSteps;
 
-            Transform layoutGroup = uiFolder.GetChild(1).FindChild("LayoutGroup");
+            Transform layoutGroup = uiFolder.GetChild(1).Find("LayoutGroup");
             EndScoreWrongStepDescr[] stepObjects = layoutGroup.GetComponentsInChildren<EndScoreWrongStepDescr>();
 
             for (int i = 0; i < wrongSteps.Count && i < stepObjects.Length; ++i)

@@ -22,7 +22,7 @@ public class Syringe : PickableObject {
             }
             else
             {
-                transform.FindChild("syringePlunger").localPosition = value;
+                transform.Find("syringePlunger").localPosition = value;
             }
         }
     }
@@ -31,7 +31,7 @@ public class Syringe : PickableObject {
     {
         base.Start();
 
-        plunger = transform.FindChild("syringePlunger");
+        plunger = transform.Find("syringePlunger");
         if (plunger == null) Debug.LogError("No plunger found!");
     }
 

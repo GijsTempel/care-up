@@ -86,10 +86,10 @@ public class SelectDialogue : MonoBehaviour {
         defaultMaterial = Resources.Load<Material>("Materials/Floor Material");
         correctMaterial = Resources.Load<Material>("Materials/Object Material");
 
-        top = transform.FindChild("Top").GetComponent<Renderer>();
-        bottom = transform.FindChild("Bottom").GetComponent<Renderer>();
-        right = transform.FindChild("Right").GetComponent<Renderer>();
-        left = transform.FindChild("Left").GetComponent<Renderer>();
+        top = transform.Find("Top").GetComponent<Renderer>();
+        bottom = transform.Find("Bottom").GetComponent<Renderer>();
+        right = transform.Find("Right").GetComponent<Renderer>();
+        left = transform.Find("Left").GetComponent<Renderer>();
 
         top.material = defaultMaterial;
         bottom.material = defaultMaterial;

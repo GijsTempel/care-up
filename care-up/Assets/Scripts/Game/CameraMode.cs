@@ -303,7 +303,7 @@ public class CameraMode : MonoBehaviour {
 
         cinematicControl.transform.position =
             Vector3.Lerp(cinematicPos, cinematicTargetPos, cinematicLerp);
-        cinematicControl.FindChild("Arms").transform.rotation =
+        cinematicControl.Find("Arms").transform.rotation =
             Quaternion.Lerp(cinematicRot, cinematicTargetRot, cinematicLerp);
 
         if (cinematicDirection == 1 && cinematicLerp == 1.0f)
@@ -333,9 +333,9 @@ public class CameraMode : MonoBehaviour {
         cinematicDirection = 1;
         cinematicControl = playerScript.transform.GetChild(0);
         cinematicPos = cinematicControl.transform.position;
-        cinematicRot = cinematicControl.FindChild("Arms").transform.rotation;
+        cinematicRot = cinematicControl.Find("Arms").transform.rotation;
 
-        Transform cTarget = target.FindChild("CinematicTarget");
+        Transform cTarget = target.Find("CinematicTarget");
         cinematicTargetRot = cTarget.rotation;
         cinematicTargetPos = cTarget.position;
     }

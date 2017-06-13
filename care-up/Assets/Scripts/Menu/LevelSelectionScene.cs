@@ -40,15 +40,15 @@ public class LevelSelectionScene : MonoBehaviour {
                 if (scene.Attributes["multiple"] != null)
                 {
                     // general name
-                    doors[i].transform.FindChild("Name").gameObject.SetActive(true);
-                    doors[i].transform.FindChild("Name").GetComponent<TextMesh>().text
+                    doors[i].transform.Find("Name").gameObject.SetActive(true);
+                    doors[i].transform.Find("Name").GetComponent<TextMesh>().text
                         = scene.Attributes["name"].Value;
 
                     int count = 0;
                     foreach (XmlNode variation in scene.ChildNodes)
                     {
                         string sceneName = variation.Attributes["name"].Value;
-                        Transform descr = doors[i].transform.FindChild("Description_" + ++count);
+                        Transform descr = doors[i].transform.Find("Description_" + ++count);
                         if (count == 1)
                         {
                             descr.GetComponent<SelectionScene_DoorUI>().sceneName =
@@ -61,34 +61,34 @@ public class LevelSelectionScene : MonoBehaviour {
                             descr.GetComponent<SelectionScene_DoorUI>().sceneName = sceneName;
                         }
 
-                        descr.FindChild("Name").GetComponent<TextMesh>().text 
+                        descr.Find("Name").GetComponent<TextMesh>().text 
                             = variation.Attributes["displayname"].Value;
                         
-                        descr.FindChild("Description").GetComponent<TextMesh>().text 
+                        descr.Find("Description").GetComponent<TextMesh>().text 
                             = variation.Attributes["description"].Value;
 
                         if (ppManager.GetSceneCompleted(sceneName))
                         {
                             string info = ppManager.GetSceneStars(sceneName) + " stars; " +
                                 ppManager.GetSceneTime(sceneName);
-                            descr.FindChild("Result").GetComponent<TextMesh>().text = info;
+                            descr.Find("Result").GetComponent<TextMesh>().text = info;
                         }
                     }
                 }
                 else
                 {
                     doors[i].sceneName = doors[i].description = scene.Attributes["name"].Value;
-                    Transform descr = doors[i].transform.FindChild("Description_1");
-                    descr.FindChild("Name").GetComponent<TextMesh>().text = doors[i].sceneName;
+                    Transform descr = doors[i].transform.Find("Description_1");
+                    descr.Find("Name").GetComponent<TextMesh>().text = doors[i].sceneName;
                     if (scene.Attributes["description"].Value != "")
                     {
-                        descr.FindChild("Description").GetComponent<TextMesh>().text = scene.Attributes["description"].Value;
+                        descr.Find("Description").GetComponent<TextMesh>().text = scene.Attributes["description"].Value;
                     }
                     if (ppManager.GetSceneCompleted(doors[i].sceneName))
                     {
                         string info = ppManager.GetSceneStars(doors[i].sceneName) + " stars; " +
                             ppManager.GetSceneTime(doors[i].sceneName);
-                        descr.FindChild("Result").GetComponent<TextMesh>().text = info;
+                        descr.Find("Result").GetComponent<TextMesh>().text = info;
                     }
                 }
                 ++i;
