@@ -9,17 +9,25 @@ public class ClothObject : PickableObject {
     public Mesh inHand;
     public Mesh folded;
 
+    public enum ClothHoldState
+    {
+        Crumpled,
+        Folded
+    };
+
+    public ClothHoldState state = ClothHoldState.Crumpled;
+
     protected override void Start()
     {
         base.Start();
 
-        if (SceneManager.GetActiveScene().name == "Injection Subcutaneous_ampoule")
-        {
-            holdAnimationID = 8;
-        }
-        else
+        if (state == ClothHoldState.Crumpled)
         {
             holdAnimationID = 6;
+        }
+        else if (state == ClothHoldState.Folded)
+        {
+            holdAnimationID = 8;
         }
     }
 
@@ -37,18 +45,13 @@ public class ClothObject : PickableObject {
     {
         base.Pick();
 
-        if (SceneManager.GetActiveScene().name == "Injection Subcutaneous_ampoule")
+        if (state == ClothHoldState.Folded && folded != null)
         {
-            if (folded)
-            {
-                GetComponent<MeshFilter>().mesh = folded;
-                holdAnimationID = 8;
-            }
+            GetComponent<MeshFilter>().mesh = folded;
         }
-        else if (inHand)
+        else if (state == ClothHoldState.Crumpled && inHand != null)
         {
             GetComponent<MeshFilter>().mesh = inHand;
-            holdAnimationID = 6;
         }
     }
 }
