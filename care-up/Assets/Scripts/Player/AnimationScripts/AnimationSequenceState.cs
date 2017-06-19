@@ -29,6 +29,14 @@ public class AnimationSequenceState : StateMachineBehaviour {
                 }
             }
         }
+        else
+        {
+            // let the count go after last keyframe
+            if (animator.speed != 0)
+            {
+                ++frame; 
+            }
+        }
 	}
 
 	// OnStateExit is called when a transition ends and the state machine finishes evaluating this state

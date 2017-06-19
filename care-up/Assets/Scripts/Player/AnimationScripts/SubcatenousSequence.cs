@@ -23,8 +23,7 @@ public class SubcatenousSequence : AnimationSequenceState
     {
         if (frame == takeClothFrame)
         {
-            inv.CreateAnimationObject("Cloth", false);
-            inv.LeftHandObject.GetComponent<ClothObject>().state = ClothObject.ClothHoldState.Crumpled;
+            inv.CreateAnimationObject("Cloth", true);
         }
         else if (frame == takeSyringeFrame)
         {
@@ -39,9 +38,9 @@ public class SubcatenousSequence : AnimationSequenceState
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        base.OnStateExit(animator, stateInfo, layerIndex);
-
         inv.DeleteAnimationObject();
+
+        base.OnStateExit(animator, stateInfo, layerIndex);
 
         if (inv.LeftHandObject && inv.LeftHandObject.GetComponent<Syringe>())
             inv.LeftHandObject.GetComponent<Syringe>().updatePlunger = false;
