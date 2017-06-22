@@ -21,7 +21,7 @@ public class MainMenu : MonoBehaviour {
 
     public void OnStartButtonClick()
     {
-        loadingScreen.LoadLevel("Injection");
+        loadingScreen.LoadLevel("Tutorial");
     }
 
     public void OnQuitButtonClick()
