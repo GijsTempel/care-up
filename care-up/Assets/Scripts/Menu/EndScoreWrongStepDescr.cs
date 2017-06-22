@@ -2,21 +2,48 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class EndScoreWrongStepDescr : MonoBehaviour {
-
+public class EndScoreWrongStepDescr : MonoBehaviour, IPointerEnterHandler
+{
     public string text;
 
     private Controls controls;
 
+    bool UIflag = false;
+
     void Start()
     {
-        controls = GameObject.Find("GameLogic").GetComponent<Controls>();
+        if (GameObject.Find("GameLogic") != null)
+        {
+            controls = GameObject.Find("GameLogic").GetComponent<Controls>();
+        }
+        else
+        {
+            UIflag = true;
+        }
     }
 
     void Update()
     {
-        if (controls.SelectedObject == gameObject)
+        if (!UIflag)
+        {
+            if (controls.SelectedObject == gameObject)
+            {
+                foreach (Text text in transform.parent.GetComponentsInChildren<Text>())
+                {
+                    text.color = Color.white;
+                }
+
+                GetComponent<Text>().color = Color.green;
+                GameObject.Find("StepDescription").GetComponent<Text>().text = text;
+            }
+        }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (UIflag)
         {
             foreach (Text text in transform.parent.GetComponentsInChildren<Text>())
             {

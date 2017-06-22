@@ -21,11 +21,16 @@ public class MainMenu : MonoBehaviour {
 
     public void OnStartButtonClick()
     {
-        loadingScreen.LoadLevel("Tutorial");
+        loadingScreen.LoadLevel("Injection");
     }
 
     public void OnQuitButtonClick()
     {
         Application.Quit();
+    }
+
+    public void OnMainMenuButtonClick()
+    {
+        loadingScreen.LoadLevel("Menu");
     }
 }
