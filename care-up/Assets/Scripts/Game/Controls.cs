@@ -52,6 +52,43 @@ public class Controls : MonoBehaviour {
             CombineKey.locked = value;
             GetHintKey.locked = value;
         }
+
+        private bool[] locks;
+        private bool toggleFlag = false;
+        public void ToggleLock()
+        {
+            if ( toggleFlag )
+            {
+                mouseClickLocked = locks[0];
+                mouseClickKey.locked = locks[1];
+                LeftDropKey.locked = locks[2];
+                RightDropKey.locked = locks[3];
+                LeftUseKey.locked = locks[4];
+                RightUseKey.locked = locks[5];
+                closeObjectView.locked = locks[6];
+                pickObjectView.locked = locks[7];
+                CombineKey.locked = locks[8];
+                GetHintKey.locked = locks[9];
+                locks = null;
+            }
+            else
+            {
+                locks = new bool[10];
+                locks[0] = mouseClickLocked;
+                locks[1] = mouseClickKey.locked;
+                locks[2] = LeftDropKey.locked;
+                locks[3] = RightDropKey.locked;
+                locks[4] = LeftUseKey.locked;
+                locks[5] = RightUseKey.locked;
+                locks[6] = closeObjectView.locked;
+                locks[7] = pickObjectView.locked;
+                locks[8] = CombineKey.locked;
+                locks[9] = GetHintKey.locked;
+                SetAllLocked(true);
+            }
+
+            toggleFlag = !toggleFlag;
+        }
     };
 
     public KeyPreferences keyPreferences = new KeyPreferences();
