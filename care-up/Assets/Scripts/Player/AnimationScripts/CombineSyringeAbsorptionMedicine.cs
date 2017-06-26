@@ -8,7 +8,6 @@ public class CombineSyringeAbsorptionMedicine : AnimationCombine
 
     public int plungerStart;
     public int plungerEnd;
-    private int currentFrame = 0;
 
     private Syringe syringe;
 
@@ -23,17 +22,17 @@ public class CombineSyringeAbsorptionMedicine : AnimationCombine
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (currentFrame == plungerStart)
+        if (frame == plungerStart)
         {
             syringe.updatePlunger = true;
         }
 
-        if (currentFrame == plungerEnd)
+        if (frame == plungerEnd)
         {
             syringe.updatePlunger = false;
         }
 
-        ++currentFrame;
+        base.OnStateUpdate(animator, stateInfo, layerIndex);
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

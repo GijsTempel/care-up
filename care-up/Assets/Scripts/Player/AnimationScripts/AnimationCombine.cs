@@ -6,7 +6,7 @@ public class AnimationCombine : StateMachineBehaviour {
 
     public int combineFrame;
 
-    private int frame;
+    protected int frame;
 
     protected HandsInventory inv;
     protected CameraMode mode;

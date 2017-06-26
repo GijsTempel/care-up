@@ -21,25 +21,23 @@
     <action description="Step 6.4 Inject solvent in medicine" audioHint="InjectionSubcutaneous/Step 6.4"
         index="6" type="combine" left="SyringeWithSolvent" right="Medicine" />
  
-	<action description="Step 7.1: Absorb the right amount of medicine in the syringe" audioHint="InjectionSubcutaneous/Step 7.1"
-		index="7" type="combine" left="SyringeWithAbsorptionNeedle" right="Medicine"></action>
 	<action description="Step 7.2: Vent the syringe" audioHint="InjectionSubcutaneous/Step 7.2"
-		index="8" type="useOn" item="SyringeWithAbsorptionNeedle" target=""></action>
+		index="7" type="useOn" item="SyringeWithAbsorptionNeedle" target=""></action>
 	<action description="Step 7.3: Remove the absorption needle off the syringe" audioHint="InjectionSubcutaneous/Step 7.3"
-		index="9" type="combine" left="SyringeWithAbsorptionNeedle" right=""></action>
+		index="8" type="combine" left="SyringeWithAbsorptionNeedle" right=""></action>
 	<action description="Step 7.4: Put the needle in the needle cup (trashcan for needles)" audioHint="InjectionSubcutaneous/Step 7.4"
-		index="10" type="useOn" item="AbsorptionNeedle" target="NeedleCup"></action>
+		index="9" type="useOn" item="AbsorptionNeedle" target="NeedleCup"></action>
 	<action description="Step 7.5: Place the injection needle on the syringe" audioHint="InjectionSubcutaneous/Step 7.5"
-		index="11" type="combine" left="Syringe" right="InjectionNeedle"></action>
+		index="10" type="combine" left="Syringe" right="InjectionNeedle"></action>
 		
 	<action description="Step 8: Ask the patient to roll up his/her sleeve and show his/her arm." audioHint="InjectionSubcutaneous/Step 8"
-		index="12" type="talk" topic="RollUpSleeves"></action>
+		index="11" type="talk" topic="RollUpSleeves"></action>
 
   <action description="Step 9: Inject medicine into hand"	audioHint="InjectionSubcutaneous/Step 10"
-		index="13" type="useOn" item="SyringeWithInjectionNeedle" target="Patient"></action>
+		index="12" type="useOn" item="SyringeWithInjectionNeedle" target="Patient"></action>
 
   <action description="check if injection spot is clean and dry" audioHint="Injection/AS1-2"
-		index="14" type="sequenceStep" value="Check" extra="inj1"></action>
+		index="13" type="sequenceStep" value="Check" extra="inj1"></action>
   <action description="Take syringe in injecting hand and remove needlecap" audioHint="Injection/AS1-2"
 		index="14" type="sequenceStep" value="Remove Cap" extra="inj1"></action>
   <action description="Grab skin crease with non injection hand" audioHint="Injection/AS1-2"

@@ -654,6 +654,7 @@ public class HandsInventory : MonoBehaviour {
             }
 
             Vector3 plungerPosition = new Vector3();
+            bool updatePlunger = false;
 
             // object changed
             if (leftName != leftCombineResult)
@@ -663,6 +664,7 @@ public class HandsInventory : MonoBehaviour {
                     if (leftHandObject.GetComponent<Syringe>() != null)
                     {
                         plungerPosition = leftHandObject.GetComponent<Syringe>().PlungerPosition;
+                        updatePlunger = leftHandObject.GetComponent<Syringe>().updatePlunger;
                     }
 
                     Destroy(leftHandObject.gameObject);
@@ -692,6 +694,7 @@ public class HandsInventory : MonoBehaviour {
                     if (leftHandObject.GetComponent<Syringe>() != null)
                     {
                         leftHandObject.GetComponent<Syringe>().PlungerPosition = plungerPosition;
+                        leftHandObject.GetComponent<Syringe>().updatePlunger = updatePlunger;
                     }
                 }
                 else
@@ -708,6 +711,7 @@ public class HandsInventory : MonoBehaviour {
                     if (rightHandObject.GetComponent<Syringe>() != null)
                     {
                         plungerPosition = rightHandObject.GetComponent<Syringe>().PlungerPosition;
+                        updatePlunger = rightHandObject.GetComponent<Syringe>().updatePlunger;
                     }
                     Destroy(rightHandObject.gameObject);
                     rightHandObject = null;
@@ -736,6 +740,7 @@ public class HandsInventory : MonoBehaviour {
                     if (rightHandObject.GetComponent<Syringe>() != null)
                     {
                         rightHandObject.GetComponent<Syringe>().PlungerPosition = plungerPosition;
+                        rightHandObject.GetComponent<Syringe>().updatePlunger = updatePlunger;
                     }
                 }
                 else
