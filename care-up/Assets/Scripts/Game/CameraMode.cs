@@ -279,8 +279,8 @@ public class CameraMode : MonoBehaviour {
             string pickKey = "E";
 
             string text = (selectedObject.GetComponent<PickableObject>() != null) ?
-                "Press " + putKey + " to put down, Press " + pickKey + " to pick up" :
-                "Press " + putKey + " to put down";
+                "Druk op " + putKey + " om terug te leggen, Druk op " + pickKey + " om op te pakken" :
+                "Druk op " + putKey + " om terug te leggen";
 
             GUIStyle style = GUI.skin.GetStyle("Label");
             style.alignment = TextAnchor.MiddleCenter;

@@ -124,7 +124,7 @@ public class AnimationSequence  {
             // shuffle
             step.options = step.options.OrderBy(x => Random.value).ToList();
             // add leave option
-            step.options.Add(new SelectDialogue.DialogueOption("Leave", PlayAnimation, "CM_Leave"));
+            step.options.Add(new SelectDialogue.DialogueOption("Verlaten", PlayAnimation, "CM_Leave"));
 
             steps.Add(step);
         }

@@ -23,7 +23,7 @@ public class Cheat_CurrentAction : MonoBehaviour
     {
         GUIStyle style = GUI.skin.GetStyle("Label");
         style.alignment = TextAnchor.UpperCenter;
-        style.fontSize = 18;
+        style.fontSize = 25;
         style.normal.textColor = Color.white;
 
         GUI.Label(new Rect(0, 0, Screen.width, Screen.height), 

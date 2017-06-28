@@ -130,7 +130,7 @@ public class PersonObject : InteractableObject {
             }
         }
         // for leave option
-        optionsList.Add(new SelectDialogue.DialogueOption("Close dialogue", Talk, ""));
+        optionsList.Add(new SelectDialogue.DialogueOption("Verlaten", Talk, ""));
     }
 
     /// <summary>
