@@ -30,9 +30,12 @@ public class AnimationCombine : StateMachineBehaviour {
 
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
 	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-        if (++frame == combineFrame)
+        if (animator.speed != 0)
         {
-            GameObject.Find("GameLogic").GetComponent<HandsInventory>().ExecuteDelayedCombination();
+            if (++frame == combineFrame)
+            {
+                GameObject.Find("GameLogic").GetComponent<HandsInventory>().ExecuteDelayedCombination();
+            }
         }
     }
 

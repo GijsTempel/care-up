@@ -27,9 +27,10 @@ public class CinematicAnimation : StateMachineBehaviour {
 
 	}
 
-	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-	    
+    // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
+    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+
         if (audio)
         {
             if (frame == audioFrame)
@@ -46,8 +47,11 @@ public class CinematicAnimation : StateMachineBehaviour {
             }
         }
 
-        ++frame;
-	}
+        if (animator.speed != 0)
+        {
+            ++frame;
+        }
+    }
 
 	// OnStateExit is called when a transition ends and the state machine finishes evaluating this state
 	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {

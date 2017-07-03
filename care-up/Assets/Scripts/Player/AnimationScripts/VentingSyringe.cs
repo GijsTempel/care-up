@@ -35,7 +35,10 @@ public class VentingSyringe : AnimationUseOn
             syringe.updatePlunger = false;
         }
 
-        ++currentFrame;
+        if (animator.speed != 0)
+        {
+            ++currentFrame;
+        }
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

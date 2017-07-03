@@ -15,6 +15,10 @@ public class InGameUI : MonoBehaviour {
 
     private RigidbodyFirstPersonController player;
     private Crosshair crosshair;
+    private Animator animator;
+
+    private bool playerState = false;
+    private float animatorSpeed = 1f;
 
 	void Start () {
 
@@ -31,6 +35,7 @@ public class InGameUI : MonoBehaviour {
 
         player = GameObject.Find("Player").GetComponent<RigidbodyFirstPersonController>();
         crosshair = GameObject.Find("Player").GetComponent<Crosshair>();
+        animator = player.transform.GetChild(0).GetChild(0).GetComponent<Animator>();
 	}
 	
 	void Update () {
@@ -52,8 +57,11 @@ public class InGameUI : MonoBehaviour {
                 controls.keyPreferences.ToggleLock();
                 timer.enabled = true;
             }
-            player.enabled = true;
+
+            player.enabled = playerState;
             crosshair.enabled = true;
+
+            animator.speed = animatorSpeed;
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -66,9 +74,13 @@ public class InGameUI : MonoBehaviour {
                 controls.keyPreferences.ToggleLock();
                 timer.enabled = false;
             }
-            
+
+            playerState = player.enabled;
             player.enabled = false;
             crosshair.enabled = false;
+
+            animatorSpeed = animator.speed;
+            animator.speed = 0.0f;
             
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
