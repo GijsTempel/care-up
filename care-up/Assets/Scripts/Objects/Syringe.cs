@@ -130,13 +130,13 @@ public class Syringe : PickableObject {
                 {
                     if (inventory.LeftHandEmpty())
                     {
-                        PlayerAnimationManager.PlayAnimation("UseRight SyringeWithNeedle");
+                        PlayerAnimationManager.PlayAnimation("UseRight " + name);
                         actionManager.OnUseOnAction("SyringeWithAbsorptionNeedle", "");
                         return true; // fix for venting syringe
                     }
                     else if (inventory.RightHandEmpty())
                     {
-                        PlayerAnimationManager.PlayAnimation("UseLeft SyringeWithNeedle");
+                        PlayerAnimationManager.PlayAnimation("UseLeft " + name);
                         actionManager.OnUseOnAction("SyringeWithAbsorptionNeedle", "");
                         return true; // fix for venting syringe
                     }

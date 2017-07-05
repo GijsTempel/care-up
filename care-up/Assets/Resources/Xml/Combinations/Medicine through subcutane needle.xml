@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <CombinationList>
-    <combination leftInput="Ampoule" rightInput="Cloth" leftResult="OpenedAmpoule" rightResult="ClothWithAmpouleTop" />
-    <combination leftInput="AbsorptionNeedle" rightInput="Syringe" leftResult="" rightResult="SyringeWithAbsorptionNeedle" />
+  <combination leftInput="Ampoule" rightInput="Cloth" leftResult="OpenedAmpoule" rightResult="ClothWithAmpouleTop" />
 	<combination leftInput="SyringeWithAbsorptionNeedle" rightInput="OpenedAmpoule" leftResult="SyringeWithAbsorptionNeedle" rightResult="OpenedAmpoule" />
-	<combination leftInput="SyringeWithAbsorptionNeedle" rightInput="" leftResult="Syringe" rightResult="AbsorptionNeedle" />
-    <combination leftInput="Syringe" rightInput="InjectionNeedle" leftResult="SyringeWithInjectionNeedle" rightResult="" />
-	<combination leftInput="SyringeWithInjectionNeedle" rightInput="" leftResult="Syringe" rightResult="InjectionNeedle" />
+  <combination leftInput="Syringe" rightInput="AbsorptionNeedle" leftResult="SyringeWithAbsorptionNeedleCap" rightResult=""></combination>
+  <combination leftInput="SyringeWithAbsorptionNeedleCapped" rightInput="" leftResult="Syringe" rightResult="AbsorptionNeedle"></combination>
+  <combination leftInput="Syringe" rightInput="InjectionNeedle" leftResult="SyringeWithInjectionNeedleCap" rightResult=""></combination>
+  <combination leftInput="SyringeWithInjectionNeedleCapped" rightInput="" leftResult="Syringe" rightResult="InjectionNeedle"></combination>
+  <combination leftInput="SyringeWithAbsorptionNeedleCap" rightInput="" leftResult="SyringeWithAbsorptionNeedle" rightResult="SyringeCap" />
+  <combination leftInput="SyringeWithInjectionNeedleCap" rightInput="" leftResult="SyringeWithInjectionNeedle" rightResult="SyringeCap" />
+  <combination leftInput="SyringeWithInjectionNeedle" rightInput="SyringeCap" leftResult="SyringeWithInjectionNeedleCapped" rightResult="" />
+  <combination leftInput="SyringeWithAbsorptionNeedle" rightInput="SyringeCap" leftResult="SyringeWithAbsorptionNeedleCapped" rightResult="" />
 </CombinationList>

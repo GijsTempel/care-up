@@ -166,8 +166,8 @@ public class HandsInventory : MonoBehaviour {
                     tutorial_combined = true;
                     
                     string combineAnimation = "Combine " +
-                        (leftHandObject ? FilterName(leftHandObject.name) : "_") + " " +
-                        (rightHandObject ? FilterName(rightHandObject.name) : "_");
+                        (leftHandObject ? leftHandObject.name : "_") + " " +
+                        (rightHandObject ? rightHandObject.name : "_");
                     PlayerAnimationManager.PlayAnimation(combineAnimation);
 
                     combineDelayed = true;
@@ -590,20 +590,7 @@ public class HandsInventory : MonoBehaviour {
             rightHandObject.Pick();
         }
     }
-
-    public string FilterName(string name)
-    {
-        if (name == "AbsorptionNeedle" || name == "InjectionNeedle")
-        {
-            return "Needle";
-        }
-        else if (name == "SyringeWithAbsorptionNeedle" || name == "SyringeWithInjectionNeedle")
-        {
-            return "SyringeWithNeedle";
-        }
-        else return name;
-    }
-
+    
     public void ToggleControls(bool value)
     {
         TutorialManager manager = GameObject.Find("GameLogic").GetComponent<TutorialManager>();
