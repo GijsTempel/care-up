@@ -673,9 +673,9 @@ public class HandsInventory : MonoBehaviour {
                     }
                     else if (rightSavedPos != Vector3.zero)
                     {
-                        float offset = rightHandObject.GetComponent<Renderer>().bounds.size.x
-                            + leftHandObject.GetComponent<Renderer>().bounds.size.x; ;
-                        leftHandObject.SavePosition(rightSavedPos + new Vector3(offset, 0), rightSavedRot);
+                        float offset = rightHandObject.GetComponent<MeshFilter>().mesh.bounds.size.z * rightHandObject.transform.lossyScale.z +
+                            leftHandObject.GetComponent<MeshFilter>().mesh.bounds.size.z * leftHandObject.transform.lossyScale.z;
+                        leftHandObject.SavePosition(rightSavedPos + new Vector3(0, 0, -3f * offset), rightSavedRot);
                     }
 
                     if (leftHandObject.GetComponent<Syringe>() != null)
@@ -719,9 +719,9 @@ public class HandsInventory : MonoBehaviour {
                     }
                     else if (leftSavedPos != Vector3.zero)
                     {
-                        float offset = leftHandObject.GetComponent<Renderer>().bounds.size.x
-                            + rightHandObject.GetComponent<Renderer>().bounds.size.x;
-                        rightHandObject.SavePosition(leftSavedPos + new Vector3(offset, 0), leftSavedRot);
+                        float offset = rightHandObject.GetComponent<MeshFilter>().mesh.bounds.size.z * rightHandObject.transform.lossyScale.z +
+                            leftHandObject.GetComponent<MeshFilter>().mesh.bounds.size.z * leftHandObject.transform.lossyScale.z;
+                        rightHandObject.SavePosition(leftSavedPos + new Vector3(0, 0, -3f * offset), leftSavedRot);
                     }
 
                     if (rightHandObject.GetComponent<Syringe>() != null)
