@@ -92,9 +92,9 @@ public class InGameUI : MonoBehaviour {
         Toggle();
     }
 
-    public void OnLoadButtonClick()
+    public void OnSaveButtonClick()
     {
-
+        GameObject.Find("Preferences").GetComponent<SaveLoadManager>().Save();
     }
 
     public void OnOptionsButtonClick()
@@ -111,6 +111,6 @@ public class InGameUI : MonoBehaviour {
 
     public void OnExitButtonClick()
     {
-
+        GameObject.Find("Preferences").GetComponent<LoadingScreen>().LoadLevel("Menu");
     }
 }
