@@ -54,22 +54,13 @@ public class Syringe : PickableObject {
         if (controls.SelectedObject != null && controls.CanInteract)
         {
             if (name == "SyringeWithInjectionNeedle"
-                && controls.SelectedObject.GetComponent<PersonObjectPart>() != null 
+                && controls.SelectedObject.GetComponent<PersonObjectPart>() != null
                 && controls.SelectedObject.GetComponent<PersonObjectPart>().Person.name == "Patient")
             {
                 if (info[0] == "SyringeWithInjectionNeedle" && info[1] == "Patient")
                 {
                     actionManager.OnUseOnAction("SyringeWithInjectionNeedle", "Patient");
-                    if (SceneManager.GetActiveScene().name == "Injection" ||
-                        SceneManager.GetActiveScene().name == "Injection_ampoule" ||
-                        SceneManager.GetActiveScene().name == "Injection_disolve")
-                    {
-                        Transform target = controls.SelectedObject.GetComponent<PersonObjectPart>().Person;
-                        target.GetComponent<InteractableObject>().Reset();
-                        controls.ResetObject();
-                        PlayerAnimationManager.PlayAnimationSequence("Injection", target);
-                    }
-                    else if (SceneManager.GetActiveScene().name == "Injection Subcutaneous" ||
+                    if (SceneManager.GetActiveScene().name == "Injection Subcutaneous" ||
                         SceneManager.GetActiveScene().name == "Injection Subcutaneous_ampoule" ||
                         SceneManager.GetActiveScene().name == "Injection Subcutaneous_desolve")
                     {
@@ -97,8 +88,25 @@ public class Syringe : PickableObject {
                     return true;
                 }
             }
-            else if (name == "Syringe"
-                    && controls.SelectedObject.name == "Person")
+            else if (name == "SyringeWithInjectionNeedleCap"
+                && controls.SelectedObject.GetComponent<PersonObjectPart>() != null
+                && controls.SelectedObject.GetComponent<PersonObjectPart>().Person.name == "Patient")
+            {
+                if (info[0] == "SyringeWithInjectionNeedleCap" && info[1] == "Patient")
+                {
+                    actionManager.OnUseOnAction("SyringeWithInjectionNeedleCap", "Patient");
+                    if (SceneManager.GetActiveScene().name == "Injection" ||
+                        SceneManager.GetActiveScene().name == "Injection_ampoule" ||
+                        SceneManager.GetActiveScene().name == "Injection_disolve")
+                    {
+                        Transform target = controls.SelectedObject.GetComponent<PersonObjectPart>().Person;
+                        target.GetComponent<InteractableObject>().Reset();
+                        controls.ResetObject();
+                        PlayerAnimationManager.PlayAnimationSequence("Injection", target);
+                    }
+                }
+            }
+            else if (name == "Syringe" && controls.SelectedObject.name == "Person")
             {
                 info = actionManager.CurrentUseOnInfo;
                 if (info[0] == "Syringe" && info[1] == "Person")

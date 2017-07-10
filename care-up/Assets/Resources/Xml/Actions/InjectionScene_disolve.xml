@@ -33,17 +33,17 @@
 		index="9" type="useOn" item="AbsorptionNeedle" target="NeedleCup"></action>
 	<action description="Step 7.5: Place the injection needle on the syringe" audioHint="InjectionSubcutaneous/Step 7.5"
 		index="10" type="combine" left="Syringe" right="InjectionNeedle"></action>
-  <action description="Stap 6.6: take off syringe cap" audioHint="Injection/H11-2"
-    index="10" type="combine" left="SyringeWithInjectionNeedleCap" right="" extra="stap66" />
-		
+
 	<action description="Step 8: Ask the patient to roll up his/her sleeve and show his/her arm." audioHint="InjectionSubcutaneous/Step 8"
 		index="11" type="talk" topic="RollUpSleeves"></action>
 
   <action description="Step 9: Inject medicine into hand"	audioHint="InjectionSubcutaneous/Step 10"
-		index="12" type="useOn" item="SyringeWithInjectionNeedle" target="Patient"></action>
+		index="12" type="useOn" item="SyringeWithInjectionNeedleCap" target="Patient"></action>
 
   <action description="Palpeer de arm en maak injectie plek schoon" audioHint="Injection/AS1-2"
 		index="13" type="sequenceStep" value="clean skin" extra="inj1"></action>
+  <action description="9. take off syringe cap" audioHint="Injection/AS1-2"
+    index="13" type="sequenceStep" value="take off cap" extra="inj2" />
 	<action description="Hold skin tight with tumb and pointer vinger with left hand" audioHint="Injection/AS2-2"
 		index="14" type="sequenceStep" value="Hold skin" extra="inj2"></action>
 	<action description="Stick the needle in the arm with a fast motion at 90 degrees" audioHint="Injection/AS3-2"

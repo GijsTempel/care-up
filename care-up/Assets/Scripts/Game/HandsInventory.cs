@@ -342,16 +342,18 @@ public class HandsInventory : MonoBehaviour {
 
     public void ReplaceHandObject(bool hand, string name)
     {
-        if (!hand)
+        if (hand)
         {
             Vector3 leftSavedPos = Vector3.zero;
             Quaternion leftSavedRot = Quaternion.identity;
             leftHandObject.GetSavesLocation(out leftSavedPos, out leftSavedRot);
             
             Vector3 plungerPosition = new Vector3();
+            bool updatePlunger = false;
             if (leftHandObject.GetComponent<Syringe>() != null)
             {
                 plungerPosition = leftHandObject.GetComponent<Syringe>().PlungerPosition;
+                updatePlunger = leftHandObject.GetComponent<Syringe>().updatePlunger;
             }
 
             Destroy(leftHandObject.gameObject);
@@ -372,6 +374,7 @@ public class HandsInventory : MonoBehaviour {
             if (leftHandObject.GetComponent<Syringe>() != null)
             {
                 leftHandObject.GetComponent<Syringe>().PlungerPosition = plungerPosition;
+                leftHandObject.GetComponent<Syringe>().updatePlunger = updatePlunger;
             }
         }
         else
@@ -381,9 +384,11 @@ public class HandsInventory : MonoBehaviour {
             rightHandObject.GetSavesLocation(out rightSavedPos, out rightSavedRot);
 
             Vector3 plungerPosition = new Vector3();
+            bool updatePlunger = false;
             if (rightHandObject.GetComponent<Syringe>() != null)
             {
                 plungerPosition = rightHandObject.GetComponent<Syringe>().PlungerPosition;
+                updatePlunger = rightHandObject.GetComponent<Syringe>().updatePlunger;
             }
 
             Destroy(rightHandObject.gameObject);
@@ -391,7 +396,7 @@ public class HandsInventory : MonoBehaviour {
 
             GameObject rightObject = CreateObjectByName(name, Vector3.zero);
             rightHandObject = rightObject.GetComponent<PickableObject>();
-            rightHandObject.controlBone = rightControlBone;
+            rightHandObject.controlBone = leftControlBone;
             SetHold(false);
 
             PlayerAnimationManager.SetHandItem(false, rightObject);
@@ -404,6 +409,7 @@ public class HandsInventory : MonoBehaviour {
             if (rightHandObject.GetComponent<Syringe>() != null)
             {
                 rightHandObject.GetComponent<Syringe>().PlungerPosition = plungerPosition;
+                rightHandObject.GetComponent<Syringe>().updatePlunger = updatePlunger;
             }
         }
 
@@ -416,7 +422,7 @@ public class HandsInventory : MonoBehaviour {
     /// <param name="name">Name of the object</param>
     /// <param name="position">Position of the object</param>
     /// <returns>Object created.</returns>
-    private GameObject CreateObjectByName(string name, Vector3 position)
+    public GameObject CreateObjectByName(string name, Vector3 position)
     {
         GameObject newObject = Instantiate(Resources.Load<GameObject>("Prefabs\\" + name),
                             position, Quaternion.identity) as GameObject;
@@ -524,6 +530,30 @@ public class HandsInventory : MonoBehaviour {
             PlayerAnimationManager.SetHandItem(true, null);
         }
 
+        if (rightHandObject)
+        {
+            rightHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
+            rightHandObject.Drop(true);
+            rightHandObject = null;
+            rightHold = false;
+            PlayerAnimationManager.SetHandItem(false, null);
+        }
+    }
+
+    public void DropLeftObject()
+    {
+        if (leftHandObject)
+        {
+            leftHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
+            leftHandObject.Drop(true);
+            leftHandObject = null;
+            leftHold = false;
+            PlayerAnimationManager.SetHandItem(true, null);
+        }
+    }
+
+    public void DropRightObject()
+    {
         if (rightHandObject)
         {
             rightHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;

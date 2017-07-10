@@ -7,6 +7,8 @@ public class InjectionSequence : AnimationSequenceState
     public int dropClothFrame;
     public int takeSyringeFrame;
     public int swapHandsFrame;
+    public int takeOffCapFrame;
+    public int dropCapFrame;
 
     private HandsInventory inv;
 
@@ -29,13 +31,32 @@ public class InjectionSequence : AnimationSequenceState
         }
         else if (frame == takeSyringeFrame)
         {
-            inv.ForcePickItem("SyringeWithInjectionNeedle", false);
-            PlayerAnimationManager.SetHandItem(false, GameObject.Find("SyringeWithInjectionNeedle"));
+            inv.ForcePickItem("SyringeWithInjectionNeedleCap", false);
+            PlayerAnimationManager.SetHandItem(false, GameObject.Find("SyringeWithInjectionNeedleCap"));
             inv.RightHandObject.GetComponent<Syringe>().updatePlunger = true;
         }
         else if (frame == swapHandsFrame)
         {
             inv.SwapHands();
+        }
+        else if (frame == takeOffCapFrame)
+        {
+            inv.ReplaceHandObject(false, "SyringeWithInjectionNeedle");
+            
+            GameObject cap = inv.CreateObjectByName("SyringeInjectionCap", Vector3.zero);
+
+            Vector3 savedPos = Vector3.zero;
+            Quaternion savedRot = Quaternion.identity;
+            inv.RightHandObject.GetComponent<PickableObject>().GetSavesLocation(out savedPos, out savedRot);
+            float offset = inv.RightHandObject.GetComponent<MeshFilter>().mesh.bounds.size.z * inv.RightHandObject.transform.lossyScale.z +
+                            cap.GetComponent<MeshFilter>().mesh.bounds.size.z * cap.transform.lossyScale.z;
+            cap.GetComponent<PickableObject>().SavePosition(savedPos + new Vector3(0, 0, -3f * offset), savedRot);
+
+            inv.ForcePickItem("SyringeInjectionCap", true);
+        }
+        else if (frame == dropCapFrame)
+        {
+            inv.DropLeftObject();
         }
 
         if (keyFrame < keyFrames.Count)

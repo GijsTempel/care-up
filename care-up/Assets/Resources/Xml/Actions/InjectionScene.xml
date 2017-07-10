@@ -30,17 +30,17 @@
 		index="11" type="useOn" item="AbsorptionNeedle" target="NeedleCup" extra="stap64"></action>
 	<action description="6.D.1: Plaats de injectienaald op de spuit.Combineer de spuit met injectienaald door op de (R) knop te drukken" audioHint="Injection/H11-2"
 		index="12" type="combine" left="Syringe" right="InjectionNeedle" extra="stap65"></action>
-  <action description="6.D.2: Verwijder de beschermhuls van de injectienaald (Zorg ervoor dat je een vrije hand hebt en druk op de (R) knop om te decombineren." audioHint="Injection/H11-2"
-    index="13" type="combine" left="SyringeWithInjectionNeedleCap" right="" extra="stap66" />
-		
+	
 	<action description="7.1: Vraag de cliënt de injectieplaats te ontbloten door te kijken naar de cliënt en de linkermuisknop in te drukken/" audioHint="Injection/H12-2"
-		index="14" type="talk" topic="RollUpSleeves" extra="stap7"></action>
+		index="13" type="talk" topic="RollUpSleeves" extra="stap7"></action>
 	
 	<action description="7.2 Start injecteren door de 'gebruik(Q of E)' knop van de juiste arm te klikken, terwijl je naar de cliënt kijkt "	audioHint="Injection/H13-2"
-		index="15" type="useOn" item="SyringeWithInjectionNeedle" target="Patient" extra="stap8"></action>
+		index="14" type="useOn" item="SyringeWithInjectionNeedleCap" target="Patient" extra="stap8"></action>
 		
 	<action description="8. Palpeer de injectieplaats en controleer of de injectieplaats schoon en droog is." audioHint="Injection/AS1-2"
-		index="16" type="sequenceStep" value="clean skin" extra="inj1"></action>
+		index="15" type="sequenceStep" value="clean skin" extra="inj1"></action>
+  <action description="9. take off syringe cap" audioHint="Injection/AS1-2"
+    index="16" type="sequenceStep" value="take off cap" extra="inj2" />
 	<action description="10. Span de huid met de duim en wijsvinger van uw vrije hand." audioHint="Injection/AS2-2"
 		index="16" type="sequenceStep" value="Hold skin" extra="inj2"></action>
 	<action description="11. Steek de naald met een snelle beweging loodrecht in de spier." audioHint="Injection/AS3-2"
@@ -49,7 +49,8 @@
 		index="16" type="sequenceStep" value="Release skin with left hand" extra="inj4"></action>
 	<action description="13. Fixeer de spuit en naald met de niet injecterende hand om onverwachte bewegingen op te vangen." audioHint="Injection/AS5-2"
 		index="16" type="sequenceStep" value="Secure the needle" extra="inj5"></action>
-	<action description="14. Trek de zuiger iets terug om na te gaan of er geen bloedvat is aangeprikt." audioHint="Injection/AS6-2"
+	<action description="14. Trek de zuiger iets terug om na te gaan of er geen bloedvat is aangeprikt.
+" audioHint="Injection/AS6-2"
 		index="17" type="sequenceStep" value="pull the compression part" extra="inj6"></action>
 	<action description="15.Spuit de vloeistof langzaam en regelmatig in" audioHint="Injection/AS7-2"
 		index="18" type="sequenceStep" value="Inject medicine slow and steady" extra="inj7"></action>
