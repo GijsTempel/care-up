@@ -6,7 +6,8 @@ public class AnimationPick : StateMachineBehaviour {
 
     public bool hand;
 
-    private int frame;
+    private float frame;
+    private float prevFrame;
     private HandsInventory inv;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -14,7 +15,8 @@ public class AnimationPick : StateMachineBehaviour {
 
         inv = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
 
-        frame = 0;
+        frame = 0f;
+        prevFrame = 0f;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -22,11 +24,15 @@ public class AnimationPick : StateMachineBehaviour {
     {
         if (animator.speed != 0)
         {
-            if (++frame == 50)
+            if (PlayerAnimationManager.CompareFrames(frame, prevFrame, 50))
             {
                 inv.SetHold(hand);
             }
+
             inv.ToggleControls(true);
+            
+            prevFrame = frame;
+            frame += Time.deltaTime;
         }
     }
 

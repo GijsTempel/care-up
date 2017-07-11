@@ -7,12 +7,15 @@ public class AnimationSequenceState : StateMachineBehaviour {
     public List<int> keyFrames = new List<int>();
 
     protected int keyFrame = 0;
-    protected int frame = 0;
+
+    protected float frame = 0f;
+    protected float prevFrame = 0f;
 
 	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         keyFrame = 0;
-        frame = 0;
+        frame = 0f;
+        prevFrame = 0f;
 	}
 
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -21,12 +24,14 @@ public class AnimationSequenceState : StateMachineBehaviour {
         {
             if (animator.speed != 0)
             {
-                if (++frame == keyFrames[keyFrame])
+                if (PlayerAnimationManager.CompareFrames(frame, prevFrame, keyFrames[keyFrame]))
                 {
                     PlayerAnimationManager.NextSequenceStep(true);
                     animator.speed = 0f;
                     ++keyFrame;
                 }
+                prevFrame = frame;
+                frame += Time.deltaTime;
             }
         }
         else
@@ -34,7 +39,8 @@ public class AnimationSequenceState : StateMachineBehaviour {
             // let the count go after last keyframe
             if (animator.speed != 0)
             {
-                ++frame; 
+                prevFrame = frame;
+                frame += Time.deltaTime; 
             }
         }
 	}

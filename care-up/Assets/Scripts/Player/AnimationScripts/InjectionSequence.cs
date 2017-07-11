@@ -24,22 +24,22 @@ public class InjectionSequence : AnimationSequenceState
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (frame == dropClothFrame)
+        if (PlayerAnimationManager.CompareFrames(frame, prevFrame, dropClothFrame))
         {
             inv.DeleteAnimationObject();
             //inv.PutAllOnTable();
         }
-        else if (frame == takeSyringeFrame)
+        else if (PlayerAnimationManager.CompareFrames(frame, prevFrame, takeSyringeFrame))
         {
             inv.ForcePickItem("SyringeWithInjectionNeedleCap", false);
             PlayerAnimationManager.SetHandItem(false, GameObject.Find("SyringeWithInjectionNeedleCap"));
             inv.RightHandObject.GetComponent<Syringe>().updatePlunger = true;
         }
-        else if (frame == swapHandsFrame)
+        else if (PlayerAnimationManager.CompareFrames(frame, prevFrame, swapHandsFrame))
         {
             inv.SwapHands();
         }
-        else if (frame == takeOffCapFrame)
+        else if (PlayerAnimationManager.CompareFrames(frame, prevFrame, takeOffCapFrame))
         {
             inv.ReplaceHandObject(false, "SyringeWithInjectionNeedle");
             
@@ -54,7 +54,7 @@ public class InjectionSequence : AnimationSequenceState
 
             inv.ForcePickItem("SyringeInjectionCap", true);
         }
-        else if (frame == dropCapFrame)
+        else if (PlayerAnimationManager.CompareFrames(frame, prevFrame, dropCapFrame))
         {
             inv.DropLeftObject();
         }
@@ -63,7 +63,7 @@ public class InjectionSequence : AnimationSequenceState
         {
             if (animator.speed != 0)
             {
-                if (frame == keyFrames[keyFrame])
+                if (PlayerAnimationManager.CompareFrames(frame, prevFrame, keyFrames[keyFrame]))
                 {
                     if (keyFrame == 0)
                     {
@@ -81,7 +81,8 @@ public class InjectionSequence : AnimationSequenceState
 
         if (animator.speed != 0)
         {
-            ++frame;
+            prevFrame = frame;
+            frame += Time.deltaTime;
         }
     }
 

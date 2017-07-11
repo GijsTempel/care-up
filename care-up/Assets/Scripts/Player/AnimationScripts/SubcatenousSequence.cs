@@ -21,11 +21,11 @@ public class SubcatenousSequence : AnimationSequenceState
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (frame == takeClothFrame)
+        if (PlayerAnimationManager.CompareFrames(frame, prevFrame, takeClothFrame))
         {
             inv.CreateAnimationObject("Cloth", true);
         }
-        else if (frame == takeSyringeFrame)
+        else if (PlayerAnimationManager.CompareFrames(frame, prevFrame, takeSyringeFrame))
         {
             inv.ForcePickItem("SyringeWithInjectionNeedle", false);
             PlayerAnimationManager.SetHandItem(false, GameObject.Find("SyringeWithInjectionNeedle"));

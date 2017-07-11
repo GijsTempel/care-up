@@ -22,18 +22,18 @@ public class TutorialInjectionSequence : AnimationSequenceState
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (frame == dropClothFrame)
+        if (PlayerAnimationManager.CompareFrames(frame, prevFrame, dropClothFrame))
         {
             //inv.PutAllOnTable();
             inv.DeleteAnimationObject();
         }
-        else if (frame == takeSyringeFrame)
+        else if (PlayerAnimationManager.CompareFrames(frame, prevFrame, takeSyringeFrame))
         {
             inv.ForcePickItem("SyringeWithAbsorptionNeedle", false);
             PlayerAnimationManager.SetHandItem(false, GameObject.Find("SyringeWithAbsorptionNeedle"));
             inv.RightHandObject.GetComponent<Syringe>().updatePlunger = true;
         }
-        else if (frame == swapHandsFrame)
+        else if (PlayerAnimationManager.CompareFrames(frame, prevFrame, swapHandsFrame))
         {
             inv.SwapHands();
         }
@@ -42,7 +42,7 @@ public class TutorialInjectionSequence : AnimationSequenceState
         {
             if (animator.speed != 0)
             {
-                if (frame == keyFrames[keyFrame])
+                if (PlayerAnimationManager.CompareFrames(frame, prevFrame, keyFrames[keyFrame]))
                 {
                     if (keyFrame == 0)
                     {
@@ -65,7 +65,8 @@ public class TutorialInjectionSequence : AnimationSequenceState
 
         if (animator.speed != 0)
         {
-            ++frame;
+            prevFrame = frame;
+            frame += Time.deltaTime;
         }
     }
 

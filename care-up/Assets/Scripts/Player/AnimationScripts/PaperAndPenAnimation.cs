@@ -21,12 +21,12 @@ public class PaperAndPenAnimation : CinematicAnimation
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (frame == pickPenFrame)
+        if (PlayerAnimationManager.CompareFrames(frame, prevFrame, pickPenFrame))
         {
             inv.ForcePickItem("Pen", false);
         }
         
-        if (frame == dropPenFrame)
+        if (PlayerAnimationManager.CompareFrames(frame, prevFrame, dropPenFrame))
         {
             inv.PutAllOnTable();
         }

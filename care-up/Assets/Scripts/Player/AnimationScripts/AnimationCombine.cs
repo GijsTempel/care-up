@@ -6,7 +6,8 @@ public class AnimationCombine : StateMachineBehaviour {
 
     public int combineFrame;
 
-    protected int frame;
+    protected float frame;
+    protected float prevFrame;
 
     protected HandsInventory inv;
     protected CameraMode mode;
@@ -20,7 +21,8 @@ public class AnimationCombine : StateMachineBehaviour {
         mode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
         mode.animating = true;
 
-        frame = 0;
+        frame = 0f;
+        prevFrame = 0f;
 
         if (combineFrame == 0)
         {
@@ -32,10 +34,13 @@ public class AnimationCombine : StateMachineBehaviour {
 	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         if (animator.speed != 0)
         {
-            if (++frame == combineFrame)
+            if (PlayerAnimationManager.CompareFrames(frame, prevFrame, combineFrame))
             {
                 GameObject.Find("GameLogic").GetComponent<HandsInventory>().ExecuteDelayedCombination();
             }
+
+            prevFrame = frame;
+            frame += Time.deltaTime;
         }
     }
 

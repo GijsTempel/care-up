@@ -108,4 +108,10 @@ public class PlayerAnimationManager : MonoBehaviour {
     {
         get { return animationSequence != null ? animationSequence.Completed : true; }
     }
+
+    public static bool CompareFrames(float currentFrame, float previousFrame, int compareFrame)
+    {
+        float targetFrame = compareFrame / 60f; // 60fps
+        return (currentFrame >= targetFrame && previousFrame < targetFrame);
+    }
 }

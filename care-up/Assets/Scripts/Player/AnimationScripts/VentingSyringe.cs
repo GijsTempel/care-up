@@ -8,7 +8,9 @@ public class VentingSyringe : AnimationUseOn
 
     public int plungerStart;
     public int plungerEnd;
-    private int currentFrame = 0;
+
+    private float frame = 0f;
+    private float prevFrame = 0f;
 
     private Syringe syringe;
 
@@ -19,25 +21,27 @@ public class VentingSyringe : AnimationUseOn
 
         syringe = hand ? inv.LeftHandObject.GetComponent<Syringe>() : inv.RightHandObject.GetComponent<Syringe>();
 
-        currentFrame = 0;
+        frame = 0f;
+        prevFrame = 0f;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (currentFrame == plungerStart)
+        if (PlayerAnimationManager.CompareFrames(frame, prevFrame, plungerStart))
         {
             syringe.updatePlunger = true;
         }
 
-        if (currentFrame == plungerEnd)
+        if (PlayerAnimationManager.CompareFrames(frame, prevFrame, plungerEnd))
         {
             syringe.updatePlunger = false;
         }
 
         if (animator.speed != 0)
         {
-            ++currentFrame;
+            prevFrame = frame;
+            frame += Time.deltaTime;
         }
     }
 

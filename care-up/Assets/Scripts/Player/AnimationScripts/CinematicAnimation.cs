@@ -10,7 +10,8 @@ public class CinematicAnimation : StateMachineBehaviour {
     public string positionObjectName;
     public float volume = 1f;
 
-    protected int frame = 0;
+    protected float frame = 0f;
+    protected float prevFrame = 0f;
 
     static CameraMode cameraMode;
     
@@ -23,8 +24,8 @@ public class CinematicAnimation : StateMachineBehaviour {
             if (cameraMode == null) Debug.LogError("No camera mode");
         }
 
-        frame = 0;
-
+        frame = 0f;
+        prevFrame = 0f;
 	}
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -33,7 +34,7 @@ public class CinematicAnimation : StateMachineBehaviour {
 
         if (audio)
         {
-            if (frame == audioFrame)
+            if (PlayerAnimationManager.CompareFrames(frame, prevFrame, audioFrame))
             {
                 AudioClip clip = Resources.Load<AudioClip>("Audio/" + audioFileName);
                 if (positionObjectName != "")
@@ -49,7 +50,8 @@ public class CinematicAnimation : StateMachineBehaviour {
 
         if (animator.speed != 0)
         {
-            ++frame;
+            prevFrame = frame;
+            frame += Time.deltaTime;
         }
     }
 
