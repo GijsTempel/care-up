@@ -60,16 +60,7 @@ public class Syringe : PickableObject {
                 if (info[0] == "SyringeWithInjectionNeedle" && info[1] == "Patient")
                 {
                     actionManager.OnUseOnAction("SyringeWithInjectionNeedle", "Patient");
-                    if (SceneManager.GetActiveScene().name == "Injection Subcutaneous" ||
-                        SceneManager.GetActiveScene().name == "Injection Subcutaneous_ampoule" ||
-                        SceneManager.GetActiveScene().name == "Injection Subcutaneous_desolve")
-                    {
-                        Transform target = controls.SelectedObject.GetComponent<PersonObjectPart>().Person;
-                        target.GetComponent<InteractableObject>().Reset();
-                        controls.ResetObject();
-                        PlayerAnimationManager.PlayAnimationSequence("SubcutaneousInjection", target);
-                    }
-                    else if (SceneManager.GetActiveScene().name == "Injection Subcutaneous v2" ||
+                    if (SceneManager.GetActiveScene().name == "Injection Subcutaneous v2" ||
                         SceneManager.GetActiveScene().name == "Injection Subcutaneous v2_ampoule" ||
                         SceneManager.GetActiveScene().name == "Injection Subcutaneous v2_desolve")
                     {
@@ -104,6 +95,16 @@ public class Syringe : PickableObject {
                         controls.ResetObject();
                         PlayerAnimationManager.PlayAnimationSequence("Injection", target);
                     }
+                    else if (SceneManager.GetActiveScene().name == "Injection Subcutaneous" ||
+                        SceneManager.GetActiveScene().name == "Injection Subcutaneous_ampoule" ||
+                        SceneManager.GetActiveScene().name == "Injection Subcutaneous_desolve")
+                    {
+                        Transform target = controls.SelectedObject.GetComponent<PersonObjectPart>().Person;
+                        target.GetComponent<InteractableObject>().Reset();
+                        controls.ResetObject();
+                        PlayerAnimationManager.PlayAnimationSequence("SubcutaneousInjection", target);
+                    }
+                    return true;
                 }
             }
             else if (name == "Syringe" && controls.SelectedObject.name == "Person")
