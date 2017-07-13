@@ -312,7 +312,6 @@ namespace CareUp.Actions
         {
             if (info.Length == 1)
             {
-                Debug.Log(stepName + " : " + info[0]);
                 return info[0] == stepName;
             }
             else
