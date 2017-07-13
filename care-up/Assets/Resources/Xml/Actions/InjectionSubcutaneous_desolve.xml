@@ -9,47 +9,49 @@
 		index="2" type="examine" item="PatientRecords" expected="good"></action>
 	<action description="Step 4: Checking medicine prescriptions" audioHint="InjectionSubcutaneous/Step 4"
 		index="2" type="examine" item="Medicine" expected="good"></action>
-    <action description="Step 5: Check prescription form" audioHint="InjectionSubcutaneous/Step 5"
+  <action description="Step 5: Check prescription form" audioHint="InjectionSubcutaneous/Step 5"
 		index="2" type="examine" item="PrescriptionForm" expected="good"></action>
 		
 	<action description="Step 6.1 break open solvent ampoule with cloth (combine ampoule medicine with cloth)" audioHint="InjectionSubcutaneous/Step 6.1"
-        index="3" type="combine" left="Ampoule" right="Cloth" />
-    <action description="Step 6.2: Place the absorption needle on the syringe" audioHint="InjectionSubcutaneous/Step 6.2"
-		index="4" type="combine" left="Syringe" right="AbsorptionNeedle"></action>
+    index="3" type="combine" left="Ampoule" right="Cloth" />
+  <action description="5.A.2: Doe het gaasje met gebroken ampul bovenkant in de naaldcontainer (Kijk naar naaldcontainer en druk de 'gebruik(Q of E)' in knop van de juiste arm.)" audioHint=""
+		index="4" type="useOn" item="ClothWithAmpouleTop" target="NeedleCup"/>
+  <action description="Step 6.2: Place the absorption needle on the syringe" audioHint="InjectionSubcutaneous/Step 6.2"
+		index="5" type="combine" left="Syringe" right="AbsorptionNeedle"></action>
   <action description="Stap 5.4: Take off syringe cap" audioHint="Injection/H6-3"
-    index="5" type="combine" left="SyringeWithAbsorptionNeedleCap" right="" extra="stap54" />
-    <action description="Step 6.3 Absorb the right amount of solvent in the syringe" audioHint="InjectionSubcutaneous/Step 6.3"
-        index="5" type="combine" left="SyringeWithAbsorptionNeedle" right="OpenedAmpoule" />
-    <action description="Step 6.4 Inject solvent in medicine" audioHint="InjectionSubcutaneous/Step 6.4"
-        index="6" type="combine" left="SyringeWithSolvent" right="Medicine" />
+    index="6" type="combine" left="SyringeWithAbsorptionNeedleCap" right="" extra="stap54" />
+  <action description="Step 6.3 Absorb the right amount of solvent in the syringe" audioHint="InjectionSubcutaneous/Step 6.3"
+    index="7" type="combine" left="SyringeWithAbsorptionNeedle" right="OpenedAmpoule" />
+  <action description="Step 6.4 Inject solvent in medicine" audioHint="InjectionSubcutaneous/Step 6.4"
+    index="8" type="combine" left="SyringeWithSolvent" right="Medicine" />
  
 	<action description="Step 7.2: Vent the syringe" audioHint="InjectionSubcutaneous/Step 7.2"
-		index="7" type="useOn" item="SyringeWithAbsorptionNeedle" target=""></action>
+		index="9" type="useOn" item="SyringeWithAbsorptionNeedle" target=""></action>
   <action description="Stap 6.3.1: Put syringe cap on" audioHint="Injection/H9-2"
-    index="8" type="combine" left="SyringeWithAbsorptionNeedle" right="SyringeAbsorptionCap" extra="stap631" />
+    index="10" type="combine" left="SyringeWithAbsorptionNeedle" right="SyringeAbsorptionCap" extra="stap631" />
 	<action description="Step 7.3: Remove the absorption needle off the syringe" audioHint="InjectionSubcutaneous/Step 7.3"
-		index="8" type="combine" left="SyringeWithAbsorptionNeedle" right=""></action>
+		index="11" type="combine" left="SyringeWithAbsorptionNeedle" right=""></action>
 	<action description="Step 7.4: Put the needle in the needle cup (trashcan for needles)" audioHint="InjectionSubcutaneous/Step 7.4"
-		index="9" type="useOn" item="AbsorptionNeedle" target="NeedleCup"></action>
+		index="12" type="useOn" item="AbsorptionNeedle" target="NeedleCup"></action>
 	<action description="Step 7.5: Place the injection needle on the syringe" audioHint="InjectionSubcutaneous/Step 7.5"
-		index="10" type="combine" left="Syringe" right="InjectionNeedle"></action>
+		index="13" type="combine" left="Syringe" right="InjectionNeedle"></action>
   <action description="Stap 6.6: take off syringe cap" audioHint="Injection/H11-2"
-    index="10" type="combine" left="SyringeWithInjectionNeedleCap" right="" extra="stap66" />
+    index="14" type="combine" left="SyringeWithInjectionNeedleCap" right="" extra="stap66" />
 		
 	<action description="Step 8: Ask the patient to roll up his/her sleeve and show his/her arm." audioHint="InjectionSubcutaneous/Step 8"
-		index="11" type="talk" topic="RollUpSleeves"></action>
+		index="15" type="talk" topic="RollUpSleeves"></action>
 
   <action description="Step 9: Inject medicine into hand"	audioHint="InjectionSubcutaneous/Step 10"
-		index="12" type="useOn" item="SyringeWithInjectionNeedle" target="Patient"></action>
+		index="16" type="useOn" item="SyringeWithInjectionNeedle" target="Patient"></action>
 
   <action description="check if injection spot is clean and dry" audioHint="Injection/AS1-2"
-		index="13" type="sequenceStep" value="Check" extra="inj1"></action>
+		index="17" type="sequenceStep" value="Check" extra="inj1"></action>
   <action description="Take syringe in injecting hand and remove needlecap" audioHint="Injection/AS1-2"
-		index="14" type="sequenceStep" value="Remove Cap" extra="inj1"></action>
+		index="17" type="sequenceStep" value="Remove Cap" extra="inj1"></action>
   <action description="Grab skin crease with non injection hand" audioHint="Injection/AS1-2"
-		index="15" type="sequenceStep" value="Grab crease" extra="inj2"></action>
+		index="17" type="sequenceStep" value="Grab crease" extra="inj2"></action>
   <action description="Inject needle under an angle of 45 to 60 degree" audioHint="Injection/AS1-2"
-		index="16" type="sequenceStep" value="Inject Needle" extra="inj3"></action>
+		index="17" type="sequenceStep" value="Inject Needle" extra="inj3"></action>
   <action description="Release skin crease" audioHint="Injection/AS1-2"
 		index="17" type="sequenceStep" value="Release crease" extra="inj4"></action>
   <action description="Fixate syringe and needle" audioHint="Injection/AS1-2"
