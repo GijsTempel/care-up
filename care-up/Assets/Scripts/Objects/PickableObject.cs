@@ -86,7 +86,7 @@ public class PickableObject : InteractableObject {
         if (controls.SelectedObject != null && controls.CanInteract)
         {
             if ((name == "InjectionNeedle" || name == "AbsorptionNeedle"
-                || name == "InjectionSNeedle" || name == "AbsorptionSNeedle"
+                || name == "InjectionSNeedle"
                 || name == "TestStrips" || name == "Lancet" || name == "NeedleHolderWithNeedle"
                 || name == "ClothWithAmpouleTop")
                 && controls.SelectedObject.name == "NeedleCup")
