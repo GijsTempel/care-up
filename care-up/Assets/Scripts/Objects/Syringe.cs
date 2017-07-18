@@ -53,13 +53,13 @@ public class Syringe : PickableObject {
         string[] info = actionManager.CurrentUseOnInfo;
         if (controls.SelectedObject != null && controls.CanInteract)
         {
-            if (name == "SyringeWithInjectionNeedle"
+            if (name == "SyringeWithInjectionSNeedleCap"
                 && controls.SelectedObject.GetComponent<PersonObjectPart>() != null
                 && controls.SelectedObject.GetComponent<PersonObjectPart>().Person.name == "Patient")
             {
-                if (info[0] == "SyringeWithInjectionNeedle" && info[1] == "Patient")
+                if (info[0] == "SyringeWithInjectionSNeedleCap" && info[1] == "Patient")
                 {
-                    actionManager.OnUseOnAction("SyringeWithInjectionNeedle", "Patient");
+                    actionManager.OnUseOnAction("SyringeWithInjectionSNeedleCap", "Patient");
                     if (SceneManager.GetActiveScene().name == "Injection Subcutaneous v2" ||
                         SceneManager.GetActiveScene().name == "Injection Subcutaneous v2_ampoule" ||
                         SceneManager.GetActiveScene().name == "Injection Subcutaneous v2_desolve")
@@ -147,6 +147,26 @@ public class Syringe : PickableObject {
                     {
                         PlayerAnimationManager.PlayAnimation("UseLeft " + name);
                         actionManager.OnUseOnAction("SyringeWithAbsorptionNeedle", "");
+                        return true; // fix for venting syringe
+                    }
+                    else return false;
+                }
+            }
+            else if (name == "SyringeWithAbsorptionSNeedle")
+            {
+                info = actionManager.CurrentUseOnInfo;
+                if (info[0] == "SyringeWithAbsorptionSNeedle" && info[1] == "")
+                {
+                    if (inventory.LeftHandEmpty())
+                    {
+                        PlayerAnimationManager.PlayAnimation("UseRight " + name);
+                        actionManager.OnUseOnAction("SyringeWithAbsorptionSNeedle", "");
+                        return true; // fix for venting syringe
+                    }
+                    else if (inventory.RightHandEmpty())
+                    {
+                        PlayerAnimationManager.PlayAnimation("UseLeft " + name);
+                        actionManager.OnUseOnAction("SyringeWithAbsorptionSNeedle", "");
                         return true; // fix for venting syringe
                     }
                     else return false;
