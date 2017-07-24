@@ -63,6 +63,8 @@ public class InGameUI : MonoBehaviour {
 
             animator.speed = animatorSpeed;
 
+            ToggleAllSounds(true);
+
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
@@ -81,6 +83,8 @@ public class InGameUI : MonoBehaviour {
 
             animatorSpeed = animator.speed;
             animator.speed = 0.0f;
+
+            ToggleAllSounds(false);
             
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
@@ -112,5 +116,21 @@ public class InGameUI : MonoBehaviour {
     public void OnExitButtonClick()
     {
         GameObject.Find("Preferences").GetComponent<LoadingScreen>().LoadLevel("Menu");
+    }
+
+    public void ToggleAllSounds(bool value)
+    {
+        AudioSource [] audio = GameObject.FindObjectsOfType<AudioSource>();
+        foreach ( AudioSource a in audio )
+        {
+            if ( value )
+            {
+                a.UnPause();
+            }
+            else
+            {
+                a.Pause();
+            }
+        }
     }
 }
