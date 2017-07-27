@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
+using UnityEngine.UI;
 
 public class InGameUI : MonoBehaviour {
 
@@ -20,6 +21,9 @@ public class InGameUI : MonoBehaviour {
     private bool playerState = false;
     private float animatorSpeed = 1f;
 
+    PlayerPrefsManager prefsManager;
+    Slider volumeSlider;
+
 	void Start () {
 
         ui = transform.GetChild(0);
@@ -36,7 +40,11 @@ public class InGameUI : MonoBehaviour {
         player = GameObject.Find("Player").GetComponent<RigidbodyFirstPersonController>();
         crosshair = GameObject.Find("Player").GetComponent<Crosshair>();
         animator = player.transform.GetChild(0).GetChild(0).GetComponent<Animator>();
-	}
+
+        prefsManager = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
+        volumeSlider = transform.GetChild(0).GetChild(1).GetChild(1).GetChild(1).GetComponent<Slider>();
+        volumeSlider.value = prefsManager.Volume;
+    }
 	
 	void Update () {
 		
@@ -132,5 +140,11 @@ public class InGameUI : MonoBehaviour {
                 a.Pause();
             }
         }
+    }
+
+    public void OnVolumeSliderChange()
+    {
+        AudioListener.volume = volumeSlider.value;
+        prefsManager.Volume = volumeSlider.value;
     }
 }

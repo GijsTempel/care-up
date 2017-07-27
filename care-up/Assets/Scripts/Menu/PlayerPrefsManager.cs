@@ -25,6 +25,7 @@ public class PlayerPrefsManager : MonoBehaviour
     void Start()
     {
         AudioListener.volume = Volume;
+        Debug.Log("Volume is set to saved value: " + Volume);
     }
 
     public float Volume
