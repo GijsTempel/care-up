@@ -168,6 +168,16 @@ public class AnimationSequence  {
                 }
                 else //1 correct option
                 {
+                    if (animation == "Stick needle in arm")
+                    {
+                        GameObject.FindObjectOfType<InjectionPatient>().InjectNeedleInArmDialogue();
+                    }
+
+                    if (animation == "Inject medicine slow and steady")
+                    {
+                        GameObject.FindObjectOfType<InjectionPatient>().InjectMedicineSlowlyDialogue();        
+                    }
+                    
                     if (animation == "Inject Pricking pen" || animation == "ThrowSyringe")
                     {
                         GameObject.Find("GameLogic").GetComponent<HandsInventory>().PutAllOnTable();

@@ -48,6 +48,17 @@ public class Narrator : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Plays sound clip
+    /// </summary>
+    /// <param name="sound">sound name</param>
+    /// <returns>True if played</returns>
+    public static bool PlaySound(AudioClip sound)
+    {
+        audioSource.PlayOneShot(sound);
+        return true;
+    } 
+
     public static void PlaySystemSound(string sound, float volume)
     {
         AudioClip clip = Resources.Load<AudioClip>("Audio/" + sound);

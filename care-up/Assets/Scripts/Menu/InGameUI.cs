@@ -41,9 +41,18 @@ public class InGameUI : MonoBehaviour {
         crosshair = GameObject.Find("Player").GetComponent<Crosshair>();
         animator = player.transform.GetChild(0).GetChild(0).GetComponent<Animator>();
 
-        prefsManager = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
+        if (GameObject.Find("Preferences"))
+        {
+            prefsManager = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
+        }
+
         volumeSlider = transform.GetChild(0).GetChild(1).GetChild(1).GetChild(1).GetComponent<Slider>();
-        volumeSlider.value = prefsManager.Volume;
+
+        if (prefsManager != null)
+        {
+            volumeSlider.value = prefsManager.Volume;
+
+        }
     }
 	
 	void Update () {
@@ -70,6 +79,7 @@ public class InGameUI : MonoBehaviour {
             crosshair.enabled = true;
 
             animator.speed = animatorSpeed;
+            Time.timeScale = 1f;
 
             ToggleAllSounds(true);
 
@@ -91,6 +101,7 @@ public class InGameUI : MonoBehaviour {
 
             animatorSpeed = animator.speed;
             animator.speed = 0.0f;
+            Time.timeScale = 0f;
 
             ToggleAllSounds(false);
             
@@ -145,6 +156,9 @@ public class InGameUI : MonoBehaviour {
     public void OnVolumeSliderChange()
     {
         AudioListener.volume = volumeSlider.value;
-        prefsManager.Volume = volumeSlider.value;
+        if (prefsManager != null)
+        {
+            prefsManager.Volume = volumeSlider.value;
+        }
     }
 }

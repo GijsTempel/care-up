@@ -14,13 +14,14 @@ public class PersonObject : InteractableObject {
     public string dialogueXml;
 
     private List<SelectDialogue.DialogueOption> optionsList;
-    private AudioSource audioClip;
 
     private List<GameObject> callers;
 
     private bool inhaling = false;
     bool direction = true;
     private float inhaleCounter = 1.0f;
+
+    protected AudioSource audioSource;
 
     protected override void Start()
     {
@@ -30,7 +31,7 @@ public class PersonObject : InteractableObject {
         optionsList = new List<SelectDialogue.DialogueOption>();
         LoadDialogueOptions(dialogueXml);
 
-        audioClip = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
 
         inhaling = false;
         direction = true;
@@ -70,16 +71,6 @@ public class PersonObject : InteractableObject {
         if (ViewModeActive() || topic == "")
             return;
 
-        // play sound depending on topic (no sound yet)
-        if (audioClip.clip)
-        {
-            audioClip.Play();
-        }
-        else 
-        {
-            Debug.LogWarning("Audio clip not set.");
-        }
-
         if (topic == actionManager.CurrentTopic)
         {
             switch (topic)
@@ -87,6 +78,10 @@ public class PersonObject : InteractableObject {
                 case "RollUpSleeves":
                 case "ExtendArmMakeFist":
                     GetComponent<Animator>().SetTrigger("ShowArm");
+                    if (GetComponent<InjectionPatient>() != null)
+                    {
+                        GetComponent<InjectionPatient>().RollUpSleevesDialogue();
+                    }
                     break;
                 case "ComfortablePosition":
                     inhaling = true;
