@@ -86,9 +86,9 @@ public class PickableObject : InteractableObject {
         if (controls.SelectedObject != null && controls.CanInteract)
         {
             if ((name == "InjectionNeedle" || name == "AbsorptionNeedle"
-                || name == "InjectionSNeedle"
-                || name == "TestStrips" || name == "Lancet" || name == "NeedleHolderWithNeedle"
-                || name == "ClothWithAmpouleTop")
+                || name == "InjectionSNeedle" || name == "ClothWithAmpouleTop"
+                || name == "TestStrips" || name == "Lancet" || name == "NeedleHolderWithNeedle")
+                && info[1] == "NeedleCup"
                 && controls.SelectedObject.name == "NeedleCup")
             {
                 inventory.RemoveHandObject(hand);
