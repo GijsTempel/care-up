@@ -38,4 +38,8 @@ public class MainMenu : MonoBehaviour {
     {
         loadingScreen.LoadLevel("Tutorial");
     }
+    public void OnOptionsButtonClick()
+    {
+        loadingScreen.LoadLevel("Options");
+    }
 }
