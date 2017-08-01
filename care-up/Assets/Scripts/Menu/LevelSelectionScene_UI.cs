@@ -36,10 +36,20 @@ public class LevelSelectionScene_UI : MonoBehaviour
         {
             if (i < doors.Length)
             {
-                doors[i].gameObject.SetActive(true);
-                
+                if (scene.Attributes["hidden"] == null)
+                {
+                    doors[i].gameObject.SetActive(true);
+                }
+                else
+                {
+                    continue;
+                }
+
+
                 if (scene.Attributes["multiple"] != null)
                 {
+                    doors[i].multiple = true;
+
                     // general name
                     doors[i].transform.Find("Name").gameObject.SetActive(true);
                     doors[i].transform.Find("Name").GetComponent<Text>().text
@@ -50,7 +60,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
                     {
                         string sceneName = variation.Attributes["name"].Value;
                         Transform descr = doors[i].transform.Find("Option_" + ++count);
-                        descr.gameObject.SetActive(true);
+                        //descr.gameObject.SetActive(true);
 
                         descr.Find("Text").GetComponent<Text>().text
                             = variation.Attributes["displayname"].Value;
@@ -62,13 +72,27 @@ public class LevelSelectionScene_UI : MonoBehaviour
                                 ppManager.GetSceneTime(sceneName);
                             descr.GetComponent<LevelSelectionScene_UI_Option>().result = info;
                         }
+                        else
+                        {
+                            descr.GetComponent<LevelSelectionScene_UI_Option>().result = "Not completed";
+                        }
 
                         if (count == 1)
                         {
                             descr.GetComponent<LevelSelectionScene_UI_Option>().sceneName =
                                 doors[i].sceneName = sceneName;
 
-                            descr.GetComponent<LevelSelectionScene_UI_Option>().SetSelected();
+                            descr.parent.Find("Description").GetComponent<Text>().text = variation.Attributes["description"].Value;
+                            if (ppManager.GetSceneCompleted(sceneName))
+                            {
+                                string info = ppManager.GetSceneStars(sceneName) + " stars; " +
+                                    ppManager.GetSceneTime(sceneName);
+                                descr.parent.Find("Result").GetComponent<Text>().text = info;
+                            }
+                            else
+                            {
+                                descr.parent.Find("Result").GetComponent<Text>().text = "Not completed";
+                            }
                         }
                         else
                         {
@@ -78,6 +102,8 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 }
                 else
                 {
+                    doors[i].multiple = false;
+
                     doors[i].sceneName = scene.Attributes["name"].Value;
                     Transform descr = doors[i].transform;
                     descr.Find("Name").GetComponent<Text>().text = doors[i].sceneName;
@@ -93,7 +119,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
                     }
                     else
                     {
-                        descr.Find("Result").GetComponent<Text>().text = "";
+                        descr.Find("Result").GetComponent<Text>().text = "Not completed";
                     }
                 }
                 ++i;

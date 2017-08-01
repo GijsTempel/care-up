@@ -18,11 +18,10 @@ public class LevelSelectionScene_UI_Option : MonoBehaviour {
         // turn on
         if (!selected)
         {
-            LevelButton door = transform.parent.GetComponent<LevelButton>();
-            door.sceneName = sceneName;
-            //door.transform.Find("Name").GetComponent<Text>().text = sceneName;
-            door.transform.Find("Description").GetComponent<Text>().text = description;
-            door.transform.Find("Result").GetComponent<Text>().text = result;
+            transform.parent.Find("Start").GetComponent<LevelButton>().sceneName = sceneName;
+            
+            transform.parent.Find("Description").GetComponent<Text>().text = description;
+            transform.parent.Find("Result").GetComponent<Text>().text = result;
             
             LevelSelectionScene_UI_Option[] other = transform.parent.GetComponentsInChildren<LevelSelectionScene_UI_Option>();
             foreach (LevelSelectionScene_UI_Option ui in other)
