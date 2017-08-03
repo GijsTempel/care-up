@@ -9,6 +9,7 @@ public class InGameUI : MonoBehaviour {
     private Transform ui;
     private Transform main;
     private Transform options;
+    private Transform controlsUI;
 
     private GameObject game;
     private Controls controls;
@@ -29,6 +30,7 @@ public class InGameUI : MonoBehaviour {
         ui = transform.GetChild(0);
         main = ui.GetChild(0);
         options = ui.GetChild(1);
+        controlsUI = ui.GetChild(2);
 
         game = GameObject.Find("GameLogic");
         if (game != null)
@@ -130,6 +132,18 @@ public class InGameUI : MonoBehaviour {
     {
         main.gameObject.SetActive(true);
         options.gameObject.SetActive(false);
+    }
+
+    public void OnControlsButtonClick()
+    {
+        main.gameObject.SetActive(false);
+        controlsUI.gameObject.SetActive(true);
+    }
+
+    public void OnControlsBackButtonClick()
+    {
+        main.gameObject.SetActive(true);
+        controlsUI.gameObject.SetActive(false);
     }
 
     public void OnExitButtonClick()

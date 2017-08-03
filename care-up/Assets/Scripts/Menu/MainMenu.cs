@@ -38,8 +38,31 @@ public class MainMenu : MonoBehaviour {
     {
         loadingScreen.LoadLevel("Tutorial");
     }
+
     public void OnOptionsButtonClick()
     {
         loadingScreen.LoadLevel("Options");
+    }
+
+    public void OnControlsButtonClick()
+    {
+        GameObject canvas = GameObject.Find("Canvas");
+
+        canvas.transform.Find("MainMenu").gameObject.SetActive(false);
+        canvas.transform.Find("Logo").gameObject.SetActive(false);
+        canvas.transform.Find("OptionsBtn").gameObject.SetActive(false);
+
+        canvas.transform.Find("ControlsUI").gameObject.SetActive(true);
+    }
+
+    public void OnControlsCloseButtonClick()
+    {
+        GameObject canvas = GameObject.Find("Canvas");
+
+        canvas.transform.Find("MainMenu").gameObject.SetActive(true);
+        canvas.transform.Find("Logo").gameObject.SetActive(true);
+        canvas.transform.Find("OptionsBtn").gameObject.SetActive(true);
+
+        canvas.transform.Find("ControlsUI").gameObject.SetActive(false);
     }
 }
