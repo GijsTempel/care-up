@@ -15,6 +15,7 @@ public class LoadingScreen : MonoBehaviour {
 
     private string sceneToLoad;
     private bool loading = false;
+    private float delayTimer = 0.0f;
     
     // Set some temporary texture and text
     void Start()
@@ -29,10 +30,15 @@ public class LoadingScreen : MonoBehaviour {
 
         while (!async.isDone)
         {
+            delayTimer += Time.deltaTime;
             yield return null;
         }
 
-        yield return new WaitForSeconds(1);
+        if (delayTimer < 1.0f)
+        {
+            yield return new WaitForSeconds(1.0f - delayTimer);
+        }
+
         loading = false;
     }
 
@@ -59,8 +65,11 @@ public class LoadingScreen : MonoBehaviour {
     /// <param name="sceneName">Name of the scene to load.</param>
     public void LoadLevel(string sceneName)
     {
+        Time.timeScale = 1.0f;
+
         sceneToLoad = sceneName;
         loading = true;
+        delayTimer = 0.0f;
         StartCoroutine(LoadNewScene());
     }
 }
