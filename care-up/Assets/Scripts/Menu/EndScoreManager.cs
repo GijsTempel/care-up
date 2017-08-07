@@ -20,9 +20,15 @@ public class EndScoreManager : MonoBehaviour {
     private ActionManager actionManager;    //points, steps
     private GameTimer gameTimer; // time
 
+    private Sprite halfStar;
+    private Sprite fullStar;
+
     void Start()
     {
         SceneManager.sceneLoaded += OnLoaded;
+
+        halfStar = Resources.Load<Sprite>("Sprites/Stars/half star");
+        fullStar = Resources.Load<Sprite>("Sprites/Stars/star");
     }
 
     /// <summary>
@@ -51,17 +57,27 @@ public class EndScoreManager : MonoBehaviour {
 
             if (score >= 1)
             {
-                GameObject.Find("Star1").GetComponent<Image>().color = Color.green;
+                GameObject.Find("Star1").GetComponent<Image>().sprite = fullStar;
+            }
+
+            if (score >= 2)
+            {
+                GameObject.Find("Star2").GetComponent<Image>().sprite = halfStar;
             }
 
             if (score >= 3)
             {
-                GameObject.Find("Star2").GetComponent<Image>().color = Color.green;
+                GameObject.Find("Star2").GetComponent<Image>().sprite = fullStar;
+            }
+
+            if (score >= 4)
+            {
+                GameObject.Find("Star3").GetComponent<Image>().sprite = halfStar;
             }
 
             if (score >= 5)
             {
-                GameObject.Find("Star3").GetComponent<Image>().color = Color.green;
+                GameObject.Find("Star3").GetComponent<Image>().sprite = fullStar;
             }
 
             Cursor.lockState = CursorLockMode.None;
