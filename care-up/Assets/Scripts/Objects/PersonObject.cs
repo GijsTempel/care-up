@@ -156,7 +156,7 @@ public class PersonObject : InteractableObject {
 
     private void CallerUpdate()
     {
-        if (cameraMode.CurrentMode == CameraMode.Mode.Free)
+        if (cameraMode.CurrentMode == CameraMode.Mode.Free && !cameraMode.animating)
         {
             bool flag = false;
             bool clickFlag = true;
@@ -212,6 +212,12 @@ public class PersonObject : InteractableObject {
                     itemDescription.SetActive(false);
                 }
             }
+        }
+
+        if (cameraMode.animating && rend.material.shader == onMouseOverShader)
+        {
+            SetShaderTo(onMouseExitShader);
+            itemDescription.SetActive(false);
         }
     }
 }
