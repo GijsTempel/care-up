@@ -11,6 +11,7 @@ public class SystemObject : InteractableObject {
     public string sceneName;
 
     private LoadingScreen loadingScreen;
+    private PlayerPrefsManager prefs;
 
     protected override void Start()
     {
@@ -20,6 +21,9 @@ public class SystemObject : InteractableObject {
         {
             loadingScreen = GameObject.Find("Preferences").GetComponent<LoadingScreen>();
             if (loadingScreen == null) Debug.LogError("No loading screen found");
+
+            prefs = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
+            if (prefs == null) Debug.LogError("No PlayerPrefsManager");
         }
         else
         {
@@ -27,9 +31,20 @@ public class SystemObject : InteractableObject {
         }
     }
 
+    protected override void Update()
+    {
+        if (prefs.VR)
+        {
+            base.Update();
+        }
+    }
+
     // called when player interacts with object
     public virtual void Use(bool confirmed = false)
     {
+        if (!prefs.VR)
+            return;
+
         if (sceneName == "_Start")
         {
             // temporary until scene selection is designed

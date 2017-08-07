@@ -7,6 +7,8 @@ using System.Collections;
 /// </summary>
 public class PlayerPrefsManager : MonoBehaviour
 {
+    public bool VR = true;
+
     private static PlayerPrefsManager instance;
     
     void Awake()
