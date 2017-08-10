@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Developer script. Attach to a dev GameObject, that will be disabled for a release version of the game.
@@ -8,25 +9,20 @@ using UnityEngine;
 /// </summary>
 public class Cheat_CurrentAction : MonoBehaviour
 {
+    public Text textObject;
+
     private ActionManager actionManager;
     
     void Start()
     {
         actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
         if (actionManager == null) Debug.LogError("No action manager found.");
+
+        textObject = GameObject.Find("DevHint").transform.GetChild(0).GetComponent<Text>();
     }
 
-    /// <summary>
-    /// Displays a text message.
-    /// </summary>
-    void OnGUI()
+    private void Update()
     {
-        GUIStyle style = GUI.skin.GetStyle("Label");
-        style.alignment = TextAnchor.UpperCenter;
-        style.fontSize = 25;
-        style.normal.textColor = Color.white;
-
-        GUI.Label(new Rect(0, 0, Screen.width, Screen.height), 
-            actionManager.CurrentDescription, style);
+        textObject.text = actionManager.CurrentDescription;
     }
 }

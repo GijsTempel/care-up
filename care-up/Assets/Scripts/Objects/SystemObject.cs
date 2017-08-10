@@ -33,7 +33,7 @@ public class SystemObject : InteractableObject {
 
     protected override void Update()
     {
-        if (prefs.VR)
+        if (prefs != null && prefs.VR)
         {
             base.Update();
         }
