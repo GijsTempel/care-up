@@ -23,7 +23,13 @@ public class InGameUI : MonoBehaviour {
     private float animatorSpeed = 1f;
 
     PlayerPrefsManager prefsManager;
+
     Slider volumeSlider;
+    Dropdown qualityDropdown;
+    Dropdown resolutionDropdown;
+    Toggle fullscrToggle;
+
+    List<Resolution> resolutions;
 
 	void Start () {
 
@@ -48,13 +54,33 @@ public class InGameUI : MonoBehaviour {
             prefsManager = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
         }
 
-        volumeSlider = transform.GetChild(0).GetChild(1).GetChild(1).GetChild(1).GetComponent<Slider>();
+        Transform group = transform.GetChild(0).GetChild(1).GetChild(1);
+
+        volumeSlider = group.GetChild(0).GetChild(1).GetComponent<Slider>();
+        qualityDropdown = group.GetChild(1).GetChild(1).GetComponent<Dropdown>();
+        resolutionDropdown = group.GetChild(2).GetChild(1).GetComponent<Dropdown>();
+        fullscrToggle = group.GetChild(3).GetChild(1).GetComponent<Toggle>();
 
         if (prefsManager != null)
         {
             volumeSlider.value = prefsManager.Volume;
-
         }
+
+        List<string> qNames = new List<string>(QualitySettings.names);
+        qualityDropdown.AddOptions(qNames);
+        qualityDropdown.value = QualitySettings.GetQualityLevel();
+
+        resolutions = new List<Resolution>(Screen.resolutions);
+
+        List<string> rNames = new List<string>();
+        foreach (Resolution r in resolutions)
+        {
+            rNames.Add(r.width + "x" + r.height);
+        }
+        resolutionDropdown.AddOptions(rNames);
+        resolutionDropdown.value = resolutions.IndexOf(Screen.currentResolution);
+
+        fullscrToggle.isOn = Screen.fullScreen;
     }
 	
 	void Update () {
@@ -132,6 +158,11 @@ public class InGameUI : MonoBehaviour {
     {
         main.gameObject.SetActive(true);
         options.gameObject.SetActive(false);
+
+        // save some heavy settings
+        QualitySettings.SetQualityLevel(qualityDropdown.value, true);
+        Screen.SetResolution(resolutions[resolutionDropdown.value].width,
+            resolutions[resolutionDropdown.value].height, fullscrToggle.isOn);
     }
 
     public void OnControlsButtonClick()
