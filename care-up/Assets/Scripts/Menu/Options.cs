@@ -15,6 +15,7 @@ public class Options : MonoBehaviour {
     private Slider volumeSlider;
     private Dropdown qualityOptions;
     private Dropdown resolutionOptions;
+    private Toggle fullScreenToggle;
 
     void Start()
     {
@@ -45,6 +46,9 @@ public class Options : MonoBehaviour {
             rOptions.Add(r.ToString());
         resolutionOptions.AddOptions(rOptions);
         resolutionOptions.value = currentResolution;
+
+        fullScreenToggle = GameObject.Find("FullScreenToggle").GetComponent<Toggle>();
+        fullScreenToggle.isOn = Screen.fullScreen;
     }
 
     public void OnVolumeChange(float value)
@@ -74,5 +78,10 @@ public class Options : MonoBehaviour {
         Resolution[] resolutions = Screen.resolutions;
         Screen.SetResolution(resolutions[resolutionOptions.value].width, 
             resolutions[resolutionOptions.value].height, Screen.fullScreen);
+    }
+
+    public void OnFullScreenChange()
+    {
+        Screen.fullScreen = fullScreenToggle.isOn;
     }
 }
