@@ -12,17 +12,23 @@ public class Cheat_CurrentAction : MonoBehaviour
     public Text textObject;
 
     private ActionManager actionManager;
-    
+
     void Start()
     {
         actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
         if (actionManager == null) Debug.LogError("No action manager found.");
 
-        textObject = GameObject.Find("DevHint").transform.GetChild(0).GetComponent<Text>();
+        if (GameObject.Find("DevHint") != null)
+        {
+            textObject = GameObject.Find("DevHint").transform.GetChild(0).GetComponent<Text>();
+        }
     }
 
     private void Update()
     {
-        textObject.text = actionManager.CurrentDescription;
+        if (textObject != null)
+        {
+            textObject.text = actionManager.CurrentDescription;
+        }
     }
 }
