@@ -2,17 +2,17 @@
 <ActionList>
 	<action description="1: Pas handhygiene toe. (Kijk naar de hygienepomp en druk op de linkermuisknop te drukken.)" audioHint="Injection/H1-2"
 		index="0" type="use" value="HandCleaner"></action>
-	<action description="2: Maak een schoon werkveld.(Kijken naar de tafel en druk op de linkermuisknop.)" audioHint="Injection/H2-2"
+	<action description="2: Maak een schoon werkveld. (Kijk naar de tafel en druk op de linkermuisknop.)" audioHint="Injection/H2-2"
 		index="1" type="use" value="WorkField"></action>
 
   <action description="3: Controleer cliëntgegevens. (Kijk naar de cliëntgegevens en druk op de linkermuisknop)." audioHint="Injection/H3-2"
 		index="2" type="examine" item="PatientRecords" expected="good"></action>
-  <action description="4.1: Controleer het medicijn.(Kijk naar het medicijn en druk op de linkermuisknop.)" audioHint="Injection/H3-2"
+  <action description="4.1: Controleer het medicijn. (Kijk naar het medicijn en druk op de linkermuisknop.)" audioHint="Injection/H3-2"
 		index="2" type="examine" item="Medicine" expected="good"></action>
   <action description="4.2: Controleer de toedienlijst. (Kijk naar de toedienlijst en druk op de linkermuisknop.)" audioHint="InjectionSubcutaneous/Step 5"
 		index="2" type="examine" item="PrescriptionForm" expected="good"></action>
-
-  <action description="4.3: Ask doctor to double check" audioHint=""
+  
+  <action description="4.3: Vraag aan je collega om een dubbele controle" audioHint=""
     index="3" type="talk" topic="DoubleCheck" />
 
   <action description="5.A.1: Breek de ampul oplosmiddel open met een gaasje als bescherming (Combineer gaasje met ampul door op de (R) knop te drukken.)" audioHint="InjectionSubcutaneous/Step 6.1"
@@ -63,16 +63,16 @@
   <action description="16.Trek de naald uit de huid (Houd een gaasje voor de opvang van een eventuele bloeddruppel gereed). " audioHint="Injection/AS8-2"
 		index="23" type="sequenceStep" value="Pull needle" extra="inj7"></action>
 
-  <action description="Stap 9.1: Put on syringe cap" audioHint="Injection/EAS1-2"
-    index="24" type="combine" left="SyringeWithInjectionNeedle" right="SyringeInjectionCap" extra="stap91"/>
-	<action description="Step 17: Remove the injection needle" audioHint="InjectionSubcutaneous/Step 17"
-		index="25" type="combine" left="SyringeWithInjectionNeedle" right=""></action>
-	<action description="Step 17: Put the needle in the needle cup (trashcan for needles)" audioHint="InjectionSubcutaneous/Step 17.2"
+  <action description="17.1: Doe de beschermhuls van de opzuignaald weer op de naald. (Combineer de beschermhuls van de injectienaald met de spuit door op de (R) knop te drukken.)" audioHint="Injection/EAS1-2"
+  index="24" type="combine" left="SyringeWithInjectionNeedle" right="SyringeInjectionCap" extra="stap91"/>
+  <action description="17.2: Verwijder de naald van de spuit.(Zorg voor een vrije hand en druk op de (R) knop om te scheiden.)" audioHint="Injection/EAS1-27"
+		index="25" type="combine" left="SyringeWithInjectionNeedleCapped" right=""></action>
+  <action description="17.3: Doe de naald in de naaldencontainer (Kijk naar naaldcontainer en druk de 'gebruik(Q of E)' in knop van de juiste arm.)" audioHint="Injection/EAS2-2"
 		index="26" type="useOn" item="InjectionNeedle" target="NeedleCup"></action>
-	<action description="Step 18: Clean up the materials you used."  audioHint="InjectionSubcutaneous/Step 18"
+  <action description="18: Ruim de materialen op. (Kijk naar de tafel met lege handen en druk op de linkermuisknop.)"  audioHint="Injection/EAS3-2"
 		index="27" type="use" value="WorkField"></action>
-	<action description="Step 19: Preform hand hygiene" audioHint="InjectionSubcutaneous/Step 19"
+  <action description="19: Pas handhygiene toe. (Kijk naar de hygienepomp en druk op de linkermuisknop te drukken.)" audioHint="Injection/EAS5-2"
 		index="28" type="use" value="HandCleaner"></action>
-    <action description="Step 20: Write down information" audioHint="InjectionSubcutaneous/Step 20"
-        index="29" type="use" value="PaperAndPen"></action>
+  <action description="20: Noteer bevindingen. (Kijk naar het schrijfblok en druk op de linkermuisknop.)" audioHint="Injection/EAS4-2"
+      index="29" type="use" value="PaperAndPen"></action>
 </ActionList>
