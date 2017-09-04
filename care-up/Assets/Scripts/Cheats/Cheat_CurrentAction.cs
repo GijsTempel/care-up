@@ -11,6 +11,11 @@ public class Cheat_CurrentAction : MonoBehaviour
 {
     public Text textObject;
 
+    public float animationTime = 2.0f;
+
+    private int direction;
+    private float timer;
+    
     private ActionManager actionManager;
 
     void Start()
@@ -21,14 +26,54 @@ public class Cheat_CurrentAction : MonoBehaviour
         if (GameObject.Find("DevHint") != null)
         {
             textObject = GameObject.Find("DevHint").transform.GetChild(0).GetComponent<Text>();
+            if (textObject != null)
+            {
+                textObject.text = actionManager.CurrentDescription;
+            }
         }
+        
+        timer = 0.0f;
+        direction = 0;
     }
 
     private void Update()
     {
-        if (textObject != null)
+        if (textObject == null)
+            return;
+
+        if ( direction == 1 )
         {
-            textObject.text = actionManager.CurrentDescription;
+            if ( timer < animationTime )
+            {
+                timer += Time.deltaTime;
+                textObject.color = new Color(1.0f, 1.0f, 1.0f, 1.0f - timer / animationTime);
+            }
+            else
+            {
+                textObject.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+                textObject.text = actionManager.CurrentDescription;
+                timer = animationTime;
+                direction = -1;
+            }
         }
+        else if (direction == -1)
+        {
+            if (timer > 0.0f)
+            {
+                timer -= Time.deltaTime;
+                textObject.color = new Color(1.0f, 1.0f, 1.0f, 1.0f - timer / animationTime);
+            }
+            else
+            {
+                textObject.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+                timer = 0.0f;
+                direction = 0;
+            }
+        }
+    }
+
+    public void UpdateAction()
+    {
+        direction = 1;
     }
 }

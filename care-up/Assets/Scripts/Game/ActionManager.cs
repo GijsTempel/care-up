@@ -568,5 +568,10 @@ public class ActionManager : MonoBehaviour {
     public void PlayAddPointSound()
     {
         Narrator.PlaySystemSound("PointScored", 0.1f);
+        // todo move somewhere else
+        if (GameObject.Find("_Dev") != null)
+        {
+            GameObject.Find("_Dev").GetComponent<Cheat_CurrentAction>().UpdateAction();
+        }
     }
 }
