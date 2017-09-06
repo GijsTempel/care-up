@@ -21,7 +21,7 @@ public class LoadingScreen : MonoBehaviour {
     void Start()
     {
         loadingTexture = Resources.Load<Texture>("Textures/loading_bg");
-        loadingText = "Loading...";
+        loadingText = "Laden...";
     }
 
     IEnumerator LoadNewScene()
