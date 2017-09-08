@@ -10,7 +10,10 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(Renderer))]
 [RequireComponent(typeof(Rigidbody))]
 public class PickableObject : InteractableObject {
-    
+
+    [HideInInspector]
+    public bool tutorial_usedOn = false;
+
     public Transform controlBone;
 
     public int holdAnimationID = 0;
@@ -82,6 +85,7 @@ public class PickableObject : InteractableObject {
     /// <returns>True if used</returns>
     public virtual bool Use(bool hand)
     {
+        tutorial_usedOn = true;
         string[] info = actionManager.CurrentUseOnInfo;
         if (controls.SelectedObject != null && controls.CanInteract)
         {
@@ -91,6 +95,13 @@ public class PickableObject : InteractableObject {
                 && info[1] == "NeedleCup"
                 && controls.SelectedObject.name == "NeedleCup")
             {
+                if (GameObject.Find("GameLogic") != null)
+                {
+                    if (GameObject.Find("GameLogic").GetComponent<TutorialManager>() != null)
+                    {
+                        GameObject.Find("GameLogic").GetComponent<TutorialManager>().needleTrashed = true;
+                    }
+                }
                 inventory.RemoveHandObject(hand);
             }
             else if ((name == "Pad" || name == "Tourniquet") && 

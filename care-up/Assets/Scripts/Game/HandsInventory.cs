@@ -52,6 +52,8 @@ public class HandsInventory : MonoBehaviour {
 
     private ActionManager actionManager;
 
+    private TutorialManager tutorial;
+
     public GameObject LeftHandObject
     {
         get { return leftHandObject ? leftHandObject.gameObject : null; }
@@ -78,6 +80,8 @@ public class HandsInventory : MonoBehaviour {
 
         cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
         if (cameraMode == null) Debug.LogError("No camera mode found");
+
+        tutorial = GetComponent<TutorialManager>();
 
         foreach (GameObject obj in GameObject.FindGameObjectsWithTag("playerBone"))
         {
@@ -117,16 +121,21 @@ public class HandsInventory : MonoBehaviour {
             {
                 if (leftHandObject)
                 {
-                    leftHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
-                    tutorial_droppedLeft = true;
-                    if (!leftHandObject.Drop() && dropPenalty)
+                    if (tutorial == null || (tutorial != null &&
+                    (tutorial.itemToDrop == leftHandObject.name ||
+                    tutorial.itemToDrop2 == LeftHandObject.name)))
                     {
-                        Narrator.PlaySound("WrongAction");
-                        actionManager.Points--;
+                        leftHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
+                        tutorial_droppedLeft = true;
+                        if (!leftHandObject.Drop() && dropPenalty)
+                        {
+                            Narrator.PlaySound("WrongAction");
+                            actionManager.Points--;
+                        }
+                        leftHandObject = null;
+                        leftHold = false;
+                        PlayerAnimationManager.SetHandItem(true, null);
                     }
-                    leftHandObject = null;
-                    leftHold = false;
-                    PlayerAnimationManager.SetHandItem(true, null);
                 }
             }
 
@@ -135,16 +144,21 @@ public class HandsInventory : MonoBehaviour {
             {
                 if (rightHandObject)
                 {
-                    rightHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
-                    tutorial_droppedRight = true;
-                    if (!rightHandObject.Drop() && dropPenalty)
+                    if (tutorial == null || (tutorial != null &&
+                    (tutorial.itemToDrop == rightHandObject.name ||
+                    tutorial.itemToDrop2 == rightHandObject.name)))
                     {
-                        Narrator.PlaySound("WrongAction");
-                        actionManager.Points--;
+                        rightHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
+                        tutorial_droppedRight = true;
+                        if (!rightHandObject.Drop() && dropPenalty)
+                        {
+                            Narrator.PlaySound("WrongAction");
+                            actionManager.Points--;
+                        }
+                        rightHandObject = null;
+                        rightHold = false;
+                        PlayerAnimationManager.SetHandItem(false, null);
                     }
-                    rightHandObject = null;
-                    rightHold = false;
-                    PlayerAnimationManager.SetHandItem(false, null);
                 }
             }
 
@@ -220,7 +234,14 @@ public class HandsInventory : MonoBehaviour {
                 {
                     if (item.GetComponent<ExaminableObject>() == null)
                     {
-                        PickItem(item);
+                        if (tutorial == null || 
+                            (tutorial != null && 
+                                (item.name == tutorial.itemToPick || 
+                                item.name == tutorial.itemToPick2)))
+                        {
+                            PickItem(item);
+                        }
+
                         controls.ResetObject();
                     }
                 }

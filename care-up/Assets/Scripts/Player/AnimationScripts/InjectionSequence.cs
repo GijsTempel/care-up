@@ -73,6 +73,16 @@ public class InjectionSequence : AnimationSequenceState
                     }
 
                     PlayerAnimationManager.NextSequenceStep(true);
+                    if (keyFrame == 0)
+                    {
+                        if (GameObject.Find("GameLogic") != null)
+                        {
+                            if (GameObject.Find("GameLogic").GetComponent<TutorialManager>() != null)
+                            {
+                                PlayerAnimationManager.SequenceTutorialLock(true);
+                            }
+                        }
+                    }
                     animator.speed = 0f;
                     ++keyFrame;
                 }
@@ -91,10 +101,18 @@ public class InjectionSequence : AnimationSequenceState
     {
         base.OnStateExit(animator, stateInfo, layerIndex);
 
-        if ( inv.LeftHandObject && inv.LeftHandObject.GetComponent<Syringe>())
-        inv.LeftHandObject.GetComponent<Syringe>().updatePlunger = false;
+        if (inv.LeftHandObject && inv.LeftHandObject.GetComponent<Syringe>())
+            inv.LeftHandObject.GetComponent<Syringe>().updatePlunger = false;
 
         GameObject.FindObjectOfType<InjectionPatient>().AfterSequenceDialogue();
+
+        if (GameObject.Find("GameLogic") != null)
+        {
+            if (GameObject.Find("GameLogic").GetComponent<TutorialManager>() != null)
+            {
+                GameObject.Find("GameLogic").GetComponent<TutorialManager>().sequenceCompleted = true;
+            }
+        }
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here

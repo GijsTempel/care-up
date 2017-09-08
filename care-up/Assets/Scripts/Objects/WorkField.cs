@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class WorkField : UsableObject {
-
+    
     public List<GameObject> objects = new List<GameObject>();
     public List<GameObject> postObjects = new List<GameObject>();
 
@@ -42,6 +42,8 @@ public class WorkField : UsableObject {
             {
                 ToggleObjects();
             }
+
+            tutorial_used = true;
         }
     }
 

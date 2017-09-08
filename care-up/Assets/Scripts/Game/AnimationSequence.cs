@@ -257,6 +257,7 @@ public class AnimationSequence  {
         {
             dialogue.tutorial_lock = false;
             dialogue.ShowAnswer();
+            Debug.Log("answer()");
         }
         cheated = dialogue.cheated = true;
     }

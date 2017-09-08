@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Syringe : PickableObject {
-
+    
     public bool updatePlunger = false;
 
     private Transform plunger;
@@ -50,6 +50,7 @@ public class Syringe : PickableObject {
 
     public override bool Use(bool hand = false)
     {
+        tutorial_usedOn = true;
         string[] info = actionManager.CurrentUseOnInfo;
         if (controls.SelectedObject != null && controls.CanInteract)
         {
@@ -88,7 +89,8 @@ public class Syringe : PickableObject {
                     actionManager.OnUseOnAction("SyringeWithInjectionNeedleCap", "Patient");
                     if (SceneManager.GetActiveScene().name == "Injection" ||
                         SceneManager.GetActiveScene().name == "Injection_ampoule" ||
-                        SceneManager.GetActiveScene().name == "Injection_disolve")
+                        SceneManager.GetActiveScene().name == "Injection_disolve" ||
+                        SceneManager.GetActiveScene().name == "Tutorial")
                     {
                         Transform target = controls.SelectedObject.GetComponent<PersonObjectPart>().Person;
                         target.GetComponent<InteractableObject>().Reset();
@@ -116,17 +118,6 @@ public class Syringe : PickableObject {
                     AnimationSequence animationSequence = new AnimationSequence("WingedNeedle");
                     animationSequence.NextStep();
                     return true;
-                }
-            }
-            else if (name == "SyringeWithAbsorptionNeedle"
-                    && controls.SelectedObject.GetComponent<PersonObjectPart>() != null
-                    && controls.SelectedObject.GetComponent<PersonObjectPart>().Person.name == "Patient")
-            {
-                info = actionManager.CurrentUseOnInfo;
-                if (info[0] == "SyringeWithAbsorptionNeedle" && info[1] == "Hand")
-                {
-                    actionManager.OnUseOnAction("SyringeWithAbsorptionNeedle", "Hand");
-                    return true; // for tutorial
                 }
             }
         }

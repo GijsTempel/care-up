@@ -10,7 +10,10 @@ using UnityEngine.UI;
 /// </summary>
 [RequireComponent(typeof(AudioSource))]
 public class PersonObject : InteractableObject {
-    
+
+    [HideInInspector]
+    public bool tutorial_talked = false;
+
     public string dialogueXml;
 
     private List<SelectDialogue.DialogueOption> optionsList;
@@ -70,6 +73,8 @@ public class PersonObject : InteractableObject {
     {
         if (ViewModeActive() || topic == "")
             return;
+
+        tutorial_talked = true;
 
         if (topic == actionManager.CurrentTopic)
         {
