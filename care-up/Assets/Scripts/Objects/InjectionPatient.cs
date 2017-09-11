@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class InjectionPatient : PersonObject {
 
@@ -39,6 +40,9 @@ public class InjectionPatient : PersonObject {
 
     public void GreetDialogue()
     {
+        if (SceneManager.GetActiveScene().name == "Tutorial")
+            return;
+    
         if (greetDialogueTriggered)
             return;
         else
@@ -65,6 +69,9 @@ public class InjectionPatient : PersonObject {
 
     public void PutAbsorptionNeedleDialogue()
     {
+        if (SceneManager.GetActiveScene().name == "Tutorial")
+            return;
+
         StartCoroutine(PutAbsorptionNeedleDialogueCoroutine());
     }
 
@@ -91,6 +98,9 @@ public class InjectionPatient : PersonObject {
 
     public void InjectNeedleInArmDialogue()
     {
+        if (SceneManager.GetActiveScene().name == "Tutorial")
+            return;
+
         StartCoroutine(InjectNeedleInArmDialogueCoroutine());
     }
 
@@ -103,6 +113,9 @@ public class InjectionPatient : PersonObject {
 
     public void InjectMedicineSlowlyDialogue()
     {
+        if (SceneManager.GetActiveScene().name == "Tutorial")
+            return;
+
         StartCoroutine(InjectMedicineSlowlyDialogueCoroutine());
     }
 
@@ -115,6 +128,9 @@ public class InjectionPatient : PersonObject {
 
     public void AfterSequenceDialogue()
     {
+        if (SceneManager.GetActiveScene().name == "Tutorial")
+            return;
+
         StartCoroutine(AfterSequenceDialogueCoroutine());
     }
 
