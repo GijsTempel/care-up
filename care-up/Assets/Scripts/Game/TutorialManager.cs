@@ -53,6 +53,7 @@ public class TutorialManager : MonoBehaviour {
         WalkAway,                  // step 10
         DropBothItems,             // step 10
         PickBothItemsAgain,        // step 10
+        DropBothItemAway,          // inserted
         CombineDesinfMedicine,     // step 11
 
         DropClothMedicine,         // step 12
@@ -398,13 +399,21 @@ public class TutorialManager : MonoBehaviour {
                     {
                         handsInventory.tutorial_pickedLeft =
                             handsInventory.tutorial_pickedRight = false;
+                        currentStep = TutorialStep.DropBothItemAway;
+                        UItext.text = "Drop items on the table";
+                    }
+                    break;
+                case TutorialStep.DropBothItemAway:
+                    if ( handsInventory.tutorial_droppedLeft && handsInventory.tutorial_droppedRight)
+                    {
+                        handsInventory.tutorial_droppedLeft =
+                            handsInventory.tutorial_droppedRight = false;
                         currentStep = TutorialStep.CombineDesinfMedicine;
                         controls.keyPreferences.CombineKey.locked = combineKeyLocked = false;
                         controls.keyPreferences.pickObjectView.locked = pickObjectViewKeyLocked = false;
                         particleHint.SetActive(false);
                         particleHint_alt.SetActive(false);
                         UItext.text = "Combine desinfected cloth and medicine";
-
                     }
                     break;
                 case TutorialStep.CombineDesinfMedicine:
