@@ -201,7 +201,7 @@ public class TutorialManager : MonoBehaviour {
                         AddPointWithSound();
                         currentStep = TutorialStep.WalkAround;
                         player.tutorial_movementLock = movementLock = false;
-                        UItext.text = "Gebruik de W, A, S, D toesten om te lopen ";
+                        UItext.text = "Gebruik de W, A, S, D / pijltjestoetsen om te lopen ";
                     }
                     break;
                 case TutorialStep.WalkAround:
@@ -211,7 +211,7 @@ public class TutorialManager : MonoBehaviour {
                         currentStep = TutorialStep.WalkToTable;
                         particleHint.transform.position = tableTrigger.transform.position;
                         particleHint.SetActive(true);
-                        UItext.text = "Beweeg naar de tafel door W, A, S, D en de muis te gebruiken";
+                        UItext.text = "Beweeg naar de tafel door W, A, S, D / pijltjestoetsen en de muis te gebruiken";
                     }
                     break;
                 case TutorialStep.WalkToTable:
@@ -223,7 +223,7 @@ public class TutorialManager : MonoBehaviour {
                         currentStep = TutorialStep.UseHandCleaner;
                         controls.keyPreferences.closeObjectView.locked = closeObjectViewLocked = false;
                         particleHint.transform.position = handCleaner.transform.position;
-                        UItext.text = "Use Hand Cleaner";
+                        UItext.text = "Sommige oplichtende voorwerpen met een hand icoon erboven kunnen gebruikt worden door naar het voorwerp te kijken en op de linkermuisknop te drukken. Kijk nu naar de hygiënepomp en druk op de linkermuisknop om handhygiëne toe te passen. ";
                     }
                     break;
                 case TutorialStep.UseHandCleaner:
@@ -231,7 +231,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         currentStep = TutorialStep.UseTable;
                         particleHint.transform.position = workField.transform.position;
-                        UItext.text = "Use WorkField";
+                        UItext.text = "Maak je werkveld schoon. Dit kan door naar het werkveld te kijken en op de linkermuisknop te drukken. Hier zie je ook weer het 'hand' icoon die aangeeft dat je het voorwerp kunt gebruiken.";
                     }
                     break;
                 case TutorialStep.UseTable:
@@ -239,7 +239,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         currentStep = TutorialStep.ExamineRecords;
                         particleHint.transform.position = patientRecords.transform.position;
-                        UItext.text = "Examine records";
+                        UItext.text = "Oplichtende voorwerpen met een vergrootglas icoon kunnen bekeken en gecontroleerd worden. Dit geldt voor bijvoorbeeld de clientgegevens of het medicijn. Dit doe je door naar het voorwerp met een vergrootglas icoon te kijken en op de linkermuisknop te drukken.   ";
                         patientRecords.tutorial_picked = false;
                     }
                     break;
@@ -248,7 +248,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         currentStep = TutorialStep.CloseRecords;
                         particleHint.SetActive(false);
-                        UItext.text = "Close examine";
+                        UItext.text = "Als je met de linkermuisknop op een voorwerp met een vergrootglas icoon druk, kom je in het voorwerp bekijk modus. Je kunt door te scrollen met je muiswiel om in/uit te zoomen. Je kunt voorwerpen draaien door de linkermuisknop ingedrukt te houden en te bewegen met de muis. Het voorwerp terugleggen doe je met de 'Q' knop. Het bekeken/gecontroleerde voorwerp kun je oppakken met de 'E' knop. Dit kan echter niet met alle voorwerp. Leg nu de client gegevens terug door op 'Q' te drukken.   ";
                     }
                     break;
                 case TutorialStep.CloseRecords:
