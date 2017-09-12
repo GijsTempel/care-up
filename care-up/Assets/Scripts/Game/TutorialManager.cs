@@ -275,6 +275,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         currentStep = TutorialStep.PickCloth;
                         particleHint.transform.position = cloth.transform.position;
+                        particleHint.SetActive(true);
                         UItext.text = "Pick cloth";
                         itemToPick = "Cloth";
                     }
@@ -286,6 +287,7 @@ public class TutorialManager : MonoBehaviour {
                             AddPointWithSound();
                             UItext.text = "Wanneer je handen leeg zijn en je pakt iets op. Zal het altijd in je linkerhand verschijnen.";
                             SetPauseTimer(5.0f);
+                            particleHint.SetActive(false);
                         }
                     }
                     break;
@@ -330,6 +332,7 @@ public class TutorialManager : MonoBehaviour {
                 case TutorialStep.DropItem:
                     if ( handsInventory.tutorial_droppedLeft )
                     {
+                        AddPointWithSound();
                         handsInventory.tutorial_droppedLeft = false;
                         currentStep = TutorialStep.DropAnotherItem;
                         controls.keyPreferences.RightDropKey.locked = rightDropKeyLocked = false;
@@ -343,27 +346,34 @@ public class TutorialManager : MonoBehaviour {
                         AddPointWithSound();
                         currentStep = TutorialStep.PickBothItems;
                         handsInventory.tutorial_droppedRight = false;
-                        particleHint.SetActive(true);
                         UItext.text = "Pick both back";
 
                         itemToPick = "Alcohol";
                         itemToPick2 = "DesinfectionCloth";
+
+                        particleHint.transform.position = alcohol.transform.position;
+                        particleHint.SetActive(true);
+                        particleHint_alt.transform.position = GameObject.Find("DesinfectionCloth").transform.position;
+                        particleHint_alt.SetActive(true);
                     }
                     break;
                 case TutorialStep.PickBothItems:
                     if ( handsInventory.tutorial_pickedLeft && handsInventory.tutorial_pickedRight )
                     {
+                        AddPointWithSound();
                         handsInventory.tutorial_pickedLeft =
                             handsInventory.tutorial_pickedRight = false;
                         currentStep = TutorialStep.WalkAway;
                         player.tutorial_movementLock = movementLock = false;
                         particleHint.SetActive(false);
+                        particleHint_alt.SetActive(false);
                         UItext.text = "Walk away";
                     }
                     break;
                 case TutorialStep.WalkAway:
                     if ( Vector3.Distance(player.transform.position, tableTrigger.position) > 5.0f )
                     {
+                        AddPointWithSound();
                         currentStep = TutorialStep.DropBothItems;
                         UItext.text = "Now drop both";
                         itemToDrop = "Alcohol";
@@ -375,8 +385,8 @@ public class TutorialManager : MonoBehaviour {
                     {
                         currentStep = TutorialStep.PickBothItemsAgain;
                         UItext.text = "Pick em";
-                        particleHint.transform.position = syringe.transform.position;
-                        particleHint_alt.transform.position = needle.transform.position;
+                        particleHint.transform.position = alcohol.transform.position;
+                        particleHint_alt.transform.position = GameObject.Find("DesinfectionCloth").transform.position;
                         particleHint.SetActive(true);
                         particleHint_alt.SetActive(true);
 
@@ -387,6 +397,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         if ( handsInventory.tutorial_droppedLeft && handsInventory.tutorial_droppedRight)
                         {
+                            AddPointWithSound();
                             handsInventory.tutorial_droppedLeft =
                                 handsInventory.tutorial_droppedRight = false;
                             UItext.text = "blabla pause";
@@ -397,6 +408,9 @@ public class TutorialManager : MonoBehaviour {
                 case TutorialStep.PickBothItemsAgain:
                     if ( handsInventory.tutorial_pickedLeft && handsInventory.tutorial_pickedRight)
                     {
+                        AddPointWithSound();
+                        particleHint.SetActive(false);
+                        particleHint_alt.SetActive(false);
                         handsInventory.tutorial_pickedLeft =
                             handsInventory.tutorial_pickedRight = false;
                         currentStep = TutorialStep.DropBothItemAway;
@@ -406,14 +420,16 @@ public class TutorialManager : MonoBehaviour {
                 case TutorialStep.DropBothItemAway:
                     if ( handsInventory.tutorial_droppedLeft && handsInventory.tutorial_droppedRight)
                     {
+                        AddPointWithSound();
                         handsInventory.tutorial_droppedLeft =
                             handsInventory.tutorial_droppedRight = false;
                         currentStep = TutorialStep.CombineDesinfMedicine;
                         controls.keyPreferences.CombineKey.locked = combineKeyLocked = false;
                         controls.keyPreferences.pickObjectView.locked = pickObjectViewKeyLocked = false;
-                        particleHint.SetActive(false);
-                        particleHint_alt.SetActive(false);
                         UItext.text = "Combine desinfected cloth and medicine";
+
+                        particleHint.SetActive(true);
+                        particleHint.transform.position = medicine.transform.position;
                     }
                     break;
                 case TutorialStep.CombineDesinfMedicine:
@@ -425,11 +441,14 @@ public class TutorialManager : MonoBehaviour {
 
                         itemToDrop2 = "Medicine";
                         itemToDrop = "DesinfectionCloth";
+
+                        particleHint.SetActive(false);
                     }
                     break;
                 case TutorialStep.DropClothMedicine:
                     if ( handsInventory.tutorial_droppedLeft && handsInventory.tutorial_droppedRight)
                     {
+                        AddPointWithSound();
                         handsInventory.tutorial_droppedLeft =
                             handsInventory.tutorial_droppedRight = false;
                         currentStep = TutorialStep.PickSyringeAbNeedleCap;
@@ -437,11 +456,20 @@ public class TutorialManager : MonoBehaviour {
 
                         itemToPick = "Syringe";
                         itemToPick2 = "AbsorptionNeedle";
+
+                        particleHint.transform.position = syringe.transform.position;
+                        particleHint_alt.transform.position = GameObject.Find("AbsorptionNeedle").transform.position;
+                        particleHint.SetActive(true);
+                        particleHint_alt.SetActive(true);
                     }
                     break;
                 case TutorialStep.PickSyringeAbNeedleCap:
                     if ( handsInventory.tutorial_pickedLeft && handsInventory.tutorial_pickedRight)
                     {
+                        AddPointWithSound();
+                        particleHint.SetActive(false);
+                        particleHint_alt.SetActive(false);
+
                         handsInventory.tutorial_pickedLeft =
                             handsInventory.tutorial_pickedRight = false;
                         currentStep = TutorialStep.CombineSyringeAbNeedleCap;
@@ -469,12 +497,16 @@ public class TutorialManager : MonoBehaviour {
                 case TutorialStep.DropAbsorptionCap:
                     if (handsInventory.tutorial_droppedLeft || handsInventory.tutorial_droppedRight)
                     {
+                        AddPointWithSound();
                         handsInventory.tutorial_droppedLeft =
                             handsInventory.tutorial_droppedRight = false;
                         currentStep = TutorialStep.CombineSyringeAbNeedleMed;
                         UItext.text = "Combine syringe with needle and medicine";
 
                         itemToPick = "Medicine";
+
+                        particleHint.transform.position = medicine.transform.position;
+                        particleHint.SetActive(true);
                     }
                     break;
                 case TutorialStep.CombineSyringeAbNeedleMed:
@@ -492,11 +524,15 @@ public class TutorialManager : MonoBehaviour {
 
                         handsInventory.tutorial_droppedLeft =
                             handsInventory.tutorial_droppedRight = false;
+
+                        particleHint.SetActive(false);
                     }
                     break;
                 case TutorialStep.DropMedicine:
                     if (handsInventory.tutorial_droppedLeft || handsInventory.tutorial_droppedRight)
                     {
+                        AddPointWithSound();
+
                         handsInventory.tutorial_droppedLeft =
                             handsInventory.tutorial_droppedRight = false;
                         currentStep = TutorialStep.UseSyringeWithMed;
@@ -514,11 +550,16 @@ public class TutorialManager : MonoBehaviour {
                         UItext.text = "Pick up absorption needle cap";
 
                         itemToPick = "SyringeAbsorptionCap";
+                        particleHint.transform.position = GameObject.Find("SyringeAbsorptionCap").transform.position;
+                        particleHint.SetActive(true);
                     }
                     break;
                 case TutorialStep.PickUpAbsorptionCap:
                     if (handsInventory.tutorial_pickedLeft || handsInventory.tutorial_pickedRight)
                     {
+                        AddPointWithSound();
+                        particleHint.SetActive(false);
+
                         handsInventory.tutorial_pickedLeft =
                             handsInventory.tutorial_pickedRight = false;
                         currentStep = TutorialStep.CombinePutOnAbCap;
@@ -539,6 +580,9 @@ public class TutorialManager : MonoBehaviour {
                         handsInventory.tutorial_combined = false;
                         currentStep = TutorialStep.UseAbNeedleOnTrash;
                         UItext.text = "Use capped needle on trashcan";
+
+                        particleHint.SetActive(true);
+                        particleHint.transform.position = GameObject.Find("NeedleCup").transform.position;
                     }
                     break;
                 case TutorialStep.UseAbNeedleOnTrash:
@@ -549,11 +593,15 @@ public class TutorialManager : MonoBehaviour {
                         UItext.text = "Pick up capped injection needle";
 
                         itemToPick = "InjectionNeedle";
+                        particleHint.transform.position = GameObject.Find("InjectionNeedle").transform.position;
                     }
                     break;
                 case TutorialStep.PickInjectionNeedle:
                     if (handsInventory.tutorial_pickedLeft || handsInventory.tutorial_pickedRight)
                     {
+                        AddPointWithSound();
+                        particleHint.SetActive(false);
+
                         handsInventory.tutorial_pickedLeft =
                             handsInventory.tutorial_pickedRight = false;
                         currentStep = TutorialStep.CombineSyringeInjNeedle;
@@ -566,13 +614,19 @@ public class TutorialManager : MonoBehaviour {
                         handsInventory.tutorial_combined = false;
                         currentStep = TutorialStep.MoveToPatient;
                         UItext.text = "Move to the patient";
+
                         patientTrigger.gameObject.SetActive(true);
+                        particleHint.transform.position = patientTrigger.transform.position;
+                        particleHint.SetActive(true);
                     }
                     break;
                 case TutorialStep.MoveToPatient:
                     if ( Vector3.Distance(player.transform.position, patientTrigger.position) < 1.0f)
                     {
+                        AddPointWithSound();
+
                         patientTrigger.gameObject.SetActive(false);
+
                         player.tutorial_movementLock = movementLock = true;
                         currentStep = TutorialStep.TalkToPatient;
                         controls.keyPreferences.LeftUseKey.locked = leftUseKeyLocked = false;
@@ -620,11 +674,15 @@ public class TutorialManager : MonoBehaviour {
                         UItext.text = "Put injection needle cap on";
 
                         itemToPick = "SyringeInjectionCap";
+                        particleHint.transform.position = GameObject.Find("SyringeInjectionCap").transform.position;
+                        particleHint.SetActive(true);
                     }
                     break;
                 case TutorialStep.CombinePutOnInjCap:
                     if (handsInventory.tutorial_combined)
                     {
+                        particleHint.SetActive(false);
+
                         handsInventory.tutorial_combined = false;
                         currentStep = TutorialStep.CombineTakeOffInjNeedle;
                         UItext.text = "Take off injection needle";
@@ -636,6 +694,9 @@ public class TutorialManager : MonoBehaviour {
                         handsInventory.tutorial_combined = false;
                         currentStep = TutorialStep.UseInjNeedleOnTrash;
                         UItext.text = "Trash capped injection needle";
+
+                        particleHint.SetActive(true);
+                        particleHint.transform.position = GameObject.Find("NeedleCup").transform.position;
                     }
                     break;
                 case TutorialStep.UseInjNeedleOnTrash:
@@ -646,15 +707,21 @@ public class TutorialManager : MonoBehaviour {
                         UItext.text = "Drop syringe";
 
                         itemToDrop = "Syringe";
+                        particleHint.SetActive(false);
                     }
                     break;
                 case TutorialStep.DropSyringe:
                     if (handsInventory.Empty())
                     {
+                        AddPointWithSound();
+
                         currentStep = TutorialStep.UseWorkField;
                         UItext.text = "Use work field";
 
                         workField.tutorial_used = false;
+
+                        particleHint.SetActive(true);
+                        particleHint.transform.position = workField.transform.position;
                     }
                     break;
                 case TutorialStep.UseWorkField:
@@ -664,6 +731,7 @@ public class TutorialManager : MonoBehaviour {
                         UItext.text = "Use Hygiene Pump";
 
                         handCleaner.tutorial_used = false;
+                        particleHint.transform.position = handCleaner.transform.position;
                     }
                     break;
                 case TutorialStep.UseHygienePump:
@@ -671,11 +739,15 @@ public class TutorialManager : MonoBehaviour {
                     {
                         currentStep = TutorialStep.UsePaperAndPen;
                         UItext.text = "Use paper and pen";
+
+                        particleHint.transform.position = paperNPen.transform.position;
                     }
                     break;
                 case TutorialStep.UsePaperAndPen:
                     if (paperNPen.tutorial_used)
                     {
+                        particleHint.SetActive(false);
+
                         currentStep = TutorialStep.TutorialEnd;
                         UItext.text = "Goed gedaan. Dit was de uitleg over Care-Up. Succes bij je eerste BIG-handeling";
                     }
