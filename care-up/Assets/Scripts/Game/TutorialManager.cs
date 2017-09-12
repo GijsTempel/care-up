@@ -248,7 +248,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         currentStep = TutorialStep.CloseRecords;
                         particleHint.SetActive(false);
-                        UItext.text = "Als je met de linkermuisknop op een voorwerp met een vergrootglas icoon druk, kom je in het voorwerp bekijk modus. Je kunt door te scrollen met je muiswiel om in/uit te zoomen. Je kunt voorwerpen draaien door de linkermuisknop ingedrukt te houden en te bewegen met de muis. Het voorwerp terugleggen doe je met de 'Q' knop. Het bekeken/gecontroleerde voorwerp kun je oppakken met de 'E' knop. Dit kan echter niet met alle voorwerp. Leg nu de client gegevens terug door op 'Q' te drukken.   ";
+                        UItext.text = "Als je met de linkermuisknop op een voorwerp met een vergrootglas icoon druk, kom je in het voorwerp bekijk modus. Je kunt door te scrollen met je muiswiel om in/uit te zoomen. Je kunt voorwerpen draaien door de linkermuisknop ingedrukt te houden en te bewegen met de muis. Het voorwerp terugleggen doe je met de 'Q' knop. Het bekeken/gecontroleerde voorwerp kun je oppakken met de 'E' knop. Dit kan echter niet met alle voorwerpen. Leg nu de clientgegevens terug door op 'Q' te drukken.   ";
                     }
                     break;
                 case TutorialStep.CloseRecords:
@@ -258,7 +258,7 @@ public class TutorialManager : MonoBehaviour {
                         currentStep = TutorialStep.ExamineMedicine;
                         particleHint.transform.position = medicine.transform.position;
                         particleHint.SetActive(true);
-                        UItext.text = "Examine Medicine";
+                        UItext.text = "Controleer nu het medicijn door er naar te kijken en op de linkermuisknop te drukken.";
                     }
                     break;
                 case TutorialStep.ExamineMedicine:
@@ -266,7 +266,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         currentStep = TutorialStep.PickAlcohol;
                         particleHint.transform.position = alcohol.transform.position;
-                        UItext.text = "Pick Alcohol";
+                        UItext.text = "Goed, leg nu het medicijn terug door op 'Q' te drukken. Naast het gebruiken van voorwerpen kunnen sommige voorwerpen worden opgepakt. Oplichtende voorwerpen met een hand en pijl icoon kunnen worden opgepakt. Probeer nu de alcohol op te pakken door te kijken naar de alcohol en op linkermuisknop te drukken.";
                         itemToPick = "Alcohol";
                     }
                     break;
@@ -276,7 +276,7 @@ public class TutorialManager : MonoBehaviour {
                         currentStep = TutorialStep.PickCloth;
                         particleHint.transform.position = cloth.transform.position;
                         particleHint.SetActive(true);
-                        UItext.text = "Pick cloth";
+                        UItext.text = "Pak nu het gaasje op door er naar te kijken en op de linkermuisknop te drukken.";
                         itemToPick = "Cloth";
                     }
                     else
