@@ -21,6 +21,8 @@ public class Cheat_CurrentAction : MonoBehaviour
     
     private ActionManager actionManager;
 
+    private bool set = false; // fix
+
     void Start()
     {
         actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
@@ -31,10 +33,7 @@ public class Cheat_CurrentAction : MonoBehaviour
             if (stepDescrEnabled)
             {
                 textObject = GameObject.Find("DevHint").transform.GetChild(0).GetComponent<Text>();
-                if (textObject != null)
-                {
-                    textObject.text = actionManager.CurrentDescription;
-                }
+                set = false;
             }
             else
             {
@@ -50,6 +49,12 @@ public class Cheat_CurrentAction : MonoBehaviour
     {
         if (textObject == null)
             return;
+
+        if (!set)
+        {
+            textObject.text = actionManager.CurrentDescription;
+            set = true;
+        }
 
         if ( direction == 1 )
         {
