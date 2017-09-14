@@ -43,6 +43,7 @@ public class TutorialManager : MonoBehaviour {
         ExamineRecords,            // step 5
         CloseRecords,              // step 5
         ExamineMedicine,           // step 5
+        TalkDoubleCheck,           // inserted
         PickAlcohol,               // step 6
         PickCloth,                 // step 7
         CombineAlcoholCloth,       // step 8
@@ -113,6 +114,7 @@ public class TutorialManager : MonoBehaviour {
     private PickableObject cloth;
     private UsableObject paperNPen;
     private InjectionPatient patient;
+    private PersonObject doctor;
 
     private Transform tableTrigger;
     private Transform patientTrigger;
@@ -157,6 +159,11 @@ public class TutorialManager : MonoBehaviour {
         paperNPen = interactables.Find("PaperAndPen").GetComponent<UsableObject>();
 
         patient = GameObject.FindObjectOfType<InjectionPatient>();
+        doctor = GameObject.Find("Doctor").GetComponent<PersonObject>();
+        if (doctor == null)
+        {
+            doctor = GameObject.Find("Doctor").transform.parent.GetComponent<PersonObject>();
+        }
 
         tableTrigger = GameObject.Find("__tableTrigger").transform;
         patientTrigger = GameObject.Find("__patientTrigger").transform;
@@ -264,8 +271,18 @@ public class TutorialManager : MonoBehaviour {
                 case TutorialStep.ExamineMedicine:
                     if (medicine.tutorial_picked)
                     {
-                        currentStep = TutorialStep.PickAlcohol;
+                        currentStep = TutorialStep.TalkDoubleCheck;
+                        particleHint.transform.position = doctor.transform.position;
+                        doctor.tutorial_talked = false;
+                        player.tutorial_movementLock = movementLock = false;
+                        UItext.text = "Go ask doctor to double check";
+                    }
+                    break;
+                case TutorialStep.TalkDoubleCheck:
+                    if (doctor.tutorial_talked)
+                    {
                         particleHint.transform.position = alcohol.transform.position;
+                        currentStep = TutorialStep.PickAlcohol;
                         UItext.text = "Goed, leg nu het medicijn terug door op 'Q' te drukken. Naast het gebruiken van voorwerpen kunnen sommige voorwerpen worden opgepakt. Oplichtende voorwerpen met een hand en pijl icoon kunnen worden opgepakt. Probeer nu de alcohol op te pakken door te kijken naar de alcohol en op linkermuisknop te drukken.";
                         itemToPick = "Alcohol";
                     }
@@ -364,7 +381,6 @@ public class TutorialManager : MonoBehaviour {
                         handsInventory.tutorial_pickedLeft =
                             handsInventory.tutorial_pickedRight = false;
                         currentStep = TutorialStep.WalkAway;
-                        player.tutorial_movementLock = movementLock = false;
                         particleHint.SetActive(false);
                         particleHint_alt.SetActive(false);
                         UItext.text = "Walk away";
@@ -418,6 +434,16 @@ public class TutorialManager : MonoBehaviour {
                     }
                     break;
                 case TutorialStep.DropBothItemAway:
+                    if (Vector3.Distance(player.transform.position, workField.transform.position) > 2.0f)
+                    {
+                        controls.keyPreferences.RightDropKey.locked = rightDropKeyLocked = true;
+                        controls.keyPreferences.LeftDropKey.locked = leftDropKeyLocked = true;
+                    }
+                    else
+                    {
+                        controls.keyPreferences.RightDropKey.locked = rightDropKeyLocked = false;
+                        controls.keyPreferences.LeftDropKey.locked = leftDropKeyLocked = false;
+                    }
                     if ( handsInventory.tutorial_droppedLeft && handsInventory.tutorial_droppedRight)
                     {
                         AddPointWithSound();
