@@ -12,6 +12,7 @@ public class LevelSelectionScene_UI_Option : MonoBehaviour {
     public string sceneName;
     public string description;
     public string result;
+    public Sprite image;
     
     public void SetSelected()
     {
@@ -31,6 +32,8 @@ public class LevelSelectionScene_UI_Option : MonoBehaviour {
             }
 
             GetComponent<Image>().color = selectedColor;
+
+            transform.parent.Find("Image").GetComponent<Image>().sprite = image;
 
             selected = true;
         }

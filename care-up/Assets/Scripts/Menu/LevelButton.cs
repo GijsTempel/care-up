@@ -55,6 +55,7 @@ public class LevelButton : MonoBehaviour {
             to.sceneName = from.sceneName;
             to.description = from.description;
             to.result = from.result;
+            to.image = from.image;
 
             if (i == 1 && multiple)
                 to.SetSelected();

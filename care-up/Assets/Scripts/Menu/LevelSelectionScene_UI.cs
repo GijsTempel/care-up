@@ -66,6 +66,9 @@ public class LevelSelectionScene_UI : MonoBehaviour
                             = variation.Attributes["displayname"].Value;
                         descr.GetComponent<LevelSelectionScene_UI_Option>().sceneName = sceneName;
                         descr.GetComponent<LevelSelectionScene_UI_Option>().description = variation.Attributes["description"].Value;
+                        descr.GetComponent<LevelSelectionScene_UI_Option>().image = 
+                            Resources.Load<Sprite>("Sprites/ScenePreview/" + variation.Attributes["image"].Value);
+
                         if (ppManager.GetSceneCompleted(sceneName))
                         {
                             string info = ppManager.GetSceneStars(sceneName) + " stars; " +
