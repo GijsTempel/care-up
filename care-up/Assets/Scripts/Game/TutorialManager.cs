@@ -224,7 +224,7 @@ public class TutorialManager : MonoBehaviour {
                     }
                     break;
                 case TutorialStep.WalkToTable:
-                    if ( Vector3.Distance(tableTrigger.position, player.transform.position) < 1.0f)
+                    if ( Vector3.Distance(tableTrigger.position, player.transform.position) < 0.6f)
                     {
                         AddPointWithSound();
                         tableTrigger.gameObject.SetActive(false);
