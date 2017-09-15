@@ -315,7 +315,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         currentStep = TutorialStep.CombineAlcoholCloth;
                         controls.keyPreferences.CombineKey.locked = combineKeyLocked = false;
-                        UItext.text = "Combine alcohol and cloth";
+                        UItext.text = "Sommige voorwerpen kun je met elkaar combineren. Dit kan bijvoorbeeld met het gaasje en alcohol om zo het gaasje te desinfecteren. Voorwerpen combineren doe je door de 'R' knop in te drukken als je twee voorwerpen in je handen hebt. Probeer dit nu met het gaasje en de alcohol. ";
                         itemToPick = "";
                         SetPauseTimer(5.0f);
                     }
@@ -344,7 +344,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         currentStep = TutorialStep.DropItem;
                         controls.keyPreferences.LeftDropKey.locked = leftDropKeyLocked = false;
-                        UItext.text = "Drop item Q";
+                        UItext.text = "Goed, het gaasje is nu gedesinfecteerd. Voorwerpen die je in je hand hebt kun je terugleggen door 'SHIFT' ingedrukt te houden en te drukken op de actietoets van de juiste arm. De 'Q'toets staat voor de actietoets van de linkerhand. Probeer met 'SHIFT' + 'Q' het voorwerp in je linkerhand terug te leggen op het werkveld. ";
                         itemToDrop = "Alcohol";
                     }
                     break;
@@ -355,7 +355,7 @@ public class TutorialManager : MonoBehaviour {
                         handsInventory.tutorial_droppedLeft = false;
                         currentStep = TutorialStep.DropAnotherItem;
                         controls.keyPreferences.RightDropKey.locked = rightDropKeyLocked = false;
-                        UItext.text = "Drop another E";
+                        UItext.text = "Heel goed, probeer nu hetzelfde met de rechterhand. De actietoets van de rechterhand is de 'E'toets. Probeer nu met met 'SHIFT' + 'E' het gaasje in je linkerhand neer te leggen op het werkveld.";
                         itemToDrop = "DesinfectionCloth";
                     }
                     break;
@@ -365,7 +365,7 @@ public class TutorialManager : MonoBehaviour {
                         AddPointWithSound();
                         currentStep = TutorialStep.PickBothItems;
                         handsInventory.tutorial_droppedRight = false;
-                        UItext.text = "Pick both back";
+                        UItext.text = "Pak nu de aclohol en het gedesinfecteerde gaasje weer op door naar de voorwerpen te kijken en op de linkermuisknop te drukken.";
 
                         itemToPick = "Alcohol";
                         itemToPick2 = "DesinfectionCloth";
@@ -385,7 +385,7 @@ public class TutorialManager : MonoBehaviour {
                         currentStep = TutorialStep.WalkAway;
                         particleHint.SetActive(false);
                         particleHint_alt.SetActive(false);
-                        UItext.text = "Walk away";
+                        UItext.text = "Loop met de W, A, S, D / pijltjestoetsen en de muis bij het werkveld vandaan.";
                     }
                     break;
                 case TutorialStep.WalkAway:
@@ -393,7 +393,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         AddPointWithSound();
                         currentStep = TutorialStep.DropBothItems;
-                        UItext.text = "Now drop both";
+                        UItext.text = "Laat nu beide voorwerpen op de grond vallen door op 'SHIFT' + 'Q' te drukken om het voorwerp in je linkerhand te laten vallen en druk op 'SHIFT' + 'E' om het voorwerp in je rechterhand te laten vallen.";
                         itemToDrop = "Alcohol";
                         itemToDrop2 = "DesinfectionCloth";
                     }
@@ -402,7 +402,7 @@ public class TutorialManager : MonoBehaviour {
                     if (TimerElapsed())
                     {
                         currentStep = TutorialStep.PickBothItemsAgain;
-                        UItext.text = "Pick em";
+                        UItext.text = "Pak nu beide voorwerpen weer van de grond door ernaar te kijken en op de linkermuisknop te drukken.";
                         particleHint.transform.position = alcohol.transform.position;
                         particleHint_alt.transform.position = GameObject.Find("DesinfectionCloth").transform.position;
                         particleHint.SetActive(true);
@@ -418,8 +418,8 @@ public class TutorialManager : MonoBehaviour {
                             AddPointWithSound();
                             handsInventory.tutorial_droppedLeft =
                                 handsInventory.tutorial_droppedRight = false;
-                            UItext.text = "blabla pause";
-                            SetPauseTimer(5.0f);
+                            UItext.text = "Voorwerpen kun je overal waar je wilt laten vallen. Echter zorgt het laten vallen van voorwerpen op de grond voor strafpunten. Leg voorwerpen terug op het werkveld door dichtbij het werkveld te gaan staan en naar het werkveld te kijken terwijl je voorwerpen teruglegt.";
+                            SetPauseTimer(15.0f);
                         }
                     }
                     break;
@@ -432,7 +432,7 @@ public class TutorialManager : MonoBehaviour {
                         handsInventory.tutorial_pickedLeft =
                             handsInventory.tutorial_pickedRight = false;
                         currentStep = TutorialStep.DropBothItemAway;
-                        UItext.text = "Drop items on the table";
+                        UItext.text = "Leg nu beide voorwerpen terug op het werkveld door dichtbij het werkveld te gaan staan. Daarna druk je op 'SHIFT' + 'Q' om het voorwerp in je linkerhand terug te leggen en druk op 'SHIFT' +'E' om het voorwerp in je rechterhand terug te leggen.";
                     }
                     break;
                 case TutorialStep.DropBothItemAway:
