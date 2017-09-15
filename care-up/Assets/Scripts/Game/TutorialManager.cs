@@ -8,8 +8,10 @@ using UnityEngine.UI;
 /// </summary>
 public class TutorialManager : MonoBehaviour {
 
-    public bool sequenceCompleted = false;
     public GameObject hintsPrefab;
+
+    [HideInInspector]
+    public bool sequenceCompleted = false;
 
     [HideInInspector]
     public bool movementLock = false;
@@ -450,7 +452,6 @@ public class TutorialManager : MonoBehaviour {
                         handsInventory.tutorial_droppedLeft =
                             handsInventory.tutorial_droppedRight = false;
                         currentStep = TutorialStep.CombineDesinfMedicine;
-                        controls.keyPreferences.CombineKey.locked = combineKeyLocked = false;
                         controls.keyPreferences.pickObjectView.locked = pickObjectViewKeyLocked = false;
                         UItext.text = "Combine desinfected cloth and medicine";
 
@@ -655,8 +656,6 @@ public class TutorialManager : MonoBehaviour {
 
                         player.tutorial_movementLock = movementLock = true;
                         currentStep = TutorialStep.TalkToPatient;
-                        controls.keyPreferences.LeftUseKey.locked = leftUseKeyLocked = false;
-                        controls.keyPreferences.RightUseKey.locked = rightUseKeyLocked = false;
                         particleHint.transform.position = GameObject.Find("Patient").transform.position;
                         UItext.text = "Talk to patient";
                     }

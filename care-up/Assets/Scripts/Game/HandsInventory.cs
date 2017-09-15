@@ -645,7 +645,7 @@ public class HandsInventory : MonoBehaviour {
     public void ToggleControls(bool value)
     {
         TutorialManager manager = GameObject.Find("GameLogic").GetComponent<TutorialManager>();
-        if (manager != null)
+        if (manager != null && !value)
         {
             controls.keyPreferences.mouseClickLocked =
                 controls.keyPreferences.mouseClickKey.locked = manager.mouseClickLocked;

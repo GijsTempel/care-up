@@ -41,6 +41,7 @@ public class AnimationCombine : StateMachineBehaviour {
 
             prevFrame = frame;
             frame += Time.deltaTime;
+            inv.ToggleControls(true);
         }
     }
 

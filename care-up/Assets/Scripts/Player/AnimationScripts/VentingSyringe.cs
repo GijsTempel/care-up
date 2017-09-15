@@ -43,6 +43,8 @@ public class VentingSyringe : AnimationUseOn
             prevFrame = frame;
             frame += Time.deltaTime;
         }
+
+        base.OnStateUpdate(animator, stateInfo, layerIndex);
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
