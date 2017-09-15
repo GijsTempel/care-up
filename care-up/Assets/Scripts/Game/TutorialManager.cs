@@ -277,7 +277,7 @@ public class TutorialManager : MonoBehaviour {
                         particleHint.transform.position = doctor.transform.position;
                         doctor.tutorial_talked = false;
                         player.tutorial_movementLock = movementLock = false;
-                        UItext.text = "Go ask doctor to double check";
+					UItext.text = "Goed, leg nu het medicijn terug door op 'Q' te drukken. Loop richting jou collega. Je kunt met sommige mensen praten. Mensen waarmee je kunt praten kun je herkennen aan het praat icoon die verschijnt wanneer je naar deze persoon kijkt. Als je wilt praten met deze persoon klik je op de linkermuisknop. Er verschijnen dan een gesprekskeuzes. Kies de keuze ";
                     }
                     break;
                 case TutorialStep.TalkDoubleCheck:
@@ -285,7 +285,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         particleHint.transform.position = alcohol.transform.position;
                         currentStep = TutorialStep.PickAlcohol;
-                        UItext.text = "Goed, leg nu het medicijn terug door op 'Q' te drukken. Naast het gebruiken van voorwerpen kunnen sommige voorwerpen worden opgepakt. Oplichtende voorwerpen met een hand en pijl icoon kunnen worden opgepakt. Probeer nu de alcohol op te pakken door te kijken naar de alcohol en op linkermuisknop te drukken.";
+                        UItext.text = " Naast het gebruiken van voorwerpen kunnen sommige voorwerpen worden opgepakt. Oplichtende voorwerpen met een hand en pijl icoon kunnen worden opgepakt. Probeer nu de alcohol op te pakken door te kijken naar de alcohol en op linkermuisknop te drukken.";
                         itemToPick = "Alcohol";
                     }
                     break;
@@ -344,7 +344,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         currentStep = TutorialStep.DropItem;
                         controls.keyPreferences.LeftDropKey.locked = leftDropKeyLocked = false;
-                        UItext.text = "Goed, het gaasje is nu gedesinfecteerd. Voorwerpen die je in je hand hebt kun je terugleggen door 'SHIFT' ingedrukt te houden en te drukken op de actietoets van de juiste arm. De 'Q'toets staat voor de actietoets van de linkerhand. Probeer met 'SHIFT' + 'Q' het voorwerp in je linkerhand terug te leggen op het werkveld. ";
+                        UItext.text = "Het gaasje is nu gedesinfecteerd. Voorwerpen die je in je hand hebt kun je terugleggen door 'SHIFT' ingedrukt te houden en te drukken op de actietoets van de juiste arm. De 'Q' toets staat voor de actietoets van de linkerhand. Probeer met 'SHIFT' + 'Q' het voorwerp in je linkerhand terug te leggen op het werkveld. ";
                         itemToDrop = "Alcohol";
                     }
                     break;
@@ -355,7 +355,7 @@ public class TutorialManager : MonoBehaviour {
                         handsInventory.tutorial_droppedLeft = false;
                         currentStep = TutorialStep.DropAnotherItem;
                         controls.keyPreferences.RightDropKey.locked = rightDropKeyLocked = false;
-                        UItext.text = "Heel goed, probeer nu hetzelfde met de rechterhand. De actietoets van de rechterhand is de 'E'toets. Probeer nu met met 'SHIFT' + 'E' het gaasje in je linkerhand neer te leggen op het werkveld.";
+                        UItext.text = "Probeer nu hetzelfde met de rechterhand. De actietoets van de rechterhand is de 'E' toets. Probeer nu met met 'SHIFT' + 'E' het gaasje in je linkerhand neer te leggen op het werkveld.";
                         itemToDrop = "DesinfectionCloth";
                     }
                     break;
@@ -418,7 +418,7 @@ public class TutorialManager : MonoBehaviour {
                             AddPointWithSound();
                             handsInventory.tutorial_droppedLeft =
                                 handsInventory.tutorial_droppedRight = false;
-                            UItext.text = "Voorwerpen kun je overal waar je wilt laten vallen. Echter zorgt het laten vallen van voorwerpen op de grond voor strafpunten. Leg voorwerpen terug op het werkveld door dichtbij het werkveld te gaan staan en naar het werkveld te kijken terwijl je voorwerpen teruglegt.";
+                            UItext.text = "Voorwerpen kun je overal waar je wilt laten vallen. Echter zorgt het laten vallen van voorwerpen op de grond voor strafpunten. Leg voorwerpen terug op het werkveld door dichtbij het werkveld te gaan staan en naar het werkveld te kijken terwijl je voorwerpen teruglegt om strafpunten te voorkomen.";
                             SetPauseTimer(15.0f);
                         }
                     }
@@ -453,7 +453,7 @@ public class TutorialManager : MonoBehaviour {
                             handsInventory.tutorial_droppedRight = false;
                         currentStep = TutorialStep.CombineDesinfMedicine;
                         controls.keyPreferences.pickObjectView.locked = pickObjectViewKeyLocked = false;
-                        UItext.text = "Combine desinfected cloth and medicine";
+                        UItext.text = "Probeer nu het gedesinfecteerde gaasje te combineren met het medicijn in flacon. Pak beide voorwerpen op door ernaar te kijken en op de linkermuisknop. Als je beide voorwerpen in je handen hebt, druk je op de 'R' toets om de voorwerpen te combineren.";
 
                         particleHint.SetActive(true);
                         particleHint.transform.position = medicine.transform.position;
@@ -464,7 +464,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         handsInventory.tutorial_combined = false;
                         currentStep = TutorialStep.DropClothMedicine;
-                        UItext.text = "Drop cloth and medicine on table";
+                        UItext.text = "De rubberen dop van de flacon is nu gedesinfecteerd. Leg nu beide voorwerpen terug door 'SHIFT' + 'Q' te drukken om het voorwerp in je linkerhand terug te leggen en op 'SHIFT' + 'E' om het voorwerp in je rechthand terug te leggen.";
 
                         itemToDrop2 = "Medicine";
                         itemToDrop = "DesinfectionCloth";
@@ -479,7 +479,7 @@ public class TutorialManager : MonoBehaviour {
                         handsInventory.tutorial_droppedLeft =
                             handsInventory.tutorial_droppedRight = false;
                         currentStep = TutorialStep.PickSyringeAbNeedleCap;
-                        UItext.text = "Pick up syringe and capped absorption needle";
+					UItext.text = "Pak nu de spuit op en de opzuignaald door naar de voorwerpen te kijken en op de linkermuisknop te drukken.";
 
                         itemToPick = "Syringe";
                         itemToPick2 = "AbsorptionNeedle";
@@ -500,7 +500,7 @@ public class TutorialManager : MonoBehaviour {
                         handsInventory.tutorial_pickedLeft =
                             handsInventory.tutorial_pickedRight = false;
                         currentStep = TutorialStep.CombineSyringeAbNeedleCap;
-                        UItext.text = "Combine syringe and capped absorption needle";
+                        UItext.text = "Combineer nu de opzuignaald met de spuit door op de 'R' toets te drukken.";
                     }
                     break;
                 case TutorialStep.CombineSyringeAbNeedleCap:
