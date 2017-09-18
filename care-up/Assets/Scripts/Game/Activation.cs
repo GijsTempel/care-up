@@ -7,7 +7,7 @@ public class Activation : MonoBehaviour {
 	public Rect windowRect = new Rect(20, 20, 360, 75);
 	public string Serial = "";
 	public bool ValidProduct = false;
-
+	public string topText = "Registreer product door uw activatiecode in te voeren.";
     // Which of the base keys to compare in the check
     public byte CheckKey = 0;
 	// This is the most important part.
@@ -30,13 +30,13 @@ public class Activation : MonoBehaviour {
 		//Serial = Guardian.Generate("Care-Up");
         Debug.Log(Guardian.Generate("Care-up"));
         // Store the serial number in playerprefs so the user does not have to write them everytime.
-        /*string storedSerial = PlayerPrefs.GetString("SerialKey");
+        string storedSerial = PlayerPrefs.GetString("SerialKey");
         if(storedSerial != string.Empty) {
 		    ValidProduct = true;
 		    Camera.main.backgroundColor = Color.green;
             SceneManager.LoadScene("GameUpdateSceneExample");
             // Serial was valid we can continue on to the game menu/level
-        }*/
+        }
        
         var MySerialNumbers = Guardian.Generate(200, new System.Random(200));
         foreach (var serial in MySerialNumbers)
@@ -49,7 +49,7 @@ public class Activation : MonoBehaviour {
     }
 	
     void OnGUI() {
-        windowRect = GUI.Window(0, windowRect, DoMyWindow, "Registreer product door uw activatiecode in te voeren.");
+        windowRect = GUI.Window(0, windowRect, DoMyWindow, topText);
     }
 
  
@@ -66,7 +66,7 @@ void DoMyWindow(int windowID) {
             }
             else {
 			    Camera.main.backgroundColor = Color.red;
-                
+				topText = "Helaas, de code klopt niet. Probeer het opnieuw";
 			}
 		}        
     }
