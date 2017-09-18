@@ -285,7 +285,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         particleHint.transform.position = alcohol.transform.position;
                         currentStep = TutorialStep.PickAlcohol;
-                        UItext.text = " Naast het gebruiken van voorwerpen kunnen sommige voorwerpen worden opgepakt. Oplichtende voorwerpen met een hand en pijl icoon kunnen worden opgepakt. Probeer nu de alcohol op te pakken door te kijken naar de alcohol en op linkermuisknop te drukken.";
+                        UItext.text = "Naast het gebruiken en bekijken van voorwerpen kunnen sommige voorwerpen worden opgepakt. Oplichtende voorwerpen met een hand en pijl icoon kunnen worden opgepakt. Probeer nu de alcohol op te pakken door te kijken naar de alcohol en op linkermuisknop te drukken.";
                         itemToPick = "Alcohol";
                     }
                     break;
