@@ -45,6 +45,8 @@ public class TutorialManager : MonoBehaviour {
         ExamineRecords,            // step 5
         CloseRecords,              // step 5
         ExamineMedicine,           // step 5
+        CloseMedicine,             // inserted
+        UseDoctor,                 // inserted
         TalkDoubleCheck,           // inserted
         PickAlcohol,               // step 6
         PickCloth,                 // step 7
@@ -273,11 +275,28 @@ public class TutorialManager : MonoBehaviour {
                 case TutorialStep.ExamineMedicine:
                     if (medicine.tutorial_picked)
                     {
-                        currentStep = TutorialStep.TalkDoubleCheck;
+                        currentStep = TutorialStep.CloseMedicine;
+                        UItext.text = "Close examine medicine";
+                    }
+                    break;
+                case TutorialStep.CloseMedicine:
+                    if (medicine.tutorial_closed)
+                    {
+                        AddPointWithSound();
+                        currentStep = TutorialStep.UseDoctor;
                         particleHint.transform.position = doctor.transform.position;
                         doctor.tutorial_talked = false;
                         player.tutorial_movementLock = movementLock = false;
-					UItext.text = "Goed, leg nu het medicijn terug door op 'Q' te drukken. Loop richting jou collega. Je kunt met sommige mensen praten. Mensen waarmee je kunt praten kun je herkennen aan het praat icoon die verschijnt wanneer je naar deze persoon kijkt. Als je wilt praten met deze persoon klik je op de linkermuisknop. Er verschijnen dan een gesprekskeuzes. Kies de keuze ";
+					    UItext.text = "Goed, leg nu het medicijn terug door op 'Q' te drukken. Loop richting jou collega. Je kunt met sommige mensen praten. Mensen waarmee je kunt praten kun je herkennen aan het praat icoon die verschijnt wanneer je naar deze persoon kijkt. Als je wilt praten met deze persoon klik je op de linkermuisknop. Er verschijnen dan een gesprekskeuzes. Kies de keuze ";
+                        doctor.tutorial_used = false;
+                    }
+                    break;
+                case TutorialStep.UseDoctor:
+                    if (doctor.tutorial_used)
+                    {
+                        AddPointWithSound();
+                        currentStep = TutorialStep.TalkDoubleCheck;
+                        UItext.text = "Select double check option";
                     }
                     break;
                 case TutorialStep.TalkDoubleCheck:
@@ -470,6 +489,9 @@ public class TutorialManager : MonoBehaviour {
                         itemToDrop = "DesinfectionCloth";
 
                         particleHint.SetActive(false);
+
+                        handsInventory.tutorial_droppedLeft =
+                            handsInventory.tutorial_droppedRight = false;
                     }
                     break;
                 case TutorialStep.DropClothMedicine:

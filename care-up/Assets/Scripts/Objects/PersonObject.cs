@@ -13,6 +13,8 @@ public class PersonObject : InteractableObject {
 
     [HideInInspector]
     public bool tutorial_talked = false;
+    [HideInInspector]
+    public bool tutorial_used = false;
 
     public string dialogueXml;
 
@@ -138,6 +140,7 @@ public class PersonObject : InteractableObject {
     /// </summary>
     private void CreateSelectionDialogue()
     {
+        tutorial_used = true;
         GameObject dialogueObject = Instantiate(Resources.Load<GameObject>("Prefabs/SelectionDialogue"),
                     Camera.main.transform.position + Camera.main.transform.forward * 3.0f,
                     Camera.main.transform.rotation) as GameObject;
