@@ -192,7 +192,7 @@ public class PersonObject : InteractableObject {
                         icons.Find("TalkIcon").gameObject.SetActive(gameObject.GetComponent<PersonObject>() != null);
                         icons.Find("PickIcon").gameObject.SetActive(gameObject.GetComponent<PickableObject>() != null);
                         icons.Find("ExamIcon").gameObject.SetActive(gameObject.GetComponent<ExaminableObject>() != null);
-                        itemDescription.transform.position = transform.position;
+                        itemDescription.transform.position = transform.position + descriptionOffset;
                         itemDescription.transform.rotation = Camera.main.transform.rotation;
                         itemDescription.SetActive(true);
                     }
