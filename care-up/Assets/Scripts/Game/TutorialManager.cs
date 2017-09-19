@@ -285,7 +285,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         particleHint.transform.position = alcohol.transform.position;
                         currentStep = TutorialStep.PickAlcohol;
-                        UItext.text = " Naast het gebruiken van voorwerpen kunnen sommige voorwerpen worden opgepakt. Oplichtende voorwerpen met een hand en pijl icoon kunnen worden opgepakt. Probeer nu de alcohol op te pakken door te kijken naar de alcohol en op linkermuisknop te drukken.";
+                        UItext.text = "Naast het gebruiken en bekijken van voorwerpen kunnen sommige voorwerpen worden opgepakt. Oplichtende voorwerpen met een hand en pijl icoon kunnen worden opgepakt. Probeer nu de alcohol op te pakken door te kijken naar de alcohol en op linkermuisknop te drukken.";
                         itemToPick = "Alcohol";
                     }
                     break;
@@ -500,7 +500,7 @@ public class TutorialManager : MonoBehaviour {
                         handsInventory.tutorial_pickedLeft =
                             handsInventory.tutorial_pickedRight = false;
                         currentStep = TutorialStep.CombineSyringeAbNeedleCap;
-                        UItext.text = "Combineer nu de opzuignaald met de spuit door op de 'R' toets te drukken.";
+                        UItext.text = "Combineer nu de opzuignaald met de spuit door op de 'R' toets te drukken. ";
                     }
                     break;
                 case TutorialStep.CombineSyringeAbNeedleCap:
@@ -508,8 +508,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         handsInventory.tutorial_combined = false;
                         currentStep = TutorialStep.CombineTakeOffAbCap;
-                        UItext.text = "Decombine syringe with capped needle";
-                    }
+                        UItext.text = "Naast het combineren van voorwerpen kunnen sommige voorwerpen ook uit elkaar gehaald worden. Dit kun je doen wanneer je een vrije hand hebt en in je andere hand een voorwerp. Druk de 'R' toets in om het voorwerp uit elkaar te halen. Probeer nu de veiligheidsdop van de opzuignaald af te halen door op de 'R' toets te drukken.";                    }
                     break;
                 case TutorialStep.CombineTakeOffAbCap:
                     if ( handsInventory.tutorial_combined )
