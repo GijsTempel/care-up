@@ -20,10 +20,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4691331994334310}
   - component: {fileID: 33711228945320508}
-  - component: {fileID: 65216599813053514}
   - component: {fileID: 23544352032063994}
   - component: {fileID: 54428489171336030}
-  - component: {fileID: 114914151872119780}
+  - component: {fileID: 114436781642140080}
+  - component: {fileID: 65216599813053514}
   m_Layer: 0
   m_Name: PrescriptionForm
   m_TagString: Untagged
@@ -37,13 +37,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1956329420094276}
-  m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
+  m_LocalRotation: {x: -0.5, y: -0.5, z: -0.5, w: 0.5}
   m_LocalPosition: {x: -3.776, y: 1.1162084, z: 0.44143772}
-  m_LocalScale: {x: 0.01, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
+  m_LocalEulerAnglesHint: {x: -90, y: -90, z: 0}
 --- !u!23 &23544352032063994
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -57,7 +57,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 6a82eecd2836e1c49a4fa00dc50b9398, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -82,7 +82,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1956329420094276}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: 1bd48dc00b29e4ef8a9f21b074eb6329, type: 3}
 --- !u!54 &54428489171336030
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -108,9 +108,9 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114914151872119780
+  m_Size: {x: 0.22508033, y: 0.31512317, z: 0.012063355}
+  m_Center: {x: 0, y: 0.003321289, z: -0.0035192412}
+--- !u!114 &114436781642140080
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -118,17 +118,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1956329420094276}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6095384fe7173243b9fb25bc8b25d06, type: 3}
+  m_Script: {fileID: 11500000, guid: f3e6a197b70106d4baa62069a18baf92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  description: Toedienlijst
+  description: Pen en papier
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
-  tutorial_picked: 0
-  tutorial_closed: 0
-  examineRotation: {x: 0, y: 0, z: 0}
-  audioExamine: 0
-  viewSettings:
-    distanceFromCamera: 4
-    rotationSensetivity: 90
-  state: good
+  tutorial_used: 0
