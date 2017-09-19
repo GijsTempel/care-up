@@ -170,4 +170,24 @@ public class Syringe : PickableObject {
         return (info[0] == name && controls.SelectedObject != null && info[1] == controls.SelectedObject.name);
     }
 
+    protected override void SetShaderTo(Shader shader)
+    {
+        base.SetShaderTo(shader);
+
+        foreach (Material m in rend.materials)
+        {
+            m.renderQueue = 3000;
+        }
+
+        foreach (Renderer r in GetComponentsInChildren<Renderer>())
+        {
+            if (r.name != "ParticleHint")
+            {
+                foreach (Material m in r.materials)
+                {
+                    m.renderQueue = 3000;
+                }
+            }
+        }
+    }
 }
