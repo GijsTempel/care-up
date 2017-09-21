@@ -36,10 +36,10 @@ public class Activation : MonoBehaviour {
     
         // Store the serial number in playerprefs so the user does not have to write them everytime.
         string storedSerial = PlayerPrefs.GetString("SerialKey");
-        if(storedSerial != string.Empty)
+       if(storedSerial != string.Empty)
         {
 		   ValidProduct = true;
-            //Serial was valid we can continue on to the game menu/level
+           //Serial was valid we can continue on to the game menu/level
             SceneManager.LoadScene("Menu");
         }
        
