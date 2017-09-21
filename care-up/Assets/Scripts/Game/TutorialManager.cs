@@ -537,7 +537,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         handsInventory.tutorial_combined = false;
                         currentStep = TutorialStep.DropAbsorptionCap;
-                        UItext.text = "Drop absorption needle cap";
+                        UItext.text = "Leg de opzuignaald dop terug op het welkveld door naar het werkeld te kijken en op 'SHIFT' + 'Q' te drukken als je de dop in je linkerhand vast hebt en op 'SHIFT + 'E' als je de dop in je rechterhand vast hebt.";
 
                         itemToDrop = "SyringeAbsorptionCap";
                     }
@@ -549,7 +549,7 @@ public class TutorialManager : MonoBehaviour {
                         handsInventory.tutorial_droppedLeft =
                             handsInventory.tutorial_droppedRight = false;
                         currentStep = TutorialStep.CombineSyringeAbNeedleMed;
-                        UItext.text = "Combine syringe with needle and medicine";
+                        UItext.text = "Zorg dat je de spuit in je hand hebt en pak het medicijn op door ernaar te kijken en op de linkermuisknop te druken. Combineer de spuit met het medicijn door op de 'R'toets te drukken.";
 
                         itemToPick = "Medicine";
 
@@ -562,7 +562,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         handsInventory.tutorial_combined = false;
                         currentStep = TutorialStep.DropMedicine;
-                        UItext.text = "Drop medicine";
+                        UItext.text = "Het medicijn is nu opgezogen in de spuit. Leg het medicijn terug op het werkveld door op 'SHIFT' + 'Q' te drukken als je het medicijn in je linkerhand vast hebt en op 'SHIFT + 'E' als je het medicijn in je rechterhand vast hebt. ";
 
                         itemToDrop = "Medicine";
 
@@ -584,7 +584,7 @@ public class TutorialManager : MonoBehaviour {
                         handsInventory.tutorial_droppedLeft =
                             handsInventory.tutorial_droppedRight = false;
                         currentStep = TutorialStep.UseSyringeWithMed;
-                        UItext.text = "Vent the syringe by pressing Q/E";
+                        UItext.text = "Sommige voorwerpen h";
 
                         syringe = handsInventory.LeftHandEmpty() ?
                             handsInventory.RightHandObject : handsInventory.LeftHandObject;

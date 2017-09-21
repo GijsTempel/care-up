@@ -27,6 +27,7 @@ public class MainMenu : MonoBehaviour {
     public void OnQuitButtonClick()
     {
         Application.Quit();
+        Debug.Log("Exiting");
     }
 
     public void OnMainMenuButtonClick()
