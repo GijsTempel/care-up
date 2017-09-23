@@ -276,7 +276,7 @@ public class TutorialManager : MonoBehaviour {
                     if (medicine.tutorial_picked)
                     {
                         currentStep = TutorialStep.CloseMedicine;
-                        UItext.text = "Close examine medicine";
+                        UItext.text = "Goed, zoals je ziet kun je het medicijn naast terugleggen ook oppakken. We hebben het medicijn op dit moment nog niet nodig en hoeven hem dus niet op te pakken. Leg nu het medicijn terug door op 'Q' te drukken.";
                     }
                     break;
                 case TutorialStep.CloseMedicine:
@@ -287,7 +287,7 @@ public class TutorialManager : MonoBehaviour {
                         particleHint.transform.position = doctor.transform.position;
                         doctor.tutorial_talked = false;
                         player.tutorial_movementLock = movementLock = false;
-					    UItext.text = "Goed, leg nu het medicijn terug door op 'Q' te drukken. Loop richting jou collega. Je kunt met sommige mensen praten. Mensen waarmee je kunt praten kun je herkennen aan het praat icoon die verschijnt wanneer je naar deze persoon kijkt. Als je wilt praten met deze persoon klik je op de linkermuisknop. Er verschijnen dan een gesprekskeuzes. Kies de keuze ";
+					    UItext.text = "Loop richting je collega. Je kunt met sommige mensen praten. Mensen waarmee je kunt praten kun je herkennen aan het praat icoon die verschijnt wanneer je naar deze persoon kijkt. Als je wilt praten met deze persoon klik je op de linkermuisknop. Ga nu het gesprek aan met je collega. ";
                         doctor.tutorial_used = false;
                     }
                     break;
@@ -296,7 +296,8 @@ public class TutorialManager : MonoBehaviour {
                     {
                         AddPointWithSound();
                         currentStep = TutorialStep.TalkDoubleCheck;
-                        UItext.text = "Select double check option";
+                        UItext.text = "Wanneer je een gesprek aangaat met je collega of een client, opent er een dialoog scherm. Hier kun je een keuze maken tussen verschillende gespreksonderwerpen. Vraag nu aan je collega om de dubbele controle door de keuze te selecteren en op linkermuisknop te drukken.";
+                        
                     }
                     break;
                 case TutorialStep.TalkDoubleCheck:
@@ -314,7 +315,7 @@ public class TutorialManager : MonoBehaviour {
                         currentStep = TutorialStep.PickCloth;
                         particleHint.transform.position = cloth.transform.position;
                         particleHint.SetActive(true);
-                        UItext.text = "Pak nu het gaasje op door er naar te kijken en op de linkermuisknop te drukken.";
+                        UItext.text = "Pak nu het gaasje op door ernaar te kijken en op de linkermuisknop te drukken.";
                         itemToPick = "Cloth";
                     }
                     else
@@ -324,7 +325,7 @@ public class TutorialManager : MonoBehaviour {
                             handsInventory.tutorial_pickedLeft = false;
                             AddPointWithSound();
                             UItext.text = "Wanneer je handen leeg zijn en je pakt iets op. Zal het altijd in je linkerhand verschijnen.";
-                            SetPauseTimer(5.0f);
+                            SetPauseTimer(3.0f);
                             particleHint.SetActive(false);
                         }
                     }
@@ -346,7 +347,7 @@ public class TutorialManager : MonoBehaviour {
                             particleHint.SetActive(false);
                             AddPointWithSound();
                             UItext.text = "Wanneer je in je linkerhand al een voorwerp vast hebt zal het tweede voorwerp altijd in de rechterhand komen";
-                            SetPauseTimer(5.0f);
+                            SetPauseTimer(3.0f);
                         }
                     }
                     break;
@@ -549,7 +550,7 @@ public class TutorialManager : MonoBehaviour {
                         handsInventory.tutorial_droppedLeft =
                             handsInventory.tutorial_droppedRight = false;
                         currentStep = TutorialStep.CombineSyringeAbNeedleMed;
-                        UItext.text = "Zorg dat je de spuit in je hand hebt en pak het medicijn op door ernaar te kijken en op de linkermuisknop te druken. Combineer de spuit met het medicijn door op de 'R'toets te drukken.";
+                        UItext.text = "Zorg dat je de spuit in je hand hebt en pak het medicijn op door ernaar te kijken en op de linkermuisknop te druken. Combineer de spuit met het medicijn door op de 'R' toets te drukken.";
 
                         itemToPick = "Medicine";
 
@@ -584,7 +585,7 @@ public class TutorialManager : MonoBehaviour {
                         handsInventory.tutorial_droppedLeft =
                             handsInventory.tutorial_droppedRight = false;
                         currentStep = TutorialStep.UseSyringeWithMed;
-                        UItext.text = "Sommige voorwerpen h";
+                        UItext.text = "Sommige voorwerpen die je in je hand hebt kun je gebruiken. Dit doe je door op de actietoets te drukken van de hand waarin je het voorwerp vast houdt. De actietoets voor de linkerhand is de 'Q' toets en voor de rechterhand de 'E' toets. Probeer nu de spuit te ontluchten door op de actieknop te drukken van de hand die de spuit vast heeft. Kijk hierbij NIET naar het werkveld. ";
 
                         syringe = handsInventory.LeftHandEmpty() ?
                             handsInventory.RightHandObject : handsInventory.LeftHandObject;
@@ -595,7 +596,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         syringe.GetComponent<PickableObject>().tutorial_usedOn = false;
                         currentStep = TutorialStep.PickUpAbsorptionCap;
-                        UItext.text = "Pick up absorption needle cap";
+                        UItext.text = "De spuit is nu ontlucht. Laten we nu de beschermdop van de opzuignaald terugplaatsen op de spuit. Zorg dat je de spuit in je hand hebt en pak de beschermdop van de opzuignaald op door ernaar te kijken en op de linkermuisknop te drukken.";
 
                         itemToPick = "SyringeAbsorptionCap";
                         particleHint.transform.position = GameObject.Find("SyringeAbsorptionCap").transform.position;
@@ -611,7 +612,7 @@ public class TutorialManager : MonoBehaviour {
                         handsInventory.tutorial_pickedLeft =
                             handsInventory.tutorial_pickedRight = false;
                         currentStep = TutorialStep.CombinePutOnAbCap;
-                        UItext.text = "Combine syringe and cap to put back on cap";
+                        UItext.text = "Combineer nu de spuit met de beschermdop door op de 'R' toets te drukken.";
                     }
                     break;
                 case TutorialStep.CombinePutOnAbCap:
@@ -619,7 +620,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         handsInventory.tutorial_combined = false;
                         currentStep = TutorialStep.CombineTakeOffAbNeedle;
-                        UItext.text = "Decombine syringe with needle to take off capped needle";
+                        UItext.text = "Nu de beschermdop weer op de naald zit. Kan de opzuignaald worden verwijderd. Zorg ervoor dat je een vrije hand hebt en dat je de spuit in je andere hand hebt. Klik daarna op 'R' om de opzuignaald van de spuit af te halen.";
                     }
                     break;
                 case TutorialStep.CombineTakeOffAbNeedle:
@@ -627,7 +628,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         handsInventory.tutorial_combined = false;
                         currentStep = TutorialStep.UseAbNeedleOnTrash;
-                        UItext.text = "Use capped needle on trashcan";
+                        UItext.text = "Sommige voorwerpen kun je gebruiken op een ander voorwerp. Probeer de gebruikte opzuignaald te gebruiken op de naaldcontainer om de opzuignaald weg te gooien. Dit kun je doen door te kijken naar de naaldcontainer en dan te drukken op de actieknop van de hand die de opzuignaald vast heeft. De actieknop voor de linkerhand is de 'Q' toets en voor de rechterhand de 'E' toets.";
 
                         particleHint.SetActive(true);
                         particleHint.transform.position = GameObject.Find("NeedleCup").transform.position;
@@ -638,7 +639,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         needleTrashed = false;
                         currentStep = TutorialStep.PickInjectionNeedle;
-                        UItext.text = "Pick up capped injection needle";
+                        UItext.text = "Nu het medicijn is opgezogen en de opzuignaald is weggegooid. Is het tijd om de injectienaald op de spuit te zetten. Zorg ervoor dat je de spuit in je handen hebt en de injectie naald. Pak de voorwerpen door ernaar te kijken en op de linkerhmuisknop te drukken.";
 
                         itemToPick = "InjectionNeedle";
                         particleHint.transform.position = GameObject.Find("InjectionNeedle").transform.position;
@@ -653,7 +654,7 @@ public class TutorialManager : MonoBehaviour {
                         handsInventory.tutorial_pickedLeft =
                             handsInventory.tutorial_pickedRight = false;
                         currentStep = TutorialStep.CombineSyringeInjNeedle;
-                        UItext.text = "Combine Syringe+Injection Needle";
+                        UItext.text = "Combineer nu de injectienaald met de spuit om de spuit klaar te maken voor injecteren. Zorg dat je de spuit en injectienaald in je handen hebt en druk op de combineertoets (R). ";
                     }
                     break;
                 case TutorialStep.CombineSyringeInjNeedle:
@@ -661,7 +662,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         handsInventory.tutorial_combined = false;
                         currentStep = TutorialStep.MoveToPatient;
-                        UItext.text = "Move to the patient";
+                        UItext.text = "De spuit is klaar voor gebruik. Beweeg nu naar de de client te om met hem te praten.";
 
                         patientTrigger.gameObject.SetActive(true);
                         particleHint.transform.position = patientTrigger.transform.position;
@@ -678,7 +679,7 @@ public class TutorialManager : MonoBehaviour {
                         player.tutorial_movementLock = movementLock = true;
                         currentStep = TutorialStep.TalkToPatient;
                         particleHint.transform.position = GameObject.Find("Patient").transform.position;
-                        UItext.text = "Talk to patient";
+                        UItext.text = "Vraag aan de client of hij zijn mouw omhoog wil doen. Open het dialoogscherm door naar de client te kijken en op de linkermuisknop te drukken.";
                     }
                     break;
                 case TutorialStep.TalkToPatient:
@@ -686,7 +687,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         patient.tutorial_talked = false;
                         currentStep = TutorialStep.UseOnHand;
-                        UItext.text = "Use syringe on patient";
+                        UItext.text = "Gebruik nu de injectiespuit op de client. Doe dit net zoals je hebt gedaan bij het weggooien van de opzuignaald in de naaldcontainer. Kijk naar de client en druk op de actie toets van de hand die de injectiespuit vast heeft. Druk op de 'Q' voor de linkerhand en 'E' voor de rechterhand.";
 
                         handsInventory.tutorial_itemUsedOn = false;
                     }
