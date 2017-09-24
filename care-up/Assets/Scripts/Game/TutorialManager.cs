@@ -203,7 +203,7 @@ public class TutorialManager : MonoBehaviour {
                         controls.keyPreferences.mouseClickKey.locked = false;
                         player.tutorial_movementLock = movementLock = true;
                         UItext.text = "Welkom bij Care-Up";
-                        SetPauseTimer(5.0f);
+                        SetPauseTimer(2.0f);
                     }
                     break;
                 case TutorialStep.LookAround:
@@ -276,7 +276,7 @@ public class TutorialManager : MonoBehaviour {
                     if (medicine.tutorial_picked)
                     {
                         currentStep = TutorialStep.CloseMedicine;
-                        UItext.text = "Goed, zoals je ziet kun je het medicijn naast terugleggen ook oppakken. We hebben het medicijn op dit moment nog niet nodig en hoeven hem dus niet op te pakken. Leg nu het medicijn terug door op 'Q' te drukken.";
+                        UItext.text = "Goed, zoals je ziet kun je het medicijn naast terugleggen ook oppakken met de'E'toets. We hebben het medicijn op dit moment nog niet nodig en hoeven hem dus niet op te pakken. Leg nu het medicijn terug door op 'Q' te drukken.";
                     }
                     break;
                 case TutorialStep.CloseMedicine:
@@ -705,11 +705,11 @@ public class TutorialManager : MonoBehaviour {
                         currentStep = TutorialStep.CompleteSequence;
                         sequenceCompleted = false;
                         PlayerAnimationManager.SequenceTutorialLock(false);
-                        UItext.text = "do the sequence";
+                        UItext.text = "In deze instructie zijn de juiste keuzes aangegeven in het groen. Doorloop nu de verschillende stappen om het injecteren uit te voeren door de juiste keuzes te selecteren met de muis.";
                     }
                     else
                     {
-                        UItext.text = "explaining";
+                        UItext.text = "Ingewikkelde handelingen die uit meerdere stappen bestaan openen het 'actie keuze menu'. De handeling start automatisch. Zodra er een belangrijke stap is aangebroken, pauzeert het spel. Er verschijnen keuzes in het beeld en het is aan jou om de juiste keuze te selecteren. Zodra je de goede keuze maakt zal de handeling verder worden uitgevoerd. Dit herhaalt zich tot de handeling is afgerond.";
                         SetPauseTimer(5.0f);
                     }
                     break;
@@ -718,7 +718,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         currentStep = TutorialStep.CombinePutOnInjCap;
                         player.tutorial_movementLock = movementLock = false;
-                        UItext.text = "Put injection needle cap on";
+                        UItext.text = "De client is geinjecteerd. Pak de beschermdop van injectienaald op door ernaar te kijken en op de linkermuisknop te drukken. Combineer nu de beschrmdop van de injectienaald met de spuit door op de 'R'toets te drukken.";
 
                         itemToPick = "SyringeInjectionCap";
                         particleHint.transform.position = GameObject.Find("SyringeInjectionCap").transform.position;
@@ -732,7 +732,7 @@ public class TutorialManager : MonoBehaviour {
 
                         handsInventory.tutorial_combined = false;
                         currentStep = TutorialStep.CombineTakeOffInjNeedle;
-                        UItext.text = "Take off injection needle";
+                        UItext.text = "Nu de dop weer op de injectienaald zit, is het veilig om de injectienaald van de spuit af te halen. Zorg ervoor dat je de spuit vast hebt en zorg voor een vrije hand. Druk op de 'R' toets om de injectie naald van de spuit af te halen.";
                     }
                     break;
                 case TutorialStep.CombineTakeOffInjNeedle:
@@ -740,7 +740,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         handsInventory.tutorial_combined = false;
                         currentStep = TutorialStep.UseInjNeedleOnTrash;
-                        UItext.text = "Trash capped injection needle";
+                        UItext.text = "Gooi de injectienaald in de naaldcontainer. Doe dit door te kijken naar de naadcontainer en op de actieknop van de juiste hand te drukken. Gebruik actietoets 'Q' voor de linkerhand en ";
 
                         particleHint.SetActive(true);
                         particleHint.transform.position = GameObject.Find("NeedleCup").transform.position;
@@ -751,7 +751,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         needleTrashed = false;
                         currentStep = TutorialStep.DropSyringe;
-                        UItext.text = "Drop syringe";
+                        UItext.text = "Leg nu de spuit terug op het werkveld door op 'SHIFT' + 'Q' als je de spuit in je linkerhand vast hebt en op 'SHIFT' + 'E' als je de spuit in je rechterhand vast hebt.";
 
                         itemToDrop = "Syringe";
                         particleHint.SetActive(false);
@@ -763,7 +763,7 @@ public class TutorialManager : MonoBehaviour {
                         AddPointWithSound();
 
                         currentStep = TutorialStep.UseWorkField;
-                        UItext.text = "Use work field";
+                        UItext.text = "Ruim de spullen op en maak het werkveld schoon. Dit doe je door naar het werkveld te kijken en op de 'linkermuisknop' te drukken.";
 
                         workField.tutorial_used = false;
 
@@ -775,7 +775,7 @@ public class TutorialManager : MonoBehaviour {
                     if (workField.tutorial_used)
                     {
                         currentStep = TutorialStep.UseHygienePump;
-                        UItext.text = "Use Hygiene Pump";
+                        UItext.text = "Desinfecteer atijd je handen na het uitvoeren van een medische handeling. Doe dit door te kijken naar de hygienepomp en op de 'linkermuisknop' te drukken.";
 
                         handCleaner.tutorial_used = false;
                         particleHint.transform.position = handCleaner.transform.position;
@@ -785,7 +785,7 @@ public class TutorialManager : MonoBehaviour {
                     if (handCleaner.tutorial_used)
                     {
                         currentStep = TutorialStep.UsePaperAndPen;
-                        UItext.text = "Use paper and pen";
+                        UItext.text = "Zoals je ziet verschijnt een pen en papier op de tafel. Deze kun je gebruiken om je bevindingen op te schrijven. Doe dit door naar het papier te kijken en druk op de 'linkermuisknop'.";
 
                         particleHint.transform.position = paperNPen.transform.position;
                     }
@@ -796,7 +796,7 @@ public class TutorialManager : MonoBehaviour {
                         particleHint.SetActive(false);
 
                         currentStep = TutorialStep.TutorialEnd;
-                        UItext.text = "Goed gedaan. Dit was de uitleg over Care-Up. Succes bij je eerste BIG-handeling";
+                        UItext.text = "Goed gedaan. Dit was de uitleg over Care-Up. Succes en veel pleier bij het oefenen van de BIG-handelingen";
                     }
                     break;
                 case TutorialStep.TutorialEnd:
