@@ -20,8 +20,9 @@ public class LoadingScreen : MonoBehaviour {
     // Set some temporary texture and text
     void Start()
     {
-        loadingTexture = Resources.Load<Texture>("Textures/loading_bg");
+        loadingTexture = Resources.Load<Texture>("Sprites/Gameback");
         loadingText = "Laden...";
+     
     }
 
     IEnumerator LoadNewScene()
@@ -53,7 +54,8 @@ public class LoadingScreen : MonoBehaviour {
 
             GUIStyle style = GUI.skin.GetStyle("Label");
             style.alignment = TextAnchor.MiddleCenter;
-            style.fontSize = 40;
+            style.fontSize = 22;
+            GUI.color = Color.black;
             GUI.Label(new Rect(0, 0, Screen.width / 2, Screen.height / 2),
             loadingText, style);
         }

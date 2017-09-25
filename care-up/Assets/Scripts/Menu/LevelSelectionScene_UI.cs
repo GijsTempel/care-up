@@ -71,13 +71,13 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
                         if (ppManager.GetSceneCompleted(sceneName))
                         {
-                            string info = ppManager.GetSceneStars(sceneName) + " stars; " +
+                            string info = ppManager.GetSceneStars(sceneName) + " behaalde sterren - " +
                                 ppManager.GetSceneTime(sceneName);
                             descr.GetComponent<LevelSelectionScene_UI_Option>().result = info;
                         }
                         else
                         {
-                            descr.GetComponent<LevelSelectionScene_UI_Option>().result = "Not completed";
+                            descr.GetComponent<LevelSelectionScene_UI_Option>().result = "Niet voltooid";
                         }
 
                         if (count == 1)
@@ -88,13 +88,13 @@ public class LevelSelectionScene_UI : MonoBehaviour
                             descr.parent.Find("Description").GetComponent<Text>().text = variation.Attributes["description"].Value;
                             if (ppManager.GetSceneCompleted(sceneName))
                             {
-                                string info = ppManager.GetSceneStars(sceneName) + " stars; " +
+                                string info = ppManager.GetSceneStars(sceneName) + " behaalde sterren - " +
                                     ppManager.GetSceneTime(sceneName);
                                 descr.parent.Find("Result").GetComponent<Text>().text = info;
                             }
                             else
                             {
-                                descr.parent.Find("Result").GetComponent<Text>().text = "Not completed";
+                                descr.parent.Find("Result").GetComponent<Text>().text = "Niet voltooid";
                             }
                         }
                         else
@@ -116,13 +116,13 @@ public class LevelSelectionScene_UI : MonoBehaviour
                     }
                     if (ppManager.GetSceneCompleted(doors[i].sceneName))
                     {
-                        string info = ppManager.GetSceneStars(doors[i].sceneName) + " stars; " +
+                        string info = ppManager.GetSceneStars(doors[i].sceneName) + " behaalde sterren - " +
                             ppManager.GetSceneTime(doors[i].sceneName);
                         descr.Find("Result").GetComponent<Text>().text = info;
                     }
                     else
                     {
-                        descr.Find("Result").GetComponent<Text>().text = "Not completed";
+                        descr.Find("Result").GetComponent<Text>().text = "Niet voltooid";
                     }
                 }
                 ++i;

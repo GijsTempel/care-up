@@ -35,7 +35,7 @@ public class Activation : MonoBehaviour {
 		//Serial = Guardian.Generate("Care-Up");
     
         // Store the serial number in playerprefs so the user does not have to write them everytime.
-        string storedSerial = PlayerPrefs.GetString("SerialKey");
+       string storedSerial = PlayerPrefs.GetString("SerialKey");
        if(storedSerial != string.Empty)
         {
 		   ValidProduct = true;
