@@ -8,7 +8,7 @@ using UnityEngine.UI;
 /// Instance of dialogue with up to 4 options.
 /// </summary>
 public class SelectDialogue : MonoBehaviour {
-
+    
     public bool tutorial_lock = false;
     public bool cheated = false;
 
@@ -40,30 +40,31 @@ public class SelectDialogue : MonoBehaviour {
         Right,
         Left
     };
-
-    public float sensetivity = 1.0f;
-
+    
     private List<DialogueOption> options = new List<DialogueOption>();
 
     private Vector2 mouseState = new Vector2();
     private OptionSide currentOption = OptionSide.None;
-    private Material currentMaterial;
+    private Color currentMaterial;
 
     private bool destroy = true;
 
-    private Renderer top;
-    private Renderer bottom;
-    private Renderer right;
-    private Renderer left;
+    private CanvasRenderer top;
+    private CanvasRenderer bottom;
+    private CanvasRenderer right;
+    private CanvasRenderer left;
 
-    private Material selectedMaterial;
-    private Material defaultMaterial;
-    private Material correctMaterial;
+    private Color selectedMaterial;
+    private Color defaultMaterial;
+    private Color correctMaterial;
 
     private string text;
 
     private static CameraMode cameraMode;
     private static Controls controls;
+
+    private bool optionSelected = false;
+
 
     void Start()
     {
@@ -82,20 +83,20 @@ public class SelectDialogue : MonoBehaviour {
 
     public void Init(bool selfDestroy = true)
     {
-        selectedMaterial = Resources.Load<Material>("Materials/Blue Material");
-        defaultMaterial = Resources.Load<Material>("Materials/Floor Material");
-        correctMaterial = Resources.Load<Material>("Materials/Object Material");
+        selectedMaterial = Color.blue;
+        defaultMaterial = Color.white;
+        correctMaterial = Color.green;
 
-        top = transform.Find("Top").GetComponent<Renderer>();
-        bottom = transform.Find("Bottom").GetComponent<Renderer>();
-        right = transform.Find("Right").GetComponent<Renderer>();
-        left = transform.Find("Left").GetComponent<Renderer>();
+        top = transform.GetChild(0).GetComponent<CanvasRenderer>();
+        bottom = transform.GetChild(1).GetComponent<CanvasRenderer>();
+        right = transform.GetChild(2).GetComponent<CanvasRenderer>();
+        left = transform.GetChild(3).GetComponent<CanvasRenderer>();
 
-        top.material = defaultMaterial;
-        bottom.material = defaultMaterial;
-        right.material = defaultMaterial;
-        left.material = defaultMaterial;
-
+        top.SetColor(defaultMaterial);
+        bottom.SetColor(defaultMaterial);
+        right.SetColor(defaultMaterial);
+        left.SetColor(defaultMaterial);
+        
         top.gameObject.SetActive(false);
         bottom.gameObject.SetActive(false);
         right.gameObject.SetActive(false);
@@ -134,56 +135,32 @@ public class SelectDialogue : MonoBehaviour {
             return;
         }
 
-        // 1 - top
-        if (options.Count == 1)
+        if (options.Count > 0)
         {
             top.gameObject.SetActive(true);
             options[0].side = OptionSide.Top;
-            top.transform.GetChild(0).GetChild(1).GetComponent<Text>().text = options[0].text;
+            top.transform.GetChild(0).GetComponent<Text>().text = options[0].text;
         }
-        // 2 - left/right
-        else if (options.Count == 2)
+
+        if (options.Count > 1)
         {
-            left.gameObject.SetActive(true);
-            options[0].side = OptionSide.Left;
-            left.transform.GetChild(0).GetChild(1).GetComponent<Text>().text = options[0].text;
-
-            right.gameObject.SetActive(true);
-            options[1].side = OptionSide.Right;
-            right.transform.GetChild(0).GetChild(1).GetComponent<Text>().text = options[1].text;
-        }
-        // 3 - top/left/right
-        else if (options.Count == 3)
-        {
-            top.gameObject.SetActive(true);
-            options[0].side = OptionSide.Top;
-            top.transform.GetChild(0).GetChild(1).GetComponent<Text>().text = options[0].text;
-
-            left.gameObject.SetActive(true);
-            options[1].side = OptionSide.Left;
-            left.transform.GetChild(0).GetChild(1).GetComponent<Text>().text = options[1].text;
-
-            right.gameObject.SetActive(true);
-            options[2].side = OptionSide.Right;
-            right.transform.GetChild(0).GetChild(1).GetComponent<Text>().text = options[2].text;
-        }
-        else // all 4 sides
-        {
-            top.gameObject.SetActive(true);
-            options[0].side = OptionSide.Top;
-            top.transform.GetChild(0).GetChild(1).GetComponent<Text>().text = options[0].text;
-
-            left.gameObject.SetActive(true);
-            options[1].side = OptionSide.Left;
-            left.transform.GetChild(0).GetChild(1).GetComponent<Text>().text = options[1].text;
-
-            right.gameObject.SetActive(true);
-            options[2].side = OptionSide.Right;
-            right.transform.GetChild(0).GetChild(1).GetComponent<Text>().text = options[2].text;
-
             bottom.gameObject.SetActive(true);
-            options[3].side = OptionSide.Bottom;
-            bottom.transform.GetChild(0).GetChild(1).GetComponent<Text>().text = options[3].text;
+            options[1].side = OptionSide.Bottom;
+            bottom.transform.GetChild(0).GetComponent<Text>().text = options[1].text;
+        }
+
+        if (options.Count > 2)
+        {
+            right.gameObject.SetActive(true);
+            options[2].side = OptionSide.Right;
+            right.transform.GetChild(0).GetComponent<Text>().text = options[2].text;
+        }
+
+        if (options.Count > 3)
+        {
+            left.gameObject.SetActive(true);
+            options[3].side = OptionSide.Left;
+            left.transform.GetChild(0).GetComponent<Text>().text = options[3].text;
         }
 
         if ( cheated )
@@ -194,58 +171,31 @@ public class SelectDialogue : MonoBehaviour {
 
     void Update()
     {
-        if (controls.MouseClicked() && currentOption != OptionSide.None)
+        if (!tutorial_lock)
         {
-            DialogueOption option = options.Find(x => x.side == currentOption);
-            if (option != null)
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+            if (optionSelected && currentOption != OptionSide.None)
             {
-                option.function(option.attribute);
-                if (destroy)
+                optionSelected = false;
+
+                DialogueOption option = options.Find(x => x.side == currentOption);
+                if (option != null)
                 {
-                    Destroy(gameObject);
-                    cameraMode.ToggleCameraMode(CameraMode.Mode.Free);
+                    option.function(option.attribute);
+                    if (destroy)
+                    {
+                        Destroy(gameObject);
+                        cameraMode.ToggleCameraMode(CameraMode.Mode.Free);
+                    }
                 }
             }
         }
-
-        Vector2 mouseInput = new Vector2
-        (
-            Input.GetAxis("Mouse X"),
-            Input.GetAxis("Mouse Y")
-        );
-
-        UpdateMouse(tutorial_lock ? Vector2.zero : mouseInput);
-    }
-    
-    private void UpdateMouse(Vector2 input)
-    {
-        mouseState += input * sensetivity * 0.1f;
-        mouseState = Vector2.ClampMagnitude(mouseState, 1.0f);
-
-        float angle = Mathf.Atan2(mouseState.y, mouseState.x);
-
-        if (mouseState.magnitude > 0.5f)
-        {
-            if (angle > -Mathf.PI/4 && angle < Mathf.PI/4)
-            {
-                SetSelected(OptionSide.Right);
-            }
-            else if (angle > Mathf.PI/4 && angle < 3*Mathf.PI/4)
-            {
-                SetSelected(OptionSide.Top);
-            }
-            else if (angle < -Mathf.PI/4 && angle > -3*Mathf.PI/4 )
-            {
-                SetSelected(OptionSide.Bottom);
-            }
-            else
-            {
-                SetSelected(OptionSide.Left);
-            }
-        } 
         else
         {
-            SetSelected(OptionSide.None);
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
     }
 
@@ -266,45 +216,45 @@ public class SelectDialogue : MonoBehaviour {
             case OptionSide.Top:
                 if ( state )
                 {
-                    currentMaterial = top.material;
-                    top.material = selectedMaterial;
+                    currentMaterial = top.GetColor();
+                    top.SetColor(selectedMaterial);
                 }
                 else
                 {
-                    top.material = currentMaterial;
+                    top.SetColor(currentMaterial);
                 }
                 break;
             case OptionSide.Bottom:
                 if (state)
                 {
-                    currentMaterial = bottom.material;
-                    bottom.material = selectedMaterial;
+                    currentMaterial = bottom.GetColor();
+                    bottom.SetColor(selectedMaterial);
                 }
                 else
                 {
-                    bottom.material = currentMaterial;
+                    bottom.SetColor(currentMaterial);
                 }
                 break;
             case OptionSide.Right:
                 if (state)
                 {
-                    currentMaterial = right.material;
-                    right.material = selectedMaterial;
+                    currentMaterial = right.GetColor();
+                    right.SetColor(selectedMaterial);
                 }
                 else
                 {
-                    right.material = currentMaterial;
+                    right.SetColor(currentMaterial);
                 }
                 break;
             case OptionSide.Left:
                 if (state)
                 {
-                    currentMaterial = left.material;
-                    left.material = selectedMaterial;
+                    currentMaterial = left.GetColor();
+                    left.SetColor(selectedMaterial);
                 }
                 else
                 {
-                    left.material = currentMaterial;
+                    left.SetColor(currentMaterial);
                 }
                 break;
             default:
@@ -342,20 +292,44 @@ public class SelectDialogue : MonoBehaviour {
                     switch (o.side)
                     {
                         case OptionSide.Bottom:
-                            bottom.material = correctMaterial;
+                            bottom.SetColor(correctMaterial);
                             break;
                         case OptionSide.Left:
-                            left.material = correctMaterial;
+                            left.SetColor(correctMaterial);
                             break;
                         case OptionSide.Right:
-                            right.material = correctMaterial;
+                            right.SetColor(correctMaterial);
                             break;
                         case OptionSide.Top:
-                            top.material = correctMaterial;
+                            top.SetColor(correctMaterial);
                             break;
                     }
                 }
             }
         }
+    }
+
+    public void ButtonClick(int num)
+    {
+        OptionSide side = OptionSide.None;
+
+        switch (num)
+        {
+            case (0):
+                side = OptionSide.Top;
+                break;
+            case (1):
+                side = OptionSide.Bottom;
+                break;
+            case (2):
+                side = OptionSide.Right;
+                break;
+            case (3):
+                side = OptionSide.Left ;
+                break;
+        }
+
+        currentOption = side;
+        optionSelected = true;
     }
 }
