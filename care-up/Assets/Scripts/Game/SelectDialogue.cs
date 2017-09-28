@@ -49,10 +49,10 @@ public class SelectDialogue : MonoBehaviour {
 
     private bool destroy = true;
 
-    private CanvasRenderer top;
-    private CanvasRenderer bottom;
-    private CanvasRenderer right;
-    private CanvasRenderer left;
+    private Image top;
+    private Image bottom;
+    private Image right;
+    private Image left;
 
     private Color selectedMaterial;
     private Color defaultMaterial;
@@ -87,15 +87,15 @@ public class SelectDialogue : MonoBehaviour {
         defaultMaterial = Color.white;
         correctMaterial = Color.green;
 
-        top = transform.GetChild(0).GetComponent<CanvasRenderer>();
-        bottom = transform.GetChild(1).GetComponent<CanvasRenderer>();
-        right = transform.GetChild(2).GetComponent<CanvasRenderer>();
-        left = transform.GetChild(3).GetComponent<CanvasRenderer>();
+        top = transform.GetChild(0).GetComponent<Image>();
+        bottom = transform.GetChild(1).GetComponent<Image>();
+        right = transform.GetChild(2).GetComponent<Image>();
+        left = transform.GetChild(3).GetComponent<Image>();
 
-        top.SetColor(defaultMaterial);
-        bottom.SetColor(defaultMaterial);
-        right.SetColor(defaultMaterial);
-        left.SetColor(defaultMaterial);
+        top.color = defaultMaterial;
+        bottom.color = defaultMaterial;
+        right.color = defaultMaterial;
+        left.color = defaultMaterial;
         
         top.gameObject.SetActive(false);
         bottom.gameObject.SetActive(false);
@@ -216,45 +216,45 @@ public class SelectDialogue : MonoBehaviour {
             case OptionSide.Top:
                 if ( state )
                 {
-                    currentMaterial = top.GetColor();
-                    top.SetColor(selectedMaterial);
+                    currentMaterial = top.color;
+                    top.color = selectedMaterial;
                 }
                 else
                 {
-                    top.SetColor(currentMaterial);
+                    top.color = currentMaterial;
                 }
                 break;
             case OptionSide.Bottom:
                 if (state)
                 {
-                    currentMaterial = bottom.GetColor();
-                    bottom.SetColor(selectedMaterial);
+                    currentMaterial = bottom.color;
+                    bottom.color = selectedMaterial;
                 }
                 else
                 {
-                    bottom.SetColor(currentMaterial);
+                    bottom.color = currentMaterial;
                 }
                 break;
             case OptionSide.Right:
                 if (state)
                 {
-                    currentMaterial = right.GetColor();
-                    right.SetColor(selectedMaterial);
+                    currentMaterial = right.color;
+                    right.color = selectedMaterial;
                 }
                 else
                 {
-                    right.SetColor(currentMaterial);
+                    right.color = currentMaterial;
                 }
                 break;
             case OptionSide.Left:
                 if (state)
                 {
-                    currentMaterial = left.GetColor();
-                    left.SetColor(selectedMaterial);
+                    currentMaterial = left.color;
+                    left.color = selectedMaterial;
                 }
                 else
                 {
-                    left.SetColor(currentMaterial);
+                    left.color = currentMaterial;
                 }
                 break;
             default:
@@ -292,16 +292,16 @@ public class SelectDialogue : MonoBehaviour {
                     switch (o.side)
                     {
                         case OptionSide.Bottom:
-                            bottom.SetColor(correctMaterial);
+                            bottom.color = correctMaterial;
                             break;
                         case OptionSide.Left:
-                            left.SetColor(correctMaterial);
+                            left.color = correctMaterial;
                             break;
                         case OptionSide.Right:
-                            right.SetColor(correctMaterial);
+                            right.color = correctMaterial;
                             break;
                         case OptionSide.Top:
-                            top.SetColor(correctMaterial);
+                            top.color = correctMaterial;
                             break;
                     }
                 }
