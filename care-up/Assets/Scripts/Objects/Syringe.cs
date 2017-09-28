@@ -120,6 +120,26 @@ public class Syringe : PickableObject {
                     return true;
                 }
             }
+            else if (name == "SyringeWithAbsorptionNeedle")
+            {
+                info = actionManager.CurrentUseOnInfo;
+                if (info[0] == "SyringeWithAbsorptionNeedle" && info[1] == "")
+                {
+                    if (inventory.LeftHandEmpty())
+                    {
+                        PlayerAnimationManager.PlayAnimation("UseRight " + name);
+                        actionManager.OnUseOnAction("SyringeWithAbsorptionNeedle", "");
+                        return true; // fix for venting syringe
+                    }
+                    else if (inventory.RightHandEmpty())
+                    {
+                        PlayerAnimationManager.PlayAnimation("UseLeft " + name);
+                        actionManager.OnUseOnAction("SyringeWithAbsorptionNeedle", "");
+                        return true; // fix for venting syringe
+                    }
+                    else return false;
+                }
+            }
         }
         else // cannot interact or target == ""
         {
