@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityStandardAssets.Characters.FirstPerson;
+using UnityEngine.UI;
 
 /// <summary>
 /// Class for handling specific camera configurations other, than default player.
@@ -179,6 +180,26 @@ public class CameraMode : MonoBehaviour {
         }
     }
 
+    public void ObjectViewPickUpButton()
+    {
+        PickableObject pickableObject = selectedObject.GetComponent<PickableObject>();
+        if (pickableObject != null)
+        {
+            ToggleCameraMode(Mode.Free);
+            pickableObject.GetComponent<ExaminableObject>().ToggleViewMode(false);
+            inventory.PickItem(pickableObject);
+            selectedObject = null;
+        }
+    }
+
+    public void ObjectViewPutDownButton()
+    {
+        ToggleCameraMode(Mode.Free);
+
+        selectedObject.ToggleViewMode(false);
+        selectedObject = null;
+    }
+
     /// <summary>
     /// Switches properly mode setting controls locks, cursor, blur, etc.
     /// </summary>
@@ -193,6 +214,11 @@ public class CameraMode : MonoBehaviour {
             Cursor.visible = true;
 
             blur.enabled = true;
+
+            GameObject buttonsParent = Camera.main.transform.Find("UI").Find("ObjectViewButtons").gameObject;
+            buttonsParent.transform.GetChild(0).GetComponent<Button>().interactable =
+                (selectedObject.GetComponent<PickableObject>() != null);
+            buttonsParent.SetActive(true);
         }
         else if (currentMode == Mode.ObjectPreview && mode == Mode.Free)
         {
@@ -202,6 +228,8 @@ public class CameraMode : MonoBehaviour {
             Cursor.visible = false;
 
             blur.enabled = false;
+
+            GameObject.Find("ObjectViewButtons").SetActive(false);
         }
         else if (mode == Mode.SelectionDialogue)
         {
@@ -268,29 +296,6 @@ public class CameraMode : MonoBehaviour {
         }
     }
     
-    /// <summary>
-    /// Draws text below an object in preview mode.
-    /// </summary>
-    void OnGUI()
-    {
-        if ( currentMode == Mode.ObjectPreview )
-        {
-            string putKey = "Q";
-            string pickKey = "E";
-
-            string text = (selectedObject.GetComponent<PickableObject>() != null) ?
-                "Druk op " + putKey + " om terug te leggen, Druk op " + pickKey + " om op te pakken" :
-                "Druk op " + putKey + " om terug te leggen";
-
-            GUIStyle style = GUI.skin.GetStyle("Label");
-            style.alignment = TextAnchor.MiddleCenter;
-            style.fontSize = 40;
-            style.normal.textColor = Color.white;
-            GUI.Label(new Rect(0, 4*Screen.height/5, Screen.width, Screen.height/5), 
-                text, style);
-        }
-    }
-
     /// <summary>
     /// Chunck in update for handling cinematic
     /// </summary>
