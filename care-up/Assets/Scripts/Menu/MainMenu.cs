@@ -5,6 +5,7 @@ using UnityEngine;
 public class MainMenu : MonoBehaviour {
     
     private LoadingScreen loadingScreen;
+	public string eMail="info@triplemotion.nl";
 
     private void Start()
     {
@@ -86,6 +87,12 @@ public class MainMenu : MonoBehaviour {
 
     }
 
+	public void OnSendEmail()
+	{
+		System.Diagnostics.Process.Start (("mailto:" + eMail + "?subject=" + "Fout melding Care-Up."
+		+ "&body="
+		));
+	}
 
 
 }
