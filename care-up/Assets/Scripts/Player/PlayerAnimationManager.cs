@@ -15,6 +15,7 @@ public class PlayerAnimationManager : MonoBehaviour {
 
     private static Animator animationController;
     private static CameraMode cameraMode;
+    private static HandsInventory handsInventory;
 
     private static AnimationSequence animationSequence;
 
@@ -25,6 +26,9 @@ public class PlayerAnimationManager : MonoBehaviour {
 
         cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
         if (cameraMode == null) Debug.LogError("No camera mode");
+
+        handsInventory = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
+        if (handsInventory == null) Debug.LogError("No handsInventory");
     }
     
     public static void PlayAnimation(string name, Transform target = null)
@@ -87,6 +91,7 @@ public class PlayerAnimationManager : MonoBehaviour {
     {
         animationController.SetTrigger("AbortSequence");
         animationController.speed = 1f;
+        handsInventory.DeleteAnimationObject();
     }
 
     public static void SequenceTutorialLock(bool value)
