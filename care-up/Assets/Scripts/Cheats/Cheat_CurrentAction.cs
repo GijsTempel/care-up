@@ -12,10 +12,7 @@ public class Cheat_CurrentAction : MonoBehaviour
     public Text textObject;
 
     public float animationTime = 2.0f;
-
-    // Check only at start of the script
-    public bool stepDescrEnabled = true;
-
+    
     private int direction;
     private float timer;
     
@@ -30,7 +27,7 @@ public class Cheat_CurrentAction : MonoBehaviour
 
         if (GameObject.Find("DevHint") != null)
         {
-            if (stepDescrEnabled)
+            if (GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().practiceMode)
             {
                 textObject = GameObject.Find("DevHint").transform.GetChild(0).GetComponent<Text>();
                 set = false;

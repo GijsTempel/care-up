@@ -8,6 +8,7 @@ using System.Collections;
 public class PlayerPrefsManager : MonoBehaviour
 {
     public bool VR = true;
+    public bool practiceMode = true;
 
     private static PlayerPrefsManager instance;
     
