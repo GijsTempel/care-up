@@ -173,8 +173,11 @@ public class SelectDialogue : MonoBehaviour {
     {
         if (!tutorial_lock)
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            if (!GamepadSwitch.HandleUpdate(top.GetComponent<Button>()))
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
 
             if (optionSelected && currentOption != OptionSide.None)
             {
