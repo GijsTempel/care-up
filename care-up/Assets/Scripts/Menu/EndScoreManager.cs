@@ -14,6 +14,11 @@ public class EndScoreManager : MonoBehaviour {
     private float time;
     private string completedSceneName;
     
+    public string SceneName
+    {
+        get { return completedSceneName; }
+    }
+
     private List<string> wrongSteps;
     private List<string> wrongStepsDescr;
 
