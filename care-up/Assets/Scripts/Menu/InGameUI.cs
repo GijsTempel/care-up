@@ -31,6 +31,8 @@ public class InGameUI : MonoBehaviour {
 
     List<Resolution> resolutions;
 
+    private Selectable gamepadDefault;
+
 	void Start () {
 
         ui = transform.GetChild(0);
@@ -81,16 +83,22 @@ public class InGameUI : MonoBehaviour {
         resolutionDropdown.value = resolutions.IndexOf(Screen.currentResolution);
 
         fullscrToggle.isOn = Screen.fullScreen;
+
+        gamepadDefault = main.GetChild(0).GetComponent<Button>();
     }
-	
-	void Update () {
-		
+
+    void Update()
+    {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Toggle();
         }
 
-	}
+        if (ui.gameObject.activeSelf)
+        {
+            GamepadSwitch.HandleUpdate(gamepadDefault);
+        }
+    }
 
     public void Toggle()
     {
@@ -152,12 +160,16 @@ public class InGameUI : MonoBehaviour {
     {
         main.gameObject.SetActive(false);
         options.gameObject.SetActive(true);
+
+        gamepadDefault = options.Find("BackButton").GetComponent<Button>();
     }
 
     public void OnOptionsBackButtonClick()
     {
         main.gameObject.SetActive(true);
         options.gameObject.SetActive(false);
+
+        gamepadDefault = main.GetChild(0).GetComponent<Button>();
 
         // save some heavy settings
         QualitySettings.SetQualityLevel(qualityDropdown.value, true);
@@ -169,12 +181,17 @@ public class InGameUI : MonoBehaviour {
     {
         main.gameObject.SetActive(false);
         controlsUI.gameObject.SetActive(true);
+
+        gamepadDefault = controlsUI.Find("BackButton").GetComponent<Button>();
+
     }
 
     public void OnControlsBackButtonClick()
     {
         main.gameObject.SetActive(true);
         controlsUI.gameObject.SetActive(false);
+
+        gamepadDefault = main.GetChild(0).GetComponent<Button>();
     }
 
     public void OnExitButtonClick()
