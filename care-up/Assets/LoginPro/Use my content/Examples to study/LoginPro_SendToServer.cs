@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 namespace LoginProAsset
 {
     /// <summary>
@@ -36,6 +36,48 @@ namespace LoginProAsset
         // This is just here to show a popup when datas are sent (or error occured)
         public UIAnimation_Alert Popup;
 
+        public string Serial = "";
+        public bool ValidProduct = false;
+        public string topText = "Registreer product door uw activatiecode in te voeren.";
+        // Which of the base keys to compare in the check
+        public byte CheckKey = 0;
+
+
+        // This is the most important part.
+        // Make sure your base keys are unique
+        // choose random keys here and when you want to make a
+        // 2.x release change the keys so the 1.x keys are no longer valid
+        public uint[] MyBaseKeys = { 4, 16, 12, 64 };
+
+        void Start()
+        {
+
+
+            // Init Guardian
+            Guardian.Init(MyBaseKeys);
+            // Number of letters between each dash in the serial
+            Guardian.Spacing = 6;
+
+            // Generate A Test Key
+            //Serial = Guardian.Generate("Care-Up");
+
+            // Store the serial number in playerprefs so the user does not have to write them everytime.
+            /*string storedSerial = PlayerPrefs.GetString("SerialKey");
+            if(storedSerial != string.Empty)
+             {
+                ValidProduct = true;
+                //Serial was valid we can continue on to the game menu/level
+                 SceneManager.LoadScene("Menu");
+             }*/
+
+            var MySerialNumbers = Guardian.Generate(3, new System.Random(3));
+            foreach (var serial in MySerialNumbers)
+            {
+
+                Debug.Log(serial.Value);
+            }
+          
+       }
 
         /// <summary>
         /// Send datas to the server
@@ -50,9 +92,29 @@ namespace LoginProAsset
             datas[1] = Data2.text;
             datas[2] = Data3.text;
             LoginPro.Manager.ExecuteOnServer("SendData", SendToServer_Success, SendToServer_Error, datas);
+
+            Serial = Data1.text;
+            if (Guardian.ValidateKey(Serial, CheckKey, MyBaseKeys[CheckKey]))
+            {
+                ValidProduct = true;
+                topText = "Inloggen Geslaagd";
+                Debug.Log("code valide");
+               // SceneManager.LoadScene("Menu");
+                // Store the key so when we load up next time we dont have to enter serial again.
+                //PlayerPrefs.SetString("SerialKey", Serial);
+            }
+            else {
+                topText = "Helaas, de code klopt niet. Probeer het opnieuw";
+                Debug.Log("code invalide");
+            }
+
+            Debug.Log(datas[0]);
+
+
         }
         public void SendToServer_Success(string[] datas)
         {
+            
             Debug.Log("Success! The server answered : " + datas[0]);
             Popup.Show("Success! The server answered : " + datas[0], 3);
         }
@@ -61,5 +123,22 @@ namespace LoginProAsset
             Debug.LogError(errorMessage);
             Popup.Show("Error : " + errorMessage, 5);
         }
-    }
+
+        void DoMyWindow(int windowID)
+        {
+            Serial = Data1.text;
+                if (Guardian.ValidateKey(Serial, CheckKey, MyBaseKeys[CheckKey]))
+                {
+                    ValidProduct = true;
+                    topText = "Inloggen Geslaagd";
+                    SceneManager.LoadScene("Menu");
+                    // Store the key so when we load up next time we dont have to enter serial again.
+                    //PlayerPrefs.SetString("SerialKey", Serial);
+                }
+                else {
+                    topText = "Helaas, de code klopt niet. Probeer het opnieuw";
+                }
+            }
+
+        }
 }

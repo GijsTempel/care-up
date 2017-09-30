@@ -10,18 +10,18 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Your domain
-$_SESSION['Domain'] = 'www.my-domain-without-http-prefix.com';
+$_SESSION['Domain'] = 'www.triplemotionmedia.nl';
 // The folder (or path) where you put the LoginAccount+ProSecure folder (initially : LoginAccount+ProSecure, if you didn't change it)
 $_SESSION['SecureLoginFolder'] = 'LoginPro_Server/Game';
 
 // Your host 
 $_SESSION['SERVER_host'] = 'localhost'; // Caution : keep 'localhost' EXCEPT if your database server is not on your server (expert only)
 // Your username to connect to the database
-$_SESSION['SERVER_user'] = 'database_user';
+$_SESSION['SERVER_user'] = 'triplemoti_TMM';
 // Your password to connect to the database 
-$_SESSION['SERVER_password'] = 'database_password';
+$_SESSION['SERVER_password'] = 'VjWblwKq5k';
 // The name of your database
-$_SESSION['DB_name'] = 'database_name';
+$_SESSION['DB_name'] = 'triplemoti_TTMtheme';
 // The table where your accounts are saved
 $_SESSION['AccountTable'] = 'Account';
 // The table where your achievements are saved
