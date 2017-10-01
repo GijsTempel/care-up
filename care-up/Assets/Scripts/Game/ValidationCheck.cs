@@ -10,7 +10,7 @@ public class ValidationCheck : MonoBehaviour
 		private LoadingScreen loadingScreen;
 		private void Start()
 		{
-			/*if (GameObject.Find("Preferences") != null)
+			if (GameObject.Find("Preferences") != null)
 			{
 				loadingScreen = GameObject.Find("Preferences").GetComponent<LoadingScreen>();
 				if (loadingScreen == null) Debug.LogError("No loading screen found");
@@ -18,7 +18,7 @@ public class ValidationCheck : MonoBehaviour
 			else
 			{
 				Debug.LogWarning("No 'preferences' found. Game needs to be started from first scene");
-			}*/
+			}
 		}
 	// Update is called once per frame
 	void Update () {
