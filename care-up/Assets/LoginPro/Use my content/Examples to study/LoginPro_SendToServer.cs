@@ -38,7 +38,6 @@ namespace LoginProAsset
 
         public string Serial = "";
         public bool ValidProduct = false;
-        public string topText = "Registreer product door uw activatiecode in te voeren.";
         // Which of the base keys to compare in the check
         public byte CheckKey = 0;
 
@@ -86,59 +85,47 @@ namespace LoginProAsset
         /// </summary>
         public void SendToServer()
         {
-            // Information to send to the server (encrypted with RSA)
-            string[] datas = new string[3]; // <- CAUTION TO THE SIZE OF THE ARRAY (It's the number of data you want to send)
-            datas[0] = Data1.text;
-            datas[1] = Data2.text;
-            datas[2] = Data3.text;
-            LoginPro.Manager.ExecuteOnServer("SendData", SendToServer_Success, SendToServer_Error, datas);
-
-            Serial = Data1.text;
+			// Information to send to the server (encrypted with RSA)
+			string[] datas = new string[2]; // <- CAUTION TO THE SIZE OF THE ARRAY (It's the number of data you want to send)
+			datas[0] = Data1.text;
+	
+			Serial = Data1.text;
             if (Guardian.ValidateKey(Serial, CheckKey, MyBaseKeys[CheckKey]))
             {
                 ValidProduct = true;
-                topText = "Inloggen Geslaagd";
-                Debug.Log("code valide");
+				datas[1] = ValidProduct.ToString();
+				LoginPro.Manager.ExecuteOnServer("SendData", SendToServer_Success, SendToServer_Error, datas);
+			
                // SceneManager.LoadScene("Menu");
                 // Store the key so when we load up next time we dont have to enter serial again.
                 //PlayerPrefs.SetString("SerialKey", Serial);
             }
             else {
-                topText = "Helaas, de code klopt niet. Probeer het opnieuw";
+				Popup.Show ("Helaas, de code is incorrect.", 5);
+                //topText = "Helaas, de code klopt niet. Probeer het opnieuw";
                 Debug.Log("code invalide");
             }
 
             Debug.Log(datas[0]);
-
+			Debug.Log(datas[1]);
 
         }
+		//Check if code is correct
         public void SendToServer_Success(string[] datas)
         {
             
             Debug.Log("Success! The server answered : " + datas[0]);
-            Popup.Show("Success! The server answered : " + datas[0], 3);
+			if (ValidProduct) 
+			{
+				Popup.Show ("Succes, code correct. Je kunt het spel starten.", 5);
+			} 
         }
         public void SendToServer_Error(string errorMessage)
         {
             Debug.LogError(errorMessage);
             Popup.Show("Error : " + errorMessage, 5);
         }
-
-        void DoMyWindow(int windowID)
-        {
-            Serial = Data1.text;
-                if (Guardian.ValidateKey(Serial, CheckKey, MyBaseKeys[CheckKey]))
-                {
-                    ValidProduct = true;
-                    topText = "Inloggen Geslaagd";
-                    SceneManager.LoadScene("Menu");
-                    // Store the key so when we load up next time we dont have to enter serial again.
-                    //PlayerPrefs.SetString("SerialKey", Serial);
-                }
-                else {
-                    topText = "Helaas, de code klopt niet. Probeer het opnieuw";
-                }
-            }
+			
 
         }
 }

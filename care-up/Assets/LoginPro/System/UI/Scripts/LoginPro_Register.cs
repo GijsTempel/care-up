@@ -25,14 +25,14 @@ namespace LoginProAsset
             // Check that all field are set
             if (Username == null || Mail == null || Password == null || ConfirmPassword == null)
             {
-                Debug.LogError("Please specify all fields needed to the action LoginPro_Register.");
+                Debug.LogError("Vul alle velden in om een account aan te maken.");
                 return;
             }
 
             // Check if passwords match
             if (Password.text != ConfirmPassword.text)
             {
-                string errorMessage = "Your passwords don't match.";
+                string errorMessage = "De wachtwoorden komen niet overeen.";
                 Debug.LogWarning(errorMessage);
                 Error(errorMessage);
                 return;
@@ -87,7 +87,7 @@ namespace LoginProAsset
 
             // Show message on success
             if (this.AnimationShowMessage != null)
-                yield return this.AnimationShowMessage.Show("Registration succeeded !\nPlease click the link you have received on your email address.", 7);
+				yield return this.AnimationShowMessage.Show("Registratie voltooid!\nClick op de link in de e-mail, die naar je is toegestuurd, om je account te verifiëren", 7);
 
             // Launch animation on success
             if (this.AnimationShowLogin != null)

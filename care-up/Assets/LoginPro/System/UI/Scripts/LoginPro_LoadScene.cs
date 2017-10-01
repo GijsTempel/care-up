@@ -12,6 +12,8 @@ namespace LoginProAsset
         public void LoadScene()
         {
             LoginPro_Security.Load(SceneToLoad);
+
         }
+
     }
 }

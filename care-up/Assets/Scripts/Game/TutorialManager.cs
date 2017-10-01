@@ -212,7 +212,7 @@ public class TutorialManager : MonoBehaviour {
                         AddPointWithSound();
                         currentStep = TutorialStep.WalkAround;
                         player.tutorial_movementLock = movementLock = false;
-                        UItext.text = "Gebruik de W, A, S, D / pijltjestoetsen om te lopen ";
+                        UItext.text = "Gebruik de W, A, S, D / pijltjestoetsen om te lopen.";
                     }
                     break;
                 case TutorialStep.WalkAround:
@@ -222,7 +222,7 @@ public class TutorialManager : MonoBehaviour {
                         currentStep = TutorialStep.WalkToTable;
                         particleHint.transform.position = tableTrigger.transform.position;
                         particleHint.SetActive(true);
-                        UItext.text = "Beweeg naar de tafel door W, A, S, D / pijltjestoetsen en de muis te gebruiken";
+                        UItext.text = "Beweeg naar de tafel door W, A, S, D / pijltjestoetsen en de muis te gebruiken.";
                     }
                     break;
                 case TutorialStep.WalkToTable:
