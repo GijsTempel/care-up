@@ -48,8 +48,8 @@ $_SESSION['Server'] = 'Server';
 $_SESSION['ChatMessage'] = 'ChatMessage';
 
 // Your contact email (in case you want to send email validations), players will receive email from this email address (you could create a contact email address for example)
-$_SESSION['SERVER_email'] = 'game.email.address@mail.com';
-$_SESSION['SERVER_emailPassword'] = 'gameEmailAddressPassword';
+$_SESSION['SERVER_email'] = 'Info@careup.nl';
+$_SESSION['SERVER_emailPassword'] = 'Care Up Support team';
 
 // The maximum number of wrong attempts before IP being blocked for an account
 $_SESSION['AvailableAttemptsBeforeBlocking'] = 10;
