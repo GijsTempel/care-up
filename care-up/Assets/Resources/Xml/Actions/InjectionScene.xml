@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ActionList>
-	<action description="1: Pas handhygiene toe. (Kijk naar de hygienepomp en druk op de linkermuisknop te drukken.)" audioHint="Injection/H1-2"
-		index="0" type="use" value="HandCleaner" extra="stap1"></action>
+	<action description="1: Pas handhygiëne toe. (Kijk naar de handhygiëne en druk op de linkermuisknop te drukken.)" audioHint="Injection/H1-2"
+		index="0" type="use" value="HandCleaner" extra="Handhygiëne is het allerbelangrijkste als het gaat om voorkomen van besmetting met ziektekiemen. Dit betekent je handen reinigen op de juiste manier en op de juiste momenten. Begin een handeling altijd met handhygiëne."></action>
 	<action description="2: Maak een schoon werkveld. (Kijk naar de tafel en druk op de linkermuisknop.)" audioHint="Injection/H2-2"
-		index="1" type="use" value="WorkField" extra="stap2"></action>
-	<action description="3: Controleer cliëntgegevens. (Kijk naar de cliëntgegevens en druk op de linkermuisknop)." audioHint="Injection/H3-2"
-		index="2" type="examine" item="PatientRecords" expected="good" extra="stap3"></action>
-	<action description="4: Controleer het medicijn.(Kijk naar het medicijn en druk op de linkermuisknop.)" audioHint="Injection/H3-2"
-		index="2" type="examine" item="Medicine" expected="good" extra="stap4"></action>
-  <action description="4.2: Controleer de toedienlijst. (Kijk naar de toedienlijst en druk op de linkermuisknop.)" audioHint="InjectionSubcutaneous/Step 5"
-		index="2" type="examine" item="PrescriptionForm" expected="good"></action>
+		index="1" type="use" value="WorkField" extra="Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekimen te voorkomen."></action>
+	<action description="3.1: Controleer cliëntgegevens. (Kijk naar de cliëntgegevens en druk op de linkermuisknop)." audioHint="Injection/H3-2"
+		index="2" type="examine" item="PatientRecords" expected="good" extra="Het is belangerijk dat je de juiste persoon voor je hebt. Controleer daarom altijd de cliëntgegevens voordat je begint met een handeling."></action>
+	<action description="3.2: Controleer het medicijn.(Kijk naar het medicijn en druk op de linkermuisknop.)" audioHint="Injection/H3-2"
+		index="2" type="examine" item="Medicine" expected="good" extra="Controleer altijd het medicijn op vervaldatum, toedienwijze, kleur en substantie om er zeker van te zijn dat je het juiste medicijn hebt. Vergelijk de infromatie van het medicijn met die van de toedienlijst. "></action>
+  <action description="4.1: Controleer de toedienlijst. (Kijk naar de toedienlijst en druk op de linkermuisknop.)" audioHint="InjectionSubcutaneous/Step 5"
+		index="2" type="examine" item="PrescriptionForm" expected="good" extra="Controleer de toedienlijst op soort, dosering en toedientijdstip ">"</action>
 
-  <action description="4.3: Vraag aan je collega om een dubbele controle" audioHint=""
+  <action description="4.2: Vraag aan je collega om een dubbele controle" audioHint=""
     index="3" type="talk" topic="DoubleCheck" />
 
 	<action description="5.A: Overgiet een gaasje met alcohol (Combineer alcohol en een gaasje door op de (R) knop te drukken)" audioHint="Injection/H4-2"

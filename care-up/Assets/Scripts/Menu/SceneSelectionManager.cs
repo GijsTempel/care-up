@@ -14,9 +14,9 @@ public class SceneSelectionManager : MonoBehaviour {
     private PlayerPrefsManager manager;
 
     private string practiceText =
-        "This is practice mode. You will be able to see every step, that you need to do, at the top of the screen.";
+        "Oefenen: Oefenen de protocol waarin je elke stap van de werkwijze bovenin het scherm kunt zien. Volg de stappen om ze te oefenen en te leren.";
     private string testText =
-        "This is test mode. You will not see any hints, so you can test your knowsledge.";
+        "Toetsen: Toets je kennis. Tijdens een toets zie je geen hints en moet je de stappen van de protocol uit je hoofd uitvoeren. Zoals in het echt.";
 
     public void Start()
     {

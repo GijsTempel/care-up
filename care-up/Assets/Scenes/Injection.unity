@@ -23,7 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0.42182094, g: 0.56350076, b: 0.6102941, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 0.62
+  m_AmbientIntensity: 0.5
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.39607844, g: 0.49019608, b: 0.64705884, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: 93d43b027dc267444af7412b8e607dbd, type: 2}
@@ -87,7 +87,7 @@ LightmapSettings:
     m_PVRFilteringAtrousColorSigma: 1
     m_PVRFilteringAtrousNormalSigma: 1
     m_PVRFilteringAtrousPositionSigma: 1
-  m_LightingDataAsset: {fileID: 112000138, guid: af870a5df587c6a49b8a985bfefa546c,
+  m_LightingDataAsset: {fileID: 112000136, guid: af870a5df587c6a49b8a985bfefa546c,
     type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -1512,7 +1512,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textObject: {fileID: 0}
   animationTime: 2
-  stepDescrEnabled: 1
 --- !u!1001 &412890344
 Prefab:
   m_ObjectHideFlags: 0
@@ -5311,7 +5310,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ef2a9ce2fa4207c46821752a2e0b696c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 15.127
+      value: 15.563
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ef2a9ce2fa4207c46821752a2e0b696c, type: 3}
       propertyPath: m_LocalRotation.x
@@ -5351,7 +5350,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ef2a9ce2fa4207c46821752a2e0b696c, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.27870873
+      value: 0.32567012
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ef2a9ce2fa4207c46821752a2e0b696c, type: 3}
       propertyPath: m_LocalScale.z
@@ -5626,7 +5625,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1537108505
 Transform:
@@ -5634,13 +5633,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1537108504}
-  m_LocalRotation: {x: 0.26062325, y: -0.76647836, z: 0.11550395, w: 0.5755392}
+  m_LocalRotation: {x: -0.19287448, y: 0.7363799, z: -0.017601948, w: -0.6482548}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2097502488}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 28.494001, y: -110.712006, z: -17.657001}
+  m_LocalEulerAnglesHint: {x: 16.021, y: -459.517, z: -15.771001}
 --- !u!108 &1537108506
 Light:
   m_ObjectHideFlags: 0
@@ -5650,8 +5649,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 1
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 0.95
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 1.69
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -5659,10 +5658,10 @@ Light:
     m_Type: 2
     m_Resolution: 0
     m_CustomResolution: -1
-    m_Strength: 0.84
-    m_Bias: 0.05
-    m_NormalBias: 0.4
-    m_NearPlane: 0.2
+    m_Strength: 0.75
+    m_Bias: 0
+    m_NormalBias: 0
+    m_NearPlane: 0.1
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 12100000, guid: 09ebe82dbd1113c3d000dc0b8d76c639, type: 2}
@@ -5672,7 +5671,7 @@ Light:
     m_Bits: 4294967295
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 8
+  m_BounceIntensity: 1.39
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -5698,7 +5697,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 422804, guid: 9640cc1184c65b840a8d921e7cfdf237, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 12.26
+      value: 11.92
       objectReference: {fileID: 0}
     - target: {fileID: 422804, guid: 9640cc1184c65b840a8d921e7cfdf237, type: 2}
       propertyPath: m_LocalRotation.x
@@ -5755,6 +5754,10 @@ Prefab:
     - target: {fileID: 6556610, guid: 9640cc1184c65b840a8d921e7cfdf237, type: 2}
       propertyPath: m_IsTrigger
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 153760, guid: 9640cc1184c65b840a8d921e7cfdf237, type: 2}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967294
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9640cc1184c65b840a8d921e7cfdf237, type: 2}
