@@ -495,7 +495,7 @@ public class ActionManager : MonoBehaviour {
             }
 
             Camera.main.transform.Find("UI").Find("WrongAction").
-                GetComponent<TimedPopUp>().Set(5.0f, sublist[0].extraDescr);
+                GetComponent<TimedPopUp>().Set(sublist[0].extraDescr);
             Narrator.PlaySound("WrongAction");
         }
         else
