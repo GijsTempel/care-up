@@ -35,8 +35,9 @@ public class Controls : MonoBehaviour {
         public InputKey CombineKey   = new InputKey(new KeyBoardKey(KeyCode.R),
                                                     new ControllerKey(KeyCode.Joystick1Button3));
         // back, select
-        public InputKey GetHintKey   = new InputKey(new KeyBoardKey(KeyCode.Space),
-                                                    new ControllerKey(KeyCode.Joystick1Button6, KeyCode.Joystick1Button8));
+        //public InputKey GetHintKey   = new InputKey(new KeyBoardKey(KeyCode.Space),
+        //                                            new ControllerKey(KeyCode.Joystick1Button6, KeyCode.Joystick1Button8));
+        public InputKey GetHintKey = new InputKey();
 
         public bool mouseClickLocked = false;
         public void SetAllLocked(bool value)
