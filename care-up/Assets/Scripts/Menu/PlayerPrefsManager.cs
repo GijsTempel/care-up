@@ -64,4 +64,10 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         return PlayerPrefs.GetString(sceneName + "_time");
     }
+
+    public bool TutorialPopUpDeclined
+    {
+        get { return PlayerPrefs.GetInt("TutorialPopUpDeclined") == 1; }
+        set { PlayerPrefs.SetInt("TutorialPopUpDeclined", value ? 1 : 0); }
+    }
 }

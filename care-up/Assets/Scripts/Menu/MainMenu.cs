@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour {
     
     private LoadingScreen loadingScreen;
+    private PlayerPrefsManager prefs;
 	public string eMail="info@triplemotion.nl";
 
     private void Start()
@@ -14,6 +15,8 @@ public class MainMenu : MonoBehaviour {
         {
             loadingScreen = GameObject.Find("Preferences").GetComponent<LoadingScreen>();
             if (loadingScreen == null) Debug.LogError("No loading screen found");
+
+            prefs = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
         }
         else
         {
@@ -23,6 +26,30 @@ public class MainMenu : MonoBehaviour {
 
     public void OnStartButtonClick()
     {
+        if (prefs.TutorialCompleted || prefs.TutorialPopUpDeclined)
+        {
+            loadingScreen.LoadLevel("SceneSelection");
+        }
+        else
+        {
+            GameObject canvas = GameObject.Find("Canvas");
+
+            canvas.transform.Find("MainMenu").gameObject.SetActive(false);
+            canvas.transform.Find("Logo").gameObject.SetActive(false);
+            canvas.transform.Find("OptionsBtn").gameObject.SetActive(false);
+
+            canvas.transform.Find("TutorialPopUp").gameObject.SetActive(true);
+        }
+    }
+
+    public void OnStartYes()
+    {
+        loadingScreen.LoadLevel("Tutorial");
+    }
+
+    public void OnStartNo()
+    {
+        prefs.TutorialPopUpDeclined = true;
         loadingScreen.LoadLevel("SceneSelection");
     }
 
