@@ -25,7 +25,7 @@ public class UsableObject : InteractableObject {
 
     protected override void Update()
     {
-        if (actionManager.CurrentUseObject == name)
+        if (actionManager.CurrentUseObject == name || true) // remove restriction
         {
             base.Update();
 
