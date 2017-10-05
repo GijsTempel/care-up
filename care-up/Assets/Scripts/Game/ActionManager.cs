@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using CareUp.Actions;
+using UnityStandardAssets.Characters.FirstPerson;
 
 /// <summary>
 /// GameLogic script. Everything about actions is managed by this script.
@@ -576,5 +577,46 @@ public class ActionManager : MonoBehaviour {
         {
             GameObject.Find("_Dev").GetComponent<Cheat_CurrentAction>().UpdateAction();
         }
+    }
+
+    public void OnGameOver()
+    {
+        GameObject.Find("UI").transform.Find("GameOver").gameObject.SetActive(true);
+        
+        if (GameObject.Find("GameLogic") != null)
+        {
+            controls.keyPreferences.ToggleLock();
+            GameObject.Find("GameLogic").GetComponent<GameTimer>().enabled = false;
+        }
+
+        RigidbodyFirstPersonController player = GameObject.Find("Player").GetComponent<RigidbodyFirstPersonController>();
+        Crosshair crosshair = GameObject.Find("Player").GetComponent<Crosshair>();
+        Animator animator = player.transform.GetChild(0).GetChild(0).GetComponent<Animator>();
+        
+        player.enabled = false;
+        crosshair.enabled = false;
+
+        animator.speed = 0.0f;
+        Time.timeScale = 0f;
+
+        AudioSource[] audio = GameObject.FindObjectsOfType<AudioSource>();
+        foreach (AudioSource a in audio)
+        {
+            a.Pause();
+        }
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    public void OnRetryButtonClick()
+    {
+        GameObject.Find("Preferences").GetComponent<LoadingScreen>().LoadLevel(
+            SceneManager.GetActiveScene().name);
+    }
+
+    public void OnMainMenuButtonClick()
+    {
+        GameObject.Find("Preferences").GetComponent<LoadingScreen>().LoadLevel("Menu");
     }
 }

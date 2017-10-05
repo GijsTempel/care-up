@@ -32,6 +32,11 @@ public class WorkField : UsableObject {
     {
         if (!ViewModeActive())
         {
+            if (actionManager.CurrentUseObject != name)
+            {
+                actionManager.OnGameOver();
+            }
+
             tutorial_used = true;
             PlayerAnimationManager.PlayAnimation("Use WorkField", transform);
             actionManager.OnUseAction(gameObject.name);
