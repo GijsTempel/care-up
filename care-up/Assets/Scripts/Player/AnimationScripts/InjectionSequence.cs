@@ -19,6 +19,8 @@ public class InjectionSequence : AnimationSequenceState
 
         inv = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
         inv.PutAllOnTable();
+
+        inv.sequenceAborted = false;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -104,6 +106,29 @@ public class InjectionSequence : AnimationSequenceState
         if (inv.LeftHandObject && inv.LeftHandObject.GetComponent<Syringe>())
             inv.LeftHandObject.GetComponent<Syringe>().updatePlunger = false;
 
+        if (keyFrame >= 2 && inv.sequenceAborted)
+        {
+            if (keyFrame < keyFrames.Count)
+            {
+                if (inv.RightHandObject && inv.RightHandObject.GetComponent<Syringe>())
+                {
+                    inv.ReplaceHandObject(false, "SyringeWithInjectionNeedleCap");
+                    inv.PutAllOnTable();
+                    Destroy(GameObject.Find("SyringeInjectionCap"));
+                }
+            }
+            else
+            {
+                if (inv.LeftHandObject && inv.LeftHandObject.GetComponent<Syringe>())
+                {
+                    inv.ReplaceHandObject(true, "SyringeWithInjectionNeedleCap");
+                    inv.PutAllOnTable();
+                    Destroy(GameObject.Find("SyringeInjectionCap"));
+                }
+            }
+        }
+
+        if ( keyFrame >= keyFrames.Count && !inv.sequenceAborted )
         GameObject.FindObjectOfType<InjectionPatient>().AfterSequenceDialogue();
 
         if (GameObject.Find("GameLogic") != null)

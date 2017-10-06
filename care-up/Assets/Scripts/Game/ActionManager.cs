@@ -567,6 +567,7 @@ public class ActionManager : MonoBehaviour {
         lastAction.matched = false;
         currentActionIndex = lastAction.SubIndex;
         currentAction = lastAction;
+        GameObject.FindObjectOfType<Cheat_CurrentAction>().UpdateAction();
     }
 
     public void PlayAddPointSound()

@@ -92,6 +92,7 @@ public class PlayerAnimationManager : MonoBehaviour {
         animationController.SetTrigger("AbortSequence");
         animationController.speed = 1f;
         handsInventory.DeleteAnimationObject();
+        handsInventory.sequenceAborted = true;
     }
 
     public static void SequenceTutorialLock(bool value)

@@ -19,6 +19,8 @@ public class HandsInventory : MonoBehaviour {
     public bool tutorial_combined = false;
     [HideInInspector]
     public bool tutorial_itemUsedOn = false;
+    [HideInInspector]
+    public bool sequenceAborted = false;
 
     // position in air 
     public float horisontalOffset = 0.5f;

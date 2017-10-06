@@ -56,6 +56,11 @@ public class PickableObject : InteractableObject {
         gameObject.layer = 0;
         GetComponent<Collider>().enabled = true;
 
+        if (rigidBody == null)
+        {
+            rigidBody = GetComponent<Rigidbody>();
+        }
+
         if (rigidBody != null)
         {
             rigidBody.useGravity = true;
