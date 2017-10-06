@@ -492,7 +492,7 @@ public class ActionManager : MonoBehaviour {
                 wrongStepsList.Find(step => step == sublist[0].description) == null )
             {
                 wrongStepsList.Add(sublist[0].description);
-                wrongStepsDescriptionList.Add(sublist[0].extraDescr);
+                wrongStepsDescriptionList.Add(sublist[0].extraDescr); 
             }
 
             Camera.main.transform.Find("UI").Find("WrongAction").
@@ -582,8 +582,9 @@ public class ActionManager : MonoBehaviour {
 
     public void OnGameOver()
     {
-        GameObject.Find("UI").transform.Find("GameOver").gameObject.SetActive(true);
-        
+        Transform gameOver = GameObject.Find("UI").transform.Find("GameOver");
+        gameOver.gameObject.SetActive(true);
+            
         if (GameObject.Find("GameLogic") != null)
         {
             controls.keyPreferences.ToggleLock();

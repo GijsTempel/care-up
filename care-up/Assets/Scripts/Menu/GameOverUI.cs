@@ -15,8 +15,13 @@ public class GameOverUI : MonoBehaviour {
         if (manager == null) Debug.LogError("No camera mode");
         else
         {
-            transform.GetChild(0).GetChild(1).GetComponent<Button>().onClick.AddListener(() => manager.OnRetryButtonClick());
-            transform.GetChild(0).GetChild(2).GetComponent<Button>().onClick.AddListener(() => manager.OnMainMenuButtonClick());
+            transform.GetChild(0).Find("Retry").GetComponent<Button>().onClick.AddListener(() => manager.OnRetryButtonClick());
+            transform.GetChild(0).Find("Menu").GetComponent<Button>().onClick.AddListener(() => manager.OnMainMenuButtonClick());
         }
+    }
+
+    public void SetDescription(string value)
+    {
+        transform.Find("Panel").Find("Description").GetComponent<Text>().text = value;
     }
 }

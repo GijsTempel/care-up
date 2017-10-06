@@ -13,6 +13,11 @@ public class TimedPopUp : MonoBehaviour {
     private Image panel = null;
     private Text text = null;
     
+    public string MistakeMsg
+    {
+        get { return text == null ? "" : text.text; }
+    }
+
     void Update()
     {
         if (set)
@@ -43,5 +48,7 @@ public class TimedPopUp : MonoBehaviour {
         text.text = _text;
 
         GetComponent<Animator>().SetBool("set", true);
+
+        GameObject.Find("UI").transform.Find("GameOver").GetComponent<GameOverUI>().SetDescription(text.text);
     }
 }
