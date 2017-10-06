@@ -34,7 +34,17 @@ public class WorkField : UsableObject {
         {
             if (actionManager.CurrentUseObject != name)
             {
-                actionManager.OnGameOver();
+                if (GameObject.FindObjectOfType<PlayerPrefsManager>().practiceMode)
+                {
+                    actionManager.OnUseAction(gameObject.name);
+                    controls.ResetObject();
+                    Reset();
+                    return;
+                }
+                else
+                {
+                    actionManager.OnGameOver();
+                }
             }
 
             tutorial_used = true;
