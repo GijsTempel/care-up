@@ -32,7 +32,7 @@ namespace LoginProAsset
         public InputField Data2;
         public InputField Data3;
 
-
+        public GameObject validated;
         // This is just here to show a popup when datas are sent (or error occured)
         public UIAnimation_Alert Popup;
 
@@ -61,13 +61,13 @@ namespace LoginProAsset
             //Serial = Guardian.Generate("Care-Up");
 
             // Store the serial number in playerprefs so the user does not have to write them everytime.
-            /*string storedSerial = PlayerPrefs.GetString("SerialKey");
+            string storedSerial = PlayerPrefs.GetString("SerialKey");
             if(storedSerial != string.Empty)
              {
                 ValidProduct = true;
                 //Serial was valid we can continue on to the game menu/level
-                 SceneManager.LoadScene("Menu");
-             }*/
+                validated.SetActive(true);
+            }
 
             var MySerialNumbers = Guardian.Generate(3, new System.Random(3));
             foreach (var serial in MySerialNumbers)
@@ -118,6 +118,8 @@ namespace LoginProAsset
 			if (ValidProduct) 
 			{
 				Popup.Show ("Succes, code correct. Je kunt het spel starten.", 5);
+                validated.SetActive(true);
+
 			} 
         }
         public void SendToServer_Error(string errorMessage)

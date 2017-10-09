@@ -73,17 +73,17 @@ namespace LoginProAsset
             // If datas are empty : no need to send the form
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                methodForError("Please fill all the fields to log in.");
+                methodForError("Vul alle velden in om in te loggen.");
                 return;
             }
             if (username.Length < 3)
             {
-                methodForError("Username must be at least 3 characters long.");
+                methodForError("Gebruikersnaam moet minimaal 3 characters bevatten.");
                 return;
             }
             if (password.Length < 3)
             {
-                methodForError("Password must be at least 3 characters long.");
+                methodForError("Wachtwoord moet minimaal 3 characters bevatten.");
                 return;
             }
 
@@ -109,22 +109,22 @@ namespace LoginProAsset
             // If datas are empty : no need to send the form
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(mail) || string.IsNullOrEmpty(password))
             {
-                methodForError("Please fill all the fields to register.");
+                methodForError("Vul alle velden in om te registreren.");
                 return;
             }
             if (username.Length < 3)
             {
-                methodForError("Your username must be at least 3 characters long.");
+                methodForError("Gebruikersnaam moet minimaal 3 characters bevatten.");
                 return;
             }
             if (mail.Length < 3 || !mail.Contains("@"))
             {
-                methodForError("Your email address is not valid.");
+                methodForError("Het e-mailadres is niet geldig.");
                 return;
             }
             if (password.Length < 3)
             {
-                methodForError("Your password must be at least 3 characters long.");
+                methodForError("Wachtwoord moet minimaal 3 characters bevatten.");
                 return;
             }
 
@@ -156,22 +156,22 @@ namespace LoginProAsset
             // If datas are empty : no need to send the form
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(mail) || string.IsNullOrEmpty(password))
             {
-                methodForError("Please fill all the fields to modify your account.");
+                methodForError("Vul alle velden in om je acount te veranderen. ");
                 return;
             }
             if (username.Length < 3)
             {
-                methodForError("Username must be at least 3 characters long.");
+                methodForError("Gebruikersnaam moet minimaal 3 characters bevatten.");
                 return;
             }
             if (mail.Length < 3 || !mail.Contains("@"))
             {
-                methodForError("Email address is not valid.");
+                methodForError("Het e-mailadres is niet geldig. ");
                 return;
             }
             if (password.Length < 3)
             {
-                methodForError("Password must be at least 3 characters long.");
+                methodForError("Wachtwoord moet minimaal 3 characters bevatten.");
                 return;
             }
 
@@ -213,12 +213,12 @@ namespace LoginProAsset
             // If datas are empty : no need to send the form
             if (string.IsNullOrEmpty(mail))
             {
-                methodForError("Please fill all the fields to generate a new password.");
+                methodForError("Vul alle velden in om een nieuw wachtwoord te genereren. ");
                 return;
             }
             if (mail.Length < 3 || !mail.Contains("@"))
             {
-                methodForError("Email address is not valid.");
+                methodForError("E-mailadres is niet geldig. ");
                 return;
             }
 

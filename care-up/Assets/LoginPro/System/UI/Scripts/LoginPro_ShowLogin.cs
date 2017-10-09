@@ -8,12 +8,13 @@ namespace LoginProAsset
         public UIAnimation AnimationWhenNotLoggedIn;
 
         public static bool MenuShown = false;
-
+        public GameObject arrow;
         /// <summary>
         /// Useful when the scene changes : menu is hidden
         /// </summary>
         void Awake()
         {
+          
             MenuShown = false;
         }
 
@@ -23,6 +24,7 @@ namespace LoginProAsset
         /// </summary>
         public void ShowLoginMenu()
         {
+            arrow.SetActive(false);
             // Activate only if the menu is not already shown
             if (!MenuShown)
             {
@@ -31,6 +33,7 @@ namespace LoginProAsset
                 {
                     if (this.AnimationWhenLoggedIn != null)
                     {
+                        
                         MenuShown = true;
                         this.AnimationWhenLoggedIn.Launch();
                     }
