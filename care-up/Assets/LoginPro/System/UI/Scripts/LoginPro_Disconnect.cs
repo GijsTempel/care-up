@@ -38,7 +38,7 @@ namespace LoginProAsset
 
             // Show message on success
             if (this.AnimationShowMessage != null)
-                yield return this.AnimationShowMessage.Show("You are disconnected.", 2);
+                yield return this.AnimationShowMessage.Show("U bent uitgelogd.", 2);
 
             // Launch animation on success
             if (this.AnimationShowLogin != null)

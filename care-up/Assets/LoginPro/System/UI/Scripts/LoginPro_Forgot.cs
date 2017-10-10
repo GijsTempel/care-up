@@ -18,7 +18,7 @@ namespace LoginProAsset
             // Check that all field are set
             if (Mail == null)
             {
-                Debug.LogError("Please specify the mail field in the action LoginPro_Forgot.");
+                Debug.LogError("Vul uw e-mailadres in.");
                 return;
             }
 

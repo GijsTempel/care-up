@@ -29,10 +29,11 @@ namespace LoginProAsset
     {
         // All the datas we want to send to the server
         public InputField Data1;
-        public InputField Data2;
+		public InputField enteredSerial;
         public InputField Data3;
 
-        public GameObject validated;
+		public GameObject validatedIcon;
+
         // This is just here to show a popup when datas are sent (or error occured)
         public UIAnimation_Alert Popup;
 
@@ -65,9 +66,10 @@ namespace LoginProAsset
             if(storedSerial != string.Empty)
              {
                 ValidProduct = true;
+				validatedIcon.SetActive(true);
                 //Serial was valid we can continue on to the game menu/level
-                validated.SetActive(true);
-            }
+               
+             }
 
             var MySerialNumbers = Guardian.Generate(3, new System.Random(3));
             foreach (var serial in MySerialNumbers)
@@ -89,7 +91,7 @@ namespace LoginProAsset
 			string[] datas = new string[2]; // <- CAUTION TO THE SIZE OF THE ARRAY (It's the number of data you want to send)
 			datas[0] = Data1.text;
 	
-			Serial = Data1.text;
+			Serial = enteredSerial.text;
             if (Guardian.ValidateKey(Serial, CheckKey, MyBaseKeys[CheckKey]))
             {
                 ValidProduct = true;
@@ -98,7 +100,8 @@ namespace LoginProAsset
 			
                // SceneManager.LoadScene("Menu");
                 // Store the key so when we load up next time we dont have to enter serial again.
-                //PlayerPrefs.SetString("SerialKey", Serial);
+                PlayerPrefs.SetString("SerialKey", Serial);
+				validatedIcon.SetActive(true);
             }
             else {
 				Popup.Show ("Helaas, de code is incorrect.", 5);
@@ -118,8 +121,6 @@ namespace LoginProAsset
 			if (ValidProduct) 
 			{
 				Popup.Show ("Succes, code correct. Je kunt het spel starten.", 5);
-                validated.SetActive(true);
-
 			} 
         }
         public void SendToServer_Error(string errorMessage)

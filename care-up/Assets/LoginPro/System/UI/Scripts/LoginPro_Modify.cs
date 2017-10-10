@@ -55,14 +55,14 @@ namespace LoginProAsset
             // Check that all field are set
             if (Username == null || Mail == null || Password == null || ConfirmPassword == null)
             {
-                Debug.LogError("Please specify all fields needed to the action LoginPro_Modify.");
+                Debug.LogError("Vul alle velden in om uw account aan te passen.");
                 return;
             }
 
             // Check if passwords match
             if (Password.text != ConfirmPassword.text)
             {
-                string errorMessage = "Your passwords don't match.";
+                string errorMessage = "De wachtwoorden komen niet overeen.";
                 Debug.LogWarning(errorMessage);
                 Error(errorMessage);
                 return;
@@ -113,7 +113,7 @@ namespace LoginProAsset
             // Launch all animations one after the other
             StartCoroutine(LaunchModifyAnimations());
 
-            Debug.Log("Modification succeeded.");
+            Debug.Log("Aanpassingen voltooid.");
         }
 
         private IEnumerator LaunchModifyAnimations()
@@ -124,7 +124,7 @@ namespace LoginProAsset
 
             // Show message on success
             if (this.AnimationShowMessage != null)
-                yield return this.AnimationShowMessage.Show("Account information updated!", 3);
+                yield return this.AnimationShowMessage.Show("Account informatie aangepast!", 3);
 
             // Launch animation on success
             if (this.AnimationWindowToShow != null)

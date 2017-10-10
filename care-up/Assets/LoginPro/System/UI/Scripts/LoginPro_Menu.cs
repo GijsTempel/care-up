@@ -45,8 +45,8 @@ namespace LoginProAsset
             this.UsernameText.text = LoginPro.Session.Username;
             this.RoleText.text = LoginPro.Session.Role.ToString();
             this.MailText.text = LoginPro.Session.Mail;
-            this.RegistrationDateText.text = "Registration date :\n[" + LoginPro.Session.RegistrationDate + "]";
-            this.LastConnectionDateText.text = "Last connection date :\n[" + LoginPro.Session.PreviousConnectionDate + "]";
+            this.RegistrationDateText.text = "Registratie datum :\n[" + LoginPro.Session.RegistrationDate + "]";
+            this.LastConnectionDateText.text = "Laatste inlog datum :\n[" + LoginPro.Session.PreviousConnectionDate + "]";
             this.TimePlayedText.text = LoginPro.Session.TimePlayedText;
         }
 
@@ -184,7 +184,7 @@ namespace LoginProAsset
 
             // Update session
             TimeSpan timePlayed = TimeSpan.FromMinutes(LoginPro.Session.MinutesPlayed);
-            LoginPro.Session.TimePlayedText = "Played : " + Math.Round(timePlayed.TotalHours, 0) + " hours and " + timePlayed.Minutes + " minutes";
+            LoginPro.Session.TimePlayedText = "Gespeeld : " + Math.Round(timePlayed.TotalHours, 0) + " uur en " + timePlayed.Minutes + " minuten";
 
             // Update menu
             UpdateMenu();
