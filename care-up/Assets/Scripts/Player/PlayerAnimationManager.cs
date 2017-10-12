@@ -38,7 +38,6 @@ public class PlayerAnimationManager : MonoBehaviour {
         if (target)
         {
             cameraMode.SetCinematicMode(target);
-            Debug.Log("Trigger: " + name);
         }
     }
 

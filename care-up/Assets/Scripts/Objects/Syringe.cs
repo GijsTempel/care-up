@@ -131,6 +131,7 @@ public class Syringe : PickableObject {
                 {
                     if (inventory.LeftHandEmpty())
                     {
+                        controls.SelectedObject.GetComponent<PickableObject>().Reset();
                         PlayerAnimationManager.PlayAnimation("UseRight " + name + " " + "NeedleCup", 
                             controls.SelectedObject.transform);
                         actionManager.OnUseOnAction(name, "NeedleCup");
@@ -138,6 +139,7 @@ public class Syringe : PickableObject {
                     }
                     else if (inventory.RightHandEmpty())
                     {
+                        controls.SelectedObject.GetComponent<PickableObject>().Reset();
                         PlayerAnimationManager.PlayAnimation("UseLeft " + name + " " + "NeedleCup", 
                             controls.SelectedObject.transform);
                         actionManager.OnUseOnAction(name, "NeedleCup");
@@ -146,7 +148,9 @@ public class Syringe : PickableObject {
                     else return false;
                 }
             }
-            else if (name == "SyringeWithAbsorptionNeedle")
+
+            // venting
+            if (name == "SyringeWithAbsorptionNeedle")
             {
                 info = actionManager.CurrentUseOnInfo;
                 if (info[0] == "SyringeWithAbsorptionNeedle" && info[1] == "")
