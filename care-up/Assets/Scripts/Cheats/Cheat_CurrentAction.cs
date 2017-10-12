@@ -27,14 +27,21 @@ public class Cheat_CurrentAction : MonoBehaviour
 
         if (GameObject.Find("DevHint") != null)
         {
-            if (GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().practiceMode)
+            if (GameObject.Find("Preferences") != null)
             {
-                textObject = GameObject.Find("DevHint").transform.GetChild(0).GetComponent<Text>();
-                set = false;
+                if (GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().practiceMode)
+                {
+                    textObject = GameObject.Find("DevHint").transform.GetChild(0).GetComponent<Text>();
+                    set = false;
+                }
+                else
+                {
+                    GameObject.Find("DevHint").SetActive(false);
+                }
             }
             else
             {
-                GameObject.Find("DevHint").SetActive(false);
+                Debug.LogWarning("Game needs to be started from menu scene for CurrentAction hint to work correctly");
             }
         }
         
