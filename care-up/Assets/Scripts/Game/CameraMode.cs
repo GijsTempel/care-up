@@ -41,6 +41,8 @@ public class CameraMode : MonoBehaviour {
     private Quaternion cinematicTargetRot;
     private Transform cinematicControl;
 
+    private Quaternion camPosition;
+
     private Controls controls;
     private RigidbodyFirstPersonController playerScript;
     private HandsInventory inventory;
@@ -253,14 +255,16 @@ public class CameraMode : MonoBehaviour {
         }
         else if (mode == Mode.Cinematic)
         {
-            playerScript.mouseLook.SetMode(true);
+            playerScript.mouseLook.SetMode(true, Quaternion.identity);
             playerScript.tutorial_movementLock = true;
             playerScript.mouseLook.clampHorisontalRotation = true;
             playerScript.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+
+            camPosition = Camera.main.transform.localRotation;
         }
         else if (currentMode == Mode.Cinematic && mode == Mode.Free)
         {
-            playerScript.mouseLook.SetMode(false);
+            playerScript.mouseLook.SetMode(false, camPosition);
             if (GameObject.Find("GameLogic").GetComponent<TutorialManager>() != null)
             {
                 playerScript.tutorial_movementLock =

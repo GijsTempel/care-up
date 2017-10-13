@@ -163,12 +163,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
             return q;
         }
 
-        public void SetMode(bool value)
+        public void SetMode(bool value, Quaternion cam)
         {
             lookOnly = value;
             if (!value)
             {
-                m_CameraTargetRot = Quaternion.Euler(0f, 0f, 0f);
+                m_CameraTargetRot = cam; //Quaternion.Euler(0f, 0f, 0f);
             }
         }
 
