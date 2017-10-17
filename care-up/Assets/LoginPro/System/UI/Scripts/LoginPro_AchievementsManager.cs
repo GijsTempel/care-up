@@ -74,6 +74,8 @@ namespace LoginProAsset
         /// <param name="percent"></param>
         private void unlockAchievement(string name, int percent)
         {
+            GameObject.Find("Examples").transform.Find("ActiveScenes").gameObject.SetActive(true);
+            return; /*
             foreach (LoginPro_Achievement achievement in this.achievements)
             {
                 if (achievement.Name == name)
@@ -82,7 +84,7 @@ namespace LoginProAsset
                     achievement.PercentToUnlock = percent;
                     return;
                 }
-            }
+            } */
         }
     }
 }
