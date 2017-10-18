@@ -89,7 +89,7 @@ namespace LoginProAsset
         {
 			// Information to send to the server (encrypted with RSA)
 			string[] datas = new string[2]; // <- CAUTION TO THE SIZE OF THE ARRAY (It's the number of data you want to send)
-			datas[0] = Data1.text;
+			datas[0] = enteredSerial.text;
 	
 			Serial = enteredSerial.text;
             if (Guardian.ValidateKey(Serial, CheckKey, MyBaseKeys[CheckKey]))

@@ -41,7 +41,7 @@ increaseAttempts($id, $IP, 'Validation');
 $activation_completed = activateAccount($account['id'], $IP, $account['mail']);
 if($activation_completed)
 {
-	echo("Your account has been successfully activated. You can now log in.");
+	echo("Je account is succesvol geactiveerd. Je kunt nu inloggen.");
 	// Close connection to database properly
 	$_SESSION['databaseConnection'] = null;
 	// Ensure the end of the current script

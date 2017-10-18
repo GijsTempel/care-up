@@ -124,7 +124,7 @@ namespace LoginProAsset
         /// <param name="errorMessage"></param>
         public void Error(string errorMessage)
         {
-            errorMessage = errorMessage.Replace("ERROR: ", "Login failed: ");
+            errorMessage = errorMessage.Replace("ERROR: ", "Login mislukt: ");
 
             // Stop animation
             if (this.AnimationToStopOnResult != null)
@@ -177,7 +177,7 @@ namespace LoginProAsset
 
             // Show message on success
             if (this.MessageToShowOnResult != null)
-                this.MessageToShowOnResult.Show(string.Format("Welcome {0}!", LoginPro.Session.Username), 2);
+                this.MessageToShowOnResult.Show(string.Format("Welkom {0}!", LoginPro.Session.Username), 2);
 
             // Launch animation on success
             if (this.AnimationToPlayOnSuccess != null)

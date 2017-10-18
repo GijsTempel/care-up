@@ -28,9 +28,9 @@ $code = $_GET['code'];
 $id = getUsernameID($username);
 $IP = $_SERVER['REMOTE_ADDR'];
 $IPInformation = getIPInformation($id, $IP);
-if(is_null($IPInformation)) { end_script('IP Activation failed, this username is not linked to any account.'); }
-if($IPInformation['validated']!=0) { end_script('Your IP is already activated for this account. You can connect to your account.'); }
-if(strcmp($IPInformation['validation_code'],$code)) { end_script('Your code is incorrect.'); }
+if(is_null($IPInformation)) { end_script('IP Activatie mislukt, deze gebruikersnaam is niet gekoppeld aan een account'); }
+if($IPInformation['validated']!=0) { end_script('Dit IP adres is al geactiveerd. je kunt inloggen op je Care Up account.'); }
+if(strcmp($IPInformation['validation_code'],$code)) { end_script('Je code is niet juist.'); }
 
 //------------------------------------: CHECK IP BLOCKED :------------------------------------------------
 checkIPValidationAttempts($id, $IP);
@@ -40,7 +40,7 @@ increaseAttempts($id, $IP, 'IP Validation');
 $IPactivation_completed = activateIP($id, $IP);
 if($IPactivation_completed)
 {
-	echo("Your IP has been successfully activated. You can now log in.");
+	echo("Je IP adres is geachtiveerd. Je kunt nu inloggen met je Care Up account.");
 	// Close connection to database properly
 	$_SESSION['databaseConnection'] = null;
 	// Ensure the end of the current script
