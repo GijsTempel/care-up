@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ActionList points="39">
+	<action description="Use HandCleaner" audioHint=""
+		index="0" type="use" value="HandCleaner" />
+  <action description="Use WorkField" audioHint=""
+    index="1" type="use" value="WorkField" />
+
+  <action description="Examine PatientRecords" audioHint=""
+		index="2" type="examine" item="PatientRecords" expected="good" />
+	<action description="Examine medicine" audioHint=""
+		index="2" type="examine" item="Medicine" expected="good" />
+  
+  <action description="4.3: Vraag aan je collega om een dubbele controle" audioHint=""
+    index="3" type="talk" topic="DoubleCheck" />
+
+  <action description="5.A: Overgiet een gaasje met alcohol (Combineer alcohol en een gaasje door op de (R) knop te drukken)" audioHint="Injection/H4-2"
+		index="4" type="combine" left="Cloth" right="Alcohol" extra="stap51"></action>
+  <action description="5.B: Desinfecteer de rubberen dop van het medicijn. (combineer alcohol gaasje met medicijn door op de (R) knop te drukken) " audioHint="Injection/H5-3"
+		index="4" type="combine" left="DesinfectionCloth" right="Medicine" extra="stap52"></action>
+  <action description="5.C: Plaats opzuignaald op de spuit (Combineer spuit met opzuignaald door op de (R) knop te drukken)" audioHint="Injection/H6-3"
+		index="5" type="combine" left="Syringe" right="AbsorptionNeedle" extra="stap53"></action>
+  <action description="5.D: Verwijder de beschermhuls van de opzuignaald (Zorg voor een vrije hand en druk op de (R) knop om te scheiden.)" audioHint="Injection/H6-3"
+    index="6" type="combine" left="SyringeWithAbsorptionNeedleCap" right="" extra="stap54" />
+
+  <action description="6.A: Zuig de voorgeschreven hoeveelheid medicatie op in de spuit. (Combineer de spuit+opzuignaald met het medicijn door op de (R) knop te drukken)" audioHint="Injection/H7-2"
+		index="7" type="combine" left="SyringeWithAbsorptionNeedle" right="Medicine" extra="stap61"></action>
+  <action description="6.B: Ontlucht de spuit (Zorg ervoor dat je een vrije hand hebt en druk op de 'gebruik(Q of E)' knop van de juiste arm te klikken.)" audioHint="Injection/H8-2"
+		index="8" type="useOn" item="SyringeWithAbsorptionNeedle" target="" extra="stap62"></action>
+  <action description="6.C.1: Doe de beschermhuls van de opzuignaald weer op de naald. (Combineer de beschermhuls van de opzuignaald met de spuit door op de (R) knop te drukken.)" audioHint="Injection/H9-2"
+    index="9" type="combine" left="SyringeWithAbsorptionNeedle" right="SyringeAbsorptionCap" extra="stap631" />
+  <action description="6.C.2: Verwijder de opzuignaald (Zorg voor een vrije hand en druk op de (R) knop om te scheiden.)" audioHint="Injection/H9-2"
+		index="10" type="combine" left="SyringeWithAbsorptionNeedleCapped" right="" extra="stap63"></action>
+  <action description="6.C.3: Doe de naald in de naaldencontainer (Kijk naar naaldcontainer en druk de 'gebruik(Q of E)' in knop van de juiste arm.)" audioHint="Injection/H10-2"
+		index="11" type="useOn" item="AbsorptionNeedle" target="NeedleCup" extra="stap64"></action>
+
+  <action description="6.D: Plaats de injectienaald op de spuit. (Combineer de spuit met de injectienaald door op de (R) knop te drukken.)" audioHint="Injection/H11-2"
+		index="12" type="combine" left="Syringe" right="InjectionNeedle" extra="stap65"></action>
+
+  <action description="7.1: Vraag de cliënt de injectieplaats te ontbloten (Kijk naar de cliënt en druk op de linkermuisknop.)" audioHint="Injection/H12-2"
+		index="13" type="talk" topic="RollUpSleeves" extra="stap7"></action>
+
+  <action description="7.2 Start injecteren. (Kijk naar de cliënt en druk op de 'gebruik(Q of E)' knop van de juiste arm.)"	audioHint="Injection/H13-2"
+		index="14" type="useOn" item="SyringeWithInjectionNeedleCap" target="Patient" extra="stap8"></action>
+
+  <action description="8. Palpeer de injectieplaats en controleer of de injectieplaats schoon en droog is." audioHint="Injection/AS1-2"
+		index="15" type="sequenceStep" value="clean skin" extra="inj1"></action>
+  <action description="9. Neem de spuit in de injecterende hand en verwijder de naaldhuls." audioHint="Injection/AS1-2"
+    index="16" type="sequenceStep" value="take off cap" extra="inj2" />
+  <action description="10. Span de huid met de duim en wijsvinger van uw vrije hand." audioHint="Injection/AS2-2"
+		index="17" type="sequenceStep" value="Hold skin" extra="inj2"></action>
+  <action description="11. Steek de naald met een snelle beweging loodrecht in de spier." audioHint="Injection/AS3-2"
+		index="18" type="sequenceStep" value="Stick needle in arm" extra="inj3"></action>
+  <action description="12. Laat de huid los." audioHint="Injection/AS4-2"
+		index="19" type="sequenceStep" value="Release skin with left hand" extra="inj4"></action>
+  <action description="13. Fixeer de spuit en naald met de niet injecterende hand om onverwachte bewegingen op te vangen." audioHint="Injection/AS5-2"
+		index="20" type="sequenceStep" value="Secure the needle" extra="inj5"></action>
+  <action description="14. Trek de zuiger iets terug om na te gaan of er geen bloedvat is aangeprikt." audioHint="Injection/AS6-2"
+		index="21" type="sequenceStep" value="pull the compression part" extra="inj6"></action>
+  <action description="15.Spuit de vloeistof langzaam en regelmatig in" audioHint="Injection/AS7-2"
+		index="22" type="sequenceStep" value="Inject medicine slow and steady" extra="inj7"></action>
+  <action description="16.Trek de naald uit de huid (Houd een gaasje voor de opvang van een eventuele bloeddruppel gereed). " audioHint="Injection/AS8-2"
+		index="23" type="sequenceStep" value="pull needle out of skin" extra="inj8"></action>
+
+  <action description="17.1: Doe de beschermhuls van de opzuignaald weer op de naald. (Combineer de beschermhuls van de injectienaald met de spuit door op de (R) knop te drukken.)" audioHint="Injection/EAS1-2"
+    index="24" type="combine" left="SyringeWithInjectionNeedle" right="SyringeInjectionCap" extra="stap91"/>
+  <action description="17.2: Verwijder de naald van de spuit.(Zorg voor een vrije hand en druk op de (R) knop om te scheiden.)" audioHint="Injection/EAS1-2"
+		index="25" type="combine" left="SyringeWithInjectionNeedleCapped" right="" extra="stap9"></action>
+  <action description="17.3: Doe de naald in de naaldencontainer (Kijk naar naaldcontainer en druk de 'gebruik(Q of E)' in knop van de juiste arm.)" audioHint="Injection/EAS2-2"
+		index="26" type="useOn" item="InjectionNeedle" target="NeedleCup" extra="stap10"></action>
+  <action description="18: Ruim de materialen op. (Kijk naar de tafel met lege handen en druk op de linkermuisknop.)"  audioHint="Injection/EAS3-2"
+		index="27" type="use" value="WorkField" extra="stap11"></action>
+  <action description="19: Pas handhygiene toe. (Kijk naar de hygienepomp en druk op de linkermuisknop te drukken.)" audioHint="Injection/EAS5-2"
+		index="28" type="use" value="HandCleaner" extra="stap12"></action>
+  <action description="20: Noteer bevindingen. (Kijk naar het schrijfblok en druk op de linkermuisknop.)" audioHint="Injection/EAS4-2"
+		index="29" type="use" value="PaperAndPen" extra="stap13"></action>
+
+  <action description="Finish tutorial" audioHint=""
+		index="30" type="use" value="__tutorialEnd" />
+</ActionList>

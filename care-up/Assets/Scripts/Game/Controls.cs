@@ -1,0 +1,164 @@
+﻿using System;
+using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+
+/// <summary>
+/// Handles controls of the player
+/// </summary>
+public class Controls : MonoBehaviour {
+    
+    [Serializable]
+    public class KeyPreferences
+    {
+        // A, X
+        public InputKey mouseClickKey = new InputKey(null, new ControllerKey(KeyCode.Joystick1Button0), null, true);
+        // LeftTrigger
+        public InputKey LeftDropKey  = new InputKey(new KeyBoardKey(KeyCode.Q, KeyCode.LeftShift), null,
+                                                    new ControllerAxisKey("ControllerLeftTrigger"));
+        // right trigger
+        public InputKey RightDropKey = new InputKey(new KeyBoardKey(KeyCode.E, KeyCode.LeftShift), null,
+                                                    new ControllerAxisKey("ControllerRightTrigger"));
+        // X, square, left bumper
+        public InputKey LeftUseKey   = new InputKey(new KeyBoardKey(KeyCode.Q),
+                                                    new ControllerKey(KeyCode.Joystick1Button2, KeyCode.Joystick1Button4));
+        // B, circle, right bumper
+        public InputKey RightUseKey  = new InputKey(new KeyBoardKey(KeyCode.E),
+                                                    new ControllerKey(KeyCode.Joystick1Button1, KeyCode.Joystick1Button5));
+        // B, circle
+        public InputKey closeObjectView = new InputKey(new KeyBoardKey(KeyCode.Q),
+                                                    new ControllerKey(KeyCode.Joystick1Button1));
+        // X, square
+        public InputKey pickObjectView = new InputKey(new KeyBoardKey(KeyCode.E),
+                                                    new ControllerKey(KeyCode.Joystick1Button2));
+        // Y, triangle
+        public InputKey CombineKey   = new InputKey(new KeyBoardKey(KeyCode.R),
+                                                    new ControllerKey(KeyCode.Joystick1Button3));
+        // back, select
+        //public InputKey GetHintKey   = new InputKey(new KeyBoardKey(KeyCode.Space),
+        //                                            new ControllerKey(KeyCode.Joystick1Button6, KeyCode.Joystick1Button8));
+        public InputKey GetHintKey = new InputKey();
+
+        public bool mouseClickLocked = false;
+        public void SetAllLocked(bool value)
+        {
+            mouseClickLocked = value;
+            mouseClickKey.locked = value;
+            LeftDropKey.locked = value;
+            RightDropKey.locked = value;
+            LeftUseKey.locked = value;
+            RightUseKey.locked = value;
+            closeObjectView.locked = value;
+            pickObjectView.locked = value;
+            CombineKey.locked = value;
+            GetHintKey.locked = value;
+        }
+
+        private bool[] locks;
+        private bool toggleFlag = false;
+        public void ToggleLock()
+        {
+            if ( toggleFlag )
+            {
+                mouseClickLocked = locks[0];
+                mouseClickKey.locked = locks[1];
+                LeftDropKey.locked = locks[2];
+                RightDropKey.locked = locks[3];
+                LeftUseKey.locked = locks[4];
+                RightUseKey.locked = locks[5];
+                closeObjectView.locked = locks[6];
+                pickObjectView.locked = locks[7];
+                CombineKey.locked = locks[8];
+                GetHintKey.locked = locks[9];
+                locks = null;
+            }
+            else
+            {
+                locks = new bool[10];
+                locks[0] = mouseClickLocked;
+                locks[1] = mouseClickKey.locked;
+                locks[2] = LeftDropKey.locked;
+                locks[3] = RightDropKey.locked;
+                locks[4] = LeftUseKey.locked;
+                locks[5] = RightUseKey.locked;
+                locks[6] = closeObjectView.locked;
+                locks[7] = pickObjectView.locked;
+                locks[8] = CombineKey.locked;
+                locks[9] = GetHintKey.locked;
+                SetAllLocked(true);
+            }
+
+            toggleFlag = !toggleFlag;
+        }
+    };
+
+    public KeyPreferences keyPreferences = new KeyPreferences();
+    public float interactionDistance = 5.0f;
+
+    static public bool keyUsed = false;
+
+    private GameObject selectedObject;
+    private bool canInteract;
+
+    public GameObject SelectedObject
+    {
+        get { return selectedObject; }
+    }
+
+    public bool CanInteract
+    {
+        get { return canInteract; }
+    }
+
+    public void ResetObject()
+    {
+        selectedObject = null;
+    }
+   
+    /// <summary>
+    /// Sets selectedObject to an object player is aimed at atm.
+    /// Sets canInteract based of distance to aimed object.
+    /// </summary>
+	void LateUpdate () {
+        // raycast only in this script
+        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit))
+        {
+            selectedObject = hit.transform.gameObject;
+            //canInteract = (hit.distance <= interactionDistance) ? true : false;
+            canInteract = Vector2.Distance(
+                new Vector2(Camera.main.transform.position.x, Camera.main.transform.position.z),
+                new Vector2(hit.transform.position.x, hit.transform.position.z)) 
+                <= interactionDistance ? true : false;
+        }
+        else
+        {
+            ResetObject();
+        }
+
+        keyUsed = false;
+    }
+
+    /// <summary>
+    /// Checks if "LeftMouse" clicked, including alternatives for gamepads.
+    /// </summary>
+    /// <returns>True if clicked.</returns>
+    public bool MouseClicked()
+    {
+        if (keyPreferences.mouseClickLocked)
+        {
+            return false;
+        }
+
+        return Input.GetMouseButtonDown(0) || keyPreferences.mouseClickKey.Pressed();
+    }
+    /// <summary>
+    /// Checks if "RightMouse" clicked, including alternatives for gamepads.
+    /// </summary>
+    /// <returns>True if clicked.</returns>
+    public bool RightMouseClicked()
+    {
+        return Input.GetMouseButtonDown(1) || keyPreferences.closeObjectView.Pressed();
+    }
+}
