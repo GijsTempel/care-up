@@ -220,6 +220,15 @@ public class CameraMode : MonoBehaviour {
             GameObject buttonsParent = Camera.main.transform.Find("UI").Find("ObjectViewButtons").gameObject;
             buttonsParent.transform.GetChild(0).GetComponent<Button>().interactable =
                 (selectedObject.GetComponent<PickableObject>() != null);
+
+            if (GetComponent<TutorialManager>() != null)
+            {
+                if (controls.keyPreferences.pickObjectView.locked)
+                {
+                    buttonsParent.transform.GetChild(0).GetComponent<Button>().interactable = false;
+                }
+            }
+
             buttonsParent.SetActive(true);
         }
         else if (currentMode == Mode.ObjectPreview && mode == Mode.Free)
