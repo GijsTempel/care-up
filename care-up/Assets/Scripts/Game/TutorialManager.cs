@@ -112,7 +112,7 @@ public class TutorialManager : MonoBehaviour {
     private WorkField workField;
     private ExaminableObject patientRecords;
     private GameObject syringe;
-    private GameObject needle;
+    //private GameObject needle;
     private ExaminableObject medicine;
     private PickableObject alcohol;
     private PickableObject cloth;
@@ -157,7 +157,7 @@ public class TutorialManager : MonoBehaviour {
         Transform interactables = GameObject.Find("Interactable Objects").transform;
         medicine = interactables.Find("Medicine").GetComponent<ExaminableObject>();
         syringe = interactables.Find("Syringe").gameObject;
-        needle = interactables.Find("AbsorptionNeedle").gameObject;
+        //needle = interactables.Find("AbsorptionNeedle").gameObject;
         alcohol = interactables.Find("Alcohol").GetComponent<PickableObject>();
         cloth = interactables.Find("Cloth").GetComponent<PickableObject>();
         paperNPen = interactables.Find("PaperAndPen").GetComponent<UsableObject>();
