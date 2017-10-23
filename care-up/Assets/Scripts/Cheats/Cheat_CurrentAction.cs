@@ -29,7 +29,8 @@ public class Cheat_CurrentAction : MonoBehaviour
         {
             if (GameObject.Find("Preferences") != null)
             {
-                if (GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().practiceMode)
+                if (GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().practiceMode &&
+                    actionManager.GetComponent<TutorialManager>() == null)
                 {
                     textObject = GameObject.Find("DevHint").transform.GetChild(0).GetComponent<Text>();
                     set = false;
