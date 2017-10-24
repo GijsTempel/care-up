@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimationSequenceState : StateMachineBehaviour {
+public class AnimationSequenceState : StateMachineBehaviourM {
 
     public List<int> keyFrames = new List<int>();
 
@@ -13,6 +13,9 @@ public class AnimationSequenceState : StateMachineBehaviour {
 
 	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
+
+        base.OnStateEnter(animator, stateInfo, layerIndex);
+
         keyFrame = 0;
         frame = 0f;
         prevFrame = 0f;
@@ -51,6 +54,8 @@ public class AnimationSequenceState : StateMachineBehaviour {
         cameraMode.ToggleCameraMode(CameraMode.Mode.Cinematic);
         cameraMode.animationEnded = true;
         cameraMode.cinematicToggle = false;
+
+        base.OnStateExit(animator, stateInfo, layerIndex);
     }
 
 	// OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here

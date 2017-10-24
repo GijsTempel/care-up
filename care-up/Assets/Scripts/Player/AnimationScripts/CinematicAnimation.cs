@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CinematicAnimation : StateMachineBehaviour {
+public class CinematicAnimation : StateMachineBehaviourM {
     
     public bool audio = false;
     public string audioFileName;
@@ -18,6 +18,8 @@ public class CinematicAnimation : StateMachineBehaviour {
 	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
 	
+        base.OnStateEnter(animator, stateInfo, layerIndex);
+
         if (cameraMode == null)
         {
             cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
@@ -58,7 +60,9 @@ public class CinematicAnimation : StateMachineBehaviour {
 	// OnStateExit is called when a transition ends and the state machine finishes evaluating this state
 	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         cameraMode.animationEnded = true;
-	}
+
+        base.OnStateExit(animator, stateInfo, layerIndex);
+    }
 
 	// OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here
 	//override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
