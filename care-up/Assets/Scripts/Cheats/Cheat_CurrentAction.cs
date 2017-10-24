@@ -43,6 +43,8 @@ public class Cheat_CurrentAction : MonoBehaviour
             else
             {
                 Debug.LogWarning("Game needs to be started from menu scene for CurrentAction hint to work correctly");
+                textObject = GameObject.Find("DevHint").transform.GetChild(0).GetComponent<Text>();
+                set = false;
             }
         }
         
