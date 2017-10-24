@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimationCombine : StateMachineBehaviourM {
+public class AnimationCombine : StateMachineBehaviour {
 
     public int combineFrame;
 
@@ -14,8 +14,6 @@ public class AnimationCombine : StateMachineBehaviourM {
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-
-        base.OnStateEnter(animator, stateInfo, layerIndex);
 
         inv = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
         inv.ToggleControls(true);
@@ -52,8 +50,6 @@ public class AnimationCombine : StateMachineBehaviourM {
 
         inv.ToggleControls(false);
         mode.animating = false;
-
-        base.OnStateExit(animator, stateInfo, layerIndex);
     }
 
 	// OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here
