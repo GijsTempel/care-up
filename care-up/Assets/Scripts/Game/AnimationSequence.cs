@@ -213,8 +213,7 @@ public class AnimationSequence  {
             if (dialogueObject == null)
             {
                 dialogueObject = Object.Instantiate(Resources.Load<GameObject>("Prefabs/SelectionDialogue"),
-                        Camera.main.transform.position + Camera.main.transform.forward * 3.0f,
-                        Camera.main.transform.rotation) as GameObject;
+                        GameObject.Find("OverlayCamera").transform) as GameObject;
                 dialogueObject.name = "SelectionDialogue";
             }
 
