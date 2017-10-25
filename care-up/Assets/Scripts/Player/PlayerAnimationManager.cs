@@ -34,7 +34,11 @@ public class PlayerAnimationManager : MonoBehaviour {
     public static void PlayAnimation(string name, Transform target = null)
     {
         animationController.SetTrigger(name);
-        animationController.SetTrigger("S " + name);
+
+        if (name != "LeftPick" && name != "RightPick")
+        {
+            animationController.SetTrigger("S " + name);
+        }
         
         if (target)
         {
