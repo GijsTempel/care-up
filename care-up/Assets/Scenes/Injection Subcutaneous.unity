@@ -399,6 +399,14 @@ Prefab:
       propertyPath: greetDialogueTrigger
       value: 
       objectReference: {fileID: 944383286}
+    - target: {fileID: 4634585598884878, guid: cdb6524090b2ff049a29ca7c4b7b0037, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0.359
+      objectReference: {fileID: 0}
+    - target: {fileID: 4634585598884878, guid: cdb6524090b2ff049a29ca7c4b7b0037, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0.586
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cdb6524090b2ff049a29ca7c4b7b0037, type: 2}
   m_IsPrefabParent: 0
@@ -2931,7 +2939,9 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -81.79301
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 65515192852795486, guid: 5de1d2068167189489bd6419129786f6, type: 2}
+    - {fileID: 114394242610780462, guid: 5de1d2068167189489bd6419129786f6, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 5de1d2068167189489bd6419129786f6, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &926627613 stripped
@@ -2942,18 +2952,28 @@ Transform:
 GameObject:
   m_PrefabParentObject: {fileID: 166264, guid: 5de1d2068167189489bd6419129786f6, type: 2}
   m_PrefabInternal: {fileID: 926627612}
---- !u!65 &926627615
-BoxCollider:
+--- !u!114 &926627615
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 926627614}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.00032007726, y: 0.00007655316, z: 0.0004664031}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6095384fe7173243b9fb25bc8b25d06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: "Cli\xEBntgegevens"
+  muplipleMesh: 0
+  descriptionOffset: {x: 0, y: 0, z: 0}
+  tutorial_picked: 0
+  tutorial_closed: 0
+  examineRotation: {x: 0, y: 180, z: 0}
+  audioExamine: 0
+  viewSettings:
+    distanceFromCamera: 0.4
+    rotationSensetivity: 90
+  state: good
 --- !u!1001 &944383284
 Prefab:
   m_ObjectHideFlags: 0
@@ -5760,7 +5780,7 @@ Transform:
   m_LocalScale: {x: 16.52681, y: 0.049999997, z: 11.01042}
   m_Children: []
   m_Father: {fileID: 2063497735}
-  m_RootOrder: 18
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &1688709790
 MeshRenderer:
@@ -7473,6 +7493,7 @@ Transform:
   - {fileID: 1597290415}
   - {fileID: 1123773784}
   - {fileID: 1361767324}
+  - {fileID: 1688709789}
   - {fileID: 625544829}
   - {fileID: 1420726149}
   - {fileID: 1286814349}
@@ -7486,7 +7507,6 @@ Transform:
   - {fileID: 1284857513}
   - {fileID: 599444172}
   - {fileID: 190699713}
-  - {fileID: 1688709789}
   - {fileID: 156740706}
   - {fileID: 1489432773}
   - {fileID: 1496198189}
