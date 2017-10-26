@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ActionList>
-	<action description="1: Pas handhygiene toe. (Kijk naar de hygienepomp en druk op de linkermuisknop te drukken.)" audioHint="Injection/H1-2"
+	<action description="1: Pas handhygiëne toe. (Kijk naar de hygiënepomp en druk op de linkermuisknop te drukken.)" audioHint="Injection/H1-2"
 		index="0" type="use" value="HandCleaner" extra="Pas handhygiëne toe. Handhygiëne is het allerbelangrijkste als het gaat om voorkomen van besmetting met ziektekiemen. Dit betekent je handen reinigen op de juiste manier en op de juiste momenten. Begin een handeling altijd met handhygiëne."></action>
 	<action description="2: Maak een schoon werkveld. (Kijk naar de tafel en druk op de linkermuisknop.)" audioHint="Injection/H2-2"
 		index="1" type="use" value="WorkField" extra="Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekimen te voorkomen."></action>
@@ -8,12 +8,10 @@
 	<action description="3.1: Controleer cliëntgegevens. (Kijk naar de cliëntgegevens en druk op de linkermuisknop)." audioHint="Injection/H3-2"
 		index="2" type="examine" item="PatientRecords" expected="good" extra="Controleer cliëntgegevens Het is belangrijk dat je de juiste persoon voor je hebt. Controleer daarom altijd de cliëntgegevens voordat je begint met een handeling."></action>
 	<action description="3.2: Controleer het medicijn. (Kijk naar het medicijn en druk op de linkermuisknop.)" audioHint="Injection/H3-2"
-		index="2" type="examine" item="Medicine" expected="good" extra="Controleer het medicijn. Controleer altijd het medicijn op vervaldatum, toedienwijze, kleur en substantie om er zeker van te zijn dat je het juiste medicijn hebt. Vergelijk de infromatie van het medicijn met die van de toedienlijst.
-    ">
+		index="2" type="examine" item="Medicine" expected="good" extra="Controleer het medicijn. Controleer altijd het medicijn op vervaldatum, toedienwijze, kleur en substantie om er zeker van te zijn dat je het juiste medicijn hebt. Vergelijk de infromatie van het medicijn met die van de toedienlijst.">
   </action>
   <action description="4.1: Controleer de toedienlijst. (Kijk naar de toedienlijst en druk op de linkermuisknop.)" audioHint="InjectionSubcutaneous/Step 5"
-		index="2" type="examine" item="PrescriptionForm" expected="good" extra="Controleer het medicijn. Controleer altijd het medicijn op vervaldatum, toedienwijze, kleur en substantie om er zeker van te zijn dat je het juiste medicijn hebt. Vergelijk de infromatie van het medicijn met die van de toedienlijst.
- "></action>
+		index="2" type="examine" item="PrescriptionForm" expected="good" extra="Controleer de toedienlijst. Controleer de toedienlijst op soort, dosering en toedientijdstip. Vergelijk de informatie van de toedienlijst met die van het medicijn."></action>
 
   <action description="4.2: Vraag aan je collega om een dubbele controle" audioHint=""
      index="3" type="talk" topic="DoubleCheck" extra="Voer dubbele controle uit. Het verkeerd toedienen van medicijnen brengt risico’s met zich mee. Het risico op blijvend letsel bij verkeerde dosering of toediening verschilt, afhankelijk van het medicijn. Ook is de ene toedieningsweg risicovoller dan een andere. Dubbele controle van de medicatie is belangrijk voor de veiligheid, met name bij risicovolle medicatie. Laat ook je berekeningen die je hebt gemaakt checken."/>
@@ -45,7 +43,7 @@
 		index="14" type="useOn" item="SyringeWithInjectionNeedleCap" target="Patient" extra="Start met het toedienen van de injectie. Alles is klaar voor gebruik en je kunt dus starten met injecteren."></action>
 
 	<action description="8. Palpeer de injectieplaats en controleer of de injectieplaats schoon en droog is." audioHint="Injection/AS1-2"
-		index="15" type="sequenceStep" value="clean skin" extra="inj1"></action>
+		index="15" type="sequenceStep" value="clean skin" extra="Controleer of de injectieplaats schoon en droog is om besmetting van ziektekiemen te voorkomen."></action>
   <action description="9. Neem de spuit in de injecterende hand en verwijder de naaldhuls." audioHint="Injection/AS1-2"
     index="16" type="sequenceStep" value="take off cap" extra="De beschermdop zit nog op de naald. Deze dien je te verwijderen om gebruik te maken van de spuit. Concentreer je tijdens het verwijderen van de dop om prikincidenten te voorkomen."></action>
 	<action description="10. Span de huid met de duim en wijsvinger van uw vrije hand." audioHint="Injection/AS2-2"

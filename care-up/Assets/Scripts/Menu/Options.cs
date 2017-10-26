@@ -54,10 +54,6 @@ public class Options : MonoBehaviour {
     public void OnVolumeChange(float value)
     {
         AudioListener.volume = value;
-        if (prefsManager != null)
-        {
-            prefsManager.Volume = value;
-        }
     }
 
     public void OnBackButton()
