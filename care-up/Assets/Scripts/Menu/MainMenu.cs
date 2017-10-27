@@ -76,7 +76,7 @@ public class MainMenu : MonoBehaviour {
         canvas.transform.Find("MainMenu").gameObject.SetActive(false);
         canvas.transform.Find("Logo").gameObject.SetActive(false);
         canvas.transform.Find("OptionsBtn").gameObject.SetActive(false);
-        GameObject.Find("Opties").GetComponent<Canvas>().enabled = true;
+        canvas.transform.Find("Opties").gameObject.SetActive(true);
     }
 
     public void OnOptionsBackButtonClick()
@@ -86,7 +86,7 @@ public class MainMenu : MonoBehaviour {
         canvas.transform.Find("MainMenu").gameObject.SetActive(true);
         canvas.transform.Find("Logo").gameObject.SetActive(true);
         canvas.transform.Find("OptionsBtn").gameObject.SetActive(true);
-        GameObject.Find("Opties").GetComponent<Canvas>().enabled = false;
+        canvas.transform.Find("Opties").gameObject.SetActive(false);
     }
 
     public void OnControlsButtonClick()
