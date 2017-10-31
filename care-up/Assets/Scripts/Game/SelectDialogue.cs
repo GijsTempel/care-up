@@ -3,7 +3,6 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
-using TMPro;
 
 /// <summary>
 /// Instance of dialogue with up to 4 options.
@@ -140,7 +139,7 @@ public class SelectDialogue : MonoBehaviour {
         {
             top.gameObject.SetActive(true);
             options[0].side = OptionSide.Top;
-            top.transform.GetChild(0).GetComponent<Text>().text  = options[0].text;
+            top.transform.GetChild(0).GetComponent<Text>().text = options[0].text;
         }
 
         if (options.Count > 1)
