@@ -53,6 +53,7 @@ public class HandsInventory : MonoBehaviour {
     private CameraMode cameraMode;
 
     private ActionManager actionManager;
+    private PlayerPrefsManager prefsManager;
 
     private TutorialManager tutorial;
 
@@ -84,6 +85,11 @@ public class HandsInventory : MonoBehaviour {
         if (cameraMode == null) Debug.LogError("No camera mode found");
 
         tutorial = GetComponent<TutorialManager>();
+
+        if (GameObject.Find("Preferences"))
+        {
+            prefsManager = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
+        }
 
         foreach (GameObject obj in GameObject.FindGameObjectsWithTag("playerBone"))
         {
@@ -129,10 +135,17 @@ public class HandsInventory : MonoBehaviour {
                     {
                         leftHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
                         tutorial_droppedLeft = true;
-                        if (!leftHandObject.Drop() && dropPenalty)
+                        if (!leftHandObject.Drop())
                         {
-                            Narrator.PlaySound("WrongAction");
-                            actionManager.Points--;
+                            if (!prefsManager.practiceMode)
+                            {
+                                actionManager.OnGameOver();
+                            }
+                            else if (dropPenalty)
+                            {
+                                Narrator.PlaySound("WrongAction");
+                                actionManager.Points--;
+                            }
                         }
                         leftHandObject = null;
                         leftHold = false;
@@ -152,10 +165,17 @@ public class HandsInventory : MonoBehaviour {
                     {
                         rightHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
                         tutorial_droppedRight = true;
-                        if (!rightHandObject.Drop() && dropPenalty)
+                        if (!rightHandObject.Drop())
                         {
-                            Narrator.PlaySound("WrongAction");
-                            actionManager.Points--;
+                            if (!prefsManager.practiceMode)
+                            {
+                                actionManager.OnGameOver();
+                            }
+                            else if (dropPenalty)
+                            {
+                                Narrator.PlaySound("WrongAction");
+                                actionManager.Points--;
+                            }
                         }
                         rightHandObject = null;
                         rightHold = false;
