@@ -9,7 +9,6 @@ public class GamepadSwitch : MonoBehaviour {
     
     public static bool HandleUpdate(Selectable first)
     {
-        Debug.Log(Input.GetAxisRaw("Vertical"));
         if (!gamepad && (Input.GetAxisRaw("Vertical") != 0.0f))
         {
             gamepad = true;
