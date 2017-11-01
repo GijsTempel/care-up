@@ -9,8 +9,8 @@ public class GamepadSwitch : MonoBehaviour {
     
     public static bool HandleUpdate(Selectable first)
     {
-        if (!gamepad && (Input.GetAxisRaw("Vertical") != 0.0f 
-            || Input.GetAxisRaw("Horizontal") != 0.0f) ) // test fix
+        Debug.Log(Input.GetAxisRaw("Vertical"));
+        if (!gamepad && (Input.GetAxisRaw("Vertical") != 0.0f))
         {
             gamepad = true;
             Cursor.lockState = CursorLockMode.Locked;
