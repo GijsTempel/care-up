@@ -34,4 +34,50 @@ public class InsulinPen : PickableObject {
         }
     }
 
+    public override bool Use(bool hand)
+    {
+        string[] info = actionManager.CurrentUseOnInfo;
+        if (controls.SelectedObject != null && controls.CanInteract)
+        {
+            if (info[0] == "InsulinPen" && info[1] == "")
+            {
+                if (inventory.LeftHandEmpty())
+                {
+                    PlayerAnimationManager.PlayAnimation("UseRight " + name);
+                    actionManager.OnUseOnAction("InsulinPen", "");
+                    return true; // fix for venting 
+                }
+                else if (inventory.RightHandEmpty())
+                {
+                    PlayerAnimationManager.PlayAnimation("UseLeft " + name);
+                    actionManager.OnUseOnAction("InsulinPen", "");
+                    return true; // fix for venting 
+                }
+                else return false;
+            }
+        }
+        else
+        {
+            if (info[0] == "InsulinPen" && info[1] == "")
+            {
+                if (inventory.LeftHandEmpty())
+                {
+                    PlayerAnimationManager.PlayAnimation("UseRight " + name);
+                    actionManager.OnUseOnAction("InsulinPen", "");
+                    return true; // fix for venting 
+                }
+                else if (inventory.RightHandEmpty())
+                {
+                    PlayerAnimationManager.PlayAnimation("UseLeft " + name);
+                    actionManager.OnUseOnAction("InsulinPen", "");
+                    return true; // fix for venting 
+                }
+                else return false;
+            }
+        }
+
+        actionManager.OnUseOnAction(name, controls.SelectedObject != null && controls.CanInteract ? controls.SelectedObject.name : "");
+
+        return (info[0] == name && controls.SelectedObject != null && info[1] == controls.SelectedObject.name);
+    }
 }
