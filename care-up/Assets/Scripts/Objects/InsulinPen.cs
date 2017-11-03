@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class InsulinPen : PickableObject {
 
@@ -37,43 +38,64 @@ public class InsulinPen : PickableObject {
     public override bool Use(bool hand)
     {
         string[] info = actionManager.CurrentUseOnInfo;
+
         if (controls.SelectedObject != null && controls.CanInteract)
         {
-            if (info[0] == "InsulinPen" && info[1] == "")
+            if (name == "InsulinPenWithNeedle"
+                && controls.SelectedObject.GetComponent<PersonObjectPart>() != null
+                && controls.SelectedObject.GetComponent<PersonObjectPart>().Person.name == "Patient")
             {
-                if (inventory.LeftHandEmpty())
+                if (info[0] == name && info[1] == "Patient")
                 {
-                    PlayerAnimationManager.PlayAnimation("UseRight " + name);
-                    actionManager.OnUseOnAction("InsulinPen", "");
-                    return true; // fix for venting 
+                    actionManager.OnUseOnAction(name, "Patient");
+                    if (SceneManager.GetActiveScene().name == "Insulin Injection" )
+                    {
+                        Transform target = controls.SelectedObject.GetComponent<PersonObjectPart>().Person;
+                        target.GetComponent<InteractableObject>().Reset();
+                        controls.ResetObject();
+                        PlayerAnimationManager.PlayAnimationSequence("InsulinInjection", target);
+                    }
+
+                    return true;
                 }
-                else if (inventory.RightHandEmpty())
-                {
-                    PlayerAnimationManager.PlayAnimation("UseLeft " + name);
-                    actionManager.OnUseOnAction("InsulinPen", "");
-                    return true; // fix for venting 
-                }
-                else return false;
             }
         }
-        else
+
+        if (info[0] == "InsulinPenWithNeedle" && info[1] == "")
         {
-            if (info[0] == "InsulinPen" && info[1] == "")
+            if (inventory.LeftHandEmpty())
             {
-                if (inventory.LeftHandEmpty())
-                {
-                    PlayerAnimationManager.PlayAnimation("UseRight " + name);
-                    actionManager.OnUseOnAction("InsulinPen", "");
-                    return true; // fix for venting 
-                }
-                else if (inventory.RightHandEmpty())
-                {
-                    PlayerAnimationManager.PlayAnimation("UseLeft " + name);
-                    actionManager.OnUseOnAction("InsulinPen", "");
-                    return true; // fix for venting 
-                }
-                else return false;
+                PlayerAnimationManager.PlayAnimation("UseRight " + name);
+                actionManager.OnUseOnAction(name, "");
+                name = "VentedInsulinPenWithNeedle";
+                return true;
             }
+            else if (inventory.RightHandEmpty())
+            {
+                PlayerAnimationManager.PlayAnimation("UseLeft " + name);
+                actionManager.OnUseOnAction(name, "");
+                name = "VentedInsulinPenWithNeedle";
+                return true;
+            }
+            else return false;
+        }
+        else if (info[0] == "VentedInsulinPenWithNeedle" && info[1] == "")
+        {
+            if (inventory.LeftHandEmpty())
+            {
+                PlayerAnimationManager.PlayAnimation("UseRight " + name);
+                actionManager.OnUseOnAction(name, "");
+                name = "InsulinPenWithNeedle";
+                return true;
+            }
+            else if (inventory.RightHandEmpty())
+            {
+                PlayerAnimationManager.PlayAnimation("UseLeft " + name);
+                actionManager.OnUseOnAction(name, "");
+                name = "InsulinPenWithNeedle";
+                return true;
+            }
+            else return false;
         }
 
         actionManager.OnUseOnAction(name, controls.SelectedObject != null && controls.CanInteract ? controls.SelectedObject.name : "");
