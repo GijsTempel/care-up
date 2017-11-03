@@ -26,7 +26,7 @@ public class InsulinPen : PickableObject {
             button.localPosition = new Vector3(
                 button.localPosition.x,
                 button.localPosition.y,
-                -0.002f * controlBone.localPosition.y);
+                -0.0004f * controlBone.localPosition.y);
 
             button.localRotation = Quaternion.Euler(
                 button.localRotation.eulerAngles.x,
