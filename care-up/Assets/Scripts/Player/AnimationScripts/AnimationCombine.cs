@@ -26,7 +26,7 @@ public class AnimationCombine : StateMachineBehaviour {
 
         if (combineFrame == 0)
         {
-            GameObject.Find("GameLogic").GetComponent<HandsInventory>().ExecuteDelayedCombination();
+            inv.ExecuteDelayedCombination();
         }
 	}
 
@@ -36,7 +36,7 @@ public class AnimationCombine : StateMachineBehaviour {
         {
             if (PlayerAnimationManager.CompareFrames(frame, prevFrame, combineFrame))
             {
-                GameObject.Find("GameLogic").GetComponent<HandsInventory>().ExecuteDelayedCombination();
+                inv.ExecuteDelayedCombination();
             }
 
             prevFrame = frame;
