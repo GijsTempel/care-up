@@ -93,6 +93,9 @@ public class PersonObject : InteractableObject {
                 case "ComfortablePosition":
                     inhaling = true;
                     break;
+                case "ShowBellyForInsulin":
+                    GetComponent<Animator>().SetTrigger("ShowBellyForInsulin");
+                    break;
                 default:
                     break;
             }
