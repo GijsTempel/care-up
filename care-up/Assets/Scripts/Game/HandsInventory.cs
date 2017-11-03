@@ -391,12 +391,10 @@ public class HandsInventory : MonoBehaviour {
             Quaternion leftSavedRot = Quaternion.identity;
             leftHandObject.GetSavesLocation(out leftSavedPos, out leftSavedRot);
             
-            Vector3 plungerPosition = new Vector3();
-            bool updatePlunger = false;
-            if (leftHandObject.GetComponent<Syringe>() != null)
+            Vector3 saveInfo = new Vector3();
+            if (leftHandObject.GetComponent<PickableObjectWithInfo>() != null)
             {
-                plungerPosition = leftHandObject.GetComponent<Syringe>().PlungerPosition;
-                updatePlunger = leftHandObject.GetComponent<Syringe>().updatePlunger;
+                leftHandObject.GetComponent<PickableObjectWithInfo>().SaveInfo(ref saveInfo, ref saveInfo);
             }
 
             Destroy(leftHandObject.gameObject);
@@ -414,10 +412,9 @@ public class HandsInventory : MonoBehaviour {
                 leftHandObject.SavePosition(leftSavedPos, leftSavedRot);
             }
 
-            if (leftHandObject.GetComponent<Syringe>() != null)
+            if (leftHandObject.GetComponent<PickableObjectWithInfo>() != null)
             {
-                leftHandObject.GetComponent<Syringe>().PlungerPosition = plungerPosition;
-                leftHandObject.GetComponent<Syringe>().updatePlunger = updatePlunger;
+                leftHandObject.GetComponent<PickableObjectWithInfo>().LoadInfo(saveInfo, saveInfo);
             }
         }
         else
@@ -426,12 +423,10 @@ public class HandsInventory : MonoBehaviour {
             Quaternion rightSavedRot = Quaternion.identity;
             rightHandObject.GetSavesLocation(out rightSavedPos, out rightSavedRot);
 
-            Vector3 plungerPosition = new Vector3();
-            bool updatePlunger = false;
-            if (rightHandObject.GetComponent<Syringe>() != null)
+            Vector3 saveInfo = new Vector3();
+            if (rightHandObject.GetComponent<PickableObjectWithInfo>() != null)
             {
-                plungerPosition = rightHandObject.GetComponent<Syringe>().PlungerPosition;
-                updatePlunger = rightHandObject.GetComponent<Syringe>().updatePlunger;
+                rightHandObject.GetComponent<PickableObjectWithInfo>().SaveInfo(ref saveInfo, ref saveInfo);
             }
 
             Destroy(rightHandObject.gameObject);
@@ -449,10 +444,9 @@ public class HandsInventory : MonoBehaviour {
                 rightHandObject.SavePosition(rightSavedPos, rightSavedRot);
             }
 
-            if (rightHandObject.GetComponent<Syringe>() != null)
+            if (rightHandObject.GetComponent<PickableObjectWithInfo>() != null)
             {
-                rightHandObject.GetComponent<Syringe>().PlungerPosition = plungerPosition;
-                rightHandObject.GetComponent<Syringe>().updatePlunger = updatePlunger;
+                rightHandObject.GetComponent<PickableObjectWithInfo>().LoadInfo(saveInfo, saveInfo);
             }
         }
 
@@ -713,18 +707,16 @@ public class HandsInventory : MonoBehaviour {
                 rightHandObject.GetSavesLocation(out rightSavedPos, out rightSavedRot);
             }
 
-            Vector3 plungerPosition = new Vector3();
-            bool updatePlunger = false;
+            Vector3 saveInfo = new Vector3();
 
             // object changed
             if (leftName != leftCombineResult)
             {
                 if (leftHandObject != null)
                 {
-                    if (leftHandObject.GetComponent<Syringe>() != null)
+                    if (leftHandObject.GetComponent<PickableObjectWithInfo>() != null)
                     {
-                        plungerPosition = leftHandObject.GetComponent<Syringe>().PlungerPosition;
-                        updatePlunger = leftHandObject.GetComponent<Syringe>().updatePlunger;
+                        leftHandObject.GetComponent<PickableObjectWithInfo>().SaveInfo(ref saveInfo, ref saveInfo);
                     }
 
                     Destroy(leftHandObject.gameObject);
@@ -751,10 +743,9 @@ public class HandsInventory : MonoBehaviour {
                         leftHandObject.SavePosition(rightSavedPos + new Vector3(0, 0, -3f * offset), rightSavedRot);
                     }
 
-                    if (leftHandObject.GetComponent<Syringe>() != null)
+                    if (leftHandObject.GetComponent<PickableObjectWithInfo>() != null)
                     {
-                        leftHandObject.GetComponent<Syringe>().PlungerPosition = plungerPosition;
-                        leftHandObject.GetComponent<Syringe>().updatePlunger = updatePlunger;
+                        leftHandObject.GetComponent<PickableObjectWithInfo>().LoadInfo(saveInfo, saveInfo);
                     }
                 }
                 else
@@ -768,10 +759,9 @@ public class HandsInventory : MonoBehaviour {
             {
                 if (rightHandObject != null)
                 {
-                    if (rightHandObject.GetComponent<Syringe>() != null)
+                    if (rightHandObject.GetComponent<PickableObjectWithInfo>() != null)
                     {
-                        plungerPosition = rightHandObject.GetComponent<Syringe>().PlungerPosition;
-                        updatePlunger = rightHandObject.GetComponent<Syringe>().updatePlunger;
+                        rightHandObject.GetComponent<PickableObjectWithInfo>().SaveInfo(ref saveInfo, ref saveInfo);
                     }
                     Destroy(rightHandObject.gameObject);
                     rightHandObject = null;
@@ -797,10 +787,9 @@ public class HandsInventory : MonoBehaviour {
                         rightHandObject.SavePosition(leftSavedPos + new Vector3(0, 0, -3f * offset), leftSavedRot);
                     }
 
-                    if (rightHandObject.GetComponent<Syringe>() != null)
+                    if (rightHandObject.GetComponent<PickableObjectWithInfo>() != null)
                     {
-                        rightHandObject.GetComponent<Syringe>().PlungerPosition = plungerPosition;
-                        rightHandObject.GetComponent<Syringe>().updatePlunger = updatePlunger;
+                        rightHandObject.GetComponent<PickableObjectWithInfo>().LoadInfo(saveInfo, saveInfo);
                     }
                 }
                 else

@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class InsulinPen : PickableObject {
+public class InsulinPen : PickableObjectWithInfo {
 
     public bool animateButton = false;
 
@@ -101,5 +102,28 @@ public class InsulinPen : PickableObject {
         actionManager.OnUseOnAction(name, controls.SelectedObject != null && controls.CanInteract ? controls.SelectedObject.name : "");
 
         return (info[0] == name && controls.SelectedObject != null && info[1] == controls.SelectedObject.name);
+    }
+
+    public override void SaveInfo(ref Vector3 left, ref Vector3 right)
+    {
+        left = new Vector3(
+            (animateButton ? 1.0f : 0.0f),
+            button.localRotation.eulerAngles.z / (-14.5f),
+            0.0f);
+    }
+
+    public override void LoadInfo(Vector3 left, Vector3 right)
+    {
+        animateButton = left.x == 1.0f ? true : false;
+
+        button.localPosition = new Vector3(
+            button.localPosition.x,
+            button.localPosition.y,
+            -0.0004f * left.y);
+
+        button.localRotation = Quaternion.Euler(
+            button.localRotation.eulerAngles.x,
+            button.localRotation.eulerAngles.y,
+            -14.5f * left.y);
     }
 }
