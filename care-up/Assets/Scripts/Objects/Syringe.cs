@@ -253,6 +253,12 @@ public class Syringe : PickableObjectWithInfo {
     public override void LoadInfo(Vector3 left, Vector3 right)
     {
         updatePlunger = left.x == 1.0f ? true : false;
+        
+        if (plunger == null)
+        {
+            plunger = transform.Find("syringePlunger");
+        }
+    
         plunger.localPosition = new Vector3(
                 plunger.localPosition.x,
                 Mathf.Lerp(-0.013f, 0.06f, left.y),

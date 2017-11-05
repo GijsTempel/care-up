@@ -116,6 +116,11 @@ public class InsulinPen : PickableObjectWithInfo {
     {
         animateButton = left.x == 1.0f ? true : false;
 
+        if (button == null)
+        {
+            button = transform.Find("insulinPenButton");
+        }
+
         button.localPosition = new Vector3(
             button.localPosition.x,
             button.localPosition.y,
