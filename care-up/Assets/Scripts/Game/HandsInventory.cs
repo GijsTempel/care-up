@@ -738,9 +738,7 @@ public class HandsInventory : MonoBehaviour {
                     }
                     else if (rightSavedPos != Vector3.zero)
                     {
-                        float offset = rightHandObject.GetComponent<MeshFilter>().mesh.bounds.size.z * rightHandObject.transform.lossyScale.z +
-                            leftHandObject.GetComponent<MeshFilter>().mesh.bounds.size.z * leftHandObject.transform.lossyScale.z;
-                        leftHandObject.SavePosition(rightSavedPos + new Vector3(0, 0, -3f * offset), rightSavedRot);
+                        leftHandObject.SavePosition(rightSavedPos + GetOffset(rightHandObject, leftHandObject, rightSavedRot), rightSavedRot);
                     }
 
                     if (leftHandObject.GetComponent<PickableObjectWithInfo>() != null)
@@ -782,9 +780,7 @@ public class HandsInventory : MonoBehaviour {
                     }
                     else if (leftSavedPos != Vector3.zero)
                     {
-                        float offset = rightHandObject.GetComponent<MeshFilter>().mesh.bounds.size.z * rightHandObject.transform.lossyScale.z +
-                            leftHandObject.GetComponent<MeshFilter>().mesh.bounds.size.z * leftHandObject.transform.lossyScale.z;
-                        rightHandObject.SavePosition(leftSavedPos + new Vector3(0, 0, -3f * offset), leftSavedRot);
+                        rightHandObject.SavePosition(leftSavedPos + GetOffset(leftHandObject, rightHandObject, leftSavedRot), leftSavedRot);
                     }
 
                     if (rightHandObject.GetComponent<PickableObjectWithInfo>() != null)
@@ -798,5 +794,20 @@ public class HandsInventory : MonoBehaviour {
                 }
             }
         }
+    }
+
+    private Vector3 GetOffset(PickableObject origin, PickableObject target, Quaternion rotation)
+    {
+        Vector3 meshBoundsOrigin = origin.GetComponent<MeshFilter>().mesh.bounds.size;
+        meshBoundsOrigin.Scale(origin.transform.lossyScale);
+        Vector3 originVector = rotation * meshBoundsOrigin;
+
+        Vector3 meshBoundsTarget = target.GetComponent<MeshFilter>().mesh.bounds.size;
+        meshBoundsTarget.Scale(target.transform.lossyScale);
+        Vector3 targetVector = rotation * meshBoundsTarget;
+
+        float offset = -1.5f * Mathf.Abs(originVector.z + targetVector.z);
+        
+        return new Vector3(0.0f, 0.0f, offset);
     }
 }
