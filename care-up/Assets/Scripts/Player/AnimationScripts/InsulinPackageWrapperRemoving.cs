@@ -5,6 +5,7 @@ using UnityEngine;
 public class InsulinPackageWrapperRemoving : StateMachineBehaviour
 {
     public int combineFrame;
+    public int wrapperDestroyingFrame;
     public bool hand;
 
     protected float frame;
@@ -44,6 +45,11 @@ public class InsulinPackageWrapperRemoving : StateMachineBehaviour
                 inv.CreateAnimationObject("InsulinPenWrapper", !hand);
             }
 
+            if (PlayerAnimationManager.CompareFrames(frame, prevFrame, wrapperDestroyingFrame))
+            {
+                inv.DeleteAnimationObject();
+            }
+
             prevFrame = frame;
             frame += Time.deltaTime;
             inv.ToggleControls(true);
@@ -53,7 +59,6 @@ public class InsulinPackageWrapperRemoving : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        inv.DeleteAnimationObject();
         inv.ToggleControls(false);
         mode.animating = false;
     }
