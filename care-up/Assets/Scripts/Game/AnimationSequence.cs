@@ -230,8 +230,12 @@ public class AnimationSequence  {
             cameraMode.ToggleCameraMode(CameraMode.Mode.SelectionDialogue);
         }
         else
-        { // maybe obsolete
-            Object.Destroy(dialogueObject.gameObject);
+        {
+            if (dialogueObject != null)
+            {
+                // maybe obsolete
+                Object.Destroy(dialogueObject.gameObject);
+            }
             CameraMode cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
             cameraMode.ToggleCameraMode(CameraMode.Mode.Cinematic);
             cameraMode.animationEnded = true;
