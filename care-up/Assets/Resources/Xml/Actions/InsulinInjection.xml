@@ -15,22 +15,25 @@
   <action description="Step 5: Check if there is enough fluid in the insulin pen" audioHint="InsulinInjection/Step 3.1"
 		index="4" type="examine" item="InsulinPen" expected="good"></action>
   
+  <action description="Step 6.0: swerve pen" audioHint="" extra=""
+    index="5" type="useOn" item="InsulinPen" target="" />
+  
   <action description="Step 6.1: Remove the protected layer of the needlepackage" audioHint="InsulinInjection/Step 4.1"
-		index="5" type="combine" left="InsulinNeedlePackage" right=""></action>
+		index="6" type="combine" left="InsulinNeedlePackage" right=""></action>
 	<action description="Step 6.2: Turn the needle with the needle package on the Insulin Pen" audioHint="InsulinInjection/Step 4.2"
-		index="6" type="combine" left="InsulinPen" right="InsulinOpenedNeedlePackage"></action>
+		index="7" type="combine" left="InsulinPen" right="InsulinOpenedNeedlePackage"></action>
 	<action description="Step 6.3: Remove the needle package" audioHint="InsulinInjection/Step 4.3"
-		index="7" type="combine" left="InsulinPenWithNeedlePackage" right=""></action>
+		index="8" type="combine" left="InsulinPenWithNeedlePackage" right=""></action>
 	<action description="Step 7: vent the insulinpen" audioHint="InsulinInjection/Step 5"
-		index="8" type="useOn" item="InsulinPenWithNeedle" target=""></action>
+		index="9" type="useOn" item="InsulinPenWithNeedle" target=""></action>
   <action description="Step 8: Set right amount of units of insulin" audioHint ="InsulinInjection/Step 6"
-    index="9" type="useOn" item="VentedInsulinPenWithNeedle" target="" />
+    index="10" type="useOn" item="VentedInsulinPenWithNeedle" target="" />
 	
 	<action description="Step 8: Ask the patient to ShowBellyForInsulin." audioHint="InsulinInjection/Step 5"
-		index="10" type="talk" topic="ShowBellyForInsulin"></action>
+		index="11" type="talk" topic="ShowBellyForInsulin"></action>
 	
 	<action description="Step 10: Inject Insulin" audioHint="InsulinInjection/Step 7"
-		index="11" type="useOn" item="InsulinPenWithNeedle" target="Patient"></action>
+		index="12" type="useOn" item="InsulinPenWithNeedle" target="Patient"></action>
 
   <action description="Check if injection spot is dry and clean." audioHint="Injection/AS1-2"
 		index="12" type="sequenceStep" value="CheckSkin" extra="Controleer of de injectieplaats schoon en droog is om besmetting van ziektekiemen te voorkomen."></action>
@@ -49,10 +52,12 @@
 		index="18" type="combine" left="InsulinPenWithNeedle" right=""></action>
 	<action description="Step 12: Put the needle in the needle cup (trashcan for needles)" audioHint="InsulinInjection/Step 8"
 		index="19" type="useOn" item="InsulinNeedle" target="NeedleCup"></action>
-	<action description="Step 13: Clean up the materials you used."  audioHint="InsulinInjection/Step 9"
-		index="20" type="use" value="WorkField"></action>
+	<action description="Step 13.1: put cap on pen" audioHint="InsulinInjection/Step 7"
+		index="20" type="combine" left="InsulinPen" right="InsulinPenCap"></action>
+  <action description="Step 13: Clean up the materials you used."  audioHint="InsulinInjection/Step 9"
+		index="21" type="use" value="WorkField"></action>
 	<action description="Step 14: Preform hand hygiene" audioHint="InsulinInjection/Step 10"
-		index="21" type="use" value="HandCleaner"></action>
+		index="22" type="use" value="HandCleaner"></action>
 	<action description="Note date , kind, unit etc." audioHint="InsulinInjection/Step 11"
-		index="22" type="use" value="PaperAndPen"></action>
+		index="23" type="use" value="PaperAndPen"></action>
 </ActionList>
