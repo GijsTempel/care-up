@@ -69,10 +69,15 @@ public class TutorialManager : MonoBehaviour {
         CombineSyringeAbNeedleMed, // step 17
         DropMedicine,              // step 18
         UseSyringeWithMed,         // step 19
+
+        UseSyringeOnTrashAbs,
+
+        /*
         PickUpAbsorptionCap,       // step 20
         CombinePutOnAbCap,         // step 21
         CombineTakeOffAbNeedle,    // step 22
         UseAbNeedleOnTrash,        // step 23
+        */
 
         PickInjectionNeedle,       // step 24
         CombineSyringeInjNeedle,   // step 25
@@ -86,11 +91,16 @@ public class TutorialManager : MonoBehaviour {
         SequenceExplanation,       // step 30
         CompleteSequence,          // step 30
 
+        UseSyringeOnTrashInj,
+
+        /*
         CombinePutOnInjCap,        // step 31
         CombineTakeOffInjNeedle,   // step 32
         UseInjNeedleOnTrash,       // step 33
-        DropSyringe,               // step 34
+        */
 
+        DropSyringe,               // step 34
+       
         UseWorkField,              // step 35
         UseHygienePump,            // step 36
         UsePaperAndPen,            // step 37
@@ -112,7 +122,7 @@ public class TutorialManager : MonoBehaviour {
     private WorkField workField;
     private ExaminableObject patientRecords;
     private GameObject syringe;
-    private GameObject needle;
+    //private GameObject needle;
     private ExaminableObject medicine;
     private PickableObject alcohol;
     private PickableObject cloth;
@@ -157,7 +167,7 @@ public class TutorialManager : MonoBehaviour {
         Transform interactables = GameObject.Find("Interactable Objects").transform;
         medicine = interactables.Find("Medicine").GetComponent<ExaminableObject>();
         syringe = interactables.Find("Syringe").gameObject;
-        needle = interactables.Find("AbsorptionNeedle").gameObject;
+        //needle = interactables.Find("AbsorptionNeedle").gameObject;
         alcohol = interactables.Find("Alcohol").GetComponent<PickableObject>();
         cloth = interactables.Find("Cloth").GetComponent<PickableObject>();
         paperNPen = interactables.Find("PaperAndPen").GetComponent<UsableObject>();
@@ -595,49 +605,17 @@ public class TutorialManager : MonoBehaviour {
                     if (syringe.GetComponent<PickableObject>().tutorial_usedOn)
                     {
                         syringe.GetComponent<PickableObject>().tutorial_usedOn = false;
-                        currentStep = TutorialStep.PickUpAbsorptionCap;
-                        UItext.text = "De spuit is nu ontlucht. Laten we nu de beschermdop van de opzuignaald terugplaatsen op de spuit. Zorg dat je de spuit in je hand hebt en pak de beschermdop van de opzuignaald op door ernaar te kijken en op de linkermuisknop te drukken.";
+                        currentStep = TutorialStep.UseSyringeOnTrashAbs;
+                        UItext.text = "Use syringe on trash can for needles";
 
-                        itemToPick = "SyringeAbsorptionCap";
-                        particleHint.transform.position = GameObject.Find("SyringeAbsorptionCap").transform.position;
-                        particleHint.SetActive(true);
-                    }
-                    break;
-                case TutorialStep.PickUpAbsorptionCap:
-                    if (handsInventory.tutorial_pickedLeft || handsInventory.tutorial_pickedRight)
-                    {
-                        AddPointWithSound();
-                        particleHint.SetActive(false);
-
-                        handsInventory.tutorial_pickedLeft =
-                            handsInventory.tutorial_pickedRight = false;
-                        currentStep = TutorialStep.CombinePutOnAbCap;
-                        UItext.text = "Combineer nu de spuit met de beschermdop door op de 'R' toets te drukken.";
-                    }
-                    break;
-                case TutorialStep.CombinePutOnAbCap:
-                    if (handsInventory.tutorial_combined)
-                    {
-                        handsInventory.tutorial_combined = false;
-                        currentStep = TutorialStep.CombineTakeOffAbNeedle;
-                        UItext.text = "Nu de beschermdop weer op de naald zit. Kan de opzuignaald worden verwijderd. Zorg ervoor dat je een vrije hand hebt en dat je de spuit in je andere hand hebt. Klik daarna op 'R' om de opzuignaald van de spuit af te halen.";
-                    }
-                    break;
-                case TutorialStep.CombineTakeOffAbNeedle:
-                    if (handsInventory.tutorial_combined)
-                    {
-                        handsInventory.tutorial_combined = false;
-                        currentStep = TutorialStep.UseAbNeedleOnTrash;
-                        UItext.text = "Sommige voorwerpen kun je gebruiken op een ander voorwerp. Probeer de gebruikte opzuignaald te gebruiken op de naaldcontainer om de opzuignaald weg te gooien. Dit kun je doen door te kijken naar de naaldcontainer en dan te drukken op de actieknop van de hand die de opzuignaald vast heeft. De actieknop voor de linkerhand is de 'Q' toets en voor de rechterhand de 'E' toets.";
-
-                        particleHint.SetActive(true);
                         particleHint.transform.position = GameObject.Find("NeedleCup").transform.position;
+                        particleHint.SetActive(true);
                     }
                     break;
-                case TutorialStep.UseAbNeedleOnTrash:
-                    if (needleTrashed)
+                case TutorialStep.UseSyringeOnTrashAbs:
+                    if (syringe.GetComponent<PickableObject>().tutorial_usedOn)
                     {
-                        needleTrashed = false;
+                        syringe.GetComponent<PickableObject>().tutorial_usedOn = false;
                         currentStep = TutorialStep.PickInjectionNeedle;
                         UItext.text = "Nu het medicijn is opgezogen en de opzuignaald is weggegooid. Is het tijd om de injectienaald op de spuit te zetten. Zorg ervoor dat je de spuit in je handen hebt en de injectie naald. Pak de voorwerpen door ernaar te kijken en op de linkerhmuisknop te drukken.";
 
@@ -716,40 +694,18 @@ public class TutorialManager : MonoBehaviour {
                 case TutorialStep.CompleteSequence:
                     if ( sequenceCompleted )
                     {
-                        currentStep = TutorialStep.CombinePutOnInjCap;
+                        currentStep = TutorialStep.UseSyringeOnTrashInj;
                         player.tutorial_movementLock = movementLock = false;
-                        UItext.text = "De client is geinjecteerd. Pak de beschermdop van injectienaald op door ernaar te kijken en op de linkermuisknop te drukken. Combineer nu de beschrmdop van de injectienaald met de spuit door op de 'R'toets te drukken.";
-
-                        itemToPick = "SyringeInjectionCap";
-                        particleHint.transform.position = GameObject.Find("SyringeInjectionCap").transform.position;
-                        particleHint.SetActive(true);
-                    }
-                    break;
-                case TutorialStep.CombinePutOnInjCap:
-                    if (handsInventory.tutorial_combined)
-                    {
-                        particleHint.SetActive(false);
-
-                        handsInventory.tutorial_combined = false;
-                        currentStep = TutorialStep.CombineTakeOffInjNeedle;
-                        UItext.text = "Nu de dop weer op de injectienaald zit, is het veilig om de injectienaald van de spuit af te halen. Zorg ervoor dat je de spuit vast hebt en zorg voor een vrije hand. Druk op de 'R' toets om de injectie naald van de spuit af te halen.";
-                    }
-                    break;
-                case TutorialStep.CombineTakeOffInjNeedle:
-                    if (handsInventory.tutorial_combined)
-                    {
-                        handsInventory.tutorial_combined = false;
-                        currentStep = TutorialStep.UseInjNeedleOnTrash;
-                        UItext.text = "Gooi de injectienaald in de naaldcontainer. Doe dit door te kijken naar de naadcontainer en op de actieknop van de juiste hand te drukken. Gebruik actietoets 'Q' voor de linkerhand en ";
-
-                        particleHint.SetActive(true);
+                        UItext.text = "Use syringe on trash";
+                        
                         particleHint.transform.position = GameObject.Find("NeedleCup").transform.position;
+                        particleHint.SetActive(true);
                     }
                     break;
-                case TutorialStep.UseInjNeedleOnTrash:
-                    if (needleTrashed)
+                case TutorialStep.UseSyringeOnTrashInj:
+                    if (syringe.GetComponent<PickableObject>().tutorial_usedOn)
                     {
-                        needleTrashed = false;
+                        syringe.GetComponent<PickableObject>().tutorial_usedOn = false;
                         currentStep = TutorialStep.DropSyringe;
                         UItext.text = "Leg nu de spuit terug op het werkveld door op 'SHIFT' + 'Q' als je de spuit in je linkerhand vast hebt en op 'SHIFT' + 'E' als je de spuit in je rechterhand vast hebt.";
 

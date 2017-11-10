@@ -53,6 +53,7 @@ public class HandsInventory : MonoBehaviour {
     private CameraMode cameraMode;
 
     private ActionManager actionManager;
+    private PlayerPrefsManager prefsManager;
 
     private TutorialManager tutorial;
 
@@ -84,6 +85,11 @@ public class HandsInventory : MonoBehaviour {
         if (cameraMode == null) Debug.LogError("No camera mode found");
 
         tutorial = GetComponent<TutorialManager>();
+
+        if (GameObject.Find("Preferences"))
+        {
+            prefsManager = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
+        }
 
         foreach (GameObject obj in GameObject.FindGameObjectsWithTag("playerBone"))
         {
@@ -129,10 +135,17 @@ public class HandsInventory : MonoBehaviour {
                     {
                         leftHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
                         tutorial_droppedLeft = true;
-                        if (!leftHandObject.Drop() && dropPenalty)
+                        if (!leftHandObject.Drop())
                         {
-                            Narrator.PlaySound("WrongAction");
-                            actionManager.Points--;
+                            if (!prefsManager.practiceMode)
+                            {
+                                actionManager.OnGameOver();
+                            }
+                            else if (dropPenalty)
+                            {
+                                Narrator.PlaySound("WrongAction");
+                                actionManager.Points--;
+                            }
                         }
                         leftHandObject = null;
                         leftHold = false;
@@ -152,10 +165,17 @@ public class HandsInventory : MonoBehaviour {
                     {
                         rightHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
                         tutorial_droppedRight = true;
-                        if (!rightHandObject.Drop() && dropPenalty)
+                        if (!rightHandObject.Drop())
                         {
-                            Narrator.PlaySound("WrongAction");
-                            actionManager.Points--;
+                            if (!prefsManager.practiceMode)
+                            {
+                                actionManager.OnGameOver();
+                            }
+                            else if (dropPenalty)
+                            {
+                                Narrator.PlaySound("WrongAction");
+                                actionManager.Points--;
+                            }
                         }
                         rightHandObject = null;
                         rightHold = false;
@@ -371,12 +391,10 @@ public class HandsInventory : MonoBehaviour {
             Quaternion leftSavedRot = Quaternion.identity;
             leftHandObject.GetSavesLocation(out leftSavedPos, out leftSavedRot);
             
-            Vector3 plungerPosition = new Vector3();
-            bool updatePlunger = false;
-            if (leftHandObject.GetComponent<Syringe>() != null)
+            Vector3 saveInfo = new Vector3();
+            if (leftHandObject.GetComponent<PickableObjectWithInfo>() != null)
             {
-                plungerPosition = leftHandObject.GetComponent<Syringe>().PlungerPosition;
-                updatePlunger = leftHandObject.GetComponent<Syringe>().updatePlunger;
+                leftHandObject.GetComponent<PickableObjectWithInfo>().SaveInfo(ref saveInfo, ref saveInfo);
             }
 
             Destroy(leftHandObject.gameObject);
@@ -394,10 +412,9 @@ public class HandsInventory : MonoBehaviour {
                 leftHandObject.SavePosition(leftSavedPos, leftSavedRot);
             }
 
-            if (leftHandObject.GetComponent<Syringe>() != null)
+            if (leftHandObject.GetComponent<PickableObjectWithInfo>() != null)
             {
-                leftHandObject.GetComponent<Syringe>().PlungerPosition = plungerPosition;
-                leftHandObject.GetComponent<Syringe>().updatePlunger = updatePlunger;
+                leftHandObject.GetComponent<PickableObjectWithInfo>().LoadInfo(saveInfo, saveInfo);
             }
         }
         else
@@ -406,12 +423,10 @@ public class HandsInventory : MonoBehaviour {
             Quaternion rightSavedRot = Quaternion.identity;
             rightHandObject.GetSavesLocation(out rightSavedPos, out rightSavedRot);
 
-            Vector3 plungerPosition = new Vector3();
-            bool updatePlunger = false;
-            if (rightHandObject.GetComponent<Syringe>() != null)
+            Vector3 saveInfo = new Vector3();
+            if (rightHandObject.GetComponent<PickableObjectWithInfo>() != null)
             {
-                plungerPosition = rightHandObject.GetComponent<Syringe>().PlungerPosition;
-                updatePlunger = rightHandObject.GetComponent<Syringe>().updatePlunger;
+                rightHandObject.GetComponent<PickableObjectWithInfo>().SaveInfo(ref saveInfo, ref saveInfo);
             }
 
             Destroy(rightHandObject.gameObject);
@@ -429,10 +444,9 @@ public class HandsInventory : MonoBehaviour {
                 rightHandObject.SavePosition(rightSavedPos, rightSavedRot);
             }
 
-            if (rightHandObject.GetComponent<Syringe>() != null)
+            if (rightHandObject.GetComponent<PickableObjectWithInfo>() != null)
             {
-                rightHandObject.GetComponent<Syringe>().PlungerPosition = plungerPosition;
-                rightHandObject.GetComponent<Syringe>().updatePlunger = updatePlunger;
+                rightHandObject.GetComponent<PickableObjectWithInfo>().LoadInfo(saveInfo, saveInfo);
             }
         }
 
@@ -693,18 +707,16 @@ public class HandsInventory : MonoBehaviour {
                 rightHandObject.GetSavesLocation(out rightSavedPos, out rightSavedRot);
             }
 
-            Vector3 plungerPosition = new Vector3();
-            bool updatePlunger = false;
+            Vector3 saveInfo = new Vector3();
 
             // object changed
             if (leftName != leftCombineResult)
             {
                 if (leftHandObject != null)
                 {
-                    if (leftHandObject.GetComponent<Syringe>() != null)
+                    if (leftHandObject.GetComponent<PickableObjectWithInfo>() != null)
                     {
-                        plungerPosition = leftHandObject.GetComponent<Syringe>().PlungerPosition;
-                        updatePlunger = leftHandObject.GetComponent<Syringe>().updatePlunger;
+                        leftHandObject.GetComponent<PickableObjectWithInfo>().SaveInfo(ref saveInfo, ref saveInfo);
                     }
 
                     Destroy(leftHandObject.gameObject);
@@ -726,15 +738,12 @@ public class HandsInventory : MonoBehaviour {
                     }
                     else if (rightSavedPos != Vector3.zero)
                     {
-                        float offset = rightHandObject.GetComponent<MeshFilter>().mesh.bounds.size.z * rightHandObject.transform.lossyScale.z +
-                            leftHandObject.GetComponent<MeshFilter>().mesh.bounds.size.z * leftHandObject.transform.lossyScale.z;
-                        leftHandObject.SavePosition(rightSavedPos + new Vector3(0, 0, -3f * offset), rightSavedRot);
+                        leftHandObject.SavePosition(rightSavedPos + GetOffset(rightHandObject, leftHandObject, rightSavedRot), rightSavedRot);
                     }
 
-                    if (leftHandObject.GetComponent<Syringe>() != null)
+                    if (leftHandObject.GetComponent<PickableObjectWithInfo>() != null)
                     {
-                        leftHandObject.GetComponent<Syringe>().PlungerPosition = plungerPosition;
-                        leftHandObject.GetComponent<Syringe>().updatePlunger = updatePlunger;
+                        leftHandObject.GetComponent<PickableObjectWithInfo>().LoadInfo(saveInfo, saveInfo);
                     }
                 }
                 else
@@ -748,10 +757,9 @@ public class HandsInventory : MonoBehaviour {
             {
                 if (rightHandObject != null)
                 {
-                    if (rightHandObject.GetComponent<Syringe>() != null)
+                    if (rightHandObject.GetComponent<PickableObjectWithInfo>() != null)
                     {
-                        plungerPosition = rightHandObject.GetComponent<Syringe>().PlungerPosition;
-                        updatePlunger = rightHandObject.GetComponent<Syringe>().updatePlunger;
+                        rightHandObject.GetComponent<PickableObjectWithInfo>().SaveInfo(ref saveInfo, ref saveInfo);
                     }
                     Destroy(rightHandObject.gameObject);
                     rightHandObject = null;
@@ -772,15 +780,12 @@ public class HandsInventory : MonoBehaviour {
                     }
                     else if (leftSavedPos != Vector3.zero)
                     {
-                        float offset = rightHandObject.GetComponent<MeshFilter>().mesh.bounds.size.z * rightHandObject.transform.lossyScale.z +
-                            leftHandObject.GetComponent<MeshFilter>().mesh.bounds.size.z * leftHandObject.transform.lossyScale.z;
-                        rightHandObject.SavePosition(leftSavedPos + new Vector3(0, 0, -3f * offset), leftSavedRot);
+                        rightHandObject.SavePosition(leftSavedPos + GetOffset(leftHandObject, rightHandObject, leftSavedRot), leftSavedRot);
                     }
 
-                    if (rightHandObject.GetComponent<Syringe>() != null)
+                    if (rightHandObject.GetComponent<PickableObjectWithInfo>() != null)
                     {
-                        rightHandObject.GetComponent<Syringe>().PlungerPosition = plungerPosition;
-                        rightHandObject.GetComponent<Syringe>().updatePlunger = updatePlunger;
+                        rightHandObject.GetComponent<PickableObjectWithInfo>().LoadInfo(saveInfo, saveInfo);
                     }
                 }
                 else
@@ -789,5 +794,20 @@ public class HandsInventory : MonoBehaviour {
                 }
             }
         }
+    }
+
+    private Vector3 GetOffset(PickableObject origin, PickableObject target, Quaternion rotation)
+    {
+        Vector3 meshBoundsOrigin = origin.GetComponent<MeshFilter>().mesh.bounds.size;
+        meshBoundsOrigin.Scale(origin.transform.lossyScale);
+        Vector3 originVector = rotation * meshBoundsOrigin;
+
+        Vector3 meshBoundsTarget = target.GetComponent<MeshFilter>().mesh.bounds.size;
+        meshBoundsTarget.Scale(target.transform.lossyScale);
+        Vector3 targetVector = rotation * meshBoundsTarget;
+
+        float offset = -1.5f * Mathf.Abs(originVector.z + targetVector.z);
+        
+        return new Vector3(0.0f, 0.0f, offset);
     }
 }

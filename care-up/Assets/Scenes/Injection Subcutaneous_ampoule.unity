@@ -2700,7 +2700,9 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -73.39101
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114394242610780462, guid: 5de1d2068167189489bd6419129786f6, type: 2}
+    - {fileID: 65515192852795486, guid: 5de1d2068167189489bd6419129786f6, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 5de1d2068167189489bd6419129786f6, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &567575532 stripped
@@ -2711,18 +2713,28 @@ Transform:
 GameObject:
   m_PrefabParentObject: {fileID: 166264, guid: 5de1d2068167189489bd6419129786f6, type: 2}
   m_PrefabInternal: {fileID: 567575531}
---- !u!65 &567575534
-BoxCollider:
+--- !u!114 &567575534
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 567575533}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.00032007726, y: 0.00007655316, z: 0.0004664031}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6095384fe7173243b9fb25bc8b25d06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: "Cli\xEBntgegevens"
+  muplipleMesh: 0
+  descriptionOffset: {x: 0, y: 0, z: 0}
+  tutorial_picked: 0
+  tutorial_closed: 0
+  examineRotation: {x: 0, y: 180, z: 0}
+  audioExamine: 0
+  viewSettings:
+    distanceFromCamera: 0.4
+    rotationSensetivity: 90
+  state: good
 --- !u!1001 &585485836
 Prefab:
   m_ObjectHideFlags: 0
@@ -3140,6 +3152,14 @@ Prefab:
       propertyPath: greetDialogueTrigger
       value: 
       objectReference: {fileID: 841529257}
+    - target: {fileID: 4634585598884878, guid: cdb6524090b2ff049a29ca7c4b7b0037, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0.359
+      objectReference: {fileID: 0}
+    - target: {fileID: 4634585598884878, guid: cdb6524090b2ff049a29ca7c4b7b0037, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0.586
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cdb6524090b2ff049a29ca7c4b7b0037, type: 2}
   m_IsPrefabParent: 0

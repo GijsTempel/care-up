@@ -43,7 +43,7 @@ public class SelectDialogue : MonoBehaviour {
     
     private List<DialogueOption> options = new List<DialogueOption>();
 
-    private Vector2 mouseState = new Vector2();
+    //private Vector2 mouseState = new Vector2();
     private OptionSide currentOption = OptionSide.None;
     private Color currentMaterial;
 
@@ -102,7 +102,7 @@ public class SelectDialogue : MonoBehaviour {
         right.gameObject.SetActive(false);
         left.gameObject.SetActive(false);
 
-        mouseState = Vector2.zero;
+        //mouseState = Vector2.zero;
         currentOption = OptionSide.None;
         currentMaterial = defaultMaterial;
         options.Clear();

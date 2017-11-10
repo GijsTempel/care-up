@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Syringe : PickableObject {
+public class Syringe : PickableObjectWithInfo {
     
     public bool updatePlunger = false;
 
@@ -239,5 +240,28 @@ public class Syringe : PickableObject {
                 }
             }
         }
+    }
+
+    public override void SaveInfo(ref Vector3 left, ref Vector3 right)
+    {
+        left = new Vector3(
+            (updatePlunger ? 1.0f : 0.0f), 
+            Mathf.InverseLerp(-0.013f, 0.06f, plunger.localPosition.y), 
+            0.0f);
+    }
+
+    public override void LoadInfo(Vector3 left, Vector3 right)
+    {
+        updatePlunger = left.x == 1.0f ? true : false;
+        
+        if (plunger == null)
+        {
+            plunger = transform.Find("syringePlunger");
+        }
+    
+        plunger.localPosition = new Vector3(
+                plunger.localPosition.x,
+                Mathf.Lerp(-0.013f, 0.06f, left.y),
+                plunger.localPosition.z);
     }
 }

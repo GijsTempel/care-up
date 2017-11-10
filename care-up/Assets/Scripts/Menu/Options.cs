@@ -12,6 +12,8 @@ public class Options : MonoBehaviour {
 
     private PlayerPrefsManager prefsManager;
 
+    private Transform options;
+
     private Slider volumeSlider;
     private Dropdown qualityOptions;
     private Dropdown resolutionOptions;
@@ -22,19 +24,21 @@ public class Options : MonoBehaviour {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
+        options = GameObject.Find("Canvas").transform.Find("Opties");
+
         prefsManager = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
         if (prefsManager == null) Debug.LogError("No player prefs manager found");
 
-        volumeSlider = GameObject.Find("VolumeSlider").GetComponent<Slider>();
+        volumeSlider = options.Find("Volume").Find("VolumeSlider").GetComponent<Slider>();
         volumeSlider.value = prefsManager.Volume;
         volumeSlider.onValueChanged.AddListener(OnVolumeChange);
 
-        qualityOptions = GameObject.Find("QualityDropdown").GetComponent<Dropdown>();
+        qualityOptions = options.Find("Quality").Find("QualityDropdown").GetComponent<Dropdown>();
         List<string> qOptions = new List<string>(QualitySettings.names);
         qualityOptions.AddOptions(qOptions);
         qualityOptions.value = QualitySettings.GetQualityLevel();
 
-        resolutionOptions = GameObject.Find("ResolutionDropdown").GetComponent<Dropdown>();
+        resolutionOptions = options.Find("Resolution").Find("ResolutionDropdown").GetComponent<Dropdown>();
         Resolution[] resolutions = Screen.resolutions;
         int currentResolution = 0;
         for (; currentResolution < resolutions.Length; ++currentResolution)
@@ -47,13 +51,17 @@ public class Options : MonoBehaviour {
         resolutionOptions.AddOptions(rOptions);
         resolutionOptions.value = currentResolution;
 
-        fullScreenToggle = GameObject.Find("FullScreenToggle").GetComponent<Toggle>();
+        fullScreenToggle = options.Find("FullScreen").Find("Toggle").GetComponent<Toggle>();
         fullScreenToggle.isOn = Screen.fullScreen;
     }
 
     public void OnVolumeChange(float value)
     {
         AudioListener.volume = value;
+        if (prefsManager != null)
+        {
+            prefsManager.Volume = value;
+        }
     }
 
     public void OnBackButton()

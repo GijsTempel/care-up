@@ -213,8 +213,7 @@ public class AnimationSequence  {
             if (dialogueObject == null)
             {
                 dialogueObject = Object.Instantiate(Resources.Load<GameObject>("Prefabs/SelectionDialogue"),
-                        Camera.main.transform.position + Camera.main.transform.forward * 3.0f,
-                        Camera.main.transform.rotation) as GameObject;
+                        GameObject.Find("OverlayCamera").transform) as GameObject;
                 dialogueObject.name = "SelectionDialogue";
             }
 
@@ -231,8 +230,12 @@ public class AnimationSequence  {
             cameraMode.ToggleCameraMode(CameraMode.Mode.SelectionDialogue);
         }
         else
-        { // maybe obsolete
-            Object.Destroy(dialogueObject.gameObject);
+        {
+            if (dialogueObject != null)
+            {
+                // maybe obsolete
+                Object.Destroy(dialogueObject.gameObject);
+            }
             CameraMode cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
             cameraMode.ToggleCameraMode(CameraMode.Mode.Cinematic);
             cameraMode.animationEnded = true;

@@ -8,7 +8,7 @@ public class MainMenu : MonoBehaviour {
     private LoadingScreen loadingScreen;
     private PlayerPrefsManager prefs;
 	public string eMail="info@triplemotion.nl";
-
+    
     private void Start()
     {
         if (GameObject.Find("Preferences") != null)
@@ -71,7 +71,22 @@ public class MainMenu : MonoBehaviour {
 
     public void OnOptionsButtonClick()
     {
-        loadingScreen.LoadLevel("Options");
+        GameObject canvas = GameObject.Find("Canvas");
+
+        canvas.transform.Find("MainMenu").gameObject.SetActive(false);
+        canvas.transform.Find("Logo").gameObject.SetActive(false);
+        canvas.transform.Find("OptionsBtn").gameObject.SetActive(false);
+        canvas.transform.Find("Opties").gameObject.SetActive(true);
+    }
+
+    public void OnOptionsBackButtonClick()
+    {
+        GameObject canvas = GameObject.Find("Canvas");
+
+        canvas.transform.Find("MainMenu").gameObject.SetActive(true);
+        canvas.transform.Find("Logo").gameObject.SetActive(true);
+        canvas.transform.Find("OptionsBtn").gameObject.SetActive(true);
+        canvas.transform.Find("Opties").gameObject.SetActive(false);
     }
 
     public void OnControlsButtonClick()
