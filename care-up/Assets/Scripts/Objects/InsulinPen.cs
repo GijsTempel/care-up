@@ -98,6 +98,22 @@ public class InsulinPen : PickableObjectWithInfo {
             }
             else return false;
         }
+        else if (info[0] == "InsulinPen" && info[1] == "")
+        {
+            if (inventory.LeftHandEmpty())
+            {
+                PlayerAnimationManager.PlayAnimation("UseRight " + name);
+                actionManager.OnUseOnAction(name, "");
+                return true;
+            }
+            else if (inventory.RightHandEmpty())
+            {
+                PlayerAnimationManager.PlayAnimation("UseLeft " + name);
+                actionManager.OnUseOnAction(name, "");
+                return true;
+            }
+            else return false;
+        }
 
         actionManager.OnUseOnAction(name, controls.SelectedObject != null && controls.CanInteract ? controls.SelectedObject.name : "");
 
