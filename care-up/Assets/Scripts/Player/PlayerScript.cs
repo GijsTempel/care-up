@@ -89,7 +89,7 @@ public class PlayerScript : MonoBehaviour {
                 transform.position = savedPos;
                 if (prefs == null || (prefs != null && !prefs.VR))
                 {
-                    transform.rotation = savedRot;
+                    transform.GetChild(0).GetChild(0).rotation = savedRot;
                 }
             }
         }
@@ -101,11 +101,11 @@ public class PlayerScript : MonoBehaviour {
         {
             ToggleAway();
             savedPos = transform.position;
-            savedRot = transform.rotation;
+            savedRot = transform.GetChild(0).GetChild(0).rotation;
             transform.position = group.position;
             if ( prefs == null || (prefs != null && !prefs.VR))
             {
-                transform.rotation = Quaternion.Euler(group.rotation);
+                transform.GetChild(0).GetChild(0).rotation = Quaternion.Euler(group.rotation);
             }
         }
     }
