@@ -22,6 +22,7 @@ public class PlayerScript : MonoBehaviour {
 
     public bool away = true;
     private Vector3 savedPos;
+    private Quaternion savedRot;
     private List<WalkToGroup> groups;
 
     private bool fade;
@@ -40,7 +41,7 @@ public class PlayerScript : MonoBehaviour {
             prefs = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
         }
 
-        GetComponent<Crosshair>().enabled = true;// prefs.VR;
+        GetComponent<Crosshair>().enabled = prefs.VR;
 
         controls = GameObject.Find("GameLogic").GetComponent<Controls>();
 
@@ -53,8 +54,13 @@ public class PlayerScript : MonoBehaviour {
 
     private void Update()
     {
-        if ( true ) //prefs.VR )
+        if ( prefs.VR )
             RotateView();
+        else
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
 
         if (tutorial_movementLock)
             return;
@@ -74,7 +80,10 @@ public class PlayerScript : MonoBehaviour {
             {
                 ToggleAway();
                 transform.position = savedPos;
-                transform.rotation = Quaternion.identity;
+                if (!prefs.VR)
+                {
+                    transform.rotation = savedRot;
+                }
             }
         }
     }
@@ -100,8 +109,12 @@ public class PlayerScript : MonoBehaviour {
         {
             ToggleAway();
             savedPos = transform.position;
+            savedRot = transform.rotation;
             transform.position = group.position;
-            transform.rotation = Quaternion.Euler(group.rotation);
+            if (!prefs.VR)
+            {
+                transform.rotation = Quaternion.Euler(group.rotation);
+            }
         }
     }
 

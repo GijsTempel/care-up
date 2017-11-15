@@ -131,26 +131,25 @@ public class Controls : MonoBehaviour {
     /// Sets selectedObject to an object player is aimed at atm.
     /// Sets canInteract based of distance to aimed object.
     /// </summary>
-	void LateUpdate () {
+	void LateUpdate() {
 
-        if ( true )//prefs.VR)
+        // raycast only in this script
+        Ray ray = prefs.VR ?
+            new Ray(Camera.main.transform.position, Camera.main.transform.forward)
+            : Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit))
         {
-            // raycast only in this script
-            Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
-            {
-                selectedObject = hit.transform.gameObject;
-                //canInteract = (hit.distance <= interactionDistance) ? true : false;
-                canInteract = Vector2.Distance(
-                    new Vector2(Camera.main.transform.position.x, Camera.main.transform.position.z),
-                    new Vector2(hit.transform.position.x, hit.transform.position.z))
-                    <= interactionDistance ? true : false;
-            }
-            else
-            {
-                ResetObject();
-            }
+            selectedObject = hit.transform.gameObject;
+            //canInteract = (hit.distance <= interactionDistance) ? true : false;
+            canInteract = Vector2.Distance(
+                new Vector2(Camera.main.transform.position.x, Camera.main.transform.position.z),
+                new Vector2(hit.transform.position.x, hit.transform.position.z))
+                <= interactionDistance ? true : false;
+        }
+        else
+        {
+            ResetObject();
         }
 
         keyUsed = false;
