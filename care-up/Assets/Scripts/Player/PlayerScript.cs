@@ -30,6 +30,8 @@ public class PlayerScript : MonoBehaviour {
     private float fadeTimer = 0.0f;
     Texture fadeTex;
 
+    GameObject moveBackButton;
+
     private void Start()
     {
         m_RigidBody = GetComponent<Rigidbody>();
@@ -50,6 +52,9 @@ public class PlayerScript : MonoBehaviour {
             GameObject.FindObjectsOfType<WalkToGroup>());
 
         fadeTex = Resources.Load<Texture>("Sprites/Black");
+
+        moveBackButton = GameObject.Find("MoveBackButton");
+        moveBackButton.SetActive(false);
     }
 
 
@@ -80,19 +85,6 @@ public class PlayerScript : MonoBehaviour {
                 WalkToGroup(controls.SelectedObject.GetComponent<WalkToGroup>());
             }
         }
-
-        if (controls.keyPreferences.Teleport.Pressed())
-        {
-            if (!away)
-            {
-                ToggleAway();
-                transform.position = savedPos;
-                if (prefs == null || (prefs != null && !prefs.VR))
-                {
-                    transform.GetChild(0).GetChild(0).rotation = savedRot;
-                }
-            }
-        }
     }
 
     public void WalkToGroup(WalkToGroup group)
@@ -119,6 +111,7 @@ public class PlayerScript : MonoBehaviour {
             g.enabled = away;
             g.GetComponent<Collider>().enabled = away;
         }
+        moveBackButton.SetActive(!away);
     }
 
     private void OnGUI()
@@ -136,6 +129,19 @@ public class PlayerScript : MonoBehaviour {
                     Mathf.InverseLerp(0.0f, fadeTime, fadeTimer));
                 GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), fadeTex);
                 fadeTimer += Time.deltaTime;
+            }
+        }
+    }
+
+    public void MoveBackButton()
+    {
+        if (!away)
+        {
+            ToggleAway();
+            transform.position = savedPos;
+            if (prefs == null || (prefs != null && !prefs.VR))
+            {
+                transform.GetChild(0).GetChild(0).rotation = savedRot;
             }
         }
     }
