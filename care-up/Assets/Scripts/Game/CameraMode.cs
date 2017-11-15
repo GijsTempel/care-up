@@ -40,6 +40,9 @@ public class CameraMode : MonoBehaviour {
     private Vector3 cinematicTargetPos;
     private Quaternion cinematicTargetRot;
     private Transform cinematicControl;
+    private Quaternion savedRot;
+    private Quaternion targetRot;
+    private bool soloCamera;
 
     private Quaternion camPosition;
 
@@ -158,14 +161,21 @@ public class CameraMode : MonoBehaviour {
         }
 
         // handle player 'moving'
-        if ( currentMode == Mode.Cinematic )
+        if (currentMode == Mode.Cinematic)
         {
             CinematicUpdate();
         }
         else
         {
-            // clear unintended flag for non-cinematic animations
-            animationEnded = false;
+            if (soloCamera)
+            {
+                AnimationCameraUpdate(true);
+            }
+            else
+            {
+                // clear unintended flag for non-cinematic animations
+                animationEnded = false;
+            }
         }
 
         // handle object update in preview
@@ -323,6 +333,7 @@ public class CameraMode : MonoBehaviour {
             Vector3.Lerp(cinematicPos, cinematicTargetPos, cinematicLerp);
         cinematicControl.Find("Arms").transform.rotation =
             Quaternion.Lerp(cinematicRot, cinematicTargetRot, cinematicLerp);
+        AnimationCameraUpdate(false);
 
         if (cinematicDirection == 1 && cinematicLerp == 1.0f)
         {
@@ -336,6 +347,46 @@ public class CameraMode : MonoBehaviour {
             cinematicDirection = 1;
             animationEnded = false;
         }
+    }
+
+    void AnimationCameraUpdate(bool solo)
+    {
+        if (solo)
+        {
+            if (cinematicDirection == 1 || animationEnded)
+            {
+                cinematicLerp = Mathf.Clamp01(cinematicLerp + 2 * Time.deltaTime * cinematicDirection);
+            }
+        }
+
+        Camera.main.transform.rotation = Quaternion.Lerp(savedRot, targetRot, cinematicLerp);
+
+        if (solo)
+        {
+            if (cinematicDirection == 1 && cinematicLerp == 1.0f)
+            {
+                cinematicDirection = -1;
+            }
+            else if (cinematicDirection == -1 && cinematicLerp == 0.0f)
+            {
+                cinematicDirection = 1;
+                animationEnded = false;
+                soloCamera = false;
+            }
+        }
+    }
+
+    public void SetCameraUpdating(bool solo)
+    {
+        if (solo)
+        {
+            soloCamera = true;
+            cinematicLerp = 0.0f;
+            cinematicDirection = 1;
+        }
+
+        savedRot = Camera.main.transform.rotation;
+        targetRot = savedRot * Quaternion.Euler(25.0f, 0.0f, 0.0f);
     }
 
     public void SetCinematicMode(Transform target)
@@ -356,5 +407,7 @@ public class CameraMode : MonoBehaviour {
         Transform cTarget = target.Find("CinematicTarget");
         cinematicTargetRot = cTarget.rotation;
         cinematicTargetPos = cTarget.position;
+
+        SetCameraUpdating(false);
     }
 }
