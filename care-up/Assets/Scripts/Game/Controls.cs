@@ -134,7 +134,7 @@ public class Controls : MonoBehaviour {
 	void LateUpdate() {
 
         // raycast only in this script
-        Ray ray = prefs.VR ?
+        Ray ray = ((prefs == null) ? false : prefs.VR) ?
             new Ray(Camera.main.transform.position, Camera.main.transform.forward)
             : Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;

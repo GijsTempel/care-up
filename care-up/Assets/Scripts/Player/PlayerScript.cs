@@ -41,7 +41,8 @@ public class PlayerScript : MonoBehaviour {
             prefs = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
         }
 
-        GetComponent<Crosshair>().enabled = prefs.VR;
+        
+        GetComponent<Crosshair>().enabled = ( prefs == null ) ? false : prefs.VR;
 
         controls = GameObject.Find("GameLogic").GetComponent<Controls>();
 
@@ -54,8 +55,16 @@ public class PlayerScript : MonoBehaviour {
 
     private void Update()
     {
-        if ( !prefs.VR)
-        { 
+        if (prefs != null)
+        {
+            if (!prefs.VR)
+            {
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+            }
+        }
+        else
+        {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
@@ -78,7 +87,7 @@ public class PlayerScript : MonoBehaviour {
             {
                 ToggleAway();
                 transform.position = savedPos;
-                if (!prefs.VR)
+                if (prefs == null || (prefs != null && !prefs.VR))
                 {
                     transform.rotation = savedRot;
                 }
@@ -94,7 +103,7 @@ public class PlayerScript : MonoBehaviour {
             savedPos = transform.position;
             savedRot = transform.rotation;
             transform.position = group.position;
-            if (!prefs.VR)
+            if ( prefs == null || (prefs != null && !prefs.VR))
             {
                 transform.rotation = Quaternion.Euler(group.rotation);
             }
