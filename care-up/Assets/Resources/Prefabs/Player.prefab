@@ -599,7 +599,6 @@ GameObject:
   - component: {fileID: 4518464187611870}
   - component: {fileID: 20737624493356026}
   - component: {fileID: 81962877198642608}
-  - component: {fileID: 114983328853151864}
   - component: {fileID: 124975966895673516}
   - component: {fileID: 114076865811368206}
   - component: {fileID: 114513342045435418}
@@ -3142,8 +3141,8 @@ GameObject:
   - component: {fileID: 4698632857765890}
   - component: {fileID: 54767199245095018}
   - component: {fileID: 136900121847772860}
-  - component: {fileID: 114941805877409054}
   - component: {fileID: 114036764881867928}
+  - component: {fileID: 114025447689089386}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -5436,7 +5435,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 122
   m_CollisionDetection: 0
 --- !u!81 &81962877198642608
 AudioListener:
@@ -5764,6 +5763,35 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114025447689089386
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1877017155916426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13ab6b6f664077d47b95dd03d63a3dbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tutorial_movementLock: 0
+  tutorial_totalLookAround: 0
+  tutorial_totalMoveAround: 0
+  cam: {fileID: 20737624493356026}
+  mouseLook:
+    lookOnly: 0
+    XSensitivity: 2
+    YSensitivity: 2
+    clampVerticalRotation: 1
+    clampHorisontalRotation: 0
+    MinimumX: -45
+    MaximumX: 60
+    MinimumY: -60
+    MaximumY: 60
+    smooth: 0
+    smoothTime: 18
+    lockCursor: 1
+  away: 1
 --- !u!114 &114030887567834558
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9486,72 +9514,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114941805877409054
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1877017155916426}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81c9795a96c094f4cbde4d65546aa9b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tutorial_movementLock: 0
-  tutorial_totalLookAround: 0
-  tutorial_totalMoveAround: 0
-  cam: {fileID: 20737624493356026}
-  movementSettings:
-    ForwardSpeed: 4
-    BackwardSpeed: 2
-    StrafeSpeed: 2
-    RunMultiplier: 2
-    RunKey: 304
-    JumpForce: 50
-    SlopeCurveModifier:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: -90
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 90
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    CurrentTargetSpeed: 8
-  mouseLook:
-    lookOnly: 0
-    XSensitivity: 2
-    YSensitivity: 2
-    clampVerticalRotation: 1
-    clampHorisontalRotation: 0
-    MinimumX: -45
-    MaximumX: 60
-    MinimumY: -60
-    MaximumY: 60
-    smooth: 1
-    smoothTime: 18
-    lockCursor: 1
-  advancedSettings:
-    groundCheckDistance: 0.1
-    stickToGroundHelperDistance: 0.6
-    slowDownRate: 20
-    airControl: 0
-    shellOffset: 0
 --- !u!114 &114944046797206696
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9658,64 +9620,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 00 / 00
---- !u!114 &114983328853151864
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1217758637017482}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83c81407209f85e4c87c0cda8b32868e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Camera: {fileID: 20737624493356026}
-  motionBob:
-    HorizontalBobRange: 0.04
-    VerticalBobRange: 0.02
-    Bobcurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 0.5
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1.5
-        value: -1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 2
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    VerticaltoHorizontalRatio: 2
-  jumpAndLandingBob:
-    BobDuration: 0.15
-    BobAmount: 0.2
-  rigidbodyFirstPersonController: {fileID: 114941805877409054}
-  StrideInterval: 4
-  RunningStrideLengthen: 0.722
 --- !u!114 &114984138327283740
 MonoBehaviour:
   m_ObjectHideFlags: 1

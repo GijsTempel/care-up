@@ -25,7 +25,7 @@ public class GameTimer : MonoBehaviour {
     void Update ()
     {
         currentTime += Time.deltaTime;
-
+        
         timerText.text = string.Format("{0}:{1:00}", (int)currentTime / 60, (int)currentTime % 60);
     }
     

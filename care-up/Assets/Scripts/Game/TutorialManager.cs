@@ -114,7 +114,7 @@ public class TutorialManager : MonoBehaviour {
     private float pauseTimer = 0.0f;
     private Text UItext;
     
-    private RigidbodyFirstPersonController player;
+    private PlayerScript player;
     private ActionManager actionManager;
     private HandsInventory handsInventory;
     private Controls controls;
@@ -159,7 +159,7 @@ public class TutorialManager : MonoBehaviour {
         handsInventory = gameLogic.GetComponent<HandsInventory>();
         controls = gameLogic.GetComponent<Controls>();
 
-        player = GameObject.Find("Player").GetComponent<RigidbodyFirstPersonController>();
+        player = GameObject.Find("Player").GetComponent<PlayerScript>();
         handCleaner = GameObject.Find("HandCleaner").GetComponent<UsableObject>();
         workField = GameObject.Find("WorkField").GetComponent<WorkField>();
         patientRecords = GameObject.Find("PatientRecords").GetComponent<ExaminableObject>();

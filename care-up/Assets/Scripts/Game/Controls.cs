@@ -39,6 +39,8 @@ public class Controls : MonoBehaviour {
         //                                            new ControllerKey(KeyCode.Joystick1Button6, KeyCode.Joystick1Button8));
         public InputKey GetHintKey = new InputKey();
 
+        public InputKey Teleport = new InputKey(new KeyBoardKey(KeyCode.Space));
+
         public bool mouseClickLocked = false;
         public void SetAllLocked(bool value)
         {
@@ -114,27 +116,41 @@ public class Controls : MonoBehaviour {
     {
         selectedObject = null;
     }
-   
+
+    PlayerPrefsManager prefs;
+
+    private void Start()
+    {
+        if (GameObject.Find("Preferences") != null)
+        {
+            prefs = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
+        }
+    }
+
     /// <summary>
     /// Sets selectedObject to an object player is aimed at atm.
     /// Sets canInteract based of distance to aimed object.
     /// </summary>
 	void LateUpdate () {
-        // raycast only in this script
-        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
+
+        if ( true )//prefs.VR)
         {
-            selectedObject = hit.transform.gameObject;
-            //canInteract = (hit.distance <= interactionDistance) ? true : false;
-            canInteract = Vector2.Distance(
-                new Vector2(Camera.main.transform.position.x, Camera.main.transform.position.z),
-                new Vector2(hit.transform.position.x, hit.transform.position.z)) 
-                <= interactionDistance ? true : false;
-        }
-        else
-        {
-            ResetObject();
+            // raycast only in this script
+            Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
+            {
+                selectedObject = hit.transform.gameObject;
+                //canInteract = (hit.distance <= interactionDistance) ? true : false;
+                canInteract = Vector2.Distance(
+                    new Vector2(Camera.main.transform.position.x, Camera.main.transform.position.z),
+                    new Vector2(hit.transform.position.x, hit.transform.position.z))
+                    <= interactionDistance ? true : false;
+            }
+            else
+            {
+                ResetObject();
+            }
         }
 
         keyUsed = false;

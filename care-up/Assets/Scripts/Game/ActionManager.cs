@@ -591,7 +591,7 @@ public class ActionManager : MonoBehaviour {
             GameObject.Find("GameLogic").GetComponent<GameTimer>().enabled = false;
         }
 
-        RigidbodyFirstPersonController player = GameObject.Find("Player").GetComponent<RigidbodyFirstPersonController>();
+        PlayerScript player = GameObject.Find("Player").GetComponent<PlayerScript>();
         Crosshair crosshair = GameObject.Find("Player").GetComponent<Crosshair>();
         Animator animator = player.transform.GetChild(0).GetChild(0).GetComponent<Animator>();
         

@@ -15,7 +15,7 @@ public class InGameUI : MonoBehaviour {
     private Controls controls;
     private GameTimer timer;
 
-    private RigidbodyFirstPersonController player;
+    private PlayerScript player;
     private Crosshair crosshair;
     private Animator animator;
 
@@ -47,7 +47,7 @@ public class InGameUI : MonoBehaviour {
             timer = game.GetComponent<GameTimer>();
         }
 
-        player = GameObject.Find("Player").GetComponent<RigidbodyFirstPersonController>();
+        player = GameObject.Find("Player").GetComponent<PlayerScript>();
         crosshair = GameObject.Find("Player").GetComponent<Crosshair>();
         animator = player.transform.GetChild(0).GetChild(0).GetComponent<Animator>();
 

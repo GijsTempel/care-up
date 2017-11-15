@@ -44,7 +44,7 @@ public class CameraMode : MonoBehaviour {
     private Quaternion camPosition;
 
     private Controls controls;
-    private RigidbodyFirstPersonController playerScript;
+    private PlayerScript playerScript;
     private HandsInventory inventory;
     private UnityStandardAssets.ImageEffects.BlurOptimized blur;
 
@@ -58,7 +58,7 @@ public class CameraMode : MonoBehaviour {
         controls = GameObject.Find("GameLogic").GetComponent<Controls>();
         if (controls == null) Debug.LogError("No controls script found");
 
-        playerScript = GameObject.Find("Player").GetComponent<RigidbodyFirstPersonController>();
+        playerScript = GameObject.Find("Player").GetComponent<PlayerScript>();
         if (playerScript == null) Debug.LogError("No Player script found");
 
         inventory = GameObject.Find("GameLogic").GetComponent<HandsInventory>();

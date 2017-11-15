@@ -766,6 +766,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
+--- !u!1 &1824245024491128
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4622535321596152}
+  - component: {fileID: 65101944811255488}
+  - component: {fileID: 114777781259553906}
+  m_Layer: 0
+  m_Name: PlayerPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1833260897748028
 GameObject:
   m_ObjectHideFlags: 1
@@ -1536,15 +1553,16 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1012617578749984}
-  m_LocalRotation: {x: -0, y: 0.6586598, z: -0, w: 0.7524409}
-  m_LocalPosition: {x: -5.382001, y: 0.0049995203, z: 6.1099997}
-  m_LocalScale: {x: 1.074143, y: 1.0741423, z: 1.0741433}
+  m_LocalRotation: {x: -0, y: 0.8243837, z: -0, w: -0.56603146}
+  m_LocalPosition: {x: 9.880178, y: 0.0049995184, z: 12.639792}
+  m_LocalScale: {x: 1.0741433, y: 1.0741423, z: 1.0741435}
   m_Children:
   - {fileID: 4781453024850762}
   - {fileID: 4438302248614616}
+  - {fileID: 4622535321596152}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 82.395004, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 248.948, z: 0}
 --- !u!4 &4438302248614616
 Transform:
   m_ObjectHideFlags: 1
@@ -1646,6 +1664,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4072488134316328}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4622535321596152
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1824245024491128}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4432281150707412}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4635911744720512
 Transform:
@@ -1979,6 +2010,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 2, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &65101944811255488
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1824245024491128}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0814947, y: 2.6922631, z: 1}
+  m_Center: {x: 0.0407486, y: 0.8461306, z: 0.0000000011194912}
 --- !u!82 &82729162590868316
 AudioSource:
   m_ObjectHideFlags: 1
@@ -2034,7 +2077,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   spreadCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -2046,7 +2089,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -2058,7 +2101,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
 --- !u!95 &95009182766757784
 Animator:
   serializedVersion: 3
@@ -2087,9 +2130,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4d4d9b1976464e43a435f18ed9b02d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  description: 
+  description: Collega
   muplipleMesh: 1
-  descriptionOffset: {x: 0, y: 0, z: 0}
+  descriptionOffset: {x: 0, y: 1, z: 0}
+  tutorial_talked: 0
+  tutorial_used: 0
   dialogueXml: InjSubcV2Doctor
 --- !u!114 &114670202527344526
 MonoBehaviour:
@@ -2105,6 +2150,19 @@ MonoBehaviour:
   description: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
+--- !u!114 &114777781259553906
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1824245024491128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4e7de5618ad9c347a1224c0b467deff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 8.5, y: 0, z: 12.2}
+  rotation: {x: 0, y: 80, z: 0}
 --- !u!137 &137144922212247908
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

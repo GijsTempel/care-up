@@ -27,6 +27,7 @@ public class InteractableObject : MonoBehaviour {
     static protected Controls controls;
     static protected ActionManager actionManager;
     static protected GameObject itemDescription;
+    static protected PlayerScript player;
 
     protected virtual void Start()
     {
@@ -67,6 +68,12 @@ public class InteractableObject : MonoBehaviour {
             if (actionManager == null) Debug.LogError("No action manager found");
         }
 
+        if (player == null)
+        {
+            player = GameObject.Find("Player").GetComponent<PlayerScript>();
+            if (player == null) Debug.LogError("No player");
+        }
+
         if (itemDescription == null)
         {
             //itemDescription = Instantiate(Resources.Load<GameObject>("Prefabs/ItemDescription"),
@@ -91,7 +98,7 @@ public class InteractableObject : MonoBehaviour {
     /// </summary>
     protected virtual void Update()
     {
-        if (cameraMode.CurrentMode == CameraMode.Mode.Free)
+        if (cameraMode.CurrentMode == CameraMode.Mode.Free && !player.away)
         {
             if (controls.SelectedObject == gameObject && !cameraMode.animating)
             {
@@ -196,6 +203,25 @@ public class InteractableObject : MonoBehaviour {
                     m.shader = shader;
                 }
             }
+        }
+    }
+
+    public void Highlight(bool value)
+    {
+        if (rend == null)
+        {
+            rend = GetComponent<Renderer>();
+        }
+
+        if (value)
+        {
+            if (rend.material.shader == onMouseExitShader)
+                SetShaderTo(onMouseOverShader);
+        }
+        else
+        {
+            if (rend.material.shader == onMouseOverShader)
+                SetShaderTo(onMouseExitShader);
         }
     }
 }
