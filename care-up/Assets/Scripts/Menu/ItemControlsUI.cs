@@ -22,7 +22,7 @@ public class ItemControlsUI : MonoBehaviour {
     private GameObject combineButton;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 
         controls = GameObject.Find("GameLogic").GetComponent<Controls>();
         handsInventory = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
@@ -44,6 +44,7 @@ public class ItemControlsUI : MonoBehaviour {
     public void Init()
     {
         initedObject = controls.SelectedObject;
+
         if (initedObject != null && initedObject.GetComponent<InteractableObject>() != null)
         {
             pickButton.SetActive(initedObject.GetComponent<PickableObject>() != null 
