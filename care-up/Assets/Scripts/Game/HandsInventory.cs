@@ -247,7 +247,7 @@ public class HandsInventory : MonoBehaviour {
         }
 
         // handle picking items
-        if (controls.MouseClicked() && cameraMode.CurrentMode == CameraMode.Mode.Free)
+        /*if (controls.MouseClicked() && cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
             if (controls.SelectedObject != null && controls.CanInteract)
             {
@@ -268,7 +268,7 @@ public class HandsInventory : MonoBehaviour {
                     }
                 }
             }
-        }
+        }*/
     }
     
     /// <summary>

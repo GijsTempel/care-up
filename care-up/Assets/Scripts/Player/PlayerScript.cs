@@ -31,6 +31,7 @@ public class PlayerScript : MonoBehaviour {
     Texture fadeTex;
 
     GameObject moveBackButton;
+    ItemControlsUI itemControls;
 
     private void Start()
     {
@@ -55,6 +56,9 @@ public class PlayerScript : MonoBehaviour {
 
         moveBackButton = GameObject.Find("MoveBackButton");
         moveBackButton.SetActive(false);
+
+        itemControls = GameObject.FindObjectOfType<ItemControlsUI>();
+        itemControls.gameObject.SetActive(false);
     }
 
 
@@ -79,10 +83,15 @@ public class PlayerScript : MonoBehaviour {
 
         if (controls.MouseClicked())
         {
-            if (controls.SelectedObject != null && 
+            if (away && controls.SelectedObject != null && 
                 controls.SelectedObject.GetComponent<WalkToGroup>())
             {
                 WalkToGroup(controls.SelectedObject.GetComponent<WalkToGroup>());
+            }
+            else if (!away && controls.SelectedObject != null
+                && !itemControls.gameObject.activeSelf )
+            {
+                itemControls.Init();
             }
         }
     }

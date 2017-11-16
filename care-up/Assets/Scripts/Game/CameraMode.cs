@@ -22,8 +22,8 @@ public class CameraMode : MonoBehaviour {
     
     private Mode currentMode = Mode.Free;
 
-    private ExaminableObject selectedObject;
-    private SystemObject doorSelected;
+    public ExaminableObject selectedObject;
+    public SystemObject doorSelected;
 
     private GameObject confirmUI;
 
@@ -91,7 +91,7 @@ public class CameraMode : MonoBehaviour {
         }
 
         // clicked on something in free mode, possibly change mode
-        if (controls.MouseClicked() && currentMode == Mode.Free)
+        /*if (controls.MouseClicked() && currentMode == Mode.Free)
         {
             if (controls.SelectedObject && controls.CanInteract)
             {
@@ -107,7 +107,7 @@ public class CameraMode : MonoBehaviour {
                     doorSelected.Use();
                 }
             }
-        }
+        }*/
 
         // handle object preview, close/pick,zoom
         if (currentMode == Mode.ObjectPreview)
