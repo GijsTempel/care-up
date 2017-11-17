@@ -51,7 +51,12 @@ public class ItemControlsUI : MonoBehaviour {
                 && initedObject.GetComponent<ExaminableObject>() == null);
             examineButton.SetActive(initedObject.GetComponent<ExaminableObject>() != null);
             useButton.SetActive(initedObject.GetComponent<UsableObject>() != null);
+
             talkButton.SetActive(initedObject.GetComponent<PersonObjectPart>() != null);
+            if ( talkButton.activeSelf )
+            {
+                initedObject = initedObject.GetComponent<PersonObjectPart>().Person.gameObject;
+            }
 
             useOnButton.SetActive(false);
             combineButton.SetActive(false);
@@ -130,6 +135,19 @@ public class ItemControlsUI : MonoBehaviour {
                         controls.ResetObject();
                     }
                 }
+            }
+        }
+
+        Close();
+    }
+
+    public void Talk()
+    {
+        if (cameraMode.CurrentMode == CameraMode.Mode.Free)
+        {
+            if (initedObject != null)
+            {
+                initedObject.GetComponent<PersonObject>().CreateSelectionDialogue();
             }
         }
 

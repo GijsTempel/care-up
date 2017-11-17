@@ -121,6 +121,11 @@ public class PlayerScript : MonoBehaviour {
             g.GetComponent<Collider>().enabled = away;
         }
         moveBackButton.SetActive(!away);
+
+        if (away)
+        {
+            itemControls.Close();
+        }
     }
 
     private void OnGUI()

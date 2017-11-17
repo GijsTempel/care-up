@@ -141,7 +141,7 @@ public class PersonObject : InteractableObject {
     /// <summary>
     /// Creates an instance of dialogue, switches camera mode
     /// </summary>
-    private void CreateSelectionDialogue()
+    public void CreateSelectionDialogue()
     {
         tutorial_used = true;
         GameObject dialogueObject = Instantiate(Resources.Load<GameObject>("Prefabs/SelectionDialogue"),
@@ -202,11 +202,11 @@ public class PersonObject : InteractableObject {
                         itemDescription.SetActive(true);
                     }
 
-                    if (controls.MouseClicked() && clickFlag)
+                    /*if (controls.MouseClicked() && clickFlag)
                     {
                         Reset();
                         CreateSelectionDialogue();
-                    }
+                    }*/
                 }
                 else if (!controls.CanInteract && rend.material.shader == onMouseOverShader)
                 {
