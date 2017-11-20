@@ -63,7 +63,7 @@ public class PickableObject : InteractableObject {
 
         if (rigidBody != null)
         {
-            rigidBody.useGravity = true;
+            rigidBody.isKinematic = true;
             rigidBody.constraints = RigidbodyConstraints.None;
             if (Vector3.Distance(transform.position, savedPosition) < 3.0f || force)
             {

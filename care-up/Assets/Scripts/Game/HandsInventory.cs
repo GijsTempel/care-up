@@ -124,66 +124,6 @@ public class HandsInventory : MonoBehaviour {
         // handle player actions in free mode
         if (cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
-            // drop left object
-            if (controls.keyPreferences.LeftDropKey.Pressed())
-            {
-                if (leftHandObject)
-                {
-                    if (tutorial == null || (tutorial != null &&
-                    (tutorial.itemToDrop == leftHandObject.name ||
-                    tutorial.itemToDrop2 == LeftHandObject.name)))
-                    {
-                        leftHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
-                        tutorial_droppedLeft = true;
-                        if (!leftHandObject.Drop())
-                        {
-                            if (!prefsManager.practiceMode)
-                            {
-                                actionManager.OnGameOver();
-                            }
-                            else if (dropPenalty)
-                            {
-                                Narrator.PlaySound("WrongAction");
-                                actionManager.Points--;
-                            }
-                        }
-                        leftHandObject = null;
-                        leftHold = false;
-                        PlayerAnimationManager.SetHandItem(true, null);
-                    }
-                }
-            }
-
-            // drop right object
-            if (controls.keyPreferences.RightDropKey.Pressed())
-            {
-                if (rightHandObject)
-                {
-                    if (tutorial == null || (tutorial != null &&
-                    (tutorial.itemToDrop == rightHandObject.name ||
-                    tutorial.itemToDrop2 == rightHandObject.name)))
-                    {
-                        rightHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
-                        tutorial_droppedRight = true;
-                        if (!rightHandObject.Drop())
-                        {
-                            if (!prefsManager.practiceMode)
-                            {
-                                actionManager.OnGameOver();
-                            }
-                            else if (dropPenalty)
-                            {
-                                Narrator.PlaySound("WrongAction");
-                                actionManager.Points--;
-                            }
-                        }
-                        rightHandObject = null;
-                        rightHold = false;
-                        PlayerAnimationManager.SetHandItem(false, null);
-                    }
-                }
-            }
-
             // use left object
             if (controls.keyPreferences.LeftUseKey.Pressed())
             {
@@ -218,30 +158,6 @@ public class HandsInventory : MonoBehaviour {
                 }
             }
         }
-
-        // handle picking items
-        /*if (controls.MouseClicked() && cameraMode.CurrentMode == CameraMode.Mode.Free)
-        {
-            if (controls.SelectedObject != null && controls.CanInteract)
-            {
-                PickableObject item = controls.SelectedObject.GetComponent<PickableObject>();
-                if (item != null)
-                {
-                    if (item.GetComponent<ExaminableObject>() == null)
-                    {
-                        if (tutorial == null || 
-                            (tutorial != null && 
-                                (item.name == tutorial.itemToPick || 
-                                item.name == tutorial.itemToPick2)))
-                        {
-                            PickItem(item);
-                        }
-
-                        controls.ResetObject();
-                    }
-                }
-            }
-        }*/
     }
     
     /// <summary>
@@ -273,8 +189,8 @@ public class HandsInventory : MonoBehaviour {
                 rightHandObject = item;
                 picked = true;
                 tutorial_pickedRight = true;
-                rightHandObject.GetComponent<Rigidbody>().useGravity = false;
-                rightHandObject.GetComponent<Collider>().enabled = false;
+                rightHandObject.GetComponent<Rigidbody>().isKinematic = false;
+                //rightHandObject.GetComponent<Collider>().enabled = false;
                 rightHandObject.controlBone = leftControlBone; // TODO
                 actionManager.OnPickUpAction(rightHandObject.name);
                 PlayerAnimationManager.PlayAnimation("RightPick");
@@ -289,8 +205,8 @@ public class HandsInventory : MonoBehaviour {
                 leftHandObject = item;
                 picked = true;
                 tutorial_pickedLeft = true;
-                leftHandObject.GetComponent<Rigidbody>().useGravity = false;
-                leftHandObject.GetComponent<Collider>().enabled = false;
+                leftHandObject.GetComponent<Rigidbody>().isKinematic = false;
+                //leftHandObject.GetComponent<Collider>().enabled = false;
                 leftHandObject.controlBone = leftControlBone;
                 actionManager.OnPickUpAction(leftHandObject.name);
                 PlayerAnimationManager.PlayAnimation("LeftPick");
@@ -304,8 +220,8 @@ public class HandsInventory : MonoBehaviour {
                 rightHandObject = item;
                 picked = true;
                 tutorial_pickedRight = true;
-                rightHandObject.GetComponent<Rigidbody>().useGravity = false;
-                rightHandObject.GetComponent<Collider>().enabled = false;
+                rightHandObject.GetComponent<Rigidbody>().isKinematic = false;
+                //rightHandObject.GetComponent<Collider>().enabled = false;
                 rightHandObject.controlBone = leftControlBone; // TODO
                 actionManager.OnPickUpAction(rightHandObject.name);
                 PlayerAnimationManager.PlayAnimation("RightPick");
@@ -814,6 +730,64 @@ public class HandsInventory : MonoBehaviour {
 
             combineDelayed = true;
             ToggleControls(true);
+        }
+    }
+
+    public void DropLeft()
+    {
+        if (leftHandObject)
+        {
+            if (tutorial == null || (tutorial != null &&
+            (tutorial.itemToDrop == leftHandObject.name ||
+            tutorial.itemToDrop2 == LeftHandObject.name)))
+            {
+                leftHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
+                tutorial_droppedLeft = true;
+                if (!leftHandObject.Drop())
+                {
+                    if (!prefsManager.practiceMode)
+                    {
+                        actionManager.OnGameOver();
+                    }
+                    else if (dropPenalty)
+                    {
+                        Narrator.PlaySound("WrongAction");
+                        actionManager.Points--;
+                    }
+                }
+                leftHandObject = null;
+                leftHold = false;
+                PlayerAnimationManager.SetHandItem(true, null);
+            }
+        }
+    }
+
+    public void DropRight()
+    {
+        if (rightHandObject)
+        {
+            if (tutorial == null || (tutorial != null &&
+            (tutorial.itemToDrop == rightHandObject.name ||
+            tutorial.itemToDrop2 == rightHandObject.name)))
+            {
+                rightHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
+                tutorial_droppedRight = true;
+                if (!rightHandObject.Drop())
+                {
+                    if (!prefsManager.practiceMode)
+                    {
+                        actionManager.OnGameOver();
+                    }
+                    else if (dropPenalty)
+                    {
+                        Narrator.PlaySound("WrongAction");
+                        actionManager.Points--;
+                    }
+                }
+                rightHandObject = null;
+                rightHold = false;
+                PlayerAnimationManager.SetHandItem(false, null);
+            }
         }
     }
 }

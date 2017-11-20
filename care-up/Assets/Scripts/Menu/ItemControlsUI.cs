@@ -20,6 +20,7 @@ public class ItemControlsUI : MonoBehaviour {
     private GameObject talkButton;
     private GameObject useOnButton;
     private GameObject combineButton;
+    private GameObject dropButton;
 
 	// Use this for initialization
 	void Awake () {
@@ -38,6 +39,8 @@ public class ItemControlsUI : MonoBehaviour {
         useOnButton = transform.Find("UseOnButton").gameObject;
         combineButton = transform.Find("CombineButton").gameObject;
 
+        dropButton = transform.Find("DropButton").gameObject;
+
         closeButton = transform.Find("CloseButton").gameObject;
     }
 
@@ -52,6 +55,7 @@ public class ItemControlsUI : MonoBehaviour {
             {
                 useOnButton.SetActive(true);
                 combineButton.SetActive(true);
+                dropButton.SetActive(true);
 
                 pickButton.SetActive(false);
                 examineButton.SetActive(false);
@@ -73,6 +77,7 @@ public class ItemControlsUI : MonoBehaviour {
 
                 useOnButton.SetActive(false);
                 combineButton.SetActive(false);
+                dropButton.SetActive(false);
             }
 
 
@@ -172,6 +177,23 @@ public class ItemControlsUI : MonoBehaviour {
     public void Combine()
     {
         handsInventory.OnCombineAction();
+
+        Close();
+    }
+
+    public void Drop()
+    {
+        if (initedObject != null)
+        {
+            if (handsInventory.LeftHandObject == initedObject)
+            {
+                handsInventory.DropLeft();
+            }
+            else if (handsInventory.RightHandObject == initedObject)
+            {
+                handsInventory.DropRight();
+            }
+        }
 
         Close();
     }
