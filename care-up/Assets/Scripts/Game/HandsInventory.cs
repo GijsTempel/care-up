@@ -184,33 +184,6 @@ public class HandsInventory : MonoBehaviour {
                 }
             }
 
-            // combine key pressed, if combine performed - handle object changes
-            if (controls.keyPreferences.CombineKey.Pressed())
-            {
-                string leftName = leftHandObject ? leftHandObject.name : "";
-                string rightName = rightHandObject ? rightHandObject.name : "";
-
-                string[] currentObjects = actionManager.CurrentCombineObjects;
-                bool combineAllowed = (currentObjects[0] == leftName && currentObjects[1] == rightName)
-                    || (currentObjects[0] == rightName && currentObjects[1] == leftName);
-                
-                bool combined = combinationManager.Combine(leftName, rightName, out leftCombineResult, out rightCombineResult);
-
-                // combine performed
-                if (combined && combineAllowed)
-                {
-                    tutorial_combined = true;
-                    
-                    string combineAnimation = "Combine " +
-                        (leftHandObject ? leftHandObject.name : "_") + " " +
-                        (rightHandObject ? rightHandObject.name : "_");
-                    PlayerAnimationManager.PlayAnimation(combineAnimation);
-
-                    combineDelayed = true;
-                    ToggleControls(true);
-                }
-            }
-
             // use left object
             if (controls.keyPreferences.LeftUseKey.Pressed())
             {
@@ -287,8 +260,8 @@ public class HandsInventory : MonoBehaviour {
                 leftHandObject = item;
                 picked = true;
                 tutorial_pickedLeft = true;
-                leftHandObject.GetComponent<Rigidbody>().useGravity = false; 
-                leftHandObject.GetComponent<Collider>().enabled = false;
+                leftHandObject.GetComponent<Rigidbody>().isKinematic = false; 
+                //leftHandObject.GetComponent<Collider>().enabled = false;
                 leftHandObject.controlBone = leftControlBone;
                 actionManager.OnPickUpAction(leftHandObject.name);
                 PlayerAnimationManager.PlayAnimation("LeftPick");
@@ -809,5 +782,38 @@ public class HandsInventory : MonoBehaviour {
         float offset = -1.5f * Mathf.Abs(originVector.z + targetVector.z);
         
         return new Vector3(0.0f, 0.0f, offset);
+    }
+
+    public bool IsInHand(GameObject target)
+    {
+        GameObject left = (leftHandObject != null) ? leftHandObject.gameObject : null;
+        GameObject right = (rightHandObject != null) ? rightHandObject.gameObject : null;
+        return (target == left || target == right) && target != null;
+    }
+
+    public void OnCombineAction()
+    {
+        string leftName = leftHandObject ? leftHandObject.name : "";
+        string rightName = rightHandObject ? rightHandObject.name : "";
+
+        string[] currentObjects = actionManager.CurrentCombineObjects;
+        bool combineAllowed = (currentObjects[0] == leftName && currentObjects[1] == rightName)
+            || (currentObjects[0] == rightName && currentObjects[1] == leftName);
+
+        bool combined = combinationManager.Combine(leftName, rightName, out leftCombineResult, out rightCombineResult);
+
+        // combine performed
+        if (combined && combineAllowed)
+        {
+            tutorial_combined = true;
+
+            string combineAnimation = "Combine " +
+                (leftHandObject ? leftHandObject.name : "_") + " " +
+                (rightHandObject ? rightHandObject.name : "_");
+            PlayerAnimationManager.PlayAnimation(combineAnimation);
+
+            combineDelayed = true;
+            ToggleControls(true);
+        }
     }
 }

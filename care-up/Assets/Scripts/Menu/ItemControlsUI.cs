@@ -47,19 +47,34 @@ public class ItemControlsUI : MonoBehaviour {
 
         if (initedObject != null && initedObject.GetComponent<InteractableObject>() != null)
         {
-            pickButton.SetActive(initedObject.GetComponent<PickableObject>() != null 
-                && initedObject.GetComponent<ExaminableObject>() == null);
-            examineButton.SetActive(initedObject.GetComponent<ExaminableObject>() != null);
-            useButton.SetActive(initedObject.GetComponent<UsableObject>() != null);
-
-            talkButton.SetActive(initedObject.GetComponent<PersonObjectPart>() != null);
-            if ( talkButton.activeSelf )
+            if (initedObject.GetComponent<PickableObject>() != null
+                 && handsInventory.IsInHand(initedObject))
             {
-                initedObject = initedObject.GetComponent<PersonObjectPart>().Person.gameObject;
+                useOnButton.SetActive(true);
+                combineButton.SetActive(true);
+
+                pickButton.SetActive(false);
+                examineButton.SetActive(false);
+                useButton.SetActive(false);
+                talkButton.SetActive(false);
+            }
+            else
+            {
+                pickButton.SetActive(initedObject.GetComponent<PickableObject>() != null
+                    && initedObject.GetComponent<ExaminableObject>() == null);
+                examineButton.SetActive(initedObject.GetComponent<ExaminableObject>() != null);
+                useButton.SetActive(initedObject.GetComponent<UsableObject>() != null);
+
+                talkButton.SetActive(initedObject.GetComponent<PersonObjectPart>() != null);
+                if (talkButton.activeSelf)
+                {
+                    initedObject = initedObject.GetComponent<PersonObjectPart>().Person.gameObject;
+                }
+
+                useOnButton.SetActive(false);
+                combineButton.SetActive(false);
             }
 
-            useOnButton.SetActive(false);
-            combineButton.SetActive(false);
 
             closeButton.SetActive(true);
 
@@ -150,6 +165,13 @@ public class ItemControlsUI : MonoBehaviour {
                 initedObject.GetComponent<PersonObject>().CreateSelectionDialogue();
             }
         }
+
+        Close();
+    }
+
+    public void Combine()
+    {
+        handsInventory.OnCombineAction();
 
         Close();
     }
