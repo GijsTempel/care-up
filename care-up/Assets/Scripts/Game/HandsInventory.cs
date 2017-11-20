@@ -176,6 +176,7 @@ public class HandsInventory : MonoBehaviour {
                 leftHandObject = item;
                 picked = true;
                 tutorial_pickedLeft = true;
+                leftHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 leftHandObject.GetComponent<Rigidbody>().isKinematic = false; 
                 //leftHandObject.GetComponent<Collider>().enabled = false;
                 leftHandObject.controlBone = leftControlBone;
@@ -189,6 +190,7 @@ public class HandsInventory : MonoBehaviour {
                 rightHandObject = item;
                 picked = true;
                 tutorial_pickedRight = true;
+                leftHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 rightHandObject.GetComponent<Rigidbody>().isKinematic = false;
                 //rightHandObject.GetComponent<Collider>().enabled = false;
                 rightHandObject.controlBone = leftControlBone; // TODO
@@ -205,6 +207,7 @@ public class HandsInventory : MonoBehaviour {
                 leftHandObject = item;
                 picked = true;
                 tutorial_pickedLeft = true;
+                leftHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 leftHandObject.GetComponent<Rigidbody>().isKinematic = false;
                 //leftHandObject.GetComponent<Collider>().enabled = false;
                 leftHandObject.controlBone = leftControlBone;
@@ -220,6 +223,7 @@ public class HandsInventory : MonoBehaviour {
                 rightHandObject = item;
                 picked = true;
                 tutorial_pickedRight = true;
+                leftHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 rightHandObject.GetComponent<Rigidbody>().isKinematic = false;
                 //rightHandObject.GetComponent<Collider>().enabled = false;
                 rightHandObject.controlBone = leftControlBone; // TODO
@@ -353,9 +357,9 @@ public class HandsInventory : MonoBehaviour {
         GameObject newObject = Instantiate(Resources.Load<GameObject>("Prefabs\\" + name),
                             position, Quaternion.identity) as GameObject;
 
-        newObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
+        newObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         newObject.GetComponent<Rigidbody>().useGravity = false;
-        newObject.GetComponent<Collider>().enabled = false;
+        newObject.GetComponent<Rigidbody>().isKinematic = false;
         newObject.transform.parent = interactableObjects.transform;
         newObject.name = name;
 
@@ -372,7 +376,7 @@ public class HandsInventory : MonoBehaviour {
         animationObject = Instantiate(Resources.Load<GameObject>("Prefabs\\" + name),
                             Vector3.zero, Quaternion.identity) as GameObject;
 
-        animationObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
+        animationObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         animationObject.GetComponent<Rigidbody>().useGravity = false;
         animationObject.GetComponent<Collider>().enabled = false;
         animationObject.name = name;
@@ -745,7 +749,8 @@ public class HandsInventory : MonoBehaviour {
                 tutorial_droppedLeft = true;
                 if (!leftHandObject.Drop())
                 {
-                    if (!prefsManager.practiceMode)
+                    if (prefsManager != null &&
+                        !prefsManager.practiceMode)
                     {
                         actionManager.OnGameOver();
                     }
@@ -774,7 +779,8 @@ public class HandsInventory : MonoBehaviour {
                 tutorial_droppedRight = true;
                 if (!rightHandObject.Drop())
                 {
-                    if (!prefsManager.practiceMode)
+                    if (prefsManager != null && 
+                        !prefsManager.practiceMode)
                     {
                         actionManager.OnGameOver();
                     }
