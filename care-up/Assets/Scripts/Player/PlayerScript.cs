@@ -19,6 +19,7 @@ public class PlayerScript : MonoBehaviour {
 
     PlayerPrefsManager prefs;
     Controls controls;
+    HandsInventory handsInv;
 
     public bool away = true;
     private Vector3 savedPos;
@@ -32,6 +33,9 @@ public class PlayerScript : MonoBehaviour {
 
     GameObject moveBackButton;
     ItemControlsUI itemControls;
+
+    public bool usingOnMode = false;
+    public bool usingOnHand;
 
     private void Start()
     {
@@ -59,6 +63,8 @@ public class PlayerScript : MonoBehaviour {
 
         itemControls = GameObject.FindObjectOfType<ItemControlsUI>();
         itemControls.gameObject.SetActive(false);
+
+        handsInv = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
     }
 
 
@@ -83,15 +89,39 @@ public class PlayerScript : MonoBehaviour {
 
         if (controls.MouseClicked())
         {
-            if (away && controls.SelectedObject != null && 
+            if (away && controls.SelectedObject != null &&
                 controls.SelectedObject.GetComponent<WalkToGroup>())
             {
                 WalkToGroup(controls.SelectedObject.GetComponent<WalkToGroup>());
             }
             else if (!away && controls.SelectedObject != null
-                && !itemControls.gameObject.activeSelf )
+                && !itemControls.gameObject.activeSelf)
             {
-                itemControls.Init();
+                if (usingOnMode)
+                {
+                    if (usingOnHand)
+                    {
+                        if (handsInv.LeftHandObject)
+                        {
+                            handsInv.LeftHandObject.GetComponent<PickableObject>().Use(usingOnHand);
+                        }
+
+                        usingOnMode = false;
+                    } 
+                    else
+                    {
+                        if (handsInv.RightHandObject)
+                        {
+                            handsInv.RightHandObject.GetComponent<PickableObject>().Use(usingOnHand);
+                        }
+
+                        usingOnMode = false;
+                    }
+                }
+                else
+                {
+                    itemControls.Init();
+                }
             }
         }
     }

@@ -11,6 +11,7 @@ public class ItemControlsUI : MonoBehaviour {
     private CameraMode cameraMode;
     private ActionManager actionManager;
     private TutorialManager tutorial;
+    private PlayerScript player;
 
     private GameObject closeButton;
 
@@ -30,7 +31,7 @@ public class ItemControlsUI : MonoBehaviour {
         cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
         actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
         tutorial = GameObject.Find("GameLogic").GetComponent<TutorialManager>();
-
+       
         pickButton = transform.Find("PickButton").gameObject;
         examineButton = transform.Find("ExamineButton").gameObject;
         useButton = transform.Find("UseButton").gameObject;
@@ -46,6 +47,11 @@ public class ItemControlsUI : MonoBehaviour {
 
     public void Init()
     {
+        if (player == null)
+        {
+            player = GameObject.FindObjectOfType<PlayerScript>();
+        }
+
         initedObject = controls.SelectedObject;
 
         if (initedObject != null && initedObject.GetComponent<InteractableObject>() != null)
@@ -194,6 +200,14 @@ public class ItemControlsUI : MonoBehaviour {
                 handsInventory.DropRight();
             }
         }
+
+        Close();
+    }
+
+    public void UseOn()
+    {
+        player.usingOnMode = true;
+        player.usingOnHand = initedObject == handsInventory.LeftHandObject;
 
         Close();
     }
