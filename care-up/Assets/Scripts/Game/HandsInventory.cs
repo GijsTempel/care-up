@@ -137,7 +137,8 @@ public class HandsInventory : MonoBehaviour {
                         tutorial_droppedLeft = true;
                         if (!leftHandObject.Drop())
                         {
-                            if (!prefsManager.practiceMode)
+                            if (prefsManager != null &&
+                                prefsManager.practiceMode == false)
                             {
                                 actionManager.OnGameOver();
                             }
