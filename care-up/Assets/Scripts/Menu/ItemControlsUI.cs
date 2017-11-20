@@ -70,8 +70,7 @@ public class ItemControlsUI : MonoBehaviour {
             }
             else
             {
-                pickButton.SetActive(initedObject.GetComponent<PickableObject>() != null
-                    && initedObject.GetComponent<ExaminableObject>() == null);
+                pickButton.SetActive(initedObject.GetComponent<PickableObject>() != null);
                 examineButton.SetActive(initedObject.GetComponent<ExaminableObject>() != null);
                 useButton.SetActive(initedObject.GetComponent<UsableObject>() != null);
 
@@ -148,18 +147,15 @@ public class ItemControlsUI : MonoBehaviour {
                 PickableObject item = initedObject.GetComponent<PickableObject>();
                 if (item != null)
                 {
-                    if (item.GetComponent<ExaminableObject>() == null)
+                    if (tutorial == null ||
+                        (tutorial != null &&
+                            (item.name == tutorial.itemToPick ||
+                            item.name == tutorial.itemToPick2)))
                     {
-                        if (tutorial == null ||
-                            (tutorial != null &&
-                                (item.name == tutorial.itemToPick ||
-                                item.name == tutorial.itemToPick2)))
-                        {
-                            handsInventory.PickItem(item);
-                        }
-
-                        controls.ResetObject();
+                        handsInventory.PickItem(item);
                     }
+
+                    controls.ResetObject();
                 }
             }
         }
