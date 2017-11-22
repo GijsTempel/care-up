@@ -124,6 +124,10 @@ public class PlayerScript : MonoBehaviour {
                 }
             }
         }
+        else if (Input.GetMouseButtonDown(1) && usingOnMode)
+        {
+            usingOnMode = false;
+        }
     }
 
     public void WalkToGroup(WalkToGroup group)
