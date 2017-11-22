@@ -9,17 +9,14 @@ public class WalkToGroup : MonoBehaviour
     public Vector3 position;
     public Vector3 rotation;
 
-    //public List<InteractableObject> items = new List<InteractableObject>();
+    private GameObject text;
 
     CameraMode cameraMode;
     Controls controls;
 
     public void HighlightGroup(bool value)
     {
-        /*foreach (InteractableObject i in items)
-        {
-            i.Highlight(value);
-        }*/
+        text.SetActive(value);
     }
 
     private void Start()
@@ -28,6 +25,9 @@ public class WalkToGroup : MonoBehaviour
 
         cameraMode = gameLogic.GetComponent<CameraMode>();
         controls = gameLogic.GetComponent<Controls>();
+
+        text = transform.GetChild(0).gameObject;
+        text.SetActive(false);
     }
 
     protected void Update()
