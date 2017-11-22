@@ -91,7 +91,16 @@ public class ItemControlsUI : MonoBehaviour {
             //transform.position = initedObject.transform.position +
             //    Camera.main.transform.right * 0.2f;
             //transform.rotation = Camera.main.transform.rotation;
-            gameObject.SetActive(true);
+
+            //talkin removed
+            if (talkButton.activeSelf)
+            {
+                Talk();
+            }
+            else
+            {
+                gameObject.SetActive(true);
+            }
         }
     }
 
