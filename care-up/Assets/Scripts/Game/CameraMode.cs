@@ -240,6 +240,7 @@ public class CameraMode : MonoBehaviour {
             }
 
             buttonsParent.SetActive(true);
+            playerScript.MoveBackButtonObject.SetActive(false);
         }
         else if (currentMode == Mode.ObjectPreview && mode == Mode.Free)
         {
@@ -251,14 +252,17 @@ public class CameraMode : MonoBehaviour {
             blur.enabled = false;
 
             GameObject.Find("ObjectViewButtons").SetActive(false);
+            playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
         }
         else if (mode == Mode.SelectionDialogue)
         {
             TogglePlayerScript(false);
+            playerScript.MoveBackButtonObject.SetActive(false);
         }
         else if (currentMode == Mode.SelectionDialogue)
         {
             TogglePlayerScript(true);
+            playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
         }
         else if (currentMode == Mode.Free && mode == Mode.ConfirmUI)
         {
@@ -266,11 +270,15 @@ public class CameraMode : MonoBehaviour {
             confirmUI.transform.position = Camera.main.transform.position + Camera.main.transform.forward * (0.3f);
             confirmUI.transform.rotation = Camera.main.transform.rotation;
             confirmUI.SetActive(true);
+
+            playerScript.MoveBackButtonObject.SetActive(false);
         }
         else if (currentMode == Mode.ConfirmUI && mode == Mode.Free)
         {
             TogglePlayerScript(true);
             confirmUI.SetActive(false);
+
+            playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
         }
         else if (mode == Mode.Cinematic)
         {
@@ -280,6 +288,8 @@ public class CameraMode : MonoBehaviour {
             playerScript.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 
             camPosition = Camera.main.transform.localRotation;
+
+            playerScript.MoveBackButtonObject.SetActive(false);
         }
         else if (currentMode == Mode.Cinematic && mode == Mode.Free)
         {
@@ -295,6 +305,8 @@ public class CameraMode : MonoBehaviour {
             }
             playerScript.mouseLook.clampHorisontalRotation = false;
             playerScript.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+
+            playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
         }
 
         currentMode = mode;

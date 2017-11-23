@@ -14,9 +14,6 @@ public class PlayerScript : MonoBehaviour {
     public Camera cam;
     public MouseLook mouseLook = new MouseLook();
 
-    private Rigidbody m_RigidBody;
-    private CapsuleCollider m_Capsule;
-
     PlayerPrefsManager prefs;
     Controls controls;
     HandsInventory handsInv;
@@ -37,10 +34,14 @@ public class PlayerScript : MonoBehaviour {
     public bool usingOnMode = false;
     public bool usingOnHand;
 
+    public GameObject MoveBackButtonObject
+    {
+        get { return moveBackButton.gameObject; }
+    }
+
     private void Start()
     {
-        m_RigidBody = GetComponent<Rigidbody>();
-        m_Capsule = GetComponent<CapsuleCollider>();
+
         mouseLook.Init(transform, cam.transform);
 
         if (GameObject.Find("Preferences") != null)
