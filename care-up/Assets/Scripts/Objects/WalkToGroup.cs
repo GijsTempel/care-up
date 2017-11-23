@@ -5,7 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class WalkToGroup : MonoBehaviour
 {
-
     public Vector3 position;
     public Vector3 rotation;
 
@@ -13,6 +12,7 @@ public class WalkToGroup : MonoBehaviour
 
     CameraMode cameraMode;
     Controls controls;
+    PlayerScript player;
 
     public void HighlightGroup(bool value)
     {
@@ -25,6 +25,7 @@ public class WalkToGroup : MonoBehaviour
 
         cameraMode = gameLogic.GetComponent<CameraMode>();
         controls = gameLogic.GetComponent<Controls>();
+        player = GameObject.FindObjectOfType<PlayerScript>();
 
         text = transform.GetChild(0).gameObject;
         text.SetActive(false);
@@ -34,7 +35,7 @@ public class WalkToGroup : MonoBehaviour
     {
         if (cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
-            if (controls.SelectedObject == gameObject && !cameraMode.animating)
+            if (controls.SelectedObject == gameObject && !cameraMode.animating && player.away)
             {
                 HighlightGroup(true);
             }

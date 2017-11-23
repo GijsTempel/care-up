@@ -151,6 +151,7 @@ public class PlayerScript : MonoBehaviour {
         away = !away;
         foreach (WalkToGroup g in groups)
         {
+            g.HighlightGroup(away);
             g.enabled = away;
             g.GetComponent<Collider>().enabled = away;
         }
