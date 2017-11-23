@@ -104,6 +104,17 @@ public class ItemControlsUI : MonoBehaviour {
         }
     }
 
+    private void Update()
+    {
+        if (initedObject != null)
+        {
+            if (Input.GetMouseButton(1))
+            {
+                Close();
+            }
+        }
+    }
+
     public void Close()
     {
         gameObject.SetActive(false);
