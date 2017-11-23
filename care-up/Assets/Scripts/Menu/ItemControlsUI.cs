@@ -20,6 +20,7 @@ public class ItemControlsUI : MonoBehaviour {
     private GameObject useButton;
     private GameObject talkButton;
     private GameObject useOnButton;
+    private GameObject useOnNTButton;
     private GameObject combineButton;
     private GameObject dropButton;
 
@@ -38,6 +39,7 @@ public class ItemControlsUI : MonoBehaviour {
         talkButton = transform.Find("TalkButton").gameObject;
 
         useOnButton = transform.Find("UseOnButton").gameObject;
+        useOnNTButton = transform.Find("UseOnButton_noTarget").gameObject;
         combineButton = transform.Find("CombineButton").gameObject;
 
         dropButton = transform.Find("DropButton").gameObject;
@@ -60,6 +62,7 @@ public class ItemControlsUI : MonoBehaviour {
                  && handsInventory.IsInHand(initedObject))
             {
                 useOnButton.SetActive(true);
+                useOnNTButton.SetActive(true);
                 combineButton.SetActive(true);
                 dropButton.SetActive(true);
 
@@ -81,6 +84,7 @@ public class ItemControlsUI : MonoBehaviour {
                 }
 
                 useOnButton.SetActive(false);
+                useOnNTButton.SetActive(false);
                 combineButton.SetActive(false);
                 dropButton.SetActive(false);
             }
@@ -224,6 +228,20 @@ public class ItemControlsUI : MonoBehaviour {
     {
         player.usingOnMode = true;
         player.usingOnHand = initedObject == handsInventory.LeftHandObject;
+
+        Close();
+    }
+
+    public void UseOnNoTarget()
+    {
+        if (initedObject == handsInventory.LeftHandObject)
+        {
+            handsInventory.LeftHandObject.GetComponent<PickableObject>().Use(true);
+        }
+        else
+        {
+            handsInventory.RightHandObject.GetComponent<PickableObject>().Use(false);
+        }
 
         Close();
     }
