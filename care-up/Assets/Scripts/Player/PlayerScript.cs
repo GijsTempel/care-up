@@ -31,7 +31,7 @@ public class PlayerScript : MonoBehaviour {
     private float fadeTimer = 0.0f;
     Texture fadeTex;
 
-    GameObject moveBackButton;
+    MoveBackButton moveBackButton;
     ItemControlsUI itemControls;
 
     public bool usingOnMode = false;
@@ -58,8 +58,8 @@ public class PlayerScript : MonoBehaviour {
 
         fadeTex = Resources.Load<Texture>("Sprites/Black");
 
-        moveBackButton = GameObject.Find("MoveBackButton");
-        moveBackButton.SetActive(false);
+        moveBackButton = GameObject.Find("MoveBackButton").GetComponent<MoveBackButton>();
+        moveBackButton.gameObject.SetActive(false);
 
         itemControls = GameObject.FindObjectOfType<ItemControlsUI>();
         itemControls.gameObject.SetActive(false);
@@ -87,7 +87,7 @@ public class PlayerScript : MonoBehaviour {
         if (tutorial_movementLock)
             return;
 
-        if (controls.MouseClicked())
+        if (controls.MouseClicked() && !moveBackButton.mouseOver)
         {
             if (away && controls.SelectedObject != null &&
                 controls.SelectedObject.GetComponent<WalkToGroup>())
@@ -151,11 +151,12 @@ public class PlayerScript : MonoBehaviour {
         away = !away;
         foreach (WalkToGroup g in groups)
         {
-            g.HighlightGroup(away);
+            g.HighlightGroup(false);
             g.enabled = away;
             g.GetComponent<Collider>().enabled = away;
         }
-        moveBackButton.SetActive(!away);
+        moveBackButton.mouseOver = false;
+        moveBackButton.gameObject.SetActive(!away);
 
         if (away)
         {
