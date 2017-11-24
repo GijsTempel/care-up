@@ -202,7 +202,7 @@ public class CameraMode : MonoBehaviour {
     /// <param name="mode">Next mode.</param>
     public void ToggleCameraMode(Mode mode)
     {
-        if (currentMode == Mode.Free && mode == Mode.ObjectPreview)
+        if (mode == Mode.ObjectPreview)
         {
             TogglePlayerScript(false);
 
