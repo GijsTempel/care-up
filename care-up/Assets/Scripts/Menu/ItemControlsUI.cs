@@ -106,6 +106,8 @@ public class ItemControlsUI : MonoBehaviour {
                 gameObject.SetActive(true);
             }
         }
+
+        cameraMode.ToggleCameraMode(CameraMode.Mode.ItemControlsUI);
     }
 
     private void Update()
@@ -122,6 +124,10 @@ public class ItemControlsUI : MonoBehaviour {
     public void Close()
     {
         gameObject.SetActive(false);
+        if (cameraMode.CurrentMode == CameraMode.Mode.ItemControlsUI)
+        {
+            cameraMode.ToggleCameraMode(CameraMode.Mode.Free);
+        }
     }
 
     public void Use()
@@ -130,7 +136,7 @@ public class ItemControlsUI : MonoBehaviour {
             (actionManager.CurrentUseObject == "HandCleaner" 
             && initedObject.name == "WorkField"))
         {
-            if (cameraMode.CurrentMode == CameraMode.Mode.Free)
+            if (cameraMode.CurrentMode == CameraMode.Mode.ItemControlsUI)
             {
                 if (handsInventory.Empty())
                 {
@@ -144,7 +150,7 @@ public class ItemControlsUI : MonoBehaviour {
 
     public void Examine()
     {
-        if (cameraMode.CurrentMode == CameraMode.Mode.Free)
+        if (cameraMode.CurrentMode == CameraMode.Mode.ItemControlsUI)
         {
             cameraMode.selectedObject = initedObject.GetComponent<ExaminableObject>();
             if (cameraMode.selectedObject != null) // if there is a component
@@ -164,7 +170,7 @@ public class ItemControlsUI : MonoBehaviour {
 
     public void Pick()
     {
-        if (cameraMode.CurrentMode == CameraMode.Mode.Free)
+        if (cameraMode.CurrentMode == CameraMode.Mode.ItemControlsUI)
         {
             if (initedObject != null)
             {
@@ -189,7 +195,7 @@ public class ItemControlsUI : MonoBehaviour {
 
     public void Talk()
     {
-        if (cameraMode.CurrentMode == CameraMode.Mode.Free)
+        if (cameraMode.CurrentMode == CameraMode.Mode.ItemControlsUI)
         {
             if (initedObject != null)
             {

@@ -14,7 +14,8 @@ public class CameraMode : MonoBehaviour {
         ObjectPreview,      // object in center, controls locked, close/pick
         SelectionDialogue,  // selection dialogue, controls locked
         ConfirmUI,          // yes/no dialogue, controls locked
-        Cinematic           // playing animations, some controls disabled
+        Cinematic,          // playing animations, some controls disabled
+        ItemControlsUI      // UI showing actions is active
     };
 
     public float minZoom = 0.5f;
@@ -91,26 +92,7 @@ public class CameraMode : MonoBehaviour {
                 ToggleCameraMode(Mode.Free);
             }
         }
-
-        // clicked on something in free mode, possibly change mode
-        /*if (controls.MouseClicked() && currentMode == Mode.Free)
-        {
-            if (controls.SelectedObject && controls.CanInteract)
-            {
-                selectedObject = controls.SelectedObject.GetComponent<ExaminableObject>();
-                if (selectedObject != null) // if there is a component
-                {
-                    selectedObject.OnExamine();
-                    controls.ResetObject();
-                }
-                else if (controls.SelectedObject.GetComponent<SystemObject>() != null)
-                {
-                    doorSelected = controls.SelectedObject.GetComponent<SystemObject>();
-                    doorSelected.Use();
-                }
-            }
-        }*/
-
+        
         // handle object preview, close/pick,zoom
         if (currentMode == Mode.ObjectPreview)
         {
