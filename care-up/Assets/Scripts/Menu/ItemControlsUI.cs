@@ -49,6 +49,8 @@ public class ItemControlsUI : MonoBehaviour {
 
     public void Init()
     {
+        cameraMode.ToggleCameraMode(CameraMode.Mode.ItemControlsUI);
+
         if (player == null)
         {
             player = GameObject.FindObjectOfType<PlayerScript>();
@@ -106,8 +108,6 @@ public class ItemControlsUI : MonoBehaviour {
                 gameObject.SetActive(true);
             }
         }
-
-        cameraMode.ToggleCameraMode(CameraMode.Mode.ItemControlsUI);
     }
 
     private void Update()
