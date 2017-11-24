@@ -47,14 +47,6 @@ public class Syringe : PickableObjectWithInfo {
                 Mathf.Lerp(-0.013f, 0.06f, controlBone.localPosition.y),
                 plunger.localPosition.z);
         }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Transform target = controls.SelectedObject.GetComponent<PersonObjectPart>().Person;
-            target.GetComponent<InteractableObject>().Reset();
-            controls.ResetObject();
-            PlayerAnimationManager.PlayAnimationSequence("Injection", target);
-        }
     }
 
     public override bool Use(bool hand = false)
