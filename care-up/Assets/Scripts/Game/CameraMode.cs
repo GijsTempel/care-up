@@ -51,6 +51,8 @@ public class CameraMode : MonoBehaviour {
     private HandsInventory inventory;
     private UnityStandardAssets.ImageEffects.BlurOptimized blur;
 
+    public bool dontMoveCamera;
+
     public Mode CurrentMode
     {
         get { return currentMode; }
@@ -307,6 +309,7 @@ public class CameraMode : MonoBehaviour {
             playerScript.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
 
             playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
+            dontMoveCamera = false;
         }
 
         currentMode = mode;
@@ -345,7 +348,9 @@ public class CameraMode : MonoBehaviour {
             Vector3.Lerp(cinematicPos, cinematicTargetPos, cinematicLerp);
         cinematicControl.Find("Arms").transform.rotation =
             Quaternion.Lerp(cinematicRot, cinematicTargetRot, cinematicLerp);
-        AnimationCameraUpdate(false);
+
+        if (!dontMoveCamera)
+            AnimationCameraUpdate(false);
 
         if (cinematicDirection == 1 && cinematicLerp == 1.0f)
         {
@@ -419,7 +424,8 @@ public class CameraMode : MonoBehaviour {
         Transform cTarget = target.Find("CinematicTarget");
         cinematicTargetRot = cTarget.rotation;
         cinematicTargetPos = cTarget.position;
-
-        SetCameraUpdating(false);
+        
+        if (!dontMoveCamera)
+            SetCameraUpdating(false);
     }
 }
