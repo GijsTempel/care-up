@@ -191,5 +191,6 @@ public class PickableObject : InteractableObject {
     public virtual void Pick()
     {
         // callback for handling different OnPick mechanics
+        gameObject.layer = 9; // no collisions
     }
 }
