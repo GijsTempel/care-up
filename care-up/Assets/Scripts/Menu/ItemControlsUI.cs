@@ -47,7 +47,7 @@ public class ItemControlsUI : MonoBehaviour {
         closeButton = transform.Find("CloseButton").gameObject;
     }
 
-    public void Init()
+    public void Init(GameObject iObject)
     {
         cameraMode.ToggleCameraMode(CameraMode.Mode.ItemControlsUI);
 
@@ -56,7 +56,7 @@ public class ItemControlsUI : MonoBehaviour {
             player = GameObject.FindObjectOfType<PlayerScript>();
         }
 
-        initedObject = controls.SelectedObject;
+        initedObject = iObject;
 
         if (initedObject != null && initedObject.GetComponent<InteractableObject>() != null)
         {
@@ -90,8 +90,7 @@ public class ItemControlsUI : MonoBehaviour {
                 combineButton.SetActive(false);
                 dropButton.SetActive(false);
             }
-
-
+            
             closeButton.SetActive(true);
 
             //transform.position = initedObject.transform.position +

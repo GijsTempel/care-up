@@ -121,7 +121,7 @@ public class PlayerScript : MonoBehaviour {
                 }
                 else
                 {
-                    itemControls.Init();
+                    itemControls.Init(controls.SelectedObject);
                 }
             }
         }
