@@ -113,6 +113,7 @@ public class HandsInventory : MonoBehaviour {
         glovesOn = false;
 
         Physics.IgnoreLayerCollision(9, 9);
+        Physics.IgnoreLayerCollision(0, 9);
     }
 
     void Update() {
