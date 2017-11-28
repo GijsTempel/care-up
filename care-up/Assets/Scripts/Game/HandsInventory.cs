@@ -182,7 +182,8 @@ public class HandsInventory : MonoBehaviour {
                 leftHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 leftHandObject.GetComponent<Rigidbody>().isKinematic = false; 
                 //leftHandObject.GetComponent<Collider>().enabled = false;
-                leftHandObject.controlBone = leftControlBone;
+                leftHandObject.leftControlBone = leftControlBone;
+                leftHandObject.rightControlBone = rightControlBone;
                 actionManager.OnPickUpAction(leftHandObject.name);
                 PlayerAnimationManager.PlayAnimation("LeftPick");
                 PlayerAnimationManager.SetHandItem(true, item.gameObject);
@@ -196,7 +197,8 @@ public class HandsInventory : MonoBehaviour {
                 leftHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 rightHandObject.GetComponent<Rigidbody>().isKinematic = false;
                 //rightHandObject.GetComponent<Collider>().enabled = false;
-                rightHandObject.controlBone = leftControlBone; // TODO
+                rightHandObject.leftControlBone = leftControlBone;
+                rightHandObject.rightControlBone = rightControlBone;
                 actionManager.OnPickUpAction(rightHandObject.name);
                 PlayerAnimationManager.PlayAnimation("RightPick");
                 PlayerAnimationManager.SetHandItem(false, item.gameObject);
@@ -213,7 +215,8 @@ public class HandsInventory : MonoBehaviour {
                 leftHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 leftHandObject.GetComponent<Rigidbody>().isKinematic = false;
                 //leftHandObject.GetComponent<Collider>().enabled = false;
-                leftHandObject.controlBone = leftControlBone;
+                leftHandObject.leftControlBone = leftControlBone;
+                leftHandObject.rightControlBone = rightControlBone;
                 actionManager.OnPickUpAction(leftHandObject.name);
                 PlayerAnimationManager.PlayAnimation("LeftPick");
                 PlayerAnimationManager.SetHandItem(true, item.gameObject);
@@ -229,7 +232,8 @@ public class HandsInventory : MonoBehaviour {
                 leftHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 rightHandObject.GetComponent<Rigidbody>().isKinematic = false;
                 //rightHandObject.GetComponent<Collider>().enabled = false;
-                rightHandObject.controlBone = leftControlBone; // TODO
+                rightHandObject.leftControlBone = leftControlBone;
+                rightHandObject.rightControlBone = rightControlBone;
                 actionManager.OnPickUpAction(rightHandObject.name);
                 PlayerAnimationManager.PlayAnimation("RightPick");
                 PlayerAnimationManager.SetHandItem(false, item.gameObject);
@@ -298,7 +302,8 @@ public class HandsInventory : MonoBehaviour {
             
             GameObject leftObject = CreateObjectByName(name, Vector3.zero);
             leftHandObject = leftObject.GetComponent<PickableObject>();
-            leftHandObject.controlBone = leftControlBone;
+            leftHandObject.leftControlBone = leftControlBone;
+            leftHandObject.rightControlBone = rightControlBone;
             SetHold(true);
 
             PlayerAnimationManager.SetHandItem(true, leftObject);
@@ -330,7 +335,8 @@ public class HandsInventory : MonoBehaviour {
 
             GameObject rightObject = CreateObjectByName(name, Vector3.zero);
             rightHandObject = rightObject.GetComponent<PickableObject>();
-            rightHandObject.controlBone = leftControlBone;
+            rightHandObject.leftControlBone = leftControlBone;
+            rightHandObject.rightControlBone = rightControlBone;
             SetHold(false);
 
             PlayerAnimationManager.SetHandItem(false, rightObject);
@@ -504,7 +510,8 @@ public class HandsInventory : MonoBehaviour {
             leftHandObject = GameObject.Find(name).GetComponent<PickableObject>();
             leftHandObject.GetComponent<Rigidbody>().useGravity = false;
             leftHandObject.GetComponent<Collider>().enabled = false;
-            leftHandObject.controlBone = leftControlBone;
+            leftHandObject.leftControlBone = leftControlBone;
+            leftHandObject.rightControlBone = rightControlBone;
             leftHandObject.SavePosition();
         }
         else
@@ -512,7 +519,8 @@ public class HandsInventory : MonoBehaviour {
             rightHandObject = GameObject.Find(name).GetComponent<PickableObject>();
             rightHandObject.GetComponent<Rigidbody>().useGravity = false;
             rightHandObject.GetComponent<Collider>().enabled = false;
-            rightHandObject.controlBone = leftControlBone;
+            rightHandObject.leftControlBone = leftControlBone;
+            rightHandObject.rightControlBone = rightControlBone;
             rightHandObject.SavePosition();
         }
         SetHold(hand);
@@ -623,7 +631,8 @@ public class HandsInventory : MonoBehaviour {
                 {
                     GameObject leftObject = CreateObjectByName(leftCombineResult, Vector3.zero);
                     leftHandObject = leftObject.GetComponent<PickableObject>();
-                    leftHandObject.controlBone = leftControlBone;
+                    leftHandObject.leftControlBone = leftControlBone;
+                    leftHandObject.rightControlBone = rightControlBone;
                     SetHold(true);
 
                     PlayerAnimationManager.SetHandItem(true, leftObject);
@@ -665,7 +674,8 @@ public class HandsInventory : MonoBehaviour {
                 {
                     GameObject rightObject = CreateObjectByName(rightCombineResult, Vector3.zero);
                     rightHandObject = rightObject.GetComponent<PickableObject>();
-                    rightHandObject.controlBone = leftControlBone; // TODO
+                    rightHandObject.leftControlBone = leftControlBone;
+                    rightHandObject.rightControlBone = rightControlBone;
                     SetHold(false);
 
                     PlayerAnimationManager.SetHandItem(false, rightObject);

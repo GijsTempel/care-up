@@ -5,7 +5,11 @@ using UnityEngine;
 public class RemovingNeedle : CinematicAnimation
 {
     public int removeNeedleFrame;
+    public int decombineFrame;
     public bool leftHand;
+
+    private bool absorption;
+    private Syringe syringe;
 
     HandsInventory inv;
 
@@ -14,7 +18,12 @@ public class RemovingNeedle : CinematicAnimation
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
 
-        inv = GameObject.Find("GameLogic").GetComponent<HandsInventory>();  
+        inv = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
+
+        syringe = leftHand ? inv.LeftHandObject.GetComponent<Syringe>() : inv.RightHandObject.GetComponent<Syringe>();
+        syringe.updateProtector = true;
+
+        absorption = syringe.name == "SyringeWithAbsorptionNeedle";
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -24,15 +33,23 @@ public class RemovingNeedle : CinematicAnimation
 
         if (PlayerAnimationManager.CompareFrames(frame, prevFrame, removeNeedleFrame))
         {
+            inv.DeleteAnimationObject();
+        }
+
+        if (PlayerAnimationManager.CompareFrames(frame, prevFrame, decombineFrame))
+        {
             inv.ReplaceHandObject(leftHand, "Syringe");
+            inv.CreateAnimationObject((absorption ? "AbsorptionNeedleNoCap" : "InjectionNeedleNoCap"), !leftHand);
         }
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    //public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //
-    //}
+    public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        base.OnStateExit(animator, stateInfo, layerIndex);
+
+        syringe.updateProtector = false;
+    }
 
     // OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here
     //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {

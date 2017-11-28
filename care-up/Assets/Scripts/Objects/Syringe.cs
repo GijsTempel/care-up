@@ -7,8 +7,10 @@ using UnityEngine.SceneManagement;
 public class Syringe : PickableObjectWithInfo {
     
     public bool updatePlunger = false;
+    public bool updateProtector = false;
 
     private Transform plunger;
+    private Transform protector;
 
     private Vector3 plungerSavedPos;
 
@@ -34,6 +36,8 @@ public class Syringe : PickableObjectWithInfo {
 
         plunger = transform.Find("syringePlunger");
         if (plunger == null) Debug.LogError("No plunger found!");
+
+        protector = transform.GetChild(1).Find("Prot");
     }
 
     protected override void Update()
@@ -44,8 +48,17 @@ public class Syringe : PickableObjectWithInfo {
         {
             plunger.localPosition = new Vector3(
                 plunger.localPosition.x,
-                Mathf.Lerp(-0.013f, 0.06f, controlBone.localPosition.y),
+                Mathf.Lerp(-0.013f, 0.06f, leftControlBone.localPosition.y),
                 plunger.localPosition.z);
+        }
+
+        if (updateProtector)
+        {
+            if (protector != null)
+            {
+                protector.localRotation = Quaternion.Euler(0, 0, 
+                    -2.0f * Mathf.Rad2Deg * rightControlBone.localPosition.y);
+            }
         }
     }
 

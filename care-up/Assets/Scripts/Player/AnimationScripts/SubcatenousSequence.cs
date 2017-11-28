@@ -11,11 +11,22 @@ public class SubcatenousSequence : AnimationSequenceState
     public int takeClothAgain;
 
     private HandsInventory inv;
+    private Syringe syringe;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
+
+        if (inv.LeftHandEmpty())
+        {
+            syringe = inv.RightHandObject.GetComponent<Syringe>();
+        }
+        else
+        {
+            syringe = inv.LeftHandObject.GetComponent<Syringe>();
+        }
+        syringe.updateProtector = true;
 
         inv = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
         inv.PutAllOnTable();
@@ -97,6 +108,8 @@ public class SubcatenousSequence : AnimationSequenceState
             inv.LeftHandObject.GetComponent<Syringe>().updatePlunger = false;
 
         GameObject.FindObjectOfType<InjectionPatient>().AfterSequenceDialogue();
+
+        syringe.updateProtector = false;
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here

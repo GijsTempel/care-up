@@ -14,7 +14,8 @@ public class PickableObject : InteractableObject {
     [HideInInspector]
     public bool tutorial_usedOn = false;
 
-    public Transform controlBone;
+    public Transform leftControlBone;
+    public Transform rightControlBone;
 
     public int holdAnimationID = 0;
     

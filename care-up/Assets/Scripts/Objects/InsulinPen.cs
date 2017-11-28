@@ -27,12 +27,12 @@ public class InsulinPen : PickableObjectWithInfo {
             button.localPosition = new Vector3(
                 button.localPosition.x,
                 button.localPosition.y,
-                -0.0004f * controlBone.localPosition.y);
+                -0.0004f * leftControlBone.localPosition.y);
 
             button.localRotation = Quaternion.Euler(
                 button.localRotation.eulerAngles.x,
                 button.localRotation.eulerAngles.y,
-                -14.5f * controlBone.localPosition.y);
+                -14.5f * leftControlBone.localPosition.y);
         }
     }
 
