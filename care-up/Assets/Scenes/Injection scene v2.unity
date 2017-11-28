@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 652504717}
-  m_IndirectSpecularColor: {r: 0.8018667, g: 0.89806044, b: 0.9576196, a: 1}
+  m_IndirectSpecularColor: {r: 0.60699624, g: 0.78357977, b: 0.90628624, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -2182,6 +2182,8 @@ MonoBehaviour:
   description: 
   muplipleMesh: 1
   descriptionOffset: {x: 0, y: 0, z: 0}
+  tutorial_talked: 0
+  tutorial_used: 0
   dialogueXml: InjectionPatient
 --- !u!137 &390865115
 SkinnedMeshRenderer:
@@ -3551,20 +3553,6 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 8
-  m_FalloffTable:
-    m_Table[0]: 0
-    m_Table[1]: 0
-    m_Table[2]: 0
-    m_Table[3]: 0
-    m_Table[4]: 0
-    m_Table[5]: 0
-    m_Table[6]: 0
-    m_Table[7]: 0
-    m_Table[8]: 0
-    m_Table[9]: 0
-    m_Table[10]: 0
-    m_Table[11]: 0
-    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -4556,6 +4544,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ede4b82d6869eec4085e0c27d4f28eff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textObject: {fileID: 0}
+  animationTime: 2
 --- !u!4 &948433424
 Transform:
   m_ObjectHideFlags: 0
@@ -5510,7 +5500,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000013167861998, guid: 04ef50acd91b5534f94bead71accf78d, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0.89363766
+      value: 1.063
       objectReference: {fileID: 0}
     - target: {fileID: 4000013167861998, guid: 04ef50acd91b5534f94bead71accf78d, type: 2}
       propertyPath: m_LocalRotation.x
@@ -5600,7 +5590,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000013474603844, guid: 4bca654de2af5b644a7c60e3ab5c19cc, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 1.0604401
+      value: 0.898
       objectReference: {fileID: 0}
     - target: {fileID: 4000013474603844, guid: 4bca654de2af5b644a7c60e3ab5c19cc, type: 2}
       propertyPath: m_LocalRotation.x
@@ -6749,20 +6739,6 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_FalloffTable:
-    m_Table[0]: 0
-    m_Table[1]: 0
-    m_Table[2]: 0
-    m_Table[3]: 0
-    m_Table[4]: 0
-    m_Table[5]: 0
-    m_Table[6]: 0
-    m_Table[7]: 0
-    m_Table[8]: 0
-    m_Table[9]: 0
-    m_Table[10]: 0
-    m_Table[11]: 0
-    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -7299,7 +7275,9 @@ MonoBehaviour:
   description: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
-  controlBone: {fileID: 0}
+  tutorial_usedOn: 0
+  leftControlBone: {fileID: 0}
+  rightControlBone: {fileID: 0}
   holdAnimationID: 0
 --- !u!136 &1788430273
 CapsuleCollider:
@@ -8447,6 +8425,8 @@ MonoBehaviour:
       locked: 0
     GetHintKey:
       locked: 0
+    Teleport:
+      locked: 0
     mouseClickLocked: 0
   interactionDistance: 1.5
 --- !u!114 &1957227884
@@ -8502,6 +8482,7 @@ MonoBehaviour:
   tutorial_droppedRight: 0
   tutorial_combined: 0
   tutorial_itemUsedOn: 0
+  sequenceAborted: 0
   horisontalOffset: 0.5
   distanceFromCamera: 0.8
   dropPenalty: 1
@@ -8518,9 +8499,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minZoom: 0.5
   maxZoom: 1.75
+  selectedObject: {fileID: 0}
+  doorSelected: {fileID: 0}
   animating: 0
   animationEnded: 0
   cinematicToggle: 0
+  dontMoveCamera: 0
 --- !u!4 &1957227889
 Transform:
   m_ObjectHideFlags: 0
