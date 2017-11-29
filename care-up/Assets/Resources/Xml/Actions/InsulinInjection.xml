@@ -12,60 +12,63 @@
 		index="3" type="examine" item="PatientRecords" expected="good"></action>
   <action description="5.: Controleer de toedienlijst." audioHint="InsulinInjection/Step 3.1"
 		index="4" type="examine" item="InsulinPrescription" expected="good"></action>
- 
+  
+  <action description="4.2: Vraag aan je collega om een dubbele controle" audioHint=""
+		index="5" type="talk" topic="DoubleCheck" extra="Voer dubbele controle uit. Het verkeerd toedienen van medicijnen brengt risico’s met zich mee. Het risico op blijvend letsel bij verkeerde dosering of toediening verschilt, afhankelijk van het medicijn. Ook is de ene toedieningsweg risicovoller dan een andere. Dubbele controle van de medicatie is belangrijk voor de veiligheid, met name bij risicovolle medicatie. Laat ook je berekeningen die je hebt gemaakt checken."/>
+  
   <action description="6.: Controleer of er voldoende insuline in de pen aanwezig is. Neem zo nodig een nieuwe insulinepen of
 plaats een nieuw insulinepatroon in de pen, volgens gebruiksaanwijzing. " audioHint="InsulinInjection/Step 3.1"
-		index="5" type="examine" item="InsulinPen" expected="good"></action>
+		index="6" type="examine" item="InsulinPen" expected="good"></action>
   
   <action description="7.: Zwenk de pen voor gebruik van troebele middellang- of langwerkende insuline minstens 10x, niet
 schudden" audioHint="" extra=""
-    index="6" type="useOn" item="InsulinPen" target="" />
+    index="7" type="useOn" item="InsulinPen" target="" />
   
   <action description="8A: Verwijder de beschermlaag van de naaldverpakking. " audioHint="InsulinInjection/Step 4.1"
-		index="7" type="combine" left="InsulinNeedlePackage" right=""></action>
+		index="8" type="combine" left="InsulinNeedlePackage" right=""></action>
 	<action description="8B: Draai de naald met de naaldverpakking op de insulinepen." audioHint="InsulinInjection/Step 4.2"
-		index="8" type="combine" left="InsulinPen" right="InsulinOpenedNeedlePackage"></action>
+		index="9" type="combine" left="InsulinPen" right="InsulinOpenedNeedlePackage"></action>
 	<action description="8C: Verwijder de verpakking van de naald." audioHint="InsulinInjection/Step 4.3"
-		index="9" type="combine" left="InsulinPenWithNeedlePackage" right=""></action>
+		index="10" type="combine" left="InsulinPenWithNeedlePackage" right=""></action>
 	<action description="9: Ontlucht de insulinepen voor gebruik, door 2 IE weg te spuiten, om na te gaan of de pen goed werkt." audioHint="InsulinInjection/Step 5"
-		index="10" type="useOn" item="InsulinPenWithNeedle" target=""></action>
+		index="11" type="useOn" item="InsulinPenWithNeedle" target=""></action>
   <action description="10: Stel het juiste aantal eenheden insuline in " audioHint ="InsulinInjection/Step 6"
-    index="11" type="useOn" item="VentedInsulinPenWithNeedle" target="" />
+    index="12" type="useOn" item="VentedInsulinPenWithNeedle" target="" />
 	
 	<action description="11.1: Vraag de cliënt de injectieplaats te ontbloten en zich te ontspannen" audioHint="InsulinInjection/Step 5"
-		index="12" type="talk" topic="ShowBellyForInsulin"></action>
+		index="13" type="talk" topic="ShowBellyForInsulin"></action>
 	
 	<action description="11.2: Start injecteren." audioHint="InsulinInjection/Step 7"
-		index="13" type="useOn" item="InsulinPenWithNeedle" target="Patient"></action>
+		index="14" type="useOn" item="InsulinPenWithNeedle" target="Patient"></action>
 
   <action description="11.3: Controleer of de injectieplaats schoon en droog is. " audioHint="Injection/AS1-2" index="14" type="sequenceStep" value="CheckSkin" extra="Controleer of de injectieplaats schoon en droog is om besmetting van ziektekiemen te voorkomen."></action>
    <action description="12: Neem de insulinepen in de injecterende hand. " audioHint="Injection/AS1-2"
     index="15" type="sequenceStep" value="takeoffcap" extra="" />
   <action description="13: Steek de naald loodrecht in de huid in het onderhuidse weefsel, minimaal 1 cm verwijderd van de vorige
 injectieplaats (in een roterend schema)." audioHint="Injection/AS1-2"
-    index="15" type="sequenceStep" value="InjectInsulin" extra="De beschermdop zit nog op de naald. Deze dien je te verwijderen om gebruik te maken van de spuit. Concentreer je tijdens het verwijderen van de dop om prikincidenten te voorkomen." />
+    index="16" type="sequenceStep" value="InjectInsulin" extra="De beschermdop zit nog op de naald. Deze dien je te verwijderen om gebruik te maken van de spuit. Concentreer je tijdens het verwijderen van de dop om prikincidenten te voorkomen." />
   <action description="14: Fixeer de insulinepen met de andere hand om onverwachte bewegingen op te vangen." audioHint="Injection/AS2-2"
-		index="16" type="sequenceStep" value="FixateInsulinPen" extra="Neem de spier tussen duim en wijsvinger van de ene hand en trek de huid wat strakker. De spier als een dikke plooi tussen de duim en wijs- en middelvinger opnemen, voor een intramusculaire injectie wordt afgeraden (WHO). Deze techniek vergroot het risico op per ongeluk subcutaan injecteren. "></action>
+		index="17" type="sequenceStep" value="FixateInsulinPen" extra="Neem de spier tussen duim en wijsvinger van de ene hand en trek de huid wat strakker. De spier als een dikke plooi tussen de duim en wijs- en middelvinger opnemen, voor een intramusculaire injectie wordt afgeraden (WHO). Deze techniek vergroot het risico op per ongeluk subcutaan injecteren. "></action>
   <action description="15.1: Druk met duim van de injecterende hand de knop van de insulinepen in. " audioHint="Injection/AS3-2"
-		index="17" type="sequenceStep" value="PressInsulinPen" extra="Steek de naald met een snelle beweging loodrecht in de spier. Wissel injectieplaatsen af wanneer frequent in eenzelfde gebied geïnjecteerd moet worden."></action>
+		index="18" type="sequenceStep" value="PressInsulinPen" extra="Steek de naald met een snelle beweging loodrecht in de spier. Wissel injectieplaatsen af wanneer frequent in eenzelfde gebied geïnjecteerd moet worden."></action>
   <action description="15.2: Houd de knop ingedrukt en laat de naald minstens 10 tellen in de huid om alle insuline goed in te laten stromen. " audioHint="Injection/AS4-2"
-		index="18" type="sequenceStep" value="WaitInsulinPen" extra="Laat de huid los met je linkerhand."></action>
+		index="19" type="sequenceStep" value="WaitInsulinPen" extra="Laat de huid los met je linkerhand."></action>
   <action description="16: Trek de naald uit de huid, let bij gebruik van een veiligheidsnaald op het verschijnen van de rode indicator
 aan de zijkant van het beschermkapje dat automatisch over de naald schuift (houd een gaasje voor de
 opvang van een eventuele bloeddruppel gereed) Masseer de huid niet." audioHint="Injection/AS5-2"
-		index="19" type="sequenceStep" value="PullInsulinPen" extra="Bij een cliënt die onrustig is of plotselinge bewegingen maakt is het van belang dat injectienaald en spuit goed gefixeerd worden tijdens de injectie. Houd de naald tussen duim en wijsvinger van de niet-injecterende hand, op de plaats waar de naald op de spuit zit. Zorg dat de rest van deze hand stevig op de huid rust. Bij bewegingen van de cliënt beweegt de hand met daarin de naald en de spuit mee."></action>
+		index="20" type="sequenceStep" value="PullInsulinPen" extra="Bij een cliënt die onrustig is of plotselinge bewegingen maakt is het van belang dat injectienaald en spuit goed gefixeerd worden tijdens de injectie. Houd de naald tussen duim en wijsvinger van de niet-injecterende hand, op de plaats waar de naald op de spuit zit. Zorg dat de rest van deze hand stevig op de huid rust. Bij bewegingen van de cliënt beweegt de hand met daarin de naald en de spuit mee."></action>
 
   <action description="17.1: Verwijder de naald van de insulinepen." audioHint="InsulinInjection/Step 7"
-		index="20" type="combine" left="InsulinPenWithNeedle" right=""></action>
+		index="21" type="combine" left="InsulinPenWithNeedle" right=""></action>
 	<action description="17.2: en doe de naald in de naaldenbeker." audioHint="InsulinInjection/Step 8"
-		index="21" type="useOn" item="InsulinNeedle" target="NeedleCup"></action>
+		index="22" type="useOn" item="InsulinNeedle" target="NeedleCup"></action>
 	<action description="18: Plaats de beschermdop op de insulinepen. " audioHint="InsulinInjection/Step 7"
-		index="22" type="combine" left="InsulinPen" right="InsulinPenCap"></action>
+		index="23" type="combine" left="InsulinPen" right="InsulinPenCap"></action>
   <action description="19: Ruim de materialen op"  audioHint="InsulinInjection/Step 9"
-		index="23" type="use" value="WorkField"></action>
+		index="24" type="use" value="WorkField"></action>
 	<action description="20: Pas handhygiëne toe. " audioHint="InsulinInjection/Step 10"
-		index="24" type="use" value="HandCleaner"></action>
+		index="25" type="use" value="HandCleaner"></action>
 	<action description="21: Noteer tijdstip, soort, aantal geïnjecteerde eenheden, plaats toediening en controleer of toedienlijst goed
 is ingevuld. " audioHint="InsulinInjection/Step 11"
-		index="25" type="use" value="PaperAndPen"></action>
+		index="26" type="use" value="PaperAndPen"></action>
 </ActionList>
