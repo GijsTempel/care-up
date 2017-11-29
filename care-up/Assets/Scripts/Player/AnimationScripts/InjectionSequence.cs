@@ -18,16 +18,6 @@ public class InjectionSequence : AnimationSequenceState
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
 
-        if (inv.LeftHandEmpty())
-        {
-            syringe = inv.RightHandObject.GetComponent<Syringe>();
-        }
-        else
-        {
-            syringe = inv.LeftHandObject.GetComponent<Syringe>();
-        }
-        syringe.updateProtector = true;
-
         inv = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
         inv.PutAllOnTable();
 
@@ -55,7 +45,10 @@ public class InjectionSequence : AnimationSequenceState
         else if (PlayerAnimationManager.CompareFrames(frame, prevFrame, takeOffCapFrame))
         {
             inv.ReplaceHandObject(false, "SyringeWithInjectionNeedle");
-            
+
+            syringe = inv.RightHandObject.GetComponent<Syringe>();
+            syringe.updateProtector = true;
+
             GameObject cap = inv.CreateObjectByName("SyringeInjectionCap", Vector3.zero);
 
             Vector3 savedPos = Vector3.zero;
