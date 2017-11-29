@@ -37,8 +37,8 @@ public class TutorialManager : MonoBehaviour {
     public enum TutorialStep
     {
         StartTutorial,             // 0
-        LookAround,                // step 1
-        WalkAround,                // step 2
+        //LookAround,                // step 1
+        //WalkAround,                // step 2 rip walking
         WalkToTable,               // step 3
         UseHandCleaner,            // step 4
         UseTable,                  // step 5
@@ -201,10 +201,12 @@ public class TutorialManager : MonoBehaviour {
             {
                 case TutorialStep.StartTutorial:
                     if ( TimerElapsed() )
-                       
                     {
-                        currentStep = TutorialStep.LookAround;
-                        UItext.text = "Beweeg de muis om rond te kijken door de kamer.";
+                        currentStep = TutorialStep.WalkToTable;
+                        player.tutorial_movementLock = movementLock = false;
+                        particleHint.transform.position = tableTrigger.transform.position;
+                        particleHint.SetActive(true);
+                        UItext.text = "Beweeg naar de tafel door W, A, S, D / pijltjestoetsen en de muis te gebruiken.";
                     }
                     else
                     {
@@ -214,25 +216,6 @@ public class TutorialManager : MonoBehaviour {
                         player.tutorial_movementLock = movementLock = true;
                         UItext.text = "Welkom bij Care-Up";
                         SetPauseTimer(2.0f);
-                    }
-                    break;
-                case TutorialStep.LookAround:
-                    if ( player.tutorial_totalLookAround > 30.0f )
-                    {
-                        AddPointWithSound();
-                        currentStep = TutorialStep.WalkAround;
-                        player.tutorial_movementLock = movementLock = false;
-                        UItext.text = "Gebruik de W, A, S, D / pijltjestoetsen om te lopen.";
-                    }
-                    break;
-                case TutorialStep.WalkAround:
-                    if ( player.tutorial_totalMoveAround > 50.0f )
-                    {
-                        AddPointWithSound();
-                        currentStep = TutorialStep.WalkToTable;
-                        particleHint.transform.position = tableTrigger.transform.position;
-                        particleHint.SetActive(true);
-                        UItext.text = "Beweeg naar de tafel door W, A, S, D / pijltjestoetsen en de muis te gebruiken.";
                     }
                     break;
                 case TutorialStep.WalkToTable:
