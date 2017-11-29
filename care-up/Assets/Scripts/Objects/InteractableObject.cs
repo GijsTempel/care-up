@@ -35,7 +35,7 @@ public class InteractableObject : MonoBehaviour {
 
         if (onMouseOverShaderSihlouette == null)
         {
-            onMouseOverShaderSihlouette = Shader.Find("Outlined/Silhouetted Diffuse");
+            onMouseOverShaderSihlouette = Shader.Find("Outlined/Diffuse");
         }
 
         if (onMouseOverShadeOutline == null)
