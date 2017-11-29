@@ -371,6 +371,9 @@ public class CameraMode : MonoBehaviour {
                 cinematicDirection = 1;
                 animationEnded = false;
                 soloCamera = false;
+
+                playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
+                dontMoveCamera = false;
             }
         }
     }
@@ -382,6 +385,8 @@ public class CameraMode : MonoBehaviour {
             soloCamera = true;
             cinematicLerp = 0.0f;
             cinematicDirection = 1;
+
+            playerScript.MoveBackButtonObject.SetActive(false);
         }
 
         savedRot = Camera.main.transform.rotation;
