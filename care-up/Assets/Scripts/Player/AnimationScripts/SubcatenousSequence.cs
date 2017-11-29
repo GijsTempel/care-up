@@ -18,16 +18,6 @@ public class SubcatenousSequence : AnimationSequenceState
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
 
-        if (inv.LeftHandEmpty())
-        {
-            syringe = inv.RightHandObject.GetComponent<Syringe>();
-        }
-        else
-        {
-            syringe = inv.LeftHandObject.GetComponent<Syringe>();
-        }
-        syringe.updateProtector = true;
-
         inv = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
         inv.PutAllOnTable();
     }
@@ -55,6 +45,9 @@ public class SubcatenousSequence : AnimationSequenceState
             inv.ReplaceHandObject(false, "SyringeWithInjectionNeedle");
 
             GameObject cap = inv.CreateObjectByName("SyringeInjectionCap", Vector3.zero);
+
+            syringe = inv.RightHandObject.GetComponent<Syringe>();
+            syringe.updateProtector = true;
 
             Vector3 savedPos = Vector3.zero;
             Quaternion savedRot = Quaternion.identity;
