@@ -34,6 +34,8 @@ public class PlayerScript : MonoBehaviour {
     public bool usingOnMode = false;
     public bool usingOnHand;
 
+    private GameObject usingOnText;
+
     public GameObject MoveBackButtonObject
     {
         get { return moveBackButton.gameObject; }
@@ -66,6 +68,9 @@ public class PlayerScript : MonoBehaviour {
         itemControls.gameObject.SetActive(false);
 
         handsInv = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
+
+        usingOnText = GameObject.Find("UsingOnModeText");
+        usingOnText.SetActive(false);
     }
 
 
@@ -107,7 +112,7 @@ public class PlayerScript : MonoBehaviour {
                             handsInv.LeftHandObject.GetComponent<PickableObject>().Use(usingOnHand);
                         }
 
-                        usingOnMode = false;
+                        ToggleUsingOnMode(false);
                     } 
                     else
                     {
@@ -116,7 +121,7 @@ public class PlayerScript : MonoBehaviour {
                             handsInv.RightHandObject.GetComponent<PickableObject>().Use(usingOnHand);
                         }
 
-                        usingOnMode = false;
+                        ToggleUsingOnMode(false);
                     }
                 }
                 else
@@ -127,8 +132,14 @@ public class PlayerScript : MonoBehaviour {
         }
         else if (Input.GetMouseButtonDown(1) && usingOnMode)
         {
-            usingOnMode = false;
+            ToggleUsingOnMode(false);
         }
+    }
+
+    public void ToggleUsingOnMode(bool value)
+    {
+        usingOnMode = value;
+        usingOnText.SetActive(value);
     }
 
     public void WalkToGroup(WalkToGroup group)
