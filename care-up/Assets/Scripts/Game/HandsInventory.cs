@@ -270,7 +270,7 @@ public class HandsInventory : MonoBehaviour {
 
     public void RemoveHandObject(bool hand)
     {
-        if (!hand)
+        if (hand)
         {
             Destroy(leftHandObject.gameObject);
             leftHandObject = null;
