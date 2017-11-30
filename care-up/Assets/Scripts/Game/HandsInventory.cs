@@ -506,10 +506,10 @@ public class HandsInventory : MonoBehaviour {
     public void ForcePickItem(string name, bool hand)
     {
         if (hand)
-        {
+        { 
             leftHandObject = GameObject.Find(name).GetComponent<PickableObject>();
-            leftHandObject.GetComponent<Rigidbody>().useGravity = false;
-            leftHandObject.GetComponent<Collider>().enabled = false;
+            leftHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            leftHandObject.GetComponent<Rigidbody>().isKinematic = false;
             leftHandObject.leftControlBone = leftControlBone;
             leftHandObject.rightControlBone = rightControlBone;
             leftHandObject.SavePosition();
@@ -517,8 +517,8 @@ public class HandsInventory : MonoBehaviour {
         else
         {
             rightHandObject = GameObject.Find(name).GetComponent<PickableObject>();
-            rightHandObject.GetComponent<Rigidbody>().useGravity = false;
-            rightHandObject.GetComponent<Collider>().enabled = false;
+            rightHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            rightHandObject.GetComponent<Rigidbody>().isKinematic = false;
             rightHandObject.leftControlBone = leftControlBone;
             rightHandObject.rightControlBone = rightControlBone;
             rightHandObject.SavePosition();
