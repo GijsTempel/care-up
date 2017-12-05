@@ -17,12 +17,12 @@ namespace LoginProAsset
         public Text TimePlayedText;
 
         public bool MobileUI = false;
-        public GameObject Achievements;
-        public GameObject ListLeft;
-        public GameObject ListRight;
-        public GameObject UnknownAchievementPrefab;
+        //public GameObject Achievements;
+       // public GameObject ListLeft;
+        //public GameObject ListRight;
+        //public GameObject UnknownAchievementPrefab;
 
-        public AchievementsListScroller ScrollAchievementsList;
+      //  public AchievementsListScroller ScrollAchievementsList;
 
         private bool initiated = false;
         private int fpsCounter = -1;
@@ -32,7 +32,7 @@ namespace LoginProAsset
         {
             // Reinit the achievement list (in case a user is connecting with another account : clear the achievements before receiving it)
             // This avoid to see previous achievements, remaining during some milliseconds (this way everything is cleared)
-            this.UpdateAchievementsList();
+           // this.UpdateAchievementsList(); ---> change for achievements
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace LoginProAsset
         /// <summary>
         /// Update achievements TAGS based on the achievements received from the server
         /// </summary>
-        public void UpdateAchievementsList()
+       /*public void UpdateAchievementsList() ----> uncomment for usage of achievements 
         {
             // If it's the first time the list must be created
             if (!initiated)
@@ -132,7 +132,7 @@ namespace LoginProAsset
             if (this.ScrollAchievementsList != null)
                 this.ScrollAchievementsList.Refresh();
         }
-
+        */
         /// <summary>
         /// A timer set to launch Notice process every minutes
         /// </summary>

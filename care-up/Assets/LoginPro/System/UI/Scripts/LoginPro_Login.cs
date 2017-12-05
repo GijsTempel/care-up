@@ -14,7 +14,7 @@ namespace LoginProAsset
         public InputField Password;
 
         public LoginPro_Menu Menu;
-        public LoginPro_AchievementsManager AchievementsManager;
+        // public LoginPro_AchievementsManager AchievementsManager;---> Achemvements are not used and turned off
 
         public UIAnimation AnimationToPlayOnSuccess;
         public UIAnimation_Alert MessageToShowOnResult;
@@ -40,7 +40,7 @@ namespace LoginProAsset
             if (LoginPro.Session.LoggedIn)
             {
                 // Get user's achievements
-                this.AchievementsManager.GetAchievements();
+                // this.AchievementsManager.GetAchievements(); ---> Achemvements are not used and turned off
             }
 
             // Ask for the news of the game
@@ -69,10 +69,12 @@ namespace LoginProAsset
             PlayerPrefs.SetString("Save", "Save");
             this.ButtonSave.transform.localScale = Vector3.one;
             this.ButtonDontSave.transform.localScale = Vector3.zero;
+            Debug.Log("save ");
         }
         public void CheckDontSave()
         {
             PlayerPrefs.SetString("Save", "DontSave");
+            Debug.Log("Geen save ");
             this.ButtonSave.transform.localScale = Vector3.zero;
             this.ButtonDontSave.transform.localScale = Vector3.one;
         }
@@ -124,6 +126,7 @@ namespace LoginProAsset
         /// <param name="errorMessage"></param>
         public void Error(string errorMessage)
         {
+            Debug.Log("login ongeldig");
             errorMessage = errorMessage.Replace("ERROR: ", "Login mislukt: ");
 
             // Stop animation
@@ -189,7 +192,7 @@ namespace LoginProAsset
             Debug.Log("Login succeeded.");
 
             // Get user's achievements
-            this.AchievementsManager.GetAchievements();
+           // this.AchievementsManager.GetAchievements(); --->Achemvements are not used and turned off
         }
     }
 }
