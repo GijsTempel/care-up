@@ -112,13 +112,12 @@ public class InteractableObject : MonoBehaviour {
                     if (!itemDescription.activeSelf)
                     {
                         itemDescription.GetComponentInChildren<Text>().text = (description == "") ? name : description;
-                        Transform icons = itemDescription.transform.GetChild(0);
+                        Transform icons = itemDescription.transform.GetChild(0).GetChild(0);
                         icons.Find("UseIcon"). gameObject.SetActive(false);//gameObject.GetComponent<UsableObject>() != null);
                         icons.Find("TalkIcon").gameObject.SetActive(false);//gameObject.GetComponent<PersonObject>() != null);
                         icons.Find("PickIcon").gameObject.SetActive(false);//gameObject.GetComponent<PickableObject>() != null);
                         icons.Find("ExamIcon").gameObject.SetActive(false);//gameObject.GetComponent<ExaminableObject>() != null);
-                        itemDescription.transform.position = transform.position + descriptionOffset;
-                        itemDescription.transform.rotation = Camera.main.transform.rotation;
+                        itemDescription.transform.GetChild(0).transform.position = Input.mousePosition + new Vector3(200.0f, 400.0f);
                         itemDescription.SetActive(true);
                     }
                 }
