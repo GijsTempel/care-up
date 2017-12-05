@@ -112,7 +112,7 @@ public class InGameUI : MonoBehaviour {
             }
 
             player.enabled = playerState;
-            crosshair.enabled = true;
+            crosshair.enabled = prefsManager == null ? false : prefsManager.VR;
 
             animator.speed = animatorSpeed;
             Time.timeScale = 1f;
