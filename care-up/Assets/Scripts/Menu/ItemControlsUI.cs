@@ -24,6 +24,8 @@ public class ItemControlsUI : MonoBehaviour {
     private GameObject combineButton;
     private GameObject dropButton;
 
+    public Vector2 cursorOffset;
+
 	// Use this for initialization
 	void Awake () {
 
@@ -104,6 +106,7 @@ public class ItemControlsUI : MonoBehaviour {
             }
             else
             {
+                transform.position = Input.mousePosition + new Vector3(cursorOffset.x, cursorOffset.y);
                 gameObject.SetActive(true);
             }
         }
