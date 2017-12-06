@@ -242,8 +242,8 @@ public class ItemControlsUI : MonoBehaviour {
 
     public void UseOn()
     {
-        player.ToggleUsingOnMode(true);
         player.usingOnHand = initedObject == handsInventory.LeftHandObject;
+        player.ToggleUsingOnMode(true);
 
         Close();
     }

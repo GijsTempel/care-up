@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
+using UnityEngine.UI;
     
 public class PlayerScript : MonoBehaviour {
     [HideInInspector]
@@ -139,6 +140,15 @@ public class PlayerScript : MonoBehaviour {
     public void ToggleUsingOnMode(bool value)
     {
         usingOnMode = value;
+        usingOnText.GetComponent<Text>().text = "Selecteer een object waarmee je " +
+            (usingOnHand ?
+                (handsInv.LeftHandObject.GetComponent<InteractableObject>().description == "" 
+                ? handsInv.LeftHandObject.name : handsInv.LeftHandObject.GetComponent<InteractableObject>().description)
+            :   
+                (handsInv.RightHandObject.GetComponent<InteractableObject>().description == ""
+                ? handsInv.RightHandObject.name : handsInv.RightHandObject.GetComponent<InteractableObject>().description)
+            )
+            + " wilt gebruiken (Druk op rechtermuisknop om te annuleren).";
         usingOnText.SetActive(value);
     }
 
