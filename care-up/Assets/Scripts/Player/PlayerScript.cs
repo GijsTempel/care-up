@@ -29,7 +29,7 @@ public class PlayerScript : MonoBehaviour {
     Texture fadeTex;
 
     MoveBackButton moveBackButton;
-    ItemControlsUI itemControls;
+    public ItemControlsUI itemControls;
 
     public bool usingOnMode = false;
     public bool usingOnHand;

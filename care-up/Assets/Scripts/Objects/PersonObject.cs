@@ -192,13 +192,11 @@ public class PersonObject : InteractableObject {
                     if (!itemDescription.activeSelf)
                     {
                         itemDescription.GetComponentInChildren<Text>().text = (description == "") ? name : description;
-                        Transform icons = itemDescription.transform.GetChild(0);
+                        Transform icons = itemDescription.transform.GetChild(0).GetChild(0);
                         icons.Find("UseIcon").gameObject.SetActive(gameObject.GetComponent<UsableObject>() != null);
                         icons.Find("TalkIcon").gameObject.SetActive(gameObject.GetComponent<PersonObject>() != null);
                         icons.Find("PickIcon").gameObject.SetActive(gameObject.GetComponent<PickableObject>() != null);
                         icons.Find("ExamIcon").gameObject.SetActive(gameObject.GetComponent<ExaminableObject>() != null);
-                        itemDescription.transform.position = transform.position + descriptionOffset;
-                        itemDescription.transform.rotation = Camera.main.transform.rotation;
                         itemDescription.SetActive(true);
                     }
 
@@ -228,6 +226,11 @@ public class PersonObject : InteractableObject {
         {
             SetShaderTo(onMouseExitShader);
             itemDescription.SetActive(false);
+        }
+
+        if (itemDescription.activeSelf && !player.itemControls.gameObject.activeSelf)
+        {
+            itemDescription.transform.GetChild(0).transform.position = Input.mousePosition + new Vector3(50.0f, 25.0f);
         }
     }
 }

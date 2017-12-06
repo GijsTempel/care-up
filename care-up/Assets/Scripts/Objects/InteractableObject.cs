@@ -117,7 +117,6 @@ public class InteractableObject : MonoBehaviour {
                         icons.Find("TalkIcon").gameObject.SetActive(false);//gameObject.GetComponent<PersonObject>() != null);
                         icons.Find("PickIcon").gameObject.SetActive(false);//gameObject.GetComponent<PickableObject>() != null);
                         icons.Find("ExamIcon").gameObject.SetActive(false);//gameObject.GetComponent<ExaminableObject>() != null);
-                        itemDescription.transform.GetChild(0).transform.position = Input.mousePosition + new Vector3(50.0f, 25.0f);
                         itemDescription.SetActive(true);
                     }
                 }
@@ -135,6 +134,11 @@ public class InteractableObject : MonoBehaviour {
                     itemDescription.SetActive(false);
                 }
             }
+        }
+
+        if (itemDescription.activeSelf && !player.itemControls.gameObject.activeSelf)
+        {
+            itemDescription.transform.GetChild(0).transform.position = Input.mousePosition + new Vector3(50.0f, 25.0f);
         }
     }
 
