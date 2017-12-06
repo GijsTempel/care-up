@@ -117,7 +117,7 @@ public class InteractableObject : MonoBehaviour {
                         icons.Find("TalkIcon").gameObject.SetActive(false);//gameObject.GetComponent<PersonObject>() != null);
                         icons.Find("PickIcon").gameObject.SetActive(false);//gameObject.GetComponent<PickableObject>() != null);
                         icons.Find("ExamIcon").gameObject.SetActive(false);//gameObject.GetComponent<ExaminableObject>() != null);
-                        itemDescription.transform.GetChild(0).transform.position = Input.mousePosition + new Vector3(200.0f, 400.0f);
+                        itemDescription.transform.GetChild(0).transform.position = Input.mousePosition + new Vector3(50.0f, 25.0f);
                         itemDescription.SetActive(true);
                     }
                 }
