@@ -107,6 +107,14 @@ public class ItemControlsUI : MonoBehaviour {
             else
             {
                 transform.position = Input.mousePosition + new Vector3(cursorOffset.x, cursorOffset.y);
+
+                float lowerBound = 75.0f;
+                if (transform.position.y < lowerBound)
+                {
+                    float difference = lowerBound - transform.position.y;
+                    transform.position += new Vector3(0.0f, difference, 0.0f);
+                    GameObject.Find("ItemDescriptionGroup").transform.position += new Vector3(0.0f, difference, 0.0f);
+                }
                 gameObject.SetActive(true);
             }
         }
