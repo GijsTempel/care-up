@@ -97,11 +97,15 @@ namespace LoginProAsset
                 ValidProduct = true;
 				datas[1] = ValidProduct.ToString();
 				LoginPro.Manager.ExecuteOnServer("SendData", SendToServer_Success, SendToServer_Error, datas);
-			
-               // SceneManager.LoadScene("Menu");
+
+                // SceneManager.LoadScene("Menu");
                 // Store the key so when we load up next time we dont have to enter serial again.
-                PlayerPrefs.SetString("SerialKey", Serial);
-				validatedIcon.SetActive(true);
+                //PlayerPrefs.SetString("SerialKey", Serial);
+                if (GameObject.Find("Preferences") != null)
+                {
+                    GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().SetSerial(Serial);
+                }
+                validatedIcon.SetActive(true);
             }
             else {
 				Popup.Show ("Helaas, de code is incorrect.", 5);

@@ -36,7 +36,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
         {
             if (i < doors.Length)
             {
-                if (scene.Attributes["hidden"] == null)
+                if (ppManager.GetSceneActivated(scene.Attributes["id"].Value)) //scene.Attributes["hidden"] == null)
                 {
                     doors[i].gameObject.SetActive(true);
                 }
