@@ -33,6 +33,11 @@ public class PlayerPrefsManager : MonoBehaviour
         Debug.Log("Volume is set to saved value: " + Volume);
         
         CheckSerial();
+        
+        if (PlayerPrefs.GetString("SerialKey") != "")
+        {
+            SetSerial(PlayerPrefs.GetString("SerialKey"));
+        }
     }
 
     public float Volume
