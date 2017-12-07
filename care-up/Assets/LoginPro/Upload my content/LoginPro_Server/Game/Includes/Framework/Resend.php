@@ -20,9 +20,9 @@ $sendingInformation_completed = sendAccountActivationEmail($id);
 if($sendingInformation_completed)
 {
 	// SUCCESS
-	sendAndFinish("A link to activate your account has been sent to your email address.");
+	sendAndFinish("Een link om je account te activeren is verzonden naar je e-mailadres.");
 }
 
-end_script("Something went wrong with your sending process, please contact an administrator.");
+end_script("Er ging iets mis. Neem contact op met het Care Up support team.");
 
 ?>

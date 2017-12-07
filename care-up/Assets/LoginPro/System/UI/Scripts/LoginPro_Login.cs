@@ -195,7 +195,7 @@ namespace LoginProAsset
             //   this.AnimationToPlayOnSuccess.Launch();
 
             // Allow opening menu
-            LoginPro_ShowLogin.MenuShown = false;
+//            LoginPro_ShowLogin.MenuShown = false;
 
             Debug.Log("Login succeeded.");
 

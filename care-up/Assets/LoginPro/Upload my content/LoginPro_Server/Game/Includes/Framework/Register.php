@@ -22,9 +22,9 @@ $registration_completed = register($mail, $username, $password, $IP);
 if($registration_completed)
 {
 	// SUCCESS
-	sendAndFinish("Registration accepted, a link to activate your account has been sent to your email address.");
+	sendAndFinish("Registratie gelukt! Er is een link naar je e-mailadres gestuurd om je account te activeren.");
 }
 
-end_script("Registration failed, something went wrong with your registration, please contact an administrator.");
+end_script("Er ging iets mis. Neem contact op met het Care Up support team.");
 
 ?>

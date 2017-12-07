@@ -75,8 +75,8 @@ namespace LoginProAsset
         public void Error(string errorMessage)
         {
             // Stop button rotation animation
-            if (this.AnimationButtonToStop != null)
-                this.AnimationButtonToStop.Stop();
+           // if (this.AnimationButtonToStop != null)
+               // this.AnimationButtonToStop.Stop();
 
             // Show the error
             Debug.LogWarning(errorMessage);
@@ -89,8 +89,8 @@ namespace LoginProAsset
         public void Success(string[] datas)
         {
             // Stop button rotation animation
-            if (this.AnimationButtonToStop != null)
-                this.AnimationButtonToStop.Stop();
+//            if (this.AnimationButtonToStop != null)
+//                this.AnimationButtonToStop.Stop();
 
             // Update session
             LoginPro.Session.Username = Username.text;

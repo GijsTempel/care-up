@@ -20,10 +20,10 @@ if(strlen($new_mail)<=0 && strlen($new_username)<=0 && strlen($new_password)<=0)
 if($new_mail!="" && strlen($new_mail)<3)
 {
 	end_script('Email address must be at least 3 characters long.');
-	if(!filter_var($new_mail, FILTER_VALIDATE_EMAIL)) { end_script('Email address invalid.'); }
+	if(!filter_var($new_mail, FILTER_VALIDATE_EMAIL)) { end_script('E-mailadres niet geldig'); }
 }
-if($new_username!="" && strlen($new_username)<3) { end_script('Username must be at least 3 characters long.'); }
-if($new_password!="" && strlen($new_password)<3) { end_script('Username must be at least 3 characters long.'); }
+if($new_username!="" && strlen($new_username)<3) { end_script('Gebruikersnaam moet minimaal 3 characters bevatten.'); }
+if($new_password!="" && strlen($new_password)<3) { end_script('Gebruikersnaam moet minimaal 3 characters bevatten.'); }
 
 //------------------------------: UPDATE INFORMATION :-----------------------------------------------
 $update_completed = modify(USERNAME, $new_mail, $new_username, $new_password);
@@ -34,9 +34,9 @@ if($update_completed)
 	if($new_username!="") { $_SESSION['username'] = $new_username; }
 	
 	// SUCCESS
-	sendAndFinish("Your information have been updated.");
+	sendAndFinish("Je account is aangepast!");
 }
 
-end_script("Something went wrong with your modification, please contact an administrator.");
+end_script("Er ging iets fout. Neem contact op met het Care Up support team.");
 
 ?>

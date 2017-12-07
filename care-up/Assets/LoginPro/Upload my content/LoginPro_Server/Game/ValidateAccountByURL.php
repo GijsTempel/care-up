@@ -26,10 +26,10 @@ $code = $_GET['code'];
 
 //------------------------------------: GET USER ACCOUNT :------------------------------------------------
 $account = getAccount($username);
-if(is_null($account)) { end_script('Activation failed, this username is not linked to any account.'); }
-if($account['validated']!=0) { end_script('Your account is already activated. You can already connect to your account.'); }
-if(strcmp($account['validation_code'],$code)) { end_script('Your code is incorrect, please contact an administrator.'); }
-if(checkMailExists($account['mail'])) { end_script('Activation failed, this mail address is already in use.'); }
+if(is_null($account)) { end_script('Login mislukt. De gebruikersnaam is niet gelinkt aan een account.'); }
+if($account['validated']!=0) { end_script('Je account is al geactiveerd. Je kunt inloggen met je account en wachtwoord.'); }
+if(strcmp($account['validation_code'],$code)) { end_script('Je code is niet correct. Neem contact op met het het support team.'); }
+if(checkMailExists($account['mail'])) { end_script('Registratie mislukt. Dit e-mailadres is al in gebruik.'); }
 
 //------------------------------------: CHECK IP BLOCKED :------------------------------------------------
 $id = $account['id'];
@@ -48,6 +48,6 @@ if($activation_completed)
 	die();
 	exit(0);
 }
-else { end_script('Account activation went wrong.'); }
+else { end_script('Account registratie mislukt.'); }
 
 ?>

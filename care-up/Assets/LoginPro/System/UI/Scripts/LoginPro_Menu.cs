@@ -25,7 +25,7 @@ namespace LoginProAsset
 
       //  public AchievementsListScroller ScrollAchievementsList;
 
-        private bool initiated = false;
+//        private bool initiated = false;
         private int fpsCounter = -1;
 
 
