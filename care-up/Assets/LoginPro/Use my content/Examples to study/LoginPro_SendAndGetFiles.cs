@@ -19,7 +19,7 @@ namespace LoginProAsset
     public class LoginPro_SendAndGetFiles : MonoBehaviour
     {
         // This is just here to show a popup when datas are sent (or error occured)
-        public UIAnimation_Alert Popup;
+       // public UIAnimation_Alert Popup;
 
 
         /// <summary>
@@ -48,15 +48,15 @@ namespace LoginProAsset
             byte[] fileBytes = Convert.FromBase64String(datas[1]);
             File.WriteAllBytes(Application.persistentDataPath + "/PictureFromServer.png", fileBytes);
 
-            if (this.Popup != null)
-                this.Popup.Show("Success! Picture 'PictureFromServer.png' has been created.", 3);
-            else
-                Debug.LogWarning("Popup is not set in LoginPro_SendAndGetFiles.");
+            //if (this.Popup != null)
+              //  this.Popup.Show("Success! Picture 'PictureFromServer.png' has been created.", 3);
+            //else
+               // Debug.LogWarning("Popup is not set in LoginPro_SendAndGetFiles.");
         }
         public void SendToServer_Error(string errorMessage)
         {
             Debug.LogError(errorMessage);
-            this.Popup.Show("Error : " + errorMessage, 3);
+          //  this.Popup.Show("Error : " + errorMessage, 3);
         }
     }
 }

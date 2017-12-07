@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System;
 
 namespace LoginProAsset
-{
+{/*
     public class UIAnimation_Rotate : UIAnimation
     {
         public bool currentlyLaunched = false;
@@ -56,5 +56,5 @@ namespace LoginProAsset
             this.AnimationToLaunchWhenFinish = null;
             yield return null;
         }
-    }
+    }*/
 }

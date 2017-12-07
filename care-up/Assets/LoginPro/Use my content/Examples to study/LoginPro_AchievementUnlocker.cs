@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 namespace LoginProAsset
-{
+{/*
     /// <summary>
     /// This class allow you to understand how achievements work, and how to unlock them
     /// An achievement is a child of the object "Achievements" (in LoginPro gameObject)
@@ -20,7 +20,7 @@ namespace LoginProAsset
     /// </summary>
     public class LoginPro_AchievementUnlocker : MonoBehaviour
     {
-        public LoginPro_Achievement Achievement;
+        //public LoginPro_Achievement Achievement;
         public InputField Percent;
 
         /// <summary>
@@ -40,5 +40,5 @@ namespace LoginProAsset
         {
             this.Achievement.Lock();
         }
-    }
+    }*/
 }

@@ -2,6 +2,7 @@
 
 namespace LoginProAsset
 {
+    /*
     [RequireComponent(typeof(PlaceUIElement))]
     public class LoginPro_Achievement : MonoBehaviour
     {
@@ -13,7 +14,7 @@ namespace LoginProAsset
         public int DisplayTime = 5;
         public int PercentToUnlock = 100;
 
-        public UIAnimation_Place animationShow;
+      //  public UIAnimation_Place animationShow;
 
         //private LoginPro_AchievementsManager AchievementsManager; ---> Achemvements are not used and turned off
 
@@ -63,5 +64,5 @@ namespace LoginProAsset
             // Show the error in the console
             Debug.LogWarning(errorMessage);
         }
-    }
+    }*/
 }

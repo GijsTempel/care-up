@@ -35,7 +35,7 @@ namespace LoginProAsset
 		public GameObject validatedIcon;
 
         // This is just here to show a popup when datas are sent (or error occured)
-        public UIAnimation_Alert Popup;
+        //public UIAnimation_Alert Popup;
 
         public string Serial = "";
         public bool ValidProduct = false;
@@ -108,7 +108,8 @@ namespace LoginProAsset
                 validatedIcon.SetActive(true);
             }
             else {
-				Popup.Show ("Helaas, de code is incorrect.", 5);
+				//Popup.Show ("Helaas, de code is incorrect.", 5);
+                GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set("Helaas, de code klopt niet. Probeer het opnieuw");
                 //topText = "Helaas, de code klopt niet. Probeer het opnieuw";
                 Debug.Log("code invalide");
             }
@@ -124,13 +125,14 @@ namespace LoginProAsset
             Debug.Log("Success! The server answered : " + datas[0]);
 			if (ValidProduct) 
 			{
-				Popup.Show ("Succes, code correct. Je kunt het spel starten.", 5);
-			} 
+                GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set("Succes, je protocol is nu beschikbaar start het spel om je protocol te spelen.");
+            } 
         }
         public void SendToServer_Error(string errorMessage)
         {
             Debug.LogError(errorMessage);
-            Popup.Show("Error : " + errorMessage, 5);
+            //Popup.Show("Error : " + errorMessage, 5);
+            GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set(errorMessage);
         }
 			
 

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace LoginProAsset
-{
+{/*
     public class UIAnimator : MonoBehaviour
     {
         public List<UIAnimation> Animations;
@@ -23,5 +23,5 @@ namespace LoginProAsset
 
             yield return null;
         }
-    }
+    }*/
 }

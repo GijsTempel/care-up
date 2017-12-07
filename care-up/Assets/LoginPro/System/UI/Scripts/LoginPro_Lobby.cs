@@ -6,7 +6,7 @@ namespace LoginProAsset
 {
     public class LoginPro_Lobby : MonoBehaviour
     {
-        public UIAnimation_Alert MessageToShowOnResult;
+       // public UIAnimation_Alert MessageToShowOnResult;
 
         public Object playerRowPrefab;
         public GameObject PlayersGrid;
@@ -121,9 +121,9 @@ namespace LoginProAsset
         private void getPlayersError(string errorMessage)
         {
             Debug.Log(errorMessage);
-            if (MessageToShowOnResult != null)
-                MessageToShowOnResult.Show(errorMessage, 3);
-
+          //  if (MessageToShowOnResult != null)
+             //   MessageToShowOnResult.Show(errorMessage, 3);
+            GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set(errorMessage);
             // Leave the lobby
             this.Leave();
         }
@@ -151,8 +151,9 @@ namespace LoginProAsset
         private void sendMessageError(string errorMessage)
         {
             Debug.Log(errorMessage);
-            if (MessageToShowOnResult != null)
-                MessageToShowOnResult.Show(errorMessage, 3);
+           // if (MessageToShowOnResult != null)
+               // MessageToShowOnResult.Show(errorMessage, 3);
+            GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set(errorMessage);
         }
 
         ///////////////////////////////// - Get chat - ///////////////////////////////////////////
@@ -184,8 +185,9 @@ namespace LoginProAsset
         private void getChatError(string errorMessage)
         {
             Debug.Log(errorMessage);
-            if (MessageToShowOnResult != null)
-                MessageToShowOnResult.Show(errorMessage, 3);
+            // if (MessageToShowOnResult != null)
+            //  MessageToShowOnResult.Show(errorMessage, 3);
+            GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set(errorMessage);
         }
 
         ///////////////////////////////// - Kick a player - ///////////////////////////////////////////
@@ -203,8 +205,9 @@ namespace LoginProAsset
         private void kickError(string errorMessage)
         {
             Debug.Log(errorMessage);
-            if (MessageToShowOnResult != null)
-                MessageToShowOnResult.Show(errorMessage, 3);
+            //if (MessageToShowOnResult != null)
+           //     MessageToShowOnResult.Show(errorMessage, 3);
+            GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set(errorMessage);
         }
 
 
@@ -228,8 +231,9 @@ namespace LoginProAsset
         private void leaveError(string errorMessage)
         {
             Debug.Log(errorMessage);
-            if (MessageToShowOnResult != null)
-                MessageToShowOnResult.Show(errorMessage, 3);
+            //if (MessageToShowOnResult != null)
+            //    MessageToShowOnResult.Show(errorMessage, 3);
+            GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set(errorMessage);
 
             // Leave the lobby
             this.leave(null);

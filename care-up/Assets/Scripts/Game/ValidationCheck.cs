@@ -6,7 +6,7 @@ namespace LoginProAsset
 {
 public class ValidationCheck : MonoBehaviour
 	{
-		public UIAnimation_Alert Popup;
+		
 		private LoadingScreen loadingScreen;
 		private void Start()
 		{
@@ -37,12 +37,13 @@ public class ValidationCheck : MonoBehaviour
 			{
 				//Popup.Show ("Login succesvol", 5);
 				Debug.Log ("code klopt");
-				SceneManager.LoadScene("Menu");
+                GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set("Login succesvol");
+                SceneManager.LoadScene("Menu");
 
 			} 
 			else 
 			{
-				//Popup.Show ("Helaas, je hebt geen gevalideerd product." + datas[2], 5);
+                GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set("Je hebt geen gevalideerd product");
                 Debug.Log("code klopt Niet");
             }
 		}

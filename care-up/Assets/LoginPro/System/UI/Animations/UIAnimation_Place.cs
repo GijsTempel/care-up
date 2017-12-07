@@ -4,6 +4,7 @@ using System;
 
 namespace LoginProAsset
 {
+    /*
     public class UIAnimation_Place : UIAnimation
     {
         public bool currentlyLaunched = false;
@@ -95,5 +96,5 @@ namespace LoginProAsset
             }
             yield return null;
         }
-    }
+    }*/
 }

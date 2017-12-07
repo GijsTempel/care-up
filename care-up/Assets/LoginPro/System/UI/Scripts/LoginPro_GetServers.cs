@@ -6,7 +6,7 @@ namespace LoginProAsset
 {
     public class LoginPro_GetServers : MonoBehaviour
     {
-        public UIAnimation_Alert MessageToShowOnResult;
+       // public UIAnimation_Alert MessageToShowOnResult;
 
         public Object serverRowPrefab;
         public GameObject ServersGrid;
@@ -94,9 +94,10 @@ namespace LoginProAsset
         }
         private void getServersError(string errorMessage)
         {
+            GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set(errorMessage);
             Debug.Log(errorMessage);
-            if (MessageToShowOnResult != null)
-                MessageToShowOnResult.Show(errorMessage, 3);
+            //if (MessageToShowOnResult != null)
+            //    MessageToShowOnResult.Show(errorMessage, 3);
         }
 
         ///////////////////////////////// - Join the selected lobby - ///////////////////////////////////////////
@@ -113,8 +114,8 @@ namespace LoginProAsset
         }
         private void joinLobbySuccess(string[] serverDatas)
         {
-            if (MessageToShowOnResult != null)
-                MessageToShowOnResult.Show(serverDatas[0].Replace("ERROR:", ""), 3);
+         //   if (MessageToShowOnResult != null)
+              //  MessageToShowOnResult.Show(serverDatas[0].Replace("ERROR:", ""), 3);
 
             // Save the lobby I just joined
             LoginPro.Session.serverJoinedId = serverDatas[1];
@@ -126,8 +127,8 @@ namespace LoginProAsset
         private void joinLobbyError(string errorMessage)
         {
             Debug.Log(errorMessage);
-            if (MessageToShowOnResult != null)
-                MessageToShowOnResult.Show(errorMessage, 3);
+           // if (MessageToShowOnResult != null)
+               // MessageToShowOnResult.Show(errorMessage, 3);
 
             LoginPro.Session.serverJoinedId = "";
         }
@@ -147,8 +148,8 @@ namespace LoginProAsset
         }
         private void createLobbySuccess(string[] serverDatas)
         {
-            if (MessageToShowOnResult != null)
-                MessageToShowOnResult.Show(serverDatas[0], 3);
+          //  if (MessageToShowOnResult != null)
+             //   MessageToShowOnResult.Show(serverDatas[0], 3);
 
             // Save the created lobby id
             LoginPro.Session.serverJoinedId = serverDatas[1];
@@ -160,8 +161,9 @@ namespace LoginProAsset
         private void createLobbyError(string errorMessage)
         {
             Debug.Log(errorMessage);
-            if (MessageToShowOnResult != null)
-                MessageToShowOnResult.Show(errorMessage, 3);
+            // if (MessageToShowOnResult != null)
+            //  MessageToShowOnResult.Show(errorMessage, 3);
+            GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set(errorMessage);
         }
     }
 }

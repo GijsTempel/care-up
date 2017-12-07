@@ -32,7 +32,7 @@ namespace LoginProAsset
 
 
         // This is just here to show a popup when datas are sent (or error occured)
-        public UIAnimation_Alert Popup;
+       // public UIAnimation_Alert Popup;
 
         /// <summary>
         /// Get datas from the server
@@ -47,7 +47,7 @@ namespace LoginProAsset
         public void GetFromServer_Success(string[] datas)
         {
             Debug.Log("Success! The server answered : " + datas[0]);
-            Popup.Show("Success! The server answered : " + datas[0], 3);
+            //Popup.Show("Success! The server answered : " + datas[0], 3);
             Data1.text = datas[1];
             Data2.text = datas[2];
             Data3.text = datas[3];
@@ -55,7 +55,7 @@ namespace LoginProAsset
         public void GetFromServer_Error(string errorMessage)
         {
             Debug.LogError(errorMessage);
-            Popup.Show("Error : " + errorMessage, 5);
+           // Popup.Show("Error : " + errorMessage, 5);
         }
     }
 }

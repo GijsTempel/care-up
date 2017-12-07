@@ -8,10 +8,10 @@ namespace LoginProAsset
     {
         public InputField MessageField;
 
-        public UIAnimation_Alert MessageToShowOnResult;
-        public UIAnimation AnimationToLaunchOnResult;
-        public UIAnimation AnimationHideWindow;
-        public UIAnimation AnimationToStopOnResult;
+        //public UIAnimation_Alert MessageToShowOnResult;
+        //public UIAnimation AnimationToLaunchOnResult;
+      //  public UIAnimation AnimationHideWindow;
+       // public UIAnimation AnimationToStopOnResult;
 
         public PlaceUIElement ReportWindow;
         public PlaceUIElement ReportButton;

@@ -6,6 +6,7 @@ namespace LoginProAsset
 {
     public class UIAnimation : MonoBehaviour
     {
+    /*
         public List<UIAnimation> AnimationToLaunchWhenFinish;
 
         public Coroutine Launch()
@@ -27,6 +28,6 @@ namespace LoginProAsset
         protected virtual IEnumerator End()
         {
             yield return null;
-        }
+        }*/
     }
 }

@@ -49,6 +49,6 @@ public class TimedPopUp : MonoBehaviour {
 
         GetComponent<Animator>().SetBool("set", true);
 
-        GameObject.Find("UI").transform.Find("GameOver").GetComponent<GameOverUI>().SetDescription(text.text);
+        //GameObject.Find("UI").transform.Find("GameOver").GetComponent<GameOverUI>().SetDescription(text.text);
     }
 }

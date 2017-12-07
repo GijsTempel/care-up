@@ -17,7 +17,7 @@ namespace LoginProAsset
         //public LoginPro_AchievementsManager AchievementsManager; --->Achemvements are not used and turned off
 
         public UIAnimation AnimationToPlayOnSuccess;
-        public UIAnimation_Alert MessageToShowOnResult;
+       // public UIAnimation_Alert MessageToShowOnResult;
         public UIAnimation AnimationToStopOnResult;
 
         public Button ButtonSave;
@@ -131,18 +131,19 @@ namespace LoginProAsset
         public void Error(string errorMessage)
         {
             Debug.Log("login ongeldig");
+            GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set(errorMessage);
             errorMessage = errorMessage.Replace("ERROR: ", "Login mislukt: ");
 
             // Stop animation
-            if (this.AnimationToStopOnResult != null)
-                this.AnimationToStopOnResult.Stop();
+           // if (this.AnimationToStopOnResult != null)
+            //    this.AnimationToStopOnResult.Stop();
 
             // Show the error
             Debug.LogWarning(errorMessage);
 
             // Show message on error
-            if (this.MessageToShowOnResult != null)
-                this.MessageToShowOnResult.Show(errorMessage, 5);
+            //if (this.MessageToShowOnResult != null)
+               // this.MessageToShowOnResult.Show(errorMessage, 5);
         }
 
         /// <summary>
@@ -155,7 +156,7 @@ namespace LoginProAsset
         {
 
             GameObject.Find("LoginPro").GetComponent<LoginMenuManager>().ShowMenu(menuOnSuccess);
-
+            GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set("Welkom {0}!" + LoginPro.Session.Username);
             // Save information in session
             LoginPro.Session.Session_id = datas[1];
             LoginPro.Session.LoggedIn = true;
@@ -182,16 +183,16 @@ namespace LoginProAsset
             }
 
             // Stop animation
-            if (this.AnimationToStopOnResult != null)
-                this.AnimationToStopOnResult.Stop();
+           // if (this.AnimationToStopOnResult != null)
+           //     this.AnimationToStopOnResult.Stop();
 
             // Show message on success
-            if (this.MessageToShowOnResult != null)
-                this.MessageToShowOnResult.Show(string.Format("Welkom {0}!", LoginPro.Session.Username), 2);
+           // if (this.MessageToShowOnResult != null)
+            //    this.MessageToShowOnResult.Show(string.Format("Welkom {0}!", LoginPro.Session.Username), 2);
 
             // Launch animation on success
-            if (this.AnimationToPlayOnSuccess != null)
-               this.AnimationToPlayOnSuccess.Launch();
+           // if (this.AnimationToPlayOnSuccess != null)
+            //   this.AnimationToPlayOnSuccess.Launch();
 
             // Allow opening menu
             LoginPro_ShowLogin.MenuShown = false;

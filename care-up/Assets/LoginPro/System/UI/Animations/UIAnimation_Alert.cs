@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 namespace LoginProAsset
 {
+    /*
     public class UIAnimation_Alert : UIAnimation
     {
         public static string Message = "";
@@ -39,11 +40,11 @@ namespace LoginProAsset
             Guid instanceId = Guid.NewGuid();
             IdOfLastCoroutine = instanceId;
 
-            if (this.MessageField == null)
-                Debug.LogError("[UIAnimation_Alert] MessageField is null.");
+            //if (this.MessageField == null)
+              //  Debug.LogError("[UIAnimation_Alert] MessageField is null.");
 
             // Set the text of the message
-            this.MessageField.text = UIAnimation_Alert.Message;
+            //this.MessageField.text = UIAnimation_Alert.Message;
 
             int counter = 1;
             int totalSteps = 1000 / Speed;
@@ -77,5 +78,5 @@ namespace LoginProAsset
             // End
             yield return null;
         }
-    }
+    }*/
 }

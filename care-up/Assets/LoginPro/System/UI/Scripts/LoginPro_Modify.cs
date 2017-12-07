@@ -17,8 +17,8 @@ namespace LoginProAsset
         public LoginPro_Forgot ForgotAction;
 
         public UIAnimation AnimationButtonToStop;
-        public UIAnimation AnimationHideCurrentWindow;
-        public UIAnimation_Alert AnimationShowMessage;
+       public UIAnimation AnimationHideCurrentWindow;
+       //public UIAnimation_Alert AnimationShowMessage;
         public UIAnimation AnimationWindowToShow;
 
         void Start()
@@ -80,10 +80,10 @@ namespace LoginProAsset
 
             // Show the error
             Debug.LogWarning(errorMessage);
-
+            GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set(errorMessage);
             // Show message on error
-            if (this.AnimationShowMessage != null)
-                this.AnimationShowMessage.Show(errorMessage, 5);
+            // if (this.AnimationShowMessage != null)
+            // this.AnimationShowMessage.Show(errorMessage, 5);
         }
 
         public void Success(string[] datas)
@@ -111,26 +111,26 @@ namespace LoginProAsset
                 this.MenuAction.UpdateMenu();
 
             // Launch all animations one after the other
-            StartCoroutine(LaunchModifyAnimations());
-
+           // StartCoroutine(LaunchModifyAnimations());
+            GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set("Account informatie aangepast!");
             Debug.Log("Aanpassingen voltooid.");
         }
 
-        private IEnumerator LaunchModifyAnimations()
+       /* private IEnumerator LaunchModifyAnimations()
         {
             // Hide current window
             if (this.AnimationHideCurrentWindow != null)
                 yield return this.AnimationHideCurrentWindow.Launch();
 
             // Show message on success
-            if (this.AnimationShowMessage != null)
-                yield return this.AnimationShowMessage.Show("Account informatie aangepast!", 3);
+            //if (this.AnimationShowMessage != null)
+             //   yield return this.AnimationShowMessage.Show("Account informatie aangepast!", 3);
 
             // Launch animation on success
             if (this.AnimationWindowToShow != null)
                 yield return this.AnimationWindowToShow.Launch();
 
             yield return null;
-        }
+        }*/
     }
 }

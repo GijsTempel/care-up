@@ -71,13 +71,13 @@ namespace LoginProAsset
         /// <summary>
         /// Launch all animations specified at startup
         /// </summary>
-        void Start()
+        /*void Start()
         {
             foreach (UIAnimation anim in this.AnimationToLaunchAtStartup)
             {
                 anim.Launch();
             }
-        }
+        }*/
 
         /// <summary>
         /// Everytime the UI refreshes in GAME
