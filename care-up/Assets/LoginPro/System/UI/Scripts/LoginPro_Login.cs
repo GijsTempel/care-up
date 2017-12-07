@@ -23,6 +23,8 @@ namespace LoginProAsset
         public Button ButtonSave;
         public Button ButtonDontSave;
 
+        public SceneSelection menuOnSuccess;
+
         /// <summary>
         /// When the scene starts ask the server for achievements (if connected) or game news (if not connected yet)
         /// Then, load players prefs to prefill fields
@@ -185,6 +187,8 @@ namespace LoginProAsset
             // Launch animation on success
             if (this.AnimationToPlayOnSuccess != null)
                 this.AnimationToPlayOnSuccess.Launch();
+
+            GameObject.Find("LoginPro").GetComponent<LoginMenuManager>().ShowMenu(menuOnSuccess);
 
             // Allow opening menu
             LoginPro_ShowLogin.MenuShown = false;
