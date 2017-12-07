@@ -35,15 +35,16 @@ public class ValidationCheck : MonoBehaviour
 		{
 			if (datas [2]=="True") 
 			{
-				Popup.Show ("Login succesvol", 5);
+				//Popup.Show ("Login succesvol", 5);
 				Debug.Log ("code klopt");
 				SceneManager.LoadScene("Menu");
 
 			} 
 			else 
 			{
-				Popup.Show ("Helaas, je hebt geen gevalideerd product." + datas[2], 5);
-			}
+				//Popup.Show ("Helaas, je hebt geen gevalideerd product." + datas[2], 5);
+                Debug.Log("code klopt Niet");
+            }
 		}
 }
 }

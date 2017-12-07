@@ -5,12 +5,12 @@ namespace LoginProAsset
 {
     public class LoginPro_Disconnect : MonoBehaviour
     {
-        public UIAnimation AnimationHideCurrentWindow;
-        public UIAnimation_Alert AnimationShowMessage;
-        public UIAnimation AnimationShowLogin;
+       // public UIAnimation AnimationHideCurrentWindow;
+       // public UIAnimation_Alert AnimationShowMessage;
+       // public UIAnimation AnimationShowLogin;
 
-        public UIAnimation AnimationHideReports;
-        public UIAnimation AnimationHideFriends;
+        //public UIAnimation AnimationHideReports;
+       // public UIAnimation AnimationHideFriends;
 
         public void Launch()
         {
@@ -19,10 +19,10 @@ namespace LoginProAsset
 
             // Hide menu and show login
             // Launch all animations one after the other
-            StartCoroutine(LaunchRegisterAnimations());
+           // StartCoroutine(LaunchRegisterAnimations());
         }
 
-        private IEnumerator LaunchRegisterAnimations()
+        /*private IEnumerator LaunchRegisterAnimations()
         {
             // Hide report window
             if (this.AnimationHideReports != null)
@@ -45,6 +45,6 @@ namespace LoginProAsset
                 yield return this.AnimationShowLogin.Launch();
 
             yield return null;
-        }
+        }*/
     }
 }

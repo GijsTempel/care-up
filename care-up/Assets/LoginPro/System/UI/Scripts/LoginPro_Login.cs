@@ -14,7 +14,7 @@ namespace LoginProAsset
         public InputField Password;
 
         public LoginPro_Menu Menu;
-        // public LoginPro_AchievementsManager AchievementsManager;---> Achemvements are not used and turned off
+        //public LoginPro_AchievementsManager AchievementsManager; --->Achemvements are not used and turned off
 
         public UIAnimation AnimationToPlayOnSuccess;
         public UIAnimation_Alert MessageToShowOnResult;
@@ -120,6 +120,8 @@ namespace LoginProAsset
         {
             if (LoginPro.Manager != null)
                 LoginPro.Manager.Login(Username.text, Password.text, Success, Error);
+
+            Debug.Log("Login launched");
         }
 
         /// <summary>
@@ -151,6 +153,9 @@ namespace LoginProAsset
         /// <param name="datas"></param>
         public void Success(string[] datas)
         {
+
+            GameObject.Find("LoginPro").GetComponent<LoginMenuManager>().ShowMenu(menuOnSuccess);
+
             // Save information in session
             LoginPro.Session.Session_id = datas[1];
             LoginPro.Session.LoggedIn = true;
@@ -185,10 +190,8 @@ namespace LoginProAsset
                 this.MessageToShowOnResult.Show(string.Format("Welkom {0}!", LoginPro.Session.Username), 2);
 
             // Launch animation on success
-            //if (this.AnimationToPlayOnSuccess != null)
-            //    this.AnimationToPlayOnSuccess.Launch();
-
-            GameObject.Find("LoginPro").GetComponent<LoginMenuManager>().ShowMenu(menuOnSuccess);
+            if (this.AnimationToPlayOnSuccess != null)
+               this.AnimationToPlayOnSuccess.Launch();
 
             // Allow opening menu
             LoginPro_ShowLogin.MenuShown = false;
@@ -196,7 +199,7 @@ namespace LoginProAsset
             Debug.Log("Login succeeded.");
 
             // Get user's achievements
-           // this.AchievementsManager.GetAchievements(); --->Achemvements are not used and turned off
+            //this.AchievementsManager.GetAchievements(); --->Achemvements are not used and turned off
         }
     }
 }
