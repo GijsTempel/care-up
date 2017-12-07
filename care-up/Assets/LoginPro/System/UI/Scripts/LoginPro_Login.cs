@@ -185,8 +185,8 @@ namespace LoginProAsset
                 this.MessageToShowOnResult.Show(string.Format("Welkom {0}!", LoginPro.Session.Username), 2);
 
             // Launch animation on success
-            if (this.AnimationToPlayOnSuccess != null)
-                this.AnimationToPlayOnSuccess.Launch();
+            //if (this.AnimationToPlayOnSuccess != null)
+            //    this.AnimationToPlayOnSuccess.Launch();
 
             GameObject.Find("LoginPro").GetComponent<LoginMenuManager>().ShowMenu(menuOnSuccess);
 
