@@ -55,7 +55,11 @@ public class PlayerPrefsManager : MonoBehaviour
     private string SerialNumber
     {
         get { return PlayerPrefs.GetString("__SerialNumber"); }
-        set { PlayerPrefs.SetString("__SerialNumber", value); }
+        set
+        {
+            Debug.Log("Serial number set and saved: " + value);
+            PlayerPrefs.SetString("__SerialNumber", value);
+        }
     }
 
     public void SetSceneActivated(string sceneName, bool value)
@@ -100,6 +104,7 @@ public class PlayerPrefsManager : MonoBehaviour
     private void CheckSerial()
     {
         Debug.Log("Checking serial..");
+        Debug.Log("Using serial: " + PlayerPrefs.GetString("__SerialNumber"));
         TextAsset[] serials = Resources.LoadAll<TextAsset>("Serials");
         foreach (TextAsset serialFile in serials)
         {
