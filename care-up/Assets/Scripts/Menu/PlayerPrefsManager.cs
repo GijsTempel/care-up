@@ -34,6 +34,7 @@ public class PlayerPrefsManager : MonoBehaviour
         
         CheckSerial();
         
+        // support for old keys
         if (PlayerPrefs.GetString("SerialKey") != "")
         {
             SetSerial(PlayerPrefs.GetString("SerialKey"));
@@ -55,11 +56,7 @@ public class PlayerPrefsManager : MonoBehaviour
     private string SerialNumber
     {
         get { return PlayerPrefs.GetString("__SerialNumber"); }
-        set
-        {
-            Debug.Log("Serial number set and saved: " + value);
-            PlayerPrefs.SetString("__SerialNumber", value);
-        }
+        set { PlayerPrefs.SetString("__SerialNumber", value); }
     }
 
     public void SetSceneActivated(string sceneName, bool value)
@@ -103,8 +100,6 @@ public class PlayerPrefsManager : MonoBehaviour
 
     private void CheckSerial()
     {
-        Debug.Log("Checking serial..");
-        Debug.Log("Using serial: " + PlayerPrefs.GetString("__SerialNumber"));
         TextAsset[] serials = Resources.LoadAll<TextAsset>("Serials");
         foreach (TextAsset serialFile in serials)
         {
@@ -128,6 +123,9 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public void SetSerial(string serial)
     {
+        //support for old keys
+        PlayerPrefs.SetString("SerialKey", serial);
+
         SerialNumber = serial;
         CheckSerial();
     }
