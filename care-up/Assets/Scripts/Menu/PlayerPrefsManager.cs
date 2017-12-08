@@ -116,14 +116,15 @@ public class PlayerPrefsManager : MonoBehaviour
             if (fLines.Length > 0)
             {
                 string sceneGroup = fLines[0].Remove(0, 1);
+                string sceneName = fLines[1].Remove(0, 1);
                 SetSceneActivated(sceneGroup, false);
 
-                for (int i = 2; i < fLines.Length; ++i)
+                for (int i = 3; i < fLines.Length; ++i)
                 {
                     if (string.Compare(SerialNumber, fLines[i], true) == 0)
                     {
                         SetSceneActivated(sceneGroup, true);
-                        activatedScenes += sceneGroup + " activated\n";
+                        activatedScenes += sceneName + " activated\n";
                     }
                 }
             }
