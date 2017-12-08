@@ -4,8 +4,10 @@ using UnityEngine;
 
 namespace LoginProAsset
 {
+    
     public class PlaceUIElement : UIElement
     {
+        /*
         public float horizontalPosition = 0;
         public float verticalPosition = 0;
         public float horizontalSize = 0;
@@ -118,6 +120,6 @@ namespace LoginProAsset
 
             // Affect the list to the new one to keep only children no causing any error
             this.uiElementsToRefresh = placeUIElementsWithoutErrors;
-        }
+        }*/
     }
 }

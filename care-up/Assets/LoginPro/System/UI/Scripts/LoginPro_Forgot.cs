@@ -7,11 +7,11 @@ namespace LoginProAsset
     public class LoginPro_Forgot : MonoBehaviour
     {
         public InputField Mail;
-
-        public UIAnimation AnimationButtonToStop;
-        public UIAnimation AnimationHideCurrentWindow;
+        public SceneSelection menuOnSuccess;
+       // public UIAnimation AnimationButtonToStop;
+       // public UIAnimation AnimationHideCurrentWindow;
        // public UIAnimation_Alert AnimationShowMessage;
-        public UIAnimation AnimationShowLogin;
+       // public UIAnimation AnimationShowLogin;
 
         void Start()
         {
@@ -68,7 +68,7 @@ namespace LoginProAsset
 
             // Launch all animations one after the other
            // StartCoroutine(LaunchForgotAnimations());
-
+            GameObject.Find("LoginPro").GetComponent<LoginMenuManager>().ShowMenu(menuOnSuccess);
             Debug.Log("Forgot succeeded.");
         }
         /*

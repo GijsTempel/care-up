@@ -51,7 +51,7 @@ namespace LoginProAsset
             // Prefill fields with saved datas
             this.LoadPlayerPrefs();
         }
-
+        /*
         /// <summary>
         /// Switch to save information in playerPrefs or not depending on the user's choice
         /// </summary>
@@ -79,7 +79,7 @@ namespace LoginProAsset
             Debug.Log("Geen save ");
             this.ButtonSave.transform.localScale = Vector3.zero;
             this.ButtonDontSave.transform.localScale = Vector3.one;
-        }
+        }*/
 
         /// <summary>
         /// The News results from the server :
@@ -110,7 +110,7 @@ namespace LoginProAsset
                 Password.text = PlayerPrefs.GetString("Password");
             }
             // Check if login must be saved or not
-            SaveIsChecked();
+           // SaveIsChecked();
         }
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace LoginProAsset
         {
 
             GameObject.Find("LoginPro").GetComponent<LoginMenuManager>().ShowMenu(menuOnSuccess);
-            GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set("Welkom {0}!" + LoginPro.Session.Username);
+            GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set("Welkom!" + LoginPro.Session.Username);
             // Save information in session
             LoginPro.Session.Session_id = datas[1];
             LoginPro.Session.LoggedIn = true;
@@ -176,11 +176,10 @@ namespace LoginProAsset
                 this.Menu.UpdateMenu();
 
             // Save information in playerPrefs (if it's specified)
-            if (SaveIsChecked())
-            {
+           
                 PlayerPrefs.SetString("Username", LoginPro.Session.Username);
                 PlayerPrefs.SetString("Password", LoginPro.Session.Password);
-            }
+           
 
             // Stop animation
            // if (this.AnimationToStopOnResult != null)
