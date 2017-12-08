@@ -47,7 +47,7 @@ namespace LoginProAsset
         public void Error(string errorMessage)
         {
             errorMessage = errorMessage.Replace("ERROR: ", "");
-
+            GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set(errorMessage);
             // Stop animation
             //if (this.AnimationButtonToStop != null)
             //    this.AnimationButtonToStop.Stop();
@@ -69,6 +69,7 @@ namespace LoginProAsset
             // Launch all animations one after the other
            // StartCoroutine(LaunchForgotAnimations());
             GameObject.Find("LoginPro").GetComponent<LoginMenuManager>().ShowMenu(menuOnSuccess);
+            GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set("Succes, Er is een e-mail naar je toegestuurd met een nieuw wachtwoord.");
             Debug.Log("Forgot succeeded.");
         }
         /*
