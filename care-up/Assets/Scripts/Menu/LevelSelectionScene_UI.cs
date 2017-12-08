@@ -49,9 +49,8 @@ public class LevelSelectionScene_UI : MonoBehaviour
                     }
                     else
                     {
-
+                        continue;
                     }
-                    continue;
                 }
 
 
