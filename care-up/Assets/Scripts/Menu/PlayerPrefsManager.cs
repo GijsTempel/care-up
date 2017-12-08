@@ -2,6 +2,7 @@
 using System.Collections;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 /// <summary>
 /// Handles quick access to saved data.
@@ -13,6 +14,13 @@ public class PlayerPrefsManager : MonoBehaviour
     public bool practiceMode = true;
 
     private static PlayerPrefsManager instance;
+
+    private string activatedScenes;
+
+    public string ActivatedScenes
+    {
+        get { return activatedScenes; }
+    }
     
     void Awake()
     {
@@ -115,6 +123,7 @@ public class PlayerPrefsManager : MonoBehaviour
                     if (string.Compare(SerialNumber, fLines[i], true) == 0)
                     {
                         SetSceneActivated(sceneGroup, true);
+                        activatedScenes += sceneGroup + " activated\n";
                     }
                 }
             }

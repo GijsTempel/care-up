@@ -59,7 +59,11 @@ namespace LoginProAsset
         public void NewsSuccess(string[] datas)
         {
             // Set the news of the game to display them at startup
-            this.News.text = datas[0];
+            // this.News.text = datas[0];
+            if (GameObject.Find("Preferences") != null)
+            {
+                this.News.text = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().ActivatedScenes;
+            }
         }
         /// <summary>
         /// Update achievements TAGS based on the achievements received from the server
