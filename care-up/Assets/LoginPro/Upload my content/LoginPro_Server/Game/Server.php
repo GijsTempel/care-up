@@ -99,6 +99,8 @@ else if($ACTION == "ChangeUserRole") { include_once 'Includes/Framework/ChangeUs
 else if($ACTION == "GetData") { include_once 'Includes/Actions/GetData.php'; }
 else if($ACTION == "SendData") { include_once 'Includes/Actions/SendData.php'; }
 else if($ACTION == "SaveFile") { include_once 'Includes/Actions/SaveFile.php'; }
+else if($ACTION == "CheckSerial") { include_once 'Includes/Actions/CheckSerial.php'; }
+else if($ACTION == "GetScenes") { include_once 'Includes/Actions/GetScenes.php'; }
 /*************************** ACTIONS ZONE END ******************************/
 
 

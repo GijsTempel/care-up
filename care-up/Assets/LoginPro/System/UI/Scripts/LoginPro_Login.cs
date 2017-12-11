@@ -198,6 +198,11 @@ namespace LoginProAsset
 
             Debug.Log("Login succeeded.");
 
+            if (GameObject.Find("Preferences") != null)
+            {
+                GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().AfterLoginCheck();
+            }
+
             // Get user's achievements
             //this.AchievementsManager.GetAchievements(); --->Achemvements are not used and turned off
         }

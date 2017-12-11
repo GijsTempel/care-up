@@ -3,6 +3,7 @@ using System.Collections;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using LoginProAsset;
 
 /// <summary>
 /// Handles quick access to saved data.
@@ -39,14 +40,6 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         AudioListener.volume = Volume;
         Debug.Log("Volume is set to saved value: " + Volume);
-        
-        CheckSerial();
-        
-        // support for old keys
-        if (PlayerPrefs.GetString("SerialKey") != "")
-        {
-            SetSerial(PlayerPrefs.GetString("SerialKey"));
-        }
     }
 
     public float Volume
@@ -108,27 +101,10 @@ public class PlayerPrefsManager : MonoBehaviour
 
     private void CheckSerial()
     {
-        TextAsset[] serials = Resources.LoadAll<TextAsset>("Serials");
-        foreach (TextAsset serialFile in serials)
-        {
-            string[] fLines = Regex.Split(serialFile.text, "\n|\r|\r\n");
-            
-            if (fLines.Length > 0)
-            {
-                string sceneGroup = fLines[0].Remove(0, 1);
-                string sceneName = fLines[1].Remove(0, 1);
-                SetSceneActivated(sceneGroup, false);
+        string[] data = new string[1];
+        data[0] = SerialNumber;
 
-                for (int i = 3; i < fLines.Length; ++i)
-                {
-                    if (string.Compare(SerialNumber, fLines[i], true) == 0)
-                    {
-                        SetSceneActivated(sceneGroup, true);
-                        activatedScenes += sceneName + " activated\n";
-                    }
-                }
-            }
-        }
+        LoginPro.Manager.ExecuteOnServer("CheckSerial", CheckSerial_Success, Debug.LogError, data);
     }
 
     public void SetSerial(string serial)
@@ -138,5 +114,37 @@ public class PlayerPrefsManager : MonoBehaviour
 
         SerialNumber = serial;
         CheckSerial();
+    }
+
+    public void CheckSerial_Success(string[] datas)
+    {
+        foreach(string data in datas)
+        {
+            SetSceneActivated(data, true);
+            activatedScenes += data + " activated\n";
+        }
+    }
+    
+    public void AfterLoginCheck()
+    {
+        LoginPro.Manager.ExecuteOnServer("GetScenes", GetScenes_Success, Debug.LogError, null);
+
+        CheckSerial();
+
+        // support for old keys
+        if (PlayerPrefs.GetString("SerialKey") != ""
+            && PlayerPrefs.GetString("SerialKey") != SerialNumber)
+        {
+            SetSerial(PlayerPrefs.GetString("SerialKey"));
+        }
+    }
+
+    public void GetScenes_Success(string[] datas)
+    {
+        foreach(string data in datas)
+        {
+            SetSceneActivated(data, false);
+            Debug.Log("Scene " + data + " found on server!");
+        }
     }
 }
