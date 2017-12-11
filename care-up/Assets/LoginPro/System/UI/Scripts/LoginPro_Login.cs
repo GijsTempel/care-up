@@ -95,7 +95,7 @@ namespace LoginProAsset
         public void NewsSuccess(string[] datas)
         {
             // Set the news of the game to display them at startup
-            this.News.text = datas[0];
+            // this.News.text = datas[0];
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace LoginProAsset
             {
                 GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().AfterLoginCheck();
             }
-
+            
             // Get user's achievements
             //this.AchievementsManager.GetAchievements(); --->Achemvements are not used and turned off
         }

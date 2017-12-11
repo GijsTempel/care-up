@@ -120,8 +120,18 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         foreach(string data in datas)
         {
-            SetSceneActivated(data, true);
-            activatedScenes += data + " activated\n";
+            string[] result;
+            result = data.Split('|');
+            
+            SetSceneActivated(result[0], true);
+            activatedScenes += result[1] + " activated\n";
+        }
+
+        // setting news
+        GameObject menuWindow = GameObject.Find("MenuWindow");
+        if (menuWindow != null)
+        {
+            menuWindow.GetComponent<LoginPro_Menu>().News.text = activatedScenes;
         }
     }
     
@@ -144,7 +154,6 @@ public class PlayerPrefsManager : MonoBehaviour
         foreach(string data in datas)
         {
             SetSceneActivated(data, false);
-            Debug.Log("Scene " + data + " found on server!");
         }
     }
 }

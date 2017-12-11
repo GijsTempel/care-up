@@ -49,7 +49,7 @@ if(isset($info['ID']))
 		$sceneRes = ExecuteQuery($sceneQuery, $sceneParams);
 		
 		$scene = $sceneRes->fetch();
-		$data[] = $scene['SceneID'];
+		$data[] = $scene['SceneID'] . "|" . $scene['SceneName'];
 		
 	}
 	
