@@ -16,11 +16,17 @@ public class PlayerPrefsManager : MonoBehaviour
 
     private static PlayerPrefsManager instance;
 
-    private string activatedScenes;
+    private List<string> activatedScenes;
 
     public string ActivatedScenes
     {
-        get { return activatedScenes; }
+        get
+        {
+            string result = "";
+            foreach (string s in activatedScenes)
+                result += s + " activated.\n";
+            return result;
+        }
     }
     
     void Awake()
@@ -116,14 +122,15 @@ public class PlayerPrefsManager : MonoBehaviour
             result = data.Split('|');
             
             SetSceneActivated(result[0], true);
-            activatedScenes += result[1] + " activated\n";
+            if (!activatedScenes.Contains(result[1]))
+                activatedScenes.Add(result[1]);
         }
 
         // setting news
         GameObject menuWindow = GameObject.Find("MenuWindow");
         if (menuWindow != null)
         {
-            menuWindow.GetComponent<LoginPro_Menu>().News.text = activatedScenes;
+            menuWindow.GetComponent<LoginPro_Menu>().News.text = ActivatedScenes;
         }
     }
     
