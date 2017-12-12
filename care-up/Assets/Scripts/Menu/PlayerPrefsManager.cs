@@ -116,6 +116,8 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public void CheckSerial_Success(string[] datas)
     {
+        activatedScenes.Clear();
+
         foreach(string data in datas)
         {
             string[] result;
