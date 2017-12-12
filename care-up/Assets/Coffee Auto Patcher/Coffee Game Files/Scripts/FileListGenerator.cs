@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
 using System.Security.Cryptography;
 using System.Threading;
 using UnityEngine;
@@ -11,9 +12,10 @@ using UnityEngine;
 public class FileListGenerator : MonoBehaviour {
 
 
-    //public string serverFileListURL = "";
+    
     public string fullGameExeName = "";
     public string gameBuildPath = "";
+    public string serverFileListURL = "";
     string localFileListPath = "";
     public bool openFileListOnComplete;
 
@@ -39,17 +41,67 @@ public class FileListGenerator : MonoBehaviour {
             GenerateFileList();
         };
 
+        //if(serverFileListURL == "")
         new Thread(threadStart).Start();
+       // else
+        //GenerateFileList();
 
     }
 
     void GenerateFileList()
     {
+        bool downloadedServerFileList = false;
+
+        Dictionary<string, string> serverFiles = new Dictionary<string, string>();
+
+        if (serverFileListURL != "")
+        {
+
+            //Accepts all SSL Certificates
+            ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+
+            using (WebClient wc = new WebClient())
+            {
+
+                
+                try
+                {
+
+                    string _serverPath = System.IO.Path.Combine(gameBuildPath, "serverfileList.txt");
+
+                    wc.DownloadFile(serverFileListURL, _serverPath);
+                    downloadedServerFileList = true;
+
+                    string[] _files = WriteSafeReadAllLines(_serverPath);
+
+                    for(int i = 1; i < _files.Length; i++)
+                    {
+                        _files[i] = _files[i].Replace(@"\", "/");
+                        string[] _md5split = _files[i].Split('\t');
+                        serverFiles.Add(_md5split[0], _md5split[1]);
+                    }
+
+                    File.Delete(_serverPath);
+                }
+                catch (Exception e)
+                {
+                    UnityEngine.Debug.Log("Failed to download server fileList due to " + e.ToString());
+                    downloadedServerFileList = false;
+                }
+            }
+
+            
+
+
+        }
+
         localFileListPath = Path.Combine(gameBuildPath, "fileList.txt");
+        string updatedFilesPath = System.IO.Path.Combine(gameBuildPath, "updatedfileList.txt");
 
         string[] _AllFiles = Directory.GetFiles(gameBuildPath, "*", SearchOption.AllDirectories);
 
         TextWriter tw = new StreamWriter(localFileListPath, false);
+        TextWriter twUpdatedFiles = new StreamWriter(updatedFilesPath, false);
 
         string _exePath = System.IO.Path.Combine(gameBuildPath, fullGameExeName);
 
@@ -66,11 +118,13 @@ public class FileListGenerator : MonoBehaviour {
             }
         }
 
-
+        twUpdatedFiles.WriteLine("Files necessary to upload to the server.");
+        twUpdatedFiles.WriteLine("fileList.txt");
         foreach (string s in _AllFiles)
         {
             string t = s.Replace(gameBuildPath + @"\", null);
 
+            t = t.Replace(@"\", "/");
             //Add Exceptions if you have items in build output folder that you do not want in final. Uncomment if statement and add your exceptions.
             //Example !t.StartsWith(@"Logs\") && !t.EndsWith("Thumbs.db")
             if (!t.Contains("fileList.txt") && !t.Contains("output_log.txt"))
@@ -82,18 +136,50 @@ public class FileListGenerator : MonoBehaviour {
                     {
                         string _md5 = BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", "").ToLower();
                         tw.WriteLine(t + "\t" + _md5);
+
+                        if (serverFiles.ContainsKey(t) && downloadedServerFileList)
+                        {
+                            if (_md5 != serverFiles[t])
+                            {
+                                UnityEngine.Debug.Log(t + " must be uploaded to server.");
+                                twUpdatedFiles.WriteLine(t);
+                            }
+                        }
+                        else if (downloadedServerFileList)
+                        {
+                            twUpdatedFiles.WriteLine(t);
+                            UnityEngine.Debug.Log(t + " must be uploaded to server.");
+                        }
+
                     }
                 }
             }
         }
 
         tw.Close();
+        twUpdatedFiles.Close();
 
         UnityEngine.Debug.Log("File List Created in Build Output Folder");
 
         if (openFileListOnComplete)
             Process.Start(localFileListPath);
 
+    }
+
+
+    public string[] WriteSafeReadAllLines(String path)
+    {
+        using (var csv = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+        using (var sr = new StreamReader(csv))
+        {
+            List<string> file = new List<string>();
+            while (!sr.EndOfStream)
+            {
+                file.Add(sr.ReadLine());
+            }
+
+            return file.ToArray();
+        }
     }
 
 }
