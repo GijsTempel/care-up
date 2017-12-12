@@ -54,12 +54,6 @@ public class PlayerPrefsManager : MonoBehaviour
         set { PlayerPrefs.SetInt("TutorialCompleted", value ? 1 : 0); }
     }
     
-    private string SerialNumber
-    {
-        get { return PlayerPrefs.GetString("__SerialNumber"); }
-        set { PlayerPrefs.SetString("__SerialNumber", value); }
-    }
-
     public void SetSceneActivated(string sceneName, bool value)
     {
         if (value) Debug.Log(sceneName + " activated");
@@ -101,18 +95,16 @@ public class PlayerPrefsManager : MonoBehaviour
 
     private void CheckSerial()
     {
-        string[] data = new string[1];
-        data[0] = SerialNumber;
-
-        LoginPro.Manager.ExecuteOnServer("CheckSerial", CheckSerial_Success, Debug.LogError, data);
+        LoginPro.Manager.ExecuteOnServer("CheckSerial", CheckSerial_Success, Debug.LogError, null);
     }
 
     public void SetSerial(string serial)
     {
-        //support for old keys
-        PlayerPrefs.SetString("SerialKey", serial);
+        string[] data = new string[1];
+        data[0] = serial;
 
-        SerialNumber = serial;
+        LoginPro.Manager.ExecuteOnServer("SetSerial", Blank, Debug.LogError, data);
+
         CheckSerial();
     }
 
@@ -137,15 +129,20 @@ public class PlayerPrefsManager : MonoBehaviour
     
     public void AfterLoginCheck()
     {
+        // deactivate scenes
         LoginPro.Manager.ExecuteOnServer("GetScenes", GetScenes_Success, Debug.LogError, null);
 
+        // activate scenes corresponding to serials
         CheckSerial();
 
-        // support for old keys
-        if (PlayerPrefs.GetString("SerialKey") != ""
-            && PlayerPrefs.GetString("SerialKey") != SerialNumber)
+        // support for old key type
+        if (PlayerPrefs.GetString("SerialKey") != "")
         {
-            SetSerial(PlayerPrefs.GetString("SerialKey"));
+            string[] data = new string[1];
+            data[0] = PlayerPrefs.GetString("SerialKey");
+            LoginPro.Manager.ExecuteOnServer("SetSerial", Blank, Debug.LogError, data);
+
+            PlayerPrefs.SetString("SerialKey", ""); // clear this, so it happens once
         }
     }
 
@@ -156,4 +153,6 @@ public class PlayerPrefsManager : MonoBehaviour
             SetSceneActivated(data, false);
         }
     }
+
+    public void Blank(string[] s) { }
 }

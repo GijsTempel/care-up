@@ -25,41 +25,31 @@
 
 // LET'S BEGIN :
 // Notice that $_SESSION['GamingTable'] is set in the script 'ServerSettings.php', if you want to add other tables: add them in 'Server.php' in the ******* TABLES ZONE ********
+$serial = $datas[0];
 
-$query = "SELECT * FROM ".$_SESSION['AccountToSerials']." WHERE AccountID = :account_id";
-$parameters = array(':account_id' => $account['id']);
-$serials = ExecuteQuery($query, $parameters);
+$query = "SELECT * FROM ".$_SESSION['SerialKeys']." WHERE SerialString = :serial_string";
+$parameters = array(':serial_string' => $serial);
+$stmt = ExecuteQuery($query, $parameters);
 
-while ($serial = $serials->fetch())
+$info = $stmt->fetch();
+
+// SUCCESS
+if(isset($info['ID']))
 {
-	$query = "SELECT * FROM ".$_SESSION['SerialKeys']." WHERE ID = :id";
-	$parameters = array(':id' => $serial['SerialID']);
+	$parameters = array(':account_id' => $account['id'], ':serial_id' => $info['ID']);
+	$query = "SELECT * FROM ".$_SESSION['AccountToSerials']." WHERE AccountID = :account_id AND SerialID = :serial_id";
 	$stmt = ExecuteQuery($query, $parameters);
 	
-	$info = $stmt->fetch();
-	
-	// SUCCESS
-	if(isset($info['ID']))
+	if (!$stmt->fetch())
 	{
-		$query = "SELECT * FROM ".$_SESSION['SerialToScenes']." WHERE SerialID = :serial_id";
-		$parameters = array(':serial_id' => $info['ID']);
+		$query = "INSERT INTO ".$_SESSION['AccountToSerials']." (AccountID, SerialID) VALUES (:account_id, :serial_id)";
 		$stmt = ExecuteQuery($query, $parameters);
-		
-		$data = array();
-		
-		while ($info2 = $stmt->fetch())
-		{
-			$sceneQuery = "SELECT * FROM ".$_SESSION['GameScenes']." WHERE ID = :serial_id";
-			$sceneParams = array(':serial_id' => $info2['SceneID']);
-			$sceneRes = ExecuteQuery($sceneQuery, $sceneParams);
-			
-			$scene = $sceneRes->fetch();
-			$data[] = $scene['SceneID'] . "|" . $scene['SceneName'];
-			
-		}
+		sendAndFinish("KeyAccepted");
+	}
+	else
+	{
+		sendAndFinish("Duplicate query");
 	}
 }
-
-sendArrayAndFinish($data);
 
 ?>
