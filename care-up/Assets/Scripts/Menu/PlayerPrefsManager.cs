@@ -138,9 +138,7 @@ public class PlayerPrefsManager : MonoBehaviour
         // support for old key type
         if (PlayerPrefs.GetString("SerialKey") != "")
         {
-            string[] data = new string[1];
-            data[0] = PlayerPrefs.GetString("SerialKey");
-            LoginPro.Manager.ExecuteOnServer("SetSerial", Blank, Debug.LogError, data);
+            SetSerial(PlayerPrefs.GetString("SerialKey"));
 
             PlayerPrefs.SetString("SerialKey", ""); // clear this, so it happens once
         }
