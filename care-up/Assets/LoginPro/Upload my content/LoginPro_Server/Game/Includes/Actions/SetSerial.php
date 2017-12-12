@@ -36,20 +36,34 @@ $info = $stmt->fetch();
 // SUCCESS
 if(isset($info['ID']))
 {
-	$parameters = array(':account_id' => $account['id'], ':serial_id' => $info['ID']);
-	$query = "SELECT * FROM ".$_SESSION['AccountToSerials']." WHERE AccountID = :account_id AND SerialID = :serial_id";
+	$query = "SELECT * FROM ".$_SESSION['AccountToSerials']." WHERE SerialID = :serial_id";
+	$parameters = array(':serial_id' => $info['id']);
 	$stmt = ExecuteQuery($query, $parameters);
+	$timesUsed = count($stmt->fetchAll());
 	
-	if (!$stmt->fetch())
+	if ($timesUsed < $info['AccountNumber'])
 	{
-		$query = "INSERT INTO ".$_SESSION['AccountToSerials']." (AccountID, SerialID) VALUES (:account_id, :serial_id)";
+		$parameters = array(':account_id' => $account['id'], ':serial_id' => $info['ID']);
+		$query = "SELECT * FROM ".$_SESSION['AccountToSerials']." WHERE AccountID = :account_id AND SerialID = :serial_id";
 		$stmt = ExecuteQuery($query, $parameters);
-		sendAndFinish("KeyAccepted");
+		
+		if (!$stmt->fetch())
+		{
+			$query = "INSERT INTO ".$_SESSION['AccountToSerials']." (AccountID, SerialID) VALUES (:account_id, :serial_id)";
+			$stmt = ExecuteQuery($query, $parameters);
+			sendAndFinish("KeyAccepted");
+		}
+		else
+		{
+			sendAndFinish("Duplicate query");
+		}
 	}
 	else
 	{
-		sendAndFinish("Duplicate query");
+		end_script("Serial key is already being used.");
 	}
 }
+
+end_script("Wrong serial key.");
 
 ?>
