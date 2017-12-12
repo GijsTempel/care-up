@@ -16,7 +16,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
     private static PlayerPrefsManager instance;
 
-    private List<string> activatedScenes;
+    private List<string> activatedScenes = new List<string>();
 
     public string ActivatedScenes
     {
