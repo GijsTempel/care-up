@@ -95,7 +95,7 @@ namespace LoginProAsset
         public void NewsSuccess(string[] datas)
         {
             // Set the news of the game to display them at startup
-            // this.News.text = datas[0];
+            this.News.text = datas[0];
         }
 
         /// <summary>
