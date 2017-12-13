@@ -99,7 +99,7 @@ public class PlayerPrefsManager : MonoBehaviour
         set { PlayerPrefs.SetInt("TutorialPopUpDeclined", value ? 1 : 0); }
     }
 
-    private void CheckSerial()
+    public void CheckSerial()
     {
         LoginPro.Manager.ExecuteOnServer("CheckSerial", CheckSerial_Success, Debug.LogError, null);
     }
@@ -114,7 +114,7 @@ public class PlayerPrefsManager : MonoBehaviour
         CheckSerial();
     }
 
-    public void CheckSerial_Success(string[] datas)
+    private void CheckSerial_Success(string[] datas)
     {
         activatedScenes.Clear();
 

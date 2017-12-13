@@ -87,36 +87,15 @@ namespace LoginProAsset
         /// </summary>
         public void SendToServer()
         {
-			// Information to send to the server (encrypted with RSA)
-			string[] datas = new string[2]; // <- CAUTION TO THE SIZE OF THE ARRAY (It's the number of data you want to send)
-			datas[0] = enteredSerial.text;
-	
-			Serial = enteredSerial.text;
-            if (Guardian.ValidateKey(Serial, CheckKey, MyBaseKeys[CheckKey]))
+            string[] data = new string[1];
+            data[0] = enteredSerial.text;
+
+            LoginPro.Manager.ExecuteOnServer("SetSerial", SetSerialSuccess, SetSerialError, data);
+
+            if (GameObject.Find("Preferences") != null)
             {
-                ValidProduct = true;
-				datas[1] = ValidProduct.ToString();
-				LoginPro.Manager.ExecuteOnServer("SendData", SendToServer_Success, SendToServer_Error, datas);
-
-                // SceneManager.LoadScene("Menu");
-                // Store the key so when we load up next time we dont have to enter serial again.
-                //PlayerPrefs.SetString("SerialKey", Serial);
-                if (GameObject.Find("Preferences") != null)
-                {
-                    GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().SetSerial(Serial);
-                }
-                validatedIcon.SetActive(true);
+                GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().CheckSerial();
             }
-            else {
-				//Popup.Show ("Helaas, de code is incorrect.", 5);
-                GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set("Helaas, de code klopt niet. Probeer het opnieuw");
-                //topText = "Helaas, de code klopt niet. Probeer het opnieuw";
-                Debug.Log("code invalide");
-            }
-
-            Debug.Log(datas[0]);
-			Debug.Log(datas[1]);
-
         }
 		//Check if code is correct
         public void SendToServer_Success(string[] datas)
@@ -133,6 +112,21 @@ namespace LoginProAsset
             Debug.LogError(errorMessage);
             //Popup.Show("Error : " + errorMessage, 5);
             GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set(errorMessage);
+        }
+
+        public void SetSerialSuccess(string[] datas)
+        {
+            Serial = enteredSerial.text;
+            ValidProduct = true;
+            validatedIcon.SetActive(true);
+        }
+
+        public void SetSerialError(string msg)
+        {
+            //Popup.Show ("Helaas, de code is incorrect.", 5);
+            GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set("Helaas, de code klopt niet. Probeer het opnieuw");
+            //topText = "Helaas, de code klopt niet. Probeer het opnieuw";
+            Debug.Log("code invalide");
         }
 			
 

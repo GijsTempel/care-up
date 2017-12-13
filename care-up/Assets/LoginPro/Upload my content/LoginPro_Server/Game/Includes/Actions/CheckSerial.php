@@ -30,6 +30,8 @@ $query = "SELECT * FROM ".$_SESSION['AccountToSerials']." WHERE AccountID = :acc
 $parameters = array(':account_id' => $account['id']);
 $serials = ExecuteQuery($query, $parameters);
 
+$data = array();
+
 while ($serial = $serials->fetch())
 {
 	$query = "SELECT * FROM ".$_SESSION['SerialKeys']." WHERE ID = :id";
@@ -44,8 +46,6 @@ while ($serial = $serials->fetch())
 		$query = "SELECT * FROM ".$_SESSION['SerialToScenes']." WHERE SerialID = :serial_id";
 		$parameters = array(':serial_id' => $info['ID']);
 		$stmt = ExecuteQuery($query, $parameters);
-		
-		$data = array();
 		
 		while ($info2 = $stmt->fetch())
 		{
