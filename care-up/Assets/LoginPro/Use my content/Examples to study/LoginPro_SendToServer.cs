@@ -32,51 +32,28 @@ namespace LoginProAsset
 		public InputField enteredSerial;
         public InputField Data3;
 
-		public GameObject validatedIcon;
+
 
         // This is just here to show a popup when datas are sent (or error occured)
         //public UIAnimation_Alert Popup;
 
         public string Serial = "";
         public bool ValidProduct = false;
-        // Which of the base keys to compare in the check
-        public byte CheckKey = 0;
-
-
-        // This is the most important part.
-        // Make sure your base keys are unique
-        // choose random keys here and when you want to make a
-        // 2.x release change the keys so the 1.x keys are no longer valid
-        public uint[] MyBaseKeys = { 4, 16, 12, 64 };
 
         void Start()
         {
 
-
-            // Init Guardian
-            Guardian.Init(MyBaseKeys);
-            // Number of letters between each dash in the serial
-            Guardian.Spacing = 6;
-
-            // Generate A Test Key
-            //Serial = Guardian.Generate("Care-Up");
 
             // Store the serial number in playerprefs so the user does not have to write them everytime.
             string storedSerial = PlayerPrefs.GetString("SerialKey");
             if(storedSerial != string.Empty)
              {
                 ValidProduct = true;
-				validatedIcon.SetActive(true);
                 //Serial was valid we can continue on to the game menu/level
                
              }
 
-            var MySerialNumbers = Guardian.Generate(3, new System.Random(3));
-            foreach (var serial in MySerialNumbers)
-            {
-
-                Debug.Log(serial.Value);
-            }
+         
           
        }
 
@@ -97,30 +74,23 @@ namespace LoginProAsset
                 GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().CheckSerial();
             }
         }
-		//Check if code is correct
-        public void SendToServer_Success(string[] datas)
-        {
-            
-            Debug.Log("Success! The server answered : " + datas[0]);
-			if (ValidProduct) 
-			{
-                GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set("Succes, je protocol is nu beschikbaar start het spel om je protocol te spelen.");
-            } 
-        }
+		
         public void SendToServer_Error(string errorMessage)
         {
             Debug.LogError(errorMessage);
             //Popup.Show("Error : " + errorMessage, 5);
             GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set(errorMessage);
         }
+        //Check if code is correct
 
         public void SetSerialSuccess(string[] datas)
         {
             Serial = enteredSerial.text;
             ValidProduct = true;
-            validatedIcon.SetActive(true);
+            GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set("Succes, je protocol is nu beschikbaar start het spel om je protocol te spelen.");
         }
 
+        //Check if code is incorrect
         public void SetSerialError(string msg)
         {
             //Popup.Show ("Helaas, de code is incorrect.", 5);
