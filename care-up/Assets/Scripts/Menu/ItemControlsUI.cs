@@ -95,14 +95,17 @@ public class ItemControlsUI : MonoBehaviour {
             
             closeButton.SetActive(true);
 
-            //transform.position = initedObject.transform.position +
-            //    Camera.main.transform.right * 0.2f;
-            //transform.rotation = Camera.main.transform.rotation;
-
             //talkin removed
             if (talkButton.activeSelf)
             {
-                Talk();
+                if (controls.CanInteract)
+                {
+                    Talk();
+                }
+                else
+                {
+                    return;
+                }
             }
             else
             {
