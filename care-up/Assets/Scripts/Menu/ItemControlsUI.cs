@@ -94,24 +94,21 @@ public class ItemControlsUI : MonoBehaviour {
             }
             
             closeButton.SetActive(true);
-            
+
+            //transform.position = initedObject.transform.position +
+            //    Camera.main.transform.right * 0.2f;
+            //transform.rotation = Camera.main.transform.rotation;
+
             //talkin removed
             if (talkButton.activeSelf)
             {
-                if (controls.CanInteract)
-                {
-                    Talk();
-                }
-                else
-                {
-                    return;
-                }
+                Talk();
             }
             else
             {
                 transform.position = Input.mousePosition + new Vector3(cursorOffset.x, cursorOffset.y);
 
-                float lowerBound = 75.0f;
+                float lowerBound = 105.0f;
                 if (transform.position.y < lowerBound)
                 {
                     float difference = lowerBound - transform.position.y;
