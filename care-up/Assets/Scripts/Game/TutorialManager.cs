@@ -54,11 +54,12 @@ public class TutorialManager : MonoBehaviour {
         DroppingExplanation,       // step 9
         DropItem,                  // step 9
         DropAnotherItem,           // step 9
-        PickBothItems,             // step 9
-        WalkAway,                  // step 10
-        DropBothItems,             // step 10
-        PickBothItemsAgain,        // step 10
-        DropBothItemAway,          // inserted
+
+        //PickBothItems,             // step 9
+        //WalkAway,                  // step 10
+        //DropBothItems,             // step 10
+        //PickBothItemsAgain,        // step 10
+        //DropBothItemAway,          // inserted
         CombineDesinfMedicine,     // step 11
 
         DropClothMedicine,         // step 12
@@ -148,7 +149,7 @@ public class TutorialManager : MonoBehaviour {
     [HideInInspector]
     public string itemToDrop2 = "";
 
-    void Start () {
+    void Awake () {
         particleHint = GameObject.Find("ParticleHint");
         particleHint.SetActive(false);
         particleHint_alt = GameObject.Find("ParticleHint (1)");
@@ -376,92 +377,6 @@ public class TutorialManager : MonoBehaviour {
                     if ( handsInventory.tutorial_droppedRight )
                     {
                         AddPointWithSound();
-                        currentStep = TutorialStep.PickBothItems;
-                        handsInventory.tutorial_droppedRight = false;
-                        UItext.text = "Pak nu de aclohol en het gedesinfecteerde gaasje weer op door naar de voorwerpen te kijken en op de linkermuisknop te drukken.";
-
-                        itemToPick = "Alcohol";
-                        itemToPick2 = "DesinfectionCloth";
-
-                        particleHint.transform.position = alcohol.transform.position;
-                        particleHint.SetActive(true);
-                        particleHint_alt.transform.position = GameObject.Find("DesinfectionCloth").transform.position;
-                        particleHint_alt.SetActive(true);
-                    }
-                    break;
-                case TutorialStep.PickBothItems:
-                    if ( handsInventory.tutorial_pickedLeft && handsInventory.tutorial_pickedRight )
-                    {
-                        AddPointWithSound();
-                        handsInventory.tutorial_pickedLeft =
-                            handsInventory.tutorial_pickedRight = false;
-                        currentStep = TutorialStep.WalkAway;
-                        particleHint.SetActive(false);
-                        particleHint_alt.SetActive(false);
-                        UItext.text = "Loop met de W, A, S, D / pijltjestoetsen en de muis bij het werkveld vandaan.";
-                    }
-                    break;
-                case TutorialStep.WalkAway:
-                    if ( Vector3.Distance(player.transform.position, tableTrigger.position) > 5.0f )
-                    {
-                        AddPointWithSound();
-                        currentStep = TutorialStep.DropBothItems;
-                        UItext.text = "Laat nu beide voorwerpen op de grond vallen door op 'SHIFT' + 'Q' te drukken om het voorwerp in je linkerhand te laten vallen en druk op 'SHIFT' + 'E' om het voorwerp in je rechterhand te laten vallen.";
-                        itemToDrop = "Alcohol";
-                        itemToDrop2 = "DesinfectionCloth";
-                    }
-                    break;
-                case TutorialStep.DropBothItems:
-                    if (TimerElapsed())
-                    {
-                        currentStep = TutorialStep.PickBothItemsAgain;
-                        UItext.text = "Pak nu beide voorwerpen weer van de grond door ernaar te kijken en op de linkermuisknop te drukken.";
-                        particleHint.transform.position = alcohol.transform.position;
-                        particleHint_alt.transform.position = GameObject.Find("DesinfectionCloth").transform.position;
-                        particleHint.SetActive(true);
-                        particleHint_alt.SetActive(true);
-
-                        itemToPick = "Alcohol";
-                        itemToPick2 = "DesinfectionCloth";
-                    }
-                    else
-                    {
-                        if ( handsInventory.tutorial_droppedLeft && handsInventory.tutorial_droppedRight)
-                        {
-                            AddPointWithSound();
-                            handsInventory.tutorial_droppedLeft =
-                                handsInventory.tutorial_droppedRight = false;
-                            UItext.text = "Voorwerpen kun je overal waar je wilt laten vallen. Echter zorgt het laten vallen van voorwerpen op de grond voor strafpunten. Leg voorwerpen terug op het werkveld door dichtbij het werkveld te gaan staan en naar het werkveld te kijken terwijl je voorwerpen teruglegt om strafpunten te voorkomen.";
-                            SetPauseTimer(15.0f);
-                        }
-                    }
-                    break;
-                case TutorialStep.PickBothItemsAgain:
-                    if ( handsInventory.tutorial_pickedLeft && handsInventory.tutorial_pickedRight)
-                    {
-                        AddPointWithSound();
-                        particleHint.SetActive(false);
-                        particleHint_alt.SetActive(false);
-                        handsInventory.tutorial_pickedLeft =
-                            handsInventory.tutorial_pickedRight = false;
-                        currentStep = TutorialStep.DropBothItemAway;
-                        UItext.text = "Leg nu beide voorwerpen terug op het werkveld door dichtbij het werkveld te gaan staan. Daarna druk je op 'SHIFT' + 'Q' om het voorwerp in je linkerhand terug te leggen en druk op 'SHIFT' +'E' om het voorwerp in je rechterhand terug te leggen.";
-                    }
-                    break;
-                case TutorialStep.DropBothItemAway:
-                    if (Vector3.Distance(player.transform.position, workField.transform.position) > 2.0f)
-                    {
-                        controls.keyPreferences.RightDropKey.locked = rightDropKeyLocked = true;
-                        controls.keyPreferences.LeftDropKey.locked = leftDropKeyLocked = true;
-                    }
-                    else
-                    {
-                        controls.keyPreferences.RightDropKey.locked = rightDropKeyLocked = false;
-                        controls.keyPreferences.LeftDropKey.locked = leftDropKeyLocked = false;
-                    }
-                    if ( handsInventory.tutorial_droppedLeft && handsInventory.tutorial_droppedRight)
-                    {
-                        AddPointWithSound();
                         handsInventory.tutorial_droppedLeft =
                             handsInventory.tutorial_droppedRight = false;
                         currentStep = TutorialStep.CombineDesinfMedicine;
@@ -470,6 +385,9 @@ public class TutorialManager : MonoBehaviour {
 
                         particleHint.SetActive(true);
                         particleHint.transform.position = medicine.transform.position;
+
+                        itemToPick = "Medicine";
+                        itemToPick2 = "DesinfectionCloth";
                     }
                     break;
                 case TutorialStep.CombineDesinfMedicine:

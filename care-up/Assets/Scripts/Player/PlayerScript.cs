@@ -91,9 +91,6 @@ public class PlayerScript : MonoBehaviour {
             Cursor.lockState = CursorLockMode.None;
         }
 
-        if (tutorial_movementLock)
-            return;
-
         if (controls.MouseClicked() && !moveBackButton.mouseOver)
         {
             if (away && controls.SelectedObject != null &&
@@ -135,6 +132,8 @@ public class PlayerScript : MonoBehaviour {
         {
             ToggleUsingOnMode(false);
         }
+        
+        moveBackButton.GetComponent<Button>().interactable = !tutorial_movementLock;
     }
 
     public void ToggleUsingOnMode(bool value)
