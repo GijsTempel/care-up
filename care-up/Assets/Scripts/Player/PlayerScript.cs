@@ -105,19 +105,13 @@ public class PlayerScript : MonoBehaviour {
                 {
                     if (usingOnHand)
                     {
-                        if (handsInv.LeftHandObject)
-                        {
-                            handsInv.LeftHandObject.GetComponent<PickableObject>().Use(usingOnHand);
-                        }
+                        handsInv.LeftHandUse();
 
                         ToggleUsingOnMode(false);
                     } 
                     else
                     {
-                        if (handsInv.RightHandObject)
-                        {
-                            handsInv.RightHandObject.GetComponent<PickableObject>().Use(usingOnHand);
-                        }
+                        handsInv.RightHandUse();
 
                         ToggleUsingOnMode(false);
                     }

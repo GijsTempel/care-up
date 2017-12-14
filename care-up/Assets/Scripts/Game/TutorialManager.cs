@@ -601,6 +601,9 @@ public class TutorialManager : MonoBehaviour {
                         
                         particleHint.transform.position = GameObject.Find("NeedleCup").transform.position;
                         particleHint.SetActive(true);
+
+                        syringe = GameObject.FindObjectOfType<Syringe>().gameObject;
+                        syringe.GetComponent<PickableObject>().tutorial_usedOn = false;
                     }
                     break;
                 case TutorialStep.UseSyringeOnTrashInj:

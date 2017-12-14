@@ -123,44 +123,7 @@ public class HandsInventory : MonoBehaviour {
 
         if (rightHandObject && rightHold)
             rightHandObject.transform.localPosition = Vector3.zero;
-
-        // handle player actions in free mode
-        if (cameraMode.CurrentMode == CameraMode.Mode.Free)
-        {
-            // use left object
-            if (controls.keyPreferences.LeftUseKey.Pressed())
-            {
-                if (leftHandObject != null)
-                {
-                    if (leftHandObject.Use(false))
-                    {
-                        tutorial_itemUsedOn = true;
-                    }
-                }
-                else if (glovesOn && rightHandObject == null)
-                {
-                    actionManager.OnUseOnAction("", "");
-                    GlovesToggle(false);
-                }
-            }
-
-            // use right object
-            if (controls.keyPreferences.RightUseKey.Pressed())
-            {
-                if (rightHandObject)
-                {
-                    if (rightHandObject.Use(true))
-                    {
-                        tutorial_itemUsedOn = true;
-                    }
-                }
-                else if (glovesOn && leftHandObject == null)
-                {
-                    actionManager.OnUseOnAction("", "");
-                    GlovesToggle(false);
-                }
-            }
-        }
+        
     }
     
     /// <summary>
@@ -807,6 +770,38 @@ public class HandsInventory : MonoBehaviour {
                 rightHold = false;
                 PlayerAnimationManager.SetHandItem(false, null);
             }
+        }
+    }
+
+    public void LeftHandUse()
+    {
+        if (leftHandObject != null)
+        {
+            if (leftHandObject.Use(false))
+            {
+                tutorial_itemUsedOn = true;
+            }
+        }
+        else if (glovesOn && rightHandObject == null)
+        {
+            actionManager.OnUseOnAction("", "");
+            GlovesToggle(false);
+        }
+    }
+
+    public void RightHandUse()
+    {
+        if (rightHandObject)
+        {
+            if (rightHandObject.Use(true))
+            {
+                tutorial_itemUsedOn = true;
+            }
+        }
+        else if (glovesOn && leftHandObject == null)
+        {
+            actionManager.OnUseOnAction("", "");
+            GlovesToggle(false);
         }
     }
 }
