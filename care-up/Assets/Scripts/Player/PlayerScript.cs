@@ -11,6 +11,10 @@ public class PlayerScript : MonoBehaviour {
     public float tutorial_totalLookAround = 0.0f;
     [HideInInspector]
     public float tutorial_totalMoveAround = 0.0f;
+    [HideInInspector]
+    public bool tutorial_movedBack = false;
+    [HideInInspector]
+    public bool tutorial_movedTo = false;
 
     public Camera cam;
     public MouseLook mouseLook = new MouseLook();
@@ -176,6 +180,15 @@ public class PlayerScript : MonoBehaviour {
         if (away)
         {
             itemControls.Close();
+        }
+
+        if (away)
+        {
+            tutorial_movedBack = true;
+        }
+        else
+        {
+            tutorial_movedTo = true;
         }
     }
 

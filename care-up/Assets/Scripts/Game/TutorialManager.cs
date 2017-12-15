@@ -44,9 +44,13 @@ public class TutorialManager : MonoBehaviour {
         UseTable,                  // step 5
         ExamineRecords,            // step 5
         CloseRecords,              // step 5
+        ExaminePrescription,
+        ClosePrescription,
         ExamineMedicine,           // step 5
         CloseMedicine,             // inserted
+        Overview1,
         UseDoctor,                 // inserted
+        Overview2,
         TalkDoubleCheck,           // inserted
         PickAlcohol,               // step 6
         PickCloth,                 // step 7
@@ -85,6 +89,7 @@ public class TutorialManager : MonoBehaviour {
         //CombineTakeOffInjCap,    // step 26 : should not take cap off
         //DropInjectionCap,        // step 27 : it's done in sequence
         
+        Overview3,
         MoveToPatient,             // step 
         TalkToPatient,             // step 28 
 
@@ -122,6 +127,7 @@ public class TutorialManager : MonoBehaviour {
     private UsableObject handCleaner;
     private WorkField workField;
     private ExaminableObject patientRecords;
+    private ExaminableObject prescriptionForm;
     private GameObject syringe;
     //private GameObject needle;
     private ExaminableObject medicine;
@@ -164,6 +170,7 @@ public class TutorialManager : MonoBehaviour {
         handCleaner = GameObject.Find("HandCleaner").GetComponent<UsableObject>();
         workField = GameObject.Find("WorkField").GetComponent<WorkField>();
         patientRecords = GameObject.Find("PatientRecords").GetComponent<ExaminableObject>();
+        prescriptionForm = GameObject.Find("PrescriptionForm").GetComponent<ExaminableObject>();
 
         Transform interactables = GameObject.Find("Interactable Objects").transform;
         medicine = interactables.Find("Medicine").GetComponent<ExaminableObject>();
@@ -251,6 +258,7 @@ public class TutorialManager : MonoBehaviour {
                 case TutorialStep.ExamineRecords:
                     if ( patientRecords.tutorial_picked )
                     {
+                        AddPointWithSound();
                         currentStep = TutorialStep.CloseRecords;
                         particleHint.SetActive(false);
                         UItext.text = "Als je met de linkermuisknop op een voorwerp met een vergrootglas icoon druk, kom je in het voorwerp bekijk modus. Je kunt door te scrollen met je muiswiel om in/uit te zoomen. Je kunt voorwerpen draaien door de linkermuisknop ingedrukt te houden en te bewegen met de muis. Het voorwerp terugleggen doe je met de 'Q' knop. Het bekeken/gecontroleerde voorwerp kun je oppakken met de 'E' knop. Dit kan echter niet met alle voorwerpen. Leg nu de clientgegevens terug door op 'Q' te drukken.   ";
@@ -258,6 +266,25 @@ public class TutorialManager : MonoBehaviour {
                     break;
                 case TutorialStep.CloseRecords:
                     if ( patientRecords.tutorial_closed )
+                    {
+                        AddPointWithSound();
+                        currentStep = TutorialStep.ExaminePrescription;
+                        particleHint.SetActive(true);
+                        particleHint.transform.position = prescriptionForm.transform.position;
+                        UItext.text = "examine prescription form";
+                        prescriptionForm.tutorial_picked = false;
+                    }
+                    break;
+                case TutorialStep.ExaminePrescription:
+                    if (prescriptionForm.tutorial_picked)
+                    {
+                        currentStep = TutorialStep.ClosePrescription;
+                        particleHint.SetActive(false);
+                        UItext.text = "close prescription";
+                    }
+                    break;
+                case TutorialStep.ClosePrescription:
+                    if (prescriptionForm.tutorial_closed)
                     {
                         AddPointWithSound();
                         currentStep = TutorialStep.ExamineMedicine;
@@ -277,21 +304,40 @@ public class TutorialManager : MonoBehaviour {
                     if (medicine.tutorial_closed)
                     {
                         AddPointWithSound();
+                        currentStep = TutorialStep.Overview1;
+                        UItext.text = "Press 'back' button";
+                        player.tutorial_movedBack = false;
+                        player.tutorial_movementLock = movementLock = false;
+                        particleHint.SetActive(false);
+                    }
+                    break;
+                case TutorialStep.Overview1:
+                    if (player.tutorial_movedBack)
+                    {
+                        AddPointWithSound();
                         currentStep = TutorialStep.UseDoctor;
+                        particleHint.SetActive(true);
                         particleHint.transform.position = doctor.transform.position;
                         doctor.tutorial_talked = false;
-                        player.tutorial_movementLock = movementLock = false;
-					    UItext.text = "Loop richting je collega. Je kunt met sommige mensen praten. Mensen waarmee je kunt praten kun je herkennen aan het praat icoon die verschijnt wanneer je naar deze persoon kijkt. Als je wilt praten met deze persoon klik je op de linkermuisknop. Ga nu het gesprek aan met je collega. ";
+                        UItext.text = "Loop richting je collega. Je kunt met sommige mensen praten. Mensen waarmee je kunt praten kun je herkennen aan het praat icoon die verschijnt wanneer je naar deze persoon kijkt. Als je wilt praten met deze persoon klik je op de linkermuisknop. Ga nu het gesprek aan met je collega. ";
                         doctor.tutorial_used = false;
                     }
                     break;
                 case TutorialStep.UseDoctor:
                     if (doctor.tutorial_used)
                     {
+                        currentStep = TutorialStep.Overview2;
+                        UItext.text = "Move back";
+                        player.tutorial_movedBack = false;
+                    }
+                    break;
+                case TutorialStep.Overview2:
+                    if (player.tutorial_movedBack)
+                    {
+
                         AddPointWithSound();
                         currentStep = TutorialStep.TalkDoubleCheck;
                         UItext.text = "Wanneer je een gesprek aangaat met je collega of een client, opent er een dialoog scherm. Hier kun je een keuze maken tussen verschillende gespreksonderwerpen. Vraag nu aan je collega om de dubbele controle door de keuze te selecteren en op linkermuisknop te drukken.";
-                        
                     }
                     break;
                 case TutorialStep.TalkDoubleCheck:
@@ -540,6 +586,16 @@ public class TutorialManager : MonoBehaviour {
                     if (handsInventory.tutorial_combined)
                     {
                         handsInventory.tutorial_combined = false;
+                        player.tutorial_movedBack = false;
+                        currentStep = TutorialStep.Overview3;
+                        UItext.text = "move back";
+                        player.tutorial_movementLock = movementLock = false;
+                    }
+                    break;
+                case TutorialStep.Overview3:
+                    if (player.tutorial_movedBack)
+                    {
+                        player.tutorial_movedBack = false;
                         currentStep = TutorialStep.MoveToPatient;
                         UItext.text = "De spuit is klaar voor gebruik. Beweeg nu naar de de client te om met hem te praten.";
 
@@ -555,7 +611,6 @@ public class TutorialManager : MonoBehaviour {
 
                         patientTrigger.gameObject.SetActive(false);
 
-                        player.tutorial_movementLock = movementLock = true;
                         currentStep = TutorialStep.TalkToPatient;
                         particleHint.transform.position = GameObject.Find("Patient").transform.position;
                         UItext.text = "Vraag aan de client of hij zijn mouw omhoog wil doen. Open het dialoogscherm door naar de client te kijken en op de linkermuisknop te drukken.";
