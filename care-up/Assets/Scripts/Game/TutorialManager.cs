@@ -214,7 +214,7 @@ public class TutorialManager : MonoBehaviour {
                         player.tutorial_movementLock = movementLock = false;
                         particleHint.transform.position = tableTrigger.transform.position;
                         particleHint.SetActive(true);
-                        UItext.text = "Beweeg naar de tafel door W, A, S, D / pijltjestoetsen en de muis te gebruiken.";
+                        UItext.text = "Ieder protocol start in een overzicht. In het overzicht kun je met de muis de omgeving verkennen. Zodra je met de muis over een interessant object of persoon heen gaat verschijnt er een tekst. Je kunt naar interessante objecten toe bewegen door met de linkermuisknop het interessante object of persoon te selecteren. Klik nu met de linkermuisknop op het werkveld om hiernaar toe te bewegen.  ";
                     }
                     else
                     {
@@ -222,8 +222,8 @@ public class TutorialManager : MonoBehaviour {
                         controls.keyPreferences.mouseClickLocked = mouseClickLocked = false;
                         controls.keyPreferences.mouseClickKey.locked = false;
                         player.tutorial_movementLock = movementLock = true;
-                        UItext.text = "Welkom bij Care-Up";
-                        SetPauseTimer(2.0f);
+                        UItext.text = "Welkom bij Care-Up. Je hebt gekozen om het spel te leren. Heel goed. Laten we beginnen. ";
+                        SetPauseTimer(5.0f);
                     }
                     break;
                 case TutorialStep.WalkToTable:
@@ -235,7 +235,7 @@ public class TutorialManager : MonoBehaviour {
                         currentStep = TutorialStep.UseHandCleaner;
                         controls.keyPreferences.closeObjectView.locked = closeObjectViewLocked = false;
                         particleHint.transform.position = handCleaner.transform.position;
-                        UItext.text = "Sommige oplichtende voorwerpen met een hand icoon erboven kunnen gebruikt worden door naar het voorwerp te kijken en op de linkermuisknop te drukken. Kijk nu naar de hygiënepomp en druk op de linkermuisknop om handhygiëne toe te passen. ";
+                        UItext.text = "Laten we nu met objecten gaan interacteren. Om er achter te komen wat een object is. Kun je er met de muis overheen bewegen. Je kunt met de linkermuisknop op een object drukken om het optiemenu te openen. In dit optiemenu kun je zien wat je met een bepaald object kunt doen. Om het optiemenu te sluiten druk je op de optie 'Sluiten' of klik je op de rechtermuisknop. Klik nu op de handhyiëne pomp en kies de optie gebruiken.";
                     }
                     break;
                 case TutorialStep.UseHandCleaner:
@@ -243,7 +243,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         currentStep = TutorialStep.UseTable;
                         particleHint.transform.position = workField.transform.position;
-                        UItext.text = "Maak je werkveld schoon. Dit kan door naar het werkveld te kijken en op de linkermuisknop te drukken. Hier zie je ook weer het 'hand' icoon die aangeeft dat je het voorwerp kunt gebruiken.";
+                        UItext.text = "Heel goed! Doe nu hetzelfde met het werkveld. Beweeg de muis op het werkveld. Druk daarna op de linkermuisknop om het optiemenu te openen. Tot slot kies je de optie 'Gebruiken'.";
                     }
                     break;
                 case TutorialStep.UseTable:
@@ -251,7 +251,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         currentStep = TutorialStep.ExamineRecords;
                         particleHint.transform.position = patientRecords.transform.position;
-                        UItext.text = "Oplichtende voorwerpen met een vergrootglas icoon kunnen bekeken en gecontroleerd worden. Dit geldt voor bijvoorbeeld de clientgegevens of het medicijn. Dit doe je door naar het voorwerp met een vergrootglas icoon te kijken en op de linkermuisknop te drukken.   ";
+                        UItext.text = "Sommige objecten dien je te controleren. Denk hierbij aan de toedienlijst, de patiëntgevens en het het medicijn. Leten we als eerste de patiëntgegevens controleren. Beweeg de muis op de patiëntgegevens en klik op de linkermuisknop. Dit opent het optiemenu. We zien nu de optie 'Controleren' ipv 'Gebruiken'. Dit komt omdat je de patiëntgegevens niet hoeft te gebruiken maar moet controleren. Kies in het optiemenu voor de optie 'Controleren' om de 'Bekijk modus'te openen.  ";
                         patientRecords.tutorial_picked = false;
                     }
                     break;
@@ -261,7 +261,7 @@ public class TutorialManager : MonoBehaviour {
                         AddPointWithSound();
                         currentStep = TutorialStep.CloseRecords;
                         particleHint.SetActive(false);
-                        UItext.text = "Als je met de linkermuisknop op een voorwerp met een vergrootglas icoon druk, kom je in het voorwerp bekijk modus. Je kunt door te scrollen met je muiswiel om in/uit te zoomen. Je kunt voorwerpen draaien door de linkermuisknop ingedrukt te houden en te bewegen met de muis. Het voorwerp terugleggen doe je met de 'Q' knop. Het bekeken/gecontroleerde voorwerp kun je oppakken met de 'E' knop. Dit kan echter niet met alle voorwerpen. Leg nu de clientgegevens terug door op 'Q' te drukken.   ";
+                        UItext.text = "Welkom in de objecten 'Bekijk modus'. Hier kun je objecten beter bekijken en controleren. Je kunt in/ uitzoomen door te scrollen met je muiswiel. Je kunt de 'Bekijk modus'van een object sluiten door te klikken op de knop 'Sluiten'. Doe dit nu.";
                     }
                     break;
                 case TutorialStep.CloseRecords:
@@ -271,7 +271,7 @@ public class TutorialManager : MonoBehaviour {
                         currentStep = TutorialStep.ExaminePrescription;
                         particleHint.SetActive(true);
                         particleHint.transform.position = prescriptionForm.transform.position;
-                        UItext.text = "examine prescription form";
+                        UItext.text = "De patiëntgegevens zijn gecontroleerd. Laten wij dit nu vergelijken met de toedienlijst door deze ook te controleren. Beweeg met de muis op de toedienlijst en open het optiemenu door met de linkermuisknop op de toedienlijst te drukken. Kies vervolgens de optie 'Controleren'.";
                         prescriptionForm.tutorial_picked = false;
                     }
                     break;
@@ -280,7 +280,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         currentStep = TutorialStep.ClosePrescription;
                         particleHint.SetActive(false);
-                        UItext.text = "close prescription";
+                        UItext.text = "Door de 'Bekijk modus'te openen van een object controleer je het object ook meteen. De toedienlijst is nu gecontroleerd net zoals de patiëntgegevens aangezien je deze eerder al hebt bekeken in de 'Bekijk modus'. Sluit nu de 'Bekijk modus' door te klikken op de 'Sluiten' knop.";
                     }
                     break;
                 case TutorialStep.ClosePrescription:
@@ -290,14 +290,14 @@ public class TutorialManager : MonoBehaviour {
                         currentStep = TutorialStep.ExamineMedicine;
                         particleHint.transform.position = medicine.transform.position;
                         particleHint.SetActive(true);
-                        UItext.text = "Controleer nu het medicijn door er naar te kijken en op de linkermuisknop te drukken.";
+                        UItext.text = "Controleer nu het medicijn door er met de muis op te gaan staan en op de linkermuisknop te drukken. Kies in het optiemenu voor de optie 'Controleren'.";
                     }
                     break;
                 case TutorialStep.ExamineMedicine:
                     if (medicine.tutorial_picked)
                     {
                         currentStep = TutorialStep.CloseMedicine;
-                        UItext.text = "Goed, zoals je ziet kun je het medicijn naast terugleggen ook oppakken met de'E'toets. We hebben het medicijn op dit moment nog niet nodig en hoeven hem dus niet op te pakken. Leg nu het medicijn terug door op 'Q' te drukken.";
+                        UItext.text = "Goed, zoals je ziet kun je het medicijn naast terugleggen ook oppakken. We hebben het medicijn op dit moment nog niet nodig en hoeven hem dus niet op te pakken. De 'Oppakken'knop is daarom op dit moment uitgeschakeld. Normaal gesproken kun je voor deze optie kiezen als je het medicijn wilt oppakken. Het medicijn is gecontroleerd omdat we de 'Bekijk modus' hebben geopend. We kunnen het medicijn dus terugleggen op het werkveld door op de knop 'Sluiten' te drukken.";
                     }
                     break;
                 case TutorialStep.CloseMedicine:
@@ -305,7 +305,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         AddPointWithSound();
                         currentStep = TutorialStep.Overview1;
-                        UItext.text = "Press 'back' button";
+                        UItext.text = "Nu we alles hebben gecontroleerd is het van belang om een dubbele controle uit te voeren. Dit kan jou collega doen. Druk op de 'Terug naar overzicht'om het werkveld te verlaten. ";
                         player.tutorial_movedBack = false;
                         player.tutorial_movementLock = movementLock = false;
                         particleHint.SetActive(false);
@@ -319,7 +319,7 @@ public class TutorialManager : MonoBehaviour {
                         particleHint.SetActive(true);
                         particleHint.transform.position = doctor.transform.position;
                         doctor.tutorial_talked = false;
-                        UItext.text = "Loop richting je collega. Je kunt met sommige mensen praten. Mensen waarmee je kunt praten kun je herkennen aan het praat icoon die verschijnt wanneer je naar deze persoon kijkt. Als je wilt praten met deze persoon klik je op de linkermuisknop. Ga nu het gesprek aan met je collega. ";
+                        UItext.text = "We zijn nu weer in het overzicht. Hier kunnen wij interessante objecten of personen benaderen. Beweeg de muis op je collega en klik op de linkermuisknop om naar je collega toe te bewegen. ";
                         doctor.tutorial_used = false;
                     }
                     break;
@@ -327,7 +327,7 @@ public class TutorialManager : MonoBehaviour {
                     if (doctor.tutorial_used)
                     {
                         currentStep = TutorialStep.Overview2;
-                        UItext.text = "Move back";
+                        UItext.text = "De dubbele check is uitgevoerd. We kunnen verder met het klaarmaken voor injecteren. Ga terug naar het overzicht door op de 'Terug naar overzicht' knop te drukken. ";
                         player.tutorial_movedBack = false;
                     }
                     break;
