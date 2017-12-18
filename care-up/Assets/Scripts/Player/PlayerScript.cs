@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
     
 public class PlayerScript : MonoBehaviour {
     [HideInInspector]
@@ -40,6 +41,8 @@ public class PlayerScript : MonoBehaviour {
     public bool usingOnHand;
 
     private GameObject usingOnText;
+    private GameObject usingOnCancelButton;
+    private bool onCancelHover = false;
 
     public GameObject MoveBackButtonObject
     {
@@ -75,9 +78,31 @@ public class PlayerScript : MonoBehaviour {
         handsInv = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
 
         usingOnText = GameObject.Find("UsingOnModeText");
+        usingOnCancelButton = usingOnText.transform.GetChild(0).gameObject;
         usingOnText.SetActive(false);
+
+        EventTrigger.Entry event1 = new EventTrigger.Entry();
+        event1.eventID = EventTriggerType.PointerEnter;
+        event1.callback.AddListener((eventData) => { EnterHover(); });
+        
+        usingOnCancelButton.AddComponent<EventTrigger>();
+        usingOnCancelButton.GetComponent<EventTrigger>().triggers.Add(event1);
+        
+        EventTrigger.Entry event2 = new EventTrigger.Entry();
+        event2.eventID = EventTriggerType.PointerExit;
+        event2.callback.AddListener((eventData) => { ExitHover(); });
+        usingOnCancelButton.GetComponent<EventTrigger>().triggers.Add(event2);
     }
 
+    public void EnterHover()
+    {
+        onCancelHover = true;
+    }
+
+    public void ExitHover()
+    {
+        onCancelHover = false;
+    }
 
     private void Update()
     {
@@ -103,7 +128,7 @@ public class PlayerScript : MonoBehaviour {
                 WalkToGroup(controls.SelectedObject.GetComponent<WalkToGroup>());
             }
             else if (!away && controls.SelectedObject != null
-                && !itemControls.gameObject.activeSelf)
+                && !itemControls.gameObject.activeSelf && !onCancelHover)
             {
                 if (usingOnMode)
                 {
@@ -135,7 +160,7 @@ public class PlayerScript : MonoBehaviour {
     }
 
     public void ToggleUsingOnMode(bool value)
-    {
+    {   
         usingOnMode = value;
         usingOnText.GetComponent<Text>().text = "Selecteer een object waarmee je " +
             (usingOnHand ?
@@ -147,6 +172,11 @@ public class PlayerScript : MonoBehaviour {
             )
             + " wilt gebruiken (Druk op rechtermuisknop om te annuleren).";
         usingOnText.SetActive(value);
+
+        if (!value)
+        {
+            onCancelHover = false;
+        }
     }
 
     public void WalkToGroup(WalkToGroup group)

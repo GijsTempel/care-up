@@ -134,9 +134,12 @@ public class Controls : MonoBehaviour {
 	void LateUpdate() {
 
         // raycast only in this script
+        Vector3 screenPosition = (Input.touchCount > 0) ? 
+            new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y) : 
+            Input.mousePosition;
         Ray ray = ((prefs == null) ? false : prefs.VR) ?
             new Ray(Camera.main.transform.position, Camera.main.transform.forward)
-            : Camera.main.ScreenPointToRay(Input.mousePosition);
+            : Camera.main.ScreenPointToRay(screenPosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
