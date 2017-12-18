@@ -261,7 +261,7 @@ public class TutorialManager : MonoBehaviour {
                         AddPointWithSound();
                         currentStep = TutorialStep.CloseRecords;
                         particleHint.SetActive(false);
-                        UItext.text = "Welkom in de objecten 'Bekijk modus'. Hier kun je objecten beter bekijken en controleren. Je kunt in/ uitzoomen door te scrollen met je muiswiel. Je kunt de 'Bekijk modus'van een object sluiten door te klikken op de knop 'Sluiten'. Doe dit nu.";
+                        UItext.text = "Dit is de 'Bekijk modus'. Hier kun je objecten beter bekijken en controleren. Je kunt in/ uitzoomen door te scrollen met je muiswiel. Je kunt de 'Bekijk modus'van een object sluiten door te klikken op de knop 'Sluiten'. Doe dit nu.";
                     }
                     break;
                 case TutorialStep.CloseRecords:
@@ -327,7 +327,7 @@ public class TutorialManager : MonoBehaviour {
                     if (doctor.tutorial_used)
                     {
                         currentStep = TutorialStep.Overview2;
-                        UItext.text = "De dubbele check is uitgevoerd. We kunnen verder met het klaarmaken voor injecteren. Ga terug naar het overzicht door op de 'Terug naar overzicht' knop te drukken. ";
+                        UItext.text = "De dubbele check is uitgevoerd. We kunnen verder met het klaarmaken voor injecteren. Ga terug naar het overzicht door op de 'Terug naar overzicht' knop te drukken.";
                         player.tutorial_movedBack = false;
                     }
                     break;
