@@ -28,6 +28,7 @@ public class InGameUI : MonoBehaviour {
     Dropdown qualityDropdown;
     Dropdown resolutionDropdown;
     Toggle fullscrToggle;
+    GameObject escapeButton;
 
     List<Resolution> resolutions;
 
@@ -85,6 +86,12 @@ public class InGameUI : MonoBehaviour {
         fullscrToggle.isOn = Screen.fullScreen;
 
         gamepadDefault = main.GetChild(0).GetComponent<Button>();
+
+        escapeButton = GameObject.Find("TouchEscapeButton");
+        if (SystemInfo.deviceType != DeviceType.Handheld)
+        {
+            escapeButton.SetActive(false);
+        }
     }
 
     void Update()
@@ -121,6 +128,8 @@ public class InGameUI : MonoBehaviour {
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+
+            escapeButton.SetActive(false);
         }
         else
         {
@@ -143,6 +152,11 @@ public class InGameUI : MonoBehaviour {
             
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+
+            if (SystemInfo.deviceType == DeviceType.Handheld)
+            {
+                escapeButton.SetActive(true);
+            }
         }
     }
 

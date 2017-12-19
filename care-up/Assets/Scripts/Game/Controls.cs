@@ -169,7 +169,9 @@ public class Controls : MonoBehaviour {
             return false;
         }
 
-        return Input.GetMouseButtonDown(0) || keyPreferences.mouseClickKey.Pressed();
+        return (Input.touchCount > 0) ?
+            Input.GetTouch(0).phase == TouchPhase.Ended
+            : (Input.GetMouseButtonDown(0) || keyPreferences.mouseClickKey.Pressed());
     }
     /// <summary>
     /// Checks if "RightMouse" clicked, including alternatives for gamepads.
