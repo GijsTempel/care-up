@@ -142,6 +142,10 @@ public class CameraMode : MonoBehaviour {
                         selectedObject.viewSettings.distanceFromCamera += 0.5f;
                 }
             }
+            else if (Input.GetMouseButtonDown(1)) // right click
+            {
+                ObjectViewPutDownButton();
+            }
         }
 
         // handle player 'moving'
