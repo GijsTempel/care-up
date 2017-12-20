@@ -108,6 +108,8 @@ public class InGameUI : MonoBehaviour {
         if (ui.gameObject.activeSelf)
         {
             ui.gameObject.SetActive(false);
+            escapeButton.SetActive(true);
+
             if (game != null)
             {
                 controls.keyPreferences.ToggleLock();
@@ -124,12 +126,11 @@ public class InGameUI : MonoBehaviour {
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-
-            escapeButton.SetActive(false);
         }
         else
         {
             ui.gameObject.SetActive(true);
+            escapeButton.SetActive(false);
             if (game != null)
             {
                 controls.keyPreferences.ToggleLock();
@@ -148,8 +149,6 @@ public class InGameUI : MonoBehaviour {
             
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            
-            escapeButton.SetActive(true);
         }
     }
 
