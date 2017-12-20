@@ -42,7 +42,9 @@ public class PlayerScript : MonoBehaviour {
 
     private GameObject usingOnText;
     private GameObject usingOnCancelButton;
-    private bool onCancelHover = false;
+    private bool onButtonHover = false;
+
+    private GameObject closeButton;
 
     public GameObject MoveBackButtonObject
     {
@@ -92,16 +94,21 @@ public class PlayerScript : MonoBehaviour {
         event2.eventID = EventTriggerType.PointerExit;
         event2.callback.AddListener((eventData) => { ExitHover(); });
         usingOnCancelButton.GetComponent<EventTrigger>().triggers.Add(event2);
+
+        closeButton = GameObject.Find("TouchEscapeButton").gameObject;
+        closeButton.AddComponent<EventTrigger>();
+        closeButton.GetComponent<EventTrigger>().triggers.Add(event1);
+        closeButton.GetComponent<EventTrigger>().triggers.Add(event2);
     }
 
     public void EnterHover()
     {
-        onCancelHover = true;
+        onButtonHover = true;
     }
 
     public void ExitHover()
     {
-        onCancelHover = false;
+        onButtonHover = false;
     }
 
     private void Update()
@@ -128,7 +135,7 @@ public class PlayerScript : MonoBehaviour {
                 WalkToGroup(controls.SelectedObject.GetComponent<WalkToGroup>());
             }
             else if (!away && controls.SelectedObject != null
-                && !itemControls.gameObject.activeSelf && !onCancelHover)
+                && !itemControls.gameObject.activeSelf && !onButtonHover)
             {
                 if (usingOnMode)
                 {
@@ -175,7 +182,7 @@ public class PlayerScript : MonoBehaviour {
 
         if (!value)
         {
-            onCancelHover = false;
+            onButtonHover = false;
         }
     }
 
