@@ -16,6 +16,8 @@ public class WalkToGroup : MonoBehaviour
 
     public void HighlightGroup(bool value)
     {
+        if (SystemInfo.deviceType == DeviceType.Handheld)
+            return;
         text.SetActive(value);
     }
 
@@ -28,7 +30,10 @@ public class WalkToGroup : MonoBehaviour
         player = GameObject.FindObjectOfType<PlayerScript>();
 
         text = transform.GetChild(0).gameObject;
-        text.SetActive(false);
+        if (SystemInfo.deviceType != DeviceType.Handheld)
+        {
+            text.SetActive(false);
+        }
     }
 
     protected void Update()
