@@ -427,7 +427,7 @@ public class TutorialManager : MonoBehaviour {
                             handsInventory.tutorial_droppedRight = false;
                         currentStep = TutorialStep.CombineDesinfMedicine;
                         controls.keyPreferences.pickObjectView.locked = pickObjectViewKeyLocked = false;
-                        UItext.text = "Probeer nu het gedesinfecteerde gaasje te combineren met het medicijn in flacon. Pak beide voorwerpen op door ernaar te kijken en op de linkermuisknop. Als je beide voorwerpen in je handen hebt, druk je op de 'R' toets om de voorwerpen te combineren.";
+                        UItext.text = "Probeer nu het gedesinfecteerde gaasje te combineren met het medicijn in flacon. Pak bedei voorwerpen op door met er met de linkermuisknop op te klikken en te kiezen voor de optie 'Oppakeken' ";
 
                         particleHint.SetActive(true);
                         particleHint.transform.position = medicine.transform.position;
