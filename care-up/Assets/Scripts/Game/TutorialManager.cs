@@ -345,7 +345,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         particleHint.transform.position = alcohol.transform.position;
                         currentStep = TutorialStep.PickAlcohol;
-                        UItext.text = "Naast het gebruiken en bekijken van voorwerpen kunnen sommige voorwerpen worden opgepakt. Oplichtende voorwerpen met een hand en pijl icoon kunnen worden opgepakt. Probeer nu de alcohol op te pakken door te kijken naar de alcohol en op linkermuisknop te drukken.";
+                        UItext.text = "Naast het gebruiken en bekijken van voorwerpen kunnen sommige voorwerpen worden opgepakt Probeer nu de alcohol op te pakken door met de muis op de alcohol te bewegen, linkermuisknop te drukken en te kiezen voor de optie 'Oppakken'.";
                         itemToPick = "Alcohol";
                     }
                     break;
@@ -355,7 +355,7 @@ public class TutorialManager : MonoBehaviour {
                         currentStep = TutorialStep.PickCloth;
                         particleHint.transform.position = cloth.transform.position;
                         particleHint.SetActive(true);
-                        UItext.text = "Pak nu het gaasje op door ernaar te kijken en op de linkermuisknop te drukken.";
+                        UItext.text = "Pak nu het gaasje op door de muis op het gaasje te gaan staan en op linkermuisknop te drukken. Kies daarna voor de optie 'Oppakken'.";
                         itemToPick = "Cloth";
                     }
                     else
@@ -375,7 +375,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         currentStep = TutorialStep.CombineAlcoholCloth;
                         controls.keyPreferences.CombineKey.locked = combineKeyLocked = false;
-                        UItext.text = "Sommige voorwerpen kun je met elkaar combineren. Dit kan bijvoorbeeld met het gaasje en alcohol om zo het gaasje te desinfecteren. Voorwerpen combineren doe je door de 'R' knop in te drukken als je twee voorwerpen in je handen hebt. Probeer dit nu met het gaasje en de alcohol. ";
+                        UItext.text = "Sommige voorwerpen kun je met elkaar combineren. Dit kan bijvoorbeeld met het gaasje en alcohol om zo het gaasje te desinfecteren. Voorwerpen combineren doe je door met de linkermuisknop te drukken op de de alcohol of het gaasje en dan te kiezen voor de optie 'Combineren/Scheiden'.";
                         itemToPick = "";
                         SetPauseTimer(5.0f);
                     }
@@ -396,7 +396,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         currentStep = TutorialStep.DroppingExplanation;
                         handsInventory.tutorial_combined = false;
-                        UItext.text = "Dropping expl";
+                        UItext.text = "Voorwerpen kun je terugleggen op het werkveld door op het voorwerp die je in je hand hebt te drukken en te kiezen voor de optie 'Terugleggen'.";
                     }
                     break;
                 case TutorialStep.DroppingExplanation:
@@ -404,7 +404,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         currentStep = TutorialStep.DropItem;
                         controls.keyPreferences.LeftDropKey.locked = leftDropKeyLocked = false;
-                        UItext.text = "Het gaasje is nu gedesinfecteerd. Voorwerpen die je in je hand hebt kun je terugleggen door 'SHIFT' ingedrukt te houden en te drukken op de actietoets van de juiste arm. De 'Q' toets staat voor de actietoets van de linkerhand. Probeer met 'SHIFT' + 'Q' het voorwerp in je linkerhand terug te leggen op het werkveld. ";
+                        UItext.text = "Het gaasje is nu gedesinfecteerd. Voorwerpen kun je terugleggen op het werkveld door op het voorwerp die je in je hand hebt te drukken en te kiezen voor de optie 'Terugleggen'. ";
                         itemToDrop = "Alcohol";
                     }
                     break;
@@ -415,7 +415,7 @@ public class TutorialManager : MonoBehaviour {
                         handsInventory.tutorial_droppedLeft = false;
                         currentStep = TutorialStep.DropAnotherItem;
                         controls.keyPreferences.RightDropKey.locked = rightDropKeyLocked = false;
-                        UItext.text = "Probeer nu hetzelfde met de rechterhand. De actietoets van de rechterhand is de 'E' toets. Probeer nu met met 'SHIFT' + 'E' het gaasje in je linkerhand neer te leggen op het werkveld.";
+                        UItext.text = "Probeer nu hetzelfde met het voorwerp in je andere hand. Klik Op hebt object met de linkermuisnkop en kies de optie 'Terugleggen'.";
                         itemToDrop = "DesinfectionCloth";
                     }
                     break;
