@@ -51,6 +51,11 @@ public class ItemControlsUI : MonoBehaviour {
 
     public void Init(GameObject iObject)
     {
+        if (cameraMode.CurrentMode != CameraMode.Mode.Free)
+        {
+            return;
+        }
+
         cameraMode.ToggleCameraMode(CameraMode.Mode.ItemControlsUI);
 
         if (player == null)
