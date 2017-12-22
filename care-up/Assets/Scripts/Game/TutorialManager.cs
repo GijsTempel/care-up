@@ -387,7 +387,7 @@ public class TutorialManager : MonoBehaviour {
                             particleHint.SetActive(false);
                             AddPointWithSound();
                             UItext.text = "Wanneer je in je linkerhand al een voorwerp vast hebt zal het tweede voorwerp altijd in de rechterhand komen";
-                            SetPauseTimer(3.0f);
+                            SetPauseTimer(5.0f);
                         }
                     }
                     break;
