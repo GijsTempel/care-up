@@ -109,8 +109,13 @@ public class PlayerPrefsManager : MonoBehaviour
         string[] data = new string[1];
         data[0] = serial;
 
-        LoginPro.Manager.ExecuteOnServer("SetSerial", Blank, Debug.LogError, data);
+        LoginPro.Manager.ExecuteOnServer("SetSerial", SetSerialSuccess, Debug.LogError, data);
 
+        CheckSerial();
+    }
+
+    public void SetSerialSuccess(string[] datas)
+    {
         CheckSerial();
     }
 
