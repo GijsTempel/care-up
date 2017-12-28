@@ -55,9 +55,7 @@ public class ItemControlsUI : MonoBehaviour {
         {
             return;
         }
-
-        cameraMode.ToggleCameraMode(CameraMode.Mode.ItemControlsUI);
-
+        
         if (player == null)
         {
             player = GameObject.FindObjectOfType<PlayerScript>();
@@ -67,6 +65,8 @@ public class ItemControlsUI : MonoBehaviour {
 
         if (initedObject != null && initedObject.GetComponent<InteractableObject>() != null)
         {
+            cameraMode.ToggleCameraMode(CameraMode.Mode.ItemControlsUI);
+
             if (initedObject.GetComponent<PickableObject>() != null
                  && handsInventory.IsInHand(initedObject))
             {
