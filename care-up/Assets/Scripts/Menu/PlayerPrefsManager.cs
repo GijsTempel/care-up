@@ -110,8 +110,6 @@ public class PlayerPrefsManager : MonoBehaviour
         data[0] = serial;
 
         LoginPro.Manager.ExecuteOnServer("SetSerial", SetSerialSuccess, Debug.LogError, data);
-
-        CheckSerial();
     }
 
     public void SetSerialSuccess(string[] datas)
@@ -145,10 +143,7 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         // deactivate scenes
         LoginPro.Manager.ExecuteOnServer("GetScenes", GetScenes_Success, Debug.LogError, null);
-
-        // activate scenes corresponding to serials
-        CheckSerial();
-
+        
         // support for old key type
         if (PlayerPrefs.GetString("SerialKey") != "")
         {
@@ -164,6 +159,9 @@ public class PlayerPrefsManager : MonoBehaviour
         {
             SetSceneActivated(data, false);
         }
+
+        // activate scenes corresponding to serials
+        CheckSerial();
     }
 
     public void Blank(string[] s) { }
