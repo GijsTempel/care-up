@@ -87,18 +87,24 @@ public class PlayerScript : MonoBehaviour {
         event1.eventID = EventTriggerType.PointerEnter;
         event1.callback.AddListener((eventData) => { EnterHover(); });
         
-        usingOnCancelButton.AddComponent<EventTrigger>();
-        usingOnCancelButton.GetComponent<EventTrigger>().triggers.Add(event1);
-        
         EventTrigger.Entry event2 = new EventTrigger.Entry();
         event2.eventID = EventTriggerType.PointerExit;
         event2.callback.AddListener((eventData) => { ExitHover(); });
+
+        EventTrigger.Entry event3 = new EventTrigger.Entry();
+        event3.eventID = EventTriggerType.PointerClick;
+        event3.callback.AddListener((eventData) => { ExitHover(); });
+
+        usingOnCancelButton.AddComponent<EventTrigger>();
+        usingOnCancelButton.GetComponent<EventTrigger>().triggers.Add(event1);
         usingOnCancelButton.GetComponent<EventTrigger>().triggers.Add(event2);
+        usingOnCancelButton.GetComponent<EventTrigger>().triggers.Add(event3);
 
         closeButton = GameObject.Find("TouchEscapeButton").gameObject;
         closeButton.AddComponent<EventTrigger>();
         closeButton.GetComponent<EventTrigger>().triggers.Add(event1);
         closeButton.GetComponent<EventTrigger>().triggers.Add(event2);
+        closeButton.GetComponent<EventTrigger>().triggers.Add(event3);
     }
 
     public void EnterHover()
