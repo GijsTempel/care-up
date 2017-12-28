@@ -725,12 +725,7 @@ public class HandsInventory : MonoBehaviour {
                 tutorial_droppedLeft = true;
                 if (!leftHandObject.Drop())
                 {
-                    if (prefsManager != null &&
-                        !prefsManager.practiceMode)
-                    {
-                        actionManager.OnGameOver();
-                    }
-                    else if (dropPenalty)
+                    if (dropPenalty)
                     {
                         Narrator.PlaySound("WrongAction");
                         actionManager.Points--;
@@ -755,12 +750,7 @@ public class HandsInventory : MonoBehaviour {
                 tutorial_droppedRight = true;
                 if (!rightHandObject.Drop())
                 {
-                    if (prefsManager != null && 
-                        !prefsManager.practiceMode)
-                    {
-                        actionManager.OnGameOver();
-                    }
-                    else if (dropPenalty)
+                    if (dropPenalty)
                     {
                         Narrator.PlaySound("WrongAction");
                         actionManager.Points--;
