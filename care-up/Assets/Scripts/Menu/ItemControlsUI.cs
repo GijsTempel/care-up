@@ -218,6 +218,7 @@ public class ItemControlsUI : MonoBehaviour {
             if (initedObject != null)
             {
                 initedObject.GetComponent<PersonObject>().CreateSelectionDialogue();
+                GameObject.Find("ItemDescription").SetActive(false);
             }
         }
 
