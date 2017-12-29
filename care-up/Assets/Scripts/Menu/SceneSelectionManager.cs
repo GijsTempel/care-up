@@ -26,6 +26,7 @@ public class SceneSelectionManager : MonoBehaviour {
         testButton = GameObject.Find("TestButton").GetComponent<Image>();
 
         practiceButton.color = Color.green;
+        manager.practiceMode = true;
 
         manager = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
 
