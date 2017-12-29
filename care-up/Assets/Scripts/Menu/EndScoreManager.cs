@@ -45,7 +45,7 @@ public class EndScoreManager : MonoBehaviour {
         {
             Transform uiFolder = GameObject.Find("Canvas").transform;
 
-            uiFolder.Find("Left").Find("Score").GetComponent<Text>().text = "Score: " + score;
+            //uiFolder.Find("Left").Find("Score").GetComponent<Text>().text = "Score: " + score;
             uiFolder.Find("Left").Find("Points").GetComponent<Text>().text = "Points: " + points;
             uiFolder.Find("Left").Find("Time").GetComponent<Text>().text = string.Format("Time: {0}:{1:00}", (int)time / 60, (int)time % 60);
 
