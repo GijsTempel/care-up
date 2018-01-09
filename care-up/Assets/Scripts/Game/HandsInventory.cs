@@ -439,6 +439,7 @@ public class HandsInventory : MonoBehaviour {
             rightHandObject = null;
             rightHold = false;
             PlayerAnimationManager.SetHandItem(false, null);
+            
         }
     }
 
@@ -463,6 +464,7 @@ public class HandsInventory : MonoBehaviour {
             rightHandObject = null;
             rightHold = false;
             PlayerAnimationManager.SetHandItem(false, null);
+            
         }
     }
 
