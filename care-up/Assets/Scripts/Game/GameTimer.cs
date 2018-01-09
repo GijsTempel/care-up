@@ -26,8 +26,7 @@ public class GameTimer : MonoBehaviour {
     {
         currentTime += Time.deltaTime;
 
-        timerText.text = currentTime.ToString();
-            //string.Format("{0}:{1:00}", (int)currentTime / 60, (int)currentTime % 60);
+        timerText.text = string.Format("{0}:{1:00}", (int)currentTime / 60, (int)currentTime % 60);
     }
     
     public void Reset()
