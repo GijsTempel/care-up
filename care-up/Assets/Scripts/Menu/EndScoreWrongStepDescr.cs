@@ -14,6 +14,7 @@ public class EndScoreWrongStepDescr : MonoBehaviour, IPointerEnterHandler
 
     void Start()
     {
+        
         if (GameObject.Find("GameLogic") != null)
         {
             controls = GameObject.Find("GameLogic").GetComponent<Controls>();
