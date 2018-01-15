@@ -38,22 +38,17 @@ public class PickableObject : InteractableObject {
         }
     }
 
-    void LateUpdate()
-    {
-        framePositions.Add(transform.position);
-
-        if (framePositions.Count > 15)
-        {
-            framePositions.RemoveAt(0);
-        }
-    }
-
     /// <summary>
     /// Drops and object
     /// </summary>
     /// <param name="force">If true - forces load position instead of free dropping</param>
     public virtual bool Drop(bool force = false)
     {
+        if (GetComponent<Rigidbody>() != null)
+        {
+            // stop falling mid frame?
+            GetComponent<Rigidbody>().useGravity = true;
+        }
         gameObject.layer = 0;
         GetComponent<Collider>().enabled = true;
 
@@ -66,12 +61,12 @@ public class PickableObject : InteractableObject {
         {
             rigidBody.isKinematic = true;
             rigidBody.constraints = RigidbodyConstraints.None;
-            if (Vector3.Distance(transform.position, savedPosition) < 3.0f || force)
-            {
+            //if (Vector3.Distance(transform.position, savedPosition) < 3.0f || force)
+            //{
                 LoadPosition();
                 return true;
-            }
-            else
+            //}
+            /*else
             {
                 if (framePositions.Count > 0)
                 {
@@ -79,7 +74,7 @@ public class PickableObject : InteractableObject {
                     deltaPosition = deltaPosition * 3 / Time.fixedDeltaTime;
                     rigidBody.AddForce(deltaPosition);
                 }
-            }
+            }*/
         }
 
         return false;
@@ -193,5 +188,10 @@ public class PickableObject : InteractableObject {
     {
         // callback for handling different OnPick mechanics
         gameObject.layer = 9; // no collisions
+        if (GetComponent<Rigidbody>() != null)
+        {
+            // stop falling mid frame stupid unity
+            GetComponent<Rigidbody>().useGravity = false; 
+        }
     }
 }

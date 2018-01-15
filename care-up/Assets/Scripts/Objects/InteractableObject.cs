@@ -184,10 +184,10 @@ public class InteractableObject : MonoBehaviour {
         transform.rotation = savedRotation;
     }
 
-    public void GetSavesLocation(out Vector3 position, out Quaternion rotation)
+    public void GetSavesLocation(out Vector3 outPosition, out Quaternion outRotation)
     {
-        position = savedPosition;
-        rotation = savedRotation;
+        outPosition = savedPosition;
+        outRotation = savedRotation;
     }
 
     protected virtual void SetShaderTo(Shader shader)
