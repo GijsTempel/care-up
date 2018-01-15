@@ -769,7 +769,7 @@ public class HandsInventory : MonoBehaviour {
     {
         if (leftHandObject != null)
         {
-            if (leftHandObject.Use(false))
+            if (leftHandObject.Use(true))
             {
                 tutorial_itemUsedOn = true;
             }
@@ -785,7 +785,7 @@ public class HandsInventory : MonoBehaviour {
     {
         if (rightHandObject)
         {
-            if (rightHandObject.Use(true))
+            if (rightHandObject.Use(false))
             {
                 tutorial_itemUsedOn = true;
             }

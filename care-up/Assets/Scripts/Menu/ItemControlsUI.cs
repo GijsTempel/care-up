@@ -109,6 +109,7 @@ public class ItemControlsUI : MonoBehaviour {
                 }
                 else
                 {
+                    cameraMode.ToggleCameraMode(CameraMode.Mode.Free);
                     return;
                 }
             }

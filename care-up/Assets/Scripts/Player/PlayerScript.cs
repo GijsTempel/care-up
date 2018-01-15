@@ -175,15 +175,18 @@ public class PlayerScript : MonoBehaviour {
     public void ToggleUsingOnMode(bool value)
     {   
         usingOnMode = value;
-        usingOnText.GetComponent<Text>().text = "Selecteer een object waarmee je " +
-            (usingOnHand ?
-                (handsInv.LeftHandObject.GetComponent<InteractableObject>().description == "" 
-                ? handsInv.LeftHandObject.name : handsInv.LeftHandObject.GetComponent<InteractableObject>().description)
-            :   
-                (handsInv.RightHandObject.GetComponent<InteractableObject>().description == ""
-                ? handsInv.RightHandObject.name : handsInv.RightHandObject.GetComponent<InteractableObject>().description)
-            )
-            + " wilt gebruiken (Druk op rechtermuisknop om te annuleren).";
+        if (value)
+        {
+            usingOnText.GetComponent<Text>().text = "Selecteer een object waarmee je " +
+                (usingOnHand ?
+                    (handsInv.LeftHandObject.GetComponent<InteractableObject>().description == ""
+                    ? handsInv.LeftHandObject.name : handsInv.LeftHandObject.GetComponent<InteractableObject>().description)
+                :
+                    (handsInv.RightHandObject.GetComponent<InteractableObject>().description == ""
+                    ? handsInv.RightHandObject.name : handsInv.RightHandObject.GetComponent<InteractableObject>().description)
+                )
+                + " wilt gebruiken (Druk op rechtermuisknop om te annuleren).";
+        }
         usingOnText.SetActive(value);
 
         if (!value)
