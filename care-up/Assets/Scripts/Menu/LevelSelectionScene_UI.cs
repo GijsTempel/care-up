@@ -134,8 +134,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
                     }
                     if (scene.Attributes["image"] != null)
                     {
-                        descr.GetComponent<LevelSelectionScene_UI_Option>().image =
-                                Resources.Load<Sprite>("Sprites/ScenePreview/" + scene.Attributes["image"].Value);
+                        doors[i].image = Resources.Load<Sprite>("Sprites/ScenePreview/" + scene.Attributes["image"].Value);
                     }
                 }
                 ++i;
