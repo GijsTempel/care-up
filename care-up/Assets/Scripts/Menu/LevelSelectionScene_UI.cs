@@ -74,7 +74,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
                             = variation.Attributes["displayname"].Value;
                         descr.GetComponent<LevelSelectionScene_UI_Option>().sceneName = sceneName;
                         descr.GetComponent<LevelSelectionScene_UI_Option>().description = variation.Attributes["description"].Value;
-                        descr.GetComponent<LevelSelectionScene_UI_Option>().image = 
+                        descr.GetComponent<LevelSelectionScene_UI_Option>().image =
                             Resources.Load<Sprite>("Sprites/ScenePreview/" + variation.Attributes["image"].Value);
 
                         if (ppManager.GetSceneCompleted(sceneName))
@@ -131,6 +131,11 @@ public class LevelSelectionScene_UI : MonoBehaviour
                     else
                     {
                         descr.Find("Result").GetComponent<Text>().text = "Niet voltooid";
+                    }
+                    if (scene.Attributes["image"] != null)
+                    {
+                        descr.GetComponent<LevelSelectionScene_UI_Option>().image =
+                                Resources.Load<Sprite>("Sprites/ScenePreview/" + scene.Attributes["image"].Value);
                     }
                 }
                 ++i;
