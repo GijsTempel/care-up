@@ -115,9 +115,9 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 {
                     doors[i].multiple = false;
 
-                    doors[i].sceneName = scene.Attributes["name"].Value;
+                    doors[i].sceneName = scene.Attributes["sceneName"].Value;
                     Transform descr = doors[i].transform;
-                    descr.Find("Name").GetComponent<Text>().text = doors[i].sceneName;
+                    descr.Find("Name").GetComponent<Text>().text = scene.Attributes["name"].Value;
                     if (scene.Attributes["description"].Value != "")
                     {
                         descr.Find("Description").GetComponent<Text>().text = scene.Attributes["description"].Value;

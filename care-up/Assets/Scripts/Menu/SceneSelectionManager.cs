@@ -20,6 +20,8 @@ public class SceneSelectionManager : MonoBehaviour {
 
     public void Start()
     {
+        manager = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
+
         ShowMenu(CurrentMenu);
 
         practiceButton = GameObject.Find("PracticeButton").GetComponent<Image>();
@@ -27,9 +29,7 @@ public class SceneSelectionManager : MonoBehaviour {
 
         practiceButton.color = Color.green;
         manager.practiceMode = true;
-
-        manager = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
-
+        
         description = GameObject.Find("PracticeTestDescription").GetComponent<Text>();
         description.text = practiceText;
     }

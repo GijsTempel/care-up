@@ -29,6 +29,7 @@ public class LevelButton : MonoBehaviour {
 
     public void OnLevelButtonClick()
     {
+        sceneInfoPanel.Find("Start").GetComponent<LevelButton>().sceneName = sceneName;
         sceneInfoPanel.Find("Name").GetComponent<Text>().text = 
             transform.Find("Name").GetComponent<Text>().text;
         sceneInfoPanel.Find("Description").GetComponent<Text>().text = 
