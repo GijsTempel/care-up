@@ -124,6 +124,14 @@ public class ItemControlsUI : MonoBehaviour {
                     transform.position += new Vector3(0.0f, difference, 0.0f);
                     GameObject.Find("ItemDescriptionGroup").transform.position += new Vector3(0.0f, difference, 0.0f);
                 }
+
+                float rightBound = -175.0f;
+                if (transform.position.x > Screen.width - rightBound)
+                {
+                    float difference = (Screen.width - rightBound) - transform.position.x;
+                    transform.position += new Vector3(difference, 0.0f, 0.0f);
+                    GameObject.Find("ItemDescriptionGroup").transform.position += new Vector3(difference, 0.0f, 0.0f);
+                }
                 gameObject.SetActive(true);
             }
         }
