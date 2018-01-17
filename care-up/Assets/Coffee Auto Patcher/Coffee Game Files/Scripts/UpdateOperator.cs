@@ -108,17 +108,19 @@ public class UpdateOperator : MonoBehaviour
 
             patcherFullExe = patcherFullExe.Replace(@"\", "/");
 
+            if (File.Exists(gameFullExe))
+                rootDirectory = Environment.CurrentDirectory;
+            else
+                rootDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).ToString();
+
+
             if (deleteOldPatcherInGameDirectory)
             {
                 string[] patcherSplit = patcherFullExe.Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
 
                 if (patcherSplit.Length > 1)
                 {
-                    if (File.Exists(gameFullExe))
-                        rootDirectory = Environment.CurrentDirectory;
-                    else
-                        rootDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).ToString();
-
+                   
                     if (File.Exists(Path.Combine(rootDirectory, gameFullExe)) && File.Exists(Path.Combine(rootDirectory, patcherSplit[1])))
                     {
                         File.Delete(Path.Combine(rootDirectory, patcherSplit[1]));
@@ -250,7 +252,15 @@ public class UpdateOperator : MonoBehaviour
 
         if (buildOperatingSystem == OperatingSystem.Mac)
         {
-            fullGameExeName = fullGameExeName + @".app/Contents/MacOS/" + fullGameExeName;
+            fullGameExeName = fullGameExeName.Replace(".app", "");
+            patcherFullExe = patcherFullExe.Replace(".app", "");
+
+            if (File.Exists(fullGameExeName + @".app/Contents/MacOS/" + fullGameExeName))
+            {
+                fullGameExeName = fullGameExeName + @".app/Contents/MacOS/" + fullGameExeName;
+            }
+
+            if(File.Exists(patcherFullExe + @".app/Contents/MacOS/" + patcherFullExe))
             patcherFullExe = patcherFullExe + @".app/Contents/MacOS/" + patcherFullExe;
         }
 
@@ -273,8 +283,7 @@ public class UpdateOperator : MonoBehaviour
             FileCount = i;
             if (_md5split[0].Length > 4 && !_md5split[0].Contains(fullGameExeName))
             {
-                AddMessage("Looking at file " + i + " " + _md5split[0] + " as it is a launcher file");
-
+               
                 if (!File.Exists(Path.Combine(rootDirectory, _md5split[0])) && _md5split[0].Contains(patcherFullExe))
                 {
                     AddMessage("Downloading Launcher");
