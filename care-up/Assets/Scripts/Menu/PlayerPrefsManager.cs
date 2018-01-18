@@ -4,6 +4,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using LoginProAsset;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Handles quick access to saved data.
@@ -28,7 +29,25 @@ public class PlayerPrefsManager : MonoBehaviour
             return result;
         }
     }
-    
+
+    private void OnLoaded(Scene s, LoadSceneMode m)
+    {
+        transform.position =
+        GameObject.FindObjectOfType<AudioListener>().transform.position;
+
+        if (!(s.name == "Launch me 1" ||
+              s.name == "Menu" ||
+              s.name == "SceneSelection"))
+        {
+            GetComponent<AudioSource>().Stop();
+        }
+
+        if (s.name == "EndScore")
+        {
+            GetComponent<AudioSource>().Play();
+        }
+    }
+
     void Awake()
     {
         if ( instance )
@@ -44,6 +63,8 @@ public class PlayerPrefsManager : MonoBehaviour
     
     void Start()
     {
+        SceneManager.sceneLoaded += OnLoaded;
+
         AudioListener.volume = Volume;
         Debug.Log("Volume is set to saved value: " + Volume);
     }
