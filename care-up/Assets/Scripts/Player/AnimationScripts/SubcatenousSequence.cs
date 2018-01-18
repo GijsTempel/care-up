@@ -100,7 +100,30 @@ public class SubcatenousSequence : AnimationSequenceState
         if (inv.LeftHandObject && inv.LeftHandObject.GetComponent<Syringe>())
             inv.LeftHandObject.GetComponent<Syringe>().updatePlunger = false;
 
-        GameObject.FindObjectOfType<InjectionPatient>().AfterSequenceDialogue();
+        if (keyFrame >= 2 && inv.sequenceAborted)
+        {
+            if (keyFrame < keyFrames.Count)
+            {
+                if (inv.RightHandObject && inv.RightHandObject.GetComponent<Syringe>())
+                {
+                    inv.ReplaceHandObject(false, "SyringeWithInjectionNeedleCap");
+                    inv.PutAllOnTable();
+                    Destroy(GameObject.Find("SyringeInjectionCap"));
+                }
+            }
+            else
+            {
+                if (inv.LeftHandObject && inv.LeftHandObject.GetComponent<Syringe>())
+                {
+                    inv.ReplaceHandObject(true, "SyringeWithInjectionNeedleCap");
+                    inv.PutAllOnTable();
+                    Destroy(GameObject.Find("SyringeInjectionCap"));
+                }
+            }
+        }
+
+        if (keyFrame >= keyFrames.Count && !inv.sequenceAborted)
+            GameObject.FindObjectOfType<InjectionPatient>().AfterSequenceDialogue();
 
         syringe.updateProtector = false;
     }
