@@ -42,7 +42,9 @@ public class PlayerPrefsManager : MonoBehaviour
             GetComponent<AudioSource>().Stop();
         }
 
-        if (s.name == "EndScore")
+        if (s.name == "EndScore" ||
+            (s.name == "Menu" && 
+            !GetComponent<AudioSource>().isPlaying))
         {
             GetComponent<AudioSource>().Play();
         }
