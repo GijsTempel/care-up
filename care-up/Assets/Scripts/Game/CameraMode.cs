@@ -213,7 +213,13 @@ public class CameraMode : MonoBehaviour {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
-            blur.enabled = true;
+            #if UNITY_STANDALONE_OSX
+                blur.enabled = true;
+            #elif UNITY_STANDALONE_WIN
+                blur.enabled = true;
+            #else
+                blur.enabled = false;
+            #endif
 
             GameObject buttonsParent = Camera.main.transform.Find("UI").Find("ObjectViewButtons").gameObject;
             buttonsParent.transform.GetChild(0).GetComponent<Button>().interactable =
