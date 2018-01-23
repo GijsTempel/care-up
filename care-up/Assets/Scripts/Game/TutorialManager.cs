@@ -49,6 +49,8 @@ public class TutorialManager : MonoBehaviour {
         ExamineMedicine,           // step 5
         CloseMedicine,             // inserted
         Overview1,
+        ExplainTalking,
+        ExplainSelecting,
         UseDoctor,                 // inserted
         Overview2,
         TalkDoubleCheck,           // inserted
@@ -97,6 +99,7 @@ public class TutorialManager : MonoBehaviour {
         SequenceExplanation,       // step 30
         CompleteSequence,          // step 30
 
+        Overview4,
         UseSyringeOnTrashInj,
 
         /*
@@ -315,16 +318,32 @@ public class TutorialManager : MonoBehaviour {
                     if (player.tutorial_movedBack)
                     {
                         AddPointWithSound();
+                        currentStep = TutorialStep.ExplainTalking;
+                        UItext.text = "Come close to the collegue and click on him.";
+                        doctor.tutorial_used = false;
+                    }
+                    break;
+                case TutorialStep.ExplainTalking:
+                    if (TimerElapsed())
+                    {
                         currentStep = TutorialStep.UseDoctor;
                         particleHint.SetActive(true);
                         particleHint.transform.position = doctor.transform.position;
                         doctor.tutorial_talked = false;
                         UItext.text = "We zijn nu weer in het overzicht. Hier kunnen wij interessante objecten of personen benaderen. Beweeg de muis op je collega en klik op de linkermuisknop om naar je collega toe te bewegen. ";
-                        doctor.tutorial_used = false;
+                    }
+                    else
+                    {
+                        if (doctor.tutorial_used)
+                        {
+                            AddPointWithSound();
+                            UItext.text = "Clicking on the person opens a dialogue menu where you can select what you want to say to the person. Try asking collegue to double check everything by selecting the first dialogue option.";
+                            SetPauseTimer(5.0f);
+                        }
                     }
                     break;
                 case TutorialStep.UseDoctor:
-                    if (doctor.tutorial_used)
+                    if (doctor.tutorial_talked)
                     {
                         currentStep = TutorialStep.Overview2;
                         UItext.text = "De dubbele check is uitgevoerd. We kunnen verder met het klaarmaken voor injecteren. Ga terug naar het overzicht door op de 'Terug naar overzicht' knop te drukken.";
@@ -650,15 +669,25 @@ public class TutorialManager : MonoBehaviour {
                 case TutorialStep.CompleteSequence:
                     if ( sequenceCompleted )
                     {
-                        currentStep = TutorialStep.UseSyringeOnTrashInj;
+                        currentStep = TutorialStep.Overview4;
                         player.tutorial_movementLock = movementLock = false;
-                        UItext.text = "Verwijder nu de injectienaald door de spuit te gebruiken met de naaldcontainer. Zorg ervoor dat je de spuit in je hand hebt en dat de andere hand vrij is. Klik vervolgens op de spuit en kies voor de optie 'Gebruiken met..' Klik vervolgens met de linkermuisknop op de naaldcontainer. Je kunt de actie 'Gebruiken met..' annuleren door te klikken op de rechtermuisknop i.p.v een voorwerp kiezen met linkermuisknop.";
-                        
-                        particleHint.transform.position = GameObject.Find("NeedleCup").transform.position;
-                        particleHint.SetActive(true);
 
-                        syringe = GameObject.FindObjectOfType<Syringe>().gameObject;
-                        syringe.GetComponent<PickableObject>().tutorial_usedOn = false;
+                        UItext.text = "Injection is complete. Move back from the patient.";
+                    }
+                    break;
+                case TutorialStep.Overview4:
+                    {
+                        if (player.tutorial_movedBack)
+                        {
+                            currentStep = TutorialStep.UseSyringeOnTrashInj;
+                            UItext.text = "Verwijder nu de injectienaald door de spuit te gebruiken met de naaldcontainer. Zorg ervoor dat je de spuit in je hand hebt en dat de andere hand vrij is. Klik vervolgens op de spuit en kies voor de optie 'Gebruiken met..' Klik vervolgens met de linkermuisknop op de naaldcontainer. Je kunt de actie 'Gebruiken met..' annuleren door te klikken op de rechtermuisknop i.p.v een voorwerp kiezen met linkermuisknop.";
+
+                            particleHint.transform.position = GameObject.Find("NeedleCup").transform.position;
+                            particleHint.SetActive(true);
+
+                            syringe = GameObject.FindObjectOfType<Syringe>().gameObject;
+                            syringe.GetComponent<PickableObject>().tutorial_usedOn = false;
+                        }
                     }
                     break;
                 case TutorialStep.UseSyringeOnTrashInj:
