@@ -319,7 +319,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         AddPointWithSound();
                         currentStep = TutorialStep.MoveToDoctor;
-                        UItext.text = "Move to the collegue";
+                        UItext.text = "Beweeg nu naar je collega to door met de muis over je collega heen te bewegen en te drukken op de linkermuisknop";
                         particleHint.SetActive(true);
                         particleHint.transform.position = doctor.transform.position;
                         player.tutorial_movedTo = false;
