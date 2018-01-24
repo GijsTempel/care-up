@@ -27,7 +27,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 136522}
-  m_LocalRotation: {x: 0.09162623, y: 0.7011453, z: 0.7011453, w: -0.09162623}
+  m_LocalRotation: {x: 0.50577736, y: 0.49415508, z: 0.49415508, w: -0.50577736}
   m_LocalPosition: {x: -3.6940002, y: 1.1422, z: 0.58399963}
   m_LocalScale: {x: 0.15000013, y: 0.15000015, z: 0.15600014}
   m_Children:
@@ -35,7 +35,7 @@ Transform:
   - {fileID: 4286902438757916}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90.00001, y: 0, z: -88.66801}
 --- !u!23 &2353404
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -45,6 +45,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 2
@@ -60,6 +61,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -153,6 +155,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -168,6 +171,7 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -208,8 +212,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.24482949, y: 0.24482955, z: 0.39057252}
-  m_Center: {x: 0, y: 0, z: 0.01890317}
+  m_Size: {x: 0.5, y: 0.33, z: 0.6}
+  m_Center: {x: 0, y: 0, z: 0.1}
 --- !u!114 &114660307821524650
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -221,7 +225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6095384fe7173243b9fb25bc8b25d06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  description: 
+  description: Medicijn in flacon
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   tutorial_picked: 0
@@ -229,7 +233,7 @@ MonoBehaviour:
   examineRotation: {x: -90, y: 0, z: 90}
   audioExamine: 0
   viewSettings:
-    distanceFromCamera: 4
+    distanceFromCamera: 0.6
     rotationSensetivity: 90
   state: good
 --- !u!114 &114816157105974136
@@ -243,7 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9683ce8fd2daab5488955af11cfc9707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  description: 
+  description: Medicijn in flacon
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   tutorial_usedOn: 0
