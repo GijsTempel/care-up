@@ -50,7 +50,7 @@ public class TutorialManager : MonoBehaviour {
         CloseMedicine,             // inserted
         Overview1,
         ExplainTalking,
-        ExplainSelecting,
+        MoveToDoctor,
         UseDoctor,                 // inserted
         Overview2,
         TalkDoubleCheck,           // inserted
@@ -318,35 +318,37 @@ public class TutorialManager : MonoBehaviour {
                     if (player.tutorial_movedBack)
                     {
                         AddPointWithSound();
+                        currentStep = TutorialStep.MoveToDoctor;
+                        UItext.text = "Move to the collegue";
+                        particleHint.SetActive(true);
+                        particleHint.transform.position = doctor.transform.position;
+                        player.tutorial_movedTo = false;
+                    }
+                    break;
+                case TutorialStep.MoveToDoctor:
+                    if (player.tutorial_movedTo)
+                    {
+                        AddPointWithSound();
                         currentStep = TutorialStep.ExplainTalking;
-                        UItext.text = "Come close to the collegue and click on him.";
+                        UItext.text = "You can click on the doctor to talk";
                         doctor.tutorial_used = false;
                     }
                     break;
                 case TutorialStep.ExplainTalking:
-                    if (TimerElapsed())
+                    if (doctor.tutorial_used)
                     {
                         currentStep = TutorialStep.UseDoctor;
-                        particleHint.SetActive(true);
-                        particleHint.transform.position = doctor.transform.position;
                         doctor.tutorial_talked = false;
-                        UItext.text = "We zijn nu weer in het overzicht. Hier kunnen wij interessante objecten of personen benaderen. Beweeg de muis op je collega en klik op de linkermuisknop om naar je collega toe te bewegen. ";
-                    }
-                    else
-                    {
-                        if (doctor.tutorial_used)
-                        {
-                            AddPointWithSound();
-                            UItext.text = "Clicking on the person opens a dialogue menu where you can select what you want to say to the person. Try asking collegue to double check everything by selecting the first dialogue option.";
-                            SetPauseTimer(5.0f);
-                        }
+                        particleHint.SetActive(false);
+                        AddPointWithSound();
+                        UItext.text = "Clicking on the person opens a dialogue menu where you can select what you want to say to the person. Try asking collegue to double check everything by selecting the first dialogue option.";
                     }
                     break;
                 case TutorialStep.UseDoctor:
                     if (doctor.tutorial_talked)
                     {
                         currentStep = TutorialStep.Overview2;
-                        UItext.text = "De dubbele check is uitgevoerd. We kunnen verder met het klaarmaken voor injecteren. Ga terug naar het overzicht door op de 'Terug naar overzicht' knop te drukken.";
+                        UItext.text = "Great! Now go back to overview";
                         player.tutorial_movedBack = false;
                     }
                     break;
