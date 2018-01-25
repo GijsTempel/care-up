@@ -158,6 +158,13 @@ public class TutorialManager : MonoBehaviour {
     [HideInInspector]
     public string itemToDrop2 = "";
 
+    private GameObject endPanel;
+
+    public bool TutorialEnding
+    {
+        get { return endPanel.activeSelf; }
+    }
+
     void Awake () {
         particleHint = GameObject.Find("ParticleHint");
         particleHint.SetActive(false);
@@ -199,6 +206,9 @@ public class TutorialManager : MonoBehaviour {
         Instantiate(hintsPrefab, ui);
 
         UItext = GameObject.Find("hints").GetComponent<Text>();
+
+        endPanel = GameObject.Find("TutorialDonePanel");
+        endPanel.SetActive(false);
 	}
 	
 	void Update () {
@@ -737,25 +747,13 @@ public class TutorialManager : MonoBehaviour {
                     }
                     break;
                 case TutorialStep.UsePaperAndPen:
-                    if (paperNPen.tutorial_used)
+                    if (paperNPen.tutorial_used || true)
                     {
                         particleHint.SetActive(false);
 
-                        currentStep = TutorialStep.TutorialEnd;
-                        UItext.text = "Goed gedaan! Dit was de uitleg over Care-Up. Succes en veel plezier bij het oefenen van de verpleegtechnische handelingen.";
-                    }
-                    break;
-                case TutorialStep.TutorialEnd:
-                    if (TimerElapsed())
-                    {
                         currentStep = TutorialStep.None;
-                        actionManager.OnUseAction("__tutorialEnd");
-                        GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().TutorialCompleted = true;
-                        GameObject.Find("Preferences").GetComponent<LoadingScreen>().LoadLevel("Menu");
-                    }
-                    else
-                    {
-                        SetPauseTimer(5.0f);
+                        endPanel.SetActive(true);
+                        player.enabled = false;
                     }
                     break;
                 default:
@@ -763,6 +761,13 @@ public class TutorialManager : MonoBehaviour {
             }
         }
 	}
+
+    public void EndButtonClick()
+    {
+        //actionManager.OnUseAction("__tutorialEnd");
+        GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().TutorialCompleted = true;
+        GameObject.Find("Preferences").GetComponent<LoadingScreen>().LoadLevel("Menu");
+    }
 
     void SetPauseTimer(float value)
     {

@@ -14,6 +14,8 @@ public class WalkToGroup : MonoBehaviour
     Controls controls;
     PlayerScript player;
 
+    GameObject gameLogic;
+
     public void HighlightGroup(bool value)
     {
         if (SystemInfo.deviceType == DeviceType.Handheld)
@@ -23,7 +25,7 @@ public class WalkToGroup : MonoBehaviour
 
     private void Start()
     {
-        GameObject gameLogic = GameObject.Find("GameLogic");
+        gameLogic = GameObject.Find("GameLogic");
 
         cameraMode = gameLogic.GetComponent<CameraMode>();
         controls = gameLogic.GetComponent<Controls>();
@@ -42,6 +44,9 @@ public class WalkToGroup : MonoBehaviour
         {
             if (controls.SelectedObject == gameObject && !cameraMode.animating && player.away)
             {
+                if (gameLogic.GetComponent<TutorialManager>() != null)
+                    if (gameLogic.GetComponent<TutorialManager>().TutorialEnding)
+                        return;
                 HighlightGroup(true);
             }
             else
