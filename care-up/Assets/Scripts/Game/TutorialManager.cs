@@ -318,7 +318,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         AddPointWithSound();
                         currentStep = TutorialStep.Overview1;
-                        UItext.text = "Nu we alles hebben gecontroleerd is het van belang om een dubbele controle uit te voeren. Dit kan jou collega doen. Druk op de 'Terug naar overzicht'om het werkveld te verlaten. ";
+                        UItext.text = "Nu we alles hebben gecontroleerd is het van belang om een dubbele controle uit te voeren. Dit kan jou collega doen. Druk op de 'Terug naar overzicht' om het werkveld te verlaten. ";
                         player.tutorial_movedBack = false;
                         player.tutorial_movementLock = movementLock = false;
                         particleHint.SetActive(false);
@@ -340,7 +340,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         AddPointWithSound();
                         currentStep = TutorialStep.ExplainTalking;
-                        UItext.text = "You can click on the doctor to talk";
+                        UItext.text = "Je kunt met mensen praten door de muis op de persoon te bewegen en de linkermuisknop te drukken.";
                         doctor.tutorial_used = false;
                     }
                     break;
@@ -351,14 +351,14 @@ public class TutorialManager : MonoBehaviour {
                         doctor.tutorial_talked = false;
                         particleHint.SetActive(false);
                         AddPointWithSound();
-                        UItext.text = "Clicking on the person opens a dialogue menu where you can select what you want to say to the person. Try asking collegue to double check everything by selecting the first dialogue option.";
+                        UItext.text = "Zodra je hebt geklikt op persoon in kwestie, opent er er een keuzemenu. Hierin kun je aangeven wat je aan een persoon wilt vragen. Vraag nu aan je collega om een dubbele controle door met de linkermuisknop op de juiste keuze te klikken.";
                     }
                     break;
                 case TutorialStep.UseDoctor:
                     if (doctor.tutorial_talked)
                     {
                         currentStep = TutorialStep.Overview2;
-                        UItext.text = "Great! Now go back to overview";
+                        UItext.text = "Super! De dubbele controle is uitgevoerd. Druk op de 'Terug naar overzicht' om je collega te verlaten. ";
                         player.tutorial_movedBack = false;
                     }
                     break;
@@ -376,7 +376,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         particleHint.transform.position = alcohol.transform.position;
                         currentStep = TutorialStep.PickAlcohol;
-                        UItext.text = "Naast het gebruiken en bekijken van voorwerpen kunnen sommige voorwerpen worden opgepakt Probeer nu de alcohol op te pakken door met de muis op de alcohol te bewegen, linkermuisknop te drukken en te kiezen voor de optie 'Oppakken'.";
+                        UItext.text = "Naast het gebruiken en bekijken van voorwerpen kunnen sommige voorwerpen worden opgepakt. Beweeg eerst naar het werkveld door er met de linkermuisknop op te drukken. Probeer daarna de alcohol op te pakken door met de muis op de alcohol te bewegen, linkermuisknop te drukken en te kiezen voor de optie 'Oppakken'.";
                         itemToPick = "Alcohol";
                     }
                     break;
