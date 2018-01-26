@@ -47,11 +47,6 @@ $_SESSION['Server'] = 'Server';
 // The table of the chat message
 $_SESSION['ChatMessage'] = 'ChatMessage';
 
-$_SESSION['SerialKeys'] = 'SerialKeys';
-$_SESSION['GameScenes'] = 'GameScenes';
-$_SESSION['SerialToScenes'] = 'SerialToScenes';
-$_SESSION['AccountToSerials'] = 'AccountToSerials';
-
 // Your contact email (in case you want to send email validations), players will receive email from this email address (you could create a contact email address for example)
 $_SESSION['SERVER_email'] = 'Info@careup.nl';
 $_SESSION['SERVER_emailPassword'] = 'Care Up Support team';
@@ -60,6 +55,6 @@ $_SESSION['SERVER_emailPassword'] = 'Care Up Support team';
 $_SESSION['AvailableAttemptsBeforeBlocking'] = 10;
 
 // Scan clients IP
-define('SCAN_IP_ACTIVATED', TRUE, TRUE);
+define('SCAN_IP_ACTIVATED', FALSE, TRUE);
 
 ?>
