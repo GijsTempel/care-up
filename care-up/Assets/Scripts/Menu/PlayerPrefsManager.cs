@@ -77,7 +77,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public float Volume
     {
-        get { return PlayerPrefs.GetFloat("Volume"); }
+        get { return PlayerPrefs.HasKey("Volume") ? PlayerPrefs.GetFloat("Volume") : 1.0f; }
         set { PlayerPrefs.SetFloat("Volume", value); }
     }
 
