@@ -113,6 +113,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 2
@@ -128,6 +129,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -145,6 +147,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -160,6 +163,7 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -207,8 +211,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.028737143, y: 0.1372615, z: 0.04737696}
-  m_Center: {x: 0.000000003259629, y: 0.011035623, z: -0.000000014901161}
+  m_Size: {x: 0.03, y: 0.22, z: 0.07}
+  m_Center: {x: 0, y: 0.02, z: 0}
 --- !u!114 &114812298080428596
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -223,6 +227,9 @@ MonoBehaviour:
   description: Spuit
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
-  controlBone: {fileID: 0}
+  tutorial_usedOn: 0
+  leftControlBone: {fileID: 0}
+  rightControlBone: {fileID: 0}
   holdAnimationID: 4
   updatePlunger: 0
+  updateProtector: 0
