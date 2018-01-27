@@ -117,7 +117,7 @@ public class ItemControlsUI : MonoBehaviour {
             {
                 transform.position = Input.mousePosition + new Vector3(cursorOffset.x, cursorOffset.y);
 
-                float lowerBound = 135.0f;
+                float lowerBound = 265.0f;
                 if (transform.position.y < lowerBound)
                 {
                     float difference = lowerBound - transform.position.y;
@@ -125,7 +125,7 @@ public class ItemControlsUI : MonoBehaviour {
                     GameObject.Find("ItemDescriptionGroup").transform.position += new Vector3(0.0f, difference, 0.0f);
                 }
 
-                float rightBound = -175.0f;
+                float rightBound = -275.0f;
                 if (transform.position.x > Screen.width - rightBound)
                 {
                     float difference = (Screen.width - rightBound) - transform.position.x;
