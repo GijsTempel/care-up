@@ -71,8 +71,8 @@ public class PlayerPrefsManager : MonoBehaviour
         Debug.Log("Volume is set to saved value: " + Volume);
 
         SetSceneActivated("IILTG", true); // InjIntrLoTech
-        SetSceneActivated("ISHTG", true); // InjSubHTech
-        SetSceneActivated("INSIG", true); // Insulin
+        //SetSceneActivated("ISHTG", true); // InjSubHTech
+        //SetSceneActivated("INSIG", true); // Insulin
     }
 
     public float Volume
