@@ -130,20 +130,13 @@ namespace LoginProAsset
         /// <param name="errorMessage"></param>
         public void Error(string errorMessage)
         {
-            Debug.Log("login ongeldig");
+          
             GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set(errorMessage);
             errorMessage = errorMessage.Replace("ERROR: ", "Login mislukt: ");
 
-            // Stop animation
-           // if (this.AnimationToStopOnResult != null)
-            //    this.AnimationToStopOnResult.Stop();
 
             // Show the error
             Debug.LogWarning(errorMessage);
-
-            // Show message on error
-            //if (this.MessageToShowOnResult != null)
-               // this.MessageToShowOnResult.Show(errorMessage, 5);
         }
 
         /// <summary>

@@ -8,10 +8,6 @@ namespace LoginProAsset
     {
         public InputField Mail;
         public SceneSelection menuOnSuccess;
-       // public UIAnimation AnimationButtonToStop;
-       // public UIAnimation AnimationHideCurrentWindow;
-       // public UIAnimation_Alert AnimationShowMessage;
-       // public UIAnimation AnimationShowLogin;
 
         void Start()
         {
@@ -48,46 +44,20 @@ namespace LoginProAsset
         {
             errorMessage = errorMessage.Replace("ERROR: ", "");
             GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set(errorMessage);
-            // Stop animation
-            //if (this.AnimationButtonToStop != null)
-            //    this.AnimationButtonToStop.Stop();
 
             // Show the error
             Debug.LogWarning(errorMessage);
 
-            // Show message on error
-           // if (this.AnimationShowMessage != null)
-             //   this.AnimationShowMessage.Show(errorMessage, 5);
         }
 
         public void Success(string[] datas)
         {
-            // Stop button rotation animation
-            //if (this.AnimationButtonToStop != null)
-              //  this.AnimationButtonToStop.Stop();
-
             // Launch all animations one after the other
            // StartCoroutine(LaunchForgotAnimations());
             GameObject.Find("LoginPro").GetComponent<LoginMenuManager>().ShowMenu(menuOnSuccess);
             GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set("Succes, Er is een e-mail naar je toegestuurd met een nieuw wachtwoord.");
             Debug.Log("Forgot succeeded.");
         }
-        /*
-        private IEnumerator LaunchForgotAnimations()
-        {
-            // Hide current window
-           // if (this.AnimationHideCurrentWindow != null)
-             //   yield return this.AnimationHideCurrentWindow.Launch();
-
-            // Show message on success
-           // if (this.AnimationShowMessage != null)
-              //  yield return this.AnimationShowMessage.Show(string.Format("Information sent to : {0}\nCheck your emails", Mail.text), 5);
-
-            // Launch animation on success
-           // if (this.AnimationShowLogin != null)
-              //  yield return this.AnimationShowLogin.Launch();
-
-           // yield return null;
-        }*/
+  
     }
 }

@@ -70,8 +70,8 @@ public class PlayerPrefsManager : MonoBehaviour
         AudioListener.volume = Volume;
         Debug.Log("Volume is set to saved value: " + Volume);
 
-        SetSceneActivated("IILTG", true); // InjIntrLoTech
-        //SetSceneActivated("ISHTG", true); // InjSubHTech
+       // SetSceneActivated("IILTG", true); // InjIntrLoTech
+       // SetSceneActivated("ISHTG", true); // InjSubHTech
         //SetSceneActivated("INSIG", true); // Insulin
     }
 
