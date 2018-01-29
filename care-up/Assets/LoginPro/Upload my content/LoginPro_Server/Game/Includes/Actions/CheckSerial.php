@@ -32,40 +32,34 @@ $serials = ExecuteQuery($query, $parameters);
 
 $data = array();
 
-$serial = $serials->fetch();
-if ($serial) {
-	do
+while ($serial = $serials->fetch())
+{
+	$query = "SELECT * FROM ".$_SESSION['SerialKeys']." WHERE ID = :id";
+	$parameters = array(':id' => $serial['SerialID']);
+	$stmt = ExecuteQuery($query, $parameters);
+	
+	$info = $stmt->fetch();
+	
+	// SUCCESS
+	if(isset($info['ID']))
 	{
-		$query = "SELECT * FROM ".$_SESSION['SerialKeys']." WHERE ID = :id";
-		$parameters = array(':id' => $serial['SerialID']);
+		$query = "SELECT * FROM ".$_SESSION['SerialToScenes']." WHERE SerialID = :serial_id";
+		$parameters = array(':serial_id' => $info['ID']);
 		$stmt = ExecuteQuery($query, $parameters);
 		
-		$info = $stmt->fetch();
-		
-		// SUCCESS
-		if(isset($info['ID']))
+		while ($info2 = $stmt->fetch())
 		{
-			$query = "SELECT * FROM ".$_SESSION['SerialToScenes']." WHERE SerialID = :serial_id";
-			$parameters = array(':serial_id' => $info['ID']);
-			$stmt = ExecuteQuery($query, $parameters);
+			$sceneQuery = "SELECT * FROM ".$_SESSION['GameScenes']." WHERE ID = :serial_id";
+			$sceneParams = array(':serial_id' => $info2['SceneID']);
+			$sceneRes = ExecuteQuery($sceneQuery, $sceneParams);
 			
-			while ($info2 = $stmt->fetch())
-			{
-				$sceneQuery = "SELECT * FROM ".$_SESSION['GameScenes']." WHERE ID = :serial_id";
-				$sceneParams = array(':serial_id' => $info2['SceneID']);
-				$sceneRes = ExecuteQuery($sceneQuery, $sceneParams);
-				
-				$scene = $sceneRes->fetch();
-				$data[] = $scene['SceneID'] . "|" . $scene['SceneName'];
-				
-			}
+			$scene = $sceneRes->fetch();
+			$data[] = $scene['SceneID'] . "|" . $scene['SceneName'];
+			
 		}
-	} while ($serial = $serials->fetch());
-	
-	sendArrayAndFinish($data);
-	
-} else {
-	end_script("CheckSerial: This account has not activated any serial keys.");
-}	
+	}
+}
+
+sendArrayAndFinish($data);
 
 ?>

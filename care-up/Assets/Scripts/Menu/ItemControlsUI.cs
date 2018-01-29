@@ -270,11 +270,11 @@ public class ItemControlsUI : MonoBehaviour {
     {
         if (initedObject == handsInventory.LeftHandObject)
         {
-            handsInventory.LeftHandObject.GetComponent<PickableObject>().Use(true, true);
+            handsInventory.LeftHandObject.GetComponent<PickableObject>().Use(true);
         }
         else
         {
-            handsInventory.RightHandObject.GetComponent<PickableObject>().Use(false, true);
+            handsInventory.RightHandObject.GetComponent<PickableObject>().Use(false);
         }
 
         Close();

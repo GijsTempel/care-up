@@ -62,7 +62,7 @@ public class Syringe : PickableObjectWithInfo {
         }
     }
 
-    public override bool Use(bool hand = false, bool noTarget = false)
+    public override bool Use(bool hand = false)
     {
         tutorial_usedOn = true;
         string[] info = actionManager.CurrentUseOnInfo;
@@ -164,7 +164,7 @@ public class Syringe : PickableObjectWithInfo {
             }
 
             // venting
-            if (name == "SyringeWithAbsorptionNeedle" && noTarget)
+            if (name == "SyringeWithAbsorptionNeedle")
             {
                 info = actionManager.CurrentUseOnInfo;
                 if (info[0] == "SyringeWithAbsorptionNeedle" && info[1] == "")
@@ -187,7 +187,7 @@ public class Syringe : PickableObjectWithInfo {
         }
         else // cannot interact or target == ""
         {
-            if (name == "SyringeWithAbsorptionNeedle" && noTarget)
+            if (name == "SyringeWithAbsorptionNeedle")
             {
                 info = actionManager.CurrentUseOnInfo;
                 if (info[0] == "SyringeWithAbsorptionNeedle" && info[1] == "")
@@ -207,7 +207,7 @@ public class Syringe : PickableObjectWithInfo {
                     else return false;
                 }
             }
-            else if (name == "SyringeWithAbsorptionSNeedle" && noTarget)
+            else if (name == "SyringeWithAbsorptionSNeedle")
             {
                 info = actionManager.CurrentUseOnInfo;
                 if (info[0] == "SyringeWithAbsorptionSNeedle" && info[1] == "")
@@ -229,7 +229,7 @@ public class Syringe : PickableObjectWithInfo {
             }
         }
 
-        actionManager.OnUseOnAction(name, controls.SelectedObject != null ? controls.SelectedObject.name : "");
+        actionManager.OnUseOnAction(name, controls.SelectedObject != null && controls.CanInteract ? controls.SelectedObject.name : "");
 
         return (info[0] == name && controls.SelectedObject != null && info[1] == controls.SelectedObject.name);
     }
