@@ -84,7 +84,7 @@ public class PickableObject : InteractableObject {
     /// Handle using of an object on another one.
     /// </summary>
     /// <returns>True if used</returns>
-    public virtual bool Use(bool hand)
+    public virtual bool Use(bool hand, bool noTarget = false)
     {
         tutorial_usedOn = true;
         string[] info = actionManager.CurrentUseOnInfo;
@@ -179,7 +179,7 @@ public class PickableObject : InteractableObject {
                 GameObject.Find("GameLogic").GetComponent<HandsInventory>().GlovesToggle(true);
             }
         }
-        actionManager.OnUseOnAction(name, controls.SelectedObject != null && controls.CanInteract ? controls.SelectedObject.name : "");
+        actionManager.OnUseOnAction(name, controls.SelectedObject != null ? controls.SelectedObject.name : "");
 
         return (info[0] == name && controls.SelectedObject != null && info[1] == controls.SelectedObject.name);
     }

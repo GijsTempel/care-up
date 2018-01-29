@@ -36,7 +36,7 @@ public class InsulinPen : PickableObjectWithInfo {
         }
     }
 
-    public override bool Use(bool hand)
+    public override bool Use(bool hand, bool noTarget = false)
     {
         string[] info = actionManager.CurrentUseOnInfo;
 
@@ -62,7 +62,7 @@ public class InsulinPen : PickableObjectWithInfo {
             }
         }
 
-        if (info[0] == "InsulinPenWithNeedle" && info[1] == "")
+        if (info[0] == "InsulinPenWithNeedle" && info[1] == "" && noTarget)
         {
             if (inventory.LeftHandEmpty())
             {
@@ -80,7 +80,7 @@ public class InsulinPen : PickableObjectWithInfo {
             }
             else return false;
         }
-        else if (info[0] == "VentedInsulinPenWithNeedle" && info[1] == "")
+        else if (info[0] == "VentedInsulinPenWithNeedle" && info[1] == "" && noTarget)
         {
             if (inventory.LeftHandEmpty())
             {
@@ -98,7 +98,7 @@ public class InsulinPen : PickableObjectWithInfo {
             }
             else return false;
         }
-        else if (info[0] == "InsulinPen" && info[1] == "")
+        else if (info[0] == "InsulinPen" && info[1] == "" && noTarget)
         {
             if (inventory.LeftHandEmpty())
             {
@@ -115,7 +115,7 @@ public class InsulinPen : PickableObjectWithInfo {
             else return false;
         }
 
-        actionManager.OnUseOnAction(name, controls.SelectedObject != null && controls.CanInteract ? controls.SelectedObject.name : "");
+        actionManager.OnUseOnAction(name, controls.SelectedObject != null ? controls.SelectedObject.name : "");
 
         return (info[0] == name && controls.SelectedObject != null && info[1] == controls.SelectedObject.name);
     }
