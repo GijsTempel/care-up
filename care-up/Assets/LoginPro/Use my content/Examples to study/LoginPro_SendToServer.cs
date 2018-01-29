@@ -68,11 +68,6 @@ namespace LoginProAsset
             data[0] = enteredSerial.text;
 
             LoginPro.Manager.ExecuteOnServer("SetSerial", SetSerialSuccess, SetSerialError, data);
-
-            if (GameObject.Find("Preferences") != null)
-            {
-                GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().CheckSerial();
-            }
         }
 		
         public void SendToServer_Error(string errorMessage)
@@ -88,6 +83,11 @@ namespace LoginProAsset
             Serial = enteredSerial.text;
             ValidProduct = true;
             GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set("Succes, je protocol is nu beschikbaar start het spel om je protocol te spelen.");
+
+            if (GameObject.Find("Preferences") != null)
+            {
+                GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().CheckSerial();
+            }
         }
 
         //Check if code is incorrect
