@@ -44,22 +44,32 @@ public class WorkField : UsableObject {
                     actionManager.OnUseAction(gameObject.name);
                     controls.ResetObject();
                     Reset();
-                    return;
                 }
             }
-
-            tutorial_used = true;
-            PlayerAnimationManager.PlayAnimation("Use WorkField", transform);
-            actionManager.OnUseAction(gameObject.name);
-            controls.ResetObject();
-            Reset();
-
-            if ( toggleTime == 1 )
+            else
             {
-                ToggleObjects();
-            }
+                if (handsInventory.LeftHandEmpty() && handsInventory.RightHandEmpty())
+                {
+                    tutorial_used = true;
+                    PlayerAnimationManager.PlayAnimation("Use WorkField", transform);
+                    actionManager.OnUseAction(gameObject.name);
+                    controls.ResetObject();
+                    Reset();
 
-            tutorial_used = true;
+                    if (toggleTime == 1)
+                    {
+                        ToggleObjects();
+                    }
+
+                    tutorial_used = true;
+                }
+                else
+                {
+                    string message = "Sometimes hands should be empty in order to perform certain actions. For example you need to have both hands free to clean the workfield.";
+                    Camera.main.transform.Find("UI").Find("EmptyHandsWarning").
+                            GetComponent<TimedPopUp>().Set(message);
+                }
+            }
         }
     }
 

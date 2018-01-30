@@ -10,7 +10,7 @@ public class UsableObject : InteractableObject {
     [HideInInspector]
     public bool tutorial_used = false;
 
-    private static HandsInventory handsInventory;
+    protected static HandsInventory handsInventory;
 
     protected override void Start()
     {
