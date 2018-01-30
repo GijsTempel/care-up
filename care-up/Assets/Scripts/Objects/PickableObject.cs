@@ -197,7 +197,7 @@ public class PickableObject : InteractableObject {
 
     public void EmptyHandsWarning()
     {
-        string message = "Sometimes hands should be empty in order to perform certain actions. For example you need to have another hand free to vent a syringe.";
+        string message = "Je hebt geen vrije hand beschikbaar om de actie uit te voeren. Zorg voor een vrije hand door een object terug te leggen.";
         Camera.main.transform.Find("UI").Find("EmptyHandsWarning").
                 GetComponent<TimedPopUp>().Set(message);
     }
