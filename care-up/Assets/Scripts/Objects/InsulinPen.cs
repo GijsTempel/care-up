@@ -78,7 +78,11 @@ public class InsulinPen : PickableObjectWithInfo {
                 name = "VentedInsulinPenWithNeedle";
                 return true;
             }
-            else return false;
+            else
+            {
+                EmptyHandsWarning();
+                return false;
+            }
         }
         else if (info[0] == "VentedInsulinPenWithNeedle" && info[1] == "" && noTarget)
         {
@@ -96,7 +100,11 @@ public class InsulinPen : PickableObjectWithInfo {
                 name = "InsulinPenWithNeedle";
                 return true;
             }
-            else return false;
+            else
+            {
+                EmptyHandsWarning();
+                return false;
+            }
         }
         else if (info[0] == "InsulinPen" && info[1] == "" && noTarget)
         {
@@ -112,7 +120,11 @@ public class InsulinPen : PickableObjectWithInfo {
                 actionManager.OnUseOnAction(name, "");
                 return true;
             }
-            else return false;
+            else
+            {
+                EmptyHandsWarning();
+                return false;
+            }
         }
 
         actionManager.OnUseOnAction(name, controls.SelectedObject != null ? controls.SelectedObject.name : "");

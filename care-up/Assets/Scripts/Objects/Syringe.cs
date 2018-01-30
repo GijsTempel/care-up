@@ -159,7 +159,11 @@ public class Syringe : PickableObjectWithInfo {
                         actionManager.OnUseOnAction(name, "NeedleCup");
                         return true;
                     }
-                    else return false;
+                    else
+                    {
+                        EmptyHandsWarning();
+                        return false;
+                    }
                 }
             }
 
@@ -181,7 +185,11 @@ public class Syringe : PickableObjectWithInfo {
                         actionManager.OnUseOnAction("SyringeWithAbsorptionNeedle", "");
                         return true; // fix for venting syringe
                     }
-                    else return false;
+                    else
+                    {
+                        EmptyHandsWarning();
+                        return false;
+                    }
                 }
             }
         }
@@ -204,7 +212,11 @@ public class Syringe : PickableObjectWithInfo {
                         actionManager.OnUseOnAction("SyringeWithAbsorptionNeedle", "");
                         return true; // fix for venting syringe
                     }
-                    else return false;
+                    else
+                    {
+                        EmptyHandsWarning();
+                        return false;
+                    }
                 }
             }
             else if (name == "SyringeWithAbsorptionSNeedle" && noTarget)
@@ -224,7 +236,11 @@ public class Syringe : PickableObjectWithInfo {
                         actionManager.OnUseOnAction("SyringeWithAbsorptionSNeedle", "");
                         return true; // fix for venting syringe
                     }
-                    else return false;
+                    else
+                    {
+                        EmptyHandsWarning();
+                        return false;
+                    }
                 }
             }
         }
