@@ -27,6 +27,7 @@ public class InteractableObject : MonoBehaviour {
     static protected Controls controls;
     static protected ActionManager actionManager;
     static protected GameObject itemDescription;
+    static protected PlayerScript player;
 
     protected virtual void Start()
     {
@@ -34,7 +35,7 @@ public class InteractableObject : MonoBehaviour {
 
         if (onMouseOverShaderSihlouette == null)
         {
-            onMouseOverShaderSihlouette = Shader.Find("Outlined/Silhouetted Diffuse");
+            onMouseOverShaderSihlouette = Shader.Find("Outlined/Diffuse");
         }
 
         if (onMouseOverShadeOutline == null)
@@ -67,6 +68,12 @@ public class InteractableObject : MonoBehaviour {
             if (actionManager == null) Debug.LogError("No action manager found");
         }
 
+        if (player == null)
+        {
+            player = GameObject.Find("Player").GetComponent<PlayerScript>();
+            if (player == null) Debug.LogError("No player");
+        }
+
         if (itemDescription == null)
         {
             //itemDescription = Instantiate(Resources.Load<GameObject>("Prefabs/ItemDescription"),
@@ -91,7 +98,7 @@ public class InteractableObject : MonoBehaviour {
     /// </summary>
     protected virtual void Update()
     {
-        if (cameraMode.CurrentMode == CameraMode.Mode.Free)
+        if (cameraMode.CurrentMode == CameraMode.Mode.Free && !player.away)
         {
             if (controls.SelectedObject == gameObject && !cameraMode.animating)
             {
@@ -105,13 +112,11 @@ public class InteractableObject : MonoBehaviour {
                     if (!itemDescription.activeSelf)
                     {
                         itemDescription.GetComponentInChildren<Text>().text = (description == "") ? name : description;
-                        Transform icons = itemDescription.transform.GetChild(0);
-                        icons.Find("UseIcon").gameObject.SetActive(gameObject.GetComponent<UsableObject>() != null);
-                        icons.Find("TalkIcon").gameObject.SetActive(gameObject.GetComponent<PersonObject>() != null);
-                        icons.Find("PickIcon").gameObject.SetActive(gameObject.GetComponent<PickableObject>() != null);
-                        icons.Find("ExamIcon").gameObject.SetActive(gameObject.GetComponent<ExaminableObject>() != null);
-                        itemDescription.transform.position = transform.position + descriptionOffset;
-                        itemDescription.transform.rotation = Camera.main.transform.rotation;
+                       // Transform icons = itemDescription.transform.GetChild(0).GetChild(0);
+                       // icons.Find("UseIcon"). gameObject.SetActive(false);//gameObject.GetComponent<UsableObject>() != null);
+                       // icons.Find("TalkIcon").gameObject.SetActive(false);//gameObject.GetComponent<PersonObject>() != null);
+                        //icons.Find("PickIcon").gameObject.SetActive(false);//gameObject.GetComponent<PickableObject>() != null);
+                       // icons.Find("ExamIcon").gameObject.SetActive(false);//gameObject.GetComponent<ExaminableObject>() != null);
                         itemDescription.SetActive(true);
                     }
                 }
@@ -129,6 +134,11 @@ public class InteractableObject : MonoBehaviour {
                     itemDescription.SetActive(false);
                 }
             }
+        }
+
+        if (itemDescription.activeSelf && !player.itemControls.gameObject.activeSelf)
+        {
+            itemDescription.transform.GetChild(0).transform.position = Input.mousePosition + new Vector3(50.0f, 25.0f);
         }
     }
 
@@ -174,10 +184,10 @@ public class InteractableObject : MonoBehaviour {
         transform.rotation = savedRotation;
     }
 
-    public void GetSavesLocation(out Vector3 position, out Quaternion rotation)
+    public void GetSavesLocation(out Vector3 outPosition, out Quaternion outRotation)
     {
-        position = savedPosition;
-        rotation = savedRotation;
+        outPosition = savedPosition;
+        outRotation = savedRotation;
     }
 
     protected virtual void SetShaderTo(Shader shader)
@@ -196,6 +206,25 @@ public class InteractableObject : MonoBehaviour {
                     m.shader = shader;
                 }
             }
+        }
+    }
+
+    public void Highlight(bool value)
+    {
+        if (rend == null)
+        {
+            rend = GetComponent<Renderer>();
+        }
+
+        if (value)
+        {
+            if (rend.material.shader == onMouseExitShader)
+                SetShaderTo(onMouseOverShader);
+        }
+        else
+        {
+            if (rend.material.shader == onMouseOverShader)
+                SetShaderTo(onMouseExitShader);
         }
     }
 }

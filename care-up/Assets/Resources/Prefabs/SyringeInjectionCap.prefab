@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23543798294538450}
   - component: {fileID: 54514493834319710}
   - component: {fileID: 114782791326121822}
-  - component: {fileID: 65713099250659998}
+  - component: {fileID: 65249909261642384}
   m_Layer: 0
   m_Name: SyringeInjectionCap
   m_TagString: Untagged
@@ -38,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1447556185590090}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: 9.103576, y: 1.5410562, z: 10.39346}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -53,11 +53,12 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 3d45c0a2ae8514f50be3af483bb43052, type: 2}
+  - {fileID: 2100000, guid: 7d0097904cf3d4b80af694b6b4f5848c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -68,6 +69,7 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -82,7 +84,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1447556185590090}
-  m_Mesh: {fileID: 4300002, guid: a72b630229a28468797c38d8405629c5, type: 3}
+  m_Mesh: {fileID: 4300008, guid: 3bb3e4957e1a74780a38799b1c9d20fb, type: 3}
 --- !u!54 &54514493834319710
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -98,7 +100,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &65713099250659998
+--- !u!65 &65249909261642384
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -108,8 +110,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.013800548, y: 0.07471479, z: 0.013272831}
-  m_Center: {x: 0.0000000016298145, y: 0, z: 0}
+  m_Size: {x: 0.014548546, y: 0.05865544, z: 0.013496488}
+  m_Center: {x: -4.656613e-10, y: -0.09950177, z: 0}
 --- !u!114 &114782791326121822
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -124,5 +126,6 @@ MonoBehaviour:
   description: Beschermhuls injectienaald
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
+  tutorial_usedOn: 0
   controlBone: {fileID: 0}
-  holdAnimationID: 3
+  holdAnimationID: 14

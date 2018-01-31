@@ -14,6 +14,7 @@ public class EndScoreWrongStepDescr : MonoBehaviour, IPointerEnterHandler
 
     void Start()
     {
+        
         if (GameObject.Find("GameLogic") != null)
         {
             controls = GameObject.Find("GameLogic").GetComponent<Controls>();
@@ -32,10 +33,10 @@ public class EndScoreWrongStepDescr : MonoBehaviour, IPointerEnterHandler
             {
                 foreach (Text text in transform.parent.GetComponentsInChildren<Text>())
                 {
-                    text.color = Color.white;
+                    text.color = Color.red;
                 }
 
-                GetComponent<Text>().color = Color.green;
+                GetComponent<Text>().color = Color.black;
                 GameObject.Find("StepDescription").GetComponent<Text>().text = text;
             }
         }
@@ -47,10 +48,10 @@ public class EndScoreWrongStepDescr : MonoBehaviour, IPointerEnterHandler
         {
             foreach (Text text in transform.parent.GetComponentsInChildren<Text>())
             {
-                text.color = Color.white;
+                text.color = Color.red;
             }
 
-            GetComponent<Text>().color = Color.green;
+            GetComponent<Text>().color = Color.black;
             GameObject.Find("StepDescription").GetComponent<Text>().text = text;
         }
     }

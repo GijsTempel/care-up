@@ -11,6 +11,7 @@ public class InjectionSequence : AnimationSequenceState
     public int dropCapFrame;
 
     private HandsInventory inv;
+    private Syringe syringe;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -44,7 +45,10 @@ public class InjectionSequence : AnimationSequenceState
         else if (PlayerAnimationManager.CompareFrames(frame, prevFrame, takeOffCapFrame))
         {
             inv.ReplaceHandObject(false, "SyringeWithInjectionNeedle");
-            
+
+            syringe = inv.RightHandObject.GetComponent<Syringe>();
+            syringe.updateProtector = true;
+
             GameObject cap = inv.CreateObjectByName("SyringeInjectionCap", Vector3.zero);
 
             Vector3 savedPos = Vector3.zero;
@@ -138,6 +142,8 @@ public class InjectionSequence : AnimationSequenceState
                 GameObject.Find("GameLogic").GetComponent<TutorialManager>().sequenceCompleted = true;
             }
         }
+
+        syringe.updateProtector = false;
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here

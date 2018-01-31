@@ -15,7 +15,7 @@ public class InGameUI : MonoBehaviour {
     private Controls controls;
     private GameTimer timer;
 
-    private RigidbodyFirstPersonController player;
+    private PlayerScript player;
     private Crosshair crosshair;
     private Animator animator;
 
@@ -28,6 +28,7 @@ public class InGameUI : MonoBehaviour {
     Dropdown qualityDropdown;
     Dropdown resolutionDropdown;
     Toggle fullscrToggle;
+    GameObject escapeButton;
 
     List<Resolution> resolutions;
 
@@ -47,7 +48,7 @@ public class InGameUI : MonoBehaviour {
             timer = game.GetComponent<GameTimer>();
         }
 
-        player = GameObject.Find("Player").GetComponent<RigidbodyFirstPersonController>();
+        player = GameObject.Find("Player").GetComponent<PlayerScript>();
         crosshair = GameObject.Find("Player").GetComponent<Crosshair>();
         animator = player.transform.GetChild(0).GetChild(0).GetComponent<Animator>();
 
@@ -85,6 +86,8 @@ public class InGameUI : MonoBehaviour {
         fullscrToggle.isOn = Screen.fullScreen;
 
         gamepadDefault = main.GetChild(0).GetComponent<Button>();
+
+        escapeButton = GameObject.Find("TouchEscapeButton");
     }
 
     void Update()
@@ -105,6 +108,8 @@ public class InGameUI : MonoBehaviour {
         if (ui.gameObject.activeSelf)
         {
             ui.gameObject.SetActive(false);
+            escapeButton.SetActive(true);
+
             if (game != null)
             {
                 controls.keyPreferences.ToggleLock();
@@ -112,7 +117,7 @@ public class InGameUI : MonoBehaviour {
             }
 
             player.enabled = playerState;
-            crosshair.enabled = true;
+            crosshair.enabled = prefsManager == null ? false : prefsManager.VR;
 
             animator.speed = animatorSpeed;
             Time.timeScale = 1f;
@@ -125,6 +130,7 @@ public class InGameUI : MonoBehaviour {
         else
         {
             ui.gameObject.SetActive(true);
+            escapeButton.SetActive(false);
             if (game != null)
             {
                 controls.keyPreferences.ToggleLock();

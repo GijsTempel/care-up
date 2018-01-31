@@ -20,6 +20,7 @@ public class AnimationCombine : StateMachineBehaviour {
 
         mode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
         mode.animating = true;
+        mode.SetCameraUpdating(true);
 
         frame = 0f;
         prevFrame = 0f;
@@ -50,6 +51,7 @@ public class AnimationCombine : StateMachineBehaviour {
 
         inv.ToggleControls(false);
         mode.animating = false;
+        mode.animationEnded = true;
     }
 
 	// OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here

@@ -45,13 +45,13 @@ public class EndScoreManager : MonoBehaviour {
         {
             Transform uiFolder = GameObject.Find("Canvas").transform;
 
-            uiFolder.Find("Left").Find("Score").GetComponent<Text>().text = "Score: " + score;
+            //uiFolder.Find("Left").Find("Score").GetComponent<Text>().text = "Score: " + score;
             uiFolder.Find("Left").Find("Points").GetComponent<Text>().text = "Points: " + points;
             uiFolder.Find("Left").Find("Time").GetComponent<Text>().text = string.Format("Time: {0}:{1:00}", (int)time / 60, (int)time % 60);
 
             //uiFolder.GetChild(1).FindChild("Steps").GetComponent<Text>().text = wrongSteps;
 
-            Transform layoutGroup = uiFolder.Find("Right").Find("LayoutGroup");
+            Transform layoutGroup = uiFolder.Find("Right").Find("WrongstepScroll").Find("WrongstepViewport").Find("WrongstepContent").Find("LayoutGroup");
             EndScoreWrongStepDescr[] stepObjects = layoutGroup.GetComponentsInChildren<EndScoreWrongStepDescr>();
 
             for (int i = 0; i < wrongSteps.Count && i < stepObjects.Length; ++i)
@@ -89,7 +89,7 @@ public class EndScoreManager : MonoBehaviour {
             Cursor.visible = true;
 
             GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().SetSceneCompletionData(
-                completedSceneName, score, string.Format("Time: {0}m{1:00}s", (int)time / 60, (int)time % 60));
+                completedSceneName, score, string.Format("Tijd: {0}m{1:00}s", (int)time / 60, (int)time % 60));
         }
     }
 

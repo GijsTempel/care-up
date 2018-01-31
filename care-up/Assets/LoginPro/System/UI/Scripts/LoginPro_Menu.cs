@@ -15,16 +15,17 @@ namespace LoginProAsset
         public Text RegistrationDateText;
         public Text LastConnectionDateText;
         public Text TimePlayedText;
+        public Text News;
 
         public bool MobileUI = false;
-        public GameObject Achievements;
-        public GameObject ListLeft;
-        public GameObject ListRight;
-        public GameObject UnknownAchievementPrefab;
+        //public GameObject Achievements;
+       // public GameObject ListLeft;
+        //public GameObject ListRight;
+        //public GameObject UnknownAchievementPrefab;
 
-        public AchievementsListScroller ScrollAchievementsList;
+      //  public AchievementsListScroller ScrollAchievementsList;
 
-        private bool initiated = false;
+//        private bool initiated = false;
         private int fpsCounter = -1;
 
 
@@ -32,7 +33,8 @@ namespace LoginProAsset
         {
             // Reinit the achievement list (in case a user is connecting with another account : clear the achievements before receiving it)
             // This avoid to see previous achievements, remaining during some milliseconds (this way everything is cleared)
-            this.UpdateAchievementsList();
+            // this.UpdateAchievementsList(); ---> change for achievements
+            LoginPro.Manager.News(NewsSuccess, NewsError);
         }
 
         /// <summary>
@@ -49,11 +51,20 @@ namespace LoginProAsset
             this.LastConnectionDateText.text = "Laatste inlog datum :\n[" + LoginPro.Session.PreviousConnectionDate + "]";
             this.TimePlayedText.text = LoginPro.Session.TimePlayedText;
         }
-
+        public void NewsError(string errorMessage)
+        {
+            // Show message in console if error
+            Debug.LogWarning(errorMessage);
+        }
+        public void NewsSuccess(string[] datas)
+        {
+            // Set the news of the game to display them at startup
+            // this.News.text = datas[0];
+        }
         /// <summary>
         /// Update achievements TAGS based on the achievements received from the server
         /// </summary>
-        public void UpdateAchievementsList()
+       /*public void UpdateAchievementsList() ----> uncomment for usage of achievements 
         {
             // If it's the first time the list must be created
             if (!initiated)
@@ -132,7 +143,7 @@ namespace LoginProAsset
             if (this.ScrollAchievementsList != null)
                 this.ScrollAchievementsList.Refresh();
         }
-
+        */
         /// <summary>
         /// A timer set to launch Notice process every minutes
         /// </summary>

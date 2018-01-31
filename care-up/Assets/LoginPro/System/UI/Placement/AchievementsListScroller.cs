@@ -3,9 +3,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace LoginProAsset
-{
+{/*
     public class AchievementsListScroller : MonoBehaviour
     {
+        
         public RectTransform Scroller;
         public PlaceUIElement ListLeft;
         public PlaceUIElement ListRight;
@@ -86,8 +87,8 @@ namespace LoginProAsset
 
             // Scroll the lists
             float scrollToReach = this.GetScrollFromPosition(this.initialVerticalPosition - positionDelta);
-            this.ListLeft.verticalPosition = scrollToReach;
-            this.ListRight.verticalPosition = scrollToReach;
+//            this.ListLeft.verticalPosition = scrollToReach;
+       //     this.ListRight.verticalPosition = scrollToReach;
             PlaceCanvas.ForceRefresh();
         }
 
@@ -95,5 +96,5 @@ namespace LoginProAsset
         {
             return ((this.Frame.rectTransform.position.y - positionWanted) * 100) / PlaceCanvas.ScreenHeight;
         }
-    }
+    }*/
 }

@@ -16,7 +16,7 @@ public class UpdateOperatorEditor : Editor
         GUILayout.Space(5);
         GUILayout.BeginHorizontal();
         GUILayout.Space(20);
-        EditorGUILayout.HelpBox("This scene and Operator is ONLY to be used in your Game. If you are trying to setup your Patcher/Launcher, open the PatcherMainScene located in _Scenes/PatcherMainScene", MessageType.Error);
+        EditorGUILayout.HelpBox("This scene and Operator is ONLY to be used in your Game. If you are trying to setup your Patcher/Launcher, open the PatcherMainScene located in _Scenes/PatcherMainScene.", MessageType.Error);
         GUILayout.Space(20);
         GUILayout.EndHorizontal();
 

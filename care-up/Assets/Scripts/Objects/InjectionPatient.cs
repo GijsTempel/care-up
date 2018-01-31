@@ -8,16 +8,13 @@ public class InjectionPatient : PersonObject {
     private AudioClip[] audioClips;
 
     public GameObject greetDialogueTrigger;
-
-    private Narrator player;
+    
     private bool greetDialogueTriggered = false;
 
     protected override void Start()
     {
         base.Start();
-
-        player = GameObject.Find("Narrator").GetComponent<Narrator>();
-
+        
         audioClips = new AudioClip[17];
 
         for (int i = 0; i < 17; ++i)

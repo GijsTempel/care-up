@@ -2,6 +2,7 @@
 
 namespace LoginProAsset
 {
+    /*
     [RequireComponent(typeof(PlaceUIElement))]
     public class LoginPro_Achievement : MonoBehaviour
     {
@@ -13,14 +14,14 @@ namespace LoginProAsset
         public int DisplayTime = 5;
         public int PercentToUnlock = 100;
 
-        public UIAnimation_Place animationShow;
+      //  public UIAnimation_Place animationShow;
 
-        private LoginPro_AchievementsManager AchievementsManager;
+        //private LoginPro_AchievementsManager AchievementsManager; ---> Achemvements are not used and turned off
 
         void Awake()
         {
             this.Name = gameObject.name;
-            this.AchievementsManager = transform.parent.GetComponent<LoginPro_AchievementsManager>();
+            //this.AchievementsManager = transform.parent.GetComponent<LoginPro_AchievementsManager>(); --->Achemvements are not used and turned off
         }
 
         /// <summary>
@@ -41,7 +42,7 @@ namespace LoginProAsset
         public void UnlockSuccess(string[] achievements)
         {
             // Refresh achievements tags list
-            this.AchievementsManager.RefreshAchievements(achievements);
+            // this.AchievementsManager.RefreshAchievements(achievements);---> Achemvements are not used and turned off
 
             // Show the unlocked achievement IF the server said it has been unlocked
             if (this.Unlocked)
@@ -54,7 +55,7 @@ namespace LoginProAsset
         public void Lock()
         {
             // Call server to lock this achievement for this user
-            LoginPro.Manager.UpdateAchievement(this.Name, 0, this.AchievementsManager.RefreshAchievements, LockError);
+            //LoginPro.Manager.UpdateAchievement(this.Name, 0, this.AchievementsManager.RefreshAchievements, LockError); ---> Achemvements are not used and turned off
         }
         public void LockError(string errorMessage)
         {
@@ -63,5 +64,5 @@ namespace LoginProAsset
             // Show the error in the console
             Debug.LogWarning(errorMessage);
         }
-    }
+    }*/
 }

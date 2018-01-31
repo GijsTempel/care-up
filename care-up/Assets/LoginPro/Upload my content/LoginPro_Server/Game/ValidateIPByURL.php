@@ -17,8 +17,8 @@ include_once 'Includes/InitServerConnection.php'; 	// Initialize the connection 
 
 
 //-----------------------------------: CHECK DATA PRESENCE :----------------------------------------------
-if(!isset($_GET['username'])) { end_script('Username not received.'); }
-if(!isset($_GET['code'])) { end_script('Code not received.'); }
+if(!isset($_GET['username'])) { end_script('Gebruikersnaam niet ontvangen.'); }
+if(!isset($_GET['code'])) { end_script('Code niet ontvangen.'); }
 
 //--------------------------------: PROTECT AGAINST INJECTION :-------------------------------------------
 $username = $_GET['username'];
@@ -40,13 +40,13 @@ increaseAttempts($id, $IP, 'IP Validation');
 $IPactivation_completed = activateIP($id, $IP);
 if($IPactivation_completed)
 {
-	echo("Je IP adres is geachtiveerd. Je kunt nu inloggen met je Care Up account.");
+	echo("Je IP adres is geactiveerd. Je kunt nu inloggen met je Care Up account.");
 	// Close connection to database properly
 	$_SESSION['databaseConnection'] = null;
 	// Ensure the end of the current script
 	die();
 	exit(0);
 }
-else { end_script('IP activation went wrong.'); }
+else { end_script('IP activatie ging verkeerd.'); }
 
 ?>

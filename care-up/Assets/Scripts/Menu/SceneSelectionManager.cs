@@ -14,21 +14,22 @@ public class SceneSelectionManager : MonoBehaviour {
     private PlayerPrefsManager manager;
 
     private string practiceText =
-        "Oefenen: Oefenen de protocol waarin je elke stap van de werkwijze bovenin het scherm kunt zien. Volg de stappen om ze te oefenen en te leren.";
+        "Oefenen: Oefen het protocol waarin je elke stap van de werkwijze bovenin het scherm kunt zien. Volg de stappen om ze te oefenen en te leren.";
     private string testText =
         "Toetsen: Toets je kennis. Tijdens een toets zie je geen hints en moet je de stappen van de protocol uit je hoofd uitvoeren. Zoals in het echt.";
 
     public void Start()
     {
+        manager = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
+
         ShowMenu(CurrentMenu);
 
         practiceButton = GameObject.Find("PracticeButton").GetComponent<Image>();
         testButton = GameObject.Find("TestButton").GetComponent<Image>();
 
         practiceButton.color = Color.green;
-
-        manager = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
-
+        manager.practiceMode = true;
+        
         description = GameObject.Find("PracticeTestDescription").GetComponent<Text>();
         description.text = practiceText;
     }

@@ -14,14 +14,16 @@ namespace LoginProAsset
         public InputField Password;
 
         public LoginPro_Menu Menu;
-        public LoginPro_AchievementsManager AchievementsManager;
+        //public LoginPro_AchievementsManager AchievementsManager; --->Achemvements are not used and turned off
 
         public UIAnimation AnimationToPlayOnSuccess;
-        public UIAnimation_Alert MessageToShowOnResult;
+       // public UIAnimation_Alert MessageToShowOnResult;
         public UIAnimation AnimationToStopOnResult;
 
         public Button ButtonSave;
         public Button ButtonDontSave;
+
+        public SceneSelection menuOnSuccess;
 
         /// <summary>
         /// When the scene starts ask the server for achievements (if connected) or game news (if not connected yet)
@@ -40,7 +42,7 @@ namespace LoginProAsset
             if (LoginPro.Session.LoggedIn)
             {
                 // Get user's achievements
-                this.AchievementsManager.GetAchievements();
+                // this.AchievementsManager.GetAchievements(); ---> Achemvements are not used and turned off
             }
 
             // Ask for the news of the game
@@ -49,7 +51,7 @@ namespace LoginProAsset
             // Prefill fields with saved datas
             this.LoadPlayerPrefs();
         }
-
+        /*
         /// <summary>
         /// Switch to save information in playerPrefs or not depending on the user's choice
         /// </summary>
@@ -69,13 +71,15 @@ namespace LoginProAsset
             PlayerPrefs.SetString("Save", "Save");
             this.ButtonSave.transform.localScale = Vector3.one;
             this.ButtonDontSave.transform.localScale = Vector3.zero;
+            Debug.Log("save ");
         }
         public void CheckDontSave()
         {
             PlayerPrefs.SetString("Save", "DontSave");
+            Debug.Log("Geen save ");
             this.ButtonSave.transform.localScale = Vector3.zero;
             this.ButtonDontSave.transform.localScale = Vector3.one;
-        }
+        }*/
 
         /// <summary>
         /// The News results from the server :
@@ -106,7 +110,7 @@ namespace LoginProAsset
                 Password.text = PlayerPrefs.GetString("Password");
             }
             // Check if login must be saved or not
-            SaveIsChecked();
+           // SaveIsChecked();
         }
 
         /// <summary>
@@ -116,6 +120,8 @@ namespace LoginProAsset
         {
             if (LoginPro.Manager != null)
                 LoginPro.Manager.Login(Username.text, Password.text, Success, Error);
+
+            Debug.Log("Login launched");
         }
 
         /// <summary>
@@ -124,18 +130,13 @@ namespace LoginProAsset
         /// <param name="errorMessage"></param>
         public void Error(string errorMessage)
         {
+          
+            GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set(errorMessage);
             errorMessage = errorMessage.Replace("ERROR: ", "Login mislukt: ");
 
-            // Stop animation
-            if (this.AnimationToStopOnResult != null)
-                this.AnimationToStopOnResult.Stop();
 
             // Show the error
             Debug.LogWarning(errorMessage);
-
-            // Show message on error
-            if (this.MessageToShowOnResult != null)
-                this.MessageToShowOnResult.Show(errorMessage, 5);
         }
 
         /// <summary>
@@ -146,6 +147,9 @@ namespace LoginProAsset
         /// <param name="datas"></param>
         public void Success(string[] datas)
         {
+
+            GameObject.Find("LoginPro").GetComponent<LoginMenuManager>().ShowMenu(menuOnSuccess);
+            GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set("Welkom!" + LoginPro.Session.Username);
             // Save information in session
             LoginPro.Session.Session_id = datas[1];
             LoginPro.Session.LoggedIn = true;
@@ -165,31 +169,35 @@ namespace LoginProAsset
                 this.Menu.UpdateMenu();
 
             // Save information in playerPrefs (if it's specified)
-            if (SaveIsChecked())
-            {
+           
                 PlayerPrefs.SetString("Username", LoginPro.Session.Username);
                 PlayerPrefs.SetString("Password", LoginPro.Session.Password);
-            }
+           
 
             // Stop animation
-            if (this.AnimationToStopOnResult != null)
-                this.AnimationToStopOnResult.Stop();
+           // if (this.AnimationToStopOnResult != null)
+           //     this.AnimationToStopOnResult.Stop();
 
             // Show message on success
-            if (this.MessageToShowOnResult != null)
-                this.MessageToShowOnResult.Show(string.Format("Welkom {0}!", LoginPro.Session.Username), 2);
+           // if (this.MessageToShowOnResult != null)
+            //    this.MessageToShowOnResult.Show(string.Format("Welkom {0}!", LoginPro.Session.Username), 2);
 
             // Launch animation on success
-            if (this.AnimationToPlayOnSuccess != null)
-                this.AnimationToPlayOnSuccess.Launch();
+           // if (this.AnimationToPlayOnSuccess != null)
+            //   this.AnimationToPlayOnSuccess.Launch();
 
             // Allow opening menu
-            LoginPro_ShowLogin.MenuShown = false;
+//            LoginPro_ShowLogin.MenuShown = false;
 
             Debug.Log("Login succeeded.");
 
+            if (GameObject.Find("Preferences") != null)
+            {
+                GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().AfterLoginCheck();
+            }
+            
             // Get user's achievements
-            this.AchievementsManager.GetAchievements();
+            //this.AchievementsManager.GetAchievements(); --->Achemvements are not used and turned off
         }
     }
 }

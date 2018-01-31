@@ -15,11 +15,11 @@ namespace LoginProAsset
         public LoginPro_Modify ModifyAction;
         public LoginPro_Forgot ForgotAction;
 
-        public UIAnimation AnimationButtonToStop;
-        public UIAnimation AnimationHideCurrentWindow;
-        public UIAnimation_Alert AnimationShowMessage;
-        public UIAnimation AnimationShowLogin;
-
+        //public UIAnimation AnimationButtonToStop;
+       // public UIAnimation AnimationHideCurrentWindow;
+       // public UIAnimation_Alert AnimationShowMessage;
+       // public UIAnimation AnimationShowLogin;
+        public SceneSelection menuOnSuccess;
         public void Launch()
         {
             // Check that all field are set
@@ -45,22 +45,23 @@ namespace LoginProAsset
         public void Error(string errorMessage)
         {
             // Stop button rotation animation
-            if (this.AnimationButtonToStop != null)
-                this.AnimationButtonToStop.Stop();
+          //  if (this.AnimationButtonToStop != null)
+              //  this.AnimationButtonToStop.Stop();
 
             // Show the error
             Debug.LogWarning(errorMessage);
 
             // Show message on error
-            if (this.AnimationShowMessage != null)
-                this.AnimationShowMessage.Show(errorMessage, 3);
+           // if (this.AnimationShowMessage != null)
+           //     this.AnimationShowMessage.Show(errorMessage, 3);
+            GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set(errorMessage);
         }
 
         public void Success(string[] datas)
         {
             // Stop button rotation animation
-            if (this.AnimationButtonToStop != null)
-                this.AnimationButtonToStop.Stop();
+          //  if (this.AnimationButtonToStop != null)
+              //  this.AnimationButtonToStop.Stop();
 
             // Save information in playerPrefs
             PlayerPrefs.SetString("Username", Username.text);
@@ -74,12 +75,13 @@ namespace LoginProAsset
                 this.ForgotAction.LoadPlayerPrefs();
 
             // Launch all animations one after the other
-            StartCoroutine(LaunchRegisterAnimations());
-
+           // StartCoroutine(LaunchRegisterAnimations());
+            GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set("Registratie voltooid!\nClick op de link in de e-mail, die naar je is toegestuurd, om je account te verifiëren");
+            GameObject.Find("LoginPro").GetComponent<LoginMenuManager>().ShowMenu(menuOnSuccess);
             Debug.Log("Registration succeeded.");
         }
 
-        private IEnumerator LaunchRegisterAnimations()
+        /*private IEnumerator LaunchRegisterAnimations()
         {
             // Hide current window
             if (this.AnimationHideCurrentWindow != null)
@@ -94,6 +96,6 @@ namespace LoginProAsset
                 yield return this.AnimationShowLogin.Launch();
 
             yield return null;
-        }
+        }*/
     }
 }

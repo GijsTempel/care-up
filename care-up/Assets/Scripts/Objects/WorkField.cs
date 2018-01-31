@@ -34,31 +34,42 @@ public class WorkField : UsableObject {
         {
             if (actionManager.CurrentUseObject != name)
             {
-                if (GameObject.FindObjectOfType<PlayerPrefsManager>().practiceMode)
+                if (GameObject.FindObjectOfType<PlayerPrefsManager>() != null &&
+                    GameObject.FindObjectOfType<PlayerPrefsManager>().practiceMode == false)
+                {
+                    actionManager.OnGameOver();
+                }
+                else
                 {
                     actionManager.OnUseAction(gameObject.name);
                     controls.ResetObject();
                     Reset();
-                    return;
+                }
+            }
+            else
+            {
+                if (handsInventory.LeftHandEmpty() && handsInventory.RightHandEmpty())
+                {
+                    tutorial_used = true;
+                    PlayerAnimationManager.PlayAnimation("Use WorkField", transform);
+                    actionManager.OnUseAction(gameObject.name);
+                    controls.ResetObject();
+                    Reset();
+
+                    if (toggleTime == 1)
+                    {
+                        ToggleObjects();
+                    }
+
+                    tutorial_used = true;
                 }
                 else
                 {
-                    actionManager.OnGameOver();
+                    string message = "Zorg ervoor dat alle materialen die je hebt gebruikt op het werkveld liggen. Maak je handen vrij door eventuele objecten terug te leggen op het werkveld.";
+                    Camera.main.transform.Find("UI").Find("EmptyHandsWarning").
+                            GetComponent<TimedPopUp>().Set(message);
                 }
             }
-
-            tutorial_used = true;
-            PlayerAnimationManager.PlayAnimation("Use WorkField", transform);
-            actionManager.OnUseAction(gameObject.name);
-            controls.ResetObject();
-            Reset();
-
-            if ( toggleTime == 1 )
-            {
-                ToggleObjects();
-            }
-
-            tutorial_used = true;
         }
     }
 

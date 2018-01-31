@@ -8,6 +8,6 @@
                         public static string GameName = "Care-Up";
 
                         // The version of the game, the server will compare this number with his own and alert the client if a new version is available
-                        public static string GameVersion = "1.0";
+                        public static string GameVersion = "2.0";
                     }
                     

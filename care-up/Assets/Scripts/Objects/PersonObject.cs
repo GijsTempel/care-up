@@ -141,7 +141,7 @@ public class PersonObject : InteractableObject {
     /// <summary>
     /// Creates an instance of dialogue, switches camera mode
     /// </summary>
-    private void CreateSelectionDialogue()
+    public void CreateSelectionDialogue()
     {
         tutorial_used = true;
         GameObject dialogueObject = Instantiate(Resources.Load<GameObject>("Prefabs/SelectionDialogue"),
@@ -192,21 +192,19 @@ public class PersonObject : InteractableObject {
                     if (!itemDescription.activeSelf)
                     {
                         itemDescription.GetComponentInChildren<Text>().text = (description == "") ? name : description;
-                        Transform icons = itemDescription.transform.GetChild(0);
-                        icons.Find("UseIcon").gameObject.SetActive(gameObject.GetComponent<UsableObject>() != null);
-                        icons.Find("TalkIcon").gameObject.SetActive(gameObject.GetComponent<PersonObject>() != null);
-                        icons.Find("PickIcon").gameObject.SetActive(gameObject.GetComponent<PickableObject>() != null);
-                        icons.Find("ExamIcon").gameObject.SetActive(gameObject.GetComponent<ExaminableObject>() != null);
-                        itemDescription.transform.position = transform.position + descriptionOffset;
-                        itemDescription.transform.rotation = Camera.main.transform.rotation;
+                        //Transform icons = itemDescription.transform.GetChild(0).GetChild(0);
+                       //icons.Find("UseIcon").gameObject.SetActive(false);//gameObject.GetComponent<UsableObject>() != null);
+                      //icons.Find("TalkIcon").gameObject.SetActive(false);//gameObject.GetComponent<PersonObject>() != null);
+                      //icons.Find("PickIcon").gameObject.SetActive(false);//gameObject.GetComponent<PickableObject>() != null);
+                      //icons.Find("ExamIcon").gameObject.SetActive(false);//gameObject.GetComponent<ExaminableObject>() != null);
                         itemDescription.SetActive(true);
                     }
 
-                    if (controls.MouseClicked() && clickFlag)
+                    /*if (controls.MouseClicked() && clickFlag)
                     {
                         Reset();
                         CreateSelectionDialogue();
-                    }
+                    }*/
                 }
                 else if (!controls.CanInteract && rend.material.shader == onMouseOverShader)
                 {
@@ -228,6 +226,11 @@ public class PersonObject : InteractableObject {
         {
             SetShaderTo(onMouseExitShader);
             itemDescription.SetActive(false);
+        }
+
+        if (itemDescription.activeSelf && !player.itemControls.gameObject.activeSelf)
+        {
+            itemDescription.transform.GetChild(0).transform.position = Input.mousePosition + new Vector3(50.0f, 25.0f);
         }
     }
 }

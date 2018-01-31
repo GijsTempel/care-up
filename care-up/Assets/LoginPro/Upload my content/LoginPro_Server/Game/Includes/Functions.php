@@ -129,7 +129,7 @@ function sendMail($subject, $message, $receiverMail, $receiverUsername)
 function checkAuthentification($username, $password, $gameName, $IP, $session_token)
 {
 	$id = getUsernameID($username);														// Check account exists
-	if($id == "") { end_script('This username is not linked to any account.'); }		// Authentification denied -> Redirect to authentification page
+	if($id == "") { end_script('Gebruikersnaam is niet gelinkt aan een account.'); }		// Authentification denied -> Redirect to authentification page
 	
 	if(SCAN_IP_ACTIVATED)																// If the IP scan is activated (in the installation process)
 	{
@@ -139,9 +139,9 @@ function checkAuthentification($username, $password, $gameName, $IP, $session_to
 	}
 	
 	$passwordIsValid = passwordVerification($username, $password);						// Check password
-	if(!$passwordIsValid) { end_script('Incorrect password.'); }						// Authentification denied -> Redirect to authentification page
+	if(!$passwordIsValid) { end_script('Verkeerd wachtwoord.'); }						// Authentification denied -> Redirect to authentification page
 	
-	if(isBanned($id)) { end_script('You have been banned by an administrator.'); }		// Check if account is banned or not
+	if(isBanned($id)) { end_script('Je account is geblokeerd.'); }		// Check if account is banned or not
 	
 	$game = getGame($gameName);															// Check if the game exists and get its id
 	if($game == null) { end_script('The game name you are trying to connect to is wrong : '.$gameName); }
@@ -153,7 +153,7 @@ function checkAuthentification($username, $password, $gameName, $IP, $session_to
 	{
 		// If the account is not validated yet : send the account activation email
 		sendAccountActivationEmail($id);
-		end_script('Your account is not activated yet, please follow the link we sent you on your email address to activate it.');
+		end_script('Je account is nog niet geactiveerd. Klik de link die wij naar je e-mailadres hebben gestuurd.');
 	}
 	
 	// Success: let's save the session token in the account (to make sure only this user is connected with this account)
@@ -179,13 +179,13 @@ function checkSessionToken($username, $session_token)
 function register($mail, $username, $password, $IP)
 {
 	//---------------------------------: Are information valid ? :---------------------------------------
-	if(!filter_var($mail, FILTER_VALIDATE_EMAIL)) { end_script('Registration failed, your email address is not valid.'); }
-	if(strlen($username)<3) { end_script('Registration failed, your username is not valid.'); }
-	if(strlen($password)<3) { end_script('Registration failed, your password is not valid.'); }
+	if(!filter_var($mail, FILTER_VALIDATE_EMAIL)) { end_script('Registratie mislukt. Het e-mailadres is niet geldig.'); }
+	if(strlen($username)<3) { end_script('Registratie mislukt. Je gebruikersnaam is niet geldig.'); }
+	if(strlen($password)<3) { end_script('Registratie mislukt. Je wachtwoord is neit geldig.'); }
 	
 	//---------------------------------: Is account available ? :----------------------------------------
-	if(checkMailExists($mail)) { end_script('Registration failed! This mail address is already in use.'); }
-	if(checkUsernameExists($username)) { end_script('Registration failed, this username already exists.'); }
+	if(checkMailExists($mail)) { end_script('Registratie mislukt! Dit e-mailadres wordt al gebruikt.'); }
+	if(checkUsernameExists($username)) { end_script('Registratie mislukt! De gebruikersnaam bestaat al.'); }
 	
 	// Add salt to the password and hash it
 	$salt = generateRandomString(50);
@@ -219,11 +219,11 @@ function modify($currentUsername, $mail, $username, $password)
 	// Information to update
 	if($mail!="" && $mail != $account['mail'])
 	{
-		if(checkMailExists($mail)) { end_script('This email address is already in use.'); } // Check if email address doesn't already exist
+		if(checkMailExists($mail)) { end_script('Dit e-mailadres is al in gebruik.'); } // Check if email address doesn't already exist
 	}
 	if($username!="" && $username != $account['username'])
 	{
-		if(checkUsernameExists($username)) { end_script('This username is already in use.'); } // Check if username doesn't already exist
+		if(checkUsernameExists($username)) { end_script('Deze gebruikernaam bestaat al.'); } // Check if username doesn't already exist
 	}
 	if($password!="")
 	{
@@ -241,7 +241,7 @@ function modify($currentUsername, $mail, $username, $password)
 function getUserRole($username)
 {
 	$account = getAccount($username);
-	if(count($account)==0) { end_script('Your account does not exists, please contact an administrator.'); }
+	if(count($account)==0) { end_script('Je account bestaat niet. Neem contact op met het Care Up support team.'); }
 	return $account['role'];
 }
 
@@ -398,7 +398,7 @@ function activateAccount($id, $IP, $mail)
 function checkAccountIsValidated($id)
 {
 	$datas = getAccountById($id);
-	if(count($datas)==0) { end_script('Your account does not exists, please contact an administrator.'); }
+	if(count($datas)==0) { end_script('Je account bestaat niet. Neem contct op met het Care Up support team.'); }
 	return $datas['validated']==1;
 }
 
@@ -406,7 +406,7 @@ function checkAccountIsValidated($id)
 function isBanned($id)
 {
 	$datas = getAccountById($id);
-	if(count($datas)==0) { end_script('Your account does not exists, please contact an administrator.'); }
+	if(count($datas)==0) { end_script('Je account bestaat niet. Neem contct op met het Care Up support team.'); }
 	return $datas['banned']==1;
 }
 
@@ -474,11 +474,11 @@ function isConnected($username)
 function reinitPassword($mail, $IP)
 {
 	//---------------------------------: Are information valid ? :---------------------------------------
-	if(!filter_var($mail, FILTER_VALIDATE_EMAIL)) { end_script('Password reinitialization failed, your email address is not valid.'); }
+	if(!filter_var($mail, FILTER_VALIDATE_EMAIL)) { end_script('Wachtwoord initialisatie mislukt. Je e-mailadres is niet geldig.'); }
 	
 	//-----------------------------------: Is account valid ? :------------------------------------------
 	$account = getAccountByMail($mail);
-	if(!isset($account['id'])) { end_script('Password reinitialization failed, this mail address is not linked to any account.'); }
+	if(!isset($account['id'])) { end_script('Wachtwoord initialisatie mislukt. Dit e-mailadres is niet gelinkt aan een account.'); }
 	
 	//--------------------------------------: Is IP valid ? :--------------------------------------------
 	$id = $account['id'];
@@ -492,9 +492,9 @@ function reinitPassword($mail, $IP)
 	$stmt = ExecuteQuery($query, $parameters);
 	
 	//----------------------------: Send email to confirm email address :--------------------------------
-	$usersubject = "Your information to your account";
+	$usersubject = "Account informatie Care Up";
 	$userheaders = "From: ".$_SESSION['SERVER_email']."\n";
-	$usermessage = "If you want to change your password by a new generated one :\nPlease click the link below to change your password of your account \n\n  http://".$_SESSION['Domain']."/".$_SESSION['SecureLoginFolder']."/ReceiveNewPassword.php?mail=".$mail."&code=".$generatedValidationCode;
+	$usermessage = "Als je het wachtwoord van je acocunt wil veranderen door een nieuwe :\nKlik op de link hieronder om je wachtwoord te veranderen. \n\n  http://".$_SESSION['Domain']."/".$_SESSION['SecureLoginFolder']."/ReceiveNewPassword.php?mail=".$mail."&code=".$generatedValidationCode;
 	mail($mail,$usersubject,$usermessage,$userheaders);
 	return true;
 }
@@ -503,12 +503,12 @@ function reinitPassword($mail, $IP)
 function sendPassword($mail, $code, $IP)
 {
 	//---------------------------------: Are information valid ? :---------------------------------------
-	if(!filter_var($mail, FILTER_VALIDATE_EMAIL)) { end_script('Password reinitialization failed, your email address is not valid.'); }
+	if(!filter_var($mail, FILTER_VALIDATE_EMAIL)) { end_script('Wachtwoord initialisatie mislukt. Je e-mailadres is niet geldig.'); }
 	if(strlen($code) < 10) { end_script('Password reinitialization failed, your code is not valid.'); }
 	
 	//-----------------------------------: Is account valid ? :------------------------------------------
 	$account = getAccountByMail($mail);
-	if(!isset($account['id'])) { end_script('Password reinitialization failed, this mail address is not linked to any account.'); }
+	if(!isset($account['id'])) { end_script('Wachtwoord initialisatie mislukt. Dit e-mailadres is niet gelinkt aan een account.'); }
 	
 	//--------------------------------------: Is IP valid ? :--------------------------------------------
 	$id = $account['id'];
@@ -519,8 +519,8 @@ function sendPassword($mail, $code, $IP)
 	$generatedPasswordHash = hashPassword(hash('sha256', $generatedPassword), $salt);
 	
 	// Get code
-	if(!isset($account['id'])){ end_script('This email address is not linked to any account.'); }
-	if($account['validation_code'] != $code) { end_script('Password reinitialization failed, your code is incorrect.'); }
+	if(!isset($account['id'])){ end_script('Dit e-mailadres is niet gelinkt aan een account.'); }
+	if($account['validation_code'] != $code) { end_script('Wachtwoord initialisatie mislukt. Je code is niet geldig.'); }
 	
 	// Notice here : we have to hash the generated password with sha256 to match future sessions passwords received
 	$query = "UPDATE ".$_SESSION['AccountTable']." SET password = :password, salt = :salt WHERE id = :id";
@@ -528,9 +528,9 @@ function sendPassword($mail, $code, $IP)
 	$stmt = ExecuteQuery($query, $parameters);
 	
 	// Send email with generated password
-	$usersubject = "Your information to your account";
+	$usersubject = "Account informatie Care Up";
 	$userheaders = "From: ".$_SESSION['SERVER_email']."\n";
-	$usermessage = "Your information to your account :\n - Username : ".$account['username']."\n - Password : ".$generatedPassword."\n\nYou can connect to your account with these information.\nCaution, even if nobody can connect to your account from an IP you didn't validate, keep your information in safe place.";
+	$usermessage = "Account informatie voor Care Up :\n - Gebruikersnaam : ".$account['username']."\n - Wachtwoord : ".$generatedPassword."\n\nJe kunt inloggen in je account door deze gegevens te gebruiken.\nWaarschuwing! Ondanks dat niemand kan inloggen op jou account met een IP-adres die jij niet hebt gevalideerd. Hou je informatie voor jezelf.";
 	mail($mail,$usersubject,$usermessage,$userheaders);
 	
 	// Remove attempts
@@ -630,7 +630,7 @@ function checkIPIsValidated($id, $IP)
 	// In the 2 cases : Redirect to the IP validation page
 	// Send account activation email
 	sendIPActivationEmail($id);
-	end_script('Your IP is not activated for this account, please enter your IP password or follow the link we sent you on your email address.');
+	end_script('Dit IP-adres is niet geactiveerd voor je account. Activeer het IP-adres door op de link te klikken die we naar je e-mailadres hebben gestuurd.');
 	return false;
 }
 
@@ -700,42 +700,42 @@ function increaseAttempts($id, $IP, $action)
 function checkAttempts($id, $IP)
 {
 	$attempts = getAttempts($id, $IP, 'Connection');
-	if($attempts >= $_SESSION['AvailableAttemptsBeforeBlocking']) { end_script('Your IP is blocked for this account, please contact an administrator.'); }
+	if($attempts >= $_SESSION['AvailableAttemptsBeforeBlocking']) { end_script('Je IP-adres voor dit account is geblokeerd. Neem contact op met het Care Up support team.'); }
 }
 
 // Check if the IP hasn't reach the maximum "Resend" attempts yet (for the specified account)
 function checkResendAttempts($id, $IP)
 {
 	$attempts = getAttempts($id, $IP, 'Resend');
-	if($attempts >= $_SESSION['AvailableAttemptsBeforeBlocking']) { end_script('You cannot send account validation email anymore, please contact an administrator.'); }
+	if($attempts >= $_SESSION['AvailableAttemptsBeforeBlocking']) { end_script('Je kunt geen account activatie meer versturen. Neem contact op met het Care Up support team.'); }
 }
 
 // Check if the IP hasn't reach the maximum "Resend" attempts yet (for the specified account)
 function checkResendIPAttempts($id, $IP)
 {
 	$attempts = getAttempts($id, $IP, 'Resend IP');
-	if($attempts >= $_SESSION['AvailableAttemptsBeforeBlocking']) { end_script('You cannot send IP validation email anymore, please contact an administrator.'); }
+	if($attempts >= $_SESSION['AvailableAttemptsBeforeBlocking']) { end_script('Je kunt geen IP activatie meer versturen. Neem contact op met het Care Up support team.'); }
 }
 
 // Check if the IP hasn't reach the maximum "Validation" attempts yet (for the specified account)
 function checkAccountValidationAttempts($id, $IP)
 {
 	$attempts = getAttempts($id, $IP, 'Validation');
-	if($attempts >= $_SESSION['AvailableAttemptsBeforeBlocking']) { end_script('You cannot activate your account from your IP address anymore, please contact an administrator.'); }
+	if($attempts >= $_SESSION['AvailableAttemptsBeforeBlocking']) { end_script('Je kunt je account niet meer activeren met dit IP-adres. Neem contact op met het Care Up support team.'); }
 }
 
 // Check if the IP hasn't reach the maximum "Validation" attempts yet (for the specified account)
 function checkIPValidationAttempts($id, $IP)
 {
 	$attempts = getAttempts($id, $IP, 'IP Validation');
-	if($attempts >= $_SESSION['AvailableAttemptsBeforeBlocking']) { end_script('You cannot activate your IP for this account anymore, please contact an administrator.'); }
+	if($attempts >= $_SESSION['AvailableAttemptsBeforeBlocking']) { end_script('Je kunt je IP-adres niet meer activeren met dit account. Neem contact op met het Care Up support team.'); }
 }
 
 // Check if the IP hasn't reach the maximum "Forgot" attempts yet (for the specified account)
 function checkForgotAttempts($id, $IP)
 {
 	$attempts = getAttempts($id, $IP, 'Forgot');
-	if($attempts >= $_SESSION['AvailableAttemptsBeforeBlocking']) { end_script('You cannot get your information back from this IP anymore, please contact an administrator.'); }
+	if($attempts >= $_SESSION['AvailableAttemptsBeforeBlocking']) { end_script('Je kunt je gegevens niet meer opvragen via dit IP-adres. Neem contact op met het Care Up support team.'); }
 }
 
 
@@ -787,7 +787,7 @@ function sendAccountActivationEmail($id)
 	$parameters = array(':id' => $id);
 	$stmt = ExecuteQuery($query, $parameters);
 	$row = $stmt->fetch();
-	if(!isset($row['id'])) { end_script('Email activation not sent, the ID is not linked to any account.'); }
+	if(!isset($row['id'])) { end_script('E-mail activatie is niet verzonden. Het ID is niet gelinkt aan een account.'); }
 	
 	//-------------------------------------: Check resend attempts :--------------------------------------
 	$IP = $_SERVER['REMOTE_ADDR'];
@@ -802,8 +802,8 @@ function sendAccountActivationEmail($id)
 	$validation_code = generateNewAccountValidationCode($id);
 	
 	//----------------------------------: Send the email validation :-------------------------------------
-	$usermessage = "Please click the link below to confirm you email address in order to activate your account \n http://".$_SESSION['Domain']."/".$_SESSION['SecureLoginFolder']."/ValidateAccountByURL.php?username=".$username."&code=".$validation_code;
-	$usersubject = "Confirm your email address (".$mail.") to activate your account (".$username.")";
+	$usermessage = "Klik op de link hieronder om je account te activeren. Lukt dit niet? Kopieer dan de link en plak deze in de adresbalk van jou internetbrowser. \n http://".$_SESSION['Domain']."/".$_SESSION['SecureLoginFolder']."/ValidateAccountByURL.php?username=".$username."&code=".$validation_code;
+	$usersubject = "Bevestig je e-mail (".$mail.") om je Care Up account te activeren. (".$username.")";
 	$userheaders = "From: ".$_SESSION['SERVER_email']."\n";
 	mail($mail,$usersubject,$usermessage,$userheaders);
 	
@@ -815,7 +815,7 @@ function sendIPActivationEmail($id)
 {
 	//-------------------------------: Send email to confirm email address :------------------------------
 	$account = getAccountById($id);
-	if(!isset($account['id'])) { end_script('Email activation not sent, the ID is not linked to any account.'); }
+	if(!isset($account['id'])) { end_script('E-mail activatie is niet verzonden. Het ID is niet gelinkt aan een account.'); }
 	
 	//-------------------------------------: Check resend attempts :--------------------------------------
 	$IP = $_SERVER['REMOTE_ADDR'];
@@ -830,8 +830,8 @@ function sendIPActivationEmail($id)
 	$validation_code = generateNewIPValidationCode($id, $IP);
 	
 	//----------------------------------: Send the email validation :-------------------------------------
-	$usermessage = "Please click the link below to confirm you email address in order to activate your IP for your account \n http://".$_SESSION['Domain']."/".$_SESSION['SecureLoginFolder']."/ValidateIPByURL.php?username=".$username."&code=".$validation_code;
-	$usersubject = "Confirm your IP via your email address (".$mail.") to activate your account (".$username.") from this IP";
+	$usermessage = "Klik op de link hieronder om het IP-adres waar u zich nu bevind te activeren. \n http://".$_SESSION['Domain']."/".$_SESSION['SecureLoginFolder']."/ValidateIPByURL.php?username=".$username."&code=".$validation_code;
+	$usersubject = "Bevestig IP-adres met uw e-mail (".$mail.") om uw account te activeren (".$username.") voor dit IP-adres.";
 	$userheaders = "From: ".$_SESSION['SERVER_email']."\n";
 	mail($mail,$usersubject,$usermessage,$userheaders);
 	return true;

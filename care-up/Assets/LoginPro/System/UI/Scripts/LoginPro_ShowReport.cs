@@ -8,8 +8,8 @@ namespace LoginProAsset
     public class LoginPro_ShowReport : MonoBehaviour
     {
         public string AdministrationSceneName;
-        public UIAnimator Animator;
-        public UIAnimation_Alert Popup;
+        //public UIAnimator Animator;
+       // public UIAnimation_Alert Popup;
 
         [HideInInspector]
         public static string ScreenshotTaken = "";
@@ -29,9 +29,9 @@ namespace LoginProAsset
                 return;
             }
 
-            StartCoroutine(LaunchCapture());
+            //StartCoroutine(LaunchCapture());
         }
-
+        /*
         private void LaunchReport()
         {
             // Inform the player that a screenshot has been taken
@@ -45,7 +45,7 @@ namespace LoginProAsset
 
             // Show report window
             this.Animator.OneAfterTheOther();
-        }
+        }*/
 
         private IEnumerator LaunchCapture()
         {
@@ -74,7 +74,7 @@ namespace LoginProAsset
             if (!File.Exists(screenshotPath))
             {
                 Debug.Log("Screenshot missed. Please retry.");
-                this.Popup.Show("Screenshot missed. Please retry.", 3);
+               // this.Popup.Show("Screenshot missed. Please retry.", 3);
                 yield break;
             }
 
@@ -89,7 +89,7 @@ namespace LoginProAsset
             // Get final screenshot
             ScreenshotTaken = Convert.ToBase64String(bytes);
 
-            LaunchReport();
+            //LaunchReport();
         }
 
         private void CheckSceneIsInBuildSettings(string requiredSceneName)

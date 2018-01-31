@@ -11,6 +11,7 @@ public class SubcatenousSequence : AnimationSequenceState
     public int takeClothAgain;
 
     private HandsInventory inv;
+    private Syringe syringe;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -44,6 +45,9 @@ public class SubcatenousSequence : AnimationSequenceState
             inv.ReplaceHandObject(false, "SyringeWithInjectionNeedle");
 
             GameObject cap = inv.CreateObjectByName("SyringeInjectionCap", Vector3.zero);
+
+            syringe = inv.RightHandObject.GetComponent<Syringe>();
+            syringe.updateProtector = true;
 
             Vector3 savedPos = Vector3.zero;
             Quaternion savedRot = Quaternion.identity;
@@ -96,7 +100,32 @@ public class SubcatenousSequence : AnimationSequenceState
         if (inv.LeftHandObject && inv.LeftHandObject.GetComponent<Syringe>())
             inv.LeftHandObject.GetComponent<Syringe>().updatePlunger = false;
 
-        GameObject.FindObjectOfType<InjectionPatient>().AfterSequenceDialogue();
+        if (keyFrame >= 2 && inv.sequenceAborted)
+        {
+            if (keyFrame < keyFrames.Count)
+            {
+                if (inv.RightHandObject && inv.RightHandObject.GetComponent<Syringe>())
+                {
+                    inv.ReplaceHandObject(false, "SyringeWithInjectionNeedleCap");
+                    inv.PutAllOnTable();
+                    Destroy(GameObject.Find("SyringeInjectionCap"));
+                }
+            }
+            else
+            {
+                if (inv.LeftHandObject && inv.LeftHandObject.GetComponent<Syringe>())
+                {
+                    inv.ReplaceHandObject(true, "SyringeWithInjectionNeedleCap");
+                    inv.PutAllOnTable();
+                    Destroy(GameObject.Find("SyringeInjectionCap"));
+                }
+            }
+        }
+
+        if (keyFrame >= keyFrames.Count && !inv.sequenceAborted)
+            GameObject.FindObjectOfType<InjectionPatient>().AfterSequenceDialogue();
+
+        syringe.updateProtector = false;
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here

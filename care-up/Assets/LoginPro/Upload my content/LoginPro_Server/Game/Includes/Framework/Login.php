@@ -36,7 +36,7 @@ if($connection_granted == 1)	// If the connection is granted
 	sendArrayAndFinish($serverDatas);
 }
 
-end_script("ERROR: authentification failed.");
+end_script("ERROR: authenticatie mislukt.");
 
 
 ?>

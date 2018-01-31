@@ -9,7 +9,7 @@ namespace LoginProAsset
         public InputField UsernameToSearch;
 
         public UIAnimation AnimationHideCurrentWindow;
-        public UIAnimation_Alert AnimationShowMessage;
+      //  public UIAnimation_Alert AnimationShowMessage;
         public UIAnimation AnimationWindowToShow;
 
 
@@ -79,15 +79,15 @@ namespace LoginProAsset
             Debug.LogWarning(errorMessage);
 
             // Show message on error
-            if (this.AnimationShowMessage != null)
-                this.AnimationShowMessage.Show(errorMessage.Replace("ERROR: ", ""), 5);
+           // if (this.AnimationShowMessage != null)
+              //  this.AnimationShowMessage.Show(errorMessage.Replace("ERROR: ", ""), 5);
         }
 
         public void SendFriendRequestSuccess(string[] datas)
         {
             // Show message on success
-            if (this.AnimationShowMessage != null)
-                this.AnimationShowMessage.Show(datas[0], 3);
+           // if (this.AnimationShowMessage != null)
+               // this.AnimationShowMessage.Show(datas[0], 3);
         }
 
         /// <summary>
@@ -123,8 +123,8 @@ namespace LoginProAsset
             Debug.LogWarning(errorMessage);
 
             // Show message on error
-            if (this.AnimationShowMessage != null)
-                this.AnimationShowMessage.Show(errorMessage.Replace("ERROR: ", ""), 5);
+           // if (this.AnimationShowMessage != null)
+               // this.AnimationShowMessage.Show(errorMessage.Replace("ERROR: ", ""), 5);
         }
 
         public void GetFriendsSuccess(string[] serverDatas)
@@ -227,8 +227,8 @@ namespace LoginProAsset
             Debug.LogWarning(errorMessage);
 
             // Show message on error
-            if (this.AnimationShowMessage != null)
-                this.AnimationShowMessage.Show(errorMessage.Replace("ERROR: ", ""), 5);
+            //if (this.AnimationShowMessage != null)
+              //  this.AnimationShowMessage.Show(errorMessage.Replace("ERROR: ", ""), 5);
         }
 
         public void UpdateFriendRequestSuccess(string[] serverDatas)

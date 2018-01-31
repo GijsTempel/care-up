@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 
 namespace LoginProAsset
-{
+{/*
     public class LoginPro_ShowLogin : MonoBehaviour
     {
-        public UIAnimation AnimationWhenLoggedIn;
-        public UIAnimation AnimationWhenNotLoggedIn;
+       // public UIAnimation AnimationWhenLoggedIn;
+       // public UIAnimation AnimationWhenNotLoggedIn;
 
         public static bool MenuShown = false;
         public GameObject arrow;
@@ -57,5 +57,5 @@ namespace LoginProAsset
         {
             MenuShown = false;
         }
-    }
+    }*/
 }

@@ -39,6 +39,8 @@ public class Controls : MonoBehaviour {
         //                                            new ControllerKey(KeyCode.Joystick1Button6, KeyCode.Joystick1Button8));
         public InputKey GetHintKey = new InputKey();
 
+        public InputKey Teleport = new InputKey(new KeyBoardKey(KeyCode.Space));
+
         public bool mouseClickLocked = false;
         public void SetAllLocked(bool value)
         {
@@ -114,14 +116,30 @@ public class Controls : MonoBehaviour {
     {
         selectedObject = null;
     }
-   
+
+    PlayerPrefsManager prefs;
+
+    private void Start()
+    {
+        if (GameObject.Find("Preferences") != null)
+        {
+            prefs = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
+        }
+    }
+
     /// <summary>
     /// Sets selectedObject to an object player is aimed at atm.
     /// Sets canInteract based of distance to aimed object.
     /// </summary>
-	void LateUpdate () {
+	void LateUpdate() {
+
         // raycast only in this script
-        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+        Vector3 screenPosition = (Input.touchCount > 0) ? 
+            new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y) : 
+            Input.mousePosition;
+        Ray ray = ((prefs == null) ? false : prefs.VR) ?
+            new Ray(Camera.main.transform.position, Camera.main.transform.forward)
+            : Camera.main.ScreenPointToRay(screenPosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
@@ -129,7 +147,7 @@ public class Controls : MonoBehaviour {
             //canInteract = (hit.distance <= interactionDistance) ? true : false;
             canInteract = Vector2.Distance(
                 new Vector2(Camera.main.transform.position.x, Camera.main.transform.position.z),
-                new Vector2(hit.transform.position.x, hit.transform.position.z)) 
+                new Vector2(hit.transform.position.x, hit.transform.position.z))
                 <= interactionDistance ? true : false;
         }
         else
@@ -151,7 +169,9 @@ public class Controls : MonoBehaviour {
             return false;
         }
 
-        return Input.GetMouseButtonDown(0) || keyPreferences.mouseClickKey.Pressed();
+        return (Input.touchCount > 0) ?
+            Input.GetTouch(0).phase == TouchPhase.Ended
+            : (Input.GetMouseButtonDown(0) || keyPreferences.mouseClickKey.Pressed());
     }
     /// <summary>
     /// Checks if "RightMouse" clicked, including alternatives for gamepads.

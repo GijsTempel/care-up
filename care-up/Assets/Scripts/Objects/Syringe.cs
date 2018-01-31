@@ -7,8 +7,10 @@ using UnityEngine.SceneManagement;
 public class Syringe : PickableObjectWithInfo {
     
     public bool updatePlunger = false;
+    public bool updateProtector = false;
 
     private Transform plunger;
+    private Transform protector;
 
     private Vector3 plungerSavedPos;
 
@@ -34,6 +36,8 @@ public class Syringe : PickableObjectWithInfo {
 
         plunger = transform.Find("syringePlunger");
         if (plunger == null) Debug.LogError("No plunger found!");
+
+        protector = transform.GetChild(1).Find("Prot");
     }
 
     protected override void Update()
@@ -44,12 +48,21 @@ public class Syringe : PickableObjectWithInfo {
         {
             plunger.localPosition = new Vector3(
                 plunger.localPosition.x,
-                Mathf.Lerp(-0.013f, 0.06f, controlBone.localPosition.y),
+                Mathf.Lerp(-0.013f, 0.06f, leftControlBone.localPosition.y),
                 plunger.localPosition.z);
+        }
+
+        if (updateProtector)
+        {
+            if (protector != null)
+            {
+                protector.localRotation = Quaternion.Euler(0, 0, 
+                    -2.0f * Mathf.Rad2Deg * rightControlBone.localPosition.y);
+            }
         }
     }
 
-    public override bool Use(bool hand = false)
+    public override bool Use(bool hand = false, bool noTarget = false)
     {
         tutorial_usedOn = true;
         string[] info = actionManager.CurrentUseOnInfo;
@@ -146,12 +159,16 @@ public class Syringe : PickableObjectWithInfo {
                         actionManager.OnUseOnAction(name, "NeedleCup");
                         return true;
                     }
-                    else return false;
+                    else
+                    {
+                        EmptyHandsWarning();
+                        return false;
+                    }
                 }
             }
 
             // venting
-            if (name == "SyringeWithAbsorptionNeedle")
+            if (name == "SyringeWithAbsorptionNeedle" && noTarget)
             {
                 info = actionManager.CurrentUseOnInfo;
                 if (info[0] == "SyringeWithAbsorptionNeedle" && info[1] == "")
@@ -168,13 +185,17 @@ public class Syringe : PickableObjectWithInfo {
                         actionManager.OnUseOnAction("SyringeWithAbsorptionNeedle", "");
                         return true; // fix for venting syringe
                     }
-                    else return false;
+                    else
+                    {
+                        EmptyHandsWarning();
+                        return false;
+                    }
                 }
             }
         }
         else // cannot interact or target == ""
         {
-            if (name == "SyringeWithAbsorptionNeedle")
+            if (name == "SyringeWithAbsorptionNeedle" && noTarget)
             {
                 info = actionManager.CurrentUseOnInfo;
                 if (info[0] == "SyringeWithAbsorptionNeedle" && info[1] == "")
@@ -191,10 +212,14 @@ public class Syringe : PickableObjectWithInfo {
                         actionManager.OnUseOnAction("SyringeWithAbsorptionNeedle", "");
                         return true; // fix for venting syringe
                     }
-                    else return false;
+                    else
+                    {
+                        EmptyHandsWarning();
+                        return false;
+                    }
                 }
             }
-            else if (name == "SyringeWithAbsorptionSNeedle")
+            else if (name == "SyringeWithAbsorptionSNeedle" && noTarget)
             {
                 info = actionManager.CurrentUseOnInfo;
                 if (info[0] == "SyringeWithAbsorptionSNeedle" && info[1] == "")
@@ -211,12 +236,16 @@ public class Syringe : PickableObjectWithInfo {
                         actionManager.OnUseOnAction("SyringeWithAbsorptionSNeedle", "");
                         return true; // fix for venting syringe
                     }
-                    else return false;
+                    else
+                    {
+                        EmptyHandsWarning();
+                        return false;
+                    }
                 }
             }
         }
 
-        actionManager.OnUseOnAction(name, controls.SelectedObject != null && controls.CanInteract ? controls.SelectedObject.name : "");
+        actionManager.OnUseOnAction(name, controls.SelectedObject != null ? controls.SelectedObject.name : "");
 
         return (info[0] == name && controls.SelectedObject != null && info[1] == controls.SelectedObject.name);
     }

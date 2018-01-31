@@ -36,13 +36,21 @@ public class LevelSelectionScene_UI : MonoBehaviour
         {
             if (i < doors.Length)
             {
-                if (scene.Attributes["hidden"] == null)
+                if (ppManager.GetSceneActivated(scene.Attributes["id"].Value)) 
                 {
                     doors[i].gameObject.SetActive(true);
                 }
                 else
                 {
-                    continue;
+                    if (scene.Attributes["hidden"] == null)
+                    {
+                        doors[i].gameObject.SetActive(true);
+                        doors[i].GetComponent<Button>().interactable = false;
+                    }
+                    else
+                    {
+                        continue;
+                    }
                 }
 
 
@@ -66,7 +74,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
                             = variation.Attributes["displayname"].Value;
                         descr.GetComponent<LevelSelectionScene_UI_Option>().sceneName = sceneName;
                         descr.GetComponent<LevelSelectionScene_UI_Option>().description = variation.Attributes["description"].Value;
-                        descr.GetComponent<LevelSelectionScene_UI_Option>().image = 
+                        descr.GetComponent<LevelSelectionScene_UI_Option>().image =
                             Resources.Load<Sprite>("Sprites/ScenePreview/" + variation.Attributes["image"].Value);
 
                         if (ppManager.GetSceneCompleted(sceneName))
@@ -107,9 +115,9 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 {
                     doors[i].multiple = false;
 
-                    doors[i].sceneName = scene.Attributes["name"].Value;
+                    doors[i].sceneName = scene.Attributes["sceneName"].Value;
                     Transform descr = doors[i].transform;
-                    descr.Find("Name").GetComponent<Text>().text = doors[i].sceneName;
+                    descr.Find("Name").GetComponent<Text>().text = scene.Attributes["name"].Value;
                     if (scene.Attributes["description"].Value != "")
                     {
                         descr.Find("Description").GetComponent<Text>().text = scene.Attributes["description"].Value;
@@ -123,6 +131,10 @@ public class LevelSelectionScene_UI : MonoBehaviour
                     else
                     {
                         descr.Find("Result").GetComponent<Text>().text = "Niet voltooid";
+                    }
+                    if (scene.Attributes["image"] != null)
+                    {
+                        doors[i].image = Resources.Load<Sprite>("Sprites/ScenePreview/" + scene.Attributes["image"].Value);
                     }
                 }
                 ++i;

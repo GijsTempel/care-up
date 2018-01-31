@@ -67,6 +67,7 @@ public class PlayerAnimationManager : MonoBehaviour {
 
     public static void PlayAnimationSequence(string name, Transform target)
     {
+        cameraMode.dontMoveCamera = true;
         animationSequence = new AnimationSequence(name);
         cameraMode.cinematicToggle = true; //before play animation
         PlayAnimation(name + "Sequence", target);

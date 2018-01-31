@@ -10,7 +10,7 @@ public class UsableObject : InteractableObject {
     [HideInInspector]
     public bool tutorial_used = false;
 
-    private static HandsInventory handsInventory;
+    protected static HandsInventory handsInventory;
 
     protected override void Start()
     {
@@ -23,7 +23,7 @@ public class UsableObject : InteractableObject {
         }
     }
 
-    protected override void Update()
+    /*protected override void Update()
     {
         if (actionManager.CurrentUseObject == name || 
             (actionManager.CurrentUseObject == "HandCleaner" && name == "WorkField"))
@@ -41,7 +41,7 @@ public class UsableObject : InteractableObject {
                 }
             }
         }
-    }
+    }*/
 
     public virtual void Use()
     {

@@ -6,7 +6,7 @@ Shader "Outlined/Silhouetted Diffuse"
 	{
 		_Color("Main Color", Color) = (0,0,0,0)
 		_OutlineColor("Outline Color", Color) = (1,1,1,1)
-		_Outline("Outline width", Range(0.0, 0.03)) = .01
+		_Outline("Outline width", Range(0.0, 0.03)) = .05
 		_MainTex("Base (RGB)", 2D) = "white" { }
 	}
 
@@ -55,7 +55,7 @@ Shader "Outlined/Silhouetted Diffuse"
 			Tags{ "LightMode" = "Always" }
 			Cull Off
 			ZWrite Off
-			ZTest Always
+			//ZTest Always
 			ColorMask RGB // alpha not used
 
 						  // you can choose what kind of blending mode you want for the outline
@@ -110,7 +110,7 @@ Shader "Outlined/Silhouetted Diffuse"
 			Tags{ "LightMode" = "Always" }
 			Cull Front
 			ZWrite Off
-			ZTest Always
+			//ZTest Always
 			ColorMask RGB
 
 			// you can choose what kind of blending mode you want for the outline

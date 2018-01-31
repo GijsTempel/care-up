@@ -4,12 +4,13 @@ using UnityEngine.UI;
 
 namespace LoginProAsset
 {
+    /*
     [RequireComponent(typeof(LayoutElement))]
     [RequireComponent(typeof(RectTransform))]
     public class LoginPro_AchievementTag : MonoBehaviour
     {
         [HideInInspector]
-        public LoginPro_Achievement Achievement;
+        //public LoginPro_Achievement Achievement;
 
         public float RatioHeightWidth = 0.225f;
         public float ImageRatio = 0.8f;
@@ -39,6 +40,7 @@ namespace LoginProAsset
         private Text childText;
         private string oldText;
 
+        
         public void Init(LoginPro_Achievement achievement)
         {
             this.Achievement = achievement;
@@ -106,10 +108,10 @@ namespace LoginProAsset
             float listWidth = MobileUI ? Math.Abs(this.listParent.sizeDelta.x) + 30 : Math.Abs(this.list.sizeDelta.x);
             this.layout.preferredHeight = listWidth * this.RatioHeightWidth;
 
-            /*
+            
             // Resize the image
             float imageHeight = layout.preferredHeight * ImageRatio;
-            this.image.sizeDelta = new Vector2(imageHeight, imageHeight);*/
+            this.image.sizeDelta = new Vector2(imageHeight, imageHeight);
 
             // Place the image
             float x = this.rectTransform.position.x + (this.layout.preferredHeight * 0.52f);
@@ -127,5 +129,5 @@ namespace LoginProAsset
             x = this.rectTransform.position.x + listWidth * 0.55f;
             this.message.position = new Vector3(x, y, z);
         }
-    }
+    }*/
 }

@@ -21,14 +21,21 @@ public class UpdateOperator : MonoBehaviour
     //If set to false, will immediately close client and launch Launcher to update if an update is necessary. Otherwise will check if a launcher update is necessary.
     public bool checkForLauncherUpdates;
 
+    public bool showDebugText = false;
+
     //Full URL for your Server File List (Should be in root directory of your CDN Bucket example s3.patchbucket.com/fileList.txt)
     public string serverFileListURL = "";
 
     //Full Application Name for your Game including the .exe.  For Mac builds this is the file that is in the game.app/Contents/MacOS/ folder, it will not have any extension.
+    [Tooltip("Full application name for your Game including the .exe i.e. Game.exe")]
     public string gameFullExe = "";
 
     //Full Application Name for your Patcher including the .exe.  For Mac builds this is the file that is in the patcher.app/Contents/MacOS/ folder, it will not have any extension.
+    [Tooltip("Full relative path to the patcher.exe.  Should be example PatcherFolder/Patcher.exe if on Unity 2017+, otherwise just Patcher.exe")]
     public string patcherFullExe = "";
+
+    public bool deleteOldPatcherInGameDirectory = false;
+
 
     public RectTransform ActivitySpinner;
     float spinnerRotationSpeed = 30f;
@@ -37,6 +44,7 @@ public class UpdateOperator : MonoBehaviour
 
     string serverDirectory = "";
 
+    string rootDirectory = "";
     bool needsToUpdate = false;
     bool updatingLauncher = false;
     bool updatingLauncherFiles = false;
@@ -66,6 +74,7 @@ public class UpdateOperator : MonoBehaviour
     public OperatingSystem buildOperatingSystem;
 
     public Text debugText;
+    public ScrollRect debugScrollRect;
     // Use this for initialization
     void Start()
     {
@@ -74,7 +83,7 @@ public class UpdateOperator : MonoBehaviour
             CheckInternetUnity();
 
 
-        serverVersionFile = Path.Combine(Directory.GetCurrentDirectory(), serverVersionFile).Replace(@"\", "/");
+        serverVersionFile = Path.Combine(Environment.CurrentDirectory, serverVersionFile).Replace(@"\", "/");
 
         //Ensures that it does not check for updates if you are running the game from the Editor.
         if (checkForUpdates && hasInternetConnection && serverFileListURL != "" && gameFullExe != "" && patcherFullExe != "" && Process.GetCurrentProcess().ToString() != "System.Diagnostics.Process (Unity)")
@@ -97,6 +106,30 @@ public class UpdateOperator : MonoBehaviour
             else
                 patcherNoExe = patcherFullExe;
 
+            patcherFullExe = patcherFullExe.Replace(@"\", "/");
+
+            if (File.Exists(gameFullExe))
+                rootDirectory = Environment.CurrentDirectory;
+            else
+                rootDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).ToString();
+
+
+            if (deleteOldPatcherInGameDirectory)
+            {
+                string[] patcherSplit = patcherFullExe.Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
+
+                if (patcherSplit.Length > 1)
+                {
+                   
+                    if (File.Exists(Path.Combine(rootDirectory, gameFullExe)) && File.Exists(Path.Combine(rootDirectory, patcherSplit[1])))
+                    {
+                        File.Delete(Path.Combine(rootDirectory, patcherSplit[1]));
+                        AddMessage("Deleted old patcher to avoid issues.");
+
+                    }
+
+                }
+            }
             //Starts Update Check in Background Thread.
             ThreadStart threadStart = delegate
             {
@@ -109,6 +142,12 @@ public class UpdateOperator : MonoBehaviour
         {
             SceneManager.LoadScene(1);
         }
+
+        if (showDebugText && debugText && debugScrollRect)
+            debugScrollRect.transform.localScale = Vector3.one;
+        else if (debugScrollRect)
+            debugScrollRect.transform.localScale = Vector3.zero;
+
     }
 
 
@@ -154,7 +193,9 @@ public class UpdateOperator : MonoBehaviour
 
     void AddMessage(string message)
     {
-        debugText.text += message + "\r\n";
+        if (debugText)
+            debugText.text += message + "\r\n";
+
         UnityEngine.Debug.Log(message);
     }
 
@@ -192,6 +233,7 @@ public class UpdateOperator : MonoBehaviour
         {
 
             AddMessage("Downloading server file md5 list " + serverFileListURL + " to " + serverVersionFile);
+
             try
             {
                 wc.DownloadFile(serverFileListURL, serverVersionFile);
@@ -210,31 +252,22 @@ public class UpdateOperator : MonoBehaviour
 
         if (buildOperatingSystem == OperatingSystem.Mac)
         {
-            fullGameExeName = fullGameExeName + @".app/Contents/MacOS/" + fullGameExeName;
+            fullGameExeName = fullGameExeName.Replace(".app", "");
+            patcherFullExe = patcherFullExe.Replace(".app", "");
+
+            if (File.Exists(fullGameExeName + @".app/Contents/MacOS/" + fullGameExeName))
+            {
+                fullGameExeName = fullGameExeName + @".app/Contents/MacOS/" + fullGameExeName;
+            }
+
+            if(File.Exists(patcherFullExe + @".app/Contents/MacOS/" + patcherFullExe))
             patcherFullExe = patcherFullExe + @".app/Contents/MacOS/" + patcherFullExe;
         }
 
-        string fullGamePath = Path.Combine(Directory.GetCurrentDirectory(), fullGameExeName).Replace(@"\", "/");
+        string fullGamePath = Path.Combine(rootDirectory, fullGameExeName).Replace(@"\", "/");
         AddMessage("Full game path is " + fullGamePath + " patcherNoExe is " + patcherNoExe);
-        using (var md5 = MD5.Create())
-        {
-            using (var stream = File.OpenRead(fullGamePath))
-            {
-                _currentVersion = BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", "").ToLower();
-                AddMessage("Game current version is " + _currentVersion);
-            }
-        }
 
-        if (_currentVersion != _serverVersion)
-        {
-            AddMessage("[UPDATE] Updating Client");
-            needsToUpdate = true;
-
-            if (!checkForLauncherUpdates)
-                GetFile();
-        }
-
-        //AddMessage("Looking through " + _files.Length + " files for updates.");
+        AddMessage("Looking through " + _files.Length + " files for updates.");
 
 
 
@@ -250,9 +283,8 @@ public class UpdateOperator : MonoBehaviour
             FileCount = i;
             if (_md5split[0].Length > 4 && !_md5split[0].Contains(fullGameExeName))
             {
-                //AddMessage("Looking at file " + i + " " + _md5split[0] + " as it is a launcher file");
-
-                if (!File.Exists(_md5split[0]) && _md5split[0].Contains(patcherFullExe))
+               
+                if (!File.Exists(Path.Combine(rootDirectory, _md5split[0])) && _md5split[0].Contains(patcherFullExe))
                 {
                     AddMessage("Downloading Launcher");
                     updatingLauncher = true;
@@ -260,18 +292,18 @@ public class UpdateOperator : MonoBehaviour
                     launcherMD5 = _md5split[1];
 
                 }
-                if (!File.Exists(_md5split[0]) && !_md5split[0].Contains(patcherNoExe))
+                if (!File.Exists(Path.Combine(rootDirectory, _md5split[0])) && !_md5split[0].Contains(patcherNoExe))
                 {
                     AddMessage("Updating due to not finding " + _md5split[0]);
                     needsToUpdate = true;
                     if (!checkForLauncherUpdates)
                         GetFile();
                 }
-                if (File.Exists(_md5split[0]))
+                if (File.Exists(Path.Combine(rootDirectory, _md5split[0])))
                 {
                     using (var md5 = MD5.Create())
                     {
-                        using (var stream = new FileStream(_md5split[0], FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                        using (var stream = new FileStream(Path.Combine(rootDirectory, _md5split[0]), FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                         {
                             string _mymd5 = (BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", "").ToLower());
 
@@ -305,7 +337,7 @@ public class UpdateOperator : MonoBehaviour
                         }
                     }
                 }
-                else if (!File.Exists(_md5split[0]) && _md5split[0].Contains(patcherNoExe))
+                else if (!File.Exists(Path.Combine(rootDirectory, _md5split[0])) && _md5split[0].Contains(patcherNoExe))
                 {
                     AddMessage("Updating Launcher Files due to them being missing.");
                     updatingLauncherFiles = true;
@@ -352,7 +384,7 @@ public class UpdateOperator : MonoBehaviour
 
 
 
-        string fullPatcherPath = Path.Combine(Directory.GetCurrentDirectory(), patcherFullExe).Replace(@"\", "/");
+        string fullPatcherPath = Path.Combine(rootDirectory, patcherFullExe).Replace(@"\", "/");
 
         AddMessage("Full Patcher path is " + fullPatcherPath);
 
@@ -362,7 +394,7 @@ public class UpdateOperator : MonoBehaviour
             { UseShellExecute = false });
         }
         else
-            Process.Start(fullPatcherPath, serverFileListURL + " " + gameFullExe);
+            ExecuteAsAdmin(fullPatcherPath, serverFileListURL + " " + gameFullExe);
 
 
         Environment.Exit(0);
@@ -388,7 +420,6 @@ public class UpdateOperator : MonoBehaviour
 
             }
 
-
             Process.GetProcessesByName(patcherNoExe).FirstOrDefault().Kill();
         }
         catch
@@ -402,7 +433,7 @@ public class UpdateOperator : MonoBehaviour
 
             CurrentFileName = "Downloading file: " + _fileName;
 
-            string fullFilePath = Path.Combine(Directory.GetCurrentDirectory(), _fileName);
+            string fullFilePath = Path.Combine(rootDirectory, _fileName);
             fullFilePath = fullFilePath.Replace(@"\", "/");
             try
             {
@@ -430,7 +461,7 @@ public class UpdateOperator : MonoBehaviour
 
         using (var md5 = MD5.Create())
         {
-            using (var stream = new FileStream(_fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (var stream = new FileStream(Path.Combine(rootDirectory, _fileName), FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
                 string _mymd5 = (BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", "").ToLower());
                 AddMessage("[UPDATE] Newly downloaded mymd5: " + _mymd5 + " serverMD5: " + _serverMD5);
@@ -439,7 +470,7 @@ public class UpdateOperator : MonoBehaviour
                     if (_mymd5 != _serverMD5)
                     {
                         downloadFailures++;
-                        DownloadFile(_fileName, _serverMD5);
+                        DownloadFile(Path.Combine(rootDirectory, _fileName), _serverMD5);
                     }
                     else if (needsToUpdate && !updatingLauncherFiles)
                         GetFile();
@@ -513,5 +544,15 @@ public class UpdateOperator : MonoBehaviour
 
             return file.ToArray();
         }
+    }
+
+    public void ExecuteAsAdmin(string fileName, string args)
+    {
+        Process proc = new Process();
+        proc.StartInfo.FileName = fileName;
+        proc.StartInfo.UseShellExecute = true;
+        proc.StartInfo.Verb = "runas";
+        proc.StartInfo.Arguments = args;
+        proc.Start();
     }
 }

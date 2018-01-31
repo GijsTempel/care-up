@@ -53,7 +53,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011566409918}
   m_LocalRotation: {x: -0.5, y: -0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: -3.6754417, y: 1.2224895, z: 1.0604401}
+  m_LocalPosition: {x: -3.6754417, y: 1.2224895, z: 0.895}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4985173481978882}
@@ -82,9 +82,10 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
+  m_ReflectionProbeUsage: 2
   m_Materials:
   - {fileID: 2100000, guid: 0863daa3ecfbb418fbb4a99ca83f9f76, type: 2}
   m_StaticBatchInfo:
@@ -97,6 +98,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -137,8 +139,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.10406163, y: 0.08597634, z: 0.26034078}
-  m_Center: {x: 0.0000019073486, y: -0.0000019073486, z: -0.0011102782}
+  m_Size: {x: 0.18, y: 0.08597634, z: 0.3}
+  m_Center: {x: 0.0000019073486, y: -0.0000019073486, z: 0}
 --- !u!114 &114337429439987186
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -153,7 +155,9 @@ MonoBehaviour:
   description: Alcohol
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
-  controlBone: {fileID: 0}
+  tutorial_usedOn: 0
+  leftControlBone: {fileID: 0}
+  rightControlBone: {fileID: 0}
   holdAnimationID: 1
   basic: {fileID: 4300000, guid: 742cdcdce61d04cd6944fe88b6b65edd, type: 3}
   inHand: {fileID: 4300000, guid: bcc21012acc1ac5478b231d2991dc465, type: 3}

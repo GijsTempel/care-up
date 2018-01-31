@@ -14,7 +14,8 @@ public class PickableObject : InteractableObject {
     [HideInInspector]
     public bool tutorial_usedOn = false;
 
-    public Transform controlBone;
+    public Transform leftControlBone;
+    public Transform rightControlBone;
 
     public int holdAnimationID = 0;
     
@@ -37,22 +38,17 @@ public class PickableObject : InteractableObject {
         }
     }
 
-    void LateUpdate()
-    {
-        framePositions.Add(transform.position);
-
-        if (framePositions.Count > 15)
-        {
-            framePositions.RemoveAt(0);
-        }
-    }
-
     /// <summary>
     /// Drops and object
     /// </summary>
     /// <param name="force">If true - forces load position instead of free dropping</param>
     public virtual bool Drop(bool force = false)
     {
+        if (GetComponent<Rigidbody>() != null)
+        {
+            // stop falling mid frame?
+            GetComponent<Rigidbody>().useGravity = true;
+        }
         gameObject.layer = 0;
         GetComponent<Collider>().enabled = true;
 
@@ -63,14 +59,14 @@ public class PickableObject : InteractableObject {
 
         if (rigidBody != null)
         {
-            rigidBody.useGravity = true;
+            rigidBody.isKinematic = true;
             rigidBody.constraints = RigidbodyConstraints.None;
-            if (Vector3.Distance(transform.position, savedPosition) < 3.0f || force)
-            {
+            //if (Vector3.Distance(transform.position, savedPosition) < 3.0f || force)
+            //{
                 LoadPosition();
                 return true;
-            }
-            else
+            //}
+            /*else
             {
                 if (framePositions.Count > 0)
                 {
@@ -78,7 +74,7 @@ public class PickableObject : InteractableObject {
                     deltaPosition = deltaPosition * 3 / Time.fixedDeltaTime;
                     rigidBody.AddForce(deltaPosition);
                 }
-            }
+            }*/
         }
 
         return false;
@@ -88,7 +84,7 @@ public class PickableObject : InteractableObject {
     /// Handle using of an object on another one.
     /// </summary>
     /// <returns>True if used</returns>
-    public virtual bool Use(bool hand)
+    public virtual bool Use(bool hand, bool noTarget = false)
     {
         tutorial_usedOn = true;
         string[] info = actionManager.CurrentUseOnInfo;
@@ -183,7 +179,7 @@ public class PickableObject : InteractableObject {
                 GameObject.Find("GameLogic").GetComponent<HandsInventory>().GlovesToggle(true);
             }
         }
-        actionManager.OnUseOnAction(name, controls.SelectedObject != null && controls.CanInteract ? controls.SelectedObject.name : "");
+        actionManager.OnUseOnAction(name, controls.SelectedObject != null ? controls.SelectedObject.name : "");
 
         return (info[0] == name && controls.SelectedObject != null && info[1] == controls.SelectedObject.name);
     }
@@ -191,5 +187,18 @@ public class PickableObject : InteractableObject {
     public virtual void Pick()
     {
         // callback for handling different OnPick mechanics
+        gameObject.layer = 9; // no collisions
+        if (GetComponent<Rigidbody>() != null)
+        {
+            // stop falling mid frame stupid unity
+            GetComponent<Rigidbody>().useGravity = false; 
+        }
+    }
+
+    public void EmptyHandsWarning()
+    {
+        string message = "Je hebt geen vrije hand beschikbaar om de actie uit te voeren. Zorg voor een vrije hand door een object terug te leggen.";
+        Camera.main.transform.Find("UI").Find("EmptyHandsWarning").
+                GetComponent<TimedPopUp>().Set(message);
     }
 }

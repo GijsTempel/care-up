@@ -20,9 +20,9 @@ $reinitPassword_completed = reinitPassword($mail, $IP);
 if($reinitPassword_completed)
 {
 	// SUCCESS
-	sendAndFinish("A link to reinitialize your password has been sent to your email address.");
+	sendAndFinish("Een link om uw wachtwoord te herstellen is verzonden naar jou e-mailadres.");
 }
 
-end_script("Something went wrong with your reinitialization, please contact an administrator.");
+end_script("Er is iets verkeerd gegaan. Neem contact op met de Care Up support team.");
 
 ?>

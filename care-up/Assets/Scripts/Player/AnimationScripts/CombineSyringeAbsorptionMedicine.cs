@@ -17,6 +17,7 @@ public class CombineSyringeAbsorptionMedicine : AnimationCombine
         base.OnStateEnter(animator, stateInfo, layerIndex);
 
         syringe = hand ? inv.LeftHandObject.GetComponent<Syringe>() : inv.RightHandObject.GetComponent<Syringe>();
+        syringe.updateProtector = true;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -41,5 +42,6 @@ public class CombineSyringeAbsorptionMedicine : AnimationCombine
         base.OnStateExit(animator, stateInfo, layerIndex);
 
         syringe.updatePlunger = false;
+        syringe.updateProtector = false;
     }
 }

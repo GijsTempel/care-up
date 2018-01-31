@@ -1,5 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.IO;
+using System.Text.RegularExpressions;
+using System.Collections.Generic;
+using LoginProAsset;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Handles quick access to saved data.
@@ -11,7 +16,40 @@ public class PlayerPrefsManager : MonoBehaviour
     public bool practiceMode = true;
 
     private static PlayerPrefsManager instance;
-    
+
+    private List<string> activatedScenes = new List<string>();
+
+    public string ActivatedScenes
+    {
+        get
+        {
+            string result = "";
+            foreach (string s in activatedScenes)
+                result += s + " activated.\n";
+            return result;
+        }
+    }
+
+    private void OnLoaded(Scene s, LoadSceneMode m)
+    {
+        transform.position =
+        GameObject.FindObjectOfType<AudioListener>().transform.position;
+
+        if (!(s.name == "Launch me 1" ||
+              s.name == "Menu" ||
+              s.name == "SceneSelection"))
+        {
+            GetComponent<AudioSource>().Stop();
+        }
+
+        if (s.name == "EndScore" ||
+            (s.name == "Menu" && 
+            !GetComponent<AudioSource>().isPlaying))
+        {
+            GetComponent<AudioSource>().Play();
+        }
+    }
+
     void Awake()
     {
         if ( instance )
@@ -27,13 +65,19 @@ public class PlayerPrefsManager : MonoBehaviour
     
     void Start()
     {
+        SceneManager.sceneLoaded += OnLoaded;
+
         AudioListener.volume = Volume;
         Debug.Log("Volume is set to saved value: " + Volume);
+
+        SetSceneActivated("IILTG", true); // InjIntrLoTech
+        SetSceneActivated("ISHTG", true); // InjSubHTech
+        SetSceneActivated("INSIG", true); // Insulin
     }
 
     public float Volume
     {
-        get { return PlayerPrefs.GetFloat("Volume"); }
+        get { return PlayerPrefs.HasKey("Volume") ? PlayerPrefs.GetFloat("Volume") : 1.0f; }
         set { PlayerPrefs.SetFloat("Volume", value); }
     }
 
@@ -41,6 +85,17 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         get { return PlayerPrefs.GetInt("TutorialCompleted") == 1; }
         set { PlayerPrefs.SetInt("TutorialCompleted", value ? 1 : 0); }
+    }
+    
+    public void SetSceneActivated(string sceneName, bool value)
+    {
+        if (value) Debug.Log(sceneName + " activated");
+        PlayerPrefs.SetInt(sceneName + " activated", value ? 1 : 0);
+    }
+
+    public bool GetSceneActivated(string sceneName)
+    {
+        return PlayerPrefs.GetInt(sceneName + " activated") == 1;
     }
 
     public void SetSceneCompletionData(string sceneName, int stars, string time)
@@ -70,4 +125,71 @@ public class PlayerPrefsManager : MonoBehaviour
         get { return PlayerPrefs.GetInt("TutorialPopUpDeclined") == 1; }
         set { PlayerPrefs.SetInt("TutorialPopUpDeclined", value ? 1 : 0); }
     }
+
+    public void CheckSerial()
+    {
+        LoginPro.Manager.ExecuteOnServer("CheckSerial", CheckSerial_Success, Debug.LogError, null);
+    }
+
+    public void SetSerial(string serial)
+    {
+        string[] data = new string[1];
+        data[0] = serial;
+
+        LoginPro.Manager.ExecuteOnServer("SetSerial", SetSerialSuccess, Debug.LogError, data);
+    }
+
+    public void SetSerialSuccess(string[] datas)
+    {
+        CheckSerial();
+    }
+
+    private void CheckSerial_Success(string[] datas)
+    {
+        activatedScenes.Clear();
+
+        foreach(string data in datas)
+        {
+            string[] result;
+            result = data.Split('|');
+            
+            SetSceneActivated(result[0], true);
+            if (!activatedScenes.Contains(result[1]))
+                activatedScenes.Add(result[1]);
+        }
+
+        // setting news
+        GameObject menuWindow = GameObject.Find("MenuWindow");
+        if (menuWindow != null)
+        {
+            menuWindow.GetComponent<LoginPro_Menu>().News.text = ActivatedScenes;
+        }
+    }
+    
+    public void AfterLoginCheck()
+    {
+        // deactivate scenes
+        LoginPro.Manager.ExecuteOnServer("GetScenes", GetScenes_Success, Debug.LogError, null);
+        
+        // support for old key type
+        if (PlayerPrefs.GetString("SerialKey") != "")
+        {
+            SetSerial(PlayerPrefs.GetString("SerialKey"));
+
+            PlayerPrefs.SetString("SerialKey", ""); // clear this, so it happens once
+        }
+    }
+
+    public void GetScenes_Success(string[] datas)
+    {
+        foreach(string data in datas)
+        {
+            SetSceneActivated(data, false);
+        }
+
+        // activate scenes corresponding to serials
+        CheckSerial();
+    }
+
+    public void Blank(string[] s) { }
 }

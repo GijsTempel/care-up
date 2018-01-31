@@ -27,16 +27,16 @@ public class InsulinPen : PickableObjectWithInfo {
             button.localPosition = new Vector3(
                 button.localPosition.x,
                 button.localPosition.y,
-                -0.0004f * controlBone.localPosition.y);
+                -0.0004f * leftControlBone.localPosition.y);
 
             button.localRotation = Quaternion.Euler(
                 button.localRotation.eulerAngles.x,
                 button.localRotation.eulerAngles.y,
-                -14.5f * controlBone.localPosition.y);
+                -14.5f * leftControlBone.localPosition.y);
         }
     }
 
-    public override bool Use(bool hand)
+    public override bool Use(bool hand, bool noTarget = false)
     {
         string[] info = actionManager.CurrentUseOnInfo;
 
@@ -62,7 +62,7 @@ public class InsulinPen : PickableObjectWithInfo {
             }
         }
 
-        if (info[0] == "InsulinPenWithNeedle" && info[1] == "")
+        if (info[0] == "InsulinPenWithNeedle" && info[1] == "" && noTarget)
         {
             if (inventory.LeftHandEmpty())
             {
@@ -78,9 +78,13 @@ public class InsulinPen : PickableObjectWithInfo {
                 name = "VentedInsulinPenWithNeedle";
                 return true;
             }
-            else return false;
+            else
+            {
+                EmptyHandsWarning();
+                return false;
+            }
         }
-        else if (info[0] == "VentedInsulinPenWithNeedle" && info[1] == "")
+        else if (info[0] == "VentedInsulinPenWithNeedle" && info[1] == "" && noTarget)
         {
             if (inventory.LeftHandEmpty())
             {
@@ -96,10 +100,34 @@ public class InsulinPen : PickableObjectWithInfo {
                 name = "InsulinPenWithNeedle";
                 return true;
             }
-            else return false;
+            else
+            {
+                EmptyHandsWarning();
+                return false;
+            }
+        }
+        else if (info[0] == "InsulinPen" && info[1] == "" && noTarget)
+        {
+            if (inventory.LeftHandEmpty())
+            {
+                PlayerAnimationManager.PlayAnimation("UseRight " + name);
+                actionManager.OnUseOnAction(name, "");
+                return true;
+            }
+            else if (inventory.RightHandEmpty())
+            {
+                PlayerAnimationManager.PlayAnimation("UseLeft " + name);
+                actionManager.OnUseOnAction(name, "");
+                return true;
+            }
+            else
+            {
+                EmptyHandsWarning();
+                return false;
+            }
         }
 
-        actionManager.OnUseOnAction(name, controls.SelectedObject != null && controls.CanInteract ? controls.SelectedObject.name : "");
+        actionManager.OnUseOnAction(name, controls.SelectedObject != null ? controls.SelectedObject.name : "");
 
         return (info[0] == name && controls.SelectedObject != null && info[1] == controls.SelectedObject.name);
     }

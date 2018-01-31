@@ -11,8 +11,8 @@ if(!isset($ServerScriptCalled)) { exit(0); }
 
 //----------------------------: CHECK RECEIVED INFORMATION :-----------------------------------------
 // Verify encrypted data presence
-if(!isset($_GET['mail'])) { end_script('Password reinitialization failed, no email address specified.'); }
-if(!isset($_GET['code'])) { end_script('Password reinitialization failed, no code specified.'); }
+if(!isset($_GET['mail'])) { end_script('Wachtwoord herstellen mislukt. Er is geen e-mailadres opgegeven.'); }
+if(!isset($_GET['code'])) { end_script('Wachtwoord herstellen mislukt. Er is geen code opgegeven.'); }
 
 
 //------------------------------: GET USER INFORMATION :---------------------------------------------
@@ -25,13 +25,13 @@ $IP = $_SERVER['REMOTE_ADDR'];
 $sendPassword_completed = sendPassword($mail, $code, $IP);
 if($sendPassword_completed)
 {
-	echo("Password reinitialization succeded, a new generated password has been sent to your email address.");
+	echo("Wachtwoord herstellen is gelukt! Er is een nieuw wachtwoord naar je e-mailadres gestuurd.");
 	// Close connection to database properly
 	$_SESSION['databaseConnection'] = null;
 	// Ensure the end of the current script
 	die();
 	exit(0);
 }
-else { end_script('Something went wrong with your reinitialization, please contact an administrator.'); }
+else { end_script('Er ging iets mis. Neem contact op met het Care Up support team'); }
 
 ?>

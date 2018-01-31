@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace LoginProAsset
 {
+   /* 
     [RequireComponent(typeof(RectTransform))]
     [ExecuteInEditMode]
     public class PlaceCanvas : UIElement
@@ -71,14 +72,14 @@ namespace LoginProAsset
         /// <summary>
         /// Launch all animations specified at startup
         /// </summary>
-        void Start()
+        /*void Start()
         {
             foreach (UIAnimation anim in this.AnimationToLaunchAtStartup)
             {
                 anim.Launch();
             }
-        }
-
+        }*/
+    /*
         /// <summary>
         /// Everytime the UI refreshes in GAME
         /// </summary>
@@ -137,7 +138,7 @@ namespace LoginProAsset
                 {
                     try
                     {
-                        elementToRefresh.Place();
+//                        elementToRefresh.Place();
 
                         // Only add the UI element to place in the list if it's its direct child
                         if (elementToRefresh.transform.parent == this.transform)
@@ -163,5 +164,5 @@ namespace LoginProAsset
             System.Object Res = GetSizeOfMainGameView.Invoke(null, null);
             return (Vector2)Res;
         }
-    }
+    }*/
 }

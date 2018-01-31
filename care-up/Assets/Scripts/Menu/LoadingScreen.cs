@@ -20,7 +20,7 @@ public class LoadingScreen : MonoBehaviour {
     // Set some temporary texture and text
     void Start()
     {
-        loadingTexture = Resources.Load<Texture>("Sprites/Gameback");
+        loadingTexture = Resources.Load<Texture>("Sprites/Menu_background");
         loadingText = "Laden...";
      
     }

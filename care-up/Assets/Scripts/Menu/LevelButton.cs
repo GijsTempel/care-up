@@ -9,6 +9,7 @@ public class LevelButton : MonoBehaviour {
 
     public string sceneName;
     public bool multiple;
+    public Sprite image;
 
     private static Transform sceneInfoPanel;
 
@@ -29,6 +30,11 @@ public class LevelButton : MonoBehaviour {
 
     public void OnLevelButtonClick()
     {
+        if (image != null)
+        {
+            sceneInfoPanel.Find("Image").GetComponent<Image>().sprite = image;
+        }
+        sceneInfoPanel.Find("Start").GetComponent<LevelButton>().sceneName = sceneName;
         sceneInfoPanel.Find("Name").GetComponent<Text>().text = 
             transform.Find("Name").GetComponent<Text>().text;
         sceneInfoPanel.Find("Description").GetComponent<Text>().text = 

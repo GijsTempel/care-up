@@ -5,9 +5,11 @@ namespace LoginProAsset
     /// <summary>
     /// This class manages all achievements
     /// When the server is sending the achievements list : all achievements are set as Locked or Unlocked with their percentage
+    /// This class is turned off for now because we have no achievements
     /// </summary>
     public class LoginPro_AchievementsManager : MonoBehaviour
     {
+        /*
         public LoginPro_Menu MenuWindow;
 
         private LoginPro_Achievement[] achievements;
@@ -64,7 +66,7 @@ namespace LoginProAsset
             }
 
             // Refresh achievements tags list
-            this.MenuWindow.UpdateAchievementsList();
+            //this.MenuWindow.UpdateAchievementsList(); -----> uncomment for achievements
         }
 
         /// <summary>
@@ -85,6 +87,6 @@ namespace LoginProAsset
                     return;
                 }
             } */
-        }
+        /*}*/
     }
 }

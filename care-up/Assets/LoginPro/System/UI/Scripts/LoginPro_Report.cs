@@ -8,10 +8,10 @@ namespace LoginProAsset
     {
         public InputField MessageField;
 
-        public UIAnimation_Alert MessageToShowOnResult;
-        public UIAnimation AnimationToLaunchOnResult;
-        public UIAnimation AnimationHideWindow;
-        public UIAnimation AnimationToStopOnResult;
+        //public UIAnimation_Alert MessageToShowOnResult;
+        //public UIAnimation AnimationToLaunchOnResult;
+      //  public UIAnimation AnimationHideWindow;
+       // public UIAnimation AnimationToStopOnResult;
 
         public PlaceUIElement ReportWindow;
         public PlaceUIElement ReportButton;
@@ -35,9 +35,9 @@ namespace LoginProAsset
             if (LoginPro_ShowReport.ScreenshotTaken == "")
             {
                 Debug.LogError("No screenshot had been captured when opening the report menu.");
-                if (this.AnimationToStopOnResult != null)
-                    this.AnimationToStopOnResult.Stop();
-                this.MessageToShowOnResult.Show("No screenshot has been taken.", 3);
+//                if (this.AnimationToStopOnResult != null)
+  //                  this.AnimationToStopOnResult.Stop();
+ //               this.MessageToShowOnResult.Show("No screenshot has been taken.", 3);
                 yield break;
             }
 
@@ -47,11 +47,12 @@ namespace LoginProAsset
 
         public void Error(string errorMessage)
         {
+            /*
             // Stop animation
             if (this.AnimationToStopOnResult != null)
                 this.AnimationToStopOnResult.Stop();
             if (this.AnimationHideWindow != null)
-                this.AnimationHideWindow.Launch();
+                this.AnimationHideWindow.Launch();*/
 
 
             // Show the error
@@ -59,12 +60,13 @@ namespace LoginProAsset
             Debug.LogWarning(errorMessage);
 
             // Show message on error
-            if (this.MessageToShowOnResult != null)
-                this.MessageToShowOnResult.Show(errorMessage, 5);
+           /* if (this.MessageToShowOnResult != null)
+                this.MessageToShowOnResult.Show(errorMessage, 5);*/
         }
 
         public void Success(string[] datas)
         {
+            /*
             // Stop animation
             if (this.AnimationToStopOnResult != null)
                 this.AnimationToStopOnResult.Stop();
@@ -74,6 +76,7 @@ namespace LoginProAsset
             // Show message on success
             if (this.MessageToShowOnResult != null)
                 this.MessageToShowOnResult.Show("Abuse reported, an administrator will study the case.", 5);
+            */
         }
     }
 }
