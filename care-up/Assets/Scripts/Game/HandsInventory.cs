@@ -209,7 +209,7 @@ public class HandsInventory : MonoBehaviour {
         }
         else
         {
-            string message = "You should have at least one hand free to be able to pick up another item.";
+            string message = "Je hebt je handen vol. Leg objecten terug om je handen vrij te maken.";
             Camera.main.transform.Find("UI").Find("EmptyHandsWarning").
                     GetComponent<TimedPopUp>().Set(message);
         }
