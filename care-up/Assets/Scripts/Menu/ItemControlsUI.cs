@@ -169,6 +169,12 @@ public class ItemControlsUI : MonoBehaviour {
                 {
                     initedObject.GetComponent<UsableObject>().Use();
                 }
+                else
+                {
+                    string message = "Zorg ervoor dat alle materialen die je hebt gebruikt op het werkveld liggen. Maak je handen vrij door eventuele objecten terug te leggen op het werkveld.";
+                    Camera.main.transform.Find("UI").Find("EmptyHandsWarning").
+                            GetComponent<TimedPopUp>().Set(message);
+                }
             }
         }
 
