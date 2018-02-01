@@ -125,7 +125,7 @@ public class ItemControlsUI : MonoBehaviour {
                     GameObject.Find("ItemDescriptionGroup").transform.position += new Vector3(0.0f, difference, 0.0f);
                 }
 
-                float rightBound = -275.0f;
+                float rightBound = -125.0f; 
                 if (transform.position.x > Screen.width - rightBound)
                 {
                     float difference = (Screen.width - rightBound) - transform.position.x;
