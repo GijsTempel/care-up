@@ -162,7 +162,7 @@ public class AnimationSequence  {
                     }
                     else
                     {
-                        Narrator.PlaySound("WrongAction");
+                        ActionManager.WrongAction();
                         actionManager.Points--;
                     }
                 }
@@ -197,7 +197,7 @@ public class AnimationSequence  {
         }
         else // no info means wrong choice
         {
-            Narrator.PlaySound("WrongAction");
+            ActionManager.WrongAction();
             actionManager.OnSequenceStepAction(animation);
         }
     }

@@ -346,7 +346,7 @@ public class ActionManager : MonoBehaviour {
         Debug.Log("Combine " + leftHand + " and " + rightHand + " with result " + occured);
 
         if (!CheckScenarioCompleted() && occured)
-            PlayAddPointSound();
+            ActionManager.CorrectAction();
     }
 
     /// <summary>
@@ -362,7 +362,7 @@ public class ActionManager : MonoBehaviour {
         Debug.Log("Use " + useObject + " with result " + occured);
 
         if (!CheckScenarioCompleted() && occured)
-            PlayAddPointSound();
+            ActionManager.CorrectAction();
     }
 
     /// <summary>
@@ -378,7 +378,7 @@ public class ActionManager : MonoBehaviour {
         Debug.Log("Say " + topic + " with result " + occured);
 
         if (!CheckScenarioCompleted() && occured)
-            PlayAddPointSound();
+            ActionManager.CorrectAction();
     }
     
     /// <summary>
@@ -395,7 +395,7 @@ public class ActionManager : MonoBehaviour {
         Debug.Log("Use " + item + " on " + target + " with result " + occured);
 
         if (!CheckScenarioCompleted() && occured)
-            PlayAddPointSound();
+            ActionManager.CorrectAction();
     }
 
     /// <summary>
@@ -412,7 +412,7 @@ public class ActionManager : MonoBehaviour {
         Debug.Log("Examine " + item + " with state " + expected + " with result " + occured);
 
         if (!CheckScenarioCompleted() && occured)
-            PlayAddPointSound();
+            ActionManager.CorrectAction();
     }
 
     /// <summary>
@@ -432,7 +432,7 @@ public class ActionManager : MonoBehaviour {
         }
 
         if (!CheckScenarioCompleted() && occured)
-            PlayAddPointSound();
+            ActionManager.CorrectAction();
     }
 
     public void OnSequenceStepAction(string stepName)
@@ -444,7 +444,7 @@ public class ActionManager : MonoBehaviour {
         Debug.Log("Sequence step: " + stepName + " with result " + occured);
 
         if (!CheckScenarioCompleted() && occured)
-            PlayAddPointSound();
+            ActionManager.CorrectAction();
     }
 
     /// <summary>
@@ -497,7 +497,7 @@ public class ActionManager : MonoBehaviour {
 
             Camera.main.transform.Find("UI").Find("WrongAction").
                 GetComponent<TimedPopUp>().Set(sublist[0].extraDescr);
-            Narrator.PlaySound("WrongAction");
+            ActionManager.WrongAction();
         }
         else
         {
@@ -570,7 +570,7 @@ public class ActionManager : MonoBehaviour {
         GameObject.FindObjectOfType<Cheat_CurrentAction>().UpdateAction();
     }
 
-    public void PlayAddPointSound()
+    public static void PlayAddPointSound()
     {
         Narrator.PlaySystemSound("PointScored", 0.1f);
         // todo move somewhere else
@@ -620,5 +620,17 @@ public class ActionManager : MonoBehaviour {
     public void OnMainMenuButtonClick()
     {
         GameObject.Find("Preferences").GetComponent<LoadingScreen>().LoadLevel("Menu");
+    }
+
+    public static void WrongAction()
+    {
+        RobotManager.RobotWrongAction();
+        Narrator.PlaySound("WrongAction");
+    }
+
+    public static void CorrectAction()
+    {
+        RobotManager.RobotCorrectAction();
+        ActionManager.PlayAddPointSound();
     }
 }

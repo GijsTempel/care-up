@@ -10,9 +10,13 @@ public class RobotManager : MonoBehaviour {
     private Vector3 initialPosition;
     private float timer = 0.0f;
     private int direction = 1;
+
+    private static RobotManager instance;
     
 	void Start ()
     {
+        instance = this;
+
         UI_object = Camera.main.transform.Find("UI").Find("RobotUI").gameObject;
         UI_object.SetActive(false);
 
@@ -24,7 +28,6 @@ public class RobotManager : MonoBehaviour {
 	
 	void Update ()
     {
-        UpdateAnimation();
         UpdateTriggerPosition();
 	}
 
@@ -35,19 +38,20 @@ public class RobotManager : MonoBehaviour {
         // also play some kind of robot animation?
     }
 
-    private void UpdateAnimation()
-    {
-        timer += direction * Time.deltaTime;
-        transform.localPosition = initialPosition + new Vector3(0.0f, timer * 0.05f, 0.0f);
-
-        bool condition = (direction == 1) ? (timer >= 1.0f) : (timer <= -1.0f);
-        if (condition) { direction *= -1; }
-    }
-
     private void UpdateTriggerPosition()
     {
         Vector3 robotPosition = Camera.main.WorldToScreenPoint(transform.position);
         robotPosition += new Vector3(7.0f, 3.0f); // slight offset
         UI_trigger.transform.position = robotPosition;
+    }
+
+    public static void RobotCorrectAction()
+    {
+        instance.GetComponent<Animator>().SetTrigger("Yes");
+    }
+
+    public static void RobotWrongAction()
+    {
+        instance.GetComponent<Animator>().SetTrigger("No");
     }
 }

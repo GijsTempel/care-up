@@ -825,6 +825,6 @@ public class TutorialManager : MonoBehaviour {
     private void AddPointWithSound()
     {
         actionManager.Points += 1;
-        actionManager.PlayAddPointSound();
+        ActionManager.CorrectAction();
     }
 }

@@ -735,7 +735,7 @@ public class HandsInventory : MonoBehaviour {
                 {
                     if (dropPenalty)
                     {
-                        Narrator.PlaySound("WrongAction");
+                        ActionManager.WrongAction();
                         actionManager.Points--;
                     }
                 }
@@ -760,7 +760,7 @@ public class HandsInventory : MonoBehaviour {
                 {
                     if (dropPenalty)
                     {
-                        Narrator.PlaySound("WrongAction");
+                        ActionManager.WrongAction();
                         actionManager.Points--;
                     }
                 }
