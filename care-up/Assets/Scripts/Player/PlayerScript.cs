@@ -51,6 +51,11 @@ public class PlayerScript : MonoBehaviour {
         get { return moveBackButton.gameObject; }
     }
 
+    public bool UIHover
+    {
+        get { return onButtonHover; }
+    }
+
     private void Start()
     {
 
@@ -105,6 +110,11 @@ public class PlayerScript : MonoBehaviour {
         closeButton.GetComponent<EventTrigger>().triggers.Add(event1);
         closeButton.GetComponent<EventTrigger>().triggers.Add(event2);
         closeButton.GetComponent<EventTrigger>().triggers.Add(event3);
+
+        GameObject robotUI = Camera.main.transform.Find("UI").Find("RobotUI").gameObject;
+        robotUI.AddComponent<EventTrigger>();
+        robotUI.GetComponent<EventTrigger>().triggers.Add(event1);
+        robotUI.GetComponent<EventTrigger>().triggers.Add(event2);
     }
 
     public void EnterHover()

@@ -100,7 +100,7 @@ public class InteractableObject : MonoBehaviour {
     {
         if (cameraMode.CurrentMode == CameraMode.Mode.Free && !player.away)
         {
-            if (controls.SelectedObject == gameObject && !cameraMode.animating)
+            if (controls.SelectedObject == gameObject && !cameraMode.animating && !player.UIHover)
             {
                 if (controls.CanInteract)
                 {
