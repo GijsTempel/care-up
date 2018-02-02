@@ -12,7 +12,7 @@ public class RobotUITabs : MonoBehaviour {
 
     private RectTransform[] children;
     
-    private void Start()
+    protected virtual void Start()
     {
         tabs.Add(this);
 
@@ -20,6 +20,11 @@ public class RobotUITabs : MonoBehaviour {
         children = transform.GetComponentsInChildren<RectTransform>();
 
         SetTabActive(false);
+
+        if (name == "InfoTab")
+        {
+            SetTabActive(true);
+        }
 
         EventTrigger.Entry clickEvent = new EventTrigger.Entry();
         clickEvent.eventID = EventTriggerType.PointerClick;
