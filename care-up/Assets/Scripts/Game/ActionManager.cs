@@ -266,11 +266,8 @@ public class ActionManager : MonoBehaviour {
         }
 
         currentAction = actionList.First();
-
-        if (GameObject.Find("PointsText") != null)
-        {
-            pointsText = GameObject.Find("PointsText").GetComponent<Text>();
-        }
+        
+        pointsText = Camera.main.transform.Find("UI").Find("RobotUI").Find("GeneralTab").Find("Points").Find("Panel").Find("PointsText").GetComponent<Text>();
     }
 
     /// <summary>

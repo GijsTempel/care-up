@@ -207,7 +207,7 @@ public class PlayerScript : MonoBehaviour {
 
     public void WalkToGroup(WalkToGroup group)
     {
-        if (away)
+        if (away && !onButtonHover)
         {
             ToggleAway();
             savedPos = transform.position;

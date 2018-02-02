@@ -54,6 +54,7 @@ public class RobotUITabs : MonoBehaviour {
 
         tabTrigger.GetComponent<Image>().color = new Color(0, 0, 1.0f, value ? 0.6f : 0.3f);
         tabTrigger.SetActive(true);
+        tabTrigger.transform.GetChild(0).gameObject.SetActive(true);
         gameObject.SetActive(true);
     }
 }
