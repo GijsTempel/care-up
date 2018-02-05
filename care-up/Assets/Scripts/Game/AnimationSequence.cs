@@ -170,7 +170,11 @@ public class AnimationSequence  {
                 {
                     if (animation == "Stick needle in arm")
                     {
+                        actionManager.OnSequenceStepAction(animation);
+                        pointsEarned++;
+                        Object.Destroy(GameObject.Find("SelectionDialogue"));
                         GameObject.FindObjectOfType<InjectionPatient>().InjectNeedleInArmDialogue();
+                        return;
                     }
 
                     if (animation == "Inject medicine slow and steady")

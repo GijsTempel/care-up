@@ -84,9 +84,9 @@ public class PersonObject : InteractableObject {
             {
                 case "RollUpSleeves":
                 case "ExtendArmMakeFist":
-                    GetComponent<Animator>().SetTrigger("ShowArm");
                     if (GetComponent<InjectionPatient>() != null)
                     {
+                        // also launches animation after dialogue
                         GetComponent<InjectionPatient>().RollUpSleevesDialogue();
                     }
                     break;

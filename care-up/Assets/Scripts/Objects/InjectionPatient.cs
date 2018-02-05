@@ -91,6 +91,8 @@ public class InjectionPatient : PersonObject {
         Narrator.PlaySound(audioClips[9]);
         yield return new WaitForSeconds(audioClips[9].length);
         audioSource.PlayOneShot(audioClips[10]);
+        yield return new WaitForSeconds(audioClips[10].length);
+        GetComponent<Animator>().SetTrigger("ShowArm");
     }
 
     public void InjectNeedleInArmDialogue()
@@ -106,6 +108,8 @@ public class InjectionPatient : PersonObject {
         Narrator.PlaySound(audioClips[11]);
         yield return new WaitForSeconds(audioClips[11].length);
         audioSource.PlayOneShot(audioClips[12]);
+        yield return new WaitForSeconds(audioClips[12].length);
+        PlayerAnimationManager.NextSequenceStep(false);
     }
 
     public void InjectMedicineSlowlyDialogue()
