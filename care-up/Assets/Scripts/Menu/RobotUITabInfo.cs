@@ -15,6 +15,7 @@ public class RobotUITabInfo : RobotUITabs {
         base.Start();
 
         // generate buttons
+        // done in playerspawn
     }
 
     private void Update()
@@ -51,11 +52,23 @@ public class RobotUITabInfo : RobotUITabs {
             if (selectedButton != null)
             {
                 deselectButton = selectedButton;
+                deselectButton.GetComponent<RobotUIInfoButton>().Toggle(false);
             }
 
             selectedButton = caller;
+            selectedButton.GetComponent<RobotUIInfoButton>().Toggle(true);
 
             set = true;
+        }
+    }
+
+    protected override void SetTabActive(bool value)
+    {
+        base.SetTabActive(value);
+
+        if (selectedButton != null)
+        {
+            selectedButton.GetComponent<RobotUIInfoButton>().Toggle(value);
         }
     }
 }

@@ -45,7 +45,7 @@ public class RobotUITabs : MonoBehaviour {
         SetTabActive(true);
     }
 
-    private void SetTabActive(bool value)
+    protected virtual void SetTabActive(bool value)
     {
         foreach (RectTransform child in children)
         {
