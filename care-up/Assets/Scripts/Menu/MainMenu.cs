@@ -44,13 +44,13 @@ public class MainMenu : MonoBehaviour {
 
     public void OnStartYes()
     {
-        loadingScreen.LoadLevel("Tutorial");
+        bl_SceneLoaderUtils.GetLoader.LoadLevel("Tutorial");
     }
 
     public void OnStartNo()
     {
         prefs.TutorialPopUpDeclined = true;
-        loadingScreen.LoadLevel("SceneSelection");
+        bl_SceneLoaderUtils.GetLoader.LoadLevel("SceneSelection");
     }
 
     public void OnQuitButtonClick()
@@ -66,7 +66,7 @@ public class MainMenu : MonoBehaviour {
 
     public void OnTutorialButtonClick()
     {
-        loadingScreen.LoadLevel("Tutorial");
+        bl_SceneLoaderUtils.GetLoader.LoadLevel("Tutorial");
     }
 
     public void OnOptionsButtonClick()
@@ -140,6 +140,6 @@ public class MainMenu : MonoBehaviour {
 
     public void OnRetryButtonClick()
     {
-        loadingScreen.LoadLevel(loadingScreen.GetComponent<EndScoreManager>().SceneName);
+        bl_SceneLoaderUtils.GetLoader.LoadLevel(loadingScreen.GetComponent<EndScoreManager>().SceneName);
     }
 }
