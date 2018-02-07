@@ -736,7 +736,7 @@ public class HandsInventory : MonoBehaviour {
                     if (dropPenalty)
                     {
                         ActionManager.WrongAction();
-                        actionManager.Points--;
+                        actionManager.UpdatePoints(-1);
                     }
                 }
                 leftHandObject = null;
@@ -761,7 +761,7 @@ public class HandsInventory : MonoBehaviour {
                     if (dropPenalty)
                     {
                         ActionManager.WrongAction();
-                        actionManager.Points--;
+                        actionManager.UpdatePoints(-1);
                     }
                 }
                 rightHandObject = null;

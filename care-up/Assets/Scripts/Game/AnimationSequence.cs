@@ -142,7 +142,7 @@ public class AnimationSequence  {
             if (animation == "CM_Leave")
             {
                 actionManager.RollSequenceBack();
-                actionManager.Points -= pointsEarned + (currentStep != 1 ? 1 : 0);
+                actionManager.UpdatePoints(-pointsEarned + (currentStep != 1 ? 1 : 0));
                 currentStep = steps.Count;
                 NextStep();
                 PlayerAnimationManager.AbortSequence();
@@ -163,7 +163,7 @@ public class AnimationSequence  {
                     else
                     {
                         ActionManager.WrongAction();
-                        actionManager.Points--;
+                        actionManager.UpdatePoints(-1);
                     }
                 }
                 else //1 correct option
