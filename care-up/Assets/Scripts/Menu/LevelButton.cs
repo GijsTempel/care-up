@@ -70,6 +70,7 @@ public class LevelButton : MonoBehaviour {
 
     public void OnStartButtonClick()
     {
-        loadingScreen.LoadLevel(sceneName);
+        //loadingScreen.LoadLevel(sceneName);
+        bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName);
     }
 }
