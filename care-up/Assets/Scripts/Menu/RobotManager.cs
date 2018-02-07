@@ -13,9 +13,21 @@ public class RobotManager : MonoBehaviour {
 
     private static RobotManager instance;
     
+    private static Transform controlBone;
+
+    private static Material eyeLMat;
+    private static Material eyeRMat;
+    private static Material mouthMat;
+    
 	void Start ()
     {
         instance = this;
+        
+        controlBone = transform.Find("robotArm").Find("main").Find("face").Find("mAnker");
+
+        mouthMat = transform.Find("robot_mouth").GetComponent<Renderer>().material;
+        eyeLMat = transform.Find("robot_eye.L").GetComponent<Renderer>().material;
+        eyeRMat = transform.Find("robot_eye.R").GetComponent<Renderer>().material;
 
         UI_object = Camera.main.transform.Find("UI").Find("RobotUI").gameObject;
         UI_object.SetActive(false);
@@ -29,6 +41,7 @@ public class RobotManager : MonoBehaviour {
 	void Update ()
     {
         UpdateTriggerPosition();
+        UpdateFaceAnimations();
 	}
 
     public void TriggerUI()
@@ -53,5 +66,12 @@ public class RobotManager : MonoBehaviour {
     public static void RobotWrongAction()
     {
         instance.GetComponent<Animator>().SetTrigger("No");
+    }
+
+    private void UpdateFaceAnimations()
+    {
+        eyeLMat.mainTextureOffset = new Vector2(controlBone.localPosition.x / 4, 0.0f);
+        eyeRMat.mainTextureOffset = new Vector2(controlBone.localPosition.x / 4, 0.0f);
+        mouthMat.mainTextureOffset = new Vector2(controlBone.localPosition.x / 4, 0.0f);
     }
 }
