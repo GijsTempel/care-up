@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class InjectionPatient : PersonObject {
 
     private AudioClip[] audioClips;
+    private Animator animator;
 
     public GameObject greetDialogueTrigger;
     
@@ -22,6 +23,8 @@ public class InjectionPatient : PersonObject {
             string name = "Audio/Injection/Dialog/" + (i + 1);
             audioClips[i] = Resources.Load<AudioClip>(name);
         }
+
+        animator = GetComponent<Animator>();
     }
 
     protected override void Update()
@@ -53,14 +56,17 @@ public class InjectionPatient : PersonObject {
     {
         Narrator.PlaySound(audioClips[0]);
         yield return new WaitForSeconds(audioClips[0].length);
+        animator.SetTrigger("goedemorgen");
         audioSource.PlayOneShot(audioClips[1]);
         yield return new WaitForSeconds(audioClips[1].length);
         Narrator.PlaySound(audioClips[2]);
         yield return new WaitForSeconds(audioClips[2].length);
+        animator.SetTrigger("ja_is_goed");
         audioSource.PlayOneShot(audioClips[3]);
         yield return new WaitForSeconds(audioClips[3].length);
         Narrator.PlaySound(audioClips[4]);
         yield return new WaitForSeconds(audioClips[4].length);
+        animator.SetTrigger("oke");
         audioSource.PlayOneShot(audioClips[5]);
     }
 
@@ -76,6 +82,7 @@ public class InjectionPatient : PersonObject {
     {
         Narrator.PlaySound(audioClips[6]);
         yield return new WaitForSeconds(audioClips[6].length);
+        animator.SetTrigger("ja_goed_hoor");
         audioSource.PlayOneShot(audioClips[7]);
         yield return new WaitForSeconds(audioClips[7].length);
         Narrator.PlaySound(audioClips[8]);
@@ -90,9 +97,10 @@ public class InjectionPatient : PersonObject {
     {
         Narrator.PlaySound(audioClips[9]);
         yield return new WaitForSeconds(audioClips[9].length);
+        animator.SetTrigger("ja_hoor_zal_ik_doen");
         audioSource.PlayOneShot(audioClips[10]);
         yield return new WaitForSeconds(audioClips[10].length);
-        GetComponent<Animator>().SetTrigger("ShowArm");
+        animator.SetTrigger("ShowArm");
     }
 
     public void InjectNeedleInArmDialogue()
@@ -107,6 +115,7 @@ public class InjectionPatient : PersonObject {
     {
         Narrator.PlaySound(audioClips[11]);
         yield return new WaitForSeconds(audioClips[11].length);
+        animator.SetTrigger("oke");
         audioSource.PlayOneShot(audioClips[12]);
         yield return new WaitForSeconds(audioClips[12].length);
         PlayerAnimationManager.NextSequenceStep(false);
@@ -124,6 +133,7 @@ public class InjectionPatient : PersonObject {
     {
         Narrator.PlaySound(audioClips[13]);
         yield return new WaitForSeconds(audioClips[13].length);
+        // missing ?
         audioSource.PlayOneShot(audioClips[14]);
     }
 
@@ -139,6 +149,7 @@ public class InjectionPatient : PersonObject {
     {
         Narrator.PlaySound(audioClips[15]);
         yield return new WaitForSeconds(audioClips[15].length);
+        animator.SetTrigger("oke_dat_wil_mee");
         audioSource.PlayOneShot(audioClips[16]);
     }
 }
