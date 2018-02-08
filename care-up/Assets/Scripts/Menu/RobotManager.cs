@@ -64,7 +64,7 @@ public class RobotManager : MonoBehaviour {
 
     private void UpdateTriggerPosition()
     {
-        float x = Screen.width * 0.895f;
+        float x = Screen.width - 182.9f;
         float y = Screen.height * 0.63f;
         transform.position = Camera.main.ScreenToWorldPoint(new Vector3(x, y, 4.0f));
 
@@ -93,18 +93,20 @@ public class RobotManager : MonoBehaviour {
     {
         eyeLMat.mainTextureOffset = new Vector2(
             (eyeL.parent.localPosition.x - eyeL.localPosition.x - eyeLA.parent.localPosition.x - eyeLA.localPosition.x - 0.1772721f) * 2,
-            (eyeL.parent.localPosition.y - eyeL.localPosition.y - eyeLA.parent.localPosition.y - eyeLA.localPosition.y - 0.06614873f) * 2
+            (eyeLA.parent.localPosition.y - eyeLA.localPosition.y - eyeL.parent.localPosition.y - eyeL.localPosition.y - 0.1221102f) * 2
             );
 
         eyeRMat.mainTextureOffset = new Vector2(
             (eyeR.parent.localPosition.x - eyeR.localPosition.x - eyeRA.parent.localPosition.x - eyeRA.localPosition.x + 0.1772721f) * 2,
-            (eyeR.parent.localPosition.y - eyeR.localPosition.y - eyeRA.parent.localPosition.y - eyeRA.localPosition.y - 0.06614873f) * 2
+            (eyeRA.parent.localPosition.y - eyeRA.localPosition.y - eyeR.parent.localPosition.y - eyeR.localPosition.y - 0.1221102f) * 2
             );
         mouthMat.mainTextureOffset = new Vector2(
             (mouth.localPosition.x - mouthA.localPosition.x) * 2f,
             (mouth.localPosition.y - mouthA.localPosition.y) * 2f * 1.11900882674f
             );
  
+        
+          
 } 
 }
 	 
