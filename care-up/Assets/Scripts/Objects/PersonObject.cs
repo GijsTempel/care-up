@@ -9,7 +9,8 @@ using UnityEngine.UI;
 /// Player can perform Talk action to this object.
 /// </summary>
 [RequireComponent(typeof(AudioSource))]
-public class PersonObject : InteractableObject {
+public class PersonObject : InteractableObject
+{
 
     [HideInInspector]
     public bool tutorial_talked = false;
@@ -47,11 +48,11 @@ public class PersonObject : InteractableObject {
     {
         CallerUpdate();
         callers.Clear();
-        
+
         if (inhaling)
         {
-            float inhaleSpeed = 1/17.0f * Time.deltaTime;
-            if ( direction )
+            float inhaleSpeed = 1 / 17.0f * Time.deltaTime;
+            if (direction)
             {
                 inhaleCounter += inhaleSpeed;
                 if (inhaleCounter > 1.1f)
@@ -62,7 +63,7 @@ public class PersonObject : InteractableObject {
             else
             {
                 inhaleCounter -= inhaleSpeed;
-                if ( inhaleCounter < 1.0f )
+                if (inhaleCounter < 1.0f)
                 {
                     direction = !direction;
                 }
@@ -103,7 +104,7 @@ public class PersonObject : InteractableObject {
 
         actionManager.OnTalkAction(topic);
     }
-    
+
     /// <summary>
     /// Loads available topics to talk from xml file.
     /// </summary>
@@ -154,7 +155,7 @@ public class PersonObject : InteractableObject {
 
         cameraMode.ToggleCameraMode(CameraMode.Mode.SelectionDialogue);
     }
-    
+
     /// <summary>
     /// Person can consist of multiple parts, that should affect main Person class.
     /// </summary>
@@ -193,10 +194,10 @@ public class PersonObject : InteractableObject {
                     {
                         itemDescription.GetComponentInChildren<Text>().text = (description == "") ? name : description;
                         //Transform icons = itemDescription.transform.GetChild(0).GetChild(0);
-                       //icons.Find("UseIcon").gameObject.SetActive(false);//gameObject.GetComponent<UsableObject>() != null);
-                      //icons.Find("TalkIcon").gameObject.SetActive(false);//gameObject.GetComponent<PersonObject>() != null);
-                      //icons.Find("PickIcon").gameObject.SetActive(false);//gameObject.GetComponent<PickableObject>() != null);
-                      //icons.Find("ExamIcon").gameObject.SetActive(false);//gameObject.GetComponent<ExaminableObject>() != null);
+                        //icons.Find("UseIcon").gameObject.SetActive(false);//gameObject.GetComponent<UsableObject>() != null);
+                        //icons.Find("TalkIcon").gameObject.SetActive(false);//gameObject.GetComponent<PersonObject>() != null);
+                        //icons.Find("PickIcon").gameObject.SetActive(false);//gameObject.GetComponent<PickableObject>() != null);
+                        //icons.Find("ExamIcon").gameObject.SetActive(false);//gameObject.GetComponent<ExaminableObject>() != null);
                         itemDescription.SetActive(true);
                     }
 
@@ -232,5 +233,12 @@ public class PersonObject : InteractableObject {
         {
             itemDescription.transform.GetChild(0).transform.position = Input.mousePosition + new Vector3(50.0f, 25.0f);
         }
+    }
+
+    protected void OnAnimatorIK()
+    {
+        Animator animator = GetComponent<Animator>();
+        animator.SetLookAtWeight(1);
+        animator.SetLookAtPosition(Camera.main.transform.position);
     }
 }
