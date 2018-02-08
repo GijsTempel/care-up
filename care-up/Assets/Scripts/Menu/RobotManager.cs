@@ -88,17 +88,23 @@ public class RobotManager : MonoBehaviour {
     {
         instance.GetComponent<Animator>().SetTrigger("No");
     }
-
+	   
     private void UpdateFaceAnimations()
     {
         eyeLMat.mainTextureOffset = new Vector2(
-            ((eyeL.localPosition.x + eyeL.parent.localPosition.x) - (eyeLA.localPosition.x + eyeLA.parent.localPosition.x)) / 4,
-            ((eyeL.localPosition.y + eyeL.parent.localPosition.y) - (eyeLA.localPosition.y + eyeLA.parent.localPosition.y)) / 4);
+            (eyeL.parent.localPosition.x - eyeL.localPosition.x - eyeLA.parent.localPosition.x - eyeLA.localPosition.x - 0.1772721f) * 2,
+            (eyeL.parent.localPosition.y - eyeL.localPosition.y - eyeLA.parent.localPosition.y - eyeLA.localPosition.y - 0.06614873f) * 2
+            );
+
         eyeRMat.mainTextureOffset = new Vector2(
-            ((eyeR.localPosition.x + eyeR.parent.localPosition.x) - (eyeRA.localPosition.x + eyeRA.parent.localPosition.x)) / 4,
-            ((eyeR.localPosition.y + eyeR.parent.localPosition.y) - (eyeRA.localPosition.y + eyeRA.parent.localPosition.y)) / 4);
+            (eyeR.parent.localPosition.x - eyeR.localPosition.x - eyeRA.parent.localPosition.x - eyeRA.localPosition.x + 0.1772721f) * 2,
+            (eyeR.parent.localPosition.y - eyeR.localPosition.y - eyeRA.parent.localPosition.y - eyeRA.localPosition.y - 0.06614873f) * 2
+            );
         mouthMat.mainTextureOffset = new Vector2(
-            (mouth.localPosition.x - mouthA.localPosition.x) / 4,
-            (mouth.localPosition.y - mouthA.localPosition.y) / 4);
-    }
+            (mouth.localPosition.x - mouthA.localPosition.x) * 2f,
+            (mouth.localPosition.y - mouthA.localPosition.y) * 2f * 1.11900882674f
+            );
+ 
+} 
 }
+	 
