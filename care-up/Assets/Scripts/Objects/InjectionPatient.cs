@@ -133,7 +133,7 @@ public class InjectionPatient : PersonObject {
     {
         Narrator.PlaySound(audioClips[13]);
         yield return new WaitForSeconds(audioClips[13].length);
-        // missing ?
+        animator.SetTrigger("ja_hoor");
         audioSource.PlayOneShot(audioClips[14]);
     }
 
