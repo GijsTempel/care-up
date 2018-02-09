@@ -4,9 +4,7 @@ namespace LoginProAsset
 {
     public class LoginPro_CreateTables : MonoBehaviour
     {
-        public UIAnimation AnimationToPlayOnSuccess;
-        public UIAnimation AnimationToStopOnSuccess;
-
+     
         public void Launch()
         {
             LoginPro.Manager.CreateTables(Success, Error);

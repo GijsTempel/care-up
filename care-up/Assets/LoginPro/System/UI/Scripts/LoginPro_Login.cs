@@ -16,10 +16,6 @@ namespace LoginProAsset
         public LoginPro_Menu Menu;
         //public LoginPro_AchievementsManager AchievementsManager; --->Achemvements are not used and turned off
 
-        public UIAnimation AnimationToPlayOnSuccess;
-       // public UIAnimation_Alert MessageToShowOnResult;
-        public UIAnimation AnimationToStopOnResult;
-
         public Button ButtonSave;
         public Button ButtonDontSave;
 

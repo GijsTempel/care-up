@@ -16,11 +16,6 @@ namespace LoginProAsset
         public LoginPro_Login LoginAction;
         public LoginPro_Forgot ForgotAction;
 
-        public UIAnimation AnimationButtonToStop;
-       public UIAnimation AnimationHideCurrentWindow;
-       //public UIAnimation_Alert AnimationShowMessage;
-        public UIAnimation AnimationWindowToShow;
-
         void Start()
         {
             // Prefill fields with saved datas
@@ -74,23 +69,15 @@ namespace LoginProAsset
 
         public void Error(string errorMessage)
         {
-            // Stop button rotation animation
-           // if (this.AnimationButtonToStop != null)
-               // this.AnimationButtonToStop.Stop();
 
             // Show the error
             Debug.LogWarning(errorMessage);
             GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set(errorMessage);
-            // Show message on error
-            // if (this.AnimationShowMessage != null)
-            // this.AnimationShowMessage.Show(errorMessage, 5);
         }
 
         public void Success(string[] datas)
         {
-            // Stop button rotation animation
-//            if (this.AnimationButtonToStop != null)
-//                this.AnimationButtonToStop.Stop();
+
 
             // Update session
             LoginPro.Session.Username = Username.text;
@@ -115,22 +102,5 @@ namespace LoginProAsset
             GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set("Account informatie aangepast!");
             Debug.Log("Aanpassingen voltooid.");
         }
-
-       /* private IEnumerator LaunchModifyAnimations()
-        {
-            // Hide current window
-            if (this.AnimationHideCurrentWindow != null)
-                yield return this.AnimationHideCurrentWindow.Launch();
-
-            // Show message on success
-            //if (this.AnimationShowMessage != null)
-             //   yield return this.AnimationShowMessage.Show("Account informatie aangepast!", 3);
-
-            // Launch animation on success
-            if (this.AnimationWindowToShow != null)
-                yield return this.AnimationWindowToShow.Launch();
-
-            yield return null;
-        }*/
     }
 }
