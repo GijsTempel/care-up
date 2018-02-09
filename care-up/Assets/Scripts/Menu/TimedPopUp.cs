@@ -12,10 +12,17 @@ public class TimedPopUp : MonoBehaviour {
 
     private Image panel = null;
     private Text text = null;
-    
+
+    private static List<TimedPopUp> popUps = new List<TimedPopUp>();
+
     public string MistakeMsg
     {
         get { return text == null ? "" : text.text; }
+    }
+
+    private void Start()
+    {
+        popUps.Add(this);
     }
 
     void Update()
@@ -47,8 +54,18 @@ public class TimedPopUp : MonoBehaviour {
 
         text.text = _text;
 
-        GetComponent<Animator>().SetBool("set", true);
+        if (GetComponent<Animator>().GetBool("set"))
+        {
+            GetComponent<Animator>().SetTrigger("reset");
+        }
 
+        foreach (TimedPopUp tpu in popUps)
+        {
+            tpu.GetComponent<Animator>().SetBool("set", false);
+        }
+
+        GetComponent<Animator>().SetBool("set", true);
+     
         if (GameObject.Find("UI") != null)
         {
             if (GameObject.Find("UI").transform.Find("GameOver") != null)
