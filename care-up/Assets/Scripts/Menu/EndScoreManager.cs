@@ -112,7 +112,8 @@ public class EndScoreManager : MonoBehaviour {
         wrongSteps = actionManager.WrongSteps;
         wrongStepsDescr = actionManager.WrongStepsDescription;
 
-        GameObject.Find("Preferences").GetComponent<LoadingScreen>().LoadLevel("EndScore");
+        //GameObject.Find("Preferences").GetComponent<LoadingScreen>().LoadLevel("EndScore");
+        bl_SceneLoaderUtils.GetLoader.LoadLevel("EndScore");
         //SceneManager.LoadScene("EndScore");
     }
 }
