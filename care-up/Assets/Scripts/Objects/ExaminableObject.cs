@@ -26,7 +26,7 @@ public class ExaminableObject : InteractableObject {
     public string state = "good";
     
     private bool viewMode = false;
-
+    
     /// <summary>
     /// Action examining, handles special cases aswell as switching camera modes.
     /// </summary>
@@ -71,6 +71,12 @@ public class ExaminableObject : InteractableObject {
         {
             tutorial_closed = true;
             LoadPosition();
+
+            if (inventory.LeftHandObject == gameObject ||
+                inventory.RightHandObject == gameObject)
+            {
+                transform.localEulerAngles = Vector3.zero;
+            }
         }
 
         // disable/endable physics

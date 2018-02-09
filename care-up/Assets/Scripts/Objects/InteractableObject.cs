@@ -28,6 +28,7 @@ public class InteractableObject : MonoBehaviour {
     static protected ActionManager actionManager;
     static protected GameObject itemDescription;
     static protected PlayerScript player;
+    static protected HandsInventory inventory;
 
     protected virtual void Start()
     {
@@ -72,6 +73,12 @@ public class InteractableObject : MonoBehaviour {
         {
             player = GameObject.Find("Player").GetComponent<PlayerScript>();
             if (player == null) Debug.LogError("No player");
+        }
+
+        if (inventory == null)
+        {
+            inventory = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
+            if (inventory == null) Debug.LogError("No inventory found");
         }
 
         if (itemDescription == null)

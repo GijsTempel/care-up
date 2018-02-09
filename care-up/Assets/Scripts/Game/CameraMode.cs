@@ -223,7 +223,9 @@ public class CameraMode : MonoBehaviour {
 
             GameObject buttonsParent = Camera.main.transform.Find("UI").Find("ObjectViewButtons").gameObject;
             buttonsParent.transform.GetChild(0).GetComponent<Button>().interactable =
-                (selectedObject.GetComponent<PickableObject>() != null);
+                (selectedObject.GetComponent<PickableObject>() != null) &&
+                (selectedObject.gameObject != inventory.LeftHandObject) &&
+                (selectedObject.gameObject != inventory.RightHandObject);
 
             if (GetComponent<TutorialManager>() != null)
             {

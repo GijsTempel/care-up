@@ -76,7 +76,7 @@ public class ItemControlsUI : MonoBehaviour {
                 dropButton.SetActive(true);
 
                 pickButton.SetActive(false);
-                examineButton.SetActive(false);
+                examineButton.SetActive(true); // can examine in hand now
                 useButton.SetActive(false);
                 talkButton.SetActive(false);
             }
@@ -191,11 +191,11 @@ public class ItemControlsUI : MonoBehaviour {
                 cameraMode.selectedObject.OnExamine();
                 controls.ResetObject();
             }
-            else if (initedObject.GetComponent<SystemObject>() != null)
+            /*else if (initedObject.GetComponent<SystemObject>() != null)
             {
                 cameraMode.doorSelected = controls.SelectedObject.GetComponent<SystemObject>();
                 cameraMode.doorSelected.Use();
-            }
+            }*/
         }
 
         Close();
