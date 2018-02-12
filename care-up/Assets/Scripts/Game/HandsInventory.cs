@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 /// Handles things in hands.
@@ -26,6 +27,16 @@ public class HandsInventory : MonoBehaviour {
     public float horisontalOffset = 0.5f;
     public float distanceFromCamera = 1.0f;
     public bool dropPenalty = true;
+
+    [System.Serializable]
+    public struct ItemPosition
+    {
+        public string objectName;
+        public Vector3 position;
+        public Vector3 rotation;
+    };
+
+    public List<ItemPosition> customPositions = new List<ItemPosition>();
 
     private Transform leftToolHolder;
     private Transform rightToolHolder;
@@ -614,7 +625,15 @@ public class HandsInventory : MonoBehaviour {
                     }
                     else if (rightSavedPos != Vector3.zero)
                     {
-                        leftHandObject.SavePosition(rightSavedPos + GetOffset(rightHandObject, leftHandObject, rightSavedRot), rightSavedRot);
+                        if (customPositions.Exists(x => x.objectName == leftCombineResult))
+                        {
+                            ItemPosition custom = customPositions.Find(x => x.objectName == leftCombineResult);
+                            leftHandObject.SavePosition(custom.position, Quaternion.Euler(custom.rotation));
+                        }
+                        else
+                        {
+                            leftHandObject.SavePosition(rightSavedPos + GetOffset(rightHandObject, leftHandObject, rightSavedRot), rightSavedRot);
+                        }
                     }
 
                     if (leftHandObject.GetComponent<PickableObjectWithInfo>() != null)
@@ -657,7 +676,15 @@ public class HandsInventory : MonoBehaviour {
                     }
                     else if (leftSavedPos != Vector3.zero)
                     {
-                        rightHandObject.SavePosition(leftSavedPos + GetOffset(leftHandObject, rightHandObject, leftSavedRot), leftSavedRot);
+                        if (customPositions.Exists(x => x.objectName == rightCombineResult))
+                        {
+                            ItemPosition custom = customPositions.Find(x => x.objectName == rightCombineResult);
+                            rightHandObject.SavePosition(custom.position, Quaternion.Euler(custom.rotation));
+                        }
+                        else
+                        {
+                            rightHandObject.SavePosition(leftSavedPos + GetOffset(leftHandObject, rightHandObject, leftSavedRot), leftSavedRot);
+                        }
                     }
 
                     if (rightHandObject.GetComponent<PickableObjectWithInfo>() != null)
