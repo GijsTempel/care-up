@@ -117,7 +117,7 @@ public class ItemControlsUI : MonoBehaviour {
             {
                 transform.position = Input.mousePosition + new Vector3(cursorOffset.x, cursorOffset.y);
 
-                float lowerBound = 265.0f;
+                float lowerBound = 330.0f;
                 if (transform.position.y < lowerBound)
                 {
                     float difference = lowerBound - transform.position.y;
