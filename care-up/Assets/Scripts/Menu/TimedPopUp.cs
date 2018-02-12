@@ -58,6 +58,8 @@ public class TimedPopUp : MonoBehaviour {
         {
             GetComponent<Animator>().SetTrigger("reset");
         }
+        
+        popUps.RemoveAll(item => item == null);
 
         foreach (TimedPopUp tpu in popUps)
         {
