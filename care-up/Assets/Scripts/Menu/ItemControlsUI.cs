@@ -76,14 +76,12 @@ public class ItemControlsUI : MonoBehaviour {
                 dropButton.SetActive(true);
 
                 pickButton.SetActive(false);
-                examineButton.SetActive(true); // can examine in hand now
                 useButton.SetActive(false);
                 talkButton.SetActive(false);
             }
             else
             {
                 pickButton.SetActive(initedObject.GetComponent<PickableObject>() != null);
-                examineButton.SetActive(initedObject.GetComponent<ExaminableObject>() != null);
                 useButton.SetActive(initedObject.GetComponent<UsableObject>() != null);
 
                 talkButton.SetActive(initedObject.GetComponent<PersonObjectPart>() != null);
@@ -97,7 +95,8 @@ public class ItemControlsUI : MonoBehaviour {
                 combineButton.SetActive(false);
                 dropButton.SetActive(false);
             }
-            
+
+            examineButton.SetActive(initedObject.GetComponent<ExaminableObject>() != null);
             closeButton.SetActive(true);
 
             //talkin removed
