@@ -101,6 +101,7 @@ public class InjectionPatient : PersonObject {
         audioSource.PlayOneShot(audioClips[10]);
         yield return new WaitForSeconds(audioClips[10].length);
         animator.SetTrigger("ShowArm");
+        lookAtCamera = false;
     }
 
     public void InjectNeedleInArmDialogue()

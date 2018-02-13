@@ -11,7 +11,6 @@ using UnityEngine.UI;
 [RequireComponent(typeof(AudioSource))]
 public class PersonObject : InteractableObject
 {
-
     [HideInInspector]
     public bool tutorial_talked = false;
     [HideInInspector]
@@ -29,6 +28,8 @@ public class PersonObject : InteractableObject
 
     protected AudioSource audioSource;
 
+    protected bool lookAtCamera;
+
     protected override void Start()
     {
         base.Start();
@@ -42,6 +43,8 @@ public class PersonObject : InteractableObject
         inhaling = false;
         direction = true;
         inhaleCounter = 1.0f;
+
+        lookAtCamera = true;
     }
 
     protected override void Update()
@@ -237,8 +240,11 @@ public class PersonObject : InteractableObject
 
     protected void OnAnimatorIK()
     {
-        Animator animator = GetComponent<Animator>();
-        animator.SetLookAtWeight(1);
-        animator.SetLookAtPosition(Camera.main.transform.position);
+        if (lookAtCamera)
+        {
+            Animator animator = GetComponent<Animator>();
+            animator.SetLookAtWeight(1);
+            animator.SetLookAtPosition(Camera.main.transform.position);
+        }
     }
 }
