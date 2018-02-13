@@ -59,6 +59,11 @@ public class RobotManager : MonoBehaviour {
     {
         // play some kind of UI animation?
         UI_object.SetActive(value);
+
+        if (!value)
+        {
+            GameObject.FindObjectOfType<PlayerScript>().ResetUIHover();
+        }
     }
 
     private void UpdateTriggerPosition()

@@ -56,6 +56,11 @@ public class PlayerScript : MonoBehaviour {
         get { return onButtonHover; }
     }
 
+    public void ResetUIHover()
+    {
+        onButtonHover = false;
+    }
+
     private void Start()
     {
 
