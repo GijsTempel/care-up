@@ -14,6 +14,12 @@ public class RobotUITabInfo : RobotUITabs {
     {
         base.Start();
 
+        Transform t = transform.GetChild(1).GetChild(0);
+        if ( t != null )
+        {
+            OnItemButtonClick(t.GetComponent<RectTransform>());
+        }
+
         // generate buttons
         // done in playerspawn
     }

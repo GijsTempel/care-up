@@ -55,11 +55,10 @@ public class RobotManager : MonoBehaviour {
         UpdateFaceAnimations();
 	}
 
-    public void TriggerUI()
+    public void TriggerUI(bool value)
     {
         // play some kind of UI animation?
-        UI_object.SetActive(!UI_object.activeSelf);
-        // also play some kind of robot animation?
+        UI_object.SetActive(value);
     }
 
     private void UpdateTriggerPosition()
