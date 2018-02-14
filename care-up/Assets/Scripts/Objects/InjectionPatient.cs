@@ -106,9 +106,6 @@ public class InjectionPatient : PersonObject {
 
     public void InjectNeedleInArmDialogue()
     {
-        if (SceneManager.GetActiveScene().name == "Tutorial")
-            return;
-
         StartCoroutine(InjectNeedleInArmDialogueCoroutine());
     }
 
