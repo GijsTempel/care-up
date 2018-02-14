@@ -256,7 +256,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         currentStep = TutorialStep.UseTable;
                         particleHint.transform.position = workField.transform.position;
-                        UItext.text = "Heel goed! Doe nu hetzelfde met het werkveld. Beweeg de muis op het werkveld en klik erop om het optiemenu te openen. Tot slot kies je de optie 'Gebruiken'.";
+                        UItext.text = "Heel goed! Doe nu hetzelfde met het werkveld. Klik op het werkveld om het optiemenu te openen. Tot slot kies je de optie 'Gebruiken'.";
                     }
                     break;
                 case TutorialStep.UseTable:
@@ -584,7 +584,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         syringe.GetComponent<PickableObject>().tutorial_usedOn = false;
                         currentStep = TutorialStep.UseSyringeOnTrashAbs;
-                        UItext.text = "Voorwerpen kun je ook gebruiken met andere voorwerpen. Probeer nu de opzuignaald te verwijderen met de naaldcontainer. Zorg ervoor dat je de spuit in je hand hebt en dat de andere hand vrij is. Klik vervolgens op de spuit en kies voor de optie 'Gebruiken met..'. Klik vervolgens op de naaldcontainer. Je kunt de actie 'Gebruiken met..' annuleren door te klikken op 'Anulleren'";
+                        UItext.text = "Voorwerpen kun je ook gebruiken met andere voorwerpen. Probeer nu de opzuignaald te verwijderen met de naaldcontainer. Zorg ervoor dat je de spuit in je hand hebt en dat de andere hand vrij is. Klik vervolgens op de spuit en kies voor de optie 'Gebruiken met..'. Klik vervolgens op de naaldcontainer. Je kunt de actie 'Gebruiken met..' annuleren door te klikken op 'Annuleren'";
 
                         particleHint.transform.position = GameObject.Find("NeedleCup").transform.position;
                         particleHint.SetActive(true);
@@ -610,7 +610,7 @@ public class TutorialManager : MonoBehaviour {
                         handsInventory.tutorial_pickedLeft =
                             handsInventory.tutorial_pickedRight = false;
                         currentStep = TutorialStep.CombineSyringeInjNeedle;
-                        UItext.text = "Combineer nu de injectienaald met de spuit om de spuit klaar te maken voor injecteren. Zorg dat je de spuit en injectienaald in je handen hebt en druk op een van de twee voorwerpen. Kies vervolgens die optie 'Combineren/scheiden'. ";
+                        UItext.text = "Combineer nu de injectienaald met de spuit om de spuit klaar te maken voor injecteren. Zorg dat je de spuit en injectienaald in je handen hebt en druk op een van de twee voorwerpen. Kies vervolgens de optie 'Combineren/scheiden'. ";
                     }
                     break;
                 case TutorialStep.CombineSyringeInjNeedle:
