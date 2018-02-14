@@ -802,9 +802,16 @@ public class HandsInventory : MonoBehaviour {
     {
         if (leftHandObject != null)
         {
-            if (leftHandObject.Use(true))
+            if (controls.SelectedObject == RightHandObject)
             {
-                tutorial_itemUsedOn = true;
+                OnCombineAction();
+            }
+            else
+            {
+                if (leftHandObject.Use(true))
+                {
+                    tutorial_itemUsedOn = true;
+                }
             }
         }
         else if (glovesOn && rightHandObject == null)
@@ -818,9 +825,16 @@ public class HandsInventory : MonoBehaviour {
     {
         if (rightHandObject)
         {
-            if (rightHandObject.Use(false))
+            if (controls.SelectedObject == LeftHandObject)
             {
-                tutorial_itemUsedOn = true;
+                OnCombineAction();
+            }
+            else
+            {
+                if (rightHandObject.Use(false))
+                {
+                    tutorial_itemUsedOn = true;
+                }
             }
         }
         else if (glovesOn && leftHandObject == null)

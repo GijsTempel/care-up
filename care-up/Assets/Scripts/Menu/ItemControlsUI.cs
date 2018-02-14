@@ -241,7 +241,10 @@ public class ItemControlsUI : MonoBehaviour {
 
     public void Combine()
     {
-        handsInventory.OnCombineAction();
+        if (handsInventory.LeftHandEmpty() ^ handsInventory.RightHandEmpty())
+        {
+            handsInventory.OnCombineAction();
+        }
 
         Close();
     }

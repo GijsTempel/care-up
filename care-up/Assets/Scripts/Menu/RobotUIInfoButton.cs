@@ -15,6 +15,7 @@ public class RobotUIInfoButton : MonoBehaviour {
 
     public void Toggle(bool value)
     {
-        ui.SetActive(value);
+        if (ui != null)
+            ui.SetActive(value);
     }
 }
