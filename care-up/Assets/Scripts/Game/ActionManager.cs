@@ -99,7 +99,12 @@ public class ActionManager : MonoBehaviour {
     /// </summary>
     public string CurrentDescription
     {
-        get { return currentAction != null ? currentAction.description : ""; }
+        get { return currentAction != null ? currentAction.shortDescr : ""; }
+    }
+
+    public string CurrentExtraDescription
+    {
+        get { return currentAction != null ? currentAction.descr : ""; }
     }
 
     /// <summary>
@@ -211,6 +216,25 @@ public class ActionManager : MonoBehaviour {
             string descr = action.Attributes["description"].Value;
             string audio = action.Attributes["audioHint"].Value;
 
+            string fDescr = "";
+            if (action.Attributes["fullDescription"] != null)
+            {
+                fDescr = action.Attributes["fullDescription"].Value;
+            }
+            else
+            {
+                string[] splits = descr.Split('(', ')');
+                if (splits.Length >= 2)
+                {
+                    descr = splits[0];
+                    fDescr = splits[1];
+                }
+                else
+                {
+                    Debug.LogError("Description in xml file \"" + actionListName + "\" is set wrong. \'fullDescription\' field is not set and cannot split \'description\' properly.");
+                }
+            }
+
             string extra = "";
             if (action.Attributes["extra"] != null)
             {
@@ -222,33 +246,33 @@ public class ActionManager : MonoBehaviour {
                 case "combine":
                     string left = action.Attributes["left"].Value;
                     string right = action.Attributes["right"].Value;
-                    actionList.Add(new CombineAction(left, right, index, descr, audio, extra));
+                    actionList.Add(new CombineAction(left, right, index, descr, fDescr, audio, extra));
                     break;
                 case "use":
                     string use = action.Attributes["value"].Value;
-                    actionList.Add(new UseAction(use, index, descr, audio, extra));
+                    actionList.Add(new UseAction(use, index, descr, fDescr, audio, extra));
                     break;
                 case "talk":
                     string topic = action.Attributes["topic"].Value;
-                    actionList.Add(new TalkAction(topic, index, descr, audio, extra));
+                    actionList.Add(new TalkAction(topic, index, descr, fDescr, audio, extra));
                     break;
                 case "useOn":
                     string useItem = action.Attributes["item"].Value;
                     string target = action.Attributes["target"].Value;
-                    actionList.Add(new UseOnAction(useItem, target, index, descr, audio, extra));
+                    actionList.Add(new UseOnAction(useItem, target, index, descr, fDescr, audio, extra));
                     break;
                 case "examine":
                     string exItem = action.Attributes["item"].Value;
                     string expected = action.Attributes["expected"].Value;
-                    actionList.Add(new ExamineAction(exItem, expected, index, descr, audio, extra));
+                    actionList.Add(new ExamineAction(exItem, expected, index, descr, fDescr, audio, extra));
                     break;
                 case "pickUp":
                     string itemPicked = action.Attributes["item"].Value;
-                    actionList.Add(new PickUpAction(itemPicked, index, descr, audio, extra));
+                    actionList.Add(new PickUpAction(itemPicked, index, descr, fDescr, audio, extra));
                     break;
                 case "sequenceStep":
                     string stepName = action.Attributes["value"].Value;
-                    actionList.Add(new SequenceStepAction(stepName, index, descr, audio, extra));
+                    actionList.Add(new SequenceStepAction(stepName, index, descr, fDescr, audio, extra));
                     break;
                 default:
                     Debug.LogError("No action type found: " + type);
@@ -486,9 +510,9 @@ public class ActionManager : MonoBehaviour {
         if (!matched && type != ActionType.ObjectExamine && type != ActionType.PickUp)
         {
             if ( sublist.Count > 0 && 
-                wrongStepsList.Find(step => step == sublist[0].description) == null )
+                wrongStepsList.Find(step => step == sublist[0].shortDescr) == null )
             {
-                wrongStepsList.Add(sublist[0].description);
+                wrongStepsList.Add(sublist[0].shortDescr);
                 wrongStepsDescriptionList.Add(sublist[0].extraDescr); 
             }
 

@@ -9,7 +9,9 @@ using UnityEngine.UI;
 /// </summary>
 public class Cheat_CurrentAction : MonoBehaviour
 {
-    public Text textObject;
+    private Text textObject;
+    private Text extraText;
+    private GameObject extraPanel;
 
     public float animationTime = 2.0f;
     
@@ -32,8 +34,7 @@ public class Cheat_CurrentAction : MonoBehaviour
                 if (GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().practiceMode &&
                     actionManager.GetComponent<TutorialManager>() == null)
                 {
-                    textObject = GameObject.Find("DevHint").transform.GetChild(0).GetComponent<Text>();
-                    set = false;
+                    Init();
                 }
                 else
                 {
@@ -43,13 +44,25 @@ public class Cheat_CurrentAction : MonoBehaviour
             else
             {
                 Debug.LogWarning("Game needs to be started from menu scene for CurrentAction hint to work correctly");
-                textObject = GameObject.Find("DevHint").transform.GetChild(0).GetComponent<Text>();
-                set = false;
+                Init();
             }
         }
         
         timer = 0.0f;
         direction = 0;
+    }
+
+    private void Init()
+    {
+        GameObject devHint = GameObject.Find("DevHint");
+        textObject = devHint.transform.GetChild(0).GetComponent<Text>();
+        extraPanel = devHint.transform.Find("Extra").gameObject;
+        extraText = extraPanel.transform.GetChild(0).GetComponent<Text>();
+        extraPanel.SetActive(false);
+        set = false;
+
+        Button extraButton = devHint.transform.Find("ExtraButton").GetComponent<Button>();
+        extraButton.onClick.AddListener(ToggleExtraInfoPanel);
     }
 
     private void Update()
@@ -60,6 +73,7 @@ public class Cheat_CurrentAction : MonoBehaviour
         if (!set)
         {
             textObject.text = actionManager.CurrentDescription;
+            extraText.text = actionManager.CurrentExtraDescription;
             set = true;
         }
 
@@ -69,11 +83,14 @@ public class Cheat_CurrentAction : MonoBehaviour
             {
                 timer += Time.deltaTime;
                 textObject.color = new Color(1.0f, 1.0f, 1.0f, 1.0f - timer / animationTime);
+                extraText.color = new Color(1.0f, 1.0f, 1.0f, 1.0f - timer / animationTime);
             }
             else
             {
                 textObject.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+                extraText.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
                 textObject.text = actionManager.CurrentDescription;
+                extraText.text = actionManager.CurrentExtraDescription;
                 timer = animationTime;
                 direction = -1;
             }
@@ -84,10 +101,12 @@ public class Cheat_CurrentAction : MonoBehaviour
             {
                 timer -= Time.deltaTime;
                 textObject.color = new Color(1.0f, 1.0f, 1.0f, 1.0f - timer / animationTime);
+                extraText.color = new Color(1.0f, 1.0f, 1.0f, 1.0f - timer / animationTime);
             }
             else
             {
                 textObject.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+                extraText.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
                 timer = 0.0f;
                 direction = 0;
             }
@@ -97,5 +116,11 @@ public class Cheat_CurrentAction : MonoBehaviour
     public void UpdateAction()
     {
         direction = 1;
+        extraPanel.SetActive(false);
+    }
+
+    public void ToggleExtraInfoPanel()
+    {
+        extraPanel.SetActive(!extraPanel.activeSelf);
     }
 }
