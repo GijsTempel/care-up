@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class RobotManager : MonoBehaviour {
 
+    public bool top = true;
+
     private GameObject UI_object;
     private GameObject UI_trigger;
 
@@ -69,7 +71,7 @@ public class RobotManager : MonoBehaviour {
     private void UpdateTriggerPosition()
     {
         float x = Screen.width - 182.9f;
-        float y = Screen.height * 0.63f;
+        float y = Screen.height * (top ? 0.63f : 0.25f);
         transform.position = Camera.main.ScreenToWorldPoint(new Vector3(x, y, 4.0f));
 
         transform.LookAt(Camera.main.transform);

@@ -254,11 +254,13 @@ public class CameraMode : MonoBehaviour {
         {
             TogglePlayerScript(false);
             playerScript.MoveBackButtonObject.SetActive(false);
+            GameObject.FindObjectOfType<RobotManager>().top = false;
         }
         else if (currentMode == Mode.SelectionDialogue)
         {
             TogglePlayerScript(true);
             playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
+            GameObject.FindObjectOfType<RobotManager>().top = true;
         }
         else if (currentMode == Mode.Free && mode == Mode.ConfirmUI)
         {
