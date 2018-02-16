@@ -116,7 +116,10 @@ public class Cheat_CurrentAction : MonoBehaviour
     public void UpdateAction()
     {
         direction = 1;
-        extraPanel.SetActive(false);
+        if (extraPanel != null)
+        {
+            extraPanel.SetActive(false);
+        }
     }
 
     public void ToggleExtraInfoPanel()
