@@ -9,7 +9,7 @@ public class RobotUIInfoButton : MonoBehaviour {
     public void Set(string name)
     {
         ui = Instantiate(Resources.Load<GameObject>("Prefabs\\UI\\" + name),
-                            Vector3.zero, Quaternion.identity, transform.parent.parent) as GameObject;
+                            Vector3.zero, Quaternion.identity, transform.parent.parent.parent.parent.parent) as GameObject;
         ui.SetActive(false);
     }
 
