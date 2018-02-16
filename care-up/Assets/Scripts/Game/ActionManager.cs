@@ -191,7 +191,7 @@ public class ActionManager : MonoBehaviour {
     /// <summary>
     /// Set some variables and load info from xml file.
     /// </summary>
-    void Start()
+    void Awake()
     {
 
         string sceneName = SceneManager.GetActiveScene().name;
@@ -526,6 +526,11 @@ public class ActionManager : MonoBehaviour {
                 action.SubIndex == currentActionIndex &&
                 action.matched == false).ToList();
             currentAction = actionsLeft.Count > 0 ? actionsLeft.First() : null;
+        }
+
+        if (matched)
+        {
+            RobotUITabChecklist.StrikeStep();
         }
        
         return matched;
