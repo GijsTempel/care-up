@@ -406,7 +406,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         currentStep = TutorialStep.CombineAlcoholCloth;
                         controls.keyPreferences.CombineKey.locked = combineKeyLocked = false;
-                        UItext.text = "Sommige voorwerpen kun je met elkaar combineren. Dit kan bijvoorbeeld met het gaasje en alcohol om zo het gaasje te desinfecteren. Voorwerpen combineren doe je door op de alcohol of het gaasje te klikken en dan te kiezen voor de optie 'Combineren/Scheiden'.";
+                        UItext.text = "Sommige voorwerpen kun je met elkaar combineren. Dit kan bijvoorbeeld met het gaasje en alcohol om zo het gaasje te desinfecteren. Voorwerpen combineren doe je door op de alcohol of het gaasje te klikken en dan te kiezen voor de optie 'Gebruiken met..' en vervolgens op het voorwerp in de andere hand te klikken.";
                         itemToPick = "";
                         SetPauseTimer(5.0f);
                     }
@@ -458,7 +458,7 @@ public class TutorialManager : MonoBehaviour {
                             handsInventory.tutorial_droppedRight = false;
                         currentStep = TutorialStep.CombineDesinfMedicine;
                         controls.keyPreferences.pickObjectView.locked = pickObjectViewKeyLocked = false;
-                        UItext.text = "Probeer nu het gedesïnfecteerde gaasje te combineren met het medicijn in flacon. Pak beide voorwerpen door één voor één erop te klikken en te kiezen voor de optie 'Oppakken'. Klik daarna op een van de voorwerpen in je handen en kies voor de optie 'Combineren/Scheiden'. ";
+                        UItext.text = "Probeer nu het gedesïnfecteerde gaasje te combineren met het medicijn in flacon. Pak beide voorwerpen door één voor één erop te klikken en te kiezen voor de optie 'Oppakken'. Klik daarna op een van de voorwerpen in je handen en kies voor de optie 'Gebruiken met..' en daarna op het voorwerp in de andere hand. ";
 
                         particleHint.SetActive(true);
                         particleHint.transform.position = medicine.transform.position;
@@ -511,7 +511,7 @@ public class TutorialManager : MonoBehaviour {
                         handsInventory.tutorial_pickedLeft =
                             handsInventory.tutorial_pickedRight = false;
                         currentStep = TutorialStep.CombineSyringeAbNeedleCap;
-                        UItext.text = "Combineer nu de opzuignaald met de spuit door op een van de voorwerpen te drukken en dan te kiezen voor de optie 'Combineren/scheiden'. ";
+                        UItext.text = "Combineer nu de opzuignaald met de spuit door op een van de voorwerpen te drukken en dan te kiezen voor de optie 'Gebruiken met..' en daarna te klikken op het voorwerp in de andere hand. ";
                     }
                     break;
                 case TutorialStep.CombineSyringeAbNeedleCap:
@@ -519,7 +519,8 @@ public class TutorialManager : MonoBehaviour {
                     {
                         handsInventory.tutorial_combined = false;
                         currentStep = TutorialStep.CombineTakeOffAbCap;
-                        UItext.text = "Naast het combineren van voorwerpen kunnen sommige voorwerpen ook uit elkaar gehaald worden. Dit kun je doen wanneer je een vrije hand hebt en in je andere hand een voorwerp. Probeer nu de veiligheidsdop van de opzuignaald af te halen, klik op het voorwerp in je hand en kies de optie 'Combineren/scheiden'.";                    }
+                        UItext.text = "Naast het combineren van voorwerpen kunnen sommige voorwerpen ook uit elkaar gehaald worden. Dit kun je doen wanneer je een vrije hand hebt en in je andere hand een voorwerp. Probeer nu de veiligheidsdop van de opzuignaald af te halen, klik op het voorwerp in je hand en kies de optie 'Scheiden'.";
+                    }
                     break;
                 case TutorialStep.CombineTakeOffAbCap:
                     if ( handsInventory.tutorial_combined )
@@ -538,7 +539,7 @@ public class TutorialManager : MonoBehaviour {
                         handsInventory.tutorial_droppedLeft =
                             handsInventory.tutorial_droppedRight = false;
                         currentStep = TutorialStep.CombineSyringeAbNeedleMed;
-                        UItext.text = "Probeer nu het medicijn op te zuigen in de spuit. Zorg dat je het medicijn en de spuit vast hebt in je handen. Klik hierna op het medicijn of de spuit en kies voor de optie 'Combineren/scheiden'.";
+                        UItext.text = "Probeer nu het medicijn op te zuigen in de spuit. Zorg dat je het medicijn en de spuit vast hebt in je handen. Klik hierna op het medicijn of de spuit en kies voor de optie 'Gebruiken met..' en klik daarna op het voorwerp in de andere hand.";
 
                         itemToPick = "Medicine";
 
@@ -610,7 +611,7 @@ public class TutorialManager : MonoBehaviour {
                         handsInventory.tutorial_pickedLeft =
                             handsInventory.tutorial_pickedRight = false;
                         currentStep = TutorialStep.CombineSyringeInjNeedle;
-                        UItext.text = "Combineer nu de injectienaald met de spuit om de spuit klaar te maken voor injecteren. Zorg dat je de spuit en injectienaald in je handen hebt en druk op een van de twee voorwerpen. Kies vervolgens de optie 'Combineren/scheiden'. ";
+                        UItext.text = "Combineer nu de injectienaald met de spuit om de spuit klaar te maken voor injecteren. Zorg dat je de spuit en injectienaald in je handen hebt en druk op een van de twee voorwerpen. Kies vervolgens de optie 'Gebruiken met..' en klik daarna op het voorwerp in de andere hand. ";
                     }
                     break;
                 case TutorialStep.CombineSyringeInjNeedle:
@@ -628,7 +629,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         player.tutorial_movedBack = false;
                         currentStep = TutorialStep.MoveToPatient;
-                        UItext.text = "Nu we terug in het overzicht zijn kunnen we de cliënt aanklikken om naar hem toe te bewegen. Druk de cliënt";
+                        UItext.text = "Nu we terug in het overzicht zijn kunnen we de cliënt aanklikken om naar hem toe te bewegen. Druk op de cliënt";
 
                         patientTrigger.gameObject.SetActive(true);
                         particleHint.transform.position = patientTrigger.transform.position;
@@ -692,7 +693,7 @@ public class TutorialManager : MonoBehaviour {
                         if (player.tutorial_movedBack)
                         {
                             currentStep = TutorialStep.UseSyringeOnTrashInj;
-                            UItext.text = "Verwijder nu de injectienaald door de spuit te gebruiken met de naaldcontainer. Zorg ervoor dat je de spuit in je hand hebt en dat de andere hand vrij is. Klik vervolgens op de spuit en kies voor de optie 'Gebruiken met..' Klik vervolgens op de naaldcontainer. Je kunt de actie 'Gebruiken met..' annuleren door op de knop 'Anulleren' te klikken.";
+                            UItext.text = "Verwijder nu de injectienaald door de spuit te gebruiken met de naaldcontainer. Zorg ervoor dat je de spuit in je hand hebt en dat de andere hand vrij is. Klik vervolgens op de spuit en kies voor de optie 'Gebruiken met..' Klik vervolgens op de naaldcontainer. Je kunt de actie 'Gebruiken met..' annuleren door op de knop 'Annuleren' te klikken.";
 
                             particleHint.transform.position = GameObject.Find("NeedleCup").transform.position;
                             particleHint.SetActive(true);
