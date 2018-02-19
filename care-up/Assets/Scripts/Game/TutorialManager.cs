@@ -745,10 +745,11 @@ public class TutorialManager : MonoBehaviour {
                         UItext.text = "Zoals je ziet verschijnt er een pen en een papier op de tafel. Deze kun je gebruiken om je bevindingen op te schrijven. Doe dit door op het papier te klikken en daarna te kiezen voor de optie 'Gebruiken'.";
 
                         particleHint.transform.position = paperNPen.transform.position;
+                        paperNPen.tutorial_used = false;
                     }
                     break;
                 case TutorialStep.UsePaperAndPen:
-                    if (paperNPen.tutorial_used || true)
+                    if (paperNPen.tutorial_used)
                     {
                         particleHint.SetActive(false);
 
