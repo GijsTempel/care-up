@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemControlsUI : MonoBehaviour {
-
+    
     public GameObject initedObject;
 
     private Controls controls;
@@ -25,8 +25,7 @@ public class ItemControlsUI : MonoBehaviour {
     private GameObject dropButton;
 
     public Vector2 cursorOffset;
-
-	// Use this for initialization
+    
 	void Awake () {
 
         controls = GameObject.Find("GameLogic").GetComponent<Controls>();
@@ -116,6 +115,7 @@ public class ItemControlsUI : MonoBehaviour {
             {
                 transform.position = Input.mousePosition + new Vector3(cursorOffset.x, cursorOffset.y);
                 gameObject.SetActive(true);
+                GameObject.FindObjectOfType<RobotManager>().ToggleTrigger(false);
 
                 GameObject descrGroup = GameObject.Find("ItemDescriptionGroup");
 
@@ -158,6 +158,7 @@ public class ItemControlsUI : MonoBehaviour {
     public void Close()
     {
         gameObject.SetActive(false);
+        GameObject.FindObjectOfType<RobotManager>().ToggleTrigger(true);
         if (cameraMode.CurrentMode == CameraMode.Mode.ItemControlsUI)
         {
             cameraMode.ToggleCameraMode(CameraMode.Mode.Free);

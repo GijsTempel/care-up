@@ -94,7 +94,7 @@ public class RobotManager : MonoBehaviour {
     {
         instance.GetComponent<Animator>().SetTrigger("No");
     }
-	   
+
     private void UpdateFaceAnimations()
     {
         eyeLMat.mainTextureOffset = new Vector2(
@@ -110,9 +110,11 @@ public class RobotManager : MonoBehaviour {
             (mouth.localPosition.x - mouthA.localPosition.x) * 2f,
             (mouth.localPosition.y - mouthA.localPosition.y) * 2f * 1.11900882674f
             );
- 
-        
-          
-} 
+    } 
+
+    public void ToggleTrigger(bool value)
+    {
+        UI_trigger.SetActive(value);
+    }
 }
 	 
