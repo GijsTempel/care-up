@@ -11,7 +11,7 @@ public class RobotUITabChecklist : RobotUITabs {
     protected override void Start()
     {
         base.Start();
-        items = transform.GetChild(1).transform.GetComponentsInChildren<Text>(true);
+        items = transform.GetChild(1).GetChild(0).GetChild(0).transform.GetComponentsInChildren<Text>(true);
 
         foreach(Text i in items)
         {
