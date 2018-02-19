@@ -71,7 +71,7 @@ public class RobotManager : MonoBehaviour {
     private void UpdateTriggerPosition()
     {
         float x = Screen.width - 182.9f;
-        float y = Screen.height * (top ? 0.63f : 0.25f);
+        float y = Screen.height * (top ? 0.63f : 0.15f);
         transform.position = Camera.main.ScreenToWorldPoint(new Vector3(x, y, 4.0f));
 
         transform.LookAt(Camera.main.transform);
