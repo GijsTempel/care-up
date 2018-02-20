@@ -375,6 +375,7 @@ public class TutorialManager : MonoBehaviour {
                     if (doctor.tutorial_talked)
                     {
                         particleHint.transform.position = alcohol.transform.position;
+                        particleHint.SetActive(true);
                         currentStep = TutorialStep.PickAlcohol;
                         UItext.text = "Naast het gebruiken en bekijken van voorwerpen kunnen sommige voorwerpen worden opgepakt. Beweeg eerst naar het werkveld door erop te klikken. Probeer daarna de alcohol op te pakken door erop te klikken en te kiezen voor de optie 'Oppakken'.";
                         itemToPick = "Alcohol";
@@ -385,7 +386,6 @@ public class TutorialManager : MonoBehaviour {
                     {
                         currentStep = TutorialStep.PickCloth;
                         particleHint.transform.position = cloth.transform.position;
-                        particleHint.SetActive(true);
                         UItext.text = "Pak nu het gaasje op door op het gaasje te klikken. Kies daarna voor de optie 'Oppakken'.";
                         itemToPick = "Cloth";
                     }
