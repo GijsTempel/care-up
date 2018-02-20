@@ -19,7 +19,7 @@ public class GameTimer : MonoBehaviour {
 
     private void Start()
     {
-        timerText = Camera.main.transform.Find("UI").Find("RobotUI").Find("GeneralTab").Find("Timer").Find("Panel").Find("Time").GetComponent<Text>();
+        timerText = Camera.main.transform.Find("UI (1)").Find("RobotUI").Find("GeneralTab").Find("Timer").Find("Panel").Find("Time").GetComponent<Text>();
     }
 
     void Update ()

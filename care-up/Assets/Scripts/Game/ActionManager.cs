@@ -302,8 +302,8 @@ public class ActionManager : MonoBehaviour {
 
         currentAction = actionList.First();
         
-        pointsText = Camera.main.transform.Find("UI").Find("RobotUI").Find("GeneralTab").Find("Points").Find("Panel").Find("PointsText").GetComponent<Text>();
-        percentageText = Camera.main.transform.Find("UI").Find("RobotUI").Find("GeneralTab").Find("Percentage").Find("Panel").Find("PointsText").GetComponent<Text>();
+        pointsText = Camera.main.transform.Find("UI (1)").Find("RobotUI").Find("GeneralTab").Find("Points").Find("Panel").Find("PointsText").GetComponent<Text>();
+        percentageText = Camera.main.transform.Find("UI (1)").Find("RobotUI").Find("GeneralTab").Find("Percentage").Find("Panel").Find("PointsText").GetComponent<Text>();
     }
 
     /// <summary>

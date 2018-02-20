@@ -116,7 +116,7 @@ public class PlayerScript : MonoBehaviour {
         closeButton.GetComponent<EventTrigger>().triggers.Add(event2);
         closeButton.GetComponent<EventTrigger>().triggers.Add(event3);
 
-        GameObject robotUI = Camera.main.transform.Find("UI").Find("RobotUI").gameObject;
+        GameObject robotUI = Camera.main.transform.Find("UI (1)").Find("RobotUI").gameObject;
         robotUI.AddComponent<EventTrigger>();
         robotUI.GetComponent<EventTrigger>().triggers.Add(event1);
         robotUI.GetComponent<EventTrigger>().triggers.Add(event2);

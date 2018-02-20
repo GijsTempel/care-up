@@ -42,7 +42,7 @@ public class RobotManager : MonoBehaviour {
         eyeLMat = transform.Find("robot_eye.L").GetComponent<Renderer>().material;
         eyeRMat = transform.Find("robot_eye.R").GetComponent<Renderer>().material;
 
-        UI_object = Camera.main.transform.Find("UI").Find("RobotUI").gameObject;
+        UI_object = Camera.main.transform.Find("UI (1)").Find("RobotUI").gameObject;
         UI_object.SetActive(false);
 
         UI_trigger = Camera.main.transform.Find("UI").Find("RobotUITrigger").gameObject;

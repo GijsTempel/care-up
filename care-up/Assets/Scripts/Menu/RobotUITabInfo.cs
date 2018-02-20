@@ -10,6 +10,9 @@ public class RobotUITabInfo : RobotUITabs {
     private bool set = false;
     private float timer = 0.0f;
 
+    private float initButtonWidth  = 0;
+    private float initButtonHeight = 0;
+
     protected override void Start()
     {
         base.Start();
@@ -34,13 +37,13 @@ public class RobotUITabInfo : RobotUITabs {
             if (selectedButton != null)
             {
                 float sX = (timer / maxTime) * 45.0f;
-                selectedButton.sizeDelta = new Vector2(230 + sX, 50);
+                selectedButton.sizeDelta = new Vector2(initButtonWidth + sX, initButtonHeight);
             }
 
             if (deselectButton != null)
             {
                 float dX = ((maxTime - timer) / maxTime) * 45.0f;
-                deselectButton.sizeDelta = new Vector2(230 + dX, 50);
+                deselectButton.sizeDelta = new Vector2(initButtonWidth + dX, initButtonHeight);
             }
 
             if (timer >= maxTime)
@@ -65,6 +68,9 @@ public class RobotUITabInfo : RobotUITabs {
             selectedButton.GetComponent<RobotUIInfoButton>().Toggle(true);
 
             set = true;
+
+            initButtonWidth = selectedButton.sizeDelta.x;
+            initButtonHeight = selectedButton.sizeDelta.y;
         }
     }
 
