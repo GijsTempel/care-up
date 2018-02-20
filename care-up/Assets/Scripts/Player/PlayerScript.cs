@@ -200,7 +200,7 @@ public class PlayerScript : MonoBehaviour {
                     (handsInv.RightHandObject.GetComponent<InteractableObject>().description == ""
                     ? handsInv.RightHandObject.name : handsInv.RightHandObject.GetComponent<InteractableObject>().description)
                 )
-                + " wilt gebruiken (Druk op rechtermuisknop om te annuleren).";
+                + " wilt gebruiken.";
         }
         usingOnText.SetActive(value);
 
