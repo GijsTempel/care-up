@@ -85,6 +85,16 @@ public class ActionManager : MonoBehaviour {
         get { return totalPoints; }
     }
 
+    public float PercentageDone
+    {
+        get
+        {
+            int cur = actionList.IndexOf(currentAction);
+            int tot = actionList.Count;
+            return 100.0f * cur / tot;
+        }
+    }
+
     /// <summary>
     /// Index of current action.
     /// </summary>
@@ -337,7 +347,8 @@ public class ActionManager : MonoBehaviour {
 
         if (!menuScene)
         {
-            pointsText.text = points + " / " + totalPoints;
+            //pointsText.text = points + " / " + totalPoints;
+            pointsText.text = Mathf.RoundToInt(PercentageDone).ToString() + "%";
         }
     }
 
