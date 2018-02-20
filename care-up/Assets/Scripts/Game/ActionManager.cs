@@ -19,6 +19,7 @@ public class ActionManager : MonoBehaviour {
     private bool currentStepHintUsed = false;
 
     private Text pointsText;
+    private Text percentageText;
 
     // list of types of actions
     public enum ActionType
@@ -302,6 +303,7 @@ public class ActionManager : MonoBehaviour {
         currentAction = actionList.First();
         
         pointsText = Camera.main.transform.Find("UI").Find("RobotUI").Find("GeneralTab").Find("Points").Find("Panel").Find("PointsText").GetComponent<Text>();
+        percentageText = Camera.main.transform.Find("UI").Find("RobotUI").Find("GeneralTab").Find("Percentage").Find("Panel").Find("PointsText").GetComponent<Text>();
     }
 
     /// <summary>
@@ -347,8 +349,8 @@ public class ActionManager : MonoBehaviour {
 
         if (!menuScene)
         {
-            //pointsText.text = points + " / " + totalPoints;
-            pointsText.text = Mathf.RoundToInt(PercentageDone).ToString() + "%";
+            pointsText.text = points + " / " + totalPoints;
+            percentageText.text = Mathf.RoundToInt(PercentageDone).ToString() + "%";
         }
     }
 
