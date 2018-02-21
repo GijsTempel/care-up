@@ -15,15 +15,41 @@ public class RobotUITabs : MonoBehaviour {
     protected virtual void Start()
     {
         tabs.Add(this);
+        tabs.RemoveAll(item => item == null);
 
         tabTrigger = transform.Find("Tab").gameObject;
         children = transform.GetComponentsInChildren<RectTransform>();
 
         SetTabActive(false);
 
-        if (name == "InfoTab")
+        if (GameObject.Find("Preferences") != null)
         {
-            SetTabActive(true);
+            if (!GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().practiceMode)
+            {
+                if (name == "InfoTab" || name == "CheckListTab")
+                {
+                    SetTabActive(false);
+                    gameObject.SetActive(false);
+                }
+                else
+                {
+                    SetTabActive(true);
+                }
+            }
+            else
+            {
+                if (name == "InfoTab")
+                {
+                    SetTabActive(true);
+                }
+            }
+        }
+        else
+        {
+            if (name == "InfoTab")
+            {
+                SetTabActive(true);
+            }
         }
 
         EventTrigger.Entry clickEvent = new EventTrigger.Entry();
@@ -32,7 +58,6 @@ public class RobotUITabs : MonoBehaviour {
 
         tabTrigger.AddComponent<EventTrigger>();
         tabTrigger.GetComponent<EventTrigger>().triggers.Add(clickEvent);
-
     }
 
     private void OnTabSwitch()

@@ -34,17 +34,17 @@ public class WorkField : UsableObject {
         {
             if (actionManager.CurrentUseObject != name)
             {
-                if (GameObject.FindObjectOfType<PlayerPrefsManager>() != null &&
+                /*if (GameObject.FindObjectOfType<PlayerPrefsManager>() != null &&
                     GameObject.FindObjectOfType<PlayerPrefsManager>().practiceMode == false)
                 {
                     actionManager.OnGameOver();
                 }
                 else
-                {
+                {*/
                     actionManager.OnUseAction(gameObject.name);
                     controls.ResetObject();
                     Reset();
-                }
+                //}
             }
             else
             {

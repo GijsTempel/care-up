@@ -621,6 +621,9 @@ public class ActionManager : MonoBehaviour {
 
     public void OnGameOver()
     {
+        // disabled GameOver
+        return;
+
         Transform gameOver = GameObject.Find("UI").transform.Find("GameOver");
         gameOver.gameObject.SetActive(true);
             
