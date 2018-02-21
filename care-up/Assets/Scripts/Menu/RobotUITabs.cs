@@ -30,6 +30,7 @@ public class RobotUITabs : MonoBehaviour {
                 {
                     SetTabActive(false);
                     gameObject.SetActive(false);
+                    tabs.Remove(this);
                 }
                 else
                 {
