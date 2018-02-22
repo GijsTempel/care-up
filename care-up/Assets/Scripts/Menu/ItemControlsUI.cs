@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ItemControlsUI : MonoBehaviour {
     
@@ -25,7 +26,9 @@ public class ItemControlsUI : MonoBehaviour {
     private GameObject dropButton;
 
     public Vector2 cursorOffset;
-    
+
+    private string useOnNTtext;
+
 	void Awake () {
 
         controls = GameObject.Find("GameLogic").GetComponent<Controls>();
@@ -46,6 +49,8 @@ public class ItemControlsUI : MonoBehaviour {
         dropButton = transform.Find("DropButton").gameObject;
 
         closeButton = transform.Find("CloseButton").gameObject;
+
+        useOnNTtext = useOnNTButton.transform.GetChild(0).GetComponent<Text>().text;
     }
 
     public void Init(GameObject iObject)
@@ -140,6 +145,11 @@ public class ItemControlsUI : MonoBehaviour {
                         descrGroup.transform.position += new Vector3(difference, 0.0f, 0.0f);
                     }
                 }
+
+                useOnNTButton.transform.GetChild(0).GetComponent<Text>().text =
+                    ((actionManager.CurrentUseOnInfo[0] != "" && actionManager.CurrentUseOnInfo[1] == "") ?
+                    actionManager.CurrentDescription : useOnNTtext);
+
             }
         }
     }
