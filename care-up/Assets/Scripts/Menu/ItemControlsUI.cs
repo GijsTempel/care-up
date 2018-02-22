@@ -28,8 +28,9 @@ public class ItemControlsUI : MonoBehaviour {
     public Vector2 cursorOffset;
 
     private string useOnNTtext;
+    private string useText;
 
-	void Awake () {
+    void Awake () {
 
         controls = GameObject.Find("GameLogic").GetComponent<Controls>();
         handsInventory = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
@@ -51,6 +52,7 @@ public class ItemControlsUI : MonoBehaviour {
         closeButton = transform.Find("CloseButton").gameObject;
 
         useOnNTtext = useOnNTButton.transform.GetChild(0).GetComponent<Text>().text;
+        useText = useButton.transform.GetChild(0).GetComponent<Text>().text;
     }
 
     public void Init(GameObject iObject)
@@ -147,9 +149,10 @@ public class ItemControlsUI : MonoBehaviour {
                 }
 
                 useOnNTButton.transform.GetChild(0).GetComponent<Text>().text =
-                    ((actionManager.CurrentUseOnInfo[0] != "" && actionManager.CurrentUseOnInfo[1] == "") ?
+                    ((actionManager.CurrentUseOnInfo[0] == initedObject.name && actionManager.CurrentUseOnInfo[1] == "") ?
                     actionManager.CurrentDescription : useOnNTtext);
-
+                useButton.transform.GetChild(0).GetComponent<Text>().text =
+                    (actionManager.CurrentUseObject == initedObject.name) ? actionManager.CurrentDescription : useText;
             }
         }
     }
