@@ -197,6 +197,22 @@ public class ActionManager : MonoBehaviour {
         }
     }
 
+    public string CurrentButtonText
+    {
+        get
+        {
+            if (currentAction.Type == ActionType.ObjectUse)
+            {
+                return ((UseAction)currentAction).buttonText;
+            }
+            else if (currentAction.Type == ActionType.ObjectUseOn)
+            {
+                return ((UseOnAction)currentAction).buttonText;
+            }
+            else return "";
+        }
+    }
+
     private Controls controls;
 
     /// <summary>
@@ -252,6 +268,16 @@ public class ActionManager : MonoBehaviour {
                 extra = action.Attributes["extra"].Value;
             }
 
+            string buttonText = "";
+            if (action.Attributes["buttonText"] != null)
+            {
+                buttonText = action.Attributes["buttonText"].Value;
+            }
+            else
+            {
+                buttonText = descr;
+            }
+
             switch (type)
             {
                 case "combine":
@@ -261,7 +287,7 @@ public class ActionManager : MonoBehaviour {
                     break;
                 case "use":
                     string use = action.Attributes["value"].Value;
-                    actionList.Add(new UseAction(use, index, descr, fDescr, audio, extra));
+                    actionList.Add(new UseAction(use, index, descr, fDescr, audio, extra, buttonText));
                     break;
                 case "talk":
                     string topic = action.Attributes["topic"].Value;
@@ -270,7 +296,7 @@ public class ActionManager : MonoBehaviour {
                 case "useOn":
                     string useItem = action.Attributes["item"].Value;
                     string target = action.Attributes["target"].Value;
-                    actionList.Add(new UseOnAction(useItem, target, index, descr, fDescr, audio, extra));
+                    actionList.Add(new UseOnAction(useItem, target, index, descr, fDescr, audio, extra, buttonText));
                     break;
                 case "examine":
                     string exItem = action.Attributes["item"].Value;
