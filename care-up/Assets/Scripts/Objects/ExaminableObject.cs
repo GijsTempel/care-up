@@ -65,7 +65,7 @@ public class ExaminableObject : InteractableObject {
         {
             tutorial_picked = true;
             SavePosition();
-            transform.localRotation = Camera.main.transform.rotation * Quaternion.Euler(examineRotation);
+            transform.rotation = Camera.main.transform.rotation * Quaternion.Euler(examineRotation);
         }
         else
         {
@@ -100,12 +100,18 @@ public class ExaminableObject : InteractableObject {
         if (viewMode)
         {
             // ObjectView layer drawn only on OverlayCamera
-            gameObject.layer = 8;
+            foreach (Transform t in transform.GetComponentsInChildren<Transform>())
+            {
+                t.gameObject.layer = 8;
+            }
         }
         else
         {
             // default
-            gameObject.layer = 0;
+            foreach (Transform t in transform.GetComponentsInChildren<Transform>())
+            {
+                t.gameObject.layer = 0;
+            }
         }
     }
 
