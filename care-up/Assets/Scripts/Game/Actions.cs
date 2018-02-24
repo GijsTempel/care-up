@@ -111,10 +111,13 @@ namespace CareUp.Actions
     {
         private string useInput;
 
-        public UseAction(string use, int index, string sdescr, string fdescr, string audio, string extra)
+        public string buttonText;
+
+        public UseAction(string use, int index, string sdescr, string fdescr, string audio, string extra, string button)
             : base(ActionManager.ActionType.ObjectUse, index, sdescr, fdescr, audio, extra)
         {
             useInput = use;
+            buttonText = button;
         }
 
         public override bool Compare(string[] info)
@@ -188,12 +191,15 @@ namespace CareUp.Actions
     {
         private string item;
         private string target;
+        
+        public string buttonText;
 
-        public UseOnAction(string i, string t, int index, string sdescr, string fdescr, string audio, string extra)
+        public UseOnAction(string i, string t, int index, string sdescr, string fdescr, string audio, string extra, string button)
             : base(ActionManager.ActionType.ObjectUseOn, index, sdescr, fdescr, audio, extra)
         {
             item = i;
             target = t;
+            buttonText = button;
         }
 
         /// <summary>
