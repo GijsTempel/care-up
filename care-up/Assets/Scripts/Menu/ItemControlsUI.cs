@@ -150,9 +150,9 @@ public class ItemControlsUI : MonoBehaviour {
 
                 useOnNTButton.transform.GetChild(0).GetComponent<Text>().text =
                     ((actionManager.CurrentUseOnInfo[0] == initedObject.name && actionManager.CurrentUseOnInfo[1] == "") ?
-                    actionManager.CurrentDescription : useOnNTtext);
+                    actionManager.CurrentButtonText : useOnNTtext);
                 useButton.transform.GetChild(0).GetComponent<Text>().text =
-                    (actionManager.CurrentUseObject == initedObject.name) ? actionManager.CurrentDescription : useText;
+                    (actionManager.CurrentUseObject == initedObject.name) ? actionManager.CurrentButtonText : useText;
             }
         }
     }
