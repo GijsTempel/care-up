@@ -118,6 +118,18 @@ public class ItemControlsUI : MonoBehaviour {
                     return;
                 }
             }
+            else if (pickButton.activeSelf && !examineButton.activeSelf)
+            {
+                Pick();
+            }
+            else if(!pickButton.activeSelf && examineButton.activeSelf && !handsInventory.IsInHand(initedObject))
+            {
+                Examine();
+            }
+            else if (useButton.activeSelf)
+            {
+                Use();
+            }
             else
             {
                 transform.position = Input.mousePosition + new Vector3(cursorOffset.x, cursorOffset.y);
