@@ -47,6 +47,7 @@ public class ActionManager : MonoBehaviour {
     private int currentActionIndex = 0;  // index of current action
     private Action currentAction;        // current action instance
     private int currentPointAward = 1;
+    private bool penalized = false;
 
     // GameObjects that show player next step when hint used
     private List<GameObject> particleHints;
@@ -565,6 +566,8 @@ public class ActionManager : MonoBehaviour {
             Camera.main.transform.Find("UI").Find("WrongAction").
                 GetComponent<TimedPopUp>().Set(sublist[0].extraDescr);
             ActionManager.WrongAction();
+
+            penalized = true;
         }
         else
         {
@@ -712,8 +715,11 @@ public class ActionManager : MonoBehaviour {
 
     public void UpdatePoints(int value)
     {
-        if (value > 0)
-            value *= currentPointAward;
+        if (value <= 0)
+            return;
+
+        value *= (penalized ? currentPointAward/2 : currentPointAward);
+        penalized = false;
 
         points += value;
 
