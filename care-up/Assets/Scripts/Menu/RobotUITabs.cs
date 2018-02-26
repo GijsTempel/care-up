@@ -8,9 +8,9 @@ public class RobotUITabs : MonoBehaviour {
 
     private static List<RobotUITabs> tabs = new List<RobotUITabs>();
 
-    private GameObject tabTrigger;
+    protected GameObject tabTrigger;
 
-    private RectTransform[] children;
+    protected RectTransform[] children;
     
     protected virtual void Start()
     {
@@ -61,7 +61,7 @@ public class RobotUITabs : MonoBehaviour {
         tabTrigger.GetComponent<EventTrigger>().triggers.Add(clickEvent);
     }
 
-    private void OnTabSwitch()
+    public void OnTabSwitch()
     {
         foreach (RobotUITabs t in tabs)
         {
@@ -75,12 +75,12 @@ public class RobotUITabs : MonoBehaviour {
     {
         foreach (RectTransform child in children)
         {
-            child.gameObject.SetActive(value);
+            if (child.name != "Tab" && child.parent.name != "Tab" && child.GetComponent<RobotUITabs>() == null)
+            {
+                child.gameObject.SetActive(value);
+            }
         }
 
         tabTrigger.GetComponent<Image>().color = new Color(0, 0, 1.0f, value ? 0.6f : 0.3f);
-        tabTrigger.SetActive(true);
-        tabTrigger.transform.GetChild(0).gameObject.SetActive(true);
-        gameObject.SetActive(true);
     }
 }

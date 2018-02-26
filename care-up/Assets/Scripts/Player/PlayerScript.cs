@@ -46,6 +46,9 @@ public class PlayerScript : MonoBehaviour {
 
     private GameObject closeButton;
 
+    [HideInInspector]
+    public QuizTab quiz;
+
     public GameObject MoveBackButtonObject
     {
         get { return moveBackButton.gameObject; }
@@ -63,14 +66,12 @@ public class PlayerScript : MonoBehaviour {
 
     private void Start()
     {
-
         mouseLook.Init(transform, cam.transform);
 
         if (GameObject.Find("Preferences") != null)
         {
             prefs = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
         }
-
         
         GetComponent<Crosshair>().enabled = ( prefs == null ) ? false : prefs.VR;
 
@@ -92,6 +93,8 @@ public class PlayerScript : MonoBehaviour {
         usingOnText = GameObject.Find("UsingOnModeText");
         usingOnCancelButton = usingOnText.transform.GetChild(0).gameObject;
         usingOnText.SetActive(false);
+
+        quiz = GameObject.FindObjectOfType<QuizTab>(); 
 
         EventTrigger.Entry event1 = new EventTrigger.Entry();
         event1.eventID = EventTriggerType.PointerEnter;
@@ -134,6 +137,11 @@ public class PlayerScript : MonoBehaviour {
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            quiz.NextQuizQuestion(); // trigger quiz question
+        }
+
         if (prefs != null)
         {
             if (!prefs.VR)
