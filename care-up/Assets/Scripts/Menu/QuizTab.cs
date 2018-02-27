@@ -110,6 +110,8 @@ public class QuizTab : RobotUITabs {
                 buttons[i].onClick.AddListener(delegate { WrongAnswer(descr); });
             }
         }
+
+        descriptionText.text = "";
     }
 
     public void CorrectAnswer(string description)
@@ -148,5 +150,13 @@ public class QuizTab : RobotUITabs {
         RobotUITabs infoTab = tabs.Find(x => x.name == "InfoTab");
         if (infoTab != null)
             infoTab.OnTabSwitch();
+    }
+
+    protected override void SetTabActive(bool value)
+    {
+        base.SetTabActive(value);
+        
+        if (!value)
+            continueButton.gameObject.SetActive(false);
     }
 }
