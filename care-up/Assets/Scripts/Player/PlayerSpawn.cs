@@ -37,7 +37,14 @@ public class PlayerSpawn : MonoBehaviour {
             buttons[i].Set(infoList[i].prefabName);
         }
 
-        GameObject.FindObjectOfType<QuizTab>().Init(quizName);
+        if (quizName != "")
+        {
+            GameObject.FindObjectOfType<QuizTab>().Init(quizName);
+        }
+        else
+        {
+            Debug.LogWarning("Quiz file name is blank.");
+        }
 
         Destroy(gameObject);
 	}
