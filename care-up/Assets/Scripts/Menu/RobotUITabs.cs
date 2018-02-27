@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class RobotUITabs : MonoBehaviour {
 
-    private static List<RobotUITabs> tabs = new List<RobotUITabs>();
+    protected static List<RobotUITabs> tabs = new List<RobotUITabs>();
 
     protected GameObject tabTrigger;
 

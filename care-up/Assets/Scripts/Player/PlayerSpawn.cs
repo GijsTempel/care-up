@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerSpawn : MonoBehaviour {
 
+    public string quizName;
     public GameObject playerPrefab;
 
     [System.Serializable]
@@ -35,6 +36,8 @@ public class PlayerSpawn : MonoBehaviour {
             buttons[i].GetComponentInChildren<Text>().text = infoList[i].buttonName;
             buttons[i].Set(infoList[i].prefabName);
         }
+
+        GameObject.FindObjectOfType<QuizTab>().Init(quizName);
 
         Destroy(gameObject);
 	}

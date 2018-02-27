@@ -6,23 +6,31 @@ using UnityEngine.UI;
 
 public class QuizTab : RobotUITabs {
 
-    public string quizFilename = "test";
-
     public struct Question
     {
         public string text;
         public int answerID;
-        public List<string> answers;
+        public List<Answer> answers;
     };
+
+    public struct Answer
+    {
+        public string text;
+        public string descr;
+    }
 
     private List<Question> questionList = new List<Question>();
     private int currentQuestionID = 0;
 
     private List<Button> buttons = new List<Button>();
 
-    private void Awake()
+    private Text descriptionText;
+    private Button continueButton;
+    private Button switchToInfoButton;
+
+    public void Init(string name)
     {
-        TextAsset textAsset = (TextAsset)Resources.Load("Xml/Quiz/" + quizFilename);
+        TextAsset textAsset = (TextAsset)Resources.Load("Xml/Quiz/" + name);
         XmlDocument xmlFile = new XmlDocument();
         xmlFile.LoadXml(textAsset.text);
 
@@ -31,7 +39,7 @@ public class QuizTab : RobotUITabs {
         foreach(XmlNode q in questions)
         {
             Question question = new Question();
-            question.answers = new List<string>();
+            question.answers = new List<Answer>();
 
             question.text = q.Attributes["text"].Value;
             int.TryParse(q.Attributes["answer"].Value, out question.answerID);
@@ -40,11 +48,21 @@ public class QuizTab : RobotUITabs {
             XmlNodeList answers = q.ChildNodes;
             foreach(XmlNode a in answers)
             {
-                question.answers.Add(a.Attributes["text"].Value);
+                Answer t = new Answer();
+                t.text = a.Attributes["text"].Value;
+                t.descr = a.Attributes["descr"].Value;
+                question.answers.Add(t);
             }
 
             questionList.Add(question);
         }
+
+        descriptionText = transform.Find("Description").GetComponent<Text>();
+        continueButton = transform.Find("Continue").GetComponent<Button>();
+        switchToInfoButton = transform.Find("SwitchToInfo").GetComponent<Button>();
+
+        continueButton.gameObject.SetActive(false);
+        descriptionText.text = "";
     }
 
     protected override void Start()
@@ -58,6 +76,9 @@ public class QuizTab : RobotUITabs {
         buttons.Add(transform.Find("Answer2").GetComponent<Button>());
         buttons.Add(transform.Find("Answer3").GetComponent<Button>());
         buttons.Add(transform.Find("Answer4").GetComponent<Button>());
+
+        continueButton.onClick.AddListener(OnContinueButton);
+        switchToInfoButton.onClick.AddListener(OnSwitchToInfoTabButton);
     }
 
     public void NextQuizQuestion()
@@ -74,25 +95,26 @@ public class QuizTab : RobotUITabs {
 
         Question current = questionList[currentQuestionID];
         transform.Find("QuestionText").GetComponent<Text>().text = current.text;
-
-        for(int i = 0; i < buttons.Count; i++)
+        
+        for (int i = 0; i < buttons.Count; i++)
         {
-            buttons[i].transform.GetChild(0).GetComponent<Text>().text = current.answers[i];
+            buttons[i].transform.GetChild(0).GetComponent<Text>().text = current.answers[i].text;
         }
 
-        buttons[current.answerID].onClick.AddListener(CorrectAnswer);
-        for(int i = 0; i < 4; i++)
+        buttons[current.answerID].onClick.AddListener(delegate { CorrectAnswer(current.answers[current.answerID].descr); });
+        for (int i = 0; i < buttons.Count; i++)
         {
             if (i != current.answerID)
             {
-                buttons[i].onClick.AddListener(WrongAnswer);
+                string descr = current.answers[i].descr;
+                buttons[i].onClick.AddListener(delegate { WrongAnswer(descr); });
             }
         }
     }
 
-    public void CorrectAnswer()
+    public void CorrectAnswer(string description)
     {
-        Debug.Log("Quiz::CorrectAnswer");
+        descriptionText.text = description;
 
         ++currentQuestionID;
 
@@ -100,17 +122,31 @@ public class QuizTab : RobotUITabs {
         {
             b.onClick.RemoveAllListeners();
         }
-        
+
+        continueButton.gameObject.SetActive(true);
+    }
+
+    public void WrongAnswer(string description)
+    {
+        descriptionText.text = description;
+    }
+
+    public void OnContinueButton()
+    {
+        continueButton.gameObject.SetActive(false);
+
         gameObject.SetActive(false);
         GameObject.FindObjectOfType<RobotUITabs>().OnTabSwitch(); // switch tab to something else
 
         RobotManager manager = GameObject.FindObjectOfType<RobotManager>();
         manager.ToggleCloseBtn(true); // enable close btn
-        //manager.TriggerUI(false); // close UI ?
+        manager.TriggerUI(false); // close UI ?
     }
 
-    public void WrongAnswer()
+    public void OnSwitchToInfoTabButton()
     {
-        Debug.Log("Quiz::WrongAnswer");
+        RobotUITabs infoTab = tabs.Find(x => x.name == "InfoTab");
+        if (infoTab != null)
+            infoTab.OnTabSwitch();
     }
 }
