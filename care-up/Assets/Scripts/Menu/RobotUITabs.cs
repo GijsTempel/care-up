@@ -63,6 +63,15 @@ public class RobotUITabs : MonoBehaviour {
 
     public void OnTabSwitch()
     {
+        QuizTab tab = GameObject.FindObjectOfType<QuizTab>();
+        if (tab != null)
+        {
+            if (tab.transform.Find("Continue") != null && tab.transform.Find("Continue").gameObject.activeSelf)
+            {
+                GameObject.FindObjectOfType<QuizTab>().Continue();
+            }
+        }
+
         foreach (RobotUITabs t in tabs)
         {
             t.SetTabActive(false);

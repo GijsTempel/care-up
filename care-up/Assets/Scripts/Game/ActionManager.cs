@@ -728,4 +728,20 @@ public class ActionManager : MonoBehaviour {
             points = 0;
         }
     }
+
+    public void UpdatePointsDirectly(int value)
+    {
+        points += (penalized ? value/2 : value);
+        penalized = false;
+
+        if (points < 0)
+        {
+            points = 0;
+        }
+    }
+
+    public void ActivatePenalty()
+    {
+        penalized = true;
+    }
 }

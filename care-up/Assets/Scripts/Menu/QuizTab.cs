@@ -11,6 +11,7 @@ public class QuizTab : RobotUITabs {
         public string text;
         public int answerID;
         public List<Answer> answers;
+        public int points;
     };
 
     public struct Answer
@@ -23,6 +24,7 @@ public class QuizTab : RobotUITabs {
     private int currentQuestionID = 0;
 
     private List<Button> buttons = new List<Button>();
+    private bool[] buttonsActive = new bool[4];
 
     private Text descriptionText;
     private Button continueButton;
@@ -43,6 +45,16 @@ public class QuizTab : RobotUITabs {
 
             question.text = q.Attributes["text"].Value;
             int.TryParse(q.Attributes["answer"].Value, out question.answerID);
+
+            if (q.Attributes["points"] != null)
+            {
+                int.TryParse(q.Attributes["points"].Value, out question.points);
+            }
+            else
+            {
+                question.points = 1;
+            }
+
             --question.answerID; // let ppl write 1-4, but we need 0-3 as indexes
 
             XmlNodeList answers = q.ChildNodes;
@@ -108,13 +120,16 @@ public class QuizTab : RobotUITabs {
             {
                 string descr = current.answers[i].descr;
                 buttons[i].onClick.AddListener(delegate { WrongAnswer(descr); });
-                buttons[i].gameObject.SetActive(true);
             }
+
+            buttons[i].gameObject.SetActive(true);
+            buttonsActive[i] = true;
         }
 
         for (int i = current.answers.Count; i < buttons.Count; i++)
         {
             buttons[i].gameObject.SetActive(false);
+            buttonsActive[i] = false;
         }
 
         descriptionText.text = "";
@@ -122,6 +137,9 @@ public class QuizTab : RobotUITabs {
 
     public void CorrectAnswer(string description)
     {
+        GameObject.Find("GameLogic").GetComponent<ActionManager>().UpdatePointsDirectly(questionList[currentQuestionID].points);
+        ActionManager.CorrectAction();
+
         descriptionText.text = description;
 
         ++currentQuestionID;
@@ -137,18 +155,23 @@ public class QuizTab : RobotUITabs {
     public void WrongAnswer(string description)
     {
         descriptionText.text = description;
+        GameObject.Find("GameLogic").GetComponent<ActionManager>().ActivatePenalty();
+        ActionManager.WrongAction();
     }
 
     public void OnContinueButton()
     {
-        continueButton.gameObject.SetActive(false);
+        Continue();
 
-        gameObject.SetActive(false);
         GameObject.FindObjectOfType<RobotUITabs>().OnTabSwitch(); // switch tab to something else
+        GameObject.FindObjectOfType<RobotManager>().TriggerUI(false); // close UI ?
+    }
 
-        RobotManager manager = GameObject.FindObjectOfType<RobotManager>();
-        manager.ToggleCloseBtn(true); // enable close btn
-        manager.TriggerUI(false); // close UI ?
+    public void Continue()
+    {
+        continueButton.gameObject.SetActive(false);
+        gameObject.SetActive(false);
+        GameObject.FindObjectOfType<RobotManager>().ToggleCloseBtn(true); // enable close btn
     }
 
     public void OnSwitchToInfoTabButton()
@@ -164,5 +187,13 @@ public class QuizTab : RobotUITabs {
         
         if (!value)
             continueButton.gameObject.SetActive(false);
+
+        if (value)
+        {
+            for (int i = 0; i < buttons.Count; i++)
+            {
+                buttons[i].gameObject.SetActive(buttonsActive[i]);
+            }
+        }
     }
 }
