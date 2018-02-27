@@ -383,7 +383,7 @@ public class ActionManager : MonoBehaviour {
 
         if (!menuScene)
         {
-            pointsText.text = points + " / " + totalPoints;
+            pointsText.text = points.ToString();// + " / " + totalPoints;
             percentageText.text = Mathf.RoundToInt(PercentageDone).ToString() + "%";
         }
     }
