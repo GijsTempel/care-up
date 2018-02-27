@@ -96,19 +96,25 @@ public class QuizTab : RobotUITabs {
         Question current = questionList[currentQuestionID];
         transform.Find("QuestionText").GetComponent<Text>().text = current.text;
         
-        for (int i = 0; i < buttons.Count; i++)
+        for (int i = 0; i < current.answers.Count; i++)
         {
             buttons[i].transform.GetChild(0).GetComponent<Text>().text = current.answers[i].text;
         }
 
         buttons[current.answerID].onClick.AddListener(delegate { CorrectAnswer(current.answers[current.answerID].descr); });
-        for (int i = 0; i < buttons.Count; i++)
+        for (int i = 0; i < current.answers.Count; i++)
         {
             if (i != current.answerID)
             {
                 string descr = current.answers[i].descr;
                 buttons[i].onClick.AddListener(delegate { WrongAnswer(descr); });
+                buttons[i].gameObject.SetActive(true);
             }
+        }
+
+        for (int i = current.answers.Count; i < buttons.Count; i++)
+        {
+            buttons[i].gameObject.SetActive(false);
         }
 
         descriptionText.text = "";
