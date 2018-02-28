@@ -92,9 +92,9 @@ public class CameraMode : MonoBehaviour {
                 ToggleCameraMode(Mode.Free);
             }
         }
-        
+
         // handle object preview, close/pick,zoom
-        if (currentMode == Mode.ObjectPreview)
+        if (currentMode == Mode.ObjectPreview && !selectedObject.animationExamine)
         {
             if (controls.keyPreferences.closeObjectView.Pressed())
             {
@@ -210,16 +210,19 @@ public class CameraMode : MonoBehaviour {
         {
             TogglePlayerScript(false);
 
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            if (!selectedObject.animationExamine)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
 
-            #if UNITY_STANDALONE_OSX
-                blur.enabled = true;
-            #elif UNITY_STANDALONE_WIN
-                blur.enabled = true;
-            #else
-                blur.enabled = false;
-            #endif
+                #if UNITY_STANDALONE_OSX
+                    blur.enabled = true;
+                #elif UNITY_STANDALONE_WIN
+                    blur.enabled = true;
+                #else
+                    blur.enabled = false;
+                #endif
+            }
 
             GameObject buttonsParent = Camera.main.transform.Find("UI").Find("ObjectViewButtons").gameObject;
             buttonsParent.transform.GetChild(0).GetComponent<Button>().interactable =
