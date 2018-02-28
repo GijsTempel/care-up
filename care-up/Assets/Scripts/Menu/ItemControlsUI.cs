@@ -84,9 +84,20 @@ public class ItemControlsUI : MonoBehaviour {
                 pickButton.SetActive(false);
                 useButton.SetActive(false);
                 talkButton.SetActive(false);
+
+                examineButton.SetActive(initedObject.GetComponent<ExaminableObject>() != null);
             }
             else
             {
+                if (initedObject.GetComponent<ExaminableObject>() != null)
+                {
+                    examineButton.SetActive(!initedObject.GetComponent<ExaminableObject>().animationExamine);
+                }
+                else
+                {
+                    examineButton.SetActive(false);
+                }
+
                 pickButton.SetActive(initedObject.GetComponent<PickableObject>() != null);
                 useButton.SetActive(initedObject.GetComponent<UsableObject>() != null);
 
@@ -102,7 +113,6 @@ public class ItemControlsUI : MonoBehaviour {
                 dropButton.SetActive(false);
             }
 
-            examineButton.SetActive(initedObject.GetComponent<ExaminableObject>() != null);
             closeButton.SetActive(true);
 
             //talkin removed
