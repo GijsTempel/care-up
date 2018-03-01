@@ -97,7 +97,10 @@ public class ExaminableObject : InteractableObject {
         }
 
         if (animationExamine)
+        {
+            Reset();
             return;
+        }
 
         // disable/endable physics
         GetComponent<Collider>().enabled = !viewMode;
