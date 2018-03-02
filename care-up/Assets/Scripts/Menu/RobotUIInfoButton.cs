@@ -3,26 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RobotUIInfoButton : MonoBehaviour {
-
-    private static Paroxe.PdfRenderer.PDFViewer pdf;
-    private Paroxe.PdfRenderer.PDFAsset asset;
-
-    private void Awake()
-    {
-        if (pdf == null)
-        {
-            pdf = GameObject.FindObjectOfType<Paroxe.PdfRenderer.PDFViewer>();
-        }
-    }
+    
+    private GameObject ui;
 
     public void Set(string name)
     {
-        asset = Resources.Load<Paroxe.PdfRenderer.PDFAsset>("Prefabs\\UI\\" + name);
+        ui = Instantiate(Resources.Load<GameObject>("Prefabs\\UI\\" + name),
+                            Vector3.zero, Quaternion.identity, transform.parent.parent.parent.parent.parent) as GameObject;
+        ui.SetActive(false);
     }
 
     public void Toggle(bool value)
     {
-        pdf.PDFAsset = asset;
-        pdf.ReloadDocument();
+        if (ui != null)
+            ui.SetActive(value);
     }
 }
