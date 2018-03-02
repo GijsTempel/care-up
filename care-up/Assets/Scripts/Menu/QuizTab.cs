@@ -69,9 +69,9 @@ public class QuizTab : RobotUITabs {
             questionList.Add(question);
         }
 
-        descriptionText = transform.Find("Description").GetComponent<Text>();
-        continueButton = transform.Find("Continue").GetComponent<Button>();
-        switchToInfoButton = transform.Find("SwitchToInfo").GetComponent<Button>();
+        descriptionText = transform.GetChild(1).Find("Description").GetComponent<Text>();
+        continueButton = transform.GetChild(1).Find("Continue").GetComponent<Button>();
+        switchToInfoButton = transform.GetChild(1).Find("SwitchToInfo").GetComponent<Button>();
 
         continueButton.gameObject.SetActive(false);
         descriptionText.text = "";
@@ -84,10 +84,10 @@ public class QuizTab : RobotUITabs {
         GameObject.FindObjectOfType<PlayerScript>().quiz = this;
         gameObject.SetActive(false);
 
-        buttons.Add(transform.Find("Answer1").GetComponent<Button>());
-        buttons.Add(transform.Find("Answer2").GetComponent<Button>());
-        buttons.Add(transform.Find("Answer3").GetComponent<Button>());
-        buttons.Add(transform.Find("Answer4").GetComponent<Button>());
+        buttons.Add(transform.GetChild(1).Find("Answer1").GetComponent<Button>());
+        buttons.Add(transform.GetChild(1).Find("Answer2").GetComponent<Button>());
+        buttons.Add(transform.GetChild(1).Find("Answer3").GetComponent<Button>());
+        buttons.Add(transform.GetChild(1).Find("Answer4").GetComponent<Button>());
 
         continueButton.onClick.AddListener(OnContinueButton);
         switchToInfoButton.onClick.AddListener(OnSwitchToInfoTabButton);

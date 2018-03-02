@@ -23,7 +23,7 @@ public class PlayerSpawn : MonoBehaviour {
         player.name = "Player";
 
         RobotUITabInfo infotab = GameObject.FindObjectOfType<RobotUITabInfo>();
-        RobotUIInfoButton[] buttons = infotab.transform.Find("ItemList").GetComponentsInChildren<RobotUIInfoButton>();
+        RobotUIInfoButton[] buttons = infotab.transform.GetChild(1).Find("ItemList").GetComponentsInChildren<RobotUIInfoButton>();
 
         foreach (RobotUIInfoButton b in buttons)
         {
