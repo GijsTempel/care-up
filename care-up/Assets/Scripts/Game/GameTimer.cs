@@ -22,11 +22,14 @@ public class GameTimer : MonoBehaviour {
         timerText = Camera.main.transform.Find("UI (1)").Find("RobotUI").Find("GeneralTab").Find("Timer").Find("Panel").Find("Time").GetComponent<Text>();
     }
 
-    void Update ()
+    void Update()
     {
         currentTime += Time.deltaTime;
 
-        timerText.text = string.Format("{0}:{1:00}", (int)currentTime / 60, (int)currentTime % 60);
+        if (timerText.gameObject.activeSelf)
+        {
+            timerText.text = string.Format("{0}:{1:00}", (int)currentTime / 60, (int)currentTime % 60);
+        }
     }
     
     public void Reset()
