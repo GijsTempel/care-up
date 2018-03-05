@@ -6,11 +6,11 @@ using UnityEngine.EventSystems;
 
 public class RobotUITabs : MonoBehaviour {
 
-    private static List<RobotUITabs> tabs = new List<RobotUITabs>();
+    protected static List<RobotUITabs> tabs = new List<RobotUITabs>();
 
-    private GameObject tabTrigger;
+    protected GameObject tabTrigger;
 
-    private RectTransform[] children;
+    protected RectTransform[] children;
     
     protected virtual void Start()
     {
@@ -65,6 +65,13 @@ public class RobotUITabs : MonoBehaviour {
             }
         }
 
+        if (name == "InfoTab" || name == "QuizTab")
+        {
+            SetTabActive(false);
+            gameObject.SetActive(false);
+            tabs.Remove(this);
+        }
+
         EventTrigger.Entry clickEvent = new EventTrigger.Entry();
         clickEvent.eventID = EventTriggerType.PointerClick;
         clickEvent.callback.AddListener((eventData) => { OnTabSwitch(); });
@@ -73,8 +80,17 @@ public class RobotUITabs : MonoBehaviour {
         tabTrigger.GetComponent<EventTrigger>().triggers.Add(clickEvent);
     }
 
-    private void OnTabSwitch()
+    public void OnTabSwitch()
     {
+        QuizTab tab = GameObject.FindObjectOfType<QuizTab>();
+        if (tab != null)
+        {
+            if (tab.transform.Find("Continue") != null && tab.transform.Find("Continue").gameObject.activeSelf)
+            {
+                GameObject.FindObjectOfType<QuizTab>().Continue();
+            }
+        }
+
         foreach (RobotUITabs t in tabs)
         {
             t.SetTabActive(false);
@@ -87,12 +103,12 @@ public class RobotUITabs : MonoBehaviour {
     {
         foreach (RectTransform child in children)
         {
-            child.gameObject.SetActive(value);
+            if (child.name != "Tab" && child.parent.name != "Tab" && child.GetComponent<RobotUITabs>() == null)
+            {
+                child.gameObject.SetActive(value);
+            }
         }
 
         tabTrigger.GetComponent<Image>().color = new Color(0, 0, 1.0f, value ? 0.6f : 0.3f);
-        tabTrigger.SetActive(true);
-        tabTrigger.transform.GetChild(0).gameObject.SetActive(true);
-        gameObject.SetActive(true);
     }
 }

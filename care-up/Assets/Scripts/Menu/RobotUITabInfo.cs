@@ -17,7 +17,7 @@ public class RobotUITabInfo : RobotUITabs {
     {
         base.Start();
 
-        Transform t = transform.GetChild(1).GetChild(0).GetChild(0).GetChild(0).GetChild(0);
+        Transform t = transform.GetChild(1).GetChild(1).GetChild(0).GetChild(0).GetChild(0).GetChild(0);
         if ( t != null )
         {
             OnItemButtonClick(t.GetComponent<RectTransform>());

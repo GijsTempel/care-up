@@ -4,18 +4,25 @@ using UnityEngine;
 
 public class RobotUIInfoButton : MonoBehaviour {
     
-    private GameObject ui;
+    private static Paroxe.PdfRenderer.PDFViewer pdf;
+    private Paroxe.PdfRenderer.PDFAsset asset;
 
+    private void Awake()
+    {
+        if (pdf == null)
+        {
+            pdf = GameObject.FindObjectOfType<Paroxe.PdfRenderer.PDFViewer>();
+        }
+    }
+    
     public void Set(string name)
     {
-        ui = Instantiate(Resources.Load<GameObject>("Prefabs\\UI\\" + name),
-                            Vector3.zero, Quaternion.identity, transform.parent.parent.parent.parent.parent) as GameObject;
-        ui.SetActive(false);
+        asset = Resources.Load<Paroxe.PdfRenderer.PDFAsset>("Prefabs\\UI\\" + name);
     }
 
     public void Toggle(bool value)
     {
-        if (ui != null)
-            ui.SetActive(value);
+        pdf.PDFAsset = asset;
+        pdf.ReloadDocument();
     }
 }

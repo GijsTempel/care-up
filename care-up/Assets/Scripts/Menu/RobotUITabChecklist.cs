@@ -11,7 +11,7 @@ public class RobotUITabChecklist : RobotUITabs {
     protected override void Start()
     {
         base.Start();
-        items = transform.GetChild(1).GetChild(0).GetChild(0).transform.GetComponentsInChildren<Text>(true);
+        items = transform.GetChild(1).GetChild(0).GetChild(0).GetChild(0).transform.GetComponentsInChildren<Text>(true);
 
         foreach(Text i in items)
         {
@@ -20,9 +20,12 @@ public class RobotUITabChecklist : RobotUITabs {
 
         int index = 0;
         ActionManager manager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
-        foreach(CareUp.Actions.Action a in manager.ActionList)
+        foreach (CareUp.Actions.Action a in manager.ActionList)
         {
-            items[index++].text = a.shortDescr;
+            if (index < items.Length)
+            {
+                items[index++].text = a.shortDescr;
+            }
         }
     }
 

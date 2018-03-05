@@ -84,9 +84,20 @@ public class ItemControlsUI : MonoBehaviour {
                 pickButton.SetActive(false);
                 useButton.SetActive(false);
                 talkButton.SetActive(false);
+
+                examineButton.SetActive(initedObject.GetComponent<ExaminableObject>() != null);
             }
             else
             {
+                if (initedObject.GetComponent<ExaminableObject>() != null)
+                {
+                    examineButton.SetActive(!initedObject.GetComponent<ExaminableObject>().animationExamine);
+                }
+                else
+                {
+                    examineButton.SetActive(false);
+                }
+
                 pickButton.SetActive(initedObject.GetComponent<PickableObject>() != null);
                 useButton.SetActive(initedObject.GetComponent<UsableObject>() != null);
 
@@ -102,7 +113,6 @@ public class ItemControlsUI : MonoBehaviour {
                 dropButton.SetActive(false);
             }
 
-            examineButton.SetActive(initedObject.GetComponent<ExaminableObject>() != null);
             closeButton.SetActive(true);
 
             //talkin removed
@@ -117,6 +127,18 @@ public class ItemControlsUI : MonoBehaviour {
                     cameraMode.ToggleCameraMode(CameraMode.Mode.Free);
                     return;
                 }
+            }
+            else if (pickButton.activeSelf && !examineButton.activeSelf)
+            {
+                Pick();
+            }
+            else if(!pickButton.activeSelf && examineButton.activeSelf && !handsInventory.IsInHand(initedObject))
+            {
+                Examine();
+            }
+            else if (useButton.activeSelf)
+            {
+                Use();
             }
             else
             {
@@ -150,9 +172,9 @@ public class ItemControlsUI : MonoBehaviour {
 
                 useOnNTButton.transform.GetChild(0).GetComponent<Text>().text =
                     ((actionManager.CurrentUseOnInfo[0] == initedObject.name && actionManager.CurrentUseOnInfo[1] == "") ?
-                    actionManager.CurrentDescription : useOnNTtext);
+                    actionManager.CurrentButtonText : useOnNTtext);
                 useButton.transform.GetChild(0).GetComponent<Text>().text =
-                    (actionManager.CurrentUseObject == initedObject.name) ? actionManager.CurrentDescription : useText;
+                    (actionManager.CurrentUseObject == initedObject.name) ? actionManager.CurrentButtonText : useText;
             }
         }
     }

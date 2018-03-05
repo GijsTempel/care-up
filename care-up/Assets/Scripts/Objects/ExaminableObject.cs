@@ -14,6 +14,7 @@ public class ExaminableObject : InteractableObject {
 
     public Vector3 examineRotation;
     public bool audioExamine = false;
+    public bool animationExamine = false;
 
     [Serializable]
     public class ViewSettings
@@ -64,19 +65,41 @@ public class ExaminableObject : InteractableObject {
         if (viewMode)
         {
             tutorial_picked = true;
-            SavePosition();
-            transform.rotation = Camera.main.transform.rotation * Quaternion.Euler(examineRotation);
+            if (!animationExamine)
+            {
+                SavePosition();
+                transform.rotation = Camera.main.transform.rotation * Quaternion.Euler(examineRotation);
+            }
+            else
+            {
+                PlayerAnimationManager.PlayAnimation("closeup_" +
+                (inventory.LeftHandObject == gameObject ? "left" : "right"));
+            }
         }
         else
         {
             tutorial_closed = true;
-            LoadPosition();
-
-            if (inventory.LeftHandObject == gameObject ||
-                inventory.RightHandObject == gameObject)
+            if (!animationExamine)
             {
-                transform.localEulerAngles = Vector3.zero;
+                LoadPosition();
+
+                if (inventory.LeftHandObject == gameObject ||
+                    inventory.RightHandObject == gameObject)
+                {
+                    transform.localEulerAngles = Vector3.zero;
+                }
             }
+            else
+            {
+                PlayerAnimationManager.PlayAnimation("faraway_" +
+                (inventory.LeftHandObject == gameObject ? "left" : "right"));
+            }
+        }
+
+        if (animationExamine)
+        {
+            Reset();
+            return;
         }
 
         // disable/endable physics
@@ -120,6 +143,9 @@ public class ExaminableObject : InteractableObject {
     /// </summary>
     public void ViewModeUpdate()
     {
+        if (animationExamine)
+            return;
+
         transform.position = Camera.main.transform.position
             + Camera.main.transform.forward * viewSettings.distanceFromCamera;
 

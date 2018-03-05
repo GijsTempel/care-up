@@ -46,6 +46,8 @@ public class ActionManager : MonoBehaviour {
     private int points = 0;              // current points
     private int currentActionIndex = 0;  // index of current action
     private Action currentAction;        // current action instance
+    private int currentPointAward = 1;
+    private bool penalized = false;
 
     // GameObjects that show player next step when hint used
     private List<GameObject> particleHints;
@@ -278,38 +280,44 @@ public class ActionManager : MonoBehaviour {
                 buttonText = descr;
             }
 
+            int pointsValue = 1;
+            if (action.Attributes["points"] != null)
+            {
+                int.TryParse(action.Attributes["points"].Value, out pointsValue);
+            }
+
             switch (type)
             {
                 case "combine":
                     string left = action.Attributes["left"].Value;
                     string right = action.Attributes["right"].Value;
-                    actionList.Add(new CombineAction(left, right, index, descr, fDescr, audio, extra));
+                    actionList.Add(new CombineAction(left, right, index, descr, fDescr, audio, extra, pointsValue));
                     break;
                 case "use":
                     string use = action.Attributes["value"].Value;
-                    actionList.Add(new UseAction(use, index, descr, fDescr, audio, extra, buttonText));
+                    actionList.Add(new UseAction(use, index, descr, fDescr, audio, extra, buttonText, pointsValue));
                     break;
                 case "talk":
                     string topic = action.Attributes["topic"].Value;
-                    actionList.Add(new TalkAction(topic, index, descr, fDescr, audio, extra));
+                    actionList.Add(new TalkAction(topic, index, descr, fDescr, audio, extra, pointsValue));
                     break;
                 case "useOn":
                     string useItem = action.Attributes["item"].Value;
                     string target = action.Attributes["target"].Value;
-                    actionList.Add(new UseOnAction(useItem, target, index, descr, fDescr, audio, extra, buttonText));
+                    actionList.Add(new UseOnAction(useItem, target, index, descr, fDescr, audio, extra, buttonText, pointsValue));
                     break;
                 case "examine":
                     string exItem = action.Attributes["item"].Value;
                     string expected = action.Attributes["expected"].Value;
-                    actionList.Add(new ExamineAction(exItem, expected, index, descr, fDescr, audio, extra));
+                    actionList.Add(new ExamineAction(exItem, expected, index, descr, fDescr, audio, extra, pointsValue));
                     break;
                 case "pickUp":
                     string itemPicked = action.Attributes["item"].Value;
-                    actionList.Add(new PickUpAction(itemPicked, index, descr, fDescr, audio, extra));
+                    actionList.Add(new PickUpAction(itemPicked, index, descr, fDescr, audio, extra, pointsValue));
                     break;
                 case "sequenceStep":
                     string stepName = action.Attributes["value"].Value;
-                    actionList.Add(new SequenceStepAction(stepName, index, descr, fDescr, audio, extra));
+                    actionList.Add(new SequenceStepAction(stepName, index, descr, fDescr, audio, extra, pointsValue));
                     break;
                 default:
                     Debug.LogError("No action type found: " + type);
@@ -328,8 +336,8 @@ public class ActionManager : MonoBehaviour {
 
         currentAction = actionList.First();
         
-        pointsText = Camera.main.transform.Find("UI (1)").Find("RobotUI").Find("GeneralTab").Find("Points").Find("Panel").Find("PointsText").GetComponent<Text>();
-        percentageText = Camera.main.transform.Find("UI (1)").Find("RobotUI").Find("GeneralTab").Find("Percentage").Find("Panel").Find("PointsText").GetComponent<Text>();
+        pointsText = Camera.main.transform.Find("UI (1)").Find("RobotUI").Find("GeneralTab").GetChild(1).Find("Points").Find("Panel").Find("PointsText").GetComponent<Text>();
+        percentageText = Camera.main.transform.Find("UI (1)").Find("RobotUI").Find("GeneralTab").GetChild(1).Find("Percentage").Find("Panel").Find("PointsText").GetComponent<Text>();
     }
 
     /// <summary>
@@ -375,8 +383,15 @@ public class ActionManager : MonoBehaviour {
 
         if (!menuScene)
         {
-            pointsText.text = points + " / " + totalPoints;
-            percentageText.text = Mathf.RoundToInt(PercentageDone).ToString() + "%";
+            if (pointsText.gameObject.activeSelf)
+            {
+                pointsText.text = points.ToString();// + " / " + totalPoints;
+            }
+
+            if (percentageText.gameObject.activeSelf)
+            {
+                percentageText.text = Mathf.RoundToInt(PercentageDone).ToString() + "%";
+            }
         }
     }
 
@@ -558,9 +573,12 @@ public class ActionManager : MonoBehaviour {
             Camera.main.transform.Find("UI").Find("WrongAction").
                 GetComponent<TimedPopUp>().Set(sublist[0].extraDescr);
             ActionManager.WrongAction();
+
+            penalized = true;
         }
         else
         {
+            currentPointAward = currentAction.pointValue;
             List<Action> actionsLeft = actionList.Where(action =>
                 action.SubIndex == currentActionIndex &&
                 action.matched == false).ToList();
@@ -704,11 +722,33 @@ public class ActionManager : MonoBehaviour {
 
     public void UpdatePoints(int value)
     {
+        if (value <= 0)
+            return;
+
+        value *= (penalized ? currentPointAward/2 : currentPointAward);
+        penalized = false;
+
         points += value;
 
         if (points < 0)
         {
             points = 0;
         }
+    }
+
+    public void UpdatePointsDirectly(int value)
+    {
+        points += (penalized ? value/2 : value);
+        penalized = false;
+
+        if (points < 0)
+        {
+            points = 0;
+        }
+    }
+
+    public void ActivatePenalty()
+    {
+        penalized = true;
     }
 }
