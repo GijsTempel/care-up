@@ -27,6 +27,8 @@ public class RobotUITabChecklist : RobotUITabs {
                 items[index++].text = a.shortDescr;
             }
         }
+
+        current = 0;
     }
 
     public static void StrikeStep()
