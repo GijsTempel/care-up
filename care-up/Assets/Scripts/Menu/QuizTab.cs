@@ -106,7 +106,7 @@ public class QuizTab : RobotUITabs {
         OnTabSwitch();
 
         Question current = questionList[currentQuestionID];
-        transform.Find("QuestionText").GetComponent<Text>().text = current.text;
+        transform.GetChild(1).Find("QuestionText").GetComponent<Text>().text = current.text;
         
         for (int i = 0; i < current.answers.Count; i++)
         {
