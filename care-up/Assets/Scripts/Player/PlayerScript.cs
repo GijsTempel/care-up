@@ -137,10 +137,10 @@ public class PlayerScript : MonoBehaviour {
 
     private void Update()
     {
-        /*if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             quiz.NextQuizQuestion(); // trigger quiz question
-        }*/
+        }
 
         if (prefs != null)
         {

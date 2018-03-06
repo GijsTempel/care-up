@@ -35,7 +35,9 @@ public class PlayerAnimationManager : MonoBehaviour {
     {
         animationController.SetTrigger(name);
 
-        if (name != "LeftPick" && name != "RightPick")
+        if (name != "LeftPick" && name != "RightPick" &&
+            name != "closeup_left" && name != "closeup_right" &&
+            name != "faraway_left" && name != "faraway_right")
         {
             animationController.SetTrigger("S " + name);
         }

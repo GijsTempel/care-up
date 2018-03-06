@@ -65,13 +65,6 @@ public class RobotUITabs : MonoBehaviour {
             }
         }
 
-        if (name == "InfoTab" || name == "QuizTab")
-        {
-            SetTabActive(false);
-            gameObject.SetActive(false);
-            tabs.Remove(this);
-        }
-
         EventTrigger.Entry clickEvent = new EventTrigger.Entry();
         clickEvent.eventID = EventTriggerType.PointerClick;
         clickEvent.callback.AddListener((eventData) => { OnTabSwitch(); });

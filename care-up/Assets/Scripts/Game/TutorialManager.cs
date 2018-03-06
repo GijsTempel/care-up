@@ -266,6 +266,7 @@ public class TutorialManager : MonoBehaviour {
                         particleHint.transform.position = patientRecords.transform.position;
                         UItext.text = "Sommige objecten dien je te controleren. Denk hierbij aan de toedienlijst, de cliëntgevens en het medicijn. Laten we als eerste de patiëntgegevens controleren. Klik op de patiëntgegevens, dit opent het optiemenu. We zien nu de optie 'Controleren' i.p.v. 'Gebruiken'. Dit komt omdat je de patiëntgegevens niet hoeft te gebruiken maar moet controleren. Kies in het optiemenu voor de optie 'Controleren' om de 'Bekijk modus' te openen.  ";
                         patientRecords.tutorial_picked = false;
+                        itemToPick = "PatientRecords";
                     }
                     break;
                 case TutorialStep.ExamineRecords:
@@ -275,6 +276,7 @@ public class TutorialManager : MonoBehaviour {
                         currentStep = TutorialStep.CloseRecords;
                         particleHint.SetActive(false);
                         UItext.text = "Dit is de 'Bekijk modus'. Hier kun je objecten beter bekijken en controleren. Je kunt de 'Bekijk modus' van een object sluiten door te klikken op de knop 'Sluiten'. Probeer nu de 'Bekijk modus' sluiten. ";
+                        itemToDrop = "PatientRecords";
                     }
                     break;
                 case TutorialStep.CloseRecords:
@@ -286,6 +288,7 @@ public class TutorialManager : MonoBehaviour {
                         particleHint.transform.position = prescriptionForm.transform.position;
                         UItext.text = "De patiëntgegevens zijn gecontroleerd. Laten wij dit nu vergelijken met de toedienlijst door deze ook te controleren. Klik op de toedienlijst, kies vervolgens de optie 'Controleren'.";
                         prescriptionForm.tutorial_picked = false;
+                        itemToPick = "PrescriptionForm";
                     }
                     break;
                 case TutorialStep.ExaminePrescription:
@@ -294,6 +297,7 @@ public class TutorialManager : MonoBehaviour {
                         currentStep = TutorialStep.ClosePrescription;
                         particleHint.SetActive(false);
                         UItext.text = "Door de 'Bekijk modus' te openen van een object controleer je het object ook meteen. De toedienlijst is nu gecontroleerd net zoals de patiëntgegevens aangezien je deze eerder al hebt bekeken in de 'Bekijk modus'. Sluit nu de 'Bekijk modus' door te klikken op de 'Sluiten' knop.";
+                        itemToDrop = "PrescriptionForm";
                     }
                     break;
                 case TutorialStep.ClosePrescription:
@@ -304,6 +308,7 @@ public class TutorialManager : MonoBehaviour {
                         particleHint.transform.position = medicine.transform.position;
                         particleHint.SetActive(true);
                         UItext.text = "Controleer nu het medicijn door erop te klikken en in het optiemenu te kiezen voor de optie 'Controleren'.";
+                        itemToPick = "Medicine";
                     }
                     break;
                 case TutorialStep.ExamineMedicine:
@@ -311,6 +316,7 @@ public class TutorialManager : MonoBehaviour {
                     {
                         currentStep = TutorialStep.CloseMedicine;
                         UItext.text = "Goed, zoals je ziet kun je het medicijn naast terugleggen ook oppakken. We hebben het medicijn op dit moment nog niet nodig en hoeven hem dus niet op te paksken. Het medicijn is gecontroleerd omdat we de 'Bekijk modus' hebben geopend. We kunnen het medicijn dus terugleggen op het werkveld door op de knop 'Sluiten' te drukken.";
+                        itemToDrop = "Medicine";
                     }
                     break;
                 case TutorialStep.CloseMedicine:
