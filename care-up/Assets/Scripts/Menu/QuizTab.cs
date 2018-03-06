@@ -89,7 +89,16 @@ public class QuizTab : RobotUITabs {
         buttons.Add(transform.GetChild(1).Find("Answer3").GetComponent<Button>());
         buttons.Add(transform.GetChild(1).Find("Answer4").GetComponent<Button>());
 
+        if (continueButton == null)
+        {
+            continueButton = transform.GetChild(1).Find("Continue").GetComponent<Button>();
+        }
         continueButton.onClick.AddListener(OnContinueButton);
+
+        if (switchToInfoButton == null)
+        {
+            switchToInfoButton = transform.GetChild(1).Find("SwitchToInfo").GetComponent<Button>();
+        }
         switchToInfoButton.onClick.AddListener(OnSwitchToInfoTabButton);
     }
 
@@ -184,11 +193,19 @@ public class QuizTab : RobotUITabs {
     protected override void SetTabActive(bool value)
     {
         base.SetTabActive(value);
-        
-        if (!value)
-            continueButton.gameObject.SetActive(false);
 
-        if (value)
+        if (!value)
+        {
+            if (continueButton != null)
+            {
+                continueButton.gameObject.SetActive(false);
+            }
+            else
+            {
+                transform.GetChild(1).Find("Continue").gameObject.SetActive(false);
+            }
+        }
+        else
         {
             for (int i = 0; i < buttons.Count; i++)
             {
