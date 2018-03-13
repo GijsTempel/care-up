@@ -198,10 +198,13 @@ namespace AssetBundles
 		{
 	#if UNITY_EDITOR
 			Log (LogType.Info, "Simulation Mode: " + (SimulateAssetBundleInEditor ? "Enabled" : "Disabled"));
-	#endif
-	
-			var go = new GameObject("AssetBundleManager", typeof(AssetBundleManager));
-			DontDestroyOnLoad(go);
+#endif
+
+            if (GameObject.FindObjectOfType<AssetBundleManager>() == null)
+            {
+                var go = new GameObject("AssetBundleManager", typeof(AssetBundleManager));
+                DontDestroyOnLoad(go);
+            }
 		
 	#if UNITY_EDITOR	
 			// If we're in Editor simulation mode, we don't need the manifest assetBundle.

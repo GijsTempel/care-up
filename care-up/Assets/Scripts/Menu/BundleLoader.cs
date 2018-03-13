@@ -7,7 +7,7 @@ public class BundleLoader : MonoBehaviour {
 
     string sceneAssetBundle;
     string sceneName;
-
+    
     public IEnumerator Load(string scene, string bundle)
     {
         sceneAssetBundle = bundle;
@@ -16,7 +16,7 @@ public class BundleLoader : MonoBehaviour {
         yield return StartCoroutine(Initialize());
 
         // Load level.
-        yield return StartCoroutine(InitializeLevelAsync(sceneName, true));
+        yield return StartCoroutine(InitializeLevelAsync(sceneName, false));
     }
 
     // Initialize the downloading url and AssetBundleManifest object.

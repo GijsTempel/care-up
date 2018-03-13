@@ -222,7 +222,11 @@ public class bl_SceneLoader : MonoBehaviour
     /// </summary>
     public void LoadLevel(string level, string bundle = "")
     {
-        Debug.Log(bundle + " ::: " + level);
+        string message = "Loading level \"" + level + "\"";
+        if (bundle != "")
+            message += " from bundle \"" + bundle + "\"";
+        Debug.Log(message);
+
         CurrentLoadLevel = Manager.GetSceneInfo(level);
         if (CurrentLoadLevel == null)
             return;
