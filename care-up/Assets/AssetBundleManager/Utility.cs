@@ -31,7 +31,7 @@ namespace AssetBundles
 				return "WebGL";
 			case BuildTarget.StandaloneWindows:
 			case BuildTarget.StandaloneWindows64:
-				return "WindowsStandalone";
+				return "StandaloneWindows";
 			case BuildTarget.StandaloneOSX:
 				return "OSX";
 				// Add more build targets for your own.
@@ -53,7 +53,7 @@ namespace AssetBundles
 			case RuntimePlatform.WebGLPlayer:
 				return "WebGL";
 			case RuntimePlatform.WindowsPlayer:
-				return "WindowsStandalone";
+				return "StandaloneWindows";
 			case RuntimePlatform.OSXPlayer:
 				return "OSX";
 				// Add more build targets for your own.
