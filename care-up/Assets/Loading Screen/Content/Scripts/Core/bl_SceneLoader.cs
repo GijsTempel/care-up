@@ -220,18 +220,29 @@ public class bl_SceneLoader : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    public void LoadLevel(string level)
+    public void LoadLevel(string level, string bundle = "")
     {
+        string message = "Loading level \"" + level + "\"";
+        if (bundle != "")
+            message += " from bundle \"" + bundle + "\"";
+        Debug.Log(message);
+
         CurrentLoadLevel = Manager.GetSceneInfo(level);
         if (CurrentLoadLevel == null)
             return;
 
         SetupUI(CurrentLoadLevel);
-        StartCoroutine(StartAsyncOperation(CurrentLoadLevel.SceneName));
+        StartCoroutine(StartAsyncOperation(CurrentLoadLevel.SceneName, bundle));
         if (CurrentLoadLevel.LoadingType == LoadingType.Fake)
         {
             StartCoroutine(StartFakeLoading());
         }
+    }
+
+    // unity is too dumb to allow functions with 2 parameters in editor
+    public void LoadLevelButton(string level)
+    {
+        LoadLevel(level);
     }
 
     /// <summary>
@@ -303,24 +314,33 @@ public class bl_SceneLoader : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    private IEnumerator StartAsyncOperation(string level)
+    private IEnumerator StartAsyncOperation(string level, string bundle = "")
     {
         while(RootAlpha.alpha < 1)
         {
             RootAlpha.alpha += DeltaTime * FadeInSpeed;
             yield return null;
         }
-        async = bl_SceneLoaderUtils.LoadLevelAsync(level);
-        if (GetSkipType != SceneSkipType.InstantComplete || CurrentLoadLevel.LoadingType == LoadingType.Fake)
+
+        if (bundle != "")
         {
-            async.allowSceneActivation = false;
+            BundleLoader loader = GameObject.FindObjectOfType<BundleLoader>();
+            yield return StartCoroutine(loader.Load(level, bundle));
         }
         else
         {
-            async.allowSceneActivation = true;
+            async = bl_SceneLoaderUtils.LoadLevelAsync(level, bundle);
+            if (GetSkipType != SceneSkipType.InstantComplete || CurrentLoadLevel.LoadingType == LoadingType.Fake)
+            {
+                async.allowSceneActivation = false;
+            }
+            else
+            {
+                async.allowSceneActivation = true;
+            }
+            isOperationStarted = true;
+            yield return async;
         }
-        isOperationStarted = true;
-        yield return async;
     }
 
     /// <summary>

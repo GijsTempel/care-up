@@ -7,12 +7,12 @@ namespace Lovatto.SceneLoader
     /// </summary>
     public class bl_TriggerLoad : MonoBehaviour
     {
-
+        public string BundleName;
         public string SceneName;
 
         private void OnTriggerEnter(Collider other)
         {
-            bl_SceneLoaderUtils.GetLoader.LoadLevel(SceneName);
+            bl_SceneLoaderUtils.GetLoader.LoadLevel(BundleName, SceneName);
         }
     }
 }

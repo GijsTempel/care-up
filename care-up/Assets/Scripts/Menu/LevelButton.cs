@@ -7,6 +7,7 @@ public class LevelButton : MonoBehaviour {
 
     private static LoadingScreen loadingScreen;
 
+    public string bundleName;
     public string sceneName;
     public bool multiple;
     public Sprite image;
@@ -34,6 +35,7 @@ public class LevelButton : MonoBehaviour {
         {
             sceneInfoPanel.Find("Image").GetComponent<Image>().sprite = image;
         }
+        sceneInfoPanel.Find("Start").GetComponent<LevelButton>().bundleName = bundleName;
         sceneInfoPanel.Find("Start").GetComponent<LevelButton>().sceneName = sceneName;
         sceneInfoPanel.Find("Name").GetComponent<Text>().text = 
             transform.Find("Name").GetComponent<Text>().text;
@@ -59,6 +61,7 @@ public class LevelButton : MonoBehaviour {
                     from.transform.Find("Text").GetComponent<Text>().text;
 
             to.sceneName = from.sceneName;
+            to.bundleName = from.bundleName;
             to.description = from.description;
             to.result = from.result;
             to.image = from.image;
@@ -71,6 +74,6 @@ public class LevelButton : MonoBehaviour {
     public void OnStartButtonClick()
     {
         //loadingScreen.LoadLevel(sceneName);
-        bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName);
+        bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
     }
 }

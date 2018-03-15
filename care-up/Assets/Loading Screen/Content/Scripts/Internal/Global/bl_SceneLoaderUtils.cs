@@ -53,7 +53,7 @@ public static class bl_SceneLoaderUtils
     /// 
     /// </summary>
     /// <param name="scene"></param>
-    public static AsyncOperation LoadLevelAsync(string scene)
+    public static AsyncOperation LoadLevelAsync(string scene, string bundle = "")
     {
 #if UNITY_5_3 || UNITY_5_4|| UNITY_5_3_OR_NEWER || UNITY_2017
         return  SceneManager.LoadSceneAsync(scene);

@@ -63,6 +63,8 @@ public class LevelSelectionScene_UI : MonoBehaviour
                     doors[i].transform.Find("Name").GetComponent<Text>().text
                         = scene.Attributes["name"].Value;
 
+                    string bundleName = scene.Attributes["bundleName"].Value;
+
                     int count = 0;
                     foreach (XmlNode variation in scene.ChildNodes)
                     {
@@ -73,6 +75,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
                         descr.Find("Text").GetComponent<Text>().text
                             = variation.Attributes["displayname"].Value;
                         descr.GetComponent<LevelSelectionScene_UI_Option>().sceneName = sceneName;
+                        descr.GetComponent<LevelSelectionScene_UI_Option>().bundleName = bundleName;
                         descr.GetComponent<LevelSelectionScene_UI_Option>().description = variation.Attributes["description"].Value;
                         descr.GetComponent<LevelSelectionScene_UI_Option>().image =
                             Resources.Load<Sprite>("Sprites/ScenePreview/" + variation.Attributes["image"].Value);
@@ -92,6 +95,8 @@ public class LevelSelectionScene_UI : MonoBehaviour
                         {
                             descr.GetComponent<LevelSelectionScene_UI_Option>().sceneName =
                                 doors[i].sceneName = sceneName;
+                            descr.GetComponent<LevelSelectionScene_UI_Option>().bundleName =
+                                doors[i].bundleName = bundleName;
 
                             descr.parent.Find("Description").GetComponent<Text>().text = variation.Attributes["description"].Value;
                             if (ppManager.GetSceneCompleted(sceneName))
@@ -108,6 +113,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
                         else
                         {
                             descr.GetComponent<LevelSelectionScene_UI_Option>().sceneName = sceneName;
+                            descr.GetComponent<LevelSelectionScene_UI_Option>().bundleName = bundleName;
                         }
                     }
                 }
@@ -116,6 +122,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
                     doors[i].multiple = false;
 
                     doors[i].sceneName = scene.Attributes["sceneName"].Value;
+                    doors[i].bundleName = scene.Attributes["bundleName"].Value;
                     Transform descr = doors[i].transform;
                     descr.Find("Name").GetComponent<Text>().text = scene.Attributes["name"].Value;
                     if (scene.Attributes["description"].Value != "")

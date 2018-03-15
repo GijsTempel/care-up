@@ -9,6 +9,7 @@ public class LevelSelectionScene_UI_Option : MonoBehaviour {
 
     private bool selected = false;
 
+    public string bundleName;
     public string sceneName;
     public string description;
     public string result;
@@ -20,7 +21,8 @@ public class LevelSelectionScene_UI_Option : MonoBehaviour {
         if (!selected)
         {
             transform.parent.Find("Start").GetComponent<LevelButton>().sceneName = sceneName;
-            
+            transform.parent.Find("Start").GetComponent<LevelButton>().bundleName = bundleName;
+
             transform.parent.Find("Description").GetComponent<Text>().text = description;
             transform.parent.Find("Result").GetComponent<Text>().text = result;
             
