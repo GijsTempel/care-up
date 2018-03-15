@@ -339,8 +339,8 @@ public class ActionManager : MonoBehaviour {
 
     private void Start()
     {
-        pointsText = Camera.main.transform.Find("UI (1)").Find("RobotUI").Find("GeneralTab").GetChild(1).Find("Points").Find("Panel").Find("PointsText").GetComponent<Text>();
-        percentageText = Camera.main.transform.Find("UI (1)").Find("RobotUI").Find("GeneralTab").GetChild(1).Find("Percentage").Find("Panel").Find("PointsText").GetComponent<Text>();
+        pointsText = Camera.main.transform.Find("UI (1)").Find("RobotUI").Find("GeneralTab").Find("GeneralDynamicCanvas").Find("Points").Find("Panel").Find("PointsText").GetComponent<Text>();
+        percentageText = Camera.main.transform.Find("UI (1)").Find("RobotUI").Find("GeneralTab").Find("GeneralDynamicCanvas").Find("Percentage").Find("Panel").Find("PointsText").GetComponent<Text>();
     }
 
     /// <summary>
