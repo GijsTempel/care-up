@@ -107,6 +107,7 @@ public class InteractableObject : MonoBehaviour {
     {
         if (cameraMode.CurrentMode == CameraMode.Mode.Free && !player.away)
         {
+            bool selectedIsInteractable = (controls.SelectedObject != null && controls.SelectedObject.GetComponent<InteractableObject>() != null);
             if (controls.SelectedObject == gameObject && !cameraMode.animating && !player.UIHover)
             {
                 if (controls.CanInteract)
@@ -118,7 +119,6 @@ public class InteractableObject : MonoBehaviour {
 
                     if (!itemDescription.activeSelf)
                     {
-                        itemDescription.GetComponentInChildren<Text>().text = (description == "") ? name : description;
                        // Transform icons = itemDescription.transform.GetChild(0).GetChild(0);
                        // icons.Find("UseIcon"). gameObject.SetActive(false);//gameObject.GetComponent<UsableObject>() != null);
                        // icons.Find("TalkIcon").gameObject.SetActive(false);//gameObject.GetComponent<PersonObject>() != null);
@@ -126,6 +126,8 @@ public class InteractableObject : MonoBehaviour {
                        // icons.Find("ExamIcon").gameObject.SetActive(false);//gameObject.GetComponent<ExaminableObject>() != null);
                         itemDescription.SetActive(true);
                     }
+
+                    itemDescription.GetComponentInChildren<Text>().text = (description == "") ? name : description;
                 }
                 else if (!controls.CanInteract && rend.material.shader == onMouseOverShader)
                 {
@@ -138,6 +140,10 @@ public class InteractableObject : MonoBehaviour {
                 if (rend.material.shader == onMouseOverShader)
                 {
                     SetShaderTo(onMouseExitShader);
+                }
+
+                if (!selectedIsInteractable)
+                {
                     itemDescription.SetActive(false);
                 }
             }
