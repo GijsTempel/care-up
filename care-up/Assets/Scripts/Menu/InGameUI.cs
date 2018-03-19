@@ -162,13 +162,13 @@ public class InGameUI : MonoBehaviour {
         GameObject.Find("Preferences").GetComponent<SaveLoadManager>().Save();
     }
 
-    public void OnOptionsButtonClick()
+    /*public void OnOptionsButtonClick()
     {
         main.gameObject.SetActive(false);
         options.gameObject.SetActive(true);
 
         gamepadDefault = options.Find("BackButton").GetComponent<Button>();
-    }
+    }*/
 
     public void OnOptionsBackButtonClick()
     {
@@ -183,14 +183,14 @@ public class InGameUI : MonoBehaviour {
             resolutions[resolutionDropdown.value].height, fullscrToggle.isOn);
     }
 
-    public void OnControlsButtonClick()
+    /*public void OnControlsButtonClick()
     {
         main.gameObject.SetActive(false);
         controlsUI.gameObject.SetActive(true);
 
         gamepadDefault = controlsUI.Find("BackButton").GetComponent<Button>();
 
-    }
+    }*/
 
     public void OnControlsBackButtonClick()
     {
