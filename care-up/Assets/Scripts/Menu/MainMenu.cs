@@ -35,7 +35,7 @@ public class MainMenu : MonoBehaviour {
             GameObject canvas = GameObject.Find("Canvas");
 
             canvas.transform.Find("MainMenu").gameObject.SetActive(false);
-            canvas.transform.Find("Logo").gameObject.SetActive(false);
+            //canvas.transform.Find("Logo").gameObject.SetActive(false);
            // canvas.transform.Find("OptionsBtn").gameObject.SetActive(false);
 
             canvas.transform.Find("TutorialPopUp").gameObject.SetActive(true);
@@ -74,7 +74,7 @@ public class MainMenu : MonoBehaviour {
         GameObject canvas = GameObject.Find("Canvas");
 
         //canvas.transform.Find("MainMenu").gameObject.SetActive(false);
-        canvas.transform.Find("Logo").gameObject.SetActive(false);
+		canvas.transform.Find("MainMenu").gameObject.SetActive(false);
         //canvas.transform.Find("OptionsBtn").gameObject.SetActive(false);
         canvas.transform.Find("Opties").gameObject.SetActive(true);
     }
@@ -84,7 +84,7 @@ public class MainMenu : MonoBehaviour {
         GameObject canvas = GameObject.Find("Canvas");
 
         //canvas.transform.Find("MainMenu").gameObject.SetActive(true);
-        canvas.transform.Find("Logo").gameObject.SetActive(true);
+		canvas.transform.Find("MainMenu").gameObject.SetActive(true);
         //canvas.transform.Find("OptionsBtn").gameObject.SetActive(true);
         canvas.transform.Find("Opties").gameObject.SetActive(false);
     }
@@ -94,7 +94,7 @@ public class MainMenu : MonoBehaviour {
         GameObject canvas = GameObject.Find("Canvas");
 
         //canvas.transform.Find("MainMenu").gameObject.SetActive(false);
-        canvas.transform.Find("Logo").gameObject.SetActive(false);
+		canvas.transform.Find("MainMenu").gameObject.SetActive(false);
        // canvas.transform.Find("OptionsBtn").gameObject.SetActive(false);
         canvas.transform.Find("ControlsUI").gameObject.SetActive(true);
     }
@@ -104,7 +104,7 @@ public class MainMenu : MonoBehaviour {
         GameObject canvas = GameObject.Find("Canvas");
 
         //canvas.transform.Find("MainMenu").gameObject.SetActive(true);
-        canvas.transform.Find("Logo").gameObject.SetActive(true);
+		canvas.transform.Find("MainMenu").gameObject.SetActive(true);
         //canvas.transform.Find("OptionsBtn").gameObject.SetActive(true);
         canvas.transform.Find("ControlsUI").gameObject.SetActive(false);
     }
@@ -114,7 +114,7 @@ public class MainMenu : MonoBehaviour {
         GameObject canvas = GameObject.Find("Canvas");
 
         //canvas.transform.Find("MainMenu").gameObject.SetActive(false);
-        canvas.transform.Find("Logo").gameObject.SetActive(false);
+		canvas.transform.Find("MainMenu").gameObject.SetActive(false);
         //canvas.transform.Find("OptionsBtn").gameObject.SetActive(false);
         canvas.transform.Find("BugReportUI").gameObject.SetActive(true);
     }
@@ -124,7 +124,7 @@ public class MainMenu : MonoBehaviour {
         GameObject canvas = GameObject.Find("Canvas");
 
         //canvas.transform.Find("MainMenu").gameObject.SetActive(true);
-        canvas.transform.Find("Logo").gameObject.SetActive(true);
+		canvas.transform.Find("MainMenu").gameObject.SetActive(true);
         //canvas.transform.Find("OptionsBtn").gameObject.SetActive(true);
         canvas.transform.Find("BugReportUI").gameObject.SetActive(false);
 

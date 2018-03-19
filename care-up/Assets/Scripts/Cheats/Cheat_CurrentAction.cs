@@ -82,7 +82,7 @@ public class Cheat_CurrentAction : MonoBehaviour
             if ( timer < animationTime )
             {
                 timer += Time.deltaTime;
-                textObject.color = new Color(1.0f, 1.0f, 1.0f, 1.0f - timer / animationTime);
+                textObject.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
                 extraText.color = new Color(1.0f, 1.0f, 1.0f, 1.0f - timer / animationTime);
             }
             else
@@ -100,12 +100,12 @@ public class Cheat_CurrentAction : MonoBehaviour
             if (timer > 0.0f)
             {
                 timer -= Time.deltaTime;
-                textObject.color = new Color(1.0f, 1.0f, 1.0f, 1.0f - timer / animationTime);
+                textObject.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
                 extraText.color = new Color(1.0f, 1.0f, 1.0f, 1.0f - timer / animationTime);
             }
             else
             {
-                textObject.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+                textObject.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
                 extraText.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
                 timer = 0.0f;
                 direction = 0;

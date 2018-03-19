@@ -156,19 +156,7 @@ public class InGameUI : MonoBehaviour {
     {
         Toggle();
     }
-
-    public void OnSaveButtonClick()
-    {
-        GameObject.Find("Preferences").GetComponent<SaveLoadManager>().Save();
-    }
-
-    /*public void OnOptionsButtonClick()
-    {
-        main.gameObject.SetActive(false);
-        options.gameObject.SetActive(true);
-
-        gamepadDefault = options.Find("BackButton").GetComponent<Button>();
-    }*/
+		
 
     public void OnOptionsBackButtonClick()
     {
