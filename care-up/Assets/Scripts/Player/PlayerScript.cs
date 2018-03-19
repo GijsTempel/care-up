@@ -113,11 +113,12 @@ public class PlayerScript : MonoBehaviour {
         usingOnCancelButton.GetComponent<EventTrigger>().triggers.Add(event2);
         usingOnCancelButton.GetComponent<EventTrigger>().triggers.Add(event3);
 
-        closeButton = GameObject.Find("TouchEscapeButton").gameObject;
+        /*closeButton = GameObject.Find("TouchEscapeButton").gameObject;
         closeButton.AddComponent<EventTrigger>();
         closeButton.GetComponent<EventTrigger>().triggers.Add(event1);
         closeButton.GetComponent<EventTrigger>().triggers.Add(event2);
         closeButton.GetComponent<EventTrigger>().triggers.Add(event3);
+        */
 
         GameObject robotUI = Camera.main.transform.Find("UI (1)").Find("RobotUI").gameObject;
         robotUI.AddComponent<EventTrigger>();

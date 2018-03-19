@@ -66,7 +66,7 @@ public class MainMenu : MonoBehaviour {
 
     public void OnTutorialButtonClick()
     {
-        bl_SceneLoaderUtils.GetLoader.LoadLevel("Tutorial");
+        bl_SceneLoaderUtils.GetLoader.LoadLevel("Tutorial", "tutorial");
     }
 
     public void OnOptionsButtonClick()
