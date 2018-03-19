@@ -44,10 +44,13 @@ public class TutorialManager : MonoBehaviour {
         UseTable,                  // step 5
         ExamineRecords,            // step 5
         CloseRecords,              // step 5
+        DropRecords,
         ExaminePrescription,
         ClosePrescription,
+        DropPrescription,
         ExamineMedicine,           // step 5
         CloseMedicine,             // inserted
+        DropMedicine1,
         Overview1,
         ExplainTalking,
         MoveToDoctor,
@@ -276,11 +279,20 @@ public class TutorialManager : MonoBehaviour {
                         currentStep = TutorialStep.CloseRecords;
                         particleHint.SetActive(false);
                         UItext.text = "Dit is de 'Bekijk modus'. Hier kun je objecten beter bekijken en controleren. Je kunt de 'Bekijk modus' van een object sluiten door te klikken op de knop 'Sluiten'. Probeer nu de 'Bekijk modus' sluiten. ";
-                        itemToDrop = "PatientRecords";
                     }
                     break;
                 case TutorialStep.CloseRecords:
                     if ( patientRecords.tutorial_closed )
+                    {
+                        AddPointWithSound();
+                        currentStep = TutorialStep.DropRecords;
+                        UItext.text = "Drop records";
+                        handsInventory.tutorial_droppedLeft = false;
+                        itemToDrop = "PatientRecords";
+                    }
+                    break;
+                case TutorialStep.DropRecords:
+                    if (handsInventory.tutorial_droppedLeft)
                     {
                         AddPointWithSound();
                         currentStep = TutorialStep.ExaminePrescription;
@@ -297,11 +309,20 @@ public class TutorialManager : MonoBehaviour {
                         currentStep = TutorialStep.ClosePrescription;
                         particleHint.SetActive(false);
                         UItext.text = "Door de 'Bekijk modus' te openen van een object controleer je het object ook meteen. De toedienlijst is nu gecontroleerd net zoals de patiëntgegevens aangezien je deze eerder al hebt bekeken in de 'Bekijk modus'. Sluit nu de 'Bekijk modus' door te klikken op de 'Sluiten' knop.";
-                        itemToDrop = "PrescriptionForm";
                     }
                     break;
                 case TutorialStep.ClosePrescription:
                     if (prescriptionForm.tutorial_closed)
+                    {
+                        AddPointWithSound();
+                        currentStep = TutorialStep.DropPrescription;
+                        UItext.text = "Drop prescriptions";
+                        handsInventory.tutorial_droppedLeft = false;
+                        itemToDrop = "PrescriptionForm";
+                    }
+                    break;
+                case TutorialStep.DropPrescription:
+                    if (handsInventory.tutorial_droppedLeft)
                     {
                         AddPointWithSound();
                         currentStep = TutorialStep.ExamineMedicine;
@@ -316,11 +337,20 @@ public class TutorialManager : MonoBehaviour {
                     {
                         currentStep = TutorialStep.CloseMedicine;
                         UItext.text = "Goed, zoals je ziet kun je het medicijn naast terugleggen ook oppakken. We hebben het medicijn op dit moment nog niet nodig en hoeven hem dus niet op te paksken. Het medicijn is gecontroleerd omdat we de 'Bekijk modus' hebben geopend. We kunnen het medicijn dus terugleggen op het werkveld door op de knop 'Sluiten' te drukken.";
-                        itemToDrop = "Medicine";
                     }
                     break;
                 case TutorialStep.CloseMedicine:
                     if (medicine.tutorial_closed)
+                    {
+                        AddPointWithSound();
+                        currentStep = TutorialStep.DropMedicine1;
+                        UItext.text = "Drop medicine";
+                        handsInventory.tutorial_droppedLeft = false;
+                        itemToDrop = "Medicine";
+                    }
+                    break;
+                case TutorialStep.DropMedicine1:
+                    if (handsInventory.tutorial_droppedLeft)
                     {
                         AddPointWithSound();
                         currentStep = TutorialStep.Overview1;
