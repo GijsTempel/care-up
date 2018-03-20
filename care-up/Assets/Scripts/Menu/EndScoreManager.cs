@@ -51,7 +51,7 @@ public class EndScoreManager : MonoBehaviour {
 
             //uiFolder.GetChild(1).FindChild("Steps").GetComponent<Text>().text = wrongSteps;
 
-            Transform layoutGroup = uiFolder.Find("Right").Find("WrongstepScroll").Find("WrongstepViewport").Find("WrongstepContent").Find("LayoutGroup");
+            Transform layoutGroup = uiFolder.Find("Right").Find("WrongstepScroll").Find("WrongstepViewport").Find("LayoutGroup");
             EndScoreWrongStepDescr[] stepObjects = layoutGroup.GetComponentsInChildren<EndScoreWrongStepDescr>();
 
             for (int i = 0; i < wrongSteps.Count && i < stepObjects.Length; ++i)
