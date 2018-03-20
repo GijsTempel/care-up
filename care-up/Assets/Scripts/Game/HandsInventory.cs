@@ -754,7 +754,7 @@ public class HandsInventory : MonoBehaviour {
         {
             if (tutorial == null || (tutorial != null &&
             (tutorial.itemToDrop == leftHandObject.name ||
-            tutorial.itemToDrop2 == LeftHandObject.name)))
+            tutorial.itemToDrop2 == leftHandObject.name)))
             {
                 leftHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
                 tutorial_droppedLeft = true;

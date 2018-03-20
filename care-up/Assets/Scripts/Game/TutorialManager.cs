@@ -415,6 +415,7 @@ public class TutorialManager : MonoBehaviour {
                         currentStep = TutorialStep.PickAlcohol;
                         UItext.text = "Naast het gebruiken en bekijken van voorwerpen kunnen sommige voorwerpen worden opgepakt. Beweeg eerst naar het werkveld door erop te klikken. Probeer daarna de alcohol op te pakken door erop te klikken en te kiezen voor de optie 'Oppakken'.";
                         itemToPick = "Alcohol";
+                        handsInventory.tutorial_pickedLeft = false;
                     }
                     break;
                 case TutorialStep.PickAlcohol:
@@ -424,6 +425,7 @@ public class TutorialManager : MonoBehaviour {
                         particleHint.transform.position = cloth.transform.position;
                         UItext.text = "Pak nu het gaasje op door op het gaasje te klikken. Kies daarna voor de optie 'Oppakken'.";
                         itemToPick = "Cloth";
+                        handsInventory.tutorial_pickedRight = false;
                     }
                     else
                     {
@@ -464,6 +466,7 @@ public class TutorialManager : MonoBehaviour {
                         currentStep = TutorialStep.DroppingExplanation;
                         handsInventory.tutorial_combined = false;
                         UItext.text = "Voorwerpen kun je terugleggen op het werkveld door op het voorwerp die je in je hand hebt te drukken en te kiezen voor de optie 'Terugleggen'.";
+                        SetPauseTimer(5.0f);
                     }
                     break;
                 case TutorialStep.DroppingExplanation:
@@ -473,6 +476,7 @@ public class TutorialManager : MonoBehaviour {
                         controls.keyPreferences.LeftDropKey.locked = leftDropKeyLocked = false;
                         UItext.text = "Het gaasje is nu gedesinfecteerd. Voorwerpen kun je terugleggen op het werkveld door op het voorwerp die je in je hand hebt te drukken en te kiezen voor de optie 'Terugleggen'. ";
                         itemToDrop = "Alcohol";
+                        handsInventory.tutorial_droppedLeft = false;
                     }
                     break;
                 case TutorialStep.DropItem:
