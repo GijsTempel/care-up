@@ -25,7 +25,7 @@ public class PlayerPrefsManager : MonoBehaviour
         {
             string result = "";
             foreach (string s in activatedScenes)
-                result += s + " activated.\n";
+                result += s + " geactiveerd.\n";
             return result;
         }
     }
