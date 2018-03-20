@@ -177,6 +177,10 @@ public class CameraMode : MonoBehaviour {
             {
                 selectedObject.ViewModeUpdate();
             }
+            if (controls.MouseClicked())
+            {
+                ObjectViewPutDownButton();
+            }
         }
     }
 
