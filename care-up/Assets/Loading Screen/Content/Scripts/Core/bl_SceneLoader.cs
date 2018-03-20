@@ -169,7 +169,7 @@ public class bl_SceneLoader : MonoBehaviour
         if (ProgressText != null)
         {
             string percent = (lerpValue * 100).ToString("F0");
-            ProgressText.text = "Loading";//string.Format(LoadingTextFormat, percent);
+            ProgressText.text = "Laden";//string.Format(LoadingTextFormat, percent);
         }
     }
 
@@ -278,7 +278,7 @@ public class bl_SceneLoader : MonoBehaviour
         if(LoadBarSlider != null) { LoadBarSlider.value = 0; }
         if (ProgressText != null)
         {
-            ProgressText.text = "Loading";//string.Format(LoadingTextFormat, 0);
+            ProgressText.text = "Laden";//string.Format(LoadingTextFormat, 0);
         }
         if (Manager.HasTips && TipText != null)
         {
