@@ -107,7 +107,8 @@ public class InteractableObject : MonoBehaviour {
     {
         if (cameraMode.CurrentMode == CameraMode.Mode.Free && !player.away)
         {
-            bool selectedIsInteractable = (controls.SelectedObject != null && controls.SelectedObject.GetComponent<InteractableObject>() != null);
+            bool selectedIsInteractable = (controls.SelectedObject != null && controls.CanInteract &&
+                controls.SelectedObject.GetComponent<InteractableObject>() != null);
             if (controls.SelectedObject == gameObject && !cameraMode.animating && !player.UIHover)
             {
                 if (controls.CanInteract)
@@ -119,11 +120,6 @@ public class InteractableObject : MonoBehaviour {
 
                     if (!itemDescription.activeSelf)
                     {
-                       // Transform icons = itemDescription.transform.GetChild(0).GetChild(0);
-                       // icons.Find("UseIcon"). gameObject.SetActive(false);//gameObject.GetComponent<UsableObject>() != null);
-                       // icons.Find("TalkIcon").gameObject.SetActive(false);//gameObject.GetComponent<PersonObject>() != null);
-                        //icons.Find("PickIcon").gameObject.SetActive(false);//gameObject.GetComponent<PickableObject>() != null);
-                       // icons.Find("ExamIcon").gameObject.SetActive(false);//gameObject.GetComponent<ExaminableObject>() != null);
                         itemDescription.SetActive(true);
                     }
 
