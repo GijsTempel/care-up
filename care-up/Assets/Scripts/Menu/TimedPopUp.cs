@@ -39,6 +39,14 @@ public class TimedPopUp : MonoBehaviour {
         }
     }
 
+    public static void ForceHide()
+    {
+        foreach (TimedPopUp tpu in popUps)
+        {
+            tpu.GetComponent<Animator>().SetBool("set", false);
+        }
+    }
+
     public void Set(string _text)
     {
         if (panel == null)

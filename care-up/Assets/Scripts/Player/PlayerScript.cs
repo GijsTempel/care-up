@@ -124,6 +124,26 @@ public class PlayerScript : MonoBehaviour {
         robotUI.AddComponent<EventTrigger>();
         robotUI.GetComponent<EventTrigger>().triggers.Add(event1);
         robotUI.GetComponent<EventTrigger>().triggers.Add(event2);
+
+        GameObject wrongActionPopUp = Camera.main.transform.Find("UI").Find("WrongAction").gameObject;
+        GameObject warningPopUp = Camera.main.transform.Find("UI").Find("EmptyHandsWarning").gameObject;
+
+        wrongActionPopUp.AddComponent<EventTrigger>();
+        wrongActionPopUp.GetComponent<EventTrigger>().triggers.Add(event1);
+        wrongActionPopUp.GetComponent<EventTrigger>().triggers.Add(event2);
+        wrongActionPopUp.GetComponent<EventTrigger>().triggers.Add(event3);
+
+        warningPopUp.AddComponent<EventTrigger>();
+        warningPopUp.GetComponent<EventTrigger>().triggers.Add(event1);
+        warningPopUp.GetComponent<EventTrigger>().triggers.Add(event2);
+        warningPopUp.GetComponent<EventTrigger>().triggers.Add(event3);
+        
+        EventTrigger.Entry closePopUp = new EventTrigger.Entry();
+        event3.eventID = EventTriggerType.PointerClick;
+        event3.callback.AddListener((eventData) => { TimedPopUp.ForceHide(); });
+        
+        wrongActionPopUp.GetComponent<EventTrigger>().triggers.Add(closePopUp);
+        warningPopUp.GetComponent<EventTrigger>().triggers.Add(closePopUp);
     }
 
     public void EnterHover()
