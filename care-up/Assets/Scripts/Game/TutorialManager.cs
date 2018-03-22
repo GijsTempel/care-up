@@ -211,10 +211,14 @@ public class TutorialManager : MonoBehaviour {
         UItext = GameObject.Find("hints").GetComponent<Text>();
 
         endPanel = GameObject.Find("TutorialDonePanel");
-        endPanel.SetActive(false);
 	}
-	
-	void Update () {
+
+    private void Start()
+    {
+        endPanel.SetActive(false);
+    }
+
+    void Update () {
 		if ( pauseEnabled && pauseTimer > 0.0f)
         {
             pauseTimer -= Time.deltaTime;
@@ -796,6 +800,7 @@ public class TutorialManager : MonoBehaviour {
                         currentStep = TutorialStep.None;
                         endPanel.SetActive(true);
                         player.enabled = false;
+                        GameObject.FindObjectOfType<RobotManager>().enabled = false;
                     }
                     break;
                 default:

@@ -144,6 +144,14 @@ public class PlayerScript : MonoBehaviour {
         
         wrongActionPopUp.GetComponent<EventTrigger>().triggers.Add(closePopUp);
         warningPopUp.GetComponent<EventTrigger>().triggers.Add(closePopUp);
+
+        if (GameObject.Find("GameLogic").GetComponent<TutorialManager>() != null)
+        {
+            GameObject tutorialEndUi = GameObject.Find("TutorialDonePanel");
+            tutorialEndUi.AddComponent<EventTrigger>();
+            tutorialEndUi.GetComponent<EventTrigger>().triggers.Add(event1);
+            tutorialEndUi.GetComponent<EventTrigger>().triggers.Add(event2);
+        }
     }
 
     public void EnterHover()
