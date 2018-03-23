@@ -88,11 +88,11 @@ namespace LoginProAsset
             // Show message in console if error
             Debug.LogWarning(errorMessage);
         }
-        public void NewsSuccess(string[] datas)
+       /* public void NewsSuccess(string[] datas)
         {
             // Set the news of the game to display them at startup
             this.News.text = datas[0];
-        }
+        }*/
 
         /// <summary>
         /// Load player prefs saved
