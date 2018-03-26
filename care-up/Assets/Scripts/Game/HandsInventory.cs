@@ -485,6 +485,34 @@ public class HandsInventory : MonoBehaviour {
         }
     }
 
+    public void FreezeObject(bool hand)
+    {
+        if (hand)
+        {
+            if (leftHandObject)
+            {
+                leftHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
+                leftHandObject.enabled = false;
+                leftHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                leftHandObject = null;
+                leftHold = false;
+                PlayerAnimationManager.SetHandItem(true, null);
+            }
+        }
+        else
+        {
+            if (rightHandObject)
+            {
+                rightHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
+                rightHandObject.enabled = false;
+                rightHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                rightHandObject = null;
+                rightHold = false;
+                PlayerAnimationManager.SetHandItem(false, null);
+            }
+        }
+    }
+
     public void ForcePickItem(string name, bool hand)
     {
         if (hand)
