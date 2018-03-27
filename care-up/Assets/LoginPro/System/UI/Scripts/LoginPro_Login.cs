@@ -42,7 +42,7 @@ namespace LoginProAsset
             }
 
             // Ask for the news of the game
-            LoginPro.Manager.News(NewsSuccess, NewsError);
+            //LoginPro.Manager.News(NewsSuccess, NewsError);
 
             // Prefill fields with saved datas
             this.LoadPlayerPrefs();
