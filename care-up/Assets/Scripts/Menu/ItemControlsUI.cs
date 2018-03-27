@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class ItemControlsUI : MonoBehaviour {
     
@@ -30,6 +31,18 @@ public class ItemControlsUI : MonoBehaviour {
     private string useOnNTtext;
     private string useText;
 
+    private bool UIhover;
+
+    private void OnEnterHover()
+    {
+        UIhover = true;
+    }
+
+    private void OnExitHover()
+    {
+        UIhover = false;
+    }
+
     void Awake () {
 
         controls = GameObject.Find("GameLogic").GetComponent<Controls>();
@@ -53,6 +66,65 @@ public class ItemControlsUI : MonoBehaviour {
 
         useOnNTtext = useOnNTButton.transform.GetChild(0).GetComponent<Text>().text;
         useText = useButton.transform.GetChild(0).GetComponent<Text>().text;
+        
+        //------------
+
+        EventTrigger.Entry event1 = new EventTrigger.Entry();
+        event1.eventID = EventTriggerType.PointerEnter;
+        event1.callback.AddListener((eventData) => { OnEnterHover(); });
+
+        EventTrigger.Entry event2 = new EventTrigger.Entry();
+        event2.eventID = EventTriggerType.PointerExit;
+        event2.callback.AddListener((eventData) => { OnExitHover(); });
+
+        EventTrigger.Entry event3 = new EventTrigger.Entry();
+        event3.eventID = EventTriggerType.PointerClick;
+        event3.callback.AddListener((eventData) => { OnExitHover(); });
+
+        closeButton.AddComponent<EventTrigger>();
+        closeButton.GetComponent<EventTrigger>().triggers.Add(event1);
+        closeButton.GetComponent<EventTrigger>().triggers.Add(event2);
+        closeButton.GetComponent<EventTrigger>().triggers.Add(event3);
+
+        pickButton.AddComponent<EventTrigger>();
+        pickButton.GetComponent<EventTrigger>().triggers.Add(event1);
+        pickButton.GetComponent<EventTrigger>().triggers.Add(event2);
+        pickButton.GetComponent<EventTrigger>().triggers.Add(event3);
+
+        examineButton.AddComponent<EventTrigger>();
+        examineButton.GetComponent<EventTrigger>().triggers.Add(event1);
+        examineButton.GetComponent<EventTrigger>().triggers.Add(event2);
+        examineButton.GetComponent<EventTrigger>().triggers.Add(event3);
+
+        useButton.AddComponent<EventTrigger>();
+        useButton.GetComponent<EventTrigger>().triggers.Add(event1);
+        useButton.GetComponent<EventTrigger>().triggers.Add(event2);
+        useButton.GetComponent<EventTrigger>().triggers.Add(event3);
+
+        talkButton.AddComponent<EventTrigger>();
+        talkButton.GetComponent<EventTrigger>().triggers.Add(event1);
+        talkButton.GetComponent<EventTrigger>().triggers.Add(event2);
+        talkButton.GetComponent<EventTrigger>().triggers.Add(event3);
+
+        useOnButton.AddComponent<EventTrigger>();
+        useOnButton.GetComponent<EventTrigger>().triggers.Add(event1);
+        useOnButton.GetComponent<EventTrigger>().triggers.Add(event2);
+        useOnButton.GetComponent<EventTrigger>().triggers.Add(event3);
+
+        useOnNTButton.AddComponent<EventTrigger>();
+        useOnNTButton.GetComponent<EventTrigger>().triggers.Add(event1);
+        useOnNTButton.GetComponent<EventTrigger>().triggers.Add(event2);
+        useOnNTButton.GetComponent<EventTrigger>().triggers.Add(event3);
+
+        combineButton.AddComponent<EventTrigger>();
+        combineButton.GetComponent<EventTrigger>().triggers.Add(event1);
+        combineButton.GetComponent<EventTrigger>().triggers.Add(event2);
+        combineButton.GetComponent<EventTrigger>().triggers.Add(event3);
+
+        dropButton.AddComponent<EventTrigger>();
+        dropButton.GetComponent<EventTrigger>().triggers.Add(event1);
+        dropButton.GetComponent<EventTrigger>().triggers.Add(event2);
+        dropButton.GetComponent<EventTrigger>().triggers.Add(event3);
     }
 
     public void Init(GameObject iObject)
@@ -183,7 +255,7 @@ public class ItemControlsUI : MonoBehaviour {
     {
         if (initedObject != null)
         {
-            if (Input.GetMouseButton(1))
+            if (!UIhover && Input.GetMouseButtonDown(0))
             {
                 Close();
             }
@@ -198,6 +270,7 @@ public class ItemControlsUI : MonoBehaviour {
         {
             cameraMode.ToggleCameraMode(CameraMode.Mode.Free);
         }
+        UIhover = false;
     }
 
     public void Use()
