@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class DecombineAndDropToTrash : AnimationCombine
 {
-    public int cinematicFrame;
-
     public bool dropHand;
     public int dropFrame;
 
@@ -24,16 +22,13 @@ public class DecombineAndDropToTrash : AnimationCombine
         {
             inv.ExecuteDelayedCombination();
         }
+
+        mode.SetCinematicMode(GameObject.Find("TrashBucket").transform);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (PlayerAnimationManager.CompareFrames(frame, prevFrame, cinematicFrame))
-        {
-            mode.SetCinematicMode(GameObject.Find("TrashBucket").transform);
-        }
-
         if (PlayerAnimationManager.CompareFrames(frame, prevFrame, dropFrame))
         {
             inv.FreezeObject(dropHand);
