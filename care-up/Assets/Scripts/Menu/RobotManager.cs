@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class RobotManager : MonoBehaviour {
 
@@ -25,8 +26,11 @@ public class RobotManager : MonoBehaviour {
     private static Material eyeLMat;
     private static Material eyeRMat;
     private static Material mouthMat;
-    
-	void Start ()
+
+    private static Material robotHandMat;
+    private static Material robotFaceMat;
+
+    void Start ()
     {
         instance = this;
 
@@ -49,9 +53,43 @@ public class RobotManager : MonoBehaviour {
         UI_trigger.SetActive(true);
 
         initialPosition = transform.localPosition;
-	}
-	
-	void Update ()
+
+        EventTrigger.Entry event1 = new EventTrigger.Entry();
+        event1.eventID = EventTriggerType.PointerEnter;
+        event1.callback.AddListener((eventData) => { OnEnterHover(); });
+
+        EventTrigger.Entry event2 = new EventTrigger.Entry();
+        event2.eventID = EventTriggerType.PointerExit;
+        event2.callback.AddListener((eventData) => { OnExitHover(); });
+
+        EventTrigger.Entry event3 = new EventTrigger.Entry();
+        event3.eventID = EventTriggerType.PointerClick;
+        event3.callback.AddListener((eventData) => { OnExitHover(); });
+
+        UI_trigger.AddComponent<EventTrigger>();
+        UI_trigger.GetComponent<EventTrigger>().triggers.Add(event1);
+        UI_trigger.GetComponent<EventTrigger>().triggers.Add(event2);
+        UI_trigger.GetComponent<EventTrigger>().triggers.Add(event3);
+
+        robotHandMat = transform.Find("robot").GetComponent<Renderer>().material;
+        robotFaceMat = transform.Find("robot_face").GetComponent<Renderer>().material;
+    }
+
+    public void OnEnterHover()
+    {
+        Color color = new Color(1.0f, 0, 0);
+        robotHandMat.color = color;
+        robotFaceMat.color = color;
+    }
+
+    public void OnExitHover()
+    {
+        Color color = new Color(1.0f, 1.0f, 1.0f);
+        robotHandMat.color = color;
+        robotFaceMat.color = color;
+    }
+
+    void Update ()
     {
         UpdateTriggerPosition();
         UpdateFaceAnimations();
