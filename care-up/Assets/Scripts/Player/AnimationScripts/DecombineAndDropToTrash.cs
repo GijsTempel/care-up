@@ -23,6 +23,7 @@ public class DecombineAndDropToTrash : AnimationCombine
             inv.ExecuteDelayedCombination();
         }
 
+        mode.dontMoveCamera = true;
         mode.SetCinematicMode(GameObject.Find("TrashBucket").transform);
     }
 
