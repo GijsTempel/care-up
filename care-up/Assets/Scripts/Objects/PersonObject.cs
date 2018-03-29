@@ -170,21 +170,20 @@ public class PersonObject : InteractableObject
 
     private void CallerUpdate()
     {
-        if (cameraMode.CurrentMode == CameraMode.Mode.Free && !cameraMode.animating)
+        if (cameraMode.CurrentMode == CameraMode.Mode.Free && !player.away)
         {
             bool flag = false;
-            bool clickFlag = true;
             foreach (GameObject caller in callers)
             {
                 if (caller == controls.SelectedObject)
                 {
                     flag = true;
-                    if (caller.GetComponent<ExaminableObject>() != null)
-                        clickFlag = false;
                 }
             }
 
-            if (flag)
+            bool selectedIsInteractable = (controls.SelectedObject != null && controls.CanInteract &&
+                controls.SelectedObject.GetComponent<InteractableObject>() != null);
+            if (flag && !cameraMode.animating && !player.UIHover)
             {
                 if (controls.CanInteract)
                 {
@@ -195,20 +194,10 @@ public class PersonObject : InteractableObject
 
                     if (!itemDescription.activeSelf)
                     {
-                        itemDescription.GetComponentInChildren<Text>().text = (description == "") ? name : description;
-                        //Transform icons = itemDescription.transform.GetChild(0).GetChild(0);
-                        //icons.Find("UseIcon").gameObject.SetActive(false);//gameObject.GetComponent<UsableObject>() != null);
-                        //icons.Find("TalkIcon").gameObject.SetActive(false);//gameObject.GetComponent<PersonObject>() != null);
-                        //icons.Find("PickIcon").gameObject.SetActive(false);//gameObject.GetComponent<PickableObject>() != null);
-                        //icons.Find("ExamIcon").gameObject.SetActive(false);//gameObject.GetComponent<ExaminableObject>() != null);
                         itemDescription.SetActive(true);
                     }
 
-                    /*if (controls.MouseClicked() && clickFlag)
-                    {
-                        Reset();
-                        CreateSelectionDialogue();
-                    }*/
+                    itemDescription.GetComponentInChildren<Text>().text = (description == "") ? name : description;
                 }
                 else if (!controls.CanInteract && rend.material.shader == onMouseOverShader)
                 {
@@ -221,6 +210,10 @@ public class PersonObject : InteractableObject
                 if (rend.material.shader == onMouseOverShader)
                 {
                     SetShaderTo(onMouseExitShader);
+                }
+
+                if (!selectedIsInteractable)
+                {
                     itemDescription.SetActive(false);
                 }
             }
