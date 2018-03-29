@@ -77,7 +77,7 @@ public class RobotManager : MonoBehaviour {
 
     public void OnEnterHover()
     {
-        Color color = new Color(1.0f, 0, 0);
+        Color color = new Color(0.0f, 0.831f, 1.0f);
         robotHandMat.color = color;
         robotFaceMat.color = color;
     }
