@@ -106,6 +106,14 @@ public class PickableObject : InteractableObject {
                 }
                 inventory.RemoveHandObject(hand);
             }
+            else if ((name == "AbsorptionNeedleNoCap" || name == "InjectionNeedleNoCap") 
+                && controls.SelectedObject.name == "NeedleCup" && info[1] == "NeedleCup")
+            {
+                string animation = (hand ? "UseLeft " : "UseRight ") + name + " NeedleCup";
+                PlayerAnimationManager.PlayAnimation(animation, GameObject.Find("NeedleCup").transform);
+                actionManager.OnUseOnAction(name, "NeedleCup");
+                return true;
+            }
             else if ((name == "Pad" || name == "Tourniquet") && 
                 controls.SelectedObject.name == "Person")
             {
