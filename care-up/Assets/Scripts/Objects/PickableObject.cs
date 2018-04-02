@@ -14,12 +14,12 @@ public class PickableObject : InteractableObject {
     [HideInInspector]
     public bool tutorial_usedOn = false;
 
+    [HideInInspector]
     public Transform leftControlBone;
+    [HideInInspector]
     public Transform rightControlBone;
 
     public int holdAnimationID = 0;
-    
-    protected static HandsInventory inventory;
 
     private List<Vector3> framePositions = new List<Vector3>();
     private Rigidbody rigidBody;
@@ -30,12 +30,6 @@ public class PickableObject : InteractableObject {
         framePositions.Clear();
 
         rigidBody = GetComponent<Rigidbody>();
-
-        if (inventory == null)
-        {
-            inventory = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
-            if (inventory == null) Debug.LogError("No invenrity found");
-        }
     }
 
     /// <summary>
