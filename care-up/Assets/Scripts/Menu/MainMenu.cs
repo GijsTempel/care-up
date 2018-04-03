@@ -153,4 +153,16 @@ public class MainMenu : MonoBehaviour {
     {
         Application.OpenURL(url);
     }
+
+    public void ToggleMuteButton()
+    {
+        if (AudioListener.volume != 0.0f)
+        {
+            AudioListener.volume = 0.0f;
+        }
+        else
+        {
+            AudioListener.volume = FindObjectOfType<PlayerPrefsManager>().Volume;
+        }
+    }
 }
