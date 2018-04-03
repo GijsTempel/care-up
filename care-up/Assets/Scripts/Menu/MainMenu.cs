@@ -148,4 +148,9 @@ public class MainMenu : MonoBehaviour {
     {
         button.interactable = !button.interactable;
     }
+
+    public void OpenUrl(string url)
+    {
+        Application.OpenURL(url);
+    }
 }
