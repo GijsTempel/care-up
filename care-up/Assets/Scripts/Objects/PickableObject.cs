@@ -85,8 +85,7 @@ public class PickableObject : InteractableObject {
         if (controls.SelectedObject != null && controls.CanInteract)
         {
             if ((name == "InjectionNeedle" || name == "AbsorptionNeedle"
-                || name == "InjectionSNeedle" || name == "ClothWithAmpouleTop"
-                || name == "InsulinNeedle"
+                || name == "InjectionSNeedle" || name == "InsulinNeedle"
                 || name == "TestStrips" || name == "Lancet" || name == "NeedleHolderWithNeedle")
                 && info[1] == "NeedleCup"
                 && controls.SelectedObject.name == "NeedleCup")
@@ -100,7 +99,8 @@ public class PickableObject : InteractableObject {
                 }
                 inventory.RemoveHandObject(hand);
             }
-            else if ((name == "AbsorptionNeedleNoCap" || name == "InjectionNeedleNoCap") 
+            else if ((name == "AbsorptionNeedleNoCap" || name == "InjectionNeedleNoCap"
+                || name == "ClothWithAmpouleTop") 
                 && controls.SelectedObject.name == "NeedleCup" && info[1] == "NeedleCup")
             {
                 string animation = (hand ? "UseLeft " : "UseRight ") + name + " NeedleCup";
