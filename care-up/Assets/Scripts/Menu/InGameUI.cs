@@ -228,24 +228,4 @@ public class InGameUI : MonoBehaviour {
             prefsManager.Volume = volumeSlider.value;
         }
     }
-
-    public void ToggleMuteButton()
-    {
-        if (AudioListener.volume != 0.0f)
-        {
-            AudioListener.volume = 0.0f;
-        }
-        else
-        {
-            PlayerPrefsManager manager = FindObjectOfType<PlayerPrefsManager>();
-            if (manager != null)
-            {
-                AudioListener.volume = manager.Volume;
-            }
-            else
-            {
-                Debug.LogWarning("Cannot unmute without Preferences. Start from the first scene.");
-            }
-        }
-    }
 }
