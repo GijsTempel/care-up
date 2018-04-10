@@ -241,12 +241,16 @@ public class ItemControlsUI : MonoBehaviour {
                         descrGroup.transform.position += new Vector3(difference, 0.0f, 0.0f);
                     }
                 }
-
+                
                 useOnNTButton.transform.GetChild(0).GetComponent<Text>().text =
                     ((actionManager.CurrentUseOnInfo[0] == initedObject.name && actionManager.CurrentUseOnInfo[1] == "") ?
                     actionManager.CurrentButtonText : useOnNTtext);
+
                 useButton.transform.GetChild(0).GetComponent<Text>().text =
                     (actionManager.CurrentUseObject == initedObject.name) ? actionManager.CurrentButtonText : useText;
+
+                useOnNTButton.SetActive(actionManager.CurrentUseOnInfo[0] == initedObject.name && actionManager.CurrentUseOnInfo[1] == "");
+                useButton.SetActive(actionManager.CurrentUseObject == initedObject.name);
             }
         }
     }
