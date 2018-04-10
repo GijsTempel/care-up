@@ -528,7 +528,7 @@ public class TutorialManager : MonoBehaviour {
                     }
                     break;
                 case TutorialStep.DropClothMedicine:
-                    if ( handsInventory.tutorial_droppedLeft && handsInventory.tutorial_droppedRight)
+                    if ( handsInventory.tutorial_droppedLeft || handsInventory.tutorial_droppedRight)
                     {
                         AddPointWithSound();
                         handsInventory.tutorial_droppedLeft =
