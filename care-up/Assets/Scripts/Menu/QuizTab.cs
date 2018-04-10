@@ -30,6 +30,8 @@ public class QuizTab : RobotUITabs {
     private Button continueButton;
     private Button switchToInfoButton;
 
+    private bool continueBtn = false;
+
     public void Init(string name)
     {
         TextAsset textAsset = (TextAsset)Resources.Load("Xml/Quiz/" + name);
@@ -73,7 +75,7 @@ public class QuizTab : RobotUITabs {
         continueButton = transform.GetChild(1).Find("Continue").GetComponent<Button>();
         switchToInfoButton = transform.GetChild(1).Find("SwitchToInfo").GetComponent<Button>();
 
-        continueButton.gameObject.SetActive(false);
+        continueButton.gameObject.SetActive(continueBtn);
         descriptionText.text = "";
     }
 
@@ -158,7 +160,8 @@ public class QuizTab : RobotUITabs {
             b.onClick.RemoveAllListeners();
         }
 
-        continueButton.gameObject.SetActive(true);
+        continueBtn = true;
+        continueButton.gameObject.SetActive(continueBtn);
     }
 
     public void WrongAnswer(string description)
@@ -178,7 +181,8 @@ public class QuizTab : RobotUITabs {
 
     public void Continue()
     {
-        continueButton.gameObject.SetActive(false);
+        continueBtn = false;
+        continueButton.gameObject.SetActive(continueBtn);
         gameObject.SetActive(false);
         GameObject.FindObjectOfType<RobotManager>().ToggleCloseBtn(true); // enable close btn
     }
@@ -198,11 +202,11 @@ public class QuizTab : RobotUITabs {
         {
             if (continueButton != null)
             {
-                continueButton.gameObject.SetActive(false);
+                continueButton.gameObject.SetActive(continueBtn);
             }
             else
             {
-                transform.GetChild(1).Find("Continue").gameObject.SetActive(false);
+                transform.GetChild(1).Find("Continue").gameObject.SetActive(continueBtn);
             }
         }
         else
