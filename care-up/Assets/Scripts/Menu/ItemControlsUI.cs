@@ -204,7 +204,7 @@ public class ItemControlsUI : MonoBehaviour {
             {
                 Pick();
             }
-            else if(!pickButton.activeSelf && examineButton.activeSelf && !handsInventory.IsInHand(initedObject))
+            else if (!pickButton.activeSelf && examineButton.activeSelf && !handsInventory.IsInHand(initedObject))
             {
                 Examine();
             }
@@ -241,7 +241,7 @@ public class ItemControlsUI : MonoBehaviour {
                         descrGroup.transform.position += new Vector3(difference, 0.0f, 0.0f);
                     }
                 }
-                
+
                 useOnNTButton.transform.GetChild(0).GetComponent<Text>().text =
                     ((actionManager.CurrentUseOnInfo[0] == initedObject.name && actionManager.CurrentUseOnInfo[1] == "") ?
                     actionManager.CurrentButtonText : useOnNTtext);
@@ -251,6 +251,18 @@ public class ItemControlsUI : MonoBehaviour {
 
                 useOnNTButton.SetActive(actionManager.CurrentUseOnInfo[0] == initedObject.name && actionManager.CurrentUseOnInfo[1] == "");
                 useButton.SetActive(actionManager.CurrentUseObject == initedObject.name);
+            }
+
+            if (!pickButton.activeSelf && 
+                !examineButton.activeSelf && 
+                !useButton.activeSelf && 
+                !talkButton.activeSelf && 
+                !useOnButton.activeSelf && 
+                !useOnNTButton.activeSelf && 
+                !combineButton.activeSelf && 
+                !dropButton.activeSelf)
+            {
+                Close();
             }
         }
     }
