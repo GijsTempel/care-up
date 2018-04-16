@@ -260,7 +260,9 @@ public class ActionManager : MonoBehaviour {
                 }
                 else
                 {
-                    Debug.LogError("Description in xml file \"" + actionListName + "\" is set wrong. \'fullDescription\' field is not set and cannot split \'description\' properly.");
+                    Debug.LogError("Description in xml file \"" + actionListName + "\" is set wrong. \n" +
+                        "\'fullDescription\' field is not set and cannot split \'description\' properly. \n" +
+                        "Index: " + index + ". Descr: " + descr);
                 }
             }
 
