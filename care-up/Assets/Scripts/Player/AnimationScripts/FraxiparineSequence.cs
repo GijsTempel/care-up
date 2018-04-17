@@ -10,7 +10,7 @@ public class FraxiparineSequence : AnimationSequenceState
     public int dropCapFrame;
 
     private HandsInventory inv;
-    private Syringe syringe;
+    private FraxiparineSyringe syringe;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -34,14 +34,13 @@ public class FraxiparineSequence : AnimationSequenceState
         {
             inv.ForcePickItem("Frexi_with_needle_cap", false);
             PlayerAnimationManager.SetHandItem(false, GameObject.Find("Frexi_with_needle_cap"));
-            inv.RightHandObject.GetComponent<Syringe>().updatePlunger = true;
+            inv.RightHandObject.GetComponent<FraxiparineSyringe>().updatePlunger = true;
         }
         else if (PlayerAnimationManager.CompareFrames(frame, prevFrame, takeOffCapFrame))
         {
             inv.ReplaceHandObject(false, "Frexi");
 
-            syringe = inv.RightHandObject.GetComponent<Syringe>();
-            syringe.updateProtector = true;
+            syringe = inv.RightHandObject.GetComponent<FraxiparineSyringe>();
 
             GameObject cap = inv.CreateObjectByName("SyringeInjectionCap", Vector3.zero);
 
@@ -136,8 +135,6 @@ public class FraxiparineSequence : AnimationSequenceState
                 GameObject.Find("GameLogic").GetComponent<TutorialManager>().sequenceCompleted = true;
             }
         }
-
-        syringe.updateProtector = false;
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here
