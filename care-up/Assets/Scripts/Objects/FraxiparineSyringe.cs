@@ -96,6 +96,30 @@ public class FraxiparineSyringe : PickableObjectWithInfo
         }
         else // cannot interact or target == ""
         {
+            if (name == "FraxiparineSyringe_packed" && noTarget)
+            {
+                info = actionManager.CurrentUseOnInfo;
+                if (info[0] == "FraxiparineSyringe_packed" && info[1] == "")
+                {
+                    if (inventory.LeftHandEmpty())
+                    {
+                        PlayerAnimationManager.PlayAnimation("UseRight " + name);
+                        actionManager.OnUseOnAction("FraxiparineSyringe_packed", "");
+                        return true; // fix for venting syringe
+                    }
+                    else if (inventory.RightHandEmpty())
+                    {
+                        PlayerAnimationManager.PlayAnimation("UseLeft " + name);
+                        actionManager.OnUseOnAction("FraxiparineSyringe_packed", "");
+                        return true; // fix for venting syringe
+                    }
+                    else
+                    {
+                        EmptyHandsWarning();
+                        return false;
+                    }
+                }
+            }
         }
 
         actionManager.OnUseOnAction(name, controls.SelectedObject != null ? controls.SelectedObject.name : "");
