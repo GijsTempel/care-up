@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FraxiparineSyringe : PickableObjectWithInfo
 {
@@ -97,7 +98,24 @@ public class FraxiparineSyringe : PickableObjectWithInfo
 
         if (controls.SelectedObject != null && controls.CanInteract)
         {
-            if (name == "Frexi" && controls.SelectedObject.name == "NeedleCup" && info[1] == "NeedleCup")
+            if (name == "Frexi_with_needle_cap"
+                && controls.SelectedObject.GetComponent<PersonObjectPart>() != null
+                && controls.SelectedObject.GetComponent<PersonObjectPart>().Person.name == "Patient")
+            {
+                if (info[0] == "Frexi_with_needle_cap" && info[1] == "Patient")
+                {
+                    actionManager.OnUseOnAction("Frexi_with_needle_cap", "Patient");
+                    if (SceneManager.GetActiveScene().name == "Fraxiparine_Injecteren")
+                    {
+                        Transform target = controls.SelectedObject.GetComponent<PersonObjectPart>().Person;
+                        target.GetComponent<InteractableObject>().Reset();
+                        controls.ResetObject();
+                        PlayerAnimationManager.PlayAnimationSequence("FraxiparineInjection", target);
+                    }
+                    return true;
+                }
+            }
+            else if (name == "Frexi" && controls.SelectedObject.name == "NeedleCup" && info[1] == "NeedleCup")
             {
                 string animation = (hand ? "UseLeft " : "UseRight ") + name + " NeedleCup";
                 PlayerAnimationManager.PlayAnimation(animation, GameObject.Find("NeedleCup").transform);
