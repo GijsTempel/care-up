@@ -93,31 +93,37 @@ public class FraxiparineSyringe : PickableObjectWithInfo
 
         if (controls.SelectedObject != null && controls.CanInteract)
         {
-        }
-        else // cannot interact or target == ""
-        {
-            if (name == "FraxiparineSyringe_packed" && noTarget)
+            if (name == "Frexi" && controls.SelectedObject.name == "NeedleCup" && info[1] == "NeedleCup")
             {
-                info = actionManager.CurrentUseOnInfo;
-                if (info[0] == "FraxiparineSyringe_packed" && info[1] == "")
+                string animation = (hand ? "UseLeft " : "UseRight ") + name + " NeedleCup";
+                PlayerAnimationManager.PlayAnimation(animation, GameObject.Find("NeedleCup").transform);
+                actionManager.OnUseOnAction(name, "NeedleCup");
+                return true;
+            }
+        }
+
+        // venting && tube
+        if ((name == "Frexi_with_needle_cap" || name == "Frexi") && noTarget)
+        {
+            info = actionManager.CurrentUseOnInfo;
+            if ((info[0] == "Frexi_with_needle_cap" || info[0] == "Frexi") && info[1] == "")
+            {
+                if (inventory.LeftHandEmpty())
                 {
-                    if (inventory.LeftHandEmpty())
-                    {
-                        PlayerAnimationManager.PlayAnimation("UseRight " + name);
-                        actionManager.OnUseOnAction("FraxiparineSyringe_packed", "");
-                        return true; // fix for venting syringe
-                    }
-                    else if (inventory.RightHandEmpty())
-                    {
-                        PlayerAnimationManager.PlayAnimation("UseLeft " + name);
-                        actionManager.OnUseOnAction("FraxiparineSyringe_packed", "");
-                        return true; // fix for venting syringe
-                    }
-                    else
-                    {
-                        EmptyHandsWarning();
-                        return false;
-                    }
+                    PlayerAnimationManager.PlayAnimation("UseRight " + name);
+                    actionManager.OnUseOnAction(name, "");
+                    return true; // fix for venting syringe
+                }
+                else if (inventory.RightHandEmpty())
+                {
+                    PlayerAnimationManager.PlayAnimation("UseLeft " + name);
+                    actionManager.OnUseOnAction(name, "");
+                    return true; // fix for venting syringe
+                }
+                else
+                {
+                    EmptyHandsWarning();
+                    return false;
                 }
             }
         }
