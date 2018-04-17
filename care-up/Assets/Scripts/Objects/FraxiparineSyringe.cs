@@ -4,23 +4,27 @@ using UnityEngine;
 
 public class FraxiparineSyringe : PickableObjectWithInfo
 {
-
     public bool updatePlunger = false;
     public bool updateTube = false;
 
     private Transform plunger;
     private Transform tube;
 
+    private float loPlunger = -0.013f;
+    private float hiPlunger =  0.06f;
+    private float loTube    = -0.013f;
+    private float hiTube    =  0.06f;
+
     public override void SaveInfo(ref Vector3 left, ref Vector3 right)
     {
         left = new Vector3(
             (updatePlunger ? 1.0f : 0.0f),
-            Mathf.InverseLerp(-0.013f, 0.06f, plunger.localPosition.y),
+            Mathf.InverseLerp(loPlunger, hiPlunger, plunger.localPosition.y),
             0.0f);
 
         right = new Vector3(
             (updateTube ? 1.0f : 0.0f),
-            Mathf.InverseLerp(-0.013f, 0.06f, tube.localPosition.y),
+            Mathf.InverseLerp(loTube, hiTube, tube.localPosition.y),
             0.0f);
     }
 
@@ -35,7 +39,7 @@ public class FraxiparineSyringe : PickableObjectWithInfo
 
         plunger.localPosition = new Vector3(
                 plunger.localPosition.x,
-                Mathf.Lerp(-0.013f, 0.06f, left.y),
+                Mathf.Lerp(loPlunger, hiPlunger, left.y),
                 plunger.localPosition.z);
 
         updateTube = right.x == 1.0f ? true : false;
@@ -47,7 +51,7 @@ public class FraxiparineSyringe : PickableObjectWithInfo
 
         tube.localPosition = new Vector3(
             tube.localPosition.x,
-            Mathf.Lerp(-0.013f, 0.06f, right.y),
+            Mathf.Lerp(loTube, hiTube, right.y),
             tube.localPosition.z);
     }
 
@@ -70,7 +74,7 @@ public class FraxiparineSyringe : PickableObjectWithInfo
         {
             plunger.localPosition = new Vector3(
                 plunger.localPosition.x,
-                Mathf.Lerp(-0.013f, 0.06f, leftControlBone.localPosition.y),
+                Mathf.Lerp(loPlunger, hiPlunger, leftControlBone.localPosition.y),
                 plunger.localPosition.z);
         }
 
@@ -80,7 +84,7 @@ public class FraxiparineSyringe : PickableObjectWithInfo
             {
                 tube.localPosition = new Vector3(
                     plunger.localPosition.x,
-                    Mathf.Lerp(-0.013f, 0.06f, rightControlBone.localPosition.y),
+                    Mathf.Lerp(loTube, hiTube, rightControlBone.localPosition.y),
                     plunger.localPosition.z);
             }
         }
