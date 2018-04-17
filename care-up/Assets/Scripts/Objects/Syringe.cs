@@ -100,7 +100,6 @@ public class Syringe : PickableObjectWithInfo {
             {
                 if (info[0] == "SyringeWithInjectionNeedleCap" && info[1] == "Patient")
                 {
-                    Debug.Log(SceneManager.GetActiveScene().name);
                     actionManager.OnUseOnAction("SyringeWithInjectionNeedleCap", "Patient");
                     if (SceneManager.GetActiveScene().name == "Injection" ||
                         SceneManager.GetActiveScene().name == "Injection_ampoule" ||
