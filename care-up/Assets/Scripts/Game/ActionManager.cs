@@ -333,7 +333,11 @@ public class ActionManager : MonoBehaviour {
         }
         else
         {
-            totalPoints = actionList.Count();
+            totalPoints = 0;
+            foreach (Action a in actionList)
+            {
+                totalPoints += a.pointValue;
+            }
         }
 
         currentAction = actionList.First();
