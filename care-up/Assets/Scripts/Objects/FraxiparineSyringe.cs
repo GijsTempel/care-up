@@ -11,10 +11,10 @@ public class FraxiparineSyringe : PickableObjectWithInfo
     private Transform plunger;
     private Transform tube;
 
-    private float loPlunger = -0.013f;
+    private float loPlunger = -0.0f;
     private float hiPlunger =  0.06f;
-    private float loTube    = -0.013f;
-    private float hiTube    =  0.06f;
+    private float loTube    = 0.00f;
+    private float hiTube    =  -0.06f;
 
     public override void SaveInfo(ref Vector3 left, ref Vector3 right)
     {
@@ -37,12 +37,12 @@ public class FraxiparineSyringe : PickableObjectWithInfo
         {
             plunger = transform.Find("Fraxi_plunger");
         }
-
+/*
         plunger.localPosition = new Vector3(
                 plunger.localPosition.x,
                 Mathf.Lerp(loPlunger, hiPlunger, left.y),
                 plunger.localPosition.z);
-
+*/
         updateTube = right.x == 1.0f ? true : false;
 
         if (tube == null)
