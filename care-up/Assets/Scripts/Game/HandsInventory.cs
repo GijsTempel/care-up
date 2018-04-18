@@ -57,6 +57,7 @@ public class HandsInventory : MonoBehaviour {
     private bool glovesOn = false;
 
     private GameObject animationObject;
+    private GameObject animationObject2;
 
     private CombinationManager combinationManager;
     private GameObject interactableObjects;
@@ -273,9 +274,12 @@ public class HandsInventory : MonoBehaviour {
             
             Vector3 saveInfo1 = new Vector3();
             Vector3 saveInfo2 = new Vector3();
+            bool load = false;
+
             if (leftHandObject.GetComponent<PickableObjectWithInfo>() != null)
             {
                 leftHandObject.GetComponent<PickableObjectWithInfo>().SaveInfo(ref saveInfo1, ref saveInfo2);
+                load = true;
             }
 
             Destroy(leftHandObject.gameObject);
@@ -294,7 +298,7 @@ public class HandsInventory : MonoBehaviour {
                 leftHandObject.SavePosition(leftSavedPos, leftSavedRot);
             }
 
-            if (leftHandObject.GetComponent<PickableObjectWithInfo>() != null)
+            if (leftHandObject.GetComponent<PickableObjectWithInfo>() != null && load)
             {
                 leftHandObject.GetComponent<PickableObjectWithInfo>().LoadInfo(saveInfo1, saveInfo2);
             }
@@ -307,9 +311,12 @@ public class HandsInventory : MonoBehaviour {
 
             Vector3 saveInfo1 = new Vector3();
             Vector3 saveInfo2 = new Vector3();
+            bool load = false;
+
             if (rightHandObject.GetComponent<PickableObjectWithInfo>() != null)
             {
                 rightHandObject.GetComponent<PickableObjectWithInfo>().SaveInfo(ref saveInfo1, ref saveInfo2);
+                load = true;
             }
 
             Destroy(rightHandObject.gameObject);
@@ -328,7 +335,7 @@ public class HandsInventory : MonoBehaviour {
                 rightHandObject.SavePosition(rightSavedPos, rightSavedRot);
             }
 
-            if (rightHandObject.GetComponent<PickableObjectWithInfo>() != null)
+            if (rightHandObject.GetComponent<PickableObjectWithInfo>() != null && load)
             {
                 rightHandObject.GetComponent<PickableObjectWithInfo>().LoadInfo(saveInfo1, saveInfo2);
             }
@@ -383,6 +390,29 @@ public class HandsInventory : MonoBehaviour {
     {
         Destroy(animationObject);
         animationObject = null;
+    }
+
+    public void CreateAnimationObject2(string name, bool hand)
+    {
+        animationObject2 = Instantiate(Resources.Load<GameObject>("Prefabs\\" + name),
+                            Vector3.zero, Quaternion.identity) as GameObject;
+                       
+        animationObject2.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        animationObject2.GetComponent<Rigidbody>().useGravity = false;
+        animationObject2.GetComponent<Collider>().enabled = false;
+        animationObject2.name = name;
+                       
+        animationObject2.transform.parent = hand ? leftToolHolder : rightToolHolder;
+        animationObject2.transform.localPosition = Vector3.zero;
+        animationObject2.transform.localRotation = Quaternion.identity;
+                       
+        animationObject2.GetComponent<PickableObject>().Pick();
+    }
+
+    public void DeleteAnimationObject2()
+    {
+        Destroy(animationObject2);
+        animationObject2 = null;
     }
 
     /// <summary>
@@ -623,7 +653,9 @@ public class HandsInventory : MonoBehaviour {
                 rightHandObject.GetSavesLocation(out rightSavedPos, out rightSavedRot);
             }
 
-            Vector3 saveInfo = new Vector3();
+            Vector3 saveInfo1 = new Vector3();
+            Vector3 saveInfo2 = new Vector3();
+            bool load = false;
 
             // object changed
             if (leftName != leftCombineResult)
@@ -632,7 +664,8 @@ public class HandsInventory : MonoBehaviour {
                 {
                     if (leftHandObject.GetComponent<PickableObjectWithInfo>() != null)
                     {
-                        leftHandObject.GetComponent<PickableObjectWithInfo>().SaveInfo(ref saveInfo, ref saveInfo);
+                        leftHandObject.GetComponent<PickableObjectWithInfo>().SaveInfo(ref saveInfo1, ref saveInfo2);
+                        load = true;
                     }
 
                     Destroy(leftHandObject.gameObject);
@@ -666,9 +699,9 @@ public class HandsInventory : MonoBehaviour {
                         }
                     }
 
-                    if (leftHandObject.GetComponent<PickableObjectWithInfo>() != null)
+                    if (leftHandObject.GetComponent<PickableObjectWithInfo>() != null && load)
                     {
-                        leftHandObject.GetComponent<PickableObjectWithInfo>().LoadInfo(saveInfo, saveInfo);
+                        leftHandObject.GetComponent<PickableObjectWithInfo>().LoadInfo(saveInfo1, saveInfo2);
                     }
                 }
                 else
@@ -677,6 +710,7 @@ public class HandsInventory : MonoBehaviour {
                 }
             }
 
+            load = false;
             // object changed
             if (rightName != rightCombineResult)
             {
@@ -684,7 +718,7 @@ public class HandsInventory : MonoBehaviour {
                 {
                     if (rightHandObject.GetComponent<PickableObjectWithInfo>() != null)
                     {
-                        rightHandObject.GetComponent<PickableObjectWithInfo>().SaveInfo(ref saveInfo, ref saveInfo);
+                        rightHandObject.GetComponent<PickableObjectWithInfo>().SaveInfo(ref saveInfo1, ref saveInfo2);
                     }
                     Destroy(rightHandObject.gameObject);
                     rightHandObject = null;
@@ -717,9 +751,9 @@ public class HandsInventory : MonoBehaviour {
                         }
                     }
 
-                    if (rightHandObject.GetComponent<PickableObjectWithInfo>() != null)
+                    if (rightHandObject.GetComponent<PickableObjectWithInfo>() != null && load)
                     {
-                        rightHandObject.GetComponent<PickableObjectWithInfo>().LoadInfo(saveInfo, saveInfo);
+                        rightHandObject.GetComponent<PickableObjectWithInfo>().LoadInfo(saveInfo1, saveInfo2);
                     }
                 }
                 else

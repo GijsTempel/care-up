@@ -1685,7 +1685,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyFrames: 0c010000f601000059020000d30200009e0300003f040000
-  dropClothFrame: 15
   takeSyringeFrame: 309
   takeOffCapFrame: 364
   dropCapFrame: 425
@@ -2836,18 +2835,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5cacadbc71667048bc80fad5bb73881, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114571678813920826
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4298b1dc010d39c43aeeea5a544c3740, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  combineFrame: 66
 --- !u!114 &114572495795223148
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -3719,6 +3706,23 @@ MonoBehaviour:
   combineFrame: 0
   dropHand: 0
   dropFrame: 181
+--- !u!114 &114917988199531278
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27e84f1ab9bf0544294c57aedcc9496e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  combineFrame: 66
+  hand: 1
+  openTopFrame: 10
+  dropTopFrame: 20
+  removeBottomFrame: 30
+  dropBottomFrame: 40
 --- !u!114 &114918868805526996
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -3758,18 +3762,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combineFrame: 100
---- !u!114 &114933873179196224
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4298b1dc010d39c43aeeea5a544c3740, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  combineFrame: 66
 --- !u!114 &114935749974131642
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3838,6 +3830,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combineFrame: 100
+--- !u!114 &114966351967220442
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27e84f1ab9bf0544294c57aedcc9496e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  combineFrame: 66
+  hand: 0
+  openTopFrame: 10
+  dropTopFrame: 20
+  removeBottomFrame: 30
+  dropBottomFrame: 40
 --- !u!114 &114967678108497092
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -25547,7 +25556,7 @@ AnimatorState:
   m_Transitions:
   - {fileID: 1101561375313830100}
   m_StateMachineBehaviours:
-  - {fileID: 114571678813920826}
+  - {fileID: 114917988199531278}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -28443,7 +28452,7 @@ AnimatorState:
   m_Transitions:
   - {fileID: 1101337773242031062}
   m_StateMachineBehaviours:
-  - {fileID: 114933873179196224}
+  - {fileID: 114966351967220442}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1

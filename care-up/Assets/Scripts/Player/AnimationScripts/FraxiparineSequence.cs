@@ -28,7 +28,6 @@ public class FraxiparineSequence : AnimationSequenceState
         {
             inv.ForcePickItem("Frexi_with_needle_cap", false);
             PlayerAnimationManager.SetHandItem(false, GameObject.Find("Frexi_with_needle_cap"));
-            inv.RightHandObject.GetComponent<FraxiparineSyringe>().updatePlunger = true;
         }
         else if (PlayerAnimationManager.CompareFrames(frame, prevFrame, takeOffCapFrame))
         {
@@ -50,6 +49,8 @@ public class FraxiparineSequence : AnimationSequenceState
         else if (PlayerAnimationManager.CompareFrames(frame, prevFrame, dropCapFrame))
         {
             inv.DropLeftObject();
+
+            inv.RightHandObject.GetComponent<FraxiparineSyringe>().updatePlunger = true;
         }
 
         if (keyFrame < keyFrames.Count)

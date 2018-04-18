@@ -37,12 +37,12 @@ public class FraxiparineSyringe : PickableObjectWithInfo
         {
             plunger = transform.Find("Fraxi_plunger");
         }
-/*
+
         plunger.localPosition = new Vector3(
                 plunger.localPosition.x,
                 Mathf.Lerp(loPlunger, hiPlunger, left.y),
                 plunger.localPosition.z);
-*/
+
         updateTube = right.x == 1.0f ? true : false;
 
         if (tube == null)
