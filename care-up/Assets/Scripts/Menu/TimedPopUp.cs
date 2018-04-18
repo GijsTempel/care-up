@@ -24,7 +24,11 @@ public class TimedPopUp : MonoBehaviour {
     {
         popUps.Add(this);
 
-        transform.Find("closeBTN").GetComponent<Button>().onClick.AddListener(ForceHide);
+        Transform btn = transform.Find("closeBTN");
+        if (btn != null)
+        {
+            btn.GetComponent<Button>().onClick.AddListener(ForceHide);
+        }
     }
 
     void Update()
