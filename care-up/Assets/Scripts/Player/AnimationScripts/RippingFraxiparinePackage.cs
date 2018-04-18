@@ -8,6 +8,7 @@ public class RippingFraxiparinePackage : AnimationCombine
 
     public int openTopFrame;
     public int dropTopFrame;
+    public int swapHandsFrame;
     public int removeBottomFrame;
     public int dropBottomFrame;
 
@@ -26,6 +27,9 @@ public class RippingFraxiparinePackage : AnimationCombine
         {
             inv.ExecuteDelayedCombination();
         }
+
+        mode.dontMoveCamera = true;
+        mode.SetCinematicMode(GameObject.Find("TrashBucket").transform);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -33,25 +37,28 @@ public class RippingFraxiparinePackage : AnimationCombine
     {
         if (PlayerAnimationManager.CompareFrames(frame, prevFrame, openTopFrame))
         {
-            inv.RemoveHandObject(hand);
+            inv.CreateObjectByName("fraxiPackageBottom", Vector3.zero);
+            inv.ForcePickItem("fraxiPackageBottom", !hand);
 
-            //inv.CreateAnimationObject("fraxiPackageTop", !hand);
-            //inv.CreateAnimationObject2("fraxiPackageSyringeBottom", hand);
+            inv.ReplaceHandObject(hand, "fraxiPackageSyringeBottom");
         }
         else if (PlayerAnimationManager.CompareFrames(frame, prevFrame, dropTopFrame))
         {
-            //inv.DeleteAnimationObject();
+            inv.FreezeObject(!hand);
+        }
+        else if (PlayerAnimationManager.CompareFrames(frame, prevFrame, swapHandsFrame))
+        {
+            inv.SwapHands();
         }
         else if (PlayerAnimationManager.CompareFrames(frame, prevFrame, removeBottomFrame))
         {
-            //inv.DeleteAnimationObject2();
+            inv.ReplaceHandObject(!hand, "fraxiPackageTop");
 
-            inv.CreateAnimationObject("Frexi_with_needle_cap", !hand);
-            //inv.CreateAnimationObject2("fraxiPackageBottom", hand);
+            inv.CreateAnimationObject("Frexi_with_needle_cap", hand);
         }
         else if (PlayerAnimationManager.CompareFrames(frame, prevFrame, dropBottomFrame))
         {
-            //inv.DeleteAnimationObject2();
+            inv.FreezeObject(!hand);
         }
         else if (PlayerAnimationManager.CompareFrames(frame, prevFrame, combineFrame))
         {
