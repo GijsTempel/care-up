@@ -49,6 +49,13 @@ public class UsableObject : InteractableObject {
         {
             switch(name)
             {
+                case "HandCleaner":
+                    {
+                        string message = "Clean your hands even better than this";
+                        Camera.main.transform.Find("UI").Find("EmptyHandsWarning").
+                                GetComponent<TimedPopUp>().Set(message);
+                    }
+                    break;
                 case "OldBandAid":
                     {
                         Destroy(gameObject);
