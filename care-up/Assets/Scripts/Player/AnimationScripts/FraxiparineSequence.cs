@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class FraxiparineSequence : AnimationSequenceState
 {
-    public int dropClothFrame;
     public int takeSyringeFrame;
     public int takeOffCapFrame;
     public int dropCapFrame;
@@ -25,12 +24,7 @@ public class FraxiparineSequence : AnimationSequenceState
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        if (PlayerAnimationManager.CompareFrames(frame, prevFrame, dropClothFrame))
-        {
-            inv.DeleteAnimationObject();
-        }
-        else if (PlayerAnimationManager.CompareFrames(frame, prevFrame, takeSyringeFrame))
+    {if (PlayerAnimationManager.CompareFrames(frame, prevFrame, takeSyringeFrame))
         {
             inv.ForcePickItem("Frexi_with_needle_cap", false);
             PlayerAnimationManager.SetHandItem(false, GameObject.Find("Frexi_with_needle_cap"));
@@ -64,13 +58,6 @@ public class FraxiparineSequence : AnimationSequenceState
             {
                 if (PlayerAnimationManager.CompareFrames(frame, prevFrame, keyFrames[keyFrame]))
                 {
-                    if (keyFrame == 0)
-                    {
-                        inv.CreateAnimationObject("Cloth", false);
-                        //inv.ForcePickItem("DesinfectionCloth", false);
-                        //PlayerAnimationManager.SetHandItem(false, GameObject.Find("DesinfectionCloth"));
-                    }
-
                     PlayerAnimationManager.NextSequenceStep(true);
                     if (keyFrame == 0)
                     {
@@ -100,14 +87,14 @@ public class FraxiparineSequence : AnimationSequenceState
     {
         base.OnStateExit(animator, stateInfo, layerIndex);
 
-        if (inv.LeftHandObject && inv.LeftHandObject.GetComponent<Syringe>())
-            inv.LeftHandObject.GetComponent<Syringe>().updatePlunger = false;
+        if (inv.RightHandObject && inv.RightHandObject.GetComponent<FraxiparineSyringe>())
+            inv.RightHandObject.GetComponent<FraxiparineSyringe>().updatePlunger = false;
 
         if (keyFrame >= 2 && inv.sequenceAborted)
         {
             if (keyFrame < keyFrames.Count)
             {
-                if (inv.RightHandObject && inv.RightHandObject.GetComponent<Syringe>())
+                if (inv.RightHandObject && inv.RightHandObject.GetComponent<FraxiparineSyringe>())
                 {
                     inv.ReplaceHandObject(false, "Frexi_with_needle_cap");
                     inv.PutAllOnTable();
@@ -116,7 +103,7 @@ public class FraxiparineSequence : AnimationSequenceState
             }
             else
             {
-                if (inv.LeftHandObject && inv.LeftHandObject.GetComponent<Syringe>())
+                if (inv.LeftHandObject && inv.LeftHandObject.GetComponent<FraxiparineSyringe>())
                 {
                     inv.ReplaceHandObject(true, "Frexi_with_needle_cap");
                     inv.PutAllOnTable();

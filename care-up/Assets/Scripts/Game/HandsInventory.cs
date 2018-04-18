@@ -271,10 +271,11 @@ public class HandsInventory : MonoBehaviour {
             Quaternion leftSavedRot = Quaternion.identity;
             leftHandObject.GetSavesLocation(out leftSavedPos, out leftSavedRot);
             
-            Vector3 saveInfo = new Vector3();
+            Vector3 saveInfo1 = new Vector3();
+            Vector3 saveInfo2 = new Vector3();
             if (leftHandObject.GetComponent<PickableObjectWithInfo>() != null)
             {
-                leftHandObject.GetComponent<PickableObjectWithInfo>().SaveInfo(ref saveInfo, ref saveInfo);
+                leftHandObject.GetComponent<PickableObjectWithInfo>().SaveInfo(ref saveInfo1, ref saveInfo2);
             }
 
             Destroy(leftHandObject.gameObject);
@@ -295,7 +296,7 @@ public class HandsInventory : MonoBehaviour {
 
             if (leftHandObject.GetComponent<PickableObjectWithInfo>() != null)
             {
-                leftHandObject.GetComponent<PickableObjectWithInfo>().LoadInfo(saveInfo, saveInfo);
+                leftHandObject.GetComponent<PickableObjectWithInfo>().LoadInfo(saveInfo1, saveInfo2);
             }
         }
         else
@@ -304,10 +305,11 @@ public class HandsInventory : MonoBehaviour {
             Quaternion rightSavedRot = Quaternion.identity;
             rightHandObject.GetSavesLocation(out rightSavedPos, out rightSavedRot);
 
-            Vector3 saveInfo = new Vector3();
+            Vector3 saveInfo1 = new Vector3();
+            Vector3 saveInfo2 = new Vector3();
             if (rightHandObject.GetComponent<PickableObjectWithInfo>() != null)
             {
-                rightHandObject.GetComponent<PickableObjectWithInfo>().SaveInfo(ref saveInfo, ref saveInfo);
+                rightHandObject.GetComponent<PickableObjectWithInfo>().SaveInfo(ref saveInfo1, ref saveInfo2);
             }
 
             Destroy(rightHandObject.gameObject);
@@ -328,7 +330,7 @@ public class HandsInventory : MonoBehaviour {
 
             if (rightHandObject.GetComponent<PickableObjectWithInfo>() != null)
             {
-                rightHandObject.GetComponent<PickableObjectWithInfo>().LoadInfo(saveInfo, saveInfo);
+                rightHandObject.GetComponent<PickableObjectWithInfo>().LoadInfo(saveInfo1, saveInfo2);
             }
         }
 
