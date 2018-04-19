@@ -123,6 +123,8 @@ public class FraxiparineSequence : AnimationSequenceState
                 GameObject.Find("GameLogic").GetComponent<TutorialManager>().sequenceCompleted = true;
             }
         }
+
+        GameObject.FindObjectOfType<PersonObject>().GetComponent<Animator>().SetTrigger("ShirtDown");
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here
