@@ -27,7 +27,7 @@ public class MainMenu : MonoBehaviour {
 
     public void OnStartButtonClick()
     {
-        if (prefs.TutorialCompleted || prefs.TutorialPopUpDeclined)
+        if (prefs.tutorialCompleted || prefs.TutorialPopUpDeclined)
         {
             loadingScreen.LoadLevel("SceneSelection");
         }

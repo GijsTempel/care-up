@@ -812,7 +812,7 @@ public class TutorialManager : MonoBehaviour {
     public void EndButtonClick()
     {
         //actionManager.OnUseAction("__tutorialEnd");
-        GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().TutorialCompleted = true;
+        GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().tutorialCompleted = true;
         GameObject.Find("Preferences").GetComponent<LoadingScreen>().LoadLevel("Menu");
     }
 

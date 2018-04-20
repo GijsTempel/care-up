@@ -102,6 +102,8 @@ else if($ACTION == "SaveFile") { include_once 'Includes/Actions/SaveFile.php'; }
 else if($ACTION == "CheckSerial") { include_once 'Includes/Actions/CheckSerial.php'; }
 else if($ACTION == "GetScenes") { include_once 'Includes/Actions/GetScenes.php'; }
 else if($ACTION == "SetSerial") { include_once 'Includes/Actions/SetSerial.php'; }
+else if($ACTION == "SetTutorialCompleted") { include_once 'Includes/Actions/SetTutorialCompleted.php'; }
+else if($ACTION == "GetTutorialCompleted") { include_once 'Includes/Actions/GetTutorialCompleted.php'; }
 /*************************** ACTIONS ZONE END ******************************/
 
 

@@ -15,6 +15,9 @@ public class PlayerPrefsManager : MonoBehaviour
     public bool VR = true;
     public bool practiceMode = true;
 
+    // store value here after getting from server
+    public bool tutorialCompleted;
+
     private static PlayerPrefsManager instance;
 
     private List<string> activatedScenes = new List<string>();
@@ -69,22 +72,12 @@ public class PlayerPrefsManager : MonoBehaviour
 
         AudioListener.volume = Volume;
         Debug.Log("Volume is set to saved value: " + Volume);
-
-        //SetSceneActivated("IILTG", true); // InjIntrLoTech
-        //SetSceneActivated("ISHTG", true); // InjSubHTech
-        //SetSceneActivated("INSIG", true); // Insulin
     }
 
     public float Volume
     {
         get { return PlayerPrefs.HasKey("Volume") ? PlayerPrefs.GetFloat("Volume") : 1.0f; }
         set { PlayerPrefs.SetFloat("Volume", value); }
-    }
-
-    public bool TutorialCompleted
-    {
-        get { return PlayerPrefs.GetInt("TutorialCompleted") == 1; }
-        set { PlayerPrefs.SetInt("TutorialCompleted", value ? 1 : 0); }
     }
     
     public void SetSceneActivated(string sceneName, bool value)
@@ -127,7 +120,7 @@ public class PlayerPrefsManager : MonoBehaviour
     }
 
     public void CheckSerial()
-    {
+    { 
         LoginPro.Manager.ExecuteOnServer("CheckSerial", CheckSerial_Success, Debug.LogError, null);
     }
 
@@ -177,6 +170,40 @@ public class PlayerPrefsManager : MonoBehaviour
             SetSerial(PlayerPrefs.GetString("SerialKey"));
 
             PlayerPrefs.SetString("SerialKey", ""); // clear this, so it happens once
+        }
+
+        // time for checking if tutorial is completed
+        if (PlayerPrefs.HasKey("TutorialCompleted"))
+        {
+            if (PlayerPrefs.GetInt("TutorialCompleted") == 1)
+            {
+                // tutorial was completed, let's send to server and remove this info from PC
+                LoginPro.Manager.ExecuteOnServer("SetTutorialCompleted", Blank, Debug.LogError, null);
+                tutorialCompleted = true; // store for current session
+            }
+            else
+            {
+                tutorialCompleted = false;// store for current session
+            }
+
+            PlayerPrefs.DeleteKey("TutorialCompleted"); // delete 
+        }
+        else // when info is deleted from PC
+        {
+            LoginPro.Manager.ExecuteOnServer("GetTutorialCompleted", GetTutorialCompleted_Success, Debug.LogError, null);
+        }
+    }
+
+    public void GetTutorialCompleted_Success(string[] datas)
+    {
+        if (datas.Length > 0)
+        {
+            // getting numerical value, not boolean
+            int value = 0;
+            int.TryParse(datas[0], out value);
+
+            // 0 = false, 1 = true
+            tutorialCompleted = (value > 0);
         }
     }
 
