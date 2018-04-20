@@ -193,7 +193,7 @@ public class InGameUI : MonoBehaviour {
 
     public void OnExitButtonClick()
     {
-        GameObject.Find("Preferences").GetComponent<LoadingScreen>().LoadLevel("Menu");
+        bl_SceneLoaderUtils.GetLoader.LoadLevel("Menu");
     }
 
     public void ToggleAllSounds(bool value)
