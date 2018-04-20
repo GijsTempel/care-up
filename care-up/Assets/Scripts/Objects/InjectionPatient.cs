@@ -30,11 +30,18 @@ public class InjectionPatient : PersonObject {
     protected override void Update()
     {
         base.Update();
-        
-        if (Vector3.Distance(transform.position, greetDialogueTrigger.transform.position) >
-            Vector3.Distance(transform.position, player.transform.position))
+
+        if (greetDialogueTrigger != null)
         {
-            GreetDialogue();
+            if (Vector3.Distance(transform.position, greetDialogueTrigger.transform.position) >
+                Vector3.Distance(transform.position, player.transform.position))
+            {
+                GreetDialogue();
+            }
+        }
+        else
+        {
+            Debug.LogWarning("No greet diaglogue trigger set.");
         }
     }
 
