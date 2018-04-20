@@ -19,7 +19,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public MouseLook mouseLook = new MouseLook();
         
         private Rigidbody m_RigidBody;
-        private CapsuleCollider m_Capsule;
+        //private CapsuleCollider m_Capsule; // never used
         
         //PlayerPrefsManager prefs;
         
@@ -27,7 +27,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private void Start()
         {
             m_RigidBody = GetComponent<Rigidbody>();
-            m_Capsule = GetComponent<CapsuleCollider>();
+            //m_Capsule = GetComponent<CapsuleCollider>(); // never used
             mouseLook.Init (transform, cam.transform);
 
             //prefs = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
@@ -38,8 +38,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void Update()
         {
-            if ( false )//prefs.VR )
-                RotateView();
+            // commented unreachable code here
+            //if ( false )//prefs.VR )
+            //    RotateView();
 
             if (tutorial_movementLock)
                 return;

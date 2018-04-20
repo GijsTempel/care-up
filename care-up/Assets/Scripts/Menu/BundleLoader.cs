@@ -49,7 +49,7 @@ public class BundleLoader : MonoBehaviour {
             yield break;
         yield return StartCoroutine(request);
 
-        // Calculate and display the elapsed time.
-        float elapsedTime = Time.realtimeSinceStartup - startTime;
+        // Calculate and display the elapsed time. // never used now
+        //float elapsedTime = Time.realtimeSinceStartup - startTime;
     }
 }

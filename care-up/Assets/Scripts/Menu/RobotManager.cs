@@ -9,11 +9,7 @@ public class RobotManager : MonoBehaviour {
 
     private GameObject UI_object;
     private GameObject UI_trigger;
-
-    private Vector3 initialPosition;
-    private float timer = 0.0f;
-    private int direction = 1;
-
+    
     private static RobotManager instance;
     
     private static Transform eyeL;
@@ -51,8 +47,6 @@ public class RobotManager : MonoBehaviour {
 
         UI_trigger = Camera.main.transform.Find("UI").Find("RobotUITrigger").gameObject;
         UI_trigger.SetActive(true);
-
-        initialPosition = transform.localPosition;
 
         EventTrigger.Entry event1 = new EventTrigger.Entry();
         event1.eventID = EventTriggerType.PointerEnter;

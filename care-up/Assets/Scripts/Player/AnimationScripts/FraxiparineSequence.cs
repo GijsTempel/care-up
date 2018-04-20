@@ -9,7 +9,6 @@ public class FraxiparineSequence : AnimationSequenceState
     public int dropCapFrame;
 
     private HandsInventory inv;
-    private FraxiparineSyringe syringe;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -32,8 +31,6 @@ public class FraxiparineSequence : AnimationSequenceState
         else if (PlayerAnimationManager.CompareFrames(frame, prevFrame, takeOffCapFrame))
         {
             inv.ReplaceHandObject(false, "Frexi");
-
-            syringe = inv.RightHandObject.GetComponent<FraxiparineSyringe>();
 
             GameObject cap = inv.CreateObjectByName("SyringeInjectionCap", Vector3.zero);
 

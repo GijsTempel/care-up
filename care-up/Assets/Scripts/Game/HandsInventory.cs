@@ -65,7 +65,7 @@ public class HandsInventory : MonoBehaviour {
     private CameraMode cameraMode;
 
     private ActionManager actionManager;
-    private PlayerPrefsManager prefsManager;
+    //private PlayerPrefsManager prefsManager;
 
     private TutorialManager tutorial;
 
@@ -98,10 +98,11 @@ public class HandsInventory : MonoBehaviour {
 
         tutorial = GetComponent<TutorialManager>();
 
+        /* never used?
         if (GameObject.Find("Preferences"))
         {
             prefsManager = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
-        }
+        } */
 
         foreach (GameObject obj in GameObject.FindGameObjectsWithTag("playerBone"))
         {

@@ -672,11 +672,9 @@ public class ActionManager : MonoBehaviour {
         }
     }
 
+    /* not used
     public void OnGameOver()
     {
-        // disabled GameOver
-        return;
-
         Transform gameOver = GameObject.Find("UI").transform.Find("GameOver");
         gameOver.gameObject.SetActive(true);
             
@@ -704,7 +702,7 @@ public class ActionManager : MonoBehaviour {
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-    }
+    } */
 
     public void OnRetryButtonClick()
     {
