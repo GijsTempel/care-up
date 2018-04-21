@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class InjectionSequence : AnimationSequenceState
 {
-    public int dropClothFrame;
     public int takeSyringeFrame;
     public int swapHandsFrame;
     public int takeOffCapFrame;
@@ -27,12 +26,7 @@ public class InjectionSequence : AnimationSequenceState
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (PlayerAnimationManager.CompareFrames(frame, prevFrame, dropClothFrame))
-        {
-            inv.DeleteAnimationObject();
-            //inv.PutAllOnTable();
-        }
-        else if (PlayerAnimationManager.CompareFrames(frame, prevFrame, takeSyringeFrame))
+        if (PlayerAnimationManager.CompareFrames(frame, prevFrame, takeSyringeFrame))
         {
             inv.ForcePickItem("SyringeWithInjectionNeedleCap", false);
             PlayerAnimationManager.SetHandItem(false, GameObject.Find("SyringeWithInjectionNeedleCap"));
@@ -71,13 +65,6 @@ public class InjectionSequence : AnimationSequenceState
             {
                 if (PlayerAnimationManager.CompareFrames(frame, prevFrame, keyFrames[keyFrame]))
                 {
-                    if (keyFrame == 0)
-                    {
-                        inv.CreateAnimationObject("Cloth", false);
-                        //inv.ForcePickItem("DesinfectionCloth", false);
-                        //PlayerAnimationManager.SetHandItem(false, GameObject.Find("DesinfectionCloth"));
-                    }
-
                     PlayerAnimationManager.NextSequenceStep(true);
                     if (keyFrame == 0)
                     {

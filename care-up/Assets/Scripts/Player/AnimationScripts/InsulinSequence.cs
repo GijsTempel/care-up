@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class InsulinSequence : AnimationSequenceState
 {
-    public int dropClothFrame;
     public int takePenFrame;
     public int startButtonFrame;
     public int endButtonFrame;
@@ -25,11 +24,7 @@ public class InsulinSequence : AnimationSequenceState
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (PlayerAnimationManager.CompareFrames(frame, prevFrame, dropClothFrame))
-        {
-            inv.DeleteAnimationObject();
-        }
-        else if (PlayerAnimationManager.CompareFrames(frame, prevFrame, takePenFrame))
+        if (PlayerAnimationManager.CompareFrames(frame, prevFrame, takePenFrame))
         {
             inv.ForcePickItem("InsulinPenWithNeedle", false);
             PlayerAnimationManager.SetHandItem(false, GameObject.Find("InsulinPenWithNeedle"));
@@ -49,11 +44,6 @@ public class InsulinSequence : AnimationSequenceState
             {
                 if (PlayerAnimationManager.CompareFrames(frame, prevFrame, keyFrames[keyFrame]))
                 {
-                    if (keyFrame == 0)
-                    {
-                        inv.CreateAnimationObject("Cloth", false);
-                    }
-
                     PlayerAnimationManager.NextSequenceStep(true);
                     animator.speed = 0f;
                     ++keyFrame;
