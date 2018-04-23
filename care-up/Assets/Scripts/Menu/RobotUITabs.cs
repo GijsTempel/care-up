@@ -47,6 +47,13 @@ public class RobotUITabs : MonoBehaviour {
             }
             else
             {
+                if (name == "InfoTab" )
+                {
+                    SetTabActive(false);
+                    gameObject.SetActive(false);
+                    tabs.Remove(this);
+                }
+                else
                 if (name == "GeneralTab")
                 {
                     SetTabActive(true);
@@ -55,7 +62,14 @@ public class RobotUITabs : MonoBehaviour {
         }
         else
         {
-            if (name == "GeneralTab")
+            if (name == "InfoTab")
+            {
+                SetTabActive(false);
+                gameObject.SetActive(false);
+                tabs.Remove(this);
+            }
+            else
+               if (name == "GeneralTab")
             {
                 SetTabActive(true);
             }
