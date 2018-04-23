@@ -13,6 +13,7 @@ public class LevelButton : MonoBehaviour {
     public Sprite image;
 
     private static Transform sceneInfoPanel;
+    private static PlayerPrefsManager manager;
 
     private void Start()
     {
@@ -27,6 +28,12 @@ public class LevelButton : MonoBehaviour {
             sceneInfoPanel = GameObject.Find("SceneInfo").transform.GetChild(0);
             if (sceneInfoPanel == null) Debug.LogError("No sceneInfo panel");
         }
+
+        if (manager == null)
+        {
+            manager = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
+            if (manager == null) Debug.LogError("No prefs manager ( start from 1st scene? )");
+        }
     }
 
     public void OnLevelButtonClick()
@@ -35,9 +42,11 @@ public class LevelButton : MonoBehaviour {
         {
             sceneInfoPanel.Find("Image").GetComponent<Image>().sprite = image;
         }
+
         sceneInfoPanel.Find("Start").GetComponent<LevelButton>().bundleName = bundleName;
         sceneInfoPanel.Find("Start").GetComponent<LevelButton>().sceneName = sceneName;
-        sceneInfoPanel.Find("Name").GetComponent<Text>().text = 
+        sceneInfoPanel.Find("Name").GetComponent<Text>().text =
+            manager.currentSceneVisualName =
             transform.Find("Name").GetComponent<Text>().text;
         sceneInfoPanel.Find("Description").GetComponent<Text>().text = 
             transform.Find("Description").GetComponent<Text>().text;

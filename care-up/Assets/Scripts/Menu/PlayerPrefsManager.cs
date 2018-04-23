@@ -22,6 +22,9 @@ public class PlayerPrefsManager : MonoBehaviour
 
     private List<string> activatedScenes = new List<string>();
 
+    // sets up after selecting scene in "scene selection"
+    public string currentSceneVisualName;
+
     public string ActivatedScenes
     {
         get
