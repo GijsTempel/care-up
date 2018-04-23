@@ -54,6 +54,8 @@ public class CameraMode : MonoBehaviour {
 
     public bool dontMoveCamera;
 
+    private bool previewModeFrame; //fix
+
     public Mode CurrentMode
     {
         get { return currentMode; }
@@ -177,9 +179,17 @@ public class CameraMode : MonoBehaviour {
             {
                 selectedObject.ViewModeUpdate();
             }
+
             if (controls.MouseClicked())
             {
-                ObjectViewPutDownButton();
+                if (previewModeFrame && (Input.touchCount > 0)) // skip first touch hopefully
+                {
+                    previewModeFrame = false;
+                }
+                else
+                {
+                    ObjectViewPutDownButton();
+                }
             }
         }
     }
@@ -231,6 +241,8 @@ public class CameraMode : MonoBehaviour {
             Camera.main.transform.Find("UI").Find("ObjectViewButtons").gameObject.SetActive(true);
             
             playerScript.MoveBackButtonObject.SetActive(false);
+
+            previewModeFrame = true;
         }
         else if (currentMode == Mode.ObjectPreview && mode == Mode.Free)
         {

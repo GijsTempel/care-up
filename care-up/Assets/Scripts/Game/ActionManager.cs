@@ -260,7 +260,9 @@ public class ActionManager : MonoBehaviour {
                 }
                 else
                 {
-                    Debug.LogError("Description in xml file \"" + actionListName + "\" is set wrong. \'fullDescription\' field is not set and cannot split \'description\' properly.");
+                    Debug.LogError("Description in xml file \"" + actionListName + "\" is set wrong. \n" +
+                        "\'fullDescription\' field is not set and cannot split \'description\' properly. \n" +
+                        "Index: " + index + ". Descr: " + descr);
                 }
             }
 
@@ -331,7 +333,11 @@ public class ActionManager : MonoBehaviour {
         }
         else
         {
-            totalPoints = actionList.Count();
+            totalPoints = 0;
+            foreach (Action a in actionList)
+            {
+                totalPoints += a.pointValue;
+            }
         }
 
         currentAction = actionList.First();
@@ -666,11 +672,9 @@ public class ActionManager : MonoBehaviour {
         }
     }
 
+    /* not used
     public void OnGameOver()
     {
-        // disabled GameOver
-        return;
-
         Transform gameOver = GameObject.Find("UI").transform.Find("GameOver");
         gameOver.gameObject.SetActive(true);
             
@@ -698,7 +702,7 @@ public class ActionManager : MonoBehaviour {
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-    }
+    } */
 
     public void OnRetryButtonClick()
     {

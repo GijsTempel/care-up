@@ -23,32 +23,19 @@ public class UsableObject : InteractableObject {
         }
     }
 
-    /*protected override void Update()
-    {
-        if (actionManager.CurrentUseObject == name || 
-            (actionManager.CurrentUseObject == "HandCleaner" && name == "WorkField"))
-        {
-            base.Update();
-
-            if (controls.MouseClicked() && cameraMode.CurrentMode == CameraMode.Mode.Free)
-            {
-                if (controls.SelectedObject == gameObject && controls.CanInteract)
-                {
-                    if (handsInventory.Empty())
-                    {
-                        Use();
-                    }
-                }
-            }
-        }
-    }*/
-
     public virtual void Use()
     {
         if (!ViewModeActive())
         {
             switch(name)
             {
+                case "HandCleaner":
+                    {
+                        string message = "Zorg volgens een zorgvuldige handhygiëne. Handhygiëne is in dit protocol versneld om de gebruikerservaring te verbeteren";
+                        Camera.main.transform.Find("UI").Find("EmptyHandsWarning").
+                                GetComponent<TimedPopUp>().Set(message);
+                    }
+                    break;
                 case "OldBandAid":
                     {
                         Destroy(gameObject);

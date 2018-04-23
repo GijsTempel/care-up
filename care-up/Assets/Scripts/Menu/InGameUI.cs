@@ -34,6 +34,8 @@ public class InGameUI : MonoBehaviour {
 
     private Selectable gamepadDefault;
 
+    private bool startChange;
+
 	void Start () {
 
         ui = transform.GetChild(0);
@@ -66,6 +68,7 @@ public class InGameUI : MonoBehaviour {
 
         if (prefsManager != null)
         {
+            startChange = true;
             volumeSlider.value = prefsManager.Volume;
         }
 
@@ -190,7 +193,7 @@ public class InGameUI : MonoBehaviour {
 
     public void OnExitButtonClick()
     {
-        GameObject.Find("Preferences").GetComponent<LoadingScreen>().LoadLevel("Menu");
+        bl_SceneLoaderUtils.GetLoader.LoadLevel("Menu");
     }
 
     public void ToggleAllSounds(bool value)
@@ -211,7 +214,15 @@ public class InGameUI : MonoBehaviour {
 
     public void OnVolumeSliderChange()
     {
-        AudioListener.volume = volumeSlider.value;
+        if (startChange)
+        {
+            startChange = false;
+        }
+        else
+        {
+            AudioListener.volume = volumeSlider.value;
+        }
+
         if (prefsManager != null)
         {
             prefsManager.Volume = volumeSlider.value;

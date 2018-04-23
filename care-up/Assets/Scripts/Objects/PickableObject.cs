@@ -14,12 +14,12 @@ public class PickableObject : InteractableObject {
     [HideInInspector]
     public bool tutorial_usedOn = false;
 
+    [HideInInspector]
     public Transform leftControlBone;
+    [HideInInspector]
     public Transform rightControlBone;
 
     public int holdAnimationID = 0;
-    
-    protected static HandsInventory inventory;
 
     private List<Vector3> framePositions = new List<Vector3>();
     private Rigidbody rigidBody;
@@ -30,12 +30,6 @@ public class PickableObject : InteractableObject {
         framePositions.Clear();
 
         rigidBody = GetComponent<Rigidbody>();
-
-        if (inventory == null)
-        {
-            inventory = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
-            if (inventory == null) Debug.LogError("No invenrity found");
-        }
     }
 
     /// <summary>
@@ -91,8 +85,7 @@ public class PickableObject : InteractableObject {
         if (controls.SelectedObject != null && controls.CanInteract)
         {
             if ((name == "InjectionNeedle" || name == "AbsorptionNeedle"
-                || name == "InjectionSNeedle" || name == "ClothWithAmpouleTop"
-                || name == "InsulinNeedle"
+                || name == "InjectionSNeedle" || name == "InsulinNeedle"
                 || name == "TestStrips" || name == "Lancet" || name == "NeedleHolderWithNeedle")
                 && info[1] == "NeedleCup"
                 && controls.SelectedObject.name == "NeedleCup")
@@ -105,6 +98,15 @@ public class PickableObject : InteractableObject {
                     }
                 }
                 inventory.RemoveHandObject(hand);
+            }
+            else if ((name == "AbsorptionNeedleNoCap" || name == "InjectionNeedleNoCap"
+                || name == "ClothWithAmpouleTop") 
+                && controls.SelectedObject.name == "NeedleCup" && info[1] == "NeedleCup")
+            {
+                string animation = (hand ? "UseLeft " : "UseRight ") + name + " NeedleCup";
+                PlayerAnimationManager.PlayAnimation(animation, GameObject.Find("NeedleCup").transform);
+                actionManager.OnUseOnAction(name, "NeedleCup");
+                return true;
             }
             else if ((name == "Pad" || name == "Tourniquet") && 
                 controls.SelectedObject.name == "Person")

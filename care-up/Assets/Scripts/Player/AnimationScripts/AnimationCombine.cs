@@ -20,7 +20,7 @@ public class AnimationCombine : StateMachineBehaviour {
 
         mode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
         mode.animating = true;
-        mode.SetCameraUpdating(true);
+        //mode.SetCameraUpdating(true);
 
         frame = 0f;
         prevFrame = 0f;

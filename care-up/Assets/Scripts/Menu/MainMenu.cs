@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour {
     
@@ -26,7 +27,7 @@ public class MainMenu : MonoBehaviour {
 
     public void OnStartButtonClick()
     {
-        if (prefs.TutorialCompleted || prefs.TutorialPopUpDeclined)
+        if (prefs.tutorialCompleted || prefs.TutorialPopUpDeclined)
         {
             loadingScreen.LoadLevel("SceneSelection");
         }
@@ -141,5 +142,15 @@ public class MainMenu : MonoBehaviour {
     public void OnRetryButtonClick()
     {
         bl_SceneLoaderUtils.GetLoader.LoadLevel(loadingScreen.GetComponent<EndScoreManager>().SceneName);
+    }
+
+    public void OnToggleAcceptTermsAndConditions(Button button)
+    {
+        button.interactable = !button.interactable;
+    }
+
+    public void OpenUrl(string url)
+    {
+        Application.OpenURL(url);
     }
 }

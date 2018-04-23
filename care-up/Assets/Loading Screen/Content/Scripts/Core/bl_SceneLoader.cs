@@ -168,8 +168,8 @@ public class bl_SceneLoader : MonoBehaviour
         if (LoadBarSlider != null) { LoadBarSlider.value = lerpValue; }
         if (ProgressText != null)
         {
-            string percent = (lerpValue * 100).ToString("F0");
-            ProgressText.text = "Laden";//string.Format(LoadingTextFormat, percent);
+            //string percent = (lerpValue * 100).ToString("F0"); never used anymore
+            ProgressText.text = "Laden"; //string.Format(LoadingTextFormat, percent);
         }
     }
 
