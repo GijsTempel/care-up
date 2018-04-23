@@ -349,6 +349,12 @@ public class ItemControlsUI : MonoBehaviour {
                     {
                         handsInventory.PickItem(item);
                     }
+                    else
+                    {
+                        string message = "Volg de tips links bovenin het scherm om verder te gaan.";
+                        Camera.main.transform.Find("UI").Find("EmptyHandsWarning").
+                                GetComponent<TimedPopUp>().Set(message);
+                    }
 
                     controls.ResetObject();
                 }
