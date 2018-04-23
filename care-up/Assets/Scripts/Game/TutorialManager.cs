@@ -570,18 +570,6 @@ public class TutorialManager : MonoBehaviour {
                     if ( handsInventory.tutorial_combined )
                     {
                         handsInventory.tutorial_combined = false;
-                        currentStep = TutorialStep.DropAbsorptionCap;
-                        UItext.text = "Leg de opzuignaald dop terug op het welkveld door op de dop te klikken en te kiezen voor de optie 'Terugleggen'";
-
-                        itemToDrop = "SyringeAbsorptionCap";
-                    }
-                    break;
-                case TutorialStep.DropAbsorptionCap:
-                    if (handsInventory.tutorial_droppedLeft || handsInventory.tutorial_droppedRight)
-                    {
-                        AddPointWithSound();
-                        handsInventory.tutorial_droppedLeft =
-                            handsInventory.tutorial_droppedRight = false;
                         currentStep = TutorialStep.CombineSyringeAbNeedleMed;
                         UItext.text = "Probeer nu het medicijn op te zuigen in de spuit. Zorg dat je het medicijn en de spuit vast hebt in je handen. Klik hierna op het medicijn of de spuit en kies voor de optie 'Gebruiken met..' en klik daarna op het voorwerp in de andere hand.";
 
