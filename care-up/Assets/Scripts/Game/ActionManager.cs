@@ -109,15 +109,44 @@ public class ActionManager : MonoBehaviour {
 
     /// <summary>
     /// Description of the current action.
+    /// Heavy function, use only once, never on update
     /// </summary>
     public string CurrentDescription
     {
-        get { return currentAction != null ? currentAction.shortDescr : ""; }
+        get {
+            List<Action> sublist = actionList.Where(action =>
+                action.SubIndex == currentActionIndex &&
+                action.matched == false).ToList();
+
+            string result = "";
+            foreach (Action a in sublist)
+            {
+                result += a.shortDescr + "\n";
+            }
+
+            return result;
+        }
     }
 
+    /// <summary>
+    /// Extra description ( for extended hints )
+    /// Heavy function, use only once, never on update
+    /// </summary>
     public string CurrentExtraDescription
     {
-        get { return currentAction != null ? currentAction.descr : ""; }
+        get {
+            List<Action> sublist = actionList.Where(action =>
+                action.SubIndex == currentActionIndex &&
+                action.matched == false).ToList();
+
+            string result = "";
+            foreach (Action a in sublist)
+            {
+                result += a.descr + "\n";
+            }
+
+            return result;
+        }
     }
 
     /// <summary>
@@ -556,6 +585,10 @@ public class ActionManager : MonoBehaviour {
                 {
                     matched = true;
                     action.matched = true;
+                    
+                    //inserted checklist stuff
+                    RobotUITabChecklist.StrikeStep(actionList.IndexOf(action));
+                    // end checklist
                 }
             }
         }
@@ -591,14 +624,10 @@ public class ActionManager : MonoBehaviour {
             List<Action> actionsLeft = actionList.Where(action =>
                 action.SubIndex == currentActionIndex &&
                 action.matched == false).ToList();
+            
             currentAction = actionsLeft.Count > 0 ? actionsLeft.First() : null;
         }
-
-        if (matched)
-        {
-            RobotUITabChecklist.StrikeStep();
-        }
-       
+        
         return matched;
     }
 
