@@ -27,8 +27,17 @@ public class UsableObject : InteractableObject {
     {
         if (!ViewModeActive())
         {
-            switch(name)
+            tutorial_used = true;
+
+            switch (name)
             {
+                case "ClothPackage":
+                    {
+                        GameObject gameObject = handsInventory.CreateObjectByName("Cloth", Vector3.zero);
+                        handsInventory.PickItem(gameObject.GetComponent<PickableObject>());
+                        Reset();
+                        return;
+                    }   // no break, return = end function
                 case "HandCleaner":
                     {
                         string message = "Zorg volgens een zorgvuldige handhygiëne. Handhygiëne is in dit protocol versneld om de gebruikerservaring te verbeteren";
@@ -42,7 +51,6 @@ public class UsableObject : InteractableObject {
                     }
                     break;
             }
-            tutorial_used = true;
             actionManager.OnUseAction(gameObject.name);
             PlayerAnimationManager.PlayAnimation("Use " + name, transform);
             Reset();

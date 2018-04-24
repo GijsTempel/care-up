@@ -291,7 +291,11 @@ public class ItemControlsUI : MonoBehaviour {
 
     public void Use()
     {
-        if (actionManager.CurrentUseObject == initedObject.name ||
+        if (initedObject.name == "ClothPackage")
+        {
+            initedObject.GetComponent<UsableObject>().Use();
+        }
+        else if (actionManager.CurrentUseObject == initedObject.name ||
             (actionManager.CurrentUseObject == "HandCleaner" 
             && initedObject.name == "WorkField"))
         {
