@@ -121,7 +121,7 @@ public class ActionManager : MonoBehaviour {
             string result = "";
             foreach (Action a in sublist)
             {
-                result += a.shortDescr + "\n";
+                result += " - " + a.shortDescr + "\n";
             }
 
             return result;
@@ -142,7 +142,7 @@ public class ActionManager : MonoBehaviour {
             string result = "";
             foreach (Action a in sublist)
             {
-                result += a.descr + "\n";
+                result += " - " + a.descr + "\n";
             }
 
             return result;
