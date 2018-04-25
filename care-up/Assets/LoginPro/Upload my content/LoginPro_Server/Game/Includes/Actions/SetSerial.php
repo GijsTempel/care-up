@@ -37,9 +37,9 @@ $info = $stmt->fetch();
 if(isset($info['ID']))
 {
 	$query = "SELECT * FROM ".$_SESSION['AccountToSerials']." WHERE SerialID = :serial_id";
-	$parameters = array(':serial_id' => $info['id']);
+	$parameters = array(':serial_id' => $info['ID']);
 	$stmt = ExecuteQuery($query, $parameters);
-	$timesUsed = count($stmt->fetchAll());
+	$timesUsed = $stmt->rowCount();
 	
 	if ($timesUsed < $info['AccountNumber'])
 	{
