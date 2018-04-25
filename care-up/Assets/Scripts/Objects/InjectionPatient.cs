@@ -90,20 +90,41 @@ public class InjectionPatient : PersonObject {
         }
     }
 
+    public void GreetDialoguePt2()
+    {
+        StartCoroutine(GreetDialogueCoroutinePt2());
+    }
+
+    public void GreetDialoguePt3()
+    {
+        StartCoroutine(GreetDialogueCoroutinePt3());
+    }
+
     private IEnumerator GreetDialogueCoroutine()
     {
         Narrator.PlaySound(audioClips[0]);
         yield return new WaitForSeconds(audioClips[0].length);
+
         animator.SetTrigger("goedemorgen");
         audioSource.PlayOneShot(audioClips[1]);
         yield return new WaitForSeconds(audioClips[1].length);
+    }
+
+    private IEnumerator GreetDialogueCoroutinePt2()
+    {
         Narrator.PlaySound(audioClips[2]);
         yield return new WaitForSeconds(audioClips[2].length);
+
         animator.SetTrigger("ja_is_goed");
         audioSource.PlayOneShot(audioClips[3]);
         yield return new WaitForSeconds(audioClips[3].length);
+    }
+
+    private IEnumerator GreetDialogueCoroutinePt3()
+    {
         Narrator.PlaySound(audioClips[4]);
         yield return new WaitForSeconds(audioClips[4].length);
+
         animator.SetTrigger("oke");
         audioSource.PlayOneShot(audioClips[5]);
     }
