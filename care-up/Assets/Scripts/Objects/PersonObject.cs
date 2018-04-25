@@ -16,14 +16,15 @@ public class PersonObject : InteractableObject
     [HideInInspector]
     public bool tutorial_used = false;
 
-    public string dialogueXml;
+    public List<string> dialogueXmls;
+    protected int currentDialogueIndex = 0;
 
     private List<SelectDialogue.DialogueOption> optionsList;
 
     private List<GameObject> callers;
 
-    private bool inhaling = false;
-    bool direction = true;
+    protected bool inhaling = false;
+    private bool direction = true;
     private float inhaleCounter = 1.0f;
 
     protected AudioSource audioSource;
@@ -36,7 +37,15 @@ public class PersonObject : InteractableObject
 
         callers = new List<GameObject>();
         optionsList = new List<SelectDialogue.DialogueOption>();
-        LoadDialogueOptions(dialogueXml);
+
+        if (dialogueXmls.Count > 0)
+        {
+            LoadDialogueOptions(dialogueXmls[0]);
+        }
+        else
+        {
+            LoadDialogueOptions("Greeting");
+        }
 
         audioSource = GetComponent<AudioSource>();
 
@@ -75,15 +84,16 @@ public class PersonObject : InteractableObject
         }
     }
 
-    public void Talk(string topic = "")
+    public virtual void Talk(string topic = "")
     {
         if (ViewModeActive() || topic == "")
             return;
-
-        tutorial_talked = true;
-
+        
         if (topic == actionManager.CurrentTopic)
         {
+            tutorial_talked = true;
+            actionManager.OnTalkAction(topic);
+
             switch (topic)
             {
                 case "RollUpSleeves":
@@ -104,15 +114,13 @@ public class PersonObject : InteractableObject
                     break;
             }
         }
-
-        actionManager.OnTalkAction(topic);
     }
 
     /// <summary>
     /// Loads available topics to talk from xml file.
     /// </summary>
     /// <param name="filename">Xml filename</param>
-    private void LoadDialogueOptions(string filename)
+    protected void LoadDialogueOptions(string filename)
     {
         optionsList.Clear();
 

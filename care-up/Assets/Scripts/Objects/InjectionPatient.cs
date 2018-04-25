@@ -7,8 +7,6 @@ public class InjectionPatient : PersonObject {
 
     private AudioClip[] audioClips;
     private Animator animator;
-
-    public GameObject greetDialogueTrigger;
     
     private bool greetDialogueTriggered = false;
 
@@ -27,21 +25,54 @@ public class InjectionPatient : PersonObject {
         animator = GetComponent<Animator>();
     }
 
-    protected override void Update()
+    public override void Talk(string topic = "")
     {
-        base.Update();
-
-        if (greetDialogueTrigger != null)
+        if (ViewModeActive() || topic == "")
+            return;
+        
+        if (topic == actionManager.CurrentTopic)
         {
-            if (Vector3.Distance(transform.position, greetDialogueTrigger.transform.position) >
-                Vector3.Distance(transform.position, player.transform.position))
+            tutorial_talked = true;
+            actionManager.OnTalkAction(topic);
+
+            switch (topic)
             {
-                GreetDialogue();
+                case "RollUpSleeves":
+                case "ExtendArmMakeFist":
+                    if (GetComponent<InjectionPatient>() != null)
+                    {
+                        // also launches animation after dialogue
+                        GetComponent<InjectionPatient>().RollUpSleevesDialogue();
+                    }
+                    break;
+                case "ComfortablePosition":
+                    inhaling = true;
+                    break;
+                case "ShowBellyForInsulin":
+                    GetComponent<Animator>().SetTrigger("ShowBellyForInsulin");
+                    break;
+                default:
+                    break;
+            }
+            
+            ++currentDialogueIndex;
+            if (currentDialogueIndex < dialogueXmls.Count)
+            {
+                LoadDialogueOptions(dialogueXmls[currentDialogueIndex]);
             }
         }
         else
         {
-            Debug.LogWarning("No greet diaglogue trigger set.");
+            if (topic == "Hello")
+            {
+                GreetDialogue();
+
+                ++currentDialogueIndex;
+                if (currentDialogueIndex < dialogueXmls.Count)
+                {
+                    LoadDialogueOptions(dialogueXmls[currentDialogueIndex]);
+                }
+            }
         }
     }
 
