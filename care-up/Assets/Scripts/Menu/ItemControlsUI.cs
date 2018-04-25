@@ -291,7 +291,11 @@ public class ItemControlsUI : MonoBehaviour {
 
     public void Use()
     {
-        if (actionManager.CurrentUseObject == initedObject.name ||
+        if (initedObject.name == "ClothPackage")
+        {
+            initedObject.GetComponent<UsableObject>().Use();
+        }
+        else if (actionManager.CurrentUseObject == initedObject.name ||
             (actionManager.CurrentUseObject == "HandCleaner" 
             && initedObject.name == "WorkField"))
         {
@@ -348,6 +352,12 @@ public class ItemControlsUI : MonoBehaviour {
                             item.name == tutorial.itemToPick2)))
                     {
                         handsInventory.PickItem(item);
+                    }
+                    else
+                    {
+                        string message = "Volg de tips links bovenin het scherm om verder te gaan.";
+                        Camera.main.transform.Find("UI").Find("EmptyHandsWarning").
+                                GetComponent<TimedPopUp>().Set(message);
                     }
 
                     controls.ResetObject();

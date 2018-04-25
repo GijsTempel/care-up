@@ -1372,6 +1372,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deleteFrame: 92
   hand: 1
+--- !u!114 &114005367501949626
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74dca907f59c6b84096a9753d0a3c528, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deleteFrame: 140
+  hand: 1
 --- !u!114 &114020137798212310
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1457,7 +1470,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyFrames: 050000000c010000f60100005902000019030000ad0300001404000016050000
-  dropClothFrame: 268
   takeSyringeFrame: 311
   takeOffCapFrame: 362
   dropCapFrame: 411
@@ -1684,7 +1696,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9773ec5478e5d734e90f8bf1a7073a3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keyFrames: 0c010000f601000059020000d30200009e0300003f040000
+  keyFrames: 0e0000000c010000f6010000d30200009e0300003f040000
   takeSyringeFrame: 309
   takeOffCapFrame: 364
   dropCapFrame: 425
@@ -1911,7 +1923,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyFrames: 01000000470100005b01000037020000770200002a03000093030000
-  dropClothFrame: 327
   takePenFrame: 347
   startButtonFrame: 685
   endButtonFrame: 793
@@ -2161,7 +2172,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyFrames: 05000000610100009a010000570200005d0200008902000075030000eb04000014050000
-  dropClothFrame: 268
   takeSyringeFrame: 311
   swapHandsFrame: 1265
   takeOffCapFrame: 0
@@ -2190,7 +2200,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyFrames: 05000000610100009a010000570200005d0200008902000075030000eb04000014050000
-  dropClothFrame: 268
   takeSyringeFrame: 311
   swapHandsFrame: 1265
   takeOffCapFrame: 0
@@ -2373,7 +2382,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyFrames: 0500000020010000f601000048020000ee02000046030000750300006f04000081050000
-  dropClothFrame: 268
   takeSyringeFrame: 311
   swapHandsFrame: 1511
   takeOffCapFrame: 362
@@ -2644,7 +2652,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyFrames: 05000000610100009a010000570200005d0200008902000075030000eb040000
-  dropClothFrame: 268
   takeSyringeFrame: 311
   swapHandsFrame: 1265
   takeOffCapFrame: 0
@@ -2779,7 +2786,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyFrames: 05000000610100009a010000570200005d0200008902000075030000eb040000
-  dropClothFrame: 268
   takeSyringeFrame: 311
   swapHandsFrame: 1265
   takeOffCapFrame: 0
@@ -2970,7 +2976,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyFrames: 05000000610100009a010000570200005d0200008902000075030000eb04000014050000
-  dropClothFrame: 268
   takeSyringeFrame: 311
   swapHandsFrame: 1265
   takeOffCapFrame: 0
@@ -3273,7 +3278,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyFrames: 05000000610100009a010000570200005d0200008902000075030000eb04000014050000
-  dropClothFrame: 268
   takeSyringeFrame: 311
   swapHandsFrame: 1265
   takeOffCapFrame: 0
@@ -3479,19 +3483,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   combineFrame: 320
   target: NeedleCup
-  hand: 1
---- !u!114 &114826614769469220
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74dca907f59c6b84096a9753d0a3c528, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  deleteFrame: 140
   hand: 1
 --- !u!114 &114828250901371266
 MonoBehaviour:
@@ -3901,7 +3892,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyFrames: 05000000610100009a010000570200005d0200008902000075030000eb040000
-  dropClothFrame: 268
   takeSyringeFrame: 311
   swapHandsFrame: 1265
   takeOffCapFrame: 0
@@ -11355,30 +11345,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!1101 &1101405393427402408
-AnimatorStateTransition:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: 
-  m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: S UseRight ClothWithAmpouleTop NeedleCup
-    m_EventTreshold: 0
-  m_DstStateMachine: {fileID: 0}
-  m_DstState: {fileID: 1102355613306453708}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 0
-  serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.75
-  m_HasExitTime: 0
-  m_HasFixedDuration: 1
-  m_InterruptionSource: 0
-  m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
 --- !u!1101 &1101406961486984466
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -12947,30 +12913,6 @@ AnimatorStateTransition:
   m_TransitionOffset: 0
   m_ExitTime: 0.9498328
   m_HasExitTime: 1
-  m_HasFixedDuration: 1
-  m_InterruptionSource: 0
-  m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
---- !u!1101 &1101487890440714600
-AnimatorStateTransition:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: 
-  m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: UseLeft ClothWithAmpouleTop NeedleCup
-    m_EventTreshold: 0
-  m_DstStateMachine: {fileID: 0}
-  m_DstState: {fileID: 1102105558905320596}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 0
-  serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.75
-  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -14869,27 +14811,6 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0.9896623
-  m_HasExitTime: 1
-  m_HasFixedDuration: 1
-  m_InterruptionSource: 0
-  m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
---- !u!1101 &1101596301395438658
-AnimatorStateTransition:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: 
-  m_Conditions: []
-  m_DstStateMachine: {fileID: 1107000013396830544}
-  m_DstState: {fileID: 0}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 0
-  serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.94071144
   m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -19026,27 +18947,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!1101 &1101827676865283314
-AnimatorStateTransition:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: 
-  m_Conditions: []
-  m_DstStateMachine: {fileID: 1107153178216169846}
-  m_DstState: {fileID: 0}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 0
-  serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.94071144
-  m_HasExitTime: 1
-  m_HasFixedDuration: 1
-  m_InterruptionSource: 0
-  m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
 --- !u!1101 &1101828899333051854
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -20749,7 +20649,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: 1
   m_HasExitTime: 1
@@ -21963,7 +21863,8 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101302426223935748}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 114005367501949626}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -23091,33 +22992,6 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400020, guid: a99ed095061348f419e2c0a92e465fd2, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &1102105558905320596
-AnimatorState:
-  serializedVersion: 5
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: Armature|841_remove_clothAroundAmpoule_Left_L_Lib
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: 1101596301395438658}
-  m_StateMachineBehaviours:
-  - {fileID: 114826614769469220}
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400096, guid: 909fa001ae1583b4cac13a0b208063af, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -25328,32 +25202,6 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400124, guid: a99ed095061348f419e2c0a92e465fd2, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &1102355613306453708
-AnimatorState:
-  serializedVersion: 5
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: Armature|840_remove_clothAroundAmpoule_Right_L_Lib
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: 1101827676865283314}
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400094, guid: 909fa001ae1583b4cac13a0b208063af, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -31023,7 +30871,6 @@ AnimatorStateMachine:
   - {fileID: 1101050082333960920}
   - {fileID: 1101959994390439872}
   - {fileID: 1101154903142494492}
-  - {fileID: 1101487890440714600}
   - {fileID: 1101326305363641476}
   - {fileID: 1101709561097035270}
   - {fileID: 1101486692056850596}
@@ -31418,7 +31265,6 @@ AnimatorStateMachine:
   - {fileID: 1101180716902536338}
   - {fileID: 1101578311601152786}
   - {fileID: 1101069397041747630}
-  - {fileID: 1101405393427402408}
   - {fileID: 1101442750555816672}
   - {fileID: 1101622987292870738}
   - {fileID: 1101961565567754792}
@@ -31620,16 +31466,13 @@ AnimatorStateMachine:
     m_Position: {x: 432, y: 84, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102297459257012204}
-    m_Position: {x: 204, y: 180, z: 0}
+    m_Position: {x: 132, y: 180, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102987896169568150}
     m_Position: {x: 432, y: 180, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102529946516259484}
-    m_Position: {x: 216, y: 228, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 1102105558905320596}
-    m_Position: {x: 432, y: 228, z: 0}
+    m_Position: {x: 216, y: 264, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -33167,11 +33010,8 @@ AnimatorStateMachine:
     m_State: {fileID: 1102460218425062656}
     m_Position: {x: 432, y: 96, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: 1102355613306453708}
-    m_Position: {x: 216, y: 144, z: 0}
-  - serializedVersion: 1
     m_State: {fileID: 1102018170649597252}
-    m_Position: {x: 432, y: 144, z: 0}
+    m_Position: {x: 432, y: 192, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

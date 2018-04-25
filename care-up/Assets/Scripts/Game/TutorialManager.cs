@@ -75,12 +75,13 @@ public class TutorialManager : MonoBehaviour {
         PickSyringeAbNeedleCap,    // step 13
         CombineSyringeAbNeedleCap, // step 14
         CombineTakeOffAbCap,       // step 15
-        DropAbsorptionCap,         // step 16
+        //DropAbsorptionCap,         // step 16
         CombineSyringeAbNeedleMed, // step 17
         DropMedicine,              // step 18
         UseSyringeWithMed,         // step 19
 
-        UseSyringeOnTrashAbs,
+        DecombineAbsSyringe,
+        UseNeedleOnTrashAbs,
 
         /*
         PickUpAbsorptionCap,       // step 20
@@ -103,7 +104,8 @@ public class TutorialManager : MonoBehaviour {
         CompleteSequence,          // step 30
 
         Overview4,
-        UseSyringeOnTrashInj,
+        DecombineInjSyringe,
+        UseNeedleOnTrashInj,
 
         /*
         CombinePutOnInjCap,        // step 31
@@ -142,6 +144,8 @@ public class TutorialManager : MonoBehaviour {
     private UsableObject paperNPen;
     private InjectionPatient patient;
     private PersonObject doctor;
+    private GameObject absorptionNeedle;
+    private GameObject injectionNeedle;
 
     private Transform tableTrigger;
     private Transform patientTrigger;
@@ -570,18 +574,6 @@ public class TutorialManager : MonoBehaviour {
                     if ( handsInventory.tutorial_combined )
                     {
                         handsInventory.tutorial_combined = false;
-                        currentStep = TutorialStep.DropAbsorptionCap;
-                        UItext.text = "Leg de opzuignaald dop terug op het welkveld door op de dop te klikken en te kiezen voor de optie 'Terugleggen'";
-
-                        itemToDrop = "SyringeAbsorptionCap";
-                    }
-                    break;
-                case TutorialStep.DropAbsorptionCap:
-                    if (handsInventory.tutorial_droppedLeft || handsInventory.tutorial_droppedRight)
-                    {
-                        AddPointWithSound();
-                        handsInventory.tutorial_droppedLeft =
-                            handsInventory.tutorial_droppedRight = false;
                         currentStep = TutorialStep.CombineSyringeAbNeedleMed;
                         UItext.text = "Probeer nu het medicijn op te zuigen in de spuit. Zorg dat je het medicijn en de spuit vast hebt in je handen. Klik hierna op het medicijn of de spuit en kies voor de optie 'Gebruiken met..' en klik daarna op het voorwerp in de andere hand.";
 
@@ -628,17 +620,33 @@ public class TutorialManager : MonoBehaviour {
                     if (syringe.GetComponent<PickableObject>().tutorial_usedOn)
                     {
                         syringe.GetComponent<PickableObject>().tutorial_usedOn = false;
-                        currentStep = TutorialStep.UseSyringeOnTrashAbs;
+
+                        currentStep = TutorialStep.DecombineAbsSyringe;
+                        UItext.text = "decombine";
+
+                        handsInventory.tutorial_combined = false;
+                    }
+                    break;
+                case TutorialStep.DecombineAbsSyringe:
+                    if (handsInventory.tutorial_combined)
+                    {
+                        handsInventory.tutorial_combined = false;
+
+                        currentStep = TutorialStep.UseNeedleOnTrashAbs;
                         UItext.text = "Voorwerpen kun je ook gebruiken met andere voorwerpen. Probeer nu de opzuignaald te verwijderen met de naaldcontainer. Zorg ervoor dat je de spuit in je hand hebt en dat de andere hand vrij is. Klik vervolgens op de spuit en kies voor de optie 'Gebruiken met..'. Klik vervolgens op de naaldcontainer. Je kunt de actie 'Gebruiken met..' annuleren door te klikken op 'Annuleren'";
 
                         particleHint.transform.position = GameObject.Find("NeedleCup").transform.position;
                         particleHint.SetActive(true);
                     }
                     break;
-                case TutorialStep.UseSyringeOnTrashAbs:
-                    if (syringe.GetComponent<PickableObject>().tutorial_usedOn)
+                case TutorialStep.UseNeedleOnTrashAbs:
+                    if (absorptionNeedle == null)
                     {
-                        syringe.GetComponent<PickableObject>().tutorial_usedOn = false;
+                        absorptionNeedle = GameObject.Find("AbsorptionNeedleNoCap");
+                    }
+                    if (absorptionNeedle != null && absorptionNeedle.GetComponent<PickableObject>().tutorial_usedOn)
+                    {
+                        absorptionNeedle.GetComponent<PickableObject>().tutorial_usedOn = false;
                         currentStep = TutorialStep.PickInjectionNeedle;
                         UItext.text = "Nu het medicijn is opgezogen en de opzuignaald is weggegooid. Is het tijd om de injectienaald op de spuit te zetten. Zorg ervoor dat je de spuit en de injectienaald in je handen hebt . Pak de voorwerpen door erop te klikken en te kiezen voor de optie 'Oppakken'.";
 
@@ -736,21 +744,36 @@ public class TutorialManager : MonoBehaviour {
                     {
                         if (player.tutorial_movedBack)
                         {
-                            currentStep = TutorialStep.UseSyringeOnTrashInj;
-                            UItext.text = "Verwijder nu de injectienaald door de spuit te gebruiken met de naaldcontainer. Zorg ervoor dat je de spuit in je hand hebt en dat de andere hand vrij is. Klik vervolgens op de spuit en kies voor de optie 'Gebruiken met..' Klik vervolgens op de naaldcontainer. Je kunt de actie 'Gebruiken met..' annuleren door op de knop 'Annuleren' te klikken.";
+                            player.tutorial_movedBack = false;
 
-                            particleHint.transform.position = GameObject.Find("NeedleCup").transform.position;
-                            particleHint.SetActive(true);
-
-                            syringe = GameObject.FindObjectOfType<Syringe>().gameObject;
-                            syringe.GetComponent<PickableObject>().tutorial_usedOn = false;
+                            currentStep = TutorialStep.DecombineInjSyringe;
+                            UItext.text = "decombine";
+                            
+                            handsInventory.tutorial_combined = false;
                         }
                     }
                     break;
-                case TutorialStep.UseSyringeOnTrashInj:
-                    if (syringe.GetComponent<PickableObject>().tutorial_usedOn)
+                case TutorialStep.DecombineInjSyringe:
+                    if (handsInventory.tutorial_combined)
                     {
-                        syringe.GetComponent<PickableObject>().tutorial_usedOn = false;
+                        handsInventory.tutorial_combined = false;
+
+                        currentStep = TutorialStep.UseNeedleOnTrashInj;
+                        UItext.text = "Verwijder nu de injectienaald door de spuit te gebruiken met de naaldcontainer. Zorg ervoor dat je de spuit in je hand hebt en dat de andere hand vrij is. Klik vervolgens op de spuit en kies voor de optie 'Gebruiken met..' Klik vervolgens op de naaldcontainer. Je kunt de actie 'Gebruiken met..' annuleren door op de knop 'Annuleren' te klikken.";
+
+                        particleHint.transform.position = GameObject.Find("NeedleCup").transform.position;
+                        particleHint.SetActive(true);
+                    }
+                    break;
+                case TutorialStep.UseNeedleOnTrashInj:
+                    if (injectionNeedle == null)
+                    {
+                        injectionNeedle = GameObject.Find("InjectionNeedleNoCap");
+                    }
+                    if (injectionNeedle != null && injectionNeedle.GetComponent<PickableObject>().tutorial_usedOn)
+                    {
+                        injectionNeedle.GetComponent<PickableObject>().tutorial_usedOn = false;
+
                         currentStep = TutorialStep.DropSyringe;
                         UItext.text = "Leg nu de spuit terug op het werkveld door op de spuit te klikken en te kiezen voor de optie 'Terugleggen'. ";
 

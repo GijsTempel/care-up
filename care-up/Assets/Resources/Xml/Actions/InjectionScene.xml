@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ActionList>
-	<action description="1: Pas handhygiëne toe. (Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp om deze te gebruiken.)" audioHint="Injection/H1-2"
+	<action description="Pas handhygiëne toe. (Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp om deze te gebruiken.)" audioHint="Injection/H1-2"
 		index="0" type="use" value="HandCleaner" extra="Pas handhygiëne toe. Handhygiëne is het allerbelangrijkste als het gaat om voorkomen van besmetting met ziektekiemen. Dit betekent je handen reinigen op de juiste manier en op de juiste momenten. Begin een handeling altijd met handhygiëne." buttonText="asfasf"></action>
-	<action description="2: Maak een schoon werkveld. (Klik op het werkveld om deze schoon te maken.')" audioHint="Injection/H2-2"
+	<action description="Maak een schoon werkveld. (Klik op het werkveld om deze schoon te maken.')" audioHint="Injection/H2-2"
 		index="1" type="use" value="WorkField" extra="Maak een schoon werkveld. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen." ></action>
 	
-  <action description="3.1: Controleer cliëntgegevens. (Klik op de cliëntgegevens om deze op te pakken Klik hierna nogmaals op de cliëntgegevens en kies de optie 'controleren'.)." audioHint="Injection/H3-2"
+  <action description="Controleer cliëntgegevens. (Klik op de cliëntgegevens om deze op te pakken Klik hierna nogmaals op de cliëntgegevens en kies de optie 'controleren'.)." audioHint="Injection/H3-2"
 		index="2" type="examine" item="PatientRecords" expected="good" extra="Controleer de cliëntgegevens, het is belangrijk dat je de juiste persoon voor je hebt. Controleer daarom altijd de cliëntgegevens voordat je begint met een handeling."></action>
 	<action description="Controleer het medicijn. (Klik op het medicijn om deze op te pakken. Klik hierna nogmaals op het medicijn en kies de optie 'controleren'.)" audioHint="Injection/H3-2"
 		index="2" type="examine" item="Medicine" expected="good" extra="Controleer het medicijn. Controleer altijd het medicijn op vervaldatum, toedienwijze, kleur en substantie om er zeker van te zijn dat je het juiste medicijn hebt. Vergelijk de infromatie van het medicijn met die van de toedienlijst."></action>
@@ -32,40 +32,40 @@
     index="10" type="combine" left="SyringeWithAbsorptionNeedle" right="" extra="Klik het beschermkapje met een duimbeweging over de opzuignaald, verwijder de naald van de spuit (bij naald zonder veiligheidsysteem met een naaldverwijderaar)" />
   <action description="Doe de opzuignaald in de naaldcontainer." fullDescription="Klik op de opzuignaald in je hand en kies de optie 'Gebruiken met ...'. Klik vervolgens op de naaldencontainer." audioHint="Injection/H10-2"
 		index="11" type="useOn" item="AbsorptionNeedleNoCap" target="NeedleCup" extra="Verwijder de opzuignaald en doe de naald in de naaldencontainer. Gebruik voor injecteren spuiten en naalden voor eenmalig gebruik (disposable). Plaats een naald na gebruik nooit in de plastic beschermhuls terug. Werk met veilige opzuig injectienaalden. Gebruik de inkepingen op de deksel om de naald en spuit te scheiden of gebruik een naaldverwijderaar."></action>
-	<action description="6.D: Plaats de injectienaald op de spuit. (Klik op de injectienaald. Klik vervolgens op de spuit of injectienaald in je hand en kies de optie 'Gebruiken met..' en klik op het voorwerp in de andere hand)" audioHint="Injection/H11-2"
+	<action description="Plaats de injectienaald op de spuit. (Klik op de injectienaald. Klik vervolgens op de spuit of injectienaald in je hand en kies de optie 'Gebruiken met..' en klik op het voorwerp in de andere hand)" audioHint="Injection/H11-2"
 		index="12" type="combine" left="Syringe" right="InjectionNeedle" extra="Plaats de injectienaald op de spuit. Gebruik voor intramusculaire injecties een iets dikkere en langere naald, bijvoorbeeld: 0,8 x 38 - 40 mm (diameter x lengte)."></action>
 	
-	<action description="7.1: Vraag de cliënt de injectieplaats te ontbloten (Klik met op de spuit + injectienaald + beschermdop in je hand op de 'Terug naar overzicht' knop rechtsboven in het scherm om terug te gaan naar het overzicht. Klik daarna op de cliënt. Klik nogmaals op de cliënt om te praten. Kies de optie 'Zou u uw mouw omhoog kunnen doen?'.)" audioHint="Injection/H12-2"
+	<action description="Vraag de cliënt de injectieplaats te ontbloten (Klik met op de spuit + injectienaald + beschermdop in je hand op de 'Terug naar overzicht' knop rechtsboven in het scherm om terug te gaan naar het overzicht. Klik daarna op de cliënt. Klik nogmaals op de cliënt om te praten. Kies de optie 'Zou u uw mouw omhoog kunnen doen?'.)" audioHint="Injection/H12-2"
 		index="13" type="talk" topic="RollUpSleeves" extra="Vraag de cliënt de injectieplaats te ontbloten en te ontspannen zodat je makkelijk bij de injectieplaats kunt."></action>
 	
-	<action description="7.2 Start injecteren. (Klik op de spuit + injectienaald + beschermdop en kies de optie 'gebruiken met ...'Klik vervolgens op de cliënt.)"	audioHint="Injection/H13-2"
+	<action description="Start injecteren. (Klik op de spuit + injectienaald + beschermdop en kies de optie 'gebruiken met ...'Klik vervolgens op de cliënt.)"	audioHint="Injection/H13-2"
 		index="14" type="useOn" item="SyringeWithInjectionNeedleCap" target="Patient" extra="Start met het toedienen van de injectie. Alles is klaar voor gebruik en je kunt dus starten met injecteren."></action>
 		
-	<action description="8. Palpeer de injectieplaats en controleer of de injectieplaats schoon en droog is. (Klik op de juiste optie)" audioHint="Injection/AS1-2"
+	<action description="Palpeer de injectieplaats en controleer of de injectieplaats schoon en droog is. (Klik op de juiste optie)" audioHint="Injection/AS1-2"
 		index="15" type="sequenceStep" value="clean skin" extra="Controleer of de injectieplaats schoon en droog is om besmetting van ziektekiemen te voorkomen."></action>
-  <action description="9. Neem de spuit in de injecterende hand en verwijder de naaldhuls. (Klik op de juiste optie)" audioHint="Injection/AS1-2"
+  <action description="Neem de spuit in de injecterende hand en verwijder de naaldhuls. (Klik op de juiste optie)" audioHint="Injection/AS1-2"
     index="16" type="sequenceStep" value="take off cap" extra="De beschermdop zit nog op de naald. Deze dien je te verwijderen om gebruik te maken van de spuit. Concentreer je tijdens het verwijderen van de dop om prikaccidenten te voorkomen." />
-	<action description="10. Span de huid met de duim en wijsvinger van uw vrije hand. (Klik op de juiste optie)" audioHint="Injection/AS2-2"
+	<action description="Span de huid met de duim en wijsvinger van uw vrije hand. (Klik op de juiste optie)" audioHint="Injection/AS2-2"
 		index="17" type="sequenceStep" value="Hold skin" extra="Neem de spier tussen duim en wijsvinger van de ene hand en trek de huid wat strakker. De spier als een dikke plooi tussen de duim en wijs- en middelvinger opnemen, voor een intramusculaire injectie wordt afgeraden (WHO). Deze techniek vergroot het risico op per ongeluk subcutaan injecteren. "></action>
-	<action description="11. Steek de naald met een snelle beweging loodrecht in de spier. (Klik op de juiste optie)" audioHint="Injection/AS3-2"
+	<action description="Steek de naald met een snelle beweging loodrecht in de spier. (Klik op de juiste optie)" audioHint="Injection/AS3-2"
 		index="18" type="sequenceStep" value="Stick needle in arm" extra="Steek de naald met een snelle beweging loodrecht in de spier. Wissel injectieplaatsen af wanneer frequent in eenzelfde gebied geïnjecteerd moet worden."></action>
-	<action description="12. Laat de huid los. (Klik op de juiste optie)" audioHint="Injection/AS4-2"
+	<action description="Laat de huid los. (Klik op de juiste optie)" audioHint="Injection/AS4-2"
 		index="19" type="sequenceStep" value="Release skin with left hand" extra="Laat de huid los met je linkerhand."></action>
-	<action description="13. Fixeer de spuit en naald met de niet injecterende hand om onverwachte bewegingen op te vangen. (Klik op de juiste optie)" audioHint="Injection/AS5-2"
+	<action description="Fixeer de spuit en naald met de niet injecterende hand om onverwachte bewegingen op te vangen. (Klik op de juiste optie)" audioHint="Injection/AS5-2"
 		index="20" type="sequenceStep" value="Secure the needle" extra="Bij een cliënt die onrustig is of plotselinge bewegingen maakt is het van belang dat injectienaald en spuit goed gefixeerd worden tijdens de injectie. Houd de naald tussen duim en wijsvinger van de niet-injecterende hand, op de plaats waar de naald op de spuit zit. Zorg dat de rest van deze hand stevig op de huid rust. Bij bewegingen van de cliënt beweegt de hand met daarin de naald en de spuit mee."></action>
-	<action description="14.Spuit de vloeistof langzaam en regelmatig in. (Klik op de juiste optie)" audioHint="Injection/AS7-2"
+	<action description="Spuit de vloeistof langzaam en regelmatig in. (Klik op de juiste optie)" audioHint="Injection/AS7-2"
 		index="21" type="sequenceStep" value="Inject medicine slow and steady" extra="Spuit medicijnen langzaam in (ongeveer 10 sec/ml.)"></action>
-	<action description="15.Trek de naald uit de huid. Houd een gaasje voor de opvang van een eventuele bloeddruppel gereed. (Klik op de juiste optie) " audioHint="Injection/AS8-2"
+	<action description="Trek de naald uit de huid. Houd een gaasje voor de opvang van een eventuele bloeddruppel gereed. (Klik op de juiste optie) " audioHint="Injection/AS8-2"
 		index="22" type="sequenceStep" value="pull needle out of skin" extra="Trek na het injecteren de naald uit de huid. Hierbij kun je een gaasje gereed houden om een eventuele bloeddruppel op te vangen."></action>
 
    <action description="Verwijder de naald van de spuit." fullDescription="Klik op de 'Terug naar overzicht' knop rechts bovenin het scherm om terug te gaan naar het overzicht. Klik daarna op het werkveld. Klik tot slot op de spuit + injectienaald en kies de optie 'Scheiden'." audioHint=""
     index="23" type="combine" left="SyringeWithInjectionNeedle" right="" extra="Klik het beschermkapje met een duimbeweging over de opzuignaald, verwijder de naald van de spuit (bij naald zonder veiligheidsysteem met een naaldverwijderaar)" /> 
   <action description="Doe de injectienaald in de naaldencontainer.(Klik op de injectienaald in je hand en kies de optie 'Gebruiken met ...'. Klik vervolgens op de naaldencontainer.)" audioHint="Injection/EAS2-2"
 		index="24" type="useOn" item="InjectionNeedleNoCap" target="NeedleCup" extra="Verwijder de opzuignaald en doe de naald in de naaldencontainer. Gebruik voor injecteren spuiten en naalden voor eenmalig gebruik (disposable). Plaats een naald na gebruik nooit in de plastic beschermhuls terug. Werk met veilige opzuigen injectienaalden. Gebruik de inkepingen op de deksel om naald en spuit te scheiden of gebruik een naaldverwijderaar."></action>
-	<action description="18: Ruim de materialen op. (Leg de spuit terug op het werkveld. Klik op de spuit en kies de optie 'terugleggen'. Klik vervolgens op het werkveld om deze schoon te maken)"  audioHint="Injection/EAS3-2"
+	<action description="Ruim de materialen op. (Leg de spuit terug op het werkveld. Klik op de spuit en kies de optie 'terugleggen'. Klik vervolgens op het werkveld om deze schoon te maken)"  audioHint="Injection/EAS3-2"
 		index="25" type="use" value="WorkField" extra=" Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen."></action>
-	<action description="19: Pas handhygiëne toe. (Klik op de hygiënepomp om deze te gebruiken.)" audioHint="Injection/EAS5-2"
+	<action description="Pas handhygiëne toe. (Klik op de hygiënepomp om deze te gebruiken.)" audioHint="Injection/EAS5-2"
 		index="26" type="use" value="HandCleaner" extra="Handhygiëne is het allerbelangrijkste als het gaat om voorkomen van besmetting met ziektekiemen. Dit betekent je handen reinigen op de juiste manier en op de juiste momenten. Sluit handelingen af met handhygiëne"></action>
-	<action description="20: Noteer bevindingen. (Klik op de pen en het papier om deze te gebruiken.)" audioHint="Injection/EAS4-2"
+	<action description="Noteer bevindingen. (Klik op de pen en het papier om deze te gebruiken.)" audioHint="Injection/EAS4-2"
 		index="27" type="use" value="PaperAndPen" extra="Noteer bevindingen. Teken toedienlijst af of noteer tijdstip, soort medicijn, concentratie, hoeveelheid, wijze van toediening en noteer bevindingen."></action>
 </ActionList>

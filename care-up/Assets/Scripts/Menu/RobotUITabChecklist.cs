@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class RobotUITabChecklist : RobotUITabs {
 
     private static Text[] items;
-    private static int current = 0;
+    //private static int current = 0;
 
     protected override void Start()
     {
@@ -28,9 +28,10 @@ public class RobotUITabChecklist : RobotUITabs {
             }
         }
 
-        current = 0;
+        //current = 0;
     }
 
+    /* old one
     public static void StrikeStep()
     {
         if (current >= items.Length)
@@ -38,6 +39,17 @@ public class RobotUITabChecklist : RobotUITabs {
 
         items[current].text = StrikeThrough(items[current].text);
         ++current;
+    } */
+
+    public static void StrikeStep(int index)
+    {
+        if (index < 0 || index >= items.Length)
+        {
+            Debug.LogWarning("Index out of range.");
+            return;
+        }
+
+        items[index].text = StrikeThrough(items[index].text);
     }
 
     private static string StrikeThrough(string s)
