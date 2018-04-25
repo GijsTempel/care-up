@@ -38,9 +38,11 @@ public class ActionManager : MonoBehaviour {
 
     // actual list of actions
     private List<Action> actionList = new List<Action>();
+
     // list of descriptions of steps, player got penalty on
-    private List<string> wrongStepsList = new List<string>();
-    private List<string> wrongStepsDescriptionList = new List<string>();
+    private List<string> stepsList = new List<string>();
+    private List<string> stepsDescriptionList = new List<string>();
+    private List<int> wrongStepIndexes = new List<int>();
 
     private int totalPoints = 0;         // max points of scene
     private int points = 0;              // current points
@@ -63,12 +65,12 @@ public class ActionManager : MonoBehaviour {
     /// </summary>
     public List<string> WrongSteps
     {
-        get { return wrongStepsList; }
+        get { return stepsList; }
     }
 
     public List<string> WrongStepsDescription
     {
-        get { return wrongStepsDescriptionList; }
+        get { return stepsDescriptionList; }
     }
 
     /// <summary>
@@ -369,6 +371,12 @@ public class ActionManager : MonoBehaviour {
             }
         }
 
+        foreach(Action a in actionList)
+        {
+            stepsList.Add(a.shortDescr);
+            stepsDescriptionList.Add(a.extraDescr);
+        }
+
         currentAction = actionList.First();
     }
 
@@ -606,10 +614,9 @@ public class ActionManager : MonoBehaviour {
         if (!matched && type != ActionType.ObjectExamine && type != ActionType.PickUp)
         {
             if ( sublist.Count > 0 && 
-                wrongStepsList.Find(step => step == sublist[0].shortDescr) == null )
+                stepsList.Find(step => step == sublist[0].shortDescr) == null )
             {
-                wrongStepsList.Add(sublist[0].shortDescr);
-                wrongStepsDescriptionList.Add(sublist[0].extraDescr); 
+                wrongStepIndexes.Add(actionList.IndexOf(currentAction));
             }
 
             Camera.main.transform.Find("UI").Find("WrongAction").

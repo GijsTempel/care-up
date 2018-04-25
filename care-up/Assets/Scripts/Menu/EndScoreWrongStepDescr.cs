@@ -5,8 +5,9 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class EndScoreWrongStepDescr : MonoBehaviour, IPointerEnterHandler
-{
+{ 
     public string text;
+    public bool wrong;
 
     private Controls controls;
 
@@ -33,7 +34,7 @@ public class EndScoreWrongStepDescr : MonoBehaviour, IPointerEnterHandler
             {
                 foreach (Text text in transform.parent.GetComponentsInChildren<Text>())
                 {
-                    text.color = Color.red;
+                    text.color = text.GetComponent<EndScoreWrongStepDescr>().wrong ? Color.red : Color.grey;
                 }
 
                 GetComponent<Text>().color = Color.black;
@@ -48,7 +49,7 @@ public class EndScoreWrongStepDescr : MonoBehaviour, IPointerEnterHandler
         {
             foreach (Text text in transform.parent.GetComponentsInChildren<Text>())
             {
-                text.color = Color.red;
+                text.color = text.GetComponent<EndScoreWrongStepDescr>().wrong ? Color.red : Color.grey;
             }
 
             GetComponent<Text>().color = Color.black;
