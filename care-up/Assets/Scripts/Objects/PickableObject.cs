@@ -81,13 +81,16 @@ public class PickableObject : InteractableObject {
     public virtual bool Use(bool hand, bool noTarget = false)
     {
         tutorial_usedOn = true;
-        string[] info = actionManager.CurrentUseOnInfo;
+
         if (controls.SelectedObject != null && controls.CanInteract)
         {
-            if ((name == "InjectionNeedle" || name == "AbsorptionNeedle"
-                || name == "InjectionSNeedle" || name == "InsulinNeedle"
-                || name == "TestStrips" || name == "Lancet" || name == "NeedleHolderWithNeedle")
-                && info[1] == "NeedleCup"
+            if ((actionManager.CompareUseOnInfo("InjectionNeedle", "NeedleCup") ||
+                actionManager.CompareUseOnInfo("AbsorptionNeedle", "NeedleCup") ||
+                actionManager.CompareUseOnInfo("InjectionSNeedle", "NeedleCup") ||
+                actionManager.CompareUseOnInfo("InsulinNeedle", "NeedleCup") ||
+                actionManager.CompareUseOnInfo("TestStrips", "NeedleCup") ||
+                actionManager.CompareUseOnInfo("Lancet", "NeedleCup") ||
+                actionManager.CompareUseOnInfo("NeedleHolderWithNeedle", "NeedleCup"))
                 && controls.SelectedObject.name == "NeedleCup")
             {
                 if (GameObject.Find("GameLogic") != null)
@@ -99,9 +102,10 @@ public class PickableObject : InteractableObject {
                 }
                 inventory.RemoveHandObject(hand);
             }
-            else if ((name == "AbsorptionNeedleNoCap" || name == "InjectionNeedleNoCap"
-                || name == "ClothWithAmpouleTop") 
-                && controls.SelectedObject.name == "NeedleCup" && info[1] == "NeedleCup")
+            else if ((actionManager.CompareUseOnInfo("AbsorptionNeedleNoCap", "NeedleCup") ||
+                actionManager.CompareUseOnInfo("InjectionNeedleNoCap", "NeedleCup") ||
+                actionManager.CompareUseOnInfo("ClothWithAmpouleTop", "NeedleCup"))
+                && controls.SelectedObject.name == "NeedleCup")
             {
                 string animation = (hand ? "UseLeft " : "UseRight ") + name + " NeedleCup";
                 PlayerAnimationManager.PlayAnimation(animation, GameObject.Find("NeedleCup").transform);
@@ -115,8 +119,7 @@ public class PickableObject : InteractableObject {
             }
             else if (name == "BandAid" && controls.SelectedObject.name == "Hand")
             {
-                info = actionManager.CurrentUseOnInfo;
-                if (info[0] == "BandAid" && info[1] == "Hand")
+                if (actionManager.CompareUseOnInfo("BandAid", "Hand"))
                 {
                     actionManager.OnUseOnAction("BandAid", "Hand");
                     AnimationSequence animationSequence = new AnimationSequence("BandAid");
@@ -128,8 +131,7 @@ public class PickableObject : InteractableObject {
             else if (name == "PrickingPen" && controls.SelectedObject.GetComponent<PersonObjectPart>() != null
                 && controls.SelectedObject.GetComponent<PersonObjectPart>().Person.name == "Patient")
             {
-                info = actionManager.CurrentUseOnInfo;
-                if (info[0] == "PrickingPen" && info[1] == "Patient")
+                if (actionManager.CompareUseOnInfo("PrickingPen", "Patient"))
                 {
                     actionManager.OnUseOnAction("PrickingPen", "Patient");
                     if ( SceneManager.GetActiveScene().name == "Measuring Blood Glucose(Haemogluco)")
@@ -152,8 +154,7 @@ public class PickableObject : InteractableObject {
             else if (name == "InsulinPenWithNeedle"
                 && controls.SelectedObject.name == "Hand")
             {
-                info = actionManager.CurrentUseOnInfo;
-                if (info[0] == "InsulinPenWithNeedle" && info[1] == "Hand")
+                if (actionManager.CompareUseOnInfo("InsulinPenWithNeedle", "Hand"))
                 {
                     actionManager.OnUseOnAction("InsulinPenWithNeedle", "Hand");
                     AnimationSequence animationSequence = new AnimationSequence("InsulinInjection");
@@ -164,8 +165,7 @@ public class PickableObject : InteractableObject {
             else if (name == "NeedleHolderWithNeedle"
                 && controls.SelectedObject.name == "Hand")
             {
-                info = actionManager.CurrentUseOnInfo;
-                if (info[0] == "NeedleHolderWithNeedle" && info[1] == "Hand")
+                if (actionManager.CompareUseOnInfo("NeedleHolderWithNeedle", "Hand"))
                 {
                     actionManager.OnUseOnAction("NeedleHolderWithNeedle", "Hand");
                     AnimationSequence animationSequence = new AnimationSequence("Venapunction");
@@ -183,7 +183,7 @@ public class PickableObject : InteractableObject {
         }
         actionManager.OnUseOnAction(name, controls.SelectedObject != null ? controls.SelectedObject.name : "");
 
-        return (info[0] == name && controls.SelectedObject != null && info[1] == controls.SelectedObject.name);
+        return (controls.SelectedObject != null && actionManager.CompareUseOnInfo(name, controls.SelectedObject.name));
     }
 
     public virtual void Pick()

@@ -164,24 +164,7 @@ public class ActionManager : MonoBehaviour {
         get { return currentAction.audioHint; }
     }
 
-    /// <summary>
-    /// If current action is UseAction, returns the name of the object that needs to be used.
-    /// Returns empty string for every other case.
-    /// </summary>
-    public string CurrentUseObject
-    {
-        get
-        {
-            if (currentAction != null)
-            {
-                return (currentAction.Type == ActionType.ObjectUse) ?
-                    ((UseAction)currentAction).GetObjectName() : "";
-            }
-            else
-                return "";
-        }
-    }
-
+    // new comparison looks for all actions of type withing current index
     public bool CompareUseObject(string name)
     {
         bool result = false;
@@ -193,83 +176,99 @@ public class ActionManager : MonoBehaviour {
         {
             if (a.Type == ActionType.ObjectUse)
             {
-                string[] names;
-                a.ObjectNames(out names);
-                if (names[0] == name)
+                if (((UseAction)a).GetObjectName() == name)
                     result = true;
             }
-
         }
 
         return result;
     }
-
-    /// <summary>
-    /// Returns string[] of names of objects that need to be combined.
-    /// Returns nothing if current action is not CombineAction.
-    /// </summary>
-    public string[] CurrentCombineObjects
+    
+    public bool CompareCombineObjects(string left, string right)
     {
-        get
+        bool result = false;
+
+        List<Action> sublist = actionList.Where(action =>
+                action.SubIndex == currentActionIndex &&
+                action.matched == false).ToList();
+        foreach (Action a in sublist)
         {
-            string[] objects = new string[2];
-            if (currentAction.Type == ActionType.ObjectCombine)
+            if (a.Type == ActionType.ObjectCombine)
             {
-                string left, right;
-                ((CombineAction)currentAction).GetObjects(out left, out right);
-                objects[0] = left;
-                objects[1] = right;
+                string _left, _right;
+                ((CombineAction)a).GetObjects(out _left, out _right);
+                if ((_left == left && _right == right) ||
+                    (_right == left && _left == right))
+                    result = true;
             }
-            return objects;
         }
-    }
 
-    /// <summary>
-    /// Returns data if current action is UseOnAction.
-    /// string[0] = item that should be used on target
-    /// string[1] = target item
-    /// </summary>
-    public string[] CurrentUseOnInfo
+        return result;
+    }
+    
+    public bool CompareUseOnInfo(string item, string target)
     {
-        get
+        bool result = false;
+
+        List<Action> sublist = actionList.Where(action =>
+                action.SubIndex == currentActionIndex &&
+                action.matched == false).ToList();
+        foreach (Action a in sublist)
         {
-            string[] info = new string[2];
-            if (currentAction.Type == ActionType.ObjectUseOn)
+            if (a.Type == ActionType.ObjectUseOn)
             {
-                string item, target;
-                ((UseOnAction)currentAction).GetInfo(out item, out target);
-                info[0] = item;
-                info[1] = target;
+                string _item, _target;
+                ((UseOnAction)a).GetInfo(out _item, out _target);
+                if (_item == item && _target == target)
+                    result = true;
             }
-            return info;
         }
-    }
 
-    /// <summary>
-    /// Returns topic string if current action is TalkAction.
-    /// </summary>
-    public string CurrentTopic
+        return result;
+    }
+    
+    public bool CompareTopic(string t)
     {
-        get
+        bool result = false;
+
+        List<Action> sublist = actionList.Where(action =>
+                action.SubIndex == currentActionIndex &&
+                action.matched == false).ToList();
+        foreach (Action a in sublist)
         {
-            return (currentAction.Type == ActionType.PersonTalk) ?
-                ((TalkAction)currentAction).Topic : "";
+            if (a.Type == ActionType.PersonTalk)
+            {
+                if (((TalkAction)a).Topic == t)
+                    result = true;
+            }
         }
+
+        return result;
     }
 
     public string CurrentButtonText
     {
         get
         {
-            if (currentAction.Type == ActionType.ObjectUse)
+            string result = "";
+            
+            List<Action> sublist = actionList.Where(action =>
+                   action.SubIndex == currentActionIndex &&
+                   action.matched == false).ToList();
+
+            foreach (Action a in sublist)
             {
-                return ((UseAction)currentAction).buttonText;
+                if (a.Type == ActionType.ObjectUse)
+                {
+                    result = ((UseAction)a).buttonText;
+                }
+                else if (currentAction.Type == ActionType.ObjectUseOn)
+                {
+                    result = ((UseOnAction)a).buttonText;
+                }
             }
-            else if (currentAction.Type == ActionType.ObjectUseOn)
-            {
-                return ((UseOnAction)currentAction).buttonText;
-            }
-            else return "";
+
+            return result;
         }
     }
 

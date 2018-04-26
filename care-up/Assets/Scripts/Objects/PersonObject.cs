@@ -89,7 +89,7 @@ public class PersonObject : InteractableObject
         if (ViewModeActive() || topic == "")
             return;
         
-        if (topic == actionManager.CurrentTopic)
+        if (actionManager.CompareTopic(topic))
         {
             tutorial_talked = true;
             actionManager.OnTalkAction(topic);
