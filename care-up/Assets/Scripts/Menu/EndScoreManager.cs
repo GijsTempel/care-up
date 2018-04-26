@@ -111,8 +111,9 @@ public class EndScoreManager : MonoBehaviour {
         score = Mathf.FloorToInt(5.0f * points / actionManager.TotalPoints);
         completedSceneName = SceneManager.GetActiveScene().name;
         
-        steps = actionManager.WrongSteps;
-        stepsDescr = actionManager.WrongStepsDescription;
+        steps = actionManager.StepsList;
+        stepsDescr = actionManager.StepsDescriptionList;
+        wrongStepIndexes = actionManager.WrongStepIndexes;
 
         bl_SceneLoaderUtils.GetLoader.LoadLevel("EndScore");
         //GameObject.Find("Preferences").GetComponent<LoadingScreen>().LoadLevel("EndScore");

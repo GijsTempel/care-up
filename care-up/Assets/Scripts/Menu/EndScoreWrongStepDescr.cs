@@ -12,10 +12,12 @@ public class EndScoreWrongStepDescr : MonoBehaviour, IPointerEnterHandler
     private Controls controls;
 
     bool UIflag = false;
+    
+    private Color redish = new Color(0.5f, 0.0f, 0.0f, 1.0f);
+    private Color greyish = new Color(0.25f, 0.25f, 0.25f, 1.0f);
 
     void Start()
     {
-        
         if (GameObject.Find("GameLogic") != null)
         {
             controls = GameObject.Find("GameLogic").GetComponent<Controls>();
@@ -24,6 +26,8 @@ public class EndScoreWrongStepDescr : MonoBehaviour, IPointerEnterHandler
         {
             UIflag = true;
         }
+
+        GetComponent<Text>().color = wrong ? Color.red : Color.black;
     }
 
     void Update()
@@ -34,10 +38,10 @@ public class EndScoreWrongStepDescr : MonoBehaviour, IPointerEnterHandler
             {
                 foreach (Text text in transform.parent.GetComponentsInChildren<Text>())
                 {
-                    text.color = text.GetComponent<EndScoreWrongStepDescr>().wrong ? Color.red : Color.grey;
+                    text.color = text.GetComponent<EndScoreWrongStepDescr>().wrong ? redish : greyish;
                 }
 
-                GetComponent<Text>().color = Color.black;
+                GetComponent<Text>().color = wrong ? Color.red : Color.black;
                 GameObject.Find("StepDescription").GetComponent<Text>().text = text;
             }
         }
@@ -49,10 +53,10 @@ public class EndScoreWrongStepDescr : MonoBehaviour, IPointerEnterHandler
         {
             foreach (Text text in transform.parent.GetComponentsInChildren<Text>())
             {
-                text.color = text.GetComponent<EndScoreWrongStepDescr>().wrong ? Color.red : Color.grey;
+                text.color = text.GetComponent<EndScoreWrongStepDescr>().wrong ? redish : greyish;
             }
 
-            GetComponent<Text>().color = Color.black;
+            GetComponent<Text>().color = wrong ? Color.red : Color.black;
             GameObject.Find("StepDescription").GetComponent<Text>().text = text;
         }
     }

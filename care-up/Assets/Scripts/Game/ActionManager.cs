@@ -63,14 +63,19 @@ public class ActionManager : MonoBehaviour {
     /// <summary>
     /// List of wrong steps, merged into a string with line breaks.
     /// </summary>
-    public List<string> WrongSteps
+    public List<string> StepsList
     {
         get { return stepsList; }
     }
 
-    public List<string> WrongStepsDescription
+    public List<string> StepsDescriptionList
     {
         get { return stepsDescriptionList; }
+    }
+
+    public List<int> WrongStepIndexes
+    {
+        get { return wrongStepIndexes; }
     }
 
     /// <summary>
@@ -613,10 +618,10 @@ public class ActionManager : MonoBehaviour {
 
         if (!matched && type != ActionType.ObjectExamine && type != ActionType.PickUp)
         {
-            if ( sublist.Count > 0 && 
-                stepsList.Find(step => step == sublist[0].shortDescr) == null )
+            int index = actionList.IndexOf(currentAction);
+            if ( sublist.Count > 0 && !wrongStepIndexes.Contains(index) )
             {
-                wrongStepIndexes.Add(actionList.IndexOf(currentAction));
+                wrongStepIndexes.Add(index);
             }
 
             Camera.main.transform.Find("UI").Find("WrongAction").
