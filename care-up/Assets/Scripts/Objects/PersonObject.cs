@@ -96,23 +96,20 @@ public class PersonObject : InteractableObject
 
             switch (topic)
             {
-                case "RollUpSleeves":
-                case "ExtendArmMakeFist":
-                    if (GetComponent<InjectionPatient>() != null)
-                    {
-                        // also launches animation after dialogue
-                        GetComponent<InjectionPatient>().RollUpSleevesDialogue();
-                    }
-                    break;
-                case "ComfortablePosition":
-                    inhaling = true;
-                    break;
-                case "ShowBellyForInsulin":
-                    GetComponent<Animator>().SetTrigger("ShowBellyForInsulin");
-                    break;
                 default:
                     break;
             }
+
+            NextDialogue();
+        }
+    }
+    
+    public void NextDialogue()
+    {
+        ++currentDialogueIndex;
+        if (currentDialogueIndex < dialogueXmls.Count)
+        {
+            LoadDialogueOptions(dialogueXmls[currentDialogueIndex]);
         }
     }
 

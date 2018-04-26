@@ -60,15 +60,6 @@ public class InjectionPatient : PersonObject {
         }
     }
 
-    public void NextDialogue()
-    {
-        ++currentDialogueIndex;
-        if (currentDialogueIndex < dialogueXmls.Count)
-        {
-            LoadDialogueOptions(dialogueXmls[currentDialogueIndex]);
-        }
-    }
-
     public void GreetDialogue()
     {
         if (SceneManager.GetActiveScene().name == "Tutorial")
