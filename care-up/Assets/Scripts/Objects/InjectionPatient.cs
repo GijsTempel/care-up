@@ -7,8 +7,6 @@ public class InjectionPatient : PersonObject {
 
     private AudioClip[] audioClips;
     private Animator animator;
-    
-    private bool greetDialogueTriggered = false;
 
     protected override void Start()
     {
@@ -37,6 +35,9 @@ public class InjectionPatient : PersonObject {
 
             switch (topic)
             {
+                case "Hello":
+                    GreetDialogue();
+                    break;
                 case "RollUpSleeves":
                 case "ExtendArmMakeFist":
                     if (GetComponent<InjectionPatient>() != null)
@@ -61,33 +62,14 @@ public class InjectionPatient : PersonObject {
                 LoadDialogueOptions(dialogueXmls[currentDialogueIndex]);
             }
         }
-        else
-        {
-            if (topic == "Hello")
-            {
-                GreetDialogue();
-
-                ++currentDialogueIndex;
-                if (currentDialogueIndex < dialogueXmls.Count)
-                {
-                    LoadDialogueOptions(dialogueXmls[currentDialogueIndex]);
-                }
-            }
-        }
     }
 
     public void GreetDialogue()
     {
         if (SceneManager.GetActiveScene().name == "Tutorial")
             return;
-    
-        if (greetDialogueTriggered)
-            return;
-        else
-        {
-            greetDialogueTriggered = true;
-            StartCoroutine(GreetDialogueCoroutine());
-        }
+
+        StartCoroutine(GreetDialogueCoroutine());
     }
 
     public void GreetDialoguePt2()

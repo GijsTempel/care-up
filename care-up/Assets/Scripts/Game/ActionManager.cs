@@ -182,6 +182,28 @@ public class ActionManager : MonoBehaviour {
         }
     }
 
+    public bool CompareUseObject(string name)
+    {
+        bool result = false;
+
+        List<Action> sublist = actionList.Where(action =>
+                action.SubIndex == currentActionIndex &&
+                action.matched == false).ToList();
+        foreach(Action a in sublist)
+        {
+            if (a.Type == ActionType.ObjectUse)
+            {
+                string[] names;
+                a.ObjectNames(out names);
+                if (names[0] == name)
+                    result = true;
+            }
+
+        }
+
+        return result;
+    }
+
     /// <summary>
     /// Returns string[] of names of objects that need to be combined.
     /// Returns nothing if current action is not CombineAction.
@@ -324,38 +346,40 @@ public class ActionManager : MonoBehaviour {
                 int.TryParse(action.Attributes["points"].Value, out pointsValue);
             }
 
+            bool notNeeded = action.Attributes["notNeeded"] != null;
+
             switch (type)
             {
                 case "combine":
                     string left = action.Attributes["left"].Value;
                     string right = action.Attributes["right"].Value;
-                    actionList.Add(new CombineAction(left, right, index, descr, fDescr, audio, extra, pointsValue));
+                    actionList.Add(new CombineAction(left, right, index, descr, fDescr, audio, extra, pointsValue, notNeeded));
                     break;
                 case "use":
                     string use = action.Attributes["value"].Value;
-                    actionList.Add(new UseAction(use, index, descr, fDescr, audio, extra, buttonText, pointsValue));
+                    actionList.Add(new UseAction(use, index, descr, fDescr, audio, extra, buttonText, pointsValue, notNeeded));
                     break;
                 case "talk":
                     string topic = action.Attributes["topic"].Value;
-                    actionList.Add(new TalkAction(topic, index, descr, fDescr, audio, extra, pointsValue));
+                    actionList.Add(new TalkAction(topic, index, descr, fDescr, audio, extra, pointsValue, notNeeded));
                     break;
                 case "useOn":
                     string useItem = action.Attributes["item"].Value;
                     string target = action.Attributes["target"].Value;
-                    actionList.Add(new UseOnAction(useItem, target, index, descr, fDescr, audio, extra, buttonText, pointsValue));
+                    actionList.Add(new UseOnAction(useItem, target, index, descr, fDescr, audio, extra, buttonText, pointsValue, notNeeded));
                     break;
                 case "examine":
                     string exItem = action.Attributes["item"].Value;
                     string expected = action.Attributes["expected"].Value;
-                    actionList.Add(new ExamineAction(exItem, expected, index, descr, fDescr, audio, extra, pointsValue));
+                    actionList.Add(new ExamineAction(exItem, expected, index, descr, fDescr, audio, extra, pointsValue, notNeeded));
                     break;
                 case "pickUp":
                     string itemPicked = action.Attributes["item"].Value;
-                    actionList.Add(new PickUpAction(itemPicked, index, descr, fDescr, audio, extra, pointsValue));
+                    actionList.Add(new PickUpAction(itemPicked, index, descr, fDescr, audio, extra, pointsValue, notNeeded));
                     break;
                 case "sequenceStep":
                     string stepName = action.Attributes["value"].Value;
-                    actionList.Add(new SequenceStepAction(stepName, index, descr, fDescr, audio, extra, pointsValue));
+                    actionList.Add(new SequenceStepAction(stepName, index, descr, fDescr, audio, extra, pointsValue, notNeeded));
                     break;
                 default:
                     Debug.LogError("No action type found: " + type);
@@ -615,7 +639,7 @@ public class ActionManager : MonoBehaviour {
         {
             currentActionIndex += 1;
         }
-
+        
         if (!matched && type != ActionType.ObjectExamine && type != ActionType.PickUp)
         {
             int index = actionList.IndexOf(currentAction);
@@ -638,7 +662,23 @@ public class ActionManager : MonoBehaviour {
                 action.matched == false).ToList();
             
             currentAction = actionsLeft.Count > 0 ? actionsLeft.First() : null;
+
+            // now we have not mandatory actions, let's skip them and add to mistakes
+            List<Action> skippableActions = actionsLeft.Where(action => action.notMandatory == true).ToList();
+            if (actionsLeft.Count == skippableActions.Count) // all of them are skippable
+            {
+                wrongStepIndexes.Add(actionList.IndexOf(currentAction));
+                currentActionIndex += 1;
+                
+                // get next actions with new index
+                actionsLeft = actionList.Where(action =>
+                    action.SubIndex == currentActionIndex &&
+                    action.matched == false).ToList();
+
+                currentAction = actionsLeft.Count > 0 ? actionsLeft.First() : null;
+            }
         }
+
         
         return matched;
     }
@@ -655,12 +695,13 @@ public class ActionManager : MonoBehaviour {
             Destroy(o);
         particleHints.Clear();
 
-        if (actionList.Find(action => action.matched == false) == null)
+        if (actionList.Find(action => action.matched == false && action.notMandatory == false) == null)
         {
             Narrator.PlaySystemSound("LevelComplete", 0.1f);
             StartCoroutine(DelayedEndScene(5.0f));
             return true;
         }
+
         else return false;
     }
     
