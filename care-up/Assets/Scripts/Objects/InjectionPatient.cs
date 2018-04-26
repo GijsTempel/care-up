@@ -55,12 +55,17 @@ public class InjectionPatient : PersonObject {
                 default:
                     break;
             }
-            
-            ++currentDialogueIndex;
-            if (currentDialogueIndex < dialogueXmls.Count)
-            {
-                LoadDialogueOptions(dialogueXmls[currentDialogueIndex]);
-            }
+
+            NextDialogue();
+        }
+    }
+
+    public void NextDialogue()
+    {
+        ++currentDialogueIndex;
+        if (currentDialogueIndex < dialogueXmls.Count)
+        {
+            LoadDialogueOptions(dialogueXmls[currentDialogueIndex]);
         }
     }
 

@@ -40,6 +40,12 @@ public class UsableObject : InteractableObject {
                     }   // no break, return = end function
                 case "HandCleaner":
                     {
+                        InjectionPatient patient = GameObject.FindObjectOfType<InjectionPatient>();
+                        if (patient != null)
+                        {
+                            patient.NextDialogue();
+                        }
+                        
                         string message = "Zorg volgens een zorgvuldige handhygiëne. Handhygiëne is in dit protocol versneld om de gebruikerservaring te verbeteren";
                         Camera.main.transform.Find("UI").Find("EmptyHandsWarning").
                                 GetComponent<TimedPopUp>().Set(message);
