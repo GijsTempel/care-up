@@ -345,7 +345,7 @@ public class ActionManager : MonoBehaviour {
                 int.TryParse(action.Attributes["points"].Value, out pointsValue);
             }
 
-            bool notNeeded = action.Attributes["notNeeded"] != null;
+            bool notNeeded = action.Attributes["optional"] != null;
 
             switch (type)
             {
