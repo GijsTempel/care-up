@@ -38,15 +38,13 @@ public class InsulinPen : PickableObjectWithInfo {
 
     public override bool Use(bool hand, bool noTarget = false)
     {
-        string[] info = actionManager.CurrentUseOnInfo;
-
         if (controls.SelectedObject != null && controls.CanInteract)
         {
             if (name == "InsulinPenWithNeedle"
                 && controls.SelectedObject.GetComponent<PersonObjectPart>() != null
                 && controls.SelectedObject.GetComponent<PersonObjectPart>().Person.name == "Patient")
             {
-                if (info[0] == name && info[1] == "Patient")
+                if (actionManager.CompareUseOnInfo(name, "Patient"))
                 {
                     actionManager.OnUseOnAction(name, "Patient");
                     if (SceneManager.GetActiveScene().name == "Insulin Injection" )
@@ -62,7 +60,7 @@ public class InsulinPen : PickableObjectWithInfo {
             }
         }
 
-        if (info[0] == "InsulinPenWithNeedle" && info[1] == "" && noTarget)
+        if (actionManager.CompareUseOnInfo("InsulinPenWithNeedle", "") && noTarget)
         {
             if (inventory.LeftHandEmpty())
             {
@@ -84,7 +82,7 @@ public class InsulinPen : PickableObjectWithInfo {
                 return false;
             }
         }
-        else if (info[0] == "VentedInsulinPenWithNeedle" && info[1] == "" && noTarget)
+        else if (actionManager.CompareUseOnInfo("VentedInsulinPenWithNeedle", "") && noTarget)
         {
             if (inventory.LeftHandEmpty())
             {
@@ -106,7 +104,7 @@ public class InsulinPen : PickableObjectWithInfo {
                 return false;
             }
         }
-        else if (info[0] == "InsulinPen" && info[1] == "" && noTarget)
+        else if (actionManager.CompareUseOnInfo("InsulinPen", "") && noTarget)
         {
             if (inventory.LeftHandEmpty())
             {
@@ -129,7 +127,7 @@ public class InsulinPen : PickableObjectWithInfo {
 
         actionManager.OnUseOnAction(name, controls.SelectedObject != null ? controls.SelectedObject.name : "");
 
-        return (info[0] == name && controls.SelectedObject != null && info[1] == controls.SelectedObject.name);
+        return (controls.SelectedObject != null && actionManager.CompareUseOnInfo(name, controls.SelectedObject.name));
     }
 
     public override void SaveInfo(ref Vector3 left, ref Vector3 right)

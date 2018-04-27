@@ -243,14 +243,14 @@ public class ItemControlsUI : MonoBehaviour {
                 }
 
                 useOnNTButton.transform.GetChild(0).GetComponent<Text>().text =
-                    ((actionManager.CurrentUseOnInfo[0] == initedObject.name && actionManager.CurrentUseOnInfo[1] == "") ?
+                    (actionManager.CompareUseOnInfo(initedObject.name, "") ?
                     actionManager.CurrentButtonText : useOnNTtext);
 
                 useButton.transform.GetChild(0).GetComponent<Text>().text =
-                    (actionManager.CurrentUseObject == initedObject.name) ? actionManager.CurrentButtonText : useText;
+                    (actionManager.CompareUseObject(initedObject.name)) ? actionManager.CurrentButtonText : useText;
 
-                useOnNTButton.SetActive(actionManager.CurrentUseOnInfo[0] == initedObject.name && actionManager.CurrentUseOnInfo[1] == "");
-                useButton.SetActive(actionManager.CurrentUseObject == initedObject.name);
+                useOnNTButton.SetActive(actionManager.CompareUseOnInfo(initedObject.name, ""));
+                useButton.SetActive(actionManager.CompareUseObject(initedObject.name));
             }
 
             if (!pickButton.activeSelf && 
@@ -295,8 +295,8 @@ public class ItemControlsUI : MonoBehaviour {
         {
             initedObject.GetComponent<UsableObject>().Use();
         }
-        else if (actionManager.CurrentUseObject == initedObject.name ||
-            (actionManager.CurrentUseObject == "HandCleaner" 
+        else if (actionManager.CompareUseObject(initedObject.name) ||
+            (actionManager.CompareUseObject("HandCleaner") 
             && initedObject.name == "WorkField"))
         {
             if (cameraMode.CurrentMode == CameraMode.Mode.ItemControlsUI)

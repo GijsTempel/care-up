@@ -19,8 +19,9 @@ public class EndScoreManager : MonoBehaviour {
         get { return completedSceneName; }
     }
 
-    private List<string> wrongSteps;
-    private List<string> wrongStepsDescr;
+    private List<string> steps;
+    private List<string> stepsDescr;
+    private List<int> wrongStepIndexes;
 
     private ActionManager actionManager;    //points, steps
     private GameTimer gameTimer; // time
@@ -54,10 +55,11 @@ public class EndScoreManager : MonoBehaviour {
             Transform layoutGroup = uiFolder.Find("Right").Find("WrongstepScroll").Find("WrongstepViewport").Find("LayoutGroup");
             EndScoreWrongStepDescr[] stepObjects = layoutGroup.GetComponentsInChildren<EndScoreWrongStepDescr>();
 
-            for (int i = 0; i < wrongSteps.Count && i < stepObjects.Length; ++i)
+            for (int i = 0; i < steps.Count && i < stepObjects.Length; ++i)
             {
-                stepObjects[i].GetComponent<Text>().text = wrongSteps[i];
-                stepObjects[i].text = wrongStepsDescr[i];
+                stepObjects[i].GetComponent<Text>().text = steps[i];
+                stepObjects[i].text = stepsDescr[i];
+                stepObjects[i].wrong = wrongStepIndexes.Contains(i);
             }
 
             if (score >= 1)
@@ -109,8 +111,9 @@ public class EndScoreManager : MonoBehaviour {
         score = Mathf.FloorToInt(5.0f * points / actionManager.TotalPoints);
         completedSceneName = SceneManager.GetActiveScene().name;
         
-        wrongSteps = actionManager.WrongSteps;
-        wrongStepsDescr = actionManager.WrongStepsDescription;
+        steps = actionManager.StepsList;
+        stepsDescr = actionManager.StepsDescriptionList;
+        wrongStepIndexes = actionManager.WrongStepIndexes;
 
         bl_SceneLoaderUtils.GetLoader.LoadLevel("EndScore");
         //GameObject.Find("Preferences").GetComponent<LoadingScreen>().LoadLevel("EndScore");

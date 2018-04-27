@@ -8,10 +8,6 @@ public class InjectionPatient : PersonObject {
     private AudioClip[] audioClips;
     private Animator animator;
 
-    public GameObject greetDialogueTrigger;
-    
-    private bool greetDialogueTriggered = false;
-
     protected override void Start()
     {
         base.Start();
@@ -27,21 +23,40 @@ public class InjectionPatient : PersonObject {
         animator = GetComponent<Animator>();
     }
 
-    protected override void Update()
+    public override void Talk(string topic = "")
     {
-        base.Update();
+        if (ViewModeActive() || topic == "")
+            return;
 
-        if (greetDialogueTrigger != null)
+        if (actionManager.CompareTopic(topic))
         {
-            if (Vector3.Distance(transform.position, greetDialogueTrigger.transform.position) >
-                Vector3.Distance(transform.position, player.transform.position))
+            tutorial_talked = true;
+            actionManager.OnTalkAction(topic);
+
+            switch (topic)
             {
-                GreetDialogue();
+                case "Hello":
+                    GreetDialogue();
+                    break;
+                case "RollUpSleeves":
+                case "ExtendArmMakeFist":
+                    if (GetComponent<InjectionPatient>() != null)
+                    {
+                        // also launches animation after dialogue
+                        GetComponent<InjectionPatient>().RollUpSleevesDialogue();
+                    }
+                    break;
+                case "ComfortablePosition":
+                    inhaling = true;
+                    break;
+                case "ShowBellyForInsulin":
+                    GetComponent<Animator>().SetTrigger("ShowBellyForInsulin");
+                    break;
+                default:
+                    break;
             }
-        }
-        else
-        {
-            Debug.LogWarning("No greet diaglogue trigger set.");
+
+            NextDialogue();
         }
     }
 
@@ -49,30 +64,45 @@ public class InjectionPatient : PersonObject {
     {
         if (SceneManager.GetActiveScene().name == "Tutorial")
             return;
-    
-        if (greetDialogueTriggered)
-            return;
-        else
-        {
-            greetDialogueTriggered = true;
-            StartCoroutine(GreetDialogueCoroutine());
-        }
+
+        StartCoroutine(GreetDialogueCoroutine());
+    }
+
+    public void GreetDialoguePt2()
+    {
+        StartCoroutine(GreetDialogueCoroutinePt2());
+    }
+
+    public void GreetDialoguePt3()
+    {
+        StartCoroutine(GreetDialogueCoroutinePt3());
     }
 
     private IEnumerator GreetDialogueCoroutine()
     {
         Narrator.PlaySound(audioClips[0]);
         yield return new WaitForSeconds(audioClips[0].length);
+
         animator.SetTrigger("goedemorgen");
         audioSource.PlayOneShot(audioClips[1]);
         yield return new WaitForSeconds(audioClips[1].length);
+    }
+
+    private IEnumerator GreetDialogueCoroutinePt2()
+    {
         Narrator.PlaySound(audioClips[2]);
         yield return new WaitForSeconds(audioClips[2].length);
+
         animator.SetTrigger("ja_is_goed");
         audioSource.PlayOneShot(audioClips[3]);
         yield return new WaitForSeconds(audioClips[3].length);
+    }
+
+    private IEnumerator GreetDialogueCoroutinePt3()
+    {
         Narrator.PlaySound(audioClips[4]);
         yield return new WaitForSeconds(audioClips[4].length);
+
         animator.SetTrigger("oke");
         audioSource.PlayOneShot(audioClips[5]);
     }

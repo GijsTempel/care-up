@@ -791,10 +791,8 @@ public class HandsInventory : MonoBehaviour {
     {
         string leftName = leftHandObject ? leftHandObject.name : "";
         string rightName = rightHandObject ? rightHandObject.name : "";
-
-        string[] currentObjects = actionManager.CurrentCombineObjects;
-        bool combineAllowed = (currentObjects[0] == leftName && currentObjects[1] == rightName)
-            || (currentObjects[0] == rightName && currentObjects[1] == leftName);
+        
+        bool combineAllowed = actionManager.CompareCombineObjects(leftName, rightName);
 
         bool combined = combinationManager.Combine(leftName, rightName, out leftCombineResult, out rightCombineResult);
 

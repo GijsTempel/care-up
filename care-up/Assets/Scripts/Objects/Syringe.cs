@@ -65,14 +65,14 @@ public class Syringe : PickableObjectWithInfo {
     public override bool Use(bool hand = false, bool noTarget = false)
     {
         tutorial_usedOn = true;
-        string[] info = actionManager.CurrentUseOnInfo;
+
         if (controls.SelectedObject != null && controls.CanInteract)
         {
             if (name == "SyringeWithInjectionSNeedleCap"
                 && controls.SelectedObject.GetComponent<PersonObjectPart>() != null
                 && controls.SelectedObject.GetComponent<PersonObjectPart>().Person.name == "Patient")
             {
-                if (info[0] == "SyringeWithInjectionSNeedleCap" && info[1] == "Patient")
+                if (actionManager.CompareUseOnInfo("SyringeWithInjectionSNeedleCap", "Patient"))
                 {
                     actionManager.OnUseOnAction("SyringeWithInjectionSNeedleCap", "Patient");
                     if (SceneManager.GetActiveScene().name == "Injection Subcutaneous v2" ||
@@ -98,7 +98,7 @@ public class Syringe : PickableObjectWithInfo {
                 && controls.SelectedObject.GetComponent<PersonObjectPart>() != null
                 && controls.SelectedObject.GetComponent<PersonObjectPart>().Person.name == "Patient")
             {
-                if (info[0] == "SyringeWithInjectionNeedleCap" && info[1] == "Patient")
+                if (actionManager.CompareUseOnInfo("SyringeWithInjectionNeedleCap", "Patient"))
                 {
                     actionManager.OnUseOnAction("SyringeWithInjectionNeedleCap", "Patient");
                     if (SceneManager.GetActiveScene().name == "Injection" ||
@@ -125,8 +125,7 @@ public class Syringe : PickableObjectWithInfo {
             }
             else if (name == "Syringe" && controls.SelectedObject.name == "Person")
             {
-                info = actionManager.CurrentUseOnInfo;
-                if (info[0] == "Syringe" && info[1] == "Person")
+                if (actionManager.CompareUseOnInfo("Syringe", "Person"))
                 {
                     actionManager.OnUseOnAction("Syringe", "Person");
                     AnimationSequence animationSequence = new AnimationSequence("WingedNeedle");
@@ -138,10 +137,8 @@ public class Syringe : PickableObjectWithInfo {
                      name == "SyringeWithInjectionNeedle") &&
                      controls.SelectedObject.name == "NeedleCup")
             {
-                info = actionManager.CurrentUseOnInfo;
-                if ((info[0] == "SyringeWithAbsorptionNeedle" ||
-                    info[0] == "SyringeWithInjectionNeedle")
-                    && info[1] == "NeedleCup")
+                if (actionManager.CompareUseOnInfo("SyringeWithAbsorptionNeedle", "NeedleCup") ||
+                    actionManager.CompareUseOnInfo("SyringeWithInjectionNeedle", "NeedleCup"))
                 {
                     if (inventory.LeftHandEmpty())
                     {
@@ -170,8 +167,7 @@ public class Syringe : PickableObjectWithInfo {
             // venting
             if (name == "SyringeWithAbsorptionNeedle" && noTarget)
             {
-                info = actionManager.CurrentUseOnInfo;
-                if (info[0] == "SyringeWithAbsorptionNeedle" && info[1] == "")
+                if (actionManager.CompareUseOnInfo("SyringeWithAbsorptionNeedle", ""))
                 {
                     if (inventory.LeftHandEmpty())
                     {
@@ -197,8 +193,7 @@ public class Syringe : PickableObjectWithInfo {
         {
             if (name == "SyringeWithAbsorptionNeedle" && noTarget)
             {
-                info = actionManager.CurrentUseOnInfo;
-                if (info[0] == "SyringeWithAbsorptionNeedle" && info[1] == "")
+                if (actionManager.CompareUseOnInfo("SyringeWithAbsorptionNeedle", ""))
                 {
                     if (inventory.LeftHandEmpty())
                     {
@@ -221,8 +216,7 @@ public class Syringe : PickableObjectWithInfo {
             }
             else if (name == "SyringeWithAbsorptionSNeedle" && noTarget)
             {
-                info = actionManager.CurrentUseOnInfo;
-                if (info[0] == "SyringeWithAbsorptionSNeedle" && info[1] == "")
+                if (actionManager.CompareUseOnInfo("SyringeWithAbsorptionSNeedle", ""))
                 {
                     if (inventory.LeftHandEmpty())
                     {
@@ -247,7 +241,7 @@ public class Syringe : PickableObjectWithInfo {
 
         actionManager.OnUseOnAction(name, controls.SelectedObject != null ? controls.SelectedObject.name : "");
 
-        return (info[0] == name && controls.SelectedObject != null && info[1] == controls.SelectedObject.name);
+        return (controls.SelectedObject != null && actionManager.CompareUseOnInfo(name, controls.SelectedObject.name));
     }
 
     protected override void SetShaderTo(Shader shader)

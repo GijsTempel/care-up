@@ -32,7 +32,7 @@ public class WorkField : UsableObject {
     {
         if (!ViewModeActive())
         {
-            if (actionManager.CurrentUseObject != name)
+            if (!actionManager.CompareUseObject(name))
             {
                 /*if (GameObject.FindObjectOfType<PlayerPrefsManager>() != null &&
                     GameObject.FindObjectOfType<PlayerPrefsManager>().practiceMode == false)

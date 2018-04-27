@@ -38,9 +38,11 @@ public class ActionManager : MonoBehaviour {
 
     // actual list of actions
     private List<Action> actionList = new List<Action>();
+
     // list of descriptions of steps, player got penalty on
-    private List<string> wrongStepsList = new List<string>();
-    private List<string> wrongStepsDescriptionList = new List<string>();
+    private List<string> stepsList = new List<string>();
+    private List<string> stepsDescriptionList = new List<string>();
+    private List<int> wrongStepIndexes = new List<int>();
 
     private int totalPoints = 0;         // max points of scene
     private int points = 0;              // current points
@@ -61,14 +63,19 @@ public class ActionManager : MonoBehaviour {
     /// <summary>
     /// List of wrong steps, merged into a string with line breaks.
     /// </summary>
-    public List<string> WrongSteps
+    public List<string> StepsList
     {
-        get { return wrongStepsList; }
+        get { return stepsList; }
     }
 
-    public List<string> WrongStepsDescription
+    public List<string> StepsDescriptionList
     {
-        get { return wrongStepsDescriptionList; }
+        get { return stepsDescriptionList; }
+    }
+
+    public List<int> WrongStepIndexes
+    {
+        get { return wrongStepIndexes; }
     }
 
     /// <summary>
@@ -157,90 +164,111 @@ public class ActionManager : MonoBehaviour {
         get { return currentAction.audioHint; }
     }
 
-    /// <summary>
-    /// If current action is UseAction, returns the name of the object that needs to be used.
-    /// Returns empty string for every other case.
-    /// </summary>
-    public string CurrentUseObject
+    // new comparison looks for all actions of type withing current index
+    public bool CompareUseObject(string name)
     {
-        get
-        {
-            if (currentAction != null)
-            {
-                return (currentAction.Type == ActionType.ObjectUse) ?
-                    ((UseAction)currentAction).GetObjectName() : "";
-            }
-            else
-                return "";
-        }
-    }
+        bool result = false;
 
-    /// <summary>
-    /// Returns string[] of names of objects that need to be combined.
-    /// Returns nothing if current action is not CombineAction.
-    /// </summary>
-    public string[] CurrentCombineObjects
-    {
-        get
+        List<Action> sublist = actionList.Where(action =>
+                action.SubIndex == currentActionIndex &&
+                action.matched == false).ToList();
+        foreach(Action a in sublist)
         {
-            string[] objects = new string[2];
-            if (currentAction.Type == ActionType.ObjectCombine)
+            if (a.Type == ActionType.ObjectUse)
             {
-                string left, right;
-                ((CombineAction)currentAction).GetObjects(out left, out right);
-                objects[0] = left;
-                objects[1] = right;
+                if (((UseAction)a).GetObjectName() == name)
+                    result = true;
             }
-            return objects;
         }
-    }
 
-    /// <summary>
-    /// Returns data if current action is UseOnAction.
-    /// string[0] = item that should be used on target
-    /// string[1] = target item
-    /// </summary>
-    public string[] CurrentUseOnInfo
+        return result;
+    }
+    
+    public bool CompareCombineObjects(string left, string right)
     {
-        get
+        bool result = false;
+
+        List<Action> sublist = actionList.Where(action =>
+                action.SubIndex == currentActionIndex &&
+                action.matched == false).ToList();
+        foreach (Action a in sublist)
         {
-            string[] info = new string[2];
-            if (currentAction.Type == ActionType.ObjectUseOn)
+            if (a.Type == ActionType.ObjectCombine)
             {
-                string item, target;
-                ((UseOnAction)currentAction).GetInfo(out item, out target);
-                info[0] = item;
-                info[1] = target;
+                string _left, _right;
+                ((CombineAction)a).GetObjects(out _left, out _right);
+                if ((_left == left && _right == right) ||
+                    (_right == left && _left == right))
+                    result = true;
             }
-            return info;
         }
-    }
 
-    /// <summary>
-    /// Returns topic string if current action is TalkAction.
-    /// </summary>
-    public string CurrentTopic
+        return result;
+    }
+    
+    public bool CompareUseOnInfo(string item, string target)
     {
-        get
+        bool result = false;
+
+        List<Action> sublist = actionList.Where(action =>
+                action.SubIndex == currentActionIndex &&
+                action.matched == false).ToList();
+        foreach (Action a in sublist)
         {
-            return (currentAction.Type == ActionType.PersonTalk) ?
-                ((TalkAction)currentAction).Topic : "";
+            if (a.Type == ActionType.ObjectUseOn)
+            {
+                string _item, _target;
+                ((UseOnAction)a).GetInfo(out _item, out _target);
+                if (_item == item && _target == target)
+                    result = true;
+            }
         }
+
+        return result;
+    }
+    
+    public bool CompareTopic(string t)
+    {
+        bool result = false;
+
+        List<Action> sublist = actionList.Where(action =>
+                action.SubIndex == currentActionIndex &&
+                action.matched == false).ToList();
+        foreach (Action a in sublist)
+        {
+            if (a.Type == ActionType.PersonTalk)
+            {
+                if (((TalkAction)a).Topic == t)
+                    result = true;
+            }
+        }
+
+        return result;
     }
 
     public string CurrentButtonText
     {
         get
         {
-            if (currentAction.Type == ActionType.ObjectUse)
+            string result = "";
+            
+            List<Action> sublist = actionList.Where(action =>
+                   action.SubIndex == currentActionIndex &&
+                   action.matched == false).ToList();
+
+            foreach (Action a in sublist)
             {
-                return ((UseAction)currentAction).buttonText;
+                if (a.Type == ActionType.ObjectUse)
+                {
+                    result = ((UseAction)a).buttonText;
+                }
+                else if (currentAction.Type == ActionType.ObjectUseOn)
+                {
+                    result = ((UseOnAction)a).buttonText;
+                }
             }
-            else if (currentAction.Type == ActionType.ObjectUseOn)
-            {
-                return ((UseOnAction)currentAction).buttonText;
-            }
-            else return "";
+
+            return result;
         }
     }
 
@@ -317,38 +345,40 @@ public class ActionManager : MonoBehaviour {
                 int.TryParse(action.Attributes["points"].Value, out pointsValue);
             }
 
+            bool notNeeded = action.Attributes["optional"] != null;
+
             switch (type)
             {
                 case "combine":
                     string left = action.Attributes["left"].Value;
                     string right = action.Attributes["right"].Value;
-                    actionList.Add(new CombineAction(left, right, index, descr, fDescr, audio, extra, pointsValue));
+                    actionList.Add(new CombineAction(left, right, index, descr, fDescr, audio, extra, pointsValue, notNeeded));
                     break;
                 case "use":
                     string use = action.Attributes["value"].Value;
-                    actionList.Add(new UseAction(use, index, descr, fDescr, audio, extra, buttonText, pointsValue));
+                    actionList.Add(new UseAction(use, index, descr, fDescr, audio, extra, buttonText, pointsValue, notNeeded));
                     break;
                 case "talk":
                     string topic = action.Attributes["topic"].Value;
-                    actionList.Add(new TalkAction(topic, index, descr, fDescr, audio, extra, pointsValue));
+                    actionList.Add(new TalkAction(topic, index, descr, fDescr, audio, extra, pointsValue, notNeeded));
                     break;
                 case "useOn":
                     string useItem = action.Attributes["item"].Value;
                     string target = action.Attributes["target"].Value;
-                    actionList.Add(new UseOnAction(useItem, target, index, descr, fDescr, audio, extra, buttonText, pointsValue));
+                    actionList.Add(new UseOnAction(useItem, target, index, descr, fDescr, audio, extra, buttonText, pointsValue, notNeeded));
                     break;
                 case "examine":
                     string exItem = action.Attributes["item"].Value;
                     string expected = action.Attributes["expected"].Value;
-                    actionList.Add(new ExamineAction(exItem, expected, index, descr, fDescr, audio, extra, pointsValue));
+                    actionList.Add(new ExamineAction(exItem, expected, index, descr, fDescr, audio, extra, pointsValue, notNeeded));
                     break;
                 case "pickUp":
                     string itemPicked = action.Attributes["item"].Value;
-                    actionList.Add(new PickUpAction(itemPicked, index, descr, fDescr, audio, extra, pointsValue));
+                    actionList.Add(new PickUpAction(itemPicked, index, descr, fDescr, audio, extra, pointsValue, notNeeded));
                     break;
                 case "sequenceStep":
                     string stepName = action.Attributes["value"].Value;
-                    actionList.Add(new SequenceStepAction(stepName, index, descr, fDescr, audio, extra, pointsValue));
+                    actionList.Add(new SequenceStepAction(stepName, index, descr, fDescr, audio, extra, pointsValue, notNeeded));
                     break;
                 default:
                     Debug.LogError("No action type found: " + type);
@@ -367,6 +397,12 @@ public class ActionManager : MonoBehaviour {
             {
                 totalPoints += a.pointValue;
             }
+        }
+
+        foreach(Action a in actionList)
+        {
+            stepsList.Add(a.shortDescr);
+            stepsDescriptionList.Add(a.extraDescr);
         }
 
         currentAction = actionList.First();
@@ -602,14 +638,13 @@ public class ActionManager : MonoBehaviour {
         {
             currentActionIndex += 1;
         }
-
+        
         if (!matched && type != ActionType.ObjectExamine && type != ActionType.PickUp)
         {
-            if ( sublist.Count > 0 && 
-                wrongStepsList.Find(step => step == sublist[0].shortDescr) == null )
+            int index = actionList.IndexOf(currentAction);
+            if ( sublist.Count > 0 && !wrongStepIndexes.Contains(index) )
             {
-                wrongStepsList.Add(sublist[0].shortDescr);
-                wrongStepsDescriptionList.Add(sublist[0].extraDescr); 
+                wrongStepIndexes.Add(index);
             }
 
             Camera.main.transform.Find("UI").Find("WrongAction").
@@ -626,7 +661,23 @@ public class ActionManager : MonoBehaviour {
                 action.matched == false).ToList();
             
             currentAction = actionsLeft.Count > 0 ? actionsLeft.First() : null;
+
+            // now we have not mandatory actions, let's skip them and add to mistakes
+            List<Action> skippableActions = actionsLeft.Where(action => action.notMandatory == true).ToList();
+            if (actionsLeft.Count == skippableActions.Count) // all of them are skippable
+            {
+                wrongStepIndexes.Add(actionList.IndexOf(currentAction));
+                currentActionIndex += 1;
+                
+                // get next actions with new index
+                actionsLeft = actionList.Where(action =>
+                    action.SubIndex == currentActionIndex &&
+                    action.matched == false).ToList();
+
+                currentAction = actionsLeft.Count > 0 ? actionsLeft.First() : null;
+            }
         }
+
         
         return matched;
     }
@@ -643,12 +694,13 @@ public class ActionManager : MonoBehaviour {
             Destroy(o);
         particleHints.Clear();
 
-        if (actionList.Find(action => action.matched == false) == null)
+        if (actionList.Find(action => action.matched == false && action.notMandatory == false) == null)
         {
             Narrator.PlaySystemSound("LevelComplete", 0.1f);
             StartCoroutine(DelayedEndScene(5.0f));
             return true;
         }
+
         else return false;
     }
     

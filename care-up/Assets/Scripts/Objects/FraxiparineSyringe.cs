@@ -94,7 +94,6 @@ public class FraxiparineSyringe : PickableObjectWithInfo
     public override bool Use(bool hand = false, bool noTarget = false)
     {
         tutorial_usedOn = true;
-        string[] info = actionManager.CurrentUseOnInfo;
 
         if (controls.SelectedObject != null && controls.CanInteract)
         {
@@ -102,7 +101,7 @@ public class FraxiparineSyringe : PickableObjectWithInfo
                 && controls.SelectedObject.GetComponent<PersonObjectPart>() != null
                 && controls.SelectedObject.GetComponent<PersonObjectPart>().Person.name == "Patient")
             {
-                if (info[0] == "Frexi_with_needle_cap" && info[1] == "Patient")
+                if (actionManager.CompareUseOnInfo("Frexi_with_needle_cap", "Patient"))
                 {
                     actionManager.OnUseOnAction("Frexi_with_needle_cap", "Patient");
                     if (SceneManager.GetActiveScene().name == "Fraxiparine_Injecteren")
@@ -115,7 +114,8 @@ public class FraxiparineSyringe : PickableObjectWithInfo
                     return true;
                 }
             }
-            else if (name == "Frexi" && controls.SelectedObject.name == "NeedleCup" && info[1] == "NeedleCup")
+            else if (name == "Frexi" && controls.SelectedObject.name == "NeedleCup" 
+                && actionManager.CompareUseOnInfo("Frexi","NeedleCup"))
             {
                 string animation = (hand ? "UseLeft " : "UseRight ") + name + " NeedleCup";
                 PlayerAnimationManager.PlayAnimation(animation, GameObject.Find("NeedleCup").transform);
@@ -127,8 +127,8 @@ public class FraxiparineSyringe : PickableObjectWithInfo
         // venting && tube
         if ((name == "Frexi_with_needle_cap" || name == "Frexi") && noTarget)
         {
-            info = actionManager.CurrentUseOnInfo;
-            if ((info[0] == "Frexi_with_needle_cap" || info[0] == "Frexi") && info[1] == "")
+            if (actionManager.CompareUseOnInfo("Frexi_with_needle_cap", "") || 
+                 actionManager.CompareUseOnInfo("Frexi", ""))
             {
                 if (inventory.LeftHandEmpty())
                 {
@@ -152,7 +152,7 @@ public class FraxiparineSyringe : PickableObjectWithInfo
 
         actionManager.OnUseOnAction(name, controls.SelectedObject != null ? controls.SelectedObject.name : "");
 
-        return (info[0] == name && controls.SelectedObject != null && info[1] == controls.SelectedObject.name);
+        return (controls.SelectedObject != null && actionManager.CompareUseOnInfo(name, controls.SelectedObject.name));
     }
 
     protected override void SetShaderTo(Shader shader)
