@@ -4,7 +4,13 @@ using System.Collections;
 /// <summary>
 /// Handle animation changes of the player
 /// </summary>
-public class PlayerAnimationManager : MonoBehaviour {
+public class PlayerAnimationManager : MonoBehaviour
+{
+    public enum Hand
+    {
+        Right,
+        Left
+    };
 
     public float ikWeight = 1.0f;
 
