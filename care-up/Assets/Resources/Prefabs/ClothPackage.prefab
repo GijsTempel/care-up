@@ -21,8 +21,10 @@ GameObject:
   - component: {fileID: 4049654515715358}
   - component: {fileID: 33023942993562280}
   - component: {fileID: 23013382605253790}
+  - component: {fileID: 65181658000568228}
+  - component: {fileID: 114045968854326932}
   m_Layer: 0
-  m_Name: clothBox
+  m_Name: ClothPackage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -54,7 +56,6 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: dc1d9175fea60483a887ce75105ddf5b, type: 3}
   m_StaticBatchInfo:
@@ -83,3 +84,30 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1612408360832218}
   m_Mesh: {fileID: 4300000, guid: dc1d9175fea60483a887ce75105ddf5b, type: 3}
+--- !u!65 &65181658000568228
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1612408360832218}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.18115199, y: 0.109690614, z: 0.14962153}
+  m_Center: {x: 0, y: 0, z: 0.018698633}
+--- !u!114 &114045968854326932
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1612408360832218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3e6a197b70106d4baa62069a18baf92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: Gaasjes
+  muplipleMesh: 0
+  descriptionOffset: {x: 0, y: 0, z: 0}
+  tutorial_used: 0
