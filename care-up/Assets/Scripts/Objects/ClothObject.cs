@@ -26,8 +26,20 @@ public class ClothObject : PickableObject {
 
     public override bool Drop(bool force = false)
     {
-        Destroy(gameObject);
-        return true;
+        if (GameObject.Find("ClothPackage") == null)
+        {
+            if (basic)
+            {
+                GetComponent<MeshFilter>().mesh = basic;
+            }
+
+            return base.Drop(force);
+        }
+        else
+        {
+            Destroy(gameObject);
+            return true;
+        }
     }
 
     public override void Pick()
