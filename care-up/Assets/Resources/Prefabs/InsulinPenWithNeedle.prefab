@@ -56,9 +56,9 @@ GameObject:
   - component: {fileID: 33397843980016910}
   - component: {fileID: 23490036024522748}
   - component: {fileID: 114163257275261798}
-  - component: {fileID: 114082230969668906}
   - component: {fileID: 54707812952757282}
   - component: {fileID: 65888778373605648}
+  - component: {fileID: 114984537350006092}
   m_Layer: 0
   m_Name: InsulinPenWithNeedle
   m_TagString: Untagged
@@ -330,28 +330,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.022444189, y: 0.08, z: 0.24}
   m_Center: {x: -0.00011752173, y: -0.00011330098, z: -0.009857178}
---- !u!114 &114082230969668906
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1757418967420768}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6095384fe7173243b9fb25bc8b25d06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  description: 'Insulinepen met naald '
-  muplipleMesh: 0
-  descriptionOffset: {x: 0, y: 0, z: 0}
-  tutorial_picked: 0
-  tutorial_closed: 0
-  examineRotation: {x: 0, y: 90, z: 0}
-  audioExamine: 0
-  viewSettings:
-    distanceFromCamera: 0.6
-    rotationSensetivity: 90
-  state: good
 --- !u!114 &114163257275261798
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -371,3 +349,18 @@ MonoBehaviour:
   rightControlBone: {fileID: 0}
   holdAnimationID: 10
   animateButton: 0
+--- !u!114 &114984537350006092
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1757418967420768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3e6a197b70106d4baa62069a18baf92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: 'Insuline pen met naald '
+  muplipleMesh: 0
+  descriptionOffset: {x: 0, y: 0, z: 0}
+  tutorial_used: 0
