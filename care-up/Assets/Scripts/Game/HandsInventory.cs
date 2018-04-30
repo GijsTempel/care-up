@@ -689,15 +689,14 @@ public class HandsInventory : MonoBehaviour {
                     }
                     else if (rightSavedPos != Vector3.zero)
                     {
-                        if (customPositions.Exists(x => x.objectName == leftCombineResult))
-                        {
-                            ItemPosition custom = customPositions.Find(x => x.objectName == leftCombineResult);
-                            leftHandObject.SavePosition(custom.position, Quaternion.Euler(custom.rotation));
-                        }
-                        else
-                        {
-                            leftHandObject.SavePosition(rightSavedPos + GetOffset(rightHandObject, leftHandObject, rightSavedRot), rightSavedRot);
-                        }
+                        leftHandObject.SavePosition(rightSavedPos + GetOffset(rightHandObject, leftHandObject, rightSavedRot), rightSavedRot);
+                    }
+
+                    // whatever, override with custom in all cases
+                    if (customPositions.Exists(x => x.objectName == leftCombineResult))
+                    {
+                        ItemPosition custom = customPositions.Find(x => x.objectName == leftCombineResult);
+                        leftHandObject.SavePosition(custom.position, Quaternion.Euler(custom.rotation), true);
                     }
 
                     if (leftHandObject.GetComponent<PickableObjectWithInfo>() != null && load)
@@ -741,15 +740,14 @@ public class HandsInventory : MonoBehaviour {
                     }
                     else if (leftSavedPos != Vector3.zero)
                     {
-                        if (customPositions.Exists(x => x.objectName == rightCombineResult))
-                        {
-                            ItemPosition custom = customPositions.Find(x => x.objectName == rightCombineResult);
-                            rightHandObject.SavePosition(custom.position, Quaternion.Euler(custom.rotation));
-                        }
-                        else
-                        {
-                            rightHandObject.SavePosition(leftSavedPos + GetOffset(leftHandObject, rightHandObject, leftSavedRot), leftSavedRot);
-                        }
+                        rightHandObject.SavePosition(leftSavedPos + GetOffset(leftHandObject, rightHandObject, leftSavedRot), leftSavedRot);
+                    }
+
+                    // whatever, override with custom in all cases
+                    if (customPositions.Exists(x => x.objectName == rightCombineResult))
+                    {
+                        ItemPosition custom = customPositions.Find(x => x.objectName == rightCombineResult);
+                        rightHandObject.SavePosition(custom.position, Quaternion.Euler(custom.rotation));
                     }
 
                     if (rightHandObject.GetComponent<PickableObjectWithInfo>() != null && load)

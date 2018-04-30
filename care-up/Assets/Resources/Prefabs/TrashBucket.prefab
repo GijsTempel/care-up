@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 4405023099832756}
   - component: {fileID: 33769852081915320}
   - component: {fileID: 23376300795908406}
+  - component: {fileID: 114810860968754204}
+  - component: {fileID: 65707648979265048}
   m_Layer: 0
   m_Name: TrashBucket
   m_TagString: Untagged
@@ -50,8 +52,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1288371613823538}
   m_LocalRotation: {x: -0.5, y: -0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: -3.815, y: 1.0908, z: 1.037}
-  m_LocalScale: {x: 0.6000005, y: 0.60000044, z: 0.6000004}
+  m_LocalPosition: {x: -3.959, y: 1.091, z: 1.023}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
   - {fileID: 4773384060687494}
   m_Father: {fileID: 0}
@@ -63,9 +65,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1889728731936422}
-  m_LocalRotation: {x: -0.007305756, y: 0.70706904, z: 0.70706904, w: 0.007305756}
-  m_LocalPosition: {x: -0.0415, y: -1.073, z: -0.465}
-  m_LocalScale: {x: 1.6666657, y: 1.6666654, z: 1.6666653}
+  m_LocalRotation: {x: -0.0073057413, y: 0.70706904, z: 0.70706904, w: 0.0073057413}
+  m_LocalPosition: {x: 0.004, y: -0.779, z: -0.33}
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
   m_Children: []
   m_Father: {fileID: 4405023099832756}
   m_RootOrder: 0
@@ -83,7 +85,6 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: cb07525e7f313407ab4b345e1ce67f95, type: 2}
   m_StaticBatchInfo:
@@ -112,3 +113,29 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1288371613823538}
   m_Mesh: {fileID: 4300000, guid: 2d722738cc38c49f58b69cf7ee3cd738, type: 3}
+--- !u!65 &65707648979265048
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1288371613823538}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.39680606, y: 0.20069173, z: 0.060008086}
+  m_Center: {x: -0.0000009536743, y: 0.004454989, z: 0.033635776}
+--- !u!114 &114810860968754204
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1288371613823538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27ae771b2d26f78498800caecd887ac4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: Afvalbakje
+  muplipleMesh: 0
+  descriptionOffset: {x: 0, y: 0, z: 0}

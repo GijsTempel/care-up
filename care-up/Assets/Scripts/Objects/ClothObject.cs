@@ -21,24 +21,25 @@ public class ClothObject : PickableObject {
     {
         base.Start();
 
-        if (state == ClothHoldState.Crumpled)
-        {
-            holdAnimationID = 6;
-        }
-        else if (state == ClothHoldState.Folded)
-        {
-            holdAnimationID = 8;
-        }
+        ChangeState(state);
     }
 
     public override bool Drop(bool force = false)
     {
-        if (basic)
+        if (GameObject.Find("ClothPackage") == null)
         {
-            GetComponent<MeshFilter>().mesh = basic;
-        }
+            if (basic)
+            {
+                GetComponent<MeshFilter>().mesh = basic;
+            }
 
-        return base.Drop(force);
+            return base.Drop(force);
+        }
+        else
+        {
+            Destroy(gameObject);
+            return true;
+        }
     }
 
     public override void Pick()
@@ -52,6 +53,27 @@ public class ClothObject : PickableObject {
         else if (state == ClothHoldState.Crumpled && inHand != null)
         {
             GetComponent<MeshFilter>().mesh = inHand;
+        }
+    }
+
+    public void ChangeState(ClothHoldState s, bool forceChangeMesh = false)
+    {
+        state = s;
+        if (state == ClothHoldState.Crumpled)
+        {
+            holdAnimationID = 6;
+            if (forceChangeMesh && inHand != null)
+            {
+                GetComponent<MeshFilter>().mesh = inHand;
+            }
+        }
+        else if (state == ClothHoldState.Folded)
+        {
+            holdAnimationID = 8;
+            if (forceChangeMesh && folded != null)
+            {
+                GetComponent<MeshFilter>().mesh = folded;
+            }
         }
     }
 }
