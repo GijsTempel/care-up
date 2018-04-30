@@ -26,7 +26,8 @@ public class ClothObject : PickableObject {
 
     public override bool Drop(bool force = false)
     {
-        if (GameObject.Find("ClothPackage") == null)
+        if (GameObject.Find("ClothPackage") == null
+            || name != "Cloth")
         {
             if (basic)
             {
