@@ -176,9 +176,9 @@ public class InteractableObject : MonoBehaviour {
         }
     }
 
-    public void SavePosition(Vector3 pos, Quaternion rot)
+    public void SavePosition(Vector3 pos, Quaternion rot, bool force = false)
     {
-        if (!positionSaved)
+        if (!positionSaved || force)
         {
             positionSaved = true;
 
