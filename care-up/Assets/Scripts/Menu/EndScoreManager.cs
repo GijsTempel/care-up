@@ -109,9 +109,12 @@ public class EndScoreManager : MonoBehaviour {
         if (gameTimer == null) Debug.LogError("No timer found");
 
         time = gameTimer.CurrentTime;
-        //points = Mathf.RoundToInt(actionManager.Points * (time < 300.0f ? 3.0f : (time < 600.0f ? 2.0f : 1.0f)));
+
+        int multiplier = (time < 300.0f ? 3 : (time < 600.0f ? 2 : 1));
         points = actionManager.Points;
         score = Mathf.FloorToInt(5.0f * points / actionManager.TotalPoints);
+        points *= multiplier;
+
         completedSceneName = SceneManager.GetActiveScene().name;
         
         steps = actionManager.StepsList;
