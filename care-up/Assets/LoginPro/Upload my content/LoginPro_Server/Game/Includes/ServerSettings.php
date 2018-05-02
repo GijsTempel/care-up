@@ -51,6 +51,7 @@ $_SESSION['SerialKeys'] = 'SerialKeys';
 $_SESSION['GameScenes'] = 'GameScenes';
 $_SESSION['SerialToScenes'] = 'SerialToScenes';
 $_SESSION['AccountToSerials'] = 'AccountToSerials';
+$_SESSION['HighScores'] = 'HighScores';
 // Your contact email (in case you want to send email validations), players will receive email from this email address (you could create a contact email address for example)
 $_SESSION['SERVER_email'] = 'Info@careup.nl';
 $_SESSION['SERVER_emailPassword'] = 'Care Up Support team';

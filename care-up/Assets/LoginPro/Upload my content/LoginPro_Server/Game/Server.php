@@ -104,6 +104,8 @@ else if($ACTION == "GetScenes") { include_once 'Includes/Actions/GetScenes.php';
 else if($ACTION == "SetSerial") { include_once 'Includes/Actions/SetSerial.php'; }
 else if($ACTION == "SetTutorialCompleted") { include_once 'Includes/Actions/SetTutorialCompleted.php'; }
 else if($ACTION == "GetTutorialCompleted") { include_once 'Includes/Actions/GetTutorialCompleted.php'; }
+else if($ACTION == "UploadSceneScore") { include_once 'Includes/Actions/UploadSceneScore.php'; }
+else if($ACTION == "GetSceneLeaders") { include_once 'Includes/Actions/GetSceneLeaders.php'; }
 /*************************** ACTIONS ZONE END ******************************/
 
 

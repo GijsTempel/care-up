@@ -94,11 +94,14 @@ public class PlayerPrefsManager : MonoBehaviour
         return PlayerPrefs.GetInt(sceneName + " activated") == 1;
     }
 
-    public void SetSceneCompletionData(string sceneName, int stars, string time)
+    public void SetSceneCompletionData(string sceneName, int score, int time)
     {
-        PlayerPrefs.SetInt(sceneName + "_completed", 1);
-        PlayerPrefs.SetInt(sceneName + "_stars", stars);
-        PlayerPrefs.SetString(sceneName + "_time", time);
+        string[] datas = new string[3];
+        datas[0] = sceneName;
+        datas[1] = score.ToString();
+        datas[2] = time.ToString();
+
+        LoginPro.Manager.ExecuteOnServer("UploadSceneScore", Blank, Debug.LogError, datas);
     }
 
     public bool GetSceneCompleted(string sceneName)
