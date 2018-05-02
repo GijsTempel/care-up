@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <CombinationList>
-  <combination leftInput="Ampoule" rightInput="Cloth" leftResult="OpenedAmpoule" rightResult="ClothWithAmpouleTop" />
+	<combination leftInput="DesinfectedAmpoule" rightInput="Cloth" leftResult="OpenedAmpoule" rightResult="ClothWithAmpouleTop" />
+  <combination leftInput="DesinfectionCloth" rightInput="Ampoule" leftResult="DesinfectionCloth" rightResult="DesinfectedAmpoule"></combination>
   <combination leftInput="Cloth" rightInput="Alcohol" leftResult="DesinfectionCloth" rightResult="Alcohol"></combination>
   <combination leftInput="DesinfectionCloth" rightInput="Medicine" leftResult="DesinfectionCloth" rightResult="Medicine"></combination>
 	<combination leftInput="SyringeWithAbsorptionNeedle" rightInput="OpenedAmpoule" leftResult="SyringeWithSolvent" rightResult="OpenedAmpoule" />
@@ -14,4 +15,9 @@
   <combination leftInput="SyringeWithInjectionNeedleCap" rightInput="" leftResult="SyringeWithInjectionNeedle" rightResult="SyringeInjectionCap" />
   <combination leftInput="SyringeWithInjectionNeedle" rightInput="SyringeInjectionCap" leftResult="SyringeWithInjectionNeedleCapped" rightResult="" />
   <combination leftInput="SyringeWithAbsorptionNeedle" rightInput="SyringeAbsorptionCap" leftResult="SyringeWithAbsorptionNeedleCapped" rightResult="" />
+
+  <combination leftInput="SyringeWithAbsorptionNeedle" rightInput="" leftResult="Syringe" rightResult="AbsorptionNeedleNoCap" />
+  <combination leftInput="SyringeWithInjectionNeedle" rightInput="" leftResult="Syringe" rightResult="InjectionNeedleNoCap" />
+
+
 </CombinationList>
