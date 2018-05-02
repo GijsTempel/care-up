@@ -91,9 +91,7 @@ public class EndScoreManager : MonoBehaviour {
             Cursor.visible = true;
 
             GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().SetSceneCompletionData(
-                completedSceneName, score, string.Format("Tijd: {0}m{1:00}s", (int)time / 60, (int)time % 60));
-
-            // TO remember - save full points, not score on database, score is 5point system
+                completedSceneName, points, Mathf.RoundToInt(time));
         }
     }
 
