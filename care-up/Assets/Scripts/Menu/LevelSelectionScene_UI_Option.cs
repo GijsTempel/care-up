@@ -21,9 +21,12 @@ public class LevelSelectionScene_UI_Option : MonoBehaviour {
         if (!selected)
         {
             LevelButton levelButton = transform.parent.Find("Start").GetComponent<LevelButton>();
+
             levelButton.sceneName = sceneName;
             levelButton.bundleName = bundleName;
+
             levelButton.UpdateLeaderBoard();
+            levelButton.UpdateHighScore();
 
             transform.parent.Find("Description").GetComponent<Text>().text = description;
             transform.parent.Find("Result").GetComponent<Text>().text = result;

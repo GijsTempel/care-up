@@ -69,8 +69,8 @@ public class LevelButton : MonoBehaviour {
             transform.Find("Name").GetComponent<Text>().text;
         sceneInfoPanel.Find("Description").GetComponent<Text>().text = 
             transform.Find("Description").GetComponent<Text>().text;
-        sceneInfoPanel.Find("Result").GetComponent<Text>().text = 
-            transform.Find("Result").GetComponent<Text>().text;
+
+        UpdateHighScore();
 
         for (int i = 1; i <= 3; ++i)
         {
@@ -135,5 +135,25 @@ public class LevelButton : MonoBehaviour {
 
         // maybe launch loading icon or something? it isnt instant
         manager.GetSceneLeaders(sceneName, 5, GetSceneLeaders_Success);
+    }
+
+    public void GetSceneDatabaseInfo_Success(string[] info)
+    {
+        if (info.Length > 1)
+        {
+            int iTime;
+            string time = (int.TryParse(info[2], out iTime)) ? string.Format("Tijd: {0}m{1:00}s", iTime / 60, iTime % 60) : "";
+            string text = " " + info[1] + " points - " + time;
+            sceneInfoPanel.Find("Result").GetComponent<Text>().text = text;
+        }
+        else
+        {
+            sceneInfoPanel.Find("Result").GetComponent<Text>().text = " Niet voltooid";
+        }
+    }
+
+    public void UpdateHighScore()
+    {
+        manager.GetSceneDatabaseInfo(sceneName, GetSceneDatabaseInfo_Success);
     }
 }

@@ -233,5 +233,14 @@ public class PlayerPrefsManager : MonoBehaviour
         LoginPro.Manager.ExecuteOnServer("GetSceneLeaders", method, Debug.LogError, datas);
     }
 
+    public void GetSceneDatabaseInfo(string scene, System.Action<string[]> method)
+    {
+        string[] datas = new string[1];
+        datas[0] = scene;
+        Debug.Log(datas[0]);
+
+        LoginPro.Manager.ExecuteOnServer("GetSceneInfo", method, Debug.LogError, datas);
+    }
+
     public void Blank(string[] s) { }
 }

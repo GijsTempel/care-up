@@ -106,6 +106,7 @@ else if($ACTION == "SetTutorialCompleted") { include_once 'Includes/Actions/SetT
 else if($ACTION == "GetTutorialCompleted") { include_once 'Includes/Actions/GetTutorialCompleted.php'; }
 else if($ACTION == "UploadSceneScore") { include_once 'Includes/Actions/UploadSceneScore.php'; }
 else if($ACTION == "GetSceneLeaders") { include_once 'Includes/Actions/GetSceneLeaders.php'; }
+else if($ACTION == "GetSceneInfo") { include_once 'Includes/Actions/GetSceneInfo.php'; }
 /*************************** ACTIONS ZONE END ******************************/
 
 

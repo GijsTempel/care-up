@@ -79,18 +79,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
                         descr.GetComponent<LevelSelectionScene_UI_Option>().description = variation.Attributes["description"].Value;
                         descr.GetComponent<LevelSelectionScene_UI_Option>().image =
                             Resources.Load<Sprite>("Sprites/ScenePreview/" + variation.Attributes["image"].Value);
-
-                        if (ppManager.GetSceneCompleted(sceneName))
-                        {
-                            string info = ppManager.GetSceneStars(sceneName) + " behaalde sterren - " +
-                                ppManager.GetSceneTime(sceneName);
-                            descr.GetComponent<LevelSelectionScene_UI_Option>().result = info;
-                        }
-                        else
-                        {
-                            descr.GetComponent<LevelSelectionScene_UI_Option>().result = "Niet voltooid";
-                        }
-
+                        
                         if (count == 1)
                         {
                             descr.GetComponent<LevelSelectionScene_UI_Option>().sceneName =
@@ -99,16 +88,6 @@ public class LevelSelectionScene_UI : MonoBehaviour
                                 doors[i].bundleName = bundleName;
 
                             descr.parent.Find("Description").GetComponent<Text>().text = variation.Attributes["description"].Value;
-                            if (ppManager.GetSceneCompleted(sceneName))
-                            {
-                                string info = ppManager.GetSceneStars(sceneName) + " behaalde sterren - " +
-                                    ppManager.GetSceneTime(sceneName);
-                                descr.parent.Find("Result").GetComponent<Text>().text = info;
-                            }
-                            else
-                            {
-                                descr.parent.Find("Result").GetComponent<Text>().text = "Niet voltooid";
-                            }
                         }
                         else
                         {
@@ -125,20 +104,12 @@ public class LevelSelectionScene_UI : MonoBehaviour
                     doors[i].bundleName = scene.Attributes["bundleName"].Value;
                     Transform descr = doors[i].transform;
                     descr.Find("Name").GetComponent<Text>().text = scene.Attributes["name"].Value;
+
                     if (scene.Attributes["description"].Value != "")
                     {
                         descr.Find("Description").GetComponent<Text>().text = scene.Attributes["description"].Value;
                     }
-                    if (ppManager.GetSceneCompleted(doors[i].sceneName))
-                    {
-                        string info = ppManager.GetSceneStars(doors[i].sceneName) + " behaalde sterren - " +
-                            ppManager.GetSceneTime(doors[i].sceneName);
-                        descr.Find("Result").GetComponent<Text>().text = info;
-                    }
-                    else
-                    {
-                        descr.Find("Result").GetComponent<Text>().text = "Niet voltooid";
-                    }
+
                     if (scene.Attributes["image"] != null)
                     {
                         doors[i].image = Resources.Load<Sprite>("Sprites/ScenePreview/" + scene.Attributes["image"].Value);
