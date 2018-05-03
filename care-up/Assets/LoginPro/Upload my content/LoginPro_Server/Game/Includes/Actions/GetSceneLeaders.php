@@ -16,6 +16,7 @@ while ($row = $stmt->fetch())
 	$dataToGetFromServer[] = $row["time"];
 }
 
+$dataToGetFromServer[] = "yay, it's not empty now, quit throwing errors";
 sendArrayAndFinish($dataToGetFromServer);
 
 ?>

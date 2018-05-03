@@ -224,5 +224,14 @@ public class PlayerPrefsManager : MonoBehaviour
         CheckSerial();
     }
 
+    public void GetSceneLeaders(string scene, int top, System.Action<string[]> method)
+    {
+        string[] datas = new string[2];
+        datas[0] = scene;
+        datas[1] = top.ToString();
+
+        LoginPro.Manager.ExecuteOnServer("GetSceneLeaders", method, Debug.LogError, datas);
+    }
+
     public void Blank(string[] s) { }
 }

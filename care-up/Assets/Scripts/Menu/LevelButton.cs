@@ -15,6 +15,10 @@ public class LevelButton : MonoBehaviour {
     private static Transform sceneInfoPanel;
     private static PlayerPrefsManager manager;
 
+    private static Transform leaderboard;
+    private static Transform scores;
+    private static Transform names;
+
     private void Start()
     {
         if (GameObject.Find("Preferences") != null && loadingScreen == null)
@@ -34,6 +38,21 @@ public class LevelButton : MonoBehaviour {
             manager = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
             if (manager == null) Debug.LogError("No prefs manager ( start from 1st scene? )");
         }
+
+        if (leaderboard == null)
+        {
+            leaderboard = sceneInfoPanel.Find("LeaderBoard");
+            if (leaderboard == null)
+            {
+                Debug.LogError("No leaderboard panel");
+            }
+            else
+            {
+                scores = leaderboard.Find("Scores");
+                names = leaderboard.Find("Player_names");
+            }
+        }
+        
     }
 
     public void OnLevelButtonClick()
@@ -78,11 +97,43 @@ public class LevelButton : MonoBehaviour {
             if (i == 1 && multiple)
                 to.SetSelected();
         }
+
+        // leaderboard stuff, yay
+        UpdateLeaderBoard();
     }
 
     public void OnStartButtonClick()
     {
         //loadingScreen.LoadLevel(sceneName);
         bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
+    }
+
+    public void GetSceneLeaders_Success(string[] info)
+    {
+        for (int i = 0; i < info.Length / 3; ++i)
+        {
+            string name  = info[i * 3];
+            string score = info[i * 3 + 1];
+            string time  = info[i * 3 + 2];
+
+            names.Find("PlayerName_" + (i + 1)).GetComponent<Text>().text = name;
+            scores.Find("Score_" + (i + 1)).GetComponent<Text>().text = score;
+        }
+    }
+
+    public void UpdateLeaderBoard()
+    {
+        // let's clear current UI first, it might have some editor text or info from other scene we loaded before
+        foreach (Text t in scores.GetComponentsInChildren<Text>())
+        {
+            t.text = "";
+        }
+        foreach (Text t in names.GetComponentsInChildren<Text>())
+        {
+            t.text = "";
+        }
+
+        // maybe launch loading icon or something? it isnt instant
+        manager.GetSceneLeaders(sceneName, 5, GetSceneLeaders_Success);
     }
 }
