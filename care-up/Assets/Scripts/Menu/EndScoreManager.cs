@@ -62,32 +62,32 @@ public class EndScoreManager : MonoBehaviour {
                 stepObjects[i].wrong = wrongStepIndexes.Contains(i);
             }
 
-            if (score >= 1)
+            if (score >= 0.5f)
             {
                 GameObject.Find("Star1").GetComponent<Image>().sprite = halfStar;
             }
 
-            if (score >= 2)
+            if (score >= 1.0f)
             {
                 GameObject.Find("Star1").GetComponent<Image>().sprite = fullStar;
             }
 
-            if (score >= 3)
+            if (score >= 1.5f)
             {
                 GameObject.Find("Star2").GetComponent<Image>().sprite = halfStar;
             }
 
-            if (score >= 4)
+            if (score >= 2.0f)
             {
                 GameObject.Find("Star2").GetComponent<Image>().sprite = fullStar;
             }
 
-            if (score >= 5)
+            if (score >= 2.5f)
             {
                 GameObject.Find("Star3").GetComponent<Image>().sprite = halfStar;
             }
 
-            if (score >= 6)
+            if (score >= 3.0f)
             {
                 GameObject.Find("Star3").GetComponent<Image>().sprite = fullStar;
             }
@@ -117,7 +117,7 @@ public class EndScoreManager : MonoBehaviour {
 
         int multiplier = (time < 300.0f ? 3 : (time < 600.0f ? 2 : 1));
         points = actionManager.Points;
-        score = Mathf.FloorToInt(6.0f * points / actionManager.TotalPoints);
+        score = Mathf.FloorToInt(3.0f * points / actionManager.TotalPoints);
         points *= multiplier;
 
         completedSceneName = SceneManager.GetActiveScene().name;
