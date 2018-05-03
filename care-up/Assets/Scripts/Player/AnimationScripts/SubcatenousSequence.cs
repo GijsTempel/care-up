@@ -113,6 +113,8 @@ public class SubcatenousSequence : AnimationSequenceState
             GameObject.FindObjectOfType<InjectionPatient>().AfterSequenceDialogue();
 
         syringe.updateProtector = false;
+
+        GameObject.FindObjectOfType<PersonObject>().GetComponent<Animator>().SetTrigger("ShirtDown");
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here
