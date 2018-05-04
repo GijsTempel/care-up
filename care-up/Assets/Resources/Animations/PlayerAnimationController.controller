@@ -2044,20 +2044,6 @@ MonoBehaviour:
   volume: 1
   pickPenFrame: 40
   dropPenFrame: 270
---- !u!114 &114270580028663092
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 202fc7de7b92c9740a5e240d4ece3c15, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  combineFrame: 70
-  wrapperDestroyingFrame: 110
-  hand: 0
 --- !u!114 &114277011381263738
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3710,6 +3696,20 @@ MonoBehaviour:
   removeNeedleFrame: 381
   decombineFrame: 320
   leftHand: 0
+--- !u!114 &114876089960912690
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1eddd45d8086d44a802a4cd8d799f36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  combineFrame: 70
+  dropHand: 1
+  dropFrame: 97
 --- !u!114 &114885004016596416
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -3745,20 +3745,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combineFrame: 100
---- !u!114 &114908159274491166
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 202fc7de7b92c9740a5e240d4ece3c15, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  combineFrame: 70
-  wrapperDestroyingFrame: 110
-  hand: 1
 --- !u!114 &114913210402914718
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -3771,6 +3757,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyFrames: 05000000610100009a010000570200005d02000089020000
+--- !u!114 &114914195764406144
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1eddd45d8086d44a802a4cd8d799f36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  combineFrame: 70
+  dropHand: 0
+  dropFrame: 97
 --- !u!114 &114915552969357588
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -26819,7 +26819,7 @@ AnimatorState:
   m_Transitions:
   - {fileID: 1101078605115154142}
   m_StateMachineBehaviours:
-  - {fileID: 114270580028663092}
+  - {fileID: 114876089960912690}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -29232,7 +29232,7 @@ AnimatorState:
   m_Transitions:
   - {fileID: 1101760583764197342}
   m_StateMachineBehaviours:
-  - {fileID: 114908159274491166}
+  - {fileID: 114914195764406144}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
