@@ -10,46 +10,28 @@ public class EndScoreWrongStepDescr : MonoBehaviour, IPointerEnterHandler
     public bool wrong;
 
     private Controls controls;
-
-    bool UIflag = false;
     
     private Color redish = new Color(0.5f, 0.0f, 0.0f, 1.0f);
     private Color greyish = new Color(0.25f, 0.25f, 0.25f, 1.0f);
 
+    private static Button_Functions sounds;
+
     void Start()
     {
-        if (GameObject.Find("GameLogic") != null)
-        {
-            controls = GameObject.Find("GameLogic").GetComponent<Controls>();
-        }
-        else
-        {
-            UIflag = true;
-        }
+        controls = GameObject.FindObjectOfType<Controls>();
 
         GetComponent<Text>().color = wrong ? Color.red : Color.black;
+
+        if (sounds == null)
+        {
+            sounds = GameObject.FindObjectOfType<Button_Functions>();
+            if (sounds == null) Debug.LogWarning("No sounds for UI?");
+        }
     }
 
     void Update()
     {
-        if (!UIflag)
-        {
-            if (controls.SelectedObject == gameObject)
-            {
-                foreach (Text text in transform.parent.GetComponentsInChildren<Text>())
-                {
-                    text.color = text.GetComponent<EndScoreWrongStepDescr>().wrong ? redish : greyish;
-                }
-
-                GetComponent<Text>().color = wrong ? Color.red : Color.black;
-                GameObject.Find("StepDescription").GetComponent<Text>().text = text;
-            }
-        }
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        if (UIflag)
+        if (controls.SelectedObject == gameObject)
         {
             foreach (Text text in transform.parent.GetComponentsInChildren<Text>())
             {
@@ -58,6 +40,14 @@ public class EndScoreWrongStepDescr : MonoBehaviour, IPointerEnterHandler
 
             GetComponent<Text>().color = wrong ? Color.red : Color.black;
             GameObject.Find("StepDescription").GetComponent<Text>().text = text;
+        }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (sounds != null)
+        {
+            sounds.OnButtonHover();
         }
     }
 }
