@@ -104,7 +104,8 @@ public class PickableObject : InteractableObject {
             }
             else if ((actionManager.CompareUseOnInfo("AbsorptionNeedleNoCap", "NeedleCup") ||
                 actionManager.CompareUseOnInfo("InjectionNeedleNoCap", "NeedleCup") ||
-                actionManager.CompareUseOnInfo("ClothWithAmpouleTop", "NeedleCup"))
+                actionManager.CompareUseOnInfo("ClothWithAmpouleTop", "NeedleCup") ||
+                actionManager.CompareUseOnInfo("InsulinNeedle", "NeedleCup"))
                 && controls.SelectedObject.name == "NeedleCup")
             {
                 string animation = (hand ? "UseLeft " : "UseRight ") + name + " NeedleCup";
