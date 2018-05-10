@@ -29,25 +29,19 @@ public class EndScoreWrongStepDescr : MonoBehaviour, IPointerEnterHandler
         }
     }
 
-    void Update()
-    {
-        if (controls.SelectedObject == gameObject)
-        {
-            foreach (Text text in transform.parent.GetComponentsInChildren<Text>())
-            {
-                text.color = text.GetComponent<EndScoreWrongStepDescr>().wrong ? redish : greyish;
-            }
-
-            GetComponent<Text>().color = wrong ? Color.red : Color.black;
-            GameObject.Find("StepDescription").GetComponent<Text>().text = text;
-        }
-    }
-
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (sounds != null)
         {
             sounds.OnButtonHover();
         }
+
+        foreach (Text text in transform.parent.GetComponentsInChildren<Text>())
+        {
+            text.color = text.GetComponent<EndScoreWrongStepDescr>().wrong ? redish : greyish;
+        }
+
+        GetComponent<Text>().color = wrong ? Color.red : Color.black;
+        GameObject.Find("StepDescription").GetComponent<Text>().text = text;
     }
 }

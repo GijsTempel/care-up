@@ -106,7 +106,8 @@ namespace LoginProAsset
                         return;
                 }
             }
-            Debug.LogError(string.Format("LoginPro_ShowReport : The scene {0} is not in the build settings, caution!", requiredSceneName));
+
+            Debug.LogWarning(string.Format("LoginPro_ShowReport : The scene {0} is not in the build settings, caution!", requiredSceneName));
 #endif
         }
     }

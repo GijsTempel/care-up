@@ -87,7 +87,6 @@ public class PickableObject : InteractableObject {
             if ((actionManager.CompareUseOnInfo("InjectionNeedle", "NeedleCup") ||
                 actionManager.CompareUseOnInfo("AbsorptionNeedle", "NeedleCup") ||
                 actionManager.CompareUseOnInfo("InjectionSNeedle", "NeedleCup") ||
-                actionManager.CompareUseOnInfo("InsulinNeedle", "NeedleCup") ||
                 actionManager.CompareUseOnInfo("TestStrips", "NeedleCup") ||
                 actionManager.CompareUseOnInfo("Lancet", "NeedleCup") ||
                 actionManager.CompareUseOnInfo("NeedleHolderWithNeedle", "NeedleCup"))
