@@ -201,7 +201,7 @@ function register($mail, $username, $password, $IP)
 						':password' => $password,
 						':salt' => $salt,
 						':validation_code' => $validation_code,
-						':validated' => 0);
+						':validated' => 1);
 	$stmt = ExecuteQuery($query, $parameters);
 	
 	//---------------------: Activate IP and send account activation email :-----------------------------
