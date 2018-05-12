@@ -747,7 +747,7 @@ public class HandsInventory : MonoBehaviour {
                     if (customPositions.Exists(x => x.objectName == rightCombineResult))
                     {
                         ItemPosition custom = customPositions.Find(x => x.objectName == rightCombineResult);
-                        rightHandObject.SavePosition(custom.position, Quaternion.Euler(custom.rotation));
+                        rightHandObject.SavePosition(custom.position, Quaternion.Euler(custom.rotation), true);
                     }
 
                     if (rightHandObject.GetComponent<PickableObjectWithInfo>() != null && load)
