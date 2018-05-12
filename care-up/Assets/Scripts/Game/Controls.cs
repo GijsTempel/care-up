@@ -95,7 +95,11 @@ public class Controls : MonoBehaviour {
     };
 
     public KeyPreferences keyPreferences = new KeyPreferences();
-    public float interactionDistance = 5.0f;
+    public float interactionDistance;
+
+    #if UNITY_EDITOR
+    public bool devInteractionDisplay = false;
+    #endif
 
     static public bool keyUsed = false;
 
@@ -156,6 +160,27 @@ public class Controls : MonoBehaviour {
         }
 
         keyUsed = false;
+        
+        #if UNITY_EDITOR
+        if (devInteractionDisplay)
+        {
+            Vector3 origin = Camera.main.transform.position;
+
+            Vector3 from = new Vector3(0.0f, -1.0f, interactionDistance);
+            for (float i = -1.0f; i < 1.0f; i += 0.1f)
+            {
+                for (float j = 0; j < 2.0f * Math.PI; j += 0.1f)
+                {
+                    float x = interactionDistance * Mathf.Sin(j);
+                    float y = interactionDistance * Mathf.Cos(j);
+
+                    Vector3 to = new Vector3(x, i, y);
+                    Debug.DrawLine(origin + from, origin + to);
+                    from = to;
+                }
+            }
+        }
+        #endif
     }
 
     /// <summary>
