@@ -143,7 +143,7 @@ public class LevelButton : MonoBehaviour {
         {
             int iTime;
             string time = (int.TryParse(info[2], out iTime)) ? string.Format("Tijd: {0}m{1:00}s", iTime / 60, iTime % 60) : "";
-            string text = " " + info[1] + " points - " + time;
+            string text = " " + info[1] + " Score: - " + time;
             sceneInfoPanel.Find("Result").GetComponent<Text>().text = text;
         }
         else
