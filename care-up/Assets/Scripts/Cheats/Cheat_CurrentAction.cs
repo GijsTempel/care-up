@@ -13,7 +13,7 @@ public class Cheat_CurrentAction : MonoBehaviour
     private Text extraText;
     private GameObject extraPanel;
 
-    public float animationTime = 2.0f;
+    private float animationTime = 1.0f;
     
     private int direction;
     private float timer;
