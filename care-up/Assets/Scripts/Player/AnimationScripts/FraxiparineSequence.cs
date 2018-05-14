@@ -110,8 +110,11 @@ public class FraxiparineSequence : AnimationSequenceState
             }
         }
 
-        if ( keyFrame >= keyFrames.Count && !inv.sequenceAborted )
-        GameObject.FindObjectOfType<InjectionPatient>().AfterSequenceDialogue();
+        if (keyFrame >= keyFrames.Count && !inv.sequenceAborted)
+        {
+            GameObject.FindObjectOfType<InjectionPatient>().AfterSequenceDialogue();
+            GameObject.FindObjectOfType<InjectionPatient>().GetComponent<Animator>().SetTrigger("ShirtDown");
+        }
 
         if (GameObject.Find("GameLogic") != null)
         {
@@ -120,8 +123,6 @@ public class FraxiparineSequence : AnimationSequenceState
                 GameObject.Find("GameLogic").GetComponent<TutorialManager>().sequenceCompleted = true;
             }
         }
-
-        GameObject.FindObjectOfType<InjectionPatient>().GetComponent<Animator>().SetTrigger("ShirtDown");
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here
