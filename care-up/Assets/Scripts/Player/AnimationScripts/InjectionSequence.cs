@@ -119,9 +119,11 @@ public class InjectionSequence : AnimationSequenceState
             }
         }
 
-        if ( keyFrame >= keyFrames.Count && !inv.sequenceAborted )
-        GameObject.FindObjectOfType<InjectionPatient>().AfterSequenceDialogue();
-
+        if (keyFrame >= keyFrames.Count && !inv.sequenceAborted)
+        {
+            GameObject.FindObjectOfType<InjectionPatient>().AfterSequenceDialogue();
+        }
+        
         if (GameObject.Find("GameLogic") != null)
         {
             if (GameObject.Find("GameLogic").GetComponent<TutorialManager>() != null)

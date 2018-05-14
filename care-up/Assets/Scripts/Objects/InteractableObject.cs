@@ -30,6 +30,8 @@ public class InteractableObject : MonoBehaviour {
     static protected PlayerScript player;
     static protected HandsInventory inventory;
 
+    public bool transparencyFix = false;
+
     protected virtual void Start()
     {
         rend = GetComponent<Renderer>();
@@ -213,6 +215,25 @@ public class InteractableObject : MonoBehaviour {
                 foreach (Material m in r.materials)
                 {
                     m.shader = shader;
+                }
+            }
+        }
+
+        if (transparencyFix)
+        {
+            foreach (Material m in rend.materials)
+            {
+                m.renderQueue = 3000;
+            }
+
+            foreach (Renderer r in GetComponentsInChildren<Renderer>())
+            {
+                if (r.name != "ParticleHint")
+                {
+                    foreach (Material m in r.materials)
+                    {
+                        m.renderQueue = 3000;
+                    }
                 }
             }
         }

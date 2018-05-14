@@ -38,6 +38,8 @@ public class Syringe : PickableObjectWithInfo {
         if (plunger == null) Debug.LogError("No plunger found!");
 
         protector = transform.GetChild(1).Find("Prot");
+
+        transparencyFix = true;
     }
 
     protected override void Update()
@@ -242,27 +244,6 @@ public class Syringe : PickableObjectWithInfo {
         actionManager.OnUseOnAction(name, controls.SelectedObject != null ? controls.SelectedObject.name : "");
 
         return (controls.SelectedObject != null && actionManager.CompareUseOnInfo(name, controls.SelectedObject.name));
-    }
-
-    protected override void SetShaderTo(Shader shader)
-    {
-        base.SetShaderTo(shader);
-
-        foreach (Material m in rend.materials)
-        {
-            m.renderQueue = 3000;
-        }
-
-        foreach (Renderer r in GetComponentsInChildren<Renderer>())
-        {
-            if (r.name != "ParticleHint")
-            {
-                foreach (Material m in r.materials)
-                {
-                    m.renderQueue = 3000;
-                }
-            }
-        }
     }
 
     public override void SaveInfo(ref Vector3 left, ref Vector3 right)

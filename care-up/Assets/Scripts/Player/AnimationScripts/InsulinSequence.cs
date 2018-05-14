@@ -66,7 +66,11 @@ public class InsulinSequence : AnimationSequenceState
         if (inv.LeftHandObject && inv.LeftHandObject.GetComponent<InsulinPen>())
             inv.LeftHandObject.GetComponent<InsulinPen>().animateButton = false;
 
-        GameObject.FindObjectOfType<InjectionPatient>().GetComponent<Animator>().SetTrigger("ShirtDown");
+        if (keyFrame >= keyFrames.Count && !inv.sequenceAborted)
+        {
+            GameObject.FindObjectOfType<InjectionPatient>().AfterSequenceDialogue();
+            GameObject.FindObjectOfType<InjectionPatient>().GetComponent<Animator>().SetTrigger("ShirtDown");
+        }
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here
