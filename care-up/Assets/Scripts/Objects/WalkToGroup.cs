@@ -42,7 +42,7 @@ public class WalkToGroup : MonoBehaviour
     {
         if (cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
-            if (controls.SelectedObject == gameObject && !cameraMode.animating && player.away)
+            if (controls.SelectedObject == gameObject && !cameraMode.animating && (player.away || player.freeLook))
             {
                 if (gameLogic.GetComponent<TutorialManager>() != null)
                     if (gameLogic.GetComponent<TutorialManager>().TutorialEnding)

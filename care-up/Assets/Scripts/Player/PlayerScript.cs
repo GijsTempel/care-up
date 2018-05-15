@@ -19,6 +19,7 @@ public class PlayerScript : MonoBehaviour {
 
     public Camera cam;
     public MouseLook mouseLook = new MouseLook();
+    public bool freeLook = false;
 
     PlayerPrefsManager prefs;
     Controls controls;
@@ -28,6 +29,7 @@ public class PlayerScript : MonoBehaviour {
     private Vector3 savedPos;
     private Quaternion savedRot;
     private List<WalkToGroup> groups;
+    private WalkToGroup currentWalkPosition;
 
     private bool fade;
     private float fadeTime = 1f;
@@ -45,10 +47,11 @@ public class PlayerScript : MonoBehaviour {
     private bool onButtonHover = false;
 
     private GameObject closeButton;
+    private GameObject freeLookButton;
 
     [HideInInspector]
     public QuizTab quiz;
-
+    
     public GameObject MoveBackButtonObject
     {
         get { return moveBackButton.gameObject; }
@@ -84,6 +87,8 @@ public class PlayerScript : MonoBehaviour {
 
         moveBackButton = GameObject.Find("MoveBackButton").GetComponent<MoveBackButton>();
         moveBackButton.gameObject.SetActive(false);
+
+        freeLookButton = GameObject.Find("CameraFreeLookButton").gameObject;
 
         itemControls = GameObject.FindObjectOfType<ItemControlsUI>();
         itemControls.gameObject.SetActive(false);
@@ -152,6 +157,9 @@ public class PlayerScript : MonoBehaviour {
             tutorialEndUi.GetComponent<EventTrigger>().triggers.Add(event1);
             tutorialEndUi.GetComponent<EventTrigger>().triggers.Add(event2);
         }
+
+        savedPos = transform.position;
+        savedRot = transform.rotation;
     }
 
     public void EnterHover()
@@ -164,13 +172,41 @@ public class PlayerScript : MonoBehaviour {
         onButtonHover = false;
     }
 
-    private void Update()
+    public void FreeLookButton()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        freeLook = !freeLook;
+
+        mouseLook.Init(transform, Camera.main.transform);
+        mouseLook.ToggleMode(freeLook, transform, Camera.main.transform);
+
+        if (freeLook)
         {
-            quiz.NextQuizQuestion(); // trigger quiz question
+            foreach (WalkToGroup g in groups)
+            {
+                if (g != currentWalkPosition)
+                {
+                    g.HighlightGroup(false);
+                    g.enabled = true;
+                    g.GetComponent<Collider>().enabled = true;
+                }
+            }
+        }
+        else
+        {
+            foreach (WalkToGroup g in groups)
+            {
+                g.HighlightGroup(false);
+                g.enabled = away;
+                g.GetComponent<Collider>().enabled = away;
+            }
         }
 
+        itemControls.Close();
+        freeLookButton.SetActive(false);
+    }
+
+    private void Update()
+    {
         if (prefs != null)
         {
             if (!prefs.VR)
@@ -185,9 +221,15 @@ public class PlayerScript : MonoBehaviour {
             Cursor.lockState = CursorLockMode.None;
         }
 
+        // under cursor code^^, mouse look will lock cursor 
+        if (freeLook)
+        {
+            mouseLook.LookRotation(transform, Camera.main.transform);
+        }
+
         if (controls.MouseClicked() && !moveBackButton.mouseOver)
         {
-            if (away && controls.SelectedObject != null &&
+            if ((away || freeLook) && controls.SelectedObject != null &&
                 controls.SelectedObject.GetComponent<WalkToGroup>())
             {
                 WalkToGroup(controls.SelectedObject.GetComponent<WalkToGroup>());
@@ -249,23 +291,23 @@ public class PlayerScript : MonoBehaviour {
 
     public void WalkToGroup(WalkToGroup group)
     {
-        if (away && !onButtonHover)
+        if ((away || freeLook) && !onButtonHover)
         {
             ToggleAway();
-            savedPos = transform.position;
-            savedRot = transform.GetChild(0).GetChild(0).rotation;
             transform.position = group.position;
             if ( prefs == null || (prefs != null && !prefs.VR))
             {
                 transform.GetChild(0).GetChild(0).rotation = Quaternion.Euler(group.rotation);
+                Camera.main.transform.rotation = new Quaternion();
             }
+            currentWalkPosition = group;
         }
     }
 
-    private void ToggleAway()
+    private void ToggleAway(bool _away = false)
     {
         fade = true;
-        away = !away;
+        away = _away;
         foreach (WalkToGroup g in groups)
         {
             g.HighlightGroup(false);
@@ -274,11 +316,8 @@ public class PlayerScript : MonoBehaviour {
         }
         moveBackButton.mouseOver = false;
         moveBackButton.gameObject.SetActive(!away);
-
-        if (away)
-        {
-            itemControls.Close();
-        }
+        
+        itemControls.Close();
 
         if (away)
         {
@@ -288,6 +327,11 @@ public class PlayerScript : MonoBehaviour {
         {
             tutorial_movedTo = true;
         }
+
+        freeLook = false;
+        mouseLook.savedRot = false;
+        mouseLook.ToggleMode(freeLook, transform, Camera.main.transform);
+        freeLookButton.SetActive(true);
     }
 
     private void OnGUI()
@@ -313,7 +357,7 @@ public class PlayerScript : MonoBehaviour {
     {
         if (!away)
         {
-            ToggleAway();
+            ToggleAway(true);
             transform.position = savedPos;
             if (prefs == null || (prefs != null && !prefs.VR))
             {
