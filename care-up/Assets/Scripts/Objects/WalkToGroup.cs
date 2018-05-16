@@ -15,12 +15,20 @@ public class WalkToGroup : MonoBehaviour
     PlayerScript player;
 
     GameObject gameLogic;
+    ParticleSystem particles;
 
     public void HighlightGroup(bool value)
     {
         if (SystemInfo.deviceType == DeviceType.Handheld)
             return;
         text.SetActive(value);
+
+        text.transform.rotation = Camera.main.transform.rotation;
+
+        if (particles != null)
+        {
+            particles.enableEmission = value;
+        }
     }
 
     private void Start()
@@ -36,6 +44,9 @@ public class WalkToGroup : MonoBehaviour
         {
             text.SetActive(false);
         }
+
+        particles = GetComponent<ParticleSystem>();
+        if (particles != null) particles.enableEmission = false;
     }
 
     protected void Update()
