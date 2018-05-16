@@ -303,8 +303,9 @@ public class PlayerScript : MonoBehaviour {
             transform.position = group.position;
             if ( prefs == null || (prefs != null && !prefs.VR))
             {
-                transform.GetChild(0).GetChild(0).rotation = Quaternion.Euler(group.rotation);
-                Camera.main.transform.rotation = new Quaternion();
+                //transform.GetChild(0).GetChild(0).rotation = Quaternion.Euler(group.rotation);
+                transform.rotation = Quaternion.Euler(0.0f, group.rotation.y, 0.0f);
+                Camera.main.transform.rotation = Quaternion.Euler(group.rotation);
             }
             currentWalkPosition = group;
         }
