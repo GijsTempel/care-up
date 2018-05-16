@@ -84,7 +84,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 }
             }
 
-            UpdateCursorLock();
+            //UpdateCursorLock();
 
             return new Vector2(xRot, yRot).magnitude;
         }

@@ -244,7 +244,7 @@ public class PlayerScript : MonoBehaviour {
                         handsInv.LeftHandUse();
 
                         ToggleUsingOnMode(false);
-                    } 
+                    }
                     else
                     {
                         handsInv.RightHandUse();
@@ -257,10 +257,28 @@ public class PlayerScript : MonoBehaviour {
                     itemControls.Init(controls.SelectedObject);
                 }
             }
+
+            if (!freeLook && controls.SelectedObject != null &&
+                controls.SelectedObject.GetComponent<InteractableObject>() == null)
+            {
+                FreeLookButton();
+            }
         }
         else if (Input.GetMouseButtonDown(1) && usingOnMode)
         {
             ToggleUsingOnMode(false);
+        }
+        else if (Input.GetMouseButtonUp(0) && freeLook)
+        {
+            if (controls.SelectedObject != null &&
+                controls.SelectedObject.GetComponent<WalkToGroup>())
+            {
+                WalkToGroup(controls.SelectedObject.GetComponent<WalkToGroup>());
+            }
+            else
+            {
+                FreeLookButton();
+            }
         }
         
         moveBackButton.GetComponent<Button>().interactable = !tutorial_movementLock;
