@@ -368,7 +368,8 @@ public class PlayerScript : MonoBehaviour {
             transform.position = savedPos;
             if (prefs == null || (prefs != null && !prefs.VR))
             {
-                transform.GetChild(0).GetChild(0).rotation = savedRot;
+                transform.rotation = Quaternion.Euler(0.0f, savedRot.eulerAngles.y, 0.0f);
+                Camera.main.transform.localRotation = Quaternion.Euler(savedRot.eulerAngles.x, 0.0f, 0.0f);
             }
         }
     }
