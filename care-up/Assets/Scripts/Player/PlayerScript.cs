@@ -257,18 +257,15 @@ public class PlayerScript : MonoBehaviour {
                     itemControls.Init(controls.SelectedObject);
                 }
             }
-
-            if (!freeLook && controls.SelectedObject != null &&
-                controls.SelectedObject.GetComponent<InteractableObject>() == null)
-            {
-                FreeLookButton();
-            }
         }
         else if (Input.GetMouseButtonDown(1) && usingOnMode)
         {
             ToggleUsingOnMode(false);
         }
-        else if (Input.GetMouseButtonUp(0) && freeLook)
+
+        if ((Input.GetMouseButtonDown(1) && !freeLook && controls.SelectedObject != null &&
+                controls.SelectedObject.GetComponent<InteractableObject>() == null)
+                 || (Input.GetMouseButtonUp(1) && freeLook))
         {
             FreeLookButton();
         }
