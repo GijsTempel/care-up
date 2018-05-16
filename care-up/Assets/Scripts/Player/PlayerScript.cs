@@ -176,7 +176,7 @@ public class PlayerScript : MonoBehaviour {
     {
         freeLook = !freeLook;
 
-        //mouseLook.Init(transform, Camera.main.transform);
+        mouseLook.Init(transform, Camera.main.transform);
         //mouseLook.ToggleMode(freeLook, transform, Camera.main.transform);
 
         if (freeLook)
@@ -305,7 +305,7 @@ public class PlayerScript : MonoBehaviour {
             {
                 //transform.GetChild(0).GetChild(0).rotation = Quaternion.Euler(group.rotation);
                 transform.rotation = Quaternion.Euler(0.0f, group.rotation.y, 0.0f);
-                Camera.main.transform.rotation = Quaternion.Euler(group.rotation);
+                Camera.main.transform.localRotation = Quaternion.Euler(group.rotation.x, 0.0f, 0.0f);
             }
             currentWalkPosition = group;
         }
