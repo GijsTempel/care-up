@@ -176,8 +176,8 @@ public class PlayerScript : MonoBehaviour {
     {
         freeLook = !freeLook;
 
-        mouseLook.Init(transform, Camera.main.transform);
-        mouseLook.ToggleMode(freeLook, transform, Camera.main.transform);
+        //mouseLook.Init(transform, Camera.main.transform);
+        //mouseLook.ToggleMode(freeLook, transform, Camera.main.transform);
 
         if (freeLook)
         {
@@ -191,7 +191,7 @@ public class PlayerScript : MonoBehaviour {
                 }
             }
         }
-        else
+        /*else
         {
             foreach (WalkToGroup g in groups)
             {
@@ -199,10 +199,10 @@ public class PlayerScript : MonoBehaviour {
                 g.enabled = away;
                 g.GetComponent<Collider>().enabled = away;
             }
-        }
+        }*/
 
         itemControls.Close();
-        freeLookButton.SetActive(false);
+        //freeLookButton.SetActive(false);
     }
 
     private void Update()
@@ -229,7 +229,7 @@ public class PlayerScript : MonoBehaviour {
 
         if (controls.MouseClicked() && !moveBackButton.mouseOver)
         {
-            if ((away || freeLook) && controls.SelectedObject != null &&
+            if (/*(away || freeLook) &&*/ controls.SelectedObject != null &&
                 controls.SelectedObject.GetComponent<WalkToGroup>())
             {
                 WalkToGroup(controls.SelectedObject.GetComponent<WalkToGroup>());
@@ -270,15 +270,7 @@ public class PlayerScript : MonoBehaviour {
         }
         else if (Input.GetMouseButtonUp(0) && freeLook)
         {
-            if (controls.SelectedObject != null &&
-                controls.SelectedObject.GetComponent<WalkToGroup>())
-            {
-                WalkToGroup(controls.SelectedObject.GetComponent<WalkToGroup>());
-            }
-            else
-            {
-                FreeLookButton();
-            }
+            FreeLookButton();
         }
         
         moveBackButton.GetComponent<Button>().interactable = !tutorial_movementLock;
@@ -309,7 +301,7 @@ public class PlayerScript : MonoBehaviour {
 
     public void WalkToGroup(WalkToGroup group)
     {
-        if ((away || freeLook) && !onButtonHover)
+        if (/*(away || freeLook) &&*/ !onButtonHover)
         {
             ToggleAway();
             transform.position = group.position;

@@ -97,7 +97,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 savedCharRot = character.rotation;
                 savedRot = true;
             }
-            else
+            /*else
             {
                 if (savedRot)
                 {
@@ -105,7 +105,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     character.rotation = savedCharRot;
                     camera.rotation = savedCamRot;
                 }
-            }
+            }*/
         }
 
         public void SetCursorLock(bool value)
