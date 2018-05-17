@@ -7,6 +7,9 @@ public class WalkToGroup : MonoBehaviour
 {
     public Vector3 position;
     public Vector3 rotation;
+    
+    public Vector3 robotPosition;
+    public Vector3 robotRotation;
 
     private GameObject text;
 
@@ -27,7 +30,8 @@ public class WalkToGroup : MonoBehaviour
 
         if (particles != null)
         {
-            particles.enableEmission = value;
+            ParticleSystem.EmissionModule emission = particles.emission;
+            emission.enabled = value;
         }
     }
 
@@ -46,7 +50,11 @@ public class WalkToGroup : MonoBehaviour
         }
 
         particles = GetComponent<ParticleSystem>();
-        if (particles != null) particles.enableEmission = false;
+        if (particles != null)
+        {
+            ParticleSystem.EmissionModule emission = particles.emission;
+            emission.enabled = false;
+        }
     }
 
     protected void Update()

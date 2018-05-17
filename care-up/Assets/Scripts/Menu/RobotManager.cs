@@ -23,9 +23,6 @@ public class RobotManager : MonoBehaviour {
     private static Material eyeRMat;
     private static Material mouthMat;
 
-    private static Material robotHandMat;
-    private static Material robotFaceMat;
-
     void Start ()
     {
         instance = this;
@@ -47,40 +44,6 @@ public class RobotManager : MonoBehaviour {
 
         UI_trigger = Camera.main.transform.Find("UI").Find("RobotUITrigger").gameObject;
         UI_trigger.SetActive(true);
-
-        EventTrigger.Entry event1 = new EventTrigger.Entry();
-        event1.eventID = EventTriggerType.PointerEnter;
-        event1.callback.AddListener((eventData) => { OnEnterHover(); });
-
-        EventTrigger.Entry event2 = new EventTrigger.Entry();
-        event2.eventID = EventTriggerType.PointerExit;
-        event2.callback.AddListener((eventData) => { OnExitHover(); });
-
-        EventTrigger.Entry event3 = new EventTrigger.Entry();
-        event3.eventID = EventTriggerType.PointerClick;
-        event3.callback.AddListener((eventData) => { OnExitHover(); });
-
-        UI_trigger.AddComponent<EventTrigger>();
-        UI_trigger.GetComponent<EventTrigger>().triggers.Add(event1);
-        UI_trigger.GetComponent<EventTrigger>().triggers.Add(event2);
-        UI_trigger.GetComponent<EventTrigger>().triggers.Add(event3);
-
-        robotHandMat = transform.Find("robot").GetComponent<Renderer>().material;
-        robotFaceMat = transform.Find("robot_face").GetComponent<Renderer>().material;
-    }
-
-    public void OnEnterHover()
-    {
-        Color color = new Color(0.0f, 0.831f, 1.0f);
-        robotHandMat.color = color;
-        robotFaceMat.color = color;
-    }
-
-    public void OnExitHover()
-    {
-        Color color = new Color(1.0f, 1.0f, 1.0f);
-        robotHandMat.color = color;
-        robotFaceMat.color = color;
     }
 
     void Update ()
@@ -104,7 +67,7 @@ public class RobotManager : MonoBehaviour {
     {
         float x = top ? Screen.width - 182.9f : 182.9f;
         float y = Screen.height * 0.63f;
-        transform.position = Camera.main.ScreenToWorldPoint(new Vector3(x, y, 4.0f));
+        UI_trigger.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(x, y, 4.0f));
 
         transform.LookAt(Camera.main.transform);
         transform.localEulerAngles = new Vector3(
@@ -112,7 +75,7 @@ public class RobotManager : MonoBehaviour {
             transform.localEulerAngles.y,
             0.0f);
 
-        Vector3 robotPosition = Camera.main.WorldToScreenPoint(transform.position);
+        Vector3 robotPosition = Camera.main.WorldToScreenPoint(UI_trigger.transform.position);
         robotPosition += new Vector3(7.0f, 3.0f); // slight offset
         UI_trigger.transform.position = robotPosition;
     }

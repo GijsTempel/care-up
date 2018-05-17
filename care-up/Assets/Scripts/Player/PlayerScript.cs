@@ -31,6 +31,10 @@ public class PlayerScript : MonoBehaviour {
     private List<WalkToGroup> groups;
     private WalkToGroup currentWalkPosition;
 
+    RobotManager robot;
+    private Vector3 savedRobotPos;
+    private Quaternion savedRobotRot;
+
     private bool fade;
     private float fadeTime = 1f;
     private float fadeTimer = 0.0f;
@@ -157,6 +161,10 @@ public class PlayerScript : MonoBehaviour {
 
         savedPos = transform.position;
         savedRot = transform.rotation;
+
+        robot = GameObject.FindObjectOfType<RobotManager>();
+        savedRobotPos = robot.transform.position;
+        savedRobotRot = robot.transform.rotation;
     }
 
     public void EnterHover()
@@ -305,6 +313,9 @@ public class PlayerScript : MonoBehaviour {
                 Camera.main.transform.localRotation = Quaternion.Euler(group.rotation.x, 0.0f, 0.0f);
             }
             currentWalkPosition = group;
+
+            robot.transform.position = group.robotPosition;
+            robot.transform.rotation = Quaternion.Euler(group.robotRotation);
         }
     }
 
@@ -367,6 +378,10 @@ public class PlayerScript : MonoBehaviour {
                 transform.rotation = Quaternion.Euler(0.0f, savedRot.eulerAngles.y, 0.0f);
                 Camera.main.transform.localRotation = Quaternion.Euler(savedRot.eulerAngles.x, 0.0f, 0.0f);
             }
+            currentWalkPosition = null;
+
+            robot.transform.position = savedRobotPos;
+            robot.transform.rotation = savedRobotRot;
         }
     }
 
