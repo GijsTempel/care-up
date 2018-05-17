@@ -47,7 +47,6 @@ public class PlayerScript : MonoBehaviour {
     private bool onButtonHover = false;
 
     private GameObject closeButton;
-    private GameObject freeLookButton;
 
     [HideInInspector]
     public QuizTab quiz;
@@ -87,9 +86,7 @@ public class PlayerScript : MonoBehaviour {
 
         moveBackButton = GameObject.Find("MoveBackButton").GetComponent<MoveBackButton>();
         moveBackButton.gameObject.SetActive(false);
-
-        freeLookButton = GameObject.Find("CameraFreeLookButton").gameObject;
-
+        
         itemControls = GameObject.FindObjectOfType<ItemControlsUI>();
         itemControls.gameObject.SetActive(false);
 
@@ -338,7 +335,6 @@ public class PlayerScript : MonoBehaviour {
         freeLook = false;
         mouseLook.savedRot = false;
         mouseLook.ToggleMode(freeLook, transform, Camera.main.transform);
-        freeLookButton.SetActive(true);
     }
 
     private void OnGUI()
@@ -372,5 +368,25 @@ public class PlayerScript : MonoBehaviour {
                 Camera.main.transform.localRotation = Quaternion.Euler(savedRot.eulerAngles.x, 0.0f, 0.0f);
             }
         }
+    }
+
+    public void OpenRobotUI()
+    {
+        if (handsInv.Empty())
+        {
+            PlayerAnimationManager.PlayAnimation("IpadCloseUp");
+        }
+        else
+        {
+            string message = "Zorg ervoor dat alle materialen die je hebt gebruikt op het werkveld liggen. Maak je handen vrij door eventuele objecten terug te leggen op het werkveld.";
+            Camera.main.transform.Find("UI").Find("EmptyHandsWarning").
+                    GetComponent<TimedPopUp>().Set(message);
+        }
+    }
+
+    public void CloseRobotUI()
+    {
+        GameObject.FindObjectOfType<RobotManager>().TriggerUI(false);
+        PlayerAnimationManager.PlayAnimation("IPadFarAway");
     }
 }
