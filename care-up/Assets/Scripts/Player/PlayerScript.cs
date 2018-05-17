@@ -52,6 +52,8 @@ public class PlayerScript : MonoBehaviour {
 
     private GameObject closeButton;
 
+    private float rotated = 0.0f;
+
     [HideInInspector]
     public QuizTab quiz;
     
@@ -180,6 +182,7 @@ public class PlayerScript : MonoBehaviour {
     public void FreeLookButton()
     {
         freeLook = !freeLook;
+        rotated = 0.0f;
 
         mouseLook.Init(transform, Camera.main.transform);
         //mouseLook.ToggleMode(freeLook, transform, Camera.main.transform);
@@ -229,17 +232,12 @@ public class PlayerScript : MonoBehaviour {
         // under cursor code^^, mouse look will lock cursor 
         if (freeLook)
         {
-            mouseLook.LookRotation(transform, Camera.main.transform);
+            rotated += mouseLook.LookRotation(transform, Camera.main.transform);
         }
 
         if (controls.MouseClicked() && !moveBackButton.mouseOver)
         {
-            if (/*(away || freeLook) &&*/ controls.SelectedObject != null &&
-                controls.SelectedObject.GetComponent<WalkToGroup>())
-            {
-                WalkToGroup(controls.SelectedObject.GetComponent<WalkToGroup>());
-            }
-            else if (!away && controls.SelectedObject != null
+            if (!away && controls.SelectedObject != null
                 && !itemControls.gameObject.activeSelf && !onButtonHover)
             {
                 if (usingOnMode)
@@ -268,10 +266,22 @@ public class PlayerScript : MonoBehaviour {
             ToggleUsingOnMode(false);
         }
 
-        if ((Input.GetMouseButtonDown(1) && !freeLook)
-            || (Input.GetMouseButtonUp(1) && freeLook))
+        if (Input.GetMouseButtonDown(0) && !freeLook)
         {
             FreeLookButton();
+        }
+
+        if (Input.GetMouseButtonUp(0) && freeLook)
+        {
+            if (rotated < 3.0f && controls.SelectedObject != null &&
+                controls.SelectedObject.GetComponent<WalkToGroup>())
+            {
+                WalkToGroup(controls.SelectedObject.GetComponent<WalkToGroup>());
+            }
+            else
+            {
+                FreeLookButton();
+            }
         }
         
         moveBackButton.GetComponent<Button>().interactable = !tutorial_movementLock;
