@@ -120,14 +120,7 @@ public class PlayerScript : MonoBehaviour {
         usingOnCancelButton.GetComponent<EventTrigger>().triggers.Add(event1);
         usingOnCancelButton.GetComponent<EventTrigger>().triggers.Add(event2);
         usingOnCancelButton.GetComponent<EventTrigger>().triggers.Add(event3);
-
-        /*closeButton = GameObject.Find("TouchEscapeButton").gameObject;
-        closeButton.AddComponent<EventTrigger>();
-        closeButton.GetComponent<EventTrigger>().triggers.Add(event1);
-        closeButton.GetComponent<EventTrigger>().triggers.Add(event2);
-        closeButton.GetComponent<EventTrigger>().triggers.Add(event3);
-        */
-
+        
         GameObject robotUI = Camera.main.transform.Find("UI (1)").Find("RobotUI").gameObject;
         robotUI.AddComponent<EventTrigger>();
         robotUI.GetComponent<EventTrigger>().triggers.Add(event1);
@@ -185,7 +178,6 @@ public class PlayerScript : MonoBehaviour {
         rotated = 0.0f;
 
         mouseLook.Init(transform, Camera.main.transform);
-        //mouseLook.ToggleMode(freeLook, transform, Camera.main.transform);
 
         if (freeLook)
         {
@@ -199,18 +191,6 @@ public class PlayerScript : MonoBehaviour {
                 }
             }
         }
-        /*else
-        {
-            foreach (WalkToGroup g in groups)
-            {
-                g.HighlightGroup(false);
-                g.enabled = away;
-                g.GetComponent<Collider>().enabled = away;
-            }
-        }*/
-
-        itemControls.Close();
-        //freeLookButton.SetActive(false);
     }
 
     private void Update()
@@ -228,16 +208,16 @@ public class PlayerScript : MonoBehaviour {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
-
-        // under cursor code^^, mouse look will lock cursor 
+        
         if (freeLook)
         {
             rotated += mouseLook.LookRotation(transform, Camera.main.transform);
         }
 
-        if (controls.MouseClicked() && !moveBackButton.mouseOver)
+        if (!freeLook && controls.MouseClicked() && !moveBackButton.mouseOver)
         {
-            if (!away && controls.SelectedObject != null
+            if (!away && controls.SelectedObject != null 
+                && controls.SelectedObject.GetComponent<InteractableObject>() != null
                 && !itemControls.gameObject.activeSelf && !onButtonHover)
             {
                 if (usingOnMode)
@@ -260,18 +240,16 @@ public class PlayerScript : MonoBehaviour {
                     itemControls.Init(controls.SelectedObject);
                 }
             }
+            else
+            {
+                FreeLookButton();
+            }
         }
         else if (Input.GetMouseButtonDown(1) && usingOnMode)
         {
             ToggleUsingOnMode(false);
         }
-
-        if (Input.GetMouseButtonDown(0) && !freeLook)
-        {
-            FreeLookButton();
-        }
-
-        if (Input.GetMouseButtonUp(0) && freeLook)
+        else if (Input.GetMouseButtonUp(0) && freeLook)
         {
             if (rotated < 3.0f && controls.SelectedObject != null &&
                 controls.SelectedObject.GetComponent<WalkToGroup>())
@@ -312,13 +290,12 @@ public class PlayerScript : MonoBehaviour {
 
     public void WalkToGroup(WalkToGroup group)
     {
-        if (/*(away || freeLook) &&*/ !onButtonHover)
+        if (!onButtonHover)
         {
             ToggleAway();
             transform.position = group.position;
             if ( prefs == null || (prefs != null && !prefs.VR))
             {
-                //transform.GetChild(0).GetChild(0).rotation = Quaternion.Euler(group.rotation);
                 transform.rotation = Quaternion.Euler(0.0f, group.rotation.y, 0.0f);
                 Camera.main.transform.localRotation = Quaternion.Euler(group.rotation.x, 0.0f, 0.0f);
             }

@@ -19,14 +19,13 @@ public class RobotUITabs : MonoBehaviour {
 
         tabTrigger = transform.Find("Tab").gameObject;
         children = transform.GetComponentsInChildren<RectTransform>();
-
-        // TODO: move this part to a new 'generaltab script' ( no such script yet )
+        
         GameObject sceneTitle = GameObject.Find("SceneTitle");
         GameObject manager = GameObject.Find("Preferences");
         if (sceneTitle != null && (manager != null && manager.GetComponent<PlayerPrefsManager>() != null))
         {
             sceneTitle.GetComponent<Text>().text = manager.GetComponent<PlayerPrefsManager>().currentSceneVisualName;
-        }   // end todo
+        }  
 
         SetTabActive(false);
 
