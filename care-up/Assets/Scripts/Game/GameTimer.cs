@@ -10,6 +10,7 @@ public class GameTimer : MonoBehaviour {
     private Text timerText;
 
     private float currentTime = 0.0f;
+    private bool set = false;
 	
     public float CurrentTime
     {
@@ -17,13 +18,16 @@ public class GameTimer : MonoBehaviour {
         set { currentTime = value < 0 ? 0 : value; }
     }
 
-    private void Start()
+    public void SetTextObject(Text t)
     {
-        timerText = Camera.main.transform.Find("UI (1)").Find("RobotUI").Find("GeneralTab").Find("GeneralDynamicCanvas").Find("Timer").Find("Panel").Find("Time").GetComponent<Text>();
+        timerText = t;
+        set = true;
     }
 
     void Update()
     {
+        if (!set) return;
+
         currentTime += Time.deltaTime;
 
         if (timerText.gameObject.activeSelf)

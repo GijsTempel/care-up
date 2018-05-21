@@ -16,11 +16,24 @@ public class PlayerSpawn : MonoBehaviour {
     };
 
     public List<InfoPair> infoList = new List<InfoPair>();
-    
-	void Awake () {
+
+    void Awake()
+    {
         GameObject player = Instantiate(playerPrefab,
             transform.position, transform.rotation);
         player.name = "Player";
+        
+        GameObject itemControls = Instantiate(Resources.Load("Prefabs/ItemControls") as GameObject,
+            transform.position, transform.rotation);
+        itemControls.name = "ItemControls";
+
+        GameObject itemDescription = Instantiate(Resources.Load("Prefabs/ItemDescription") as GameObject,
+            transform.position, transform.rotation);
+        itemDescription.name = "ItemDescription";
+
+        GameObject iPad = Instantiate(Resources.Load("Prefabs/ipad") as GameObject,
+            transform.position, transform.rotation);
+        iPad.name = "ipad";
 
         RobotUITabInfo infotab = GameObject.FindObjectOfType<RobotUITabInfo>();
         RobotUIInfoButton[] buttons = infotab.transform.GetChild(1).Find("ItemList").GetComponentsInChildren<RobotUIInfoButton>();
@@ -46,6 +59,17 @@ public class PlayerSpawn : MonoBehaviour {
             Debug.LogWarning("Quiz file name is blank.");
         }
 
+        iPad.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Button>().onClick.AddListener(
+            player.GetComponent<PlayerScript>().CloseRobotUI);
+
+        GameObject.FindObjectOfType<GameTimer>().SetTextObject(
+            GameObject.Find("RobotUI").transform.Find("GeneralTab").Find("GeneralDynamicCanvas")
+            .Find("Timer").Find("Panel").Find("Time").GetComponent<Text>());
+
+        GameTimer.FindObjectOfType<ActionManager>().SetUIObjects(
+            GameObject.Find("GeneralTab").transform.Find("GeneralDynamicCanvas").Find("Points").Find("Panel").Find("PointsText").GetComponent<Text>(),
+            GameObject.Find("GeneralTab").transform.Find("GeneralDynamicCanvas").Find("Percentage").Find("Panel").Find("PointsText").GetComponent<Text>());
+
         Destroy(gameObject);
-	}
+    }
 }

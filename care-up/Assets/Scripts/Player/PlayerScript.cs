@@ -56,6 +56,8 @@ public class PlayerScript : MonoBehaviour {
 
     [HideInInspector]
     public QuizTab quiz;
+
+    private bool robotUIopened = false;
     
     public GameObject MoveBackButtonObject
     {
@@ -121,7 +123,7 @@ public class PlayerScript : MonoBehaviour {
         usingOnCancelButton.GetComponent<EventTrigger>().triggers.Add(event2);
         usingOnCancelButton.GetComponent<EventTrigger>().triggers.Add(event3);
         
-        GameObject robotUI = Camera.main.transform.Find("UI (1)").Find("RobotUI").gameObject;
+        GameObject robotUI = GameObject.Find("RobotUI");
         robotUI.AddComponent<EventTrigger>();
         robotUI.GetComponent<EventTrigger>().triggers.Add(event1);
         robotUI.GetComponent<EventTrigger>().triggers.Add(event2);
@@ -209,7 +211,7 @@ public class PlayerScript : MonoBehaviour {
             Cursor.lockState = CursorLockMode.None;
         }
         
-        if (freeLook)
+        if (freeLook && !robotUIopened)
         {
             rotated += mouseLook.LookRotation(transform, Camera.main.transform);
         }
@@ -377,6 +379,7 @@ public class PlayerScript : MonoBehaviour {
         if (handsInv.Empty())
         {
             PlayerAnimationManager.PlayAnimation("IpadCloseUp");
+            robotUIopened = true;
         }
         else
         {
@@ -388,7 +391,8 @@ public class PlayerScript : MonoBehaviour {
 
     public void CloseRobotUI()
     {
-        GameObject.FindObjectOfType<RobotManager>().TriggerUI(false);
+        //GameObject.FindObjectOfType<RobotManager>().TriggerUI(false);
         PlayerAnimationManager.PlayAnimation("IPadFarAway");
+        robotUIopened = false;
     }
 }

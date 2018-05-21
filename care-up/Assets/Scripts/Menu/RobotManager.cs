@@ -23,8 +23,6 @@ public class RobotManager : MonoBehaviour {
     private static Material eyeRMat;
     private static Material mouthMat;
 
-    private bool firstframe = true;
-
     void Start ()
     {
         instance = this;
@@ -41,7 +39,7 @@ public class RobotManager : MonoBehaviour {
         eyeLMat = transform.Find("robot_eye.L").GetComponent<Renderer>().material;
         eyeRMat = transform.Find("robot_eye.R").GetComponent<Renderer>().material;
 
-        UI_object = Camera.main.transform.Find("UI (1)").Find("RobotUI").gameObject;
+        UI_object = GameObject.Find("RobotUI");
 
         UI_trigger = Camera.main.transform.Find("UI").Find("RobotUITrigger").gameObject;
         UI_trigger.SetActive(true);
@@ -49,19 +47,12 @@ public class RobotManager : MonoBehaviour {
 
     void Update ()
     {
-        if (firstframe)
-        {
-            firstframe = false;
-            UI_object.SetActive(false);
-        }
-
         UpdateTriggerPosition();
         UpdateFaceAnimations();
 	}
 
     public void TriggerUI(bool value)
     {
-        // play some kind of UI animation?
         UI_object.SetActive(value);
 
         if (!value)

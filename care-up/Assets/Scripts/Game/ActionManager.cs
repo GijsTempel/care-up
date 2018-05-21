@@ -54,6 +54,7 @@ public class ActionManager : MonoBehaviour {
     // GameObjects that show player next step when hint used
     private List<GameObject> particleHints;
     private bool menuScene;
+    private bool uiSet = false;
 
     public List<Action> ActionList
     {
@@ -408,12 +409,6 @@ public class ActionManager : MonoBehaviour {
         currentAction = actionList.First();
     }
 
-    private void Start()
-    {
-        pointsText = Camera.main.transform.Find("UI (1)").Find("RobotUI").Find("GeneralTab").Find("GeneralDynamicCanvas").Find("Points").Find("Panel").Find("PointsText").GetComponent<Text>();
-        percentageText = Camera.main.transform.Find("UI (1)").Find("RobotUI").Find("GeneralTab").Find("GeneralDynamicCanvas").Find("Percentage").Find("Panel").Find("PointsText").GetComponent<Text>();
-    }
-
     /// <summary>
     /// Handle pressing "Get Hint" key.
     /// Play audio hint, create particle hint, do penalty.
@@ -455,7 +450,7 @@ public class ActionManager : MonoBehaviour {
             }
         }
 
-        if (!menuScene)
+        if (!menuScene && uiSet)
         {
             if (pointsText.gameObject.activeSelf)
             {
@@ -838,5 +833,13 @@ public class ActionManager : MonoBehaviour {
     public void ActivatePenalty()
     {
         penalized = true;
+    }
+
+    public void SetUIObjects(Text points, Text percentage)
+    {
+        uiSet = true;
+
+        pointsText = points;
+        percentageText = percentage;
     }
 }
