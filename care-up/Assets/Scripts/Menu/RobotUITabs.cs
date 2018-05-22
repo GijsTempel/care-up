@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class RobotUITabs : MonoBehaviour {
 
     protected static List<RobotUITabs> tabs = new List<RobotUITabs>();
+    protected static Transform icons;
 
     protected GameObject tabTrigger;
 
@@ -17,7 +18,8 @@ public class RobotUITabs : MonoBehaviour {
         tabs.Add(this);
         tabs.RemoveAll(item => item == null);
 
-        tabTrigger = transform.Find("Tab").gameObject;
+        icons = transform.parent.Find("TabletIcons");
+        tabTrigger = icons.Find(name).gameObject;
         children = transform.GetComponentsInChildren<RectTransform>();
         
         GameObject sceneTitle = GameObject.Find("SceneTitle");
@@ -37,11 +39,8 @@ public class RobotUITabs : MonoBehaviour {
                 {
                     SetTabActive(false);
                     gameObject.SetActive(false);
+                    tabTrigger.SetActive(false);
                     tabs.Remove(this);
-                }
-                else
-                {
-                    SetTabActive(true);
                 }
             }
             else
@@ -50,12 +49,8 @@ public class RobotUITabs : MonoBehaviour {
                 {
                     SetTabActive(false);
                     gameObject.SetActive(false);
+                    tabTrigger.SetActive(false);
                     tabs.Remove(this);
-                }
-                else
-                if (name == "GeneralTab")
-                {
-                    SetTabActive(true);
                 }
             }
         }
@@ -65,12 +60,8 @@ public class RobotUITabs : MonoBehaviour {
             {
                 SetTabActive(false);
                 gameObject.SetActive(false);
+                tabTrigger.SetActive(false);
                 tabs.Remove(this);
-            }
-            else
-               if (name == "GeneralTab")
-            {
-                SetTabActive(true);
             }
         }
 
@@ -80,6 +71,14 @@ public class RobotUITabs : MonoBehaviour {
 
         tabTrigger.AddComponent<EventTrigger>();
         tabTrigger.GetComponent<EventTrigger>().triggers.Add(clickEvent);
+        
+        EventTrigger.Entry backBtnClickEvent = new EventTrigger.Entry();
+        backBtnClickEvent.eventID = EventTriggerType.PointerClick;
+        backBtnClickEvent.callback.AddListener((eventData) => { BackButton(); });
+
+        GameObject backBtn = transform.Find("Button").gameObject;
+        backBtn.AddComponent<EventTrigger>();
+        backBtn.GetComponent<EventTrigger>().triggers.Add(backBtnClickEvent);
     }
 
     public void OnTabSwitch()
@@ -98,6 +97,8 @@ public class RobotUITabs : MonoBehaviour {
             t.SetTabActive(false);
         }
 
+        icons.gameObject.SetActive(false);
+
         SetTabActive(true);
     }
 
@@ -112,5 +113,15 @@ public class RobotUITabs : MonoBehaviour {
         }
 
         tabTrigger.GetComponent<Image>().color = new Color(0.0f, 0.831f, 1.0f, value ? 1.0f : 0.3f);
+    }
+
+    protected void BackButton()
+    {
+        icons.gameObject.SetActive(true);
+
+        foreach (RobotUITabs t in tabs)
+        {
+            t.SetTabActive(false);
+        }
     }
 }

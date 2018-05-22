@@ -102,6 +102,8 @@ public class QuizTab : RobotUITabs {
             switchToInfoButton = transform.GetChild(1).Find("SwitchToInfo").GetComponent<Button>();
         }
         switchToInfoButton.onClick.AddListener(OnSwitchToInfoTabButton);
+
+        tabTrigger.SetActive(false);
     }
 
     public void NextQuizQuestion()

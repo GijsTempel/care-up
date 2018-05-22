@@ -11,7 +11,8 @@ public class RobotUITabChecklist : RobotUITabs {
     protected override void Start()
     {
         base.Start();
-        items = transform.GetChild(1).GetChild(0).GetChild(0).GetChild(0).transform.GetComponentsInChildren<Text>(true);
+        items = transform.Find("ChecklistDynamicCanvas").Find("Scroll View").
+            Find("Viewport").Find("GridFolder").transform.GetComponentsInChildren<Text>(true);
 
         foreach (Text i in items)
         {
