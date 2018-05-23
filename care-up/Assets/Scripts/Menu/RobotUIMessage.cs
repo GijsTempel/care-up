@@ -28,15 +28,16 @@ public class RobotUIMessage : MonoBehaviour
 
     public void OnClick()
     {
-        Debug.Log("click");
-        messageNew = false;
+        if (messageNew)
+        {
+            messageNew = false;
+            text.color = Color.black;
+        }
 
         if (contentObject)
         {
             contentObject.text = content;
         }
-
-        text.color = Color.black;
     }
 
     public void NewMessage(string title, string message)

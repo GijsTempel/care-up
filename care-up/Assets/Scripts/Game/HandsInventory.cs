@@ -223,8 +223,8 @@ public class HandsInventory : MonoBehaviour {
         else
         {
             string message = "Je hebt je handen vol. Leg objecten terug om je handen vrij te maken.";
-            Camera.main.transform.Find("UI").Find("EmptyHandsWarning").
-                    GetComponent<TimedPopUp>().Set(message);
+            RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
+            messageCenter.NewMessage("Cannot pick up", message);
         }
 
         return picked;

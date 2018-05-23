@@ -8,7 +8,7 @@ public class RobotManager : MonoBehaviour {
     public bool top = true;
 
     private GameObject UI_object;
-    private GameObject UI_trigger;
+    private static GameObject UI_trigger;
     
     private static RobotManager instance;
     
@@ -22,7 +22,7 @@ public class RobotManager : MonoBehaviour {
     private static Material eyeLMat;
     private static Material eyeRMat;
     private static Material mouthMat;
-
+    
     void Start ()
     {
         instance = this;
@@ -105,14 +105,14 @@ public class RobotManager : MonoBehaviour {
             );
     } 
 
-    public void ToggleTrigger(bool value)
-    {
-        UI_trigger.SetActive(value);
-    }
-
     public void ToggleCloseBtn(bool value)
     {
         UI_object.transform.Find("CloseBtn").gameObject.SetActive(value);
+    }
+
+    public static void SetUITriggerActive(bool value)
+    {
+        UI_trigger.SetActive(value);
     }
 }
 	 

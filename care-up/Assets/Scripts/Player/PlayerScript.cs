@@ -200,11 +200,6 @@ public class PlayerScript : MonoBehaviour {
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            GameObject.FindObjectOfType<RobotUIMessageTab>().NewMessage("WARDNING", "JK");
-        }
-
         if (prefs != null)
         {
             if (!prefs.VR)
@@ -389,12 +384,15 @@ public class PlayerScript : MonoBehaviour {
             PlayerAnimationManager.PlayAnimation("IpadCloseUp");
             robotUIopened = true;
             devHintUI.SetActive(false);
+
+            RobotManager.SetUITriggerActive(false);
+            Camera.main.transform.localRotation = Quaternion.Euler(8.0f, 0.0f, 0.0f);
         }
         else
         {
             string message = "Zorg ervoor dat alle materialen die je hebt gebruikt op het werkveld liggen. Maak je handen vrij door eventuele objecten terug te leggen op het werkveld.";
-            Camera.main.transform.Find("UI").Find("EmptyHandsWarning").
-                    GetComponent<TimedPopUp>().Set(message);
+            RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
+            messageCenter.NewMessage("Empty Hands", message);
         }
     }
 
@@ -404,5 +402,7 @@ public class PlayerScript : MonoBehaviour {
         PlayerAnimationManager.PlayAnimation("IPadFarAway");
         robotUIopened = false;
         devHintUI.SetActive(true);
+
+        RobotManager.SetUITriggerActive(true);
     }
 }

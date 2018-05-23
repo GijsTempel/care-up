@@ -28,6 +28,11 @@ public class RobotUIMessageTab : RobotUITabs
     {
         if (iterator < messages.Length)
         {
+            if (title == "")
+            {
+                title = content.Substring(0, 10) + "...";
+            }
+
             messages[iterator].gameObject.SetActive(true);
             messages[iterator].NewMessage(title, content);
 

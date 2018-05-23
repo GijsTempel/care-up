@@ -641,9 +641,10 @@ public class ActionManager : MonoBehaviour {
             {
                 wrongStepIndexes.Add(index);
             }
+            
+            RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
+            messageCenter.NewMessage("Mistake!", sublist[0].extraDescr);
 
-            Camera.main.transform.Find("UI").Find("WrongAction").
-                GetComponent<TimedPopUp>().Set(sublist[0].extraDescr);
             ActionManager.WrongAction();
 
             penalized = true;

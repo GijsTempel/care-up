@@ -5,7 +5,6 @@ using UnityEngine;
 public class IPadAnimation : StateMachineBehaviour
 {
     public int takeFrame;
-    public int openUIFrame;
     public int dropFrame;
 
     public bool openingAnimation = false;
@@ -34,13 +33,7 @@ public class IPadAnimation : StateMachineBehaviour
                 if (PlayerAnimationManager.CompareFrames(frame, prevFrame, takeFrame))
                 {
                     // pick iPad in left hand
-                    //inv.CreateObjectByName("ipad", Vector3.zero);
                     inv.ForcePickItem("ipad", false);
-                }
-                else if (PlayerAnimationManager.CompareFrames(frame, prevFrame, openUIFrame))
-                {
-                    // open UI
-                    //GameObject.FindObjectOfType<RobotManager>().TriggerUI(true);
                 }
             }
             else

@@ -241,6 +241,7 @@ public class CameraMode : MonoBehaviour {
             Camera.main.transform.Find("UI").Find("ObjectViewButtons").gameObject.SetActive(true);
             
             playerScript.MoveBackButtonObject.SetActive(false);
+            RobotManager.SetUITriggerActive(false);
 
             previewModeFrame = true;
         }
@@ -255,17 +256,20 @@ public class CameraMode : MonoBehaviour {
 
             GameObject.Find("ObjectViewButtons").SetActive(false);
             playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
+            RobotManager.SetUITriggerActive(true);
         }
         else if (mode == Mode.SelectionDialogue)
         {
             TogglePlayerScript(false);
             playerScript.MoveBackButtonObject.SetActive(false);
+            RobotManager.SetUITriggerActive(false);
             GameObject.FindObjectOfType<RobotManager>().top = false;
         }
         else if (currentMode == Mode.SelectionDialogue)
         {
             TogglePlayerScript(true);
             playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
+            RobotManager.SetUITriggerActive(true);
             GameObject.FindObjectOfType<RobotManager>().top = true;
         }
         else if (currentMode == Mode.Free && mode == Mode.ConfirmUI)
@@ -276,6 +280,7 @@ public class CameraMode : MonoBehaviour {
             confirmUI.SetActive(true);
 
             playerScript.MoveBackButtonObject.SetActive(false);
+            RobotManager.SetUITriggerActive(false);
         }
         else if (currentMode == Mode.ConfirmUI && mode == Mode.Free)
         {
@@ -283,6 +288,7 @@ public class CameraMode : MonoBehaviour {
             confirmUI.SetActive(false);
 
             playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
+            RobotManager.SetUITriggerActive(true);
         }
         else if (mode == Mode.Cinematic)
         {
@@ -294,6 +300,7 @@ public class CameraMode : MonoBehaviour {
             camPosition = Camera.main.transform.localRotation;
 
             playerScript.MoveBackButtonObject.SetActive(false);
+            RobotManager.SetUITriggerActive(false);
         }
         else if (currentMode == Mode.Cinematic && mode == Mode.Free)
         {
@@ -311,6 +318,7 @@ public class CameraMode : MonoBehaviour {
             playerScript.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
 
             playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
+            RobotManager.SetUITriggerActive(true);
             dontMoveCamera = false;
         }
 
@@ -393,6 +401,7 @@ public class CameraMode : MonoBehaviour {
                 soloCamera = false;
 
                 playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
+                RobotManager.SetUITriggerActive(true);
                 dontMoveCamera = false;
             }
         }
@@ -407,6 +416,7 @@ public class CameraMode : MonoBehaviour {
             cinematicDirection = 1;
 
             playerScript.MoveBackButtonObject.SetActive(false);
+            RobotManager.SetUITriggerActive(false);
         }
 
         savedRot = Camera.main.transform.rotation;
