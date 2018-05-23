@@ -200,6 +200,11 @@ public class PlayerScript : MonoBehaviour {
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            GameObject.FindObjectOfType<RobotUIMessageTab>().NewMessage("WARDNING", "JK");
+        }
+
         if (prefs != null)
         {
             if (!prefs.VR)

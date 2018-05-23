@@ -5,27 +5,33 @@ using UnityEngine.UI;
 
 public class RobotUIMessageTab : RobotUITabs
 {
-    private List<GameObject> list;
-    private Transform itemsParent;
+    private RobotUIMessage[] messages;
+    private int iterator = 0;
 
     protected override void Start()
     {
-        base.Start();
+        messages = transform.Find("GeneralDynamicCanvas").Find("ScrollViewTileMessege")
+            .Find("Viewport").Find("Content").GetComponentsInChildren<RobotUIMessage>();
 
-        list = new List<GameObject>();
-        itemsParent = transform.Find("GeneralDynamicCanvas");
+        foreach (RobotUIMessage m in messages)
+        {
+            m.gameObject.SetActive(false);
+        }
+
+        transform.Find("GeneralDynamicCanvas").Find("ScrollViewMessege").Find("Viewport").
+            Find("Content").Find("Text").GetComponent<Text>().text = "";
+
+        base.Start(); // at the end.. deactivates children
     }
 
-    public void NewMessage(string text)
+    public void NewMessage(string title, string content)
     {
-        GameObject newObject = new GameObject("Item");
-        newObject.transform.parent = itemsParent;
+        if (iterator < messages.Length)
+        {
+            messages[iterator].gameObject.SetActive(true);
+            messages[iterator].NewMessage(title, content);
 
-        newObject.AddComponent<Text>();
-        newObject.GetComponent<Text>().text = text;
-
-        // add script that controls if message seen?
-        // newObject.AddComponent<blabla>();
-        // newObject.GetComponent<blabla>().seen = false;
+            ++iterator;
+        }
     }
 }
