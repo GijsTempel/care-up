@@ -5,6 +5,11 @@ using UnityEngine.UI;
 
 public class RobotUIMessageTab : RobotUITabs
 {
+    public GameObject buttonPrefab;
+    public Image errorIcon;
+    public Image warningIcon;
+    public Image infoIcon;
+
     private RobotUIMessage[] messages;
     private int iterator = 0;
 
