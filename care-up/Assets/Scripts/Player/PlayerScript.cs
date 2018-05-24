@@ -57,7 +57,7 @@ public class PlayerScript : MonoBehaviour {
     [HideInInspector]
     public QuizTab quiz;
 
-    private bool robotUIopened = false;
+    public bool robotUIopened = false;
     GameObject devHintUI;
     
     public GameObject MoveBackButtonObject
