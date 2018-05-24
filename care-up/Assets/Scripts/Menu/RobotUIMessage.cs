@@ -34,6 +34,7 @@ public class RobotUIMessage : MonoBehaviour
         {
             messageNew = false;
             text.color = Color.black;
+            RobotManager.SetNotification(RobotManager.NotificationNumber - 1);
         }
 
         if (contentObject)

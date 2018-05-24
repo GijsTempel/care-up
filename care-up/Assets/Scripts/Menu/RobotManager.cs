@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class RobotManager : MonoBehaviour {
 
@@ -9,7 +10,10 @@ public class RobotManager : MonoBehaviour {
 
     private GameObject UI_object;
     private static GameObject UI_trigger;
-    
+
+    private static Transform notification;
+    private static int notificationCount = 0;
+
     private static RobotManager instance;
     
     private static Transform eyeL;
@@ -43,6 +47,9 @@ public class RobotManager : MonoBehaviour {
 
         UI_trigger = Camera.main.transform.Find("UI").Find("RobotUITrigger").gameObject;
         UI_trigger.SetActive(true);
+        
+        notification = UI_trigger.transform.Find("Notification");
+        notification.gameObject.SetActive(false);
     }
 
     void Update ()
@@ -113,6 +120,28 @@ public class RobotManager : MonoBehaviour {
     public static void SetUITriggerActive(bool value)
     {
         UI_trigger.SetActive(value);
+    }
+
+    public static void SetNotification(int n)
+    {
+        notificationCount = n;
+
+        if (n > 0)
+        {
+            notification.gameObject.SetActive(true);
+            notification.Find("Text").GetComponent<Text>().text = n.ToString();
+        }
+        else
+        {
+            notification.gameObject.SetActive(false);
+        }
+
+        RobotUIMessageTab.SetNotification(n);
+    }
+
+    public static int NotificationNumber
+    {
+        get { return notificationCount; }
     }
 }
 	 

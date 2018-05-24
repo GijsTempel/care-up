@@ -387,6 +387,11 @@ public class PlayerScript : MonoBehaviour {
 
             RobotManager.SetUITriggerActive(false);
             Camera.main.transform.localRotation = Quaternion.Euler(8.0f, 0.0f, 0.0f);
+
+            if (RobotManager.NotificationNumber > 0)
+            {
+                GameObject.FindObjectOfType<RobotUIMessageTab>().OnTabSwitch();
+            }
         }
         else
         {
@@ -398,7 +403,6 @@ public class PlayerScript : MonoBehaviour {
 
     public void CloseRobotUI()
     {
-        //GameObject.FindObjectOfType<RobotManager>().TriggerUI(false);
         PlayerAnimationManager.PlayAnimation("IPadFarAway");
         robotUIopened = false;
         devHintUI.SetActive(true);

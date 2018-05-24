@@ -12,6 +12,8 @@ public class RobotUIMessageTab : RobotUITabs
 
     private Transform _parent;
 
+    private static Transform notification;
+
     public enum Icon
     {
         Info,
@@ -30,8 +32,11 @@ public class RobotUIMessageTab : RobotUITabs
         
         transform.Find("GeneralDynamicCanvas").Find("ScrollViewMessege").Find("Viewport").
             Find("Content").Find("Text").GetComponent<Text>().text = "";
-
+        
         base.Start(); // at the end.. deactivates children
+
+        notification = tabTrigger.transform.Find("Notification");
+        notification.gameObject.SetActive(false);
     }
 
     public void NewMessage(string title, string content, Icon icon)
@@ -61,5 +66,19 @@ public class RobotUIMessageTab : RobotUITabs
 
         button.GetComponent<RobotUIMessage>().NewMessage(title, content, i);
 
+        RobotManager.SetNotification(RobotManager.NotificationNumber + 1);
+    }
+
+    public static void SetNotification(int n)
+    {
+        if (n > 0)
+        {
+            notification.gameObject.SetActive(true);
+            notification.Find("Text").GetComponent<Text>().text = n.ToString();
+        }
+        else
+        {
+            notification.gameObject.SetActive(false);
+        }
     }
 }
