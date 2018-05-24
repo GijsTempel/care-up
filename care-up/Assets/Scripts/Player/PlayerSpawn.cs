@@ -8,6 +8,9 @@ public class PlayerSpawn : MonoBehaviour {
     public string quizName;
     public GameObject playerPrefab;
 
+    public Vector3 robotPosition;
+    public Vector3 robotRotation;
+
     [System.Serializable]
     public struct InfoPair
     {
@@ -34,6 +37,10 @@ public class PlayerSpawn : MonoBehaviour {
         GameObject iPad = Instantiate(Resources.Load("Prefabs/ipad") as GameObject,
             transform.position, transform.rotation);
         iPad.name = "ipad";
+
+        GameObject robot = Instantiate(Resources.Load("Prefabs/robot") as GameObject, 
+            robotPosition, Quaternion.Euler(robotRotation));
+        robot.name = "robot";
 
         RobotUITabInfo infotab = GameObject.FindObjectOfType<RobotUITabInfo>();
         RobotUIInfoButton[] buttons = infotab.transform.Find("InfoDynamicCanvas").Find("ItemList").GetComponentsInChildren<RobotUIInfoButton>();
