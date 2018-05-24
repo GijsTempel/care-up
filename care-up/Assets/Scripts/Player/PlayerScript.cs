@@ -219,7 +219,7 @@ public class PlayerScript : MonoBehaviour {
             rotated += mouseLook.LookRotation(transform, Camera.main.transform);
         }
 
-        if (!freeLook && controls.MouseClicked() && !moveBackButton.mouseOver)
+        if (!freeLook && controls.MouseClicked() && !moveBackButton.mouseOver && !robotUIopened)
         {
             if (!away && controls.SelectedObject != null 
                 && controls.SelectedObject.GetComponent<InteractableObject>() != null
@@ -392,6 +392,7 @@ public class PlayerScript : MonoBehaviour {
             {
                 GameObject.FindObjectOfType<RobotUIMessageTab>().OnTabSwitch();
             }
+
         }
         else
         {
