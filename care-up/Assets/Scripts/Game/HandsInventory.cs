@@ -224,7 +224,7 @@ public class HandsInventory : MonoBehaviour {
         {
             string message = "Je hebt je handen vol. Leg objecten terug om je handen vrij te maken.";
             RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
-            messageCenter.NewMessage("Cannot pick up", message);
+            messageCenter.NewMessage("Cannot pick up", message, RobotUIMessageTab.Icon.Warning);
         }
 
         return picked;

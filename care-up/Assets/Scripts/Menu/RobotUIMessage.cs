@@ -14,6 +14,7 @@ public class RobotUIMessage : MonoBehaviour
     
     private static Text contentObject;
     private Text text;
+    private Image icon;
 
     private void Init()
     {
@@ -24,6 +25,7 @@ public class RobotUIMessage : MonoBehaviour
         }
 
         text = transform.GetComponentInChildren<Text>();
+        icon = transform.Find("Image").GetComponent<Image>();
     }
 
     public void OnClick()
@@ -40,13 +42,15 @@ public class RobotUIMessage : MonoBehaviour
         }
     }
 
-    public void NewMessage(string title, string message)
+    public void NewMessage(string title, string message, Sprite i)
     {
         Init();
 
         messageNew = true;
         text.text = title;
         content = message;
+
+        icon.sprite = i;
 
         text.color = Color.red;
     }

@@ -392,7 +392,7 @@ public class PlayerScript : MonoBehaviour {
         {
             string message = "Zorg ervoor dat alle materialen die je hebt gebruikt op het werkveld liggen. Maak je handen vrij door eventuele objecten terug te leggen op het werkveld.";
             RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
-            messageCenter.NewMessage("Empty Hands", message);
+            messageCenter.NewMessage("Empty Hands", message, RobotUIMessageTab.Icon.Warning);
         }
     }
 
