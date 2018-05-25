@@ -33,7 +33,7 @@ public class RobotUIMessage : MonoBehaviour
         if (messageNew)
         {
             messageNew = false;
-            text.color = Color.black;
+            text.fontStyle = FontStyle.Normal;
             RobotManager.SetNotification(RobotManager.NotificationNumber - 1);
         }
 
@@ -53,7 +53,7 @@ public class RobotUIMessage : MonoBehaviour
 
         icon.sprite = i;
 
-        text.color = Color.red;
+        text.fontStyle = FontStyle.Bold;
 
         transform.SetSiblingIndex(0);
     }
