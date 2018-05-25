@@ -112,7 +112,7 @@ public class RobotUITabs : MonoBehaviour {
             }
         }
 
-        tabTrigger.GetComponent<Image>().color = new Color(0.0f, 0.831f, 1.0f, value ? 1.0f : 0.3f);
+        //tabTrigger.GetComponent<Image>().color = new Color(0.0f, 0.831f, 1.0f, value ? 1.0f : 0.3f);
     }
 
     protected void BackButton()
