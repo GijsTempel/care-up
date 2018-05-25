@@ -54,5 +54,7 @@ public class RobotUIMessage : MonoBehaviour
         icon.sprite = i;
 
         text.color = Color.red;
+
+        transform.SetSiblingIndex(0);
     }
 }
