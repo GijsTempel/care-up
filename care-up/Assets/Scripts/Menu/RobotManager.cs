@@ -54,7 +54,6 @@ public class RobotManager : MonoBehaviour {
 
     void Update ()
     {
-        UpdateTriggerPosition();
         UpdateFaceAnimations();
 	}
 
@@ -66,23 +65,6 @@ public class RobotManager : MonoBehaviour {
         {
             GameObject.FindObjectOfType<PlayerScript>().ResetUIHover();
         }
-    }
-
-    private void UpdateTriggerPosition()
-    {
-        float x = top ? Screen.width - 182.9f : 182.9f;
-        float y = Screen.height * 0.63f;
-        UI_trigger.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(x, y, 4.0f));
-
-        transform.LookAt(Camera.main.transform);
-        transform.localEulerAngles = new Vector3(
-            transform.localEulerAngles.x,
-            transform.localEulerAngles.y,
-            0.0f);
-
-        Vector3 robotPosition = Camera.main.WorldToScreenPoint(UI_trigger.transform.position);
-        robotPosition += new Vector3(7.0f, 3.0f); // slight offset
-        UI_trigger.transform.position = robotPosition;
     }
 
     public static void RobotCorrectAction()
