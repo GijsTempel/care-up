@@ -16,6 +16,10 @@ public class PlayerScript : MonoBehaviour {
     public bool tutorial_movedBack = false;
     [HideInInspector]
     public bool tutorial_movedTo = false;
+    [HideInInspector]
+    public bool tutorial_robotUI_opened = false;
+    [HideInInspector]
+    public bool tutorial_robotUI_closed = false;
 
     public Camera cam;
     public MouseLook mouseLook = new MouseLook();
@@ -56,8 +60,9 @@ public class PlayerScript : MonoBehaviour {
 
     [HideInInspector]
     public QuizTab quiz;
-
+    
     public bool robotUIopened = false;
+
     GameObject devHintUI;
     
     public GameObject MoveBackButtonObject
@@ -157,6 +162,7 @@ public class PlayerScript : MonoBehaviour {
             tutorialEndUi.AddComponent<EventTrigger>();
             tutorialEndUi.GetComponent<EventTrigger>().triggers.Add(event1);
             tutorialEndUi.GetComponent<EventTrigger>().triggers.Add(event2);
+            tutorialEndUi.SetActive(false);
         }
 
         savedPos = transform.position;
@@ -392,7 +398,7 @@ public class PlayerScript : MonoBehaviour {
             {
                 GameObject.FindObjectOfType<RobotUIMessageTab>().OnTabSwitch();
             }
-
+            tutorial_robotUI_opened = true;
         }
         else
         {
@@ -409,5 +415,6 @@ public class PlayerScript : MonoBehaviour {
         devHintUI.SetActive(true);
 
         RobotManager.SetUITriggerActive(true);
+        tutorial_robotUI_closed = true;
     }
 }

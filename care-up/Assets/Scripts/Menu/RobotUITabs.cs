@@ -12,6 +12,13 @@ public class RobotUITabs : MonoBehaviour {
     protected GameObject tabTrigger;
 
     protected RectTransform[] children;
+
+    [HideInInspector]
+    public static bool tutorial_back = false;
+    [HideInInspector]
+    public static bool tutorial_generalOpened = false;
+    [HideInInspector]
+    public static bool tutorial_checkListOpened = false;
     
     protected virtual void Start()
     {
@@ -112,11 +119,21 @@ public class RobotUITabs : MonoBehaviour {
             }
         }
 
-        //tabTrigger.GetComponent<Image>().color = new Color(0.0f, 0.831f, 1.0f, value ? 1.0f : 0.3f);
+        switch (name)
+        {
+            case "GeneralTab":
+                tutorial_generalOpened = true;
+                break;
+            case "CheckListTab":
+                tutorial_checkListOpened = true;
+                break;
+        }
     }
 
     protected void BackButton()
     {
+        tutorial_back = true;
+
         icons.gameObject.SetActive(true);
 
         foreach (RobotUITabs t in tabs)

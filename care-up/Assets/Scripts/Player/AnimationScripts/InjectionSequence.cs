@@ -128,7 +128,7 @@ public class InjectionSequence : AnimationSequenceState
         {
             if (GameObject.Find("GameLogic").GetComponent<TutorialManager>() != null)
             {
-                GameObject.Find("GameLogic").GetComponent<TutorialManager>().sequenceCompleted = true;
+                //GameObject.Find("GameLogic").GetComponent<TutorialManager>().sequenceCompleted = true;
             }
         }
 

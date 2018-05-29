@@ -96,7 +96,7 @@ public class PickableObject : InteractableObject {
                 {
                     if (GameObject.Find("GameLogic").GetComponent<TutorialManager>() != null)
                     {
-                        GameObject.Find("GameLogic").GetComponent<TutorialManager>().needleTrashed = true;
+                        //GameObject.Find("GameLogic").GetComponent<TutorialManager>().needleTrashed = true;
                     }
                 }
                 inventory.RemoveHandObject(hand);
