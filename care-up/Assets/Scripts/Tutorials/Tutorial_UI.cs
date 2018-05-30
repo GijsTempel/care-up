@@ -23,6 +23,7 @@ public class Tutorial_UI : TutorialManager
         ChecklistBack,
         PressMessageCenter,
         MessageCenterExpl,
+        OpenMessage,
         CloseMessageCenter,
         CloseRobotUI,
         DevHintsExpl,
@@ -172,8 +173,16 @@ public class Tutorial_UI : TutorialManager
                 case TutorialStep.MessageCenterExpl:
                     if (nextButtonClicked)
                     {
+                        currentStep = TutorialStep.OpenMessage;
+                        UItext.text = "Let's look what message have u got. Click on it.";
+                        RobotUIMessageTab.tutorial_messageOpened = false;
+                    }
+                    break;
+                case TutorialStep.OpenMessage:
+                    if (RobotUIMessageTab.tutorial_messageOpened)
+                    {
                         currentStep = TutorialStep.CloseMessageCenter;
-                        UItext.text = "Now let's close message center";
+                        UItext.text = "What a nice message! Now let's close message center.";
                         RobotUITabs.tutorial_back = false;
                     }
                     break;

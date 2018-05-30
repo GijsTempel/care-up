@@ -41,6 +41,8 @@ public class RobotUIMessage : MonoBehaviour
         {
             contentObject.text = content;
         }
+
+        RobotUIMessageTab.tutorial_messageOpened = true;
     }
 
     public void NewMessage(string title, string message, Sprite i)

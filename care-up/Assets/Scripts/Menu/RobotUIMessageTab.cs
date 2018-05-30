@@ -14,6 +14,9 @@ public class RobotUIMessageTab : RobotUITabs
 
     private static Transform notification;
 
+    [HideInInspector]
+    public static bool tutorial_messageOpened = false;
+
     public enum Icon
     {
         Info,
