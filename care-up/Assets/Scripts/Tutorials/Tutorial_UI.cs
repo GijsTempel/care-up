@@ -171,7 +171,7 @@ public class Tutorial_UI : TutorialManager
                     {
                         currentStep = TutorialStep.PressMessageCenter;
                         UItext.text = "Oh wow, je hebt een bericht! Laten we gaan kijken!";
-                        hintsBox.anchoredPosition = new Vector2(0f, -23f);
+                        hintsBox.anchoredPosition = new Vector2(637f, -70f);
                         GameObject.FindObjectOfType<RobotUIMessageTab>().NewMessage("Leren Spelen",
                             "De inhoud van de berichten verschijnen in dit venster. Gebruik de terug knop linksboven in het scherm van de tablet om de app af te sluiten en verder te gaan!",
                              RobotUIMessageTab.Icon.Info);
