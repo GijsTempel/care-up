@@ -19,7 +19,9 @@ public class RobotUITabs : MonoBehaviour {
     public static bool tutorial_generalOpened = false;
     [HideInInspector]
     public static bool tutorial_checkListOpened = false;
-    
+    [HideInInspector]
+    public static bool tutorial_messageCenterOpened = false;
+
     protected virtual void Start()
     {
         tabs.Add(this);
@@ -115,6 +117,9 @@ public class RobotUITabs : MonoBehaviour {
                 break;
             case "CheckListTab":
                 tutorial_checkListOpened = true;
+                break;
+            case "MessageCenter":
+                tutorial_messageCenterOpened = true;
                 break;
         }
     }

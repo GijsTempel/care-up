@@ -21,6 +21,9 @@ public class Tutorial_UI : TutorialManager
         PressChecklist,
         ChecklistExpl,
         ChecklistBack,
+        PressMessageCenter,
+        MessageCenterExpl,
+        CloseMessageCenter,
         CloseRobotUI,
         DevHintsExpl,
         OpenExtraHints,
@@ -148,6 +151,33 @@ public class Tutorial_UI : TutorialManager
                     }
                     break;
                 case TutorialStep.ChecklistBack:
+                    if (RobotUITabs.tutorial_back)
+                    {
+                        currentStep = TutorialStep.PressMessageCenter;
+                        UItext.text = "Oh wow, we got new message! Let's open and read it!";
+                        GameObject.FindObjectOfType<RobotUIMessageTab>().NewMessage("New message!",
+                            "Here is your first ingame e-mail message. You will see here a lot of useful information about your actions during the game!",
+                             RobotUIMessageTab.Icon.Info);
+                        RobotUITabs.tutorial_messageCenterOpened = false;
+                    }
+                    break;
+                case TutorialStep.PressMessageCenter:
+                    if (RobotUITabs.tutorial_messageCenterOpened)
+                    {
+                        currentStep = TutorialStep.MessageCenterExpl;
+                        UItext.text = "This is your e-mail app. We'll send you some messages during the game to help you out!";
+                        SetUpTutorialNextButton();
+                    }
+                    break;
+                case TutorialStep.MessageCenterExpl:
+                    if (nextButtonClicked)
+                    {
+                        currentStep = TutorialStep.CloseMessageCenter;
+                        UItext.text = "Now let's close message center";
+                        RobotUITabs.tutorial_back = false;
+                    }
+                    break;
+                case TutorialStep.CloseMessageCenter:
                     if (RobotUITabs.tutorial_back)
                     {
                         currentStep = TutorialStep.CloseRobotUI;

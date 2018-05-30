@@ -6,10 +6,8 @@ using UnityEngine.UI;
 /// <summary>
 /// Handles entire tutorial scene step by step.
 /// </summary>
-public class TutorialManager : MonoBehaviour {
-
-    public GameObject hintsPrefab;
-    
+public class TutorialManager : MonoBehaviour
+{
     [HideInInspector]
     public bool movementLock = false;
     [HideInInspector]
@@ -34,6 +32,7 @@ public class TutorialManager : MonoBehaviour {
     protected bool pauseEnabled = false;
     protected float pauseTimer = 0.0f;
     protected Text UItext;
+    protected RectTransform hintsBox;
 
     protected PlayerScript player;
     protected ActionManager actionManager;
@@ -81,10 +80,9 @@ public class TutorialManager : MonoBehaviour {
     protected virtual void Start()
     {
         player = GameObject.Find("Player").GetComponent<PlayerScript>();
-        Transform ui = GameObject.Find("UI").transform;
-        Instantiate(hintsPrefab, ui);
 
-        UItext = GameObject.Find("hints").GetComponent<Text>();
+        UItext = GameObject.Find("TutorialHintsText").GetComponent<Text>();
+        hintsBox = GameObject.Find("TutorialHints").transform as RectTransform;
     }
 
     protected virtual void Update ()
