@@ -71,21 +71,10 @@ public class RobotUITabs : MonoBehaviour {
                 tabs.Remove(this);
             }
         }
-
-        EventTrigger.Entry clickEvent = new EventTrigger.Entry();
-        clickEvent.eventID = EventTriggerType.PointerClick;
-        clickEvent.callback.AddListener((eventData) => { OnTabSwitch(); });
-
-        tabTrigger.AddComponent<EventTrigger>();
-        tabTrigger.GetComponent<EventTrigger>().triggers.Add(clickEvent);
-        
-        EventTrigger.Entry backBtnClickEvent = new EventTrigger.Entry();
-        backBtnClickEvent.eventID = EventTriggerType.PointerClick;
-        backBtnClickEvent.callback.AddListener((eventData) => { BackButton(); });
+        tabTrigger.GetComponent<Button>().onClick.AddListener(OnTabSwitch);
 
         GameObject backBtn = transform.Find("Button").gameObject;
-        backBtn.AddComponent<EventTrigger>();
-        backBtn.GetComponent<EventTrigger>().triggers.Add(backBtnClickEvent);
+        backBtn.GetComponent<Button>().onClick.AddListener(BackButton);
     }
 
     public void OnTabSwitch()
