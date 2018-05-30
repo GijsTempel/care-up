@@ -643,7 +643,7 @@ public class ActionManager : MonoBehaviour {
             }
             
             RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
-            messageCenter.NewMessage("Mistake!", sublist[0].extraDescr, RobotUIMessageTab.Icon.Error);
+            messageCenter.NewMessage("Verkeerde handeling!", sublist[0].extraDescr, RobotUIMessageTab.Icon.Error);
 
             ActionManager.WrongAction();
 
