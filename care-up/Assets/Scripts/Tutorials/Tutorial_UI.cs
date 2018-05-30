@@ -54,7 +54,9 @@ public class Tutorial_UI : TutorialManager
             {
                 case TutorialStep.First:
                     currentStep = TutorialStep.Welcome;
-                    UItext.text = "Welcome, this is UI tutorial!";
+                    hintsBox.anchoredPosition = new Vector2(-0.00011874f, 0.00024414f);
+                    hintsBox.sizeDelta = new Vector2(788f, 524.9f);
+                    UItext.text = "Welkom, in deze oefening zullen wij je uitleggen wat alle menu's en iconen in Care Up betekenen.";
                     SetUpTutorialNextButton();
                     break;
                 case TutorialStep.Welcome:
