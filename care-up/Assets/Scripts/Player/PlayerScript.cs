@@ -62,6 +62,8 @@ public class PlayerScript : MonoBehaviour {
     public QuizTab quiz;
     
     public bool robotUIopened = false;
+    private GameObject robotSavedLeft;
+    private GameObject robotSavedRight;
 
     GameObject devHintUI;
     
@@ -387,6 +389,9 @@ public class PlayerScript : MonoBehaviour {
     {
         if (!handsInv.Empty())
         {
+            robotSavedLeft = handsInv.LeftHandObject;
+            robotSavedRight = handsInv.RightHandObject;
+
             handsInv.DropLeftObject();
             handsInv.DropRightObject();
         }
@@ -414,5 +419,20 @@ public class PlayerScript : MonoBehaviour {
 
         RobotManager.SetUITriggerActive(true);
         tutorial_robotUI_closed = true;
+    }
+
+    public void PickItemsBackAfterRobotUI()
+    {
+        if (robotSavedLeft != null)
+        {
+            handsInv.ForcePickItem(robotSavedLeft.name, true);
+            PlayerAnimationManager.SetHandItem(true, robotSavedLeft.gameObject);
+        }
+
+        if (robotSavedRight != null)
+        {
+            handsInv.ForcePickItem(robotSavedRight.name, false);
+            PlayerAnimationManager.SetHandItem(false, robotSavedRight.gameObject);
+        }
     }
 }
