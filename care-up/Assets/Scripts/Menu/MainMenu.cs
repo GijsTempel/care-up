@@ -153,4 +153,53 @@ public class MainMenu : MonoBehaviour {
     {
         Application.OpenURL(url);
     }
+
+    public void OnTutorialButtonClick_Interface()
+    {
+        string sceneName = "Tutorial_UI";
+        string bundleName = "Tutorials";
+        bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
+    }
+
+    public void OnTutorialButtonClick_Movement()
+    {
+        string sceneName = "Tutorial_UI";
+        string bundleName = "Tutorials";
+        bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
+    }
+
+    public void OnTutorialButtonClick_Picking()
+    {
+        string sceneName = "Tutorial_UI";
+        string bundleName = "Tutorials";
+        bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
+    }
+
+    public void OnTutorialButtonClick_Combining()
+    {
+        string sceneName = "Tutorial_UI";
+        string bundleName = "Tutorials";
+        bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
+    }
+
+    public void OnTutorialButtonClick_UsingOn()
+    {
+        string sceneName = "Tutorial_UI";
+        string bundleName = "Tutorials";
+        bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
+    }
+
+    public void OnTutorialButtonClick_PersonDialogues()
+    {
+        string sceneName = "Tutorial_UI";
+        string bundleName = "Tutorials";
+        bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
+    }
+
+    public void OnTutorialButtonClick_Sequences()
+    {
+        string sceneName = "Tutorial_UI";
+        string bundleName = "Tutorials";
+        bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
+    }
 }

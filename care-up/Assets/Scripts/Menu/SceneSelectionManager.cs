@@ -64,5 +64,4 @@ public class SceneSelectionManager : MonoBehaviour {
 
         manager.practiceMode = false; 
     }
-
 }
