@@ -385,27 +385,25 @@ public class PlayerScript : MonoBehaviour {
 
     public void OpenRobotUI()
     {
-        if (handsInv.Empty())
+        if (!handsInv.Empty())
         {
-            PlayerAnimationManager.PlayAnimation("IpadCloseUp");
-            robotUIopened = true;
-            devHintUI.SetActive(false);
-
-            RobotManager.SetUITriggerActive(false);
-            Camera.main.transform.localRotation = Quaternion.Euler(8.0f, 0.0f, 0.0f);
-
-            if (RobotManager.NotificationNumber > 0)
-            {
-                GameObject.FindObjectOfType<RobotUIMessageTab>().OnTabSwitch();
-            }
-            tutorial_robotUI_opened = true;
+            handsInv.DropLeftObject();
+            handsInv.DropRightObject();
         }
-        else
+
+        PlayerAnimationManager.PlayAnimation("IpadCloseUp");
+        robotUIopened = true;
+        devHintUI.SetActive(false);
+
+        RobotManager.SetUITriggerActive(false);
+        Camera.main.transform.localRotation = Quaternion.Euler(8.0f, 0.0f, 0.0f);
+
+        if (RobotManager.NotificationNumber > 0)
         {
-            string message = "Je hebt geen vrije hand beschikbaar om de actie uit te voeren. Zorg voor een vrije hand door een object terug te leggen.";
-            RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
-            messageCenter.NewMessage("Je hebt je handen vol!", message, RobotUIMessageTab.Icon.Warning);
+            GameObject.FindObjectOfType<RobotUIMessageTab>().OnTabSwitch();
         }
+
+        tutorial_robotUI_opened = true;
     }
 
     public void CloseRobotUI()
