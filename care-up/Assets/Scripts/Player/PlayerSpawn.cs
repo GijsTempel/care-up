@@ -35,7 +35,7 @@ public class PlayerSpawn : MonoBehaviour {
         itemDescription.name = "ItemDescription";
 
         GameObject iPad = Instantiate(Resources.Load("Prefabs/ipad") as GameObject,
-            transform.position, transform.rotation);
+            transform.position + new Vector3(0, -100f, 0), transform.rotation);
         iPad.name = "ipad";
 
         GameObject robot = Instantiate(Resources.Load("Prefabs/robot") as GameObject, 
