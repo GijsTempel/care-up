@@ -157,7 +157,7 @@ public class MainMenu : MonoBehaviour {
     public void OnTutorialButtonClick_Interface()
     {
         string sceneName = "Tutorial_UI";
-        string bundleName = "Tutorials";
+        string bundleName = "tutorial_ui";
         bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
     }
 
