@@ -27,6 +27,8 @@ public class Cheat_CurrentAction : MonoBehaviour
     [HideInInspector]
     public bool tutorial_extraClosed = false;
 
+    Tutorial_UI tutorial_UI;
+
     void Start()
     {
         actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
@@ -55,6 +57,8 @@ public class Cheat_CurrentAction : MonoBehaviour
         
         timer = 0.0f;
         direction = 0;
+
+        tutorial_UI = GameObject.FindObjectOfType<Tutorial_UI>();
     }
 
     private void Init()
@@ -129,6 +133,11 @@ public class Cheat_CurrentAction : MonoBehaviour
 
     public void ToggleExtraInfoPanel()
     {
+        if (tutorial_UI != null && tutorial_UI.expectedHintsState == extraPanel.activeSelf)
+        {
+            return;
+        }
+
         extraPanel.SetActive(!extraPanel.activeSelf);
 
         if (extraPanel.activeSelf)

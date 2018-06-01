@@ -16,6 +16,8 @@ public class RobotUIMessage : MonoBehaviour
     private Text text;
     private Image icon;
 
+    static Tutorial_UI tutorial_UI;
+
     private void Init()
     {
         if (contentObject == null)
@@ -26,10 +28,17 @@ public class RobotUIMessage : MonoBehaviour
 
         text = transform.GetComponentInChildren<Text>();
         icon = transform.Find("Image").GetComponent<Image>();
+
+        tutorial_UI = GameObject.FindObjectOfType<Tutorial_UI>();
     }
 
     public void OnClick()
     {
+        if (tutorial_UI != null && tutorial_UI.openMailMessage == false)
+        {
+            return;
+        }
+
         if (messageNew)
         {
             messageNew = false;

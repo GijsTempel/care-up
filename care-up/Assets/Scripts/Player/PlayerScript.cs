@@ -66,6 +66,8 @@ public class PlayerScript : MonoBehaviour {
     private GameObject robotSavedRight;
 
     GameObject devHintUI;
+
+    Tutorial_UI tutorial_UI;
     
     public GameObject MoveBackButtonObject
     {
@@ -173,6 +175,8 @@ public class PlayerScript : MonoBehaviour {
         robot = GameObject.FindObjectOfType<RobotManager>();
         savedRobotPos = robot.transform.position;
         savedRobotRot = robot.transform.rotation;
+
+        tutorial_UI = GameObject.FindObjectOfType<Tutorial_UI>();
     }
 
     public void EnterHover()
@@ -387,6 +391,11 @@ public class PlayerScript : MonoBehaviour {
 
     public void OpenRobotUI()
     {
+        if (tutorial_UI != null && tutorial_UI.expectedRobotUIstate == false)
+        {
+            return;
+        }
+
         if (!handsInv.Empty())
         {
             robotSavedLeft = handsInv.LeftHandObject;
@@ -413,6 +422,11 @@ public class PlayerScript : MonoBehaviour {
 
     public void CloseRobotUI()
     {
+        if (tutorial_UI != null && tutorial_UI.expectedRobotUIstate == true)
+        {
+            return;
+        }
+
         PlayerAnimationManager.PlayAnimation("IPadFarAway");
         robotUIopened = false;
         devHintUI.SetActive(true);

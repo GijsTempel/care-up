@@ -37,6 +37,12 @@ public class Tutorial_UI : TutorialManager
 
     Cheat_CurrentAction hintsUI;
 
+    public string tabToOpen = "";
+    public bool closeTab = false;
+    public bool expectedRobotUIstate = false;
+    public bool expectedHintsState = false;
+    public bool openMailMessage = false;
+
     protected override void Start()
     {
         base.Start();
@@ -75,6 +81,7 @@ public class Tutorial_UI : TutorialManager
                         currentStep = TutorialStep.OpenRobotUI;
                         hintsBox.anchoredPosition = new Vector2(-575f, -128);
                         UItext.text = "Het icon met de tablet kun je aanklikken om je tablet te openen. Op de tablet kun je veel informatie vinden. Probeer de tablet erbij te pakken door op het icoon te klikken.";
+                        expectedRobotUIstate = true;
                     }
                     break;
                 case TutorialStep.OpenRobotUI:
@@ -120,6 +127,7 @@ public class Tutorial_UI : TutorialManager
                         hintsBox.anchoredPosition = new Vector2(58f, -149.45f);
                         UItext.text = "Laten we de 'Algemene' app openen door op het icoon te klikken. Probeer dit nu.";
                         RobotUITabs.tutorial_generalOpened = false;
+                        tabToOpen = "GeneralTab";
                     }
                     break;
                 case TutorialStep.PressGeneral:
@@ -137,16 +145,18 @@ public class Tutorial_UI : TutorialManager
                         currentStep = TutorialStep.GeneralBack;
                         hintsBox.anchoredPosition = new Vector2(-142f, 57f);
                         UItext.text = "Laten we de app sluiten door op de terug knop te drukken. ";
+                        closeTab = true;
                     }
                     break;
                 case TutorialStep.GeneralBack:
                     if (RobotUITabs.tutorial_back)
                     {
-                        RobotUITabs.tutorial_back = false;
+                        closeTab = RobotUITabs.tutorial_back = false;
                         currentStep = TutorialStep.PressChecklist;
                         hintsBox.anchoredPosition = new Vector2(334f, -149.45f);
                         UItext.text = "Laten we nu gaan kijken naar de checklist app.";
                         RobotUITabs.tutorial_checkListOpened = false;
+                        tabToOpen = "CheckListTab";
                     }
                     break;
                 case TutorialStep.PressChecklist:
@@ -164,11 +174,13 @@ public class Tutorial_UI : TutorialManager
                         currentStep = TutorialStep.ChecklistBack;
                         hintsBox.anchoredPosition = new Vector2(-158f, 52f);
                         UItext.text = "Laten we terug gaan.";
+                        closeTab = true;
                     }
                     break;
                 case TutorialStep.ChecklistBack:
                     if (RobotUITabs.tutorial_back)
                     {
+                        closeTab = RobotUITabs.tutorial_back = false;
                         currentStep = TutorialStep.PressMessageCenter;
                         UItext.text = "Oh wow, je hebt een bericht! Laten we gaan kijken!";
                         hintsBox.anchoredPosition = new Vector2(637f, -70f);
@@ -176,11 +188,13 @@ public class Tutorial_UI : TutorialManager
                             "De inhoud van de berichten verschijnen in dit venster. Gebruik de terug knop linksboven in het scherm van de tablet om de app af te sluiten en verder te gaan!",
                              RobotUIMessageTab.Icon.Info);
                         RobotUITabs.tutorial_messageCenterOpened = false;
+                        tabToOpen = "MessageCenter";
                     }
                     break;
                 case TutorialStep.PressMessageCenter:
                     if (RobotUITabs.tutorial_messageCenterOpened)
                     {
+                        tabToOpen = "";
                         currentStep = TutorialStep.MessageCenterExpl;
                         hintsBox.anchoredPosition = new Vector2(493f, -205f);
                         UItext.text = "Dit is de berichten app. Tijdens het spelen zullen wij jou berichten sturen om je te helpen en te informeren.";
@@ -194,6 +208,7 @@ public class Tutorial_UI : TutorialManager
                         hintsBox.anchoredPosition = new Vector2(0.92902f, -20f);
                         UItext.text = "Laten we kijken wat er in het bericht staat door op de titel te klikken.";
                         RobotUIMessageTab.tutorial_messageOpened = false;
+                        openMailMessage = true;
                     }
                     break;
                 case TutorialStep.OpenMessage:
@@ -203,14 +218,17 @@ public class Tutorial_UI : TutorialManager
                         hintsBox.anchoredPosition = new Vector2(758f, -19f);
                         UItext.text = "Berichten kun je lezen wanneer je wilt. Er kan erg handige informatie in staan. Laten we de berichten app afsluiten.";
                         RobotUITabs.tutorial_back = false;
+                        closeTab = true;
                     }
                     break;
                 case TutorialStep.CloseMessageCenter:
                     if (RobotUITabs.tutorial_back)
                     {
+                        closeTab = RobotUITabs.tutorial_back = false;
                         currentStep = TutorialStep.CloseRobotUI;
                         hintsBox.anchoredPosition = new Vector2(791f, 170f);
                         UItext.text = "Laten we de tablet afsluiten. Je kunt de tablet altijd weer openen door op het icoon te klikken.";
+                        expectedRobotUIstate = false;
                     }
                     break;
                 case TutorialStep.CloseRobotUI:
@@ -229,6 +247,7 @@ public class Tutorial_UI : TutorialManager
                         hintsBox.anchoredPosition = new Vector2(-563f, 27f);
                         UItext.text = "Als je niet weet hoe je een stap moet uitvoeren dan kun je klikken op het informatie icoon. Laten we op het icoon klikken";
                         hintsUI.tutorial_extraOpened = false;
+                        expectedHintsState = true;
                     }
                     break;
                 case TutorialStep.OpenExtraHints:
@@ -238,6 +257,7 @@ public class Tutorial_UI : TutorialManager
                         hintsBox.anchoredPosition = new Vector2(264f, -0.29356f);
                         UItext.text = "Hier staat extra uitleg over hoe je een stap kunt uitvoeren. Laten we het scherm weer sluiten door nogmaals op het informatie icoon te klikken.";
                         hintsUI.tutorial_extraClosed = false;
+                        expectedHintsState = false;
                     }
                     break;
                 case TutorialStep.CloseHints:

@@ -22,6 +22,8 @@ public class RobotUITabs : MonoBehaviour {
     [HideInInspector]
     public static bool tutorial_messageCenterOpened = false;
 
+    Tutorial_UI tutorial_UI;
+
     protected virtual void Start()
     {
         tabs.Add(this);
@@ -36,7 +38,17 @@ public class RobotUITabs : MonoBehaviour {
         if (sceneTitle != null && (manager != null && manager.GetComponent<PlayerPrefsManager>() != null))
         {
             sceneTitle.GetComponent<Text>().text = manager.GetComponent<PlayerPrefsManager>().currentSceneVisualName;
-        }  
+        }
+
+        tutorial_UI = GameObject.FindObjectOfType<Tutorial_UI>();
+        if (tutorial_UI != null)
+        {
+            GameObject exitBtn = GameObject.Find("Exit");
+            if (exitBtn != null)
+            {
+                exitBtn.GetComponent<Button>().interactable = false;
+            }
+        }
 
         SetTabActive(false);
 
@@ -81,6 +93,11 @@ public class RobotUITabs : MonoBehaviour {
 
     public void OnTabSwitch()
     {
+        if (tutorial_UI != null && tutorial_UI.tabToOpen != name)
+        {
+            return;
+        }
+
         QuizTab tab = GameObject.FindObjectOfType<QuizTab>();
         if (tab != null)
         {
@@ -126,6 +143,11 @@ public class RobotUITabs : MonoBehaviour {
 
     protected void BackButton()
     {
+        if (tutorial_UI != null && tutorial_UI.closeTab == false)
+        {
+            return;
+        }
+
         tutorial_back = true;
 
         icons.gameObject.SetActive(true);
