@@ -42,7 +42,7 @@ public class Tutorial_Picking : TutorialManager {
                         itemToPick = "Cloth";
 
                         particleHint.SetActive(true);
-                        particleHint.transform.position = GameObject.Find("Cloth").transform.position;
+                        particleHint.transform.position = GameObject.Find("ClothPackage").transform.position;
                     }
                     break;
                 case TutorialStep.PickOne:
