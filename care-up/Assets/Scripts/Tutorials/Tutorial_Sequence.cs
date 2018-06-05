@@ -43,6 +43,7 @@ public class Tutorial_Sequence : TutorialManager
                         UItext.text = "Pick up syringe";
 
                         handsInventory.tutorial_pickedLeft = false;
+                        itemToPick = "SyringeWithInjectionNeedleCap";
                     }
                     break;
                 case TutorialStep.PickSyringe:
