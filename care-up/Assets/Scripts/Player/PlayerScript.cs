@@ -20,6 +20,10 @@ public class PlayerScript : MonoBehaviour {
     public bool tutorial_robotUI_opened = false;
     [HideInInspector]
     public bool tutorial_robotUI_closed = false;
+    [HideInInspector]
+    public bool tutorial_itemControls = false;
+    [HideInInspector]
+    public bool tutorial_UseOnControl = false;
 
     public Camera cam;
     public MouseLook mouseLook = new MouseLook();
@@ -256,6 +260,7 @@ public class PlayerScript : MonoBehaviour {
                 else
                 {
                     itemControls.Init(controls.SelectedObject);
+                    tutorial_itemControls = true;
                 }
             }
             else
@@ -303,6 +308,10 @@ public class PlayerScript : MonoBehaviour {
         if (!value)
         {
             onButtonHover = false;
+        }
+        else
+        {
+            tutorial_UseOnControl = true;
         }
     }
 

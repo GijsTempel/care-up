@@ -8,8 +8,12 @@ public class Tutorial_Combining : TutorialManager {
     {
         First,
         Welcome,
+        MoveTo,
         PickBoth,
+        OpenControls,
+        ClickUseOn,
         Combine,
+        OpenControls2,
         Decombine,
         Done,
         None
@@ -35,6 +39,17 @@ public class Tutorial_Combining : TutorialManager {
                 case TutorialStep.Welcome:
                     if (nextButtonClicked)
                     {
+                        currentStep = TutorialStep.MoveTo;
+                        UItext.text = "Come to table";
+
+                        player.tutorial_movedTo = false;
+                    }
+                    break;
+                case TutorialStep.MoveTo:
+                    if (player.tutorial_movedTo)
+                    {
+                        player.tutorial_movedTo = false;
+                        
                         currentStep = TutorialStep.PickBoth;
                         UItext.text = "Come close to items. Pick the syringe and needle.";
 
@@ -60,8 +75,30 @@ public class Tutorial_Combining : TutorialManager {
                         particleHint.SetActive(false);
                         particleHint_alt.SetActive(false);
 
+                        currentStep = TutorialStep.OpenControls;
+                        UItext.text = "Click on an item in hand";
+
+                        player.tutorial_itemControls = false;
+                    }
+                    break;
+                case TutorialStep.OpenControls:
+                    if (player.tutorial_itemControls)
+                    {
+                        player.tutorial_itemControls = false;
+
+                        currentStep = TutorialStep.ClickUseOn;
+                        UItext.text = "Click UseOn";
+
+                        player.tutorial_UseOnControl = false;
+                    }
+                    break;
+                case TutorialStep.ClickUseOn:
+                    if (player.tutorial_UseOnControl)
+                    {
+                        player.tutorial_UseOnControl = false;
+
                         currentStep = TutorialStep.Combine;
-                        UItext.text = "Combine";
+                        UItext.text = "Select item that is in another hand";
 
                         handsInventory.tutorial_combined = false;
                     }
@@ -70,26 +107,47 @@ public class Tutorial_Combining : TutorialManager {
                     if (handsInventory.tutorial_combined)
                     {
                         handsInventory.tutorial_combined = false;
+
+                        currentStep = TutorialStep.OpenControls2;
+                        UItext.text = "Now Decombining. Click item in hand";
+
+                        player.tutorial_itemControls = false;
+                    }
+                    break;
+                case TutorialStep.OpenControls2:
+                    if (player.tutorial_itemControls)
+                    {
+                        player.tutorial_itemControls = false;
+
                         currentStep = TutorialStep.Decombine;
-                        UItext.text = "Decombine";
+                        UItext.text = "Select decombine";
+
+                        handsInventory.tutorial_combined = false;
                     }
                     break;
                 case TutorialStep.Decombine:
-                    if (handsInventory.tutorial_droppedRight)
+                    if (handsInventory.tutorial_combined)
                     {
+                        handsInventory.tutorial_combined = false;
+
                         currentStep = TutorialStep.Done;
                         UItext.text = "Great work! This concludes picking up tutorial.";
+
+                        SetPauseTimer(5.0f);
                     }
                     break;
                 case TutorialStep.Done:
-                    currentStep = TutorialStep.None;
-                    endPanel.SetActive(true);
-                    player.enabled = false;
-                    GameObject.FindObjectOfType<RobotManager>().enabled = false;
-                    foreach (InteractableObject o in GameObject.FindObjectsOfType<InteractableObject>())
+                    if (!Paused())
                     {
-                        o.Reset();
-                        o.enabled = false;
+                        currentStep = TutorialStep.None;
+                        endPanel.SetActive(true);
+                        player.enabled = false;
+                        GameObject.FindObjectOfType<RobotManager>().enabled = false;
+                        foreach (InteractableObject o in GameObject.FindObjectsOfType<InteractableObject>())
+                        {
+                            o.Reset();
+                            o.enabled = false;
+                        }
                     }
                     break;
             }

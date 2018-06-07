@@ -8,6 +8,7 @@ public class Tutorial_Talk : TutorialManager
     {
         First,
         Welcome,
+        MoveTo,
         OpenOptions,
         Talk,
         Done,
@@ -43,8 +44,17 @@ public class Tutorial_Talk : TutorialManager
                 case TutorialStep.Welcome:
                     if (nextButtonClicked)
                     {
+                        currentStep = TutorialStep.MoveTo;
+                        UItext.text = "Move to patient";
+
+                        player.tutorial_movedTo = false;
+                    }
+                    break;
+                case TutorialStep.MoveTo:
+                    if (player.tutorial_movedTo)
+                    {
                         currentStep = TutorialStep.OpenOptions;
-                        UItext.text = "Come close to patient. Click on patient.";
+                        UItext.text = "Click on patient.";
 
                         patient.tutorial_used = false;
                     }
@@ -70,14 +80,17 @@ public class Tutorial_Talk : TutorialManager
                     }
                     break;
                 case TutorialStep.Done:
-                    currentStep = TutorialStep.None;
-                    endPanel.SetActive(true);
-                    player.enabled = false;
-                    GameObject.FindObjectOfType<RobotManager>().enabled = false;
-                    foreach (InteractableObject o in GameObject.FindObjectsOfType<InteractableObject>())
+                    if (patient.tutorial_greetingEnded)
                     {
-                        o.Reset();
-                        o.enabled = false;
+                        currentStep = TutorialStep.None;
+                        endPanel.SetActive(true);
+                        player.enabled = false;
+                        GameObject.FindObjectOfType<RobotManager>().enabled = false;
+                        foreach (InteractableObject o in GameObject.FindObjectsOfType<InteractableObject>())
+                        {
+                            o.Reset();
+                            o.enabled = false;
+                        }
                     }
                     break;
             }

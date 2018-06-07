@@ -8,9 +8,12 @@ public class Tutorial_Picking : TutorialManager {
     {
         First,
         Welcome,
+        MoveTo,
         PickOne,
         PickTwo,
+        OpenDropOne,
         DropOne,
+        OpenDropTwo,
         DropTwo,
         Done,
         None
@@ -36,8 +39,18 @@ public class Tutorial_Picking : TutorialManager {
                 case TutorialStep.Welcome:
                     if (nextButtonClicked)
                     {
+                        currentStep = TutorialStep.MoveTo;
+                        UItext.text = "Come close to items.";
+
+                        player.tutorial_movedTo = false;
+                    }
+                    break;
+                case TutorialStep.MoveTo:
+                    if (player.tutorial_movedTo)
+                    { 
                         currentStep = TutorialStep.PickOne;
-                        UItext.text = "Come close to items. Picking is performed simply by clicking on desired item. Try to pick up piece of cloth.";
+                        UItext.text = "Picking is performed simply by clicking on desired item. Try to pick up piece of cloth.";
+
                         handsInventory.tutorial_pickedLeft = false;
                         itemToPick = "Cloth";
 
@@ -50,8 +63,7 @@ public class Tutorial_Picking : TutorialManager {
                     {
                         handsInventory.tutorial_pickedLeft = false;
                         currentStep = TutorialStep.PickTwo;
-                        UItext.text = "First item picked will go in left hand, second - in right hand. If player can also examine item, picking is done in two steps:" +
-                            "\n 1. Click on item to open controls menu. \n 2. Select \'pick up\' option. \n Try to pick up bottle of medicine.";
+                        UItext.text = "First item picked will go in left hand, second - in right hand. Pick up medicine now.";
                         itemToPick = "Medicine";
                         handsInventory.tutorial_pickedRight = false;
 
@@ -63,9 +75,21 @@ public class Tutorial_Picking : TutorialManager {
                     {
                         handsInventory.tutorial_pickedRight = false;
                         itemToPick = "";
+
+                        currentStep = TutorialStep.OpenDropOne;
+                        UItext.text = "Good job! Now let's proceed to putting items back on table. Putting items is done in two steps. First - click on cloth.";
+
+                        player.tutorial_itemControls = false;
+                    }
+                    break;
+                case TutorialStep.OpenDropOne:
+                    if (player.tutorial_itemControls)
+                    {
+                        player.tutorial_itemControls = false;
+
                         currentStep = TutorialStep.DropOne;
-                        UItext.text = "Good job! Now let's proceed to putting items back on table. Putting items is done similarly. Click on desired item, then select \'Drop\' option from controls menu. " +
-                            "\n Try to drop cloth.";
+                        UItext.text = "Now select Drop option";
+
                         itemToDrop = "Cloth";
                         handsInventory.tutorial_droppedLeft = false;
                     }
@@ -74,8 +98,21 @@ public class Tutorial_Picking : TutorialManager {
                     if (handsInventory.tutorial_droppedLeft)
                     {
                         handsInventory.tutorial_droppedLeft = false;
+
+                        currentStep = TutorialStep.OpenDropTwo;
+                        UItext.text = "You're doing great! Now click bottle of medicine";
+
+                        player.tutorial_itemControls = false;
+                    }
+                    break;
+                case TutorialStep.OpenDropTwo:
+                    if (player.tutorial_itemControls)
+                    {
+                        player.tutorial_itemControls = false;
+
                         currentStep = TutorialStep.DropTwo;
-                        UItext.text = "You're doing great! Now drop another item too. ";
+                        UItext.text = "And select to drop this too";
+
                         itemToDrop = "Medicine";
                         handsInventory.tutorial_droppedRight = false;
                     }

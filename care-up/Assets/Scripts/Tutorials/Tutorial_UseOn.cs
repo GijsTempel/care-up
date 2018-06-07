@@ -8,7 +8,10 @@ public class Tutorial_UseOn : TutorialManager {
     {
         First,
         Welcome,
+        MoveTo,
         PickNeedle,
+        OpenControls,
+        ClickUseOn,
         UseOn,
         Done,
         None
@@ -34,8 +37,19 @@ public class Tutorial_UseOn : TutorialManager {
                 case TutorialStep.Welcome:
                     if (nextButtonClicked)
                     {
+                        currentStep = TutorialStep.MoveTo;
+                        UItext.text = "Move to table";
+
+                        player.tutorial_movedTo = false;
+                    }
+                    break;
+                case TutorialStep.MoveTo:
+                    if (player.tutorial_movedTo)
+                    {
+                        player.tutorial_movedTo = false;
+
                         currentStep = TutorialStep.PickNeedle;
-                        UItext.text = "Come close to items. Pick the needle.";
+                        UItext.text = "Pick the needle.";
 
                         handsInventory.tutorial_pickedLeft = false;
                         
@@ -49,13 +63,34 @@ public class Tutorial_UseOn : TutorialManager {
                     if (handsInventory.tutorial_pickedLeft)
                     {
                         handsInventory.tutorial_pickedLeft = false;
-                        handsInventory.tutorial_pickedRight = false;
                         itemToPick = "";
 
                         particleHint.SetActive(false);
 
+                        currentStep = TutorialStep.OpenControls;
+                        UItext.text = "Click the needle";
+
+                        player.tutorial_itemControls = false;
+                    }
+                    break;
+                case TutorialStep.OpenControls:
+                    if (player.tutorial_itemControls)
+                    {
+                        player.tutorial_itemControls = false;
+
+                        currentStep = TutorialStep.ClickUseOn;
+                        UItext.text = "Select UseOn option";
+
+                        player.tutorial_UseOnControl = false;
+                    }
+                    break;
+                case TutorialStep.ClickUseOn:
+                    if (player.tutorial_UseOnControl)
+                    {
+                        player.tutorial_UseOnControl = false;
+                        
                         currentStep = TutorialStep.UseOn;
-                        UItext.text = "Use it on the needle cup.";
+                        UItext.text = "Click on the needle cup.";
                         
                         handsInventory.tutorial_itemUsedOn = false;
                     }
