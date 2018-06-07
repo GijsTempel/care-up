@@ -29,7 +29,7 @@ public class Tutorial_UseOn : TutorialManager {
             {
                 case TutorialStep.First:
                     currentStep = TutorialStep.Welcome;
-                    UItext.text = "Welcome. This tutorial will teach you how to use items on other items that are on the table.";
+                    UItext.text = "Welkom. In deze leermodule zal je leren hoe je objecten met andere objecten kunt gebruiken. Denk hierbij aan het weggooien van een naald in de naaldcontainer of het gebruiken van een injectiespuit op de cliënt.";
                     SetUpTutorialNextButton();
 
                     GameObject.Find("DevHint").SetActive(false);
@@ -38,7 +38,7 @@ public class Tutorial_UseOn : TutorialManager {
                     if (nextButtonClicked)
                     {
                         currentStep = TutorialStep.MoveTo;
-                        UItext.text = "Move to table";
+                        UItext.text = "Laten we beginnen door te bewegen naar het werkveld. Doe dit door te klikken op het werkveld.";
 
                         player.tutorial_movedTo = false;
                     }
@@ -49,7 +49,7 @@ public class Tutorial_UseOn : TutorialManager {
                         player.tutorial_movedTo = false;
 
                         currentStep = TutorialStep.PickNeedle;
-                        UItext.text = "Pick the needle.";
+                        UItext.text = "Heel goed. Laten we nu de gebruikte opzuignaald oppakken door erop te klikken.";
 
                         handsInventory.tutorial_pickedLeft = false;
                         
@@ -68,7 +68,7 @@ public class Tutorial_UseOn : TutorialManager {
                         particleHint.SetActive(false);
 
                         currentStep = TutorialStep.OpenControls;
-                        UItext.text = "Click the needle";
+                        UItext.text = "Nu je de naald vast hebt, klik nogmaals op de naald om de opties te tonen. ";
 
                         player.tutorial_itemControls = false;
                     }
@@ -79,7 +79,7 @@ public class Tutorial_UseOn : TutorialManager {
                         player.tutorial_itemControls = false;
 
                         currentStep = TutorialStep.ClickUseOn;
-                        UItext.text = "Select UseOn option";
+                        UItext.text = "Kies voor de optie 'Gebruiken met...' ";
 
                         player.tutorial_UseOnControl = false;
                     }
@@ -90,7 +90,7 @@ public class Tutorial_UseOn : TutorialManager {
                         player.tutorial_UseOnControl = false;
                         
                         currentStep = TutorialStep.UseOn;
-                        UItext.text = "Click on the needle cup.";
+                        UItext.text = "Klik nu op het object waarmee je de naald wilt gebruiken. In dit geval de naaldcontainer.";
                         
                         handsInventory.tutorial_itemUsedOn = false;
                     }
@@ -100,7 +100,7 @@ public class Tutorial_UseOn : TutorialManager {
                     {
                         handsInventory.tutorial_itemUsedOn = false;
                         currentStep = TutorialStep.Done;
-                        UItext.text = "Great work! This concludes picking up tutorial.";
+                        UItext.text = "Super! Dit was de leermodule over het gebruiken van een object in je hand met een ander object zoals de naaldcontainer.";
                     }
                     break;
                 case TutorialStep.Done:

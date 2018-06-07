@@ -36,7 +36,7 @@ public class Tutorial_Talk : TutorialManager
             {
                 case TutorialStep.First:
                     currentStep = TutorialStep.Welcome;
-                    UItext.text = "Welcome. This tutorial will teach you how to use items on other items that are on the table.";
+                    UItext.text = "Welkom. In deze leermodule zul je leren hoe je met mensen een gesprek kunt aangaan.";
                     SetUpTutorialNextButton();
 
                     GameObject.Find("DevHint").SetActive(false);
@@ -45,7 +45,7 @@ public class Tutorial_Talk : TutorialManager
                     if (nextButtonClicked)
                     {
                         currentStep = TutorialStep.MoveTo;
-                        UItext.text = "Move to patient";
+                        UItext.text = "Laten we naar de cliënt toe gaan door op hem te klikken.";
 
                         player.tutorial_movedTo = false;
                     }
@@ -54,7 +54,7 @@ public class Tutorial_Talk : TutorialManager
                     if (player.tutorial_movedTo)
                     {
                         currentStep = TutorialStep.OpenOptions;
-                        UItext.text = "Click on patient.";
+                        UItext.text = "Heel goed. Klik nu nogmaals op de cliënt om het een gesprek te starten. ";
 
                         patient.tutorial_used = false;
                     }
@@ -65,7 +65,7 @@ public class Tutorial_Talk : TutorialManager
                         patient.tutorial_used = false;
 
                         currentStep = TutorialStep.Talk;
-                        UItext.text = "Select first option";
+                        UItext.text = "Als je een gesprek start kun je keuzes maken over wat je tegen de persoon wilt zeggen. Laten we de cliënt begroeten door de optie 'Goedemorgen' te kiezen.";
 
                         patient.tutorial_talked = false;
                     }
@@ -76,7 +76,7 @@ public class Tutorial_Talk : TutorialManager
                         patient.tutorial_talked = false;
 
                         currentStep = TutorialStep.Done;
-                        UItext.text = "Great work! This concludes talking tutorial.";
+                        UItext.text = "Goed gedaan. Je weet nu hoe je een gesprek kunt starten met personen!";
                     }
                     break;
                 case TutorialStep.Done:
