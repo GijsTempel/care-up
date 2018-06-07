@@ -50,6 +50,12 @@ public class RobotManager : MonoBehaviour {
         
         notification = UI_trigger.transform.Find("Notification");
         notification.gameObject.SetActive(false);
+        
+        if (GameObject.FindObjectOfType<TutorialManager>() != null &&
+            GameObject.FindObjectOfType<Tutorial_UI>() == null)
+        {
+            SetUITriggerActive(false);
+        }
     }
 
     void Update ()

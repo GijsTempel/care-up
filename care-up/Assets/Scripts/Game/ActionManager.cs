@@ -648,6 +648,11 @@ public class ActionManager : MonoBehaviour {
             ActionManager.WrongAction();
 
             penalized = true;
+
+            if (type == ActionType.SequenceStep)
+            {
+                GameObject.Find("WrongAction").GetComponent<TimedPopUp>().Set(sublist[0].extraDescr);
+            }
         }
         else
         {

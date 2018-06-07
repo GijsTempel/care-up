@@ -66,6 +66,7 @@ public class PlayerScript : MonoBehaviour {
     private GameObject robotSavedRight;
 
     GameObject devHintUI;
+    GameObject tutorialCanvas;
 
     Tutorial_UI tutorial_UI;
     
@@ -418,6 +419,16 @@ public class PlayerScript : MonoBehaviour {
         }
 
         tutorial_robotUI_opened = true;
+
+        if (GameObject.FindObjectOfType<TutorialManager>() != null)
+        {
+            if (tutorialCanvas == null)
+            {
+                tutorialCanvas = GameObject.Find("TutorialDoneCanvas");
+            }
+
+            tutorialCanvas.SetActive(false);
+        }
     }
 
     public void CloseRobotUI()
@@ -429,7 +440,15 @@ public class PlayerScript : MonoBehaviour {
 
         PlayerAnimationManager.PlayAnimation("IPadFarAway");
         robotUIopened = false;
-        devHintUI.SetActive(true);
+
+        if (GameObject.FindObjectOfType<TutorialManager>() == null)
+        {
+            devHintUI.SetActive(true);
+        }
+        else
+        {
+            tutorialCanvas.SetActive(true);
+        }
 
         RobotManager.SetUITriggerActive(true);
         tutorial_robotUI_closed = true;
