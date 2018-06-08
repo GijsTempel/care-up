@@ -9,10 +9,12 @@ public class Tutorial_Combining : TutorialManager {
         First,
         Welcome,
         MoveTo,
-        PickBoth,
+        PickOne,
+        PickTwo,
         OpenControls,
         ClickUseOn,
         Combine,
+        Explanaiton,
         OpenControls2,
         Decombine,
         Done,
@@ -54,31 +56,41 @@ public class Tutorial_Combining : TutorialManager {
                     {
                         player.tutorial_movedTo = false;
                         
-                        currentStep = TutorialStep.PickBoth;
+                        currentStep = TutorialStep.PickOne;
                         hintsBox.anchoredPosition = new Vector2(236.25f, 149.45f); 
                         UItext.text = "We zien een spuit en een naald op het werkveld liggen. Pak beide objecten op door erop te klikken.";
 
                         handsInventory.tutorial_pickedLeft = false;
-                        handsInventory.tutorial_pickedRight = false;
 
                         itemToPick = "Syringe";
-                        itemToPick2 = "AbsorptionNeedle";
 
                         particleHint.SetActive(true);
                         particleHint.transform.position = GameObject.Find("Syringe").transform.position;
-                        particleHint_alt.SetActive(true);
-                        particleHint_alt.transform.position = GameObject.Find("AbsorptionNeedle").transform.position;
                     }
                     break;
-                case TutorialStep.PickBoth:
-                    if (handsInventory.tutorial_pickedLeft && handsInventory.tutorial_pickedRight)
+                case TutorialStep.PickOne:
+                    if (handsInventory.tutorial_pickedLeft)
                     {
                         handsInventory.tutorial_pickedLeft = false;
+
+                        currentStep = TutorialStep.PickTwo;
+                        UItext.text = "Pick needle";
+
                         handsInventory.tutorial_pickedRight = false;
-                        itemToPick = itemToPick2 = "";
+
+                        itemToPick = "AbsorptionNeedle";
+                        
+                        particleHint.transform.position = GameObject.Find("AbsorptionNeedle").transform.position;
+                    }
+                    break;
+                case TutorialStep.PickTwo:
+                    if (handsInventory.tutorial_pickedRight)
+                    {
+                        handsInventory.tutorial_pickedRight = false;
+                        itemToPick = "";
 
                         particleHint.SetActive(false);
-                        particleHint_alt.SetActive(false);
+
                         hintsBox.anchoredPosition = new Vector2(-67f, 37f);
                         currentStep = TutorialStep.OpenControls;
                         UItext.text = "Nu we beide objecten in onze handen hebben kunnen we erop klikken om de opties te tonen. Klik nu op de spuit.";
@@ -115,6 +127,14 @@ public class Tutorial_Combining : TutorialManager {
                     {
                         handsInventory.tutorial_combined = false;
 
+                        currentStep = TutorialStep.Explanaiton;
+                        UItext.text = "Explanation about ability to also use right hand for options (with ok button)";
+                        SetUpTutorialNextButton();
+                    }
+                    break;
+                case TutorialStep.Explanaiton:
+                    if (nextButtonClicked)
+                    { 
                         currentStep = TutorialStep.OpenControls2;
                         hintsBox.anchoredPosition = new Vector2(0f, -239f);
                         UItext.text = "Heel goed. Laten we nu de dop van de naald afhalen. Dit noemen we in Care Up 'Scheiden'. Klik op de spuit met opzuignaald die je in je hand vast hebt om het opties menu te openen.";
