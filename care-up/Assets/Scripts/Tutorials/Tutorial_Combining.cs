@@ -170,14 +170,7 @@ public class Tutorial_Combining : TutorialManager {
                     if (!Paused())
                     {
                         currentStep = TutorialStep.None;
-                        endPanel.SetActive(true);
-                        player.enabled = false;
-                        GameObject.FindObjectOfType<RobotManager>().enabled = false;
-                        foreach (InteractableObject o in GameObject.FindObjectsOfType<InteractableObject>())
-                        {
-                            o.Reset();
-                            o.enabled = false;
-                        }
+                        TutorialEnd();
                     }
                     break;
             }

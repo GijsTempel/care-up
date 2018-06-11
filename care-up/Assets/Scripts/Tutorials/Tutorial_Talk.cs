@@ -83,14 +83,7 @@ public class Tutorial_Talk : TutorialManager
                     if (patient.tutorial_greetingEnded)
                     {
                         currentStep = TutorialStep.None;
-                        endPanel.SetActive(true);
-                        player.enabled = false;
-                        GameObject.FindObjectOfType<RobotManager>().enabled = false;
-                        foreach (InteractableObject o in GameObject.FindObjectsOfType<InteractableObject>())
-                        {
-                            o.Reset();
-                            o.enabled = false;
-                        }
+                        TutorialEnd();
                     }
                     break;
             }

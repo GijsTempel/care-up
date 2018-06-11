@@ -128,14 +128,7 @@ public class Tutorial_Picking : TutorialManager {
                     break;
                 case TutorialStep.Done:
                     currentStep = TutorialStep.None;
-                    endPanel.SetActive(true);
-                    player.enabled = false;
-                    GameObject.FindObjectOfType<RobotManager>().enabled = false;
-                    foreach (InteractableObject o in GameObject.FindObjectsOfType<InteractableObject>())
-                    {
-                        o.Reset();
-                        o.enabled = false;
-                    }
+                    TutorialEnd();
                     break;
             }
         }

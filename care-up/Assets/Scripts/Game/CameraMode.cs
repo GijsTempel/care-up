@@ -257,7 +257,12 @@ public class CameraMode : MonoBehaviour {
 
             GameObject.Find("ObjectViewButtons").SetActive(false);
             playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
-            RobotManager.SetUITriggerActive(true);
+
+            if (GameObject.FindObjectOfType<TutorialManager>() == null ||
+                GameObject.FindObjectOfType<Tutorial_UI>() != null)
+            {
+                RobotManager.SetUITriggerActive(true);
+            }
         }
         else if (mode == Mode.SelectionDialogue)
         {
@@ -270,7 +275,11 @@ public class CameraMode : MonoBehaviour {
         {
             TogglePlayerScript(true);
             playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
-            RobotManager.SetUITriggerActive(true);
+            if (GameObject.FindObjectOfType<TutorialManager>() == null ||
+                GameObject.FindObjectOfType<Tutorial_UI>() != null)
+            {
+                RobotManager.SetUITriggerActive(true);
+            }
             GameObject.FindObjectOfType<RobotManager>().top = true;
         }
         else if (currentMode == Mode.Free && mode == Mode.ConfirmUI)
@@ -289,7 +298,11 @@ public class CameraMode : MonoBehaviour {
             confirmUI.SetActive(false);
 
             playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
-            RobotManager.SetUITriggerActive(true);
+            if (GameObject.FindObjectOfType<TutorialManager>() == null ||
+                GameObject.FindObjectOfType<Tutorial_UI>() != null)
+            {
+                RobotManager.SetUITriggerActive(true);
+            }
         }
         else if (mode == Mode.Cinematic)
         {
@@ -319,7 +332,11 @@ public class CameraMode : MonoBehaviour {
             playerScript.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
 
             playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
-            RobotManager.SetUITriggerActive(true);
+            if (GameObject.FindObjectOfType<TutorialManager>() == null ||
+                GameObject.FindObjectOfType<Tutorial_UI>() != null)
+            {
+                RobotManager.SetUITriggerActive(true);
+            }
             dontMoveCamera = false;
         }
 
@@ -402,7 +419,11 @@ public class CameraMode : MonoBehaviour {
                 soloCamera = false;
 
                 playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
-                RobotManager.SetUITriggerActive(true);
+                if (GameObject.FindObjectOfType<TutorialManager>() == null ||
+                    GameObject.FindObjectOfType<Tutorial_UI>() != null)
+                {
+                    RobotManager.SetUITriggerActive(true);
+                }
                 dontMoveCamera = false;
             }
         }
