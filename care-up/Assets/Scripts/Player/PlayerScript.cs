@@ -73,6 +73,8 @@ public class PlayerScript : MonoBehaviour {
     GameObject tutorialCanvas;
 
     Tutorial_UI tutorial_UI;
+
+    bool moveBackBtnActiveForIpad = false;
     
     public GameObject MoveBackButtonObject
     {
@@ -438,6 +440,9 @@ public class PlayerScript : MonoBehaviour {
 
             tutorialCanvas.SetActive(false);
         }
+
+        moveBackBtnActiveForIpad = MoveBackButtonObject.activeSelf;
+        MoveBackButtonObject.SetActive(false);
     }
 
     public void CloseRobotUI()
@@ -461,6 +466,8 @@ public class PlayerScript : MonoBehaviour {
 
         RobotManager.SetUITriggerActive(true);
         tutorial_robotUI_closed = true;
+
+        MoveBackButtonObject.SetActive(moveBackBtnActiveForIpad);
     }
 
     public void PickItemsBackAfterRobotUI()
