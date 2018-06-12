@@ -54,7 +54,7 @@ public class Tutorial_UseOn : TutorialManager {
                         player.tutorial_movedTo = false;
 
                         currentStep = TutorialStep.PickNeedle;
-                        hintsBox.anchoredPosition = new Vector2(309f, -322f);
+                        hintsBox.anchoredPosition = new Vector2(372.73f, -237f);
                         UItext.text = "Heel goed. Laten we nu de gebruikte opzuignaald oppakken door erop te klikken.";
 
                         handsInventory.tutorial_pickedLeft = false;
@@ -74,7 +74,7 @@ public class Tutorial_UseOn : TutorialManager {
                         particleHint.SetActive(false);
 
                         currentStep = TutorialStep.OpenControls;
-                        hintsBox.anchoredPosition = new Vector2(48f, -221f);
+                        hintsBox.anchoredPosition = new Vector2(207f, -138f);
                         UItext.text = "Nu je de naald vast hebt, klik nogmaals op de naald om de opties te tonen. ";
 
                         player.tutorial_itemControls = false;
@@ -98,7 +98,7 @@ public class Tutorial_UseOn : TutorialManager {
                         player.tutorial_UseOnControl = false;
                         
                         currentStep = TutorialStep.UseOn;
-                        hintsBox.anchoredPosition = new Vector2(75f, 0.0f);
+                        hintsBox.anchoredPosition = new Vector2(566f, -69f);
                         UItext.text = "Klik nu op het object waarmee je de naald wilt gebruiken. In dit geval de naaldcontainer.";
                         
                         handsInventory.tutorial_itemUsedOn = false;
