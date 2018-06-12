@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ActionList>
+  <action points="1" description="Vraag de cliënt de injectieplaats te ontbloten (Klik met op de spuit + injectienaald + beschermdop in je hand op de 'Terug naar overzicht' knop rechtsboven in het scherm om terug te gaan naar het overzicht. Klik daarna op de cliënt. Klik nogmaals op de cliënt om te praten. Kies de optie 'Zou u uw mouw omhoog kunnen doen?'.)" audioHint="Injection/H12-2"
+		index="0" type="talk" topic="RollUpSleeves" extra="Vraag de cliënt de injectieplaats te ontbloten en te ontspannen zodat je makkelijk bij de injectieplaats kunt."></action>
+
   <action description="7.2 Start injecteren. (Klik op de spuit, daarna op 'gebruiken met..' en vervolgens op de cliënt)"	audioHint="Injection/H13-2"
-		index="0" type="useOn" item="SyringeWithInjectionNeedleCap" target="Patient" extra="Helaas dit is een verkeerde actie. Volg de bovenstaande tip om verder te gaan."></action>
+		index="1" type="useOn" item="SyringeWithInjectionNeedleCap" target="Patient" extra="Helaas dit is een verkeerde actie. Volg de bovenstaande tip om verder te gaan."></action>
 
   <action description="8. Palpeer de injectieplaats en controleer of de injectieplaats schoon en droog is." fullDescription="" audioHint="Injection/AS1-2"
 		index="1" type="sequenceStep" value="clean skin" extra="Helaas dit is een verkeerde actie. Volg de bovenstaande tip om verder te gaan."></action>
@@ -19,4 +22,8 @@
 		index="7" type="sequenceStep" value="Inject medicine slow and steady" extra="Helaas dit is een verkeerde actie. Volg de bovenstaande tip om verder te gaan."></action>
   <action description="16.Trek de naald uit de huid (Houd een gaasje voor de opvang van een eventuele bloeddruppel gereed). " audioHint="Injection/AS8-2"
 		index="8" type="sequenceStep" value="pull needle out of skin" extra="Helaas dit is een verkeerde actie. Volg de bovenstaande tip om verder te gaan."></action>
+
+
+  <action description="Finish tutorial" fullDescription="" audioHint=""
+		index="9" type="use" value="__tutorialEnd" />
 </ActionList>

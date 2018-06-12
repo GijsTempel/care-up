@@ -8,7 +8,10 @@ public class Tutorial_Sequence : TutorialManager
     {
         First,
         Welcome,
+        MoveTo,
         PickSyringe,
+        MoveToPatient,
+        Talk,
         UseOnPatient,
         SequenceExplanation,
         CompleteSequence,
@@ -21,6 +24,15 @@ public class Tutorial_Sequence : TutorialManager
     [HideInInspector]
     public bool sequenceCompleted = false;
     
+    private InjectionPatient patient;
+
+    protected override void Start()
+    {
+        base.Start();
+
+        patient = GameObject.FindObjectOfType<InjectionPatient>();
+    }
+
     protected override void Update()
     {
         base.Update();
@@ -39,6 +51,17 @@ public class Tutorial_Sequence : TutorialManager
                 case TutorialStep.Welcome:
                     if (nextButtonClicked)
                     {
+                        currentStep = TutorialStep.MoveTo;
+                        UItext.text = "Laten we beginnen. Beweeg naar het werkveld door erop te klikken.";
+
+                        player.tutorial_movedTo = false;
+                    }
+                    break;
+                case TutorialStep.MoveTo:
+                    if (player.tutorial_movedTo)
+                    {
+                        player.tutorial_movedTo = false;
+
                         currentStep = TutorialStep.PickSyringe;
                         UItext.text = "Pick up syringe";
 
@@ -50,6 +73,28 @@ public class Tutorial_Sequence : TutorialManager
                     if (handsInventory.tutorial_pickedLeft)
                     {
                         handsInventory.tutorial_pickedLeft = false;
+
+                        currentStep = TutorialStep.MoveToPatient;
+                        UItext.text = "Laten we beginnen. Beweeg naar het werkveld door erop te klikken.";
+
+                        player.tutorial_movedTo = false;
+                    }
+                    break;
+                case TutorialStep.MoveToPatient:
+                    if (player.tutorial_movedTo)
+                    {
+                        player.tutorial_movedTo = false;
+
+                        currentStep = TutorialStep.Talk;
+                        UItext.text = "ask patient to pull up sleeves";
+
+                        patient.tutorial_talked = false;
+                    }
+                    break;
+                case TutorialStep.Talk:
+                    if (patient.tutorial_talked)
+                    {
+                        patient.tutorial_talked = false;
 
                         currentStep = TutorialStep.UseOnPatient;
                         UItext.text = "Use syringe on patient";
