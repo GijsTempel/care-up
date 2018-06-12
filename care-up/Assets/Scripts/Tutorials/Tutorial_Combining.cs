@@ -58,7 +58,7 @@ public class Tutorial_Combining : TutorialManager {
                         
                         currentStep = TutorialStep.PickOne;
                         hintsBox.anchoredPosition = new Vector2(236.25f, 149.45f); 
-                        UItext.text = "We zien een spuit en een naald op het werkveld liggen. Pak beide objecten op door erop te klikken.";
+                        UItext.text = "We zien een spuit en een naald op het werkveld liggen. Pak de spuit op door erop te klikken.";
 
                         handsInventory.tutorial_pickedLeft = false;
 
@@ -74,7 +74,7 @@ public class Tutorial_Combining : TutorialManager {
                         handsInventory.tutorial_pickedLeft = false;
 
                         currentStep = TutorialStep.PickTwo;
-                        UItext.text = "Pick needle";
+                        UItext.text = "Heel goed! Pak nu ook de naald op. Doe dit door op de naald te klikken.";
 
                         handsInventory.tutorial_pickedRight = false;
 
@@ -128,7 +128,7 @@ public class Tutorial_Combining : TutorialManager {
                         handsInventory.tutorial_combined = false;
 
                         currentStep = TutorialStep.Explanaiton;
-                        UItext.text = "Explanation about ability to also use right hand for options (with ok button)";
+                        UItext.text = "De opties tonen voor objecten kan zowel met het object in je linkerhand als in je rechterhand.";
                         SetUpTutorialNextButton();
                     }
                     break;
@@ -137,7 +137,7 @@ public class Tutorial_Combining : TutorialManager {
                     { 
                         currentStep = TutorialStep.OpenControls2;
                         hintsBox.anchoredPosition = new Vector2(0f, -239f);
-                        UItext.text = "Heel goed. Laten we nu de dop van de naald afhalen. Dit noemen we in Care Up 'Scheiden'. Klik op de spuit met opzuignaald die je in je hand vast hebt om het opties menu te openen.";
+                        UItext.text = "Laten we nu de dop van de naald afhalen. Dit noemen we in Care Up 'Scheiden'. Klik op de spuit met opzuignaald die je in je hand vast hebt om het opties menu te openen.";
 
                         player.tutorial_itemControls = false;
                     }
