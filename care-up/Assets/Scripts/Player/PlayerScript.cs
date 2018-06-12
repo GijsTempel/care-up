@@ -431,7 +431,8 @@ public class PlayerScript : MonoBehaviour {
 
         tutorial_robotUI_opened = true;
 
-        if (GameObject.FindObjectOfType<TutorialManager>() != null)
+        if (GameObject.FindObjectOfType<TutorialManager>() != null
+            && GameObject.FindObjectOfType<Tutorial_UI>() == null)
         {
             if (tutorialCanvas == null)
             {
@@ -461,6 +462,11 @@ public class PlayerScript : MonoBehaviour {
         }
         else
         {
+            if (tutorialCanvas == null)
+            {
+                tutorialCanvas = GameObject.Find("TutorialDoneCanvas");
+            }
+
             tutorialCanvas.SetActive(true);
         }
 
