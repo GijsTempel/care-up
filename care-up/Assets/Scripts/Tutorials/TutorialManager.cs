@@ -55,6 +55,8 @@ public class TutorialManager : MonoBehaviour
     protected GameObject nextButton;
     protected bool nextButtonClicked = false;
 
+    public bool finished = false;
+
     public bool TutorialEnding
     {
         get { return endPanel.activeSelf; }
@@ -161,6 +163,8 @@ public class TutorialManager : MonoBehaviour
     protected void TutorialEnd()
     {
         endPanel.SetActive(true);
+        player.MoveBackButtonObject.SetActive(false);
+
         player.enabled = false;
         GameObject.FindObjectOfType<RobotManager>().enabled = false;
         foreach (InteractableObject o in GameObject.FindObjectsOfType<InteractableObject>())
@@ -168,6 +172,7 @@ public class TutorialManager : MonoBehaviour
             o.Reset();
             o.enabled = false;
         }
-        player.MoveBackButtonObject.SetActive(false);
+
+        finished = true;
     }
 }

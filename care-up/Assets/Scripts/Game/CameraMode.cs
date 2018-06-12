@@ -331,7 +331,13 @@ public class CameraMode : MonoBehaviour {
             playerScript.mouseLook.clampHorisontalRotation = false;
             playerScript.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
 
-            playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
+            if ((GameObject.FindObjectOfType<TutorialManager>() != null &&
+                !GameObject.FindObjectOfType<TutorialManager>().finished) ||
+                GameObject.FindObjectOfType<TutorialManager>() == null)
+            {
+                playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
+            }
+
             if (GameObject.FindObjectOfType<TutorialManager>() == null ||
                 GameObject.FindObjectOfType<Tutorial_UI>() != null)
             {
