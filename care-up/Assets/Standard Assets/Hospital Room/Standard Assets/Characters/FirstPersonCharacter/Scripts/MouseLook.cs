@@ -47,7 +47,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         
         public float LookRotation(Transform character, Transform camera)
         {
-            float yRot, xRot;
+            float yRot = 0.0f, xRot = 0.0f;
 
             if (Input.touchCount > 0)
             {
@@ -56,10 +56,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             else
             {
-                // no errors plz for no reason
-                xRot = 0f;
-                yRot = 0f;
-
                 #if UNITY_STANDALONE_OSX
                     xRot = Input.GetAxisRaw("Mouse Y") * XMacSensetivity;
                     yRot = Input.GetAxisRaw("Mouse X") * YMacSensetivity;
