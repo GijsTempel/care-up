@@ -276,7 +276,7 @@ public class PlayerScript : MonoBehaviour {
         {
             ToggleUsingOnMode(false);
         }
-        else if (Input.GetMouseButtonUp(0) && freeLook)
+        else if (Controls.MouseReleased() && freeLook)
         {
             if (rotated < 3.0f && controls.SelectedObject != null &&
                 controls.SelectedObject.GetComponent<WalkToGroup>())

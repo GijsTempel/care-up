@@ -195,7 +195,7 @@ public class Controls : MonoBehaviour {
         }
 
         return (Input.touchCount > 0) ?
-            Input.GetTouch(0).phase == TouchPhase.Ended
+            Input.GetTouch(0).phase == TouchPhase.Began
             : (Input.GetMouseButtonDown(0) || keyPreferences.mouseClickKey.Pressed());
     }
     /// <summary>
@@ -205,5 +205,11 @@ public class Controls : MonoBehaviour {
     public bool RightMouseClicked()
     {
         return Input.GetMouseButtonDown(1) || keyPreferences.closeObjectView.Pressed();
+    }
+
+    public static bool MouseReleased()
+    {
+        return (Input.touchCount > 0) ?
+            Input.GetTouch(0).phase == TouchPhase.Ended : (Input.GetMouseButtonUp(0));
     }
 }
