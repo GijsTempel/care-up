@@ -128,7 +128,7 @@ public class Tutorial_Sequence : TutorialManager
                         currentStep = TutorialStep.CompleteSequence;
                         sequenceCompleted = false;
                         PlayerAnimationManager.SequenceTutorialLock(false);
-                        UItext.text = "In deze instructie zijn de juiste keuzes aangegeven in het groen. Doorloop nu de verschillende stappen om het injecteren uit te voeren door de juiste keuzes te selecteren.";
+                        UItext.text = "In deze instructie zijn de juiste keuzes aangegeven in het groen. Doorloop nu de verschillende injectie stappen door de juiste keuzes te selecteren.";
                     }
                     break;
                 case TutorialStep.CompleteSequence:
