@@ -194,6 +194,11 @@ public class Controls : MonoBehaviour {
             return false;
         }
 
+        if (Input.touchCount > 0)
+        {
+            LateUpdate();
+        }
+
         return (Input.touchCount > 0) ?
             Input.GetTouch(0).phase == TouchPhase.Began
             : (Input.GetMouseButtonDown(0) || keyPreferences.mouseClickKey.Pressed());

@@ -59,7 +59,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 #if UNITY_STANDALONE_OSX
                     xRot = Input.GetAxisRaw("Mouse Y") * XMacSensetivity;
                     yRot = Input.GetAxisRaw("Mouse X") * YMacSensetivity;
-                #elif UNITY_STANDALONE_WIN
+                #else
                     xRot = Input.GetAxisRaw("Mouse Y") * XSensitivity;
                     yRot = Input.GetAxisRaw("Mouse X") * YSensitivity;
                 #endif

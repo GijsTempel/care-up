@@ -215,8 +215,6 @@ public class PlayerScript : MonoBehaviour {
                 }
             }
         }
-
-        Debug.Log("Free look is toggled and is now " + (freeLook ? "" : "in") + "active.");
     }
 
     private void Update()
