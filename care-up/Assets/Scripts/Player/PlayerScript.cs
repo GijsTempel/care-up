@@ -75,6 +75,7 @@ public class PlayerScript : MonoBehaviour {
     Tutorial_UI tutorial_UI;
 
     bool moveBackBtnActiveForIpad = false;
+    bool devHintActiveForIpad = false;
     
     public GameObject MoveBackButtonObject
     {
@@ -419,6 +420,8 @@ public class PlayerScript : MonoBehaviour {
 
         PlayerAnimationManager.PlayAnimation("IpadCloseUp");
         robotUIopened = true;
+
+        devHintActiveForIpad = devHintUI.activeSelf;
         devHintUI.SetActive(false);
 
         RobotManager.SetUITriggerActive(false);
@@ -448,7 +451,7 @@ public class PlayerScript : MonoBehaviour {
         if (GameObject.FindObjectOfType<TutorialManager>() == null 
             || GameObject.FindObjectOfType<Tutorial_UI>() != null)
         {
-            devHintUI.SetActive(true);
+            devHintUI.SetActive(devHintActiveForIpad);
         }
 
         RobotManager.SetUITriggerActive(true);
