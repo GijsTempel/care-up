@@ -31,13 +31,13 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public float XSensitivity = 2f;
         public float YSensitivity = 2f;
 
-        //touches (android, posibly other phones)
-        public float XTouchSensetivity = 0.01f;
-        public float YTouchSensetivity = 0.01f;
+        //touches (android, possibly other phones)
+        public float XTouchSensetivity = 0.007f;
+        public float YTouchSensetivity = 0.007f;
 
         // OSX
-        public float XMacSensetivity = 20f;
-        public float YMacSensetivity = 20f;
+        public float XMacSensetivity = 50f;
+        public float YMacSensetivity = 50f;
 
         public void Init(Transform character, Transform camera)
         {
