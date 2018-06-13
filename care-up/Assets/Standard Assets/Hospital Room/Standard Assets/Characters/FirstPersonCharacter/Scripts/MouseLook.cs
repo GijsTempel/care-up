@@ -29,7 +29,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private Quaternion savedCamRot;
         private Quaternion savedCharRot;
 
-
+        public float XTouchSensetivity = 0.2f;
+        public float YTouchSensetivity = 0.2f;
 
         public void Init(Transform character, Transform camera)
         {
@@ -43,8 +44,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             if (Input.touchCount > 0)
             {
-                xRot = Input.GetTouch(0).deltaPosition.x * XSensitivity;
-                yRot = Input.GetTouch(0).deltaPosition.y * YSensitivity;
+                xRot = Input.GetTouch(0).deltaPosition.x * XTouchSensetivity;
+                yRot = Input.GetTouch(0).deltaPosition.y * YTouchSensetivity;
             }
             else
             {
