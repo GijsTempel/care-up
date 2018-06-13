@@ -56,6 +56,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             else
             {
+                // no errors plz for no reason
+                xRot = 0f;
+                yRot = 0f;
+
                 #if UNITY_STANDALONE_OSX
                     xRot = Input.GetAxisRaw("Mouse Y") * XMacSensetivity;
                     yRot = Input.GetAxisRaw("Mouse X") * YMacSensetivity;
