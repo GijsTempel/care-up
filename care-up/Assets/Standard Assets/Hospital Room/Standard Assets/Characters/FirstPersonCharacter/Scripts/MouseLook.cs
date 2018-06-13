@@ -10,8 +10,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [HideInInspector]
         public bool lookOnly = false;
 
-        public float XSensitivity = 2f;
-        public float YSensitivity = 2f;
         public bool clampVerticalRotation = true;
         public bool clampHorisontalRotation = true;
         public float MinimumX = -90F;
@@ -29,8 +27,17 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private Quaternion savedCamRot;
         private Quaternion savedCharRot;
 
-        public float XTouchSensetivity = 0.2f;
-        public float YTouchSensetivity = 0.2f;
+        // windows
+        public float XSensitivity = 2f;
+        public float YSensitivity = 2f;
+
+        //touches (android, posibly other phones)
+        public float XTouchSensetivity = 0.01f;
+        public float YTouchSensetivity = 0.01f;
+
+        // OSX
+        public float XMacSensetivity = 20f;
+        public float YMacSensetivity = 20f;
 
         public void Init(Transform character, Transform camera)
         {
@@ -44,13 +51,18 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             if (Input.touchCount > 0)
             {
-                xRot = Input.GetTouch(0).deltaPosition.x * XTouchSensetivity;
-                yRot = Input.GetTouch(0).deltaPosition.y * YTouchSensetivity;
+                xRot = Input.GetTouch(0).deltaPosition.y * XTouchSensetivity;
+                yRot = Input.GetTouch(0).deltaPosition.x * YTouchSensetivity;
             }
             else
             {
-                xRot = Input.GetAxisRaw("Mouse Y") * XSensitivity;
-                yRot = Input.GetAxisRaw("Mouse X") * YSensitivity;
+                #if UNITY_STANDALONE_OSX
+                    xRot = Input.GetAxisRaw("Mouse Y") * XMacSensetivity;
+                    yRot = Input.GetAxisRaw("Mouse X") * YMacSensetivity;
+                #elif UNITY_STANDALONE_WIN
+                    xRot = Input.GetAxisRaw("Mouse Y") * XSensitivity;
+                    yRot = Input.GetAxisRaw("Mouse X") * YSensitivity;
+                #endif
             }
 
             if (lookOnly)
