@@ -29,6 +29,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private Quaternion savedCamRot;
         private Quaternion savedCharRot;
 
+
+
         public void Init(Transform character, Transform camera)
         {
             m_CharacterTargetRot = character.localRotation;
@@ -37,8 +39,18 @@ namespace UnityStandardAssets.Characters.FirstPerson
         
         public float LookRotation(Transform character, Transform camera)
         {
-            float yRot = CrossPlatformInputManager.GetAxis("Mouse X") * XSensitivity;
-            float xRot = CrossPlatformInputManager.GetAxis("Mouse Y") * YSensitivity;
+            float yRot, xRot;
+
+            if (Input.touchCount > 0)
+            {
+                xRot = Input.GetTouch(0).deltaPosition.x * XSensitivity;
+                yRot = Input.GetTouch(0).deltaPosition.y * YSensitivity;
+            }
+            else
+            {
+                xRot = Input.GetAxisRaw("Mouse Y") * XSensitivity;
+                yRot = Input.GetAxisRaw("Mouse X") * YSensitivity;
+            }
 
             if (lookOnly)
             {
