@@ -238,7 +238,7 @@ public class CameraMode : MonoBehaviour {
                 #endif
             }
 
-            Camera.main.transform.Find("UI").Find("ObjectViewButtons").gameObject.SetActive(true);
+			GameObject.Find("UI").transform.Find("ObjectViewButtons").gameObject.SetActive(true);
             Camera.main.transform.localRotation = Quaternion.Euler(8.0f, 0.0f, 0.0f);
 
             playerScript.MoveBackButtonObject.SetActive(false);
