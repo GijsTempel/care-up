@@ -201,6 +201,6 @@ public class PickableObject : InteractableObject {
     {
         string message = "Je hebt geen vrije hand beschikbaar om de actie uit te voeren. Zorg voor een vrije hand door een object terug te leggen.";
         RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
-        messageCenter.NewMessage("Je hebt je handen vol!", message, RobotUIMessageTab.Icon.Warning);
+        messageCenter.NewMessage("Actie kan niet worden uitgevoerd!", message, RobotUIMessageTab.Icon.Warning);
     }
 }
