@@ -32,7 +32,7 @@ public class Narrator : MonoBehaviour {
         {
             if (sound == "WrongAction")
             {
-                sound = Random.value > .5f ? "WA1-1" : "WA2-1";
+                sound = "WA1-1";
             }
 
             AudioClip clip = Resources.Load<AudioClip>("Audio/" + sound);
