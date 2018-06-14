@@ -118,9 +118,9 @@ public class PlayerScript : MonoBehaviour {
 
         handsInv = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
 
-        //usingOnText = GameObject.Find("UsingOnModeText");
+        usingOnText = GameObject.Find("UsingOnModeText");
 		usingOnCancelButton = GameObject.Find("CancelUseOnButton").gameObject;
-        //usingOnText.SetActive(false);
+        usingOnText.SetActive(false);
 
         quiz = GameObject.FindObjectOfType<QuizTab>(); 
 

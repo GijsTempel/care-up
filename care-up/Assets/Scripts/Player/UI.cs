@@ -12,6 +12,10 @@ public class UI : MonoBehaviour {
 		Player.GetComponent<PlayerScript>().MoveBackButton();
 	}
 
+	public void OpenRobotUI()
+    {
+		Player.GetComponent<PlayerScript>().OpenRobotUI();
+    }
 
 
 	// Use this for initialization
