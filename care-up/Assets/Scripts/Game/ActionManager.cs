@@ -417,7 +417,7 @@ public class ActionManager : MonoBehaviour {
     {
         if (controls.keyPreferences.GetHintKey.Pressed())
         {
-            if (Narrator.PlaySound(CurrentAudioHint)) // if sound played
+            if (Narrator.PlayHintSound(CurrentAudioHint)) // if sound played
             {
                 string[] obj;
                 currentAction.ObjectNames(out obj);
@@ -697,7 +697,7 @@ public class ActionManager : MonoBehaviour {
 
         if (actionList.Find(action => action.matched == false && action.notMandatory == false) == null)
         {
-            Narrator.PlaySystemSound("LevelComplete", 0.1f);
+            Narrator.PlaySound("LevelComplete", 0.1f);
             StartCoroutine(DelayedEndScene(5.0f));
             return true;
         }
@@ -746,7 +746,7 @@ public class ActionManager : MonoBehaviour {
 
     public static void PlayAddPointSound()
     {
-        Narrator.PlaySystemSound("PointScored", 0.1f);
+        Narrator.PlaySound("PointScored", 0.1f);
         // todo move somewhere else
         if (GameObject.Find("_Dev") != null)
         {
