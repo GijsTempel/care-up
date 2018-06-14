@@ -65,12 +65,12 @@ public class Cheat_CurrentAction : MonoBehaviour
     {
         GameObject devHint = GameObject.Find("DevHint");
         textObject = devHint.transform.GetChild(0).GetComponent<Text>();
-        extraPanel = devHint.transform.Find("Extra").gameObject;
+		extraPanel = GameObject.Find("Extra").gameObject;
         extraText = extraPanel.transform.GetChild(0).GetComponent<Text>();
         extraPanel.SetActive(false);
         set = false;
 
-        Button extraButton = devHint.transform.Find("ExtraButton").GetComponent<Button>();
+		Button extraButton = GameObject.Find("ExtraButton").GetComponent<Button>();
         extraButton.onClick.AddListener(ToggleExtraInfoPanel);
     }
 

@@ -118,9 +118,9 @@ public class PlayerScript : MonoBehaviour {
 
         handsInv = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
 
-        usingOnText = GameObject.Find("UsingOnModeText");
-        usingOnCancelButton = usingOnText.transform.GetChild(0).gameObject;
-        usingOnText.SetActive(false);
+        //usingOnText = GameObject.Find("UsingOnModeText");
+		usingOnCancelButton = GameObject.Find("CancelUseOnButton").gameObject;
+        //usingOnText.SetActive(false);
 
         quiz = GameObject.FindObjectOfType<QuizTab>(); 
 
@@ -146,10 +146,10 @@ public class PlayerScript : MonoBehaviour {
         robotUI.GetComponent<EventTrigger>().triggers.Add(event1);
         robotUI.GetComponent<EventTrigger>().triggers.Add(event2);
 
-        devHintUI = Camera.main.transform.Find("UI").Find("DevHint").gameObject;
+        devHintUI = GameObject.Find("DevHint").gameObject;
 
-        GameObject wrongActionPopUp = Camera.main.transform.Find("UI").Find("WrongAction").gameObject;
-        GameObject warningPopUp = Camera.main.transform.Find("UI").Find("EmptyHandsWarning").gameObject;
+        GameObject wrongActionPopUp = GameObject.Find("WrongAction").gameObject;
+		GameObject warningPopUp = GameObject.Find("EmptyHandsWarning").gameObject;
 
         wrongActionPopUp.AddComponent<EventTrigger>();
         wrongActionPopUp.GetComponent<EventTrigger>().triggers.Add(event1);

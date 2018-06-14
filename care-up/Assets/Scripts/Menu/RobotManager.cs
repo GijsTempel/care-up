@@ -45,7 +45,7 @@ public class RobotManager : MonoBehaviour {
 
         UI_object = GameObject.Find("RobotUI");
 
-        UI_trigger = Camera.main.transform.Find("UI").Find("RobotUITrigger").gameObject;
+        UI_trigger = GameObject.Find("RobotUITrigger").gameObject;
         UI_trigger.SetActive(true);
         
         notification = UI_trigger.transform.Find("Notification");

@@ -58,6 +58,7 @@ GameObject:
   - component: {fileID: 223179536027541536}
   - component: {fileID: 114112041139173948}
   - component: {fileID: 114799291419532724}
+  - component: {fileID: 114562994571074428}
   m_Layer: 8
   m_Name: UI
   m_TagString: Untagged
@@ -252,7 +253,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1421737638381132
 GameObject:
   m_ObjectHideFlags: 1
@@ -952,8 +953,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: OpenRobotUI
+      - m_Target: {fileID: 1080411362894166}
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1103,9 +1104,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: ToggleUsingOnMode
-        m_Mode: 6
+      - m_Target: {fileID: 114562994571074428}
+        m_MethodName: 
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1729,14 +1730,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.71686745, b: 1, a: 0.6862745}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300064, guid: f86ce8a395acce24889091f6315499ac, type: 3}
+  m_Sprite: {fileID: 21300006, guid: f86ce8a395acce24889091f6315499ac, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1744,6 +1745,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114562994571074428
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1080411362894166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a808c8bd4930442c9cb612a09a809d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114567846984370850
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1903,7 +1915,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.95686275}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2157,8 +2169,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: MoveBackButton
+      - m_Target: {fileID: 114562994571074428}
+        m_MethodName: MoveBack
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2848,7 +2860,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0.93522644, y: 131.68506}
+  m_AnchoredPosition: {x: 0.93522644, y: 81}
   m_SizeDelta: {x: 381.4, y: 81.342834}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224344532832328492
@@ -2884,7 +2896,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00053596497, y: -0.0000019073486}
+  m_AnchoredPosition: {x: -0.00061416626, y: -0.000032424927}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224410767162442674
@@ -2940,10 +2952,10 @@ RectTransform:
   m_Father: {fileID: 224694371190656938}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.15474035, y: 0.3269259}
-  m_AnchorMax: {x: 0.7995542, y: 0.95656663}
-  m_AnchoredPosition: {x: -15.283539, y: 2.5626678}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -16.74057}
+  m_SizeDelta: {x: 291, y: 103}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224570501293006824
 RectTransform:
