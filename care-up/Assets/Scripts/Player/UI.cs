@@ -17,6 +17,11 @@ public class UI : MonoBehaviour {
 		Player.GetComponent<PlayerScript>().OpenRobotUI();
     }
 
+	public void ToggleUsingOnMode()
+    {
+		Player.GetComponent<PlayerScript>().ToggleUsingOnMode(false);
+    }
+    
 
 	// Use this for initialization
 	void Start () {
