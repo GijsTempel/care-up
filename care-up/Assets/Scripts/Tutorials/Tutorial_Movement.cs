@@ -119,7 +119,7 @@ public class Tutorial_Movement : TutorialManager
                         wfPos.SetActive(false);
 
                         currentStep = TutorialStep.Done;
-                        UItext.text = "Gefeliciteerd!";
+                        UItext.text = "Gefeliciteerd! Je weet nu hoe je kunt rond bewegen binnen Care Up.";
                     }
                     break;
                 case TutorialStep.Done:
