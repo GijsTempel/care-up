@@ -46,14 +46,14 @@ public class Tutorial_Movement : TutorialManager
                     currentStep = TutorialStep.Welcome;
                     hintsBox.anchoredPosition = new Vector2(-0.00011874f, 0.00024414f);
                     hintsBox.sizeDelta = new Vector2(788f, 524.9f);
-                    UItext.text = "Welkom, in deze oefening ";
+                    UItext.text = "Welkom! In deze leermodule zal je leren hoe je door de omgeving van Care Up kunt bewegen.";
                     SetUpTutorialNextButton();
                     break;
                 case TutorialStep.Welcome:
                     if (nextButtonClicked)
                     {
                         currentStep = TutorialStep.PointsExpl;
-                        UItext.text = "messege about points of interest with ok button";
+                        UItext.text = "Binnen Care Up kun je bewegen door de omgeving door te klikken op interessante objecten. Interessante objecten kun je ontdekken door met de muis over objecten heen te bewegen. Op tablet of telefoon staan de namen van de interessante objecten boven de objecten weergegeven. ";
                         SetUpTutorialNextButton();
                     }
                     break;
@@ -61,7 +61,7 @@ public class Tutorial_Movement : TutorialManager
                     if (nextButtonClicked)
                     {
                         currentStep = TutorialStep.MoveToTable;
-                        UItext.text = "Move to table";
+                        UItext.text = "Probeer nu naar het werkveld te bewegen. Dit kun je doen door op het werkveld te klikken.";
 
                         player.tutorial_movedTo = false;
                         wfPos.SetActive(true);
@@ -74,7 +74,7 @@ public class Tutorial_Movement : TutorialManager
                         player.tutorial_movedTo = false;
 
                         currentStep = TutorialStep.MoveBack;
-                        UItext.text = "move back to overview with button";
+                        UItext.text = "Je ziet dat we nu naar het werkveld zijn verplaatst. Je kunt op ieder moment weer terug keren naar de beginpositie. Dit nomen wij het overzicht. Keer terug naar het overzicht door te drukken op de knop 'Terug naar overzicht' rechtsboven in het scherm. ";
 
                         player.tutorial_movedBack = false;
                     }
@@ -85,7 +85,7 @@ public class Tutorial_Movement : TutorialManager
                         player.tutorial_movedBack = false;
 
                         currentStep = TutorialStep.MoveToDoctor;
-                        UItext.text = "Move to doctor";
+                        UItext.text = "Heel goed. Probeer nu richting je collega te bewegen door op haar te klikken.";
 
                         player.tutorial_movedTo = false;
                         docPos.SetActive(true);
@@ -98,7 +98,7 @@ public class Tutorial_Movement : TutorialManager
                         player.tutorial_movedTo = false;
 
                         currentStep = TutorialStep.FreeLookExpl;
-                        UItext.text = "Explanation about free look with oke button";
+                        UItext.text = "Binnen Care Up kun je ook om je heen kijken. Om je heen kijken kun je doen door (Computer) De linkermuisknop in te drukken en ingedrukt te houden. Beweeg vervolgens de muis om rond te kijken. Laat de linkermuisknop los om te stoppen met rondkijken. (Mobiel/Tablet) Kijk op de Mobiel/Tablet rond door met je vinger over het beeld te 'swipen'. Klik hierbij niet op interessante objecten.  ";
                         SetUpTutorialNextButton();
                     }
                     break;
@@ -106,7 +106,7 @@ public class Tutorial_Movement : TutorialManager
                     if (nextButtonClicked)
                     {
                         currentStep = TutorialStep.MoveWithFreeLook;
-                        UItext.text = "move to table using free look (turn off back button)";
+                        UItext.text = "Beweeg vanaf je collega dirct naar het werkveld zonder terug te keren naar het overzicht.";
 
                         player.MoveBackButtonObject.SetActive(false);
                         player.tutorial_movedTo = false;
