@@ -22,6 +22,11 @@ public class PlayerSpawn : MonoBehaviour {
 
     void Awake()
     {
+		if (GameObject.FindObjectOfType(typeof(UI)) == null)
+		{
+			GameObject UIPrefab = Instantiate(Resources.Load("Prefabs/UI") as GameObject);
+	    }      
+
         GameObject player = Instantiate(playerPrefab,
             transform.position, transform.rotation);
         player.name = "Player";

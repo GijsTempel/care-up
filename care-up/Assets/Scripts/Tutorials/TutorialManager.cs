@@ -83,8 +83,8 @@ public class TutorialManager : MonoBehaviour
     {
         player = GameObject.Find("Player").GetComponent<PlayerScript>();
 
-        //UItext = GameObject.Find("TutorialHintsText").GetComponent<Text>();
-        //hintsBox = GameObject.Find("TutorialHints").transform as RectTransform;
+        UItext = GameObject.Find("TutorialHintsText").GetComponent<Text>();
+        hintsBox = GameObject.Find("TutorialHints").transform as RectTransform;
     }
 
     protected virtual void Update ()
