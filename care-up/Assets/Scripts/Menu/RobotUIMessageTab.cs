@@ -63,6 +63,7 @@ public class RobotUIMessageTab : RobotUITabs
                 i = warningIcon;
                 break;
             case Icon.Error:
+				GameObject.FindObjectOfType<UI>().BlinkRed();
                 i = errorIcon;
                 break;
         }
