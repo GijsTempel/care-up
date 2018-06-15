@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class UI : MonoBehaviour {
 	GameObject Player;
-
+	public Animator Blink;
 
 	public void MoveBack()
 	{
@@ -21,11 +21,17 @@ public class UI : MonoBehaviour {
     {
 		Player.GetComponent<PlayerScript>().ToggleUsingOnMode(false);
     }
-    
+
+
+	public void BlinkRed()
+	{
+		Blink.SetTrigger("BlinkRed");
+	}
 
 	// Use this for initialization
 	void Start () {
 		Player = GameObject.Find("Player");
+
 	}
 	
 	// Update is called once per frame
