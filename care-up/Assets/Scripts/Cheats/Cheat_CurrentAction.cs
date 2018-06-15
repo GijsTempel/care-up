@@ -140,6 +140,7 @@ public class Cheat_CurrentAction : MonoBehaviour
 
         extraPanel.SetActive(!extraPanel.activeSelf);
 
+
         if (extraPanel.activeSelf)
         {
             tutorial_extraOpened = true;

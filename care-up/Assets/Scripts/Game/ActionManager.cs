@@ -600,6 +600,7 @@ public class ActionManager : MonoBehaviour {
     /// <returns>True if action expected and correct. False otherwise.</returns>
     public bool Check(string[] info, ActionType type)
     {
+		
         bool matched = false;
 
         List<Action> sublist = actionList.Where(action =>
@@ -656,6 +657,7 @@ public class ActionManager : MonoBehaviour {
         }
         else
         {
+			GameObject.FindObjectOfType<UI>().ButtonBlink(false);
             currentPointAward = currentAction.pointValue;
             List<Action> actionsLeft = actionList.Where(action =>
                 action.SubIndex == currentActionIndex &&

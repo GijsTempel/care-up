@@ -6,6 +6,7 @@ using UnityEngine;
 public class UI : MonoBehaviour {
 	GameObject Player;
 	public Animator Blink;
+	bool BlinkState = false;
 
 	public void MoveBack()
 	{
@@ -23,9 +24,24 @@ public class UI : MonoBehaviour {
     }
 
 
-	public void BlinkRed()
+	public void ButtonBlink(bool ToBlink)
 	{
-		Blink.SetTrigger("BlinkRed");
+		if (BlinkState == ToBlink)
+			return;
+		BlinkState = ToBlink;
+        if (transform.Find("Extra").gameObject.activeSelf)
+        {
+            Blink.SetTrigger("BlinkOnes");
+			BlinkState = false;
+        }
+        else if (ToBlink)
+        {
+            Blink.SetTrigger("BlinkStart");
+        }
+        else
+        {
+            Blink.SetTrigger("BlinkStop");
+        }
 	}
 
 	// Use this for initialization
