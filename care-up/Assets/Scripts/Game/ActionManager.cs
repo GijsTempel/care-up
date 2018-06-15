@@ -628,6 +628,7 @@ public class ActionManager : MonoBehaviour {
         if (matched)
         {
             currentStepHintUsed = false;
+			GameObject.FindObjectOfType<UI>().ButtonBlink(false);
         }
 
         if (matched && subcategoryLength <= 1)
@@ -657,7 +658,7 @@ public class ActionManager : MonoBehaviour {
         }
         else
         {
-			GameObject.FindObjectOfType<UI>().ButtonBlink(false);
+			
             currentPointAward = currentAction.pointValue;
             List<Action> actionsLeft = actionList.Where(action =>
                 action.SubIndex == currentActionIndex &&
