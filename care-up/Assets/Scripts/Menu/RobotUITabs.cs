@@ -64,27 +64,8 @@ public class RobotUITabs : MonoBehaviour {
                     tabs.Remove(this);
                 }
             }
-            else
-            {
-                if (name == "InfoTab" )
-                {
-                    SetTabActive(false);
-                    gameObject.SetActive(false);
-                    tabTrigger.SetActive(false);
-                    tabs.Remove(this);
-                }
-            }
         }
-        else
-        {
-            if (name == "InfoTab")
-            {
-                SetTabActive(false);
-                gameObject.SetActive(false);
-                tabTrigger.SetActive(false);
-                tabs.Remove(this);
-            }
-        }
+
         tabTrigger.GetComponent<Button>().onClick.AddListener(OnTabSwitch);
 
         GameObject backBtn = transform.Find("Button").gameObject;
