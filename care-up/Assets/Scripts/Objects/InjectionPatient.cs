@@ -11,6 +11,8 @@ public class InjectionPatient : PersonObject {
     private AudioClip[] audioClips;
     private Animator animator;
 
+    private bool pulledUp = false;
+
     protected override void Start()
     {
         base.Start();
@@ -48,12 +50,14 @@ public class InjectionPatient : PersonObject {
                         // also launches animation after dialogue
                         GetComponent<InjectionPatient>().RollUpSleevesDialogue();
                     }
+                    pulledUp = true;
                     break;
                 case "ComfortablePosition":
                     inhaling = true;
                     break;
                 case "ShowBellyForInsulin":
                     GetComponent<Animator>().SetTrigger("ShowBellyForInsulin");
+                    pulledUp = true;
                     break;
                 default:
                     break;
@@ -61,6 +65,20 @@ public class InjectionPatient : PersonObject {
 
             NextDialogue();
         }
+        else
+        {
+            if (pulledUp && (topic == "RollUpSleeves" || topic == "ShowBellyForInsulin"))
+            {
+                PulledUpMessage();
+            }
+        }
+    }
+
+    private void PulledUpMessage()
+    {
+        string title = "Injectieplaats ontbloten";
+        string message = "De cliënt heeft de injectieplaats al ontbloot. je kunt beginnen met injecteren door de injectie naald+ spuit + schermdop te begebruiken met de Cliënt.";
+        FindObjectOfType<RobotUIMessageTab>().NewMessage(title, message, RobotUIMessageTab.Icon.Warning);
     }
 
     public void GreetDialogue()
