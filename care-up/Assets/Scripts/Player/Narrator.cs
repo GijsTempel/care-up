@@ -25,6 +25,22 @@ public class Narrator : MonoBehaviour {
                 hintSrc = sources[0];
             }
         }
+        else
+        {
+            if (sources[sources.Length - 1] == null)
+            {
+                sources = sources = gameObject.GetComponents<AudioSource>();
+
+                if (sources.Length == 0)
+                {
+                    Debug.LogError("No AudioSource on narrator found");
+                }
+                else
+                {
+                    hintSrc = sources[0];
+                }
+            }
+        }
     }
 
     /// <summary>
