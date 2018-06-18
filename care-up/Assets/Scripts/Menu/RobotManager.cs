@@ -66,15 +66,10 @@ public class RobotManager : MonoBehaviour {
         EventTrigger.Entry event2 = new EventTrigger.Entry();
         event2.eventID = EventTriggerType.PointerExit;
         event2.callback.AddListener((eventData) => { player.ExitHover(); });
-
-        EventTrigger.Entry event3 = new EventTrigger.Entry();
-        event3.eventID = EventTriggerType.PointerClick;
-        event3.callback.AddListener((eventData) => { player.ExitHover(); });
         
         UI_trigger.AddComponent<EventTrigger>();
         UI_trigger.GetComponent<EventTrigger>().triggers.Add(event1);
         UI_trigger.GetComponent<EventTrigger>().triggers.Add(event2);
-        UI_trigger.GetComponent<EventTrigger>().triggers.Add(event3);
     }
 
     void Update ()
