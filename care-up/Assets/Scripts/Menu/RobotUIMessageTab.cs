@@ -63,7 +63,7 @@ public class RobotUIMessageTab : RobotUITabs
                 i = warningIcon;
                 break;
             case Icon.Error:
-				GameObject.FindObjectOfType<UI>().ButtonBlink(true);
+				GameObject.FindObjectOfType<GameUI>().ButtonBlink(true);
                 i = errorIcon;
                 break;
         }

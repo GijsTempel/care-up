@@ -46,6 +46,8 @@ public class Cheat_CurrentAction : MonoBehaviour
                 else
                 {
                     GameObject.Find("DevHint").SetActive(false);
+					GameObject.Find("Extra").SetActive(false);
+					GameObject.Find("ExtraButton").SetActive(false);
                 }
             }
             else

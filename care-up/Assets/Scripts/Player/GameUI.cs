@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class UI : MonoBehaviour {
+public class GameUI : MonoBehaviour {
 	GameObject Player;
 	public Animator Blink;
 	bool BlinkState = false;
