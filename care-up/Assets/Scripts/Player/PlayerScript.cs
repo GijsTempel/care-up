@@ -328,6 +328,7 @@ public class PlayerScript : MonoBehaviour {
             {
                 transform.rotation = Quaternion.Euler(0.0f, group.rotation.y, 0.0f);
                 Camera.main.transform.localRotation = Quaternion.Euler(group.rotation.x, 0.0f, 0.0f);
+                mouseLook.SaveRot(transform, Camera.main.transform);
             }
             currentWalkPosition = group;
 
@@ -361,8 +362,12 @@ public class PlayerScript : MonoBehaviour {
         }
 
         freeLook = false;
-        mouseLook.savedRot = false;
-        mouseLook.ToggleMode(freeLook, transform, Camera.main.transform);
+    }
+
+    public void ResetFreeLook()
+    {
+        transform.rotation = mouseLook.SavedCharRot;
+        Camera.main.transform.rotation = mouseLook.SavedCamRot;
     }
 
     private void OnGUI()

@@ -27,6 +27,16 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private Quaternion savedCamRot;
         private Quaternion savedCharRot;
 
+        public Quaternion SavedCamRot
+        {
+            get { return savedCamRot; }
+        }
+
+        public Quaternion SavedCharRot
+        {
+            get { return savedCharRot; }
+        }
+
         // windows
         public float XSensitivity = 2f;
         public float YSensitivity = 2f;
@@ -114,23 +124,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
             return new Vector2(xRot, yRot).magnitude;
         }
 
-        public void ToggleMode(bool value, Transform character, Transform camera)
+        public void SaveRot(Transform character, Transform camera)
         {
-            if (value)
-            {
-                savedCamRot = camera.rotation;
-                savedCharRot = character.rotation;
-                savedRot = true;
-            }
-            /*else
-            {
-                if (savedRot)
-                {
-                    // this order specifically, parenting
-                    character.rotation = savedCharRot;
-                    camera.rotation = savedCamRot;
-                }
-            }*/
+            savedCamRot = camera.rotation;
+            savedCharRot = character.rotation;
         }
 
         public void SetCursorLock(bool value)
