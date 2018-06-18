@@ -306,6 +306,10 @@ public class CameraMode : MonoBehaviour {
         }
         else if (mode == Mode.Cinematic)
         {
+<<<<<<< 490044ef29ae7a517667066f9f68567809e7eee6
+=======
+            playerScript.ResetFreeLook();
+>>>>>>> resetting camera angle for cinematic animations (combinations and something else left? )
             playerScript.tutorial_movementLock = true;
             playerScript.mouseLook.clampHorisontalRotation = true;
             playerScript.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
