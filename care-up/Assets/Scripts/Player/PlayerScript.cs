@@ -70,6 +70,7 @@ public class PlayerScript : MonoBehaviour {
     private GameObject robotSavedRight;
 
     GameObject devHintUI;
+	GameObject UI;
     GameObject tutorialCanvas;
 
     Tutorial_UI tutorial_UI;
@@ -95,7 +96,7 @@ public class PlayerScript : MonoBehaviour {
     private void Start()
     {
         mouseLook.Init(transform, cam.transform);
-
+		UI = GameObject.FindObjectOfType<UI>().gameObject;
         if (GameObject.Find("Preferences") != null)
         {
             prefs = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
@@ -422,7 +423,8 @@ public class PlayerScript : MonoBehaviour {
         robotUIopened = true;
 
         devHintActiveForIpad = devHintUI.activeSelf;
-        devHintUI.SetActive(false);
+		//devHintUI.SetActive(false);
+		UI.SetActive(false);
 
         RobotManager.SetUITriggerActive(false);
         Camera.main.transform.localRotation = Quaternion.Euler(8.0f, 0.0f, 0.0f);
@@ -456,6 +458,7 @@ public class PlayerScript : MonoBehaviour {
 
         RobotManager.SetUITriggerActive(true);
         tutorial_robotUI_closed = true;
+		UI.SetActive(true);
 
         MoveBackButtonObject.SetActive(moveBackBtnActiveForIpad);
     }
