@@ -16,9 +16,18 @@ public class PlayerScript : MonoBehaviour {
     public bool tutorial_movedBack = false;
     [HideInInspector]
     public bool tutorial_movedTo = false;
+    [HideInInspector]
+    public bool tutorial_robotUI_opened = false;
+    [HideInInspector]
+    public bool tutorial_robotUI_closed = false;
+    [HideInInspector]
+    public bool tutorial_itemControls = false;
+    [HideInInspector]
+    public bool tutorial_UseOnControl = false;
 
     public Camera cam;
     public MouseLook mouseLook = new MouseLook();
+    public bool freeLook = false;
 
     PlayerPrefsManager prefs;
     Controls controls;
@@ -28,6 +37,11 @@ public class PlayerScript : MonoBehaviour {
     private Vector3 savedPos;
     private Quaternion savedRot;
     private List<WalkToGroup> groups;
+    private WalkToGroup currentWalkPosition;
+
+    RobotManager robot;
+    private Vector3 savedRobotPos;
+    private Quaternion savedRobotRot;
 
     private bool fade;
     private float fadeTime = 1f;
@@ -46,9 +60,24 @@ public class PlayerScript : MonoBehaviour {
 
     private GameObject closeButton;
 
+    private float rotated = 0.0f;
+
     [HideInInspector]
     public QuizTab quiz;
+    
+    public bool robotUIopened = false;
+    private GameObject robotSavedLeft;
+    private GameObject robotSavedRight;
 
+    GameObject devHintUI;
+	GameObject UIObject;
+    GameObject tutorialCanvas;
+
+    Tutorial_UI tutorial_UI;
+
+    bool moveBackBtnActiveForIpad = false;
+    bool devHintActiveForIpad = false;
+    
     public GameObject MoveBackButtonObject
     {
         get { return moveBackButton.gameObject; }
@@ -67,7 +96,7 @@ public class PlayerScript : MonoBehaviour {
     private void Start()
     {
         mouseLook.Init(transform, cam.transform);
-
+		UIObject = GameObject.FindObjectOfType<GameUI>().gameObject;
         if (GameObject.Find("Preferences") != null)
         {
             prefs = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
@@ -84,14 +113,14 @@ public class PlayerScript : MonoBehaviour {
 
         moveBackButton = GameObject.Find("MoveBackButton").GetComponent<MoveBackButton>();
         moveBackButton.gameObject.SetActive(false);
-
+        
         itemControls = GameObject.FindObjectOfType<ItemControlsUI>();
         itemControls.gameObject.SetActive(false);
 
         handsInv = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
 
         usingOnText = GameObject.Find("UsingOnModeText");
-        usingOnCancelButton = usingOnText.transform.GetChild(0).gameObject;
+		usingOnCancelButton = GameObject.Find("CancelUseOnButton").gameObject;
         usingOnText.SetActive(false);
 
         quiz = GameObject.FindObjectOfType<QuizTab>(); 
@@ -112,21 +141,16 @@ public class PlayerScript : MonoBehaviour {
         usingOnCancelButton.GetComponent<EventTrigger>().triggers.Add(event1);
         usingOnCancelButton.GetComponent<EventTrigger>().triggers.Add(event2);
         usingOnCancelButton.GetComponent<EventTrigger>().triggers.Add(event3);
-
-        /*closeButton = GameObject.Find("TouchEscapeButton").gameObject;
-        closeButton.AddComponent<EventTrigger>();
-        closeButton.GetComponent<EventTrigger>().triggers.Add(event1);
-        closeButton.GetComponent<EventTrigger>().triggers.Add(event2);
-        closeButton.GetComponent<EventTrigger>().triggers.Add(event3);
-        */
-
-        GameObject robotUI = Camera.main.transform.Find("UI (1)").Find("RobotUI").gameObject;
+        
+        GameObject robotUI = GameObject.Find("RobotUI");
         robotUI.AddComponent<EventTrigger>();
         robotUI.GetComponent<EventTrigger>().triggers.Add(event1);
         robotUI.GetComponent<EventTrigger>().triggers.Add(event2);
 
-        GameObject wrongActionPopUp = Camera.main.transform.Find("UI").Find("WrongAction").gameObject;
-        GameObject warningPopUp = Camera.main.transform.Find("UI").Find("EmptyHandsWarning").gameObject;
+        devHintUI = GameObject.Find("DevHint").gameObject;
+
+        GameObject wrongActionPopUp = GameObject.Find("WrongAction").gameObject;
+		GameObject warningPopUp = GameObject.Find("EmptyHandsWarning").gameObject;
 
         wrongActionPopUp.AddComponent<EventTrigger>();
         wrongActionPopUp.GetComponent<EventTrigger>().triggers.Add(event1);
@@ -151,7 +175,17 @@ public class PlayerScript : MonoBehaviour {
             tutorialEndUi.AddComponent<EventTrigger>();
             tutorialEndUi.GetComponent<EventTrigger>().triggers.Add(event1);
             tutorialEndUi.GetComponent<EventTrigger>().triggers.Add(event2);
+            tutorialEndUi.SetActive(false);
         }
+
+        savedPos = transform.position;
+        savedRot = transform.rotation;
+
+        robot = GameObject.FindObjectOfType<RobotManager>();
+        savedRobotPos = robot.transform.position;
+        savedRobotRot = robot.transform.rotation;
+
+        tutorial_UI = GameObject.FindObjectOfType<Tutorial_UI>();
     }
 
     public void EnterHover()
@@ -164,13 +198,29 @@ public class PlayerScript : MonoBehaviour {
         onButtonHover = false;
     }
 
+    public void FreeLookButton()
+    {
+        freeLook = !freeLook;
+        rotated = 0.0f;
+
+        mouseLook.Init(transform, Camera.main.transform);
+
+        if (freeLook)
+        {
+            foreach (WalkToGroup g in groups)
+            {
+                if (g != currentWalkPosition)
+                {
+                    g.HighlightGroup(false);
+                    g.enabled = true;
+                    g.GetComponent<Collider>().enabled = true;
+                }
+            }
+        }
+    }
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            quiz.NextQuizQuestion(); // trigger quiz question
-        }
-
         if (prefs != null)
         {
             if (!prefs.VR)
@@ -184,15 +234,16 @@ public class PlayerScript : MonoBehaviour {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
-
-        if (controls.MouseClicked() && !moveBackButton.mouseOver)
+        
+        if (freeLook && !robotUIopened)
         {
-            if (away && controls.SelectedObject != null &&
-                controls.SelectedObject.GetComponent<WalkToGroup>())
-            {
-                WalkToGroup(controls.SelectedObject.GetComponent<WalkToGroup>());
-            }
-            else if (!away && controls.SelectedObject != null
+            rotated += mouseLook.LookRotation(transform, Camera.main.transform);
+        }
+
+        if (!freeLook && controls.MouseClicked() && !moveBackButton.mouseOver && !robotUIopened)
+        {
+            if (!away && controls.SelectedObject != null 
+                && controls.SelectedObject.GetComponent<InteractableObject>() != null
                 && !itemControls.gameObject.activeSelf && !onButtonHover)
             {
                 if (usingOnMode)
@@ -202,7 +253,7 @@ public class PlayerScript : MonoBehaviour {
                         handsInv.LeftHandUse();
 
                         ToggleUsingOnMode(false);
-                    } 
+                    }
                     else
                     {
                         handsInv.RightHandUse();
@@ -213,12 +264,29 @@ public class PlayerScript : MonoBehaviour {
                 else
                 {
                     itemControls.Init(controls.SelectedObject);
+                    tutorial_itemControls = true;
                 }
+            }
+            else
+            {
+                FreeLookButton();
             }
         }
         else if (Input.GetMouseButtonDown(1) && usingOnMode)
         {
             ToggleUsingOnMode(false);
+        }
+        else if (Controls.MouseReleased() && freeLook)
+        {
+            if (rotated < 3.0f && controls.SelectedObject != null &&
+                controls.SelectedObject.GetComponent<WalkToGroup>())
+            {
+                WalkToGroup(controls.SelectedObject.GetComponent<WalkToGroup>());
+            }
+            else
+            {
+                FreeLookButton();
+            }
         }
         
         moveBackButton.GetComponent<Button>().interactable = !tutorial_movementLock;
@@ -245,27 +313,34 @@ public class PlayerScript : MonoBehaviour {
         {
             onButtonHover = false;
         }
+        else
+        {
+            tutorial_UseOnControl = true;
+        }
     }
 
     public void WalkToGroup(WalkToGroup group)
     {
-        if (away && !onButtonHover)
+        if (!onButtonHover)
         {
             ToggleAway();
-            savedPos = transform.position;
-            savedRot = transform.GetChild(0).GetChild(0).rotation;
             transform.position = group.position;
             if ( prefs == null || (prefs != null && !prefs.VR))
             {
-                transform.GetChild(0).GetChild(0).rotation = Quaternion.Euler(group.rotation);
+                transform.rotation = Quaternion.Euler(0.0f, group.rotation.y, 0.0f);
+                Camera.main.transform.localRotation = Quaternion.Euler(group.rotation.x, 0.0f, 0.0f);
             }
+            currentWalkPosition = group;
+
+            robot.transform.position = group.robotPosition;
+            robot.transform.rotation = Quaternion.Euler(group.robotRotation);
         }
     }
 
-    private void ToggleAway()
+    private void ToggleAway(bool _away = false)
     {
         fade = true;
-        away = !away;
+        away = _away;
         foreach (WalkToGroup g in groups)
         {
             g.HighlightGroup(false);
@@ -274,11 +349,8 @@ public class PlayerScript : MonoBehaviour {
         }
         moveBackButton.mouseOver = false;
         moveBackButton.gameObject.SetActive(!away);
-
-        if (away)
-        {
-            itemControls.Close();
-        }
+        
+        itemControls.Close();
 
         if (away)
         {
@@ -288,6 +360,10 @@ public class PlayerScript : MonoBehaviour {
         {
             tutorial_movedTo = true;
         }
+
+        freeLook = false;
+        mouseLook.savedRot = false;
+        mouseLook.ToggleMode(freeLook, transform, Camera.main.transform);
     }
 
     private void OnGUI()
@@ -313,12 +389,92 @@ public class PlayerScript : MonoBehaviour {
     {
         if (!away)
         {
-            ToggleAway();
+            ToggleAway(true);
             transform.position = savedPos;
             if (prefs == null || (prefs != null && !prefs.VR))
             {
-                transform.GetChild(0).GetChild(0).rotation = savedRot;
+                transform.rotation = Quaternion.Euler(0.0f, savedRot.eulerAngles.y, 0.0f);
+                Camera.main.transform.localRotation = Quaternion.Euler(savedRot.eulerAngles.x, 0.0f, 0.0f);
             }
+            currentWalkPosition = null;
+
+            robot.transform.position = savedRobotPos;
+            robot.transform.rotation = savedRobotRot;
+        }
+    }
+
+    public void OpenRobotUI()
+    {
+        if (tutorial_UI != null && tutorial_UI.expectedRobotUIstate == false)
+        {
+            return;
+        }
+
+        if (!handsInv.Empty())
+        {
+            robotSavedLeft = handsInv.LeftHandObject;
+            robotSavedRight = handsInv.RightHandObject;
+
+            handsInv.DropLeftObject();
+            handsInv.DropRightObject();
+        }
+
+        PlayerAnimationManager.PlayAnimation("IpadCloseUp");
+        robotUIopened = true;
+
+        devHintActiveForIpad = devHintUI.activeSelf;
+		//devHintUI.SetActive(false);
+		UIObject.SetActive(false);
+
+        RobotManager.SetUITriggerActive(false);
+        Camera.main.transform.localRotation = Quaternion.Euler(8.0f, 0.0f, 0.0f);
+
+        if (RobotManager.NotificationNumber > 0)
+        {
+            GameObject.FindObjectOfType<RobotUIMessageTab>().OnTabSwitch();
+        }
+
+        tutorial_robotUI_opened = true;
+
+        moveBackBtnActiveForIpad = MoveBackButtonObject.activeSelf;
+        MoveBackButtonObject.SetActive(false);
+    }
+
+    public void CloseRobotUI()
+    {
+        if (tutorial_UI != null && tutorial_UI.expectedRobotUIstate == true)
+        {
+            return;
+        }
+
+        PlayerAnimationManager.PlayAnimation("IPadFarAway");
+        robotUIopened = false;
+
+        if (GameObject.FindObjectOfType<TutorialManager>() == null 
+            || GameObject.FindObjectOfType<Tutorial_UI>() != null)
+        {
+            devHintUI.SetActive(devHintActiveForIpad);
+        }
+
+        RobotManager.SetUITriggerActive(true);
+        tutorial_robotUI_closed = true;
+		UIObject.SetActive(true);
+
+        MoveBackButtonObject.SetActive(moveBackBtnActiveForIpad);
+    }
+
+    public void PickItemsBackAfterRobotUI()
+    {
+        if (robotSavedLeft != null)
+        {
+            handsInv.ForcePickItem(robotSavedLeft.name, true);
+            PlayerAnimationManager.SetHandItem(true, robotSavedLeft.gameObject);
+        }
+
+        if (robotSavedRight != null)
+        {
+            handsInv.ForcePickItem(robotSavedRight.name, false);
+            PlayerAnimationManager.SetHandItem(false, robotSavedRight.gameObject);
         }
     }
 }

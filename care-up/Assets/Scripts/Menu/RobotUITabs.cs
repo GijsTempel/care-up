@@ -7,26 +7,48 @@ using UnityEngine.EventSystems;
 public class RobotUITabs : MonoBehaviour {
 
     protected static List<RobotUITabs> tabs = new List<RobotUITabs>();
+    protected static Transform icons;
 
     protected GameObject tabTrigger;
 
     protected RectTransform[] children;
-    
+
+    [HideInInspector]
+    public static bool tutorial_back = false;
+    [HideInInspector]
+    public static bool tutorial_generalOpened = false;
+    [HideInInspector]
+    public static bool tutorial_checkListOpened = false;
+    [HideInInspector]
+    public static bool tutorial_messageCenterOpened = false;
+
+    Tutorial_UI tutorial_UI;
+
     protected virtual void Start()
     {
         tabs.Add(this);
         tabs.RemoveAll(item => item == null);
 
-        tabTrigger = transform.Find("Tab").gameObject;
+        icons = transform.parent.Find("TabletIcons");
+        tabTrigger = icons.Find(name).gameObject;
         children = transform.GetComponentsInChildren<RectTransform>();
-
-        // TODO: move this part to a new 'generaltab script' ( no such script yet )
+        
         GameObject sceneTitle = GameObject.Find("SceneTitle");
         GameObject manager = GameObject.Find("Preferences");
         if (sceneTitle != null && (manager != null && manager.GetComponent<PlayerPrefsManager>() != null))
         {
             sceneTitle.GetComponent<Text>().text = manager.GetComponent<PlayerPrefsManager>().currentSceneVisualName;
-        }   // end todo
+        }
+
+        tutorial_UI = GameObject.FindObjectOfType<Tutorial_UI>();
+        if (tutorial_UI != null)
+        {
+            GameObject exitBtn = GameObject.Find("Exit");
+            if (exitBtn != null)
+            {
+                exitBtn.GetComponent<Button>().interactable = false;
+            }
+        }
 
         SetTabActive(false);
 
@@ -38,11 +60,8 @@ public class RobotUITabs : MonoBehaviour {
                 {
                     SetTabActive(false);
                     gameObject.SetActive(false);
+                    tabTrigger.SetActive(false);
                     tabs.Remove(this);
-                }
-                else
-                {
-                    SetTabActive(true);
                 }
             }
             else
@@ -51,12 +70,8 @@ public class RobotUITabs : MonoBehaviour {
                 {
                     SetTabActive(false);
                     gameObject.SetActive(false);
+                    tabTrigger.SetActive(false);
                     tabs.Remove(this);
-                }
-                else
-                if (name == "GeneralTab")
-                {
-                    SetTabActive(true);
                 }
             }
         }
@@ -66,25 +81,23 @@ public class RobotUITabs : MonoBehaviour {
             {
                 SetTabActive(false);
                 gameObject.SetActive(false);
+                tabTrigger.SetActive(false);
                 tabs.Remove(this);
             }
-            else
-               if (name == "GeneralTab")
-            {
-                SetTabActive(true);
-            }
         }
+        tabTrigger.GetComponent<Button>().onClick.AddListener(OnTabSwitch);
 
-        EventTrigger.Entry clickEvent = new EventTrigger.Entry();
-        clickEvent.eventID = EventTriggerType.PointerClick;
-        clickEvent.callback.AddListener((eventData) => { OnTabSwitch(); });
-
-        tabTrigger.AddComponent<EventTrigger>();
-        tabTrigger.GetComponent<EventTrigger>().triggers.Add(clickEvent);
+        GameObject backBtn = transform.Find("Button").gameObject;
+        backBtn.GetComponent<Button>().onClick.AddListener(BackButton);
     }
 
     public void OnTabSwitch()
     {
+        if (tutorial_UI != null && tutorial_UI.tabToOpen != name)
+        {
+            return;
+        }
+
         QuizTab tab = GameObject.FindObjectOfType<QuizTab>();
         if (tab != null)
         {
@@ -99,6 +112,8 @@ public class RobotUITabs : MonoBehaviour {
             t.SetTabActive(false);
         }
 
+        icons.gameObject.SetActive(false);
+
         SetTabActive(true);
     }
 
@@ -112,6 +127,34 @@ public class RobotUITabs : MonoBehaviour {
             }
         }
 
-        tabTrigger.GetComponent<Image>().color = new Color(0.0f, 0.831f, 1.0f, value ? 1.0f : 0.3f);
+        switch (name)
+        {
+            case "GeneralTab":
+                tutorial_generalOpened = true;
+                break;
+            case "CheckListTab":
+                tutorial_checkListOpened = true;
+                break;
+            case "MessageCenter":
+                tutorial_messageCenterOpened = true;
+                break;
+        }
+    }
+
+    protected void BackButton()
+    {
+        if (tutorial_UI != null && tutorial_UI.closeTab == false)
+        {
+            return;
+        }
+
+        tutorial_back = true;
+
+        icons.gameObject.SetActive(true);
+
+        foreach (RobotUITabs t in tabs)
+        {
+            t.SetTabActive(false);
+        }
     }
 }

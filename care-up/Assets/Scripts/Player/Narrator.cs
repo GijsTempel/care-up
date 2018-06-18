@@ -7,13 +7,23 @@ using System.Collections;
 [RequireComponent(typeof(AudioSource))]
 public class Narrator : MonoBehaviour {
 
-    private static AudioSource audioSource;
+    private static AudioSource[] sources;
+    private static AudioSource hintSrc;
 
     void Start() {
 
-        if (audioSource == null) {
-            audioSource = GetComponent<AudioSource>();
-            if (audioSource == null) Debug.LogError("No AudioSource on narrator found");
+        if (sources == null)
+        {
+            sources = gameObject.GetComponents<AudioSource>();
+
+            if (sources.Length == 0)
+            {
+                Debug.LogError("No AudioSource on narrator found");
+            }
+            else
+            {
+                hintSrc = sources[0];
+            }
         }
     }
 
@@ -22,19 +32,73 @@ public class Narrator : MonoBehaviour {
     /// </summary>
     /// <param name="sound">sound name</param>
     /// <returns>True if played</returns>
-    public static bool PlaySound(string sound)
+    public static bool PlaySound(string sound, float volume = 1.0f)
     {
-        if (audioSource.isPlaying)
+        foreach (AudioSource src in sources)
         {
+            if (src.isPlaying || src == hintSrc)
+            {
+                continue;
+            }
+            else
+            {
+                if (sound == "WrongAction")
+                {
+                    sound = "WA1-1";
+                }
+
+                AudioClip clip = Resources.Load<AudioClip>("Audio/" + sound);
+                if (clip == null)
+                {
+                    Debug.LogWarning("No audio clip " + sound + " found!");
+                }
+                else
+                {
+                    src.PlayOneShot(clip, volume);
+                }
+                return true;
+            }
+        }
+
+        Debug.LogWarning("No available AudioSources! Add more to Narrator object.");
+        return false;
+    }
+
+    /// <summary>
+    /// Plays sound clip
+    /// </summary>
+    /// <param name="sound">sound name</param>
+    /// <returns>True if played</returns>
+    public static bool PlaySound(AudioClip sound, float volume = 1.0f)
+    {
+        foreach (AudioSource src in sources)
+        {
+            if (src.isPlaying || src == hintSrc)
+            {
+                continue;
+            }
+            else
+            {
+                src.PlayOneShot(sound, volume);
+                return true;
+            }
+        }
+
+        Debug.LogWarning("No available AudioSources! Add more to Narrator object.");
+        return false;
+    }
+
+    // checks if hint already playing to avoid multiple at same time
+    public static bool PlayHintSound(string sound, float volume = 1.0f)
+    {
+
+        if (hintSrc.isPlaying)
+        {
+            Debug.Log("Hint already playing");
             return false;
         }
         else
         {
-            if (sound == "WrongAction")
-            {
-                sound = Random.value > .5f ? "WA1-1" : "WA2-1";
-            }
-
             AudioClip clip = Resources.Load<AudioClip>("Audio/" + sound);
             if (clip == null)
             {
@@ -42,33 +106,10 @@ public class Narrator : MonoBehaviour {
             }
             else
             {
-                audioSource.PlayOneShot(clip);
+                hintSrc.PlayOneShot(clip, volume);
             }
+
             return true;
-        }
-    }
-
-    /// <summary>
-    /// Plays sound clip
-    /// </summary>
-    /// <param name="sound">sound name</param>
-    /// <returns>True if played</returns>
-    public static bool PlaySound(AudioClip sound)
-    {
-        audioSource.PlayOneShot(sound);
-        return true;
-    } 
-
-    public static void PlaySystemSound(string sound, float volume)
-    {
-        AudioClip clip = Resources.Load<AudioClip>("Audio/" + sound);
-        if (clip == null)
-        {
-            Debug.LogWarning("No audio clip " + sound + " found!");
-        }
-        else
-        {
-            audioSource.PlayOneShot(clip, volume);
         }
     }
 }

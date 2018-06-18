@@ -61,7 +61,7 @@ public class CameraMovement {
         {
             cursorLocked = false;
         }
-        else if (Input.GetMouseButtonUp(0))
+        else if (Controls.MouseReleased())
         {
             cursorLocked = true;
         }

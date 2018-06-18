@@ -96,7 +96,7 @@ public class PickableObject : InteractableObject {
                 {
                     if (GameObject.Find("GameLogic").GetComponent<TutorialManager>() != null)
                     {
-                        GameObject.Find("GameLogic").GetComponent<TutorialManager>().needleTrashed = true;
+                        //GameObject.Find("GameLogic").GetComponent<TutorialManager>().needleTrashed = true;
                     }
                 }
                 inventory.RemoveHandObject(hand);
@@ -200,7 +200,7 @@ public class PickableObject : InteractableObject {
     public void EmptyHandsWarning()
     {
         string message = "Je hebt geen vrije hand beschikbaar om de actie uit te voeren. Zorg voor een vrije hand door een object terug te leggen.";
-        Camera.main.transform.Find("UI").Find("EmptyHandsWarning").
-                GetComponent<TimedPopUp>().Set(message);
+        RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
+        messageCenter.NewMessage("Actie kan niet worden uitgevoerd!", message, RobotUIMessageTab.Icon.Warning);
     }
 }

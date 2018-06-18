@@ -7,13 +7,14 @@ public class RobotUITabChecklist : RobotUITabs {
 
     private static Text[] items;
     //private static int current = 0;
-
+    
     protected override void Start()
     {
         base.Start();
-        items = transform.GetChild(1).GetChild(0).GetChild(0).GetChild(0).transform.GetComponentsInChildren<Text>(true);
+        items = transform.Find("ChecklistDynamicCanvas").Find("Scroll View").
+            Find("Viewport").Find("GridFolder").transform.GetComponentsInChildren<Text>(true);
 
-        foreach(Text i in items)
+        foreach (Text i in items)
         {
             i.text = "";
         }
@@ -27,19 +28,7 @@ public class RobotUITabChecklist : RobotUITabs {
                 items[index++].text = a.shortDescr;
             }
         }
-
-        //current = 0;
     }
-
-    /* old one
-    public static void StrikeStep()
-    {
-        if (current >= items.Length)
-            return;
-
-        items[current].text = StrikeThrough(items[current].text);
-        ++current;
-    } */
 
     public static void StrikeStep(int index)
     {

@@ -216,7 +216,6 @@ public class ItemControlsUI : MonoBehaviour {
             {
                 transform.position = Input.mousePosition + new Vector3(cursorOffset.x, cursorOffset.y);
                 gameObject.SetActive(true);
-                GameObject.FindObjectOfType<RobotManager>().ToggleTrigger(false);
 
                 GameObject descrGroup = GameObject.Find("ItemDescriptionGroup");
 
@@ -281,7 +280,6 @@ public class ItemControlsUI : MonoBehaviour {
     public void Close()
     {
         gameObject.SetActive(false);
-        GameObject.FindObjectOfType<RobotManager>().ToggleTrigger(true);
         if (cameraMode.CurrentMode == CameraMode.Mode.ItemControlsUI)
         {
             cameraMode.ToggleCameraMode(CameraMode.Mode.Free);
@@ -308,8 +306,8 @@ public class ItemControlsUI : MonoBehaviour {
                 else
                 {
                     string message = "Zorg ervoor dat alle materialen die je hebt gebruikt op het werkveld liggen. Maak je handen vrij door eventuele objecten terug te leggen op het werkveld.";
-                    Camera.main.transform.Find("UI").Find("EmptyHandsWarning").
-                            GetComponent<TimedPopUp>().Set(message);
+                    RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
+                    messageCenter.NewMessage("Materialen terugleggen.", message, RobotUIMessageTab.Icon.Warning);
                 }
             }
         }
@@ -356,8 +354,8 @@ public class ItemControlsUI : MonoBehaviour {
                     else
                     {
                         string message = "Volg de tips links bovenin het scherm om verder te gaan.";
-                        Camera.main.transform.Find("UI").Find("EmptyHandsWarning").
-                                GetComponent<TimedPopUp>().Set(message);
+                        RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
+                        messageCenter.NewMessage("Volg de tips!", message, RobotUIMessageTab.Icon.Warning);
                     }
 
                     controls.ResetObject();

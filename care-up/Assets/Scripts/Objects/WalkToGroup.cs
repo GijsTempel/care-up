@@ -7,6 +7,9 @@ public class WalkToGroup : MonoBehaviour
 {
     public Vector3 position;
     public Vector3 rotation;
+    
+    public Vector3 robotPosition;
+    public Vector3 robotRotation;
 
     private GameObject text;
 
@@ -15,12 +18,21 @@ public class WalkToGroup : MonoBehaviour
     PlayerScript player;
 
     GameObject gameLogic;
+    ParticleSystem particles;
 
     public void HighlightGroup(bool value)
     {
         if (SystemInfo.deviceType == DeviceType.Handheld)
             return;
         text.SetActive(value);
+
+        text.transform.rotation = Camera.main.transform.rotation;
+
+        if (particles != null)
+        {
+            ParticleSystem.EmissionModule emission = particles.emission;
+            emission.enabled = value;
+        }
     }
 
     private void Start()
@@ -36,13 +48,20 @@ public class WalkToGroup : MonoBehaviour
         {
             text.SetActive(false);
         }
+
+        particles = GetComponent<ParticleSystem>();
+        if (particles != null)
+        {
+            ParticleSystem.EmissionModule emission = particles.emission;
+            emission.enabled = false;
+        }
     }
 
     protected void Update()
     {
         if (cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
-            if (controls.SelectedObject == gameObject && !cameraMode.animating && player.away)
+            if (controls.SelectedObject == gameObject && !cameraMode.animating /*&& (player.away || player.freeLook)*/)
             {
                 if (gameLogic.GetComponent<TutorialManager>() != null)
                     if (gameLogic.GetComponent<TutorialManager>().TutorialEnding)

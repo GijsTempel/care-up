@@ -106,7 +106,7 @@ public class Syringe : PickableObjectWithInfo {
                     if (SceneManager.GetActiveScene().name == "Injection" ||
                         SceneManager.GetActiveScene().name == "Injection_ampoule" ||
                         SceneManager.GetActiveScene().name == "Injection_disolve" ||
-                        SceneManager.GetActiveScene().name == "Tutorial")
+                        SceneManager.GetActiveScene().name == "Tutorial_Sequence")
                     {
                         Transform target = controls.SelectedObject.GetComponent<PersonObjectPart>().Person;
                         target.GetComponent<InteractableObject>().Reset();

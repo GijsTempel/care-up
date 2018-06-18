@@ -17,6 +17,8 @@ public class AnimationPick : StateMachineBehaviour {
 
         frame = 0f;
         prevFrame = 0f;
+        
+        RobotManager.SetUITriggerActive(false);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -37,8 +39,15 @@ public class AnimationPick : StateMachineBehaviour {
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
         inv.ToggleControls(false);
+
+        if (GameObject.FindObjectOfType<TutorialManager>() == null ||
+            GameObject.FindObjectOfType<Tutorial_UI>() != null)
+        {
+            RobotManager.SetUITriggerActive(true);
+        }
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here

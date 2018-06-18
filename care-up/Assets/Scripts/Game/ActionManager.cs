@@ -54,6 +54,7 @@ public class ActionManager : MonoBehaviour {
     // GameObjects that show player next step when hint used
     private List<GameObject> particleHints;
     private bool menuScene;
+    private bool uiSet = false;
 
     public List<Action> ActionList
     {
@@ -408,12 +409,6 @@ public class ActionManager : MonoBehaviour {
         currentAction = actionList.First();
     }
 
-    private void Start()
-    {
-        pointsText = Camera.main.transform.Find("UI (1)").Find("RobotUI").Find("GeneralTab").Find("GeneralDynamicCanvas").Find("Points").Find("Panel").Find("PointsText").GetComponent<Text>();
-        percentageText = Camera.main.transform.Find("UI (1)").Find("RobotUI").Find("GeneralTab").Find("GeneralDynamicCanvas").Find("Percentage").Find("Panel").Find("PointsText").GetComponent<Text>();
-    }
-
     /// <summary>
     /// Handle pressing "Get Hint" key.
     /// Play audio hint, create particle hint, do penalty.
@@ -422,7 +417,7 @@ public class ActionManager : MonoBehaviour {
     {
         if (controls.keyPreferences.GetHintKey.Pressed())
         {
-            if (Narrator.PlaySound(CurrentAudioHint)) // if sound played
+            if (Narrator.PlayHintSound(CurrentAudioHint)) // if sound played
             {
                 string[] obj;
                 currentAction.ObjectNames(out obj);
@@ -455,7 +450,7 @@ public class ActionManager : MonoBehaviour {
             }
         }
 
-        if (!menuScene)
+        if (!menuScene && uiSet)
         {
             if (pointsText.gameObject.activeSelf)
             {
@@ -605,6 +600,7 @@ public class ActionManager : MonoBehaviour {
     /// <returns>True if action expected and correct. False otherwise.</returns>
     public bool Check(string[] info, ActionType type)
     {
+		
         bool matched = false;
 
         List<Action> sublist = actionList.Where(action =>
@@ -632,8 +628,9 @@ public class ActionManager : MonoBehaviour {
         if (matched)
         {
             currentStepHintUsed = false;
+			GameObject.FindObjectOfType<GameUI>().ButtonBlink(false);
         }
-
+        
         if (matched && subcategoryLength <= 1)
         {
             currentActionIndex += 1;
@@ -646,15 +643,22 @@ public class ActionManager : MonoBehaviour {
             {
                 wrongStepIndexes.Add(index);
             }
+            
+            RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
+            messageCenter.NewMessage("Verkeerde handeling!", sublist[0].extraDescr, RobotUIMessageTab.Icon.Error);
 
-            Camera.main.transform.Find("UI").Find("WrongAction").
-                GetComponent<TimedPopUp>().Set(sublist[0].extraDescr);
             ActionManager.WrongAction();
 
             penalized = true;
+
+            if (type == ActionType.SequenceStep)
+            {
+                GameObject.Find("WrongAction").GetComponent<TimedPopUp>().Set(sublist[0].extraDescr);
+            }
         }
         else
         {
+			
             currentPointAward = currentAction.pointValue;
             List<Action> actionsLeft = actionList.Where(action =>
                 action.SubIndex == currentActionIndex &&
@@ -696,7 +700,7 @@ public class ActionManager : MonoBehaviour {
 
         if (actionList.Find(action => action.matched == false && action.notMandatory == false) == null)
         {
-            Narrator.PlaySystemSound("LevelComplete", 0.1f);
+            Narrator.PlaySound("LevelComplete", 0.1f);
             StartCoroutine(DelayedEndScene(5.0f));
             return true;
         }
@@ -745,7 +749,7 @@ public class ActionManager : MonoBehaviour {
 
     public static void PlayAddPointSound()
     {
-        Narrator.PlaySystemSound("PointScored", 0.1f);
+        Narrator.PlaySound("PointScored", 0.1f);
         // todo move somewhere else
         if (GameObject.Find("_Dev") != null)
         {
@@ -838,5 +842,13 @@ public class ActionManager : MonoBehaviour {
     public void ActivatePenalty()
     {
         penalized = true;
+    }
+
+    public void SetUIObjects(Text points, Text percentage)
+    {
+        uiSet = true;
+
+        pointsText = points;
+        percentageText = percentage;
     }
 }

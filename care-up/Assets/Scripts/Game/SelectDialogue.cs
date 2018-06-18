@@ -195,11 +195,6 @@ public class SelectDialogue : MonoBehaviour {
                 }
             }
         }
-        else
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
     }
 
     private void SetSelected(OptionSide option)

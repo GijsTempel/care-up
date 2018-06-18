@@ -46,9 +46,9 @@ public class UsableObject : InteractableObject {
                             patient.NextDialogue();
                         }
                         
-                        string message = "Zorg volgens een zorgvuldige handhygiëne. Handhygiëne is in dit protocol versneld om de gebruikerservaring te verbeteren";
-                        Camera.main.transform.Find("UI").Find("EmptyHandsWarning").
-                                GetComponent<TimedPopUp>().Set(message);
+                        string message = "Zorg voor een zorgvuldige handhygiëne. Handhygiëne is in dit protocol versneld om de gebruikerservaring te verbeteren";
+                        RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
+                        messageCenter.NewMessage("Zorgvuldige handhygiëne", message, RobotUIMessageTab.Icon.Info);
                     }
                     break;
                 case "OldBandAid":

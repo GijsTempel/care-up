@@ -10,8 +10,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [HideInInspector]
         public bool lookOnly = false;
 
-        public float XSensitivity = 2f;
-        public float YSensitivity = 2f;
         public bool clampVerticalRotation = true;
         public bool clampHorisontalRotation = true;
         public float MinimumX = -90F;
@@ -21,23 +19,51 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public bool smooth;
         public float smoothTime = 5f;
         public bool lockCursor = true;
-
-
+        
         private Quaternion m_CharacterTargetRot;
         private Quaternion m_CameraTargetRot;
-        //private bool m_cursorIsLocked = true; never used
+
+        public bool savedRot = false;
+        private Quaternion savedCamRot;
+        private Quaternion savedCharRot;
+
+        // windows
+        public float XSensitivity = 2f;
+        public float YSensitivity = 2f;
+
+        //touches (android, possibly other phones)
+        public float XTouchSensetivity = 0.007f;
+        public float YTouchSensetivity = 0.007f;
+
+        // OSX
+        public float XMacSensetivity = 50f;
+        public float YMacSensetivity = 50f;
 
         public void Init(Transform character, Transform camera)
         {
             m_CharacterTargetRot = character.localRotation;
             m_CameraTargetRot = camera.localRotation;
         }
-
-
+        
         public float LookRotation(Transform character, Transform camera)
         {
-            float yRot = CrossPlatformInputManager.GetAxis("Mouse X") * XSensitivity;
-            float xRot = CrossPlatformInputManager.GetAxis("Mouse Y") * YSensitivity;
+            float yRot = 0.0f, xRot = 0.0f;
+
+            if (Input.touchCount > 0)
+            {
+                xRot = Input.GetTouch(0).deltaPosition.y * XTouchSensetivity;
+                yRot = Input.GetTouch(0).deltaPosition.x * YTouchSensetivity;
+            }
+            else
+            {
+                #if UNITY_STANDALONE_OSX
+                    xRot = Input.GetAxisRaw("Mouse Y") * XMacSensetivity;
+                    yRot = Input.GetAxisRaw("Mouse X") * YMacSensetivity;
+                #else
+                    xRot = Input.GetAxisRaw("Mouse Y") * XSensitivity;
+                    yRot = Input.GetAxisRaw("Mouse X") * YSensitivity;
+                #endif
+            }
 
             if (lookOnly)
             {
@@ -83,9 +109,28 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 }
             }
 
-            UpdateCursorLock();
+            //UpdateCursorLock();
 
             return new Vector2(xRot, yRot).magnitude;
+        }
+
+        public void ToggleMode(bool value, Transform character, Transform camera)
+        {
+            if (value)
+            {
+                savedCamRot = camera.rotation;
+                savedCharRot = character.rotation;
+                savedRot = true;
+            }
+            /*else
+            {
+                if (savedRot)
+                {
+                    // this order specifically, parenting
+                    character.rotation = savedCharRot;
+                    camera.rotation = savedCamRot;
+                }
+            }*/
         }
 
         public void SetCursorLock(bool value)
@@ -102,36 +147,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             //if the user set "lockCursor" we check & properly lock the cursos
             if (lockCursor)
-                InternalLockUpdate();
-        }
-
-        private void InternalLockUpdate()
-        {
-            /* 
-            // assigned and never used
-            if(Input.GetKeyUp(KeyCode.Escape))
-            {
-                m_cursorIsLocked = false;
-            }
-            else if(Input.GetMouseButtonUp(0))
-            {
-                m_cursorIsLocked = true;
-            }
-            */
-
-            /*if (m_cursorIsLocked)
             {
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
             }
-            else if (!m_cursorIsLocked)
-            {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-            }*/
-
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
         }
 
         Quaternion ClampRotationAroundXAxis(Quaternion q)
@@ -171,9 +190,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
             lookOnly = value;
             if (!value)
             {
-                m_CameraTargetRot = cam; //Quaternion.Euler(0f, 0f, 0f);
+                m_CameraTargetRot = cam;
             }
         }
-
     }
 }

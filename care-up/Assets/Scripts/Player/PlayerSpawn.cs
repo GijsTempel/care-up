@@ -8,6 +8,9 @@ public class PlayerSpawn : MonoBehaviour {
     public string quizName;
     public GameObject playerPrefab;
 
+    public Vector3 robotPosition;
+    public Vector3 robotRotation;
+
     [System.Serializable]
     public struct InfoPair
     {
@@ -16,14 +19,36 @@ public class PlayerSpawn : MonoBehaviour {
     };
 
     public List<InfoPair> infoList = new List<InfoPair>();
-    
-	void Awake () {
+
+    void Awake()
+    {
+		if (GameObject.FindObjectOfType(typeof(GameUI)) == null)
+		{
+			GameObject UIPrefab = Instantiate(Resources.Load("Prefabs/UI") as GameObject);
+	    }      
+
         GameObject player = Instantiate(playerPrefab,
             transform.position, transform.rotation);
         player.name = "Player";
+        
+        GameObject itemControls = Instantiate(Resources.Load("Prefabs/ItemControls") as GameObject,
+            transform.position, transform.rotation);
+        itemControls.name = "ItemControls";
+
+        GameObject itemDescription = Instantiate(Resources.Load("Prefabs/ItemDescription") as GameObject,
+            transform.position, transform.rotation);
+        itemDescription.name = "ItemDescription";
+
+        GameObject iPad = Instantiate(Resources.Load("Prefabs/ipad") as GameObject,
+            transform.position + new Vector3(0, -100f, 0), transform.rotation);
+        iPad.name = "ipad";
+
+        GameObject robot = Instantiate(Resources.Load("Prefabs/robot") as GameObject, 
+            robotPosition, Quaternion.Euler(robotRotation));
+        robot.name = "robot";
 
         RobotUITabInfo infotab = GameObject.FindObjectOfType<RobotUITabInfo>();
-        RobotUIInfoButton[] buttons = infotab.transform.GetChild(1).Find("ItemList").GetComponentsInChildren<RobotUIInfoButton>();
+        RobotUIInfoButton[] buttons = infotab.transform.Find("InfoDynamicCanvas").Find("ItemList").GetComponentsInChildren<RobotUIInfoButton>();
 
         foreach (RobotUIInfoButton b in buttons)
         {
@@ -46,6 +71,17 @@ public class PlayerSpawn : MonoBehaviour {
             Debug.LogWarning("Quiz file name is blank.");
         }
 
+        iPad.transform.GetChild(0).GetChild(0).GetChild(0).Find("CloseBtn").GetComponent<Button>().onClick.AddListener(
+            player.GetComponent<PlayerScript>().CloseRobotUI);
+
+        GameObject.FindObjectOfType<GameTimer>().SetTextObject(
+            GameObject.Find("RobotUI").transform.Find("TopBarUI").Find("GeneralDynamicCanvas")
+            .Find("Timer").Find("Time").GetComponent<Text>());
+
+        GameTimer.FindObjectOfType<ActionManager>().SetUIObjects(
+            GameObject.Find("TopBarUI").transform.Find("GeneralDynamicCanvas").Find("Points").Find("PointsText").GetComponent<Text>(),
+            GameObject.Find("TopBarUI").transform.Find("GeneralDynamicCanvas").Find("Percentage").Find("PointsText").GetComponent<Text>());
+
         Destroy(gameObject);
-	}
+    }
 }

@@ -78,7 +78,7 @@ public class TutorialInjectionSequence : AnimationSequenceState
         if ( inv.LeftHandObject && inv.LeftHandObject.GetComponent<Syringe>())
         inv.LeftHandObject.GetComponent<Syringe>().updatePlunger = false;
 
-        GameObject.Find("GameLogic").GetComponent<TutorialManager>().sequenceCompleted = true;
+        //GameObject.Find("GameLogic").GetComponent<TutorialManager>().sequenceCompleted = true;
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here

@@ -2,14 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class RobotManager : MonoBehaviour {
 
     public bool top = true;
 
     private GameObject UI_object;
-    private GameObject UI_trigger;
-    
+    private static GameObject UI_trigger;
+
+    private static Transform notification;
+    private static int notificationCount = 0;
+
     private static RobotManager instance;
     
     private static Transform eyeL;
@@ -22,10 +26,7 @@ public class RobotManager : MonoBehaviour {
     private static Material eyeLMat;
     private static Material eyeRMat;
     private static Material mouthMat;
-
-    private static Material robotHandMat;
-    private static Material robotFaceMat;
-
+    
     void Start ()
     {
         instance = this;
@@ -42,79 +43,48 @@ public class RobotManager : MonoBehaviour {
         eyeLMat = transform.Find("robot_eye.L").GetComponent<Renderer>().material;
         eyeRMat = transform.Find("robot_eye.R").GetComponent<Renderer>().material;
 
-        UI_object = Camera.main.transform.Find("UI (1)").Find("RobotUI").gameObject;
-        UI_object.SetActive(false);
+        UI_object = GameObject.Find("RobotUI");
 
-        UI_trigger = Camera.main.transform.Find("UI").Find("RobotUITrigger").gameObject;
+        UI_trigger = GameObject.Find("RobotUITrigger").gameObject;
         UI_trigger.SetActive(true);
+        
+        notification = UI_trigger.transform.Find("Notification");
+        notification.gameObject.SetActive(false);
+        
+        if (GameObject.FindObjectOfType<TutorialManager>() != null &&
+            GameObject.FindObjectOfType<Tutorial_UI>() == null)
+        {
+            SetUITriggerActive(false);
+        }
+
+        PlayerScript player = FindObjectOfType<PlayerScript>();
 
         EventTrigger.Entry event1 = new EventTrigger.Entry();
         event1.eventID = EventTriggerType.PointerEnter;
-        event1.callback.AddListener((eventData) => { OnEnterHover(); });
+        event1.callback.AddListener((eventData) => { player.EnterHover(); });
 
         EventTrigger.Entry event2 = new EventTrigger.Entry();
         event2.eventID = EventTriggerType.PointerExit;
-        event2.callback.AddListener((eventData) => { OnExitHover(); });
-
-        EventTrigger.Entry event3 = new EventTrigger.Entry();
-        event3.eventID = EventTriggerType.PointerClick;
-        event3.callback.AddListener((eventData) => { OnExitHover(); });
-
+        event2.callback.AddListener((eventData) => { player.ExitHover(); });
+        
         UI_trigger.AddComponent<EventTrigger>();
         UI_trigger.GetComponent<EventTrigger>().triggers.Add(event1);
         UI_trigger.GetComponent<EventTrigger>().triggers.Add(event2);
-        UI_trigger.GetComponent<EventTrigger>().triggers.Add(event3);
-
-        robotHandMat = transform.Find("robot").GetComponent<Renderer>().material;
-        robotFaceMat = transform.Find("robot_face").GetComponent<Renderer>().material;
-    }
-
-    public void OnEnterHover()
-    {
-        Color color = new Color(0.0f, 0.831f, 1.0f);
-        robotHandMat.color = color;
-        robotFaceMat.color = color;
-    }
-
-    public void OnExitHover()
-    {
-        Color color = new Color(1.0f, 1.0f, 1.0f);
-        robotHandMat.color = color;
-        robotFaceMat.color = color;
     }
 
     void Update ()
     {
-        UpdateTriggerPosition();
         UpdateFaceAnimations();
 	}
 
     public void TriggerUI(bool value)
     {
-        // play some kind of UI animation?
         UI_object.SetActive(value);
 
         if (!value)
         {
             GameObject.FindObjectOfType<PlayerScript>().ResetUIHover();
         }
-    }
-
-    private void UpdateTriggerPosition()
-    {
-        float x = top ? Screen.width - 182.9f : 182.9f;
-        float y = Screen.height * 0.63f;
-        transform.position = Camera.main.ScreenToWorldPoint(new Vector3(x, y, 4.0f));
-
-        transform.LookAt(Camera.main.transform);
-        transform.localEulerAngles = new Vector3(
-            transform.localEulerAngles.x,
-            transform.localEulerAngles.y,
-            0.0f);
-
-        Vector3 robotPosition = Camera.main.WorldToScreenPoint(transform.position);
-        robotPosition += new Vector3(7.0f, 3.0f); // slight offset
-        UI_trigger.transform.position = robotPosition;
     }
 
     public static void RobotCorrectAction()
@@ -144,14 +114,36 @@ public class RobotManager : MonoBehaviour {
             );
     } 
 
-    public void ToggleTrigger(bool value)
+    public void ToggleCloseBtn(bool value)
+    {
+        UI_object.transform.Find("CloseBtn").gameObject.SetActive(value);
+    }
+
+    public static void SetUITriggerActive(bool value)
     {
         UI_trigger.SetActive(value);
     }
 
-    public void ToggleCloseBtn(bool value)
+    public static void SetNotification(int n)
     {
-        UI_object.transform.Find("CloseBtn").gameObject.SetActive(value);
+        notificationCount = n;
+
+        if (n > 0)
+        {
+            notification.gameObject.SetActive(true);
+            notification.Find("Text").GetComponent<Text>().text = n.ToString();
+        }
+        else
+        {
+            notification.gameObject.SetActive(false);
+        }
+
+        RobotUIMessageTab.SetNotification(n);
+    }
+
+    public static int NotificationNumber
+    {
+        get { return notificationCount; }
     }
 }
 	 

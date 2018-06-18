@@ -19,7 +19,7 @@ public class Options : MonoBehaviour {
     private Dropdown resolutionOptions;
     private Toggle fullScreenToggle;
 
-    void Start()
+    /*void Start()
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -53,8 +53,8 @@ public class Options : MonoBehaviour {
 
         fullScreenToggle = options.Find("FullScreen").Find("Toggle").GetComponent<Toggle>();
         fullScreenToggle.isOn = Screen.fullScreen;
-    }
-
+    }*/
+    /*
     public void OnVolumeChange(float value)
     {
         AudioListener.volume = value;
@@ -91,5 +91,5 @@ public class Options : MonoBehaviour {
     public void OnFullScreenChange()
     {
         Screen.fullScreen = fullScreenToggle.isOn;
-    }
+    }*/
 }

@@ -107,7 +107,7 @@ public class InteractableObject : MonoBehaviour {
     /// </summary>
     protected virtual void Update()
     {
-        if (cameraMode.CurrentMode == CameraMode.Mode.Free && !player.away)
+        if (cameraMode.CurrentMode == CameraMode.Mode.Free && !player.away && !player.robotUIopened)
         {
             bool selectedIsInteractable = (controls.SelectedObject != null && controls.CanInteract &&
                 controls.SelectedObject.GetComponent<InteractableObject>() != null);

@@ -13,14 +13,22 @@ public class Cheat_CurrentAction : MonoBehaviour
     private Text extraText;
     private GameObject extraPanel;
 
-    public float animationTime = 2.0f;
+    private float animationTime = 1.0f;
     
     private int direction;
     private float timer;
+	Button extraButton;
     
     private ActionManager actionManager;
 
     private bool set = false; // fix
+
+    [HideInInspector]
+    public bool tutorial_extraOpened = false;
+    [HideInInspector]
+    public bool tutorial_extraClosed = false;
+
+    Tutorial_UI tutorial_UI;
 
     void Start()
     {
@@ -29,16 +37,18 @@ public class Cheat_CurrentAction : MonoBehaviour
 
         if (GameObject.Find("DevHint") != null)
         {
+			Init();
+
             if (GameObject.Find("Preferences") != null)
             {
-                if (GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().practiceMode &&
-                    actionManager.GetComponent<TutorialManager>() == null)
-                {
-                    Init();
-                }
-                else
+            
+				if ((!GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().practiceMode &&
+				     actionManager.GetComponent<TutorialManager>() == null) || (FindObjectOfType<TutorialManager>() != null && FindObjectOfType<Tutorial_UI>() == null))
+			
                 {
                     GameObject.Find("DevHint").SetActive(false);
+					extraPanel.SetActive(false);
+					extraButton.gameObject.SetActive(false);
                 }
             }
             else
@@ -50,18 +60,20 @@ public class Cheat_CurrentAction : MonoBehaviour
         
         timer = 0.0f;
         direction = 0;
+
+        tutorial_UI = GameObject.FindObjectOfType<Tutorial_UI>();
     }
 
     private void Init()
     {
         GameObject devHint = GameObject.Find("DevHint");
         textObject = devHint.transform.GetChild(0).GetComponent<Text>();
-        extraPanel = devHint.transform.Find("Extra").gameObject;
+		extraPanel = GameObject.Find("Extra").gameObject;
         extraText = extraPanel.transform.GetChild(0).GetComponent<Text>();
         extraPanel.SetActive(false);
         set = false;
 
-        Button extraButton = devHint.transform.Find("ExtraButton").GetComponent<Button>();
+		extraButton = GameObject.Find("ExtraButton").GetComponent<Button>();
         extraButton.onClick.AddListener(ToggleExtraInfoPanel);
     }
 
@@ -124,6 +136,23 @@ public class Cheat_CurrentAction : MonoBehaviour
 
     public void ToggleExtraInfoPanel()
     {
+		
+
+        if (tutorial_UI != null && tutorial_UI.expectedHintsState == extraPanel.activeSelf)
+        {
+            return;
+        }
+
         extraPanel.SetActive(!extraPanel.activeSelf);
+
+
+        if (extraPanel.activeSelf)
+        {
+            tutorial_extraOpened = true;
+        }
+        else
+        {
+            tutorial_extraClosed = true;
+        }
     }
 }

@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class InjectionPatient : PersonObject {
 
+    [HideInInspector]
+    public bool tutorial_greetingEnded = false;
+
     private AudioClip[] audioClips;
     private Animator animator;
 
@@ -86,6 +89,8 @@ public class InjectionPatient : PersonObject {
         animator.SetTrigger("goedemorgen");
         audioSource.PlayOneShot(audioClips[1]);
         yield return new WaitForSeconds(audioClips[1].length);
+
+        tutorial_greetingEnded = true;
     }
 
     private IEnumerator GreetDialogueCoroutinePt2()
