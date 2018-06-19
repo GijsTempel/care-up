@@ -35,7 +35,10 @@ public class Tutorial_UseOn : TutorialManager {
                     UItext.text = "Welkom. In deze leermodule zal je leren hoe je objecten met andere objecten kunt gebruiken. Denk hierbij aan het weggooien van een naald in de naaldcontainer of het gebruiken van een injectiespuit op de cliënt.";
                     SetUpTutorialNextButton();
 
-                    GameObject.Find("DevHint").SetActive(false);
+     //               GameObject.Find("DevHint").SetActive(false);
+					//GameObject.Find("Extra").SetActive(false);
+                    //GameObject.Find("ExtraButton").SetActive(false);
+
                     break;
                 case TutorialStep.Welcome:
                     if (nextButtonClicked)

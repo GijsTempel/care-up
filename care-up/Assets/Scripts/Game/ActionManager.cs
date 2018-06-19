@@ -628,9 +628,9 @@ public class ActionManager : MonoBehaviour {
         if (matched)
         {
             currentStepHintUsed = false;
-			GameObject.FindObjectOfType<UI>().ButtonBlink(false);
+			GameObject.FindObjectOfType<GameUI>().ButtonBlink(false);
         }
-
+        
         if (matched && subcategoryLength <= 1)
         {
             currentActionIndex += 1;

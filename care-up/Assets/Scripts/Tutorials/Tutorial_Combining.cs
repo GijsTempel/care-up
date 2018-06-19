@@ -38,7 +38,9 @@ public class Tutorial_Combining : TutorialManager {
                     UItext.text = "Welkom. In deze leermodule zal je leren hoe je objecten in je handen kunt combineren en uit elkaar kunt halen.";
                     SetUpTutorialNextButton();
 
-                    GameObject.Find("DevHint").SetActive(false);
+     //               GameObject.Find("DevHint").SetActive(false);
+					//GameObject.Find("Extra").SetActive(false);
+                    //GameObject.Find("ExtraButton").SetActive(false);
                     break;
                 case TutorialStep.Welcome:
                     if (nextButtonClicked)

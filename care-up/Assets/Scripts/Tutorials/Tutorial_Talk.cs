@@ -41,7 +41,9 @@ public class Tutorial_Talk : TutorialManager
                     UItext.text = "Welkom. In deze leermodule zul je leren hoe je met mensen een gesprek kunt aangaan.";
                     SetUpTutorialNextButton();
 
-                    GameObject.Find("DevHint").SetActive(false);
+     //               GameObject.Find("DevHint").SetActive(false);
+					//GameObject.Find("Extra").SetActive(false);
+                    //GameObject.Find("ExtraButton").SetActive(false);
                     break;
                 case TutorialStep.Welcome:
                     if (nextButtonClicked)

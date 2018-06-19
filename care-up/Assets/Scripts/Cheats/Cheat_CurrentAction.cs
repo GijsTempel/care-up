@@ -17,6 +17,7 @@ public class Cheat_CurrentAction : MonoBehaviour
     
     private int direction;
     private float timer;
+	Button extraButton;
     
     private ActionManager actionManager;
 
@@ -36,16 +37,18 @@ public class Cheat_CurrentAction : MonoBehaviour
 
         if (GameObject.Find("DevHint") != null)
         {
+			Init();
+
             if (GameObject.Find("Preferences") != null)
             {
-                if (GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().practiceMode &&
-                    actionManager.GetComponent<TutorialManager>() == null)
-                {
-                    Init();
-                }
-                else
+            
+				if ((!GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().practiceMode &&
+				     actionManager.GetComponent<TutorialManager>() == null) || (FindObjectOfType<TutorialManager>() != null && FindObjectOfType<Tutorial_UI>() == null))
+			
                 {
                     GameObject.Find("DevHint").SetActive(false);
+					extraPanel.SetActive(false);
+					extraButton.gameObject.SetActive(false);
                 }
             }
             else
@@ -70,7 +73,7 @@ public class Cheat_CurrentAction : MonoBehaviour
         extraPanel.SetActive(false);
         set = false;
 
-		Button extraButton = GameObject.Find("ExtraButton").GetComponent<Button>();
+		extraButton = GameObject.Find("ExtraButton").GetComponent<Button>();
         extraButton.onClick.AddListener(ToggleExtraInfoPanel);
     }
 
@@ -133,6 +136,8 @@ public class Cheat_CurrentAction : MonoBehaviour
 
     public void ToggleExtraInfoPanel()
     {
+		
+
         if (tutorial_UI != null && tutorial_UI.expectedHintsState == extraPanel.activeSelf)
         {
             return;

@@ -48,7 +48,9 @@ public class Tutorial_Sequence : TutorialManager
                     UItext.text = "Welkom, In deze tutorial zul je leren hoe je ingewikkelde handelingen, zoals injecteren, moet uitvoeren.";
                     SetUpTutorialNextButton();
 
-                    GameObject.Find("DevHint").SetActive(false);
+     //               GameObject.Find("DevHint").SetActive(false);
+					//GameObject.Find("Extra").SetActive(false);
+                    //GameObject.Find("ExtraButton").SetActive(false);
                     break;
                 case TutorialStep.Welcome:
                     if (nextButtonClicked)

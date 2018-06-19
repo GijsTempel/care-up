@@ -22,7 +22,7 @@ public class PlayerSpawn : MonoBehaviour {
 
     void Awake()
     {
-		if (GameObject.FindObjectOfType(typeof(UI)) == null)
+		if (GameObject.FindObjectOfType(typeof(GameUI)) == null)
 		{
 			GameObject UIPrefab = Instantiate(Resources.Load("Prefabs/UI") as GameObject);
 	    }      

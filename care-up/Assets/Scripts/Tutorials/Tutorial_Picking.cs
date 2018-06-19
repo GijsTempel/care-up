@@ -36,7 +36,9 @@ public class Tutorial_Picking : TutorialManager {
                     UItext.text = "Welkom. In deze leermodule zul je leren hoe je objecten kunt oppakken en terugleggen";
                     SetUpTutorialNextButton();
 
-                    GameObject.Find("DevHint").SetActive(false);
+     //               GameObject.Find("DevHint").SetActive(false);
+					//GameObject.Find("Extra").SetActive(false);
+                    //GameObject.Find("ExtraButton").SetActive(false);
                     break;
                 case TutorialStep.Welcome:
                     if (nextButtonClicked)
