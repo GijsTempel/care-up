@@ -188,7 +188,7 @@ public class PersonObject : InteractableObject
 
             bool selectedIsInteractable = (controls.SelectedObject != null && controls.CanInteract &&
                 controls.SelectedObject.GetComponent<InteractableObject>() != null);
-            if (flag && !cameraMode.animating && !player.UIHover)
+            if (flag && !cameraMode.animating)
             {
                 if (controls.CanInteract)
                 {

@@ -62,20 +62,6 @@ public class RobotManager : MonoBehaviour {
         {
             SetUITriggerActive(false);
         }
-
-        PlayerScript player = FindObjectOfType<PlayerScript>();
-
-        EventTrigger.Entry event1 = new EventTrigger.Entry();
-        event1.eventID = EventTriggerType.PointerEnter;
-        event1.callback.AddListener((eventData) => { player.EnterHover(); });
-
-        EventTrigger.Entry event2 = new EventTrigger.Entry();
-        event2.eventID = EventTriggerType.PointerExit;
-        event2.callback.AddListener((eventData) => { player.ExitHover(); });
-        
-        UI_trigger.AddComponent<EventTrigger>();
-        UI_trigger.GetComponent<EventTrigger>().triggers.Add(event1);
-        UI_trigger.GetComponent<EventTrigger>().triggers.Add(event2);
     }
 
     void Update ()
@@ -86,11 +72,6 @@ public class RobotManager : MonoBehaviour {
     public void TriggerUI(bool value)
     {
         UI_object.SetActive(value);
-
-        if (!value)
-        {
-            GameObject.FindObjectOfType<PlayerScript>().ResetUIHover();
-        }
     }
 
     public static void RobotCorrectAction()
