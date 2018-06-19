@@ -12,7 +12,6 @@ public class Cheat_CurrentAction : MonoBehaviour
     private Text textObject;
     private Text extraText;
     private GameObject extraPanel;
-	private GameObject devHint;
 
     private float animationTime = 1.0f;
     
@@ -34,11 +33,6 @@ public class Cheat_CurrentAction : MonoBehaviour
     void Start()
     {
 		extraPanel = GameObject.Find("Extra").gameObject;
-		devHint = GameObject.Find("DevHint");
-		textObject = devHint.transform.GetChild(0).GetComponent<Text>();
-        extraText = extraPanel.transform.GetChild(0).GetComponent<Text>();
-
-
         actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
         if (actionManager == null) Debug.LogError("No action manager found.");
 
@@ -61,7 +55,6 @@ public class Cheat_CurrentAction : MonoBehaviour
             else
             {
                 Debug.LogWarning("Game needs to be started from menu scene for CurrentAction hint to work correctly");
-                Init();
             }
         }
         
@@ -73,8 +66,10 @@ public class Cheat_CurrentAction : MonoBehaviour
 
     private void Init()
     {
-        
+        GameObject devHint = GameObject.Find("DevHint");
+        textObject = devHint.transform.GetChild(0).GetComponent<Text>();
 
+        extraText = extraPanel.transform.GetChild(0).GetComponent<Text>();
         extraPanel.SetActive(false);
         set = false;
 
@@ -143,10 +138,10 @@ public class Cheat_CurrentAction : MonoBehaviour
     {
 		
 
-        //if (tutorial_UI != null && tutorial_UI.expectedHintsState == extraPanel.activeSelf)
-        //{
-        //    return;
-        //}
+        if (tutorial_UI != null && tutorial_UI.expectedHintsState == extraPanel.activeSelf)
+        {
+            return;
+        }
 
         extraPanel.SetActive(!extraPanel.activeSelf);
 
