@@ -6,6 +6,7 @@ using UnityEngine;
 public class GameUI : MonoBehaviour {
 	GameObject Player;
 	public Animator Blink;
+	public Animator IPadBlink;
 	bool BlinkState = false;
 
 	public void MoveBack()
@@ -16,6 +17,8 @@ public class GameUI : MonoBehaviour {
 	public void OpenRobotUI()
     {
 		Player.GetComponent<PlayerScript>().OpenRobotUI();
+		RobotManager.UIElementsState[0] = false;
+		print("asddddddddddddddddddd");
     }
 
 	public void ToggleUsingOnMode()
@@ -37,10 +40,12 @@ public class GameUI : MonoBehaviour {
         else if (ToBlink)
         {
             Blink.SetTrigger("BlinkStart");
+			RobotManager.UIElementsState[1] = true;
         }
         else
         {
             Blink.SetTrigger("BlinkStop");
+			RobotManager.UIElementsState[1] = false;
         }
 	}
 

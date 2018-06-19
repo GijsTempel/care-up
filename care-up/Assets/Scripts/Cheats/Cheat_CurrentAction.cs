@@ -143,10 +143,10 @@ public class Cheat_CurrentAction : MonoBehaviour
     {
 		
 
-        if (tutorial_UI != null && tutorial_UI.expectedHintsState == extraPanel.activeSelf)
-        {
-            return;
-        }
+        //if (tutorial_UI != null && tutorial_UI.expectedHintsState == extraPanel.activeSelf)
+        //{
+        //    return;
+        //}
 
         extraPanel.SetActive(!extraPanel.activeSelf);
 

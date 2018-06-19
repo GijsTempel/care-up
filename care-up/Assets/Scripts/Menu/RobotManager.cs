@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class RobotManager : MonoBehaviour {
 
     public bool top = true;
-
+	private GameObject Game_UI;
     private GameObject UI_object;
+    public static bool[] UIElementsState = { false, false };
+	//0 -- RobotUITrigger
+	//1 -- ExtraButton
+    
     private static GameObject UI_trigger;
 
     private static Transform notification;
@@ -30,6 +35,7 @@ public class RobotManager : MonoBehaviour {
     void Start ()
     {
         instance = this;
+		Game_UI = GameObject.FindObjectOfType<GameUI>().gameObject;
 
         Transform face = transform.Find("robotArm").Find("main").Find("face");
         eyeL = face.Find("mEye").Find("eye.L");
@@ -119,12 +125,12 @@ public class RobotManager : MonoBehaviour {
         UI_object.transform.Find("CloseBtn").gameObject.SetActive(value);
     }
 
-    public static void SetUITriggerActive(bool value)
+	public static void SetUITriggerActive(bool value)
     {
         UI_trigger.SetActive(value);
     }
 
-    public static void SetNotification(int n)
+	public static void SetNotification(int n)
     {
         notificationCount = n;
 
@@ -139,6 +145,9 @@ public class RobotManager : MonoBehaviour {
         }
 
         RobotUIMessageTab.SetNotification(n);
+		UI_trigger.GetComponent<Animator>().SetTrigger("BlinkStart");
+		UIElementsState[0] = true;
+
     }
 
     public static int NotificationNumber
