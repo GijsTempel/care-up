@@ -56,7 +56,6 @@ public class PlayerScript : MonoBehaviour {
 
     private GameObject usingOnText;
     private GameObject usingOnCancelButton;
-    private bool onButtonHover = false;
 
     private GameObject closeButton;
 
@@ -82,17 +81,7 @@ public class PlayerScript : MonoBehaviour {
     {
         get { return moveBackButton.gameObject; }
     }
-
-    public bool UIHover
-    {
-        get { return onButtonHover; }
-    }
-
-    public void ResetUIHover()
-    {
-        onButtonHover = false;
-    }
-
+    
     private void Start()
     {
         mouseLook.Init(transform, cam.transform);
@@ -124,47 +113,18 @@ public class PlayerScript : MonoBehaviour {
         usingOnText.SetActive(false);
 
         quiz = GameObject.FindObjectOfType<QuizTab>(); 
-
-        EventTrigger.Entry event1 = new EventTrigger.Entry();
-        event1.eventID = EventTriggerType.PointerEnter;
-        event1.callback.AddListener((eventData) => { EnterHover(); });
         
-        EventTrigger.Entry event2 = new EventTrigger.Entry();
-        event2.eventID = EventTriggerType.PointerExit;
-        event2.callback.AddListener((eventData) => { ExitHover(); });
-
-        EventTrigger.Entry event3 = new EventTrigger.Entry();
-        event3.eventID = EventTriggerType.PointerClick;
-        event3.callback.AddListener((eventData) => { ExitHover(); });
-
-        usingOnCancelButton.AddComponent<EventTrigger>();
-        usingOnCancelButton.GetComponent<EventTrigger>().triggers.Add(event1);
-        usingOnCancelButton.GetComponent<EventTrigger>().triggers.Add(event2);
-        usingOnCancelButton.GetComponent<EventTrigger>().triggers.Add(event3);
-        
-        GameObject robotUI = GameObject.Find("RobotUI");
-        robotUI.AddComponent<EventTrigger>();
-        robotUI.GetComponent<EventTrigger>().triggers.Add(event1);
-        robotUI.GetComponent<EventTrigger>().triggers.Add(event2);
-
         devHintUI = GameObject.Find("DevHint").gameObject;
 
         GameObject wrongActionPopUp = GameObject.Find("WrongAction").gameObject;
 		GameObject warningPopUp = GameObject.Find("EmptyHandsWarning").gameObject;
 
         wrongActionPopUp.AddComponent<EventTrigger>();
-        wrongActionPopUp.GetComponent<EventTrigger>().triggers.Add(event1);
-        wrongActionPopUp.GetComponent<EventTrigger>().triggers.Add(event2);
-        wrongActionPopUp.GetComponent<EventTrigger>().triggers.Add(event3);
-
         warningPopUp.AddComponent<EventTrigger>();
-        warningPopUp.GetComponent<EventTrigger>().triggers.Add(event1);
-        warningPopUp.GetComponent<EventTrigger>().triggers.Add(event2);
-        warningPopUp.GetComponent<EventTrigger>().triggers.Add(event3);
         
         EventTrigger.Entry closePopUp = new EventTrigger.Entry();
-        event3.eventID = EventTriggerType.PointerClick;
-        event3.callback.AddListener((eventData) => { TimedPopUp.ForceHide(); });
+        closePopUp.eventID = EventTriggerType.PointerClick;
+        closePopUp.callback.AddListener((eventData) => { TimedPopUp.ForceHide(); });
         
         wrongActionPopUp.GetComponent<EventTrigger>().triggers.Add(closePopUp);
         warningPopUp.GetComponent<EventTrigger>().triggers.Add(closePopUp);
@@ -172,9 +132,6 @@ public class PlayerScript : MonoBehaviour {
         if (GameObject.Find("GameLogic").GetComponent<TutorialManager>() != null)
         {
             GameObject tutorialEndUi = GameObject.Find("TutorialDonePanel");
-            tutorialEndUi.AddComponent<EventTrigger>();
-            tutorialEndUi.GetComponent<EventTrigger>().triggers.Add(event1);
-            tutorialEndUi.GetComponent<EventTrigger>().triggers.Add(event2);
             tutorialEndUi.SetActive(false);
         }
 
@@ -186,16 +143,6 @@ public class PlayerScript : MonoBehaviour {
         savedRobotRot = robot.transform.rotation;
 
         tutorial_UI = GameObject.FindObjectOfType<Tutorial_UI>();
-    }
-
-    public void EnterHover()
-    {
-        onButtonHover = true;
-    }
-
-    public void ExitHover()
-    {
-        onButtonHover = false;
     }
 
     public void FreeLookButton()
@@ -244,7 +191,7 @@ public class PlayerScript : MonoBehaviour {
         {
             if (!away && controls.SelectedObject != null 
                 && controls.SelectedObject.GetComponent<InteractableObject>() != null
-                && !itemControls.gameObject.activeSelf && !onButtonHover)
+                && !itemControls.gameObject.activeSelf)
             {
                 if (usingOnMode)
                 {
@@ -309,11 +256,7 @@ public class PlayerScript : MonoBehaviour {
         }
         usingOnText.SetActive(value);
 
-        if (!value)
-        {
-            onButtonHover = false;
-        }
-        else
+        if (value)
         {
             tutorial_UseOnControl = true;
         }
@@ -321,20 +264,17 @@ public class PlayerScript : MonoBehaviour {
 
     public void WalkToGroup(WalkToGroup group)
     {
-        if (!onButtonHover)
+        ToggleAway();
+        transform.position = group.position;
+        if (prefs == null || (prefs != null && !prefs.VR))
         {
-            ToggleAway();
-            transform.position = group.position;
-            if ( prefs == null || (prefs != null && !prefs.VR))
-            {
-                transform.rotation = Quaternion.Euler(0.0f, group.rotation.y, 0.0f);
-                Camera.main.transform.localRotation = Quaternion.Euler(group.rotation.x, 0.0f, 0.0f);
-            }
-            currentWalkPosition = group;
-
-            robot.transform.position = group.robotPosition;
-            robot.transform.rotation = Quaternion.Euler(group.robotRotation);
+            transform.rotation = Quaternion.Euler(0.0f, group.rotation.y, 0.0f);
+            Camera.main.transform.localRotation = Quaternion.Euler(group.rotation.x, 0.0f, 0.0f);
         }
+        currentWalkPosition = group;
+
+        robot.transform.position = group.robotPosition;
+        robot.transform.rotation = Quaternion.Euler(group.robotRotation);
     }
 
     private void ToggleAway(bool _away = false)
