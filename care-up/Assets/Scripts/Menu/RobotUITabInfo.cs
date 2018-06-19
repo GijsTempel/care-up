@@ -12,21 +12,38 @@ public class RobotUITabInfo : RobotUITabs {
 
     private float initButtonWidth  = 0;
     private float initButtonHeight = 0;
+	public GameObject ItemList;
+	public GameObject ItemListButton;
+    
 
     protected override void Start()
     {
         base.Start();
 
-        Transform t = transform.Find("InfoDynamicCanvas").Find("ItemList").Find("Scroll View")
-            .Find("Viewport").Find("Content").GetChild(0);
-        if ( t != null )
-        {
-            OnItemButtonClick(t.GetComponent<RectTransform>());
-        }
+        //Transform t = transform.Find("InfoDynamicCanvas/ItemList/Scroll View/Viewport/Content").GetChild(0);
+        //if ( t != null )
+        //{
+        //    OnItemButtonClick(t.GetComponent<RectTransform>());
+        //}
+		//ItemList.SetActive(false);
+
 
         // generate buttons
         // done in playerspawn
     }
+
+       
+	public void ToggleItemList()
+	{
+		ItemListButton.GetComponent<Animator>().SetTrigger("BlinkStop");
+		ItemList.SetActive(!ItemList.activeSelf);
+	}
+
+	public void SwitchItemList(bool value)
+    {
+		ItemList.SetActive(value);
+    }
+
 
     private void Update()
     {
@@ -73,6 +90,7 @@ public class RobotUITabInfo : RobotUITabs {
             initButtonWidth = selectedButton.sizeDelta.x;
             initButtonHeight = selectedButton.sizeDelta.y;
         }
+		ToggleItemList();
     }
 
     protected override void SetTabActive(bool value)
