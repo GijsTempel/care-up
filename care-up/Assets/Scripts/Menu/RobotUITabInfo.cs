@@ -32,6 +32,12 @@ public class RobotUITabInfo : RobotUITabs {
         // done in playerspawn
     }
 
+
+	public void FullScreenPDF()
+	{
+		GameObject FullScreenPDF_UI = Instantiate(Resources.Load("Prefabs/PDFFullScreen")) as GameObject; 
+	}
+
        
 	public void ToggleItemList()
 	{
