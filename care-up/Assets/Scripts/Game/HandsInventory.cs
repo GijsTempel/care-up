@@ -42,9 +42,9 @@ public class HandsInventory : MonoBehaviour {
     private Transform rightToolHolder;
     private Transform leftControlBone;
     private Transform rightControlBone;
-
-    private PickableObject leftHandObject;
-    private PickableObject rightHandObject;
+    
+    public PickableObject leftHandObject;
+    public PickableObject rightHandObject;
     private bool leftHold = false;
     private bool rightHold = false;
     
