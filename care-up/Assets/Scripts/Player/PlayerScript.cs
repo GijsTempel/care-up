@@ -410,6 +410,7 @@ public class PlayerScript : MonoBehaviour {
 
     public void OpenRobotUI()
     {
+		RobotManager.UIElementsState[0] = false;
         if (tutorial_UI != null && tutorial_UI.expectedRobotUIstate == false)
         {
             return;

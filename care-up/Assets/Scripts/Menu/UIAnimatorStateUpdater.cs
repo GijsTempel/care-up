@@ -18,6 +18,7 @@ public class UIAnimatorStateUpdater : MonoBehaviour {
 		{
 			transform.GetComponent<Animator>().SetTrigger("BlinkStart");
 		}
+        
 
     }
 	

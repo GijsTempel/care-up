@@ -8,6 +8,7 @@ public class GameUI : MonoBehaviour {
 	public Animator Blink;
 	public Animator IPadBlink;
 	bool BlinkState = false;
+	public bool testValue;
 
 	public void MoveBack()
 	{
@@ -16,8 +17,8 @@ public class GameUI : MonoBehaviour {
 
 	public void OpenRobotUI()
     {
-		Player.GetComponent<PlayerScript>().OpenRobotUI();
 		RobotManager.UIElementsState[0] = false;
+        Player.GetComponent<PlayerScript>().OpenRobotUI();
     }
 
 	public void ToggleUsingOnMode()
@@ -51,11 +52,11 @@ public class GameUI : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Player = GameObject.Find("Player");
-
+		//Debug.Log(Application.isEditor);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		testValue = RobotManager.UIElementsState[0];
 	}
 }

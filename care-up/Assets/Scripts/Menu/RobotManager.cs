@@ -132,6 +132,12 @@ public class RobotManager : MonoBehaviour {
 
 	public static void SetNotification(int n)
     {
+		if (n > notificationCount)
+		{
+			UI_trigger.GetComponent<Animator>().SetTrigger("BlinkStart");
+            UIElementsState[0] = true;
+		}
+
         notificationCount = n;
 
         if (n > 0)
@@ -145,8 +151,7 @@ public class RobotManager : MonoBehaviour {
         }
 
         RobotUIMessageTab.SetNotification(n);
-		UI_trigger.GetComponent<Animator>().SetTrigger("BlinkStart");
-		UIElementsState[0] = true;
+
 
     }
 
