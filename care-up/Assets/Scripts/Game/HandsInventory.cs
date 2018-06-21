@@ -800,24 +800,44 @@ public class HandsInventory : MonoBehaviour {
         bool combined = combinationManager.Combine(leftName, rightName, out leftCombineResult, out rightCombineResult);
 
 
-        // combine performed
-        if ((combined && combineAllowed) || (ObjectsID_Controller.Cheat && Application.isEditor))
+		// combine performed
+		bool alloweCombine = (combined && combineAllowed);
+		if (ObjectsID_Controller != null)
+		{
+			if (ObjectsID_Controller.Cheat && Application.isEditor)
+			{
+				alloweCombine = true;
+			}
+		}
+		if (alloweCombine)
         {
             tutorial_combined = true;
-            string combineAnimation = "Combine " +
-                (leftHandObject ? leftHandObject.name : "_") + " " +
-                (rightHandObject ? rightHandObject.name : "_");
+ 
 			//--------------------------------------------------------------------
-			if (ObjectsID_Controller.FindByName(leftName) != -1 || ObjectsID_Controller.FindByName(rightName) != -1)
-			{
-				ObjectsIDs l = ObjectsID_Controller.GetObject(ObjectsID_Controller.FindByName(leftName));
-				ObjectsIDs r = ObjectsID_Controller.GetObject(ObjectsID_Controller.FindByName(rightName));
+			bool idModeAllow = false;
 
-				PlayerAnimationManager.PlayCombineAnimation(l, r);
+			if (GameObject.Find("GameLogic").GetComponent<ObjectsIDController>() != null)
+			{
+				if (ObjectsID_Controller.FindByName(leftName) != -1 || ObjectsID_Controller.FindByName(rightName) != -1)
+				{
+					idModeAllow = true;
+				}
+			}
+
+			if (idModeAllow)
+			{
+				print("IDMODEEEEEEEEEEEEEEEEE");
+					ObjectsIDs l = ObjectsID_Controller.GetObject(ObjectsID_Controller.FindByName(leftName));
+					ObjectsIDs r = ObjectsID_Controller.GetObject(ObjectsID_Controller.FindByName(rightName));
+
+					PlayerAnimationManager.PlayCombineAnimation(l, r);
 			}
 			else
 			{
-
+				string combineAnimation = "Combine " +
+                 (leftHandObject ? leftHandObject.name : "_") + " " +
+                 (rightHandObject ? rightHandObject.name : "_");
+				
 				PlayerAnimationManager.PlayAnimation(combineAnimation);
 			}
 
