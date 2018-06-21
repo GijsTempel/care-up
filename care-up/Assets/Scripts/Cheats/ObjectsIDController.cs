@@ -37,7 +37,10 @@ public class ObjectsIDController : MonoBehaviour
 	public bool Cheat = false;
 	public ObjectsIDs[] Objects =
 	{
-		new ObjectsIDs("syringePack", 30, 0)
+		new ObjectsIDs("syringePack", 30, 0),
+		new ObjectsIDs("Syringe", 1, 1),
+		new ObjectsIDs("AbsorptionNeedle", 20, 0)
+        
 	};
 
 
