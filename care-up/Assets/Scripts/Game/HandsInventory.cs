@@ -28,6 +28,9 @@ public class HandsInventory : MonoBehaviour {
     public float distanceFromCamera = 1.0f;
     public bool dropPenalty = true;
 
+
+	ObjectsIDController ObjectsID_Controller;
+
     [System.Serializable]
     public struct ItemPosition
     {
@@ -81,6 +84,8 @@ public class HandsInventory : MonoBehaviour {
 
     void Start()
     {
+		ObjectsID_Controller = GameObject.Find("GameLogic").GetComponent<ObjectsIDController>();
+
         combinationManager = GameObject.Find("GameLogic").GetComponent<CombinationManager>();
         if (combinationManager == null) Debug.LogError("No combination manager found.");
 
@@ -794,15 +799,27 @@ public class HandsInventory : MonoBehaviour {
 
         bool combined = combinationManager.Combine(leftName, rightName, out leftCombineResult, out rightCombineResult);
 
+
         // combine performed
-        if (combined && combineAllowed)
+        if ((combined && combineAllowed) || (ObjectsID_Controller.Cheat && Application.isEditor))
         {
             tutorial_combined = true;
-
             string combineAnimation = "Combine " +
                 (leftHandObject ? leftHandObject.name : "_") + " " +
                 (rightHandObject ? rightHandObject.name : "_");
-            PlayerAnimationManager.PlayAnimation(combineAnimation);
+			//--------------------------------------------------------------------
+			if (ObjectsID_Controller.FindByName(leftName) != -1 || ObjectsID_Controller.FindByName(rightName) != -1)
+			{
+				ObjectsIDs l = ObjectsID_Controller.GetObject(ObjectsID_Controller.FindByName(leftName));
+				ObjectsIDs r = ObjectsID_Controller.GetObject(ObjectsID_Controller.FindByName(rightName));
+
+				PlayerAnimationManager.PlayCombineAnimation(l, r);
+			}
+			else
+			{
+
+				PlayerAnimationManager.PlayAnimation(combineAnimation);
+			}
 
             combineDelayed = true;
             ToggleControls(true);

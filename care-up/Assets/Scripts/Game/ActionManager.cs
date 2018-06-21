@@ -486,6 +486,10 @@ public class ActionManager : MonoBehaviour {
         string[] info = { leftHand, rightHand };
         bool occured = Check(info, ActionType.ObjectCombine);
         UpdatePoints(occured ? 1 : -1);
+        
+
+        
+
 
         Debug.Log("Combine " + leftHand + " and " + rightHand + " with result " + occured);
 

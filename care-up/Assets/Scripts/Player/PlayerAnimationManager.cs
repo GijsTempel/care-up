@@ -41,6 +41,26 @@ public class PlayerAnimationManager : MonoBehaviour
         if (playerScript == null) Debug.LogError("No player");
     }
     
+	public static void PlayCombineAnimation(ObjectsIDs LeftObj, ObjectsIDs RightObj, Transform target = null)
+    {
+		Debug.Log(LeftObj.GetName());
+
+		//animationController.SetTrigger(triggerLeft);
+
+        //if (name != "LeftPick" && name != "RightPick" &&
+        //    name != "closeup_left" && name != "closeup_right" &&
+        //    name != "faraway_left" && name != "faraway_right")
+        //{
+        //    animationController.SetTrigger("S " + name);
+        //}
+
+        //if (target)
+        //{
+        //    cameraMode.SetCinematicMode(target);
+        //}
+    }
+
+
     public static void PlayAnimation(string name, Transform target = null)
     {
         animationController.SetTrigger(name);

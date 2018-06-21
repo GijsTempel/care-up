@@ -56,6 +56,8 @@ public class CombinationManager : MonoBehaviour {
     /// <returns>True if combine performed</returns>
     public bool Combine(string leftInput, string rightInput, out string leftResult, out string rightResult)
     {
+        
+
         leftResult = "";
         rightResult = "";
 
@@ -80,6 +82,7 @@ public class CombinationManager : MonoBehaviour {
         
         if (found)
         {
+			//-------------------------------------
             actionManager.OnCombineAction(leftInput, rightInput);
         }
 
