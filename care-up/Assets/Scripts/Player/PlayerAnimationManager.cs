@@ -44,8 +44,21 @@ public class PlayerAnimationManager : MonoBehaviour
 	public static void PlayCombineAnimation(ObjectsIDs LeftObj, ObjectsIDs RightObj, Transform target = null)
     {
 		Debug.Log(LeftObj.GetName());
+		int leftID = 0;
+		int rightID = 0;
+		if (LeftObj != null)
+		{
+			leftID = LeftObj.GetID() * 100 + LeftObj.GetState();
+		}
+		if (RightObj != null)
+		{
+			rightID = RightObj.GetID() * 100 + RightObj.GetState();
+		}
 
-		//animationController.SetTrigger(triggerLeft);
+		animationController.SetInteger("leftID", leftID);
+		animationController.SetInteger("rightID", rightID);
+		animationController.SetTrigger("Combine");
+		animationController.SetTrigger("S Combine");
 
         //if (name != "LeftPick" && name != "RightPick" &&
         //    name != "closeup_left" && name != "closeup_right" &&
@@ -54,10 +67,10 @@ public class PlayerAnimationManager : MonoBehaviour
         //    animationController.SetTrigger("S " + name);
         //}
 
-        //if (target)
-        //{
-        //    cameraMode.SetCinematicMode(target);
-        //}
+        if (target)
+        {
+            cameraMode.SetCinematicMode(target);
+        }
     }
 
 
