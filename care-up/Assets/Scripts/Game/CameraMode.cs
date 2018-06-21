@@ -306,7 +306,6 @@ public class CameraMode : MonoBehaviour {
         }
         else if (mode == Mode.Cinematic)
         {
-            playerScript.ResetFreeLook();
             playerScript.tutorial_movementLock = true;
             playerScript.mouseLook.clampHorisontalRotation = true;
             playerScript.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;

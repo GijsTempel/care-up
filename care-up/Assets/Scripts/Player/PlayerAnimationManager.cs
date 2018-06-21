@@ -22,6 +22,7 @@ public class PlayerAnimationManager : MonoBehaviour
     private static Animator animationController;
     private static CameraMode cameraMode;
     private static HandsInventory handsInventory;
+    private static PlayerScript playerScript;
 
     private static AnimationSequence animationSequence;
 
@@ -35,6 +36,9 @@ public class PlayerAnimationManager : MonoBehaviour
 
         handsInventory = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
         if (handsInventory == null) Debug.LogError("No handsInventory");
+
+        playerScript = GameObject.FindObjectOfType<PlayerScript>();
+        if (playerScript == null) Debug.LogError("No player");
     }
     
     public static void PlayAnimation(string name, Transform target = null)
@@ -46,6 +50,7 @@ public class PlayerAnimationManager : MonoBehaviour
             name != "faraway_left" && name != "faraway_right")
         {
             animationController.SetTrigger("S " + name);
+            playerScript.ResetFreeLook();
         }
         
         if (target)
