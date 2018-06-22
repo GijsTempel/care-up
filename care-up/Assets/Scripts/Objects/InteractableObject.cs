@@ -7,6 +7,7 @@ using UnityEngine.UI;
 /// </summary>
 [RequireComponent(typeof(Renderer))]
 public class InteractableObject : MonoBehaviour {
+	public int ObjectID = 0;
 
     public string description;
     public bool muplipleMesh = false;

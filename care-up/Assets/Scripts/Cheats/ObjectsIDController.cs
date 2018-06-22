@@ -38,8 +38,10 @@ public class ObjectsIDController : MonoBehaviour
 	public ObjectsIDs[] Objects =
 	{
 		new ObjectsIDs("syringePack", 30, 0),
-		new ObjectsIDs("Syringe", 1, 1),
-		new ObjectsIDs("AbsorptionNeedle", 20, 0)
+		new ObjectsIDs("Syringe", 2, 1),
+		new ObjectsIDs("AbsorptionNeedle", 20, 0),
+		new ObjectsIDs("InjectionNeedle", 20, 0)
+
         
 	};
 
