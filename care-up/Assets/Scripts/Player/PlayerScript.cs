@@ -345,7 +345,7 @@ public class PlayerScript : MonoBehaviour {
 
     public void OpenRobotUI()
     {
-        if (tutorial_UI != null && tutorial_UI.expectedRobotUIstate == false)
+        if (tutorial_UI != null && tutorial_UI.expectedRobotUIstate == false || robotUIopened)
         {
             return;
         }
