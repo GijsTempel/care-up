@@ -9,23 +9,45 @@ public class TestHint : MonoBehaviour {
 	public Vector3 offset;
 	Camera cam;
 	float screenCorrection = 1f;
+	public string ScriptCommand;
+	Vector2 res;
 
 	// Use this for initialization
-	void Start () {
-		screenCorrection = Screen.height / 1080f;
-		print(screenCorrection * 72f);
-		cam = GameObject.Find("Camera").GetComponent<Camera>();
-		GetComponentInParent<CanvasScaler>().fallbackScreenDPI = screenCorrection * 72f;
+
+	void UpdateToScreenResolution()
+	{
+		res = new Vector2(Screen.width, Screen.height);
+        screenCorrection = Screen.height / 1080f;
+        GetComponentInParent<CanvasScaler>().fallbackScreenDPI = screenCorrection * 72f;
 	}
+
+	void Start () {
+		cam = GameObject.Find("Camera").GetComponent<Camera>();
+		UpdateToScreenResolution();
+	}
+
+
 	
 	// Update is called once per frame
 	void Update () {
+		Vector2 scr = new Vector2(Screen.width, Screen.height);
+		if (res != scr)
+		{
+			UpdateToScreenResolution();
+			print("rescaleeeeeeeeeeeeeeee");
+		}
 		if (Input.GetKeyDown("h"))
 		{
-			print("h key was pressed");
-			WorldObject = Selection.activeGameObject;
-			Selection.activeGameObject = gameObject;
-			offset = new Vector3(0f, 0f, 0f);
+			GameObject sel = Selection.activeGameObject;
+			if (sel != null)
+			{
+				if (sel != gameObject)
+				{
+					WorldObject = sel;
+					Selection.activeGameObject = gameObject;
+					offset = new Vector3(0f, 0f, 0f);
+				}
+			}
 		}
         
 		if (WorldObject != null)
@@ -33,14 +55,16 @@ public class TestHint : MonoBehaviour {
 			if (WorldObject.GetComponent<RectTransform>() == null)
 			{
 				Vector3 ObjWorldPos = WorldObject.transform.position;
-				Vector3 ScreenPos = cam.WorldToScreenPoint(ObjWorldPos + offset) / screenCorrection;
-				GetComponent<RectTransform>().anchoredPosition = ScreenPos;
-			}
-			else
-			{
-				print("addddddddddddddddddddddddddddddd");
+                Vector3 ScreenPos = cam.WorldToScreenPoint(ObjWorldPos + offset) / screenCorrection;
+                GetComponent<RectTransform>().anchoredPosition = ScreenPos;
+                ScriptCommand = "toWorldPosition" + (ObjWorldPos + offset).ToString() + ";";
+            }
+            else
+            {
+                //print(WorldObject.GetComponent<RectTransform>().position);
+				float canvasScale = WorldObject.GetComponentInParent<Canvas>().gameObject.GetComponent<RectTransform>().localScale.x;
 				Vector3 UIElementPos = WorldObject.GetComponent<RectTransform>().position;
-				GetComponent<RectTransform>().anchoredPosition = UIElementPos + offset;
+				GetComponent<RectTransform>().anchoredPosition = (UIElementPos + offset * canvasScale) / screenCorrection;
 				//RectTransformUtility.ScreenPointToWorldPointInRectangle(WorldObject.GetComponent<RectTransform>()
 			}
 		}
