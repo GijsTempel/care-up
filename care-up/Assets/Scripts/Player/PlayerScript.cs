@@ -180,6 +180,8 @@ public class PlayerScript : MonoBehaviour {
         savedPos = transform.position;
         savedRot = transform.rotation;
 
+        mouseLook.SaveRot(transform, Camera.main.transform);
+
         robot = GameObject.FindObjectOfType<RobotManager>();
         savedRobotPos = robot.transform.position;
         savedRobotRot = robot.transform.rotation;
@@ -399,6 +401,7 @@ public class PlayerScript : MonoBehaviour {
             {
                 transform.rotation = Quaternion.Euler(0.0f, savedRot.eulerAngles.y, 0.0f);
                 Camera.main.transform.localRotation = Quaternion.Euler(savedRot.eulerAngles.x, 0.0f, 0.0f);
+                mouseLook.SaveRot(transform, Camera.main.transform);
             }
             currentWalkPosition = null;
 
