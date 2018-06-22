@@ -55,17 +55,27 @@ public class TestHint : MonoBehaviour {
 			if (WorldObject.GetComponent<RectTransform>() == null)
 			{
 				Vector3 ObjWorldPos = WorldObject.transform.position;
-                Vector3 ScreenPos = cam.WorldToScreenPoint(ObjWorldPos + offset) / screenCorrection;
-                GetComponent<RectTransform>().anchoredPosition = ScreenPos;
-                ScriptCommand = "toWorldPosition" + (ObjWorldPos + offset).ToString() + ";";
-            }
-            else
-            {
-                //print(WorldObject.GetComponent<RectTransform>().position);
-				float canvasScale = WorldObject.GetComponentInParent<Canvas>().gameObject.GetComponent<RectTransform>().localScale.x;
-				Vector3 UIElementPos = WorldObject.GetComponent<RectTransform>().position;
-				GetComponent<RectTransform>().anchoredPosition = (UIElementPos + offset * canvasScale) / screenCorrection;
-				//RectTransformUtility.ScreenPointToWorldPointInRectangle(WorldObject.GetComponent<RectTransform>()
+				Vector3 ScreenPos = cam.WorldToScreenPoint(ObjWorldPos + offset) / screenCorrection;
+				GetComponent<RectTransform>().anchoredPosition = ScreenPos;
+				ScriptCommand = "toWorldPosition" + (ObjWorldPos + offset).ToString() + ";";
+			}
+			else
+			{
+				if (WorldObject.GetComponentInParent<Canvas>().renderMode.ToString() == "WorldSpace")
+				{
+					GameObject canv = WorldObject.GetComponentInParent<Canvas>().gameObject;
+					print(canv.GetComponent<RectTransform>().position);
+					Vector3 ObjWorldPos = WorldObject.GetComponent<RectTransform>().TransformPoint(WorldObject.GetComponent<RectTransform>().position + offset); 
+                    Vector3 ScreenPos = cam.WorldToScreenPoint(ObjWorldPos) / screenCorrection;
+					GetComponent<RectTransform>().anchoredPosition = ScreenPos;
+				}
+				else
+				{
+
+					float canvasScale = WorldObject.GetComponentInParent<Canvas>().gameObject.GetComponent<RectTransform>().localScale.x;
+					Vector3 UIElementPos = WorldObject.GetComponent<RectTransform>().position;
+					GetComponent<RectTransform>().anchoredPosition = (UIElementPos + offset * canvasScale) / screenCorrection;
+				}
 			}
 		}
 	}
