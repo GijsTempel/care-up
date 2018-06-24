@@ -36,9 +36,6 @@ public class Tutorial_Picking : TutorialManager {
                     UItext.text = "Welkom. In deze leermodule zul je leren hoe je objecten kunt oppakken en terugleggen";
                     SetUpTutorialNextButton();
 
-     //               GameObject.Find("DevHint").SetActive(false);
-					//GameObject.Find("Extra").SetActive(false);
-                    //GameObject.Find("ExtraButton").SetActive(false);
                     break;
                 case TutorialStep.Welcome:
                     if (nextButtonClicked)
@@ -70,10 +67,11 @@ public class Tutorial_Picking : TutorialManager {
                     {
                         handsInventory.tutorial_pickedLeft = false;
                         currentStep = TutorialStep.PickTwo;
-                        hintsBox.anchoredPosition = new Vector2(-713f, 269f);
+                        hintsBox.anchoredPosition = new Vector2(0f, 79f);
                         UItext.text = "Het eerst object die je pakt verschijnt altijd in je linkerhand. Probeer nu het medicijn op te pakken door erop te klikken.";
-                        itemToPick = "Medicine";
+                        
                         handsInventory.tutorial_pickedRight = false;
+                        itemToPick = "Medicine";
 
                         particleHint.transform.position = GameObject.Find("Medicine").transform.position;
                     }
@@ -119,7 +117,7 @@ public class Tutorial_Picking : TutorialManager {
                     if (player.tutorial_itemControls)
                     {
                         player.tutorial_itemControls = false;
-                        hintsBox.anchoredPosition = new Vector2(-43f, 193f);
+                        hintsBox.anchoredPosition = new Vector2(-121f, 0);
                         currentStep = TutorialStep.DropTwo;
                         UItext.text = "Kies ook hier weer voor de optie 'Terugleggen'.";
 
@@ -130,7 +128,7 @@ public class Tutorial_Picking : TutorialManager {
                 case TutorialStep.DropTwo:
                     if (handsInventory.tutorial_droppedRight)
                     {
-                        hintsBox.anchoredPosition = new Vector2(548f, -302f);
+                        hintsBox.anchoredPosition = new Vector2(548f, -274f);
                         handsInventory.tutorial_droppedRight = false;
                         currentStep = TutorialStep.Done;
                         UItext.text = "Goed gedaan. Nu weet je hoe je objecten kunt oppakken en kunt terugleggen.";
