@@ -104,6 +104,7 @@ namespace LoginProAsset
             {
                 Username.text = PlayerPrefs.GetString("Username");
                 Password.text = PlayerPrefs.GetString("Password");
+              
             }
             // Check if login must be saved or not
            // SaveIsChecked();
@@ -116,7 +117,7 @@ namespace LoginProAsset
         {
             if (LoginPro.Manager != null)
                 LoginPro.Manager.Login(Username.text, Password.text, Success, Error);
-
+            
             Debug.Log("Login launched");
         }
 
