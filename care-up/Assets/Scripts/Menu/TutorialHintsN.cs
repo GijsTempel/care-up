@@ -68,7 +68,23 @@ public class TutorialHintsN : MonoBehaviour
 		hintsBox.anchoredPosition = originalPos;
         hintsBox.sizeDelta = originalSize;
 	}
-    
+
+	public void SetIconPosition(int pos)
+	{
+		RectTransform Icon = transform.Find("hintsBox/RegisterProtocols/Arrow").GetComponent<RectTransform>();
+		RectTransform hintsBox = transform.Find("hintsBox").GetComponent<RectTransform>();
+		Vector2 hintSize = hintsBox.sizeDelta;
+		switch (pos)
+		{
+			case 0:
+				Icon.anchoredPosition = new Vector2(10f, -10f);
+				break;
+			case 1:
+				Icon.anchoredPosition = new Vector2(hintSize.x - 10f, -10f);
+				break;
+		}
+
+	}
 
     void Update()
     {
