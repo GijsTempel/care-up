@@ -114,11 +114,16 @@ public class Tutorial_UseOn : TutorialManager {
                         currentStep = TutorialStep.Done;
                         hintsBox.anchoredPosition = new Vector2(513f, -304f);
                         UItext.text = "Super! Dit was de leermodule over het gebruiken van een object in je hand met een ander object zoals de naaldcontainer.";
+
+                        SetPauseTimer(3.0f);
                     }
                     break;
                 case TutorialStep.Done:
-                    currentStep = TutorialStep.None;
-                    TutorialEnd();
+                    if (!Paused())
+                    {
+                        currentStep = TutorialStep.None;
+                        TutorialEnd();
+                    }
                     break;
             }
         }

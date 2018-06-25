@@ -60,7 +60,7 @@ public class Tutorial_Talk : TutorialManager
                     if (player.tutorial_movedTo)
                     {
                         currentStep = TutorialStep.OpenOptions;
-                        hintsBox.anchoredPosition = new Vector2(731f, -253f);
+                        hintsBox.anchoredPosition = new Vector2(-315.67f, 114f);
                         UItext.text = "Heel goed. Klik nu nogmaals op de cliënt om het een gesprek te starten. ";
 
                         patient.tutorial_used = false;
@@ -72,7 +72,7 @@ public class Tutorial_Talk : TutorialManager
                         patient.tutorial_used = false;
 
                         currentStep = TutorialStep.Talk;
-                        hintsBox.anchoredPosition = new Vector2(-261f, 228f);
+                        hintsBox.anchoredPosition = new Vector2(-315.67f, 114f);
                         UItext.text = "Als je een gesprek start kun je keuzes maken over wat je tegen de persoon wilt zeggen. Laten we de cliënt begroeten door de optie 'Goedemorgen' te kiezen.";
 
                         patient.tutorial_talked = false;

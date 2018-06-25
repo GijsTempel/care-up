@@ -111,7 +111,7 @@ public class InteractableObject : MonoBehaviour {
         {
             bool selectedIsInteractable = (controls.SelectedObject != null && controls.CanInteract &&
                 controls.SelectedObject.GetComponent<InteractableObject>() != null);
-            if (controls.SelectedObject == gameObject && !cameraMode.animating && !player.UIHover)
+            if (controls.SelectedObject == gameObject && !cameraMode.animating)
             {
                 if (controls.CanInteract)
                 {

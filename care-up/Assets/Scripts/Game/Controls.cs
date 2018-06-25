@@ -137,6 +137,16 @@ public class Controls : MonoBehaviour {
     /// </summary>
 	void LateUpdate() {
 
+        if (UnityEngine.EventSystems.EventSystem.current != null)
+        {
+            if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+            {
+                selectedObject = null;
+                canInteract = false;
+                return;
+            }
+        }
+
         // raycast only in this script
         Vector3 screenPosition = (Input.touchCount > 0) ? 
             new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y) : 
