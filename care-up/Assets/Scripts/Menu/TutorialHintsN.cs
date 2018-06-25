@@ -13,6 +13,9 @@ public class TutorialHintsN : MonoBehaviour
     float screenCorrection = 1f;
     public string ScriptCommand;
     Vector2 res;
+	Vector2 originalPos;
+	Vector2 originalSize;
+	public int IconPosition = 0;
 
     void UpdateToScreenResolution()
     {
@@ -45,9 +48,27 @@ public class TutorialHintsN : MonoBehaviour
     {
         cam = GameObject.Find("Camera").GetComponent<Camera>();
         UpdateToScreenResolution();
+		originalPos = new Vector2(267f, -176f);
+		originalSize = new Vector2(452f, 300f);
     }
 
 
+	public void SetSize(float x, float y)
+	{
+		RectTransform hintsBox = transform.Find("hintsBox").GetComponent<RectTransform>();
+		float x_shift = originalPos.x + (x - originalSize.x) / 2f;
+		float y_shift = originalPos.y - (y - originalSize.y) / 2f;
+		hintsBox.anchoredPosition = new Vector2(x_shift, y_shift);
+		hintsBox.sizeDelta = new Vector2(x, y);
+			//sizeDelta
+	}
+	public void ResetSize()
+	{
+		RectTransform hintsBox = transform.Find("hintsBox").GetComponent<RectTransform>();
+		hintsBox.anchoredPosition = originalPos;
+        hintsBox.sizeDelta = originalSize;
+	}
+    
 
     void Update()
     {
