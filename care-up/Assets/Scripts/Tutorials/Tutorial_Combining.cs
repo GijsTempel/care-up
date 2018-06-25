@@ -35,7 +35,8 @@ public class Tutorial_Combining : TutorialManager {
                     currentStep = TutorialStep.Welcome;
                     //hintsBox.anchoredPosition = new Vector2(-14.8f, 9.9f);
                     //hintsBox.sizeDelta = new Vector2(788f, 524.9f);
-					hintsN.LockTo("ExtraButton", new Vector3(649.80f, -187.90f, 0.00f));
+					hintsN.SetSize(788f, 524.9f);
+                    hintsN.LockTo("UI(Clone)", new Vector3(-393.80f, 214.70f, 0.00f));
                     UItext.text = "Welkom. In deze leermodule zal je leren hoe je objecten in je handen kunt combineren en uit elkaar kunt halen.";
                     SetUpTutorialNextButton();
 
@@ -45,8 +46,9 @@ public class Tutorial_Combining : TutorialManager {
                     if (nextButtonClicked)
                     {
                         currentStep = TutorialStep.MoveTo;
-                        //hintsBox.anchoredPosition = new Vector2(165f, -265.64f);
-                        //hintsBox.sizeDelta = new Vector2(472.5f, 298.9f);
+						//hintsBox.anchoredPosition = new Vector2(165f, -265.64f);
+						//hintsBox.sizeDelta = new Vector2(472.5f, 298.9f);
+						hintsN.ResetSize();
 						hintsN.LockTo("WorkField", new Vector3(0.00f, 0.51f, -0.75f));
                         UItext.text = "Laten we beginnen door te bewegen naar het werkveld. Doe dit door te klikken op het werkveld.";
 
@@ -59,8 +61,8 @@ public class Tutorial_Combining : TutorialManager {
                         player.tutorial_movedTo = false;
                         
                         currentStep = TutorialStep.PickOne;
-                        //hintsBox.anchoredPosition = new Vector2(236.25f, 149.45f); 
-						hintsN.LockTo("Syringe", new Vector3(0.00f, 0.33f, -0.26f));
+						hintsN.SetIconPosition(3);
+						hintsN.LockTo("Syringe", new Vector3(0.00f, 0.47f, -0.10f));
                         UItext.text = "We zien een spuit en een naald op het werkveld liggen. Pak de spuit op door erop te klikken.";
 
                         handsInventory.tutorial_pickedLeft = false;
@@ -79,7 +81,7 @@ public class Tutorial_Combining : TutorialManager {
                         currentStep = TutorialStep.PickTwo;
                         UItext.text = "Heel goed! Pak nu ook de naald op. Doe dit door op de naald te klikken.";
 
-						hintsN.LockTo("AbsorptionNeedle", new Vector3(0.00f, 0.06f, -0.11f));
+						hintsN.LockTo("AbsorptionNeedle", new Vector3(0.00f, 0.42f, -0.08f));
 
                         handsInventory.tutorial_pickedRight = false;
 
@@ -98,6 +100,7 @@ public class Tutorial_Combining : TutorialManager {
 
                         //hintsBox.anchoredPosition = new Vector2(-67f, 37f);
 						hintsN.LockTo("Syringe", new Vector3(0.00f, 0.00f, 0.00f));
+						hintsN.SetIconPosition(0);
 
                         currentStep = TutorialStep.OpenControls;
                         UItext.text = "Nu we beide objecten in onze handen hebben kunnen we erop klikken om de opties te tonen. Klik nu op de spuit.";
@@ -125,7 +128,8 @@ public class Tutorial_Combining : TutorialManager {
 
                         currentStep = TutorialStep.Combine;
                         //hintsBox.anchoredPosition = new Vector2(746f, -149.45f);
-						hintsN.LockTo("AbsorptionNeedle", new Vector3(0.00f, -0.08f, 0.00f));
+						hintsN.LockTo("AbsorptionNeedle", new Vector3(0.00f, 0.20f, 0.00f));
+						hintsN.SetIconPosition(3);
                         UItext.text = "Klik nu op het object in je andere hand om de objecten met elkaar te combineren.";
 
                         handsInventory.tutorial_combined = false;
@@ -138,6 +142,7 @@ public class Tutorial_Combining : TutorialManager {
 
                         currentStep = TutorialStep.Explanaiton;
 						hintsN.LockTo("UI(Clone)", new Vector3(-239.20f, 0.00f, 0.00f));
+						hintsN.SetIconPosition(0);
                         UItext.text = "De opties tonen voor objecten kan zowel met het object in je linkerhand als in je rechterhand.";
                         SetUpTutorialNextButton();
                     }

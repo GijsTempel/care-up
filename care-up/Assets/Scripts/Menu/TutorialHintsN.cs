@@ -82,6 +82,12 @@ public class TutorialHintsN : MonoBehaviour
 			case 1:
 				Icon.anchoredPosition = new Vector2(hintSize.x - 10f, -10f);
 				break;
+			case 2:
+				Icon.anchoredPosition = new Vector2(hintSize.x - 10f, -hintSize.y + 10f);
+				break;
+			case 3:
+				Icon.anchoredPosition = new Vector2(10f, -hintSize.y + 10f);
+				break;
 		}
 
 	}
