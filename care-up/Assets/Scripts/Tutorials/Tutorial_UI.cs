@@ -63,7 +63,8 @@ public class Tutorial_UI : TutorialManager
                     //hintsBox.anchoredPosition = new Vector2(-0.00011874f, 0.00024414f);
                     //hintsBox.sizeDelta = new Vector2(788f, 524.9f);
 					//hintsN.LockTo("/UI/DevHint/Text",new Vector3(271, 6, -68, 3, 0, 0));
-					hintsN.LockTo("/UI", new Vector3(-302.00f, 138.90f, 0.00f));
+					hintsN.SetSize(788f, 524.9f);
+                    hintsN.LockTo("UI(Clone)", new Vector3(-393.80f, 214.70f, 0.00f));
                     UItext.text = "Welkom, in deze oefening zullen wij je uitleggen wat alle menu's en iconen in Care Up betekenen.";
                     SetUpTutorialNextButton();
                     break;
@@ -74,6 +75,7 @@ public class Tutorial_UI : TutorialManager
                         //hintsBox.anchoredPosition = new Vector2(771f, 0f);
 						//hintsBox.sizeDelta = new Vector2(472.5f, 298.9f);
                         hintsN.LockTo("/robot", new Vector3(0.00f, -0.16f, -0.17f));
+						hintsN.ResetSize();
                         UItext.text = "Dit is Olivia. Olivia is jou helper robot. Olivia heeft op dit moment nog niet veel functies maar dit zal veranderen in de toekomst. Wel geeft ze aan wanneer een actie goed of fout is uitgevoerd. ";
                         SetUpTutorialNextButton();
                     }
@@ -233,7 +235,7 @@ public class Tutorial_UI : TutorialManager
                     {
                         currentStep = TutorialStep.CloseMessageCenter;
                         //hintsBox.anchoredPosition = new Vector2(159f, -262f);
-						hintsN.LockTo("RobotUI", new Vector3(-633.30f, -111.00f, 0.00f));
+						hintsN.LockTo("RobotUI", new Vector3(-1861.90f, 957.80f, 0.00f));
                         UItext.text = "Berichten kun je lezen wanneer je wilt. Er kan erg handige informatie in staan. Laten we de berichten app afsluiten door op de terug knop te klikken.";
                         RobotUITabs.tutorial_back = false;
                         closeTab = true;
@@ -245,7 +247,8 @@ public class Tutorial_UI : TutorialManager
                         closeTab = RobotUITabs.tutorial_back = false;
                         currentStep = TutorialStep.CloseRobotUI;
                         //hintsBox.anchoredPosition = new Vector2(617f, 193f);
-						hintsN.LockTo("RobotUI", new Vector3(1326.00f, 1299.00f, 0.00f));
+						hintsN.LockTo("RobotUI", new Vector3(230.00f, 1299.00f, 0.00f));
+						hintsN.SetIconPosition(1);
                         UItext.text = "Laten we de tablet afsluiten. Je kunt de tablet altijd weer openen door op het icoon te klikken.";
                         expectedRobotUIstate = false;
                     }
@@ -255,6 +258,7 @@ public class Tutorial_UI : TutorialManager
                     {
                         currentStep = TutorialStep.DevHintsExpl;
                         //hintsBox.anchoredPosition = new Vector2(-21f, 226f);
+						hintsN.SetIconPosition(0);
 						hintsN.LockTo("/UI/DevHint/Text", new Vector3(342.00f, -84.72f, 0.00f));
                         UItext.text = "Hier zien we de stappen die je moet doorlopen om het protocol succesvol af te ronden.";
                         SetUpTutorialNextButton();
