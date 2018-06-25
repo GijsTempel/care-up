@@ -33,6 +33,7 @@ public class TutorialManager : MonoBehaviour
     protected float pauseTimer = 0.0f;
     protected Text UItext;
     protected RectTransform hintsBox;
+	protected TutorialHintsN hintsN;
 
     protected PlayerScript player;
     protected ActionManager actionManager;
@@ -61,6 +62,7 @@ public class TutorialManager : MonoBehaviour
     {
         get { return endPanel.activeSelf; }
     }
+    
 
     void Awake () {
         particleHint = GameObject.Find("ParticleHint");
@@ -76,15 +78,28 @@ public class TutorialManager : MonoBehaviour
         handsInventory.dropPenalty = false;
         
         endPanel = GameObject.Find("TutorialDonePanel");
-        nextButton = GameObject.Find("TutorialNextButton");
+
 	}
 
     protected virtual void Start()
     {
         player = GameObject.Find("Player").GetComponent<PlayerScript>();
 
-        UItext = GameObject.Find("TutorialHintsText").GetComponent<Text>();
-        hintsBox = GameObject.Find("TutorialHints").transform as RectTransform;
+        
+
+		if (GameObject.FindObjectOfType<TutorialHintsN>() != null)
+		{
+			hintsN = GameObject.FindObjectOfType<TutorialHintsN>();
+			hintsBox = GameObject.Find("hintsBox").transform as RectTransform;
+			nextButton = GameObject.Find("TutNextButton");
+			UItext = GameObject.Find("TutHintsText").GetComponent<Text>();
+		}   
+	    else if (GameObject.Find("TutorialHints") != null)
+        {
+			hintsBox = GameObject.Find("TutorialHints").transform as RectTransform;
+			nextButton = GameObject.Find("TutorialNextButton");
+			UItext = GameObject.Find("TutorialHintsText").GetComponent<Text>();
+        }
     }
 
     protected virtual void Update ()

@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 222043865999246456}
   - component: {fileID: 114697198697056144}
   m_Layer: 8
-  m_Name: TutorialHintsText
+  m_Name: TutHintsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 224921275818993744}
   - component: {fileID: 222986675344475188}
   - component: {fileID: 114620987877077910}
-  - component: {fileID: 114949615423110034}
+  - component: {fileID: 114084172696006166}
   m_Layer: 5
   m_Name: TestHints
   m_TagString: Untagged
@@ -107,7 +107,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224504123238741806}
   m_Layer: 8
-  m_Name: TestHints
+  m_Name: hintsBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -125,12 +125,27 @@ GameObject:
   - component: {fileID: 114754499833266056}
   - component: {fileID: 114622573052612446}
   m_Layer: 5
-  m_Name: TutorialNextButton
+  m_Name: TutNextButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &114084172696006166
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1272175931645562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 238164183917941aaad3daef6024bd4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WorldObject: {fileID: 0}
+  offset: {x: 0, y: 0, z: 0}
+  FullPath: 1
+  ScriptCommand: 
 --- !u!114 &114496361820285580
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -223,7 +238,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114754499833266056}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: TutorialNextButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114697198697056144
@@ -360,20 +386,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114949615423110034
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1272175931645562}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1cf8bbd34c61d4aabb03724714447bea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  WorldObject: {fileID: 0}
-  offset: {x: 0, y: 0, z: 0}
-  ScriptCommand: 
 --- !u!222 &222043865999246456
 CanvasRenderer:
   m_ObjectHideFlags: 1
