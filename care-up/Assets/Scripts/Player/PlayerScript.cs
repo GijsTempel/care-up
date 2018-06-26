@@ -73,6 +73,7 @@ public class PlayerScript : MonoBehaviour {
     GameObject tutorialCanvas;
 
     Tutorial_UI tutorial_UI;
+    Tutorial_Theory tutorial_theory;
 
     bool moveBackBtnActiveForIpad = false;
     bool devHintActiveForIpad = false;
@@ -187,6 +188,7 @@ public class PlayerScript : MonoBehaviour {
         savedRobotRot = robot.transform.rotation;
 
         tutorial_UI = GameObject.FindObjectOfType<Tutorial_UI>();
+        tutorial_theory = GameObject.FindObjectOfType<Tutorial_Theory>();
     }
 
     public void EnterHover()
@@ -412,7 +414,8 @@ public class PlayerScript : MonoBehaviour {
 
     public void OpenRobotUI()
     {
-        if (tutorial_UI != null && tutorial_UI.expectedRobotUIstate == false)
+        if ((tutorial_UI != null && tutorial_UI.expectedRobotUIstate == false) || 
+            (tutorial_theory != null && tutorial_theory.expectedRobotUIstate == false))
         {
             return;
         }
@@ -448,7 +451,8 @@ public class PlayerScript : MonoBehaviour {
 
     public void CloseRobotUI()
     {
-        if (tutorial_UI != null && tutorial_UI.expectedRobotUIstate == true)
+        if ((tutorial_UI != null && tutorial_UI.expectedRobotUIstate == true) ||
+            (tutorial_theory != null && tutorial_theory.expectedRobotUIstate == true))
         {
             return;
         }
@@ -457,7 +461,7 @@ public class PlayerScript : MonoBehaviour {
         robotUIopened = false;
 
         if (GameObject.FindObjectOfType<TutorialManager>() == null 
-            || GameObject.FindObjectOfType<Tutorial_UI>() != null)
+            || tutorial_UI != null || tutorial_theory != null)
         {
             devHintUI.SetActive(devHintActiveForIpad);
         }

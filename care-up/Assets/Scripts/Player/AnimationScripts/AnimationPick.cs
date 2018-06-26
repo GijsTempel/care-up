@@ -44,7 +44,8 @@ public class AnimationPick : StateMachineBehaviour {
         inv.ToggleControls(false);
 
         if (GameObject.FindObjectOfType<TutorialManager>() == null ||
-            GameObject.FindObjectOfType<Tutorial_UI>() != null)
+            GameObject.FindObjectOfType<Tutorial_UI>() != null ||
+            GameObject.FindObjectOfType<Tutorial_Theory>() != null)
         {
             RobotManager.SetUITriggerActive(true);
         }

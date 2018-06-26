@@ -21,8 +21,11 @@ public class RobotUITabs : MonoBehaviour {
     public static bool tutorial_checkListOpened = false;
     [HideInInspector]
     public static bool tutorial_messageCenterOpened = false;
+    [HideInInspector]
+    public static bool tutorial_infoTabOpened = false;
 
     Tutorial_UI tutorial_UI;
+    Tutorial_Theory tutorial_theory;
 
     protected virtual void Start()
     {
@@ -41,6 +44,7 @@ public class RobotUITabs : MonoBehaviour {
         }
 
         tutorial_UI = GameObject.FindObjectOfType<Tutorial_UI>();
+        tutorial_theory = GameObject.FindObjectOfType<Tutorial_Theory>();
         if (tutorial_UI != null)
         {
             GameObject exitBtn = GameObject.Find("Exit");
@@ -74,7 +78,8 @@ public class RobotUITabs : MonoBehaviour {
 
     public void OnTabSwitch()
     {
-        if (tutorial_UI != null && tutorial_UI.tabToOpen != name)
+        if ((tutorial_UI != null && tutorial_UI.tabToOpen != name) ||
+            (tutorial_theory != null && tutorial_theory.tabToOpen != name))
         {
             return;
         }
@@ -119,12 +124,16 @@ public class RobotUITabs : MonoBehaviour {
             case "MessageCenter":
                 tutorial_messageCenterOpened = true;
                 break;
+            case "InfoTab":
+                tutorial_infoTabOpened = true;
+                break;
         }
     }
 
     protected void BackButton()
     {
-        if (tutorial_UI != null && tutorial_UI.closeTab == false)
+        if ((tutorial_UI != null && tutorial_UI.closeTab == false) ||
+            ( tutorial_theory != null && tutorial_theory.closeTab == false))
         {
             return;
         }

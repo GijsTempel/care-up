@@ -2,7 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RobotUITabInfo : RobotUITabs {
+public class RobotUITabInfo : RobotUITabs
+{
+    [HideInInspector]
+    public bool tutorial_fullscreen = false;
+    [HideInInspector]
+    public bool tutorial_listButton = false;
+    [HideInInspector]
+    public bool tutorial_changedPDF = false;
 
     private RectTransform selectedButton;
     private RectTransform deselectButton;
@@ -15,35 +22,21 @@ public class RobotUITabInfo : RobotUITabs {
 	public GameObject ItemList;
 	public GameObject ItemListButton;
     
-
-    protected override void Start()
-    {
-        base.Start();
-
-        //Transform t = transform.Find("InfoDynamicCanvas/ItemList/Scroll View/Viewport/Content").GetChild(0);
-        //if ( t != null )
-        //{
-        //    OnItemButtonClick(t.GetComponent<RectTransform>());
-        //}
-		//ItemList.SetActive(false);
-
-
-        // generate buttons
-        // done in playerspawn
-    }
-
-
 	public void FullScreenPDF()
 	{
-		GameObject FullScreenPDF_UI = Instantiate(Resources.Load("Prefabs/PDFFullScreen")) as GameObject; 
-	}
+		GameObject FullScreenPDF_UI = Instantiate(Resources.Load("Prefabs/PDFFullScreen")) as GameObject;
+
+        tutorial_fullscreen = true;
+    }
 
        
 	public void ToggleItemList()
 	{
 		ItemListButton.GetComponent<Animator>().SetTrigger("BlinkStop");
 		ItemList.SetActive(!ItemList.activeSelf);
-	}
+
+        tutorial_listButton = true;
+    }
 
 	public void SwitchItemList(bool value)
     {
@@ -97,6 +90,8 @@ public class RobotUITabInfo : RobotUITabs {
             initButtonHeight = selectedButton.sizeDelta.y;
         }
 		ToggleItemList();
+
+        tutorial_changedPDF = true;
     }
 
     protected override void SetTabActive(bool value)

@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PDFFullScreenViewer : MonoBehaviour {
-	public Paroxe.PdfRenderer.PDFViewer FS_PDF;
+public class PDFFullScreenViewer : MonoBehaviour
+{
+    [HideInInspector]
+    public bool tutorial_closedFullScrPDF = false;
+
+    public Paroxe.PdfRenderer.PDFViewer FS_PDF;
 	public Paroxe.PdfRenderer.PDFViewer IPad_PDF;
 
 	private void FullScreenOff()
@@ -12,14 +16,15 @@ public class PDFFullScreenViewer : MonoBehaviour {
 		float ScrollPos = FS_PDF.gameObject.transform.Find("_Internal/VerticalScrollbar").GetComponent<Scrollbar>().value;
 		IPad_PDF.gameObject.transform.Find("_Internal/VerticalScrollbar").GetComponent<Scrollbar>().value = ScrollPos;
 		Invoke("CloseFS_PDF", 0.1f);
-	}
+
+        tutorial_closedFullScrPDF = true;
+    }
     
 	private void CloseFS_PDF()
 	{
 		Destroy(gameObject);
 	}
     
-	// Use this for initialization
 	void Start () {
 		FS_PDF = transform.Find("FS_PDFViewer").GetComponent<Paroxe.PdfRenderer.PDFViewer>();
 		IPad_PDF = GameObject.Find("PDFViewer").GetComponent<Paroxe.PdfRenderer.PDFViewer>();
@@ -28,10 +33,5 @@ public class PDFFullScreenViewer : MonoBehaviour {
 		FS_PDF.CurrentPageIndex = IPad_PDF.CurrentPageIndex;
 		float ScrollPos = IPad_PDF.gameObject.transform.Find("_Internal/VerticalScrollbar").GetComponent<Scrollbar>().value;
         FS_PDF.gameObject.transform.Find("_Internal/VerticalScrollbar").GetComponent<Scrollbar>().value = ScrollPos;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 }

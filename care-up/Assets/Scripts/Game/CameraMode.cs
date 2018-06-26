@@ -259,7 +259,8 @@ public class CameraMode : MonoBehaviour {
             playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
 
             if (GameObject.FindObjectOfType<TutorialManager>() == null ||
-                GameObject.FindObjectOfType<Tutorial_UI>() != null)
+                GameObject.FindObjectOfType<Tutorial_UI>() != null ||
+                GameObject.FindObjectOfType<Tutorial_Theory>() != null)
             {
                 RobotManager.SetUITriggerActive(true);
             }
@@ -276,7 +277,8 @@ public class CameraMode : MonoBehaviour {
             TogglePlayerScript(true);
             playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
             if (GameObject.FindObjectOfType<TutorialManager>() == null ||
-                GameObject.FindObjectOfType<Tutorial_UI>() != null)
+                GameObject.FindObjectOfType<Tutorial_UI>() != null ||
+                GameObject.FindObjectOfType<Tutorial_Theory>() != null)
             {
                 RobotManager.SetUITriggerActive(true);
             }
@@ -299,7 +301,8 @@ public class CameraMode : MonoBehaviour {
 
             playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
             if (GameObject.FindObjectOfType<TutorialManager>() == null ||
-                GameObject.FindObjectOfType<Tutorial_UI>() != null)
+                GameObject.FindObjectOfType<Tutorial_UI>() != null ||
+                GameObject.FindObjectOfType<Tutorial_Theory>() != null)
             {
                 RobotManager.SetUITriggerActive(true);
             }
@@ -337,7 +340,8 @@ public class CameraMode : MonoBehaviour {
             }
 
             if (GameObject.FindObjectOfType<TutorialManager>() == null ||
-                GameObject.FindObjectOfType<Tutorial_UI>() != null)
+                GameObject.FindObjectOfType<Tutorial_UI>() != null ||
+                GameObject.FindObjectOfType<Tutorial_Theory>() != null)
             {
                 RobotManager.SetUITriggerActive(true);
             }
@@ -424,7 +428,8 @@ public class CameraMode : MonoBehaviour {
 
                 playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
                 if (GameObject.FindObjectOfType<TutorialManager>() == null ||
-                    GameObject.FindObjectOfType<Tutorial_UI>() != null)
+                    GameObject.FindObjectOfType<Tutorial_UI>() != null ||
+                    GameObject.FindObjectOfType<Tutorial_Theory>() != null )
                 {
                     RobotManager.SetUITriggerActive(true);
                 }
