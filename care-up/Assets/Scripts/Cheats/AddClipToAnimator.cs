@@ -47,6 +47,8 @@ public class AddClipToAnimator : MonoBehaviour {
             bm.anyStateTransitions[l - 1].AddCondition(AnimatorConditionMode.Equals, leftID, "leftID");
         if (rightID > -1)
             bm.anyStateTransitions[l - 1].AddCondition(AnimatorConditionMode.Equals, rightID, "rightID");
+        lm.AddTransition(animationController.layers[layer].stateMachine);
+        lm.transitions[lm.transitions.Length - 1].hasExitTime = true;
     }
     
     AnimatorStateMachine FindMachine(AnimatorStateMachine machine, string addr)
