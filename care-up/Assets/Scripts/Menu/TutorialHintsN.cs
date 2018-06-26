@@ -16,12 +16,16 @@ public class TutorialHintsN : MonoBehaviour
 	Vector2 originalPos;
 	Vector2 originalSize;
 	public int IconPosition = 0;
+	float screenRation;
 
     void UpdateToScreenResolution()
     {
         res = new Vector2(Screen.width, Screen.height);
-        screenCorrection = Screen.height / 1080f;
-        GetComponentInParent<CanvasScaler>().fallbackScreenDPI = screenCorrection * 72f;
+		screenRation = (float)Screen.width / (float)Screen.height;
+		GetComponentInParent<CanvasScaler>().referenceResolution = new Vector2(1920f, 1920f / screenRation);
+		screenCorrection = (float)Screen.width / 1920f;
+
+		print(res);
     }
 
 	//get object path in hierarchy
