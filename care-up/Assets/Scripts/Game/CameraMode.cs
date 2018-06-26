@@ -350,6 +350,8 @@ public class CameraMode : MonoBehaviour {
 
         currentMode = mode;
         controls.ResetObject();
+
+        playerScript.ResetFreeLook();
     }
 
     /// <summary>

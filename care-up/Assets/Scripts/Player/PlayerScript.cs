@@ -32,6 +32,7 @@ public class PlayerScript : MonoBehaviour {
     PlayerPrefsManager prefs;
     Controls controls;
     HandsInventory handsInv;
+    CameraMode cameraMode;
 
     public bool away = true;
     private Vector3 savedPos;
@@ -118,6 +119,7 @@ public class PlayerScript : MonoBehaviour {
         itemControls.gameObject.SetActive(false);
 
         handsInv = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
+        cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
 
         usingOnText = GameObject.Find("UsingOnModeText");
 		usingOnCancelButton = GameObject.Find("CancelUseOnButton").gameObject;
@@ -238,7 +240,7 @@ public class PlayerScript : MonoBehaviour {
             Cursor.lockState = CursorLockMode.None;
         }
         
-        if (freeLook && !robotUIopened)
+        if (freeLook && !robotUIopened && cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
             rotated += mouseLook.LookRotation(transform, Camera.main.transform);
         }
