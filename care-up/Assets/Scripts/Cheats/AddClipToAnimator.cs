@@ -19,48 +19,36 @@ public class AddClipToAnimator : MonoBehaviour {
     [ContextMenu("Run Test")]
     public void Run()
     {
-		if (leftClip) { 
-			Motion LeftMotion = (Motion)leftClip as Motion;
-   //         UnityEditor.Animations.AnimatorState lm;
-   //         lm = animationController.layers[0].stateMachine.stateMachines[3].stateMachine.stateMachines[0].stateMachine.AddState(LeftMotion.name);
-   //         lm.motion = LeftMotion;
-			//animationController.layers[0].stateMachine.AddAnyStateTransition(lm);
-   //         int tLenght = animationController.layers[0].stateMachine.anyStateTransitions.Length;
-   //         animationController.layers[0].stateMachine.anyStateTransitions[tLenght - 1].AddCondition(AnimatorConditionMode.Equals, 1, "Combine");
-			//if (LeftObjectsID > -1)
-			//{
-			//	animationController.layers[0].stateMachine.anyStateTransitions[tLenght - 1].AddCondition(AnimatorConditionMode.Equals, LeftObjectsID, "leftID");
-			//}
-			//if (RightbjectsID > -1)
-    //        {
-				//animationController.layers[0].stateMachine.anyStateTransitions[tLenght - 1].AddCondition(AnimatorConditionMode.Equals, RightbjectsID, "rightID");
-            //}
-            
-            
-            
-            UnityEditor.Animations.AnimatorState rm;
-            //rm = animationController.layers[1].stateMachine.AddState(LeftMotion.name);
-            //print(animationController.layers[1].stateMachine.stateMachines[0].stateMachine.name);
-
-            //animationController.layers[1].stateMachine.AddAnyStateTransition(rm);
-            //int ttLenght = animationController.layers[1].stateMachine.anyStateTransitions.Length;
-            //animationController.layers[1].stateMachine.anyStateTransitions[ttLenght - 1].AddCondition(AnimatorConditionMode.Equals, 1, "S Combine");
-            //if (LeftObjectsID > -1)
-            //{
-            //    animationController.layers[1].stateMachine.anyStateTransitions[ttLenght - 1].AddCondition(AnimatorConditionMode.Equals, LeftObjectsID, "rightID");
-            //}
-            //if (RightbjectsID > -1)
-            //{
-            //    animationController.layers[1].stateMachine.anyStateTransitions[ttLenght - 1].AddCondition(AnimatorConditionMode.Equals, RightbjectsID, "leftID");
-            //}
-            AnimatorStateMachine am = FindMachine(animationController.layers[1].stateMachine, "Combine Animations/Injection Scene/New StateMachine");
-            if (am != null)
-                print(am.name);
-				
-		}
-
+        if (leftClip != null) 
+        { 
+            Motion LeftMotion = (Motion)leftClip as Motion;
+            AddActionToMachine(0, "Combine Animations/Injection Scene", LeftMotion, LeftObjectsID, RightbjectsID, "Combine");
+            AddActionToMachine(1, "Combine Animations/Injection Scene", LeftMotion, LeftObjectsID, RightbjectsID, "S Combine");
+	    }
+        if (rightClip != null)
+        {
+            Motion RightMotion = (Motion)rightClip as Motion;
+            AddActionToMachine(0, "Combine Animations/Injection Scene", RightMotion, RightbjectsID, LeftObjectsID, "Combine");
+            AddActionToMachine(1, "Combine Animations/Injection Scene", RightMotion, RightbjectsID, LeftObjectsID, "S Combine");
+        }
     }
 
+    void AddActionToMachine(int layer, string machineName, Motion clip, int leftID, int rightID, string trigger)
+    {
+        AnimatorStateMachine am = FindMachine(animationController.layers[layer].stateMachine, machineName);
+        UnityEditor.Animations.AnimatorState lm;
+        lm = am.AddState(clip.name);
+        lm.motion = clip;
+        AnimatorStateMachine bm = animationController.layers[layer].stateMachine;
+        bm.AddAnyStateTransition(lm);
+        int l = bm.anyStateTransitions.Length;
+        bm.anyStateTransitions[l - 1].AddCondition(AnimatorConditionMode.If, 1, trigger);
+        if (leftID > -1)
+            bm.anyStateTransitions[l - 1].AddCondition(AnimatorConditionMode.Equals, leftID, "leftID");
+        if (rightID > -1)
+            bm.anyStateTransitions[l - 1].AddCondition(AnimatorConditionMode.Equals, rightID, "rightID");
+    }
+    
     AnimatorStateMachine FindMachine(AnimatorStateMachine machine, string addr)
     {
         string n = addr;
@@ -77,7 +65,6 @@ public class AddClipToAnimator : MonoBehaviour {
                 if (i < (addrLen - 1))
                     nextAddr += "/";
             }
-            print(nextAddr);
         }
         foreach (ChildAnimatorStateMachine state in machine.stateMachines)
         {
