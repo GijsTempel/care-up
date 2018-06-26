@@ -32,7 +32,6 @@ public class InjectionPatient : PersonObject {
     {
         if (ViewModeActive() || topic == "")
             return;
-
         if (actionManager.CompareTopic(topic))
         {
             tutorial_talked = true;

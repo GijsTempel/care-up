@@ -42,6 +42,7 @@ public class Tutorial_Sequence : TutorialManager
             switch (currentStep)
             {
                 case TutorialStep.First:
+					GameObject.FindObjectOfType<InjectionPatient>().allowToTalk = false;
                     currentStep = TutorialStep.Welcome;
                     //hintsBox.anchoredPosition = new Vector2(-14.8f, 9.9f);
                     //hintsBox.sizeDelta = new Vector2(788f, 524.9f);
@@ -99,6 +100,7 @@ public class Tutorial_Sequence : TutorialManager
                     if (player.tutorial_movedTo)
                     {
                         player.tutorial_movedTo = false;
+						GameObject.FindObjectOfType<InjectionPatient>().allowToTalk = true;
                         //hintsBox.anchoredPosition = new Vector2(-490.9f, -214.1f);
                         //hintsBox.sizeDelta = new Vector2(592.3f, 374.7f);
 						hintsN.LockTo("RightShoulder", new Vector3(0.00f, 0.00f, 0.00f));
