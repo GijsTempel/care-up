@@ -202,4 +202,11 @@ public class MainMenu : MonoBehaviour {
         string bundleName = "tutorial_sequences";
         bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
     }
+
+    public void OnTutorialButtonClick_Theory()
+    {
+        string sceneName = "Tutorial_Theory";
+        string bundleName = "tutorial_theory";
+        bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
+    }
 }

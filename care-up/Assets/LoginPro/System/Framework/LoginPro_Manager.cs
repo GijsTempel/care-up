@@ -24,6 +24,7 @@ namespace LoginProAsset
         {
             // Register to LoginPro as THE manager
             LoginPro.Manager = this;
+           
         }
 
         // This function is called when the scene changes

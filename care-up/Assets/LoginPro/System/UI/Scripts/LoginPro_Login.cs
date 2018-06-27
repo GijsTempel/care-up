@@ -25,6 +25,13 @@ namespace LoginProAsset
         /// When the scene starts ask the server for achievements (if connected) or game news (if not connected yet)
         /// Then, load players prefs to prefill fields
         /// </summary>
+        /// 
+        void Awake()
+        {
+            // Load username & Password 
+            LoadPlayerPrefs();
+
+        }
         void Start()
         {
             // Check that all field are set
