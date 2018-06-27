@@ -701,7 +701,6 @@ public class ActionManager : MonoBehaviour {
         foreach (GameObject o in particleHints)
             Destroy(o);
         particleHints.Clear();
-
         if (actionList.Find(action => action.matched == false && action.notMandatory == false) == null)
         {
             Narrator.PlaySound("LevelComplete", 0.1f);
@@ -711,12 +710,12 @@ public class ActionManager : MonoBehaviour {
 
         else return false;
     }
-    
 
     private IEnumerator DelayedEndScene(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        GameObject.Find("Preferences").GetComponent<EndScoreManager>().LoadEndScoreScene();
+		GameObject.FindObjectOfType<GameUI>().ShowDonePanel(true);
+        //GameObject.Find("Preferences").GetComponent<EndScoreManager>().LoadEndScoreScene();
     }
 
     /// <summary>
