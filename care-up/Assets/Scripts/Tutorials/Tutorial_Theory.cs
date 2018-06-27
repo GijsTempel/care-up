@@ -45,14 +45,15 @@ public class Tutorial_Theory : TutorialManager
                     currentStep = TutorialStep.Welcome;
                     hintsN.SetSize(788f, 524.9f);
                     hintsN.LockTo("UI(Clone)", new Vector3(-393.80f, 214.70f, 0.00f));
-                    UItext.text = "Welkom, in deze oefening zullen wij je uitleggen wat alle menu's en iconen in Care Up betekenen.";
+                    UItext.text = "Welkom, in deze oefening zullen wij je uitleggen hoe je de theorie van een protocol kunt bekijken.";
                     SetUpTutorialNextButton();
                     break;
                 case TutorialStep.Welcome:
                     if (nextButtonClicked)
                     {
                         currentStep = TutorialStep.OpenRobotUI;
-                        hintsN.LockTo("/UI/RobotUITrigger", new Vector3(53.24f, -48.91f, 0.00f));
+                        hintsN.ResetSize();
+                        hintsN.LockTo("/UI/RobotUITrigger", new Vector3(84.20f, -43.70f, 0.00f));
                         UItext.text = "Het icon met de tablet kun je aanklikken om je tablet te openen. Op de tablet kun je veel informatie vinden. Probeer de tablet erbij te pakken door op het icoon te klikken.";
                         expectedRobotUIstate = true;
                     }
@@ -61,8 +62,9 @@ public class Tutorial_Theory : TutorialManager
                     if (player.tutorial_robotUI_opened)
                     {
                         currentStep = TutorialStep.PressTheory;
-                        hintsN.LockTo("RobotUI", new Vector3(-990.90f, -49.30f, -99.80f));
-                        UItext.text = "Laten we de 'Algemene' app openen door op het icoon te klikken. Probeer dit nu.";
+                        hintsN.LockTo("RobotUI", new Vector3(-897.20f, 597.00f, -99.80f));
+                        hintsN.SetIconPosition(3);
+                        UItext.text = "Laten we de 'Theorie' app openen door op het icoon te klikken.";
                         RobotUITabs.tutorial_infoTabOpened = false;
                         tabToOpen = "InfoTab";
                     }
@@ -71,16 +73,20 @@ public class Tutorial_Theory : TutorialManager
                     if (RobotUITabs.tutorial_infoTabOpened)
                     {
                         currentStep = TutorialStep.TheoryExpl;
-                        hintsN.LockTo("RobotUI", new Vector3(-694.10f, 338.70f, -99.80f));
-                        UItext.text = "In de app 'Algemeen' vind je algemene informatie zoals de naam van het protocol, geluidsknop & de terugkeren naar het hoofdmenu knop.";
+                        hintsN.SetSize(788f, 524.9f);
+                        hintsN.LockTo("UI(Clone)", new Vector3(-1314.83f, 719.20f, 0.00f));
+                        hintsN.SetIconPosition(0);
+                        UItext.text = "In de app 'Theorie' vindt je alle theorie die hoort bij het protocol die je aan het oefenen bent. Theorie kun je op ieder moment openen en bekijken.";
                         SetUpTutorialNextButton();
                     }
                     break;
                 case TutorialStep.TheoryExpl:
                     if (nextButtonClicked)
                     {
+                        hintsN.ResetSize();
+                        hintsN.LockTo("RobotUI", new Vector3(-1373.80f, 958.20f, -34.70f));
                         currentStep = TutorialStep.PressScroll;
-                        UItext.text = "Press open list button";
+                        UItext.text = "Druk op de knop met de streepjes om alle theorie te tonen.";
 
                         infoTab.tutorial_listButton = false;
                     }
@@ -89,9 +95,9 @@ public class Tutorial_Theory : TutorialManager
                     if (infoTab.tutorial_listButton)
                     {
                         infoTab.tutorial_listButton = false;
-
+                        hintsN.LockTo("RobotUI", new Vector3(-1132.30f, 408.00f, -34.70f));
                         currentStep = TutorialStep.ChangePDF;
-                        UItext.text = "Select another PDF";
+                        UItext.text = "In deze lijst kun je theorie vinden over verschillende onderwerpen. Probeer nu een ander theorie onderwerp te openen door op een van de knoppen te drukken.";
 
                         infoTab.tutorial_changedPDF = false;
                     }
@@ -100,9 +106,10 @@ public class Tutorial_Theory : TutorialManager
                     if (infoTab.tutorial_changedPDF)
                     {
                         infoTab.tutorial_changedPDF = false;
-
+                        hintsN.SetIconPosition(1);
+                        hintsN.LockTo("RobotUI", new Vector3(75.00f, 836.00f, -34.70f));
                         currentStep = TutorialStep.FullScrOn;
-                        UItext.text = "Turn on fullscreen mode";
+                        UItext.text = "Je kunt overschakelen naar een volledige scherm weergave om de theorie beter te kunnen lezen. Probeer dit nu door op de knop met de twee pijlen te drukken.";
 
                         infoTab.tutorial_fullscreen = false;
                     }
@@ -111,9 +118,9 @@ public class Tutorial_Theory : TutorialManager
                     if (infoTab.tutorial_fullscreen)
                     {
                         infoTab.tutorial_fullscreen = false;
-
+                        hintsN.LockTo("RobotUI", new Vector3(486.09f, 990.40f, -34.70f));
                         currentStep = TutorialStep.FullScrOff;
-                        UItext.text = "Turn off fullscreen mode";
+                        UItext.text = "Volledige scherm weergave kun je afsluiten door op de knop met het kruisje te drukken. Probeer dit nu.";
 
                         pdfViewer = FindObjectOfType<PDFFullScreenViewer>();
                         pdfViewer.tutorial_closedFullScrPDF = false;
@@ -123,8 +130,9 @@ public class Tutorial_Theory : TutorialManager
                     if (pdfViewer.tutorial_closedFullScrPDF)
                     {
                         currentStep = TutorialStep.TheoryBack;
+                        hintsN.SetIconPosition(0);
                         hintsN.LockTo("RobotUI", new Vector3(-1826.90f, 936.80f, -99.80f));
-                        UItext.text = "Laten we de app sluiten door op de terug knop te drukken. ";
+                        UItext.text = "Dat was alles over de theorie app. Laten we de apps sluiten door op de knop te drukken met het pijltje naar links. ";
 
                         closeTab = true;
                     }
@@ -136,7 +144,7 @@ public class Tutorial_Theory : TutorialManager
                         currentStep = TutorialStep.CloseIpad;
                         hintsN.LockTo("RobotUI", new Vector3(230.00f, 1299.00f, 0.00f));
                         hintsN.SetIconPosition(1);
-                        UItext.text = "Laten we de tablet afsluiten. Je kunt de tablet altijd weer openen door op het icoon te klikken.";
+                        UItext.text = "Heel goed. Laten we tot slot de tablet weer sluiten door op de knop met het kruisje te drukken. ";
                         expectedRobotUIstate = false;
                     }
                     break;
@@ -144,8 +152,9 @@ public class Tutorial_Theory : TutorialManager
                     if (player.tutorial_robotUI_closed)
                     {
                         currentStep = TutorialStep.Done;
-                        hintsN.LockTo("/Player/CinematicControl/Arms/Armature/Hips/Spine/Spine1/Spine2/Neck/Head/Camera/Canvas/SceneLoader 1", new Vector3(216.10f, 24.94f, 0.00f));
-                        UItext.text = "Gefeliciteerd! Je hebt nu alles geleerd over de menu's en iconen binnen Care Up. Veel plezier met het oefenen van de verpleegtechnische handelingen!";
+                        hintsN.SetIconPosition(0);
+                        hintsN.LockTo("/Player/CinematicControl/Arms/Armature/Hips/Spine/Spine1/Spine2/Neck/Head/Camera/Canvas/SceneLoader 1", new Vector3(123.80f, -69.10f, 0.00f));
+                        UItext.text = "Gefeliciteerd! Je hebt nu alles geleerd over hoe je theorie kunt opzoeken binnen Care Up. Veel plezier met het oefenen van de verpleegtechnische handelingen!";
                     }
                     break;
                 case TutorialStep.Done:
