@@ -33,6 +33,8 @@ public class ItemControlsUI : MonoBehaviour {
 
     private bool UIhover;
 
+    private Tutorial_Combining tutorialCombine;
+
     private void OnEnterHover()
     {
         UIhover = true;
@@ -125,6 +127,8 @@ public class ItemControlsUI : MonoBehaviour {
         dropButton.GetComponent<EventTrigger>().triggers.Add(event1);
         dropButton.GetComponent<EventTrigger>().triggers.Add(event2);
         dropButton.GetComponent<EventTrigger>().triggers.Add(event3);
+
+        tutorialCombine = GameObject.FindObjectOfType<Tutorial_Combining>();
     }
 
     public void Init(GameObject iObject)
@@ -382,6 +386,11 @@ public class ItemControlsUI : MonoBehaviour {
 
     public void Combine()
     {
+        if (tutorialCombine != null && !tutorialCombine.decombiningAllowed)
+        {
+            return;
+        }
+
         if (handsInventory.LeftHandEmpty() ^ handsInventory.RightHandEmpty())
         {
             handsInventory.OnCombineAction();

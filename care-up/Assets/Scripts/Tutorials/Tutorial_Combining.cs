@@ -23,6 +23,8 @@ public class Tutorial_Combining : TutorialManager {
 
     TutorialStep currentStep = TutorialStep.First;
 
+    public bool decombiningAllowed = false;
+
     protected override void Update()
     {
         base.Update();
@@ -169,6 +171,7 @@ public class Tutorial_Combining : TutorialManager {
                         UItext.text = "Kies vervolgens voor de optie 'Scheiden'. Afval (dopjes, gebruikte gaasjes etc.) wordt automatisch weggegooit na het combineren of scheiden. ";
 
                         handsInventory.tutorial_combined = false;
+                        decombiningAllowed = true;
                     }
                     break;
                 case TutorialStep.Decombine:
