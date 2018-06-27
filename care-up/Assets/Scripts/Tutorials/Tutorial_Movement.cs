@@ -144,7 +144,7 @@ public class Tutorial_Movement : TutorialManager
                         wfPos.SetActive(false);
                         //hintsBox.anchoredPosition = new Vector2(502f, -346f);
                         //hintsBox.sizeDelta = new Vector2(472.5f, 298.9f);
-						hintsN.LockTo("/UI(Clone)", new Vector3(425.90f, 201.10f, 0.00f));
+						hintsN.LockTo("UI(Clone)", new Vector3(376.67f, -44.90f, 0.00f));
 						hintsN.SetIconPosition(0);
                         currentStep = TutorialStep.Done;
                         UItext.text = "Gefeliciteerd! Je weet nu hoe je kunt rond bewegen binnen Care Up.";

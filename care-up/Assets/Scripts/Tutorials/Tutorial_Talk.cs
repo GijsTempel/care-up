@@ -89,7 +89,7 @@ public class Tutorial_Talk : TutorialManager
                         patient.tutorial_talked = false;
                         //hintsBox.anchoredPosition = new Vector2(532f, -318f);
 						hintsN.SetIconPosition(0);
-						hintsN.LockTo("SceneLoader 1", new Vector3(363.90f, 324.50f, 0.00f));
+						hintsN.LockTo("SceneLoader 1", new Vector3(356.74f, 39.10f, 0.00f));
                         currentStep = TutorialStep.Done;
                         UItext.text = "Goed gedaan. Je weet nu hoe je een gesprek kunt starten met personen!";
                     }

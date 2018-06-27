@@ -249,6 +249,7 @@ GameObject:
   - component: {fileID: 89288712}
   - component: {fileID: 89288711}
   - component: {fileID: 89288710}
+  - component: {fileID: 89288718}
   m_Layer: 0
   m_Name: GameLogic
   m_TagString: Untagged
@@ -360,6 +361,8 @@ MonoBehaviour:
   distanceFromCamera: 0.8
   dropPenalty: 1
   customPositions: []
+  leftHandObject: {fileID: 0}
+  rightHandObject: {fileID: 0}
 --- !u!114 &89288716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -392,6 +395,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &89288718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 89288709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79d63b85af3e941bbbb677de1a5b9540, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cheat: 0
 --- !u!1001 &90779066
 Prefab:
   m_ObjectHideFlags: 0
@@ -3423,6 +3438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9683ce8fd2daab5488955af11cfc9707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ObjectID: 0
   description: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
@@ -4042,6 +4058,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45d193438a63f844fad6e80e8bff19ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ObjectID: 0
   description: Stoppen
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0.55}

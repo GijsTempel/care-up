@@ -103,7 +103,7 @@ public class Tutorial_Picking : TutorialManager {
 
                         currentStep = TutorialStep.DropOne;
                         //hintsBox.anchoredPosition = new Vector2(507f, -199f);
-						hintsN.LockTo("DropButton", new Vector3(166.77f, 307.60f, 0.00f));
+						hintsN.LockTo("DropButton", new Vector3(176.40f, 303.30f, 0.00f));
 						hintsN.SetIconPosition(3);
                         UItext.text = "Kies vervolgens voor de optie 'Terugleggen'.";
 
@@ -129,7 +129,7 @@ public class Tutorial_Picking : TutorialManager {
                     {
                         player.tutorial_itemControls = false;
                         //hintsBox.anchoredPosition = new Vector2(-43f, 193f);
-						hintsN.LockTo("DropButton", new Vector3(-667.32f, 269.50f, 0.00f));
+						hintsN.LockTo("DropButton", new Vector3(-704.10f, 305.40f, 0.00f));
 						hintsN.SetIconPosition(2);
                         currentStep = TutorialStep.DropTwo;
                         UItext.text = "Kies ook hier weer voor de optie 'Terugleggen'.";
@@ -142,7 +142,7 @@ public class Tutorial_Picking : TutorialManager {
                     if (handsInventory.tutorial_droppedRight)
                     {
                         //hintsBox.anchoredPosition = new Vector2(548f, -302f);
-						hintsN.LockTo("SceneLoader 1", new Vector3(363.90f, 324.50f, 0.00f));
+						hintsN.LockTo("SceneLoader 1", new Vector3(363.90f, 41.00f, 0.00f));
 						hintsN.SetIconPosition(0);
                         handsInventory.tutorial_droppedRight = false;
                         currentStep = TutorialStep.Done;
