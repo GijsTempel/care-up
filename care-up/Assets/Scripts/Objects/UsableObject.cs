@@ -33,9 +33,14 @@ public class UsableObject : InteractableObject {
             {
                 case "ClothPackage":
                     {
-                        GameObject gameObject = handsInventory.CreateObjectByName("Cloth", Vector3.zero);
-                        handsInventory.PickItem(gameObject.GetComponent<PickableObject>());
-                        Reset();
+                        TutorialManager tutorial = GameObject.Find("GameLogic").GetComponent<TutorialManager>();
+                        if (tutorial == null || (tutorial != null &&
+                            ("Cloth" == tutorial.itemToPick || "Cloth" == tutorial.itemToPick2)))
+                        {
+                            GameObject gameObject = handsInventory.CreateObjectByName("Cloth", Vector3.zero);
+                            handsInventory.PickItem(gameObject.GetComponent<PickableObject>());
+                            Reset();
+                        }
                         return;
                     }   // no break, return = end function
                 case "HandCleaner":
