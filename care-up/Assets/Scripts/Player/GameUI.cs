@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class GameUI : MonoBehaviour {
 	GameObject Player;
@@ -9,6 +9,7 @@ public class GameUI : MonoBehaviour {
 	public Animator IPadBlink;
 	bool BlinkState = false;
 	public bool testValue;
+	GameObject TutorialDonePanel;
 
 	public void MoveBack()
 	{
@@ -52,6 +53,7 @@ public class GameUI : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Player = GameObject.Find("Player");
+
 		//Debug.Log(Application.isEditor);
 	}
 	

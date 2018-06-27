@@ -24,8 +24,6 @@ public class TutorialHintsN : MonoBehaviour
 		screenRation = (float)Screen.width / (float)Screen.height;
 		GetComponentInParent<CanvasScaler>().referenceResolution = new Vector2(1920f, 1920f / screenRation);
 		screenCorrection = (float)Screen.width / 1920f;
-
-		print(res);
     }
 
 	//get object path in hierarchy
