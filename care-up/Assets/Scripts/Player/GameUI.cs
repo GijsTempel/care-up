@@ -9,7 +9,8 @@ public class GameUI : MonoBehaviour {
 	public Animator IPadBlink;
 	bool BlinkState = false;
 	public bool testValue;
-	GameObject TutorialDonePanel;
+	GameObject donePanel;
+    
 
 	public void MoveBack()
 	{
@@ -53,6 +54,11 @@ public class GameUI : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Player = GameObject.Find("Player");
+		donePanel = transform.Find("DonePanel").gameObject;
+		GameObject doneButton = donePanel.transform.Find("Button").gameObject;
+        GameObject sl = GameObject.Find("SceneLoader 1");
+        doneButton.GetComponent<Button>().onClick.AddListener(delegate { sl.GetComponent<bl_SceneLoader>().LoadLevelButton("Menu"); });
+		donePanel.active = false;
 
 		//Debug.Log(Application.isEditor);
 	}
