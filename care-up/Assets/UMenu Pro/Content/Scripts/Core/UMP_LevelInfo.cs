@@ -23,7 +23,7 @@ public class UMP_LevelInfo : MonoBehaviour {
     public void GetInfo(string title,string desc,Sprite preview,string scene,string pn)
     {
         Title.text = title;
-        Description.text = desc;
+        //Description.text = desc;
         Preview.sprite = preview;
         PlayText.text = pn;
         LevelName = scene;
