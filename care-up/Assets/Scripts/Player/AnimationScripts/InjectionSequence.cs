@@ -70,9 +70,15 @@ public class InjectionSequence : AnimationSequenceState
                     {
                         if (GameObject.Find("GameLogic") != null)
                         {
-                            if (GameObject.Find("GameLogic").GetComponent<TutorialManager>() != null)
+                            Tutorial_Sequence tutSeq = GameObject.Find("GameLogic").GetComponent<Tutorial_Sequence>();
+                            if (tutSeq != null)
                             {
                                 PlayerAnimationManager.SequenceTutorialLock(true);
+
+                                if (!tutSeq.sequenceLock)
+                                {
+                                    PlayerAnimationManager.SequenceTutorialLock(false);
+                                }
                             }
                         }
                     }
@@ -122,19 +128,22 @@ public class InjectionSequence : AnimationSequenceState
         if (keyFrame >= keyFrames.Count && !inv.sequenceAborted)
         {
             GameObject.FindObjectOfType<InjectionPatient>().AfterSequenceDialogue();
-        }
-        
-        if (GameObject.Find("GameLogic") != null)
-        {
-            if (GameObject.Find("GameLogic").GetComponent<Tutorial_Sequence>() != null)
+
+            if (GameObject.Find("GameLogic") != null)
             {
-                GameObject.Find("GameLogic").GetComponent<Tutorial_Sequence>().sequenceCompleted = true;
+                if (GameObject.Find("GameLogic").GetComponent<Tutorial_Sequence>() != null)
+                {
+                    GameObject.Find("GameLogic").GetComponent<Tutorial_Sequence>().sequenceCompleted = true;
+                }
             }
+
+            GameObject.FindObjectOfType<InjectionPatient>().GetComponent<Animator>().SetTrigger("SleeveDown");
         }
 
-        syringe.updateProtector = false;
-        
-        GameObject.FindObjectOfType<InjectionPatient>().GetComponent<Animator>().SetTrigger("SleeveDown");
+        if (syringe != null)
+        {
+            syringe.updateProtector = false;
+        }
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here

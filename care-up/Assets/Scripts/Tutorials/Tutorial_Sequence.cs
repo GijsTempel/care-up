@@ -23,7 +23,10 @@ public class Tutorial_Sequence : TutorialManager
     
     [HideInInspector]
     public bool sequenceCompleted = false;
-    
+    [HideInInspector]
+    public bool sequenceLock = true;
+
+
     private InjectionPatient patient;
 
     protected override void Start()
@@ -44,22 +47,14 @@ public class Tutorial_Sequence : TutorialManager
                 case TutorialStep.First:
 					GameObject.FindObjectOfType<InjectionPatient>().allowToTalk = false;
                     currentStep = TutorialStep.Welcome;
-                    //hintsBox.anchoredPosition = new Vector2(-14.8f, 9.9f);
-                    //hintsBox.sizeDelta = new Vector2(788f, 524.9f);
 					hintsN.SetSize(788f, 382f);
                     hintsN.LockTo("UI(Clone)", new Vector3(-393.80f, 214.70f, 0.00f));
                     UItext.text = "Welkom, In deze tutorial zul je leren hoe je ingewikkelde handelingen, zoals injecteren, moet uitvoeren.";
                     SetUpTutorialNextButton();
-
-     //               GameObject.Find("DevHint").SetActive(false);
-					//GameObject.Find("Extra").SetActive(false);
-                    //GameObject.Find("ExtraButton").SetActive(false);
                     break;
                 case TutorialStep.Welcome:
                     if (nextButtonClicked)
                     {
-                        //hintsBox.anchoredPosition = new Vector2(165f, -265.64f);
-                        //hintsBox.sizeDelta = new Vector2(472.5f, 298.9f);
 						hintsN.ResetSize();
                         hintsN.LockTo("WorkField", new Vector3(0.00f, 0.51f, -0.73f));
                         currentStep = TutorialStep.MoveTo;
@@ -72,7 +67,6 @@ public class Tutorial_Sequence : TutorialManager
                     if (player.tutorial_movedTo)
                     {
                         player.tutorial_movedTo = false;
-                        //hintsBox.anchoredPosition = new Vector2(421f, -284f);
 						hintsN.LockTo("SyringeWithInjectionNeedleCap", new Vector3(0.00f, 0.46f, 0.00f));
 						hintsN.SetIconPosition(3);
                         currentStep = TutorialStep.PickSyringe;
@@ -86,8 +80,6 @@ public class Tutorial_Sequence : TutorialManager
                     if (handsInventory.tutorial_pickedLeft)
                     {
                         handsInventory.tutorial_pickedLeft = false;
-                        //hintsBox.anchoredPosition = new Vector2(575f, -235.3f);
-                        //hintsBox.sizeDelta = new Vector2(626.4f, 396.3f);
 						hintsN.LockTo("UI(Clone)", new Vector3(171.60f, 374.99f, 0.00f));
 						hintsN.SetIconPosition(1);
                         currentStep = TutorialStep.MoveToPatient;
@@ -101,8 +93,6 @@ public class Tutorial_Sequence : TutorialManager
                     {
                         player.tutorial_movedTo = false;
 						GameObject.FindObjectOfType<InjectionPatient>().allowToTalk = true;
-                        //hintsBox.anchoredPosition = new Vector2(-490.9f, -214.1f);
-                        //hintsBox.sizeDelta = new Vector2(592.3f, 374.7f);
 						hintsN.LockTo("RightShoulder", new Vector3(0.00f, 0.00f, 0.00f));
 						hintsN.SetIconPosition(0);
                         currentStep = TutorialStep.Talk;
@@ -115,8 +105,6 @@ public class Tutorial_Sequence : TutorialManager
                     if (patient.tutorial_talked)
                     {
                         patient.tutorial_talked = false;
-                        //hintsBox.anchoredPosition = new Vector2(686f, -228f);
-                        //hintsBox.sizeDelta = new Vector2(520f, 322.5f);
 						hintsN.LockTo("SceneLoader 1", new Vector3(362.67f, 281.10f, 0.00f));
 						hintsN.SetIconPosition(3);
                         currentStep = TutorialStep.UseOnPatient;
@@ -128,8 +116,6 @@ public class Tutorial_Sequence : TutorialManager
                 case TutorialStep.UseOnPatient:
                     if (handsInventory.tutorial_itemUsedOn)
                     {
-                        //hintsBox.anchoredPosition = new Vector2(-14.8f, 9.9f);
-                        //hintsBox.sizeDelta = new Vector2(788f, 524.9f);
 						hintsN.LockTo("UI(Clone)", new Vector3(-419.90f, 142.80f, 0.00f));
 						hintsN.SetIconPosition(0);
 						hintsN.SetSize(560f, 400f);
@@ -141,12 +127,10 @@ public class Tutorial_Sequence : TutorialManager
                 case TutorialStep.SequenceExplanation:
                     if (nextButtonClicked)
                     {
-                        //hintsBox.anchoredPosition = new Vector2(-682f, 259.12f);
-                        //hintsBox.sizeDelta = new Vector2(521.9f, 347.6f);
 						hintsN.LockTo("UI(Clone)", new Vector3(-723.20f, 279.40f, 0.00f));
 						hintsN.ResetSize();
                         currentStep = TutorialStep.CompleteSequence;
-                        sequenceCompleted = false;
+                        sequenceCompleted = sequenceLock = false;
                         PlayerAnimationManager.SequenceTutorialLock(false);
                         UItext.text = "In deze instructie zijn de juiste keuzes aangegeven in het groen. Doorloop nu de verschillende injectie stappen door de juiste keuzes te selecteren.";
                     }
@@ -154,8 +138,6 @@ public class Tutorial_Sequence : TutorialManager
                 case TutorialStep.CompleteSequence:
                     if (sequenceCompleted)
                     {
-                        //hintsBox.anchoredPosition = new Vector2(519f, -347f);
-                        //hintsBox.sizeDelta = new Vector2(472.5f, 298.9f);
 						hintsN.LockTo("SceneLoader 1", new Vector3(363.61f, -22.40f, 0.00f));
                         currentStep = TutorialStep.Done;
                         UItext.text = "Gefeliciteerd! Je weet nu hoe je ingewikkelde handelingen succesvol kunt uitvoeren.";
