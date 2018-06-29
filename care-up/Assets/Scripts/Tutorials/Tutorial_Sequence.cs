@@ -25,7 +25,8 @@ public class Tutorial_Sequence : TutorialManager
     public bool sequenceCompleted = false;
     [HideInInspector]
     public bool sequenceLock = true;
-
+    [HideInInspector]
+    public bool dialogueEnded = false;
 
     private InjectionPatient patient;
 
@@ -136,7 +137,7 @@ public class Tutorial_Sequence : TutorialManager
                     }
                     break;
                 case TutorialStep.CompleteSequence:
-                    if (sequenceCompleted)
+                    if (sequenceCompleted && dialogueEnded)
                     {
 						hintsN.LockTo("SceneLoader 1", new Vector3(363.61f, -22.40f, 0.00f));
                         currentStep = TutorialStep.Done;
