@@ -74,7 +74,8 @@ public class Tutorial_UI : TutorialManager
                         currentStep = TutorialStep.RobotIntro;
                         //hintsBox.anchoredPosition = new Vector2(771f, 0f);
 						//hintsBox.sizeDelta = new Vector2(472.5f, 298.9f);
-                        hintsN.LockTo("/robot", new Vector3(0.00f, -0.16f, -0.17f));
+						hintsN.LockTo("robot", new Vector3(0.00f, -0.25f, 0.09f));
+						hintsN.SetIconPosition(1);
 						hintsN.ResetSize();
                         UItext.text = "Dit is Olivia. Olivia is jou helper robot. Olivia heeft op dit moment nog niet veel functies maar dit zal veranderen in de toekomst. Wel geeft ze aan wanneer een actie goed of fout is uitgevoerd. ";
                         SetUpTutorialNextButton();
@@ -85,6 +86,7 @@ public class Tutorial_UI : TutorialManager
                     {
                         currentStep = TutorialStep.OpenRobotUI;
                         //hintsBox.anchoredPosition = new Vector2(-560, -68);
+						hintsN.SetIconPosition(0);
 						hintsN.LockTo("/UI/RobotUITrigger", new Vector3(53.24f, -48.91f, 0.00f));
                         UItext.text = "Het icon met de tablet kun je aanklikken om je tablet te openen. Op de tablet kun je veel informatie vinden. Probeer de tablet erbij te pakken door op het icoon te klikken.";
                         expectedRobotUIstate = true;
@@ -201,6 +203,7 @@ public class Tutorial_UI : TutorialManager
                         UItext.text = "Oh wow, je hebt een bericht! Laten we gaan kijken!";
                         //hintsBox.anchoredPosition = new Vector2(729f, -125f);
 						hintsN.LockTo("RobotUI", new Vector3(849.00f, -244.00f, -34.70f));
+						hintsN.SetIconPosition(1);
                         GameObject.FindObjectOfType<RobotUIMessageTab>().NewMessage("Leren Spelen",
                             "De inhoud van de berichten verschijnen in dit venster. Gebruik de terug knop linksboven in het scherm van de tablet om de app af te sluiten en verder te gaan!",
                              RobotUIMessageTab.Icon.Info);
@@ -214,6 +217,7 @@ public class Tutorial_UI : TutorialManager
                         tabToOpen = "";
                         currentStep = TutorialStep.MessageCenterExpl;
                         //hintsBox.anchoredPosition = new Vector2(493f, -205f);
+						hintsN.SetIconPosition(0);
 						hintsN.LockTo("RobotUI", new Vector3(-687.60f, -244.00f, -34.70f));
                         UItext.text = "Dit is de berichten app. Tijdens het spelen zullen wij jou berichten sturen om je te helpen en te informeren.";
                         SetUpTutorialNextButton();
@@ -247,7 +251,7 @@ public class Tutorial_UI : TutorialManager
                         closeTab = RobotUITabs.tutorial_back = false;
                         currentStep = TutorialStep.CloseRobotUI;
                         //hintsBox.anchoredPosition = new Vector2(617f, 193f);
-						hintsN.LockTo("RobotUI", new Vector3(230.00f, 1299.00f, 0.00f));
+						hintsN.LockTo("RobotUI", new Vector3(1880.40f, 1299.00f, 0.00f));
 						hintsN.SetIconPosition(1);
                         UItext.text = "Laten we de tablet afsluiten. Je kunt de tablet altijd weer openen door op het icoon te klikken.";
                         expectedRobotUIstate = false;

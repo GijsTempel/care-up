@@ -67,7 +67,7 @@ public class Tutorial_Sequence : TutorialManager
                     if (player.tutorial_movedTo)
                     {
                         player.tutorial_movedTo = false;
-						hintsN.LockTo("SyringeWithInjectionNeedleCap", new Vector3(0.00f, 0.46f, 0.00f));
+						hintsN.LockTo("SyringeWithInjectionNeedleCap", new Vector3(0.00f, 0.12f, 0.00f));
 						hintsN.SetIconPosition(3);
                         currentStep = TutorialStep.PickSyringe;
                         UItext.text = "Pak de spuit + injectienaald + beschermdop op door op het object te klikken.";
@@ -80,7 +80,7 @@ public class Tutorial_Sequence : TutorialManager
                     if (handsInventory.tutorial_pickedLeft)
                     {
                         handsInventory.tutorial_pickedLeft = false;
-						hintsN.LockTo("UI(Clone)", new Vector3(171.60f, 374.99f, 0.00f));
+						hintsN.LockTo("UI(Clone)", new Vector3(682.50f, 374.99f, 0.00f));
 						hintsN.SetIconPosition(1);
                         currentStep = TutorialStep.MoveToPatient;
                         UItext.text = "Heel goed. Laten we naar de cliënt toe gaan. Dit kan door op door op de 'terug naar overzicht' knop te klikken en daarna op de cliënt of door de camera te draaien richting de cliënt op hem te klikken. ";
@@ -105,7 +105,7 @@ public class Tutorial_Sequence : TutorialManager
                     if (patient.tutorial_talked)
                     {
                         patient.tutorial_talked = false;
-						hintsN.LockTo("SceneLoader 1", new Vector3(362.67f, 281.10f, 0.00f));
+						hintsN.LockTo("UI(Clone)", new Vector3(418.20f, 0.00f, 0.00f));
 						hintsN.SetIconPosition(3);
                         currentStep = TutorialStep.UseOnPatient;
                         UItext.text = "Gebruik nu de spuit + naald + dop met de cliënt. Doe dit door op de spuit + injectienaald + beschermdop te klikken, te kiezen voor de optie 'Gebruiken met...' en vervolgens te klikken op de cliënt.";

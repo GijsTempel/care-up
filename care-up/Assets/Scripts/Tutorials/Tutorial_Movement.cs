@@ -85,7 +85,7 @@ public class Tutorial_Movement : TutorialManager
 
                         //hintsBox.anchoredPosition = new Vector2(681f, 175f);
                         //hintsBox.sizeDelta = new Vector2(472.5f, 298.9f);
-						hintsN.LockTo("MoveBackButton", new Vector3(-645.80f, -38.90f, 0.00f));
+						hintsN.LockTo("MoveBackButton", new Vector3(-122.94f, -51.70f, 0.00f));
 						hintsN.SetIconPosition(1);
                         currentStep = TutorialStep.MoveBack;
                         UItext.text = "Je ziet dat we nu naar het werkveld zijn verplaatst. Je kunt op ieder moment weer terug keren naar de beginpositie. Dit noemen wij het overzicht. Keer terug naar het overzicht door te drukken op de knop 'Terug naar overzicht' rechtsboven in het scherm. ";
@@ -132,7 +132,7 @@ public class Tutorial_Movement : TutorialManager
                         UItext.text = "Beweeg vanaf je collega direct naar het werkveld zonder terug te keren naar het overzicht.";
 						hintsN.ResetSize();
 						hintsN.SetIconPosition(1);
-						hintsN.LockTo("UI(Clone)", new Vector3(375.27f, 446.10f, 0.00f));
+						hintsN.LockTo("UI(Clone)", new Vector3(891.40f, 446.10f, 0.00f));
                         player.MoveBackButtonObject.SetActive(false);
                         player.tutorial_movedTo = false;
                         wfPos.SetActive(true);

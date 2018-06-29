@@ -17,6 +17,7 @@ public class TutorialHintsN : MonoBehaviour
 	Vector2 originalSize;
 	public int IconPosition = 0;
 	float screenRation;
+	int iconPos = 0;
 
     void UpdateToScreenResolution()
     {
@@ -62,6 +63,8 @@ public class TutorialHintsN : MonoBehaviour
 		float y_shift = originalPos.y - (y - originalSize.y) / 2f;
 		hintsBox.anchoredPosition = new Vector2(x_shift, y_shift);
 		hintsBox.sizeDelta = new Vector2(x, y);
+		SetIconPosition(iconPos);
+
 			//sizeDelta
 	}
 	public void ResetSize()
@@ -69,25 +72,32 @@ public class TutorialHintsN : MonoBehaviour
 		RectTransform hintsBox = transform.Find("hintsBox").GetComponent<RectTransform>();
 		hintsBox.anchoredPosition = originalPos;
         hintsBox.sizeDelta = originalSize;
+		SetIconPosition(iconPos);
 	}
 
 	public void SetIconPosition(int pos)
 	{
+		iconPos = pos;
 		RectTransform Icon = transform.Find("hintsBox/RegisterProtocols/Arrow").GetComponent<RectTransform>();
 		RectTransform hintsBox = transform.Find("hintsBox").GetComponent<RectTransform>();
 		Vector2 hintSize = hintsBox.sizeDelta;
 		switch (pos)
 		{
 			case 0:
+				hintsBox.anchoredPosition = new Vector3(hintSize.x / 2f + 40, -hintSize.y / 2f - 15f, 0f);
 				Icon.anchoredPosition = new Vector2(10f, -10f);
 				break;
 			case 1:
+				hintsBox.anchoredPosition = new Vector3(-hintSize.x / 2f - 40, -hintSize.y / 2f - 15f, 0f);
 				Icon.anchoredPosition = new Vector2(hintSize.x - 10f, -10f);
 				break;
 			case 2:
+				hintsBox.anchoredPosition = new Vector3(-hintSize.x / 2f - 40, hintSize.y / 2f + 15f, 0f);
 				Icon.anchoredPosition = new Vector2(hintSize.x - 10f, -hintSize.y + 10f);
 				break;
 			case 3:
+				hintsBox.anchoredPosition = new Vector3(hintSize.x / 2f + 40, hintSize.y / 2f + 15f, 0f);
+
 				Icon.anchoredPosition = new Vector2(10f, -hintSize.y + 10f);
 				break;
 		}

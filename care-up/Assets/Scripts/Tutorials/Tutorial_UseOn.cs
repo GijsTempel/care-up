@@ -61,7 +61,7 @@ public class Tutorial_UseOn : TutorialManager {
 
                         currentStep = TutorialStep.PickNeedle;
                         //hintsBox.anchoredPosition = new Vector2(372.73f, -237f);
-						hintsN.LockTo("AbsorptionNeedleNoCap", new Vector3(0.00f, 0.42f, -0.06f));
+						hintsN.LockTo("AbsorptionNeedleNoCap", new Vector3(0.00f, 0.06f, -0.06f));
 						hintsN.SetIconPosition(3);
                         UItext.text = "Heel goed. Laten we nu de gebruikte opzuignaald oppakken door erop te klikken.";
 
@@ -97,7 +97,7 @@ public class Tutorial_UseOn : TutorialManager {
 
                         currentStep = TutorialStep.ClickUseOn;
                         //hintsBox.anchoredPosition = new Vector2(527f, 68f);
-						hintsN.LockTo("UseOnButton", new Vector3(172.97f, 318.30f, 0.00f));
+						hintsN.LockTo("UseOnButton", new Vector3(171.89f, 0.00f, 0.00f));
 						hintsN.SetIconPosition(3);
                         UItext.text = "Kies voor de optie 'Gebruiken met...' ";
 
@@ -111,7 +111,7 @@ public class Tutorial_UseOn : TutorialManager {
                         
                         currentStep = TutorialStep.UseOn;
                         //hintsBox.anchoredPosition = new Vector2(566f, -69f);
-						hintsN.LockTo("NeedleCup", new Vector3(0.00f, 0.00f, -0.07f));
+						hintsN.LockTo("NeedleCup", new Vector3(0.00f, 0.00f, -0.15f));
 						hintsN.SetIconPosition(0);
                         UItext.text = "Klik nu op het object waarmee je de naald wilt gebruiken. In dit geval de naaldcontainer.";
                         

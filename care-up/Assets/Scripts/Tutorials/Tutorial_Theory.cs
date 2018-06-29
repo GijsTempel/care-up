@@ -62,7 +62,7 @@ public class Tutorial_Theory : TutorialManager
                     if (player.tutorial_robotUI_opened)
                     {
                         currentStep = TutorialStep.PressTheory;
-						hintsN.LockTo("RobotUI", new Vector3(-983.80f, 688.20f, -99.80f));
+						hintsN.LockTo("RobotUI", new Vector3(-997.40f, -430.00f, -99.80f));
                         hintsN.SetIconPosition(3);
                         UItext.text = "Laten we de 'Theorie' app openen door op het icoon te klikken.";
                         RobotUITabs.tutorial_infoTabOpened = false;
@@ -74,9 +74,10 @@ public class Tutorial_Theory : TutorialManager
                     {
                         currentStep = TutorialStep.TheoryExpl;
                         hintsN.SetSize(788f, 524.9f);
-						hintsN.LockTo("Stopwatch", new Vector3(622.40f, -818.80f, 0.00f));
 
-                        hintsN.SetIconPosition(0);
+						hintsN.LockTo("Stopwatch", new Vector3(3396.70f, -818.80f, 0.00f));
+
+                        hintsN.SetIconPosition(1);
                         UItext.text = "In de app 'Theorie' vindt je alle theorie die hoort bij het protocol die je aan het oefenen bent. Theorie kun je op ieder moment openen en bekijken.";
                         SetUpTutorialNextButton();
                     }
@@ -85,6 +86,7 @@ public class Tutorial_Theory : TutorialManager
                     if (nextButtonClicked)
                     {
                         hintsN.ResetSize();
+						hintsN.SetIconPosition(0);
 						hintsN.LockTo("Stopwatch", new Vector3(438.90f, -531.30f, 0.00f));
                         currentStep = TutorialStep.PressScroll;
                         UItext.text = "Druk op de knop met de streepjes om alle theorie te tonen.";
@@ -108,7 +110,7 @@ public class Tutorial_Theory : TutorialManager
                     {
                         infoTab.tutorial_changedPDF = false;
                         hintsN.SetIconPosition(1);
-						hintsN.LockTo("FullScreenPDFButton", new Vector3(-2019.40f, -178.20f, 0.00f));
+						hintsN.LockTo("FullScreenPDFButton", new Vector3(-154.02f, -217.40f, 0.00f));
                         currentStep = TutorialStep.FullScrOn;
                         UItext.text = "Je kunt overschakelen naar een volledige scherm weergave om de theorie beter te kunnen lezen. Probeer dit nu door op de knop met de twee pijlen te drukken.";
 
@@ -119,7 +121,7 @@ public class Tutorial_Theory : TutorialManager
                     if (infoTab.tutorial_fullscreen)
                     {
                         infoTab.tutorial_fullscreen = false;
-						hintsN.LockTo("ExitFromFullScreen", new Vector3(-571.60f, -45.70f, 0.00f));
+						hintsN.LockTo("ExitFromFullScreen", new Vector3(-41.70f, -61.70f, 0.00f));
                         currentStep = TutorialStep.FullScrOff;
                         UItext.text = "Volledige scherm weergave kun je afsluiten door op de knop met het kruisje te drukken. Probeer dit nu.";
 
@@ -143,7 +145,7 @@ public class Tutorial_Theory : TutorialManager
                     {
                         closeTab = RobotUITabs.tutorial_back = false;
                         currentStep = TutorialStep.CloseIpad;
-						hintsN.LockTo("RobotUI", new Vector3(102.60f, 1326.80f, 0.00f));
+						hintsN.LockTo("RobotUI", new Vector3(1884.10f, 1305.00f, 0.00f));
                         hintsN.SetIconPosition(1);
                         UItext.text = "Heel goed. Laten we tot slot de tablet weer sluiten door op de knop met het kruisje te drukken. ";
                         expectedRobotUIstate = false;
