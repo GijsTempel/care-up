@@ -208,5 +208,12 @@ public class InjectionPatient : PersonObject {
         yield return new WaitForSeconds(audioClips[15].length);
         animator.SetTrigger("oke_dat_wil_mee");
         audioSource.PlayOneShot(audioClips[16]);
+
+        Tutorial_Sequence tutSeq = GameObject.FindObjectOfType<Tutorial_Sequence>();
+        if (tutSeq != null)
+        {
+            yield return new WaitForSeconds(audioClips[16].length);
+            tutSeq.dialogueEnded = true;
+        }
     }
 }
