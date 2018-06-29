@@ -84,7 +84,11 @@ public class GameUI : MonoBehaviour {
     
 	public void EndScene()
     {
-        GameObject.Find("Preferences").GetComponent<EndScoreManager>().LoadEndScoreScene();
+		if (GameObject.Find("Preferences") != null){
+			GameObject.Find("Preferences").GetComponent<EndScoreManager>().LoadEndScoreScene();
+		}else{
+			bl_SceneLoaderUtils.GetLoader.LoadLevel("Menu");
+		}
     }
 	
 	// Update is called once per frame
