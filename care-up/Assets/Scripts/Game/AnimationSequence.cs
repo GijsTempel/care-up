@@ -108,7 +108,7 @@ public class AnimationSequence  {
                     string description = xmlOption.Attributes["text"].Value;
                     string animation = xmlOption.Attributes["animation"] != null ? xmlOption.Attributes["animation"].Value : "";
                     SelectDialogue.DialogueOption option = new SelectDialogue.DialogueOption(description, PlayAnimation, animation);
-                    if (step.options.Count < 3) // add only 3 options as 4th is leaving
+                    if (step.options.Count < 4)
                     {
                         step.options.Add(option);
                     }
@@ -124,7 +124,7 @@ public class AnimationSequence  {
             // shuffle
             step.options = step.options.OrderBy(x => Random.value).ToList();
             // add leave option
-            step.options.Add(new SelectDialogue.DialogueOption("Verlaten", PlayAnimation, "CM_Leave"));
+            //step.options.Add(new SelectDialogue.DialogueOption("Verlaten", PlayAnimation, "CM_Leave"));
 
             steps.Add(step);
         }
