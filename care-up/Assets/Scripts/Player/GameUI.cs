@@ -10,6 +10,9 @@ public class GameUI : MonoBehaviour {
 	bool BlinkState = false;
 	public bool testValue;
 	GameObject donePanel;
+	GameObject closeButton;
+	GameObject closeDialog;
+    
     
 
 	public void MoveBack()
@@ -27,6 +30,17 @@ public class GameUI : MonoBehaviour {
     {
 		Player.GetComponent<PlayerScript>().ToggleUsingOnMode(false);
     }
+
+	public void CloseButtonPressed(bool value)
+	{
+		closeDialog.SetActive(value);
+		closeButton.SetActive(!value);
+	}
+
+	public void CloseGame()
+	{
+		bl_SceneLoaderUtils.GetLoader.LoadLevel("Menu");
+	}
 
 
 	public void ButtonBlink(bool ToBlink)
@@ -54,6 +68,9 @@ public class GameUI : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Player = GameObject.Find("Player");
+		closeButton = transform.Find("CloseBtn").gameObject;
+		closeDialog = transform.Find("CloseDialog").gameObject;
+		closeDialog.SetActive(false);
 		donePanel = transform.Find("DonePanel").gameObject;
 		donePanel.SetActive(false);
 
