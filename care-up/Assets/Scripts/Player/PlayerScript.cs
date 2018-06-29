@@ -67,6 +67,7 @@ public class PlayerScript : MonoBehaviour {
     public QuizTab quiz;
     
     public bool robotUIopened = false;
+    private bool robotUINotOpenedYet = true;
     private GameObject robotSavedLeft;
     private GameObject robotSavedRight;
 
@@ -416,7 +417,7 @@ public class PlayerScript : MonoBehaviour {
 
     public void OpenRobotUI()
     {
-        if ((tutorial_UI != null && tutorial_UI.expectedRobotUIstate == false) || 
+        if ((tutorial_UI != null && tutorial_UI.expectedRobotUIstate == false) ||
             (tutorial_theory != null && tutorial_theory.expectedRobotUIstate == false))
         {
             return;
@@ -449,6 +450,15 @@ public class PlayerScript : MonoBehaviour {
 
         moveBackBtnActiveForIpad = MoveBackButtonObject.activeSelf;
         MoveBackButtonObject.SetActive(false);
+
+        if (robotUINotOpenedYet)
+        {
+            string title = "Hygiënisch smartphone- en tabletgebruik";
+            string message = "Telefoons en tablet bevatten erg veel micro-organismen. Bij het gebruik van een smartphone of tablet heeft handhygiëne de grootste prioriteit. Zowel voor als na het gebruiken van een mobiel communicatiemiddel moet je je handen goed reinigen. Je kunt het gebruik van een mobiel apparaat tijdens werkzaamheden zien als het beëindigen en opnieuw aangaan van handcontact met de cliënt. In Care Up is dit niet nodig omdat het de gebruikerservaring negatief beïnvloed maar zorg in de praktijk dus voor goede hygiëne tijdens het gebruik van mobiele apparaten.";
+            GameObject.FindObjectOfType<RobotUIMessageTab>().NewMessage(title, message, RobotUIMessageTab.Icon.Warning);
+
+            robotUINotOpenedYet = false;
+        }
     }
 
     public void CloseRobotUI()
