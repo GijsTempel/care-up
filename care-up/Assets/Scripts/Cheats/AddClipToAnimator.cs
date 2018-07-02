@@ -3,8 +3,9 @@ using UnityEngine.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor.Animations;
-
+#endif
 
 public class AddClipToAnimator : MonoBehaviour {
 
