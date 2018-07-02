@@ -112,6 +112,7 @@ public class TutorialHintsN : MonoBehaviour
             UpdateToScreenResolution();
         }
 
+#if UNITY_EDITOR
         if (Input.GetKeyDown("h"))
         {
             GameObject sel = Selection.activeGameObject;
@@ -125,6 +126,7 @@ public class TutorialHintsN : MonoBehaviour
                 }
             }
         }
+#endif
 
         if (WorldObject != null)
         {
