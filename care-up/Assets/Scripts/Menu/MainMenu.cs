@@ -62,7 +62,7 @@ public class MainMenu : MonoBehaviour {
 
     public void OnMainMenuButtonClick()
     {
-        loadingScreen.LoadLevel("Menu");
+        loadingScreen.LoadLevel("UMenuPro");
     }
 
     public void OnTutorialButtonClick()
