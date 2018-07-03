@@ -89,11 +89,6 @@ public class PlayerPrefsManager : MonoBehaviour
         PlayerPrefs.SetInt(sceneName + " activated", value ? 1 : 0);
     }
 
-    public bool GetSceneActivated(string sceneName)
-    {
-        return PlayerPrefs.GetInt(sceneName + " activated") == 1;
-    }
-
     public void SetSceneCompletionData(string sceneName, int score, int time)
     {
         string[] datas = new string[3];

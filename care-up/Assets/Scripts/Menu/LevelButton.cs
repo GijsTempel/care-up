@@ -9,7 +9,9 @@ public class LevelButton : MonoBehaviour {
 
     public string bundleName;
     public string sceneName;
+
     public bool multiple;
+    public string displayName;
     public Sprite image;
 
     private static Transform sceneInfoPanel;
@@ -19,6 +21,19 @@ public class LevelButton : MonoBehaviour {
     private static Transform scores;
     private static Transform names;
 
+    // saving info
+    public struct Info
+    {
+        public string bundleName;
+        public string sceneName;
+        public string displayName;
+        public string description;
+        public string result;
+        public Sprite image;
+    };
+    
+    public List<Info> variations = new List<Info>();
+
     private void Start()
     {
         if (GameObject.Find("Preferences") != null && loadingScreen == null)
@@ -27,18 +42,20 @@ public class LevelButton : MonoBehaviour {
             if (loadingScreen == null) Debug.LogError("No loading screen found");
         }
 
-        if (sceneInfoPanel == null)
-        {
-            sceneInfoPanel = GameObject.Find("SceneInfo").transform.GetChild(0);
-            if (sceneInfoPanel == null) Debug.LogError("No sceneInfo panel");
-        }
-
         if (manager == null)
         {
-            manager = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
-            if (manager == null) Debug.LogError("No prefs manager ( start from 1st scene? )");
+            if (GameObject.Find("Preferences") != null)
+            {
+                manager = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
+                if (manager == null) Debug.LogWarning("No prefs manager ( start from 1st scene? )");
+            }
+            else
+            {
+                Debug.LogWarning("No prefs manager ( start from 1st scene? )");
+            }
         }
 
+        /*
         if (leaderboard == null)
         {
             leaderboard = sceneInfoPanel.Find("LeaderBoard");
@@ -51,60 +68,57 @@ public class LevelButton : MonoBehaviour {
                 scores = leaderboard.Find("Scores");
                 names = leaderboard.Find("Player_names");
             }
-        }
-        
+        }*/
     }
 
     public void OnLevelButtonClick()
     {
-        if (image != null)
+        LevelButton mainBtn = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/DialogTestPractice/Dialog/Start").GetComponent<LevelButton>();
+        
+        if (multiple)
         {
-            sceneInfoPanel.Find("Image").GetComponent<Image>().sprite = image;
-        }
+            // we need to fill info in the dialogue
+            GameObject dialogue = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/Dialog 1");
 
-        sceneInfoPanel.Find("Start").GetComponent<LevelButton>().bundleName = bundleName;
-        sceneInfoPanel.Find("Start").GetComponent<LevelButton>().sceneName = sceneName;
-        sceneInfoPanel.Find("Name").GetComponent<Text>().text =
-            manager.currentSceneVisualName =
-            transform.Find("Name").GetComponent<Text>().text;
-        sceneInfoPanel.Find("Description").GetComponent<Text>().text = 
-            transform.Find("Description").GetComponent<Text>().text;
-
-        UpdateHighScore();
-
-        for (int i = 1; i <= 3; ++i)
-        {
-            string name = "Option_" + i;
-            LevelSelectionScene_UI_Option to =
-                sceneInfoPanel.Find(name).GetComponent<LevelSelectionScene_UI_Option>();
-            LevelSelectionScene_UI_Option from =
-                transform.Find(name).GetComponent<LevelSelectionScene_UI_Option>();
-
-            if (multiple) {
-                to.gameObject.SetActive(true);
-            } else {
-                to.gameObject.SetActive(false);
+            // setting title i assume
+            dialogue.transform.Find("Dialog/TopBar/Text").GetComponent<Text>().text = displayName;
+            if (manager != null)
+            {
+                manager.currentSceneVisualName = displayName;
             }
-            to.transform.Find("Text").GetComponent<Text>().text =
-                    from.transform.Find("Text").GetComponent<Text>().text;
+            
+            // filling up options
+            for(int i = 0; i < variations.Count; ++i)
+            {
+                LevelSelectionScene_UI_Option option = 
+                    dialogue.transform.Find("Option_" + (i + 1)).GetComponent<LevelSelectionScene_UI_Option>();
+                option.bundleName = variations[i].bundleName;
+                option.sceneName = variations[i].sceneName;
+                option.transform.GetComponentInChildren<Text>().text = variations[i].displayName;
 
-            to.sceneName = from.sceneName;
-            to.bundleName = from.bundleName;
-            to.description = from.description;
-            to.result = from.result;
-            to.image = from.image;
+                if (i == 0)
+                {
+                    // set 1st option as default
+                    option.SetSelected();
+                }
+            }
 
-            if (i == 1 && multiple)
-                to.SetSelected();
+            // we need to show this dialogue only for scenes with variations
+            GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(0);
         }
+        else
+        {
+            // filling info for loading
+            mainBtn.bundleName = bundleName;
+            mainBtn.sceneName = sceneName;
 
-        // leaderboard stuff, yay
-        UpdateLeaderBoard();
+            // for single variation we can skip into practice/test dialogue
+            GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(3);
+        }
     }
 
     public void OnStartButtonClick()
     {
-        //loadingScreen.LoadLevel(sceneName);
         bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
     }
 

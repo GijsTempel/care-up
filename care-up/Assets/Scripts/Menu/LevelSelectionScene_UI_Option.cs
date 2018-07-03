@@ -20,17 +20,11 @@ public class LevelSelectionScene_UI_Option : MonoBehaviour {
         // turn on
         if (!selected)
         {
-            LevelButton levelButton = transform.parent.Find("Start").GetComponent<LevelButton>();
+            LevelButton levelButton = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/DialogTestPractice/Dialog/Start").GetComponent<LevelButton>();
 
             levelButton.sceneName = sceneName;
             levelButton.bundleName = bundleName;
 
-            levelButton.UpdateLeaderBoard();
-            levelButton.UpdateHighScore();
-
-            transform.parent.Find("Description").GetComponent<Text>().text = description;
-            transform.parent.Find("Result").GetComponent<Text>().text = result;
-            
             LevelSelectionScene_UI_Option[] other = transform.parent.GetComponentsInChildren<LevelSelectionScene_UI_Option>();
             foreach (LevelSelectionScene_UI_Option ui in other)
             {
@@ -39,9 +33,6 @@ public class LevelSelectionScene_UI_Option : MonoBehaviour {
             }
 
             GetComponent<Image>().color = selectedColor;
-
-            transform.parent.Find("Image").GetComponent<Image>().sprite = image;
-
             selected = true;
         }
     }
