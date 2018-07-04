@@ -18,6 +18,13 @@ public class CameraMode : MonoBehaviour {
         ItemControlsUI      // UI showing actions is active
     };
 
+	bool camViewObject = false;
+	Quaternion camRotFrom;
+	Quaternion camRotTo;
+	float startTime;
+	float camRotTime;
+	bool backFromObjectPreview = false;
+    
     public float minZoom = 0.5f;
     public float maxZoom = 2.0f;
     
@@ -80,6 +87,29 @@ public class CameraMode : MonoBehaviour {
 
     void Update()
     {
+		if (camViewObject)
+		{
+			//---------------------------------------------------------
+	
+			camRotTime = Time.time - startTime;
+			Camera.main.transform.localRotation = Quaternion.Lerp(camRotFrom, camRotTo, camRotTime);
+			if (camRotTime > 1f)
+			{
+				camViewObject = false;
+			}
+			return;
+			//else
+			//{
+			//	camRotTime = (Time.time - startTime);
+			//	//Camera.main.transform.localRotation = Quaternion.Lerp(camRotTo, camRotFrom, camRotTime);
+   //             if (camRotTime > 1f)
+   //             {
+   //                 camViewObject = false;
+			//		backFromObjectPreview = false;
+   //             }
+
+			//}
+		}
         // handle confirm mode
         if (currentMode == Mode.ConfirmUI)
         {
@@ -220,6 +250,29 @@ public class CameraMode : MonoBehaviour {
     /// <param name="mode">Next mode.</param>
     public void ToggleCameraMode(Mode mode)
     {
+		if (currentMode == Mode.ObjectPreview && mode == Mode.Free)
+        {
+			//startTime = Time.time;
+            //camViewObject = true;
+            //backFromObjectPreview = true;
+
+            TogglePlayerScript(true);
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
+            blur.enabled = false;
+
+            GameObject.Find("ObjectViewButtons").SetActive(false);
+            playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
+
+            if (GameObject.FindObjectOfType<TutorialManager>() == null ||
+                GameObject.FindObjectOfType<Tutorial_UI>() != null ||
+                GameObject.FindObjectOfType<Tutorial_Theory>() != null)
+            {
+                RobotManager.SetUITriggerActive(true);
+            }
+        }
+
         if (mode == Mode.ObjectPreview)
         {
             TogglePlayerScript(false);
@@ -239,32 +292,20 @@ public class CameraMode : MonoBehaviour {
             }
 
 			GameObject.Find("UI").transform.Find("ObjectViewButtons").gameObject.SetActive(true);
-            Camera.main.transform.localRotation = Quaternion.Euler(8.0f, 0.0f, 0.0f);
+//-----------------------------
+			camRotFrom = Camera.main.transform.localRotation;
+			startTime = Time.time;
+			camRotTo = Quaternion.Euler(8.0f, 0.0f, 0.0f);
+			camViewObject = true;
+            //Camera.main.transform.localRotation = Quaternion.Euler(8.0f, 0.0f, 0.0f);
+            
 
             playerScript.MoveBackButtonObject.SetActive(false);
             RobotManager.SetUITriggerActive(false);
 
             previewModeFrame = true;
         }
-        else if (currentMode == Mode.ObjectPreview && mode == Mode.Free)
-        {
-            TogglePlayerScript(true);
-
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-
-            blur.enabled = false;
-
-            GameObject.Find("ObjectViewButtons").SetActive(false);
-            playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
-
-            if (GameObject.FindObjectOfType<TutorialManager>() == null ||
-                GameObject.FindObjectOfType<Tutorial_UI>() != null ||
-                GameObject.FindObjectOfType<Tutorial_Theory>() != null)
-            {
-                RobotManager.SetUITriggerActive(true);
-            }
-        }
+        
         else if (mode == Mode.SelectionDialogue)
         {
             TogglePlayerScript(false);
@@ -347,7 +388,6 @@ public class CameraMode : MonoBehaviour {
             }
             dontMoveCamera = false;
         }
-
         currentMode = mode;
         controls.ResetObject();
     }
