@@ -25,9 +25,9 @@ public class SceneSelectionManager : MonoBehaviour {
         ShowMenu(CurrentMenu);
 
         practiceButton = GameObject.Find("PracticeButton").GetComponent<Image>();
-        //testButton = GameObject.Find("TestButton").GetComponent<Image>();
+        testButton = GameObject.Find("TestButton").GetComponent<Image>();
 
-        //practiceButton.color = Color.green;
+        practiceButton.color = Color.green;
         manager.practiceMode = true;
         
        description = GameObject.Find("PracticeTestDescription").GetComponent<Text>();
@@ -55,13 +55,13 @@ public class SceneSelectionManager : MonoBehaviour {
         manager.practiceMode = true;
     }
 
-   /* public void OnTestButtonClick()
+   public void OnTestButtonClick()
     {
         practiceButton.color = Color.white;
         testButton.color = Color.green;
 
-        description.text = testText;
+       // description.text = testText;
 
         manager.practiceMode = false; 
-    }*/
+    }
 }
