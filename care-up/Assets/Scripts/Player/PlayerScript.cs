@@ -471,7 +471,7 @@ public class PlayerScript : MonoBehaviour {
 
         PlayerAnimationManager.PlayAnimation("IPadFarAway");
         robotUIopened = false;
-
+        
         if (GameObject.FindObjectOfType<TutorialManager>() == null 
             || tutorial_UI != null || tutorial_theory != null)
         {

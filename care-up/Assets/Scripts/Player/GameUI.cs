@@ -7,7 +7,7 @@ public class GameUI : MonoBehaviour {
 	GameObject Player;
 	public Animator Blink;
 	public Animator IPadBlink;
-	bool BlinkState = false;
+	public bool BlinkState = false;
 	public bool testValue;
 	GameObject donePanel;
 	GameObject closeButton;
@@ -45,6 +45,7 @@ public class GameUI : MonoBehaviour {
 
 	public void ButtonBlink(bool ToBlink)
 	{
+
 		if (BlinkState == ToBlink)
 			return;
 		BlinkState = ToBlink;
