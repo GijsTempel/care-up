@@ -29,6 +29,24 @@ public class RobotUITabInfo : RobotUITabs
         tutorial_fullscreen = true;
     }
 
+	protected override void Start()
+    {
+        base.Start();
+
+        Transform t = transform.Find("InfoDynamicCanvas").Find("ItemList").Find("Scroll View")
+            .Find("Viewport").Find("Content").GetChild(0);
+        if (t != null)
+        {
+            OnItemButtonClick(t.GetComponent<RectTransform>());
+        }
+
+		//SwitchItemList(true);
+
+
+        // generate buttons
+        // done in playerspawn
+    }
+
        
 	public void ToggleItemList()
 	{
@@ -36,11 +54,13 @@ public class RobotUITabInfo : RobotUITabs
 		ItemList.SetActive(!ItemList.activeSelf);
 
         tutorial_listButton = true;
+		print(ItemList.activeSelf);
     }
 
 	public void SwitchItemList(bool value)
     {
 		ItemList.SetActive(value);
+		print(value);
     }
 
 

@@ -101,6 +101,7 @@ public class RobotUITabs : MonoBehaviour {
         icons.gameObject.SetActive(false);
 
         SetTabActive(true);
+		print("gggggggggggggggggggggggggggggg");
     }
 
     protected virtual void SetTabActive(bool value)
@@ -112,7 +113,7 @@ public class RobotUITabs : MonoBehaviour {
                 child.gameObject.SetActive(value);
             }
         }
-
+		print(name);
         switch (name)
         {
             case "GeneralTab":
@@ -126,6 +127,7 @@ public class RobotUITabs : MonoBehaviour {
                 break;
             case "InfoTab":
                 tutorial_infoTabOpened = true;
+				GameObject.FindObjectOfType<RobotUITabInfo>().SwitchItemList(false);
                 break;
         }
     }
