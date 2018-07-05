@@ -297,9 +297,7 @@ public class ItemControlsUI : MonoBehaviour {
         {
             initedObject.GetComponent<UsableObject>().Use();
         }
-        else if (actionManager.CompareUseObject(initedObject.name) ||
-            (actionManager.CompareUseObject("HandCleaner") 
-            && initedObject.name == "WorkField"))
+        else
         {
             if (cameraMode.CurrentMode == CameraMode.Mode.ItemControlsUI)
             {

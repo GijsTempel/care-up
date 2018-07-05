@@ -42,14 +42,14 @@ public class PlayerPrefsManager : MonoBehaviour
         GameObject.FindObjectOfType<AudioListener>().transform.position;
 
         if (!(s.name == "Launch me 1" ||
-              s.name == "Menu" ||
+              s.name == "UMenuPro" ||
               s.name == "SceneSelection"))
         {
             GetComponent<AudioSource>().Stop();
         }
 
         if (s.name == "EndScore" ||
-            (s.name == "Menu" && 
+            (s.name == "UMenuPro" && 
             !GetComponent<AudioSource>().isPlaying))
         {
             GetComponent<AudioSource>().Play();

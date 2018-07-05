@@ -93,7 +93,6 @@ public class PersonObject : InteractableObject
         if (actionManager.CompareTopic(topic))
         {
             tutorial_talked = true;
-            actionManager.OnTalkAction(topic);
 
             switch (topic)
             {
@@ -103,6 +102,8 @@ public class PersonObject : InteractableObject
 
             NextDialogue();
         }
+
+        actionManager.OnTalkAction(topic);
     }
     
     public void NextDialogue()

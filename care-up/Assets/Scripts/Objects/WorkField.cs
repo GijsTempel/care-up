@@ -32,35 +32,20 @@ public class WorkField : UsableObject {
     {
         if (!ViewModeActive())
         {
-            if (!actionManager.CompareUseObject(name))
-            {
-                /*if (GameObject.FindObjectOfType<PlayerPrefsManager>() != null &&
-                    GameObject.FindObjectOfType<PlayerPrefsManager>().practiceMode == false)
-                {
-                    actionManager.OnGameOver();
-                }
-                else
-                {*/
-                    actionManager.OnUseAction(gameObject.name);
-                    controls.ResetObject();
-                    Reset();
-                //}
-            }
-            else
+            if (actionManager.CompareUseObject(name))
             {
                 tutorial_used = true;
                 PlayerAnimationManager.PlayAnimation("Use WorkField", transform);
-                actionManager.OnUseAction(gameObject.name);
-                controls.ResetObject();
-                Reset();
-
+                
                 if (toggleTime == 1)
                 {
                     ToggleObjects();
                 }
-
-                tutorial_used = true;
             }
+
+            actionManager.OnUseAction(gameObject.name);
+            controls.ResetObject();
+            Reset();
         }
     }
 

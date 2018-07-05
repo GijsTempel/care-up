@@ -32,10 +32,10 @@ public class InjectionPatient : PersonObject {
     {
         if (ViewModeActive() || topic == "")
             return;
+
         if (actionManager.CompareTopic(topic))
         {
             tutorial_talked = true;
-            actionManager.OnTalkAction(topic);
 
             switch (topic)
             {
@@ -71,6 +71,8 @@ public class InjectionPatient : PersonObject {
                 PulledUpMessage();
             }
         }
+
+        actionManager.OnTalkAction(topic);
     }
 
     private void PulledUpMessage()

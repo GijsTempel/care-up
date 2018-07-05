@@ -27,43 +27,50 @@ public class UsableObject : InteractableObject {
     {
         if (!ViewModeActive())
         {
-            tutorial_used = true;
-
-            switch (name)
+            // unique object, not usable, but picking performed instead
+            if (name == "ClothPackage")
             {
-                case "ClothPackage":
-                    {
-                        TutorialManager tutorial = GameObject.Find("GameLogic").GetComponent<TutorialManager>();
-                        if (tutorial == null || (tutorial != null &&
-                            ("Cloth" == tutorial.itemToPick || "Cloth" == tutorial.itemToPick2)))
-                        {
-                            GameObject gameObject = handsInventory.CreateObjectByName("Cloth", Vector3.zero);
-                            handsInventory.PickItem(gameObject.GetComponent<PickableObject>());
-                            Reset();
-                        }
-                        return;
-                    }   // no break, return = end function
-                case "HandCleaner":
-                    {
-                        InjectionPatient patient = GameObject.FindObjectOfType<InjectionPatient>();
-                        if (patient != null)
-                        {
-                            patient.NextDialogue();
-                        }
-                        
-                        string message = "Zorg voor een zorgvuldige handhygiëne. Handhygiëne is in dit protocol versneld om de gebruikerservaring te verbeteren";
-                        RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
-                        messageCenter.NewMessage("Zorgvuldige handhygiëne", message, RobotUIMessageTab.Icon.Info);
-                    }
-                    break;
-                case "OldBandAid":
-                    {
-                        Destroy(gameObject);
-                    }
-                    break;
+                TutorialManager tutorial = GameObject.Find("GameLogic").GetComponent<TutorialManager>();
+                if (tutorial == null || (tutorial != null &&
+                    ("Cloth" == tutorial.itemToPick || "Cloth" == tutorial.itemToPick2)))
+                {
+                    GameObject gameObject = handsInventory.CreateObjectByName("Cloth", Vector3.zero);
+                    handsInventory.PickItem(gameObject.GetComponent<PickableObject>());
+                    Reset();
+                }
+                return;
             }
+
+            if (actionManager.CompareUseObject(name))
+            {
+                switch (name)
+                {
+                    case "HandCleaner":
+                        {
+                            InjectionPatient patient = GameObject.FindObjectOfType<InjectionPatient>();
+                            if (patient != null)
+                            {
+                                patient.NextDialogue();
+                            }
+
+                            string message = "Zorg voor een zorgvuldige handhygiëne. Handhygiëne is in dit protocol versneld om de gebruikerservaring te verbeteren";
+                            RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
+                            messageCenter.NewMessage("Zorgvuldige handhygiëne", message, RobotUIMessageTab.Icon.Info);
+                        }
+                        break;
+                    case "OldBandAid":
+                        {
+                            Destroy(gameObject);
+                        }
+                        break;
+                }
+
+                PlayerAnimationManager.PlayAnimation("Use " + name, transform);
+                tutorial_used = true;
+            }
+
             actionManager.OnUseAction(gameObject.name);
-            PlayerAnimationManager.PlayAnimation("Use " + name, transform);
+
             Reset();
         }
     }
