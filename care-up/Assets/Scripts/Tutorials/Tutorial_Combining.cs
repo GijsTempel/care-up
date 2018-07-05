@@ -108,6 +108,7 @@ public class Tutorial_Combining : TutorialManager {
                         UItext.text = "Nu we beide objecten in onze handen hebben kunnen we erop klikken om de opties te tonen. Klik nu op de spuit.";
 
                         player.tutorial_itemControls = false;
+                        player.itemControlsToInit = "Syringe";
                     }
                     break;
                 case TutorialStep.OpenControls:
@@ -158,6 +159,7 @@ public class Tutorial_Combining : TutorialManager {
                         UItext.text = "Laten we nu de dop van de naald afhalen. Dit noemen we in Care Up 'Scheiden'. Klik op de spuit met opzuignaald die je in je hand vast hebt om het opties menu te openen.";
 
                         player.tutorial_itemControls = false;
+                        player.itemControlsToInit = "SyringeWithAbsorptionNeedleCap";
                     }
                     break;
                 case TutorialStep.OpenControls2:

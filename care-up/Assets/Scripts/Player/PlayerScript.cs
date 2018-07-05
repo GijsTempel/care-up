@@ -24,6 +24,8 @@ public class PlayerScript : MonoBehaviour {
     public bool tutorial_itemControls = false;
     [HideInInspector]
     public bool tutorial_UseOnControl = false;
+    [HideInInspector]
+    public string itemControlsToInit = "";
 
     public Camera cam;
     public MouseLook mouseLook = new MouseLook();
@@ -270,7 +272,6 @@ public class PlayerScript : MonoBehaviour {
                 else
                 {
                     itemControls.Init(controls.SelectedObject);
-                    tutorial_itemControls = true;
                 }
             }
             else

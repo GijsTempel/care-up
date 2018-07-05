@@ -147,6 +147,11 @@ public class ItemControlsUI : MonoBehaviour {
 
         if (initedObject != null && initedObject.GetComponent<InteractableObject>() != null)
         {
+            if (player.itemControlsToInit == initedObject.name)
+            {
+                player.tutorial_itemControls = true;
+            }
+
             cameraMode.ToggleCameraMode(CameraMode.Mode.ItemControlsUI);
 
             if (initedObject.GetComponent<PickableObject>() != null

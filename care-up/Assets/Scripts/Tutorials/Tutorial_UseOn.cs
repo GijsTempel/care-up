@@ -88,6 +88,7 @@ public class Tutorial_UseOn : TutorialManager {
                         UItext.text = "Nu je de naald vast hebt, klik nogmaals op de naald om de opties te tonen. ";
 
                         player.tutorial_itemControls = false;
+                        player.itemControlsToInit = "AbsorptionNeedleNoCap";
                     }
                     break;
                 case TutorialStep.OpenControls:

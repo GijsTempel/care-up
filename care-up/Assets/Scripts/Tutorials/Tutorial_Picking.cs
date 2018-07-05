@@ -87,6 +87,7 @@ public class Tutorial_Picking : TutorialManager {
                         UItext.text = "Goed gedaan. Laten we nu beide objecten terugleggen. Klik op het gaasje om de opties te tonen.";
 
                         player.tutorial_itemControls = false;
+                        player.itemControlsToInit = "Cloth";
                     }
                     break;
                 case TutorialStep.OpenDropOne:
@@ -113,6 +114,7 @@ public class Tutorial_Picking : TutorialManager {
                         UItext.text = "Makkelijk toch? Klik nu op het medicijn om de opties te tonen.";
 
                         player.tutorial_itemControls = false;
+                        player.itemControlsToInit = "Medicine";
                     }
                     break;
                 case TutorialStep.OpenDropTwo:
