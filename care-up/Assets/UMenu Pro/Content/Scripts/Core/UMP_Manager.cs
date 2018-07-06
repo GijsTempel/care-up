@@ -19,35 +19,12 @@ public class UMP_Manager : MonoBehaviour {
 
     private int CurrentWindow = -1;
     private PlayerPrefsManager manager;
-    private Image practiceButton;
-    private Image testButton;
     /// <summary>
     /// 
     /// </summary>
     void Awake()
     {
         InstanceLevels();
-    }
-    void Start()
-    {
-        practiceButton = GameObject.Find("PracticeButton").GetComponent<Image>();
-        testButton = GameObject.Find("TestButton").GetComponent<Image>();
-    }
-    public void OnPracticeButtonClick()
-    {
-        practiceButton.color = Color.green;
-        testButton.color = Color.white;
-
-        manager.practiceMode = true;
-    }
-
-    public void OnTestButtonClick()
-    {
-        practiceButton.color = Color.white;
-        testButton.color = Color.green;
-
-        manager.practiceMode = false;
-        Debug.Log(manager.practiceMode);
     }
     /// <summary>
     /// 
