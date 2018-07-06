@@ -198,6 +198,8 @@ public class QuizTab : RobotUITabs {
         GameObject.FindObjectOfType<RobotUITabs>().OnTabSwitch(); 
         // close UI 
         GameObject.FindObjectOfType<PlayerScript>().CloseRobotUI();
+        // enable player if needed
+        PlayerScript.actionsLocked = false;
     }
 
     public void Continue()

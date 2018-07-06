@@ -51,7 +51,7 @@ public class PlayerScript : MonoBehaviour {
     private float fadeTimer = 0.0f;
     Texture fadeTex;
 
-    MoveBackButton moveBackButton;
+    Button moveBackButton;
     public ItemControlsUI itemControls;
 
     public bool usingOnMode = false;
@@ -82,7 +82,9 @@ public class PlayerScript : MonoBehaviour {
 
     bool moveBackBtnActiveForIpad = false;
     bool devHintActiveForIpad = false;
-    
+
+    public static bool actionsLocked = false;
+
     public GameObject MoveBackButtonObject
     {
         get { return moveBackButton.gameObject; }
@@ -118,7 +120,7 @@ public class PlayerScript : MonoBehaviour {
 
         fadeTex = Resources.Load<Texture>("Sprites/Black");
 
-        moveBackButton = GameObject.Find("MoveBackButton").GetComponent<MoveBackButton>();
+        moveBackButton = GameObject.Find("MoveBackButton").GetComponent<Button>();
         moveBackButton.gameObject.SetActive(false);
         
         itemControls = GameObject.FindObjectOfType<ItemControlsUI>();
@@ -256,11 +258,11 @@ public class PlayerScript : MonoBehaviour {
             rotated += mouseLook.LookRotation(transform, Camera.main.transform);
         }
 
-        if (!freeLook && controls.MouseClicked() && !moveBackButton.mouseOver && !robotUIopened)
+        if (!freeLook && controls.MouseClicked() && !robotUIopened)
         {
             if (!away && controls.SelectedObject != null 
                 && controls.SelectedObject.GetComponent<InteractableObject>() != null
-                && !itemControls.gameObject.activeSelf && !onButtonHover)
+                && !itemControls.gameObject.activeSelf && !actionsLocked)
             {
                 if (usingOnMode)
                 {
@@ -363,7 +365,6 @@ public class PlayerScript : MonoBehaviour {
             g.enabled = away;
             g.GetComponent<Collider>().enabled = away;
         }
-        moveBackButton.mouseOver = false;
         moveBackButton.gameObject.SetActive(!away);
         
         itemControls.Close();

@@ -48,6 +48,8 @@ public class InjectionPatient : PersonObject {
                     {
                         // also launches animation after dialogue
                         GetComponent<InjectionPatient>().RollUpSleevesDialogue();
+                        // lock actions so player does nothing to break until quiz triggers
+                        PlayerScript.actionsLocked = true;
                     }
                     pulledUp = true;
                     break;
@@ -55,6 +57,8 @@ public class InjectionPatient : PersonObject {
                     inhaling = true;
                     break;
                 case "ShowBellyForInsulin":
+                    // lock actions so player does nothing to break until quiz triggers
+                    PlayerScript.actionsLocked = true;
                     GetComponent<Animator>().SetTrigger("ShowBellyForInsulin");
                     pulledUp = true;
                     PlayerScript.TriggerQuizQuestion(3.3f);
