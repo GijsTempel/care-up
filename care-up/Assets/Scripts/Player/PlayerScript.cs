@@ -234,11 +234,6 @@ public class PlayerScript : MonoBehaviour {
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            TriggerQuizQuestion();
-        }
-
         if (prefs != null)
         {
             if (!prefs.VR)
