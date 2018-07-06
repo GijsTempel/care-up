@@ -57,6 +57,7 @@ public class InjectionPatient : PersonObject {
                 case "ShowBellyForInsulin":
                     GetComponent<Animator>().SetTrigger("ShowBellyForInsulin");
                     pulledUp = true;
+                    PlayerScript.TriggerQuizQuestion(3.3f);
                     break;
                 default:
                     break;
@@ -163,6 +164,7 @@ public class InjectionPatient : PersonObject {
         yield return new WaitForSeconds(audioClips[10].length);
         animator.SetTrigger("ShowArm");
         lookAtCamera = false;
+        PlayerScript.TriggerQuizQuestion(3.7f);
     }
 
     public void InjectNeedleInArmDialogue()
