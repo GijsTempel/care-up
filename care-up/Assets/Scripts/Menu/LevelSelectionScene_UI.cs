@@ -4,6 +4,7 @@ using System.Xml;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System;
 
 /// <summary>
 /// Handles Scene selection module
@@ -12,11 +13,45 @@ public class LevelSelectionScene_UI : MonoBehaviour
 {
     private PlayerPrefsManager ppManager;
 
+    // leaderboard stuff
+    private Text[] leaderNames;
+    private Text[] leaderScores;
+    private Text[] leaderTimes;
+    public List<Transform> variations;
+
+    private void Awake()
+    {
+        Transform leaderPanel = GameObject.Find("UMenuProManager/MenuCanvas/Leaderboard/InfoBar").transform;
+
+        // set up all the Text objects for leaderboard
+        leaderNames = leaderPanel.Find("LeaderNames").GetComponentsInChildren<Text>();
+        leaderScores = leaderPanel.Find("LeaderScores").GetComponentsInChildren<Text>();
+        leaderTimes = leaderPanel.Find("LeaderTimes").GetComponentsInChildren<Text>();
+
+        // clear them
+        for (int i = 0; i < 10; ++i)
+        {
+            leaderNames[i].text = "";
+            leaderScores[i].text = "";
+            leaderTimes[i].text = "";
+        }
+
+        // variations buttons should be disabled from the beginning
+        for (int i = 0; i < 3; ++i)
+        {
+            Transform v = leaderPanel.parent.Find("SceneVariation" + (i+1));
+            variations.Add(v);
+            v.gameObject.SetActive(false);
+        }
+    }
+
     /// <summary>
     /// Load xml file, set all door variables.
     /// </summary>
     void Start()
     {
+        ppManager = GameObject.FindObjectOfType<PlayerPrefsManager>();
+
         // load xml
         TextAsset textAsset = (TextAsset)Resources.Load("Xml/Scenes");
         XmlDocument xmlFile = new XmlDocument();
@@ -115,6 +150,56 @@ public class LevelSelectionScene_UI : MonoBehaviour
                     sceneUnit.transform.Find("LevelPreview").GetComponent<Image>().sprite = sceneUnit.image;
                 }
             }
+
+            // leaderboard stuff
+            GameObject button = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/UI/LeaderBoardSceneButton"),
+                GameObject.Find("UMenuProManager/MenuCanvas/Leaderboard/LeftBar/Scroll View/Viewport/Content").transform);
+            LeaderBoardSceneButton buttonInfo = button.GetComponent<LeaderBoardSceneButton>();
+
+            button.transform.GetChild(0).GetComponent<Text>().text = sceneUnit.displayName;
+            buttonInfo.sceneName = sceneUnit.sceneName;
+            buttonInfo.multiple = sceneUnit.multiple;
+            if (buttonInfo.multiple)
+            {
+                foreach(LevelButton.Info v in sceneUnit.variations)
+                {
+                    buttonInfo.sceneNames.Add(v.sceneName);
+                    buttonInfo.buttonNames.Add(v.displayName);
+                }
+            }
+        }
+    }
+    
+    public void UpdateLeaderBoard(string sceneName)
+    {
+        Debug.Log("UpdateLeaderBoard:::" + sceneName);
+        // let's clear current UI first, it might have some editor text or info from other scene we loaded before
+        for (int i = 0; i < leaderNames.Length; ++i )
+        {
+            leaderNames[i].text =
+            leaderScores[i].text =
+            leaderTimes[i].text = "";
+        }
+
+        // maybe launch loading icon or something? it isnt instant
+        ppManager.GetSceneLeaders(sceneName, 10, GetSceneLeaders_Success);
+    }
+
+    public void GetSceneLeaders_Success(string[] info)
+    {
+        for (int i = 0; i < info.Length / 3; ++i)
+        {
+            string name = info[i * 3];
+            string score = info[i * 3 + 1];
+            string time = info[i * 3 + 2];
+
+            TimeSpan timeSpan = TimeSpan.FromSeconds(double.Parse(time));
+            string timeFormated = string.Format("{0:D2}m:{1:D2}s",
+                timeSpan.Minutes, timeSpan.Seconds);
+
+            leaderNames[i].text = name;
+            leaderScores[i].text = score;
+            leaderTimes[i].text = timeFormated;
         }
     }
 }
