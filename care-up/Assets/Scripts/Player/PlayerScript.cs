@@ -66,7 +66,8 @@ public class PlayerScript : MonoBehaviour {
     private float rotated = 0.0f;
 
     [HideInInspector]
-    public QuizTab quiz;
+    public static QuizTab quiz;
+    private static PlayerScript instance; // fix for coroutines
     
     public bool robotUIopened = false;
     private bool robotUINotOpenedYet = true;
@@ -99,6 +100,8 @@ public class PlayerScript : MonoBehaviour {
 
     private void Start()
     {
+        instance = this;
+
         mouseLook.Init(transform, cam.transform);
 
         if (GameObject.Find("Preferences") != null)
@@ -231,7 +234,7 @@ public class PlayerScript : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            quiz.NextQuizQuestion();
+            TriggerQuizQuestion();
         }
 
         if (prefs != null)
@@ -506,5 +509,22 @@ public class PlayerScript : MonoBehaviour {
             handsInv.ForcePickItem(robotSavedRight.name, false);
             PlayerAnimationManager.SetHandItem(false, robotSavedRight.gameObject);
         }
+    }
+
+    /// <summary>
+    /// Function triggers next quiz question from xml file,
+    /// that was set in PlayerSpawn object. 
+    /// If there is no questions left - it will do nothing.
+    /// </summary>
+    /// <param name="delay">Delay before opening ipad.</param>
+    public static void TriggerQuizQuestion(float delay = 0.0f)
+    {
+        instance.StartCoroutine(QuizCoroutine(delay));
+    }
+
+    private static IEnumerator QuizCoroutine(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        quiz.NextQuizQuestion();
     }
 }

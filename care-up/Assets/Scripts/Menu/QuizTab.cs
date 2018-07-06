@@ -93,7 +93,7 @@ public class QuizTab : RobotUITabs {
     {
         base.Start();
 
-        GameObject.FindObjectOfType<PlayerScript>().quiz = this;
+        PlayerScript.quiz = this;
         gameObject.SetActive(false);
 
         buttons.Add(transform.GetChild(1).Find("Answer1").GetComponent<Button>());

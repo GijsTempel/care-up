@@ -36,7 +36,12 @@ public class WorkField : UsableObject {
             {
                 tutorial_used = true;
                 PlayerAnimationManager.PlayAnimation("Use WorkField", transform);
-                
+
+                if (toggleTime == 0)
+                {
+                    PlayerScript.TriggerQuizQuestion(5f);
+                }
+
                 if (toggleTime == 1)
                 {
                     ToggleObjects();
