@@ -104,7 +104,7 @@ public class RobotManager : MonoBehaviour {
 
     public void ToggleCloseBtn(bool value)
     {
-        UI_object.transform.Find("CloseBtn").gameObject.SetActive(value);
+        UI_object.transform.Find("TopBarUI/CloseBtn").gameObject.SetActive(value);
     }
 
 	public static void SetUITriggerActive(bool value)

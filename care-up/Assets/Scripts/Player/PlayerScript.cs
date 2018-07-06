@@ -229,6 +229,11 @@ public class PlayerScript : MonoBehaviour {
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            quiz.NextQuizQuestion();
+        }
+
         if (prefs != null)
         {
             if (!prefs.VR)
@@ -418,6 +423,9 @@ public class PlayerScript : MonoBehaviour {
 
     public void OpenRobotUI()
     {
+        if (robotUIopened)
+            return;
+
         if ((tutorial_UI != null && tutorial_UI.expectedRobotUIstate == false) ||
             (tutorial_theory != null && tutorial_theory.expectedRobotUIstate == false))
         {

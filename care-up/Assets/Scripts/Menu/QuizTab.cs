@@ -20,7 +20,8 @@ public class QuizTab : RobotUITabs {
         public string descr;
     }
 
-    private List<Question> questionList = new List<Question>();
+    private List<List<Question>> questionList = new List<List<Question>>();
+    private int currentStep = 0;
     private int currentQuestionID = 0;
 
     private List<Button> buttons = new List<Button>();
@@ -38,37 +39,46 @@ public class QuizTab : RobotUITabs {
         XmlDocument xmlFile = new XmlDocument();
         xmlFile.LoadXml(textAsset.text);
 
-        XmlNodeList questions = xmlFile.FirstChild.NextSibling.ChildNodes;
+        XmlNodeList steps = xmlFile.FirstChild.NextSibling.ChildNodes;
 
-        foreach(XmlNode q in questions)
+        foreach (XmlNode s in steps)
         {
-            Question question = new Question();
-            question.answers = new List<Answer>();
+            List<Question> step = new List<Question>();
 
-            question.text = q.Attributes["text"].Value;
-            int.TryParse(q.Attributes["answer"].Value, out question.answerID);
+            XmlNodeList questions = s.ChildNodes;
 
-            if (q.Attributes["points"] != null)
+            foreach (XmlNode q in questions)
             {
-                int.TryParse(q.Attributes["points"].Value, out question.points);
-            }
-            else
-            {
-                question.points = 1;
+                Question question = new Question();
+                question.answers = new List<Answer>();
+
+                question.text = q.Attributes["text"].Value;
+                int.TryParse(q.Attributes["answer"].Value, out question.answerID);
+
+                if (q.Attributes["points"] != null)
+                {
+                    int.TryParse(q.Attributes["points"].Value, out question.points);
+                }
+                else
+                {
+                    question.points = 1;
+                }
+
+                --question.answerID; // let ppl write 1-4, but we need 0-3 as indexes
+
+                XmlNodeList answers = q.ChildNodes;
+                foreach (XmlNode a in answers)
+                {
+                    Answer t = new Answer();
+                    t.text = a.Attributes["text"].Value;
+                    t.descr = a.Attributes["descr"].Value;
+                    question.answers.Add(t);
+                }
+
+                step.Add(question);
             }
 
-            --question.answerID; // let ppl write 1-4, but we need 0-3 as indexes
-
-            XmlNodeList answers = q.ChildNodes;
-            foreach(XmlNode a in answers)
-            {
-                Answer t = new Answer();
-                t.text = a.Attributes["text"].Value;
-                t.descr = a.Attributes["descr"].Value;
-                question.answers.Add(t);
-            }
-
-            questionList.Add(question);
+            questionList.Add(step);
         }
 
         descriptionText = transform.GetChild(1).Find("Description").GetComponent<Text>();
@@ -108,17 +118,22 @@ public class QuizTab : RobotUITabs {
 
     public void NextQuizQuestion()
     {
-        if (currentQuestionID >= questionList.Count)
+        if (currentStep >= questionList.Count)
             return;
 
-        RobotManager manager = GameObject.FindObjectOfType<RobotManager>();
-        manager.TriggerUI(true); // open UI
-        manager.ToggleCloseBtn(false); // disable close button
+        // open UI
+        GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
+        // disable close button
+        GameObject.FindObjectOfType<RobotManager>().ToggleCloseBtn(false);
+        // enable quiz icon
+        icons.Find("QuizTab").gameObject.SetActive(true);
 
         gameObject.SetActive(true);
         OnTabSwitch();
+        
+        int currentQuestionID = Random.Range(0, questionList[currentStep].Count);
 
-        Question current = questionList[currentQuestionID];
+        Question current = questionList[currentStep][currentQuestionID];
         transform.GetChild(1).Find("QuestionText").GetComponent<Text>().text = current.text;
         
         for (int i = 0; i < current.answers.Count; i++)
@@ -150,12 +165,12 @@ public class QuizTab : RobotUITabs {
 
     public void CorrectAnswer(string description)
     {
-        GameObject.Find("GameLogic").GetComponent<ActionManager>().UpdatePointsDirectly(questionList[currentQuestionID].points);
+        GameObject.Find("GameLogic").GetComponent<ActionManager>().UpdatePointsDirectly(questionList[currentStep][currentQuestionID].points);
         ActionManager.CorrectAction();
 
         descriptionText.text = description;
 
-        ++currentQuestionID;
+        ++currentStep;
 
         foreach (Button b in buttons)
         {
@@ -177,8 +192,12 @@ public class QuizTab : RobotUITabs {
     {
         Continue();
 
-        GameObject.FindObjectOfType<RobotUITabs>().OnTabSwitch(); // switch tab to something else
-        GameObject.FindObjectOfType<RobotManager>().TriggerUI(false); // close UI ?
+        // disable quiz icon
+        icons.Find("QuizTab").gameObject.SetActive(false);
+        // switch tab to something else
+        GameObject.FindObjectOfType<RobotUITabs>().OnTabSwitch(); 
+        // close UI 
+        GameObject.FindObjectOfType<PlayerScript>().CloseRobotUI();
     }
 
     public void Continue()
