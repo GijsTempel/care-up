@@ -655,6 +655,7 @@ GameObject:
   - component: {fileID: 144483623}
   - component: {fileID: 144483622}
   - component: {fileID: 144483625}
+  - component: {fileID: 144483626}
   m_Layer: 0
   m_Name: CodeIput
   m_TagString: Untagged
@@ -743,6 +744,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 144483626}
+        m_MethodName: TriggerEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.InputField+SubmitEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_OnValueChanged:
@@ -812,6 +824,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82896d20b0badd740b360389b787ba55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &144483626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 144483620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -745406591, guid: 220224b43fc464c28bc0e8de8f54a432, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Trigger:
+    m_IsTriggerExpanded: 1
+    m_Type: 0
+    m_LifecycleEvent: 0
+    m_ApplyRules: 0
+    m_Rules:
+      m_Rules: []
+    m_TriggerBool: 0
+    m_InitTime: 5
+    m_RepeatTime: 5
+    m_Repetitions: 0
+    repetitionCount: 0
+  m_EventPayload:
+    m_IsEventExpanded: 1
+    m_StandardEventType: CustomEvent
+    m_Parameters:
+      m_Parameters: []
+    m_Name: Serialtyped
 --- !u!1 &164803747
 GameObject:
   m_ObjectHideFlags: 0
@@ -4766,6 +4807,7 @@ GameObject:
   - component: {fileID: 775744095}
   - component: {fileID: 775744093}
   - component: {fileID: 775744098}
+  - component: {fileID: 775744099}
   m_Layer: 5
   m_Name: SendDatas
   m_TagString: Untagged
@@ -4895,6 +4937,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 775744099}
+        m_MethodName: TriggerEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &775744096
@@ -4946,6 +4999,35 @@ MonoBehaviour:
   Data3: {fileID: 0}
   Serial: 
   ValidProduct: 0
+--- !u!114 &775744099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 775744092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -745406591, guid: 220224b43fc464c28bc0e8de8f54a432, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Trigger:
+    m_IsTriggerExpanded: 1
+    m_Type: 0
+    m_LifecycleEvent: 0
+    m_ApplyRules: 0
+    m_Rules:
+      m_Rules: []
+    m_TriggerBool: 0
+    m_InitTime: 5
+    m_RepeatTime: 5
+    m_Repetitions: 0
+    repetitionCount: 0
+  m_EventPayload:
+    m_IsEventExpanded: 1
+    m_StandardEventType: CustomEvent
+    m_Parameters:
+      m_Parameters: []
+    m_Name: PressedActivationButton
 --- !u!1 &780034519
 GameObject:
   m_ObjectHideFlags: 0
@@ -5795,6 +5877,7 @@ GameObject:
   - component: {fileID: 872845030}
   - component: {fileID: 872845032}
   - component: {fileID: 872845031}
+  - component: {fileID: 872845033}
   m_Layer: 5
   m_Name: PlayButton
   m_TagString: Untagged
@@ -5862,9 +5945,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: set_useGUILayout
-        m_Mode: 6
+      - m_Target: {fileID: 872845033}
+        m_MethodName: TriggerEvent
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5954,6 +6037,35 @@ MonoBehaviour:
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   delegates: []
+--- !u!114 &872845033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 872845028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -745406591, guid: 220224b43fc464c28bc0e8de8f54a432, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Trigger:
+    m_IsTriggerExpanded: 1
+    m_Type: 0
+    m_LifecycleEvent: 0
+    m_ApplyRules: 0
+    m_Rules:
+      m_Rules: []
+    m_TriggerBool: 0
+    m_InitTime: 5
+    m_RepeatTime: 5
+    m_Repetitions: 0
+    repetitionCount: 0
+  m_EventPayload:
+    m_IsEventExpanded: 1
+    m_StandardEventType: CustomEvent
+    m_Parameters:
+      m_Parameters: []
+    m_Name: ProgressTomain
 --- !u!114 &872845035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10521,8 +10633,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1403126955}
   m_HandleRect: {fileID: 1403126954}
   m_Direction: 2
-  m_Value: 0.99996054
-  m_Size: 0.19819185
+  m_Value: 0.99998134
+  m_Size: 0.3039192
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -14068,7 +14180,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0.9995828}
-  m_AnchoredPosition: {x: -1.898407, y: -292.4666}
+  m_AnchoredPosition: {x: -1.898407, y: -292.4325}
   m_SizeDelta: {x: -3.7969, y: 585.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1994540221

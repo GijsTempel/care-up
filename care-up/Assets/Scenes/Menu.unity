@@ -7545,6 +7545,7 @@ GameObject:
   - component: {fileID: 1854302431}
   - component: {fileID: 1854302430}
   - component: {fileID: 1854302434}
+  - component: {fileID: 1854302433}
   m_Layer: 5
   m_Name: StartBtn
   m_TagString: Untagged
@@ -7622,6 +7623,17 @@ MonoBehaviour:
           m_StringArgument: SceneSelection
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1854302433}
+        m_MethodName: TriggerEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1854302431
@@ -7657,6 +7669,35 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1854302428}
+--- !u!114 &1854302433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1854302428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -745406591, guid: 220224b43fc464c28bc0e8de8f54a432, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Trigger:
+    m_IsTriggerExpanded: 1
+    m_Type: 0
+    m_LifecycleEvent: 0
+    m_ApplyRules: 0
+    m_Rules:
+      m_Rules: []
+    m_TriggerBool: 0
+    m_InitTime: 5
+    m_RepeatTime: 5
+    m_Repetitions: 0
+    repetitionCount: 0
+  m_EventPayload:
+    m_IsEventExpanded: 1
+    m_StandardEventType: CustomEvent
+    m_Parameters:
+      m_Parameters: []
+    m_Name: ProgressToSelection
 --- !u!114 &1854302434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7780,7 +7821,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 574464879}
   m_Direction: 2
   m_Value: 0.9999998
-  m_Size: 0.51455706
+  m_Size: 0.48938212
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
