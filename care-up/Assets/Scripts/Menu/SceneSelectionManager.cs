@@ -15,8 +15,8 @@ public class SceneSelectionManager : MonoBehaviour {
 
     private string practiceText =
         "Oefenen: Oefen het protocol waarin je elke stap van de werkwijze bovenin het scherm kunt zien. Volg de stappen om ze te oefenen en te leren.";
-    //private string testText =
-        //"Toetsen: Toets je kennis. Tijdens een toets zie je geen hints en moet je de stappen van de protocol uit je hoofd uitvoeren. Zoals in het echt.";
+    private string testText =
+        "Toetsen: Toets je kennis. Tijdens een toets zie je geen hints en moet je de stappen van de protocol uit je hoofd uitvoeren. Zoals in het echt.";
 
     public void Start()
     {
@@ -48,7 +48,7 @@ public class SceneSelectionManager : MonoBehaviour {
     public void OnPracticeButtonClick()
     {
         practiceButton.color = Color.green;
-        //testButton.color = Color.white;
+        testButton.color = Color.white;
 
         description.text = practiceText;
 
@@ -60,7 +60,7 @@ public class SceneSelectionManager : MonoBehaviour {
         practiceButton.color = Color.white;
         testButton.color = Color.green;
 
-       // description.text = testText;
+        description.text = testText;
 
         manager.practiceMode = false; 
     }
