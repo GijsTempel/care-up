@@ -477,6 +477,12 @@ public class PlayerScript : MonoBehaviour {
             return;
         }
 
+        QuizTab quizTab = GameObject.FindObjectOfType<QuizTab>();
+        if (quizTab != null && quizTab.continueBtn)
+        {
+            GameObject.FindObjectOfType<QuizTab>().OnContinueButton();
+        }
+
         PlayerAnimationManager.PlayAnimation("IPadFarAway");
         robotUIopened = false;
         

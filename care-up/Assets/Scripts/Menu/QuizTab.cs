@@ -31,7 +31,7 @@ public class QuizTab : RobotUITabs {
     private Button continueButton;
     private Button switchToInfoButton;
 
-    private bool continueBtn = false;
+    public bool continueBtn = false;
 
     public void Init(string name)
     {
@@ -179,6 +179,8 @@ public class QuizTab : RobotUITabs {
 
         continueBtn = true;
         continueButton.gameObject.SetActive(continueBtn);
+
+        GameObject.FindObjectOfType<RobotManager>().ToggleCloseBtn(true); // enable close btn
     }
 
     public void WrongAnswer(string description)
@@ -207,7 +209,6 @@ public class QuizTab : RobotUITabs {
         continueBtn = false;
         continueButton.gameObject.SetActive(continueBtn);
         gameObject.SetActive(false);
-        GameObject.FindObjectOfType<RobotManager>().ToggleCloseBtn(true); // enable close btn
     }
 
     public void OnSwitchToInfoTabButton()
