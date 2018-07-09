@@ -500,16 +500,31 @@ public class PlayerScript : MonoBehaviour {
 
     public void PickItemsBackAfterRobotUI()
     {
+        StartCoroutine(DelayedPickItemsAfterIpad(0.5f));
+
         if (robotSavedLeft != null)
         {
-            handsInv.ForcePickItem(robotSavedLeft.name, true);
             PlayerAnimationManager.SetHandItem(true, robotSavedLeft.gameObject);
         }
 
         if (robotSavedRight != null)
         {
-            handsInv.ForcePickItem(robotSavedRight.name, false);
             PlayerAnimationManager.SetHandItem(false, robotSavedRight.gameObject);
+        }
+    }
+
+    IEnumerator DelayedPickItemsAfterIpad(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (robotSavedLeft != null)
+        {
+            handsInv.ForcePickItem(robotSavedLeft.name, true);
+        }
+
+        if (robotSavedRight != null)
+        {
+            handsInv.ForcePickItem(robotSavedRight.name, false);
         }
     }
 
