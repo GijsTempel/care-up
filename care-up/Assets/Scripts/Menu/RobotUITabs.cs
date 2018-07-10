@@ -101,7 +101,6 @@ public class RobotUITabs : MonoBehaviour {
         icons.gameObject.SetActive(false);
 
         SetTabActive(true);
-		print("gggggggggggggggggggggggggggggg");
     }
 
     protected virtual void SetTabActive(bool value)
@@ -113,7 +112,7 @@ public class RobotUITabs : MonoBehaviour {
                 child.gameObject.SetActive(value);
             }
         }
-		print(name);
+
         switch (name)
         {
             case "GeneralTab":

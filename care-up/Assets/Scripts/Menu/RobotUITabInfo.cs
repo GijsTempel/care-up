@@ -54,13 +54,11 @@ public class RobotUITabInfo : RobotUITabs
 		ItemList.SetActive(!ItemList.activeSelf);
 
         tutorial_listButton = true;
-		print(ItemList.activeSelf);
     }
 
 	public void SwitchItemList(bool value)
     {
 		ItemList.SetActive(value);
-		print(value);
     }
 
 

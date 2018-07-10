@@ -127,57 +127,26 @@ public class PlayerScript : MonoBehaviour {
         usingOnText.SetActive(false);
 
         quiz = GameObject.FindObjectOfType<QuizTab>(); 
-
-        EventTrigger.Entry event1 = new EventTrigger.Entry();
-        event1.eventID = EventTriggerType.PointerEnter;
-        event1.callback.AddListener((eventData) => { EnterHover(); });
-        
-        EventTrigger.Entry event2 = new EventTrigger.Entry();
-        event2.eventID = EventTriggerType.PointerExit;
-        event2.callback.AddListener((eventData) => { ExitHover(); });
-
-        EventTrigger.Entry event3 = new EventTrigger.Entry();
-        event3.eventID = EventTriggerType.PointerClick;
-        event3.callback.AddListener((eventData) => { ExitHover(); });
-
-        usingOnCancelButton.AddComponent<EventTrigger>();
-        usingOnCancelButton.GetComponent<EventTrigger>().triggers.Add(event1);
-        usingOnCancelButton.GetComponent<EventTrigger>().triggers.Add(event2);
-        usingOnCancelButton.GetComponent<EventTrigger>().triggers.Add(event3);
         
         GameObject robotUI = GameObject.Find("RobotUI");
-        robotUI.AddComponent<EventTrigger>();
-        robotUI.GetComponent<EventTrigger>().triggers.Add(event1);
-        robotUI.GetComponent<EventTrigger>().triggers.Add(event2);
 
         devHintUI = GameObject.Find("DevHint").gameObject;
 
         GameObject wrongActionPopUp = GameObject.Find("WrongAction").gameObject;
 		GameObject warningPopUp = GameObject.Find("EmptyHandsWarning").gameObject;
-
-        wrongActionPopUp.AddComponent<EventTrigger>();
-        wrongActionPopUp.GetComponent<EventTrigger>().triggers.Add(event1);
-        wrongActionPopUp.GetComponent<EventTrigger>().triggers.Add(event2);
-        wrongActionPopUp.GetComponent<EventTrigger>().triggers.Add(event3);
-
-        warningPopUp.AddComponent<EventTrigger>();
-        warningPopUp.GetComponent<EventTrigger>().triggers.Add(event1);
-        warningPopUp.GetComponent<EventTrigger>().triggers.Add(event2);
-        warningPopUp.GetComponent<EventTrigger>().triggers.Add(event3);
         
         EventTrigger.Entry closePopUp = new EventTrigger.Entry();
-        event3.eventID = EventTriggerType.PointerClick;
-        event3.callback.AddListener((eventData) => { TimedPopUp.ForceHide(); });
-        
+        closePopUp.eventID = EventTriggerType.PointerClick;
+        closePopUp.callback.AddListener((eventData) => { TimedPopUp.ForceHide(); });
+
+        wrongActionPopUp.AddComponent<EventTrigger>();
         wrongActionPopUp.GetComponent<EventTrigger>().triggers.Add(closePopUp);
+        warningPopUp.AddComponent<EventTrigger>();
         warningPopUp.GetComponent<EventTrigger>().triggers.Add(closePopUp);
 
         if (GameObject.Find("GameLogic").GetComponent<TutorialManager>() != null)
         {
             GameObject tutorialEndUi = GameObject.Find("TutorialDonePanel");
-            tutorialEndUi.AddComponent<EventTrigger>();
-            tutorialEndUi.GetComponent<EventTrigger>().triggers.Add(event1);
-            tutorialEndUi.GetComponent<EventTrigger>().triggers.Add(event2);
             tutorialEndUi.SetActive(false);
         }
 
@@ -192,16 +161,6 @@ public class PlayerScript : MonoBehaviour {
 
         tutorial_UI = GameObject.FindObjectOfType<Tutorial_UI>();
         tutorial_theory = GameObject.FindObjectOfType<Tutorial_Theory>();
-    }
-
-    public void EnterHover()
-    {
-        onButtonHover = true;
-    }
-
-    public void ExitHover()
-    {
-        onButtonHover = false;
     }
 
     public void FreeLookButton()
@@ -246,11 +205,11 @@ public class PlayerScript : MonoBehaviour {
             rotated += mouseLook.LookRotation(transform, Camera.main.transform);
         }
 
-        if (!freeLook && controls.MouseClicked() && !moveBackButton.mouseOver && !robotUIopened)
+        if (!freeLook && controls.MouseClicked() && !robotUIopened)
         {
             if (!away && controls.SelectedObject != null 
                 && controls.SelectedObject.GetComponent<InteractableObject>() != null
-                && !itemControls.gameObject.activeSelf && !onButtonHover)
+                && !itemControls.gameObject.activeSelf)
             {
                 if (usingOnMode)
                 {
