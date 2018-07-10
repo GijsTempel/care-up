@@ -71,7 +71,8 @@ public class Tutorial_Talk : TutorialManager
                         patient.tutorial_used = false;
 
                         currentStep = TutorialStep.Talk;
-						hintsN.LockTo("SelectionDialogue(Clone)", new Vector3(168.40f, 124.90f, 0.00f));
+
+                        hintsN.LockTo("SelectionDialogue(Clone)", new Vector3(68.02f, 86.50f, 0.00f));
 						hintsN.SetIconPosition(1);
                         UItext.text = "Als je een gesprek start kun je keuzes maken over wat je tegen de persoon wilt zeggen. Laten we de cliënt begroeten door de optie 'Goedemorgen' te kiezen.";
 

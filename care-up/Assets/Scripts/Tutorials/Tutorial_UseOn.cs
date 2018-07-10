@@ -31,7 +31,7 @@ public class Tutorial_UseOn : TutorialManager {
                     currentStep = TutorialStep.Welcome;
                     //hintsBox.anchoredPosition = new Vector2(-14.8f, 9.9f);
                     //hintsBox.sizeDelta = new Vector2(788f, 524.9f);
-					hintsN.SetSize(788f, 382f);
+                    hintsN.SetSize(788f, 524.9f);
                     hintsN.LockTo("UI(Clone)", new Vector3(-393.80f, 214.70f, 0.00f));
                     UItext.text = "Welkom. In deze leermodule zal je leren hoe je objecten met andere objecten kunt gebruiken. Denk hierbij aan het weggooien van een naald in de naaldcontainer of het gebruiken van een injectiespuit op de cliënt.";
                     SetUpTutorialNextButton();
@@ -126,11 +126,16 @@ public class Tutorial_UseOn : TutorialManager {
 						hintsN.LockTo("SceneLoader 1", new Vector3(363.61f, -22.40f, 0.00f));
                         //hintsBox.anchoredPosition = new Vector2(513f, -304f);
                         UItext.text = "Super! Dit was de leermodule over het gebruiken van een object in je hand met een ander object zoals de naaldcontainer.";
+                        SetPauseTimer(4.0f);
+                    
                     }
                     break;
                 case TutorialStep.Done:
-                    currentStep = TutorialStep.None;
-                    TutorialEnd();
+                    if (!Paused())
+                    {
+                        currentStep = TutorialStep.None;
+                        TutorialEnd();
+                    }
                     break;
             }
         }

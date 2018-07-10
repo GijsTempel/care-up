@@ -48,7 +48,7 @@ public class Tutorial_Sequence : TutorialManager
                 case TutorialStep.First:
 					GameObject.FindObjectOfType<InjectionPatient>().allowToTalk = false;
                     currentStep = TutorialStep.Welcome;
-					hintsN.SetSize(788f, 382f);
+                    hintsN.SetSize(788f, 524.9f);
                     hintsN.LockTo("UI(Clone)", new Vector3(-393.80f, 214.70f, 0.00f));
                     UItext.text = "Welkom, In deze tutorial zul je leren hoe je ingewikkelde handelingen, zoals injecteren, moet uitvoeren.";
                     SetUpTutorialNextButton();
