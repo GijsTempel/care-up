@@ -5,6 +5,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Static object that can be used
 /// </summary>
+[RequireComponent(typeof(Renderer))]
 public class UsableObject : InteractableObject {
 
     [HideInInspector]
