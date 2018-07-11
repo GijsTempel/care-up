@@ -181,7 +181,7 @@ public class Tutorial_Combining : TutorialManager {
 
                         currentStep = TutorialStep.Done;
                         //hintsBox.anchoredPosition = new Vector2(512f, -267.19f);
-						hintsN.LockTo("SceneLoader 1", new Vector3(359.26f, 18.80f, 0.00f));
+                        hintsN.LockTo("SceneLoader 1", new Vector3(262.50f, -69.10f, 0.00f));
                         UItext.text = "Goed gedaan! Dit was de leermodule over het combineren en scheiden van objecten.";
 
                         SetPauseTimer(5.0f);

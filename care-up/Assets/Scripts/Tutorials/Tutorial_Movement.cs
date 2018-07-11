@@ -85,8 +85,8 @@ public class Tutorial_Movement : TutorialManager
 
                         //hintsBox.anchoredPosition = new Vector2(681f, 175f);
                         //hintsBox.sizeDelta = new Vector2(472.5f, 298.9f);
-						hintsN.LockTo("MoveBackButton", new Vector3(-122.94f, -51.70f, 0.00f));
-						hintsN.SetIconPosition(1);
+                        hintsN.LockTo("MoveBackButton", new Vector3(-59.90f, -87.00f, 0.00f));
+                        hintsN.SetIconPosition(1);
                         currentStep = TutorialStep.MoveBack;
                         UItext.text = "Je ziet dat we nu naar het werkveld zijn verplaatst. Je kunt op ieder moment weer terug keren naar de beginpositie. Dit noemen wij het overzicht. Keer terug naar het overzicht door te drukken op de knop 'Terug naar overzicht' rechtsboven in het scherm. ";
 
@@ -100,7 +100,7 @@ public class Tutorial_Movement : TutorialManager
                         //hintsBox.anchoredPosition = new Vector2(-471f, 35f);
                         //hintsBox.sizeDelta = new Vector2(472.5f, 298.9f);
 						hintsN.SetIconPosition(0);
-						hintsN.LockTo("doc", new Vector3(0.00f, 1.56f, -0.49f));
+                        hintsN.LockTo("doc", new Vector3(-59.36f, 8.00f, -20.36f));
                         currentStep = TutorialStep.MoveToDoctor;
                         UItext.text = "Heel goed. Probeer nu richting je collega te bewegen door op haar te klikken.";
 
@@ -115,8 +115,8 @@ public class Tutorial_Movement : TutorialManager
                         player.tutorial_movedTo = false;
                         //hintsBox.anchoredPosition = new Vector2(-0.00011874f, 0.00024414f);
                         //hintsBox.sizeDelta = new Vector2(788f, 524.9f);
-						hintsN.LockTo("UI(Clone)", new Vector3(-317.70f, 0.00f, 0.00f));
-						hintsN.SetSize(675f, 400f);
+                        hintsN.LockTo("/doc", new Vector3(345.90f, 1.40f, 707.00f));
+                        hintsN.SetSize(675f, 400f);
                         currentStep = TutorialStep.FreeLookExpl;
                         UItext.text = "Binnen Care Up kun je ook om je heen kijken. Om je heen kijken kun je doen door (Computer) De linkermuisknop in te drukken en ingedrukt te houden. Beweeg vervolgens de muis om rond te kijken. Laat de linkermuisknop los om te stoppen met rondkijken. (Mobiel/Tablet) Kijk op de Mobiel/Tablet rond door met je vinger over het beeld te 'swipen'. Klik hierbij niet op interessante objecten.  ";
                         SetUpTutorialNextButton();
@@ -132,7 +132,7 @@ public class Tutorial_Movement : TutorialManager
                         UItext.text = "Beweeg vanaf je collega direct naar het werkveld zonder terug te keren naar het overzicht.";
 						hintsN.ResetSize();
 						hintsN.SetIconPosition(1);
-						hintsN.LockTo("UI(Clone)", new Vector3(891.40f, 446.10f, 0.00f));
+                        hintsN.LockTo("doc", new Vector3(0.48f, 1.32f, 1.22f));
                         player.MoveBackButtonObject.SetActive(false);
                         player.tutorial_movedTo = false;
                         wfPos.SetActive(true);

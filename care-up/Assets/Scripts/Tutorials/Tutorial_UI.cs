@@ -143,7 +143,7 @@ public class Tutorial_UI : TutorialManager
                         currentStep = TutorialStep.GeneralExpl;
                       
 						hintsN.LockTo("RobotUI", new Vector3(-694.10f, 338.70f, -99.80f));
-                        UItext.text = "In de app 'Algemeen' vind je algemene informatie zoals de naam van het protocol, geluidsknop & de terugkeren naar het hoofdmenu knop.";
+                        UItext.text = "In de app 'Algemeen' vind je algemene informatie zoals de naam van het protocol en de geluidsknop.";
                         SetUpTutorialNextButton();
                     }
                     break;
@@ -257,7 +257,7 @@ public class Tutorial_UI : TutorialManager
                         currentStep = TutorialStep.DevHintsExpl;
              
 						hintsN.SetIconPosition(0);
-						hintsN.LockTo("/UI/DevHint/Text", new Vector3(342.00f, -84.72f, 0.00f));
+                        hintsN.LockTo("DevHint", new Vector3(375.39f, -84.72f, 0.00f));
                         UItext.text = "Hier zien we de stappen die je moet doorlopen om het protocol succesvol af te ronden.";
                         SetUpTutorialNextButton();
                     }
@@ -266,8 +266,8 @@ public class Tutorial_UI : TutorialManager
                     if (nextButtonClicked)
                     {
                         currentStep = TutorialStep.OpenExtraHints;
-                    
-						hintsN.LockTo("/UI/ExtraButton", new Vector3(53.30f, -45.51f, 0.00f));
+
+                        hintsN.LockTo("ExtraButton", new Vector3(81.50f, -22.50f, 0.00f));
                         UItext.text = "Als je niet weet hoe je een stap moet uitvoeren dan kun je klikken op het informatie icoon. Laten we op het icoon klikken";
                         hintsUI.tutorial_extraOpened = false;
                         expectedHintsState = true;
@@ -277,8 +277,8 @@ public class Tutorial_UI : TutorialManager
                     if (hintsUI.tutorial_extraOpened)
                     {
                         currentStep = TutorialStep.CloseHints;
-                      
-						hintsN.LockTo("/UI/ExtraButton", new Vector3(792.40f, -158.00f, 0.00f));
+
+                        hintsN.LockTo("ExtraButton", new Vector3(830.40f, -158.20f, 0.00f));
                         UItext.text = "Hier komt tijdens het spelen van een protocol extra uitleg te staan over hoe je een stap kunt uitvoeren. Laten we het scherm weer sluiten door nogmaals op het informatie icoon te klikken.";
                         hintsUI.tutorial_extraClosed = false;
                         expectedHintsState = false;
@@ -288,8 +288,8 @@ public class Tutorial_UI : TutorialManager
                     if (hintsUI.tutorial_extraClosed)
                     {
                         currentStep = TutorialStep.Done;
-                      
-                        hintsN.LockTo("/UI/ExtraButton", new Vector3(792.40f, -158.00f, 0.00f));
+
+                        hintsN.LockTo("SceneLoader 1", new Vector3(262.50f, -69.10f, 0.00f));
                         UItext.text = "Gefeliciteerd! Je hebt nu alles geleerd over de menu's en iconen binnen Care Up. Veel plezier met het oefenen van de verpleegtechnische handelingen!";
                     }
                     break;
