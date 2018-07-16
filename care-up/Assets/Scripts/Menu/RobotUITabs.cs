@@ -27,6 +27,8 @@ public class RobotUITabs : MonoBehaviour {
     Tutorial_UI tutorial_UI;
     Tutorial_Theory tutorial_theory;
 
+    static RobotUITabs generalTab;
+
     protected virtual void Start()
     {
         tabs.Add(this);
@@ -82,7 +84,20 @@ public class RobotUITabs : MonoBehaviour {
         tabTrigger.GetComponent<Button>().onClick.AddListener(OnTabSwitch);
 
         GameObject backBtn = transform.Find("Button").gameObject;
-        backBtn.GetComponent<Button>().onClick.AddListener(BackButton);
+
+        if (transform.tag == "alg")
+        {
+            backBtn.GetComponent<Button>().onClick.AddListener(BackBtnToGeneral);
+        }
+        else
+        {
+            backBtn.GetComponent<Button>().onClick.AddListener(BackButton);
+        }
+
+        if (name == "GeneralTab")
+        {
+            generalTab = this;
+        }
     }
 
     public void OnTabSwitch()
@@ -110,6 +125,16 @@ public class RobotUITabs : MonoBehaviour {
         icons.gameObject.SetActive(false);
 
         SetTabActive(true);
+
+        switch (name)
+        { 
+            case "PrescriptionTab":
+                FindObjectOfType<ActionManager>().OnExamineAction("PrescriptionForm", "good");
+                break;
+            case "RecordsTab":
+                FindObjectOfType<ActionManager>().OnExamineAction("PatientRecords", "good");
+                break;
+        }
     }
 
     protected virtual void SetTabActive(bool value)
@@ -121,6 +146,7 @@ public class RobotUITabs : MonoBehaviour {
                 child.gameObject.SetActive(value);
             }
         }
+
         switch (name)
         {
             case "GeneralTab":
@@ -148,14 +174,30 @@ public class RobotUITabs : MonoBehaviour {
         }
 
         tutorial_back = true;
-
-
+        
         foreach (RobotUITabs t in tabs)
         {
             t.SetTabActive(false);
         }
 
 		icons.gameObject.SetActive(true);
+    }
 
+    public void OnIpadRecordButtonClick()
+    {
+        FindObjectOfType<ActionManager>().OnUseAction("PaperAndPen");
+    }
+    
+    protected void BackBtnToGeneral()
+    {
+        if ((tutorial_UI != null && tutorial_UI.closeTab == false) ||
+            (tutorial_theory != null && tutorial_theory.closeTab == false))
+        {
+            return;
+        }
+
+        tutorial_back = true;
+
+        generalTab.OnTabSwitch();
     }
 }

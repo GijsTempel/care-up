@@ -21,11 +21,6 @@ public class WorkField : UsableObject {
         {
             obj.SetActive(toggle);
         }
-
-        foreach (GameObject obj in postObjects)
-        {
-            obj.SetActive(toggle);
-        }
     }
 
     public override void Use()
@@ -68,16 +63,6 @@ public class WorkField : UsableObject {
             }
             
             ++toggleTime;
-        }
-        else
-        {
-            foreach (GameObject obj in postObjects)
-            {
-                if (obj)
-                {
-                    obj.SetActive(true);
-                }
-            }
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Xml;
 
 public class PlayerSpawn : MonoBehaviour {
 
@@ -17,6 +18,9 @@ public class PlayerSpawn : MonoBehaviour {
         public string buttonName;
         public string prefabName;
     };
+
+    public string prescriptionXml;
+    public string patientRecordsXml;
 
     public List<InfoPair> infoList = new List<InfoPair>();
 
@@ -42,6 +46,7 @@ public class PlayerSpawn : MonoBehaviour {
         GameObject iPad = Instantiate(Resources.Load("Prefabs/ipad") as GameObject,
             transform.position + new Vector3(0, -100f, 0), transform.rotation);
         iPad.name = "ipad";
+        IpadLoadXmlInfo(iPad.transform);
 
         GameObject robot = Instantiate(Resources.Load("Prefabs/robot") as GameObject, 
             robotPosition, Quaternion.Euler(robotRotation));
@@ -83,5 +88,44 @@ public class PlayerSpawn : MonoBehaviour {
             GameObject.Find("TopBarUI").transform.Find("GeneralDynamicCanvas").Find("Percentage").Find("PointsText").GetComponent<Text>());
 
         Destroy(gameObject);
+    }
+
+    public void IpadLoadXmlInfo(Transform ipad)
+    {
+        Transform robotUI = ipad.Find("UI (1)/RobotUI");
+
+        if (prescriptionXml != "")
+        {
+            Transform prescriptionPanel = robotUI.Find("PrescriptionTab/Panel");
+
+            TextAsset textAsset = (TextAsset)Resources.Load("Xml/IpadInfo/" + prescriptionXml);
+            XmlDocument xmlFile = new XmlDocument();
+            xmlFile.LoadXml(textAsset.text);
+
+            XmlNodeList nodes = xmlFile.FirstChild.NextSibling.ChildNodes;
+            
+            foreach (XmlNode node in nodes)
+            {
+                prescriptionPanel.Find(node.Name).GetComponent<Text>().text =
+                    node.Attributes["value"].Value;
+            }
+        }
+
+        if (patientRecordsXml != "")
+        {
+            Transform patientRecordsXmlPanel = robotUI.Find("RecordsTab/Panel");
+
+            TextAsset textAsset = (TextAsset)Resources.Load("Xml/IpadInfo/" + patientRecordsXml);
+            XmlDocument xmlFile = new XmlDocument();
+            xmlFile.LoadXml(textAsset.text);
+
+            XmlNodeList nodes = xmlFile.FirstChild.NextSibling.ChildNodes;
+
+            foreach (XmlNode node in nodes)
+            {
+                patientRecordsXmlPanel.Find(node.Name).GetComponent<Text>().text =
+                    node.Attributes["value"].Value;
+            }
+        }
     }
 }

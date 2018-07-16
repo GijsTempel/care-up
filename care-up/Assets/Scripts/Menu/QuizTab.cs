@@ -196,8 +196,8 @@ public class QuizTab : RobotUITabs {
 
         // disable quiz icon
         icons.Find("QuizTab").gameObject.SetActive(false);
-        // switch tab to something else
-        GameObject.FindObjectOfType<RobotUITabs>().OnTabSwitch(); 
+        // close tab
+        BackButton();
         // close UI 
         GameObject.FindObjectOfType<PlayerScript>().CloseRobotUI();
         // enable player if needed
