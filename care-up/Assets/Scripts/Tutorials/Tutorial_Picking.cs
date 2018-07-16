@@ -133,8 +133,8 @@ public class Tutorial_Picking : TutorialManager {
                 case TutorialStep.DropTwo:
                     if (handsInventory.tutorial_droppedRight)
                     {
-						hintsN.LockTo("SceneLoader 1", new Vector3(363.90f, 41.00f, 0.00f));
-						hintsN.SetIconPosition(0);
+                        hintsN.LockTo("SceneLoader 1", new Vector3(262.50f, -69.10f, 0.00f));
+                        hintsN.SetIconPosition(0);
                         handsInventory.tutorial_droppedRight = false;
                         currentStep = TutorialStep.Done;
                         UItext.text = "Goed gedaan. Nu weet je hoe je objecten kunt oppakken en kunt terugleggen.";

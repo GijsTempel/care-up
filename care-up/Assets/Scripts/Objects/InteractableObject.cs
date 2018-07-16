@@ -5,7 +5,6 @@ using UnityEngine.UI;
 /// <summary>
 /// General abstract class for objects.
 /// </summary>
-[RequireComponent(typeof(Renderer))]
 public class InteractableObject : MonoBehaviour {
 	public int ObjectID = 0;
 

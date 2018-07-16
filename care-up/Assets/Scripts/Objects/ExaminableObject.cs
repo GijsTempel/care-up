@@ -5,6 +5,7 @@ using System;
 /// <summary>
 /// Object that can be examined - opened in object preview.
 /// </summary>
+[RequireComponent(typeof(Renderer))]
 public class ExaminableObject : InteractableObject {
 
     [HideInInspector]

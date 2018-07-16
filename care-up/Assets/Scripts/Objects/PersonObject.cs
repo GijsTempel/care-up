@@ -55,6 +55,8 @@ public class PersonObject : InteractableObject
         inhaleCounter = 1.0f;
 
         lookAtCamera = true;
+
+        rend = GetComponentInChildren<SkinnedMeshRenderer>();
     }
 
     protected override void Update()

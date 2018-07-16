@@ -58,9 +58,9 @@ public class Tutorial_Talk : TutorialManager
                     if (player.tutorial_movedTo)
                     {
                         currentStep = TutorialStep.OpenOptions;
-						hintsN.LockTo("RightShoulder", new Vector3(0.00f, 0.00f, 0.00f));
+                        hintsN.LockTo("RightShoulder", new Vector3(0.00f, 0.00f, 0.29f));
                         UItext.text = "Heel goed. Klik nu nogmaals op de cliënt om het een gesprek te starten. ";
-
+                        hintsN.SetIconPosition(1);
                         patient.tutorial_used = false;
                         GameObject.FindObjectOfType<InjectionPatient>().allowToTalk = true;
                     }
@@ -71,7 +71,8 @@ public class Tutorial_Talk : TutorialManager
                         patient.tutorial_used = false;
 
                         currentStep = TutorialStep.Talk;
-						hintsN.LockTo("SelectionDialogue(Clone)", new Vector3(168.40f, 124.90f, 0.00f));
+
+                        hintsN.LockTo("SelectionDialogue(Clone)", new Vector3(68.02f, 86.50f, 0.00f));
 						hintsN.SetIconPosition(1);
                         UItext.text = "Als je een gesprek start kun je keuzes maken over wat je tegen de persoon wilt zeggen. Laten we de cliënt begroeten door de optie 'Goedemorgen' te kiezen.";
 
@@ -83,7 +84,7 @@ public class Tutorial_Talk : TutorialManager
                     {
                         patient.tutorial_talked = false;
 						hintsN.SetIconPosition(0);
-						hintsN.LockTo("SceneLoader 1", new Vector3(356.74f, 39.10f, 0.00f));
+                        hintsN.LockTo("SceneLoader 1", new Vector3(262.50f, -69.10f, 0.00f));
                         currentStep = TutorialStep.Done;
                         UItext.text = "Goed gedaan. Je weet nu hoe je een gesprek kunt starten met personen!";
                     }

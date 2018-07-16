@@ -48,7 +48,7 @@ public class Tutorial_Sequence : TutorialManager
                 case TutorialStep.First:
 					GameObject.FindObjectOfType<InjectionPatient>().allowToTalk = false;
                     currentStep = TutorialStep.Welcome;
-					hintsN.SetSize(788f, 382f);
+                    hintsN.SetSize(788f, 524.9f);
                     hintsN.LockTo("UI(Clone)", new Vector3(-393.80f, 214.70f, 0.00f));
                     UItext.text = "Welkom, In deze tutorial zul je leren hoe je ingewikkelde handelingen, zoals injecteren, moet uitvoeren.";
                     SetUpTutorialNextButton();
@@ -81,8 +81,8 @@ public class Tutorial_Sequence : TutorialManager
                     if (handsInventory.tutorial_pickedLeft)
                     {
                         handsInventory.tutorial_pickedLeft = false;
-						hintsN.LockTo("UI(Clone)", new Vector3(682.50f, 374.99f, 0.00f));
-						hintsN.SetIconPosition(1);
+                        hintsN.LockTo("WorkField", new Vector3(0.13f, 0.93f, -1.17f));
+                        hintsN.SetIconPosition(1);
                         currentStep = TutorialStep.MoveToPatient;
                         UItext.text = "Heel goed. Laten we naar de cliënt toe gaan. Dit kan door op door op de 'terug naar overzicht' knop te klikken en daarna op de cliënt of door de camera te draaien richting de cliënt op hem te klikken. ";
 
@@ -94,8 +94,8 @@ public class Tutorial_Sequence : TutorialManager
                     {
                         player.tutorial_movedTo = false;
 						GameObject.FindObjectOfType<InjectionPatient>().allowToTalk = true;
-						hintsN.LockTo("RightShoulder", new Vector3(0.00f, 0.00f, 0.00f));
-						hintsN.SetIconPosition(0);
+                        hintsN.LockTo("RightShoulder", new Vector3(0.00f, 0.00f, 0.23f));
+                        hintsN.SetIconPosition(1);
                         currentStep = TutorialStep.Talk;
                         UItext.text = "Vraag de cliënt om zijn mouw omhoog te doen door op de cliënt te klikken en te kiezen voor de eerste optie. ";
 
@@ -106,8 +106,8 @@ public class Tutorial_Sequence : TutorialManager
                     if (patient.tutorial_talked)
                     {
                         patient.tutorial_talked = false;
-						hintsN.LockTo("UI(Clone)", new Vector3(418.20f, 0.00f, 0.00f));
-						hintsN.SetIconPosition(3);
+                        hintsN.LockTo("RightArm", new Vector3(417.45f, -214.30f, -287.30f));
+                        hintsN.SetIconPosition(3);
                         currentStep = TutorialStep.UseOnPatient;
                         UItext.text = "Gebruik nu de spuit + naald + dop met de cliënt. Doe dit door op de spuit + injectienaald + beschermdop te klikken, te kiezen voor de optie 'Gebruiken met...' en vervolgens te klikken op de cliënt.";
 
@@ -117,8 +117,8 @@ public class Tutorial_Sequence : TutorialManager
                 case TutorialStep.UseOnPatient:
                     if (handsInventory.tutorial_itemUsedOn)
                     {
-						hintsN.LockTo("UI(Clone)", new Vector3(-419.90f, 142.80f, 0.00f));
-						hintsN.SetIconPosition(0);
+                        hintsN.LockTo("UI", new Vector3(-640.10f, 142.80f, 0.00f));
+                        hintsN.SetIconPosition(0);
 						hintsN.SetSize(560f, 400f);
                         currentStep = TutorialStep.SequenceExplanation;
                         UItext.text = "Ingewikkelde handelingen die uit meerdere stappen bestaan openen het 'actie keuze menu'. De handeling start automatisch. Zodra er een belangrijke stap is aangebroken, pauzeert het spel. Er verschijnen keuzes in het beeld en het is aan jou om de juiste keuze te selecteren. Zodra je de goede keuze maakt zal de handeling verder worden uitgevoerd. Dit herhaalt zich tot de handeling is afgerond.";
@@ -139,7 +139,7 @@ public class Tutorial_Sequence : TutorialManager
                 case TutorialStep.CompleteSequence:
                     if (sequenceCompleted && dialogueEnded)
                     {
-						hintsN.LockTo("SceneLoader 1", new Vector3(363.61f, -22.40f, 0.00f));
+                        hintsN.LockTo("SceneLoader 1", new Vector3(262.50f, -69.10f, 0.00f));
                         currentStep = TutorialStep.Done;
                         UItext.text = "Gefeliciteerd! Je weet nu hoe je ingewikkelde handelingen succesvol kunt uitvoeren.";
                     }
