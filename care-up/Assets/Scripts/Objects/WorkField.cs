@@ -5,7 +5,6 @@ using UnityEngine;
 public class WorkField : UsableObject {
     
     public List<GameObject> objects = new List<GameObject>();
-    public List<GameObject> postObjects = new List<GameObject>();
 
     private int toggleTime = 0;
     private bool toggle = false;
