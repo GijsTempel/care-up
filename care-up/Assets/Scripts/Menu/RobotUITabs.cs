@@ -33,7 +33,16 @@ public class RobotUITabs : MonoBehaviour {
         tabs.RemoveAll(item => item == null);
 
         icons = transform.parent.Find("TabletIcons");
-        tabTrigger = icons.Find(name).gameObject;
+        
+		if (transform.tag == "alg")
+		{
+			tabTrigger = transform.parent.Find("GeneralTab/InGameUI/Panel").Find(name).gameObject;
+		}
+		else 
+		{ 
+			tabTrigger = icons.Find(name).gameObject;
+		}
+
         children = transform.GetComponentsInChildren<RectTransform>();
         
         GameObject sceneTitle = GameObject.Find("SceneTitle");
@@ -78,6 +87,7 @@ public class RobotUITabs : MonoBehaviour {
 
     public void OnTabSwitch()
     {
+		print("aaaaaaaaaaaaaaaaaaaa");
         if ((tutorial_UI != null && tutorial_UI.tabToOpen != name) ||
             (tutorial_theory != null && tutorial_theory.tabToOpen != name))
         {
