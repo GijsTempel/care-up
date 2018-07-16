@@ -87,7 +87,6 @@ public class RobotUITabs : MonoBehaviour {
 
     public void OnTabSwitch()
     {
-		print("aaaaaaaaaaaaaaaaaaaa");
         if ((tutorial_UI != null && tutorial_UI.tabToOpen != name) ||
             (tutorial_theory != null && tutorial_theory.tabToOpen != name))
         {
@@ -150,11 +149,13 @@ public class RobotUITabs : MonoBehaviour {
 
         tutorial_back = true;
 
-        icons.gameObject.SetActive(true);
 
         foreach (RobotUITabs t in tabs)
         {
             t.SetTabActive(false);
         }
+
+		icons.gameObject.SetActive(true);
+
     }
 }
