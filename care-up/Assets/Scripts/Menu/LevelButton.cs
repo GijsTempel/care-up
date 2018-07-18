@@ -34,6 +34,8 @@ public class LevelButton : MonoBehaviour {
     
     public List<Info> variations = new List<Info>();
 
+    public bool buy = false;
+
     private void Start()
     {
         if (GameObject.Find("Preferences") != null && loadingScreen == null)
@@ -104,7 +106,24 @@ public class LevelButton : MonoBehaviour {
 
     public void OnStartButtonClick()
     {
-        bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
+        if (buy)
+        {
+            string link = "https://careup.nl/protocollen-voorbehouden-en-risicovolle-handelingen/";
+            if (Application.platform == RuntimePlatform.WebGLPlayer)
+            {
+                #pragma warning disable CS0618 // Type or member is obsolete
+                Application.ExternalEval("window.open(\""+ link +"\",\"_blank\")");
+                #pragma warning restore CS0618 // Type or member is obsolete
+            }
+            else
+            {
+                Application.OpenURL(link);
+            }
+        }
+        else
+        {
+            bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
+        }
     }
     
     public void GetSceneDatabaseInfo_Success(string[] info)

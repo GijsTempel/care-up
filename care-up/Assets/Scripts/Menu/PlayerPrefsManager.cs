@@ -180,7 +180,8 @@ public class PlayerPrefsManager : MonoBehaviour
         // now after login
         // we check the serial for the scenes
         // and then load new menu scene
-        LoginPro_Security.Load("UMenuPro");
+        //LoginPro_Security.Load("UMenuPro");
+        bl_SceneLoaderUtils.GetLoader.LoadLevel("UMenuPro");
     }
 
     public void AfterLoginCheck()

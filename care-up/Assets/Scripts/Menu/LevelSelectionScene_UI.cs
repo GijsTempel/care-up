@@ -86,7 +86,9 @@ public class LevelSelectionScene_UI : MonoBehaviour
             {
                 // but if scene is not activated and NOT hidden either
                 // just disable play button, but show the panel to the player
-                //sceneUnit.transform.Find("BottomBar/Play").GetComponent<Button>().interactable = false;
+                Transform btn = sceneUnit.transform.Find("BottomBar/Play");
+                btn.GetComponent<LevelButton>().buy = true;
+                btn.GetChild(0).GetComponent<Text>().text = "Buy";
             }
 
             // now let's fill some actual info about the scene
