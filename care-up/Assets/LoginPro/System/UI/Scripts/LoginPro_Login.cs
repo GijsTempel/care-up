@@ -151,8 +151,8 @@ namespace LoginProAsset
         public void Success(string[] datas)
         {
 
-            GameObject.Find("LoginPro").GetComponent<LoginMenuManager>().ShowMenu(menuOnSuccess);
-            GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set("Welkom!" + LoginPro.Session.Username);
+            //GameObject.Find("LoginPro").GetComponent<LoginMenuManager>().ShowMenu(menuOnSuccess);
+            //GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set("Welkom!" + LoginPro.Session.Username);
             // Save information in session
             LoginPro.Session.Session_id = datas[1];
             LoginPro.Session.LoggedIn = true;
@@ -198,7 +198,14 @@ namespace LoginProAsset
             {
                 GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().AfterLoginCheck();
             }
-            
+            else
+            {
+                Debug.LogError("Where are Preferences GameObject?!");
+            }
+
+            //LoginPro_Security.Load("UMenuPro");
+            //bl_SceneLoaderUtils.GetLoader.LoadLevel("UMenuPro");
+
             // Get user's achievements
             //this.AchievementsManager.GetAchievements(); --->Achemvements are not used and turned off
         }

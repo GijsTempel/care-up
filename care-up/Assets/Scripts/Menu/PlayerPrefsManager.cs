@@ -125,6 +125,11 @@ public class PlayerPrefsManager : MonoBehaviour
         LoginPro.Manager.ExecuteOnServer("CheckSerial", CheckSerial_Success, Debug.LogError, null);
     }
 
+    public void CheckSerialAfterLogIn()
+    {
+        LoginPro.Manager.ExecuteOnServer("CheckSerial", CheckSerialAfterLogIn_Success, Debug.LogError, null);
+    }
+
     public void SetSerial(string serial)
     {
         string[] data = new string[1];
@@ -151,15 +156,28 @@ public class PlayerPrefsManager : MonoBehaviour
             if (!activatedScenes.Contains(result[1]))
                 activatedScenes.Add(result[1]);
         }
-
-        // setting news
-        GameObject menuWindow = GameObject.Find("MenuWindow");
-        if (menuWindow != null)
-        {
-            menuWindow.GetComponent<LoginPro_Menu>().News.text = ActivatedScenes;
-        }
     }
-    
+
+    private void CheckSerialAfterLogIn_Success(string[] datas)
+    {
+        activatedScenes.Clear();
+
+        foreach (string data in datas)
+        {
+            string[] result;
+            result = data.Split('|');
+
+            SetSceneActivated(result[0], true);
+            if (!activatedScenes.Contains(result[1]))
+                activatedScenes.Add(result[1]);
+        }
+
+        // now after login
+        // we check the serial for the scenes
+        // and then load new menu scene
+        LoginPro_Security.Load("UMenuPro");
+    }
+
     public void AfterLoginCheck()
     {
         // deactivate scenes
@@ -216,7 +234,7 @@ public class PlayerPrefsManager : MonoBehaviour
         }
 
         // activate scenes corresponding to serials
-        CheckSerial();
+        CheckSerialAfterLogIn();
     }
 
     public void GetSceneLeaders(string scene, int top, System.Action<string[]> method)
