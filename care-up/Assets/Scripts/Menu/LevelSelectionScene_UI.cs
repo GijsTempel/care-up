@@ -61,6 +61,10 @@ public class LevelSelectionScene_UI : MonoBehaviour
         xmlFile.LoadXml(textAsset.text);
         XmlNodeList xmlSceneList = xmlFile.FirstChild.NextSibling.FirstChild.ChildNodes;
         
+        // leaderboard stuff
+        bool firstScene = true;
+        LeaderBoardSceneButton.buttons.Clear();
+
         foreach (XmlNode xmlSceneNode in xmlSceneList)
         {
             bool activated = PlayerPrefs.GetInt(xmlSceneNode.Attributes["id"].Value + " activated") == 1;
@@ -169,6 +173,12 @@ public class LevelSelectionScene_UI : MonoBehaviour
                     buttonInfo.sceneNames.Add(v.sceneName);
                     buttonInfo.buttonNames.Add(v.displayName);
                 }
+            }
+
+            if (firstScene)
+            {
+                firstScene = false;
+                buttonInfo.OnMainButtonClick();
             }
         }
     }
