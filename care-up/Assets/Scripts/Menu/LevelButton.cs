@@ -60,59 +60,13 @@ public class LevelButton : MonoBehaviour {
 
     public void OnLevelButtonClick()
     {
-        LevelButton mainBtn = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/DialogTestPractice/Dialog/Start").GetComponent<LevelButton>();
-        
-        if (multiple)
-        {
-            // we need to fill info in the dialogue
-            GameObject dialogue = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/Dialog 1");
-
-            // setting title i assume
-            dialogue.transform.Find("Dialog/TopBar/Text").GetComponent<Text>().text = displayName;
-            if (manager != null)
-            {
-                manager.currentSceneVisualName = displayName;
-            }
-            
-            // filling up options
-            for(int i = 0; i < variations.Count; ++i)
-            {
-                LevelSelectionScene_UI_Option option = 
-                    dialogue.transform.Find("Option_" + (i + 1)).GetComponent<LevelSelectionScene_UI_Option>();
-                option.bundleName = variations[i].bundleName;
-                option.sceneName = variations[i].sceneName;
-                option.transform.GetComponentInChildren<Text>().text = variations[i].displayName;
-
-                if (i == 0)
-                {
-                    // set 1st option as default
-                    option.SetSelected();
-                }
-            }
-
-            // we need to show this dialogue only for scenes with variations
-            GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(0);
-        }
-        else
-        {
-            // filling info for loading
-            mainBtn.bundleName = bundleName;
-            mainBtn.sceneName = sceneName;
-
-            // for single variation we can skip into practice/test dialogue
-            GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(3);
-        }
-    }
-
-    public void OnStartButtonClick()
-    {
         if (buy)
         {
             string link = "https://careup.nl/protocollen-voorbehouden-en-risicovolle-handelingen/";
             if (Application.platform == RuntimePlatform.WebGLPlayer)
             {
                 #pragma warning disable CS0618 // Type or member is obsolete
-                Application.ExternalEval("window.open(\""+ link +"\",\"_blank\")");
+                Application.ExternalEval("window.open(\"" + link + "\",\"_blank\")");
                 #pragma warning restore CS0618 // Type or member is obsolete
             }
             else
@@ -122,8 +76,54 @@ public class LevelButton : MonoBehaviour {
         }
         else
         {
-            bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
+            LevelButton mainBtn = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/DialogTestPractice/Dialog/Start").GetComponent<LevelButton>();
+
+            if (multiple)
+            {
+                // we need to fill info in the dialogue
+                GameObject dialogue = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/Dialog 1");
+
+                // setting title i assume
+                dialogue.transform.Find("Dialog/TopBar/Text").GetComponent<Text>().text = displayName;
+                if (manager != null)
+                {
+                    manager.currentSceneVisualName = displayName;
+                }
+
+                // filling up options
+                for (int i = 0; i < variations.Count; ++i)
+                {
+                    LevelSelectionScene_UI_Option option =
+                        dialogue.transform.Find("Option_" + (i + 1)).GetComponent<LevelSelectionScene_UI_Option>();
+                    option.bundleName = variations[i].bundleName;
+                    option.sceneName = variations[i].sceneName;
+                    option.transform.GetComponentInChildren<Text>().text = variations[i].displayName;
+
+                    if (i == 0)
+                    {
+                        // set 1st option as default
+                        option.SetSelected();
+                    }
+                }
+
+                // we need to show this dialogue only for scenes with variations
+                GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(0);
+            }
+            else
+            {
+                // filling info for loading
+                mainBtn.bundleName = bundleName;
+                mainBtn.sceneName = sceneName;
+
+                // for single variation we can skip into practice/test dialogue
+                GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(3);
+            }
         }
+    }
+
+    public void OnStartButtonClick()
+    {
+        bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
     }
     
     public void GetSceneDatabaseInfo_Success(string[] info)
