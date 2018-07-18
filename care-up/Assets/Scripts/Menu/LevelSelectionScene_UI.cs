@@ -43,6 +43,9 @@ public class LevelSelectionScene_UI : MonoBehaviour
             variations.Add(v);
             v.gameObject.SetActive(false);
         }
+
+        GameObject.Find("UMenuProManager/MenuCanvas/Home/BannerArea/RegisterProtocols/News/Text")
+            .GetComponent<Text>().text = GameObject.FindObjectOfType<PlayerPrefsManager>().ActivatedScenes;
     }
 
     /// <summary>

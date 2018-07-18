@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using LoginProAsset;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 /// <summary>
 /// Handles quick access to saved data.
@@ -156,6 +157,10 @@ public class PlayerPrefsManager : MonoBehaviour
             if (!activatedScenes.Contains(result[1]))
                 activatedScenes.Add(result[1]);
         }
+
+        // set new activated scenes in news
+        GameObject.Find("UMenuProManager/MenuCanvas/Home/BannerArea/RegisterProtocols/News/Text")
+            .GetComponent<Text>().text = ActivatedScenes;
     }
 
     private void CheckSerialAfterLogIn_Success(string[] datas)
