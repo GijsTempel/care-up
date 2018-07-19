@@ -119,7 +119,7 @@ public class TutorialManager : MonoBehaviour
     public void EndButtonClick()
     {
         GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().tutorialCompleted = true;
-        GameObject.Find("Preferences").GetComponent<LoadingScreen>().LoadLevel("Menu");
+        GameObject.Find("Preferences").GetComponent<LoadingScreen>().LoadLevel("UMenuPro");
     }
 
     protected void SetPauseTimer(float value)

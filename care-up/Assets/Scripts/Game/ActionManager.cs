@@ -796,7 +796,7 @@ public class ActionManager : MonoBehaviour {
 
     public void OnMainMenuButtonClick()
     {
-        GameObject.Find("Preferences").GetComponent<LoadingScreen>().LoadLevel("Menu");
+        GameObject.Find("Preferences").GetComponent<LoadingScreen>().LoadLevel("UMenuPro");
     }
 
     public static void WrongAction()

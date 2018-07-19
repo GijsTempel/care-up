@@ -193,7 +193,7 @@ public class InGameUI : MonoBehaviour {
 
     public void OnExitButtonClick()
     {
-        bl_SceneLoaderUtils.GetLoader.LoadLevel("Menu");
+        bl_SceneLoaderUtils.GetLoader.LoadLevel("UMenuPro");
     }
 
     public void ToggleAllSounds(bool value)

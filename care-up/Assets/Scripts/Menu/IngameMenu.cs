@@ -45,7 +45,7 @@ public class IngameMenu : MonoBehaviour
                         //SceneManager.LoadScene("Options");
                         break;
                     case "Exit":
-                        GameObject.Find("Preferences").GetComponent<LoadingScreen>().LoadLevel("Menu");
+                        GameObject.Find("Preferences").GetComponent<LoadingScreen>().LoadLevel("UMenuPro");
                         //SceneManager.LoadScene("Menu");
                         break;
                 }
