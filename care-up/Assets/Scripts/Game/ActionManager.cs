@@ -56,6 +56,8 @@ public class ActionManager : MonoBehaviour {
     private bool menuScene;
     private bool uiSet = false;
 
+    PlayerPrefsManager manager;
+
     public List<Action> ActionList
     {
         get { return actionList; }
@@ -121,15 +123,24 @@ public class ActionManager : MonoBehaviour {
     /// </summary>
     public string CurrentDescription
     {
-        get {
-            List<Action> sublist = actionList.Where(action =>
-                action.SubIndex == currentActionIndex &&
-                action.matched == false).ToList();
-
+        get
+        {
             string result = "";
-            foreach (Action a in sublist)
+
+            if (manager != null && !manager.practiceMode && currentAction != null)
             {
-                result += " - " + a.shortDescr + "\n";
+                result = currentAction.shortDescr;
+            }
+            else
+            {
+                List<Action> sublist = actionList.Where(action =>
+                    action.SubIndex == currentActionIndex &&
+                    action.matched == false).ToList();
+
+                foreach (Action a in sublist)
+                {
+                    result += " - " + a.shortDescr + "\n";
+                }
             }
 
             return result;
@@ -142,15 +153,24 @@ public class ActionManager : MonoBehaviour {
     /// </summary>
     public string CurrentExtraDescription
     {
-        get {
-            List<Action> sublist = actionList.Where(action =>
-                action.SubIndex == currentActionIndex &&
-                action.matched == false).ToList();
-
+        get
+        {
             string result = "";
-            foreach (Action a in sublist)
+
+            if (manager != null && !manager.practiceMode && currentAction != null)
             {
-                result += " - " + a.descr + "\n";
+                result = currentAction.descr;
+            }
+            else
+            {
+                List<Action> sublist = actionList.Where(action =>
+                    action.SubIndex == currentActionIndex &&
+                    action.matched == false).ToList();
+
+                foreach (Action a in sublist)
+                {
+                    result += " - " + a.descr + "\n";
+                }
             }
 
             return result;
@@ -262,10 +282,12 @@ public class ActionManager : MonoBehaviour {
                 if (a.Type == ActionType.ObjectUse)
                 {
                     result = ((UseAction)a).buttonText;
+                    return result;
                 }
-                else if (currentAction.Type == ActionType.ObjectUseOn)
+                else if (a.Type == ActionType.ObjectUseOn)
                 {
                     result = ((UseOnAction)a).buttonText;
+                    return result;
                 }
             }
 
@@ -280,6 +302,7 @@ public class ActionManager : MonoBehaviour {
     /// </summary>
     void Awake()
     {
+        manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
 
         string sceneName = SceneManager.GetActiveScene().name;
         menuScene = sceneName == "Menu" || sceneName == "SceneSelection" || sceneName == "EndScore";
@@ -348,6 +371,13 @@ public class ActionManager : MonoBehaviour {
 
             bool notNeeded = action.Attributes["optional"] != null;
 
+            // try making all steps optional for test
+            if ( manager != null && !manager.practiceMode)
+            {
+                notNeeded = true;
+                index = 0;
+            }
+
             switch (type)
             {
                 case "combine":
@@ -386,6 +416,7 @@ public class ActionManager : MonoBehaviour {
                     break;
             }
         }
+        actionList.Last<Action>().sceneDoneTrigger = true;
 
         if (xmlFile.FirstChild.NextSibling.Attributes["points"] != null)
         {
@@ -600,7 +631,6 @@ public class ActionManager : MonoBehaviour {
     /// <returns>True if action expected and correct. False otherwise.</returns>
     public bool Check(string[] info, ActionType type)
     {
-		
         bool matched = false;
 
         List<Action> sublist = actionList.Where(action =>
@@ -658,7 +688,6 @@ public class ActionManager : MonoBehaviour {
         }
         else
         {
-			
             currentPointAward = currentAction.pointValue;
             List<Action> actionsLeft = actionList.Where(action =>
                 action.SubIndex == currentActionIndex &&
@@ -666,22 +695,24 @@ public class ActionManager : MonoBehaviour {
             
             currentAction = actionsLeft.Count > 0 ? actionsLeft.First() : null;
 
-            // now we have not mandatory actions, let's skip them and add to mistakes
-            List<Action> skippableActions = actionsLeft.Where(action => action.notMandatory == true).ToList();
-            if (actionsLeft.Count == skippableActions.Count) // all of them are skippable
+            if (manager != null && manager.practiceMode)
             {
-                wrongStepIndexes.Add(actionList.IndexOf(currentAction));
-                currentActionIndex += 1;
-                
-                // get next actions with new index
-                actionsLeft = actionList.Where(action =>
-                    action.SubIndex == currentActionIndex &&
-                    action.matched == false).ToList();
+                // now we have not mandatory actions, let's skip them and add to mistakes
+                List<Action> skippableActions = actionsLeft.Where(action => action.notMandatory == true).ToList();
+                if (actionsLeft.Count == skippableActions.Count) // all of them are skippable
+                {
+                    wrongStepIndexes.Add(actionList.IndexOf(currentAction));
+                    currentActionIndex += 1;
 
-                currentAction = actionsLeft.Count > 0 ? actionsLeft.First() : null;
+                    // get next actions with new index
+                    actionsLeft = actionList.Where(action =>
+                        action.SubIndex == currentActionIndex &&
+                        action.matched == false).ToList();
+
+                    currentAction = actionsLeft.Count > 0 ? actionsLeft.First() : null;
+                }
             }
         }
-
         
         return matched;
     }
@@ -697,14 +728,27 @@ public class ActionManager : MonoBehaviour {
         foreach (GameObject o in particleHints)
             Destroy(o);
         particleHints.Clear();
-        if (actionList.Find(action => action.matched == false && action.notMandatory == false) == null)
-        {
-            Narrator.PlaySound("LevelComplete", 0.1f);
-            StartCoroutine(DelayedEndScene(5.0f));
-            return true;
-        }
 
-        else return false;
+        if (manager != null && !manager.practiceMode)
+        {
+            if (actionList.Find(action => action.matched == true && action.sceneDoneTrigger == true) != null)
+            {
+                Narrator.PlaySound("LevelComplete", 0.1f);
+                StartCoroutine(DelayedEndScene(5.0f));
+                return true;
+            }
+            else return false;
+        }
+        else
+        {
+            if (actionList.Find(action => action.matched == false && action.notMandatory == false) == null)
+            {
+                Narrator.PlaySound("LevelComplete", 0.1f);
+                StartCoroutine(DelayedEndScene(5.0f));
+                return true;
+            }
+            else return false;
+        } 
     }
 
     private IEnumerator DelayedEndScene(float waitTime)

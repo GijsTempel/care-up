@@ -16,6 +16,7 @@ namespace CareUp.Actions
         public string extraDescr;
         public int pointValue;
         public bool notMandatory;
+        public bool sceneDoneTrigger; // for test version, when all steps are optional
 
         protected ActionManager.ActionType type;
 
@@ -48,7 +49,8 @@ namespace CareUp.Actions
             audioHint = audio;
             extraDescr = extra;
             pointValue = points;
-            notMandatory = notNeeded; 
+            notMandatory = notNeeded;
+            sceneDoneTrigger = false;
         }
 
         /// <summary>

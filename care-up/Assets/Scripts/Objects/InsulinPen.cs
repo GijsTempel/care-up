@@ -60,7 +60,8 @@ public class InsulinPen : PickableObjectWithInfo {
             }
         }
 
-        if (actionManager.CompareUseOnInfo("InsulinPenWithNeedle", "") && noTarget)
+        if (actionManager.CompareUseOnInfo("InsulinPenWithNeedle", "") && noTarget
+            && name == "InsulinPenWithNeedle")
         {
             if (inventory.LeftHandEmpty())
             {
@@ -82,7 +83,8 @@ public class InsulinPen : PickableObjectWithInfo {
                 return false;
             }
         }
-        else if (actionManager.CompareUseOnInfo("VentedInsulinPenWithNeedle", "") && noTarget)
+        else if (actionManager.CompareUseOnInfo("VentedInsulinPenWithNeedle", "") && noTarget
+            && name == "VentedInsulinPenWithNeedle")
         {
             if (inventory.LeftHandEmpty())
             {
@@ -104,7 +106,8 @@ public class InsulinPen : PickableObjectWithInfo {
                 return false;
             }
         }
-        else if (actionManager.CompareUseOnInfo("InsulinPen", "") && noTarget)
+        else if (actionManager.CompareUseOnInfo("InsulinPen", "") && noTarget
+            && name == "InsulinPen")
         {
             if (inventory.LeftHandEmpty())
             {
