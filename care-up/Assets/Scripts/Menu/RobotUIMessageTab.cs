@@ -44,6 +44,15 @@ public class RobotUIMessageTab : RobotUITabs
 
     public void NewMessage(string title, string content, Icon icon)
     {
+        if (!(GameObject.FindObjectOfType<TutorialManager>() == null
+            || GameObject.FindObjectOfType<Tutorial_UI>() != null 
+            || GameObject.FindObjectOfType<Tutorial_Theory>() != null))
+        {
+            // no messages for scenes with ipad disabled
+            // ik, condition is dumb, but whatever
+            return;
+        }
+
         GameObject button = Instantiate(buttonPrefab, _parent);
 
         if (title == "")
