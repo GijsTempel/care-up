@@ -167,7 +167,8 @@ public class Syringe : PickableObjectWithInfo {
             }
 
             // venting
-            if (name == "SyringeWithAbsorptionNeedle" && noTarget)
+            if (name == "SyringeWithAbsorptionNeedle" && noTarget
+                && name == "SyringeWithAbsorptionNeedle")
             {
                 if (actionManager.CompareUseOnInfo("SyringeWithAbsorptionNeedle", ""))
                 {
@@ -193,7 +194,8 @@ public class Syringe : PickableObjectWithInfo {
         }
         else // cannot interact or target == ""
         {
-            if (name == "SyringeWithAbsorptionNeedle" && noTarget)
+            if (name == "SyringeWithAbsorptionNeedle" && noTarget
+                && name == "SyringeWithAbsorptionNeedle")
             {
                 if (actionManager.CompareUseOnInfo("SyringeWithAbsorptionNeedle", ""))
                 {
@@ -216,7 +218,8 @@ public class Syringe : PickableObjectWithInfo {
                     }
                 }
             }
-            else if (name == "SyringeWithAbsorptionSNeedle" && noTarget)
+            else if (name == "SyringeWithAbsorptionSNeedle" && noTarget
+                && name == "SyringeWithAbsorptionSNeedle")
             {
                 if (actionManager.CompareUseOnInfo("SyringeWithAbsorptionSNeedle", ""))
                 {
