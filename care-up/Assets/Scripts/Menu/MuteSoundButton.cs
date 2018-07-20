@@ -39,6 +39,8 @@ public class MuteSoundButton : MonoBehaviour {
             else
             {
                 Debug.LogWarning("Cannot unmute without Preferences. Start from the first scene.");
+				AudioListener.volume = 1f;
+                selfImage.sprite = normal;
             }
         }
     }
