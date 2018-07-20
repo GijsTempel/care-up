@@ -734,7 +734,7 @@ public class ActionManager : MonoBehaviour {
             if (actionList.Find(action => action.matched == true && action.sceneDoneTrigger == true) != null)
             {
                 Narrator.PlaySound("LevelComplete", 0.1f);
-                StartCoroutine(DelayedEndScene(5.0f));
+                GameObject.FindObjectOfType<GameUI>().ShowDonePanel(true);
                 return true;
             }
             else return false;
@@ -744,18 +744,11 @@ public class ActionManager : MonoBehaviour {
             if (actionList.Find(action => action.matched == false && action.notMandatory == false) == null)
             {
                 Narrator.PlaySound("LevelComplete", 0.1f);
-                StartCoroutine(DelayedEndScene(5.0f));
+                GameObject.FindObjectOfType<GameUI>().ShowDonePanel(true);
                 return true;
             }
             else return false;
         } 
-    }
-
-    private IEnumerator DelayedEndScene(float waitTime)
-    {
-        yield return new WaitForSeconds(waitTime);
-		GameObject.FindObjectOfType<GameUI>().ShowDonePanel(true);
-        //GameObject.Find("Preferences").GetComponent<EndScoreManager>().LoadEndScoreScene();
     }
 
     /// <summary>
