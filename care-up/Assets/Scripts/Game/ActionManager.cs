@@ -43,6 +43,7 @@ public class ActionManager : MonoBehaviour {
     private List<string> stepsList = new List<string>();
     private List<string> stepsDescriptionList = new List<string>();
     private List<int> wrongStepIndexes = new List<int>();
+    private List<int> correctStepIndexes = new List<int>();
 
     private int totalPoints = 0;         // max points of scene
     private int points = 0;              // current points
@@ -79,6 +80,11 @@ public class ActionManager : MonoBehaviour {
     public List<int> WrongStepIndexes
     {
         get { return wrongStepIndexes; }
+    }
+
+    public List<int> CorrectStepIndexes
+    {
+        get { return correctStepIndexes; }
     }
 
     /// <summary>
@@ -647,10 +653,12 @@ public class ActionManager : MonoBehaviour {
                 {
                     matched = true;
                     action.matched = true;
-                    
+
+                    int index = actionList.IndexOf(action);
                     //inserted checklist stuff
-                    RobotUITabChecklist.StrikeStep(actionList.IndexOf(action));
+                    RobotUITabChecklist.StrikeStep(index);
                     // end checklist
+                    correctStepIndexes.Add(index);
                 }
             }
         }
