@@ -14,32 +14,24 @@ public class LevelSelectionScene_UI : MonoBehaviour
     private PlayerPrefsManager ppManager;
 
     // leaderboard stuff
-    private Text[] leaderNames;
-    private Text[] leaderScores;
-    private Text[] leaderTimes;
+    public ScoreLine[] _Scores;
+
     public List<Transform> variations;
 
     private void Awake()
     {
         Transform leaderPanel = GameObject.Find("UMenuProManager/MenuCanvas/Leaderboard/InfoBar").transform;
+        _Scores = GameObject.Find("scoreLines").GetComponentsInChildren<ScoreLine>();
 
-        // set up all the Text objects for leaderboard
-        leaderNames = leaderPanel.Find("LeaderNames").GetComponentsInChildren<Text>();
-        leaderScores = leaderPanel.Find("LeaderScores").GetComponentsInChildren<Text>();
-        leaderTimes = leaderPanel.Find("LeaderTimes").GetComponentsInChildren<Text>();
-
-        // clear them
-        for (int i = 0; i < 10; ++i)
+        for (int i = 0; i < _Scores.Length; i++)
         {
-            leaderNames[i].text = "";
-            leaderScores[i].text = "";
-            leaderTimes[i].text = "";
+            _Scores[i].SetScoreLine("", "", "", i);
         }
 
         // variations buttons should be disabled from the beginning
         for (int i = 0; i < 3; ++i)
         {
-            Transform v = leaderPanel.parent.Find("SceneVariation" + (i+1));
+            Transform v = leaderPanel.parent.Find("InfoBar/menu/d" + (i+1));
             variations.Add(v);
             v.gameObject.SetActive(false);
         }
@@ -188,11 +180,9 @@ public class LevelSelectionScene_UI : MonoBehaviour
     {
         Debug.Log("UpdateLeaderBoard:::" + sceneName);
         // let's clear current UI first, it might have some editor text or info from other scene we loaded before
-        for (int i = 0; i < leaderNames.Length; ++i )
+        for (int i = 0; i < _Scores.Length; i++)
         {
-            leaderNames[i].text =
-            leaderScores[i].text =
-            leaderTimes[i].text = "";
+            _Scores[i].SetScoreLine("", "", "", i);
         }
 
         // maybe launch loading icon or something? it isnt instant
@@ -210,10 +200,9 @@ public class LevelSelectionScene_UI : MonoBehaviour
             TimeSpan timeSpan = TimeSpan.FromSeconds(double.Parse(time));
             string timeFormated = string.Format("{0:D2}m:{1:D2}s",
                 timeSpan.Minutes, timeSpan.Seconds);
-
-            leaderNames[i].text = name;
-            leaderScores[i].text = score;
-            leaderTimes[i].text = timeFormated;
+            if (i < _Scores.Length)
+                _Scores[i].SetScoreLine(name, timeFormated, score, i);
+    
         }
     }
 }

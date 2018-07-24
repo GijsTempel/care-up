@@ -11,7 +11,6 @@ public class LeaderBoardSceneButton : MonoBehaviour
     public List<string> buttonNames = new List<string>();
 
     public static List<LeaderBoardSceneButton> buttons = new List<LeaderBoardSceneButton>();
-    public static Color selectedColor = Color.cyan;
 
     private void Start()
     {
@@ -53,22 +52,22 @@ public class LeaderBoardSceneButton : MonoBehaviour
         // clear color
         foreach (LeaderBoardSceneButton b in buttons)
         {
-            b.GetComponent<Image>().color = Color.white;
+            b.GetComponent<Button>().interactable = true;
         }
 
         // color
-        GetComponent<Image>().color = selectedColor;
+        GetComponent<Button>().interactable = false;
 
         // clear variations to color
         foreach (Transform t in manager.variations)
         {
-            t.GetComponent<Image>().color = Color.white;
+            t.GetComponent<Button>().interactable = true;
         }
 
         // color 1st variation
         if (multiple)
         {
-            manager.variations[0].GetComponent<Image>().color = selectedColor;
+            manager.variations[0].GetComponent<Button>().interactable = false;
         }
     }
 
@@ -80,10 +79,9 @@ public class LeaderBoardSceneButton : MonoBehaviour
         // clear variations to color
         foreach (Transform t in manager.variations)
         {
-            t.GetComponent<Image>().color = Color.white;
+            t.GetComponent<Button>().interactable = true;
         }
-
         //color
-        manager.variations[variation].GetComponent<Image>().color = selectedColor;
+        manager.variations[variation].GetComponent<Button>().interactable = false;
     }
 }
