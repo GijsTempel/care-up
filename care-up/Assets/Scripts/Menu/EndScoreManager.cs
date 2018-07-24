@@ -49,8 +49,8 @@ public class EndScoreManager : MonoBehaviour {
             Transform uiFolder = GameObject.Find("Canvas").transform;
 
             //uiFolder.Find("Left").Find("Score").GetComponent<Text>().text = "Score: " + score;
-            uiFolder.Find("Left").Find("Points").GetComponent<Text>().text = "Points: " + points;
-            uiFolder.Find("Left").Find("Time").GetComponent<Text>().text = string.Format("Time: {0}:{1:00}", (int)time / 60, (int)time % 60);
+            uiFolder.Find("Left").Find("Points").GetComponent<Text>().text = "Punten: " + points;
+            uiFolder.Find("Left").Find("Time").GetComponent<Text>().text = string.Format("Tijd: {0}:{1:00}", (int)time / 60, (int)time % 60);
 
             //uiFolder.GetChild(1).FindChild("Steps").GetComponent<Text>().text = wrongSteps;
 
@@ -88,6 +88,11 @@ public class EndScoreManager : MonoBehaviour {
             GameObject.Find("Interactable Objects/Canvas/Score_result/ResultText")
                 .GetComponent<Text>().text = (percent < 0.7f) ? "Onvoldoende" : "Voldoende";
 
+            GameObject.Find("Interactable Objects/Canvas/Score_Stars/Points")
+                .GetComponent<Text>().text = "Punten: " + points;
+            GameObject.Find("Interactable Objects/Canvas/Score_Stars/Time")
+                .GetComponent<Text>().text = string.Format("Tijd: {0}:{1:00}", (int)time / 60, (int)time % 60);
+            
             actualScene = true;
         }
 
