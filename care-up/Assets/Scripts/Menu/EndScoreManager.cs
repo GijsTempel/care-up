@@ -22,6 +22,7 @@ public class EndScoreManager : MonoBehaviour {
     private List<string> steps;
     private List<string> stepsDescr;
     private List<int> wrongStepIndexes;
+    private List<int> correctStepIndexes;
 
     private ActionManager actionManager;    //points, steps
     private GameTimer gameTimer; // time
@@ -42,13 +43,14 @@ public class EndScoreManager : MonoBehaviour {
     /// </summary>
     private void OnLoaded(Scene s, LoadSceneMode m)
     {
+        bool actualScene = false; // for later lines
         if (SceneManager.GetActiveScene().name == "EndScore")
         {
             Transform uiFolder = GameObject.Find("Canvas").transform;
 
             //uiFolder.Find("Left").Find("Score").GetComponent<Text>().text = "Score: " + score;
-            uiFolder.Find("Left").Find("Points").GetComponent<Text>().text = "Points: " + points;
-            uiFolder.Find("Left").Find("Time").GetComponent<Text>().text = string.Format("Time: {0}:{1:00}", (int)time / 60, (int)time % 60);
+            uiFolder.Find("Left").Find("Points").GetComponent<Text>().text = "Punten: " + points;
+            uiFolder.Find("Left").Find("Time").GetComponent<Text>().text = string.Format("Tijd: {0}:{1:00}", (int)time / 60, (int)time % 60);
 
             //uiFolder.GetChild(1).FindChild("Steps").GetComponent<Text>().text = wrongSteps;
 
@@ -61,7 +63,41 @@ public class EndScoreManager : MonoBehaviour {
                 stepObjects[i].text = stepsDescr[i];
                 stepObjects[i].wrong = wrongStepIndexes.Contains(i);
             }
+            actualScene = true;
+        }
+        else if(SceneManager.GetActiveScene().name == "EndScore_Test")
+        {
+            Transform stepParent = GameObject.Find("Interactable Objects/Canvas/ObservationForm/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
+            
+            for (int i = 0; i < steps.Count; ++i)
+            {
+                GameObject step = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/ProtocolEvaluationStep"), stepParent);
+                step.transform.Find("Text").GetComponent<Text>().text = steps[i];
 
+                bool correct = correctStepIndexes.Contains(i);
+                step.transform.Find("ToggleYes").GetComponent<Toggle>().isOn = correct;
+                step.transform.Find("ToggleNo").GetComponent<Toggle>().isOn = !correct;
+                Debug.Log("Step#" + i + " is " + correct);
+            }
+
+            float percent = 1.0f * correctStepIndexes.Count / steps.Count;
+
+            GameObject.Find("Interactable Objects/Canvas/Score_percentage/ScoreText")
+                .GetComponent<Text>().text = Mathf.FloorToInt(percent * 100f).ToString() + "%";
+
+            GameObject.Find("Interactable Objects/Canvas/Score_result/ResultText")
+                .GetComponent<Text>().text = (percent < 0.7f) ? "Onvoldoende" : "Voldoende";
+
+            GameObject.Find("Interactable Objects/Canvas/Score_Stars/Points")
+                .GetComponent<Text>().text = "Punten: " + points;
+            GameObject.Find("Interactable Objects/Canvas/Score_Stars/Time")
+                .GetComponent<Text>().text = string.Format("Tijd: {0}:{1:00}", (int)time / 60, (int)time % 60);
+            
+            actualScene = true;
+        }
+
+        if (actualScene)
+        {
             if (score >= 0.5f)
             {
                 GameObject.Find("Star1").GetComponent<Image>().sprite = halfStar;
@@ -123,9 +159,16 @@ public class EndScoreManager : MonoBehaviour {
         steps = actionManager.StepsList;
         stepsDescr = actionManager.StepsDescriptionList;
         wrongStepIndexes = actionManager.WrongStepIndexes;
+        correctStepIndexes = actionManager.CorrectStepIndexes;
 
-        bl_SceneLoaderUtils.GetLoader.LoadLevel("EndScore");
-        //GameObject.Find("Preferences").GetComponent<LoadingScreen>().LoadLevel("EndScore");
-        //SceneManager.LoadScene("EndScore");
+        PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
+        if (manager != null && manager.practiceMode)
+        {
+            bl_SceneLoaderUtils.GetLoader.LoadLevel("EndScore");
+        }
+        else
+        {
+            bl_SceneLoaderUtils.GetLoader.LoadLevel("EndScore_Test");
+        }
     }
 }
