@@ -252,10 +252,11 @@ public class ItemControlsUI : MonoBehaviour {
 
                 useOnNTButton.transform.GetChild(0).GetComponent<Text>().text =
                     (actionManager.CompareUseOnInfo(initedObject.name, "") ?
-                    actionManager.CurrentButtonText : useOnNTtext);
+                    actionManager.CurrentButtonText(initedObject.name) : useOnNTtext);
 
                 useButton.transform.GetChild(0).GetComponent<Text>().text =
-                    (actionManager.CompareUseObject(initedObject.name)) ? actionManager.CurrentButtonText : useText;
+                    (actionManager.CompareUseObject(initedObject.name)) ? 
+                    actionManager.CurrentButtonText(initedObject.name) : useText;
 
                 useOnNTButton.SetActive(actionManager.CompareUseOnInfo(initedObject.name, ""));
                 useButton.SetActive(actionManager.CompareUseObject(initedObject.name));

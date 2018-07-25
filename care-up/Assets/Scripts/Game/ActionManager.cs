@@ -273,32 +273,35 @@ public class ActionManager : MonoBehaviour {
         return result;
     }
 
-    public string CurrentButtonText
+    public string CurrentButtonText(string itemName)
     {
-        get
-        {
-            string result = "";
-            
-            List<Action> sublist = actionList.Where(action =>
-                   action.SubIndex == currentActionIndex &&
-                   action.matched == false).ToList();
+        List<Action> sublist = actionList.Where(action =>
+               action.SubIndex == currentActionIndex &&
+               action.matched == false).ToList();
 
-            foreach (Action a in sublist)
+        foreach (Action a in sublist)
+        {
+            if (a.Type == ActionType.ObjectUse)
             {
-                if (a.Type == ActionType.ObjectUse)
+                UseAction useA = (UseAction)a;
+                if (useA.GetObjectName() == itemName)
                 {
-                    result = ((UseAction)a).buttonText;
-                    return result;
-                }
-                else if (a.Type == ActionType.ObjectUseOn)
-                {
-                    result = ((UseOnAction)a).buttonText;
-                    return result;
+                    return useA.buttonText;
                 }
             }
-
-            return result;
+            else if (a.Type == ActionType.ObjectUseOn)
+            {
+                UseOnAction useOnA = (UseOnAction)a;
+                string i, t;
+                useOnA.GetInfo(out i, out t);
+                if (i == itemName)
+                {
+                    return useOnA.buttonText;
+                }
+            }
         }
+
+        return "";
     }
 
     private Controls controls;
@@ -659,6 +662,9 @@ public class ActionManager : MonoBehaviour {
                     RobotUITabChecklist.StrikeStep(index);
                     // end checklist
                     correctStepIndexes.Add(index);
+
+                    // count only 1 step, some steps are identical
+                    break;
                 }
             }
         }
