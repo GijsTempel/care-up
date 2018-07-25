@@ -34,7 +34,7 @@ namespace LoginProAsset
             // Reinit the achievement list (in case a user is connecting with another account : clear the achievements before receiving it)
             // This avoid to see previous achievements, remaining during some milliseconds (this way everything is cleared)
             // this.UpdateAchievementsList(); ---> change for achievements
-            LoginPro.Manager.News(NewsSuccess, NewsError);
+            //LoginPro.Manager.News(NewsSuccess, NewsError);
         }
 
         /// <summary>
@@ -42,8 +42,6 @@ namespace LoginProAsset
         /// </summary>
         public void UpdateMenu()
         {
-            if (this.UsernameText == null)
-                Debug.Log("this.UsernameText IS NULLLL");
             this.UsernameText.text = LoginPro.Session.Username;
             this.RoleText.text = LoginPro.Session.Role.ToString();
             this.MailText.text = LoginPro.Session.Mail;
@@ -51,6 +49,8 @@ namespace LoginProAsset
             this.LastConnectionDateText.text = "Laatste inlog datum :\n[" + LoginPro.Session.PreviousConnectionDate + "]";
             this.TimePlayedText.text = LoginPro.Session.TimePlayedText;
         }
+
+        /*
         public void NewsError(string errorMessage)
         {
             // Show message in console if error
@@ -60,7 +60,8 @@ namespace LoginProAsset
         {
             // Set the news of the game to display them at startup
             // this.News.text = datas[0];
-        }
+        }*/
+
         /// <summary>
         /// Update achievements TAGS based on the achievements received from the server
         /// </summary>
