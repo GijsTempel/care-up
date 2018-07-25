@@ -687,9 +687,12 @@ public class ActionManager : MonoBehaviour {
             {
                 wrongStepIndexes.Add(index);
             }
-            
-            RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
-            messageCenter.NewMessage("Verkeerde handeling!", sublist[0].extraDescr, RobotUIMessageTab.Icon.Error);
+
+            if (manager.practiceMode)
+            {
+                RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
+                messageCenter.NewMessage("Verkeerde handeling!", sublist[0].extraDescr, RobotUIMessageTab.Icon.Error);
+            }
 
             ActionManager.WrongAction();
 
