@@ -233,9 +233,12 @@ public class ActionManager : MonoBehaviour {
         return result;
     }
     
-    public bool CompareUseOnInfo(string item, string target)
+    public bool CompareUseOnInfo(string item, string target, string callerName = "")
     {
         bool result = false;
+
+        if (callerName != "" && callerName != item)
+            return result;
 
         List<Action> sublist = actionList.Where(action =>
                 action.SubIndex == currentActionIndex &&
