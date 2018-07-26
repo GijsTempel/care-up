@@ -58,7 +58,7 @@ public class AnimationSequenceState : StateMachineBehaviour {
 
         // unlock 2nd workfield action
         WorkField wf = GameObject.FindObjectOfType<WorkField>();
-        if (wf != null && (keyFrame >= keyFrames.Count && !inv.sequenceAborted))
+        if (wf != null)
         {
             wf.cleaningLocked = false;
         }
