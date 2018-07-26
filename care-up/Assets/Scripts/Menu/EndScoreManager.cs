@@ -77,7 +77,6 @@ public class EndScoreManager : MonoBehaviour {
                 bool correct = correctStepIndexes.Contains(i);
                 step.transform.Find("ToggleYes").GetComponent<Toggle>().isOn = correct;
                 step.transform.Find("ToggleNo").GetComponent<Toggle>().isOn = !correct;
-                Debug.Log("Step#" + i + " is " + correct);
             }
 
             float percent = 1.0f * correctStepIndexes.Count / steps.Count;

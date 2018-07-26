@@ -84,12 +84,12 @@ public class PickableObject : InteractableObject {
 
         if (controls.SelectedObject != null && controls.CanInteract)
         {
-            if ((actionManager.CompareUseOnInfo("InjectionNeedle", "NeedleCup") ||
-                actionManager.CompareUseOnInfo("AbsorptionNeedle", "NeedleCup") ||
-                actionManager.CompareUseOnInfo("InjectionSNeedle", "NeedleCup") ||
-                actionManager.CompareUseOnInfo("TestStrips", "NeedleCup") ||
-                actionManager.CompareUseOnInfo("Lancet", "NeedleCup") ||
-                actionManager.CompareUseOnInfo("NeedleHolderWithNeedle", "NeedleCup"))
+            if ((actionManager.CompareUseOnInfo("InjectionNeedle", "NeedleCup", this.name) ||
+                actionManager.CompareUseOnInfo("AbsorptionNeedle", "NeedleCup", this.name) ||
+                actionManager.CompareUseOnInfo("InjectionSNeedle", "NeedleCup", this.name) ||
+                actionManager.CompareUseOnInfo("TestStrips", "NeedleCup", this.name) ||
+                actionManager.CompareUseOnInfo("Lancet", "NeedleCup", this.name) ||
+                actionManager.CompareUseOnInfo("NeedleHolderWithNeedle", "NeedleCup", this.name))
                 && controls.SelectedObject.name == "NeedleCup")
             {
                 if (GameObject.Find("GameLogic") != null)
@@ -101,10 +101,10 @@ public class PickableObject : InteractableObject {
                 }
                 inventory.RemoveHandObject(hand);
             }
-            else if ((actionManager.CompareUseOnInfo("AbsorptionNeedleNoCap", "NeedleCup") ||
-                actionManager.CompareUseOnInfo("InjectionNeedleNoCap", "NeedleCup") ||
-                actionManager.CompareUseOnInfo("ClothWithAmpouleTop", "NeedleCup") ||
-                actionManager.CompareUseOnInfo("InsulinNeedle", "NeedleCup"))
+            else if ((actionManager.CompareUseOnInfo("AbsorptionNeedleNoCap", "NeedleCup", this.name) ||
+                actionManager.CompareUseOnInfo("InjectionNeedleNoCap", "NeedleCup", this.name) ||
+                actionManager.CompareUseOnInfo("ClothWithAmpouleTop", "NeedleCup", this.name) ||
+                actionManager.CompareUseOnInfo("InsulinNeedle", "NeedleCup", this.name))
                 && controls.SelectedObject.name == "NeedleCup")
             {
                 string animation = (hand ? "UseLeft " : "UseRight ") + name + " NeedleCup";
