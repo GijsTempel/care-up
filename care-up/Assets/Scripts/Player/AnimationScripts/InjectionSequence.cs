@@ -8,8 +8,7 @@ public class InjectionSequence : AnimationSequenceState
     public int swapHandsFrame;
     public int takeOffCapFrame;
     public int dropCapFrame;
-
-    private HandsInventory inv;
+    
     private Syringe syringe;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -17,7 +16,6 @@ public class InjectionSequence : AnimationSequenceState
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
 
-        inv = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
         inv.PutAllOnTable();
 
         inv.sequenceAborted = false;

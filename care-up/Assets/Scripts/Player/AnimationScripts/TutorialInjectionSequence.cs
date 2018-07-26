@@ -8,14 +8,11 @@ public class TutorialInjectionSequence : AnimationSequenceState
     public int takeSyringeFrame;
     public int swapHandsFrame;
 
-    private HandsInventory inv;
-
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
-
-        inv = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
+        
         inv.PutAllOnTable();
     }
 

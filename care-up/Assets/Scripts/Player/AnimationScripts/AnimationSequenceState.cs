@@ -11,12 +11,16 @@ public class AnimationSequenceState : StateMachineBehaviour {
     protected float frame = 0f;
     protected float prevFrame = 0f;
 
+    protected HandsInventory inv;
+
 	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         keyFrame = 0;
         frame = 0f;
         prevFrame = 0f;
-	}
+
+        inv = GameObject.FindObjectOfType<HandsInventory>();
+    }
 
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
 	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
@@ -54,7 +58,7 @@ public class AnimationSequenceState : StateMachineBehaviour {
 
         // unlock 2nd workfield action
         WorkField wf = GameObject.FindObjectOfType<WorkField>();
-        if (wf != null)
+        if (wf != null && (keyFrame >= keyFrames.Count && !inv.sequenceAborted))
         {
             wf.cleaningLocked = false;
         }

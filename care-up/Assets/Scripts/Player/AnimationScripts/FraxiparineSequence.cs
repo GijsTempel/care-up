@@ -7,15 +7,12 @@ public class FraxiparineSequence : AnimationSequenceState
     public int takeSyringeFrame;
     public int takeOffCapFrame;
     public int dropCapFrame;
-
-    private HandsInventory inv;
-
+    
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
-
-        inv = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
+        
         inv.PutAllOnTable();
 
         inv.sequenceAborted = false;
