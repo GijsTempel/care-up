@@ -9,6 +9,8 @@ public class WorkField : UsableObject {
     private int toggleTime = 0;
     private bool toggle = false;
 
+    public bool cleaningLocked = true;
+
     protected override void Start()
     {
         base.Start();
@@ -26,6 +28,12 @@ public class WorkField : UsableObject {
     {
         if (!ViewModeActive())
         {
+            if (toggleTime == 1 && cleaningLocked)
+            {
+                // lock 2nd cleaning
+                return;
+            }
+
             if (actionManager.CompareUseObject(name))
             {
                 tutorial_used = true;

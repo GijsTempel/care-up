@@ -51,6 +51,13 @@ public class AnimationSequenceState : StateMachineBehaviour {
         cameraMode.ToggleCameraMode(CameraMode.Mode.Cinematic);
         cameraMode.animationEnded = true;
         cameraMode.cinematicToggle = false;
+
+        // unlock 2nd workfield action
+        WorkField wf = GameObject.FindObjectOfType<WorkField>();
+        if (wf != null)
+        {
+            wf.cleaningLocked = false;
+        }
     }
 
 	// OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here
