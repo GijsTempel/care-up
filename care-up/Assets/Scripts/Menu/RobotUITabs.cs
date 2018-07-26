@@ -38,7 +38,7 @@ public class RobotUITabs : MonoBehaviour {
         
 		if (transform.tag == "alg")
 		{
-			tabTrigger = transform.parent.Find("GeneralTab/InGameUI/Panel").Find(name).gameObject;
+			tabTrigger = transform.parent.Find("GeneralTab").Find(name).gameObject;
 		}
 		else 
 		{ 
