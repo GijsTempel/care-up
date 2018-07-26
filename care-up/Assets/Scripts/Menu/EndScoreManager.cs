@@ -111,6 +111,11 @@ public class EndScoreManager : MonoBehaviour {
             
             actualScene = true;
         }
+        else
+        {
+            quizQuestionsTexts.Clear();
+            quizWrongIndexes.Clear();
+        }
 
         if (actualScene)
         {
