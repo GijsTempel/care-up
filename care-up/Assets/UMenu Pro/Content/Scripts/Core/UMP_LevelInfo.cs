@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 #if UNITY_5_3 || UNITY_5_3_OR_NEWER
 using UnityEngine.SceneManagement;
 #endif
 
-public class UMP_LevelInfo : MonoBehaviour {
+public class UMP_LevelInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
 
     public Text Title;
     public Text Description;
@@ -35,11 +36,11 @@ public class UMP_LevelInfo : MonoBehaviour {
 
     public static void LoadLevel(string scene)
     {
-#if UNITY_5_3 || UNITY_5_3_OR_NEWER
- SceneManager.LoadScene(scene);
-#else
-        Application.LoadLevel(scene);
-#endif
+        #if UNITY_5_3 || UNITY_5_3_OR_NEWER
+            SceneManager.LoadScene(scene);
+        #else
+            Application.LoadLevel(scene);
+        #endif
     }
         /// <summary>
         /// 
@@ -56,5 +57,15 @@ public class UMP_LevelInfo : MonoBehaviour {
         {
             a.SetBool("show", false);
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        EventMouse(true);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        EventMouse(false);
     }
 }
