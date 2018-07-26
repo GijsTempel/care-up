@@ -33,6 +33,8 @@ public class QuizTab : RobotUITabs {
 
     public bool continueBtn = false;
 
+    EndScoreManager endScoreManager;
+
     public void Init(string name)
     {
         TextAsset textAsset = (TextAsset)Resources.Load("Xml/Quiz/" + name);
@@ -114,6 +116,8 @@ public class QuizTab : RobotUITabs {
         switchToInfoButton.onClick.AddListener(OnSwitchToInfoTabButton);
 
         tabTrigger.SetActive(false);
+
+        endScoreManager = GameObject.FindObjectOfType<EndScoreManager>();
     }
 
     public void NextQuizQuestion()
@@ -161,6 +165,8 @@ public class QuizTab : RobotUITabs {
         }
 
         descriptionText.text = "";
+
+        endScoreManager.quizQuestionsTexts.Add(current.text);
     }
 
     public void CorrectAnswer(string description)
@@ -188,6 +194,8 @@ public class QuizTab : RobotUITabs {
         descriptionText.text = description;
         GameObject.Find("GameLogic").GetComponent<ActionManager>().ActivatePenalty();
         ActionManager.WrongAction();
+
+        endScoreManager.quizWrongIndexes.Add(currentStep);
     }
 
     public void OnContinueButton()

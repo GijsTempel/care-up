@@ -24,6 +24,9 @@ public class EndScoreManager : MonoBehaviour {
     private List<int> wrongStepIndexes;
     private List<int> correctStepIndexes;
 
+    public List<string> quizQuestionsTexts = new List<string>();
+    public List<int> quizWrongIndexes = new List<int>();
+
     private ActionManager actionManager;    //points, steps
     private GameTimer gameTimer; // time
 
@@ -79,7 +82,21 @@ public class EndScoreManager : MonoBehaviour {
                 step.transform.Find("ToggleNo").GetComponent<Toggle>().isOn = !correct;
             }
 
-            float percent = 1.0f * correctStepIndexes.Count / steps.Count;
+            Transform quizParent = GameObject.Find("Interactable Objects/Canvas/QuizForm/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
+
+            for (int i = 0; i < quizQuestionsTexts.Count; ++i)
+            {
+                GameObject step = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/ProtocolQuestion"), quizParent);
+                step.transform.Find("Text").GetComponent<Text>().text = quizQuestionsTexts[i];
+
+                bool wrong = quizWrongIndexes.Contains(i);
+                step.transform.Find("ToggleYes").GetComponent<Toggle>().isOn = !wrong;
+                step.transform.Find("ToggleNo").GetComponent<Toggle>().isOn = wrong;
+            }
+
+            float percent = 1.0f * 
+                (correctStepIndexes.Count + (quizQuestionsTexts.Count - quizWrongIndexes.Count)) 
+                / (steps.Count + quizQuestionsTexts.Count);
 
             GameObject.Find("Interactable Objects/Canvas/Score_percentage/ScoreText")
                 .GetComponent<Text>().text = Mathf.FloorToInt(percent * 100f).ToString() + "%";
@@ -159,7 +176,7 @@ public class EndScoreManager : MonoBehaviour {
         stepsDescr = actionManager.StepsDescriptionList;
         wrongStepIndexes = actionManager.WrongStepIndexes;
         correctStepIndexes = actionManager.CorrectStepIndexes;
-
+        
         PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
         if (manager != null && manager.practiceMode)
         {
