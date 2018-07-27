@@ -12,12 +12,9 @@ public class EndScoreManager : MonoBehaviour {
     private int points;
     private int score;
     private float time;
-    private string completedSceneName;
-    
-    public string SceneName
-    {
-        get { return completedSceneName; }
-    }
+
+    public string completedSceneName;
+    public string completedSceneBundle;
 
     private List<string> steps;
     private List<string> stepsDescr;

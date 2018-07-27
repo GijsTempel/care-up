@@ -141,7 +141,8 @@ public class MainMenu : MonoBehaviour {
 
     public void OnRetryButtonClick()
     {
-        bl_SceneLoaderUtils.GetLoader.LoadLevel(loadingScreen.GetComponent<EndScoreManager>().SceneName);
+        EndScoreManager manager = loadingScreen.GetComponent<EndScoreManager>();
+        bl_SceneLoaderUtils.GetLoader.LoadLevel(manager.completedSceneName, manager.completedSceneBundle);
     }
 
     public void OnToggleAcceptTermsAndConditions(Button button)

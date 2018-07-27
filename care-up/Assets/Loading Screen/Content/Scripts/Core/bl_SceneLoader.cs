@@ -225,7 +225,11 @@ public class bl_SceneLoader : MonoBehaviour
     {
         string message = "Loading level \"" + level + "\"";
         if (bundle != "")
+        {
             message += " from bundle \"" + bundle + "\"";
+            GameObject.FindObjectOfType<EndScoreManager>().completedSceneBundle = bundle;
+        }
+
         Debug.Log(message);
 
         CurrentLoadLevel = Manager.GetSceneInfo(level);
