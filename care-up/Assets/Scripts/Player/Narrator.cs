@@ -29,7 +29,7 @@ public class Narrator : MonoBehaviour {
         {
             if (sources[sources.Length - 1] == null)
             {
-                sources = sources = gameObject.GetComponents<AudioSource>();
+                sources = gameObject.GetComponents<AudioSource>();
 
                 if (sources.Length == 0)
                 {

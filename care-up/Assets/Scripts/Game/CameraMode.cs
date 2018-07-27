@@ -23,7 +23,7 @@ public class CameraMode : MonoBehaviour {
 	Quaternion camRotTo;
 	float startTime;
 	float camRotTime;
-	bool backFromObjectPreview = false;
+	//bool backFromObjectPreview = false; never used?
     
     public float minZoom = 0.5f;
     public float maxZoom = 2.0f;
@@ -52,7 +52,7 @@ public class CameraMode : MonoBehaviour {
     private Quaternion targetRot;
     private bool soloCamera;
 
-    private Quaternion camPosition;
+    //private Quaternion camPosition; never used
 
     private Controls controls;
     private PlayerScript playerScript;
@@ -354,7 +354,7 @@ public class CameraMode : MonoBehaviour {
             playerScript.mouseLook.clampHorisontalRotation = true;
             playerScript.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 
-            camPosition = Camera.main.transform.localRotation;
+            //camPosition = Camera.main.transform.localRotation; never used
 
             playerScript.MoveBackButtonObject.SetActive(false);
             RobotManager.SetUITriggerActive(false);

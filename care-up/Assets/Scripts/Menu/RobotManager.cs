@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using System.Collections.Generic;
 
 public class RobotManager : MonoBehaviour {
 
     public bool top = true;
-	private GameObject Game_UI;
+	//private GameObject Game_UI;
     private GameObject UI_object;
     public static bool[] UIElementsState = { false, false };
 	//0 -- RobotUITrigger
@@ -35,7 +34,7 @@ public class RobotManager : MonoBehaviour {
     void Start ()
     {
         instance = this;
-		Game_UI = GameObject.FindObjectOfType<GameUI>().gameObject;
+		//Game_UI = GameObject.FindObjectOfType<GameUI>().gameObject;
 
         Transform face = transform.Find("robotArm").Find("main").Find("face");
         eyeL = face.Find("mEye").Find("eye.L");

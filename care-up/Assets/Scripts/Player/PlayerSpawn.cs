@@ -28,7 +28,9 @@ public class PlayerSpawn : MonoBehaviour {
     {
 		if (GameObject.FindObjectOfType(typeof(GameUI)) == null)
 		{
-			GameObject UIPrefab = Instantiate(Resources.Load("Prefabs/UI") as GameObject);
+            // never used
+			//GameObject UIPrefab = 
+            Instantiate(Resources.Load("Prefabs/UI") as GameObject);
 	    }      
 
         GameObject player = Instantiate(playerPrefab,

@@ -8,8 +8,6 @@ public class EndScoreWrongStepDescr : MonoBehaviour, IPointerEnterHandler
 { 
     public string text;
     public bool wrong;
-
-    private Controls controls;
     
     private Color redish = new Color(0.5f, 0.0f, 0.0f, 1.0f);
     private Color greyish = new Color(0.25f, 0.25f, 0.25f, 1.0f);
@@ -18,8 +16,6 @@ public class EndScoreWrongStepDescr : MonoBehaviour, IPointerEnterHandler
 
     void Start()
     {
-        controls = GameObject.FindObjectOfType<Controls>();
-
         GetComponent<Text>().color = wrong ? Color.red : Color.black;
 
         if (sounds == null)

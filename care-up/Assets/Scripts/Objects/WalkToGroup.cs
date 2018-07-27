@@ -15,7 +15,6 @@ public class WalkToGroup : MonoBehaviour
 
     CameraMode cameraMode;
     Controls controls;
-    PlayerScript player;
 
     GameObject gameLogic;
     ParticleSystem particles;
@@ -41,7 +40,6 @@ public class WalkToGroup : MonoBehaviour
 
         cameraMode = gameLogic.GetComponent<CameraMode>();
         controls = gameLogic.GetComponent<Controls>();
-        player = GameObject.FindObjectOfType<PlayerScript>();
 
         text = transform.GetChild(0).gameObject;
         if (SystemInfo.deviceType != DeviceType.Handheld)
