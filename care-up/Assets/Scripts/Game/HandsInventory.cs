@@ -799,6 +799,7 @@ public class HandsInventory : MonoBehaviour {
 
         bool combined = combinationManager.Combine(leftName, rightName, out leftCombineResult, out rightCombineResult);
 
+        if (combined) HandleCombineQuizTriggers(leftName, rightName);
 
 		// combine performed
 		bool alloweCombine = (combined && combineAllowed);
@@ -842,6 +843,25 @@ public class HandsInventory : MonoBehaviour {
 
             combineDelayed = true;
             ToggleControls(true);
+        }
+    }
+
+    public void HandleCombineQuizTriggers(string left, string right)
+    {
+        if ((left == "SyringeWithAbsorptionNeedleCap" && right == "") ||
+            (left == "" && right == "SyringeWithAbsorptionNeedleCap"))
+        {
+            PlayerScript.TriggerQuizQuestion(5.3f);
+        }
+        else if ((left == "InsulinOpenedNeedlePackage" && right == "InsulinPen") ||
+                 (left == "InsulinPen" && right == "InsulinOpenedNeedlePackage"))
+        {
+            PlayerScript.TriggerQuizQuestion(7.3f);
+        }
+        else if ((left == "fraxi_pakage" && right == "") ||
+                 (left == "" && right == "fraxi_pakage"))
+        {
+            PlayerScript.TriggerQuizQuestion(7.0f);
         }
     }
 
