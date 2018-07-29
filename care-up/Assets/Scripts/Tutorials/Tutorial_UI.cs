@@ -132,7 +132,7 @@ public class Tutorial_UI : TutorialManager
                         currentStep = TutorialStep.PressGeneral;
                
 						hintsN.LockTo("RobotUI", new Vector3(-990.90f, -49.30f, -99.80f));
-                        UItext.text = "Laten we de 'Algemene' app openen door op het icoon te klikken. Probeer dit nu.";
+                        UItext.text = "Laten we de 'Gegevens' app openen door op het icoon te klikken. Probeer dit nu.";
                         RobotUITabs.tutorial_generalOpened = false;
                         tabToOpen = "GeneralTab";
                     }
@@ -143,7 +143,7 @@ public class Tutorial_UI : TutorialManager
                         currentStep = TutorialStep.GeneralExpl;
                       
 						hintsN.LockTo("RobotUI", new Vector3(-694.10f, 338.70f, -99.80f));
-                        UItext.text = "In de app 'Algemeen' vind je algemene informatie zoals de naam van het protocol en de geluidsknop.";
+                        UItext.text = "In de app 'Gegevens' vind je de cliëntgevens en de toedienlijst. Laten we de cliëntgegevens bekijken door op het icoon the klikken. ";
                         SetUpTutorialNextButton();
                     }
                     break;
