@@ -234,6 +234,16 @@ public class UMP_Options : MonoBehaviour
     /// </summary>
     public void Apply()
     {
+        Toggle postProcessing = GameObject.Find("PostProcessingToggle").GetComponent<Toggle>();
+        GameObject preferences = GameObject.Find("Preferences");
+        if (preferences != null)
+        {
+            preferences.GetComponent<PlayerPrefsManager>().postProcessingEnabled = postProcessing.isOn;
+            PlayerPrefs.SetInt("PostProcessing", (postProcessing.isOn ? 1 : 0));
+            Debug.Log("PostProcessing is set to " + postProcessing.isOn);
+        }
+    }
+    /*  other options that are removed ?
         PlayerPrefs.SetInt(UMPKeys.Quality, CurrentQuality);
         PlayerPrefs.SetInt(UMPKeys.AnisoStropic, CurrentAS);
         PlayerPrefs.SetInt(UMPKeys.AntiAliasing, CurrentAA);
@@ -249,7 +259,7 @@ public class UMP_Options : MonoBehaviour
         
         Screen.SetResolution(Screen.resolutions[CurrentRS].width, Screen.resolutions[CurrentRS].height,false);
         Screen.fullScreen = m_FullScreen;
-    }
+    */
 
     public void ChangeName(InputField field) { if (field == null || PlayerNameText == null) return; PlayerNameText.text = field.text; field.text = string.Empty; CNAnimationWindow(); }
     /// <summary>

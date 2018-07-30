@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using LoginProAsset;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.PostProcessing;
 
 /// <summary>
 /// Handles quick access to saved data.
@@ -25,6 +26,9 @@ public class PlayerPrefsManager : MonoBehaviour
 
     // sets up after selecting scene in "scene selection"
     public string currentSceneVisualName;
+
+    // post processing on camera
+    public bool postProcessingEnabled = false;
 
     public string ActivatedScenes
     {
@@ -46,7 +50,12 @@ public class PlayerPrefsManager : MonoBehaviour
               s.name == "UMenuPro" ||
               s.name == "SceneSelection"))
         {
+            // game scenes
             GetComponent<AudioSource>().Stop();
+            if (Camera.main.GetComponent<PostProcessingBehaviour>() != null)
+            {
+                Camera.main.GetComponent<PostProcessingBehaviour>().enabled = postProcessingEnabled;
+            }
         }
 
         if (s.name == "EndScore" ||
@@ -54,6 +63,11 @@ public class PlayerPrefsManager : MonoBehaviour
             !GetComponent<AudioSource>().isPlaying))
         {
             GetComponent<AudioSource>().Play();
+        }
+
+        if (s.name == "UMenuPro")
+        {
+            GameObject.Find("PostProcessingToggle").GetComponent<Toggle>().isOn = postProcessingEnabled;
         }
     }
 
@@ -76,6 +90,9 @@ public class PlayerPrefsManager : MonoBehaviour
 
         AudioListener.volume = Volume;
         Debug.Log("Volume is set to saved value: " + Volume);
+
+        postProcessingEnabled = PlayerPrefs.GetInt("PostProcessing") == 1;
+        Debug.Log("PostProcessing is set to saved value: " + postProcessingEnabled);
     }
 
     public float Volume
