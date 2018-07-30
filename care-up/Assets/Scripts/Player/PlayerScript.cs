@@ -71,8 +71,8 @@ public class PlayerScript : MonoBehaviour {
     
     public bool robotUIopened = false;
     private bool robotUINotOpenedYet = true;
-    private GameObject robotSavedLeft;
-    private GameObject robotSavedRight;
+    public GameObject robotSavedLeft;
+    public GameObject robotSavedRight;
 
     GameObject devHintUI;
     GameObject tutorialCanvas;

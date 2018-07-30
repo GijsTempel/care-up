@@ -347,7 +347,7 @@ public class ItemControlsUI : MonoBehaviour {
     {
         if (cameraMode.CurrentMode == CameraMode.Mode.ItemControlsUI)
         {
-            if (initedObject != null)
+            if (initedObject != null && player.robotSavedLeft != initedObject && player.robotSavedRight != initedObject)
             {
                 PickableObject item = initedObject.GetComponent<PickableObject>();
                 if (item != null)
