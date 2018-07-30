@@ -23,6 +23,10 @@ public class RobotUITabs : MonoBehaviour {
     public static bool tutorial_messageCenterOpened = false;
     [HideInInspector]
     public static bool tutorial_infoTabOpened = false;
+    [HideInInspector]
+    public static bool tutorial_recordsOpened = false;
+    [HideInInspector]
+    public static bool tutorial_prescriptionOpened = false;
 
     Tutorial_UI tutorial_UI;
     Tutorial_Theory tutorial_theory;
@@ -161,6 +165,12 @@ public class RobotUITabs : MonoBehaviour {
             case "InfoTab":
                 tutorial_infoTabOpened = true;
 				GameObject.FindObjectOfType<RobotUITabInfo>().SwitchItemList(false);
+                break;
+            case "PrescriptionTab":
+                tutorial_prescriptionOpened = true;
+                break;
+            case "RecordsTab":
+                tutorial_recordsOpened = true;
                 break;
         }
     }
