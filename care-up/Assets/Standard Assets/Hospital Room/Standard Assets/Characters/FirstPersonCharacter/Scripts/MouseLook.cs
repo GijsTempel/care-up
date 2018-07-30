@@ -69,6 +69,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 #if UNITY_STANDALONE_OSX
                     xRot = Input.GetAxisRaw("Mouse Y") * XMacSensetivity;
                     yRot = Input.GetAxisRaw("Mouse X") * YMacSensetivity;
+                #elif UNITY_ANDROID
+                    xRot = Input.GetTouch(0).deltaPosition.y * XTouchSensetivity;
+                    yRot = Input.GetTouch(0).deltaPosition.x * YTouchSensetivity;
                 #else
                     xRot = Input.GetAxisRaw("Mouse Y") * XSensitivity;
                     yRot = Input.GetAxisRaw("Mouse X") * YSensitivity;
