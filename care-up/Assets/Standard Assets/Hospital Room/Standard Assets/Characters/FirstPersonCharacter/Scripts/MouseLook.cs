@@ -61,18 +61,22 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             if (Input.touchCount > 0)
             {
+                Debug.Log("touch detected " + Input.GetTouch(0).deltaPosition.y + " " + Input.GetTouch(0).deltaPosition.x);
                 xRot = Input.GetTouch(0).deltaPosition.y * XTouchSensetivity;
                 yRot = Input.GetTouch(0).deltaPosition.x * YTouchSensetivity;
             }
             else
             {
                 #if UNITY_STANDALONE_OSX
+                    Debug.Log("OSX");
                     xRot = Input.GetAxisRaw("Mouse Y") * XMacSensetivity;
                     yRot = Input.GetAxisRaw("Mouse X") * YMacSensetivity;
                 #elif UNITY_ANDROID
+                    Debug.Log("ANDROID " + Input.GetTouch(0).deltaPosition.y + " " + Input.GetTouch(0).deltaPosition.x);
                     xRot = Input.GetTouch(0).deltaPosition.y * XTouchSensetivity;
                     yRot = Input.GetTouch(0).deltaPosition.x * YTouchSensetivity;
                 #else
+                    Debug.Log("ELSE");
                     xRot = Input.GetAxisRaw("Mouse Y") * XSensitivity;
                     yRot = Input.GetAxisRaw("Mouse X") * YSensitivity;
                 #endif
