@@ -43,7 +43,7 @@ public class UMP_Options : MonoBehaviour
     /// </summary>
     void Awake()
     {
-        GetInfoOptions();
+        //GetInfoOptions();
     }
     /// <summary>
     /// 
@@ -265,6 +265,8 @@ public class UMP_Options : MonoBehaviour
     /// <summary>
     /// Get saved info
     /// </summary>
+    /// 
+    /*
     void GetInfoOptions()
     {
         if (PlayerPrefs.HasKey(UMPKeys.Quality)) { CurrentQuality = PlayerPrefs.GetInt(UMPKeys.Quality); } else { CurrentQuality = QualitySettings.GetQualityLevel(); }
@@ -280,7 +282,7 @@ public class UMP_Options : MonoBehaviour
             Screen.fullScreen = f;
             FullScreenToggle.isOn = f;
         }
-   
+
         VolumenSlider.value = AudioListener.volume;
         QualityText.text = QualitySettings.names[CurrentQuality];
         //
@@ -345,13 +347,6 @@ public class UMP_Options : MonoBehaviour
                 QualitySettings.blendWeights = BlendWeights.FourBones;
                 blendWeightsText.text = BlendWeights.FourBones.ToString();
                 break;
-        }
-        //
-#if !UNITY_EDITOR
-        if(CurrentRS > Screen.resolutions.Length - 1) { CurrentRS = Screen.resolutions.Length - 1; }
-        ResolutionText.text = Screen.resolutions[CurrentRS].width + " X " + Screen.resolutions[CurrentRS].height;
-#else
-        ResolutionText.text = Screen.resolutions[0].width + " X " + Screen.resolutions[0].height;
-#endif
-    }
+        }*/    
 }
+   
