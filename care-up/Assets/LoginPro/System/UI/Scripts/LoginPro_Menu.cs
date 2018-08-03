@@ -65,8 +65,8 @@ namespace LoginProAsset
         /// <summary>
         /// Update achievements TAGS based on the achievements received from the server
         /// </summary>
-       /*public void UpdateAchievementsList() ----> uncomment for usage of achievements 
-        {
+        public void UpdateAchievementsList()
+        {   /*
             // If it's the first time the list must be created
             if (!initiated)
             {
@@ -74,7 +74,7 @@ namespace LoginProAsset
                 CreateAchievementsList();
                 return;
             }
-
+            
             // Refresh all achievements tags
             // If on Mobile UI : there is only one list
             LoginPro_AchievementTag[] achievementsTags = null;
@@ -82,41 +82,42 @@ namespace LoginProAsset
                 achievementsTags = this.ListLeft.GetComponentsInChildren<LoginPro_AchievementTag>();
             else
                 achievementsTags = this.ScrollAchievementsList.GetComponentsInChildren<LoginPro_AchievementTag>();
-
+            
             foreach (LoginPro_AchievementTag achievementTag in achievementsTags)
             {
                 achievementTag.RefreshDisplay();
             }
-
+            
             Debug.Log("Update achievements");
             // Refresh list
             if (this.ScrollAchievementsList != null)
                 this.ScrollAchievementsList.Refresh();
+            */
         }
 
         /// <summary>
         /// Create the menu with a tag for each existing achievement
         /// </summary>
         public void CreateAchievementsList()
-        {
+        {   /*
             // Error if no objects specified
             if (!MobileUI && (this.Achievements == null || this.ListLeft == null || this.ListRight == null))
             {
                 return;
             }
-
+            
             int rowIndex = 0;
             bool impair = false;
             LoginPro_Achievement[] achievements = this.Achievements.GetComponentsInChildren<LoginPro_Achievement>();
             foreach (LoginPro_Achievement achievement in achievements)
             {
                 GameObject list = impair ? ListRight : ListLeft;
-
+            
                 GameObject createdAchievementTag = (GameObject)GameObject.Instantiate(this.UnknownAchievementPrefab);
                 createdAchievementTag.transform.SetParent(list.transform);
                 createdAchievementTag.name = achievement.name;
                 createdAchievementTag.transform.position = list.transform.position;
-
+            
                 LoginPro_AchievementTag tag = createdAchievementTag.GetComponent<LoginPro_AchievementTag>();
                 if (MobileUI)
                 {
@@ -124,27 +125,28 @@ namespace LoginProAsset
                     tag.MobileUI = true;
                 }
                 tag.rowIndex = rowIndex;
-
+            
                 // Show achievmeent only if it's unlocked
                 tag.Init(achievement);
-
+            
                 impair = !impair;
-
+            
                 // Keep achievements in the ListLeft only (if on mobile UI)
                 if (MobileUI)
                     impair = false;
-
+            
                 // New row only when pair must be done next time
                 if (!impair)
                     rowIndex++;
             }
-
+            
             Debug.Log("Create achievements");
             // Refresh list
             if (this.ScrollAchievementsList != null)
                 this.ScrollAchievementsList.Refresh();
+            */
         }
-        */
+
         /// <summary>
         /// A timer set to launch Notice process every minutes
         /// </summary>

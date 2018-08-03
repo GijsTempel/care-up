@@ -9,7 +9,6 @@ namespace LoginProAsset
     /// </summary>
     public class LoginPro_AchievementsManager : MonoBehaviour
     {
-        /*
         public LoginPro_Menu MenuWindow;
 
         private LoginPro_Achievement[] achievements;
@@ -66,7 +65,7 @@ namespace LoginProAsset
             }
 
             // Refresh achievements tags list
-            //this.MenuWindow.UpdateAchievementsList(); -----> uncomment for achievements
+            //this.MenuWindow.UpdateAchievementsList();
         }
 
         /// <summary>
@@ -76,8 +75,8 @@ namespace LoginProAsset
         /// <param name="percent"></param>
         private void unlockAchievement(string name, int percent)
         {
-            GameObject.Find("Examples").transform.Find("ActiveScenes").gameObject.SetActive(true);
-            return; /*
+            //GameObject.Find("Examples").transform.Find("ActiveScenes").gameObject.SetActive(true);
+            
             foreach (LoginPro_Achievement achievement in this.achievements)
             {
                 if (achievement.Name == name)
@@ -86,7 +85,7 @@ namespace LoginProAsset
                     achievement.PercentToUnlock = percent;
                     return;
                 }
-            } */
-        /*}*/
+            } 
+        }
     }
 }

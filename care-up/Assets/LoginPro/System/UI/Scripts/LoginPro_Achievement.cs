@@ -2,8 +2,7 @@
 
 namespace LoginProAsset
 {
-    /*
-    [RequireComponent(typeof(PlaceUIElement))]
+    //[RequireComponent(typeof(PlaceUIElement))]
     public class LoginPro_Achievement : MonoBehaviour
     {
         [HideInInspector]
@@ -14,14 +13,14 @@ namespace LoginProAsset
         public int DisplayTime = 5;
         public int PercentToUnlock = 100;
 
-      //  public UIAnimation_Place animationShow;
+        //public UIAnimation_Place animationShow;
 
-        //private LoginPro_AchievementsManager AchievementsManager; ---> Achemvements are not used and turned off
+        private LoginPro_AchievementsManager AchievementsManager;
 
         void Awake()
         {
             this.Name = gameObject.name;
-            //this.AchievementsManager = transform.parent.GetComponent<LoginPro_AchievementsManager>(); --->Achemvements are not used and turned off
+            this.AchievementsManager = transform.parent.GetComponent<LoginPro_AchievementsManager>();
         }
 
         /// <summary>
@@ -42,11 +41,11 @@ namespace LoginProAsset
         public void UnlockSuccess(string[] achievements)
         {
             // Refresh achievements tags list
-            // this.AchievementsManager.RefreshAchievements(achievements);---> Achemvements are not used and turned off
+            this.AchievementsManager.RefreshAchievements(achievements);
 
             // Show the unlocked achievement IF the server said it has been unlocked
-            if (this.Unlocked)
-                animationShow.Launch();
+            //if (this.Unlocked)
+            //    animationShow.Launch();
         }
 
         /// <summary>
@@ -55,8 +54,9 @@ namespace LoginProAsset
         public void Lock()
         {
             // Call server to lock this achievement for this user
-            //LoginPro.Manager.UpdateAchievement(this.Name, 0, this.AchievementsManager.RefreshAchievements, LockError); ---> Achemvements are not used and turned off
+            LoginPro.Manager.UpdateAchievement(this.Name, 0, this.AchievementsManager.RefreshAchievements, LockError);
         }
+
         public void LockError(string errorMessage)
         {
             errorMessage = errorMessage.Replace("ERROR: ", "Lock achievement failed: ");
@@ -64,5 +64,5 @@ namespace LoginProAsset
             // Show the error in the console
             Debug.LogWarning(errorMessage);
         }
-    }*/
+    }
 }
