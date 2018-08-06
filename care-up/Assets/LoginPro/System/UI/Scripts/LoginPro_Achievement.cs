@@ -9,8 +9,8 @@ namespace LoginProAsset
         public string Name;
 
         public bool Unlocked = false;
-        [Range(0, 10)]
-        public int DisplayTime = 5;
+        //[Range(0, 10)]
+        //public int DisplayTime = 5;
         public int PercentToUnlock = 100;
 
         //public UIAnimation_Place animationShow;
@@ -44,8 +44,11 @@ namespace LoginProAsset
             this.AchievementsManager.RefreshAchievements(achievements);
 
             // Show the unlocked achievement IF the server said it has been unlocked
-            //if (this.Unlocked)
-            //    animationShow.Launch();
+            if (this.Unlocked)
+            {
+                //animationShow.Launch();
+                GetComponent<Animator>().SetTrigger("Show");
+            }
         }
 
         /// <summary>
