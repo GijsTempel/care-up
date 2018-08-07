@@ -195,5 +195,17 @@ public class TutorialManager : MonoBehaviour
         }
 
         finished = true;
+
+        GameObject ach = GameObject.Find("FinishTutorial");
+        if (ach != null)
+        {
+            ach.GetComponent<LoginProAsset.LoginPro_Achievement>().Unlock(100);
+        }
+
+        ach = GameObject.Find("FinishAllTutorial");
+        if (ach != null)
+        {
+            ach.GetComponent<LoginProAsset.LoginPro_Achievement>().Unlock(10);
+        }
     }
 }

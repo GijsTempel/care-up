@@ -753,8 +753,7 @@ public class ActionManager : MonoBehaviour {
         {
             if (actionList.Find(action => action.matched == true && action.sceneDoneTrigger == true) != null)
             {
-                Narrator.PlaySound("LevelComplete", 0.1f);
-                GameObject.FindObjectOfType<GameUI>().ShowDonePanel(true);
+                SceneCompletedRoutine();
                 return true;
             }
             else return false;
@@ -763,12 +762,47 @@ public class ActionManager : MonoBehaviour {
         {
             if (actionList.Find(action => action.matched == false && action.notMandatory == false) == null)
             {
-                Narrator.PlaySound("LevelComplete", 0.1f);
-                GameObject.FindObjectOfType<GameUI>().ShowDonePanel(true);
+                SceneCompletedRoutine();
                 return true;
             }
             else return false;
         } 
+    }
+
+    private void SceneCompletedRoutine()
+    {
+        Narrator.PlaySound("LevelComplete", 0.1f);
+        GameObject.FindObjectOfType<GameUI>().ShowDonePanel(true);
+
+        GameObject ach = GameObject.Find("FinishProtocol");
+        if (ach != null)
+        {
+            ach.GetComponent<LoginProAsset.LoginPro_Achievement>().Unlock(100);
+        }
+
+        ach = GameObject.Find("FinishProtocol5min");
+        if (ach != null && GameObject.FindObjectOfType<GameTimer>().CurrentTime < 300f)
+        {
+            ach.GetComponent<LoginProAsset.LoginPro_Achievement>().Unlock(100);
+        }
+
+        ach = GameObject.Find("FinishProtocol10min");
+        if (ach != null && GameObject.FindObjectOfType<GameTimer>().CurrentTime < 600f)
+        {
+            ach.GetComponent<LoginProAsset.LoginPro_Achievement>().Unlock(100);
+        }
+
+        ach = GameObject.Find("Finish3Protocols");
+        if (ach != null)
+        {
+            ach.GetComponent<LoginProAsset.LoginPro_Achievement>().Unlock(34);
+        }
+
+        ach = GameObject.Find("Finish5Protocols");
+        if (ach != null)
+        {
+            ach.GetComponent<LoginProAsset.LoginPro_Achievement>().Unlock(20);
+        }
     }
 
     /// <summary>
