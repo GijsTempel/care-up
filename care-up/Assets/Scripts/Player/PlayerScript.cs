@@ -505,11 +505,13 @@ public class PlayerScript : MonoBehaviour {
         if (robotSavedLeft != null)
         {
             PlayerAnimationManager.SetHandItem(true, robotSavedLeft.gameObject);
+            robotSavedLeft = null; // reset
         }
 
         if (robotSavedRight != null)
         {
             PlayerAnimationManager.SetHandItem(false, robotSavedRight.gameObject);
+            robotSavedRight = null; // reset
         }
     }
 
