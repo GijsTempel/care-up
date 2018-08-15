@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 #endif
 
-public class UMP_LevelInfo : MonoBehaviour/*, IPointerEnterHandler, IPointerExitHandler*/ {
+public class UMP_LevelInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler {
 
     public Text Title;
     public Text Description;
@@ -13,6 +13,12 @@ public class UMP_LevelInfo : MonoBehaviour/*, IPointerEnterHandler, IPointerExit
     public Image Preview;
     //Name of scene of build setting
     private string LevelName;
+    static Button_Functions sounds;
+
+    private void Start()
+    {
+        sounds = GameObject.FindObjectOfType<Button_Functions>();
+    }
 
     /// <summary>
     /// Level Info
@@ -29,10 +35,11 @@ public class UMP_LevelInfo : MonoBehaviour/*, IPointerEnterHandler, IPointerExit
         PlayText.text = pn;
         LevelName = scene;
     }
+
     /// <summary>
     /// 
     /// </summary>
-    /* public void OpenLevel() { LoadLevel(LevelName); }
+    public void OpenLevel() { LoadLevel(LevelName); }
 
     public static void LoadLevel(string scene)
     {
@@ -42,10 +49,11 @@ public class UMP_LevelInfo : MonoBehaviour/*, IPointerEnterHandler, IPointerExit
             Application.LoadLevel(scene);
         #endif
     }
-        /// <summary>
-        /// 
-        /// </summary>
-       /// <param name="Forward"></param>
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="Forward"></param>
     public void EventMouse(bool Forward = true)
     {
         Animator a = this.GetComponent<Animator>();
@@ -62,10 +70,16 @@ public class UMP_LevelInfo : MonoBehaviour/*, IPointerEnterHandler, IPointerExit
     public void OnPointerEnter(PointerEventData eventData)
     {
         EventMouse(true);
+        sounds.OnButtonHover();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         EventMouse(false);
-    }*/
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        sounds.OnButtonClick();
+    }
 }
