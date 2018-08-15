@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 #endif
 
-public class UMP_LevelInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
+public class UMP_LevelInfo : MonoBehaviour/*, IPointerEnterHandler, IPointerExitHandler*/ {
 
     public Text Title;
     public Text Description;
@@ -32,7 +32,7 @@ public class UMP_LevelInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     /// <summary>
     /// 
     /// </summary>
-    public void OpenLevel() { LoadLevel(LevelName); }
+    /* public void OpenLevel() { LoadLevel(LevelName); }
 
     public static void LoadLevel(string scene)
     {
@@ -45,7 +45,7 @@ public class UMP_LevelInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="Forward"></param>
+       /// <param name="Forward"></param>
     public void EventMouse(bool Forward = true)
     {
         Animator a = this.GetComponent<Animator>();
@@ -67,5 +67,5 @@ public class UMP_LevelInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public void OnPointerExit(PointerEventData eventData)
     {
         EventMouse(false);
-    }
+    }*/
 }
