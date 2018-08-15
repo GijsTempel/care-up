@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using LoginProAsset;
     
 public class PlayerScript : MonoBehaviour {
     [HideInInspector]
@@ -234,6 +235,11 @@ public class PlayerScript : MonoBehaviour {
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            FindObjectOfType<LoginPro_Achievement>().Unlock();
+        }
+
         if (prefs != null)
         {
             if (!prefs.VR)

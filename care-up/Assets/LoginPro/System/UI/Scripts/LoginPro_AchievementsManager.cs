@@ -65,7 +65,7 @@ namespace LoginProAsset
             }
 
             // Refresh achievements tags list
-            this.MenuWindow.UpdateAchievementsList();
+            //this.MenuWindow.UpdateAchievementsList();
         }
 
         /// <summary>
