@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
+using System.Xml;
 
 public class GameUI : MonoBehaviour {
 	GameObject Player;
-	public Animator Blink;
+    public TextAsset xmlFile;
+    public Animator Blink;
 	public Animator IPadBlink;
 	public bool BlinkState = false;
 	public bool testValue;
@@ -42,8 +45,47 @@ public class GameUI : MonoBehaviour {
 		bl_SceneLoaderUtils.GetLoader.LoadLevel("UMenuPro");
 	}
 
+    void addAchivements(string xmlData)
+    {
+        GameObject aList = transform.Find("AchievementsList").gameObject;
 
-	public void ButtonBlink(bool ToBlink)
+
+        XmlDocument xmlDoc = new XmlDocument();
+        xmlDoc.Load(new StringReader(xmlData));
+        string xmlPathPattern = "//achivements/achivement";
+        XmlNodeList nodeList = xmlDoc.SelectNodes(xmlPathPattern);
+        foreach (XmlNode node in nodeList)
+        {
+            XmlNode xName = node.FirstChild;
+            if (aList.transform.Find(xName.InnerText) == null)
+            {
+                GameObject go = (GameObject)Instantiate(Resources.Load("Prefabs/Achievements"));
+                go.name = xName.InnerText;
+                go.transform.parent = aList.transform;
+                go.GetComponent<RectTransform>().localScale = new Vector3(1.5f, 1.5f, 1.5f);
+
+                Text description = go.transform.Find("Message").GetComponent<Text>();
+                Image icon = go.transform.Find("Image").GetComponent<Image>();
+
+                XmlNode xIconID = xName.NextSibling;
+                XmlNode xDescr = xIconID.NextSibling;
+
+                if (!string.IsNullOrEmpty(xDescr.InnerText))
+                    description.text = xDescr.InnerText;
+                if (!string.IsNullOrEmpty(xIconID.InnerText))
+                {
+                    Sprite[] sprites = Resources.LoadAll<Sprite>("Sprites/achivements");
+                    icon.sprite = sprites[int.Parse(xIconID.InnerText)];
+                
+                }
+            }
+        }
+
+    }
+
+
+
+    public void ButtonBlink(bool ToBlink)
 	{
 
 		if (BlinkState == ToBlink)
@@ -75,8 +117,11 @@ public class GameUI : MonoBehaviour {
 		donePanel = transform.Find("DonePanel").gameObject;
 		donePanel.SetActive(false);
 
-		//Debug.Log(Application.isEditor);
-	}
+        string xData = xmlFile.text;
+        addAchivements(xData);
+
+        //Debug.Log(Application.isEditor);
+    }
 
 	public void ShowDonePanel(bool value)
 	{
