@@ -11,7 +11,7 @@ namespace LoginProAsset
     {
         public LoginPro_Menu MenuWindow;
 
-        private LoginPro_Achievement[] achievements;
+        public LoginPro_Achievement[] achievements;
 
         void Start()
         {

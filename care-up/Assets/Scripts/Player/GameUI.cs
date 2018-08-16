@@ -63,7 +63,7 @@ public class GameUI : MonoBehaviour {
                 go.name = xName.InnerText;
                 go.transform.parent = aList.transform;
                 go.GetComponent<RectTransform>().localScale = new Vector3(1.5f, 1.5f, 1.5f);
-
+                go.GetComponent<LoginProAsset.LoginPro_Achievement>().Name = go.name;
                 Text description = go.transform.Find("Message").GetComponent<Text>();
                 Image icon = go.transform.Find("Image").GetComponent<Image>();
 
@@ -108,18 +108,20 @@ public class GameUI : MonoBehaviour {
         }
 	}
 
-	// Use this for initialization
-	void Start () {
+    void Awake()
+    {
+        string xData = xmlFile.text;
+        addAchivements(xData);
+    }
+
+    // Use this for initialization
+    void Start () {
 		Player = GameObject.Find("Player");
 		closeButton = transform.Find("CloseBtn").gameObject;
 		closeDialog = transform.Find("CloseDialog").gameObject;
 		closeDialog.SetActive(false);
 		donePanel = transform.Find("DonePanel").gameObject;
 		donePanel.SetActive(false);
-
-        string xData = xmlFile.text;
-        addAchivements(xData);
-
         //Debug.Log(Application.isEditor);
     }
 
