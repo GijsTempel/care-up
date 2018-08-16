@@ -62,6 +62,9 @@ public class RobotManager : MonoBehaviour {
         {
             SetUITriggerActive(false);
         }
+
+        // reset counter
+        notificationCount = 0;
     }
 
     void Update ()
@@ -132,8 +135,6 @@ public class RobotManager : MonoBehaviour {
         }
 
         RobotUIMessageTab.SetNotification(n);
-
-
     }
 
     public static int NotificationNumber

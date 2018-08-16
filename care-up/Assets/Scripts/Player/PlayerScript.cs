@@ -526,11 +526,13 @@ public class PlayerScript : MonoBehaviour {
         if (robotSavedLeft != null)
         {
             handsInv.ForcePickItem(robotSavedLeft.name, true);
+            robotSavedLeft = null; // reset
         }
 
         if (robotSavedRight != null)
         {
             handsInv.ForcePickItem(robotSavedRight.name, false);
+            robotSavedRight = null; // reset
         }
     }
 

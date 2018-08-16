@@ -91,7 +91,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 // saving everything else for dialogues
 
                 // setting scene title
-                sceneUnit.transform.Find("Degradado/Title").GetComponent<Text>().text
+                sceneUnit.transform.Find("Title").GetComponent<Text>().text
                     = sceneUnit.displayName = xmlSceneNode.Attributes["name"].Value;
 
                 // saving bundle name for later
@@ -133,7 +133,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 sceneUnit.bundleName = xmlSceneNode.Attributes["bundleName"].Value;
 
                 // setting scene title
-                sceneUnit.transform.Find("Degradado/Title").GetComponent<Text>().text
+                sceneUnit.transform.Find("Title").GetComponent<Text>().text
                     = sceneUnit.displayName = xmlSceneNode.Attributes["name"].Value;
 
                 // setting description
