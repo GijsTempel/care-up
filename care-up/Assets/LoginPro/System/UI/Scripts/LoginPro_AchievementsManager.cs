@@ -84,6 +84,7 @@ namespace LoginProAsset
                 if (achievement.name == name)
                 {
                     achievement.opened = percent >= 100;
+                    achievement.UpdateElement();
                     return;
                 }
             }
