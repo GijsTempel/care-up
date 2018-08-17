@@ -25,7 +25,6 @@ public class UMP_Manager : MonoBehaviour {
     void Awake()
     {
         InstanceLevels();
-        GameObject.Find("Leaderboard").SetActive(false);
     }
     /// <summary>
     /// 

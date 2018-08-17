@@ -49,7 +49,6 @@ public class GameUI : MonoBehaviour {
     {
         GameObject aList = transform.Find("AchievementsList").gameObject;
 
-
         XmlDocument xmlDoc = new XmlDocument();
         xmlDoc.Load(new StringReader(xmlData));
         string xmlPathPattern = "//achivements/achivement";

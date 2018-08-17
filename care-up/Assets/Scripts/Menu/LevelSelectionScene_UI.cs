@@ -15,13 +15,14 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
     // leaderboard stuff
     public ScoreLine[] _Scores;
+    public GameObject scoreLines;
 
     public List<Transform> variations;
 
     private void Awake()
     {
         Transform leaderPanel = GameObject.Find("UMenuProManager/MenuCanvas/Leaderboard/InfoBar").transform;
-        _Scores = GameObject.Find("scoreLines").GetComponentsInChildren<ScoreLine>();
+        _Scores = scoreLines.GetComponentsInChildren<ScoreLine>();
 
         for (int i = 0; i < _Scores.Length; i++)
         {
@@ -153,7 +154,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
             // leaderboard stuff
             GameObject button = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/UI/LeaderBoardSceneButton"),
-                GameObject.Find("UMenuProManager/MenuCanvas/Leaderboard/LeftBar/Scroll View/Viewport/Content").transform);
+            GameObject.Find("UMenuProManager/MenuCanvas/Leaderboard/LeftBar/Scroll View/Viewport/Content").transform);
             LeaderBoardSceneButton buttonInfo = button.GetComponent<LeaderBoardSceneButton>();
 
             button.transform.GetChild(0).GetComponent<Text>().text = sceneUnit.displayName;
