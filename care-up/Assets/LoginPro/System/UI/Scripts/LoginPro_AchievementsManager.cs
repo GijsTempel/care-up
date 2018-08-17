@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace LoginProAsset
 {
@@ -9,14 +10,24 @@ namespace LoginProAsset
     /// </summary>
     public class LoginPro_AchievementsManager : MonoBehaviour
     {
-        public LoginPro_Menu MenuWindow;
+        //public LoginPro_Menu MenuWindow;
 
         public LoginPro_Achievement[] achievements;
+        public AchivementsManuButton[] menuAchievements;
 
-        void Start()
+        void Awake()
         {
             // Get all achievements gameObjects
             this.achievements = transform.GetComponentsInChildren<LoginPro_Achievement>();
+            this.menuAchievements = transform.GetComponentsInChildren<AchivementsManuButton>();
+        }
+
+        private void Start()
+        {
+            if (SceneManager.GetActiveScene().name == "UMenuPro")
+            {
+                GetMenuAchievements();
+            }
         }
 
         /// <summary>
@@ -26,6 +37,12 @@ namespace LoginProAsset
         {
             // As kthe server for achievements list
             LoginPro.Manager.GetAchievements(RefreshAchievements, FailedToRefreshAchievements);
+        }
+
+        public void GetMenuAchievements()
+        {
+            // Ask the server for achievements list
+            LoginPro.Manager.GetAchievements(RefreshMenuAchievements, FailedToRefreshAchievements);
         }
 
         /// <summary>
@@ -38,6 +55,38 @@ namespace LoginProAsset
 
             // Show the error in the console
             Debug.LogError(errorMessage);
+        }
+
+        public void RefreshMenuAchievements(string[] datas)
+        {
+            Debug.Log(datas[0]);
+
+            // Lock all achievements
+            foreach (AchivementsManuButton achievement in this.menuAchievements)
+            {
+                achievement.opened = false;
+            }
+
+            // Unlock those who are set as unlocked
+            for (int i = 1; i < datas.Length; i = i + 3)
+            {
+                int percent = 0;
+                int.TryParse(datas[i + 1], out percent);
+                unlockMenuAchievement(datas[i], percent);
+            }
+        }
+
+        private void unlockMenuAchievement(string name, int percent)
+        {
+            Debug.Log("UnlockAchievement::" + name);
+            foreach (AchivementsManuButton achievement in this.menuAchievements)
+            {
+                if (achievement.name == name)
+                {
+                    achievement.opened = percent >= 100;
+                    return;
+                }
+            }
         }
 
         /// <summary>

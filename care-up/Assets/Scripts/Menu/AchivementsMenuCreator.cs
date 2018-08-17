@@ -11,7 +11,7 @@ public class AchivementsMenuCreator : MonoBehaviour {
     float scrollHeight = 0f;
 
     // Use this for initialization
-    void Start () {
+    void Awake () {
         string xData = xmlFile.text;
         addAchivements(xData);
     }
@@ -47,16 +47,12 @@ public class AchivementsMenuCreator : MonoBehaviour {
                 {
                     aButton.iconID = int.Parse(xIconID.InnerText);
                 }
-
-                aButton.opened = (n < 3);
-                //aButton.UpdateElement();
             }
             n++;
         }
         Vector2 h = aList.GetComponent<RectTransform>().sizeDelta;
         h.y = scrollHeight;
         aList.GetComponent<RectTransform>().sizeDelta = h;
-
     }
 
 }

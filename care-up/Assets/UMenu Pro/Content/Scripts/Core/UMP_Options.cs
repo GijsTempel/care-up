@@ -37,7 +37,7 @@ public class UMP_Options : MonoBehaviour
 
     public Toggle FullScreenToggle = null;
     public bool SaveFullcreen = true;
-    private bool m_FullScreen = false;
+    //private bool m_FullScreen = false;
     /// <summary>
     /// 
     /// </summary>
@@ -179,7 +179,7 @@ public class UMP_Options : MonoBehaviour
         ResolutionText.text = Screen.resolutions[0].width + " X " + Screen.resolutions[0].height;
 #endif
     }
-    public void FullScreen(bool f) { m_FullScreen = f; }
+    //public void FullScreen(bool f) { m_FullScreen = f; }
     /// <summary>
     /// Change volumen
     /// </summary>
