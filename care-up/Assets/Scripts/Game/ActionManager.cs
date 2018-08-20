@@ -934,6 +934,11 @@ public class ActionManager : MonoBehaviour {
         penalized = true;
     }
 
+    public bool IsPenalized()
+    {
+        return penalized;
+    }
+
     public void SetUIObjects(Text points, Text percentage)
     {
         uiSet = true;

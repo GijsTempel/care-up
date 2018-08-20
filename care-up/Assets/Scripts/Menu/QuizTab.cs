@@ -171,7 +171,9 @@ public class QuizTab : RobotUITabs {
 
     public void CorrectAnswer(string description)
     {
-        GameObject.Find("GameLogic").GetComponent<ActionManager>().UpdatePointsDirectly(questionList[currentStep][currentQuestionID].points);
+        ActionManager actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
+        actionManager.UpdatePointsDirectly((actionManager.IsPenalized()) ? 0 : questionList[currentStep][currentQuestionID].points);
+
         ActionManager.CorrectAction();
 
         descriptionText.text = description;
