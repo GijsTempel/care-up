@@ -541,7 +541,11 @@ public class PlayerScript : MonoBehaviour {
         // lock actions so player does nothing to break until quiz triggers
         PlayerScript.actionsLocked = true;
         // close itemDescription if active, cuz we locked actions, so it's not updating
-        GameObject.Find("ItemDescription").SetActive(false);
+        GameObject itemDescription = GameObject.Find("ItemDescription");
+        if (itemDescription)
+        {
+            itemDescription.SetActive(false);
+        }
         // trigger quiz with delay
         instance.StartCoroutine(QuizCoroutine(delay));
     }
