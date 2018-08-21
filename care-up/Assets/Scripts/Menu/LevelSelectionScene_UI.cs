@@ -84,6 +84,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 ColorBlock colorBlock = sceneUnit.GetComponent<Button>().colors;
                 colorBlock.normalColor = Color.grey;
                 colorBlock.highlightedColor = Color.grey;
+                sceneUnit.GetComponent<Button>().colors = colorBlock;
             }
 
             // now let's fill some actual info about the scene
