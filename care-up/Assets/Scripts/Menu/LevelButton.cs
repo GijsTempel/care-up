@@ -62,17 +62,8 @@ public class LevelButton : MonoBehaviour {
     {
         if (buy)
         {
-            string link = "https://careup.nl/protocollen-voorbehouden-en-risicovolle-handelingen/";
-            if (Application.platform == RuntimePlatform.WebGLPlayer)
-            {
-                #pragma warning disable CS0618 // Type or member is obsolete
-                Application.ExternalEval("window.open(\"" + link + "\",\"_blank\")");
-                #pragma warning restore CS0618 // Type or member is obsolete
-            }
-            else
-            {
-                Application.OpenURL(link);
-            }
+            // show dialogue now instead
+            GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(5);
         }
         else
         {

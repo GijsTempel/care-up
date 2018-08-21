@@ -21,4 +21,18 @@ public class Button_Functions : MonoBehaviour {
 		source.PlayOneShot (buttonClick, 0.15F);
 	}
 
+    public void OnBuyButtonClick()
+    {
+        string link = "https://careup.nl/protocollen-voorbehouden-en-risicovolle-handelingen/";
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+        {
+            #pragma warning disable CS0618 // Type or member is obsolete
+            Application.ExternalEval("window.open(\"" + link + "\",\"_blank\")");
+            #pragma warning restore CS0618 // Type or member is obsolete
+        }
+        else
+        {
+            Application.OpenURL(link);
+        }
+    }
 }
