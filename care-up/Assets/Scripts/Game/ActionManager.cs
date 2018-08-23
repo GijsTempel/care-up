@@ -795,13 +795,17 @@ public class ActionManager : MonoBehaviour {
         ach = GameObject.Find("Finish3Protocols");
         if (ach != null)
         {
-            ach.GetComponent<LoginProAsset.LoginPro_Achievement>().Unlock(34);
+            int progress = ach.GetComponent<LoginProAsset.LoginPro_Achievement>().PercentToUnlock;
+            progress += 34;
+            ach.GetComponent<LoginProAsset.LoginPro_Achievement>().Unlock(progress);
         }
 
         ach = GameObject.Find("Finish5Protocols");
         if (ach != null)
         {
-            ach.GetComponent<LoginProAsset.LoginPro_Achievement>().Unlock(20);
+            int progress = ach.GetComponent<LoginProAsset.LoginPro_Achievement>().PercentToUnlock;
+            progress += 20;
+            ach.GetComponent<LoginProAsset.LoginPro_Achievement>().Unlock(progress);
         }
     }
 

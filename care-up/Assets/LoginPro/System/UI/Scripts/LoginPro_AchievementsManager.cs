@@ -78,7 +78,6 @@ namespace LoginProAsset
 
         private void unlockMenuAchievement(string name, int percent)
         {
-            Debug.Log("UnlockAchievement::" + name);
             foreach (AchivementsManuButton achievement in this.menuAchievements)
             {
                 if (achievement.name == name)
@@ -126,7 +125,7 @@ namespace LoginProAsset
         private void unlockAchievement(string name, int percent)
         {
             //GameObject.Find("Examples").transform.Find("ActiveScenes").gameObject.SetActive(true);
-            
+
             foreach (LoginPro_Achievement achievement in this.achievements)
             {
                 if (achievement.Name == name)
