@@ -360,16 +360,7 @@ public class ItemControlsUI : MonoBehaviour {
                                 item.name == tutorial.itemToPick2)))
                         {
                             handsInventory.PickItem(item);
-                            
-                            GameObject ghost = Instantiate(Resources.Load<GameObject>("Prefabs/" + item.name), item.SavedPosition, item.SavedRotation);
-                            ghost.layer = 9; // no collisions
-                            ghost.GetComponent<PickableObject>().pairedObject = item;
-                            item.pairedObject = ghost.GetComponent<PickableObject>();
-                            item.pairedObject.sihlouette = true;
-                            item.pairedObject.SetGhostShader();
-                            item.pairedObject.GetComponent<Rigidbody>().useGravity = false;
-                            item.pairedObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                            // change name if needed? 
+                            item.CreateGhostObject();
                         }
                     }
                     else if (item.sihlouette == true)
