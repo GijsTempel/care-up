@@ -195,7 +195,15 @@ public class RobotUITabs : MonoBehaviour {
 
     public void OnIpadRecordButtonClick()
     {
-        FindObjectOfType<ActionManager>().OnUseAction("PaperAndPen");
+        PlayerPrefsManager prefsManager = GameObject.FindObjectOfType<PlayerPrefsManager>();
+        if (prefsManager != null && !prefsManager.practiceMode)
+        {
+            FindObjectOfType<GameUI>().OpenDonePanelYesNo();
+        }
+        else
+        {
+            FindObjectOfType<ActionManager>().OnUseAction("PaperAndPen");
+        }
     }
     
     protected void BackBtnToGeneral()

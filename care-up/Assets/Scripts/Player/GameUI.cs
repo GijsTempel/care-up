@@ -12,8 +12,7 @@ public class GameUI : MonoBehaviour {
 	GameObject donePanel;
 	GameObject closeButton;
 	GameObject closeDialog;
-    
-    
+    GameObject donePanelYesNo;
 
 	public void MoveBack()
 	{
@@ -75,8 +74,11 @@ public class GameUI : MonoBehaviour {
 		donePanel = transform.Find("DonePanel").gameObject;
 		donePanel.SetActive(false);
 
-		//Debug.Log(Application.isEditor);
-	}
+        donePanelYesNo = transform.Find("DonePanelYesNo").gameObject;
+        donePanelYesNo.SetActive(false);
+
+        //Debug.Log(Application.isEditor);
+    }
 
 	public void ShowDonePanel(bool value)
 	{
@@ -96,4 +98,20 @@ public class GameUI : MonoBehaviour {
 	void Update () {
 		testValue = RobotManager.UIElementsState[0];
 	}
+
+    public void OpenDonePanelYesNo()
+    {
+        donePanelYesNo.SetActive(true);
+    }
+
+    public void DonePanelYes()
+    {
+        FindObjectOfType<ActionManager>().OnUseAction("PaperAndPen");
+        donePanelYesNo.SetActive(false);
+    }
+
+    public void DonePanelNo()
+    {
+        donePanelYesNo.SetActive(false);
+    }
 }
