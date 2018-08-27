@@ -869,24 +869,19 @@ public class HandsInventory : MonoBehaviour {
     {
         if (leftHandObject)
         {
-            if (tutorial == null || (tutorial != null &&
-            (tutorial.itemToDrop == leftHandObject.name ||
-            tutorial.itemToDrop2 == leftHandObject.name)))
+            leftHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
+            tutorial_droppedLeft = true;
+            if (!leftHandObject.Drop())
             {
-                leftHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
-                tutorial_droppedLeft = true;
-                if (!leftHandObject.Drop())
+                if (dropPenalty)
                 {
-                    if (dropPenalty)
-                    {
-                        ActionManager.WrongAction();
-                        actionManager.UpdatePoints(-1);
-                    }
+                    ActionManager.WrongAction();
+                    actionManager.UpdatePoints(-1);
                 }
-                leftHandObject = null;
-                leftHold = false;
-                PlayerAnimationManager.SetHandItem(true, null);
             }
+            leftHandObject = null;
+            leftHold = false;
+            PlayerAnimationManager.SetHandItem(true, null);
         }
     }
 
@@ -894,24 +889,19 @@ public class HandsInventory : MonoBehaviour {
     {
         if (rightHandObject)
         {
-            if (tutorial == null || (tutorial != null &&
-            (tutorial.itemToDrop == rightHandObject.name ||
-            tutorial.itemToDrop2 == rightHandObject.name)))
+            rightHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
+            tutorial_droppedRight = true;
+            if (!rightHandObject.Drop())
             {
-                rightHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
-                tutorial_droppedRight = true;
-                if (!rightHandObject.Drop())
+                if (dropPenalty)
                 {
-                    if (dropPenalty)
-                    {
-                        ActionManager.WrongAction();
-                        actionManager.UpdatePoints(-1);
-                    }
+                    ActionManager.WrongAction();
+                    actionManager.UpdatePoints(-1);
                 }
-                rightHandObject = null;
-                rightHold = false;
-                PlayerAnimationManager.SetHandItem(false, null);
             }
+            rightHandObject = null;
+            rightHold = false;
+            PlayerAnimationManager.SetHandItem(false, null);
         }
     }
 

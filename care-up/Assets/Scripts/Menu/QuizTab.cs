@@ -134,12 +134,12 @@ public class QuizTab : RobotUITabs {
 
         gameObject.SetActive(true);
         OnTabSwitch();
-        
+
         int currentQuestionID = Random.Range(0, questionList[currentStep].Count);
 
         Question current = questionList[currentStep][currentQuestionID];
         transform.GetChild(1).Find("QuestionText").GetComponent<Text>().text = current.text;
-        
+
         for (int i = 0; i < current.answers.Count; i++)
         {
             buttons[i].transform.GetChild(0).GetComponent<Text>().text = current.answers[i].text;
@@ -166,7 +166,14 @@ public class QuizTab : RobotUITabs {
 
         descriptionText.text = "";
 
-        endScoreManager.quizQuestionsTexts.Add(current.text);
+        if (endScoreManager != null)
+        {
+            endScoreManager.quizQuestionsTexts.Add(current.text);
+        }
+        else
+        {
+            Debug.LogWarning("No EndScoreManager found. Start from 1st scene.");
+        }
     }
 
     public void CorrectAnswer(string description)
@@ -197,10 +204,17 @@ public class QuizTab : RobotUITabs {
         GameObject.Find("GameLogic").GetComponent<ActionManager>().ActivatePenalty();
         ActionManager.WrongAction();
 
-        endScoreManager.quizWrongIndexes.Add(currentStep);
+        if (endScoreManager != null)
+        {
+            endScoreManager.quizWrongIndexes.Add(currentStep);
+        }
+        else
+        {
+            Debug.LogWarning("No EndScoreManager found. Start from 1st scene.");
+        }
     }
 
-    public void OnContinueButton()
+public void OnContinueButton()
     {
         Continue();
 

@@ -23,6 +23,9 @@ public class PickableObject : InteractableObject {
 
     private List<Vector3> framePositions = new List<Vector3>();
     private Rigidbody rigidBody;
+
+    public bool sihlouette = false;
+    public PickableObject pairedObject;
   
     protected override void Start()
     {
@@ -193,7 +196,7 @@ public class PickableObject : InteractableObject {
         if (GetComponent<Rigidbody>() != null)
         {
             // stop falling mid frame stupid unity
-            GetComponent<Rigidbody>().useGravity = false; 
+            GetComponent<Rigidbody>().useGravity = false;
         }
     }
 

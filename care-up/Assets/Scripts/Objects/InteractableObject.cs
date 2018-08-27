@@ -18,6 +18,7 @@ public class InteractableObject : MonoBehaviour {
     static private Shader onMouseOverShaderSihlouette;
     static private Shader onMouseOverShadeOutline;
     static protected Shader onMouseExitShader;
+    static protected Shader ghostShader;
 
     protected bool positionSaved = false;
     protected Vector3 savedPosition;
@@ -31,6 +32,16 @@ public class InteractableObject : MonoBehaviour {
     static protected HandsInventory inventory;
 
     public bool transparencyFix = false;
+
+    public Vector3 SavedPosition
+    {
+        get { return savedPosition; }
+    }
+
+    public Quaternion SavedRotation
+    {
+        get { return savedRotation; }
+    }
 
     protected virtual void Start()
     {
@@ -51,6 +62,11 @@ public class InteractableObject : MonoBehaviour {
         if (onMouseExitShader == null)
         {
             onMouseExitShader = Shader.Find("Standard");
+        }
+
+        if (ghostShader == null)
+        {
+            ghostShader = Shader.Find("Unlit/GhostZ");
         }
 
         if (cameraMode == null)
@@ -239,7 +255,13 @@ public class InteractableObject : MonoBehaviour {
         }
     }
 
-    public void Highlight(bool value)
+    public void SetGhostShader()
+    {
+        rend = GetComponent<Renderer>();
+        SetShaderTo(ghostShader);
+    }
+
+    public virtual void Highlight(bool value)
     {
         if (rend == null)
         {
