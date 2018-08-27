@@ -374,7 +374,7 @@ public class HandsInventory : MonoBehaviour {
         }
         return newObject;
     }
-
+    
     public void CreateAnimationObject(string name, bool hand)
     {
         animationObject = Instantiate(Resources.Load<GameObject>("Prefabs\\" + name),
@@ -674,6 +674,7 @@ public class HandsInventory : MonoBehaviour {
                         load = true;
                     }
 
+                    leftHandObject.DeleteGhostObject();
                     Destroy(leftHandObject.gameObject);
                     leftHandObject = null;
                 }
@@ -708,6 +709,8 @@ public class HandsInventory : MonoBehaviour {
                     {
                         leftHandObject.GetComponent<PickableObjectWithInfo>().LoadInfo(saveInfo1, saveInfo2);
                     }
+
+                    leftHandObject.CreateGhostObject();
                 }
                 else
                 {
@@ -725,6 +728,8 @@ public class HandsInventory : MonoBehaviour {
                     {
                         rightHandObject.GetComponent<PickableObjectWithInfo>().SaveInfo(ref saveInfo1, ref saveInfo2);
                     }
+
+                    rightHandObject.DeleteGhostObject();
                     Destroy(rightHandObject.gameObject);
                     rightHandObject = null;
                 }
@@ -759,6 +764,8 @@ public class HandsInventory : MonoBehaviour {
                     {
                         rightHandObject.GetComponent<PickableObjectWithInfo>().LoadInfo(saveInfo1, saveInfo2);
                     }
+
+                    rightHandObject.CreateGhostObject();
                 }
                 else
                 {

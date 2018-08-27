@@ -206,4 +206,33 @@ public class PickableObject : InteractableObject {
         RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
         messageCenter.NewMessage("Actie kan niet worden uitgevoerd!", message, RobotUIMessageTab.Icon.Warning);
     }
+
+    public void CreateGhostObject()
+    {
+        GameObject ghost = Instantiate(Resources.Load<GameObject>("Prefabs/" + this.name), 
+            this.SavedPosition, this.SavedRotation);
+        ghost.layer = 9; // no collisions
+        ghost.GetComponent<PickableObject>().pairedObject = this;
+        this.pairedObject = ghost.GetComponent<PickableObject>();
+        this.pairedObject.sihlouette = true;
+        this.pairedObject.SetGhostShader();
+        this.pairedObject.GetComponent<Rigidbody>().useGravity = false;
+        this.pairedObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        // change name if needed? 
+    }
+
+    public void DeleteGhostObject()
+    {
+        if (pairedObject != null)
+        {
+            if (sihlouette)
+            {
+                Destroy(this.gameObject);
+            }
+            else
+            {
+                Destroy(this.pairedObject.gameObject);
+            }
+        }
+    }
 }
