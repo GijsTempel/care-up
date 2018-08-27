@@ -796,6 +796,7 @@ public class HandsInventory : MonoBehaviour {
         string rightName = rightHandObject ? rightHandObject.name : "";
         
         bool combineAllowed = actionManager.CompareCombineObjects(leftName, rightName);
+        combineAllowed = combineAllowed || !GameObject.FindObjectOfType<PlayerPrefsManager>().practiceMode;
 
         bool combined = combinationManager.Combine(leftName, rightName, out leftCombineResult, out rightCombineResult);
 
