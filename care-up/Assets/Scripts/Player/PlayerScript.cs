@@ -538,6 +538,10 @@ public class PlayerScript : MonoBehaviour {
     /// <param name="delay">Delay before opening ipad.</param>
     public static void TriggerQuizQuestion(float delay = 0.0f)
     {
+        // just dont trigger quiz if it's a tutorial for all cases
+        if (GameObject.FindObjectOfType<TutorialManager>() != null)
+            return;
+
         // lock actions so player does nothing to break until quiz triggers
         PlayerScript.actionsLocked = true;
         // close itemDescription if active, cuz we locked actions, so it's not updating
