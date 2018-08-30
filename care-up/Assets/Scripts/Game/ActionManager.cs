@@ -701,7 +701,7 @@ public class ActionManager : MonoBehaviour {
 
             penalized = true;
 
-            if (type == ActionType.SequenceStep)
+            if (type == ActionType.SequenceStep && manager.practiceMode)
             {
                 GameObject.Find("WrongAction").GetComponent<TimedPopUp>().Set(sublist[0].extraDescr);
             }
