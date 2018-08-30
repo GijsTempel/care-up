@@ -130,7 +130,7 @@ public class Syringe : PickableObjectWithInfo {
                         if (patient.pulledUp == false)
                         {
                             patient.pulledUp = true;
-                            patient.GetComponent<Animator>().SetTrigger("ShowArm");
+                            patient.GetComponent<Animator>().SetTrigger("ShowBellyForInsulin");
                         }
                     }
 
