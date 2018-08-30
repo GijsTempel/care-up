@@ -11,7 +11,7 @@ public class InjectionPatient : PersonObject {
     private AudioClip[] audioClips;
     private Animator animator;
 
-    private bool pulledUp = false;
+    public bool pulledUp = false;
 
     protected override void Start()
     {
