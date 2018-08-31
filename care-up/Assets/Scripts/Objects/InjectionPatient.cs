@@ -49,7 +49,11 @@ public class InjectionPatient : PersonObject {
                         // also launches animation after dialogue
                         GetComponent<InjectionPatient>().RollUpSleevesDialogue();
                         // lock actions so player does nothing to break until quiz triggers
-                        PlayerScript.actionsLocked = true;
+                        if (GameObject.FindObjectOfType<TutorialManager>() == null)
+                        {
+                            // in tutorials quiz are disabled
+                            PlayerScript.actionsLocked = true;
+                        }
                     }
                     pulledUp = true;
                     break;
