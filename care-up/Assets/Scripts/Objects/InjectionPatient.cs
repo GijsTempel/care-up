@@ -30,7 +30,7 @@ public class InjectionPatient : PersonObject {
 
     public override void Talk(string topic = "")
     {
-        if (ViewModeActive() || topic == "")
+        if (ViewModeActive() || topic == "CM_Leave" || topic == "")
             return;
 
         if (actionManager.CompareTopic(topic))
