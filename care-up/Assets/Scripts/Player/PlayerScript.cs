@@ -74,7 +74,7 @@ public class PlayerScript : MonoBehaviour {
     public GameObject robotSavedLeft;
     public GameObject robotSavedRight;
 
-    GameObject devHintUI;
+    GameObject devHintUI = null;
     GameObject tutorialCanvas;
 
     Tutorial_UI tutorial_UI;
@@ -157,7 +157,8 @@ public class PlayerScript : MonoBehaviour {
         robotUI.GetComponent<EventTrigger>().triggers.Add(event1);
         robotUI.GetComponent<EventTrigger>().triggers.Add(event2);
 
-        devHintUI = GameObject.Find("DevHint").gameObject;
+        if (GameObject.Find("DevHint") != null)
+            devHintUI = GameObject.Find("DevHint").gameObject;
 
         GameObject wrongActionPopUp = GameObject.Find("WrongAction").gameObject;
 		GameObject warningPopUp = GameObject.Find("EmptyHandsWarning").gameObject;
@@ -443,8 +444,11 @@ public class PlayerScript : MonoBehaviour {
         PlayerAnimationManager.PlayAnimation("IpadCloseUp");
         robotUIopened = true;
 
-        devHintActiveForIpad = devHintUI.activeSelf;
-        devHintUI.SetActive(false);
+        if (devHintUI != null)
+        {
+            devHintActiveForIpad = devHintUI.activeSelf;
+            devHintUI.SetActive(false);
+        }
 
         RobotManager.SetUITriggerActive(false);
         Camera.main.transform.localRotation = Quaternion.Euler(8.0f, 0.0f, 0.0f);
@@ -489,7 +493,10 @@ public class PlayerScript : MonoBehaviour {
         if (GameObject.FindObjectOfType<TutorialManager>() == null 
             || tutorial_UI != null || tutorial_theory != null)
         {
-            devHintUI.SetActive(devHintActiveForIpad);
+            if (devHintUI != null)
+            {
+                devHintUI.SetActive(devHintActiveForIpad);
+            }
         }
 
         RobotManager.SetUITriggerActive(true);
