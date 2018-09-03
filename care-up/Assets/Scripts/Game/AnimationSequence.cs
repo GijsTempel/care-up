@@ -199,11 +199,6 @@ public class AnimationSequence  {
                 }
             }
         }
-        else // no info means wrong choice
-        {
-            ActionManager.WrongAction();
-            actionManager.OnSequenceStepAction(animation);
-        }
     }
 
     /// <summary>
