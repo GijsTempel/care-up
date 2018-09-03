@@ -57,6 +57,7 @@ public class SelectDialogue : MonoBehaviour {
     private Color selectedMaterial;
     private Color defaultMaterial;
     private Color correctMaterial;
+    private Color wrongMaterial;
 
     private string text;
 
@@ -86,6 +87,7 @@ public class SelectDialogue : MonoBehaviour {
         selectedMaterial = Color.blue;
         defaultMaterial = Color.white;
         correctMaterial = Color.green;
+        wrongMaterial = Color.red;
 
         top = transform.GetChild(0).GetComponent<Image>();
         bottom = transform.GetChild(1).GetComponent<Image>();
@@ -186,11 +188,35 @@ public class SelectDialogue : MonoBehaviour {
                 DialogueOption option = options.Find(x => x.side == currentOption);
                 if (option != null)
                 {
-                    option.function(option.attribute);
-                    if (destroy)
+                    if (option.attribute != "")
                     {
-                        Destroy(gameObject);
-                        cameraMode.ToggleCameraMode(CameraMode.Mode.Free);
+                        option.function(option.attribute);
+                        if (destroy)
+                        {
+                            Destroy(gameObject);
+                            cameraMode.ToggleCameraMode(CameraMode.Mode.Free);
+                        }
+                    }
+                    else // no info means wrong choice
+                    {
+                        switch(currentOption)
+                        {
+                            case OptionSide.Bottom:
+                                bottom.color = wrongMaterial;
+                                break;
+                            case OptionSide.Left:
+                                left.color = wrongMaterial;
+                                break;
+                            case OptionSide.Right:
+                                right.color = wrongMaterial;
+                                break;
+                            case OptionSide.Top:
+                                top.color = wrongMaterial;
+                                break;
+                        }
+
+                        ActionManager.WrongAction();
+                        GameObject.FindObjectOfType<ActionManager>().OnSequenceStepAction("");
                     }
                 }
             }

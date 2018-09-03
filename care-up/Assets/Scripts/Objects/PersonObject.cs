@@ -89,7 +89,7 @@ public class PersonObject : InteractableObject
 
     public virtual void Talk(string topic = "")
     {
-        if (ViewModeActive() || topic == "")
+        if (ViewModeActive() || topic == "CM_Leave" || topic == "")
             return;
         
         if (actionManager.CompareTopic(topic))
@@ -149,7 +149,7 @@ public class PersonObject : InteractableObject
             }
         }
         // for leave option
-        optionsList.Add(new SelectDialogue.DialogueOption("Verlaten", Talk, ""));
+        optionsList.Add(new SelectDialogue.DialogueOption("Verlaten", Talk, "CM_Leave"));
     }
 
     /// <summary>
