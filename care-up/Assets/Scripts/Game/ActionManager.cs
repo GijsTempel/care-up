@@ -663,6 +663,13 @@ public class ActionManager : MonoBehaviour {
                     int index = actionList.IndexOf(action);
                     //inserted checklist stuff
                     RobotUITabChecklist.StrikeStep(index);
+                    
+                    if (type == ActionType.SequenceStep && penalized)
+                    {
+                        wrongStepIndexes.Add(index);
+                        break;
+                    }
+
                     // end checklist
                     correctStepIndexes.Add(index);
 
