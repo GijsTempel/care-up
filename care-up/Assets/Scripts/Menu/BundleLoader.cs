@@ -26,9 +26,9 @@ public class BundleLoader : MonoBehaviour {
         AssetBundleManager.SetDevelopmentAssetBundleServer();
         #else
 		// Use the following code if AssetBundles are embedded in the project for example via StreamingAssets folder etc:
-		AssetBundleManager.SetSourceAssetBundleURL(Application.dataPath + "/");
+		//AssetBundleManager.SetSourceAssetBundleURL(Application.dataPath + "/");
 		// Or customize the URL based on your deployment or configuration
-		AssetBundleManager.SetSourceAssetBundleURL("http://www.triplemotionmedia.nl/CareUp_AssetBundles/");
+		//AssetBundleManager.SetSourceAssetBundleURL("http://www.triplemotionmedia.nl/CareUp_AssetBundles/");
         #endif
 
         // Initialize AssetBundleManifest which loads the AssetBundleManifest object.
