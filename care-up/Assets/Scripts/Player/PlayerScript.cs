@@ -334,21 +334,20 @@ public class PlayerScript : MonoBehaviour {
 
     public void WalkToGroup(WalkToGroup group)
     {
-        if (!onButtonHover)
-        {
-            ToggleAway();
-            transform.position = group.position;
-            if ( prefs == null || (prefs != null && !prefs.VR))
-            {
-                transform.rotation = Quaternion.Euler(0.0f, group.rotation.y, 0.0f);
-                Camera.main.transform.localRotation = Quaternion.Euler(group.rotation.x, 0.0f, 0.0f);
-                mouseLook.SaveRot(transform, Camera.main.transform);
-            }
-            currentWalkPosition = group;
 
-            robot.transform.position = group.robotPosition;
-            robot.transform.rotation = Quaternion.Euler(group.robotRotation);
+        ToggleAway();
+        transform.position = group.position;
+        if ( prefs == null || (prefs != null && !prefs.VR))
+        {
+            transform.rotation = Quaternion.Euler(0.0f, group.rotation.y, 0.0f);
+            Camera.main.transform.localRotation = Quaternion.Euler(group.rotation.x, 0.0f, 0.0f);
+            mouseLook.SaveRot(transform, Camera.main.transform);
         }
+        currentWalkPosition = group;
+
+        robot.transform.position = group.robotPosition;
+        robot.transform.rotation = Quaternion.Euler(group.robotRotation);
+        
     }
 
     private void ToggleAway(bool _away = false)
@@ -404,7 +403,7 @@ public class PlayerScript : MonoBehaviour {
 
     public void MoveBackButton()
     {
-        if (!away)
+        if (true)
         {
             ToggleAway(true);
             transform.position = savedPos;
