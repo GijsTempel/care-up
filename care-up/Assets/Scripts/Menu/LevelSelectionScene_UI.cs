@@ -15,14 +15,13 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
     // leaderboard stuff
     public ScoreLine[] _Scores;
-    public GameObject scoreLines;
 
     public List<Transform> variations;
 
     private void Awake()
     {
         Transform leaderPanel = GameObject.Find("UMenuProManager/MenuCanvas/Leaderboard/InfoBar").transform;
-        _Scores = scoreLines.GetComponentsInChildren<ScoreLine>();
+        _Scores = GameObject.Find("scoreLines").GetComponentsInChildren<ScoreLine>();
 
         for (int i = 0; i < _Scores.Length; i++)
         {
@@ -79,8 +78,13 @@ public class LevelSelectionScene_UI : MonoBehaviour
             {
                 // but if scene is not activated and NOT hidden either
                 // just disable play button, but show the panel to the player
-                sceneUnit.transform.Find("BottonBar/Play").GetChild(0).GetComponent<Text>().text = "Bestellen";
+                //sceneUnit.transform.Find("BottonBar/Play").GetChild(0).GetComponent<Text>().text = "Bestellen";
                 sceneUnit.buy = true;
+                // grey out ?
+                ColorBlock colorBlock = sceneUnit.GetComponent<Button>().colors;
+                colorBlock.normalColor = Color.grey;
+                colorBlock.highlightedColor = Color.grey;
+                sceneUnit.GetComponent<Button>().colors = colorBlock;
             }
 
             // now let's fill some actual info about the scene
@@ -154,7 +158,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
             // leaderboard stuff
             GameObject button = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/UI/LeaderBoardSceneButton"),
-            GameObject.Find("UMenuProManager/MenuCanvas/Leaderboard/LeftBar/Scroll View/Viewport/Content").transform);
+                GameObject.Find("UMenuProManager/MenuCanvas/Leaderboard/LeftBar/Scroll View/Viewport/Content").transform);
             LeaderBoardSceneButton buttonInfo = button.GetComponent<LeaderBoardSceneButton>();
 
             button.transform.GetChild(0).GetComponent<Text>().text = sceneUnit.displayName;

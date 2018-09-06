@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using LoginProAsset;
     
 public class PlayerScript : MonoBehaviour {
     [HideInInspector]
@@ -75,7 +74,7 @@ public class PlayerScript : MonoBehaviour {
     public GameObject robotSavedLeft;
     public GameObject robotSavedRight;
 
-    GameObject devHintUI;
+    GameObject devHintUI = null;
     GameObject tutorialCanvas;
 
     Tutorial_UI tutorial_UI;
@@ -158,7 +157,8 @@ public class PlayerScript : MonoBehaviour {
         robotUI.GetComponent<EventTrigger>().triggers.Add(event1);
         robotUI.GetComponent<EventTrigger>().triggers.Add(event2);
 
-        devHintUI = GameObject.Find("DevHint").gameObject;
+        if (GameObject.Find("DevHint") != null)
+            devHintUI = GameObject.Find("DevHint").gameObject;
 
         GameObject wrongActionPopUp = GameObject.Find("WrongAction").gameObject;
 		GameObject warningPopUp = GameObject.Find("EmptyHandsWarning").gameObject;
@@ -334,21 +334,20 @@ public class PlayerScript : MonoBehaviour {
 
     public void WalkToGroup(WalkToGroup group)
     {
-        if (!onButtonHover)
-        {
-            ToggleAway();
-            transform.position = group.position;
-            if ( prefs == null || (prefs != null && !prefs.VR))
-            {
-                transform.rotation = Quaternion.Euler(0.0f, group.rotation.y, 0.0f);
-                Camera.main.transform.localRotation = Quaternion.Euler(group.rotation.x, 0.0f, 0.0f);
-                mouseLook.SaveRot(transform, Camera.main.transform);
-            }
-            currentWalkPosition = group;
 
-            robot.transform.position = group.robotPosition;
-            robot.transform.rotation = Quaternion.Euler(group.robotRotation);
+        ToggleAway();
+        transform.position = group.position;
+        if ( prefs == null || (prefs != null && !prefs.VR))
+        {
+            transform.rotation = Quaternion.Euler(0.0f, group.rotation.y, 0.0f);
+            Camera.main.transform.localRotation = Quaternion.Euler(group.rotation.x, 0.0f, 0.0f);
+            mouseLook.SaveRot(transform, Camera.main.transform);
         }
+        currentWalkPosition = group;
+
+        robot.transform.position = group.robotPosition;
+        robot.transform.rotation = Quaternion.Euler(group.robotRotation);
+        
     }
 
     private void ToggleAway(bool _away = false)
@@ -404,7 +403,7 @@ public class PlayerScript : MonoBehaviour {
 
     public void MoveBackButton()
     {
-        if (!away)
+        if (true)
         {
             ToggleAway(true);
             transform.position = savedPos;
@@ -444,8 +443,11 @@ public class PlayerScript : MonoBehaviour {
         PlayerAnimationManager.PlayAnimation("IpadCloseUp");
         robotUIopened = true;
 
-        devHintActiveForIpad = devHintUI.activeSelf;
-        devHintUI.SetActive(false);
+        if (devHintUI != null)
+        {
+            devHintActiveForIpad = devHintUI.activeSelf;
+            devHintUI.SetActive(false);
+        }
 
         RobotManager.SetUITriggerActive(false);
         Camera.main.transform.localRotation = Quaternion.Euler(8.0f, 0.0f, 0.0f);
@@ -490,7 +492,10 @@ public class PlayerScript : MonoBehaviour {
         if (GameObject.FindObjectOfType<TutorialManager>() == null 
             || tutorial_UI != null || tutorial_theory != null)
         {
-            devHintUI.SetActive(devHintActiveForIpad);
+            if (devHintUI != null)
+            {
+                devHintUI.SetActive(devHintActiveForIpad);
+            }
         }
 
         RobotManager.SetUITriggerActive(true);
@@ -539,10 +544,18 @@ public class PlayerScript : MonoBehaviour {
     /// <param name="delay">Delay before opening ipad.</param>
     public static void TriggerQuizQuestion(float delay = 0.0f)
     {
+        // just dont trigger quiz if it's a tutorial for all cases
+        if (GameObject.FindObjectOfType<TutorialManager>() != null)
+            return;
+
         // lock actions so player does nothing to break until quiz triggers
         PlayerScript.actionsLocked = true;
         // close itemDescription if active, cuz we locked actions, so it's not updating
-        GameObject.Find("ItemDescription").SetActive(false);
+        GameObject itemDescription = GameObject.Find("ItemDescription");
+        if (itemDescription)
+        {
+            itemDescription.SetActive(false);
+        }
         // trigger quiz with delay
         instance.StartCoroutine(QuizCoroutine(delay));
     }

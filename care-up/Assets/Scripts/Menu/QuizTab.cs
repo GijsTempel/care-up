@@ -134,12 +134,12 @@ public class QuizTab : RobotUITabs {
 
         gameObject.SetActive(true);
         OnTabSwitch();
-
+        
         int currentQuestionID = Random.Range(0, questionList[currentStep].Count);
 
         Question current = questionList[currentStep][currentQuestionID];
         transform.GetChild(1).Find("QuestionText").GetComponent<Text>().text = current.text;
-
+        
         for (int i = 0; i < current.answers.Count; i++)
         {
             buttons[i].transform.GetChild(0).GetComponent<Text>().text = current.answers[i].text;
@@ -166,21 +166,12 @@ public class QuizTab : RobotUITabs {
 
         descriptionText.text = "";
 
-        if (endScoreManager != null)
-        {
-            endScoreManager.quizQuestionsTexts.Add(current.text);
-        }
-        else
-        {
-            Debug.LogWarning("No EndScoreManager found. Start from 1st scene.");
-        }
+        endScoreManager.quizQuestionsTexts.Add(current.text);
     }
 
     public void CorrectAnswer(string description)
     {
-        ActionManager actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
-        actionManager.UpdatePointsDirectly((actionManager.IsPenalized()) ? 0 : questionList[currentStep][currentQuestionID].points);
-
+        GameObject.Find("GameLogic").GetComponent<ActionManager>().UpdatePointsDirectly(questionList[currentStep][currentQuestionID].points);
         ActionManager.CorrectAction();
 
         descriptionText.text = description;
@@ -204,17 +195,10 @@ public class QuizTab : RobotUITabs {
         GameObject.Find("GameLogic").GetComponent<ActionManager>().ActivatePenalty();
         ActionManager.WrongAction();
 
-        if (endScoreManager != null)
-        {
-            endScoreManager.quizWrongIndexes.Add(currentStep);
-        }
-        else
-        {
-            Debug.LogWarning("No EndScoreManager found. Start from 1st scene.");
-        }
+        endScoreManager.quizWrongIndexes.Add(currentStep);
     }
 
-public void OnContinueButton()
+    public void OnContinueButton()
     {
         Continue();
 

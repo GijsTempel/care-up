@@ -23,9 +23,6 @@ public class PickableObject : InteractableObject {
 
     private List<Vector3> framePositions = new List<Vector3>();
     private Rigidbody rigidBody;
-
-    public bool sihlouette = false;
-    public PickableObject pairedObject;
   
     protected override void Start()
     {
@@ -196,7 +193,7 @@ public class PickableObject : InteractableObject {
         if (GetComponent<Rigidbody>() != null)
         {
             // stop falling mid frame stupid unity
-            GetComponent<Rigidbody>().useGravity = false;
+            GetComponent<Rigidbody>().useGravity = false; 
         }
     }
 
@@ -205,34 +202,5 @@ public class PickableObject : InteractableObject {
         string message = "Je hebt geen vrije hand beschikbaar om de actie uit te voeren. Zorg voor een vrije hand door een object terug te leggen.";
         RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
         messageCenter.NewMessage("Actie kan niet worden uitgevoerd!", message, RobotUIMessageTab.Icon.Warning);
-    }
-
-    public void CreateGhostObject()
-    {
-        GameObject ghost = Instantiate(Resources.Load<GameObject>("Prefabs/" + this.name), 
-            this.SavedPosition, this.SavedRotation);
-        ghost.layer = 9; // no collisions
-        ghost.GetComponent<PickableObject>().pairedObject = this;
-        this.pairedObject = ghost.GetComponent<PickableObject>();
-        this.pairedObject.sihlouette = true;
-        this.pairedObject.SetGhostShader();
-        this.pairedObject.GetComponent<Rigidbody>().useGravity = false;
-        this.pairedObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-        // change name if needed? 
-    }
-
-    public void DeleteGhostObject()
-    {
-        if (pairedObject != null)
-        {
-            if (sihlouette)
-            {
-                Destroy(this.gameObject);
-            }
-            else
-            {
-                Destroy(this.pairedObject.gameObject);
-            }
-        }
     }
 }

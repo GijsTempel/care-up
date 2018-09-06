@@ -205,9 +205,7 @@ public class TutorialManager : MonoBehaviour
         ach = GameObject.Find("FinishAllTutorial");
         if (ach != null)
         {
-            int progress = ach.GetComponent<LoginProAsset.LoginPro_Achievement>().PercentToUnlock;
-            progress += 10;
-            ach.GetComponent<LoginProAsset.LoginPro_Achievement>().Unlock(progress);
+            ach.GetComponent<LoginProAsset.LoginPro_Achievement>().Unlock(10);
         }
     }
 }

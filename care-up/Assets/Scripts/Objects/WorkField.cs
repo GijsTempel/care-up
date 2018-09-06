@@ -20,7 +20,8 @@ public class WorkField : UsableObject {
 
         foreach (GameObject obj in objects)
         {
-            obj.SetActive(toggle);
+            if (obj != null)
+                obj.SetActive(toggle);
         }
     }
 

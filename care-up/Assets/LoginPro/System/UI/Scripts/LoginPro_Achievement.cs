@@ -20,9 +20,7 @@ namespace LoginProAsset
         void Awake()
         {
             this.Name = gameObject.name;
-            //this.AchievementsManager = transform.parent.GetComponent<LoginPro_AchievementsManager>();
-            this.AchievementsManager = GameObject.FindObjectOfType<LoginPro_AchievementsManager>();
-
+            this.AchievementsManager = transform.parent.GetComponent<LoginPro_AchievementsManager>();
         }
 
         /// <summary>

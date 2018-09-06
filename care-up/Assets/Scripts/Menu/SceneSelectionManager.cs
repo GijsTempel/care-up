@@ -9,17 +9,15 @@ public class SceneSelectionManager : MonoBehaviour {
 
     public Image practiceButton;
     public Image testButton;
-    //private Text description;
+    public Text description;
 
     private PlayerPrefsManager manager;
-
-    /* never used
+    
     private string practiceText =
-        "Oefenen: Oefen het protocol waarin je elke stap van de werkwijze bovenin het scherm kunt zien. Volg de stappen om ze te oefenen en te leren.";
+        "Oefenen: Oefen de handeling waarin je elke stap van de werkwijze bovenin het scherm kunt zien. Volg de stappen om ze te oefenen en te leren.";
     private string testText =
-        "Toetsen: Toets je kennis. Tijdens een toets zie je geen hints en moet je de stappen van de protocol uit je hoofd uitvoeren. Zoals in het echt.";
-    */
-
+        "Toetsen: Toets je kennis. Tijdens een toets zie je geen hints en moet je de stappen van de handeling uit je hoofd uitvoeren. Je kunt nu iedere actie in een willekeurige volgorde uitvoeren. Je kunt dus dingen in de verkeerde volgorde doen of zelf vergeten. Net zoals tijdens een praktijktoets.";
+    
     public void Start()
     {
         if (GameObject.Find("Preferences") != null)
@@ -44,7 +42,7 @@ public class SceneSelectionManager : MonoBehaviour {
         }
 
         //description = GameObject.Find("PracticeTestDescription").GetComponent<Text>();
-        //description.text = practiceText;
+        description.text = practiceText;
     }
 
     public void ShowMenu (SceneSelection sceneselection)
@@ -63,7 +61,7 @@ public class SceneSelectionManager : MonoBehaviour {
         practiceButton.color = Color.green;
         testButton.color = Color.white;
 
-        //description.text = practiceText;
+        description.text = practiceText;
 
         if (manager)
         {
@@ -76,7 +74,7 @@ public class SceneSelectionManager : MonoBehaviour {
         practiceButton.color = Color.white;
         testButton.color = Color.green;
 
-        //description.text = testText;
+        description.text = testText;
 
         if (manager)
         {

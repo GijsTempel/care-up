@@ -11,7 +11,7 @@ public class InjectionPatient : PersonObject {
     private AudioClip[] audioClips;
     private Animator animator;
 
-    private bool pulledUp = false;
+    public bool pulledUp = false;
 
     protected override void Start()
     {
@@ -30,7 +30,7 @@ public class InjectionPatient : PersonObject {
 
     public override void Talk(string topic = "")
     {
-        if (ViewModeActive() || topic == "")
+        if (ViewModeActive() || topic == "CM_Leave" || topic == "")
             return;
 
         if (actionManager.CompareTopic(topic))
@@ -49,7 +49,11 @@ public class InjectionPatient : PersonObject {
                         // also launches animation after dialogue
                         GetComponent<InjectionPatient>().RollUpSleevesDialogue();
                         // lock actions so player does nothing to break until quiz triggers
-                        PlayerScript.actionsLocked = true;
+                        if (GameObject.FindObjectOfType<TutorialManager>() == null)
+                        {
+                            // in tutorials quiz are disabled
+                            PlayerScript.actionsLocked = true;
+                        }
                     }
                     pulledUp = true;
                     break;

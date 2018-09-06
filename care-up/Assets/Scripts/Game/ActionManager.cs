@@ -663,13 +663,6 @@ public class ActionManager : MonoBehaviour {
                     int index = actionList.IndexOf(action);
                     //inserted checklist stuff
                     RobotUITabChecklist.StrikeStep(index);
-                    
-                    if (type == ActionType.SequenceStep && penalized)
-                    {
-                        wrongStepIndexes.Add(index);
-                        break;
-                    }
-
                     // end checklist
                     correctStepIndexes.Add(index);
 
@@ -708,7 +701,7 @@ public class ActionManager : MonoBehaviour {
 
             penalized = true;
 
-            if (type == ActionType.SequenceStep)
+            if (type == ActionType.SequenceStep && manager.practiceMode)
             {
                 GameObject.Find("WrongAction").GetComponent<TimedPopUp>().Set(sublist[0].extraDescr);
             }
@@ -802,17 +795,13 @@ public class ActionManager : MonoBehaviour {
         ach = GameObject.Find("Finish3Protocols");
         if (ach != null)
         {
-            int progress = ach.GetComponent<LoginProAsset.LoginPro_Achievement>().PercentToUnlock;
-            progress += 34;
-            ach.GetComponent<LoginProAsset.LoginPro_Achievement>().Unlock(progress);
+            ach.GetComponent<LoginProAsset.LoginPro_Achievement>().Unlock(34);
         }
 
         ach = GameObject.Find("Finish5Protocols");
         if (ach != null)
         {
-            int progress = ach.GetComponent<LoginProAsset.LoginPro_Achievement>().PercentToUnlock;
-            progress += 20;
-            ach.GetComponent<LoginProAsset.LoginPro_Achievement>().Unlock(progress);
+            ach.GetComponent<LoginProAsset.LoginPro_Achievement>().Unlock(20);
         }
     }
 
@@ -943,11 +932,6 @@ public class ActionManager : MonoBehaviour {
     public void ActivatePenalty()
     {
         penalized = true;
-    }
-
-    public bool IsPenalized()
-    {
-        return penalized;
     }
 
     public void SetUIObjects(Text points, Text percentage)

@@ -352,28 +352,12 @@ public class ItemControlsUI : MonoBehaviour {
                 PickableObject item = initedObject.GetComponent<PickableObject>();
                 if (item != null)
                 {
-                    if (item.sihlouette == false)
+                    if (tutorial == null ||
+                        (tutorial != null &&
+                            (item.name == tutorial.itemToPick ||
+                            item.name == tutorial.itemToPick2)))
                     {
-                        if (tutorial == null ||
-                            (tutorial != null &&
-                                (item.name == tutorial.itemToPick ||
-                                item.name == tutorial.itemToPick2)))
-                        {
-                            handsInventory.PickItem(item);
-                            item.CreateGhostObject();
-                        }
-                    }
-                    else if (item.sihlouette == true)
-                    {
-                        if (tutorial == null || (tutorial != null &&
-                                (item.name == tutorial.itemToDrop ||
-                                item.name == tutorial.itemToDrop2)))
-                        {
-                            GameObject ghost = item.gameObject;
-                            initedObject = item.pairedObject.gameObject;
-                            GameObject.Destroy(ghost);
-                            Drop();
-                        }
+                        handsInventory.PickItem(item);
                     }
                     else
                     {
@@ -397,7 +381,8 @@ public class ItemControlsUI : MonoBehaviour {
             if (initedObject != null)
             {
                 initedObject.GetComponent<PersonObject>().CreateSelectionDialogue();
-                GameObject.Find("ItemDescription").SetActive(false);
+                if (GameObject.Find("ItemDescription") != null)
+                    GameObject.Find("ItemDescription").SetActive(false);
             }
         }
 
@@ -423,25 +408,13 @@ public class ItemControlsUI : MonoBehaviour {
     {
         if (initedObject != null)
         {
-            if (tutorial == null || (tutorial != null &&
-            (tutorial.itemToDrop == initedObject.name ||
-            tutorial.itemToDrop2 == initedObject.name)))
+            if (handsInventory.LeftHandObject == initedObject)
             {
-                PickableObject item = initedObject.GetComponent<PickableObject>();
-                if (item != null && item.pairedObject != null)
-                {
-                    Destroy(item.pairedObject.gameObject);
-                    item.pairedObject = null;
-                }
-
-                if (handsInventory.LeftHandObject == initedObject)
-                {
-                    handsInventory.DropLeft();
-                }
-                else if (handsInventory.RightHandObject == initedObject)
-                {
-                    handsInventory.DropRight();
-                }
+                handsInventory.DropLeft();
+            }
+            else if (handsInventory.RightHandObject == initedObject)
+            {
+                handsInventory.DropRight();
             }
         }
 

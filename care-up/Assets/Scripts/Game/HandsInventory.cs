@@ -374,7 +374,7 @@ public class HandsInventory : MonoBehaviour {
         }
         return newObject;
     }
-    
+
     public void CreateAnimationObject(string name, bool hand)
     {
         animationObject = Instantiate(Resources.Load<GameObject>("Prefabs\\" + name),
@@ -674,7 +674,6 @@ public class HandsInventory : MonoBehaviour {
                         load = true;
                     }
 
-                    leftHandObject.DeleteGhostObject();
                     Destroy(leftHandObject.gameObject);
                     leftHandObject = null;
                 }
@@ -709,8 +708,6 @@ public class HandsInventory : MonoBehaviour {
                     {
                         leftHandObject.GetComponent<PickableObjectWithInfo>().LoadInfo(saveInfo1, saveInfo2);
                     }
-
-                    leftHandObject.CreateGhostObject();
                 }
                 else
                 {
@@ -728,8 +725,6 @@ public class HandsInventory : MonoBehaviour {
                     {
                         rightHandObject.GetComponent<PickableObjectWithInfo>().SaveInfo(ref saveInfo1, ref saveInfo2);
                     }
-
-                    rightHandObject.DeleteGhostObject();
                     Destroy(rightHandObject.gameObject);
                     rightHandObject = null;
                 }
@@ -764,8 +759,6 @@ public class HandsInventory : MonoBehaviour {
                     {
                         rightHandObject.GetComponent<PickableObjectWithInfo>().LoadInfo(saveInfo1, saveInfo2);
                     }
-
-                    rightHandObject.CreateGhostObject();
                 }
                 else
                 {
@@ -803,6 +796,7 @@ public class HandsInventory : MonoBehaviour {
         string rightName = rightHandObject ? rightHandObject.name : "";
         
         bool combineAllowed = actionManager.CompareCombineObjects(leftName, rightName);
+        combineAllowed = combineAllowed || !GameObject.FindObjectOfType<PlayerPrefsManager>().practiceMode;
 
         bool combined = combinationManager.Combine(leftName, rightName, out leftCombineResult, out rightCombineResult);
 
@@ -876,19 +870,24 @@ public class HandsInventory : MonoBehaviour {
     {
         if (leftHandObject)
         {
-            leftHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
-            tutorial_droppedLeft = true;
-            if (!leftHandObject.Drop())
+            if (tutorial == null || (tutorial != null &&
+            (tutorial.itemToDrop == leftHandObject.name ||
+            tutorial.itemToDrop2 == leftHandObject.name)))
             {
-                if (dropPenalty)
+                leftHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
+                tutorial_droppedLeft = true;
+                if (!leftHandObject.Drop())
                 {
-                    ActionManager.WrongAction();
-                    actionManager.UpdatePoints(-1);
+                    if (dropPenalty)
+                    {
+                        ActionManager.WrongAction();
+                        actionManager.UpdatePoints(-1);
+                    }
                 }
+                leftHandObject = null;
+                leftHold = false;
+                PlayerAnimationManager.SetHandItem(true, null);
             }
-            leftHandObject = null;
-            leftHold = false;
-            PlayerAnimationManager.SetHandItem(true, null);
         }
     }
 
@@ -896,19 +895,24 @@ public class HandsInventory : MonoBehaviour {
     {
         if (rightHandObject)
         {
-            rightHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
-            tutorial_droppedRight = true;
-            if (!rightHandObject.Drop())
+            if (tutorial == null || (tutorial != null &&
+            (tutorial.itemToDrop == rightHandObject.name ||
+            tutorial.itemToDrop2 == rightHandObject.name)))
             {
-                if (dropPenalty)
+                rightHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
+                tutorial_droppedRight = true;
+                if (!rightHandObject.Drop())
                 {
-                    ActionManager.WrongAction();
-                    actionManager.UpdatePoints(-1);
+                    if (dropPenalty)
+                    {
+                        ActionManager.WrongAction();
+                        actionManager.UpdatePoints(-1);
+                    }
                 }
+                rightHandObject = null;
+                rightHold = false;
+                PlayerAnimationManager.SetHandItem(false, null);
             }
-            rightHandObject = null;
-            rightHold = false;
-            PlayerAnimationManager.SetHandItem(false, null);
         }
     }
 

@@ -148,9 +148,9 @@ public class Tutorial_UI : TutorialManager
                     if (RobotUITabs.tutorial_generalOpened)
                     {
                         currentStep = TutorialStep.GeneralExpl;
-
-                        hintsN.LockTo("RobotUI", new Vector3(-694.10f, 338.70f, -99.80f));
-                        UItext.text = "In de app 'Gegevens' vind je de cliëntgevens en de toedienlijst. Laten we de cliëntgegevens bekijken door op het icoon the klikken. ";
+                        hintsN.SetSize(788f, 524.9f);
+                        hintsN.LockTo("RobotUI", new Vector3(-1231.60f, 650.80f, 0.00f));
+                        UItext.text = "In de app 'Gegevens' vind je de cliëntgevens en de toedienlijst. Hier kunnen je gegevens controleren, bekijken en de toedienlijst aftekenen.";
                         SetUpTutorialNextButton();
                     }
                     break;
@@ -158,8 +158,9 @@ public class Tutorial_UI : TutorialManager
                     if (nextButtonClicked)
                     {
                         currentStep = TutorialStep.PatientRecordsOpen;
-                        UItext.text = "Something?";
-
+                        UItext.text = "Laten we de cliëntgegevens bekijken door op het icoon the klikken.";
+                        hintsN.ResetSize();
+                        hintsN.LockTo("RobotUI", new Vector3(-1006.70f, 38.00f, -99.80f));
                         RobotUITabs.tutorial_recordsOpened = false;
                         tabToOpen = "RecordsTab";
                     }
@@ -168,7 +169,8 @@ public class Tutorial_UI : TutorialManager
                     if (RobotUITabs.tutorial_recordsOpened)
                     {
                         RobotUITabs.tutorial_recordsOpened = false;
-
+                        hintsN.SetSize(788f, 524.9f);
+                        hintsN.LockTo("RobotUI", new Vector3(-1231.60f, 650.80f, 0.00f));
                         currentStep = TutorialStep.PatientRecordsExpl;
                         UItext.text = "Hier kun je de cliëntgegevens bekijken en controleren. De controle vind automatisch plaats wanneer je de cliëntgegevens opent.";
 
@@ -179,6 +181,8 @@ public class Tutorial_UI : TutorialManager
                     if (nextButtonClicked)
                     {
                         currentStep = TutorialStep.PatientRecordsBack;
+                        hintsN.ResetSize();
+                        hintsN.LockTo("RobotUI", new Vector3(-1824.10f, 1017.60f, 0.00f));
                         UItext.text = "Laten we nu de cliëntgegevens sluiten door op de terugknop te drukken.";
                         
                         closeTab = true;
@@ -190,6 +194,7 @@ public class Tutorial_UI : TutorialManager
                     if (RobotUITabs.tutorial_back)
                     {
                         currentStep = TutorialStep.PatientPrescriptionOpen;
+                        hintsN.LockTo("RobotUI", new Vector3(268.00f, 111.00f, 0.00f));
                         UItext.text = "Laten we nu de toedienlijst openen door op het icoon te klikken.";
 
                         RobotUITabs.tutorial_prescriptionOpened = false;
@@ -200,7 +205,8 @@ public class Tutorial_UI : TutorialManager
                     if (RobotUITabs.tutorial_prescriptionOpened)
                     {
                         RobotUITabs.tutorial_prescriptionOpened = false;
-
+                        hintsN.SetSize(788f, 524.9f);
+                        hintsN.LockTo("RobotUI", new Vector3(-1231.60f, 650.80f, 0.00f));
                         currentStep = TutorialStep.PatientPrescriptionExpl;
                         UItext.text = "Hier kun je de toedienlijst bekijken en controleren. De controle vind automatisch plaats wanneer je de toedienlijst opent.";
 
@@ -211,6 +217,9 @@ public class Tutorial_UI : TutorialManager
                     if (nextButtonClicked)
                     {
                         currentStep = TutorialStep.WritingDownExpl;
+                        hintsN.ResetSize();
+                        hintsN.LockTo("RobotUI", new Vector3(1809.70f, 741.50f, 0.00f));
+                        hintsN.SetIconPosition(1);
                         UItext.text = "Door op het afteken icoon te klikken kun je aan het einde van een handeling de toedienlijst aftekenen.";
 
                         SetUpTutorialNextButton();
@@ -220,6 +229,8 @@ public class Tutorial_UI : TutorialManager
                     if (nextButtonClicked)
                     {
                         currentStep = TutorialStep.PrescriptionBack;
+                        hintsN.SetIconPosition(0);
+                        hintsN.LockTo("RobotUI", new Vector3(-1824.10f, 1017.60f, 0.00f));
                         UItext.text = "Laten we nu de toedienlijst sluiten door op de terugknop te drukken.";
                         
                         closeTab = true;

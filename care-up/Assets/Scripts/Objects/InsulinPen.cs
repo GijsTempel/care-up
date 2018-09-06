@@ -55,6 +55,17 @@ public class InsulinPen : PickableObjectWithInfo {
                         PlayerAnimationManager.PlayAnimationSequence("InsulinInjection", target);
                     }
 
+                    PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
+                    if (manager != null && !manager.practiceMode)
+                    {
+                        InjectionPatient patient = GameObject.FindObjectOfType<InjectionPatient>();
+                        if (patient.pulledUp == false)
+                        {
+                            patient.pulledUp = true;
+                            patient.GetComponent<Animator>().SetTrigger("ShowBellyForInsulin");
+                        }
+                    }
+
                     return true;
                 }
             }

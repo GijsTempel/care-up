@@ -167,16 +167,10 @@ public class EndScoreManager : MonoBehaviour {
 
         time = gameTimer.CurrentTime;
 
+        int multiplier = (time < 300.0f ? 3 : (time < 600.0f ? 2 : 1));
         points = actionManager.Points;
         score = Mathf.FloorToInt(3.0f * points / actionManager.TotalPoints);
-
-        Debug.Log("Current points: " + points);
-        Debug.Log("Total available points: " + actionManager.TotalPoints);
-        Debug.Log("Calculated stars (3 * points/total): " + score);
-
-        int multiplier = (time < 300.0f ? 3 : (time < 600.0f ? 2 : 1));
         points *= multiplier;
-        Debug.Log("Multiplied final score: " + points);
 
         completedSceneName = SceneManager.GetActiveScene().name;
         

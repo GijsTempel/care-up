@@ -102,6 +102,8 @@ public class Syringe : PickableObjectWithInfo {
             {
                 if (actionManager.CompareUseOnInfo("SyringeWithInjectionNeedleCap", "Patient"))
                 {
+					string triggerName = "";
+					
                     actionManager.OnUseOnAction("SyringeWithInjectionNeedleCap", "Patient");
                     if (SceneManager.GetActiveScene().name == "Injection" ||
                         SceneManager.GetActiveScene().name == "Injection_ampoule" ||
@@ -112,6 +114,8 @@ public class Syringe : PickableObjectWithInfo {
                         target.GetComponent<InteractableObject>().Reset();
                         controls.ResetObject();
                         PlayerAnimationManager.PlayAnimationSequence("Injection", target);
+						
+						triggerName = "ShowArm";
                     }
                     else if (SceneManager.GetActiveScene().name == "Injection Subcutaneous" ||
                         SceneManager.GetActiveScene().name == "Injection Subcutaneous_ampoule" ||
@@ -121,7 +125,21 @@ public class Syringe : PickableObjectWithInfo {
                         target.GetComponent<InteractableObject>().Reset();
                         controls.ResetObject();
                         PlayerAnimationManager.PlayAnimationSequence("SubcutaneousInjection", target);
+						
+						triggerName = "ShowBellyForInsulin";
                     }
+
+                    PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
+                    if (manager != null && !manager.practiceMode)
+                    {
+                        InjectionPatient patient = GameObject.FindObjectOfType<InjectionPatient>();
+                        if (patient.pulledUp == false)
+                        {
+                            patient.pulledUp = true;
+                            patient.GetComponent<Animator>().SetTrigger(triggerName);
+                        }
+                    }
+
                     return true;
                 }
             }
