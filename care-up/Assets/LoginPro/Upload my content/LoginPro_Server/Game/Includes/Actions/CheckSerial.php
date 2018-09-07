@@ -60,6 +60,8 @@ while ($serial = $serials->fetch())
 	}
 }
 
+$data[] = "Received";
+
 sendArrayAndFinish($data);
 
 ?>
