@@ -167,6 +167,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
         foreach(string data in datas)
         {
+            if (data == "Received") break;
             string[] result;
             result = data.Split('|');
             
