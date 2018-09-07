@@ -76,7 +76,7 @@ namespace LoginProAsset
 
             // Launch all animations one after the other
            // StartCoroutine(LaunchRegisterAnimations());
-            GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set("Registratie voltooid!\nClick op de link in de e-mail, die naar je is toegestuurd, om je account te verifiëren");
+            GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set("Registratie voltooid! Je kunt nu inloggen met je gebruikersnaam & wachtwoord.");
             GameObject.Find("LoginPro").GetComponent<LoginMenuManager>().ShowMenu(menuOnSuccess);
             Debug.Log("Registration succeeded.");
         }

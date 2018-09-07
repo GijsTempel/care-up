@@ -204,9 +204,8 @@ namespace LoginProAsset
             }
 
             LoginPro.Manager.ExecuteOnServer("IncrementLoginNumber", Debug.Log, Debug.LogError);
-
             //LoginPro_Security.Load("UMenuPro");
-            //bl_SceneLoaderUtils.GetLoader.LoadLevel("UMenuPro");
+       
 
             // Get user's achievements
             //this.AchievementsManager.GetAchievements(); --->Achemvements are not used and turned off
