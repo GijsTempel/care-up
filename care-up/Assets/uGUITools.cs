@@ -1,9 +1,11 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 public class uGUITools : MonoBehaviour {
 #if UNITY_EDITOR
-	[MenuItem("uGUI/Anchors to Corners %[")]
+    [MenuItem("uGUI/Anchors to Corners %[")]
 	static void AnchorsToCorners(){
 		foreach(Transform transform in Selection.transforms){
 			RectTransform t = transform as RectTransform;
