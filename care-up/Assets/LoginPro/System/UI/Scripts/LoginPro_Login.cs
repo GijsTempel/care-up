@@ -203,6 +203,8 @@ namespace LoginProAsset
                 Debug.LogError("Where are Preferences GameObject?!");
             }
 
+            LoginPro.Manager.ExecuteOnServer("IncrementLoginNumber", Debug.Log, Debug.LogError);
+
             //LoginPro_Security.Load("UMenuPro");
        
 

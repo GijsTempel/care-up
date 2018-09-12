@@ -107,6 +107,7 @@ else if($ACTION == "GetTutorialCompleted") { include_once 'Includes/Actions/GetT
 else if($ACTION == "UploadSceneScore") { include_once 'Includes/Actions/UploadSceneScore.php'; }
 else if($ACTION == "GetSceneLeaders") { include_once 'Includes/Actions/GetSceneLeaders.php'; }
 else if($ACTION == "GetSceneInfo") { include_once 'Includes/Actions/GetSceneInfo.php'; }
+else if($ACTION == "IncrementLoginNumber") { include_once 'Includes/Actions/IncementLoginNumber.php'; }
 /*************************** ACTIONS ZONE END ******************************/
 
 
