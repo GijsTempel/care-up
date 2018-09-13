@@ -26,16 +26,15 @@ public class BundleLoader : MonoBehaviour {
     {
         #if DEVELOPMENT_BUILD || UNITY_EDITOR
         AssetBundleManager.SetDevelopmentAssetBundleServer();
-#endif
+        #else
         // Use the following code if AssetBundles are embedded in the project for example via StreamingAssets folder etc:
         //AssetBundleManager.SetSourceAssetBundleURL(Application.dataPath + "/");
 
 		// Or customize the URL based on your deployment or configuration
-		AssetBundleManager.SetSourceAssetBundleURL("http://www.triplemotionmedia.nl/CareUp_AssetBundles/");
-
+		AssetBundleManager.SetSourceAssetBundleURL("http://www.triplemotionmedia.nl/CareUp_AssetBundles_6.0.0/");
+        #endif
         if (GameObject.Find("url_test") != null)
         {
-            print("___________________________________GameObject.Find(url_test) != null");
             if (GameObject.Find("url_test").GetComponent<InputField>().text != "")
             {
 
@@ -43,15 +42,7 @@ public class BundleLoader : MonoBehaviour {
                 print("____++++++++++++++++++_______  " + GameObject.Find("url_test").GetComponent<InputField>().text);
             }
         }
-        else
-        {
-            print("****************GameObject.Find(url_test) == null");
-        }
-
-		//AssetBundleManager.SetSourceAssetBundleURL("http://172.20.200.251/test/");
-
-
-
+  
         // Initialize AssetBundleManifest which loads the AssetBundleManifest object.
         var request = AssetBundleManager.Initialize();
 
