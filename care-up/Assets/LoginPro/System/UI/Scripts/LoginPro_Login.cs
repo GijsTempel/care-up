@@ -133,10 +133,8 @@ namespace LoginProAsset
         /// <param name="errorMessage"></param>
         public void Error(string errorMessage)
         {
-          
             GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set(errorMessage);
             errorMessage = errorMessage.Replace("ERROR: ", "Login mislukt: ");
-
 
             // Show the error
             Debug.LogWarning(errorMessage);

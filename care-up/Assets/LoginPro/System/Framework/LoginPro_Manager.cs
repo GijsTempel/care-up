@@ -562,7 +562,7 @@ namespace LoginProAsset
             {
                 Debug.LogError(w.error);
                 Debug.LogError("Server can't be reached. Did you configure the AccountServerSettings.cs script ?\nMake sure the Server.php script is well placed, and your AccountServerSettings.cs (in game) AND AccountServerSettings.php (on server) scripts are corrects.\n" + w.error);
-                methodForError("Server can't be reached: " + w.error);
+                methodForError("Er is geen internetconnectie. Zorg ervoor dat je verbinding hebt met het internet");
 
                 // Clear the form
                 w.Dispose();
