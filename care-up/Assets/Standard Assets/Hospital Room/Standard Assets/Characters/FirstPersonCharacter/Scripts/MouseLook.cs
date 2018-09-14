@@ -42,8 +42,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public float YSensitivity = 2f;
 
         //touches (android, possibly other phones)
-        public float XTouchSensetivity = 0.007f;
-        public float YTouchSensetivity = 0.007f;
+        public float XTouchSensetivity = 0.03f;
+        public float YTouchSensetivity = 0.03f;
 
         // OSX
         public float XMacSensetivity = 50f;
