@@ -85,6 +85,8 @@ public class PlayerScript : MonoBehaviour {
 
     GameObject extraButton;
     bool extraBtnActiveForIpad = false;
+    GameObject extraPanel;
+    bool extraPanelActiveForIpad = false;
 
     public static bool actionsLocked = false;
 
@@ -127,6 +129,7 @@ public class PlayerScript : MonoBehaviour {
         moveBackButton.gameObject.SetActive(false);
 
         extraButton = GameObject.Find("ExtraButton");
+        extraPanel = GameObject.Find("Extra");
         
         itemControls = GameObject.FindObjectOfType<ItemControlsUI>();
         itemControls.gameObject.SetActive(false);
@@ -460,6 +463,12 @@ public class PlayerScript : MonoBehaviour {
             extraButton.SetActive(false);
         }
 
+        if (extraPanel != null)
+        {
+            extraPanelActiveForIpad = extraPanel.activeSelf;
+            extraPanel.SetActive(false);
+        }
+
         RobotManager.SetUITriggerActive(false);
         Camera.main.transform.localRotation = Quaternion.Euler(8.0f, 0.0f, 0.0f);
 
@@ -511,6 +520,11 @@ public class PlayerScript : MonoBehaviour {
             if (extraButton != null)
             {
                 extraButton.SetActive(extraBtnActiveForIpad);
+            }
+
+            if (extraPanel != null)
+            {
+                extraPanel.SetActive(extraPanelActiveForIpad);
             }
         }
 
