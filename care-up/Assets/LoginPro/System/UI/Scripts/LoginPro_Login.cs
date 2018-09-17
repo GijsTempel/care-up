@@ -202,6 +202,7 @@ namespace LoginProAsset
             }
 
             LoginPro.Manager.ExecuteOnServer("IncrementLoginNumber", Debug.Log, Debug.LogError);
+
             //LoginPro_Security.Load("UMenuPro");
        
 

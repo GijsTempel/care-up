@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using AssetBundles;
+using UnityEngine.UI;
+
 
 public class BundleLoader : MonoBehaviour {
 
@@ -25,12 +27,23 @@ public class BundleLoader : MonoBehaviour {
         #if DEVELOPMENT_BUILD || UNITY_EDITOR
         AssetBundleManager.SetDevelopmentAssetBundleServer();
         #else
-		// Use the following code if AssetBundles are embedded in the project for example via StreamingAssets folder etc:
-		AssetBundleManager.SetSourceAssetBundleURL(Application.dataPath + "/");
+        // Use the following code if AssetBundles are embedded in the project for example via StreamingAssets folder etc:
+        //AssetBundleManager.SetSourceAssetBundleURL(Application.dataPath + "/");
+
 		// Or customize the URL based on your deployment or configuration
+
 		AssetBundleManager.SetSourceAssetBundleURL("http://www.triplemotionmedia.nl/CareUp_AssetBundles/");
         #endif
+        if (GameObject.Find("url_test") != null)
+        {
+            if (GameObject.Find("url_test").GetComponent<InputField>().text != "")
+            {
 
+                AssetBundleManager.SetSourceAssetBundleURL(GameObject.Find("url_test").GetComponent<InputField>().text);
+                print("____++++++++++++++++++_______  " + GameObject.Find("url_test").GetComponent<InputField>().text);
+            }
+        }
+  
         // Initialize AssetBundleManifest which loads the AssetBundleManifest object.
         var request = AssetBundleManager.Initialize();
 

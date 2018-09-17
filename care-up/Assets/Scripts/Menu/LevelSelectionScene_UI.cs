@@ -47,6 +47,32 @@ public class LevelSelectionScene_UI : MonoBehaviour
     {
         ppManager = GameObject.FindObjectOfType<PlayerPrefsManager>();
 
+        UpdateSceneUI();
+    }
+
+    void ClearUI()
+    {
+        Transform parent1 = GameObject.Find("UMenuProManager/MenuCanvas/Play/LevelPanel/ViewPoint/List").transform;
+        for (int i = 0; i < parent1.childCount; ++i)
+        {
+            Destroy(parent1.GetChild(i).gameObject);
+        }
+
+        Transform parent2 = GameObject.Find("UMenuProManager/MenuCanvas/Leaderboard/LeftBar/Scroll View/Viewport/Content").transform;
+        for (int i = 0; i < parent1.childCount; ++i)
+        {
+            Destroy(parent2.GetChild(i).gameObject);
+        }
+    }
+
+    public void OnSceneTabSwitch()
+    {
+        ClearUI();
+        UpdateSceneUI();
+    }
+
+    void UpdateSceneUI()
+    {
         // load xml
         TextAsset textAsset = (TextAsset)Resources.Load("Xml/Scenes");
         XmlDocument xmlFile = new XmlDocument();
