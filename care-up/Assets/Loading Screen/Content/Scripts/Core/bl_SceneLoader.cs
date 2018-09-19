@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using Lovatto.SceneLoader;
 using System.Collections;
 using System.Collections.Generic;
+using LoginProAsset;
 
 [RequireComponent(typeof(AudioSource))]
 public class bl_SceneLoader : MonoBehaviour
@@ -67,6 +68,9 @@ public class bl_SceneLoader : MonoBehaviour
     private float lerpValue = 0;
     private bool canSkipWithKey = false;
     private bl_SceneLoaderInfo CurrentLoadLevel = null;
+
+    private string sceneToLoad = "";
+    private string bundleToLoad = "";
 
     /// <summary>
     /// 
@@ -223,6 +227,22 @@ public class bl_SceneLoader : MonoBehaviour
     /// </summary>
     public void LoadLevel(string level, string bundle = "")
     {
+        sceneToLoad = level;
+        bundleToLoad = bundle;
+        LoginPro.Manager.ExecuteOnServer("GetData", ActualLoadLevel, LoadLevelConnectionError, null);
+    }
+
+    public void LoadLevelConnectionError(string s)
+    {
+        // no internet connection, make a pop up or smth
+        Debug.LogWarning("No internet connection. Can't load asset bundle.");
+    }
+
+    public void ActualLoadLevel(string[] s)
+    {
+        string level = sceneToLoad;
+        string bundle = bundleToLoad;
+
         string message = "Loading level \"" + level + "\"";
         if (bundle != "")
         {
