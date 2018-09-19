@@ -901,6 +901,7 @@ public class ActionManager : MonoBehaviour {
     {
         RobotManager.RobotWrongAction();
         Narrator.PlaySound("WrongAction");
+        PlayerAnimationManager.PlayAnimation("no");
     }
 
     public static void CorrectAction()

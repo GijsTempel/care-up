@@ -80,7 +80,8 @@ public class PlayerAnimationManager : MonoBehaviour
 
         if (name != "LeftPick" && name != "RightPick" &&
             name != "closeup_left" && name != "closeup_right" &&
-            name != "faraway_left" && name != "faraway_right")
+            name != "faraway_left" && name != "faraway_right" &&
+            name != "no")
         {
             animationController.SetTrigger("S " + name);
             playerScript.ResetFreeLook();
