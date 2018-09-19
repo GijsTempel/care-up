@@ -235,6 +235,7 @@ public class bl_SceneLoader : MonoBehaviour
     public void LoadLevelConnectionError(string s)
     {
         // no internet connection, make a pop up or smth
+        GameObject.Find("NoInternet").GetComponent<Animator>().SetTrigger("pop");
         Debug.LogWarning("No internet connection. Can't load asset bundle.");
     }
 
