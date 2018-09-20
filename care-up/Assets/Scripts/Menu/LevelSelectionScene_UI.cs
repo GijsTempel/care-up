@@ -85,7 +85,8 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
         foreach (XmlNode xmlSceneNode in xmlSceneList)
         {
-            bool activated = PlayerPrefs.GetInt(xmlSceneNode.Attributes["id"].Value + " activated") == 1;
+           // bool activated = PlayerPrefs.GetInt(xmlSceneNode.Attributes["id"].Value + " activated") == 1;
+            bool activated = true;
             bool hidden = xmlSceneNode.Attributes["hidden"] != null;
             if (!activated && hidden)
             {
