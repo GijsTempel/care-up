@@ -8,7 +8,7 @@ using System.Collections;
 public class Narrator : MonoBehaviour {
 
     private static AudioSource[] sources;
-    private static AudioSource hintSrc;
+    private static AudioSource playerSource;
 
     void Start() {
 
@@ -22,7 +22,7 @@ public class Narrator : MonoBehaviour {
             }
             else
             {
-                hintSrc = sources[0];
+                playerSource = sources[0];
             }
         }
         else
@@ -37,7 +37,7 @@ public class Narrator : MonoBehaviour {
                 }
                 else
                 {
-                    hintSrc = sources[0];
+                    playerSource = sources[0];
                 }
             }
         }
@@ -50,19 +50,28 @@ public class Narrator : MonoBehaviour {
     /// <returns>True if played</returns>
     public static bool PlaySound(string sound, float volume = 1.0f)
     {
+        if (sound == "WrongAction")
+        {
+            AudioClip clip = Resources.Load<AudioClip>("Audio/WA1-1");
+            if (clip == null)
+            {
+                Debug.LogWarning("No audio clip " + sound + " found!");
+            }
+            else
+            {
+                PlayDialogueSound(clip);
+            }
+            return true;
+        }
+        
         foreach (AudioSource src in sources)
         {
-            if (src.isPlaying || src == hintSrc)
+            if (src.isPlaying || src == playerSource)
             {
                 continue;
             }
             else
             {
-                if (sound == "WrongAction")
-                {
-                    sound = "WA1-1";
-                }
-
                 AudioClip clip = Resources.Load<AudioClip>("Audio/" + sound);
                 if (clip == null)
                 {
@@ -76,7 +85,7 @@ public class Narrator : MonoBehaviour {
             }
         }
 
-        Debug.LogWarning("No available AudioSources! Add more to Narrator object.");
+        Debug.LogWarning("No available AudioSources!");
         return false;
     }
 
@@ -85,30 +94,25 @@ public class Narrator : MonoBehaviour {
     /// </summary>
     /// <param name="sound">sound name</param>
     /// <returns>True if played</returns>
-    public static bool PlaySound(AudioClip sound, float volume = 1.0f)
+    public static bool PlayDialogueSound(AudioClip sound, float volume = 1.0f)
     {
-        foreach (AudioSource src in sources)
+        if (playerSource.isPlaying)
         {
-            if (src.isPlaying || src == hintSrc)
-            {
-                continue;
-            }
-            else
-            {
-                src.PlayOneShot(sound, volume);
-                return true;
-            }
+            Debug.LogWarning("Player is already saying something.");
+            return false;
+        }
+        else
+        {
+            playerSource.PlayOneShot(sound, volume);
+            return true;
         }
 
-        Debug.LogWarning("No available AudioSources! Add more to Narrator object.");
-        return false;
     }
 
     // checks if hint already playing to avoid multiple at same time
     public static bool PlayHintSound(string sound, float volume = 1.0f)
     {
-
-        if (hintSrc.isPlaying)
+        if (playerSource.isPlaying)
         {
             Debug.Log("Hint already playing");
             return false;
@@ -122,7 +126,7 @@ public class Narrator : MonoBehaviour {
             }
             else
             {
-                hintSrc.PlayOneShot(clip, volume);
+                playerSource.PlayOneShot(clip, volume);
             }
 
             return true;

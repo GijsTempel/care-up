@@ -109,7 +109,7 @@ public class InjectionPatient : PersonObject {
 
     private IEnumerator GreetDialogueCoroutine()
     {
-        Narrator.PlaySound(audioClips[0]);
+        Narrator.PlayDialogueSound(audioClips[0]);
         yield return new WaitForSeconds(audioClips[0].length);
 
         animator.SetTrigger("goedemorgen");
@@ -121,7 +121,7 @@ public class InjectionPatient : PersonObject {
 
     private IEnumerator GreetDialogueCoroutinePt2()
     {
-        Narrator.PlaySound(audioClips[2]);
+        Narrator.PlayDialogueSound(audioClips[2]);
         yield return new WaitForSeconds(audioClips[2].length);
 
         animator.SetTrigger("ja_is_goed");
@@ -131,7 +131,7 @@ public class InjectionPatient : PersonObject {
 
     private IEnumerator GreetDialogueCoroutinePt3()
     {
-        Narrator.PlaySound(audioClips[4]);
+        Narrator.PlayDialogueSound(audioClips[4]);
         yield return new WaitForSeconds(audioClips[4].length);
 
         animator.SetTrigger("oke");
@@ -148,12 +148,12 @@ public class InjectionPatient : PersonObject {
 
     private IEnumerator PutAbsorptionNeedleDialogueCoroutine()
     {
-        Narrator.PlaySound(audioClips[6]);
+        Narrator.PlayDialogueSound(audioClips[6]);
         yield return new WaitForSeconds(audioClips[6].length);
         animator.SetTrigger("ja_goed_hoor");
         audioSource.PlayOneShot(audioClips[7]);
         yield return new WaitForSeconds(audioClips[7].length);
-        Narrator.PlaySound(audioClips[8]);
+        Narrator.PlayDialogueSound(audioClips[8]);
     }
 
     public void RollUpSleevesDialogue()
@@ -163,7 +163,7 @@ public class InjectionPatient : PersonObject {
 
     private IEnumerator RollUpSleevesDialogueCoroutine()
     {
-        Narrator.PlaySound(audioClips[9]);
+        Narrator.PlayDialogueSound(audioClips[9]);
         yield return new WaitForSeconds(audioClips[9].length);
         animator.SetTrigger("ja_hoor_zal_ik_doen");
         audioSource.PlayOneShot(audioClips[10]);
@@ -180,7 +180,7 @@ public class InjectionPatient : PersonObject {
 
     private IEnumerator InjectNeedleInArmDialogueCoroutine()
     {
-        Narrator.PlaySound(audioClips[11]);
+        Narrator.PlayDialogueSound(audioClips[11]);
         yield return new WaitForSeconds(audioClips[11].length);
         animator.SetTrigger("oke");
         audioSource.PlayOneShot(audioClips[12]);
@@ -198,7 +198,7 @@ public class InjectionPatient : PersonObject {
 
     private IEnumerator InjectMedicineSlowlyDialogueCoroutine()
     {
-        Narrator.PlaySound(audioClips[13]);
+        Narrator.PlayDialogueSound(audioClips[13]);
         yield return new WaitForSeconds(audioClips[13].length);
         animator.SetTrigger("ja_hoor");
         audioSource.PlayOneShot(audioClips[14]);
@@ -214,7 +214,7 @@ public class InjectionPatient : PersonObject {
 
     private IEnumerator AfterSequenceDialogueCoroutine()
     {
-        Narrator.PlaySound(audioClips[15]);
+        Narrator.PlayDialogueSound(audioClips[15]);
         yield return new WaitForSeconds(audioClips[15].length);
         animator.SetTrigger("oke_dat_wil_mee");
         audioSource.PlayOneShot(audioClips[16]);
