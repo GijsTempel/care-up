@@ -7,8 +7,8 @@ public class DemoScript : MonoBehaviour {
 
     void Start () {
         CMLData credentials = new CMLData();
-        credentials.Set( "username", username );
-        credentials.Set( "password", password );
+        credentials.Set( "testserial", username );
+        credentials.Set( "123", password );
         WULogin.AttemptToLogin( credentials );
 	}	
 }
