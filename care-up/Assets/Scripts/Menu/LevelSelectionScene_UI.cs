@@ -36,8 +36,9 @@ public class LevelSelectionScene_UI : MonoBehaviour
             v.gameObject.SetActive(false);
         }
 
-        GameObject.Find("UMenuProManager/MenuCanvas/Home/BannerArea/RegisterProtocols/News/Text")
-            .GetComponent<Text>().text = GameObject.FindObjectOfType<PlayerPrefsManager>().ActivatedScenes;
+        // we dont have a list of activated scenes anymore i guess
+        //GameObject.Find("UMenuProManager/MenuCanvas/Home/BannerArea/RegisterProtocols/News/Text")
+        //    .GetComponent<Text>().text = GameObject.FindObjectOfType<PlayerPrefsManager>().ActivatedScenes;
     }
 
     /// <summary>
@@ -88,7 +89,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
            // bool activated = PlayerPrefs.GetInt(xmlSceneNode.Attributes["id"].Value + " activated") == 1;
             bool activated = true;
             bool hidden = xmlSceneNode.Attributes["hidden"] != null;
-            if (!activated && hidden)
+            if ((!activated && hidden) || hidden )
             {
                 // not activated and hidden scene should not even create a panel, so just end up here
                 continue;
@@ -218,7 +219,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
         }
 
         // maybe launch loading icon or something? it isnt instant
-        ppManager.GetSceneLeaders(sceneName, 10, GetSceneLeaders_Success);
+        //ppManager.GetSceneLeaders(sceneName, 10, GetSceneLeaders_Success);
     }
 
     public void GetSceneLeaders_Success(string[] info)

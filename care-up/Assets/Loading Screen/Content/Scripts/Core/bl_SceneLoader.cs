@@ -229,7 +229,8 @@ public class bl_SceneLoader : MonoBehaviour
     {
         sceneToLoad = level;
         bundleToLoad = bundle;
-        LoginPro.Manager.ExecuteOnServer("GetData", ActualLoadLevel, LoadLevelConnectionError, null);
+        //LoginPro.Manager.ExecuteOnServer("GetData", ActualLoadLevel, LoadLevelConnectionError, null);
+        ActualLoadLevel(null);
     }
 
     public void LoadLevelConnectionError(string s)
