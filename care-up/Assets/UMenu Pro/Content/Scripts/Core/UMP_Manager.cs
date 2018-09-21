@@ -118,7 +118,6 @@ public class UMP_Manager : MonoBehaviour {
     public void LogOff()
     {
         WULogin.LogOut();
-        bl_SceneLoaderUtils.GetLoader.LoadLevel("LoginMenu");
     }
     [System.Serializable]
     public class LevelInfo
