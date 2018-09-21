@@ -4,11 +4,18 @@ using UnityEngine;
 using MBS;
 
 public class LoadMenuAfterLoginWP : MonoBehaviour {
-    
-	void Start ()
+
+    static bool done = false;
+
+    void Start()
     {
-        WULogin.onLoggedIn += LoadMenuScene;
-	}
+        if (!done)
+        {
+            WULogin.onLoggedIn += LoadMenuScene;
+            done = true;
+            Debug.Log("done " + done);
+        }
+    }
 
     void LoadMenuScene( CML response )
     {
