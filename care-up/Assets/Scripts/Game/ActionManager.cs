@@ -704,13 +704,16 @@ public class ActionManager : MonoBehaviour {
                 messageCenter.NewMessage("Verkeerde handeling!", sublist[0].extraDescr, RobotUIMessageTab.Icon.Error);
             }
 
-            ActionManager.WrongAction();
+            ActionManager.WrongAction(); 
 
             penalized = true;
 
             if (type == ActionType.SequenceStep && manager.practiceMode)
             {
                 GameObject.Find("WrongAction").GetComponent<TimedPopUp>().Set(sublist[0].extraDescr);
+                // reset 'no' trigger
+                GameObject.FindObjectOfType<PlayerScript>().transform.GetChild(0).GetChild(0).
+                    GetComponent<Animator>().ResetTrigger("no");
             }
         }
         else
