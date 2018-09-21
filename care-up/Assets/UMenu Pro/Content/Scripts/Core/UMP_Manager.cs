@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using MBS;
 
 public class UMP_Manager : MonoBehaviour {
 
@@ -114,7 +115,11 @@ public class UMP_Manager : MonoBehaviour {
 		Application.Quit();
 #endif
     }
-
+    public void LogOff()
+    {
+        WULogin.LogOut();
+        bl_SceneLoaderUtils.GetLoader.LoadLevel("LoginMenu");
+    }
     [System.Serializable]
     public class LevelInfo
     {
