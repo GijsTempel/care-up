@@ -293,7 +293,7 @@ namespace MBS
                 MBSNotification.SpawnInstance(c , new Vector2( 270f, -30f ), new Vector2( -20f, -30f ), localisation.RegistrationSuccessHeader, localisation.RegistrationSuccessMessage );
             WULogin.HasSerial = true;
             WULogin.SerialNumber = response [0].String( "serial" );
-            DisplayScreen( panels.post_login_menu_screen );
+            bl_SceneLoaderUtils.GetLoader.LoadLevel("UMenuPro");
         }
 
         void OnRegistrationFailed( CMLData response )
