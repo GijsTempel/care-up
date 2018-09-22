@@ -467,7 +467,7 @@ namespace MBS
         virtual public void OnRegistered( CML data )
         {
             StatusMessage.Message = "Registration successful...";
-            DisplayScreen( panels.login_screen );
+            DisplayScreen( panels.login_menu );
         }
 
         virtual public void OnAccountInfoUpdated( CML data )
