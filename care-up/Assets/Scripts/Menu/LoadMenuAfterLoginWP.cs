@@ -12,16 +12,13 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
         if (!done)
         {
             WULogin.onLoggedIn += CheckForSerials;
+            WULogin.onLoggedOut += LoadStartScene;
             done = true;
-            Debug.Log("done " + done);
         }
     }
  
-
     void CheckForSerials(CML ignore)
-
     {
-
         if(WULogin.RequireSerialForLogin && !WULogin.HasSerial)
         {
             StatusMessage.Message ="Je hebt geen actief product";
@@ -32,12 +29,11 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
         {
             bl_SceneLoaderUtils.GetLoader.LoadLevel("UMenuPro");
         }
-            
-
     }
-    /*void LoadMenuScene( CML response )
-    {
-        Debug.Log("Login was successful. Loading UMenuPro scene.");
 
-    }*/
+    void LoadStartScene(CML response)
+    {
+        Debug.Log("Logout was successful. Loading first scene.");
+        bl_SceneLoaderUtils.GetLoader.LoadLevel("LoginMenu");
+    }
 }
