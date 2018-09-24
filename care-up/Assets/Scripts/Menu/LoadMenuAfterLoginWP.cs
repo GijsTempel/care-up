@@ -19,6 +19,7 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
  
     void CheckForSerials(CML ignore)
     {
+        #if WUSKU
         if(WULogin.RequireSerialForLogin && !WULogin.HasSerial)
         {
             StatusMessage.Message ="Je hebt geen actief product";
@@ -29,6 +30,7 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
         {
             bl_SceneLoaderUtils.GetLoader.LoadLevel("UMenuPro");
         }
+        #endif
     }
 
     void LoadStartScene(CML response)
