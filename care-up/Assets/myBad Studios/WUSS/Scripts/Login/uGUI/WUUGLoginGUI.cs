@@ -149,6 +149,7 @@ namespace MBS
             {
                 attempt_auto_login = PlayerPrefs.GetInt( "Remember Me", 0 ) > 0;
                 fields.login_username.text = PlayerPrefs.GetString( "username", string.Empty );
+                fields.login_password.text = PlayerPrefs.GetString( "password", string.Empty );
             }
 
             //if this script is loaded while already logged in, go to the post login menu or else show the login menu
@@ -386,11 +387,14 @@ namespace MBS
         {
             //remember the "Remember me" choice...
             PlayerPrefs.SetInt( "Remember Me", attempt_auto_login ? 1 : 0 );
-            if ( attempt_auto_login )
-                PlayerPrefs.SetString( "username", fields.login_username.text );
+            if (attempt_auto_login)
+            {
+                PlayerPrefs.SetString("username", fields.login_username.text);
+                PlayerPrefs.SetString("password", fields.login_password.text);
+            }
 
             //remove the password from the textfield
-            fields.login_password.text = "";
+            //fields.login_password.text = "";
 
 
 #if WUSKU
