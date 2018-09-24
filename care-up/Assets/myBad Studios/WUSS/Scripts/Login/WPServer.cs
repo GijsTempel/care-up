@@ -170,6 +170,8 @@ namespace MBS
 
                 failedresponse?.Invoke( error );
 
+                if (e.Message == "Cannot resolve destination host")
+                    GameObject.Find("NoInternet").GetComponent<Animator>().SetTrigger("pop");
                 Debug.LogWarning( $"{e.Message}\n{w.downloadHandler.text}" );
             }
         }
