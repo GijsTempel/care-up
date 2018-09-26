@@ -117,7 +117,13 @@ public class UMP_Manager : MonoBehaviour {
     }
     public void LogOff()
     {
+        Windows[4].SetActive (false);
         WULogin.LogOut();
+    }
+
+    public void TutorialClicked () 
+    {
+        Windows[3].SetActive (false);
     }
     [System.Serializable]
     public class LevelInfo

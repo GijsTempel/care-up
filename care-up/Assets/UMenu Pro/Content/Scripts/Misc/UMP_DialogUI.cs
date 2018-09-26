@@ -36,6 +36,8 @@ public class UMP_DialogUI : MonoBehaviour
         }
     }
 
+    public void InstantClose () => Desactive ();
+
     /// <summary>
     /// 
     /// </summary>
