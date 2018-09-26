@@ -803,7 +803,8 @@ public class HandsInventory : MonoBehaviour {
         string rightName = rightHandObject ? rightHandObject.name : "";
         
         bool combineAllowed = actionManager.CompareCombineObjects(leftName, rightName);
-        combineAllowed = combineAllowed || !GameObject.FindObjectOfType<PlayerPrefsManager>().practiceMode;
+        bool practice = (GameObject.FindObjectOfType<PlayerPrefsManager>() != null ? GameObject.FindObjectOfType<PlayerPrefsManager>().practiceMode : true);
+        combineAllowed = combineAllowed || practice;
 
         bool combined = combinationManager.Combine(leftName, rightName, out leftCombineResult, out rightCombineResult);
 

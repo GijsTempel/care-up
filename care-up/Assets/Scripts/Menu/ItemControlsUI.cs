@@ -209,7 +209,9 @@ public class ItemControlsUI : MonoBehaviour {
                     return;
                 }
             }
-            else if (pickButton.activeSelf && !examineButton.activeSelf)
+            else if ((pickButton.activeSelf && !examineButton.activeSelf)
+                || (initedObject.GetComponent<PickableObject>() != null
+                && initedObject.GetComponent<PickableObject>().sihlouette))
             {
                 Pick();
             }
