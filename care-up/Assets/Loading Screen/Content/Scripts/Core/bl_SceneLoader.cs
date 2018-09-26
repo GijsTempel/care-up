@@ -4,6 +4,7 @@ using Lovatto.SceneLoader;
 using System.Collections;
 using System.Collections.Generic;
 using LoginProAsset;
+using MBS;
 
 [RequireComponent(typeof(AudioSource))]
 public class bl_SceneLoader : MonoBehaviour
@@ -221,26 +222,30 @@ public class bl_SceneLoader : MonoBehaviour
         if (LoadingCircleCanvas != null) { StartCoroutine(FadeOutCanvas(LoadingCircleCanvas, 0.5f)); }
         if (LoadingBarAlpha != null && FadeLoadingBarOnFinish) { StartCoroutine(FadeOutCanvas(LoadingBarAlpha, 1)); }
     }
-
-    /// <summary>
-    /// 
-    /// </summary>
+    
     public void LoadLevel(string level, string bundle = "")
     {
         sceneToLoad = level;
         bundleToLoad = bundle;
-        //LoginPro.Manager.ExecuteOnServer("GetData", ActualLoadLevel, LoadLevelConnectionError, null);
-        ActualLoadLevel(null);
+
+        string scoring_filepath = "wuss_scoring/unity_functions.php";
+        string SCORINGConstant = "SCORING";
+
+        CMLData data = new CMLData();
+        data.Seti("limit", 0);
+        data.Seti("gid", -1);
+
+        WPServer.ContactServer("FetchScores", scoring_filepath, SCORINGConstant, data, ActualLoadLevel, LoadLevelConnectionError);
     }
 
-    public void LoadLevelConnectionError(string s)
+    public void LoadLevelConnectionError(CMLData action)
     {
         // no internet connection, make a pop up or smth
         GameObject.Find("NoInternet").GetComponent<Animator>().SetTrigger("pop");
         Debug.LogWarning("No internet connection. Can't load asset bundle.");
     }
 
-    public void ActualLoadLevel(string[] s)
+    public void ActualLoadLevel(CML action)
     {
         string level = sceneToLoad;
         string bundle = bundleToLoad;
