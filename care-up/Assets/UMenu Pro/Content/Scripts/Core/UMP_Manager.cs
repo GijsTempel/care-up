@@ -53,7 +53,7 @@ public class UMP_Manager : MonoBehaviour {
         if (CurrentWindow == id)
             return;
 
-        if (id != 2)
+        if (id != 1)
         {
             for (int i = 0; i < Windows.Count; i++)
             {
@@ -117,13 +117,13 @@ public class UMP_Manager : MonoBehaviour {
     }
     public void LogOff()
     {
-        Windows[4].SetActive (false);
+        Windows[3].SetActive (false);
         WULogin.LogOut();
     }
 
     public void TutorialClicked () 
     {
-        Windows[3].SetActive (false);
+        Windows[2].SetActive (false);
     }
     [System.Serializable]
     public class LevelInfo
