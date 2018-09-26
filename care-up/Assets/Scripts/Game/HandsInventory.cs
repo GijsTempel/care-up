@@ -259,11 +259,13 @@ public class HandsInventory : MonoBehaviour {
     {
         if (hand)
         {
+            leftHandObject.DeleteGhostObject();
             Destroy(leftHandObject.gameObject);
             leftHandObject = null;
         }
         else
         {
+            rightHandObject.DeleteGhostObject();
             Destroy(rightHandObject.gameObject);
             rightHandObject = null;
         }
@@ -288,6 +290,7 @@ public class HandsInventory : MonoBehaviour {
                 load = true;
             }
 
+            leftHandObject.DeleteGhostObject();
             Destroy(leftHandObject.gameObject);
             leftHandObject = null;
             
@@ -296,6 +299,8 @@ public class HandsInventory : MonoBehaviour {
             leftHandObject.leftControlBone = leftControlBone;
             leftHandObject.rightControlBone = rightControlBone;
             SetHold(true);
+
+            leftHandObject.CreateGhostObject();
 
             PlayerAnimationManager.SetHandItem(true, leftObject);
 
@@ -325,6 +330,7 @@ public class HandsInventory : MonoBehaviour {
                 load = true;
             }
 
+            rightHandObject.DeleteGhostObject();
             Destroy(rightHandObject.gameObject);
             rightHandObject = null;
 
@@ -333,6 +339,8 @@ public class HandsInventory : MonoBehaviour {
             rightHandObject.leftControlBone = leftControlBone;
             rightHandObject.rightControlBone = rightControlBone;
             SetHold(false);
+
+            rightHandObject.CreateGhostObject();
 
             PlayerAnimationManager.SetHandItem(false, rightObject);
 
@@ -529,6 +537,7 @@ public class HandsInventory : MonoBehaviour {
         {
             if (leftHandObject)
             {
+                leftHandObject.DeleteGhostObject();
                 leftHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
                 leftHandObject.enabled = false;
                 leftHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
@@ -541,6 +550,7 @@ public class HandsInventory : MonoBehaviour {
         {
             if (rightHandObject)
             {
+                rightHandObject.DeleteGhostObject();
                 rightHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
                 rightHandObject.enabled = false;
                 rightHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
