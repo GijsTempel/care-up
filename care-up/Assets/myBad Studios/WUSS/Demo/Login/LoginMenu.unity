@@ -1256,7 +1256,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 141504885}
-        m_MethodName: DoLogin
+        m_MethodName: ReturnFromSerialScreen
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2606,10 +2606,10 @@ MonoBehaviour:
   fields:
     login_username: {fileID: 314873940}
     login_password: {fileID: 2126106767}
-    register_username: {fileID: 1169342141}
+    register_username: {fileID: 944686843}
     register_password: {fileID: 143365402}
     register_verify: {fileID: 502495157}
-    register_email: {fileID: 954176380}
+    register_email: {fileID: 791934621}
     pass_reset_username: {fileID: 1169342141}
     pass_reset_email: {fileID: 954176380}
     pass_change_old: {fileID: 1899295979}
@@ -9853,7 +9853,6 @@ GameObject:
   - component: {fileID: 715878172}
   - component: {fileID: 715878177}
   - component: {fileID: 715878176}
-  - component: {fileID: 715878175}
   - component: {fileID: 715878174}
   - component: {fileID: 715878173}
   m_Layer: 5
@@ -9940,25 +9939,6 @@ MonoBehaviour:
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   delegates: []
---- !u!114 &715878175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114000011275752398, guid: dba0dbf44d02c0143af4279315b5348c,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 715878171}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0835d918f669cee468b1635762e45124, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  News: {fileID: 0}
-  Username: {fileID: 1169342141}
-  Password: {fileID: 954176380}
-  Menu: {fileID: 0}
-  ButtonSave: {fileID: 0}
-  ButtonDontSave: {fileID: 0}
-  menuOnSuccess: {fileID: 0}
 --- !u!114 &715878176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10001,7 +9981,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 141504885}
-        m_MethodName: DoLogin
+        m_MethodName: DoPasswordReset
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
