@@ -42,7 +42,8 @@ public class FraxiparineSequence : AnimationSequenceState
         }
         else if (PlayerAnimationManager.CompareFrames(frame, prevFrame, dropCapFrame))
         {
-            inv.DropLeftObject();
+            //inv.DropLeftObject();
+            inv.RemoveHandObject(true); // left
 
             inv.RightHandObject.GetComponent<FraxiparineSyringe>().updatePlunger = true;
         }
