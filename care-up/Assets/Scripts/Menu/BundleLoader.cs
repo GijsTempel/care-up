@@ -26,14 +26,14 @@ public class BundleLoader : MonoBehaviour {
     {
         #if DEVELOPMENT_BUILD || UNITY_EDITOR
         AssetBundleManager.SetDevelopmentAssetBundleServer();
-        #else
+#else
         // Use the following code if AssetBundles are embedded in the project for example via StreamingAssets folder etc:
         //AssetBundleManager.SetSourceAssetBundleURL(Application.dataPath + "/");
 
 		// Or customize the URL based on your deployment or configuration
 
-		AssetBundleManager.SetSourceAssetBundleURL("https://careup.online/CareUp/AssetBundels");
-        #endif
+		AssetBundleManager.SetSourceAssetBundleURL("https://careup.online/CareUp/AssetBundles/");
+#endif
         if (GameObject.Find("url_test") != null)
         {
             if (GameObject.Find("url_test").GetComponent<InputField>().text != "")
