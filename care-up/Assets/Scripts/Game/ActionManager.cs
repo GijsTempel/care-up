@@ -775,12 +775,13 @@ public class ActionManager : MonoBehaviour {
             else return false;
         } 
     }
-
+   
     private void SceneCompletedRoutine()
     {
         Narrator.PlaySound("LevelComplete", 0.1f);
         GameObject.FindObjectOfType<GameUI>().ShowDonePanel(true);
 
+        /*//Loginpro is removed but these achievements can be used with new system later
         GameObject ach = GameObject.Find("FinishProtocol");
         if (ach != null)
         {
@@ -809,7 +810,7 @@ public class ActionManager : MonoBehaviour {
         if (ach != null)
         {
             ach.GetComponent<LoginProAsset.LoginPro_Achievement>().Unlock(20);
-        }
+        }*/
     }
 
     /// <summary>

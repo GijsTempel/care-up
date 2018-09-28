@@ -114,7 +114,7 @@ public class PlayerPrefsManager : MonoBehaviour
         datas[1] = score.ToString();
         datas[2] = time.ToString();
 
-        LoginPro.Manager.ExecuteOnServer("UploadSceneScore", Blank, Debug.LogError, datas);
+
     }
 
     public bool GetSceneCompleted(string sceneName)
@@ -138,27 +138,12 @@ public class PlayerPrefsManager : MonoBehaviour
         set { PlayerPrefs.SetInt("TutorialPopUpDeclined", value ? 1 : 0); }
     }
 
-    public void CheckSerial()
-    { 
-        LoginPro.Manager.ExecuteOnServer("CheckSerial", CheckSerial_Success, Debug.LogError, null);
-    }
-
-    public void CheckSerialAfterLogIn()
-    {
-        LoginPro.Manager.ExecuteOnServer("CheckSerial", CheckSerialAfterLogIn_Success, Debug.LogError, null);
-    }
-
     public void SetSerial(string serial)
     {
         string[] data = new string[1];
         data[0] = serial;
 
-        LoginPro.Manager.ExecuteOnServer("SetSerial", SetSerialSuccess, Debug.LogError, data);
-    }
-
-    public void SetSerialSuccess(string[] datas)
-    {
-        CheckSerial();
+       // LoginPro.Manager.ExecuteOnServer("SetSerial", SetSerialSuccess, Debug.LogError, data);
     }
 
     private void CheckSerial_Success(string[] datas)
@@ -208,7 +193,7 @@ public class PlayerPrefsManager : MonoBehaviour
     public void AfterLoginCheck()
     {
         // deactivate scenes
-        LoginPro.Manager.ExecuteOnServer("GetScenes", GetScenes_Success, Debug.LogError, null);
+        //LoginPro.Manager.ExecuteOnServer("GetScenes", GetScenes_Success, Debug.LogError, null);
         
         // support for old key type
         if (PlayerPrefs.GetString("SerialKey") != "")
@@ -224,7 +209,7 @@ public class PlayerPrefsManager : MonoBehaviour
             if (PlayerPrefs.GetInt("TutorialCompleted") == 1)
             {
                 // tutorial was completed, let's send to server and remove this info from PC
-                LoginPro.Manager.ExecuteOnServer("SetTutorialCompleted", Blank, Debug.LogError, null);
+               // LoginPro.Manager.ExecuteOnServer("SetTutorialCompleted", Blank, Debug.LogError, null);
                 tutorialCompleted = true; // store for current session
             }
             else
@@ -236,7 +221,7 @@ public class PlayerPrefsManager : MonoBehaviour
         }
         else // when info is deleted from PC
         {
-            LoginPro.Manager.ExecuteOnServer("GetTutorialCompleted", GetTutorialCompleted_Success, Debug.LogError, null);
+           // LoginPro.Manager.ExecuteOnServer("GetTutorialCompleted", GetTutorialCompleted_Success, Debug.LogError, null);
         }
     }
 
@@ -261,7 +246,7 @@ public class PlayerPrefsManager : MonoBehaviour
         }
 
         // activate scenes corresponding to serials
-        CheckSerialAfterLogIn();
+       
     }
 
     public void GetSceneLeaders(string scene, int top, System.Action<string[]> method)
@@ -270,7 +255,7 @@ public class PlayerPrefsManager : MonoBehaviour
         datas[0] = scene;
         datas[1] = top.ToString();
 
-        LoginPro.Manager.ExecuteOnServer("GetSceneLeaders", method, Debug.LogError, datas);
+        //LoginPro.Manager.ExecuteOnServer("GetSceneLeaders", method, Debug.LogError, datas);
     }
 
     public void GetSceneDatabaseInfo(string scene, System.Action<string[]> method)
@@ -279,7 +264,7 @@ public class PlayerPrefsManager : MonoBehaviour
         datas[0] = scene;
         Debug.Log(datas[0]);
 
-        LoginPro.Manager.ExecuteOnServer("GetSceneInfo", method, Debug.LogError, datas);
+       // LoginPro.Manager.ExecuteOnServer("GetSceneInfo", method, Debug.LogError, datas);
     }
 
     public void Blank(string[] s) { }

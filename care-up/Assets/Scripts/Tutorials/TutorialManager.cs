@@ -195,7 +195,7 @@ public class TutorialManager : MonoBehaviour
         }
 
         finished = true;
-
+        /*Old achievements using LoginPro, should be replaced with new system
         GameObject ach = GameObject.Find("FinishTutorial");
         if (ach != null)
         {
@@ -206,6 +206,6 @@ public class TutorialManager : MonoBehaviour
         if (ach != null)
         {
             ach.GetComponent<LoginProAsset.LoginPro_Achievement>().Unlock(10);
-        }
+        }*/
     }
 }

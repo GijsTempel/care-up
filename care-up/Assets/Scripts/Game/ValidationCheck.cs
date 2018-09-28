@@ -28,7 +28,7 @@ public class ValidationCheck : MonoBehaviour
 	public void GetFromServer()
 	{
 		// Here datas are null since we don't want to SEND anything (but we want something)
-		LoginPro.Manager.ExecuteOnServer("GetData",Startgame, null);
+		//LoginPro.Manager.ExecuteOnServer("GetData",Startgame, null);
 	}
 	//check if code is correct and set to true in database. 
 		public void Startgame(string[] datas)
