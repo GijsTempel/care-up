@@ -215,7 +215,6 @@ public class SelectDialogue : MonoBehaviour {
                                 break;
                         }
 
-                        ActionManager.WrongAction();
                         GameObject.FindObjectOfType<ActionManager>().OnSequenceStepAction("");
                     }
                 }
