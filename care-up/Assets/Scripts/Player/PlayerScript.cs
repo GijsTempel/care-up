@@ -463,10 +463,19 @@ public class PlayerScript : MonoBehaviour {
             extraButton.SetActive(false);
         }
 
+        if (extraPanel == null)
+        {
+            extraPanel = GameObject.Find("Extra");
+        }
+
         if (extraPanel != null)
         {
             extraPanelActiveForIpad = extraPanel.activeSelf;
             extraPanel.SetActive(false);
+        }
+        else
+        {
+            Debug.LogWarning("Did not find hints extra panel.");
         }
 
         RobotManager.SetUITriggerActive(false);
