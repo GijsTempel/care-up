@@ -122,7 +122,11 @@ public class InteractableObject : MonoBehaviour {
 
                     if (!itemDescription.activeSelf)
                     {
-                        itemDescription.SetActive(true);
+                        PickableObject pickableObject = controls.SelectedObject.GetComponent<PickableObject>();
+                        if (!(pickableObject != null && pickableObject.sihlouette == true))
+                        {
+                            itemDescription.SetActive(true);
+                        }
                     }
 
                     itemDescription.GetComponentInChildren<Text>().text = (description == "") ? name : description;
