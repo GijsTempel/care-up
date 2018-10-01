@@ -127,7 +127,17 @@ public class InteractableObject : MonoBehaviour {
         {
             bool selectedIsInteractable = (controls.SelectedObject != null && controls.CanInteract &&
                 controls.SelectedObject.GetComponent<InteractableObject>() != null);
-            if (controls.SelectedObject == gameObject && !cameraMode.animating)
+
+            PickableObject pickableObject = null;
+            if (controls.SelectedObject != null)
+            {
+                pickableObject = controls.SelectedObject.GetComponent<PickableObject>();
+            }
+
+            bool notSihlouette = (pickableObject == null || (pickableObject != null && pickableObject.sihlouette == false));
+            selectedIsInteractable &= notSihlouette;
+
+            if ((controls.SelectedObject == gameObject && !cameraMode.animating) && notSihlouette)
             {
                 if (controls.CanInteract)
                 {
