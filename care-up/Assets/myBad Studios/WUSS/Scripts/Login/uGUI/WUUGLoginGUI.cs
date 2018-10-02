@@ -23,6 +23,7 @@ namespace MBS
             shop_screen,
             localization_screen,
             serialnumber_screen,
+            termsandcondition_screen,
             custom_1;
         }
 
@@ -253,16 +254,19 @@ namespace MBS
             if ( fields.register_email.text.Trim() == string.Empty || fields.register_password.text.Trim() == string.Empty || fields.register_username.text.Trim() == string.Empty )
             {
                 StatusMessage.Message = localisation.AllFieldsRequired;
+                DisplayScreen (panels.login_menu);
                 return;
             }
             if ( fields.register_verify.text.Trim() != fields.register_password.text.Trim() )
             {
                 StatusMessage.Message = localisation.FailedVerification;
+                DisplayScreen (panels.login_menu);
                 return;
             }
             if ( !fields.register_email.text.Trim().IsValidEmailFormat() )
             {
                 StatusMessage.Message = localisation.InvalidEmail;
+                DisplayScreen (panels.login_menu);
                 return;
             }
 
@@ -495,6 +499,7 @@ namespace MBS
         public void ShowPasswordResetScreen() => DisplayScreen( panels.password_reset_screen );
         public void ShowPasswordChangeScreen() => DisplayScreen( panels.password_change_screen );
         public void ShowAccountDetailsScreen() => DisplayScreen( panels.personal_info_screen );
+        public void ShowTermsAndConditionScreen () => DisplayScreen (panels.termsandcondition_screen );
         public void CloseHighScoresScreen() => DisplayScreen( panels.login_menu );
         public void ReturnFromSerialScreen() => DisplayScreen( WULogin.logged_in ? panels.post_login_menu_screen : panels.login_menu );
         public void ShowLocalizationScreen()
