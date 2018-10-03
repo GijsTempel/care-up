@@ -109,7 +109,6 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public void SetSceneCompletionData(string sceneName, int score, int time)
     {
-        MBS.WUScoringUGUI.SpawnInstance();
         MBS.WUScoring.SubmitScore(score, sceneName.GetHashCode());
     }
 
