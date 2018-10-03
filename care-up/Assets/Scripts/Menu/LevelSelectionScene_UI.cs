@@ -237,9 +237,8 @@ public class LevelSelectionScene_UI : MonoBehaviour
             string name = entry.String("dname");
             string score = entry.String("score");
             
-            if (++i < _Scores.Length)
-                _Scores[i].SetScoreLine(name, score, i);
-    
+            if (i <= _Scores.Length)
+                _Scores[i].SetScoreLine(name, score, i++);
         }
     }
 }
