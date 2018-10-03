@@ -25,7 +25,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
         for (int i = 0; i < _Scores.Length; i++)
         {
-            _Scores[i].SetScoreLine("", "", "", i);
+            _Scores[i].SetScoreLine("", "", i);
         }
 
         // variations buttons should be disabled from the beginning
@@ -215,27 +215,30 @@ public class LevelSelectionScene_UI : MonoBehaviour
         // let's clear current UI first, it might have some editor text or info from other scene we loaded before
         for (int i = 0; i < _Scores.Length; i++)
         {
-            _Scores[i].SetScoreLine("", "", "", i);
+            _Scores[i].SetScoreLine("", "", i);
         }
 
         // maybe launch loading icon or something? it isnt instant
         //ppManager.GetSceneLeaders(sceneName, 10, GetSceneLeaders_Success);
+
+        MBS.WUScoring.onFetched = GetSceneLeaders_Success;
+        MBS.WUScoring.FetchScores(10, sceneName.GetHashCode());
     }
 
-    public void GetSceneLeaders_Success(string[] info)
+    public void GetSceneLeaders_Success(MBS.CML cml)
     {
-        for (int i = 0; i < info.Length / 3; ++i)
-        {
-            string name = info[i * 3];
-            string score = info[i * 3 + 1];
-            string time = info[i * 3 + 2];
+        int i = 0;
 
-            TimeSpan timeSpan = TimeSpan.FromSeconds(double.Parse(time));
-            string timeFormated = string.Format("{0:D2}m:{1:D2}s",
-                timeSpan.Minutes, timeSpan.Seconds);
-            if (i < _Scores.Length)
-                _Scores[i].SetScoreLine(name, timeFormated, score, i);
-    
+        List<MBS.CMLData> entries = cml.AllNodesOfType("person");
+        if (entries == null) return;
+
+        foreach(MBS.CMLData entry in entries)
+        {
+            string name = entry.String("dname");
+            string score = entry.String("score");
+            
+            if (i <= _Scores.Length)
+                _Scores[i].SetScoreLine(name, score, i++);
         }
     }
 }
