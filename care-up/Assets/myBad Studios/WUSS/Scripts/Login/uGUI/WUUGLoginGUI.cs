@@ -501,7 +501,7 @@ namespace MBS
         public void ShowAccountDetailsScreen() => DisplayScreen( panels.personal_info_screen );
         public void ShowTermsAndConditionScreen () => DisplayScreen (panels.termsandcondition_screen );
         public void CloseHighScoresScreen() => DisplayScreen( panels.login_menu );
-        public void ReturnFromSerialScreen() => DisplayScreen( WULogin.logged_in ? panels.post_login_menu_screen : panels.login_menu );
+        public void ReturnFromSerialScreen () => LogOut ();
         public void ShowLocalizationScreen()
         {
             DisplayScreen( panels.localization_screen );
