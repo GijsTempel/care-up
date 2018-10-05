@@ -63,6 +63,7 @@ public class ItemControlsUI : MonoBehaviour {
         combineButton = transform.Find("CombineButton").gameObject;
 
         dropButton = transform.Find("DropButton").gameObject;
+        dropButton.SetActive(false);
 
         closeButton = transform.Find("CloseButton").gameObject;
 
@@ -122,12 +123,7 @@ public class ItemControlsUI : MonoBehaviour {
         combineButton.GetComponent<EventTrigger>().triggers.Add(event1);
         combineButton.GetComponent<EventTrigger>().triggers.Add(event2);
         combineButton.GetComponent<EventTrigger>().triggers.Add(event3);
-
-        dropButton.AddComponent<EventTrigger>();
-        dropButton.GetComponent<EventTrigger>().triggers.Add(event1);
-        dropButton.GetComponent<EventTrigger>().triggers.Add(event2);
-        dropButton.GetComponent<EventTrigger>().triggers.Add(event3);
-
+        
         tutorialCombine = GameObject.FindObjectOfType<Tutorial_Combining>();
     }
 
@@ -160,7 +156,6 @@ public class ItemControlsUI : MonoBehaviour {
                 useOnButton.SetActive(true);
                 useOnNTButton.SetActive(true);
                 combineButton.SetActive(true);
-                dropButton.SetActive(true);
 
                 pickButton.SetActive(false);
                 useButton.SetActive(false);
@@ -191,7 +186,6 @@ public class ItemControlsUI : MonoBehaviour {
                 useOnButton.SetActive(false);
                 useOnNTButton.SetActive(false);
                 combineButton.SetActive(false);
-                dropButton.SetActive(false);
             }
 
             closeButton.SetActive(true);
@@ -270,8 +264,7 @@ public class ItemControlsUI : MonoBehaviour {
                 !talkButton.activeSelf && 
                 !useOnButton.activeSelf && 
                 !useOnNTButton.activeSelf && 
-                !combineButton.activeSelf && 
-                !dropButton.activeSelf)
+                !combineButton.activeSelf)
             {
                 Close();
             }
