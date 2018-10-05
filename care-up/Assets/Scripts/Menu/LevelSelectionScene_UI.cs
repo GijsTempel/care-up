@@ -232,7 +232,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
     public void GetSceneLeaders_Success(MBS.CML cml)
     {
         List<MBS.CMLData> entries = cml.AllNodesOfType("person");
-        List<MBS.CMLData> sortedEntries = entries.OrderBy(x => int.Parse(x.String("score"))).ToList();
+        List<MBS.CMLData> sortedEntries = entries.OrderByDescending(x => int.Parse(x.String("score"))).ToList();
 
         if (entries == null) return;
 
