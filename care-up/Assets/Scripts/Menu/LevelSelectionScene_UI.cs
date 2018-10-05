@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System;
+using System.Linq;
 
 /// <summary>
 /// Handles Scene selection module
@@ -222,23 +223,26 @@ public class LevelSelectionScene_UI : MonoBehaviour
         //ppManager.GetSceneLeaders(sceneName, 10, GetSceneLeaders_Success);
 
         MBS.WUScoring.onFetched = GetSceneLeaders_Success;
-        MBS.WUScoring.FetchScores(10, sceneName.GetHashCode());
+
+        // hashes are NOT a clean solution
+        int hash = Mathf.Abs(sceneName.GetHashCode());
+        MBS.WUScoring.FetchScores(0, hash);
     }
 
     public void GetSceneLeaders_Success(MBS.CML cml)
     {
-        int i = 0;
-
         List<MBS.CMLData> entries = cml.AllNodesOfType("person");
+        List<MBS.CMLData> sortedEntries = entries.OrderBy(x => int.Parse(x.String("score"))).ToList();
+
         if (entries == null) return;
 
-        foreach(MBS.CMLData entry in entries)
+        for (int i = 0; i < 10; ++i)
         {
-            string name = entry.String("dname");
-            string score = entry.String("score");
+            string name = sortedEntries[i].String("dname");
+            string score = sortedEntries[i].String("score");
             
-            if (i <= _Scores.Length)
-                _Scores[i].SetScoreLine(name, score, i++);
+            if (i < _Scores.Length)
+                _Scores[i].SetScoreLine(name, score, i);
         }
     }
 }

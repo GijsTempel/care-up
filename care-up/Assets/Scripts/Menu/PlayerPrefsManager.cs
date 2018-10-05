@@ -109,7 +109,9 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public void SetSceneCompletionData(string sceneName, int score, int time)
     {
-        MBS.WUScoring.SubmitScore(score, sceneName.GetHashCode());
+        // hashes are NOT a clean solution
+        int hash = Mathf.Abs(sceneName.GetHashCode());
+        MBS.WUScoring.SubmitScore(score, hash);
     }
 
     public bool GetSceneCompleted(string sceneName)
