@@ -402,7 +402,7 @@ namespace MBS
 
 
 #if WUSKU
-            fields.serial_number.text = WULogin.SerialNumber;
+            //fields.serial_number.text = WULogin.SerialNumber;
 
             //return to main menu and set it out of view...
             //unless you require a serial first...
