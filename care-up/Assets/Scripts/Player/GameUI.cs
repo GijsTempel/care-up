@@ -92,6 +92,8 @@ public class GameUI : MonoBehaviour {
 		}else{
 			bl_SceneLoaderUtils.GetLoader.LoadLevel("UMenuPro");
 		}
+
+        donePanel.SetActive(false);
     }
 	
 	// Update is called once per frame

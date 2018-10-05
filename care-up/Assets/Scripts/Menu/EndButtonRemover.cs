@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class EndButtonRemover : MonoBehaviour {
 
-    [SerializeField] private GameObject canvas;
+    public GameObject goToMenuButton;
 
     public void ButtonClick () {
-        canvas.SetActive(false);
+        goToMenuButton.SetActive(false);
     }
 }
