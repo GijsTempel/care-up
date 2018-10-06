@@ -207,20 +207,8 @@ public class Tutorial_UI : TutorialManager
                         RobotUITabs.tutorial_prescriptionOpened = false;
                         hintsN.SetSize(788f, 524.9f);
                         hintsN.LockTo("RobotUI", new Vector3(-1231.60f, 650.80f, 0.00f));
-                        currentStep = TutorialStep.PatientPrescriptionExpl;
-                        UItext.text = "Hier kun je de toedienlijst bekijken en controleren. De controle vind automatisch plaats wanneer je de toedienlijst opent.";
-
-                        SetUpTutorialNextButton();
-                    }
-                    break;
-                case TutorialStep.PatientPrescriptionExpl:
-                    if (nextButtonClicked)
-                    {
                         currentStep = TutorialStep.WritingDownExpl;
-                        hintsN.ResetSize();
-                        hintsN.LockTo("RobotUI", new Vector3(1809.70f, 741.50f, 0.00f));
-                        hintsN.SetIconPosition(1);
-                        UItext.text = "Door op het afteken icoon te klikken kun je aan het einde van een handeling de toedienlijst aftekenen.";
+                        UItext.text = "Hier kun je de toedienlijst bekijken en controleren. De controle vind automatisch plaats wanneer je de toedienlijst opent.";
 
                         SetUpTutorialNextButton();
                     }
@@ -228,22 +216,35 @@ public class Tutorial_UI : TutorialManager
                 case TutorialStep.WritingDownExpl:
                     if (nextButtonClicked)
                     {
-                        currentStep = TutorialStep.PrescriptionBack;
+                        currentStep = TutorialStep.PatientPrescriptionExpl;
                         hintsN.SetIconPosition(0);
                         hintsN.LockTo("RobotUI", new Vector3(-1824.10f, 1017.60f, 0.00f));
+                        hintsN.ResetSize();
                         UItext.text = "Laten we nu de toedienlijst sluiten door op de terugknop te drukken.";
-                        
+
                         closeTab = true;
                         tabToOpen = "GeneralTab";
                         RobotUITabs.tutorial_back = false;
                     }
                     break;
-                case TutorialStep.PrescriptionBack:
+                case TutorialStep.PatientPrescriptionExpl:
                     if (RobotUITabs.tutorial_back)
+                    {
+                        currentStep = TutorialStep.PrescriptionBack;
+                        hintsN.LockTo("RobotUI", new Vector3(845.00f, -105.00f, 0.00f));
+                        hintsN.SetIconPosition(1);
+                        UItext.text = "Door op het afteken icoon te klikken kun je een handeling aftekenen. Let op: hiermee rond je de handeling ook af! ";
+
+                        SetUpTutorialNextButton();
+                    }
+                    break;  
+                case TutorialStep.PrescriptionBack:
+                    if (nextButtonClicked)
                     { 
                         currentStep = TutorialStep.GeneralBack;
-
-						hintsN.LockTo("RobotUI", new Vector3(-1826.90f, 936.80f, -99.80f));
+                        hintsN.ResetSize();
+                        hintsN.LockTo("RobotUI", new Vector3(-1650.00f, 936.80f, -99.80f));
+                        hintsN.SetIconPosition(0);
                         UItext.text = "Laten we de app sluiten door op de terug knop te drukken. ";
                         
                         RobotUITabs.tutorial_back = false;
