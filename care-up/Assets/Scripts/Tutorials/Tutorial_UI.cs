@@ -182,7 +182,7 @@ public class Tutorial_UI : TutorialManager
                     {
                         currentStep = TutorialStep.PatientRecordsBack;
                         hintsN.ResetSize();
-                        hintsN.LockTo("RobotUI", new Vector3(-1824.10f, 1017.60f, 0.00f));
+                        hintsN.LockTo("RobotUI", new Vector3(-1650.00f, 1017.60f, 0.00f));
                         UItext.text = "Laten we nu de cliëntgegevens sluiten door op de terugknop te drukken.";
                         
                         closeTab = true;
@@ -218,7 +218,7 @@ public class Tutorial_UI : TutorialManager
                     {
                         currentStep = TutorialStep.PatientPrescriptionExpl;
                         hintsN.SetIconPosition(0);
-                        hintsN.LockTo("RobotUI", new Vector3(-1824.10f, 1017.60f, 0.00f));
+                        hintsN.LockTo("RobotUI", new Vector3(-1650.00f, 1017.60f, 0.00f));
                         hintsN.ResetSize();
                         UItext.text = "Laten we nu de toedienlijst sluiten door op de terugknop te drukken.";
 
@@ -277,7 +277,7 @@ public class Tutorial_UI : TutorialManager
                     {
                         currentStep = TutorialStep.ChecklistBack;
                      
-						hintsN.LockTo("RobotUI", new Vector3(-1856.10f, 958.20f, -34.70f));
+                        hintsN.LockTo("RobotUI", new Vector3(-1650.00f, 958.20f, -34.70f));
                         UItext.text = "Laten we terug gaan.";
                         closeTab = true;
                     }
@@ -326,7 +326,7 @@ public class Tutorial_UI : TutorialManager
                     {
                         currentStep = TutorialStep.CloseMessageCenter;
                     
-						hintsN.LockTo("RobotUI", new Vector3(-1861.90f, 957.80f, 0.00f));
+                        hintsN.LockTo("RobotUI", new Vector3(-1650.00f, 957.80f, 0.00f));
                         UItext.text = "Berichten kun je lezen wanneer je wilt. Er kan erg handige informatie in staan. Laten we de berichten app afsluiten door op de terug knop te klikken.";
                         RobotUITabs.tutorial_back = false;
                         closeTab = true;
