@@ -35,7 +35,7 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
 
     void LoadStartScene(CML response)
     {
-        Debug.Log("Logout was successful. Loading first scene.");
+        Debug.Log("Uitloggen is gelukt. Je keert nu terug naar het login scherm.");
         bl_SceneLoaderUtils.GetLoader.LoadLevel("LoginMenu");
     }
 }
