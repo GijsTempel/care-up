@@ -108,6 +108,7 @@ public class PlayerScript : MonoBehaviour {
     private void Start()
     {
         instance = this;
+        actionsLocked = false;
 
         mouseLook.Init(transform, cam.transform);
 
