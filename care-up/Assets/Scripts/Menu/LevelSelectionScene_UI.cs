@@ -76,7 +76,18 @@ public class LevelSelectionScene_UI : MonoBehaviour
     void UpdateSceneUI()
     {
         // load xml
-        TextAsset textAsset = (TextAsset)Resources.Load("Xml/Scenes");
+        TextAsset textAsset;
+
+        PlayerPrefsManager pp = GameObject.FindObjectOfType<PlayerPrefsManager>();
+        if (pp != null && pp.demoVersion)
+        {
+            textAsset = (TextAsset)Resources.Load("Xml/Scenes_Demo");
+        }
+        else
+        {
+            textAsset = (TextAsset)Resources.Load("Xml/Scenes");
+        }
+
         XmlDocument xmlFile = new XmlDocument();
         xmlFile.LoadXml(textAsset.text);
         XmlNodeList xmlSceneList = xmlFile.FirstChild.NextSibling.FirstChild.ChildNodes;

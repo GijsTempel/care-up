@@ -30,6 +30,9 @@ public class PlayerPrefsManager : MonoBehaviour
     // post processing on camera
     public bool postProcessingEnabled = false;
 
+    // is this game version is demo version
+    public bool demoVersion = false;
+
     public string ActivatedScenes
     {
         get
@@ -109,6 +112,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public void SetSceneCompletionData(string sceneName, int score, int time)
     {
+        if (demoVersion) return;
         // hashes are NOT a clean solution
         int hash = Mathf.Abs(sceneName.GetHashCode());
         MBS.WUScoring.SubmitScore(score, hash);

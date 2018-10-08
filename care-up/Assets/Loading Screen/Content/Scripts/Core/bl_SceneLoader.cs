@@ -222,7 +222,7 @@ public class bl_SceneLoader : MonoBehaviour
         if (LoadingCircleCanvas != null) { StartCoroutine(FadeOutCanvas(LoadingCircleCanvas, 0.5f)); }
         if (LoadingBarAlpha != null && FadeLoadingBarOnFinish) { StartCoroutine(FadeOutCanvas(LoadingBarAlpha, 1)); }
     }
-    
+
     public void LoadLevel(string level, string bundle = "")
     {
         sceneToLoad = level;
@@ -235,7 +235,15 @@ public class bl_SceneLoader : MonoBehaviour
         data.Seti("limit", 0);
         data.Seti("gid", -1);
 
-        WPServer.ContactServer("FetchScores", scoring_filepath, SCORINGConstant, data, ActualLoadLevel, LoadLevelConnectionError);
+        PlayerPrefsManager pp = GameObject.FindObjectOfType<PlayerPrefsManager>();
+        if (pp != null && pp.demoVersion)
+        {
+            ActualLoadLevel(null);
+        }
+        else
+        {
+            WPServer.ContactServer("FetchScores", scoring_filepath, SCORINGConstant, data, ActualLoadLevel, LoadLevelConnectionError);
+        }
     }
 
     public void LoadLevelConnectionError(CMLData action)
