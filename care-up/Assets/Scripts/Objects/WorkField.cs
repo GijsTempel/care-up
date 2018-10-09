@@ -27,7 +27,7 @@ public class WorkField : UsableObject {
 
     public override void Use()
     {
-        if (!ViewModeActive())
+        if (!ViewModeActive() && actionManager.CompareUseObject("WorkField"))
         {
             if (toggleTime == 1 && cleaningLocked)
             {
