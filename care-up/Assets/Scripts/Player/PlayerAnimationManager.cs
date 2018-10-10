@@ -43,7 +43,7 @@ public class PlayerAnimationManager : MonoBehaviour
     
 	public static void PlayCombineAnimation(ObjectsIDs LeftObj, ObjectsIDs RightObj, Transform target = null)
     {
-		Debug.Log(LeftObj.GetName());
+		
 		int leftID = 0;
 		int rightID = 0;
 		if (LeftObj != null)
@@ -66,13 +66,12 @@ public class PlayerAnimationManager : MonoBehaviour
         //{
         //    animationController.SetTrigger("S " + name);
         //}
-
+        playerScript.ResetFreeLook();
         if (target)
         {
             cameraMode.SetCinematicMode(target);
         }
     }
-
 
     public static void PlayAnimation(string name, Transform target = null)
     {
@@ -92,6 +91,8 @@ public class PlayerAnimationManager : MonoBehaviour
             cameraMode.SetCinematicMode(target);
         }
     }
+    
+
 
     /// <summary>
     /// Sets the idle state of the hand, depending on object held.

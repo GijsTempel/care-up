@@ -841,6 +841,7 @@ public class HandsInventory : MonoBehaviour {
 				if (ObjectsID_Controller.FindByName(leftName) != -1 || ObjectsID_Controller.FindByName(rightName) != -1)
 				{
 					idModeAllow = true;
+                    
 				}
 			}
 
@@ -862,6 +863,7 @@ public class HandsInventory : MonoBehaviour {
 
             combineDelayed = true;
             ToggleControls(true);
+
         }
     }
 
