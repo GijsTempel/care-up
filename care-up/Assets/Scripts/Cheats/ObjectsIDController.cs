@@ -40,10 +40,13 @@ public class ObjectsIDController : MonoBehaviour
 		new ObjectsIDs("syringePack", 30, 0),
 		new ObjectsIDs("Syringe", 2, 1),
 		new ObjectsIDs("AbsorptionNeedle", 20, 0),
-		new ObjectsIDs("InjectionNeedle", 20, 0)
-
-        
-	};
+		new ObjectsIDs("InjectionNeedle", 20, 0),
+        new ObjectsIDs("cloth_02_folded", 33, 0),
+        new ObjectsIDs("water_syringe_pack", 35, 0),
+        new ObjectsIDs("water_syringe_pack_no_cover", 35, 1),
+        new ObjectsIDs("water_syringe_pack_empty", 35, 2),
+        new ObjectsIDs("water_syringe_pack_cover", 36, 0),
+    };
 
 
 	public int FindByName(string name)
