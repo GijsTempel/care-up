@@ -723,7 +723,7 @@ public class ActionManager : MonoBehaviour {
             
             currentAction = actionsLeft.Count > 0 ? actionsLeft.First() : null;
 
-            if (manager != null && manager.practiceMode)
+            if (manager == null || manager.practiceMode)
             {
                 // now we have not mandatory actions, let's skip them and add to mistakes
                 List<Action> skippableActions = actionsLeft.Where(action => action.notMandatory == true).ToList();
