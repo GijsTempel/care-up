@@ -365,9 +365,8 @@ public class ItemControlsUI : MonoBehaviour {
                                 item.name == tutorial.itemToDrop2)))
                         {
                             GameObject ghost = item.gameObject;
-                            initedObject = item.pairedObject.gameObject;
-                            GameObject.Destroy(ghost);
-                            Drop();
+                            initedObject = item.mainObject.gameObject;
+                            Drop(ghost);
                         }
                     }
                     else
@@ -415,7 +414,7 @@ public class ItemControlsUI : MonoBehaviour {
         Close();
     }
 
-    public void Drop()
+    public void Drop(GameObject ghost = null)
     {
         if (initedObject != null)
         {
@@ -423,20 +422,24 @@ public class ItemControlsUI : MonoBehaviour {
             (tutorial.itemToDrop == initedObject.name ||
             tutorial.itemToDrop2 == initedObject.name)))
             {
-                PickableObject item = initedObject.GetComponent<PickableObject>();
-                if (item != null && item.pairedObject != null)
-                {
-                    Destroy(item.pairedObject.gameObject);
-                    item.pairedObject = null;
-                }
-
                 if (handsInventory.LeftHandObject == initedObject)
                 {
-                    handsInventory.DropLeft();
+                    handsInventory.DropLeft(ghost);
                 }
                 else if (handsInventory.RightHandObject == initedObject)
                 {
-                    handsInventory.DropRight();
+                    handsInventory.DropRight(ghost);
+                }
+
+                PickableObject item = initedObject.GetComponent<PickableObject>();
+                if (item != null)
+                {
+                    for (int i = item.ghostObjects.Count-1; i >= 0; --i)
+                    {
+                        GameObject g = item.ghostObjects[i].gameObject;
+                        item.ghostObjects.RemoveAt(i);
+                        Destroy(g);
+                    }
                 }
             }
         }

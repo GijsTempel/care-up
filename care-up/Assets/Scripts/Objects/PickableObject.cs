@@ -24,9 +24,22 @@ public class PickableObject : InteractableObject {
     private List<Vector3> framePositions = new List<Vector3>();
     private Rigidbody rigidBody;
 
+    [HideInInspector]
     public bool sihlouette = false;
-    public PickableObject pairedObject;
-  
+    [HideInInspector]
+    public PickableObject mainObject;
+    [HideInInspector]
+    public List<PickableObject> ghostObjects;
+
+    [System.Serializable]
+    public struct GhostPosition
+    {
+        public Vector3 position;
+        public Vector3 rotation;
+    }
+
+    public List<GhostPosition> ghostPositions = new List<GhostPosition>();
+
     protected override void Start()
     {
         base.Start();
@@ -209,30 +222,41 @@ public class PickableObject : InteractableObject {
 
     public void CreateGhostObject()
     {
-        GameObject ghost = Instantiate(Resources.Load<GameObject>("Prefabs/" + this.name), 
-            this.SavedPosition, this.SavedRotation);
+        if (ghostPositions.Count == 0)
+        {
+            InstantiateGhostObject(this.SavedPosition, this.SavedRotation);
+        }
+        else
+        {
+            foreach(GhostPosition g in ghostPositions)
+            {
+                InstantiateGhostObject(g.position, 
+                    Quaternion.Euler(g.rotation));
+            }
+        }
+    }
+
+    private void InstantiateGhostObject(Vector3 pos, Quaternion rot)
+    {
+        GameObject ghost = Instantiate(Resources.Load<GameObject>("Prefabs/" + this.name),
+            pos, rot);
         ghost.layer = 9; // no collisions
-        ghost.GetComponent<PickableObject>().pairedObject = this;
-        this.pairedObject = ghost.GetComponent<PickableObject>();
-        this.pairedObject.sihlouette = true;
-        this.pairedObject.SetGhostShader();
-        this.pairedObject.GetComponent<Rigidbody>().useGravity = false;
-        this.pairedObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-        // change name if needed? 
+        ghost.GetComponent<PickableObject>().mainObject = this;
+        PickableObject ghostObject = ghost.GetComponent<PickableObject>();
+        ghostObject.sihlouette = true;
+        ghostObject.SetGhostShader();
+        ghostObject.GetComponent<Rigidbody>().useGravity = false;
+        ghostObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        this.ghostObjects.Add(ghostObject);
     }
 
     public void DeleteGhostObject()
     {
-        if (pairedObject != null)
+        for (int i = ghostObjects.Count - 1; i >= 0; --i)
         {
-            if (sihlouette)
-            {
-                Destroy(this.gameObject);
-            }
-            else
-            {
-                Destroy(this.pairedObject.gameObject);
-            }
+            GameObject ghost = ghostObjects[i].gameObject;
+            ghostObjects.RemoveAt(i);
+            Destroy(ghost);
         }
     }
 }
