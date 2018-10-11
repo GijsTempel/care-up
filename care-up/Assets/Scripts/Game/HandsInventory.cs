@@ -841,6 +841,7 @@ public class HandsInventory : MonoBehaviour {
 				if (ObjectsID_Controller.FindByName(leftName) != -1 || ObjectsID_Controller.FindByName(rightName) != -1)
 				{
 					idModeAllow = true;
+                    
 				}
 			}
 
@@ -862,6 +863,7 @@ public class HandsInventory : MonoBehaviour {
 
             combineDelayed = true;
             ToggleControls(true);
+
         }
     }
 
@@ -884,12 +886,19 @@ public class HandsInventory : MonoBehaviour {
         }
     }
 
-    public void DropLeft()
+    public void DropLeft(GameObject ghost = null)
     {
         if (leftHandObject)
         {
             leftHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
             tutorial_droppedLeft = true;
+
+            if (ghost != null)
+            {
+                leftHandObject.SavePosition(ghost.transform.position,
+                    ghost.transform.rotation, true);
+            }
+
             if (!leftHandObject.Drop())
             {
                 if (dropPenalty)
@@ -898,18 +907,26 @@ public class HandsInventory : MonoBehaviour {
                     actionManager.UpdatePoints(-1);
                 }
             }
+
             leftHandObject = null;
             leftHold = false;
             PlayerAnimationManager.SetHandItem(true, null);
         }
     }
 
-    public void DropRight()
+    public void DropRight(GameObject ghost = null)
     {
         if (rightHandObject)
         {
             rightHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
             tutorial_droppedRight = true;
+            
+            if (ghost != null)
+            {
+                rightHandObject.SavePosition(ghost.transform.position,
+                    ghost.transform.rotation, true);
+            }
+
             if (!rightHandObject.Drop())
             {
                 if (dropPenalty)
@@ -918,6 +935,7 @@ public class HandsInventory : MonoBehaviour {
                     actionManager.UpdatePoints(-1);
                 }
             }
+
             rightHandObject = null;
             rightHold = false;
             PlayerAnimationManager.SetHandItem(false, null);

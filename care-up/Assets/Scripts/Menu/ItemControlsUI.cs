@@ -63,6 +63,7 @@ public class ItemControlsUI : MonoBehaviour {
         combineButton = transform.Find("CombineButton").gameObject;
 
         dropButton = transform.Find("DropButton").gameObject;
+        dropButton.SetActive(false);
 
         closeButton = transform.Find("CloseButton").gameObject;
 
@@ -122,12 +123,7 @@ public class ItemControlsUI : MonoBehaviour {
         combineButton.GetComponent<EventTrigger>().triggers.Add(event1);
         combineButton.GetComponent<EventTrigger>().triggers.Add(event2);
         combineButton.GetComponent<EventTrigger>().triggers.Add(event3);
-
-        dropButton.AddComponent<EventTrigger>();
-        dropButton.GetComponent<EventTrigger>().triggers.Add(event1);
-        dropButton.GetComponent<EventTrigger>().triggers.Add(event2);
-        dropButton.GetComponent<EventTrigger>().triggers.Add(event3);
-
+        
         tutorialCombine = GameObject.FindObjectOfType<Tutorial_Combining>();
     }
 
@@ -160,7 +156,6 @@ public class ItemControlsUI : MonoBehaviour {
                 useOnButton.SetActive(true);
                 useOnNTButton.SetActive(true);
                 combineButton.SetActive(true);
-                dropButton.SetActive(true);
 
                 pickButton.SetActive(false);
                 useButton.SetActive(false);
@@ -191,7 +186,6 @@ public class ItemControlsUI : MonoBehaviour {
                 useOnButton.SetActive(false);
                 useOnNTButton.SetActive(false);
                 combineButton.SetActive(false);
-                dropButton.SetActive(false);
             }
 
             closeButton.SetActive(true);
@@ -270,8 +264,7 @@ public class ItemControlsUI : MonoBehaviour {
                 !talkButton.activeSelf && 
                 !useOnButton.activeSelf && 
                 !useOnNTButton.activeSelf && 
-                !combineButton.activeSelf && 
-                !dropButton.activeSelf)
+                !combineButton.activeSelf)
             {
                 Close();
             }
@@ -372,9 +365,8 @@ public class ItemControlsUI : MonoBehaviour {
                                 item.name == tutorial.itemToDrop2)))
                         {
                             GameObject ghost = item.gameObject;
-                            initedObject = item.pairedObject.gameObject;
-                            GameObject.Destroy(ghost);
-                            Drop();
+                            initedObject = item.mainObject.gameObject;
+                            Drop(ghost);
                         }
                     }
                     else
@@ -422,7 +414,7 @@ public class ItemControlsUI : MonoBehaviour {
         Close();
     }
 
-    public void Drop()
+    public void Drop(GameObject ghost = null)
     {
         if (initedObject != null)
         {
@@ -430,20 +422,24 @@ public class ItemControlsUI : MonoBehaviour {
             (tutorial.itemToDrop == initedObject.name ||
             tutorial.itemToDrop2 == initedObject.name)))
             {
-                PickableObject item = initedObject.GetComponent<PickableObject>();
-                if (item != null && item.pairedObject != null)
-                {
-                    Destroy(item.pairedObject.gameObject);
-                    item.pairedObject = null;
-                }
-
                 if (handsInventory.LeftHandObject == initedObject)
                 {
-                    handsInventory.DropLeft();
+                    handsInventory.DropLeft(ghost);
                 }
                 else if (handsInventory.RightHandObject == initedObject)
                 {
-                    handsInventory.DropRight();
+                    handsInventory.DropRight(ghost);
+                }
+
+                PickableObject item = initedObject.GetComponent<PickableObject>();
+                if (item != null)
+                {
+                    for (int i = item.ghostObjects.Count-1; i >= 0; --i)
+                    {
+                        GameObject g = item.ghostObjects[i].gameObject;
+                        item.ghostObjects.RemoveAt(i);
+                        Destroy(g);
+                    }
                 }
             }
         }
