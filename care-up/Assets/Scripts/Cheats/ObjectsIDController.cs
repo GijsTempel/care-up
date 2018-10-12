@@ -46,6 +46,12 @@ public class ObjectsIDController : MonoBehaviour
         new ObjectsIDs("water_syringe_pack_no_cover", 35, 1),
         new ObjectsIDs("water_syringe_pack_empty", 35, 2),
         new ObjectsIDs("water_syringe_pack_cover", 36, 0),
+
+		new ObjectsIDs("lube_syringe_pack", 35, 0),
+        new ObjectsIDs("lube_syringe_pack_noCover", 35, 1),
+        new ObjectsIDs("lube_syringe_pack_empty", 35, 2),
+        new ObjectsIDs("lube_syringe_pack_cover", 36, 0),
+
     };
 
 
