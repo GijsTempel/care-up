@@ -73,4 +73,16 @@ public class WorkField : UsableObject {
             ++toggleTime;
         }
     }
+
+    protected override void Update()
+    {
+        base.Update();
+
+        if (rend.material.shader == onMouseOverShader
+            && !actionManager.CompareUseObject("WorkField"))
+        {
+            SetShaderTo(onMouseExitShader);
+            itemDescription.SetActive(false);
+        }
+    }
 }
