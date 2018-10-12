@@ -55,8 +55,6 @@ public class HandsInventory : MonoBehaviour {
     private string leftCombineResult;
     private string rightCombineResult;
     
-    private Vector3 glovesPosition;
-    private Quaternion glovesRotation;
     private bool glovesOn = false;
 
     private GameObject animationObject;
@@ -449,35 +447,22 @@ public class HandsInventory : MonoBehaviour {
     }
 
     /// <summary>
-    /// Puts on or takes of gloves.
+    /// Puts on or takes off gloves.
     /// </summary>
     /// <param name="value">True - puts on, False - takes off</param>
     public void GlovesToggle(bool value)
     {
+        glovesOn = value;
+        Renderer hands = GameObject.FindObjectOfType<PlayerScript>().transform.
+            Find("CinematicControl/Arms/FPArms_Female").GetComponent<Renderer>();
+
         if (value)
         {
-            if ((leftHandObject && !rightHandObject)
-                || (!leftHandObject && rightHandObject))
-            {
-                if (leftHandObject)
-                {
-                    leftHandObject.GetSavesLocation(out glovesPosition, out glovesRotation);
-                    Destroy(leftHandObject.gameObject);
-                }
-                else if (rightHandObject)
-                {
-                    rightHandObject.GetSavesLocation(out glovesPosition, out glovesRotation);
-                    Destroy(rightHandObject.gameObject);
-                }
-                glovesOn = value;
-            }
+            hands.material = Resources.Load<Material>("Materials/FPArms_Female-Glow");
         }
         else
         {
-            glovesOn = value;
-            GameObject leftObject = CreateObjectByName("Gloves", Vector3.zero);
-            leftHandObject = leftObject.GetComponent<PickableObject>();
-            leftHandObject.SavePosition(glovesPosition, glovesRotation);
+            hands.material = Resources.Load<Material>("Materials/FPArms_Female-Light");
         }
     }
 
@@ -958,11 +943,6 @@ public class HandsInventory : MonoBehaviour {
                 }
             }
         }
-        else if (glovesOn && rightHandObject == null)
-        {
-            actionManager.OnUseOnAction("", "");
-            GlovesToggle(false);
-        }
     }
 
     public void RightHandUse()
@@ -980,11 +960,6 @@ public class HandsInventory : MonoBehaviour {
                     tutorial_itemUsedOn = true;
                 }
             }
-        }
-        else if (glovesOn && leftHandObject == null)
-        {
-            actionManager.OnUseOnAction("", "");
-            GlovesToggle(false);
         }
     }
 }

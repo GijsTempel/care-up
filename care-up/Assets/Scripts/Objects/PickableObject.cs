@@ -190,13 +190,7 @@ public class PickableObject : InteractableObject {
                 }
             }
         }
-        else // cannot interact or target == ""
-        {
-            if ( name == "Gloves" )
-            {
-                GameObject.Find("GameLogic").GetComponent<HandsInventory>().GlovesToggle(true);
-            }
-        }
+
         actionManager.OnUseOnAction(name, controls.SelectedObject != null ? controls.SelectedObject.name : "");
 
         return (controls.SelectedObject != null && actionManager.CompareUseOnInfo(name, controls.SelectedObject.name));
