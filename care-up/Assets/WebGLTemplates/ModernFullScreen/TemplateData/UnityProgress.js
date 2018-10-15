@@ -28,7 +28,7 @@ function UnityProgress(gameInstance, progress) {
         return;
     } else if (progress == 1) {
         document.getElementById("ProgressLine").style.width = (200 * (progress)) + "px";
-        document.getElementById("loadingInfo").innerHTML = "Laden...";
+        document.getElementById("loadingInfo").innerHTML = "Opstarten...";
         document.getElementById("progressC").innerHTML = Math.floor((100 * progress)) + "%";
     } else {
         document.getElementById("loadingInfo").innerHTML = "Laden...";
