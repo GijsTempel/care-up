@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>GameName %UNITY_CUSTOM_MYTAG%</title>
+    <title>Care Up - Verpleegtechnische handelingen. </title>
     <link rel="shortcut icon" href="TemplateData/img/favicon.ico">
     <link rel="stylesheet" href="TemplateData/css/style.css">
     <script src="Build/UnityLoader.js"></script>
@@ -68,7 +68,7 @@
 			}	
 		}
 		
-		var gameInstance = UnityLoader.instantiate("gameContainer", "%UNITY_WEBGL_BUILD_URL%", {
+		var gameInstance = UnityLoader.instantiate("gameContainer", "Build/7.0.1.json", {
 			onProgress: UnityProgress,
 			compatibilityCheck:CheckCompatibility,
 			Module: {
@@ -90,8 +90,8 @@
 		
 		<div id="loadingBlock">
 			<img class="logo" src="TemplateData/img/Logo.png"></img>
-			<span class="subtitle"> CATCHPHRASE <br>
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+			<span class="subtitle"> Care Up <br>
+			Care Up is aan het laden. Let op: de laadbalk kan even blijven hangen. Afhankelijk van je computer kan dit 5-25 seconden duren.
 			</span>
 			
 			<div id="progressBar">
@@ -102,9 +102,9 @@
 				</div>
 			</div>
 			
-			<div id="warningBrowserBlock">
-				<div class="warningBrowserText">
-					Your browser may not be compatible with this website. For an optimal experience, we suggest you to download one of this popular web browsers.
+			<div id="warningBrowserBlock" style="display:none;">
+				<div class="warningBrowserText" >
+					Je internetbrowser is mogelijk niet geschikt voor Care Up. Wij raden je aan om een van de onderstaande internetbrowsers te downloaden en gebruiken. 
 				</div>
 				<div class="browserIcons">
 					<a href="https://www.mozilla.org/firefox" target="_blank"><img src="TemplateData/img/browser-firefox.png" alt="Firefox browser"></a>
@@ -114,7 +114,10 @@
 			</div>
 			<div id="warningMobileBlock" style="display:none;">
 				<div class="warningBrowserText">
-					Please note that Unity WebGL is not currently supported on mobiles.
+					Care Up is op mobiele apparaten niet te spelen via het internet. Wij raden je aan om de app te downloaden.
+				</div>
+                	<div class="appIcons">
+					<a href="https://play.google.com/store/apps/details?id=com.TMM.CareUp" target="_blank"><img src="TemplateData/img/google-play-badge.png" alt="google play badge"></a>
 				</div>
 			</div>
 			
@@ -130,7 +133,7 @@
 				<div id="errorBrowserText">
 					Your browser does not support WebGL. <br> You can download one of this popular web browsers.
 				</div>
-				<div class="browserIcons">
+				<div class="[-">
 					<a href="https://www.mozilla.org/firefox" target="_blank"><img src="TemplateData/img/browser-firefox.png" alt="Firefox browser"></a>
 					<a href="https://www.google.com/chrome" target="_blank"><img src="TemplateData/img/browser-chrome.png" alt="Chrome browser"></a>
 					<a href="https://www.apple.com/safari/" target="_blank"><img src="TemplateData/img/browser-safari.png" alt="Safari browser"></a>
