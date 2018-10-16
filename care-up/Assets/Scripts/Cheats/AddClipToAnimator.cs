@@ -11,6 +11,7 @@ public class AddClipToAnimator : MonoBehaviour {
 
 
 #if UNITY_EDITOR
+	public string subMachine = "";
     public AnimatorController animationController;
 	public AnimationClip leftClip;
     public AnimationClip rightClip;
@@ -20,17 +21,20 @@ public class AddClipToAnimator : MonoBehaviour {
     [ContextMenu("Run Test")]
     public void Run()
     {
+		string sm = "Injection Scene";
+		if (subMachine != "")
+			sm = subMachine;
         if (leftClip != null) 
         { 
             Motion LeftMotion = (Motion)leftClip as Motion;
-            AddActionToMachine(0, "Combine Animations/Injection Scene", LeftMotion, LeftObjectsID, RightbjectsID, "Combine");
-            AddActionToMachine(1, "Combine Animations/Injection Scene", LeftMotion, LeftObjectsID, RightbjectsID, "S Combine");
+            AddActionToMachine(0, "Combine Animations/" + sm, LeftMotion, LeftObjectsID, RightbjectsID, "Combine");
+			AddActionToMachine(1, "Combine Animations/" + sm, LeftMotion, LeftObjectsID, RightbjectsID, "S Combine");
 	    }
         if (rightClip != null)
         {
             Motion RightMotion = (Motion)rightClip as Motion;
-            AddActionToMachine(0, "Combine Animations/Injection Scene", RightMotion, RightbjectsID, LeftObjectsID, "Combine");
-            AddActionToMachine(1, "Combine Animations/Injection Scene", RightMotion, RightbjectsID, LeftObjectsID, "S Combine");
+			AddActionToMachine(0, "Combine Animations/" + sm, RightMotion, RightbjectsID, LeftObjectsID, "Combine");
+			AddActionToMachine(1, "Combine Animations/" + sm, RightMotion, RightbjectsID, LeftObjectsID, "S Combine");
         }
     }
 
