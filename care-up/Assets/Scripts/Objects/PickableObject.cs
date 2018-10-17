@@ -11,6 +11,7 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(Rigidbody))]
 public class PickableObject : InteractableObject {
 
+
     [HideInInspector]
     public bool tutorial_usedOn = false;
 
@@ -43,6 +44,7 @@ public class PickableObject : InteractableObject {
     protected override void Start()
     {
         base.Start();
+
         framePositions.Clear();
 
         rigidBody = GetComponent<Rigidbody>();
@@ -123,7 +125,7 @@ public class PickableObject : InteractableObject {
                 actionManager.CompareUseOnInfo("InsulinNeedle", "NeedleCup", this.name))
                 && controls.SelectedObject.name == "NeedleCup")
             {
-                string animation = (hand ? "UseLeft " : "UseRight ") + name + " NeedleCup";
+                string animation = (hand ? "UseLeft " : "UseRight ") + name + " 3";
                 PlayerAnimationManager.PlayAnimation(animation, GameObject.Find("NeedleCup").transform);
                 actionManager.OnUseOnAction(name, "NeedleCup");
                 return true;
@@ -192,6 +194,7 @@ public class PickableObject : InteractableObject {
             else if (name == "cloth_02_folded" && controls.SelectedObject.GetComponent<PersonObjectPart>() != null
                 && controls.SelectedObject.GetComponent<PersonObjectPart>().Person.name == "w0_A")
             {
+
                 if (actionManager.CompareUseOnInfo("cloth_02_folded", "w0_A"))
                 {
                     actionManager.OnUseOnAction("cloth_02_folded", "w0_A");
@@ -199,8 +202,15 @@ public class PickableObject : InteractableObject {
                     Transform target = controls.SelectedObject.GetComponent<PersonObjectPart>().Person;
                     target.GetComponent<InteractableObject>().Reset();
                     controls.ResetObject();
-                    PlayerAnimationManager.PlayAnimation("UseOn cloth_02_folded w0_A");
-
+					//PlayerAnimationManager.PlayAnimation("UseOn cloth_02_folded w0_A");
+					if (hand)
+					{
+						PlayerAnimationManager.PlayUseAnimation(3300, -5);
+					}
+					else
+					{
+						PlayerAnimationManager.PlayUseAnimation(-5, 3300);
+					}
                     return true;
                 }
             }
@@ -210,6 +220,9 @@ public class PickableObject : InteractableObject {
 
         return (controls.SelectedObject != null && actionManager.CompareUseOnInfo(name, controls.SelectedObject.name));
     }
+    
+
+
 
     public virtual void Pick()
     {

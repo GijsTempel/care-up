@@ -73,6 +73,24 @@ public class PlayerAnimationManager : MonoBehaviour
         }
     }
 
+
+    
+	public static void PlayUseAnimation(int UseObjID, int UseOnID, Transform target = null)
+    {
+		animationController.SetInteger("leftID", UseObjID);
+		animationController.SetInteger("rightID", UseOnID);
+        animationController.SetTrigger("Use");
+        animationController.SetTrigger("S Use");
+
+        if (target)
+        {
+            cameraMode.SetCinematicMode(target);
+        }
+    }
+
+
+
+
     public static void PlayAnimation(string name, Transform target = null)
     {
         animationController.SetTrigger(name);

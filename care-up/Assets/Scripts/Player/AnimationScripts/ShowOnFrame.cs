@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HideOnFrame : StateMachineBehaviour
+public class ShowOnFrame : StateMachineBehaviour
 {
 
     public int hideFrame;
-	public string hideObjName;
+    public string ObjName;
 
     protected float frame;
     protected float prevFrame;
@@ -14,10 +14,10 @@ public class HideOnFrame : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
 
-        
+
     }
 
-	bool CompareFrames(float currentFrame, float previousFrame, int compareFrame)
+    bool CompareFrames(float currentFrame, float previousFrame, int compareFrame)
     {
         float targetFrame = compareFrame / 60f; // 60fps
         return (currentFrame >= targetFrame && previousFrame < targetFrame);
@@ -26,23 +26,26 @@ public class HideOnFrame : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
 
-		if (CompareFrames(frame, prevFrame, hideFrame) && hideObjName != "")
+        if (CompareFrames(frame, prevFrame, hideFrame) && ObjName != "")
         {
 
-			if (GameObject.Find(hideObjName))
-			{
-				GameObject.Find(hideObjName).gameObject.SetActive(false);
-    			}
+            if (GameObject.Find(ObjName))
+            {
+				if (GameObject.Find(ObjName).GetComponent<MeshRenderer>() != null)
+				{
+					GameObject.Find(ObjName).GetComponent<MeshRenderer>().enabled = true;
+				}
+            }
         }
-   
+
         prevFrame = frame;
         frame += Time.deltaTime;
-   
+
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-  
+
     }
 
 }

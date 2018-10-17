@@ -25,6 +25,7 @@ public class UseOnAndDelete : AnimationUseOn
         if (PlayerAnimationManager.CompareFrames(frame, prevFrame, deleteFrame))
         {
             inv.RemoveHandObject(hand);
+	
         }
 
         if (animator.speed != 0)

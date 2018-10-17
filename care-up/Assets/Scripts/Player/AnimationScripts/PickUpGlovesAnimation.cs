@@ -23,7 +23,7 @@ public class PickUpGlovesAnimation : StateMachineBehaviour
     {
         if (animator.speed != 0)
         {
-            if (PlayerAnimationManager.CompareFrames(frame, prevFrame, 30))
+            if (PlayerAnimationManager.CompareFrames(frame, prevFrame, 1))
             {
                 handsInventory.GlovesToggle(true);
             }
@@ -33,18 +33,5 @@ public class PickUpGlovesAnimation : StateMachineBehaviour
         }
     }
 
-    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    //public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //}
 
-    // OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here
-    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-    //
-    //}
-
-    // OnStateIK is called right after Animator.OnAnimatorIK(). Code that sets up animation IK (inverse kinematics) should be implemented here.
-    //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-    //
-    //}
 }
