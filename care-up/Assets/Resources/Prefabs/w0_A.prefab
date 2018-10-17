@@ -1108,6 +1108,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4356977901409976}
   - component: {fileID: 95991138423894402}
+  - component: {fileID: 82728382404366182}
+  - component: {fileID: 114079948524977834}
   m_Layer: 0
   m_Name: w0_A
   m_TagString: Untagged
@@ -1860,6 +1862,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4853808274453070}
+  - component: {fileID: 65157557528166688}
+  - component: {fileID: 114298444500417294}
   m_Layer: 0
   m_Name: head
   m_TagString: Untagged
@@ -3601,7 +3605,6 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 9925213fa73ef4287b50555b5a2bf2ea, type: 2}
   m_StaticBatchInfo:
@@ -3630,6 +3633,98 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1570376346781770}
   m_Mesh: {fileID: 4300014, guid: 54d67cbfbdf144a78bfcf1dcb51138bd, type: 3}
+--- !u!65 &65157557528166688
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1994545771264590}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.22, y: 0.41, z: 0.27}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!82 &82728382404366182
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1619767864227160}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!95 &95991138423894402
 Animator:
   serializedVersion: 3
@@ -3647,7 +3742,43 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114079948524977834
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1619767864227160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fe1c89ed8d75534e96567d3fc722b22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectID: 0
+  description: 
+  muplipleMesh: 1
+  descriptionOffset: {x: 0, y: 0, z: 0}
+  transparencyFix: 0
+  tutorial_talked: 0
+  tutorial_used: 0
+  allowToTalk: 1
+  dialogueXmls:
+  - CatherisationPatient
+--- !u!114 &114298444500417294
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1994545771264590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627be83678360444e9bdc7ce19845507, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectID: 0
+  description: 
+  muplipleMesh: 0
+  descriptionOffset: {x: 0, y: 0, z: 0}
+  transparencyFix: 0
 --- !u!137 &137008239596964726
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -3661,7 +3792,6 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: ad8af3083730b4393b2e3d1897367f89, type: 2}
   m_StaticBatchInfo:
@@ -3791,7 +3921,6 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: e2ad388832eff4c8a9ea46c7a2b0228f, type: 2}
   m_StaticBatchInfo:
@@ -3921,7 +4050,6 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 68d30562ab56b44278a57b26d7f1439a, type: 2}
   m_StaticBatchInfo:
@@ -4051,7 +4179,6 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: a8c6b602b048a44da9d26f76b996dfd3, type: 2}
   m_StaticBatchInfo:
@@ -4181,7 +4308,6 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 7954362fa30924e4da66acfaebfc2e1d, type: 2}
   m_StaticBatchInfo:
@@ -4311,7 +4437,6 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: a8c6b602b048a44da9d26f76b996dfd3, type: 2}
   m_StaticBatchInfo:
@@ -4441,7 +4566,6 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 6f0557fa74813462db41e54b969dcf24, type: 2}
   m_StaticBatchInfo:
@@ -4571,7 +4695,6 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 724a5860f0f394c52a0a288c20c6bbe4, type: 2}
   m_StaticBatchInfo:

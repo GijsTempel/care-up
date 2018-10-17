@@ -61,7 +61,7 @@ public class InjectionPatient : PersonObject {
                     inhaling = true;
                     break;
                 case "ShowBellyForInsulin":
-                    GetComponent<Animator>().SetTrigger("ShowBellyForInsulin");
+                    animator.SetTrigger("ShowBellyForInsulin");
                     pulledUp = true;
                     PlayerScript.TriggerQuizQuestion(3.3f);
                     break;
