@@ -19,6 +19,18 @@ public class WalkToGroup : MonoBehaviour
     GameObject gameLogic;
     ParticleSystem particles;
 
+    private Transform target;
+
+    public Vector3 Position
+    {
+        get { return (target == null) ? position : target.position; }
+    }
+
+    public Vector3 Rotation
+    {
+        get { return (target == null) ? rotation : target.rotation.eulerAngles; }
+    }
+
     public void HighlightGroup(bool value)
     {
         if (SystemInfo.deviceType == DeviceType.Handheld)
@@ -52,6 +64,15 @@ public class WalkToGroup : MonoBehaviour
         {
             ParticleSystem.EmissionModule emission = particles.emission;
             emission.enabled = false;
+        }
+
+        if (transform.Find("Target") != null)
+        {
+            target = transform.Find("Target").transform;
+        }
+        else
+        {
+            target = null;
         }
     }
 

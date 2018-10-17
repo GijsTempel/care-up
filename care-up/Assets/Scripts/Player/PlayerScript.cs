@@ -345,11 +345,11 @@ public class PlayerScript : MonoBehaviour {
     {
 
         ToggleAway();
-        transform.position = group.position;
+        transform.position = group.Position;
         if ( prefs == null || (prefs != null && !prefs.VR))
         {
-            transform.rotation = Quaternion.Euler(0.0f, group.rotation.y, 0.0f);
-            Camera.main.transform.localRotation = Quaternion.Euler(group.rotation.x, 0.0f, 0.0f);
+            transform.rotation = Quaternion.Euler(0.0f, group.Rotation.y, 0.0f);
+            Camera.main.transform.localRotation = Quaternion.Euler(group.Rotation.x, 0.0f, 0.0f);
             mouseLook.SaveRot(transform, Camera.main.transform);
         }
         currentWalkPosition = group;
