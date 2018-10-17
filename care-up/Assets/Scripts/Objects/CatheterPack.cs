@@ -6,18 +6,14 @@ public class CatheterPack : UsableObject
 {
     public List<GameObject> objects = new List<GameObject>();
     
-    private bool toggle = false;
-
     protected override void Start()
     {
         base.Start();
         
-        toggle = false;
-
         foreach (GameObject obj in objects)
         {
             if (obj != null)
-                obj.SetActive(toggle);
+                obj.SetActive(false);
         }
     }
 
@@ -29,24 +25,20 @@ public class CatheterPack : UsableObject
             {
                 PlayerAnimationManager.PlayAnimation("Use " + name);//, transform); add this with animation
 
-                ToggleObjects();
+                foreach (GameObject obj in objects)
+                {
+                    if (obj)
+                    {
+                        obj.SetActive(true);
+                    }
+                }
+
+                Destroy(gameObject);
             }
 
             actionManager.OnUseAction(name);
             controls.ResetObject();
             Reset();
-        }
-    }
-
-    public void ToggleObjects()
-    {
-        toggle = !toggle;
-        foreach (GameObject obj in objects)
-        {
-            if (obj)
-            {
-                obj.SetActive(toggle);
-            }
         }
     }
 }
