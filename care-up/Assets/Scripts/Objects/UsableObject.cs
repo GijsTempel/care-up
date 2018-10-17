@@ -59,11 +59,6 @@ public class UsableObject : InteractableObject {
                             messageCenter.NewMessage("Zorgvuldige handhygiëne", message, RobotUIMessageTab.Icon.Info);
                         }
                         break;
-                    case "gloveBox":
-                        {
-                            handsInventory.GlovesToggle(true);
-                        }
-                        break;
                     case "OldBandAid":
                         {
                             Destroy(gameObject);
