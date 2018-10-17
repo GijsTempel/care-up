@@ -23,7 +23,7 @@ public class PickUpGlovesAnimation : StateMachineBehaviour
     {
         if (animator.speed != 0)
         {
-            if (PlayerAnimationManager.CompareFrames(frame, prevFrame, 48))
+            if (PlayerAnimationManager.CompareFrames(frame, prevFrame, 30))
             {
                 handsInventory.GlovesToggle(true);
             }
