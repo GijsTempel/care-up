@@ -23,7 +23,7 @@ public class CatherisationPatient : PersonObject {
             switch (topic)
             {
                 case "LayOnBed":
-                    animator.SetTrigger("lie_down");
+                    animator.SetTrigger("pants_down");
                     break;
                 default:
                     break;
