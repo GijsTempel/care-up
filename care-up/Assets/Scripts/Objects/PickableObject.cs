@@ -189,6 +189,21 @@ public class PickableObject : InteractableObject {
                     return true;
                 }
             }
+            else if (name == "cloth_02_folded" && controls.SelectedObject.GetComponent<PersonObjectPart>() != null
+                && controls.SelectedObject.GetComponent<PersonObjectPart>().Person.name == "w0_A")
+            {
+                if (actionManager.CompareUseOnInfo("cloth_02_folded", "w0_A"))
+                {
+                    actionManager.OnUseOnAction("cloth_02_folded", "w0_A");
+
+                    Transform target = controls.SelectedObject.GetComponent<PersonObjectPart>().Person;
+                    target.GetComponent<InteractableObject>().Reset();
+                    controls.ResetObject();
+                    PlayerAnimationManager.PlayAnimation("UseOn cloth_02_folded w0_A");
+
+                    return true;
+                }
+            }
         }
 
         actionManager.OnUseOnAction(name, controls.SelectedObject != null ? controls.SelectedObject.name : "");
