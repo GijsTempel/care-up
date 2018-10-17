@@ -27,7 +27,7 @@ public class CatheterPack : UsableObject
         {
             if (actionManager.CompareUseObject(name))
             {
-                PlayerAnimationManager.PlayAnimation("Use " + name, transform);
+                PlayerAnimationManager.PlayAnimation("Use " + name);//, transform); add this with animation
 
                 ToggleObjects();
             }
