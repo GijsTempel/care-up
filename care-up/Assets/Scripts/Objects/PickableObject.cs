@@ -203,13 +203,14 @@ public class PickableObject : InteractableObject {
                     target.GetComponent<InteractableObject>().Reset();
                     controls.ResetObject();
 					//PlayerAnimationManager.PlayAnimation("UseOn cloth_02_folded w0_A");
+					Transform t = GameObject.Find("bed_w0").transform;
 					if (hand)
 					{
-						PlayerAnimationManager.PlayUseAnimation(3300, -5);
+						PlayerAnimationManager.PlayUseAnimation(3300, -5, t);
 					}
 					else
 					{
-						PlayerAnimationManager.PlayUseAnimation(-5, 3300);
+						PlayerAnimationManager.PlayUseAnimation(-5, 3300, t);
 					}
                     return true;
                 }
