@@ -386,9 +386,17 @@ public class HandsInventory : MonoBehaviour {
         animationObject = Instantiate(Resources.Load<GameObject>("Prefabs\\" + name),
                             Vector3.zero, Quaternion.identity) as GameObject;
 
-        animationObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-        animationObject.GetComponent<Rigidbody>().useGravity = false;
-        animationObject.GetComponent<Collider>().enabled = false;
+        if (animationObject.GetComponent<Rigidbody>() != null)
+        {
+            animationObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            animationObject.GetComponent<Rigidbody>().useGravity = false;
+        }
+
+        if (animationObject.GetComponent<Collider>() != null)
+        {
+            animationObject.GetComponent<Collider>().enabled = false;
+        }
+
         animationObject.name = name;
         
         animationObject.transform.parent = hand ? leftToolHolder : rightToolHolder;

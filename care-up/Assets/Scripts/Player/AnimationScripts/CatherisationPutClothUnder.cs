@@ -13,12 +13,16 @@ public class CatherisationPutClothUnder : CinematicAnimation
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        base.OnStateEnter(animator, stateInfo, layerIndex);
+
         inv = GameObject.FindObjectOfType<HandsInventory>();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        base.OnStateUpdate(animator, stateInfo, layerIndex);
+
         if (PlayerAnimationManager.CompareFrames(frame, prevFrame, changeClothModelFrame))
         {
             if (inv.LeftHandObject != null)
@@ -31,14 +35,20 @@ public class CatherisationPutClothUnder : CinematicAnimation
                 inv.RemoveHandObject(false);
             }
 
-            inv.CreateAnimationObject("", true);
+            inv.CreateAnimationObject("cloth_02_inHands", false);
         }
 
         if (PlayerAnimationManager.CompareFrames(frame, prevFrame, dropClothFrame))
         {
             inv.DeleteAnimationObject();
 
-            inv.CreateObjectByName("", clothPosition);
+            if (GameObject.Find("cloth_02"))
+            {
+                if (GameObject.Find("cloth_02").GetComponent<MeshRenderer>() != null)
+                {
+                    GameObject.Find("cloth_02").GetComponent<MeshRenderer>().enabled = true;
+                }
+            }
         }
     }
 
