@@ -48,9 +48,9 @@ public class AddClipToAnimator : MonoBehaviour {
         bm.AddAnyStateTransition(lm);
         int l = bm.anyStateTransitions.Length;
         bm.anyStateTransitions[l - 1].AddCondition(AnimatorConditionMode.If, 1, trigger);
-        if (leftID > -1)
+        if (leftID != -1)
             bm.anyStateTransitions[l - 1].AddCondition(AnimatorConditionMode.Equals, leftID, "leftID");
-        if (rightID > -1)
+        if (rightID != -1)
             bm.anyStateTransitions[l - 1].AddCondition(AnimatorConditionMode.Equals, rightID, "rightID");
         lm.AddTransition(animationController.layers[layer].stateMachine);
         lm.transitions[lm.transitions.Length - 1].hasExitTime = true;
