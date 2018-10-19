@@ -41,20 +41,9 @@ public class PlayerAnimationManager : MonoBehaviour
         if (playerScript == null) Debug.LogError("No player");
     }
     
-	public static void PlayCombineAnimation(ObjectsIDs LeftObj, ObjectsIDs RightObj, Transform target = null)
+	public static void PlayCombineAnimation(int leftID, int rightID, Transform target = null)
     {
 		
-		int leftID = 0;
-		int rightID = 0;
-		if (LeftObj != null)
-		{
-			leftID = LeftObj.GetID() * 100 + LeftObj.GetState();
-		}
-		if (RightObj != null)
-		{
-			rightID = RightObj.GetID() * 100 + RightObj.GetState();
-		}
-
 		animationController.SetInteger("leftID", leftID);
 		animationController.SetInteger("rightID", rightID);
 		animationController.SetTrigger("Combine");

@@ -191,31 +191,60 @@ public class PickableObject : InteractableObject {
                     return true;
                 }
             }
-            else if (name == "cloth_02_folded" && controls.SelectedObject.GetComponent<PersonObjectPart>() != null
-                && controls.SelectedObject.GetComponent<PersonObjectPart>().Person.name == "w0_A")
+            else if (GameObject.FindObjectOfType<ObjectsIDController>() != null)
             {
-
-                if (actionManager.CompareUseOnInfo("cloth_02_folded", "w0_A"))
+      
+                ObjectsIDController ObjectsID_Controller = GameObject.FindObjectOfType<ObjectsIDController>();
+                string selectedName = controls.SelectedObject.transform.name;
+                if (controls.SelectedObject.GetComponent<PersonObjectPart>() != null)
                 {
-                    actionManager.OnUseOnAction("cloth_02_folded", "w0_A");
+                    selectedName = controls.SelectedObject.GetComponent<PersonObjectPart>().Person.name;
+                }
+                if (ObjectsID_Controller.FindByName(transform.name) != -1 && ObjectsID_Controller.FindByName(selectedName) != -1)
+                {
+                    bool alloweUse = actionManager.CompareUseOnInfo(transform.name, selectedName);
+                    if (ObjectsID_Controller != null)
+                    {
+                        if (ObjectsID_Controller.Cheat && Application.isEditor)
+                        {
+                            alloweUse = true;
+                        }
+                    }
 
-                    Transform target = controls.SelectedObject.GetComponent<PersonObjectPart>().Person;
-                    target.GetComponent<InteractableObject>().Reset();
-                    controls.ResetObject();
-					//PlayerAnimationManager.PlayAnimation("UseOn cloth_02_folded w0_A");
-					Transform t = GameObject.Find("bed_w0").transform;
-					if (hand)
-					{
-						PlayerAnimationManager.PlayUseAnimation(3300, -5, t);
-					}
-					else
-					{
-						PlayerAnimationManager.PlayUseAnimation(-5, 3300, t);
-					}
-                    return true;
+                    if (alloweUse)
+                    {
+                        actionManager.OnUseOnAction(transform.name, selectedName);
+
+                        ObjectsIDs objectID_Controller = ObjectsID_Controller.GetObject(ObjectsID_Controller.FindByName(transform.name));
+                        ObjectsIDs selectedID_Controller = ObjectsID_Controller.GetObject(ObjectsID_Controller.FindByName(selectedName));
+
+                        int oId = ObjectsID_Controller.GetIDByName(transform.name);
+                        int sId = ObjectsID_Controller.GetIDByName(selectedName);
+                       
+                        Transform t = null;
+                        if (transform.name == "cloth_02_folded" && selectedName == "w0_A")
+                        {
+                            //t = GameObject.Find("bed_w0").transform;
+                        }
+                        else if (controls.SelectedObject.transform.Find("CinematicTarget"))
+                        {
+                            t = controls.SelectedObject.transform.Find("CinematicTarget").transform;
+                        }
+
+                        if (hand)
+                        {
+                            PlayerAnimationManager.PlayUseAnimation(oId, sId, t);
+                        }
+                        else
+                        {
+                            PlayerAnimationManager.PlayUseAnimation(sId, oId, t);
+                        }
+                        return true;
+                    }
                 }
             }
-        }
+                
+           }
 
         actionManager.OnUseOnAction(name, controls.SelectedObject != null ? controls.SelectedObject.name : "");
 

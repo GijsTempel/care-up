@@ -840,10 +840,9 @@ public class HandsInventory : MonoBehaviour {
 
 			if (idModeAllow)
 			{
-				ObjectsIDs l = ObjectsID_Controller.GetObject(ObjectsID_Controller.FindByName(leftName));
-				ObjectsIDs r = ObjectsID_Controller.GetObject(ObjectsID_Controller.FindByName(rightName));
-
-				PlayerAnimationManager.PlayCombineAnimation(l, r);
+		        int leftID = ObjectsID_Controller.GetIDByName(leftName);
+                int rightID = ObjectsID_Controller.GetIDByName(rightName);
+                PlayerAnimationManager.PlayCombineAnimation(leftID, rightID);
 			}
 			else
 			{
