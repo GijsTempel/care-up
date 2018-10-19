@@ -228,7 +228,7 @@ public class PickableObject : InteractableObject {
                         }
                         else if (controls.SelectedObject.transform.Find("CinematicTarget"))
                         {
-                            t = controls.SelectedObject.transform.Find("CinematicTarget").transform;
+                            t = controls.SelectedObject.transform;
                         }
 
                         if (hand)
