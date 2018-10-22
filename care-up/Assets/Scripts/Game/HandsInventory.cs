@@ -298,15 +298,15 @@ public class HandsInventory : MonoBehaviour {
             leftHandObject.leftControlBone = leftControlBone;
             leftHandObject.rightControlBone = rightControlBone;
             SetHold(true);
-
-            leftHandObject.CreateGhostObject();
-
+            
             PlayerAnimationManager.SetHandItem(true, leftObject);
 
             if (leftSavedPos != Vector3.zero)
             {
                 leftHandObject.SavePosition(leftSavedPos, leftSavedRot);
             }
+
+            leftHandObject.CreateGhostObject();
 
             if (leftHandObject.GetComponent<PickableObjectWithInfo>() != null && load)
             {
@@ -338,15 +338,14 @@ public class HandsInventory : MonoBehaviour {
             rightHandObject.leftControlBone = leftControlBone;
             rightHandObject.rightControlBone = rightControlBone;
             SetHold(false);
-
-            rightHandObject.CreateGhostObject();
-
+            
             PlayerAnimationManager.SetHandItem(false, rightObject);
 
             if (rightSavedPos != Vector3.zero)
             {
                 rightHandObject.SavePosition(rightSavedPos, rightSavedRot);
             }
+            rightHandObject.CreateGhostObject();
 
             if (rightHandObject.GetComponent<PickableObjectWithInfo>() != null && load)
             {
