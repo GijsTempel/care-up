@@ -8,6 +8,7 @@ public class CatherisationPatient : PersonObject {
 
     public Vector3 playerPosition;
     public Vector3 playerRotation;
+    public Transform playerPositionTarget;
 
     protected override void Start()
     {
@@ -29,8 +30,8 @@ public class CatherisationPatient : PersonObject {
                     animator.SetTrigger("pants_down");
 
                     GameObject playerPosAtPatient = GameObject.Find("PlayerPositions/PatientPos/Target");
-                    playerPosAtPatient.transform.position = playerPosition;
-                    playerPosAtPatient.transform.rotation = Quaternion.Euler(playerRotation);
+                    playerPosAtPatient.transform.position = playerPositionTarget.position;
+                    playerPosAtPatient.transform.rotation = playerPositionTarget.rotation;
                     break;
                 default:
                     break;
