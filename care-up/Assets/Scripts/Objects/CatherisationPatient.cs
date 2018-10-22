@@ -6,6 +6,9 @@ public class CatherisationPatient : PersonObject {
 
     private Animator animator;
 
+    public Vector3 playerPosition;
+    public Vector3 playerRotation;
+
     protected override void Start()
     {
         base.Start();
@@ -24,6 +27,10 @@ public class CatherisationPatient : PersonObject {
             {
                 case "LayOnBed":
                     animator.SetTrigger("pants_down");
+
+                    GameObject playerPosAtPatient = GameObject.Find("PlayerPositions/PatientPos/Target");
+                    playerPosAtPatient.transform.position = playerPosition;
+                    playerPosAtPatient.transform.rotation = Quaternion.Euler(playerRotation);
                     break;
                 default:
                     break;

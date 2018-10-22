@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 /// <summary>
 /// Object that can be picked in hand
@@ -31,16 +32,7 @@ public class PickableObject : InteractableObject {
     public PickableObject mainObject;
     [HideInInspector]
     public List<PickableObject> ghostObjects;
-
-    [System.Serializable]
-    public struct GhostPosition
-    {
-        public Vector3 position;
-        public Vector3 rotation;
-    }
-
-    public List<GhostPosition> ghostPositions = new List<GhostPosition>();
-
+    
     protected override void Start()
     {
         base.Start();
@@ -274,13 +266,16 @@ public class PickableObject : InteractableObject {
 
     public void CreateGhostObject()
     {
-        if (ghostPositions.Count == 0)
+        List<HandsInventory.ItemPosition> list =
+            inventory.customGhostPositions.Where(x => x.objectName == name).ToList();
+
+        if (list.Count == 0)
         {
             InstantiateGhostObject(this.SavedPosition, this.SavedRotation);
         }
         else
         {
-            foreach(GhostPosition g in ghostPositions)
+            foreach(HandsInventory.ItemPosition g in list)
             {
                 InstantiateGhostObject(g.position, 
                     Quaternion.Euler(g.rotation));
