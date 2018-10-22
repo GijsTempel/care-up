@@ -40,6 +40,7 @@ public class HandsInventory : MonoBehaviour {
     };
 
     public List<ItemPosition> customPositions = new List<ItemPosition>();
+    public List<ItemPosition> customGhostPositions = new List<ItemPosition>();
 
     private Transform leftToolHolder;
     private Transform rightToolHolder;
