@@ -1837,6 +1837,22 @@ MonoBehaviour:
   hand: 0
   plungerStart: 190
   plungerEnd: 800
+--- !u!114 &114102157933139198
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ae6b455166f9b3499ec4217106f67ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audio: 0
+  audioFileName: 
+  audioFrame: 0
+  positionObjectName: 
+  volume: 1
 --- !u!114 &114103235276556022
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -2116,6 +2132,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combineFrame: 210
+--- !u!114 &114202746988410382
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ae6b455166f9b3499ec4217106f67ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audio: 0
+  audioFileName: 
+  audioFrame: 0
+  positionObjectName: 
+  volume: 1
 --- !u!114 &114207607412705100
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -2448,20 +2480,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combineFrame: 100
---- !u!114 &114340539986908006
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b03eeecfc46c784a9e981273a503cc3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  swapFrame: 127
-  swapObjName: GauzeTrayWet
-  leftHand: 1
 --- !u!114 &114342345932785404
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -4258,6 +4276,20 @@ MonoBehaviour:
   audioFrame: 0
   positionObjectName: 
   volume: 1
+--- !u!114 &114952485494114628
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b03eeecfc46c784a9e981273a503cc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  swapFrame: 127
+  swapObjName: GauzeTrayWet
+  leftHand: 0
 --- !u!114 &114953393082203866
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -29051,6 +29083,7 @@ AnimatorState:
   - {fileID: 1101595916301547194}
   m_StateMachineBehaviours:
   - {fileID: 114168657016249712}
+  - {fileID: 114102157933139198}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -30740,7 +30773,7 @@ AnimatorState:
   m_Transitions:
   - {fileID: 1101583894152841310}
   m_StateMachineBehaviours:
-  - {fileID: 114340539986908006}
+  - {fileID: 114202746988410382}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -33490,7 +33523,8 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101247373161106534}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 114952485494114628}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -37853,7 +37887,7 @@ AnimatorStateMachine:
     m_Position: {x: 144, y: 372, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102551101549763602}
-    m_Position: {x: 396, y: 372, z: 0}
+    m_Position: {x: 408, y: 372, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
