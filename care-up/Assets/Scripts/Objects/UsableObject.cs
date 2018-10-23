@@ -10,7 +10,7 @@ public class UsableObject : InteractableObject {
 
     [HideInInspector]
     public bool tutorial_used = false;
-
+    public string PrefabToAppear = "";
     protected static HandsInventory handsInventory;
 
     protected override void Start()
@@ -29,13 +29,13 @@ public class UsableObject : InteractableObject {
         if (!ViewModeActive())
         {
             // unique object, not usable, but picking performed instead
-            if (name == "ClothPackage")
+            if (PrefabToAppear != "")
             {
                 TutorialManager tutorial = GameObject.Find("GameLogic").GetComponent<TutorialManager>();
                 if (tutorial == null || (tutorial != null &&
-                    ("Cloth" == tutorial.itemToPick || "Cloth" == tutorial.itemToPick2)))
+                    (PrefabToAppear == tutorial.itemToPick || PrefabToAppear == tutorial.itemToPick2)))
                 {
-                    GameObject gameObject = handsInventory.CreateObjectByName("Cloth", Vector3.zero);
+                    GameObject gameObject = handsInventory.CreateObjectByName(PrefabToAppear, Vector3.zero);
                     handsInventory.PickItem(gameObject.GetComponent<PickableObject>());
                     Reset();
                 }

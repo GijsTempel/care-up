@@ -294,7 +294,7 @@ public class ItemControlsUI : MonoBehaviour {
 
     public void Use()
     {
-        if (initedObject.name == "ClothPackage")
+        if (initedObject.GetComponent<UsableObject>().PrefabToAppear != "")
         {
             initedObject.GetComponent<UsableObject>().Use();
         }
