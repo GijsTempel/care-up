@@ -30,7 +30,8 @@ public class ActionManager : MonoBehaviour {
         ObjectUseOn,
         ObjectExamine,
         PickUp,
-        SequenceStep
+        SequenceStep,
+        ObjectDrop
     };
 
     // name of the xml file with actions
@@ -423,6 +424,11 @@ public class ActionManager : MonoBehaviour {
                     string stepName = action.Attributes["value"].Value;
                     actionList.Add(new SequenceStepAction(stepName, index, descr, fDescr, audio, extra, pointsValue, notNeeded));
                     break;
+                case "drop":
+                    string dropItem = action.Attributes["item"].Value;
+                    string dropID = (action.Attributes["posID"] != null) ? action.Attributes["posID"].Value : "0";
+                    actionList.Add(new ObjectDropAction(dropItem, dropID, index, descr, fDescr, audio, extra, pointsValue, notNeeded));
+                    break;
                 default:
                     Debug.LogError("No action type found: " + type);
                     break;
@@ -634,6 +640,21 @@ public class ActionManager : MonoBehaviour {
             ActionManager.CorrectAction();
     }
 
+    public void OnDropDownAction(string item, int posId)
+    {
+        string[] info = { item, posId.ToString() };
+        bool occured = Check(info, ActionType.ObjectDrop);
+        UpdatePoints(occured ? 1 : 0); // no penalty
+
+        if (occured || true)
+        {
+            Debug.Log("Dropped " + item + " on position #" + posId);
+        }
+
+        if (!CheckScenarioCompleted() && occured)
+            ActionManager.CorrectAction();
+    }
+
     /// <summary>
     /// Checks if triggered action is correct ( expected to be done in action list ).
     /// Plays WrongAction sound from Narrator if wrong.
@@ -690,7 +711,7 @@ public class ActionManager : MonoBehaviour {
             currentActionIndex += 1;
         }
         
-        if (!matched && type != ActionType.ObjectExamine && type != ActionType.PickUp)
+        if (!matched && type != ActionType.ObjectExamine && type != ActionType.PickUp && type != ActionType.ObjectDrop)
         {
             int index = actionList.IndexOf(currentAction);
             if ( sublist.Count > 0 && !wrongStepIndexes.Contains(index) )
