@@ -338,4 +338,33 @@ namespace CareUp.Actions
             name = res;
         }
     }
+
+    public class ObjectDropAction : Action
+    {
+        private string objectName;
+        private string dropPositionID;
+
+        public ObjectDropAction(string name, string posId, int index, string sdescr, string fdescr, string audio, string extra, int points, bool notNeeded)
+            : base(ActionManager.ActionType.ObjectDrop, index, sdescr, fdescr, audio, extra, points, notNeeded)
+        {
+            objectName = name;
+            dropPositionID = posId;
+        }
+
+        public override bool Compare(string[] info)
+        {
+            if (info.Length == 2)
+            {
+                return (info[0] == objectName && info[1] == dropPositionID);
+            }
+            else
+                return false;
+        }
+
+        public override void ObjectNames(out string[] name)
+        {
+            string[] res = { objectName, dropPositionID };
+            name = res;
+        }
+    }
 }

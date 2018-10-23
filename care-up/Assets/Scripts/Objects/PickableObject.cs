@@ -10,9 +10,8 @@ using System.Linq;
 /// </summary>
 [RequireComponent(typeof(Renderer))]
 [RequireComponent(typeof(Rigidbody))]
-public class PickableObject : InteractableObject {
-
-
+public class PickableObject : InteractableObject
+{
     [HideInInspector]
     public bool tutorial_usedOn = false;
 
@@ -28,6 +27,8 @@ public class PickableObject : InteractableObject {
 
     [HideInInspector]
     public bool sihlouette = false;
+    [HideInInspector]
+    public int positionID = 0;
     [HideInInspector]
     public PickableObject mainObject;
     [HideInInspector]
@@ -266,7 +267,7 @@ public class PickableObject : InteractableObject {
 
     public void CreateGhostObject()
     {
-        List<HandsInventory.ItemPosition> list =
+        List<HandsInventory.GhostPosition> list =
             inventory.customGhostPositions.Where(x => x.objectName == name).ToList();
 
         if (list.Count == 0)
@@ -275,15 +276,16 @@ public class PickableObject : InteractableObject {
         }
         else
         {
-            foreach(HandsInventory.ItemPosition g in list)
+            foreach(HandsInventory.GhostPosition g in list)
             {
                 InstantiateGhostObject(g.position, 
-                    Quaternion.Euler(g.rotation));
+                    Quaternion.Euler(g.rotation),
+                    g.id);
             }
         }
     }
 
-    private void InstantiateGhostObject(Vector3 pos, Quaternion rot)
+    private void InstantiateGhostObject(Vector3 pos, Quaternion rot, int posID = 0)
     {
         GameObject ghost = Instantiate(Resources.Load<GameObject>("Prefabs/" + this.name),
             pos, rot);
@@ -291,6 +293,7 @@ public class PickableObject : InteractableObject {
         ghost.GetComponent<PickableObject>().mainObject = this;
         PickableObject ghostObject = ghost.GetComponent<PickableObject>();
         ghostObject.sihlouette = true;
+        ghostObject.positionID = posID;
         ghostObject.SetGhostShader();
         ghostObject.GetComponent<Rigidbody>().useGravity = false;
         ghostObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;

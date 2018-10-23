@@ -40,7 +40,16 @@ public class HandsInventory : MonoBehaviour {
     };
 
     public List<ItemPosition> customPositions = new List<ItemPosition>();
-    public List<ItemPosition> customGhostPositions = new List<ItemPosition>();
+
+    [System.Serializable]
+    public struct GhostPosition
+    {
+        public string objectName;
+        public Vector3 position;
+        public Vector3 rotation;
+        public int id;
+    };
+    public List<GhostPosition> customGhostPositions = new List<GhostPosition>();
 
     private Transform leftToolHolder;
     private Transform rightToolHolder;
@@ -885,11 +894,15 @@ public class HandsInventory : MonoBehaviour {
             leftHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
             tutorial_droppedLeft = true;
 
+            int posID = 0;
             if (ghost != null)
             {
                 leftHandObject.SavePosition(ghost.transform.position,
                     ghost.transform.rotation, true);
+                posID = ghost.GetComponent<PickableObject>().positionID;
             }
+
+            actionManager.OnDropDownAction(leftHandObject.name, posID);
 
             if (!leftHandObject.Drop())
             {
@@ -903,6 +916,7 @@ public class HandsInventory : MonoBehaviour {
             leftHandObject = null;
             leftHold = false;
             PlayerAnimationManager.SetHandItem(true, null);
+
         }
     }
 
@@ -912,12 +926,16 @@ public class HandsInventory : MonoBehaviour {
         {
             rightHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
             tutorial_droppedRight = true;
-            
+
+            int posID = 0;
             if (ghost != null)
             {
                 rightHandObject.SavePosition(ghost.transform.position,
                     ghost.transform.rotation, true);
+                posID = ghost.GetComponent<PickableObject>().positionID;
             }
+
+            actionManager.OnDropDownAction(rightHandObject.name, posID);
 
             if (!rightHandObject.Drop())
             {
