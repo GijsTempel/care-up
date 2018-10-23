@@ -60,8 +60,8 @@ public class CatherisationPutClothUnder : CinematicAnimation
 
             HandsInventory.GhostPosition posNewGauze = new HandsInventory.GhostPosition();
             posNewGauze.objectName = "GauzeTrayWet";
-            posNewGauze.position = new Vector3(10.051f, 0.7351f, 9.2659f);
-            posNewGauze.rotation = new Vector3(-90f, 0f, 0f);
+            posNewGauze.position = new Vector3(10.187f, 0.748f, 9.2253f);
+            posNewGauze.rotation = new Vector3(-90f, 0f, 87.576f);
             posNewGauze.id = 2;
             inv.customGhostPositions.Add(posNewGauze);
 
@@ -74,8 +74,8 @@ public class CatherisationPutClothUnder : CinematicAnimation
 
             HandsInventory.GhostPosition posNewTrash = new HandsInventory.GhostPosition();
             posNewTrash.objectName = "PlasticTrashbucket";
-            posNewTrash.position = new Vector3(10.08803f, 0.7354504f, 9.008774f);
-            posNewTrash.rotation = new Vector3(-90f, 0f, 0f);
+            posNewTrash.position = new Vector3(9.9253f, 0.742f, 9.1915f);
+            posNewTrash.rotation = new Vector3(-90f, 0f, 90f);
             posNewTrash.id = 2;
             inv.customGhostPositions.Add(posNewTrash);
         }
