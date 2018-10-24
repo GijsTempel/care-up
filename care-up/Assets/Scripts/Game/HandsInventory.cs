@@ -389,6 +389,14 @@ public class HandsInventory : MonoBehaviour {
         }
         return newObject;
     }
+
+    public GameObject CreateStaticObjectByName(string name, Vector3 position, Quaternion rotation)
+    {
+        GameObject newObject = Instantiate(Resources.Load<GameObject>("Prefabs\\" + name),
+                            position, rotation) as GameObject;
+        newObject.name = name;
+        return newObject;
+    }
     
     public void CreateAnimationObject(string name, bool hand)
     {
@@ -902,9 +910,7 @@ public class HandsInventory : MonoBehaviour {
                 posID = ghost.GetComponent<PickableObject>().positionID;
             }
 
-            actionManager.OnDropDownAction(leftHandObject.name, posID);
-
-            if (!leftHandObject.Drop())
+            if (!leftHandObject.Drop(posID)) 
             {
                 if (dropPenalty)
                 {
@@ -913,6 +919,8 @@ public class HandsInventory : MonoBehaviour {
                 }
             }
 
+            actionManager.OnDropDownAction(leftHandObject.name, posID);
+            
             leftHandObject = null;
             leftHold = false;
             PlayerAnimationManager.SetHandItem(true, null);
@@ -935,9 +943,7 @@ public class HandsInventory : MonoBehaviour {
                 posID = ghost.GetComponent<PickableObject>().positionID;
             }
 
-            actionManager.OnDropDownAction(rightHandObject.name, posID);
-
-            if (!rightHandObject.Drop())
+            if (!rightHandObject.Drop(posID))
             {
                 if (dropPenalty)
                 {
@@ -946,6 +952,8 @@ public class HandsInventory : MonoBehaviour {
                 }
             }
 
+            actionManager.OnDropDownAction(rightHandObject.name, posID);
+            
             rightHandObject = null;
             rightHold = false;
             PlayerAnimationManager.SetHandItem(false, null);

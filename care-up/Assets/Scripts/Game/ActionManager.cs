@@ -308,6 +308,27 @@ public class ActionManager : MonoBehaviour {
         return "";
     }
 
+    public bool CompareDropPos(string item, int pos)
+    {
+        bool result = false;
+
+        List<Action> sublist = actionList.Where(action =>
+                action.SubIndex == currentActionIndex &&
+                action.matched == false).ToList();
+        foreach (Action a in sublist)
+        {
+            if (a.Type == ActionType.ObjectDrop)
+            {
+                string[] o = new string[2];
+                ((ObjectDropAction)a).ObjectNames(out o);
+                if (o[0] == item && o[1] == pos.ToString())
+                    result = true;
+            }
+        }
+
+        return result;
+    }
+
     private Controls controls;
 
     /// <summary>

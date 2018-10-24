@@ -66,23 +66,35 @@ public class PickableObject : InteractableObject
         {
             rigidBody.isKinematic = true;
             rigidBody.constraints = RigidbodyConstraints.None;
-            //if (Vector3.Distance(transform.position, savedPosition) < 3.0f || force)
-            //{
-                LoadPosition();
-                return true;
-            //}
-            /*else
-            {
-                if (framePositions.Count > 0)
-                {
-                    Vector3 deltaPosition = framePositions[framePositions.Count - 1] - framePositions[0];
-                    deltaPosition = deltaPosition * 3 / Time.fixedDeltaTime;
-                    rigidBody.AddForce(deltaPosition);
-                }
-            }*/
+
+            LoadPosition();
+            return true;
         }
 
         return false;
+    }
+
+    public virtual bool Drop(int posID)
+    {
+        bool res = Drop();
+
+        if (res)
+        {
+            switch (name)
+            {
+                case "GauzeTrayWet":
+                    if (posID == 2 && actionManager.CompareDropPos(name, 2))
+                    {
+                        inventory.CreateStaticObjectByName("GauzeTrayWet_placed", transform.position, transform.rotation);
+                        Destroy(gameObject);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return res;
     }
 
     /// <summary>
