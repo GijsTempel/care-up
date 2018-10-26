@@ -358,7 +358,12 @@ public class ActionManager : MonoBehaviour {
             int.TryParse(action.Attributes["index"].Value, out index);
             string type = action.Attributes["type"].Value;
             string descr = action.Attributes["description"].Value;
-            string audio = action.Attributes["audioHint"].Value;
+
+            string audio = "";
+            if (action.Attributes["audioHint"] != null)
+            {
+                audio = action.Attributes["audioHint"].Value;
+            }
 
             string fDescr = "";
             if (action.Attributes["fullDescription"] != null)
