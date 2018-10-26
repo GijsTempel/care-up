@@ -54,6 +54,7 @@ public class ObjectsIDController : MonoBehaviour
         new ObjectsIDs("w0_A", -5, 0),
         new ObjectsIDs("Sink", -10, 0),
         new ObjectsIDs("GauzeTrayFull", 38,0),
+		new ObjectsIDs("cotton_ball", 40,0),
         
     };
 
