@@ -11,8 +11,9 @@ public class IAPManager : MonoBehaviour, IStoreListener
         var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
         builder.AddProduct("CareUp_Lidmaatschap", ProductType.Subscription, new IDs
         {
-            {"subscription_google", GooglePlay.Name},
-            {"subscription_mac", MacAppStore.Name}
+            {"CareUp_Lidmaatschap", AppleAppStore.Name},
+            {"CareUp_Lidmaatschap", GooglePlay.Name},
+            {"CareUp_Lidmaatschap", MacAppStore.Name}
         });
 
         UnityPurchasing.Initialize(this, builder);
@@ -52,6 +53,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
     /// </summary>
     public void OnPurchaseFailed(Product i, PurchaseFailureReason p)
     {
+        
     }
 
     public void OnPurchaseClicked(string productId)
