@@ -53,4 +53,9 @@ public class IAPManager : MonoBehaviour, IStoreListener
     public void OnPurchaseFailed(Product i, PurchaseFailureReason p)
     {
     }
+
+    public void OnPurchaseClicked(string productId)
+    {
+        controller.InitiatePurchase(productId);
+    }
 }
