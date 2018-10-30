@@ -9,7 +9,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
     private void Start()
     {
         var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
-        builder.AddProduct("subscription", ProductType.Subscription, new IDs
+        builder.AddProduct("CareUp_Lidmaatschap", ProductType.Subscription, new IDs
         {
             {"subscription_google", GooglePlay.Name},
             {"subscription_mac", MacAppStore.Name}
