@@ -20,12 +20,18 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
     void CheckForSerials(CML ignore)
     {
         #if WUSKU
-        if(WULogin.RequireSerialForLogin && !WULogin.HasSerial)
+        if (WULogin.RequireSerialForLogin && !WULogin.HasSerial)
         {
-            StatusMessage.Message ="Je hebt geen actief product";
-            //DisplayScreen( panels.login_screen );
-
-        } 
+            IAPManager manager = GameObject.FindObjectOfType<IAPManager>();
+            if (manager.SubscriptionPurchased())
+            {
+                bl_SceneLoaderUtils.GetLoader.LoadLevel("UMenuPro");
+            }
+            else
+            {
+                StatusMessage.Message = "Je hebt geen actief product";
+            }
+        }
         else
         {
             bl_SceneLoaderUtils.GetLoader.LoadLevel("UMenuPro");

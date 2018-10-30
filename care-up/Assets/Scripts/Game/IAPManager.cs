@@ -1,11 +1,16 @@
 ﻿using UnityEngine;
 using UnityEngine.Purchasing;
+using System.Collections.Generic;
 
 public class IAPManager : MonoBehaviour, IStoreListener
 {
     private IStoreController controller;
     private IExtensionProvider extensions;
-    
+
+    private IAppleExtensions m_AppleExtensions;
+
+    Dictionary<string, string> introductory_info_dict;
+       
     private void Start()
     {
         var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
@@ -26,6 +31,8 @@ public class IAPManager : MonoBehaviour, IStoreListener
     {
         this.controller = controller;
         this.extensions = extensions;
+
+        introductory_info_dict = m_AppleExtensions.GetIntroductoryPriceDictionary();
     }
 
     /// <summary>
@@ -56,8 +63,78 @@ public class IAPManager : MonoBehaviour, IStoreListener
         
     }
 
-    public void OnPurchaseClicked(string productId)
+    public void OnPurchaseClicked(string productId = "CareUp_Lidmaatschap")
     {
         controller.InitiatePurchase(productId);
+    }
+
+    public bool SubscriptionPurchased(string id = "CareUp_Lidmaatschap")
+    {
+        Product sub = controller.products.WithID(id);
+        if (sub.availableToPurchase && sub.receipt != null)
+        {
+            if (checkIfProductIsAvailableForSubscriptionManager(sub.receipt))
+            {
+                string intro_json = (introductory_info_dict == null || !introductory_info_dict.ContainsKey(sub.definition.storeSpecificId)) ? null : introductory_info_dict[sub.definition.storeSpecificId];
+                SubscriptionManager p = new SubscriptionManager(sub, intro_json);
+                SubscriptionInfo info = p.getSubscriptionInfo();
+                return info.isSubscribed() == Result.True;
+            }
+        }
+
+        return false;
+    }
+
+    private bool checkIfProductIsAvailableForSubscriptionManager(string receipt)
+    {
+        var receipt_wrapper = (Dictionary<string, object>)MiniJson.JsonDecode(receipt);
+        if (!receipt_wrapper.ContainsKey("Store") || !receipt_wrapper.ContainsKey("Payload"))
+        {
+            Debug.Log("The product receipt does not contain enough information");
+            return false;
+        }
+        var store = (string)receipt_wrapper["Store"];
+        var payload = (string)receipt_wrapper["Payload"];
+
+        if (payload != null)
+        {
+            switch (store)
+            {
+                case GooglePlay.Name:
+                    {
+                        var payload_wrapper = (Dictionary<string, object>)MiniJson.JsonDecode(payload);
+                        if (!payload_wrapper.ContainsKey("json"))
+                        {
+                            Debug.Log("The product receipt does not contain enough information, the 'json' field is missing");
+                            return false;
+                        }
+                        var original_json_payload_wrapper = (Dictionary<string, object>)MiniJson.JsonDecode((string)payload_wrapper["json"]);
+                        if (original_json_payload_wrapper == null || !original_json_payload_wrapper.ContainsKey("developerPayload"))
+                        {
+                            Debug.Log("The product receipt does not contain enough information, the 'developerPayload' field is missing");
+                            return false;
+                        }
+                        var developerPayloadJSON = (string)original_json_payload_wrapper["developerPayload"];
+                        var developerPayload_wrapper = (Dictionary<string, object>)MiniJson.JsonDecode(developerPayloadJSON);
+                        if (developerPayload_wrapper == null || !developerPayload_wrapper.ContainsKey("is_free_trial") || !developerPayload_wrapper.ContainsKey("has_introductory_price_trial"))
+                        {
+                            Debug.Log("The product receipt does not contain enough information, the product is not purchased using 1.19 or later");
+                            return false;
+                        }
+                        return true;
+                    }
+                case AppleAppStore.Name:
+                case AmazonApps.Name:
+                case MacAppStore.Name:
+                    {
+                        return true;
+                    }
+                default:
+                    {
+                        return false;
+                    }
+            }
+        }
+        return false;
     }
 }
