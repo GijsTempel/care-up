@@ -17,10 +17,26 @@ public class DecombineAndDropToTrash : AnimationCombine
 		{
 			trashName = "PlasticTrashbucket";
 		}
-        inv.ToggleControls(true);
 
+        inv.ToggleControls(true);
+		//if (inv.
         frame = 0f;
         prevFrame = 0f;
+
+		GameObject objToThrow;
+		if (dropHand)
+		{
+			objToThrow = inv.rightHandObject.gameObject;
+		}
+		else
+		{
+			objToThrow = inv.leftHandObject.gameObject;
+		}
+		if (objToThrow.GetComponent<ExtraObjectOptions>() != null)
+		{
+			if (objToThrow.GetComponent<ExtraObjectOptions>().TrashBin != "")
+				trashName = objToThrow.GetComponent<ExtraObjectOptions>().TrashBin;
+		}
 
         if (combineFrame == 0)
         {
