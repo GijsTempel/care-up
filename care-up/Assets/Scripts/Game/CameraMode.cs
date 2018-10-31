@@ -63,7 +63,7 @@ public class CameraMode : MonoBehaviour {
     
     private bool previewModeFrame; //fix
 
-    private Mode CurrentMode
+    public  Mode CurrentMode
     {
         get { return currentMode; }
     }
