@@ -6,13 +6,17 @@ public class DecombineAndDropToTrash : AnimationCombine
 {
     public bool dropHand;
     public int dropFrame;
+	public string trashName = "TrashBucket";
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         inv = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
         mode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
-
+		if (GameObject.Find(trashName) == null)
+		{
+			trashName = "PlasticTrashbucket";
+		}
         inv.ToggleControls(true);
 
         frame = 0f;
@@ -24,7 +28,7 @@ public class DecombineAndDropToTrash : AnimationCombine
         }
 
         mode.dontMoveCamera = true;
-        mode.SetCinematicMode(GameObject.Find("TrashBucket").transform);
+		mode.SetCinematicMode(GameObject.Find(trashName).transform);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -32,7 +36,9 @@ public class DecombineAndDropToTrash : AnimationCombine
     {
         if (PlayerAnimationManager.CompareFrames(frame, prevFrame, dropFrame))
         {
-            inv.FreezeObject(dropHand);
+            //inv.FreezeObject(dropHand);
+			inv.RemoveHandObject(dropHand);
+            
         }
 
         base.OnStateUpdate(animator, stateInfo, layerIndex);

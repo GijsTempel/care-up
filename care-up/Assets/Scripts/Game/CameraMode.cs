@@ -28,7 +28,7 @@ public class CameraMode : MonoBehaviour {
     public float minZoom = 0.5f;
     public float maxZoom = 2.0f;
     
-    private Mode currentMode = Mode.Free;
+    public Mode currentMode = Mode.Free;
 
     public ExaminableObject selectedObject;
     public SystemObject doorSelected;
@@ -60,10 +60,10 @@ public class CameraMode : MonoBehaviour {
     private UnityStandardAssets.ImageEffects.BlurOptimized blur;
 
     public bool dontMoveCamera;
-
+    
     private bool previewModeFrame; //fix
 
-    public Mode CurrentMode
+    private Mode CurrentMode
     {
         get { return currentMode; }
     }

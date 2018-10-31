@@ -34,6 +34,15 @@ public class GameUI : MonoBehaviour {
 	{
 		closeDialog.SetActive(value);
 		closeButton.SetActive(!value);
+
+		if (value)
+		{
+			GameObject.FindObjectOfType<PlayerScript>().robotUIopened = true;
+		}
+		else
+		{
+			GameObject.FindObjectOfType<PlayerScript>().robotUIopened = false;
+		}
 	}
 
 	public void CloseGame()
