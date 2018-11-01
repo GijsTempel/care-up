@@ -5,7 +5,7 @@ using UnityEngine;
 public class ShowOnFrame : StateMachineBehaviour
 {
 
-    public int hideFrame;
+    public int showFrame;
     private GameObject Obj = null;
     public List<string> ObjNames;
     public bool toShow = true;
@@ -16,7 +16,7 @@ public class ShowOnFrame : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (PlayerAnimationManager.CompareFrames(frame, prevFrame, hideFrame))
+        if (PlayerAnimationManager.CompareFrames(frame, prevFrame, showFrame))
         {
             if (GameObject.FindObjectOfType<ObjectsIDController>() != null && ObjNames.Count != 0)
             {
