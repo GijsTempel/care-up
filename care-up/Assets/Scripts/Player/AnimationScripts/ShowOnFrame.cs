@@ -6,35 +6,31 @@ public class ShowOnFrame : StateMachineBehaviour
 {
 
     public int hideFrame;
-    public string ObjName;
+    private GameObject Obj = null;
+    public List<string> ObjNames;
+    public bool toShow = true;
 
     protected float frame;
     protected float prevFrame;
 
-    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-
-
-    }
-
-    bool CompareFrames(float currentFrame, float previousFrame, int compareFrame)
-    {
-        float targetFrame = compareFrame / 60f; // 60fps
-        return (currentFrame >= targetFrame && previousFrame < targetFrame);
-    }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-
-        if (CompareFrames(frame, prevFrame, hideFrame) && ObjName != "")
+        if (PlayerAnimationManager.CompareFrames(frame, prevFrame, hideFrame))
         {
-
-            if (GameObject.Find(ObjName))
+            if (GameObject.FindObjectOfType<ObjectsIDController>() != null && ObjNames.Count != 0)
             {
-				if (GameObject.Find(ObjName).GetComponent<MeshRenderer>() != null)
-				{
-					GameObject.Find(ObjName).GetComponent<MeshRenderer>().enabled = true;
-				}
+                Debug.Log("ObjNames.Count ");
+                ObjectsIDController idCont = GameObject.FindObjectOfType<ObjectsIDController>();
+                foreach (string __name in ObjNames)
+                {
+                    Debug.Log(__name);
+                    Obj = idCont.getFromHidden(__name);
+                    if (Obj != null)
+                    {
+                        Obj.SetActive(true);
+                    }
+                }
             }
         }
 
@@ -43,9 +39,5 @@ public class ShowOnFrame : StateMachineBehaviour
 
     }
 
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-
-    }
 
 }

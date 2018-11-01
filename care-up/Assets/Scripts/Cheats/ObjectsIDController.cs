@@ -32,9 +32,12 @@ public class ObjectsIDs
 
 }
 
+
 public class ObjectsIDController : MonoBehaviour
 {
 	public bool Cheat = false;
+    public List<GameObject> hidenObjects;
+
     public ObjectsIDs[] Objects =
     {
         new ObjectsIDs("syringePack", 30, 0),
@@ -62,8 +65,22 @@ public class ObjectsIDController : MonoBehaviour
         
     };
 
+    public GameObject getFromHidden(string _name)
+    {
+        if (_name != "" && hidenObjects.Count > 0)
+        {
+            foreach (GameObject go in hidenObjects)
+            {
+                if (_name == go.name)
+                    return go;
+            }
+        }
+        return null;
+    }
 
-	public int FindByName(string name)
+
+
+    public int FindByName(string name)
 	{
 		int n = 0;
 		foreach (ObjectsIDs Obj in Objects)
