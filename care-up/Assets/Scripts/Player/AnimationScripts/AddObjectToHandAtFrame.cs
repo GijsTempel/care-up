@@ -6,7 +6,7 @@ public class AddObjectToHandAtFrame : StateMachineBehaviour
 {
     public int addFrame;
     public string objectName;
-    PlayerAnimationManager.Hand hand;
+    public PlayerAnimationManager.Hand hand;
 
     protected float frame;
     protected float prevFrame;

@@ -7,7 +7,9 @@ public class CreateAnimationObjectAndDelete : StateMachineBehaviour
     public int addFrame;
     public int deleteFrame;
     public string objectName;
-    PlayerAnimationManager.Hand hand;
+    public PlayerAnimationManager.Hand hand;
+
+
 
     protected float frame;
     protected float prevFrame;

@@ -6,6 +6,7 @@ using System.Collections;
 /// </summary>
 public class PlayerAnimationManager : MonoBehaviour
 {
+    [System.Serializable]
     public enum Hand
     {
         Right,
