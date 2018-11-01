@@ -152,6 +152,11 @@ public class HandsInventory : MonoBehaviour {
         
     }
     
+    public bool PickItem(PickableObject item, PlayerAnimationManager.Hand hand)
+    {
+        return PickItem(item, (hand == PlayerAnimationManager.Hand.Left) ? "left" : "right");
+    }
+
     /// <summary>
     /// Proper picking, left hand first, right second
     /// </summary>
@@ -398,6 +403,11 @@ public class HandsInventory : MonoBehaviour {
         return newObject;
     }
     
+    public void CreateAnimationObject(string name, PlayerAnimationManager.Hand hand)
+    {
+        CreateAnimationObject(name, hand == PlayerAnimationManager.Hand.Left);
+    }
+
     public void CreateAnimationObject(string name, bool hand)
     {
         animationObject = Instantiate(Resources.Load<GameObject>("Prefabs\\" + name),
