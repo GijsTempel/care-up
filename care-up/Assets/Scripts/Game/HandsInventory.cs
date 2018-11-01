@@ -581,7 +581,12 @@ public class HandsInventory : MonoBehaviour {
         }
     }
 
-    public void ForcePickItem(string name, bool hand)
+    public void ForcePickItem(string name, PlayerAnimationManager.Hand hand)
+    {
+        ForcePickItem(name, hand == PlayerAnimationManager.Hand.Left);
+    }
+
+        public void ForcePickItem(string name, bool hand)
     {
         if (hand)
         { 
