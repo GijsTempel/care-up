@@ -62,7 +62,8 @@ public class ObjectsIDController : MonoBehaviour
 		new ObjectsIDs("catheter_bag_packed_opened", 42,1),
 		new ObjectsIDs("catheter_bag_packed_empty", 42,2),
 		new ObjectsIDs("catheter", 43,0),
-        
+        new ObjectsIDs("x_test", 101,0),
+
     };
 
     public GameObject getFromHidden(string _name)
