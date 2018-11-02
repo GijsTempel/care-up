@@ -130,7 +130,7 @@ public class PickableObject : InteractableObject
                 actionManager.CompareUseOnInfo("InsulinNeedle", "NeedleCup", this.name))
                 && controls.SelectedObject.name == "NeedleCup")
             {
-                string animation = (hand ? "UseLeft " : "UseRight ") + name + " 3";
+                string animation = (hand ? "UseLeft " : "UseRight ") + name + " NeedleCup";
                 PlayerAnimationManager.PlayAnimation(animation, GameObject.Find("NeedleCup").transform);
                 actionManager.OnUseOnAction(name, "NeedleCup");
                 return true;
