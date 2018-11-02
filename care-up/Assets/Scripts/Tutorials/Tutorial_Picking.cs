@@ -81,24 +81,10 @@ public class Tutorial_Picking : TutorialManager {
                     {
                         handsInventory.tutorial_pickedRight = false;
                         itemToPick = "";
-						hintsN.LockTo("Cloth", new Vector3(0.00f, -0.06f, -0.04f));
-						hintsN.SetIconPosition(0);
-                        currentStep = TutorialStep.OpenDropOne;
-                        UItext.text = "Goed gedaan. Laten we nu beide objecten terugleggen. Klik op het gaasje om de opties te tonen.";
-
-                        player.tutorial_itemControls = false;
-                        player.itemControlsToInit = "Cloth";
-                    }
-                    break;
-                case TutorialStep.OpenDropOne:
-                    if (player.tutorial_itemControls)
-                    {
-                        player.tutorial_itemControls = false;
 
                         currentStep = TutorialStep.DropOne;
-						hintsN.LockTo("DropButton", new Vector3(184.70f, -28.30f, 0.00f));
-						hintsN.SetIconPosition(3);
-                        UItext.text = "Kies vervolgens voor de optie 'Terugleggen'.";
+
+                        UItext.text = "Drop cloth";
 
                         itemToDrop = "Cloth";
                         handsInventory.tutorial_droppedLeft = false;
@@ -108,23 +94,9 @@ public class Tutorial_Picking : TutorialManager {
                     if (handsInventory.tutorial_droppedLeft)
                     {
                         handsInventory.tutorial_droppedLeft = false;
-                        currentStep = TutorialStep.OpenDropTwo;
-						hintsN.SetIconPosition(1);
-						hintsN.LockTo("Medicine", new Vector3(0.00f, 0.00f, 0.07f));
-                        UItext.text = "Makkelijk toch? Klik nu op het medicijn om de opties te tonen.";
 
-                        player.tutorial_itemControls = false;
-                        player.itemControlsToInit = "Medicine";
-                    }
-                    break;
-                case TutorialStep.OpenDropTwo:
-                    if (player.tutorial_itemControls)
-                    {
-                        player.tutorial_itemControls = false;
-						hintsN.LockTo("DropButton", new Vector3(-171.93f, -32.40f, 0.00f));
-						hintsN.SetIconPosition(2);
                         currentStep = TutorialStep.DropTwo;
-                        UItext.text = "Kies ook hier weer voor de optie 'Terugleggen'.";
+                        UItext.text = "Drop medicine";
 
                         itemToDrop = "Medicine";
                         handsInventory.tutorial_droppedRight = false;

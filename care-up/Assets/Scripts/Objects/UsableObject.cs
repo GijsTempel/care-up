@@ -37,6 +37,7 @@ public class UsableObject : InteractableObject {
                 {
                     GameObject gameObject = handsInventory.CreateObjectByName(PrefabToAppear, Vector3.zero);
                     handsInventory.PickItem(gameObject.GetComponent<PickableObject>());
+                    gameObject.GetComponent<PickableObject>().CreateGhostObject();
                     Reset();
                 }
                 return;

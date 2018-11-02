@@ -309,6 +309,7 @@ public class PickableObject : InteractableObject
         ghostObject.SetGhostShader();
         ghostObject.GetComponent<Rigidbody>().useGravity = false;
         ghostObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        ghostObject.name = this.name;
         this.ghostObjects.Add(ghostObject);
     }
 
