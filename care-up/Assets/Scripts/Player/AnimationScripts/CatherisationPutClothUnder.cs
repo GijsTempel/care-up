@@ -27,12 +27,12 @@ public class CatherisationPutClothUnder : CinematicAnimation
         {
             if (inv.LeftHandObject != null)
             {
-                inv.RemoveHandObject(true);
+                inv.DropLeftObject();
             }
 
             if (inv.RightHandObject != null)
             {
-                inv.RemoveHandObject(false);
+                inv.DropRightObject();
             }
 
             inv.CreateAnimationObject("cloth_02_inHands", false);
