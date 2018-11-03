@@ -422,8 +422,9 @@ public class CameraMode : MonoBehaviour {
 
         cinematicControl.transform.position =
             Vector3.Lerp(cinematicPos, cinematicTargetPos, cinematicLerp);
-        cinematicControl.Find("Arms").transform.rotation =
-            Quaternion.Lerp(cinematicRot, cinematicTargetRot, cinematicLerp);
+        if (animationEnded || cinematicDirection == 1)
+            cinematicControl.Find("Arms").transform.rotation =
+                Quaternion.Lerp(cinematicRot, cinematicTargetRot, cinematicLerp);
 
         if (!dontMoveCamera)
             AnimationCameraUpdate(false);
