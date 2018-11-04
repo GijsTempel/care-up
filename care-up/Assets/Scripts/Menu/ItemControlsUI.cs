@@ -88,12 +88,12 @@ public class ItemControlsUI : MonoBehaviour {
         closeButton.GetComponent<EventTrigger>().triggers.Add(event1);
         closeButton.GetComponent<EventTrigger>().triggers.Add(event2);
         closeButton.GetComponent<EventTrigger>().triggers.Add(event3);
-
+        
         pickButton.AddComponent<EventTrigger>();
         pickButton.GetComponent<EventTrigger>().triggers.Add(event1);
         pickButton.GetComponent<EventTrigger>().triggers.Add(event2);
         pickButton.GetComponent<EventTrigger>().triggers.Add(event3);
-
+        
         examineButton.AddComponent<EventTrigger>();
         examineButton.GetComponent<EventTrigger>().triggers.Add(event1);
         examineButton.GetComponent<EventTrigger>().triggers.Add(event2);
@@ -249,11 +249,11 @@ public class ItemControlsUI : MonoBehaviour {
                 useOnNTButton.transform.GetChild(0).GetComponent<Text>().text =
                     (actionManager.CompareUseOnInfo(initedObject.name, "") ?
                     actionManager.CurrentButtonText(initedObject.name) : useOnNTtext);
-
+                
                 useButton.transform.GetChild(0).GetComponent<Text>().text =
                     (actionManager.CompareUseObject(initedObject.name)) ? 
                     actionManager.CurrentButtonText(initedObject.name) : useText;
-
+                    
                 useOnNTButton.SetActive(actionManager.CompareUseOnInfo(initedObject.name, ""));
                 useButton.SetActive(actionManager.CompareUseObject(initedObject.name));
             }
