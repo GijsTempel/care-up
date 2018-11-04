@@ -37,11 +37,11 @@ public class PlayerSpawn : MonoBehaviour {
             transform.position, transform.rotation);
         player.name = "Player";
         
-        GameObject itemControls = Instantiate(Resources.Load("Prefabs/ItemControls") as GameObject,
+        GameObject itemControls = Instantiate(Resources.Load("Prefabs/UI/ItemControls") as GameObject,
             transform.position, transform.rotation);
         itemControls.name = "ItemControls";
 
-        GameObject itemDescription = Instantiate(Resources.Load("Prefabs/ItemDescription") as GameObject,
+        GameObject itemDescription = Instantiate(Resources.Load("Prefabs/UI/ItemDescription") as GameObject,
             transform.position, transform.rotation);
         itemDescription.name = "ItemDescription";
 
