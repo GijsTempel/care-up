@@ -75,6 +75,9 @@ public class Cheat_CurrentAction : MonoBehaviour
 
 		extraButton = GameObject.Find("ExtraButton").GetComponent<Button>();
         extraButton.onClick.AddListener(ToggleExtraInfoPanel);
+
+        Button extraCloseBtn = extraPanel.transform.Find("Image").GetComponent<Button>();
+        extraCloseBtn.onClick.AddListener(ToggleExtraInfoPanel);
     }
 
     private void Update()
@@ -136,8 +139,6 @@ public class Cheat_CurrentAction : MonoBehaviour
 
     public void ToggleExtraInfoPanel()
     {
-		
-
         if (tutorial_UI != null && tutorial_UI.expectedHintsState == extraPanel.activeSelf)
         {
             return;
