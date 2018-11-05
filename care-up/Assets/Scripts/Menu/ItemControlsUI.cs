@@ -256,6 +256,8 @@ public class ItemControlsUI : MonoBehaviour {
                     
                 useOnNTButton.SetActive(actionManager.CompareUseOnInfo(initedObject.name, ""));
                 useButton.SetActive(actionManager.CompareUseObject(initedObject.name));
+
+                initedObject.GetComponent<InteractableObject>().Reset();
             }
 
             if (!pickButton.activeSelf && 
