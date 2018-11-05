@@ -30,7 +30,7 @@ public class PlayerSpawn : MonoBehaviour {
 		{
             // never used
 			//GameObject UIPrefab = 
-            Instantiate(Resources.Load("Prefabs/UI") as GameObject);
+            Instantiate(Resources.Load("Prefabs/UI/UI") as GameObject);
 	    }      
 
         GameObject player = Instantiate(playerPrefab,
