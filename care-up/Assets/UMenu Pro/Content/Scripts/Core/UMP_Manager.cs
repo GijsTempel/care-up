@@ -27,6 +27,7 @@ public class UMP_Manager : MonoBehaviour {
     {
         InstanceLevels();
         GameObject.Find("Leaderboard").SetActive(false);
+        GameObject.Find("Opties").SetActive(false);
     }
     /// <summary>
     /// 
@@ -53,14 +54,12 @@ public class UMP_Manager : MonoBehaviour {
         if (CurrentWindow == id)
             return;
 
-        if (id != 1)
-        {
             for (int i = 0; i < Windows.Count; i++)
             {
                 Windows[i].SetActive(false);
             }
            
-        }
+        
         CurrentWindow = id;
         Windows[id].SetActive(true);
     }

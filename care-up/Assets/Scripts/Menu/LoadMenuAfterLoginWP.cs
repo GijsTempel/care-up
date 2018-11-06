@@ -19,13 +19,13 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
  
     void CheckForSerials(CML ignore)
     {
-        #if WUSKU
+#if WUSKU
         if (WULogin.RequireSerialForLogin && !WULogin.HasSerial)
         {
             IAPManager manager = GameObject.FindObjectOfType<IAPManager>();
             if (manager.SubscriptionPurchased())
             {
-                bl_SceneLoaderUtils.GetLoader.LoadLevel("UMenuPro");
+                bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
             }
             else
             {
@@ -34,9 +34,9 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
         }
         else
         {
-            bl_SceneLoaderUtils.GetLoader.LoadLevel("UMenuPro");
+            bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
         }
-        #endif
+#endif
     }
 
     void LoadStartScene(CML response)

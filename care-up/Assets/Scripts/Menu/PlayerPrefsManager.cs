@@ -50,7 +50,7 @@ public class PlayerPrefsManager : MonoBehaviour
         GameObject.FindObjectOfType<AudioListener>().transform.position;
 
         if (!(s.name == "Launch me 1" ||
-              s.name == "UMenuPro" ||
+              s.name == "MainMenu" ||
               s.name == "SceneSelection"))
         {
             // game scenes
@@ -62,13 +62,13 @@ public class PlayerPrefsManager : MonoBehaviour
         }
 
         if (s.name == "EndScore" ||
-            (s.name == "UMenuPro" && 
+            (s.name == "MainMenu" && 
             !GetComponent<AudioSource>().isPlaying))
         {
             GetComponent<AudioSource>().Play();
         }
 
-        if (s.name == "UMenuPro")
+        if (s.name == "MainMenu")
         {
             GameObject.Find("PostProcessingToggle").GetComponent<Toggle>().isOn = postProcessingEnabled;
         }

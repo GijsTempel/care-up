@@ -67,7 +67,7 @@ public class LevelButton : MonoBehaviour {
         }
         else
         {
-            LevelButton mainBtn = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/DialogTestPractice/Dialog/Start").GetComponent<LevelButton>();
+            LevelButton mainBtn = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/DialogTestPractice/Panel_UI/Start").GetComponent<LevelButton>();
 
             if (multiple)
             {
@@ -75,7 +75,7 @@ public class LevelButton : MonoBehaviour {
                 GameObject dialogue = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/Dialog 1");
 
                 // setting title i assume
-                dialogue.transform.Find("Dialog/TopBar/Text").GetComponent<Text>().text = displayName;
+                dialogue.transform.Find("Panel_UI/Top/Title").GetComponent<Text>().text = displayName;
                 if (manager != null)
                 {
                     manager.currentSceneVisualName = displayName;
