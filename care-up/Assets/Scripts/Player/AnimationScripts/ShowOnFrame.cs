@@ -34,8 +34,11 @@ public class ShowOnFrame : StateMachineBehaviour
             }
         }
 
-        prevFrame = frame;
-        frame += Time.deltaTime;
+        if (animator.speed != 0)
+        {
+            prevFrame = frame;
+            frame += Time.deltaTime;
+        }
 
     }
 
