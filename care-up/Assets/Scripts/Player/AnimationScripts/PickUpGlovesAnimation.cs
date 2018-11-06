@@ -6,6 +6,8 @@ public class PickUpGlovesAnimation : StateMachineBehaviour
 {
     private float frame;
     private float prevFrame;
+    public int showFrame = 1;
+    public bool toPickup = true;
 
     HandsInventory handsInventory;
 
@@ -23,9 +25,9 @@ public class PickUpGlovesAnimation : StateMachineBehaviour
     {
         if (animator.speed != 0)
         {
-            if (PlayerAnimationManager.CompareFrames(frame, prevFrame, 1))
+            if (PlayerAnimationManager.CompareFrames(frame, prevFrame, showFrame))
             {
-                handsInventory.GlovesToggle(true);
+                handsInventory.GlovesToggle(toPickup);
             }
             
             prevFrame = frame;

@@ -497,7 +497,7 @@ public class HandsInventory : MonoBehaviour {
         }
         else
         {
-            hands.material = Resources.Load<Material>("Materials/FPArms_Female-Light");
+            hands.material = Resources.Load<Material>("FPArms_Female-Light_COL");
         }
     }
 
