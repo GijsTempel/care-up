@@ -200,9 +200,9 @@ public class PickableObject : InteractableObject
                 && controls.SelectedObject.GetComponent<PersonObjectPart>() != null
                 && controls.SelectedObject.GetComponent<PersonObjectPart>().Person.name == "w0_A")
             {
-                actionManager.OnUseOnAction("cotton_ball", "w0_A");
                 if (actionManager.CompareUseOnInfo("cotton_ball", "w0_A"))
                 {
+                    actionManager.OnUseOnAction("cotton_ball", "w0_A");
                     Transform target = GameObject.Find("w_clean_target").transform;
                     controls.ResetObject();
                     PlayerAnimationManager.PlayAnimationSequence("CatherisationWoman", target);
