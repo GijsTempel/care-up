@@ -98,9 +98,9 @@ public class Tutorial_UseOn : TutorialManager {
 
                         currentStep = TutorialStep.ClickUseOn;
                         //hintsBox.anchoredPosition = new Vector2(527f, 68f);
-						hintsN.LockTo("UseOnButton", new Vector3(171.89f, 0.00f, 0.00f));
-						hintsN.SetIconPosition(3);
-                        UItext.text = "Kies voor de optie 'Gebruiken met...' ";
+                        hintsN.LockTo("UseOnButton", new Vector3(45.10f, -274.50f, 0.00f));
+                        hintsN.SetIconPosition(3);
+                        UItext.text = "Klik op het + icoon om het object met een ander object te gebruiken. ";
 
                         player.tutorial_UseOnControl = false;
                     }

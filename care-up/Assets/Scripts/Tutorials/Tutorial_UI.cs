@@ -78,7 +78,7 @@ public class Tutorial_UI : TutorialManager
                         currentStep = TutorialStep.RobotIntro;
                         hintsN.LockTo("robot", new Vector3(0.00f, -0.25f, 0.09f));
                         hintsN.SetIconPosition(1);
-                        hintsN.ResetSize();
+                        hintsN.SetSize(452f, 463.3f);
                         UItext.text = "Dit is Olivia. Olivia is jou helper robot. Olivia heeft op dit moment nog niet veel functies maar dit zal veranderen in de toekomst. Wel geeft ze aan wanneer een actie goed of fout is uitgevoerd. ";
                         SetUpTutorialNextButton();
                     }
@@ -87,6 +87,7 @@ public class Tutorial_UI : TutorialManager
                     if (nextButtonClicked)
                     {
                         currentStep = TutorialStep.OpenRobotUI;
+                        hintsN.ResetSize();
                         //hintsBox.anchoredPosition = new Vector2(-560, -68);
                         hintsN.SetIconPosition(0);
                         hintsN.LockTo("/UI/RobotUITrigger", new Vector3(53.24f, -48.91f, 0.00f));
@@ -128,7 +129,7 @@ public class Tutorial_UI : TutorialManager
                     {
                         currentStep = TutorialStep.TabsExpl;
 
-                        hintsN.LockTo("RobotUI", new Vector3(-428.00f, -396.14f, 0.00f));
+                        hintsN.LockTo("RobotUI", new Vector3(-428.00f, -213.19f, 0.00f));
                         UItext.text = "Je kunt op de apps die te zien zijn klikken om de app te openen.";
                         SetUpTutorialNextButton();
                     }
@@ -149,7 +150,7 @@ public class Tutorial_UI : TutorialManager
                     {
                         currentStep = TutorialStep.GeneralExpl;
                         hintsN.SetSize(788f, 524.9f);
-                        hintsN.LockTo("RobotUI", new Vector3(-1231.60f, 650.80f, 0.00f));
+                        hintsN.LockTo("RobotUI", new Vector3(-1568.20f, 958.30f, 0.00f));
                         UItext.text = "In de app 'Gegevens' vind je de cliëntgevens en de toedienlijst. Hier kunnen je gegevens controleren, bekijken en de toedienlijst aftekenen.";
                         SetUpTutorialNextButton();
                     }
@@ -170,7 +171,7 @@ public class Tutorial_UI : TutorialManager
                     {
                         RobotUITabs.tutorial_recordsOpened = false;
                         hintsN.SetSize(788f, 524.9f);
-                        hintsN.LockTo("RobotUI", new Vector3(-1231.60f, 650.80f, 0.00f));
+                        hintsN.LockTo("RobotUI", new Vector3(-1568.20f, 958.30f, 0.00f));
                         currentStep = TutorialStep.PatientRecordsExpl;
                         UItext.text = "Hier kun je de cliëntgegevens bekijken en controleren. De controle vind automatisch plaats wanneer je de cliëntgegevens opent.";
 
@@ -206,7 +207,7 @@ public class Tutorial_UI : TutorialManager
                     {
                         RobotUITabs.tutorial_prescriptionOpened = false;
                         hintsN.SetSize(788f, 524.9f);
-                        hintsN.LockTo("RobotUI", new Vector3(-1231.60f, 650.80f, 0.00f));
+                        hintsN.LockTo("RobotUI", new Vector3(-1568.20f, 958.30f, 0.00f));
                         currentStep = TutorialStep.WritingDownExpl;
                         UItext.text = "Hier kun je de toedienlijst bekijken en controleren. De controle vind automatisch plaats wanneer je de toedienlijst opent.";
 
@@ -266,8 +267,8 @@ public class Tutorial_UI : TutorialManager
                     if (RobotUITabs.tutorial_checkListOpened)
                     {
                         currentStep = TutorialStep.ChecklistExpl;
-                    
-						hintsN.LockTo("RobotUI", new Vector3(-511.90f, 379.10f, -34.70f));
+                        hintsN.SetSize(788f, 524.9f);
+                        hintsN.LockTo("RobotUI", new Vector3(-1568.20f, 958.30f, 0.00f));
                         UItext.text = "Tijdens het spelen van protocollen kan je in de checklist app zien welke stappen je hebt doorlopen en welke stappen je nog moet uitvoeren om het protocol af te ronden.";
                         SetUpTutorialNextButton();
                     }
@@ -276,7 +277,7 @@ public class Tutorial_UI : TutorialManager
                     if (nextButtonClicked)
                     {
                         currentStep = TutorialStep.ChecklistBack;
-                     
+                        hintsN.ResetSize();
                         hintsN.LockTo("RobotUI", new Vector3(-1650.00f, 958.20f, -34.70f));
                         UItext.text = "Laten we terug gaan.";
                         closeTab = true;
@@ -288,7 +289,6 @@ public class Tutorial_UI : TutorialManager
                         closeTab = RobotUITabs.tutorial_back = false;
                         currentStep = TutorialStep.PressMessageCenter;
                         UItext.text = "Oh wow, je hebt een bericht! Laten we gaan kijken!";
-               
 						hintsN.LockTo("RobotUI", new Vector3(849.00f, -244.00f, -34.70f));
 						hintsN.SetIconPosition(1);
                         GameObject.FindObjectOfType<RobotUIMessageTab>().NewMessage("Leren Spelen",
@@ -305,7 +305,8 @@ public class Tutorial_UI : TutorialManager
                         currentStep = TutorialStep.MessageCenterExpl;
                       
 						hintsN.SetIconPosition(0);
-						hintsN.LockTo("RobotUI", new Vector3(-687.60f, -244.00f, -34.70f));
+                        hintsN.SetSize(788f, 524.9f);
+                        hintsN.LockTo("RobotUI", new Vector3(-1568.20f, 958.30f, 0.00f));
                         UItext.text = "Dit is de berichten app. Tijdens het spelen zullen wij jou berichten sturen om je te helpen en te informeren.";
                         SetUpTutorialNextButton();
                     }
@@ -314,8 +315,8 @@ public class Tutorial_UI : TutorialManager
                     if (nextButtonClicked)
                     {
                         currentStep = TutorialStep.OpenMessage;
-                    
-						hintsN.LockTo("RobotUI", new Vector3(-1113.50f, 683.00f, 0.00f));
+                        hintsN.ResetSize();
+                        hintsN.LockTo("RobotUI", new Vector3(-1113.50f, 683.00f, 0.00f));
                         UItext.text = "Laten we kijken wat er in het bericht staat door op de titel te klikken.";
                         RobotUIMessageTab.tutorial_messageOpened = false;
                         openMailMessage = true;
@@ -325,8 +326,8 @@ public class Tutorial_UI : TutorialManager
                     if (RobotUIMessageTab.tutorial_messageOpened)
                     {
                         currentStep = TutorialStep.CloseMessageCenter;
-                    
-                        hintsN.LockTo("RobotUI", new Vector3(-1650.00f, 957.80f, 0.00f));
+                        hintsN.SetIconPosition(1);
+                        hintsN.LockTo("RobotUI", new Vector3(-258.00f, 34.00f, 0.00f));
                         UItext.text = "Berichten kun je lezen wanneer je wilt. Er kan erg handige informatie in staan. Laten we de berichten app afsluiten door op de terug knop te klikken.";
                         RobotUITabs.tutorial_back = false;
                         closeTab = true;
@@ -351,7 +352,7 @@ public class Tutorial_UI : TutorialManager
              
 						hintsN.SetIconPosition(0);
                         hintsN.LockTo("DevHint", new Vector3(375.39f, -84.72f, 0.00f));
-                        UItext.text = "Hier zien we de stappen die je moet doorlopen om het protocol succesvol af te ronden.";
+                        UItext.text = "Hiernaast zien we de werkwijze die je moet doorlopen om het protocol succesvol af te ronden.";
                         SetUpTutorialNextButton();
                     }
                     break;
@@ -371,7 +372,7 @@ public class Tutorial_UI : TutorialManager
                     {
                         currentStep = TutorialStep.CloseHints;
 
-                        hintsN.LockTo("ExtraButton", new Vector3(830.40f, -158.20f, 0.00f));
+                        hintsN.LockTo("ExtraButton", new Vector3(660.00f, -96.40f, 0.00f));
                         UItext.text = "Hier komt tijdens het spelen van een protocol extra uitleg te staan over hoe je een stap kunt uitvoeren. Laten we het scherm weer sluiten door nogmaals op het informatie icoon te klikken.";
                         hintsUI.tutorial_extraClosed = false;
                         expectedHintsState = false;
