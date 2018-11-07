@@ -13,12 +13,12 @@ public class EndButtonRemover : MonoBehaviour {
     private GameObject StartPanel;
 
     public void ButtonClick () {
-        goToMenuButton.SetActive(false);
+        goToMenuButton.SetActive (false);
     }
 
-    public void OnFurtherButtonClick() {
+    public void OnFurtherButtonClick () {
         StartPanel.SetActive (false);
 
-        SecondPanel.SetActive (true);
+        SecondPanel.GetComponent<Animator> ().SetBool ("pop", true);
     }
 }
