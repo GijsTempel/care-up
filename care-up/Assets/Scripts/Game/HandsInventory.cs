@@ -530,6 +530,7 @@ public class HandsInventory : MonoBehaviour {
     {
         if (leftHandObject)
         {
+            leftHandObject.DeleteGhostObject();
             leftHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
             leftHandObject.Drop(true);
             leftHandObject = null;
@@ -542,12 +543,12 @@ public class HandsInventory : MonoBehaviour {
     {
         if (rightHandObject)
         {
+            rightHandObject.DeleteGhostObject();
             rightHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
             rightHandObject.Drop(true);
             rightHandObject = null;
             rightHold = false;
             PlayerAnimationManager.SetHandItem(false, null);
-            
         }
     }
 
