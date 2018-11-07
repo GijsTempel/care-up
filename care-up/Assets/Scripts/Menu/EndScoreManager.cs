@@ -34,8 +34,7 @@ public class EndScoreManager : MonoBehaviour {
     {
         SceneManager.sceneLoaded += OnLoaded;
 
-        halfStar = Resources.Load<Sprite>("Sprites/Stars/half star");
-        fullStar = Resources.Load<Sprite>("Sprites/Stars/star");
+        fullStar = Resources.Load<Sprite> ("Sprites/Stars/star");
     }
 
     /// <summary>
@@ -49,12 +48,12 @@ public class EndScoreManager : MonoBehaviour {
             Transform uiFolder = GameObject.Find("Canvas").transform;
 
             //uiFolder.Find("Left").Find("Score").GetComponent<Text>().text = "Score: " + score;
-            uiFolder.Find("Left").Find("Points").GetComponent<Text>().text = "Punten: " + points;
-            uiFolder.Find("Left").Find("Time").GetComponent<Text>().text = string.Format("Tijd: {0}:{1:00}", (int)time / 60, (int)time % 60);
+            uiFolder.Find("Panel_UI").Find("Points").GetComponent<Text>().text = "Punten: " + points;
+            uiFolder.Find("Panel_UI").Find("Time").GetComponent<Text>().text = string.Format("Tijd: {0}:{1:00}", (int)time / 60, (int)time % 60);
 
             //uiFolder.GetChild(1).FindChild("Steps").GetComponent<Text>().text = wrongSteps;
 
-            Transform layoutGroup = uiFolder.Find("Right").Find("WrongstepScroll").Find("WrongstepViewport").Find("LayoutGroup");
+            Transform layoutGroup = uiFolder.Find("SeconScreen/Right").Find("WrongstepScroll").Find("WrongstepViewport").Find("LayoutGroup");
             EndScoreWrongStepDescr[] stepObjects = layoutGroup.GetComponentsInChildren<EndScoreWrongStepDescr>();
 
             for (int i = 0; i < steps.Count && i < stepObjects.Length; ++i)
@@ -116,29 +115,14 @@ public class EndScoreManager : MonoBehaviour {
 
         if (actualScene)
         {
-            if (score >= 0.5f)
-            {
-                GameObject.Find("Star1").GetComponent<Image>().sprite = halfStar;
-            }
-
             if (score >= 1.0f)
             {
                 GameObject.Find("Star1").GetComponent<Image>().sprite = fullStar;
             }
 
-            if (score >= 1.5f)
-            {
-                GameObject.Find("Star2").GetComponent<Image>().sprite = halfStar;
-            }
-
             if (score >= 2.0f)
             {
                 GameObject.Find("Star2").GetComponent<Image>().sprite = fullStar;
-            }
-
-            if (score >= 2.5f)
-            {
-                GameObject.Find("Star3").GetComponent<Image>().sprite = halfStar;
             }
 
             if (score >= 3.0f)
