@@ -56,8 +56,11 @@ public class MainMenu : MonoBehaviour {
 
     public void OnQuitButtonClick()
     {
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #else
         Application.Quit();
-        Debug.Log("Exiting");
+        #endif
     }
 
     public void OnMainMenuButtonClick()
