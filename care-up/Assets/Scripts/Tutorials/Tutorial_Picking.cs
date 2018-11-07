@@ -83,8 +83,8 @@ public class Tutorial_Picking : TutorialManager {
                         itemToPick = "";
 
                         currentStep = TutorialStep.DropOne;
-
-                        UItext.text = "Drop cloth";
+                        hintsN.LockTo("/Cloth", new Vector3(0.00f, 0.16f, 0.00f));
+                        UItext.text = "Objecten kun je terug leggen door op hun silhouetten te klikken. klik nu op het silhoutte van het gaasje om deze terug te leggen.";
 
                         itemToDrop = "Cloth";
                         handsInventory.tutorial_droppedLeft = false;
@@ -94,9 +94,9 @@ public class Tutorial_Picking : TutorialManager {
                     if (handsInventory.tutorial_droppedLeft)
                     {
                         handsInventory.tutorial_droppedLeft = false;
-
+                        hintsN.LockTo("/Medicine", new Vector3(0.00f, 0.16f, 0.00f));
                         currentStep = TutorialStep.DropTwo;
-                        UItext.text = "Drop medicine";
+                        UItext.text = "Voor ieder object die je oppakt verschijnt er een silhoutte. Klik nu op het silhoutte van het medicijn om ook deze terug te leggen. ";
 
                         itemToDrop = "Medicine";
                         handsInventory.tutorial_droppedRight = false;

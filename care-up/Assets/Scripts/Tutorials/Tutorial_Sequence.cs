@@ -109,7 +109,7 @@ public class Tutorial_Sequence : TutorialManager
                         hintsN.LockTo("RightArm", new Vector3(417.45f, -214.30f, -287.30f));
                         hintsN.SetIconPosition(3);
                         currentStep = TutorialStep.UseOnPatient;
-                        UItext.text = "Gebruik nu de spuit + naald + dop met de cliënt. Doe dit door op de spuit + injectienaald + beschermdop te klikken, te kiezen voor de optie 'Gebruiken met...' en vervolgens te klikken op de cliënt.";
+                        UItext.text = "Gebruik nu de spuit + naald + dop met de cliënt. Doe dit door op de spuit + injectienaald + beschermdop te klikken, te kklikken op het + icoon en vervolgens te klikken op de cliënt.";
 
                         handsInventory.tutorial_itemUsedOn = false;
                     }
@@ -117,9 +117,9 @@ public class Tutorial_Sequence : TutorialManager
                 case TutorialStep.UseOnPatient:
                     if (handsInventory.tutorial_itemUsedOn)
                     {
-                        hintsN.LockTo("UI", new Vector3(-640.10f, 142.80f, 0.00f));
+                        hintsN.LockTo("/UI(Clone)", new Vector3(-793.25f, 157.60f, 0.00f));
                         hintsN.SetIconPosition(0);
-						hintsN.SetSize(560f, 400f);
+                        hintsN.SetSize(788f, 524.9f);
                         currentStep = TutorialStep.SequenceExplanation;
                         UItext.text = "Ingewikkelde handelingen die uit meerdere stappen bestaan openen het 'actie keuze menu'. De handeling start automatisch. Zodra er een belangrijke stap is aangebroken, pauzeert het spel. Er verschijnen keuzes in het beeld en het is aan jou om de juiste keuze te selecteren. Zodra je de goede keuze maakt zal de handeling verder worden uitgevoerd. Dit herhaalt zich tot de handeling is afgerond.";
                         SetUpTutorialNextButton();
@@ -128,8 +128,9 @@ public class Tutorial_Sequence : TutorialManager
                 case TutorialStep.SequenceExplanation:
                     if (nextButtonClicked)
                     {
-						hintsN.LockTo("UI(Clone)", new Vector3(-723.20f, 279.40f, 0.00f));
-						hintsN.ResetSize();
+                        hintsN.LockTo("/UI(Clone)", new Vector3(135.20f, 288.50f, 0.00f));
+                        hintsN.ResetSize();
+                        hintsN.SetIconPosition(1);
                         currentStep = TutorialStep.CompleteSequence;
                         sequenceCompleted = sequenceLock = false;
                         PlayerAnimationManager.SequenceTutorialLock(false);
