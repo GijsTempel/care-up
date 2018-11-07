@@ -47,7 +47,7 @@ public class GameUI : MonoBehaviour {
 
 	public void CloseGame()
 	{
-		bl_SceneLoaderUtils.GetLoader.LoadLevel("UMenuPro");
+		bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
 	}
 
 
