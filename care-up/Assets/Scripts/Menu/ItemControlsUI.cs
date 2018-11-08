@@ -310,9 +310,13 @@ public class ItemControlsUI : MonoBehaviour {
                 }
                 else
                 {
-                    string message = "Zorg ervoor dat alle materialen die je hebt gebruikt op het werkveld liggen. Maak je handen vrij door eventuele objecten terug te leggen op het werkveld.";
-                    RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
-                    messageCenter.NewMessage("Materialen terugleggen.", message, RobotUIMessageTab.Icon.Warning);
+                    // no 'something in hands msg' for workfield if it's not a correct step
+                    if (!(initedObject.name == "WorkField" && !actionManager.CompareUseObject("WorkField")))
+                    {
+                        string message = "Zorg ervoor dat alle materialen die je hebt gebruikt op het werkveld liggen. Maak je handen vrij door eventuele objecten terug te leggen op het werkveld.";
+                        RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
+                        messageCenter.NewMessage("Materialen terugleggen.", message, RobotUIMessageTab.Icon.Warning);
+                    }
                 }
             }
         }
