@@ -190,6 +190,11 @@ public class InteractableObject : MonoBehaviour {
         }
     }
 
+    public static void ResetDescription()
+    {
+        itemDescription.SetActive(false);
+    }
+
     protected bool ViewModeActive()
     {
         return cameraMode.CurrentMode == CameraMode.Mode.ObjectPreview;

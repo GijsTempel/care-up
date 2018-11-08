@@ -44,7 +44,6 @@ public class PlayerAnimationManager : MonoBehaviour
     
 	public static void PlayCombineAnimation(int leftID, int rightID, Transform target = null)
     {
-		
 		animationController.SetInteger("leftID", leftID);
 		animationController.SetInteger("rightID", rightID);
 		animationController.SetTrigger("Combine");
@@ -61,6 +60,8 @@ public class PlayerAnimationManager : MonoBehaviour
         {
             cameraMode.SetCinematicMode(target);
         }
+
+        InteractableObject.ResetDescription();
     }
 
 
@@ -76,6 +77,8 @@ public class PlayerAnimationManager : MonoBehaviour
         {
             cameraMode.SetCinematicMode(target);
         }
+
+        InteractableObject.ResetDescription();
     }
 
 
@@ -98,6 +101,8 @@ public class PlayerAnimationManager : MonoBehaviour
         {
             cameraMode.SetCinematicMode(target);
         }
+
+        InteractableObject.ResetDescription();
     }
     
 
