@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GlovesBox : UsableObject
 {
+    public bool oneTimeUse = false;
 
     public override void Use()
     {
@@ -11,12 +12,16 @@ public class GlovesBox : UsableObject
         {
             if (actionManager.CompareUseObject(name))
             {
-                PlayerAnimationManager.PlayAnimation("Use " + name);
+                PlayerAnimationManager.PlayAnimation("Use gloveBox");
                 tutorial_used = true;
+
+                if (oneTimeUse)
+                {
+                    Destroy(this.gameObject);
+                }
             }
 
             actionManager.OnUseAction(gameObject.name);
-
             Reset();
         }
     }
