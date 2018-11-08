@@ -7,18 +7,28 @@ public class EndButtonRemover : MonoBehaviour {
     public GameObject goToMenuButton;
 
     [SerializeField]
-    private GameObject SecondPanel;
+    private GameObject ScorePanel;
 
     [SerializeField]
-    private GameObject StartPanel;
+    private GameObject StepPanel;
 
     public void ButtonClick () {
         goToMenuButton.SetActive (false);
     }
 
     public void OnFurtherButtonClick () {
-        StartPanel.SetActive (false);
+        StepPanel.GetComponent<Animator> ().SetBool ("pop", false);
+        StepPanel.SetActive (false);
 
-        SecondPanel.GetComponent<Animator> ().SetBool ("pop", true);
+        ScorePanel.SetActive (true);
+        ScorePanel.GetComponent<Animator> ().SetBool ("pop", true);
+    }
+
+    public void OnBackButtonClick () {
+        ScorePanel.GetComponent<Animator> ().SetBool ("pop", false);
+        ScorePanel.SetActive (false);
+
+        StepPanel.SetActive (true);
+        StepPanel.GetComponent<Animator> ().SetBool ("pop", true);
     }
 }

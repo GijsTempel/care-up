@@ -44,11 +44,11 @@ public class EndScoreManager : MonoBehaviour {
         bool actualScene = false; // for later lines
         if (SceneManager.GetActiveScene ().name == "EndScore") {
             Transform uiFolder = GameObject.Find ("Canvas").transform;
-            Transform secondScreen = GameObject.Find ("SecondScreen").transform;
+            Transform secondScreen = GameObject.Find ("StepScreen").transform;
 
             //uiFolder.Find("Left").Find("Score").GetComponent<Text>().text = "Score: " + score;
-            uiFolder.Find ("Panel_UI").Find ("Points").GetComponent<Text> ().text = "Punten: " + points;
-            uiFolder.Find ("Panel_UI").Find ("Time").GetComponent<Text> ().text = string.Format ("Tijd: {0}:{1:00}", (int)time / 60, (int)time % 60);
+            uiFolder.Find ("ScoreScreen").Find ("Points").GetComponent<Text> ().text = "Punten: " + points;
+            uiFolder.Find ("ScoreScreen").Find ("Time").GetComponent<Text> ().text = string.Format ("Tijd: {0}:{1:00}", (int)time / 60, (int)time % 60);
 
             //uiFolder.GetChild(1).FindChild("Steps").GetComponent<Text>().text = wrongSteps;
 
