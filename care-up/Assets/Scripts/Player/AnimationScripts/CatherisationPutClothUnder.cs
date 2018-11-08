@@ -67,7 +67,7 @@ public class CatherisationPutClothUnder : CinematicAnimation
             // add new ghost positions for GauzeTrayFull
             HandsInventory.GhostPosition posNormalGauze = new HandsInventory.GhostPosition();
             posNormalGauze.objectName = "GauzeTrayWet";
-            posNormalGauze.position = new Vector3(9.24f, 1.096f, 12.1548f);
+            posNormalGauze.position = new Vector3(9.438f, 1.1014f, 11.509f);
             posNormalGauze.rotation = new Vector3(-90f, 0f, 0f);
             posNormalGauze.id = 1;
             inv.customGhostPositions.Add(posNormalGauze);
