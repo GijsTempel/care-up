@@ -32,6 +32,8 @@ public class IAPManager : MonoBehaviour, IStoreListener
         this.controller = controller;
         this.extensions = extensions;
 
+        m_AppleExtensions = extensions.GetExtension<IAppleExtensions>();
+
         introductory_info_dict = m_AppleExtensions.GetIntroductoryPriceDictionary();
     }
 
