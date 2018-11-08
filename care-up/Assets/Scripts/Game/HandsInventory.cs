@@ -587,7 +587,7 @@ public class HandsInventory : MonoBehaviour {
         ForcePickItem(name, hand == PlayerAnimationManager.Hand.Left);
     }
 
-        public void ForcePickItem(string name, bool hand)
+    public void ForcePickItem(string name, bool hand)
     {
         if (hand)
         { 
@@ -597,7 +597,6 @@ public class HandsInventory : MonoBehaviour {
             leftHandObject.leftControlBone = leftControlBone;
             leftHandObject.rightControlBone = rightControlBone;
             leftHandObject.SavePosition();
-            leftHandObject.CreateGhostObject();
         }
         else
         {
@@ -607,7 +606,6 @@ public class HandsInventory : MonoBehaviour {
             rightHandObject.leftControlBone = leftControlBone;
             rightHandObject.rightControlBone = rightControlBone;
             rightHandObject.SavePosition();
-            rightHandObject.CreateGhostObject();
         }
         SetHold(hand);
     }
