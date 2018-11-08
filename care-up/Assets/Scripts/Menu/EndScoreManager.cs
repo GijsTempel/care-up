@@ -88,15 +88,15 @@ public class EndScoreManager : MonoBehaviour {
                 (correctStepIndexes.Count + (quizQuestionsTexts.Count - quizWrongIndexes.Count))
                 / (steps.Count + quizQuestionsTexts.Count);
 
-            GameObject.Find ("Interactable Objects/Canvas/Score_percentage/ScoreText")
+            GameObject.Find ("Interactable Objects/Canvas/ScoreScreen/Score_percentage/ScoreText")
                 .GetComponent<Text> ().text = Mathf.FloorToInt (percent * 100f).ToString () + "%";
 
-            GameObject.Find ("Interactable Objects/Canvas/Score_result/ResultText")
+            GameObject.Find ("Interactable Objects/Canvas/ScoreScreen/Score_result/ResultText")
                 .GetComponent<Text> ().text = (percent < 0.7f) ? "Onvoldoende" : "Voldoende";
 
-            GameObject.Find ("Interactable Objects/Canvas/Score_Stars/Points")
+            GameObject.Find ("Interactable Objects/Canvas/ScoreScreen/Points")
                 .GetComponent<Text> ().text = "Punten: " + points;
-            GameObject.Find ("Interactable Objects/Canvas/Score_Stars/Time")
+            GameObject.Find ("Interactable Objects/Canvas/ScoreScreen/Time")
                 .GetComponent<Text> ().text = string.Format ("Tijd: {0}:{1:00}", (int)time / 60, (int)time % 60);
 
             actualScene = true;
