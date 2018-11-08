@@ -12,6 +12,14 @@ public class PlayerAnimationManager : MonoBehaviour
         Right,
         Left
     };
+    public int leftObjID = 0;
+    public int rightObjID = 0;
+    public int leftModifier01 = 0;
+    public int rightModifier01 = 0;
+    public float leftModifier02 = 0f;
+    public float rightModifier02 = 0f;
+    private Transform propL;
+    private Transform propR;
 
     public float ikWeight = 1.0f;
 
@@ -29,6 +37,9 @@ public class PlayerAnimationManager : MonoBehaviour
 
     void Start()
     {
+        propL = GameObject.Find("prop.L").transform;
+        propR = GameObject.Find("prop.R").transform;
+
         animationController = GetComponent<Animator>();
         if (animationController == null) Debug.LogError("Animator not found");
 
@@ -64,9 +75,13 @@ public class PlayerAnimationManager : MonoBehaviour
         InteractableObject.ResetDescription();
     }
 
+    void Update()
+    {
+        leftModifier02 = propL.localPosition.y;
+        rightModifier02 = propR.localPosition.y;
+    }
 
-    
-	public static void PlayUseAnimation(int UseObjID, int UseOnID, Transform target = null)
+    public static void PlayUseAnimation(int UseObjID, int UseOnID, Transform target = null)
     {
 		animationController.SetInteger("leftID", UseObjID);
 		animationController.SetInteger("rightID", UseOnID);

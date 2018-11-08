@@ -116,6 +116,7 @@ GameObject:
   - component: {fileID: 23317482803223194}
   - component: {fileID: 54324712095714882}
   - component: {fileID: 114022858639540124}
+  - component: {fileID: 114529054982849370}
   m_Layer: 0
   m_Name: catheter_inner_open
   m_TagString: Untagged
@@ -415,9 +416,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1412346213861716}
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 9.546387, y: 0.0049995203, z: 15.574131}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -3.6174002, y: 1.1077, z: 2.058}
+  m_LocalScale: {x: 1.0000005, y: 1, z: 1.0000005}
   m_Children:
   - {fileID: 4431422507156038}
   - {fileID: 4464279520046984}
@@ -512,8 +513,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.041395284, y: 0.034868397, z: 0.5166586}
-  m_Center: {x: -0.007864187, y: 0, z: 0.24924299}
+  m_Size: {x: 0.06932351, y: 0.032470413, z: 0.58413774}
+  m_Center: {x: -0.0046416633, y: 0.002784755, z: 0.25991365}
 --- !u!95 &95205596414959048
 Animator:
   serializedVersion: 3
@@ -523,7 +524,7 @@ Animator:
   m_GameObject: {fileID: 1412346213861716}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: cdb83c81ba3939c4791fdc7f7fa3da66, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 67bc8f90507894aba9cea513d5fe6600, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -556,6 +557,18 @@ MonoBehaviour:
   positionID: 0
   mainObject: {fileID: 0}
   ghostObjects: []
+--- !u!114 &114529054982849370
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1412346213861716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5c5940595a0d4168b8e07274cf9cc24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim_name: catheter_tweest
 --- !u!137 &137829579254313630
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
