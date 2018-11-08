@@ -597,6 +597,7 @@ public class HandsInventory : MonoBehaviour {
             leftHandObject.leftControlBone = leftControlBone;
             leftHandObject.rightControlBone = rightControlBone;
             leftHandObject.SavePosition();
+            leftHandObject.CreateGhostObject();
         }
         else
         {
@@ -606,6 +607,7 @@ public class HandsInventory : MonoBehaviour {
             rightHandObject.leftControlBone = leftControlBone;
             rightHandObject.rightControlBone = rightControlBone;
             rightHandObject.SavePosition();
+            rightHandObject.CreateGhostObject();
         }
         SetHold(hand);
     }
