@@ -62,7 +62,7 @@ public class EndScoreManager : MonoBehaviour {
             }
             actualScene = true;
         } else if (SceneManager.GetActiveScene ().name == "EndScore_Test") {
-            Transform stepParent = GameObject.Find ("Interactable Objects/Canvas/ObservationForm/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
+            Transform stepParent = GameObject.Find ("Interactable Objects/Canvas/StepScreen/ObservationForm/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
 
             for (int i = 0; i < steps.Count; ++i) {
                 GameObject step = GameObject.Instantiate (Resources.Load<GameObject> ("Prefabs/ProtocolEvaluationStep"), stepParent);
@@ -73,7 +73,7 @@ public class EndScoreManager : MonoBehaviour {
                 step.transform.Find ("ToggleNo").GetComponent<Toggle> ().isOn = !correct;
             }
 
-            Transform quizParent = GameObject.Find ("Interactable Objects/Canvas/QuizForm/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
+            Transform quizParent = GameObject.Find ("Interactable Objects/Canvas/StepScreen/QuizForm/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
 
             for (int i = 0; i < quizQuestionsTexts.Count; ++i) {
                 GameObject step = GameObject.Instantiate (Resources.Load<GameObject> ("Prefabs/ProtocolQuestion"), quizParent);
