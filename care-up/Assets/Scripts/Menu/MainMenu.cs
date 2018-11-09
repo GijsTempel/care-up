@@ -65,7 +65,7 @@ public class MainMenu : MonoBehaviour {
 
     public void OnMainMenuButtonClick()
     {
-        bl_SceneLoaderUtils.GetLoader.LoadLevel("UMenuPro");
+        bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
     }
 
     public void OnTutorialButtonClick()
