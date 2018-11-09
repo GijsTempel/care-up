@@ -64,6 +64,9 @@ public class ObjectsIDController : MonoBehaviour
 		new ObjectsIDs("catheter", 43,0),
         new ObjectsIDs("catheter_inner", 44,0),
         new ObjectsIDs("x_test", 101,0),
+        new ObjectsIDs("CWB_inner_open", 50,0),
+        new ObjectsIDs("catheter_bag_twisted", 46,0),
+
 
     };
 

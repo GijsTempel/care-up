@@ -79,6 +79,15 @@ public class PlayerAnimationManager : MonoBehaviour
     {
         leftModifier02 = propL.localPosition.y;
         rightModifier02 = propR.localPosition.y;
+
+        //string RightAnimName = animationController.GetCurrentAnimatorClipInfo(0)[0].clip.name;
+        //string LeftAnimName = animationController.GetCurrentAnimatorClipInfo(1)[0].clip.name;
+        //float normalizedTime = animationController.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        //if (RightAnimName == LeftAnimName && normalizedTime > 0.15f && normalizedTime < 0.85f)
+        //{
+        //    animationController.Play(LeftAnimName,1, normalizedTime);
+        //}
+
     }
 
     public static void PlayUseAnimation(int UseObjID, int UseOnID, Transform target = null)
@@ -194,5 +203,6 @@ public class PlayerAnimationManager : MonoBehaviour
     {
         float targetFrame = compareFrame / 60f; // 60fps
         return (currentFrame >= targetFrame && previousFrame < targetFrame);
+
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class ShowOnFrame : StateMachineBehaviour
 {
 
+    public string ControlObjectName = "";
     public int showFrame;
     private GameObject Obj = null;
     public List<string> ObjNames;
@@ -18,19 +19,39 @@ public class ShowOnFrame : StateMachineBehaviour
     {
         if (PlayerAnimationManager.CompareFrames(frame, prevFrame, showFrame))
         {
-            if (GameObject.FindObjectOfType<ObjectsIDController>() != null && ObjNames.Count != 0)
+            if (ControlObjectName == "")
             {
-                Debug.Log("ObjNames.Count ");
-                ObjectsIDController idCont = GameObject.FindObjectOfType<ObjectsIDController>();
-                foreach (string __name in ObjNames)
+                if (GameObject.FindObjectOfType<ObjectsIDController>() != null && ObjNames.Count != 0)
                 {
-                    Debug.Log(__name);
-                    Obj = idCont.getFromHidden(__name);
-                    if (Obj != null)
+                    ObjectsIDController idCont = GameObject.FindObjectOfType<ObjectsIDController>();
+                    foreach (string __name in ObjNames)
                     {
-                        Obj.SetActive(true);
+                        Obj = idCont.getFromHidden(__name);
+                        if (Obj != null)
+                        {
+                            Obj.SetActive(true);
+                        }
                     }
                 }
+            }
+            else
+            {
+
+                if (GameObject.Find(ControlObjectName) != null && ObjNames.Count != 0)
+                {
+                    if (GameObject.Find(ControlObjectName).GetComponent<ExtraObjectOptions>() != null)
+                    {
+                        ExtraObjectOptions ControlObject = GameObject.Find(ControlObjectName).GetComponent<ExtraObjectOptions>();
+
+
+                        foreach (string __name in ObjNames)
+                        {
+                            ControlObject._show(__name, toShow);
+
+                        }
+                    }
+                }
+
             }
         }
 
