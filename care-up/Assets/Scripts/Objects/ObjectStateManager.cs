@@ -5,10 +5,12 @@ using UnityEngine;
 public class ObjectStateManager : MonoBehaviour {
     Animator animator;
     PlayerAnimationManager playerAnimationManager;
-    public string lie_anim_name = "";
-    public string hold_anim_name = "";
-    float hold_anim_value = 0f;
-    float lie_anim_value = 0f;
+    public string LieAnimName = "";
+    public string HoldAnimName = "";
+    float HoldAnimValue = 0f;
+    float LieAnimValue = 0f;
+    public bool LockHoldState = true;
+
 
     // Use this for initialization
 
@@ -21,20 +23,28 @@ public class ObjectStateManager : MonoBehaviour {
 
 	void Update () {
         //print(transform.parent.name);
-        string anim_name = lie_anim_name;
-        float anim_value = lie_anim_value;
+        string anim_name = LieAnimName;
+        float anim_value = LieAnimValue;
 
         if (transform.parent != null)
         {
             if (transform.parent.name == "toolHolder.L")
             {
-                anim_name = hold_anim_name;
-                anim_value = playerAnimationManager.leftModifier02;
+                anim_name = HoldAnimName;
+                if (!LockHoldState)
+                {
+                    HoldAnimValue = playerAnimationManager.leftModifier02;
+                }
+                anim_value = HoldAnimValue;
             }
             else if (transform.parent.name == "toolHolder.R")
             {
-                anim_name = hold_anim_name;
-                anim_value = playerAnimationManager.rightModifier02;
+                anim_name = HoldAnimName;
+                if (!LockHoldState)
+                {
+                    HoldAnimValue = playerAnimationManager.rightModifier02;
+                }
+                anim_value = HoldAnimValue;
             }
 
         }

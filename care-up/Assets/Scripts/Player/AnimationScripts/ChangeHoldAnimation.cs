@@ -11,8 +11,6 @@ public class ChangeHoldAnimation : StateMachineBehaviour
     public string ObjectName = "";
     public int HoldAnimationID = -1;
 
-    private PickableObject pickable = null;
-
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
