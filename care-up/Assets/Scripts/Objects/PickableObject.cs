@@ -291,13 +291,19 @@ public class PickableObject : InteractableObject
         messageCenter.NewMessage("Actie kan niet worden uitgevoerd!", message, RobotUIMessageTab.Icon.Warning);
     }
 
-    public void CreateGhostObject()
+    public void CreateGhostObject(bool trash = false)
     {
         List<HandsInventory.GhostPosition> list =
             inventory.customGhostPositions.Where(x => x.objectName == name).ToList();
 
-        if (list.Count == 0)
+        if (list.Count == 0 || trash)
         {
+            if (trash)
+            {
+                Transform trashObj = GameObject.Find("TrashBucket").transform;
+                SavePosition(trashObj.position, trashObj.rotation, true);
+            }
+
             InstantiateGhostObject(this.SavedPosition, this.SavedRotation);
         }
         else
