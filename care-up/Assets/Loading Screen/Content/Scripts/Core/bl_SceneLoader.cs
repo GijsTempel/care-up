@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using LoginProAsset;
 using MBS;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(AudioSource))]
 public class bl_SceneLoader : MonoBehaviour
@@ -73,6 +74,8 @@ public class bl_SceneLoader : MonoBehaviour
     private string sceneToLoad = "";
     private string bundleToLoad = "";
 
+    private bool isLoading = false;
+
     /// <summary>
     /// 
     /// </summary>
@@ -105,6 +108,17 @@ public class bl_SceneLoader : MonoBehaviour
         if (Manager.HasTips) { cacheTips = Manager.TipsList; }
         if(FilledImage != null) { FilledImage.type = Image.Type.Filled; FilledImage.fillAmount = 0; }
         transform.SetAsLastSibling();
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // reset after scene is loaded
+        isLoading = false;
     }
 
     /// <summary>
@@ -255,6 +269,16 @@ public class bl_SceneLoader : MonoBehaviour
 
     public void ActualLoadLevel(CML action)
     {
+        if (isLoading)
+        {
+            Debug.Log("Already loading something!");
+            return;
+        }
+        else
+        {
+            isLoading = true;
+        }
+
         string level = sceneToLoad;
         string bundle = bundleToLoad;
 
