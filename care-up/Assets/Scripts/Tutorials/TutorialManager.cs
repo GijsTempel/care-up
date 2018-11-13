@@ -78,12 +78,12 @@ public class TutorialManager : MonoBehaviour
         handsInventory.dropPenalty = false;
         
         endPanel = GameObject.Find("TutorialDonePanel");
-		if (endPanel != null)
+		/*if (endPanel != null)
         {
 			GameObject doneButton = endPanel.transform.Find("Button").gameObject;
             GameObject sl = GameObject.Find("SceneLoader 1");
             doneButton.GetComponent<Button>().onClick.AddListener(delegate { sl.GetComponent<bl_SceneLoader>().LoadLevelButton("MainMenu"); });
-        }
+        }*/
 
 	}
 
