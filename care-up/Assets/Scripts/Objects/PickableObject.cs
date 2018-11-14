@@ -301,6 +301,7 @@ public class PickableObject : InteractableObject
             if (trash)
             {
                 Transform trashObj = GameObject.Find("TrashBucket").transform;
+                if (trashObj == null) trashObj = GameObject.Find("PlasticTrashbucket").transform;
                 SavePosition(trashObj.position, trashObj.rotation, true);
             }
 
