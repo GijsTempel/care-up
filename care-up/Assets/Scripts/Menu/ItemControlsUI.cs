@@ -361,6 +361,15 @@ public class ItemControlsUI : MonoBehaviour {
                                 (item.name == tutorial.itemToPick ||
                                 item.name == tutorial.itemToPick2)))
                         {
+                            if (item.prefabInHands != "")
+                            {
+                                item.SavePosition();
+                                GameObject replaced = handsInventory.CreateObjectByName(item.prefabInHands, Vector3.zero);
+                                replaced.GetComponent<PickableObject>().SavePosition(item.SavedPosition, item.SavedRotation, true);
+                                Destroy(item.gameObject);
+                                item = replaced.GetComponent<PickableObject>();
+                            }
+
                             handsInventory.PickItem(item);
                             item.CreateGhostObject();
                         }

@@ -222,7 +222,7 @@ public class InteractableObject : MonoBehaviour {
         }
     }
 
-    public void LoadPosition()
+    public virtual void LoadPosition()
     {
         transform.position = savedPosition;
         transform.rotation = savedRotation;

@@ -33,6 +33,9 @@ public class PickableObject : InteractableObject
     public PickableObject mainObject;
     [HideInInspector]
     public List<PickableObject> ghostObjects;
+
+    public string prefabInHands = "";
+    public string prefabOutOfHands = "";
     
     protected override void Start()
     {
@@ -72,6 +75,21 @@ public class PickableObject : InteractableObject
         }
 
         return false;
+    }
+
+    public override void LoadPosition()
+    {
+        if (prefabOutOfHands != "")
+        {
+            GameObject replaced = inventory.CreateObjectByName(prefabOutOfHands, savedPosition);
+            replaced.GetComponent<PickableObject>().SavePosition(savedPosition, savedRotation, true);
+            replaced.GetComponent<PickableObject>().LoadPosition();
+            Destroy(gameObject);
+        }
+        else
+        {
+            base.LoadPosition();
+        }
     }
 
     public virtual bool Drop(int posID)
@@ -270,9 +288,6 @@ public class PickableObject : InteractableObject
         return (controls.SelectedObject != null && actionManager.CompareUseOnInfo(name, controls.SelectedObject.name));
     }
     
-
-
-
     public virtual void Pick()
     {
         // callback for handling different OnPick mechanics
