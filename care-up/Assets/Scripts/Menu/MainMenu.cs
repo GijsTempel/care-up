@@ -43,30 +43,6 @@ public class MainMenu : MonoBehaviour {
         }
     }
 
-    public void OnOrderButtonCick () 
-    {
-
-        GameObject serialScreen = GameObject.Find ("WUSerialScreen");
-        GameObject orderScreen = GameObject.Find ("OrderScreen");
-
-        serialScreen.transform.Find ("RegisterArea").gameObject.SetActive (false);
-
-        serialScreen.GetComponent<CanvasGroup> ().alpha = 0;
-        orderScreen.GetComponent<CanvasGroup> ().alpha = 1;
-
-    }
-
-    public void OnOrderBackButtonClick () 
-    {
-        GameObject serialScreen = GameObject.Find ("WUSerialScreen");
-        GameObject orderScreen = GameObject.Find ("OrderScreen");
-
-        serialScreen.transform.Find ("RegisterArea").gameObject.SetActive (true);
-
-        serialScreen.GetComponent<CanvasGroup> ().alpha = 1;
-        orderScreen.GetComponent<CanvasGroup> ().alpha = 0;
-    }
-
     public void OnStartYes()
     {
         bl_SceneLoaderUtils.GetLoader.LoadLevel("Tutorial");

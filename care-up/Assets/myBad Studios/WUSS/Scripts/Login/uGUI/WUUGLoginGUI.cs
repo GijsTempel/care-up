@@ -23,6 +23,7 @@ namespace MBS
             shop_screen,
             localization_screen,
             serialnumber_screen,
+            order_screen,
             termsandcondition_screen,
             custom_1;
         }
@@ -556,6 +557,17 @@ namespace MBS
 #endif
         }
 
-#endregion
+        public void ShowOrderScreen () 
+        {
+            panels.serialnumber_screen.SetActive (false);
+            panels.order_screen.SetActive (true);
+        }
+
+        public void RemoveOrderScreen () {
+            panels.serialnumber_screen.SetActive (true);
+            panels.order_screen.SetActive (false);
+        }
+
+        #endregion
     }
 }
