@@ -13,6 +13,12 @@ public class IAPManager : MonoBehaviour, IStoreListener
        
     private void Start()
     {
+        if (!Application.isMobilePlatform)
+        {
+            Destroy(this);
+            return;
+        }
+
         var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
         builder.AddProduct("CareUp_Lidmaatschap", ProductType.Subscription, new IDs
         {
@@ -32,9 +38,10 @@ public class IAPManager : MonoBehaviour, IStoreListener
         this.controller = controller;
         this.extensions = extensions;
 
-        m_AppleExtensions = extensions.GetExtension<IAppleExtensions>();
-
-        introductory_info_dict = m_AppleExtensions.GetIntroductoryPriceDictionary();
+        #if UNITY_IOS
+            m_AppleExtensions = extensions.GetExtension<IAppleExtensions>();
+            introductory_info_dict = m_AppleExtensions.GetIntroductoryPriceDictionary();
+        #endif
     }
 
     /// <summary>
