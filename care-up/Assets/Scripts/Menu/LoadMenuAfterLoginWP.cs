@@ -23,7 +23,7 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
         if (WULogin.RequireSerialForLogin && !WULogin.HasSerial)
         {
             IAPManager manager = GameObject.FindObjectOfType<IAPManager>();
-            if (manager == null || manager.SubscriptionPurchased())
+            if (manager != null && manager.SubscriptionPurchased())
             {
                 bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
             }
