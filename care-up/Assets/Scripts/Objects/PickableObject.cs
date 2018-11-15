@@ -36,6 +36,8 @@ public class PickableObject : InteractableObject
 
     public string prefabInHands = "";
     public string prefabOutOfHands = "";
+
+    public bool destroyOnDrop = false;
     
     protected override void Start()
     {
@@ -52,6 +54,12 @@ public class PickableObject : InteractableObject
     /// <param name="force">If true - forces load position instead of free dropping</param>
     public virtual bool Drop(bool force = false)
     {
+        if (destroyOnDrop)
+        {
+            Destroy(gameObject);
+            return true;
+        }
+
         if (GetComponent<Rigidbody>() != null)
         {
             // stop falling mid frame?
@@ -73,7 +81,7 @@ public class PickableObject : InteractableObject
             LoadPosition();
             return true;
         }
-
+        
         return false;
     }
 
@@ -315,9 +323,31 @@ public class PickableObject : InteractableObject
         {
             if (trash)
             {
-                Transform trashObj = GameObject.Find("TrashBucket").transform;
-                if (trashObj == null) trashObj = GameObject.Find("PlasticTrashbucket").transform;
-                SavePosition(trashObj.position, trashObj.rotation, true);
+                Transform trashObj = null;
+                GameObject find = GameObject.Find("TrashBucket");
+                if (find != null)
+                {
+                    trashObj = find.transform;
+                }
+                else
+                {
+                    find = GameObject.Find("PlasticTrashbucket");
+                    if (find != null)
+                    {
+                        trashObj = find.transform;
+                    }
+                }
+
+                if (trashObj != null)
+                {
+                    Vector3 trashPos = trashObj.position;
+                    trashPos += new Vector3(0.0f, 0.2f, 0.0f); // a bit higher
+                    SavePosition(trashPos, trashObj.rotation, true);
+                }
+                else
+                {
+                    Debug.LogWarning("No trashbucket object found");
+                }
             }
 
             InstantiateGhostObject(this.SavedPosition, this.SavedRotation);
