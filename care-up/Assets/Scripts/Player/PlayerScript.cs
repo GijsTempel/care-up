@@ -482,10 +482,11 @@ public class PlayerScript : MonoBehaviour {
         RobotManager.SetUITriggerActive(false);
         Camera.main.transform.localRotation = Quaternion.Euler(8.0f, 0.0f, 0.0f);
 
-        if (RobotManager.NotificationNumber > 0)
+        // no switching to message tab anymore :<
+        /*if (RobotManager.NotificationNumber > 0)
         {
             GameObject.FindObjectOfType<RobotUIMessageTab>().OnTabSwitch();
-        }
+        }*/
 
         tutorial_robotUI_opened = true;
 
