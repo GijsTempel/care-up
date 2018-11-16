@@ -7,6 +7,7 @@ using LoginProAsset;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.PostProcessing;
+using MBS;
 
 /// <summary>
 /// Handles quick access to saved data.
@@ -269,4 +270,33 @@ public class PlayerPrefsManager : MonoBehaviour
     }
 
     public void Blank(string[] s) { }
+
+    public static void AddOneToPlaysNumber()
+    {
+        WUData.FetchField("Plays_Number", "AccountStats", GetPlaysNumber, -1, GetPlaysNumber_Error);
+    }
+    
+    static void GetPlaysNumber(CML response)
+    {
+        print(response.ToString());
+        int plays = response[1].Int("Plays_Number");
+
+        Debug.Log(plays);
+
+        // update +1
+        CMLData data = new CMLData();
+        data.Set("Plays_Number", (plays+1).ToString());
+        WUData.UpdateCategory("AccountStats", data);
+    }
+
+    static void GetPlaysNumber_Error(CMLData response)
+    {
+        if ((response["message"] == "WPServer error: Empty response. No data found"))
+        {
+            // empty response, need to create field with 1 play
+            CMLData data = new CMLData();
+            data.Set("Plays_Number", "1");
+            WUData.UpdateCategory("AccountStats", data);
+        }
+    }
 }

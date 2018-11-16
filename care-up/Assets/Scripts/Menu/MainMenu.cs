@@ -144,6 +144,7 @@ public class MainMenu : MonoBehaviour {
 
     public void OnRetryButtonClick()
     {
+        PlayerPrefsManager.AddOneToPlaysNumber();
         EndScoreManager manager = loadingScreen.GetComponent<EndScoreManager>();
         bl_SceneLoaderUtils.GetLoader.LoadLevel(manager.completedSceneName, manager.completedSceneBundle);
     }

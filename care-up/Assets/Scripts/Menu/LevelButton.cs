@@ -114,6 +114,7 @@ public class LevelButton : MonoBehaviour {
 
     public void OnStartButtonClick()
     {
+        PlayerPrefsManager.AddOneToPlaysNumber();
         bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
     }
     
