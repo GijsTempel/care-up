@@ -49,8 +49,8 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
     void GetPlaysNumber(CML response)
     {
         // we're here only if we got data
-        int plays = response[1].Int("Plays_Number");
-        bool result = plays < 3 ? true : false;
+        PlayerPrefsManager.plays = response[1].Int("Plays_Number");
+        bool result = PlayerPrefsManager.plays < 3 ? true : false;
         AllowDenyLoadMainMenu(result, true);
     }
 
