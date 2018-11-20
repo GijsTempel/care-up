@@ -284,8 +284,6 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         int plays = response[1].Int("Plays_Number");
 
-        Debug.Log(plays);
-
         // update +1
         CMLData data = new CMLData();
         data.Set("Plays_Number", (plays+1).ToString());
