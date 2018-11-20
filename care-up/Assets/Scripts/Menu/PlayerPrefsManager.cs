@@ -284,11 +284,11 @@ public class PlayerPrefsManager : MonoBehaviour
     
     static void GetPlaysNumber(CML response)
     {
-        plays = response[1].Int("Plays_Number");
+        plays = response[1].Int("Plays_Number") + 1;
         
         // update +1
         CMLData data = new CMLData();
-        data.Set("Plays_Number", (plays+1).ToString());
+        data.Set("Plays_Number", plays.ToString());
         WUData.UpdateCategory("AccountStats", data);
     }
 
