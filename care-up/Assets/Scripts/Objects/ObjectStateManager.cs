@@ -7,7 +7,7 @@ public class ObjectStateManager : MonoBehaviour {
     PlayerAnimationManager playerAnimationManager;
     public string LieAnimName = "";
     public string HoldAnimName = "";
-    float HoldAnimValue = 0f;
+    public float HoldAnimValue = 0f;
     float LieAnimValue = 0f;
     public bool LockHoldState = true;
 

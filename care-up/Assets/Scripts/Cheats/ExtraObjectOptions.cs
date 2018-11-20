@@ -15,9 +15,12 @@ public class ExtraObjectOptions : MonoBehaviour {
     {
         foreach (GameObject o in hidenObjects)
         {
-            if (o.name == _name)
+            if (o != null)
             {
-                o.SetActive(value);
+                if (o.name == _name)
+                {
+                    o.SetActive(value);
+                }
             }
         }
     }
