@@ -11,7 +11,8 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
     {
         if (!done)
         {
-            //WULogin.onLoggedIn += AddFields;
+            // uncomment this to reset play counter for testing
+            //WULogin.onLoggedIn += ClearFields;
             WULogin.onLoggedIn += CheckForSerials;
             WULogin.onLoggedOut += LoadStartScene;
             done = true;
@@ -47,7 +48,6 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
 
     void GetPlaysNumber(CML response)
     {
-        print(response.ToString());
         // we're here only if we got data
         int plays = response[1].Int("Plays_Number");
         bool result = plays < 3 ? true : false;
@@ -57,7 +57,6 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
     void ErrorHandle(CMLData response)
     {
         // we're here if we got error or no data which should be equal to 0 plays
-        print(response.ToString());
         AllowDenyLoadMainMenu((response["message"] == "WPServer error: Empty response. No data found"));
     }
 
@@ -79,12 +78,8 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
         bl_SceneLoaderUtils.GetLoader.LoadLevel("LoginMenu");
     }
 
-    void AddFields(CML ignore)
+    void ClearFields(CML ignore)
     {
-        //WUData.RemoveCategory("AccountStats");
-
-        //CMLData data = new CMLData();
-        //data.Set("Plays_Number", "0");
-        //WUData.UpdateCategory("AccountStats", data);
+        WUData.RemoveCategory("AccountStats");
     }
 }
