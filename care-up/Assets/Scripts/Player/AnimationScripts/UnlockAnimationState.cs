@@ -25,10 +25,25 @@ public class UnlockAnimationState : StateMachineBehaviour
        
         if (GameObject.Find(ObjectName) != null)
         {
-            if (GameObject.Find(ObjectName).GetComponent<ObjectStateManager>() != null)
+            foreach (GameObject gameObj in GameObject.FindObjectsOfType<GameObject>())
             {
-                GameObject.Find(ObjectName).GetComponent<ObjectStateManager>().LockHoldState = value;
+                if (gameObj.name == ObjectName)
+                {
+                    bool is_sihlouette = false;
+                    if (gameObj.GetComponent<PickableObject>() != null)
+                    {
+                        if (gameObj.GetComponent<PickableObject>().sihlouette)
+                        {
+                            is_sihlouette = false;
+                        }
+                    }
+                    if (!is_sihlouette && gameObj.GetComponent<ObjectStateManager>() != null)
+                    {
+                        gameObj.GetComponent<ObjectStateManager>().LockHoldState = value;
+                    }
+                }
             }
+      
         }
     }
 
