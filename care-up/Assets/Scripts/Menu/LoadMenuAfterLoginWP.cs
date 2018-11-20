@@ -51,17 +51,22 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
         // we're here only if we got data
         int plays = response[1].Int("Plays_Number");
         bool result = plays < 3 ? true : false;
-        AllowDenyLoadMainMenu(result);
+        AllowDenyLoadMainMenu(result, true);
     }
 
     void ErrorHandle(CMLData response)
     {
         // we're here if we got error or no data which should be equal to 0 plays
-        AllowDenyLoadMainMenu((response["message"] == "WPServer error: Empty response. No data found"));
+        AllowDenyLoadMainMenu((response["message"] == "WPServer error: Empty response. No data found"), true);
     }
 
-    void AllowDenyLoadMainMenu(bool allow)
+    void AllowDenyLoadMainMenu(bool allow, bool noSub = false)
     {
+        if (allow)
+        {
+            GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed = !noSub;
+        }
+
         if (allow)
         {
             bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");

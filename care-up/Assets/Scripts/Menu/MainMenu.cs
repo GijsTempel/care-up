@@ -25,7 +25,7 @@ public class MainMenu : MonoBehaviour {
             Debug.LogWarning("No 'preferences' found. Game needs to be started from first scene");
         }
 
-        if (SceneManager.GetActiveScene().name == "MainMenu")
+        if (SceneManager.GetActiveScene().name == "MainMenu" && !prefs.subscribed)
         {
             Debug.Log("MainMenuCheck");
             WUData.FetchField("Plays_Number", "AccountStats", GetPlaysNumber, -1, ErrorHandle);

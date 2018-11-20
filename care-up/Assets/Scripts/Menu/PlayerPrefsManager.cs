@@ -34,6 +34,10 @@ public class PlayerPrefsManager : MonoBehaviour
     // is this game version is demo version
     public bool demoVersion = false;
 
+    // save info about subscription
+    [HideInInspector]
+    public bool subscribed = false;
+
     public string ActivatedScenes
     {
         get
@@ -278,7 +282,6 @@ public class PlayerPrefsManager : MonoBehaviour
     
     static void GetPlaysNumber(CML response)
     {
-        print(response.ToString());
         int plays = response[1].Int("Plays_Number");
 
         Debug.Log(plays);
