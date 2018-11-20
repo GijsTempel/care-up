@@ -241,9 +241,9 @@ public class MainMenu : MonoBehaviour {
         if (!allow)
         {
             // show pop up!
-            StatusMessage.Message = "Je hebt geen actief product";
+            //StatusMessage.Message = "Je hebt geen actief product";
             // or something more like
-            // GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(#);
+            GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(5);
         }
     }
 }
