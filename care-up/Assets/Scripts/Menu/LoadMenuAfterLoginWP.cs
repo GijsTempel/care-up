@@ -13,6 +13,9 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
         {
             // uncomment this to reset play counter for testing
             //WULogin.onLoggedIn += ClearFields;
+
+            WULogin.onLoggedIn += AddNumberOfLogins;
+
             WULogin.onLoggedIn += CheckForSerials;
             WULogin.onLoggedOut += LoadStartScene;
             done = true;
@@ -86,5 +89,31 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
     void ClearFields(CML ignore)
     {
         WUData.RemoveCategory("AccountStats");
+    }
+
+    void AddNumberOfLogins(CML ignore)
+    {
+        WUData.FetchField("Login_Number", "AccountStats", AddoneToLoginNumber, -1, LoginNumber_Error);
+    }
+    
+    static void AddoneToLoginNumber(CML response)
+    {
+        int logins = response[1].Int("Login_Number") + 1;
+
+        // update +1
+        CMLData data = new CMLData();
+        data.Set("Login_Number", logins.ToString());
+        WUData.UpdateCategory("AccountStats", data);
+    }
+
+    static void LoginNumber_Error(CMLData response)
+    {
+        if ((response["message"] == "WPServer error: Empty response. No data found"))
+        {
+            // empty response, need to create field with 1 play
+            CMLData data = new CMLData();
+            data.Set("Login_Number", "1");
+            WUData.UpdateCategory("AccountStats", data);
+        }
     }
 }
