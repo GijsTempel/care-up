@@ -25,6 +25,8 @@ namespace MBS
             serialnumber_screen,
             order_screen,
             termsandcondition_screen,
+            terms_condition_screen,
+            voorwaarden_screen,
             custom_1;
         }
 
@@ -510,6 +512,10 @@ namespace MBS
         public void ShowTermsAndConditionScreen () => DisplayScreen (panels.termsandcondition_screen );
         public void CloseHighScoresScreen() => DisplayScreen( panels.login_menu );
         public void ReturnFromSerialScreen () => LogOut ();
+        public void ShowTerms_condition_Screen () => panels.terms_condition_screen.SetActive(true);
+        public void ShowVoorwaarden_Screen () => panels.voorwaarden_screen.SetActive(true);
+        public void RemoveTerms_condition_Screen () => panels.terms_condition_screen.SetActive(false);
+        public void RemoveVoorwaarden_Screen () => panels.voorwaarden_screen.SetActive(false);
         public void ShowLocalizationScreen()
         {
             DisplayScreen( panels.localization_screen );
