@@ -37,6 +37,8 @@ public class PlayerPrefsManager : MonoBehaviour
     // save info about subscription
     [HideInInspector]
     public bool subscribed = false;
+    [HideInInspector]
+    public static int plays = 0;
 
     public string ActivatedScenes
     {
@@ -282,8 +284,8 @@ public class PlayerPrefsManager : MonoBehaviour
     
     static void GetPlaysNumber(CML response)
     {
-        int plays = response[1].Int("Plays_Number");
-
+        plays = response[1].Int("Plays_Number");
+        
         // update +1
         CMLData data = new CMLData();
         data.Set("Plays_Number", (plays+1).ToString());

@@ -25,10 +25,20 @@ public class MainMenu : MonoBehaviour {
             Debug.LogWarning("No 'preferences' found. Game needs to be started from first scene");
         }
 
-        if (SceneManager.GetActiveScene().name == "MainMenu" && !prefs.subscribed)
+        if (SceneManager.GetActiveScene().name == "MainMenu")
         {
-            Debug.Log("MainMenuCheck");
-            WUData.FetchField("Plays_Number", "AccountStats", GetPlaysNumber, -1, ErrorHandle);
+            Text text = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/DialogTestPractice/Panel_UI/FreeDemoPlayCounter")
+                .GetComponent<Text>();
+
+            if (!prefs.subscribed)
+            {
+                WUData.FetchField("Plays_Number", "AccountStats", GetPlaysNumber, -1, ErrorHandle);
+                text.text = "Je kunt nog " + (3 - PlayerPrefsManager.plays) + " handelingen proberen.";
+            }
+            else
+            {
+                text.text = "";
+            }
         }
     }
 
