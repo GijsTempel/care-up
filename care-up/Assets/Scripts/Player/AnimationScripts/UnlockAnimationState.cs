@@ -37,9 +37,17 @@ public class UnlockAnimationState : StateMachineBehaviour
                             is_sihlouette = false;
                         }
                     }
-                    if (!is_sihlouette && gameObj.GetComponent<ObjectStateManager>() != null)
+
+                    if (!is_sihlouette )
                     {
-                        gameObj.GetComponent<ObjectStateManager>().LockHoldState = value;
+                        if (gameObj.GetComponent<ObjectStateManager>() != null)
+                        {
+                            gameObj.GetComponent<ObjectStateManager>().LockHoldState = value;
+                        }
+                        else if (gameObj.GetComponent<Syringe>() != null)
+                        {
+                            gameObj.GetComponent<Syringe>().updatePlunger = !value;
+                        }
                     }
                 }
             }
