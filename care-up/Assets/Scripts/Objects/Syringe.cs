@@ -37,6 +37,7 @@ public class Syringe : PickableObjectWithInfo {
         plunger = transform.Find("syringePlunger");
         if (plunger == null) Debug.LogError("No plunger found!");
 
+
         protector = transform.GetChild(1).Find("Prot");
 
         transparencyFix = true;
@@ -48,9 +49,19 @@ public class Syringe : PickableObjectWithInfo {
 
         if ( updatePlunger )
         {
+            float plunger_pos = 0f;
+            if (leftControlBone != null)
+            {
+                plunger_pos = leftControlBone.localPosition.y;
+            }
+            else
+            {
+                plunger_pos = GameObject.FindObjectOfType<PlayerAnimationManager>().leftModifier02;
+            }
             plunger.localPosition = new Vector3(
                 plunger.localPosition.x,
-                Mathf.Lerp(-0.013f, 0.06f, leftControlBone.localPosition.y),
+                
+                Mathf.Lerp(-0.013f, 0.06f, plunger_pos),
                 plunger.localPosition.z);
         }
 

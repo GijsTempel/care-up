@@ -26,11 +26,9 @@ public class ShowOnFrame : StateMachineBehaviour
                     ObjectsIDController idCont = GameObject.FindObjectOfType<ObjectsIDController>();
                     foreach (string __name in ObjNames)
                     {
-                        Debug.Log("to show/hide " + __name);
                         Obj = idCont.getFromHidden(__name);
                         if (Obj != null)
                         {
-                            Debug.Log("(Obj != null)");
                             Obj.SetActive(toShow);
                         }
                     }
