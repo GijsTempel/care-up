@@ -25,6 +25,8 @@ namespace MBS
             serialnumber_screen,
             order_screen,
             termsandcondition_screen,
+            terms_condition_screen,
+            voorwaarden_screen,
             custom_1;
         }
 
@@ -276,6 +278,13 @@ namespace MBS
             data.Set( "email", fields.register_email.text.Trim() );
             data.Set( "password", fields.register_password.text.Trim() );
             WULogin.RegisterAccount( data );
+            fields.login_username.text = fields.register_username.text;
+            fields.login_password.text = fields.register_password.text;
+            fields.register_username.text = "";
+            fields.register_email.text = "";
+            fields.register_password.text = "";
+            fields.register_verify.text = "";
+
             DisplayScreen( panels.login_menu );
         }
 
@@ -438,7 +447,7 @@ namespace MBS
 
         virtual public void OnLoggedOut( CML data )
         {
-            StatusMessage.Message = $"{WULogin.display_name} logged out successfully";
+            StatusMessage.Message = $"{WULogin.display_name} Uitloggen is gelukt!";
             WULogin.logged_in = false;
             WULogin.nickname = WULogin.display_name = string.Empty;
             DisplayScreen( panels.login_menu );
@@ -446,7 +455,7 @@ namespace MBS
 
         virtual public void OnReset( CML data )
         {
-            StatusMessage.Message = "Password reset emailed to your registered email address";
+            StatusMessage.Message = "Er is een e-mail naar je verzonden waarin je je wachtwoord kunt veranderen.";
             DisplayScreen( panels.login_menu );
             fields.pass_reset_email.text = fields.pass_reset_username.text = string.Empty;
         }
@@ -475,7 +484,7 @@ namespace MBS
 
         virtual public void OnRegistered( CML data )
         {
-            StatusMessage.Message = "Registration successful...";
+            StatusMessage.Message = "Registatie gelukt! Je account is aangemaakt.";
             DisplayScreen( panels.login_menu );
         }
 
@@ -503,6 +512,10 @@ namespace MBS
         public void ShowTermsAndConditionScreen () => DisplayScreen (panels.termsandcondition_screen );
         public void CloseHighScoresScreen() => DisplayScreen( panels.login_menu );
         public void ReturnFromSerialScreen () => LogOut ();
+        public void ShowTerms_condition_Screen () => panels.terms_condition_screen.SetActive(true);
+        public void ShowVoorwaarden_Screen () => panels.voorwaarden_screen.SetActive(true);
+        public void RemoveTerms_condition_Screen () => panels.terms_condition_screen.SetActive(false);
+        public void RemoveVoorwaarden_Screen () => panels.voorwaarden_screen.SetActive(false);
         public void ShowLocalizationScreen()
         {
             DisplayScreen( panels.localization_screen );
