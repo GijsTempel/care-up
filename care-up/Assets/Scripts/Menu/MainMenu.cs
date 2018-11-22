@@ -33,7 +33,7 @@ public class MainMenu : MonoBehaviour {
             if (!prefs.subscribed)
             {
                 WUData.FetchField("Plays_Number", "AccountStats", GetPlaysNumber, -1, ErrorHandle);
-                text.text = "Je kunt nog " + (3 - PlayerPrefsManager.plays) + " handelingen proberen.";
+                text.text = "Je kunt nog " + (3 - prefs.plays) + " handelingen proberen.";
             }
             else
             {
