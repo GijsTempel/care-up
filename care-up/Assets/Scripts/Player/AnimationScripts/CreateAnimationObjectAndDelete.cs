@@ -25,18 +25,19 @@ public class CreateAnimationObjectAndDelete : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (PlayerAnimationManager.CompareFrames(frame, prevFrame, addFrame))
-        {
-            inventory.CreateAnimationObject(objectName, hand);
-        }
-
-        if (PlayerAnimationManager.CompareFrames(frame, prevFrame, deleteFrame))
-        {
-            inventory.DeleteAnimationObject();
-        }
-
         if (animator.speed != 0)
         {
+            if (PlayerAnimationManager.CompareFrames(frame, prevFrame, addFrame))
+            {
+                inventory.CreateAnimationObject(objectName, hand);
+            }
+
+            if (PlayerAnimationManager.CompareFrames(frame, prevFrame, deleteFrame))
+            {
+                inventory.DeleteAnimationObject();
+            }
+
+
             prevFrame = frame;
             frame += Time.deltaTime;
         }
