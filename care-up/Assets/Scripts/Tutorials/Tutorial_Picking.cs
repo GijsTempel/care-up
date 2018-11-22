@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Tutorial_Picking : TutorialManager {
 
+    public AudioClip Popup;
+    AudioSource audioSource;
+
     public enum TutorialStep
     {
         First,
@@ -27,9 +30,13 @@ public class Tutorial_Picking : TutorialManager {
 
         if (!Paused())
         {
+
+            audioSource = GetComponent<AudioSource> ();
+
             switch (currentStep)
             {
                 case TutorialStep.First:
+                    audioSource.PlayOneShot (Popup, 0.1F);
                     currentStep = TutorialStep.Welcome;
 					hintsN.SetSize(788f, 524.9f);
                     hintsN.LockTo("UI(Clone)", new Vector3(-393.80f, 214.70f, 0.00f));
@@ -40,6 +47,7 @@ public class Tutorial_Picking : TutorialManager {
                 case TutorialStep.Welcome:
                     if (nextButtonClicked)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         currentStep = TutorialStep.MoveTo;
 						hintsN.ResetSize();
 						hintsN.LockTo("WorkField", new Vector3(0.00f, 0.49f, -0.73f));
@@ -50,7 +58,8 @@ public class Tutorial_Picking : TutorialManager {
                     break;
                 case TutorialStep.MoveTo:
                     if (player.tutorial_movedTo)
-                    { 
+                    {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         currentStep = TutorialStep.PickOne;
 						hintsN.LockTo("ClothPackage", new Vector3(0.00f, 0.14f, -0.13f));
 						hintsN.SetIconPosition(3);
@@ -66,6 +75,7 @@ public class Tutorial_Picking : TutorialManager {
                 case TutorialStep.PickOne:
                     if (handsInventory.tutorial_pickedLeft)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         handsInventory.tutorial_pickedLeft = false;
                         currentStep = TutorialStep.PickTwo;
 						hintsN.LockTo("Medicine", new Vector3(0.00f, 0.16f, 0.00f));
@@ -79,6 +89,7 @@ public class Tutorial_Picking : TutorialManager {
                 case TutorialStep.PickTwo:
                     if (handsInventory.tutorial_pickedRight)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         handsInventory.tutorial_pickedRight = false;
                         itemToPick = "";
 
@@ -93,6 +104,7 @@ public class Tutorial_Picking : TutorialManager {
                 case TutorialStep.DropOne:
                     if (handsInventory.tutorial_droppedLeft)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         handsInventory.tutorial_droppedLeft = false;
                         hintsN.LockTo("/Medicine", new Vector3(0.00f, 0.16f, 0.00f));
                         currentStep = TutorialStep.DropTwo;
@@ -105,6 +117,7 @@ public class Tutorial_Picking : TutorialManager {
                 case TutorialStep.DropTwo:
                     if (handsInventory.tutorial_droppedRight)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         hintsN.LockTo("SceneLoader 1", new Vector3(262.50f, -69.10f, 0.00f));
                         hintsN.SetIconPosition(0);
                         handsInventory.tutorial_droppedRight = false;
