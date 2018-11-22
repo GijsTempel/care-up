@@ -343,6 +343,8 @@ public class PlayerScript : MonoBehaviour {
 
     public void WalkToGroup(WalkToGroup group)
     {
+        if (robotUIopened)
+            return;
 
         ToggleAway();
         transform.position = group.Position;
