@@ -843,12 +843,13 @@ public class HandsInventory : MonoBehaviour {
         //combineAllowed = combineAllowed || practice;
 
         bool combined = combinationManager.Combine(leftName, rightName, out leftCombineResult, out rightCombineResult);
-
-        if (combined) HandleCombineQuizTriggers(leftName, rightName);
-
+        
 		// combine performed
 		bool alloweCombine = (combined && combineAllowed);
-		if (ObjectsID_Controller != null)
+
+        if (alloweCombine) HandleCombineQuizTriggers(leftName, rightName);
+
+        if (ObjectsID_Controller != null)
 		{
 			if (ObjectsID_Controller.Cheat && Application.isEditor)
 			{
