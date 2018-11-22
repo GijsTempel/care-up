@@ -157,7 +157,12 @@ public class PlayerAnimationManager : MonoBehaviour
         cameraMode.cinematicToggle = true; //before play animation
         PlayAnimation(name + "Sequence", target);
     }
-    
+
+    public static void PlayAnimationSequence(string name)
+    {
+        animationSequence = new AnimationSequence(name);
+    }
+
     public static void NextSequenceStep(bool flag)
     {
         if (flag)
