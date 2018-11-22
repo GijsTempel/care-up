@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Tutorial_Sequence : TutorialManager
 {
+
+    public AudioClip Popup;
+    AudioSource audioSource;
+
     public enum TutorialStep
     {
         First,
@@ -43,10 +47,14 @@ public class Tutorial_Sequence : TutorialManager
 
         if (!Paused())
         {
+
+            audioSource = GetComponent<AudioSource> ();
+
             switch (currentStep)
             {
                 case TutorialStep.First:
-					GameObject.FindObjectOfType<InjectionPatient>().allowToTalk = false;
+                    audioSource.PlayOneShot (Popup, 0.1F);
+                    GameObject.FindObjectOfType<InjectionPatient>().allowToTalk = false;
                     currentStep = TutorialStep.Welcome;
                     hintsN.SetSize(788f, 524.9f);
                     hintsN.LockTo("UI(Clone)", new Vector3(-393.80f, 214.70f, 0.00f));
@@ -56,7 +64,8 @@ public class Tutorial_Sequence : TutorialManager
                 case TutorialStep.Welcome:
                     if (nextButtonClicked)
                     {
-						hintsN.ResetSize();
+                        audioSource.PlayOneShot (Popup, 0.1F);
+                        hintsN.ResetSize();
                         hintsN.LockTo("WorkField", new Vector3(0.00f, 0.51f, -0.73f));
                         currentStep = TutorialStep.MoveTo;
                         UItext.text = "Laten we beginnen. Beweeg naar het werkveld door erop te klikken.";
@@ -67,6 +76,7 @@ public class Tutorial_Sequence : TutorialManager
                 case TutorialStep.MoveTo:
                     if (player.tutorial_movedTo)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         player.tutorial_movedTo = false;
 						hintsN.LockTo("SyringeWithInjectionNeedleCap", new Vector3(0.00f, 0.12f, 0.00f));
 						hintsN.SetIconPosition(3);
@@ -80,6 +90,7 @@ public class Tutorial_Sequence : TutorialManager
                 case TutorialStep.PickSyringe:
                     if (handsInventory.tutorial_pickedLeft)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         handsInventory.tutorial_pickedLeft = false;
                         hintsN.LockTo("WorkField", new Vector3(0.13f, 0.93f, -1.17f));
                         hintsN.SetIconPosition(1);
@@ -92,6 +103,7 @@ public class Tutorial_Sequence : TutorialManager
                 case TutorialStep.MoveToPatient:
                     if (player.tutorial_movedTo)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         player.tutorial_movedTo = false;
 						GameObject.FindObjectOfType<InjectionPatient>().allowToTalk = true;
                         hintsN.LockTo("RightShoulder", new Vector3(0.00f, 0.00f, 0.23f));
@@ -105,6 +117,7 @@ public class Tutorial_Sequence : TutorialManager
                 case TutorialStep.Talk:
                     if (patient.tutorial_talked)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         patient.tutorial_talked = false;
                         hintsN.LockTo("RightArm", new Vector3(417.45f, -214.30f, -287.30f));
                         hintsN.SetIconPosition(3);
@@ -117,6 +130,7 @@ public class Tutorial_Sequence : TutorialManager
                 case TutorialStep.UseOnPatient:
                     if (handsInventory.tutorial_itemUsedOn)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         hintsN.LockTo("/UI(Clone)", new Vector3(-793.25f, 157.60f, 0.00f));
                         hintsN.SetIconPosition(0);
                         hintsN.SetSize(788f, 524.9f);
@@ -128,6 +142,7 @@ public class Tutorial_Sequence : TutorialManager
                 case TutorialStep.SequenceExplanation:
                     if (nextButtonClicked)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         hintsN.LockTo("/UI(Clone)", new Vector3(135.20f, 288.50f, 0.00f));
                         hintsN.ResetSize();
                         hintsN.SetIconPosition(1);
@@ -140,6 +155,7 @@ public class Tutorial_Sequence : TutorialManager
                 case TutorialStep.CompleteSequence:
                     if (sequenceCompleted && dialogueEnded)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         hintsN.LockTo("SceneLoader 1", new Vector3(262.50f, -69.10f, 0.00f));
                         currentStep = TutorialStep.Done;
                         UItext.text = "Gefeliciteerd! Je weet nu hoe je ingewikkelde handelingen succesvol kunt uitvoeren.";
