@@ -908,7 +908,7 @@ public class HandsInventory : MonoBehaviour {
         else if ((left == "fraxi_pakage" && right == "") ||
                  (left == "" && right == "fraxi_pakage"))
         {
-            PlayerScript.TriggerQuizQuestion(7.0f);
+            PlayerScript.TriggerQuizQuestion(8.3f);
         }
     }
 
