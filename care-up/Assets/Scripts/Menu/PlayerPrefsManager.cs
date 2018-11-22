@@ -38,7 +38,7 @@ public class PlayerPrefsManager : MonoBehaviour
     [HideInInspector]
     public bool subscribed = false;
     [HideInInspector]
-    public static int plays = 0;
+    public static int plays;
 
     public string ActivatedScenes
     {
@@ -284,7 +284,7 @@ public class PlayerPrefsManager : MonoBehaviour
     
     static void GetPlaysNumber(CML response)
     {
-        plays = response[1].Int("Plays_Number") + 1;
+        PlayerPrefsManager.plays = response[1].Int("Plays_Number") + 1;
         
         // update +1
         CMLData data = new CMLData();
@@ -297,6 +297,7 @@ public class PlayerPrefsManager : MonoBehaviour
         if ((response["message"] == "WPServer error: Empty response. No data found"))
         {
             // empty response, need to create field with 1 play
+            PlayerPrefsManager.plays = 1;
             CMLData data = new CMLData();
             data.Set("Plays_Number", "1");
             WUData.UpdateCategory("AccountStats", data);
