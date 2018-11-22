@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class Tutorial_UI : TutorialManager
 {
+
+    public AudioClip Popup;
+    AudioSource audioSource;
+
     public enum TutorialStep
     {
         First,
@@ -63,9 +67,14 @@ public class Tutorial_UI : TutorialManager
 
         if (!Paused())
         {
+
+            audioSource = GetComponent<AudioSource> ();
+
             switch (currentStep)
             {
                 case TutorialStep.First:
+
+                    audioSource.PlayOneShot (Popup, 0.1F);
                     currentStep = TutorialStep.Welcome;
                     hintsN.SetSize(788f, 524.9f);
                     hintsN.LockTo("UI(Clone)", new Vector3(-393.80f, 214.70f, 0.00f));
@@ -75,6 +84,8 @@ public class Tutorial_UI : TutorialManager
                 case TutorialStep.Welcome:
                     if (nextButtonClicked)
                     {
+
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         currentStep = TutorialStep.RobotIntro;
                         hintsN.LockTo("robot", new Vector3(0.00f, -0.25f, 0.09f));
                         hintsN.SetIconPosition(1);
@@ -86,6 +97,8 @@ public class Tutorial_UI : TutorialManager
                 case TutorialStep.RobotIntro:
                     if (nextButtonClicked)
                     {
+
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         currentStep = TutorialStep.OpenRobotUI;
                         hintsN.ResetSize();
                         //hintsBox.anchoredPosition = new Vector2(-560, -68);
@@ -98,6 +111,7 @@ public class Tutorial_UI : TutorialManager
                 case TutorialStep.OpenRobotUI:
                     if (player.tutorial_robotUI_opened)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         currentStep = TutorialStep.TimeExpl;
                         hintsN.LockTo("Stopwatch", new Vector3(107.20f, -143.10f, 0.00f));
                         UItext.text = "Het klokje met de tijd geeft aan hoelang je bezig bent met het protocol. ";
@@ -107,6 +121,7 @@ public class Tutorial_UI : TutorialManager
                 case TutorialStep.TimeExpl:
                     if (nextButtonClicked)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         currentStep = TutorialStep.PointsExpl;
 
                         hintsN.LockTo("Stopwatch", new Vector3(1297.10f, -149.20f, 0.00f));
@@ -117,6 +132,7 @@ public class Tutorial_UI : TutorialManager
                 case TutorialStep.PointsExpl:
                     if (nextButtonClicked)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         currentStep = TutorialStep.PercentExpl;
 
                         hintsN.LockTo("Stopwatch", new Vector3(2678.00f, -149.20f, 0.00f));
@@ -127,6 +143,7 @@ public class Tutorial_UI : TutorialManager
                 case TutorialStep.PercentExpl:
                     if (nextButtonClicked)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         currentStep = TutorialStep.TabsExpl;
 
                         hintsN.LockTo("RobotUI", new Vector3(-428.00f, -213.19f, 0.00f));
@@ -136,7 +153,8 @@ public class Tutorial_UI : TutorialManager
                     break;
                 case TutorialStep.TabsExpl:                        
                     if (nextButtonClicked)                         
-                    {                                              
+                    {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         currentStep = TutorialStep.PressGeneral;   
 
                         hintsN.LockTo("RobotUI", new Vector3(-990.90f, -49.30f, -99.80f)); 
@@ -148,6 +166,7 @@ public class Tutorial_UI : TutorialManager
                 case TutorialStep.PressGeneral:
                     if (RobotUITabs.tutorial_generalOpened)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         currentStep = TutorialStep.GeneralExpl;
                         hintsN.SetSize(788f, 524.9f);
                         hintsN.LockTo("RobotUI", new Vector3(-1568.20f, 958.30f, 0.00f));
@@ -158,6 +177,7 @@ public class Tutorial_UI : TutorialManager
                 case TutorialStep.GeneralExpl:
                     if (nextButtonClicked)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         currentStep = TutorialStep.PatientRecordsOpen;
                         UItext.text = "Laten we de cliëntgegevens bekijken door op het icoon the klikken.";
                         hintsN.ResetSize();
@@ -169,6 +189,7 @@ public class Tutorial_UI : TutorialManager
                 case TutorialStep.PatientRecordsOpen:
                     if (RobotUITabs.tutorial_recordsOpened)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         RobotUITabs.tutorial_recordsOpened = false;
                         hintsN.SetSize(788f, 524.9f);
                         hintsN.LockTo("RobotUI", new Vector3(-1568.20f, 958.30f, 0.00f));
@@ -181,6 +202,7 @@ public class Tutorial_UI : TutorialManager
                 case TutorialStep.PatientRecordsExpl:
                     if (nextButtonClicked)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         currentStep = TutorialStep.PatientRecordsBack;
                         hintsN.ResetSize();
                         hintsN.LockTo("RobotUI", new Vector3(-1650.00f, 1017.60f, 0.00f));
@@ -194,6 +216,7 @@ public class Tutorial_UI : TutorialManager
                 case TutorialStep.PatientRecordsBack:
                     if (RobotUITabs.tutorial_back)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         currentStep = TutorialStep.PatientPrescriptionOpen;
                         hintsN.LockTo("RobotUI", new Vector3(268.00f, 111.00f, 0.00f));
                         UItext.text = "Laten we nu de toedienlijst openen door op het icoon te klikken.";
@@ -205,6 +228,7 @@ public class Tutorial_UI : TutorialManager
                 case TutorialStep.PatientPrescriptionOpen:
                     if (RobotUITabs.tutorial_prescriptionOpened)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         RobotUITabs.tutorial_prescriptionOpened = false;
                         hintsN.SetSize(788f, 524.9f);
                         hintsN.LockTo("RobotUI", new Vector3(-1568.20f, 958.30f, 0.00f));
@@ -217,6 +241,7 @@ public class Tutorial_UI : TutorialManager
                 case TutorialStep.WritingDownExpl:
                     if (nextButtonClicked)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         currentStep = TutorialStep.PatientPrescriptionExpl;
                         hintsN.SetIconPosition(0);
                         hintsN.LockTo("RobotUI", new Vector3(-1650.00f, 1017.60f, 0.00f));
@@ -231,6 +256,7 @@ public class Tutorial_UI : TutorialManager
                 case TutorialStep.PatientPrescriptionExpl:
                     if (RobotUITabs.tutorial_back)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         currentStep = TutorialStep.PrescriptionBack;
                         hintsN.LockTo("RobotUI", new Vector3(845.00f, -105.00f, 0.00f));
                         hintsN.SetIconPosition(1);
@@ -241,7 +267,8 @@ public class Tutorial_UI : TutorialManager
                     break;  
                 case TutorialStep.PrescriptionBack:
                     if (nextButtonClicked)
-                    { 
+                    {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         currentStep = TutorialStep.GeneralBack;
                         hintsN.ResetSize();
                         hintsN.LockTo("RobotUI", new Vector3(-1650.00f, 936.80f, -99.80f));
@@ -254,6 +281,7 @@ public class Tutorial_UI : TutorialManager
                 case TutorialStep.GeneralBack:
                     if (RobotUITabs.tutorial_back)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         closeTab = RobotUITabs.tutorial_back = false;
                         currentStep = TutorialStep.PressChecklist;
                       
@@ -266,6 +294,7 @@ public class Tutorial_UI : TutorialManager
                 case TutorialStep.PressChecklist:
                     if (RobotUITabs.tutorial_checkListOpened)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         currentStep = TutorialStep.ChecklistExpl;
                         hintsN.SetSize(788f, 524.9f);
                         hintsN.LockTo("RobotUI", new Vector3(-1568.20f, 958.30f, 0.00f));
@@ -276,6 +305,7 @@ public class Tutorial_UI : TutorialManager
                 case TutorialStep.ChecklistExpl:
                     if (nextButtonClicked)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         currentStep = TutorialStep.ChecklistBack;
                         hintsN.ResetSize();
                         hintsN.LockTo("RobotUI", new Vector3(-1650.00f, 958.20f, -34.70f));
@@ -286,6 +316,7 @@ public class Tutorial_UI : TutorialManager
                 case TutorialStep.ChecklistBack:
                     if (RobotUITabs.tutorial_back)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         closeTab = RobotUITabs.tutorial_back = false;
                         currentStep = TutorialStep.PressMessageCenter;
                         UItext.text = "Oh wow, je hebt een bericht! Laten we gaan kijken!";
@@ -301,6 +332,7 @@ public class Tutorial_UI : TutorialManager
                 case TutorialStep.PressMessageCenter:
                     if (RobotUITabs.tutorial_messageCenterOpened)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         tabToOpen = "";
                         currentStep = TutorialStep.MessageCenterExpl;
                       
@@ -314,6 +346,7 @@ public class Tutorial_UI : TutorialManager
                 case TutorialStep.MessageCenterExpl:
                     if (nextButtonClicked)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         currentStep = TutorialStep.OpenMessage;
                         hintsN.ResetSize();
                         hintsN.LockTo("RobotUI", new Vector3(-1113.50f, 683.00f, 0.00f));
@@ -325,6 +358,7 @@ public class Tutorial_UI : TutorialManager
                 case TutorialStep.OpenMessage:
                     if (RobotUIMessageTab.tutorial_messageOpened)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         currentStep = TutorialStep.CloseMessageCenter;
                         hintsN.SetIconPosition(1);
                         hintsN.LockTo("RobotUI", new Vector3(-258.00f, 34.00f, 0.00f));
@@ -336,6 +370,7 @@ public class Tutorial_UI : TutorialManager
                 case TutorialStep.CloseMessageCenter:
                     if (RobotUITabs.tutorial_back)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         closeTab = RobotUITabs.tutorial_back = false;
                         currentStep = TutorialStep.CloseRobotUI;
                     
@@ -348,6 +383,7 @@ public class Tutorial_UI : TutorialManager
                 case TutorialStep.CloseRobotUI:
                     if (player.tutorial_robotUI_closed)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         currentStep = TutorialStep.DevHintsExpl;
              
 						hintsN.SetIconPosition(0);
@@ -359,6 +395,7 @@ public class Tutorial_UI : TutorialManager
                 case TutorialStep.DevHintsExpl:
                     if (nextButtonClicked)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         currentStep = TutorialStep.OpenExtraHints;
 
                         hintsN.LockTo("ExtraButton", new Vector3(81.50f, -22.50f, 0.00f));
@@ -370,6 +407,7 @@ public class Tutorial_UI : TutorialManager
                 case TutorialStep.OpenExtraHints:
                     if (hintsUI.tutorial_extraOpened)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         currentStep = TutorialStep.CloseHints;
 
                         hintsN.LockTo("ExtraButton", new Vector3(660.00f, -96.40f, 0.00f));
@@ -381,6 +419,7 @@ public class Tutorial_UI : TutorialManager
                 case TutorialStep.CloseHints:
                     if (hintsUI.tutorial_extraClosed)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         currentStep = TutorialStep.Done;
 
                         hintsN.LockTo("SceneLoader 1", new Vector3(262.50f, -69.10f, 0.00f));
