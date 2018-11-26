@@ -13,21 +13,21 @@ public class IAPManager : MonoBehaviour, IStoreListener
        
     private void Start()
     {
-        if (!Application.isMobilePlatform)
-        {
+        #if UNITY_IOS
+            var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
+            builder.AddProduct("CareUp_Lidmaatschap", ProductType.Subscription, new IDs
+            {
+                {"CareUp_Lidmaatschap", AppleAppStore.Name},
+                {"CareUp_Lidmaatschap", GooglePlay.Name},
+                {"CareUp_Lidmaatschap", MacAppStore.Name}
+            });
+
+            UnityPurchasing.Initialize(this, builder);
+        #else
+            Debug.Log("Not an iOS. Destroying IAP.");
             Destroy(this);
             return;
-        }
-
-        var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
-        builder.AddProduct("CareUp_Lidmaatschap", ProductType.Subscription, new IDs
-        {
-            {"CareUp_Lidmaatschap", AppleAppStore.Name},
-            {"CareUp_Lidmaatschap", GooglePlay.Name},
-            {"CareUp_Lidmaatschap", MacAppStore.Name}
-        });
-
-        UnityPurchasing.Initialize(this, builder);
+        #endif
     }
 
     /// <summary>
