@@ -35,8 +35,8 @@
 
   <action
     points="1"
-    description="Open catheterisation package"
-    fullDescription=" Klik op het werkveld om deze schoon te maken."
+    description="Open catheterisatie pakket"
+    fullDescription=" Klik op het catheterisatie pakket om deze open te maken."
     audioHint="Injection/H2-2"
     index="2"
     type="use"
@@ -45,21 +45,45 @@
 
   <action
     comment="3. Open package of the syringe with 10 ml of sterile water. Leave the syringe in the package "
-    points="1" description="Open package of the syringe with 10 ml of sterile water. Leave the syringe in the package " fullDescription="" audioHint="Injection/H4-2" index="3" type="combine" left="water_syringe_pack" right="" extra=""></action>
+    points="1" 
+    description="Open de verpakking van de spuit met 10 ml steriel water. " 
+    fullDescription="Open de verpakking van de spuit met 10 ml steriel water, laat de spuit in de verpakking. " 
+    audioHint="Injection/H4-2" 
+    index="3" type="combine" 
+    left="water_syringe_pack" 
+    right="" 
+    extra=""></action>
 
   <action
     comment="4. Pour tap water from a large tap (or sterile water) over the gauze."
-    points="1" description="Pour tap water from a large tap (or sterile water) over the gauze" audioHint="Injection/H8-2" index="4" type="useOn" item="GauzeTrayFull" target="Sink" buttonText="" extra="" fullDescription=""></action>
+    points="1" 
+    description="Giet kraanwater uit een flink stromende kraan (of steriel water) over de gaasjes." 
+    audioHint="Injection/H8-2" 
+    index="4" 
+    type="useOn" 
+    item="GauzeTrayFull" 
+    target="Sink" 
+    buttonText="" 
+    extra="" 
+    fullDescription=""></action>
 
   <action
     comment="5. Ask the client to uncover the lower body and lie on the back with the legs spread apart and the knees raised."
-    points="1" description="ask patient to lay on bed" audioHint="" index="5" type="talk" topic="LayOnBed" extra="do it!" fullDescription="something"/>
+    points="1" 
+    description="Vraag de cliënt het onderlichaam te ontbloten en op de rug te gaan liggen." 
+    audioHint="" 
+    index="5" 
+    type="talk" 
+    topic="LayOnBed" 
+    extra="do it!" 
+    fullDescription="Vraag de cliënt het onderlichaam te ontbloten en op de rug te gaan liggen met de benen gespreid en de
+    knieën opgetrokken."/>
 
   <action
-    comment="6. Place a pad under the buttocks and thighs of the client."
+    comment="6. Place a pad under the buttocks and thighs of the cliënt."
     points="1"
-    description="Place a pad under the buttocks and thighs of the client."
-    fullDescription="Place a pad under the "
+    description="Leg een onderlegger onder de billen en dijen van de cliënt."
+    fullDescription="Pak de onderlegger van het werkveld af klik dan op de cliënt en gebruik de onderlegger met de cliënt "
     audioHint="Injection/H13-2"
     index="6"
     type="useOn"
@@ -69,20 +93,20 @@
 
   <action
     comment="7. Place the tray with gauze on the underpad."
-    points="1" description="Put GauzeTrayWet on the pad" fullDescription="same" audioHint="" index="7" type="drop" item="GauzeTrayWet" posID="2" extra=""/>
+    points="1" description="Zet het bakje met gaasjes op de onderlegger" fullDescription="pak het bakje op ga dan naar de cliënt en klik op de onderlegger om hem neer te zetten" audioHint="" index="7" type="drop" item="GauzeTrayWet" posID="2" extra=""/>
 
   <action
     comment="8. Open the packaging of the syringe with lubricant, leave the syringe in the packaging."
-    points="1" description="Open package of the syringe with lube. Leave the syringe in the package " fullDescription="" audioHint="Injection/H4-2" index="8" type="combine" left="lube_syringe_pack" right="" extra=""></action>
+    points="1" description="Open de verpakking van de spuit met glijmiddel, laat de spuit in de verpakking. " fullDescription="pak de spuit op van het werkveld. Klik op de spuit en klik dan op het min teken om het te scheiden" audioHint="Injection/H4-2" index="8" type="combine" left="lube_syringe_pack" right="" extra=""></action>
 
   <action
     comment=""
-    points="1" description="Put PlasticTrashbucket on the pad" fullDescription="same" audioHint="" index="9" type="drop" item="PlasticTrashbucket" posID="2" extra=""/>
+    points="1" description="Leg de afval bak op de onderlegger." fullDescription="Pak de afval bak op van het werkveld ga dan naar de cliënt en leg de afval bak op de onderlegger" audioHint="" index="9" type="drop" item="PlasticTrashbucket" posID="2" extra=""/>
 
   <action
     comment="9. Put on gloves."
     points="3"
-    description="Put on gloves"
+    description="Trek handschoenen aan."
     fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp."
     audioHint="Injection/H1-2"
     index="10"
@@ -93,8 +117,8 @@
   <action
     comment=""
     points="3"
-    description="start animation sequence clean labia"
-    fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp."
+    description="Reinig de labia en de meatus in 5 stappen met de gaasjes. Per gaasje één keer en richting het perineum vegen."
+    fullDescription="Klik op het bakje met gaasjes en gebruik dan het gaasje met de cliënt"
     audioHint="Injection/H1-2"
     index="11"
     type="useOn"
@@ -102,15 +126,15 @@
     target="w0_A"
     extra="Pas handhygiëne toe. Handhygiëne is het allerbelangrijkste als het gaat om voorkomen van besmetting met ziektekiemen. Dit betekent je handen reinigen op de juiste manier en op de juiste momenten. Begin een handeling altijd met handhygiëne."></action>
 
-  <action points="1" description="Clean Labia majora, left and right separate. Each with a new cottonball" audioHint="Injection/AS1-2" index="12" type="sequenceStep" value="clean majora" extra="" fullDescription=""></action>
-  <action points="1" description="Spread out the Labia Majora with one hand" audioHint="Injection/AS1-2" index="13" type="sequenceStep" value="spread majora" extra="" fullDescription=""></action>
-  <action points="1" description="Clean the Labia Minora. Each with a new cottonball" audioHint="Injection/AS1-2" index="14" type="sequenceStep" value="clean minora" extra="" fullDescription=""></action>
-  <action points="1" description="Spread out the Labia Majora with one hand" audioHint="Injection/AS1-2" index="15" type="sequenceStep" value="spread minora" extra="" fullDescription=""></action>
-  <action points="1" description="Take a new gauze and clean the meatus (opening)." audioHint="Injection/AS1-2" index="16" type="sequenceStep" value="clean meatus" extra="" fullDescription=""></action>
-  <action points="1" description="Discard use off gauzes in bin" audioHint="Injection/AS1-2" index="17" type="sequenceStep" value="discard gauzes" extra="" fullDescription=""></action>
-  <action points="1" description="Keep labia spread and apply lube. after applying lube. Throw away the syringe in PlasticTrashbucke" audioHint="Injection/AS1-2" index="18" type="sequenceStep" value="apply lube" extra="" fullDescription=""></action>
-  <action points="1" description="Keep labia spread and place sterile gauze in labia" audioHint="Injection/AS1-2" index="19" type="sequenceStep" value="place gauze in labia" extra="" fullDescription=""></action>
-  <action points="1" description="Take off gloves and throw them in bin" audioHint="Injection/AS1-2" index="20" type="sequenceStep" value="take off gloves" extra="" fullDescription=""></action>
+  <action points="1" description="Reinig de labia majora: links en rechts afzonderlijk, ieder met een nieuw, uitgeknepen gaasje." audioHint="Injection/AS1-2" index="12" type="sequenceStep" value="clean majora" extra="" fullDescription=""></action>
+  <action points="1" description="Spreid met één hand de labia majora." audioHint="Injection/AS1-2" index="13" type="sequenceStep" value="spread majora" extra="" fullDescription=""></action>
+  <action points="1" description="Reinig de labia minora: links en rechts afzonderlijk, ieder met een nieuw, uitgeknepen gaasje." audioHint="Injection/AS1-2" index="14" type="sequenceStep" value="clean minora" extra="" fullDescription=""></action>
+  <action points="1" description="Spreid met één hand de labia minora." audioHint="Injection/AS1-2" index="15" type="sequenceStep" value="spread minora" extra="" fullDescription=""></action>
+  <action points="1" description="Neem een nieuw gaasje, knijp dit uit en reinig de meatus." audioHint="Injection/AS1-2" index="16" type="sequenceStep" value="clean meatus" extra="" fullDescription=""></action>
+  <action points="1" description="Gooi gebruikte gaasjes in de afvalbak." audioHint="Injection/AS1-2" index="17" type="sequenceStep" value="discard gauzes" extra="" fullDescription=""></action>
+  <action points="1" description="Houd de labia nog gespreid en plaats het steriele gaasje tussen de labia minora." audioHint="Injection/AS1-2" index="18" type="sequenceStep" value="apply lube" extra="" fullDescription=""></action>
+  <action points="1" description="Houd de labia minora nog gespreid en spuit glijmiddel op de meatus en breng daarna de conus van de spuit in de meatus" audioHint="Injection/AS1-2" index="19" type="sequenceStep" value="place gauze in labia" extra="" fullDescription="Houd de labia minora nog gespreid en spuit glijmiddel op de meatus en breng daarna de conus van de spuit in de meatus en spuit ongeveer 6 ml glijmiddel langzaam in de meatus. Als het glijmiddel een verdovend middel bevat: laat voor een verdovend effect het glijmiddel inwerken gedurende de in de bijsluiter vermelde tijd (minimaal 5 minuten). Gooi de spuit in de afvalbak."></action>
+  <action points="1" description="Trek de handschoenen uit en gooi ze in de afvalbak." audioHint="Injection/AS1-2" index="20" type="sequenceStep" value="take off gloves" extra="" fullDescription=""></action>
 
   <action
     comment="20. Apply hand hygiene."
@@ -127,23 +151,23 @@
     <action
       comment="??"
       index="22"
-      points="1" description="Open the package of the catheter bag" fullDescription="" audioHint="Injection/H4-2"  type="combine" left="catheter_bag_packed" right="" extra=""></action>
+      points="1" description="Open de verpakking van de urineopvangzak. Laat de steriele urineopvangzak op het steriele werkveld vallen, raak de urineopvangzak niet aan. Gooi de verpakking in de afvalbak." fullDescription="Pak de opvangzak van het werkveld af klik er dan op en selecteer het min teken om het eruit te pakken." audioHint="Injection/H4-2"  type="combine" left="catheter_bag_packed" right="" extra=""></action>
 
   <action
     comment="22. Open the outer package of the catheter a few centimeters, fold the ends. Leave the inner package in the outer package and hold the outer package with the non-dominant hand on the folded ends."
     index="23"
-    points="1" description="Open the outer package of the catheter" fullDescription="" audioHint="Injection/H4-2"  type="combine" left="catheter" right="" extra=""></action>
+    points="1" description="Open de buitenverpakking van de katheter en laat de katheter in de binnenverpakking op het steriele werkveld vallen, zonder de binnenverpakking aan te raken." fullDescription="Pak de katheter van het werkveld af klik er dan op en selecteer het min teken om het eruit te pakken." audioHint="Injection/H4-2"  type="combine" left="catheter" right="" extra=""></action>
 
   <action
       comment="24. Remove the end of the inner package from the catheter so that the connection point for the urine collection bag is accessible. The catheter remains in the inner package."
       index="24"
-      points="1" description="Remove the end of the inner package" fullDescription="" audioHint="Injection/H4-2"  type="combine" left="catheter_inner" right="" extra=""></action>
+      points="1" description="Open de binnenverpakking van de katheter." fullDescription="Klik op de katheter klik dan nog een keer op de katheter in je hand. Selecteer het min teken op de katheter om het te openen." audioHint="Injection/H4-2"  type="combine" left="catheter_inner" right="" extra=""></action>
 
   <action
     comment="29. Apply hand hygiene."
     index="25"
     points="3"
-    description="Apply hand hygiene"
+    description="Pas handhygiëne toe."
     fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp."
     audioHint="Injection/H1-2"
     type="use"
@@ -153,116 +177,117 @@
   <action
     comment="30. Put on sterile gloves."
     index="26"
-    points="3" description="Put on sterile gloves" fullDescription="" audioHint="Injection/H1-2"  type="use" value="SterileGloves" extra=""></action>
+    points="3" description="Doe steriele handschoenen aan" fullDescription="" audioHint="Injection/H1-2"  type="use" value="SterileGloves" extra=""></action>
 
   <action
     comment="24. With the dominant hand, grasp the tube of the urine collection bag just behind the connection point and attach it to the catheter. Continue to hold the hose."
     index="27"
-    points="1" description="Attach urine collection bag to the catheter." fullDescription="" audioHint="Injection/H4-2"  type="combine" left="CWB_inner_open" right="catheter_bag_twisted" extra=""></action>
+    points="1" description="Verwijder de afsluitdop van de urineopvangzak en bevestig deze aan de katheter." 
+    fullDescription="Verwijder de afsluitdop van de urineopvangzak en bevestig deze aan de katheter. De katheter blijft in binnenverpakking zitten." audioHint="Injection/H4-2"  type="combine" left="CWB_inner_open" right="catheter_bag_twisted" extra=""></action>
 
 
 
   <action
     index="28"
     value="grab package"
-    description="Grab package of cather_inner with non cathereringhand"
+    description="Pak met de niet-katheteriserende hand de verpakking van de katheter."
     points="1" audioHint="Injection/AS1-2"  type="sequenceStep"  extra="" fullDescription=""></action>
 
   <action
     index="29"
     value="remove package"
-    description=""
+    description="Trek de katheter met de katheteriserende hand uit de verpakking."
     points="1" audioHint="Injection/AS1-2"  type="sequenceStep"  extra="" fullDescription=""></action>
 
   <action
     index="30"
     value="hold catheter loop"
-    description=""
+    description="Houd de katheter ongeveer 5 cm van de top vast. Houd de rest van de katheter als een lus in de katheteriserende hand."
     points="1" audioHint="Injection/AS1-2"  type="sequenceStep"  extra="" fullDescription=""></action>
 
   <action
     index="31"
     value="remove labia gauze"
-    description=""
+    description="Verwijder met de vrije hand het steriele gaasje tussen de labia minora."
     points="1" audioHint="Injection/AS1-2"  type="sequenceStep"  extra="" fullDescription=""></action>
 
   <action
     index="32"
     value="open labia minora"
-    description=""
+    description="Houd de labia minora gespreid met de vrije hand."
     points="1" audioHint="Injection/AS1-2"  type="sequenceStep"  extra="" fullDescription=""></action>
 
   <action
     index="33"
     value="insert catheter"
-    description=""
+    description="Breng de katheterpunt in met een scheppende beweging."
     points="1" audioHint="Injection/AS1-2"  type="sequenceStep"  extra="" fullDescription=""></action>
 
   <action
     index="34"
     value="slide catheter"
-    description=""
+    description="Schuif de katheter op tot er urine verschijnt en schuif de katheter daarna nog 2 cm verder op."
     points="1" audioHint="Injection/AS1-2"  type="sequenceStep"  extra="" fullDescription=""></action>
 
   <action
     index="35"
     value="empty blather"
-    description=""
+    description="De blaas loopt leeg in de urineopvangzak. Oefen lichte druk uit op het gebied van symfyse en schaambeen als er geen urine wordt afgevoerd."
     points="1" audioHint="Injection/AS1-2"  type="sequenceStep"  extra="" fullDescription=""></action>
 
   <action
     index="36"
     value="hold catheter"
-    description=""
+    description="Houd de katheter vast, zodat deze niet uit de blaas glijdt."
     points="1" audioHint="Injection/AS1-2"  type="sequenceStep"  extra="" fullDescription=""></action>
 
   <action
     index="37"
     value="fill balloon"
-    description=""
+    description="Vul de katheterballon langzaam met de voorgeschreven hoeveelheid vloeistof uit de spuit."
     points="1" audioHint="Injection/AS1-2"  type="sequenceStep"  extra="" fullDescription=""></action>
 
   <action
     index="38"
     value="place syringe"
-    description=""
+    description="Plaats de spuit met voorgeschreven vloeistof op het katheterballonkanaal."
     points="1" audioHint="Injection/AS1-2"  type="sequenceStep"  extra="" fullDescription=""></action>
 
   <action
     index="39"
     value="inject liquid"
-    description=""
+    description="Spuit de voorgeschreven hoeveelheid voorgeschreven vloeistof langzaam in de katheterballon."
     points="1" audioHint="Injection/AS1-2"  type="sequenceStep"  extra="" fullDescription=""></action>
 
   <action
     index="40"
     value="remove syringe"
-    description=""
+    description="Verwijder de spuit."
     points="1" audioHint="Injection/AS1-2"  type="sequenceStep"  extra="" fullDescription=""></action>
 
   <action
     index="41"
     value="pull back"
-    description=""
+    description="Trek de katheter iets terug tot een weerstand gevoeld wordt."
     points="1" audioHint="Injection/AS1-2"  type="sequenceStep"  extra="" fullDescription=""></action>
 
   <action
     index="42"
     value="wash clean"
-    description=""
+    description="Was en droog het genitale gebied."
     points="1" audioHint="Injection/AS1-2"  type="sequenceStep"  extra="" fullDescription=""></action>
 
   <action
     index="43"
     value="pull off gloves"
-    description=""
+    description="Trek de handschoenen uit."
     points="1" audioHint="Injection/AS1-2"  type="sequenceStep"  extra="" fullDescription=""></action>
 
   <action
     comment="46. Apply hand hygiene."
     index="44"
     points="3"
-    description="Apply hand hygiene"
+    description="Pas handhygiëne toe."
     fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp."
     audioHint="Injection/H1-2"
     type="use"
