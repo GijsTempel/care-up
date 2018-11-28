@@ -11,6 +11,8 @@ namespace MBS
     static public class WULogin
     {
 
+        static public bool on_Login_Succes = true;
+
         #region RESPONSE DELEGATES
         static public Action<CML>
             onRegistered,
@@ -181,6 +183,8 @@ namespace MBS
             fields.Set( "wul_fields", FieldsToFetch );
             WPServer.ContactServer( WULActions.DoLogin, filepath, LOGINConstant, fields, __onLoginSuccess, onLoginFailed );
         }
+        
+
 
         static public void AttemptTrustedLogin( CMLData fields )
         {
@@ -220,7 +224,7 @@ namespace MBS
 
         static void __onLoginSuccess( CML data )
         {
-            StoreFetchedInfo( data );
+            StoreFetchedInfo ( data );
             logged_in = true;
             user_gravatar = null;
             user_gravatar_sprite = null;
@@ -246,6 +250,7 @@ namespace MBS
 
         static public void __onLogOutSuccess( CML data )
         {
+            on_Login_Succes = true;
             user_gravatar = null;
             user_gravatar_sprite = null;
             logged_in = false;

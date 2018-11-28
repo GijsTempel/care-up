@@ -5,6 +5,7 @@ namespace MBS
 {
     public class WUUGLoginGUI : WUUGLoginLocalisation
     {
+        
 
         public enum eWULUGUIState { Inactive, Active }
 
@@ -58,9 +59,33 @@ namespace MBS
                 serial_number;
         }
 
+        [SerializeField]
+        private Image UsernameField;
+        [SerializeField]
+        private Image PasswordField;
+
+        void Update () {
+            if (WULogin.on_Login_Succes == false) {
+                ChangeUIRed ();
+            }
+            
+        }
+
+        private void ChangeUIRed () {
+            UsernameField = UsernameField.GetComponent<Image> ();
+            PasswordField = PasswordField.GetComponent<Image> ();
+
+            UsernameField.color = new Color32 (255, 0, 0, 150);
+            PasswordField.color = new Color32 (255, 0, 0, 150);
+
+            WULogin.on_Login_Succes = true;
+        }
+
         static WUUGLoginGUI _instance;
         static public WUUGLoginGUI Instance
         {
+
+
             get
             {
                 if ( null == _instance )
@@ -214,13 +239,18 @@ namespace MBS
         #region Server contact
         public void DoLogin()
         {
+
+            WULogin.onLoginFailed += On_Login_Fail;
+            WULogin.on_Login_Succes = true;
+            CMLData data = new CMLData ();
+            data.Set ("username", fields.login_username.text.Trim ());
+            data.Set ("password", fields.login_password.text.Trim ());
+            WULogin.AttemptToLogin (data);
             PlayerPrefs.SetInt( "Remember Me", attempt_auto_login ? 1 : 0 );
-            CMLData data = new CMLData();
-            data.Set( "username", fields.login_username.text.Trim() );
-            data.Set( "password", fields.login_password.text.Trim() );
-            WULogin.AttemptToLogin( data );
-            DisplayScreen( panels.login_menu );
+            DisplayScreen (panels.login_menu);
         }
+
+        void On_Login_Fail (CMLData response) => WULogin.on_Login_Succes = false;
 
         public void DoTrustedLogin( string email )
         {
