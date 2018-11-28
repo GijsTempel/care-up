@@ -59,26 +59,40 @@ namespace MBS
                 serial_number;
         }
 
-        [SerializeField]
-        private Image UsernameField;
-        [SerializeField]
-        private Image PasswordField;
+        [SerializeField] private Image LoginUsernameField;
+        [SerializeField] private Image LoginPasswordField;
+
+        [SerializeField] private Image RegUsernameField;
+        [SerializeField] private Image RegEmailField;
+        [SerializeField] private Image RegPasswordField;
+        [SerializeField] private Image RegRepeatPasswordField;
 
         void Update () {
-            if (WULogin.on_Login_Succes == false) {
-                ChangeUIRed ();
+            if (WULogin.on_Login_Success == false) {
+                ChangeLoginUIRed ();
+            }else if (WULogin.on_Registration_Success == false) {
+                ChangeRegistrationUIRed ();
             }
+
+
             
         }
 
-        private void ChangeUIRed () {
-            UsernameField = UsernameField.GetComponent<Image> ();
-            PasswordField = PasswordField.GetComponent<Image> ();
+        private void ChangeLoginUIRed () {
+            LoginUsernameField = LoginUsernameField.GetComponent<Image> ();
+            LoginPasswordField = LoginPasswordField.GetComponent<Image> ();
 
-            UsernameField.color = new Color32 (255, 0, 0, 150);
-            PasswordField.color = new Color32 (255, 0, 0, 150);
+            LoginUsernameField.color = new Color32 (255, 0, 0, 150);
+            LoginPasswordField.color = new Color32 (255, 0, 0, 150);
 
-            WULogin.on_Login_Succes = true;
+            WULogin.on_Login_Success = true;
+        }
+        private void ChangeRegistrationUIRed () {
+            RegUsernameField = RegUsernameField.GetComponent<Image> ();
+
+            RegUsernameField.color = new Color32 (255, 0, 0, 150);
+
+            WULogin.on_Registration_Success = true;
         }
 
         static WUUGLoginGUI _instance;
@@ -241,7 +255,7 @@ namespace MBS
         {
 
             WULogin.onLoginFailed += On_Login_Fail;
-            WULogin.on_Login_Succes = true;
+            WULogin.on_Login_Success = true;
             CMLData data = new CMLData ();
             data.Set ("username", fields.login_username.text.Trim ());
             data.Set ("password", fields.login_password.text.Trim ());
@@ -250,7 +264,7 @@ namespace MBS
             DisplayScreen (panels.login_menu);
         }
 
-        void On_Login_Fail (CMLData response) => WULogin.on_Login_Succes = false;
+        void On_Login_Fail (CMLData response) => WULogin.on_Login_Success = false;
 
         public void DoTrustedLogin( string email )
         {
@@ -286,23 +300,45 @@ namespace MBS
         {
             if ( fields.register_email.text.Trim() == string.Empty || fields.register_password.text.Trim() == string.Empty || fields.register_username.text.Trim() == string.Empty )
             {
+                RegUsernameField = RegUsernameField.GetComponent<Image> ();
+                RegEmailField = RegEmailField.GetComponent<Image> ();
+                RegPasswordField = RegPasswordField.GetComponent<Image> ();
+                RegRepeatPasswordField = RegRepeatPasswordField.GetComponent<Image> ();
+
+                RegUsernameField.color = new Color32 (255, 0, 0, 150);
+                RegEmailField.color = new Color32 (255, 0, 0, 150);
+                RegPasswordField.color = new Color32 (255, 0, 0, 150);
+                RegRepeatPasswordField.color = new Color32 (255, 0, 0, 150);
+
                 StatusMessage.Message = localisation.AllFieldsRequired;
                 DisplayScreen (panels.login_menu);
                 return;
             }
             if ( fields.register_verify.text.Trim() != fields.register_password.text.Trim() )
             {
+                RegPasswordField = RegPasswordField.GetComponent<Image> ();
+                RegRepeatPasswordField = RegRepeatPasswordField.GetComponent<Image> ();
+                
+                RegPasswordField.color = new Color32 (255, 0, 0, 150);
+                RegRepeatPasswordField.color = new Color32 (255, 0, 0, 150);
+
                 StatusMessage.Message = localisation.FailedVerification;
                 DisplayScreen (panels.login_menu);
                 return;
             }
             if ( !fields.register_email.text.Trim().IsValidEmailFormat() )
             {
+                RegEmailField = RegEmailField.GetComponent<Image> ();
+                
+                RegEmailField.color = new Color32 (255, 0, 0, 150);
+              
                 StatusMessage.Message = localisation.InvalidEmail;
                 DisplayScreen (panels.login_menu);
                 return;
             }
 
+            WULogin.onRegistrationFailed += On_Registraion_Fail;
+            WULogin.on_Registration_Success = true;
             CMLData data = new CMLData();
             data.Set( "username", fields.register_username.text.Trim() );
             data.Set( "email", fields.register_email.text.Trim() );
@@ -317,6 +353,8 @@ namespace MBS
 
             DisplayScreen( panels.login_menu );
         }
+
+        void On_Registraion_Fail (CMLData response) => WULogin.on_Registration_Success = false;
 
         public void DoFetchAccountInfo() => WULogin.FetchPersonalInfo();
         public void LogOut() => WULogin.LogOut();
@@ -609,6 +647,12 @@ namespace MBS
         public void RemoveOrderScreen () {
             panels.serialnumber_screen.SetActive (true);
             panels.order_screen.SetActive (false);
+        }
+
+        public void onClickChangeColor (Image m_image) {
+            m_image = m_image.GetComponent<Image> ();
+
+            m_image.color = new Color32 (210, 210, 210, 150);
         }
 
         #endregion

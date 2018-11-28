@@ -11,7 +11,8 @@ namespace MBS
     static public class WULogin
     {
 
-        static public bool on_Login_Succes = true;
+        static public bool on_Login_Success = true;
+        static public bool on_Registration_Success = true;
 
         #region RESPONSE DELEGATES
         static public Action<CML>
@@ -250,7 +251,7 @@ namespace MBS
 
         static public void __onLogOutSuccess( CML data )
         {
-            on_Login_Succes = true;
+            on_Login_Success = true;
             user_gravatar = null;
             user_gravatar_sprite = null;
             logged_in = false;
