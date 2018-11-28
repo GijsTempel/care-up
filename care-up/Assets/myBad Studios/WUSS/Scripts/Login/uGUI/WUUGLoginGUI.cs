@@ -67,6 +67,8 @@ namespace MBS
         [SerializeField] private Image RegPasswordField;
         [SerializeField] private Image RegRepeatPasswordField;
 
+        private bool remove_text = false;
+
         void Update () {
             if (WULogin.on_Login_Success == false) {
                 ChangeLoginUIRed ();
@@ -74,8 +76,30 @@ namespace MBS
                 ChangeRegistrationUIRed ();
             }
 
+            if (WULogin.ChangeAllToWhite == true) {
+                RegUsernameField = RegUsernameField.GetComponent<Image> ();
+                RegEmailField = RegEmailField.GetComponent<Image> ();
+                RegPasswordField = RegPasswordField.GetComponent<Image> ();
+                RegRepeatPasswordField = RegRepeatPasswordField.GetComponent<Image> ();
 
-            
+                RegUsernameField.color = new Color32 (210, 210, 210, 150);
+                RegEmailField.color = new Color32 (210, 210, 210, 150);
+                RegPasswordField.color = new Color32 (210, 210, 210, 150);
+                RegRepeatPasswordField.color = new Color32 (210, 210, 210, 150);
+
+                WULogin.ChangeAllToWhite = false;
+            }
+
+            if (remove_text == true) {
+                fields.login_username.text = fields.register_username.text;
+                fields.login_password.text = fields.register_password.text;
+                fields.register_username.text = "";
+                fields.register_email.text = "";
+                fields.register_password.text = "";
+                fields.register_verify.text = "";
+
+                remove_text = false;
+            }
         }
 
         private void ChangeLoginUIRed () {
@@ -337,24 +361,22 @@ namespace MBS
                 return;
             }
 
-            WULogin.onRegistrationFailed += On_Registraion_Fail;
+            WULogin.onRegistrationFailed += On_Registration_Fail;
+            WULogin.onRegistered += On_Registration;
+            WULogin.onRegistered += RemoveText;
             WULogin.on_Registration_Success = true;
             CMLData data = new CMLData();
             data.Set( "username", fields.register_username.text.Trim() );
             data.Set( "email", fields.register_email.text.Trim() );
             data.Set( "password", fields.register_password.text.Trim() );
             WULogin.RegisterAccount( data );
-            fields.login_username.text = fields.register_username.text;
-            fields.login_password.text = fields.register_password.text;
-            fields.register_username.text = "";
-            fields.register_email.text = "";
-            fields.register_password.text = "";
-            fields.register_verify.text = "";
 
             DisplayScreen( panels.login_menu );
         }
 
-        void On_Registraion_Fail (CMLData response) => WULogin.on_Registration_Success = false;
+        void On_Registration_Fail (CMLData response) => WULogin.on_Registration_Success = false;
+        void On_Registration (CML response) => WULogin.ChangeAllToWhite = true;
+        void RemoveText (CML response) => remove_text = true;
 
         public void DoFetchAccountInfo() => WULogin.FetchPersonalInfo();
         public void LogOut() => WULogin.LogOut();
