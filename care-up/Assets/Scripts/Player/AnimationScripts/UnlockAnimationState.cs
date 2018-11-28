@@ -15,7 +15,6 @@ public class UnlockAnimationState : StateMachineBehaviour
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        lock_function(false);
         frame = 0f;
         prevFrame = 0f;
     }

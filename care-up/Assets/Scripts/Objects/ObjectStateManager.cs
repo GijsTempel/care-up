@@ -10,7 +10,7 @@ public class ObjectStateManager : MonoBehaviour {
     public float HoldAnimValue = 0f;
     float LieAnimValue = 0f;
     public bool LockHoldState = true;
-
+    public bool follow_left = true;
 
     // Use this for initialization
 
@@ -22,11 +22,16 @@ public class ObjectStateManager : MonoBehaviour {
     }
 
 	void Update () {
-        //print(transform.parent.name);
         string anim_name = LieAnimName;
         float anim_value = LieAnimValue;
-
+        bool in_hands = false;
         if (transform.parent != null)
+        {
+            in_hands = (transform.parent.name == "toolHolder.L" || transform.parent.name == "toolHolder.R");
+        }
+         
+
+        if (in_hands)
         {
             if (transform.parent.name == "toolHolder.L")
             {
@@ -46,8 +51,17 @@ public class ObjectStateManager : MonoBehaviour {
                 }
                 anim_value = HoldAnimValue;
             }
-
+            animator.Play(anim_name, 0, anim_value);
         }
-        animator.Play(anim_name, 0, anim_value);
+        else if (!LockHoldState)
+        {
+            anim_value = playerAnimationManager.rightModifier02;
+            if (follow_left)
+            {
+                anim_value = playerAnimationManager.leftModifier02;
+            }
+            animator.Play(anim_name, 0, anim_value);
+        }
+
     }
 }
