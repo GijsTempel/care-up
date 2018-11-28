@@ -317,7 +317,7 @@ public class PlayerPrefsManager : MonoBehaviour
         MailMessage mail = new MailMessage();
 
         mail.From = new MailAddress("info@careup.nl");
-        mail.To.Add("gtempel@triplemotion.nl");
+        mail.To.Add("info@careup.nl");
         mail.Subject = topic;
         mail.Body = message;
 
