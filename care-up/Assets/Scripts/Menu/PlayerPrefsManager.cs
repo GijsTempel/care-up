@@ -8,6 +8,11 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.PostProcessing;
 using MBS;
+using System;
+using System.Net;
+using System.Net.Mail;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 
 /// <summary>
 /// Handles quick access to saved data.
@@ -305,5 +310,26 @@ public class PlayerPrefsManager : MonoBehaviour
             data.Set("Plays_Number", "1");
             WUData.UpdateCategory("AccountStats", data);
         }
+    }
+
+    static void __sendMail(string topic, string message)
+    {
+        MailMessage mail = new MailMessage();
+
+        mail.From = new MailAddress("info@careup.nl");
+        mail.To.Add("gtempel@triplemotion.nl");
+        mail.Subject = topic;
+        mail.Body = message;
+
+        SmtpClient smtpServer = new SmtpClient("smtp.strato.de");
+        smtpServer.Port = 587;
+        smtpServer.Credentials = new System.Net.NetworkCredential("info@careup.nl", "TripleMotionMedia3") as ICredentialsByHost;
+        smtpServer.EnableSsl = true;
+
+        ServicePointManager.ServerCertificateValidationCallback =
+            delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+            { return true; };
+
+        smtpServer.Send(mail);
     }
 }
