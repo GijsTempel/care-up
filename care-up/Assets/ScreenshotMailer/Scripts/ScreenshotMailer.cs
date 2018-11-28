@@ -67,7 +67,7 @@ public class ScreenshotMailer : MonoBehaviour {
     }
 
     IEnumerator SendScreenshotToServerUsingWWW(byte[] screenshot) {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.5f);
         WWWForm form = new WWWForm();
         form.AddField("image", System.Convert.ToBase64String(mostRecentScreenshot));
         form.AddField("emailaddress", settings.EmailAddress);
