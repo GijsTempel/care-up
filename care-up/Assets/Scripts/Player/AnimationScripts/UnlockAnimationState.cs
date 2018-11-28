@@ -17,6 +17,10 @@ public class UnlockAnimationState : StateMachineBehaviour
     {
         frame = 0f;
         prevFrame = 0f;
+        if (unlock_frame == 0)
+        {
+            lock_function(false);
+        }
     }
 
     void lock_function(bool value)

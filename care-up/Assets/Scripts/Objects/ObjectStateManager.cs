@@ -56,6 +56,7 @@ public class ObjectStateManager : MonoBehaviour {
         else if (!LockHoldState)
         {
             anim_value = playerAnimationManager.rightModifier02;
+            LieAnimValue = anim_value;
             if (follow_left)
             {
                 anim_value = playerAnimationManager.leftModifier02;

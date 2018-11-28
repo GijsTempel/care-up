@@ -66,7 +66,7 @@ public class ObjectsIDController : MonoBehaviour
         new ObjectsIDs("x_test", 101,0),
         new ObjectsIDs("CWB_inner_open", 50,0),
         new ObjectsIDs("catheter_bag_twisted", 46,0),
-
+        new ObjectsIDs("fixator_folded", 52,0),
 
     };
 
@@ -76,8 +76,11 @@ public class ObjectsIDController : MonoBehaviour
         {
             foreach (GameObject go in hidenObjects)
             {
-                if (_name == go.name)
-                    return go;
+                if (go != null)
+                {
+                    if (_name == go.name)
+                        return go;
+                }
             }
         }
         return null;
