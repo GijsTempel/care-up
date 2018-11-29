@@ -111,10 +111,28 @@ namespace MBS
 
             WULogin.on_Login_Success = true;
         }
-        private void ChangeRegistrationUIRed () {
-            RegUsernameField = RegUsernameField.GetComponent<Image> ();
 
-            RegUsernameField.color = new Color32 (255, 0, 0, 150);
+        private void ChangeRegistrationUIRed () {
+            if(WULogin.EmailTheSame == true) {
+
+                Debug.Log ("hey");
+
+                RegEmailField = RegEmailField.GetComponent<Image> ();
+
+                RegEmailField.color = new Color32 (255, 0, 0, 150);
+
+                RegUsernameField = RegUsernameField.GetComponent<Image> ();
+
+                RegUsernameField.color = new Color32 (210, 210, 210, 150);
+
+                WULogin.EmailTheSame = false;
+            } else {
+
+                RegUsernameField = RegUsernameField.GetComponent<Image> ();
+
+                RegUsernameField.color = new Color32 (255, 0, 0, 150);
+            }
+
 
             WULogin.on_Registration_Success = true;
         }
