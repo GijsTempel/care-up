@@ -253,7 +253,7 @@ public class InteractableObject : MonoBehaviour {
             }
         }
 
-        if (transparencyFix)
+        if (transparencyFix || true)
         {
             foreach (Material m in rend.materials)
             {
