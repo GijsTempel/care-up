@@ -234,6 +234,7 @@ public class InteractableObject : MonoBehaviour {
         outRotation = savedRotation;
     }
 
+
     protected virtual void SetShaderTo(Shader shader)
     {
         foreach (Material m in rend.materials)
@@ -243,7 +244,7 @@ public class InteractableObject : MonoBehaviour {
         
         foreach (Renderer r in GetComponentsInChildren<Renderer>())
         {
-            if (r.name != "ParticleHint")
+            if (!(r.name == "ParticleHint" || r.GetComponent<PickableObject>() == null))
             {
                 foreach (Material m in r.materials)
                 {

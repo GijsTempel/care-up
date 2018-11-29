@@ -67,6 +67,8 @@ public class ObjectsIDController : MonoBehaviour
         new ObjectsIDs("CWB_inner_open", 50,0),
         new ObjectsIDs("catheter_bag_twisted", 46,0),
         new ObjectsIDs("fixator_folded", 52,0),
+        new ObjectsIDs("fixation_folded_buttons", 53,0),
+
 
     };
 
