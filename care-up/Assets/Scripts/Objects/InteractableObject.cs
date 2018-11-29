@@ -244,7 +244,7 @@ public class InteractableObject : MonoBehaviour {
         
         foreach (Renderer r in GetComponentsInChildren<Renderer>())
         {
-            if (!(r.name == "ParticleHint" || r.GetComponent<PickableObject>() == null))
+            if (r.name != "ParticleHint" )
             {
                 foreach (Material m in r.materials)
                 {
