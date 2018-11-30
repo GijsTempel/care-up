@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System;
+using System.Linq;
 
 /// <summary>
 /// Handles Scene selection module
@@ -25,7 +26,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
         for (int i = 0; i < _Scores.Length; i++)
         {
-            _Scores[i].SetScoreLine("", "", "", i);
+            _Scores[i].SetScoreLine("", "", i);
         }
 
         // variations buttons should be disabled from the beginning
@@ -36,8 +37,9 @@ public class LevelSelectionScene_UI : MonoBehaviour
             v.gameObject.SetActive(false);
         }
 
-        GameObject.Find("UMenuProManager/MenuCanvas/Home/BannerArea/RegisterProtocols/News/Text")
-            .GetComponent<Text>().text = GameObject.FindObjectOfType<PlayerPrefsManager>().ActivatedScenes;
+        // we dont have a list of activated scenes anymore i guess
+        //GameObject.Find("UMenuProManager/MenuCanvas/Home/BannerArea/RegisterProtocols/News/Text")
+        //    .GetComponent<Text>().text = GameObject.FindObjectOfType<PlayerPrefsManager>().ActivatedScenes;
     }
 
     /// <summary>
@@ -47,8 +49,45 @@ public class LevelSelectionScene_UI : MonoBehaviour
     {
         ppManager = GameObject.FindObjectOfType<PlayerPrefsManager>();
 
+        UpdateSceneUI();
+    }
+
+    void ClearUI()
+    {
+        Transform parent1 = GameObject.Find("UMenuProManager/MenuCanvas/Play/LevelPanel/ViewPoint/List").transform;
+        for (int i = 0; i < parent1.childCount; ++i)
+        {
+            Destroy(parent1.GetChild(i).gameObject);
+        }
+
+        Transform parent2 = GameObject.Find("UMenuProManager/MenuCanvas/Leaderboard/LeftBar/Scroll View/Viewport/Content").transform;
+        for (int i = 0; i < parent1.childCount; ++i)
+        {
+            Destroy(parent2.GetChild(i).gameObject);
+        }
+    }
+
+    public void OnSceneTabSwitch()
+    {
+        ClearUI();
+        UpdateSceneUI();
+    }
+
+    void UpdateSceneUI()
+    {
         // load xml
-        TextAsset textAsset = (TextAsset)Resources.Load("Xml/Scenes");
+        TextAsset textAsset;
+
+        PlayerPrefsManager pp = GameObject.FindObjectOfType<PlayerPrefsManager>();
+        if (pp != null && pp.demoVersion)
+        {
+            textAsset = (TextAsset)Resources.Load("Xml/Scenes_Demo");
+        }
+        else
+        {
+            textAsset = (TextAsset)Resources.Load("Xml/Scenes");
+        }
+
         XmlDocument xmlFile = new XmlDocument();
         xmlFile.LoadXml(textAsset.text);
         XmlNodeList xmlSceneList = xmlFile.FirstChild.NextSibling.FirstChild.ChildNodes;
@@ -59,9 +98,10 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
         foreach (XmlNode xmlSceneNode in xmlSceneList)
         {
-            bool activated = PlayerPrefs.GetInt(xmlSceneNode.Attributes["id"].Value + " activated") == 1;
+           // bool activated = PlayerPrefs.GetInt(xmlSceneNode.Attributes["id"].Value + " activated") == 1;
+            bool activated = true;
             bool hidden = xmlSceneNode.Attributes["hidden"] != null;
-            if (!activated && hidden)
+            if ((!activated && hidden) || hidden )
             {
                 // not activated and hidden scene should not even create a panel, so just end up here
                 continue;
@@ -187,27 +227,33 @@ public class LevelSelectionScene_UI : MonoBehaviour
         // let's clear current UI first, it might have some editor text or info from other scene we loaded before
         for (int i = 0; i < _Scores.Length; i++)
         {
-            _Scores[i].SetScoreLine("", "", "", i);
+            _Scores[i].SetScoreLine("", "", i);
         }
 
         // maybe launch loading icon or something? it isnt instant
-        ppManager.GetSceneLeaders(sceneName, 10, GetSceneLeaders_Success);
+        //ppManager.GetSceneLeaders(sceneName, 10, GetSceneLeaders_Success);
+
+        MBS.WUScoring.onFetched = GetSceneLeaders_Success;
+
+        // hashes are NOT a clean solution
+        int hash = Mathf.Abs(sceneName.GetHashCode());
+        MBS.WUScoring.FetchScores(0, hash);
     }
 
-    public void GetSceneLeaders_Success(string[] info)
+    public void GetSceneLeaders_Success(MBS.CML cml)
     {
-        for (int i = 0; i < info.Length / 3; ++i)
-        {
-            string name = info[i * 3];
-            string score = info[i * 3 + 1];
-            string time = info[i * 3 + 2];
+        List<MBS.CMLData> entries = cml.AllNodesOfType("person");
+        List<MBS.CMLData> sortedEntries = entries.OrderByDescending(x => int.Parse(x.String("score"))).ToList();
 
-            TimeSpan timeSpan = TimeSpan.FromSeconds(double.Parse(time));
-            string timeFormated = string.Format("{0:D2}m:{1:D2}s",
-                timeSpan.Minutes, timeSpan.Seconds);
+        if (entries == null) return;
+
+        for (int i = 0; i < 10; ++i)
+        {
+            string name = sortedEntries[i].String("dname");
+            string score = sortedEntries[i].String("score");
+            
             if (i < _Scores.Length)
-                _Scores[i].SetScoreLine(name, timeFormated, score, i);
-    
+                _Scores[i].SetScoreLine(name, score, i);
         }
     }
 }

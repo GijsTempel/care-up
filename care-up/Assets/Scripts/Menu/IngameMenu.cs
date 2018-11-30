@@ -27,10 +27,11 @@ public class IngameMenu : MonoBehaviour
             timer = GameObject.Find("GameLogic").GetComponent<GameTimer>();
             if (timer == null) Debug.LogError("No timer found");
         }
+        /*
         if (GameObject.FindObjectOfType<LoginProAsset.LoginPro_Manager>() == null)
         {
             gameObject.AddComponent<LoginProAsset.LoginPro_Manager>();
-        }
+        }*/
            
     }
 

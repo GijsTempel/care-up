@@ -7,6 +7,7 @@ using UnityEngine.UI;
 /// </summary>
 public class InteractableObject : MonoBehaviour {
 	public int ObjectID = 0;
+    HandsInventory handsInventory;
 
     public string description;
     public bool muplipleMesh = false;
@@ -18,6 +19,7 @@ public class InteractableObject : MonoBehaviour {
     static private Shader onMouseOverShaderSihlouette;
     static private Shader onMouseOverShadeOutline;
     static protected Shader onMouseExitShader;
+    static protected Shader ghostShader;
 
     protected bool positionSaved = false;
     protected Vector3 savedPosition;
@@ -32,8 +34,19 @@ public class InteractableObject : MonoBehaviour {
 
     public bool transparencyFix = false;
 
+    public Vector3 SavedPosition
+    {
+        get { return savedPosition; }
+    }
+
+    public Quaternion SavedRotation
+    {
+        get { return savedRotation; }
+    }
+
     protected virtual void Start()
     {
+        handsInventory = GameObject.FindObjectOfType<HandsInventory>();
         rend = GetComponent<Renderer>();
 
         if (onMouseOverShaderSihlouette == null)
@@ -51,6 +64,11 @@ public class InteractableObject : MonoBehaviour {
         if (onMouseExitShader == null)
         {
             onMouseExitShader = Shader.Find("Standard");
+        }
+
+        if (ghostShader == null)
+        {
+            ghostShader = Shader.Find("Unlit/GhostZ");
         }
 
         if (cameraMode == null)
@@ -111,7 +129,17 @@ public class InteractableObject : MonoBehaviour {
         {
             bool selectedIsInteractable = (controls.SelectedObject != null && controls.CanInteract &&
                 controls.SelectedObject.GetComponent<InteractableObject>() != null);
-            if (controls.SelectedObject == gameObject && !cameraMode.animating)
+
+            PickableObject pickableObject = null;
+            if (controls.SelectedObject != null)
+            {
+                pickableObject = controls.SelectedObject.GetComponent<PickableObject>();
+            }
+
+            bool notSihlouette = (pickableObject == null || (pickableObject != null && pickableObject.sihlouette == false));
+            selectedIsInteractable &= notSihlouette;
+
+            if ((controls.SelectedObject == gameObject && !cameraMode.animating) && notSihlouette)
             {
                 if (controls.CanInteract)
                 {
@@ -162,6 +190,11 @@ public class InteractableObject : MonoBehaviour {
         }
     }
 
+    public static void ResetDescription()
+    {
+        itemDescription.SetActive(false);
+    }
+
     protected bool ViewModeActive()
     {
         return cameraMode.CurrentMode == CameraMode.Mode.ObjectPreview;
@@ -189,7 +222,7 @@ public class InteractableObject : MonoBehaviour {
         }
     }
 
-    public void LoadPosition()
+    public virtual void LoadPosition()
     {
         transform.position = savedPosition;
         transform.rotation = savedRotation;
@@ -201,6 +234,7 @@ public class InteractableObject : MonoBehaviour {
         outRotation = savedRotation;
     }
 
+
     protected virtual void SetShaderTo(Shader shader)
     {
         foreach (Material m in rend.materials)
@@ -210,7 +244,7 @@ public class InteractableObject : MonoBehaviour {
         
         foreach (Renderer r in GetComponentsInChildren<Renderer>())
         {
-            if (r.name != "ParticleHint")
+            if (r.name != "ParticleHint" )
             {
                 foreach (Material m in r.materials)
                 {
@@ -219,7 +253,7 @@ public class InteractableObject : MonoBehaviour {
             }
         }
 
-        if (transparencyFix)
+        if (transparencyFix || true)
         {
             foreach (Material m in rend.materials)
             {
@@ -239,7 +273,13 @@ public class InteractableObject : MonoBehaviour {
         }
     }
 
-    public void Highlight(bool value)
+    public void SetGhostShader()
+    {
+        rend = GetComponent<Renderer>();
+        SetShaderTo(ghostShader);
+    }
+
+    public virtual void Highlight(bool value)
     {
         if (rend == null)
         {

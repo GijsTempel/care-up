@@ -3,6 +3,9 @@ using UnityEngine.UI;
 using Lovatto.SceneLoader;
 using System.Collections;
 using System.Collections.Generic;
+using LoginProAsset;
+using MBS;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(AudioSource))]
 public class bl_SceneLoader : MonoBehaviour
@@ -68,6 +71,11 @@ public class bl_SceneLoader : MonoBehaviour
     private bool canSkipWithKey = false;
     private bl_SceneLoaderInfo CurrentLoadLevel = null;
 
+    private string sceneToLoad = "";
+    private string bundleToLoad = "";
+
+    private bool isLoading = false;
+
     /// <summary>
     /// 
     /// </summary>
@@ -100,6 +108,17 @@ public class bl_SceneLoader : MonoBehaviour
         if (Manager.HasTips) { cacheTips = Manager.TipsList; }
         if(FilledImage != null) { FilledImage.type = Image.Type.Filled; FilledImage.fillAmount = 0; }
         transform.SetAsLastSibling();
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // reset after scene is loaded
+        isLoading = false;
     }
 
     /// <summary>
@@ -218,11 +237,51 @@ public class bl_SceneLoader : MonoBehaviour
         if (LoadingBarAlpha != null && FadeLoadingBarOnFinish) { StartCoroutine(FadeOutCanvas(LoadingBarAlpha, 1)); }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void LoadLevel(string level, string bundle = "")
     {
+        sceneToLoad = level;
+        bundleToLoad = bundle;
+
+        string scoring_filepath = "wuss_scoring/unity_functions.php";
+        string SCORINGConstant = "SCORING";
+
+        CMLData data = new CMLData();
+        data.Seti("limit", 0);
+        data.Seti("gid", -1);
+
+        PlayerPrefsManager pp = GameObject.FindObjectOfType<PlayerPrefsManager>();
+        if (pp != null && pp.demoVersion)
+        {
+            ActualLoadLevel(null);
+        }
+        else
+        {
+            WPServer.ContactServer("FetchScores", scoring_filepath, SCORINGConstant, data, ActualLoadLevel, LoadLevelConnectionError);
+        }
+    }
+
+    public void LoadLevelConnectionError(CMLData action)
+    {
+        // no internet connection, make a pop up or smth
+        GameObject.Find("NoInternet").GetComponent<Animator>().SetTrigger("pop");
+        Debug.LogWarning("No internet connection. Can't load asset bundle.");
+    }
+
+    public void ActualLoadLevel(CML action)
+    {
+        if (isLoading)
+        {
+            Debug.Log("Already loading something!");
+            return;
+        }
+        else
+        {
+            isLoading = true;
+        }
+
+        string level = sceneToLoad;
+        string bundle = bundleToLoad;
+
         string message = "Loading level \"" + level + "\"";
         if (bundle != "")
         {

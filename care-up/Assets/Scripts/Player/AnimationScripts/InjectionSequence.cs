@@ -54,7 +54,8 @@ public class InjectionSequence : AnimationSequenceState
         }
         else if (PlayerAnimationManager.CompareFrames(frame, prevFrame, dropCapFrame))
         {
-            inv.DropLeftObject();
+            //inv.DropLeftObject();
+            inv.RemoveHandObject(true); // left
         }
 
         if (keyFrame < keyFrames.Count)

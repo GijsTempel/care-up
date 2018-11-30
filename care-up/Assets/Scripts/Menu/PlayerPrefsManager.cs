@@ -7,6 +7,12 @@ using LoginProAsset;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.PostProcessing;
+using MBS;
+using System;
+using System.Net;
+using System.Net.Mail;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 
 /// <summary>
 /// Handles quick access to saved data.
@@ -30,6 +36,15 @@ public class PlayerPrefsManager : MonoBehaviour
     // post processing on camera
     public bool postProcessingEnabled = false;
 
+    // is this game version is demo version
+    public bool demoVersion = false;
+
+    // save info about subscription
+    [HideInInspector]
+    public bool subscribed = false;
+    [HideInInspector]
+    public int plays = 0;
+
     public string ActivatedScenes
     {
         get
@@ -47,7 +62,7 @@ public class PlayerPrefsManager : MonoBehaviour
         GameObject.FindObjectOfType<AudioListener>().transform.position;
 
         if (!(s.name == "Launch me 1" ||
-              s.name == "UMenuPro" ||
+              s.name == "MainMenu" ||
               s.name == "SceneSelection"))
         {
             // game scenes
@@ -59,15 +74,15 @@ public class PlayerPrefsManager : MonoBehaviour
         }
 
         if (s.name == "EndScore" ||
-            (s.name == "UMenuPro" && 
+            (s.name == "MainMenu" && 
             !GetComponent<AudioSource>().isPlaying))
         {
             GetComponent<AudioSource>().Play();
         }
 
-        if (s.name == "UMenuPro")
+        if (s.name == "MainMenu")
         {
-            GameObject.Find("PostProcessingToggle").GetComponent<Toggle>().isOn = postProcessingEnabled;
+            GameObject.Find("UMenuProManager/MenuCanvas/Opties/Panel_UI/PostProcessingToggle").GetComponent<Toggle>().isOn = postProcessingEnabled;
         }
     }
 
@@ -109,12 +124,10 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public void SetSceneCompletionData(string sceneName, int score, int time)
     {
-        string[] datas = new string[3];
-        datas[0] = sceneName;
-        datas[1] = score.ToString();
-        datas[2] = time.ToString();
-
-        LoginPro.Manager.ExecuteOnServer("UploadSceneScore", Blank, Debug.LogError, datas);
+        if (demoVersion) return;
+        // hashes are NOT a clean solution
+        int hash = Mathf.Abs(sceneName.GetHashCode());
+        MBS.WUScoring.SubmitScore(score, hash);
     }
 
     public bool GetSceneCompleted(string sceneName)
@@ -138,27 +151,12 @@ public class PlayerPrefsManager : MonoBehaviour
         set { PlayerPrefs.SetInt("TutorialPopUpDeclined", value ? 1 : 0); }
     }
 
-    public void CheckSerial()
-    { 
-        LoginPro.Manager.ExecuteOnServer("CheckSerial", CheckSerial_Success, Debug.LogError, null);
-    }
-
-    public void CheckSerialAfterLogIn()
-    {
-        LoginPro.Manager.ExecuteOnServer("CheckSerial", CheckSerialAfterLogIn_Success, Debug.LogError, null);
-    }
-
     public void SetSerial(string serial)
     {
         string[] data = new string[1];
         data[0] = serial;
 
-        LoginPro.Manager.ExecuteOnServer("SetSerial", SetSerialSuccess, Debug.LogError, data);
-    }
-
-    public void SetSerialSuccess(string[] datas)
-    {
-        CheckSerial();
+       // LoginPro.Manager.ExecuteOnServer("SetSerial", SetSerialSuccess, Debug.LogError, data);
     }
 
     private void CheckSerial_Success(string[] datas)
@@ -167,6 +165,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
         foreach(string data in datas)
         {
+            if (data == "Received") break;
             string[] result;
             result = data.Split('|');
             
@@ -186,6 +185,9 @@ public class PlayerPrefsManager : MonoBehaviour
 
         foreach (string data in datas)
         {
+            if (data == "Received")
+                break;
+
             string[] result;
             result = data.Split('|');
 
@@ -204,7 +206,7 @@ public class PlayerPrefsManager : MonoBehaviour
     public void AfterLoginCheck()
     {
         // deactivate scenes
-        LoginPro.Manager.ExecuteOnServer("GetScenes", GetScenes_Success, Debug.LogError, null);
+        //LoginPro.Manager.ExecuteOnServer("GetScenes", GetScenes_Success, Debug.LogError, null);
         
         // support for old key type
         if (PlayerPrefs.GetString("SerialKey") != "")
@@ -220,7 +222,7 @@ public class PlayerPrefsManager : MonoBehaviour
             if (PlayerPrefs.GetInt("TutorialCompleted") == 1)
             {
                 // tutorial was completed, let's send to server and remove this info from PC
-                LoginPro.Manager.ExecuteOnServer("SetTutorialCompleted", Blank, Debug.LogError, null);
+               // LoginPro.Manager.ExecuteOnServer("SetTutorialCompleted", Blank, Debug.LogError, null);
                 tutorialCompleted = true; // store for current session
             }
             else
@@ -232,7 +234,7 @@ public class PlayerPrefsManager : MonoBehaviour
         }
         else // when info is deleted from PC
         {
-            LoginPro.Manager.ExecuteOnServer("GetTutorialCompleted", GetTutorialCompleted_Success, Debug.LogError, null);
+           // LoginPro.Manager.ExecuteOnServer("GetTutorialCompleted", GetTutorialCompleted_Success, Debug.LogError, null);
         }
     }
 
@@ -257,7 +259,7 @@ public class PlayerPrefsManager : MonoBehaviour
         }
 
         // activate scenes corresponding to serials
-        CheckSerialAfterLogIn();
+       
     }
 
     public void GetSceneLeaders(string scene, int top, System.Action<string[]> method)
@@ -266,7 +268,7 @@ public class PlayerPrefsManager : MonoBehaviour
         datas[0] = scene;
         datas[1] = top.ToString();
 
-        LoginPro.Manager.ExecuteOnServer("GetSceneLeaders", method, Debug.LogError, datas);
+        //LoginPro.Manager.ExecuteOnServer("GetSceneLeaders", method, Debug.LogError, datas);
     }
 
     public void GetSceneDatabaseInfo(string scene, System.Action<string[]> method)
@@ -275,8 +277,59 @@ public class PlayerPrefsManager : MonoBehaviour
         datas[0] = scene;
         Debug.Log(datas[0]);
 
-        LoginPro.Manager.ExecuteOnServer("GetSceneInfo", method, Debug.LogError, datas);
+       // LoginPro.Manager.ExecuteOnServer("GetSceneInfo", method, Debug.LogError, datas);
     }
 
     public void Blank(string[] s) { }
+
+    public static void AddOneToPlaysNumber()
+    {
+        WUData.FetchField("Plays_Number", "AccountStats", GetPlaysNumber, -1, GetPlaysNumber_Error);
+    }
+    
+    static void GetPlaysNumber(CML response)
+    {
+        PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
+        manager.plays = response[1].Int("Plays_Number") + 1;
+        Debug.Log("Added plays, current plays: " + manager.plays);
+        // update +1
+        CMLData data = new CMLData();
+        data.Set("Plays_Number", manager.plays.ToString());
+        WUData.UpdateCategory("AccountStats", data);
+    }
+
+    static void GetPlaysNumber_Error(CMLData response)
+    {
+        if ((response["message"] == "WPServer error: Empty response. No data found"))
+        {
+            // empty response, need to create field with 1 play
+            PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
+            manager.plays = 1;
+            Debug.Log("Created plays, current plays: " + manager.plays);
+            CMLData data = new CMLData();
+            data.Set("Plays_Number", "1");
+            WUData.UpdateCategory("AccountStats", data);
+        }
+    }
+
+    static void __sendMail(string topic, string message)
+    {
+        MailMessage mail = new MailMessage();
+
+        mail.From = new MailAddress("info@careup.nl");
+        mail.To.Add("info@careup.nl");
+        mail.Subject = topic;
+        mail.Body = message;
+
+        SmtpClient smtpServer = new SmtpClient("smtp.strato.de");
+        smtpServer.Port = 587;
+        smtpServer.Credentials = new System.Net.NetworkCredential("info@careup.nl", "TripleMotionMedia3") as ICredentialsByHost;
+        smtpServer.EnableSsl = true;
+
+        ServicePointManager.ServerCertificateValidationCallback =
+            delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+            { return true; };
+
+        smtpServer.Send(mail);
+    }
 }

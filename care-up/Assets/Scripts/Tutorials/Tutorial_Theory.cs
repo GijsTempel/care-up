@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class Tutorial_Theory : TutorialManager
 {
+
+    public AudioClip Popup;
+    AudioSource audioSource;
+
     public enum TutorialStep
     {
         First,
@@ -37,9 +41,13 @@ public class Tutorial_Theory : TutorialManager
 
         if (!Paused())
         {
+
+            audioSource = GetComponent<AudioSource> ();
+
             switch (currentStep)
             {
                 case TutorialStep.First:
+                    audioSource.PlayOneShot (Popup, 0.1F);
                     infoTab = GameObject.FindObjectOfType<RobotUITabInfo>();
                     
                     currentStep = TutorialStep.Welcome;
@@ -51,6 +59,7 @@ public class Tutorial_Theory : TutorialManager
                 case TutorialStep.Welcome:
                     if (nextButtonClicked)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         currentStep = TutorialStep.OpenRobotUI;
                         hintsN.ResetSize();
 						hintsN.LockTo("RobotUITrigger", new Vector3(53.42f, -43.70f, 0.00f));
@@ -61,6 +70,7 @@ public class Tutorial_Theory : TutorialManager
                 case TutorialStep.OpenRobotUI:
                     if (player.tutorial_robotUI_opened)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         currentStep = TutorialStep.PressTheory;
 						hintsN.LockTo("RobotUI", new Vector3(-997.40f, -430.00f, -99.80f));
                         hintsN.SetIconPosition(3);
@@ -72,6 +82,7 @@ public class Tutorial_Theory : TutorialManager
                 case TutorialStep.PressTheory:
                     if (RobotUITabs.tutorial_infoTabOpened)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         currentStep = TutorialStep.ChangePDF;
                         hintsN.SetSize(788f, 524.9f);
 
@@ -108,6 +119,7 @@ public class Tutorial_Theory : TutorialManager
                 case TutorialStep.ChangePDF:
                     if (nextButtonClicked)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         infoTab.tutorial_changedPDF = false;
                         hintsN.SetIconPosition(1);
                         hintsN.LockTo("FullScreenPDFButton", new Vector3(-295.90f, -356.40f, 0.00f));
@@ -120,6 +132,7 @@ public class Tutorial_Theory : TutorialManager
                 case TutorialStep.FullScrOn:
                     if (infoTab.tutorial_fullscreen)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         infoTab.tutorial_fullscreen = false;
                         hintsN.LockTo("ExitFromFullScreen", new Vector3(-83.40f, -61.70f, 0.00f));
                         currentStep = TutorialStep.FullScrOff;
@@ -132,6 +145,7 @@ public class Tutorial_Theory : TutorialManager
                 case TutorialStep.FullScrOff:
                     if (pdfViewer.tutorial_closedFullScrPDF)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         currentStep = TutorialStep.TheoryBack;
                         hintsN.SetIconPosition(0);
                         hintsN.LockTo("RobotUI", new Vector3(-1631.30f, 936.80f, -99.80f));
@@ -143,6 +157,7 @@ public class Tutorial_Theory : TutorialManager
                 case TutorialStep.TheoryBack:
                     if (RobotUITabs.tutorial_back)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         closeTab = RobotUITabs.tutorial_back = false;
                         currentStep = TutorialStep.CloseIpad;
                         hintsN.LockTo("RobotUI", new Vector3(1921.00f, 1116.00f, 0.00f));
@@ -154,6 +169,7 @@ public class Tutorial_Theory : TutorialManager
                 case TutorialStep.CloseIpad:
                     if (player.tutorial_robotUI_closed)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         hintsN.ResetSize();
                         currentStep = TutorialStep.Done;
                         hintsN.SetIconPosition(0);

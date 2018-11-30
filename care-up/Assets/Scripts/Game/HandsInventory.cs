@@ -41,6 +41,16 @@ public class HandsInventory : MonoBehaviour {
 
     public List<ItemPosition> customPositions = new List<ItemPosition>();
 
+    [System.Serializable]
+    public struct GhostPosition
+    {
+        public string objectName;
+        public Vector3 position;
+        public Vector3 rotation;
+        public int id;
+    };
+    public List<GhostPosition> customGhostPositions = new List<GhostPosition>();
+
     private Transform leftToolHolder;
     private Transform rightToolHolder;
     private Transform leftControlBone;
@@ -55,8 +65,6 @@ public class HandsInventory : MonoBehaviour {
     private string leftCombineResult;
     private string rightCombineResult;
     
-    private Vector3 glovesPosition;
-    private Quaternion glovesRotation;
     private bool glovesOn = false;
 
     private GameObject animationObject;
@@ -144,6 +152,11 @@ public class HandsInventory : MonoBehaviour {
         
     }
     
+    public bool PickItem(PickableObject item, PlayerAnimationManager.Hand hand)
+    {
+        return PickItem(item, (hand == PlayerAnimationManager.Hand.Left) ? "left" : "right");
+    }
+
     /// <summary>
     /// Proper picking, left hand first, right second
     /// </summary>
@@ -259,11 +272,13 @@ public class HandsInventory : MonoBehaviour {
     {
         if (hand)
         {
+            leftHandObject.DeleteGhostObject();
             Destroy(leftHandObject.gameObject);
             leftHandObject = null;
         }
         else
         {
+            rightHandObject.DeleteGhostObject();
             Destroy(rightHandObject.gameObject);
             rightHandObject = null;
         }
@@ -288,6 +303,7 @@ public class HandsInventory : MonoBehaviour {
                 load = true;
             }
 
+            leftHandObject.DeleteGhostObject();
             Destroy(leftHandObject.gameObject);
             leftHandObject = null;
             
@@ -296,13 +312,15 @@ public class HandsInventory : MonoBehaviour {
             leftHandObject.leftControlBone = leftControlBone;
             leftHandObject.rightControlBone = rightControlBone;
             SetHold(true);
-
+            
             PlayerAnimationManager.SetHandItem(true, leftObject);
 
             if (leftSavedPos != Vector3.zero)
             {
                 leftHandObject.SavePosition(leftSavedPos, leftSavedRot);
             }
+
+            leftHandObject.CreateGhostObject();
 
             if (leftHandObject.GetComponent<PickableObjectWithInfo>() != null && load)
             {
@@ -325,6 +343,7 @@ public class HandsInventory : MonoBehaviour {
                 load = true;
             }
 
+            rightHandObject.DeleteGhostObject();
             Destroy(rightHandObject.gameObject);
             rightHandObject = null;
 
@@ -333,13 +352,14 @@ public class HandsInventory : MonoBehaviour {
             rightHandObject.leftControlBone = leftControlBone;
             rightHandObject.rightControlBone = rightControlBone;
             SetHold(false);
-
+            
             PlayerAnimationManager.SetHandItem(false, rightObject);
 
             if (rightSavedPos != Vector3.zero)
             {
                 rightHandObject.SavePosition(rightSavedPos, rightSavedRot);
             }
+            rightHandObject.CreateGhostObject();
 
             if (rightHandObject.GetComponent<PickableObjectWithInfo>() != null && load)
             {
@@ -375,14 +395,35 @@ public class HandsInventory : MonoBehaviour {
         return newObject;
     }
 
+    public GameObject CreateStaticObjectByName(string name, Vector3 position, Quaternion rotation)
+    {
+        GameObject newObject = Instantiate(Resources.Load<GameObject>("Prefabs\\" + name),
+                            position, rotation) as GameObject;
+        newObject.name = name;
+        return newObject;
+    }
+    
+    public void CreateAnimationObject(string name, PlayerAnimationManager.Hand hand)
+    {
+        CreateAnimationObject(name, hand == PlayerAnimationManager.Hand.Left);
+    }
+
     public void CreateAnimationObject(string name, bool hand)
     {
         animationObject = Instantiate(Resources.Load<GameObject>("Prefabs\\" + name),
                             Vector3.zero, Quaternion.identity) as GameObject;
 
-        animationObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-        animationObject.GetComponent<Rigidbody>().useGravity = false;
-        animationObject.GetComponent<Collider>().enabled = false;
+        if (animationObject.GetComponent<Rigidbody>() != null)
+        {
+            animationObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            animationObject.GetComponent<Rigidbody>().useGravity = false;
+        }
+
+        if (animationObject.GetComponent<Collider>() != null)
+        {
+            animationObject.GetComponent<Collider>().enabled = false;
+        }
+
         animationObject.name = name;
         
         animationObject.transform.parent = hand ? leftToolHolder : rightToolHolder;
@@ -441,35 +482,22 @@ public class HandsInventory : MonoBehaviour {
     }
 
     /// <summary>
-    /// Puts on or takes of gloves.
+    /// Puts on or takes off gloves.
     /// </summary>
     /// <param name="value">True - puts on, False - takes off</param>
     public void GlovesToggle(bool value)
     {
+        glovesOn = value;
+        Renderer hands = GameObject.FindObjectOfType<PlayerScript>().transform.
+            Find("CinematicControl/Arms/FPArms_Female").GetComponent<Renderer>();
+
         if (value)
         {
-            if ((leftHandObject && !rightHandObject)
-                || (!leftHandObject && rightHandObject))
-            {
-                if (leftHandObject)
-                {
-                    leftHandObject.GetSavesLocation(out glovesPosition, out glovesRotation);
-                    Destroy(leftHandObject.gameObject);
-                }
-                else if (rightHandObject)
-                {
-                    rightHandObject.GetSavesLocation(out glovesPosition, out glovesRotation);
-                    Destroy(rightHandObject.gameObject);
-                }
-                glovesOn = value;
-            }
+            hands.material = Resources.Load<Material>("Materials/FPArms_Female-Glow");
         }
         else
         {
-            glovesOn = value;
-            GameObject leftObject = CreateObjectByName("Gloves", Vector3.zero);
-            leftHandObject = leftObject.GetComponent<PickableObject>();
-            leftHandObject.SavePosition(glovesPosition, glovesRotation);
+            hands.material = Resources.Load<Material>("FPArms_Female-Light_COL");
         }
     }
 
@@ -502,6 +530,7 @@ public class HandsInventory : MonoBehaviour {
     {
         if (leftHandObject)
         {
+            leftHandObject.DeleteGhostObject();
             leftHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
             leftHandObject.Drop(true);
             leftHandObject = null;
@@ -514,12 +543,12 @@ public class HandsInventory : MonoBehaviour {
     {
         if (rightHandObject)
         {
+            rightHandObject.DeleteGhostObject();
             rightHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
             rightHandObject.Drop(true);
             rightHandObject = null;
             rightHold = false;
             PlayerAnimationManager.SetHandItem(false, null);
-            
         }
     }
 
@@ -529,6 +558,7 @@ public class HandsInventory : MonoBehaviour {
         {
             if (leftHandObject)
             {
+                leftHandObject.DeleteGhostObject();
                 leftHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
                 leftHandObject.enabled = false;
                 leftHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
@@ -541,6 +571,7 @@ public class HandsInventory : MonoBehaviour {
         {
             if (rightHandObject)
             {
+                rightHandObject.DeleteGhostObject();
                 rightHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
                 rightHandObject.enabled = false;
                 rightHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
@@ -549,6 +580,11 @@ public class HandsInventory : MonoBehaviour {
                 PlayerAnimationManager.SetHandItem(false, null);
             }
         }
+    }
+
+    public void ForcePickItem(string name, PlayerAnimationManager.Hand hand)
+    {
+        ForcePickItem(name, hand == PlayerAnimationManager.Hand.Left);
     }
 
     public void ForcePickItem(string name, bool hand)
@@ -674,6 +710,7 @@ public class HandsInventory : MonoBehaviour {
                         load = true;
                     }
 
+                    leftHandObject.DeleteGhostObject();
                     Destroy(leftHandObject.gameObject);
                     leftHandObject = null;
                 }
@@ -708,6 +745,8 @@ public class HandsInventory : MonoBehaviour {
                     {
                         leftHandObject.GetComponent<PickableObjectWithInfo>().LoadInfo(saveInfo1, saveInfo2);
                     }
+
+                    leftHandObject.CreateGhostObject();
                 }
                 else
                 {
@@ -725,6 +764,8 @@ public class HandsInventory : MonoBehaviour {
                     {
                         rightHandObject.GetComponent<PickableObjectWithInfo>().SaveInfo(ref saveInfo1, ref saveInfo2);
                     }
+
+                    rightHandObject.DeleteGhostObject();
                     Destroy(rightHandObject.gameObject);
                     rightHandObject = null;
                 }
@@ -759,6 +800,8 @@ public class HandsInventory : MonoBehaviour {
                     {
                         rightHandObject.GetComponent<PickableObjectWithInfo>().LoadInfo(saveInfo1, saveInfo2);
                     }
+
+                    rightHandObject.CreateGhostObject();
                 }
                 else
                 {
@@ -796,15 +839,17 @@ public class HandsInventory : MonoBehaviour {
         string rightName = rightHandObject ? rightHandObject.name : "";
         
         bool combineAllowed = actionManager.CompareCombineObjects(leftName, rightName);
-        combineAllowed = combineAllowed || !GameObject.FindObjectOfType<PlayerPrefsManager>().practiceMode;
+        //bool practice = (GameObject.FindObjectOfType<PlayerPrefsManager>() != null ? GameObject.FindObjectOfType<PlayerPrefsManager>().practiceMode : true);
+        //combineAllowed = combineAllowed || practice;
 
         bool combined = combinationManager.Combine(leftName, rightName, out leftCombineResult, out rightCombineResult);
-
-        if (combined) HandleCombineQuizTriggers(leftName, rightName);
-
+        
 		// combine performed
 		bool alloweCombine = (combined && combineAllowed);
-		if (ObjectsID_Controller != null)
+
+        if (alloweCombine) HandleCombineQuizTriggers(leftName, rightName);
+
+        if (ObjectsID_Controller != null)
 		{
 			if (ObjectsID_Controller.Cheat && Application.isEditor)
 			{
@@ -823,15 +868,15 @@ public class HandsInventory : MonoBehaviour {
 				if (ObjectsID_Controller.FindByName(leftName) != -1 || ObjectsID_Controller.FindByName(rightName) != -1)
 				{
 					idModeAllow = true;
+                    
 				}
 			}
 
 			if (idModeAllow)
 			{
-				ObjectsIDs l = ObjectsID_Controller.GetObject(ObjectsID_Controller.FindByName(leftName));
-				ObjectsIDs r = ObjectsID_Controller.GetObject(ObjectsID_Controller.FindByName(rightName));
-
-				PlayerAnimationManager.PlayCombineAnimation(l, r);
+		        int leftID = ObjectsID_Controller.GetIDByName(leftName);
+                int rightID = ObjectsID_Controller.GetIDByName(rightName);
+                PlayerAnimationManager.PlayCombineAnimation(leftID, rightID);
 			}
 			else
 			{
@@ -844,6 +889,7 @@ public class HandsInventory : MonoBehaviour {
 
             combineDelayed = true;
             ToggleControls(true);
+
         }
     }
 
@@ -862,57 +908,72 @@ public class HandsInventory : MonoBehaviour {
         else if ((left == "fraxi_pakage" && right == "") ||
                  (left == "" && right == "fraxi_pakage"))
         {
-            PlayerScript.TriggerQuizQuestion(7.0f);
+            PlayerScript.TriggerQuizQuestion(8.3f);
         }
     }
 
-    public void DropLeft()
+    public void DropLeft(GameObject ghost = null)
     {
         if (leftHandObject)
         {
-            if (tutorial == null || (tutorial != null &&
-            (tutorial.itemToDrop == leftHandObject.name ||
-            tutorial.itemToDrop2 == leftHandObject.name)))
+            leftHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
+            tutorial_droppedLeft = true;
+
+            int posID = 0;
+            if (ghost != null)
             {
-                leftHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
-                tutorial_droppedLeft = true;
-                if (!leftHandObject.Drop())
-                {
-                    if (dropPenalty)
-                    {
-                        ActionManager.WrongAction();
-                        actionManager.UpdatePoints(-1);
-                    }
-                }
-                leftHandObject = null;
-                leftHold = false;
-                PlayerAnimationManager.SetHandItem(true, null);
+                leftHandObject.SavePosition(ghost.transform.position,
+                    ghost.transform.rotation, true);
+                posID = ghost.GetComponent<PickableObject>().positionID;
             }
+
+            if (!leftHandObject.Drop(posID)) 
+            {
+                if (dropPenalty)
+                {
+                    ActionManager.WrongAction();
+                    actionManager.UpdatePoints(-1);
+                }
+            }
+
+            actionManager.OnDropDownAction(leftHandObject.name, posID);
+            
+            leftHandObject = null;
+            leftHold = false;
+            PlayerAnimationManager.SetHandItem(true, null);
+
         }
     }
 
-    public void DropRight()
+    public void DropRight(GameObject ghost = null)
     {
         if (rightHandObject)
         {
-            if (tutorial == null || (tutorial != null &&
-            (tutorial.itemToDrop == rightHandObject.name ||
-            tutorial.itemToDrop2 == rightHandObject.name)))
+            rightHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
+            tutorial_droppedRight = true;
+
+            int posID = 0;
+            if (ghost != null)
             {
-                rightHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
-                tutorial_droppedRight = true;
-                if (!rightHandObject.Drop())
-                {
-                    if (dropPenalty)
-                    {
-                        ActionManager.WrongAction();
-                        actionManager.UpdatePoints(-1);
-                    }
-                }
-                rightHandObject = null;
-                rightHold = false;
-                PlayerAnimationManager.SetHandItem(false, null);
+                rightHandObject.SavePosition(ghost.transform.position,
+                    ghost.transform.rotation, true);
+                posID = ghost.GetComponent<PickableObject>().positionID;
             }
+
+            if (!rightHandObject.Drop(posID))
+            {
+                if (dropPenalty)
+                {
+                    ActionManager.WrongAction();
+                    actionManager.UpdatePoints(-1);
+                }
+            }
+
+            actionManager.OnDropDownAction(rightHandObject.name, posID);
+            
+            rightHandObject = null;
+            rightHold = false;
+            PlayerAnimationManager.SetHandItem(false, null);
         }
     }
 
@@ -932,11 +993,6 @@ public class HandsInventory : MonoBehaviour {
                 }
             }
         }
-        else if (glovesOn && rightHandObject == null)
-        {
-            actionManager.OnUseOnAction("", "");
-            GlovesToggle(false);
-        }
     }
 
     public void RightHandUse()
@@ -954,11 +1010,6 @@ public class HandsInventory : MonoBehaviour {
                     tutorial_itemUsedOn = true;
                 }
             }
-        }
-        else if (glovesOn && leftHandObject == null)
-        {
-            actionManager.OnUseOnAction("", "");
-            GlovesToggle(false);
         }
     }
 }

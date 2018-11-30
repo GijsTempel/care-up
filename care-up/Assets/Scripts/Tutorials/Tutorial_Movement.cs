@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Tutorial_Movement : TutorialManager
 {
+
+    public AudioClip Popup;
+    AudioSource audioSource;
+
     public enum TutorialStep
     {
         First,
@@ -41,9 +45,13 @@ public class Tutorial_Movement : TutorialManager
 
 		if (!Paused())
         {
+
+            audioSource = GetComponent<AudioSource> ();
+
             switch (currentStep)
             {
                 case TutorialStep.First:
+                    audioSource.PlayOneShot (Popup, 0.1F);
                     currentStep = TutorialStep.Welcome;
 					hintsN.SetSize(788f, 524.9f);
 					hintsN.LockTo("UI(Clone)", new Vector3(-393.80f, 214.70f, 0.00f));
@@ -55,6 +63,7 @@ public class Tutorial_Movement : TutorialManager
                 case TutorialStep.Welcome:
                     if (nextButtonClicked)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         //hintsBox.anchoredPosition = new Vector2(165f, -265.64f);
                         //hintsBox.sizeDelta = new Vector2(788f, 524.9f);
                         currentStep = TutorialStep.PointsExpl;
@@ -66,9 +75,10 @@ public class Tutorial_Movement : TutorialManager
                 case TutorialStep.PointsExpl:
                     if (nextButtonClicked)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         //hintsBox.anchoredPosition = new Vector2(165f, -265.64f);
                         //hintsBox.sizeDelta = new Vector2(472.5f, 298.9f);
-						hintsN.LockTo("WorkField", new Vector3(0.00f, 0.41f, -0.66f));
+                        hintsN.LockTo("WorkField", new Vector3(0.00f, 0.41f, -0.66f));
 						hintsN.ResetSize();
                         currentStep = TutorialStep.MoveToTable;
                         UItext.text = "Probeer nu naar het werkveld te bewegen. Dit kun je doen door op het werkveld te klikken.";
@@ -80,6 +90,7 @@ public class Tutorial_Movement : TutorialManager
                 case TutorialStep.MoveToTable:
                     if (player.tutorial_movedTo)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         wfPos.SetActive(false);
                         player.tutorial_movedTo = false;
 
@@ -96,6 +107,7 @@ public class Tutorial_Movement : TutorialManager
                 case TutorialStep.MoveBack:
                     if (player.tutorial_movedBack)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         player.tutorial_movedBack = false;
                         //hintsBox.anchoredPosition = new Vector2(-471f, 35f);
                         //hintsBox.sizeDelta = new Vector2(472.5f, 298.9f);
@@ -111,6 +123,7 @@ public class Tutorial_Movement : TutorialManager
                 case TutorialStep.MoveToDoctor:
                     if (player.tutorial_movedTo)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         docPos.SetActive(false);
                         player.tutorial_movedTo = false;
                         //hintsBox.anchoredPosition = new Vector2(-0.00011874f, 0.00024414f);
@@ -125,7 +138,7 @@ public class Tutorial_Movement : TutorialManager
                 case TutorialStep.FreeLookExpl:
                     if (nextButtonClicked)
                     {
-
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         //hintsBox.anchoredPosition = new Vector2(165f, -265.64f);
                         //hintsBox.sizeDelta = new Vector2(472.5f, 298.9f);
                         currentStep = TutorialStep.MoveWithFreeLook;
@@ -141,6 +154,7 @@ public class Tutorial_Movement : TutorialManager
                 case TutorialStep.MoveWithFreeLook:
                     if (player.tutorial_movedTo)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         wfPos.SetActive(false);
                         //hintsBox.anchoredPosition = new Vector2(502f, -346f);
                         //hintsBox.sizeDelta = new Vector2(472.5f, 298.9f);

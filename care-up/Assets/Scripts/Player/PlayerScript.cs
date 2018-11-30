@@ -83,6 +83,11 @@ public class PlayerScript : MonoBehaviour {
     bool moveBackBtnActiveForIpad = false;
     bool devHintActiveForIpad = false;
 
+    GameObject extraButton;
+    bool extraBtnActiveForIpad = false;
+    GameObject extraPanel;
+    bool extraPanelActiveForIpad = false;
+
     public static bool actionsLocked = false;
 
     public GameObject MoveBackButtonObject
@@ -103,6 +108,7 @@ public class PlayerScript : MonoBehaviour {
     private void Start()
     {
         instance = this;
+        actionsLocked = false;
 
         mouseLook.Init(transform, cam.transform);
 
@@ -122,6 +128,9 @@ public class PlayerScript : MonoBehaviour {
 
         moveBackButton = GameObject.Find("MoveBackButton").GetComponent<Button>();
         moveBackButton.gameObject.SetActive(false);
+
+        extraButton = GameObject.Find("ExtraButton");
+        extraPanel = GameObject.Find("Extra");
         
         itemControls = GameObject.FindObjectOfType<ItemControlsUI>();
         itemControls.gameObject.SetActive(false);
@@ -161,24 +170,24 @@ public class PlayerScript : MonoBehaviour {
             devHintUI = GameObject.Find("DevHint").gameObject;
 
         GameObject wrongActionPopUp = GameObject.Find("WrongAction").gameObject;
-		GameObject warningPopUp = GameObject.Find("EmptyHandsWarning").gameObject;
+		//GameObject warningPopUp = GameObject.Find("EmptyHandsWarning").gameObject;
 
         wrongActionPopUp.AddComponent<EventTrigger>();
         wrongActionPopUp.GetComponent<EventTrigger>().triggers.Add(event1);
         wrongActionPopUp.GetComponent<EventTrigger>().triggers.Add(event2);
         wrongActionPopUp.GetComponent<EventTrigger>().triggers.Add(event3);
 
-        warningPopUp.AddComponent<EventTrigger>();
-        warningPopUp.GetComponent<EventTrigger>().triggers.Add(event1);
-        warningPopUp.GetComponent<EventTrigger>().triggers.Add(event2);
-        warningPopUp.GetComponent<EventTrigger>().triggers.Add(event3);
+       // warningPopUp.AddComponent<EventTrigger>();
+        //warningPopUp.GetComponent<EventTrigger>().triggers.Add(event1);
+       // warningPopUp.GetComponent<EventTrigger>().triggers.Add(event2);
+       // warningPopUp.GetComponent<EventTrigger>().triggers.Add(event3);
         
         EventTrigger.Entry closePopUp = new EventTrigger.Entry();
         event3.eventID = EventTriggerType.PointerClick;
         event3.callback.AddListener((eventData) => { TimedPopUp.ForceHide(); });
         
         wrongActionPopUp.GetComponent<EventTrigger>().triggers.Add(closePopUp);
-        warningPopUp.GetComponent<EventTrigger>().triggers.Add(closePopUp);
+        //warningPopUp.GetComponent<EventTrigger>().triggers.Add(closePopUp);
 
         if (GameObject.Find("GameLogic").GetComponent<TutorialManager>() != null)
         {
@@ -334,13 +343,15 @@ public class PlayerScript : MonoBehaviour {
 
     public void WalkToGroup(WalkToGroup group)
     {
+        if (robotUIopened)
+            return;
 
         ToggleAway();
-        transform.position = group.position;
+        transform.position = group.Position;
         if ( prefs == null || (prefs != null && !prefs.VR))
         {
-            transform.rotation = Quaternion.Euler(0.0f, group.rotation.y, 0.0f);
-            Camera.main.transform.localRotation = Quaternion.Euler(group.rotation.x, 0.0f, 0.0f);
+            transform.rotation = Quaternion.Euler(0.0f, group.Rotation.y, 0.0f);
+            Camera.main.transform.localRotation = Quaternion.Euler(group.Rotation.x, 0.0f, 0.0f);
             mouseLook.SaveRot(transform, Camera.main.transform);
         }
         currentWalkPosition = group;
@@ -449,13 +460,35 @@ public class PlayerScript : MonoBehaviour {
             devHintUI.SetActive(false);
         }
 
+        if (extraButton != null)
+        {
+            extraBtnActiveForIpad = extraButton.activeSelf;
+            extraButton.SetActive(false);
+        }
+
+        if (extraPanel == null)
+        {
+            extraPanel = GameObject.Find("Extra");
+        }
+
+        if (extraPanel != null)
+        {
+            extraPanelActiveForIpad = extraPanel.activeSelf;
+            extraPanel.SetActive(false);
+        }
+        else
+        {
+            Debug.LogWarning("Did not find hints extra panel.");
+        }
+
         RobotManager.SetUITriggerActive(false);
         Camera.main.transform.localRotation = Quaternion.Euler(8.0f, 0.0f, 0.0f);
 
-        if (RobotManager.NotificationNumber > 0)
+        // no switching to message tab anymore :<
+        /*if (RobotManager.NotificationNumber > 0)
         {
             GameObject.FindObjectOfType<RobotUIMessageTab>().OnTabSwitch();
-        }
+        }*/
 
         tutorial_robotUI_opened = true;
 
@@ -496,6 +529,16 @@ public class PlayerScript : MonoBehaviour {
             {
                 devHintUI.SetActive(devHintActiveForIpad);
             }
+
+            if (extraButton != null)
+            {
+                extraButton.SetActive(extraBtnActiveForIpad);
+            }
+
+            if (extraPanel != null)
+            {
+                extraPanel.SetActive(extraPanelActiveForIpad);
+            }
         }
 
         RobotManager.SetUITriggerActive(true);
@@ -526,12 +569,14 @@ public class PlayerScript : MonoBehaviour {
         if (robotSavedLeft != null)
         {
             handsInv.ForcePickItem(robotSavedLeft.name, true);
+            robotSavedLeft.GetComponent<PickableObject>().CreateGhostObject();
             robotSavedLeft = null; // reset
         }
 
         if (robotSavedRight != null)
         {
             handsInv.ForcePickItem(robotSavedRight.name, false);
+            robotSavedRight.GetComponent<PickableObject>().CreateGhostObject();
             robotSavedRight = null; // reset
         }
     }

@@ -89,10 +89,10 @@ public class SelectDialogue : MonoBehaviour {
         correctMaterial = Color.green;
         wrongMaterial = Color.red;
 
-        top = transform.GetChild(0).GetComponent<Image>();
-        bottom = transform.GetChild(1).GetComponent<Image>();
-        right = transform.GetChild(2).GetComponent<Image>();
-        left = transform.GetChild(3).GetComponent<Image>();
+        top = transform.GetChild(1).GetComponent<Image>();
+        bottom = transform.GetChild(2).GetComponent<Image>();
+        right = transform.GetChild(3).GetComponent<Image>();
+        left = transform.GetChild(4).GetComponent<Image>();
 
         top.color = defaultMaterial;
         bottom.color = defaultMaterial;
@@ -215,7 +215,6 @@ public class SelectDialogue : MonoBehaviour {
                                 break;
                         }
 
-                        ActionManager.WrongAction();
                         GameObject.FindObjectOfType<ActionManager>().OnSequenceStepAction("");
                     }
                 }

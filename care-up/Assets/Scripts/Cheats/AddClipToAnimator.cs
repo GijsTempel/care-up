@@ -11,6 +11,7 @@ public class AddClipToAnimator : MonoBehaviour {
 
 
 #if UNITY_EDITOR
+	public string subMachine = "";
     public AnimatorController animationController;
 	public AnimationClip leftClip;
     public AnimationClip rightClip;
@@ -20,17 +21,20 @@ public class AddClipToAnimator : MonoBehaviour {
     [ContextMenu("Run Test")]
     public void Run()
     {
+		string sm = "Injection Scene";
+		if (subMachine != "")
+			sm = subMachine;
         if (leftClip != null) 
         { 
             Motion LeftMotion = (Motion)leftClip as Motion;
-            AddActionToMachine(0, "Combine Animations/Injection Scene", LeftMotion, LeftObjectsID, RightbjectsID, "Combine");
-            AddActionToMachine(1, "Combine Animations/Injection Scene", LeftMotion, LeftObjectsID, RightbjectsID, "S Combine");
+            AddActionToMachine(0, "Combine Animations/" + sm, LeftMotion, LeftObjectsID, RightbjectsID, "Combine");
+			AddActionToMachine(1, "Combine Animations/" + sm, LeftMotion, LeftObjectsID, RightbjectsID, "S Combine");
 	    }
         if (rightClip != null)
         {
             Motion RightMotion = (Motion)rightClip as Motion;
-            AddActionToMachine(0, "Combine Animations/Injection Scene", RightMotion, RightbjectsID, LeftObjectsID, "Combine");
-            AddActionToMachine(1, "Combine Animations/Injection Scene", RightMotion, RightbjectsID, LeftObjectsID, "S Combine");
+			AddActionToMachine(0, "Combine Animations/" + sm, RightMotion, RightbjectsID, LeftObjectsID, "Combine");
+			AddActionToMachine(1, "Combine Animations/" + sm, RightMotion, RightbjectsID, LeftObjectsID, "S Combine");
         }
     }
 
@@ -44,9 +48,9 @@ public class AddClipToAnimator : MonoBehaviour {
         bm.AddAnyStateTransition(lm);
         int l = bm.anyStateTransitions.Length;
         bm.anyStateTransitions[l - 1].AddCondition(AnimatorConditionMode.If, 1, trigger);
-        if (leftID > -1)
+        if (leftID != -1)
             bm.anyStateTransitions[l - 1].AddCondition(AnimatorConditionMode.Equals, leftID, "leftID");
-        if (rightID > -1)
+        if (rightID != -1)
             bm.anyStateTransitions[l - 1].AddCondition(AnimatorConditionMode.Equals, rightID, "rightID");
         lm.AddTransition(animationController.layers[layer].stateMachine);
         lm.transitions[lm.transitions.Length - 1].hasExitTime = true;

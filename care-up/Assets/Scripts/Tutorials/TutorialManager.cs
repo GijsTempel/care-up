@@ -78,12 +78,12 @@ public class TutorialManager : MonoBehaviour
         handsInventory.dropPenalty = false;
         
         endPanel = GameObject.Find("TutorialDonePanel");
-		if (endPanel != null)
+		/*if (endPanel != null)
         {
 			GameObject doneButton = endPanel.transform.Find("Button").gameObject;
             GameObject sl = GameObject.Find("SceneLoader 1");
-            doneButton.GetComponent<Button>().onClick.AddListener(delegate { sl.GetComponent<bl_SceneLoader>().LoadLevelButton("UMenuPro"); });
-        }
+            doneButton.GetComponent<Button>().onClick.AddListener(delegate { sl.GetComponent<bl_SceneLoader>().LoadLevelButton("MainMenu"); });
+        }*/
 
 	}
 
@@ -119,7 +119,7 @@ public class TutorialManager : MonoBehaviour
     public void EndButtonClick()
     {
         GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().tutorialCompleted = true;
-        GameObject.Find("Preferences").GetComponent<LoadingScreen>().LoadLevel("UMenuPro");
+        bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
     }
 
     protected void SetPauseTimer(float value)
@@ -193,19 +193,8 @@ public class TutorialManager : MonoBehaviour
             o.Reset();
             o.enabled = false;
         }
+        hintsBox.gameObject.SetActive(false);
 
         finished = true;
-
-        GameObject ach = GameObject.Find("FinishTutorial");
-        if (ach != null)
-        {
-            ach.GetComponent<LoginProAsset.LoginPro_Achievement>().Unlock(100);
-        }
-
-        ach = GameObject.Find("FinishAllTutorial");
-        if (ach != null)
-        {
-            ach.GetComponent<LoginProAsset.LoginPro_Achievement>().Unlock(10);
-        }
     }
 }

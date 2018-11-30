@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using MBS;
 
 public class UMP_Manager : MonoBehaviour {
 
@@ -26,6 +27,7 @@ public class UMP_Manager : MonoBehaviour {
     {
         InstanceLevels();
         GameObject.Find("Leaderboard").SetActive(false);
+        GameObject.Find("Opties").SetActive(false);
     }
     /// <summary>
     /// 
@@ -52,14 +54,12 @@ public class UMP_Manager : MonoBehaviour {
         if (CurrentWindow == id)
             return;
 
-        if (id != 2)
-        {
             for (int i = 0; i < Windows.Count; i++)
             {
                 Windows[i].SetActive(false);
             }
            
-        }
+        
         CurrentWindow = id;
         Windows[id].SetActive(true);
     }
@@ -114,7 +114,16 @@ public class UMP_Manager : MonoBehaviour {
 		Application.Quit();
 #endif
     }
+    public void LogOff()
+    {
+        Windows[3].SetActive (false);
+        WULogin.LogOut();
+    }
 
+    public void TutorialClicked () 
+    {
+        Windows[2].SetActive (false);
+    }
     [System.Serializable]
     public class LevelInfo
     {

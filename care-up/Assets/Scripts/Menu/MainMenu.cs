@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using MBS;
 
 public class MainMenu : MonoBehaviour {
     
     private LoadingScreen loadingScreen;
     private PlayerPrefsManager prefs;
 	public string eMail="info@triplemotion.nl";
-    
+
     private void Start()
     {
         if (GameObject.Find("Preferences") != null)
@@ -22,6 +23,22 @@ public class MainMenu : MonoBehaviour {
         else
         {
             Debug.LogWarning("No 'preferences' found. Game needs to be started from first scene");
+        }
+
+        if (SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            Text text = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/DialogTestPractice/Panel_UI/FreeDemoPlayCounter")
+                .GetComponent<Text>();
+
+            if (!prefs.subscribed)
+            {
+                WUData.FetchField("Plays_Number", "AccountStats", GetPlaysNumber, -1, ErrorHandle);
+                text.text = "Je kunt nog " + (3 - prefs.plays) + " handelingen proberen.";
+            }
+            else
+            {
+                text.text = "";
+            }
         }
     }
 
@@ -56,13 +73,16 @@ public class MainMenu : MonoBehaviour {
 
     public void OnQuitButtonClick()
     {
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #else
         Application.Quit();
-        Debug.Log("Exiting");
+        #endif
     }
 
     public void OnMainMenuButtonClick()
     {
-        loadingScreen.LoadLevel("UMenuPro");
+        bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
     }
 
     public void OnTutorialButtonClick()
@@ -141,6 +161,7 @@ public class MainMenu : MonoBehaviour {
 
     public void OnRetryButtonClick()
     {
+        PlayerPrefsManager.AddOneToPlaysNumber();
         EndScoreManager manager = loadingScreen.GetComponent<EndScoreManager>();
         bl_SceneLoaderUtils.GetLoader.LoadLevel(manager.completedSceneName, manager.completedSceneBundle);
     }
@@ -209,5 +230,30 @@ public class MainMenu : MonoBehaviour {
         string sceneName = "Tutorial_Theory";
         string bundleName = "tutorial_theory";
         bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
+    }
+    
+    void GetPlaysNumber(CML response)
+    {
+        // we're here only if we got data
+        int plays = response[1].Int("Plays_Number");
+        bool result = plays < 3 ? true : false;
+        AllowDenyContinue(result);
+    }
+
+    void ErrorHandle(CMLData response)
+    {
+        // we're here if we got error or no data which should be equal to 0 plays
+        AllowDenyContinue((response["message"] == "WPServer error: Empty response. No data found"));
+    }
+
+    void AllowDenyContinue(bool allow)
+    {
+        if (!allow)
+        {
+            // show pop up!
+            //StatusMessage.Message = "Je hebt geen actief product";
+            // or something more like
+            GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(5);
+        }
     }
 }

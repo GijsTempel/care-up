@@ -4,6 +4,7 @@
 	{
 		_MainTex ("Texture", 2D) = "white" {}
 		_OutlineColor("Outline Color", Color) = (0,0,0,1)
+        _hColor("Highlight Color", Color) = (0.09,0.64,1,1)
 	}
 
 	SubShader
@@ -40,7 +41,7 @@
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
 			uniform float4 _OutlineColor;
-			
+			uniform float4 _hColor;
 			v2f vert (appdata v)
 			{
 				v2f o;
@@ -57,6 +58,10 @@
 				// sample the texture
 				fixed4 col = tex2D(_MainTex, i.uv);
 				col.a = 0.2f;
+                col.r = col.r * _hColor.r;
+                col.g = col.g * _hColor.g;
+                col.b = col.b * _hColor.b;
+                
 				return col;
 			}
 			ENDCG

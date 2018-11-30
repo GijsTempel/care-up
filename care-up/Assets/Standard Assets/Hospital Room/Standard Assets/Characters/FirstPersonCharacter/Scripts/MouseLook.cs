@@ -42,12 +42,16 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public float YSensitivity = 2f;
 
         //touches (android, possibly other phones)
-        public float XTouchSensetivity = 0.007f;
-        public float YTouchSensetivity = 0.007f;
+        public float XTouchSensetivity = 0.03f;
+        public float YTouchSensetivity = 0.03f;
 
         // OSX
         public float XMacSensetivity = 50f;
         public float YMacSensetivity = 50f;
+
+        // iOS
+        public float XiOSSensetivity = 1.0f;
+        public float YiOSSensetivity = 1.0f;
 
         public void Init(Transform character, Transform camera)
         {
@@ -69,6 +73,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 #if UNITY_STANDALONE_OSX
                     xRot = Input.GetAxisRaw("Mouse Y") * XMacSensetivity;
                     yRot = Input.GetAxisRaw("Mouse X") * YMacSensetivity;
+                #elif UNITY_IOS
+                    xRot = Input.GetAxisRaw("Mouse Y") * XiOSSensetivity;
+                    yRot = Input.GetAxisRaw("Mouse X") * YiOSSensetivity;
                 #else
                     xRot = Input.GetAxisRaw("Mouse Y") * XSensitivity;
                     yRot = Input.GetAxisRaw("Mouse X") * YSensitivity;

@@ -21,6 +21,8 @@ public class IPadAnimation : StateMachineBehaviour
 
         frame = 0f;
         prevFrame = 0f;
+
+        PlayerScript.actionsLocked = true;
     }
 
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -42,6 +44,8 @@ public class IPadAnimation : StateMachineBehaviour
                 {
                     inv.DropRightObject();
                 }
+
+                PlayerScript.actionsLocked = true;
             }
 
             prevFrame = frame;
@@ -56,6 +60,8 @@ public class IPadAnimation : StateMachineBehaviour
         {
             GameObject.FindObjectOfType<PlayerScript>().PickItemsBackAfterRobotUI();
         }
+
+        PlayerScript.actionsLocked = false;
     }
 
 	// OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here

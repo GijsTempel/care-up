@@ -3,14 +3,15 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 /// <summary>
 /// Object that can be picked in hand
 /// </summary>
 [RequireComponent(typeof(Renderer))]
 [RequireComponent(typeof(Rigidbody))]
-public class PickableObject : InteractableObject {
-
+public class PickableObject : InteractableObject
+{
     [HideInInspector]
     public bool tutorial_usedOn = false;
 
@@ -23,10 +24,25 @@ public class PickableObject : InteractableObject {
 
     private List<Vector3> framePositions = new List<Vector3>();
     private Rigidbody rigidBody;
-  
+
+    [HideInInspector]
+    public bool sihlouette = false;
+    [HideInInspector]
+    public int positionID = 0;
+    [HideInInspector]
+    public PickableObject mainObject;
+    [HideInInspector]
+    public List<PickableObject> ghostObjects;
+
+    public string prefabInHands = "";
+    public string prefabOutOfHands = "";
+
+    public bool destroyOnDrop = false;
+    
     protected override void Start()
     {
         base.Start();
+
         framePositions.Clear();
 
         rigidBody = GetComponent<Rigidbody>();
@@ -38,6 +54,12 @@ public class PickableObject : InteractableObject {
     /// <param name="force">If true - forces load position instead of free dropping</param>
     public virtual bool Drop(bool force = false)
     {
+        if (destroyOnDrop)
+        {
+            Destroy(gameObject);
+            return true;
+        }
+
         if (GetComponent<Rigidbody>() != null)
         {
             // stop falling mid frame?
@@ -55,23 +77,50 @@ public class PickableObject : InteractableObject {
         {
             rigidBody.isKinematic = true;
             rigidBody.constraints = RigidbodyConstraints.None;
-            //if (Vector3.Distance(transform.position, savedPosition) < 3.0f || force)
-            //{
-                LoadPosition();
-                return true;
-            //}
-            /*else
+
+            LoadPosition();
+            return true;
+        }
+        
+        return false;
+    }
+
+    public override void LoadPosition()
+    {
+        if (prefabOutOfHands != "")
+        {
+            GameObject replaced = inventory.CreateObjectByName(prefabOutOfHands, savedPosition);
+            replaced.GetComponent<PickableObject>().SavePosition(savedPosition, savedRotation, true);
+            replaced.GetComponent<PickableObject>().LoadPosition();
+            Destroy(gameObject);
+        }
+        else
+        {
+            base.LoadPosition();
+        }
+    }
+
+    public virtual bool Drop(int posID)
+    {
+        bool res = Drop();
+
+        if (res)
+        {
+            switch (name)
             {
-                if (framePositions.Count > 0)
-                {
-                    Vector3 deltaPosition = framePositions[framePositions.Count - 1] - framePositions[0];
-                    deltaPosition = deltaPosition * 3 / Time.fixedDeltaTime;
-                    rigidBody.AddForce(deltaPosition);
-                }
-            }*/
+                case "GauzeTrayWet":
+                    if (posID == 2 && actionManager.CompareDropPos(name, 2))
+                    {
+                        inventory.CreateStaticObjectByName("GauzeTrayWet_placed", transform.position, transform.rotation);
+                        Destroy(gameObject);
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
 
-        return false;
+        return res;
     }
 
     /// <summary>
@@ -173,19 +222,80 @@ public class PickableObject : InteractableObject {
                     return true;
                 }
             }
-        }
-        else // cannot interact or target == ""
-        {
-            if ( name == "Gloves" )
+            else if (name == "cotton_ball"
+                && controls.SelectedObject.GetComponent<PersonObjectPart>() != null
+                && controls.SelectedObject.GetComponent<PersonObjectPart>().Person.name == "w0_A")
             {
-                GameObject.Find("GameLogic").GetComponent<HandsInventory>().GlovesToggle(true);
+                if (actionManager.CompareUseOnInfo("cotton_ball", "w0_A"))
+                {
+                    actionManager.OnUseOnAction("cotton_ball", "w0_A");
+                    Transform target = GameObject.Find("w_clean_target").transform;
+                    controls.ResetObject();
+                    PlayerAnimationManager.PlayAnimationSequence("CatherisationWoman", target);
+
+                    return true;
+                }
             }
-        }
+            else if (GameObject.FindObjectOfType<ObjectsIDController>() != null)
+            {
+      
+                ObjectsIDController ObjectsID_Controller = GameObject.FindObjectOfType<ObjectsIDController>();
+                string selectedName = controls.SelectedObject.transform.name;
+                if (controls.SelectedObject.GetComponent<PersonObjectPart>() != null)
+                {
+                    selectedName = controls.SelectedObject.GetComponent<PersonObjectPart>().Person.name;
+                }
+                if (ObjectsID_Controller.FindByName(transform.name) != -1 && ObjectsID_Controller.FindByName(selectedName) != -1)
+                {
+                    bool alloweUse = actionManager.CompareUseOnInfo(transform.name, selectedName);
+                    if (ObjectsID_Controller != null)
+                    {
+                        if (ObjectsID_Controller.Cheat && Application.isEditor)
+                        {
+                            alloweUse = true;
+                        }
+                    }
+
+                    if (alloweUse)
+                    {
+                        actionManager.OnUseOnAction(transform.name, selectedName);
+
+                        ObjectsIDs objectID_Controller = ObjectsID_Controller.GetObject(ObjectsID_Controller.FindByName(transform.name));
+                        ObjectsIDs selectedID_Controller = ObjectsID_Controller.GetObject(ObjectsID_Controller.FindByName(selectedName));
+
+                        int oId = ObjectsID_Controller.GetIDByName(transform.name);
+                        int sId = ObjectsID_Controller.GetIDByName(selectedName);
+                       
+                        Transform t = null;
+                        if (transform.name == "cloth_02_folded" && selectedName == "w0_A")
+                        {
+                            //t = GameObject.Find("bed_w0").transform;
+                        }
+                        else if (controls.SelectedObject.transform.Find("CinematicTarget"))
+                        {
+                            t = controls.SelectedObject.transform;
+                        }
+
+                        if (hand)
+                        {
+                            PlayerAnimationManager.PlayUseAnimation(oId, sId, t);
+                        }
+                        else
+                        {
+                            PlayerAnimationManager.PlayUseAnimation(sId, oId, t);
+                        }
+                        return true;
+                    }
+                }
+            }
+                
+           }
+
         actionManager.OnUseOnAction(name, controls.SelectedObject != null ? controls.SelectedObject.name : "");
 
         return (controls.SelectedObject != null && actionManager.CompareUseOnInfo(name, controls.SelectedObject.name));
     }
-
+    
     public virtual void Pick()
     {
         // callback for handling different OnPick mechanics
@@ -193,7 +303,7 @@ public class PickableObject : InteractableObject {
         if (GetComponent<Rigidbody>() != null)
         {
             // stop falling mid frame stupid unity
-            GetComponent<Rigidbody>().useGravity = false; 
+            GetComponent<Rigidbody>().useGravity = false;
         }
     }
 
@@ -202,5 +312,80 @@ public class PickableObject : InteractableObject {
         string message = "Je hebt geen vrije hand beschikbaar om de actie uit te voeren. Zorg voor een vrije hand door een object terug te leggen.";
         RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
         messageCenter.NewMessage("Actie kan niet worden uitgevoerd!", message, RobotUIMessageTab.Icon.Warning);
+    }
+
+    public void CreateGhostObject(bool trash = false)
+    {
+        List<HandsInventory.GhostPosition> list =
+            inventory.customGhostPositions.Where(x => x.objectName == name).ToList();
+
+        if (list.Count == 0 || trash)
+        {
+            if (trash)
+            {
+                Transform trashObj = null;
+                GameObject find = GameObject.Find("TrashBucket");
+                if (find != null)
+                {
+                    trashObj = find.transform;
+                }
+                else
+                {
+                    find = GameObject.Find("PlasticTrashbucket");
+                    if (find != null)
+                    {
+                        trashObj = find.transform;
+                    }
+                }
+
+                if (trashObj != null)
+                {
+                    Vector3 trashPos = trashObj.position;
+                    trashPos += new Vector3(0.0f, 0.2f, 0.0f); // a bit higher
+                    SavePosition(trashPos, trashObj.rotation, true);
+                }
+                else
+                {
+                    Debug.LogWarning("No trashbucket object found");
+                }
+            }
+
+            InstantiateGhostObject(this.SavedPosition, this.SavedRotation);
+        }
+        else
+        {
+            foreach(HandsInventory.GhostPosition g in list)
+            {
+                InstantiateGhostObject(g.position, 
+                    Quaternion.Euler(g.rotation),
+                    g.id);
+            }
+        }
+    }
+
+    private void InstantiateGhostObject(Vector3 pos, Quaternion rot, int posID = 0)
+    {
+        GameObject ghost = Instantiate(Resources.Load<GameObject>("Prefabs/" + this.name),
+            pos, rot);
+        ghost.layer = 9; // no collisions
+        ghost.GetComponent<PickableObject>().mainObject = this;
+        PickableObject ghostObject = ghost.GetComponent<PickableObject>();
+        ghostObject.sihlouette = true;
+        ghostObject.positionID = posID;
+        ghostObject.SetGhostShader();
+        ghostObject.GetComponent<Rigidbody>().useGravity = false;
+        ghostObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        ghostObject.name = this.name;
+        this.ghostObjects.Add(ghostObject);
+    }
+
+    public void DeleteGhostObject()
+    {
+        for (int i = ghostObjects.Count - 1; i >= 0; --i)
+        {
+            GameObject ghost = ghostObjects[i].gameObject;
+            ghostObjects.RemoveAt(i);
+            Destroy(ghost);
+        }
     }
 }

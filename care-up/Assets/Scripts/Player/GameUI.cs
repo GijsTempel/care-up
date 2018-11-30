@@ -34,11 +34,20 @@ public class GameUI : MonoBehaviour {
 	{
 		closeDialog.SetActive(value);
 		closeButton.SetActive(!value);
+
+		if (value)
+		{
+			GameObject.FindObjectOfType<PlayerScript>().robotUIopened = true;
+		}
+		else
+		{
+			GameObject.FindObjectOfType<PlayerScript>().robotUIopened = false;
+		}
 	}
 
 	public void CloseGame()
 	{
-		bl_SceneLoaderUtils.GetLoader.LoadLevel("UMenuPro");
+		bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
 	}
 
 
@@ -92,6 +101,8 @@ public class GameUI : MonoBehaviour {
 		}else{
 			bl_SceneLoaderUtils.GetLoader.LoadLevel("UMenuPro");
 		}
+
+        donePanel.SetActive(false);
     }
 	
 	// Update is called once per frame

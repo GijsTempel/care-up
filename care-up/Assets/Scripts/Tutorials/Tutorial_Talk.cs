@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Tutorial_Talk : TutorialManager
 {
+
+    public AudioClip Popup;
+    AudioSource audioSource;
+
     public enum TutorialStep
     {
         First,
@@ -32,9 +36,13 @@ public class Tutorial_Talk : TutorialManager
 
         if (!Paused())
         {
+
+            audioSource = GetComponent<AudioSource> ();
+
             switch (currentStep)
             {
                 case TutorialStep.First:
+                    audioSource.PlayOneShot (Popup, 0.1F);
                     GameObject.FindObjectOfType<InjectionPatient>().allowToTalk = false;
 
                     currentStep = TutorialStep.Welcome;
@@ -46,7 +54,8 @@ public class Tutorial_Talk : TutorialManager
                 case TutorialStep.Welcome:
                     if (nextButtonClicked)
                     {
-						hintsN.ResetSize();
+                        audioSource.PlayOneShot (Popup, 0.1F);
+                        hintsN.ResetSize();
 						hintsN.LockTo("Patient", new Vector3(0.00f, 0.00f, 0.00f));
                         currentStep = TutorialStep.MoveTo;
                         UItext.text = "Laten we naar de cliënt toe gaan door op hem te klikken.";
@@ -57,6 +66,7 @@ public class Tutorial_Talk : TutorialManager
                 case TutorialStep.MoveTo:
                     if (player.tutorial_movedTo)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         currentStep = TutorialStep.OpenOptions;
                         hintsN.LockTo("RightShoulder", new Vector3(0.00f, 0.00f, 0.29f));
                         UItext.text = "Heel goed. Klik nu nogmaals op de cliënt om het een gesprek te starten. ";
@@ -68,6 +78,7 @@ public class Tutorial_Talk : TutorialManager
                 case TutorialStep.OpenOptions:
                     if (patient.tutorial_used)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         patient.tutorial_used = false;
 
                         currentStep = TutorialStep.Talk;
@@ -82,6 +93,7 @@ public class Tutorial_Talk : TutorialManager
                 case TutorialStep.Talk:
                     if (patient.tutorial_talked)
                     {
+                        audioSource.PlayOneShot (Popup, 0.1F);
                         patient.tutorial_talked = false;
 						hintsN.SetIconPosition(0);
                         hintsN.LockTo("SceneLoader 1", new Vector3(262.50f, -69.10f, 0.00f));

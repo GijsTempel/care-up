@@ -63,6 +63,7 @@ public class ItemControlsUI : MonoBehaviour {
         combineButton = transform.Find("CombineButton").gameObject;
 
         dropButton = transform.Find("DropButton").gameObject;
+        dropButton.SetActive(false);
 
         closeButton = transform.Find("CloseButton").gameObject;
 
@@ -87,12 +88,12 @@ public class ItemControlsUI : MonoBehaviour {
         closeButton.GetComponent<EventTrigger>().triggers.Add(event1);
         closeButton.GetComponent<EventTrigger>().triggers.Add(event2);
         closeButton.GetComponent<EventTrigger>().triggers.Add(event3);
-
+        
         pickButton.AddComponent<EventTrigger>();
         pickButton.GetComponent<EventTrigger>().triggers.Add(event1);
         pickButton.GetComponent<EventTrigger>().triggers.Add(event2);
         pickButton.GetComponent<EventTrigger>().triggers.Add(event3);
-
+        
         examineButton.AddComponent<EventTrigger>();
         examineButton.GetComponent<EventTrigger>().triggers.Add(event1);
         examineButton.GetComponent<EventTrigger>().triggers.Add(event2);
@@ -122,12 +123,7 @@ public class ItemControlsUI : MonoBehaviour {
         combineButton.GetComponent<EventTrigger>().triggers.Add(event1);
         combineButton.GetComponent<EventTrigger>().triggers.Add(event2);
         combineButton.GetComponent<EventTrigger>().triggers.Add(event3);
-
-        dropButton.AddComponent<EventTrigger>();
-        dropButton.GetComponent<EventTrigger>().triggers.Add(event1);
-        dropButton.GetComponent<EventTrigger>().triggers.Add(event2);
-        dropButton.GetComponent<EventTrigger>().triggers.Add(event3);
-
+        
         tutorialCombine = GameObject.FindObjectOfType<Tutorial_Combining>();
     }
 
@@ -160,7 +156,6 @@ public class ItemControlsUI : MonoBehaviour {
                 useOnButton.SetActive(true);
                 useOnNTButton.SetActive(true);
                 combineButton.SetActive(true);
-                dropButton.SetActive(true);
 
                 pickButton.SetActive(false);
                 useButton.SetActive(false);
@@ -191,7 +186,6 @@ public class ItemControlsUI : MonoBehaviour {
                 useOnButton.SetActive(false);
                 useOnNTButton.SetActive(false);
                 combineButton.SetActive(false);
-                dropButton.SetActive(false);
             }
 
             closeButton.SetActive(true);
@@ -209,7 +203,9 @@ public class ItemControlsUI : MonoBehaviour {
                     return;
                 }
             }
-            else if (pickButton.activeSelf && !examineButton.activeSelf)
+            else if ((pickButton.activeSelf && !examineButton.activeSelf)
+                || (initedObject.GetComponent<PickableObject>() != null
+                && initedObject.GetComponent<PickableObject>().sihlouette))
             {
                 Pick();
             }
@@ -253,13 +249,15 @@ public class ItemControlsUI : MonoBehaviour {
                 useOnNTButton.transform.GetChild(0).GetComponent<Text>().text =
                     (actionManager.CompareUseOnInfo(initedObject.name, "") ?
                     actionManager.CurrentButtonText(initedObject.name) : useOnNTtext);
-
+                
                 useButton.transform.GetChild(0).GetComponent<Text>().text =
                     (actionManager.CompareUseObject(initedObject.name)) ? 
                     actionManager.CurrentButtonText(initedObject.name) : useText;
-
+                    
                 useOnNTButton.SetActive(actionManager.CompareUseOnInfo(initedObject.name, ""));
                 useButton.SetActive(actionManager.CompareUseObject(initedObject.name));
+
+                initedObject.GetComponent<InteractableObject>().Reset();
             }
 
             if (!pickButton.activeSelf && 
@@ -268,8 +266,7 @@ public class ItemControlsUI : MonoBehaviour {
                 !talkButton.activeSelf && 
                 !useOnButton.activeSelf && 
                 !useOnNTButton.activeSelf && 
-                !combineButton.activeSelf && 
-                !dropButton.activeSelf)
+                !combineButton.activeSelf)
             {
                 Close();
             }
@@ -299,7 +296,7 @@ public class ItemControlsUI : MonoBehaviour {
 
     public void Use()
     {
-        if (initedObject.name == "ClothPackage")
+        if (initedObject.GetComponent<UsableObject>().PrefabToAppear != "")
         {
             initedObject.GetComponent<UsableObject>().Use();
         }
@@ -307,15 +304,20 @@ public class ItemControlsUI : MonoBehaviour {
         {
             if (cameraMode.CurrentMode == CameraMode.Mode.ItemControlsUI)
             {
-                if (handsInventory.Empty())
+                // specific case for "catheterisation" it doesnt need hands empty
+                if (handsInventory.Empty() || initedObject.name == "catheterisation")
                 {
                     initedObject.GetComponent<UsableObject>().Use();
                 }
                 else
                 {
-                    string message = "Zorg ervoor dat alle materialen die je hebt gebruikt op het werkveld liggen. Maak je handen vrij door eventuele objecten terug te leggen op het werkveld.";
-                    RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
-                    messageCenter.NewMessage("Materialen terugleggen.", message, RobotUIMessageTab.Icon.Warning);
+                    // no 'something in hands msg' for workfield if it's not a correct step
+                    if (!(initedObject.name == "WorkField" && !actionManager.CompareUseObject("WorkField")))
+                    {
+                        string message = "Zorg ervoor dat alle materialen die je hebt gebruikt op het werkveld liggen. Maak je handen vrij door eventuele objecten terug te leggen op het werkveld.";
+                        RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
+                        messageCenter.NewMessage("Materialen terugleggen.", message, RobotUIMessageTab.Icon.Warning);
+                    }
                 }
             }
         }
@@ -352,12 +354,36 @@ public class ItemControlsUI : MonoBehaviour {
                 PickableObject item = initedObject.GetComponent<PickableObject>();
                 if (item != null)
                 {
-                    if (tutorial == null ||
-                        (tutorial != null &&
-                            (item.name == tutorial.itemToPick ||
-                            item.name == tutorial.itemToPick2)))
+                    if (item.sihlouette == false)
                     {
-                        handsInventory.PickItem(item);
+                        if (tutorial == null ||
+                            (tutorial != null &&
+                                (item.name == tutorial.itemToPick ||
+                                item.name == tutorial.itemToPick2)))
+                        {
+                            if (item.prefabInHands != "")
+                            {
+                                item.SavePosition();
+                                GameObject replaced = handsInventory.CreateObjectByName(item.prefabInHands, Vector3.zero);
+                                replaced.GetComponent<PickableObject>().SavePosition(item.SavedPosition, item.SavedRotation, true);
+                                Destroy(item.gameObject);
+                                item = replaced.GetComponent<PickableObject>();
+                            }
+
+                            handsInventory.PickItem(item);
+                            item.CreateGhostObject();
+                        }
+                    }
+                    else if (item.sihlouette == true)
+                    {
+                        if (tutorial == null || (tutorial != null &&
+                                (item.name == tutorial.itemToDrop ||
+                                item.name == tutorial.itemToDrop2)))
+                        {
+                            GameObject ghost = item.gameObject;
+                            initedObject = item.mainObject.gameObject;
+                            Drop(ghost);
+                        }
                     }
                     else
                     {
@@ -404,17 +430,33 @@ public class ItemControlsUI : MonoBehaviour {
         Close();
     }
 
-    public void Drop()
+    public void Drop(GameObject ghost = null)
     {
         if (initedObject != null)
         {
-            if (handsInventory.LeftHandObject == initedObject)
+            if (tutorial == null || (tutorial != null &&
+            (tutorial.itemToDrop == initedObject.name ||
+            tutorial.itemToDrop2 == initedObject.name)))
             {
-                handsInventory.DropLeft();
-            }
-            else if (handsInventory.RightHandObject == initedObject)
-            {
-                handsInventory.DropRight();
+                if (handsInventory.LeftHandObject == initedObject)
+                {
+                    handsInventory.DropLeft(ghost);
+                }
+                else if (handsInventory.RightHandObject == initedObject)
+                {
+                    handsInventory.DropRight(ghost);
+                }
+
+                PickableObject item = initedObject.GetComponent<PickableObject>();
+                if (item != null)
+                {
+                    for (int i = item.ghostObjects.Count-1; i >= 0; --i)
+                    {
+                        GameObject g = item.ghostObjects[i].gameObject;
+                        item.ghostObjects.RemoveAt(i);
+                        Destroy(g);
+                    }
+                }
             }
         }
 

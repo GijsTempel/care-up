@@ -6,11 +6,20 @@ using System.Collections;
 /// </summary>
 public class PlayerAnimationManager : MonoBehaviour
 {
+    [System.Serializable]
     public enum Hand
     {
         Right,
         Left
     };
+    public int leftObjID = 0;
+    public int rightObjID = 0;
+    public int leftModifier01 = 0;
+    public int rightModifier01 = 0;
+    public float leftModifier02 = 0f;
+    public float rightModifier02 = 0f;
+    private Transform propL;
+    private Transform propR;
 
     public float ikWeight = 1.0f;
 
@@ -28,6 +37,9 @@ public class PlayerAnimationManager : MonoBehaviour
 
     void Start()
     {
+        propL = GameObject.Find("prop.L").transform;
+        propR = GameObject.Find("prop.R").transform;
+
         animationController = GetComponent<Animator>();
         if (animationController == null) Debug.LogError("Animator not found");
 
@@ -41,20 +53,8 @@ public class PlayerAnimationManager : MonoBehaviour
         if (playerScript == null) Debug.LogError("No player");
     }
     
-	public static void PlayCombineAnimation(ObjectsIDs LeftObj, ObjectsIDs RightObj, Transform target = null)
+	public static void PlayCombineAnimation(int leftID, int rightID, Transform target = null)
     {
-		Debug.Log(LeftObj.GetName());
-		int leftID = 0;
-		int rightID = 0;
-		if (LeftObj != null)
-		{
-			leftID = LeftObj.GetID() * 100 + LeftObj.GetState();
-		}
-		if (RightObj != null)
-		{
-			rightID = RightObj.GetID() * 100 + RightObj.GetState();
-		}
-
 		animationController.SetInteger("leftID", leftID);
 		animationController.SetInteger("rightID", rightID);
 		animationController.SetTrigger("Combine");
@@ -66,12 +66,46 @@ public class PlayerAnimationManager : MonoBehaviour
         //{
         //    animationController.SetTrigger("S " + name);
         //}
+        playerScript.ResetFreeLook();
+        if (target)
+        {
+            cameraMode.SetCinematicMode(target);
+        }
+
+        InteractableObject.ResetDescription();
+    }
+
+    void Update()
+    {
+        leftModifier02 = propL.localPosition.y;
+        rightModifier02 = propR.localPosition.y;
+
+        //string RightAnimName = animationController.GetCurrentAnimatorClipInfo(0)[0].clip.name;
+        //string LeftAnimName = animationController.GetCurrentAnimatorClipInfo(1)[0].clip.name;
+        //float normalizedTime = animationController.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        //if (RightAnimName == LeftAnimName && normalizedTime > 0.15f && normalizedTime < 0.85f)
+        //{
+        //    animationController.Play(LeftAnimName,1, normalizedTime);
+        //}
+
+    }
+
+    public static void PlayUseAnimation(int UseObjID, int UseOnID, Transform target = null)
+    {
+		animationController.SetInteger("leftID", UseObjID);
+		animationController.SetInteger("rightID", UseOnID);
+        animationController.SetTrigger("Use");
+        animationController.SetTrigger("S Use");
 
         if (target)
         {
             cameraMode.SetCinematicMode(target);
         }
+
+        InteractableObject.ResetDescription();
     }
+
+
 
 
     public static void PlayAnimation(string name, Transform target = null)
@@ -80,7 +114,8 @@ public class PlayerAnimationManager : MonoBehaviour
 
         if (name != "LeftPick" && name != "RightPick" &&
             name != "closeup_left" && name != "closeup_right" &&
-            name != "faraway_left" && name != "faraway_right")
+            name != "faraway_left" && name != "faraway_right" &&
+            name != "no")
         {
             animationController.SetTrigger("S " + name);
             playerScript.ResetFreeLook();
@@ -90,7 +125,11 @@ public class PlayerAnimationManager : MonoBehaviour
         {
             cameraMode.SetCinematicMode(target);
         }
+
+        InteractableObject.ResetDescription();
     }
+    
+
 
     /// <summary>
     /// Sets the idle state of the hand, depending on object held.
@@ -118,7 +157,12 @@ public class PlayerAnimationManager : MonoBehaviour
         cameraMode.cinematicToggle = true; //before play animation
         PlayAnimation(name + "Sequence", target);
     }
-    
+
+    public static void PlayAnimationSequence(string name)
+    {
+        animationSequence = new AnimationSequence(name);
+    }
+
     public static void NextSequenceStep(bool flag)
     {
         if (flag)
@@ -164,5 +208,6 @@ public class PlayerAnimationManager : MonoBehaviour
     {
         float targetFrame = compareFrame / 60f; // 60fps
         return (currentFrame >= targetFrame && previousFrame < targetFrame);
+
     }
 }

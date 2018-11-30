@@ -28,7 +28,7 @@ public class CameraMode : MonoBehaviour {
     public float minZoom = 0.5f;
     public float maxZoom = 2.0f;
     
-    private Mode currentMode = Mode.Free;
+    public Mode currentMode = Mode.Free;
 
     public ExaminableObject selectedObject;
     public SystemObject doorSelected;
@@ -60,10 +60,10 @@ public class CameraMode : MonoBehaviour {
     private UnityStandardAssets.ImageEffects.BlurOptimized blur;
 
     public bool dontMoveCamera;
-
+    
     private bool previewModeFrame; //fix
 
-    public Mode CurrentMode
+    public  Mode CurrentMode
     {
         get { return currentMode; }
     }
@@ -81,7 +81,7 @@ public class CameraMode : MonoBehaviour {
         blur = Camera.main.GetComponent<UnityStandardAssets.ImageEffects.BlurOptimized>();
         if (blur == null) Debug.Log("No Blur Attached to main camera.");
 
-        confirmUI = (GameObject)Instantiate(Resources.Load("Prefabs/ConfirmUI"), Vector3.zero, Quaternion.identity);
+        confirmUI = (GameObject)Instantiate(Resources.Load("Prefabs/UI/ConfirmUI"), Vector3.zero, Quaternion.identity);
         confirmUI.SetActive(false);
     }
 
@@ -422,11 +422,12 @@ public class CameraMode : MonoBehaviour {
 
         cinematicControl.transform.position =
             Vector3.Lerp(cinematicPos, cinematicTargetPos, cinematicLerp);
-        cinematicControl.Find("Arms").transform.rotation =
-            Quaternion.Lerp(cinematicRot, cinematicTargetRot, cinematicLerp);
+        if (animationEnded || cinematicDirection == 1)
+            cinematicControl.Find("Arms").transform.rotation =
+                Quaternion.Lerp(cinematicRot, cinematicTargetRot, cinematicLerp);
 
-        if (!dontMoveCamera)
-            AnimationCameraUpdate(false);
+        //if (!dontMoveCamera)
+        //    AnimationCameraUpdate(false);
 
         if (cinematicDirection == 1 && cinematicLerp == 1.0f)
         {

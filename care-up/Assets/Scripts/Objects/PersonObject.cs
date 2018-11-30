@@ -163,7 +163,7 @@ public class PersonObject : InteractableObject
 		}
 
         tutorial_used = true;
-        GameObject dialogueObject = Instantiate(Resources.Load<GameObject>("Prefabs/SelectionDialogue"),
+        GameObject dialogueObject = Instantiate(Resources.Load<GameObject>("Prefabs/UI/SelectionDialogue"),
                     GameObject.Find("OverlayCamera").transform) as GameObject;
 
         SelectDialogue dialogue = dialogueObject.GetComponent<SelectDialogue>();

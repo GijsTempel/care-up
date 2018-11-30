@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AnimationSequenceState : StateMachineBehaviour {
 
+    public string SequenceName = "";
     public List<int> keyFrames = new List<int>();
 
     protected int keyFrame = 0;
@@ -20,6 +21,11 @@ public class AnimationSequenceState : StateMachineBehaviour {
         prevFrame = 0f;
 
         inv = GameObject.FindObjectOfType<HandsInventory>();
+        if (SequenceName != "")
+        {
+            PlayerAnimationManager.PlayAnimationSequence(SequenceName);
+        }
+
     }
 
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

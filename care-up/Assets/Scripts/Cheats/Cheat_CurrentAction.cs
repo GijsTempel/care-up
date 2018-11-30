@@ -75,6 +75,9 @@ public class Cheat_CurrentAction : MonoBehaviour
 
 		extraButton = GameObject.Find("ExtraButton").GetComponent<Button>();
         extraButton.onClick.AddListener(ToggleExtraInfoPanel);
+
+        Button extraCloseBtn = extraPanel.transform.Find("Image").GetComponent<Button>();
+        extraCloseBtn.onClick.AddListener(ToggleExtraInfoPanel);
     }
 
     private void Update()
@@ -95,12 +98,12 @@ public class Cheat_CurrentAction : MonoBehaviour
             {
                 timer += Time.deltaTime;
                 textObject.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
-                extraText.color = new Color(1.0f, 1.0f, 1.0f, 1.0f - timer / animationTime);
+                extraText.color = new Color(0.0f, 0.0f, 0.0f, 0.0f - timer / animationTime);
             }
             else
             {
-                textObject.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
-                extraText.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+                textObject.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+                extraText.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
                 textObject.text = actionManager.CurrentDescription;
                 extraText.text = actionManager.CurrentExtraDescription;
                 timer = animationTime;
@@ -113,12 +116,12 @@ public class Cheat_CurrentAction : MonoBehaviour
             {
                 timer -= Time.deltaTime;
                 textObject.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
-                extraText.color = new Color(1.0f, 1.0f, 1.0f, 1.0f - timer / animationTime);
+                extraText.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
             }
             else
             {
                 textObject.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
-                extraText.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+                extraText.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
                 timer = 0.0f;
                 direction = 0;
             }
@@ -136,8 +139,6 @@ public class Cheat_CurrentAction : MonoBehaviour
 
     public void ToggleExtraInfoPanel()
     {
-		
-
         if (tutorial_UI != null && tutorial_UI.expectedHintsState == extraPanel.activeSelf)
         {
             return;

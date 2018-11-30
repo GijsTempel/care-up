@@ -30,7 +30,8 @@ public class ActionManager : MonoBehaviour {
         ObjectUseOn,
         ObjectExamine,
         PickUp,
-        SequenceStep
+        SequenceStep,
+        ObjectDrop
     };
 
     // name of the xml file with actions
@@ -307,6 +308,27 @@ public class ActionManager : MonoBehaviour {
         return "";
     }
 
+    public bool CompareDropPos(string item, int pos)
+    {
+        bool result = false;
+
+        List<Action> sublist = actionList.Where(action =>
+                action.SubIndex == currentActionIndex &&
+                action.matched == false).ToList();
+        foreach (Action a in sublist)
+        {
+            if (a.Type == ActionType.ObjectDrop)
+            {
+                string[] o = new string[2];
+                ((ObjectDropAction)a).ObjectNames(out o);
+                if (o[0] == item && o[1] == pos.ToString())
+                    result = true;
+            }
+        }
+
+        return result;
+    }
+
     private Controls controls;
 
     /// <summary>
@@ -336,7 +358,12 @@ public class ActionManager : MonoBehaviour {
             int.TryParse(action.Attributes["index"].Value, out index);
             string type = action.Attributes["type"].Value;
             string descr = action.Attributes["description"].Value;
-            string audio = action.Attributes["audioHint"].Value;
+
+            string audio = "";
+            if (action.Attributes["audioHint"] != null)
+            {
+                audio = action.Attributes["audioHint"].Value;
+            }
 
             string fDescr = "";
             if (action.Attributes["fullDescription"] != null)
@@ -422,6 +449,11 @@ public class ActionManager : MonoBehaviour {
                 case "sequenceStep":
                     string stepName = action.Attributes["value"].Value;
                     actionList.Add(new SequenceStepAction(stepName, index, descr, fDescr, audio, extra, pointsValue, notNeeded));
+                    break;
+                case "drop":
+                    string dropItem = action.Attributes["item"].Value;
+                    string dropID = (action.Attributes["posID"] != null) ? action.Attributes["posID"].Value : "0";
+                    actionList.Add(new ObjectDropAction(dropItem, dropID, index, descr, fDescr, audio, extra, pointsValue, notNeeded));
                     break;
                 default:
                     Debug.LogError("No action type found: " + type);
@@ -634,6 +666,21 @@ public class ActionManager : MonoBehaviour {
             ActionManager.CorrectAction();
     }
 
+    public void OnDropDownAction(string item, int posId)
+    {
+        string[] info = { item, posId.ToString() };
+        bool occured = Check(info, ActionType.ObjectDrop);
+        UpdatePoints(occured ? 1 : 0); // no penalty
+
+        if (occured || true)
+        {
+            Debug.Log("Dropped " + item + " on position #" + posId);
+        }
+
+        if (!CheckScenarioCompleted() && occured)
+            ActionManager.CorrectAction();
+    }
+
     /// <summary>
     /// Checks if triggered action is correct ( expected to be done in action list ).
     /// Plays WrongAction sound from Narrator if wrong.
@@ -663,6 +710,13 @@ public class ActionManager : MonoBehaviour {
                     int index = actionList.IndexOf(action);
                     //inserted checklist stuff
                     RobotUITabChecklist.StrikeStep(index);
+                    
+                    if (type == ActionType.SequenceStep && penalized)
+                    {
+                        wrongStepIndexes.Add(index);
+                        break;
+                    }
+
                     // end checklist
                     correctStepIndexes.Add(index);
 
@@ -683,7 +737,7 @@ public class ActionManager : MonoBehaviour {
             currentActionIndex += 1;
         }
         
-        if (!matched && type != ActionType.ObjectExamine && type != ActionType.PickUp)
+        if (!matched && type != ActionType.ObjectExamine && type != ActionType.PickUp && type != ActionType.ObjectDrop)
         {
             int index = actionList.IndexOf(currentAction);
             if ( sublist.Count > 0 && !wrongStepIndexes.Contains(index) )
@@ -697,11 +751,12 @@ public class ActionManager : MonoBehaviour {
                 messageCenter.NewMessage("Verkeerde handeling!", sublist[0].extraDescr, RobotUIMessageTab.Icon.Error);
             }
 
-            ActionManager.WrongAction();
+            ActionManager.WrongAction(type != ActionType.SequenceStep); 
 
             penalized = true;
 
-            if (type == ActionType.SequenceStep && manager.practiceMode)
+            bool practice = (manager != null) ? manager.practiceMode : true;
+            if (type == ActionType.SequenceStep && practice)
             {
                 GameObject.Find("WrongAction").GetComponent<TimedPopUp>().Set(sublist[0].extraDescr);
             }
@@ -715,7 +770,7 @@ public class ActionManager : MonoBehaviour {
             
             currentAction = actionsLeft.Count > 0 ? actionsLeft.First() : null;
 
-            if (manager != null && manager.practiceMode)
+            if (manager == null || manager.practiceMode)
             {
                 // now we have not mandatory actions, let's skip them and add to mistakes
                 List<Action> skippableActions = actionsLeft.Where(action => action.notMandatory == true).ToList();
@@ -768,12 +823,13 @@ public class ActionManager : MonoBehaviour {
             else return false;
         } 
     }
-
+   
     private void SceneCompletedRoutine()
     {
         Narrator.PlaySound("LevelComplete", 0.1f);
         GameObject.FindObjectOfType<GameUI>().ShowDonePanel(true);
 
+        /*//Loginpro is removed but these achievements can be used with new system later
         GameObject ach = GameObject.Find("FinishProtocol");
         if (ach != null)
         {
@@ -802,7 +858,7 @@ public class ActionManager : MonoBehaviour {
         if (ach != null)
         {
             ach.GetComponent<LoginProAsset.LoginPro_Achievement>().Unlock(20);
-        }
+        }*/
     }
 
     /// <summary>
@@ -890,10 +946,15 @@ public class ActionManager : MonoBehaviour {
         GameObject.Find("Preferences").GetComponent<LoadingScreen>().LoadLevel("UMenuPro");
     }
 
-    public static void WrongAction()
+    public static void WrongAction(bool headAnimation = true)
     {
         RobotManager.RobotWrongAction();
         Narrator.PlaySound("WrongAction");
+
+        if (headAnimation)
+        {
+            PlayerAnimationManager.PlayAnimation("no");
+        }
     }
 
     public static void CorrectAction()

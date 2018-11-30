@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using MBS;
 
 public class UMP_Options : MonoBehaviour
 {
@@ -242,6 +243,7 @@ public class UMP_Options : MonoBehaviour
             PlayerPrefs.SetInt("PostProcessing", (postProcessing.isOn ? 1 : 0));
             Debug.Log("PostProcessing is set to " + postProcessing.isOn);
         }
+        StatusMessage.Message = "Aanpassingen zijn opgeslagen";
     }
     /*  other options that are removed ?
         PlayerPrefs.SetInt(UMPKeys.Quality, CurrentQuality);
