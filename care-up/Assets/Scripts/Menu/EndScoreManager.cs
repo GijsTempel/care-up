@@ -105,6 +105,12 @@ public class EndScoreManager : MonoBehaviour {
             Button btn = GameObject.Find("Interactable Objects/Canvas/Send_Score/Buttons/SendButton").GetComponent<Button>();
             btn.onClick.AddListener(EndScoreSendMailResults);
 
+            // show/hide buttons
+            bool flag = (percent > 0.7f && GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed);
+            GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Buttons/NextButton").SetActive(flag);
+            GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Buttons/Back to main menu").SetActive(!flag);
+            
+
         } else {
             quizQuestionsTexts.Clear ();
             quizWrongIndexes.Clear ();
