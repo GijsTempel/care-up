@@ -312,7 +312,7 @@ public class PlayerPrefsManager : MonoBehaviour
         }
     }
 
-    static void __sendMail(string topic, string message)
+    public static void __sendMail(string topic, string message)
     {
         MailMessage mail = new MailMessage();
 
