@@ -248,6 +248,7 @@ public class MainMenu : MonoBehaviour {
 
     void AllowDenyContinue(bool allow)
     {
+        allow |= FindObjectOfType<PlayerPrefsManager>().demoVersion;
         if (!allow)
         {
             // show pop up!
