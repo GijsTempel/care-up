@@ -109,7 +109,9 @@ public class EndScoreManager : MonoBehaviour {
             bool flag = (percent > 0.7f && GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed);
             GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Buttons/NextButton").SetActive(flag);
             GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Buttons/Back to main menu").SetActive(!flag);
-            
+
+            GameObject.Find("Interactable Objects/Canvas/Send_Score/Top/Scenetitle").GetComponent<Text>().text = 
+                GameObject.FindObjectOfType<PlayerPrefsManager>().currentSceneVisualName;
 
         } else {
             quizQuestionsTexts.Clear ();

@@ -108,6 +108,11 @@ public class LevelButton : MonoBehaviour {
 
                 // for single variation we can skip into practice/test dialogue
                 GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(3);
+
+                if (manager != null)
+                {
+                    manager.currentSceneVisualName = displayName;
+                }
             }
         }
     }
