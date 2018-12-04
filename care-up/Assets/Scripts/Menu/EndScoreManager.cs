@@ -100,19 +100,6 @@ public class EndScoreManager : MonoBehaviour {
                 .GetComponent<Text> ().text = string.Format ("Tijd: {0}:{1:00}", (int)time / 60, (int)time % 60);
 
             actualScene = true;
-
-            // add send mail function to the button ?
-            Button btn = GameObject.Find("Interactable Objects/Canvas/Send_Score/Buttons/SendButton").GetComponent<Button>();
-            btn.onClick.AddListener(EndScoreSendMailResults);
-
-            // show/hide buttons
-            bool flag = (percent > 0.7f && GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed);
-            GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Buttons/NextButton").SetActive(flag);
-            GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Buttons/Back to main menu").SetActive(!flag);
-
-            GameObject.Find("Interactable Objects/Canvas/Send_Score/Top/Scenetitle").GetComponent<Text>().text = 
-                GameObject.FindObjectOfType<PlayerPrefsManager>().currentSceneVisualName;
-
         } else {
             quizQuestionsTexts.Clear ();
             quizWrongIndexes.Clear ();
@@ -175,17 +162,5 @@ public class EndScoreManager : MonoBehaviour {
         } else {
             bl_SceneLoaderUtils.GetLoader.LoadLevel ("EndScore_Test");
         }
-    }
-
-    public void EndScoreSendMailResults()
-    {
-        string topic = "Care Up accreditatie aanvraag";
-        string content = "Completed scene: " + completedSceneName + "\n";
-        content += "Username: " + MBS.WULogin.username + "\n"; 
-        
-        Text text = GameObject.Find("Interactable Objects/Canvas/Send_Score/GameObject (1)/Username/Text").GetComponent<Text>();
-        content += text.text;
-
-        PlayerPrefsManager.__sendMail(topic, content);
     }
 }
