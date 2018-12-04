@@ -6210,6 +6210,7 @@ MonoBehaviour:
   distanceFromCamera: 0.8
   dropPenalty: 1
   customPositions: []
+  customGhostPositions: []
   leftHandObject: {fileID: 0}
   rightHandObject: {fileID: 0}
 --- !u!114 &724735638
@@ -6225,6 +6226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minZoom: 0.5
   maxZoom: 1.75
+  currentMode: 0
   selectedObject: {fileID: 0}
   doorSelected: {fileID: 0}
   animating: 0
@@ -18784,9 +18786,12 @@ MonoBehaviour:
   rightControlBone: {fileID: 0}
   holdAnimationID: 0
   sihlouette: 0
+  positionID: 0
   mainObject: {fileID: 0}
   ghostObjects: []
-  ghostPositions: []
+  prefabInHands: 
+  prefabOutOfHands: 
+  destroyOnDrop: 0
 --- !u!136 &2145439585
 CapsuleCollider:
   m_ObjectHideFlags: 0
