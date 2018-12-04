@@ -1781,6 +1781,7 @@ MonoBehaviour:
   ObjectName: CWB_inner_open_in
   unlock_frame: 1
   lock_frame: 310
+  toActivate: 0
 --- !u!114 &114049313859126888
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1987,6 +1988,7 @@ MonoBehaviour:
   ObjectName: CWB_inner_open_in
   unlock_frame: 1
   lock_frame: 330
+  toActivate: 0
 --- !u!114 &114077741522578380
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -2039,6 +2041,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftHand: 1
   dropFrame: 246
+--- !u!114 &114090531146132804
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 839bcc7f24a9c47f8af28e853187bfa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: w0_A
+  unlock_frame: 1
+  lock_frame: 210
+  toActivate: 1
 --- !u!114 &114092587908106076
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2624,6 +2641,7 @@ MonoBehaviour:
   ObjectName: CWB_inner_open
   unlock_frame: 1
   lock_frame: 200
+  toActivate: 0
 --- !u!114 &114231757895595990
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2874,6 +2892,7 @@ MonoBehaviour:
   ObjectName: water_syringe
   unlock_frame: 1728
   lock_frame: 2199
+  toActivate: 0
 --- !u!114 &114268044819728714
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3438,6 +3457,7 @@ MonoBehaviour:
   ObjectName: CWB_inner_open_in
   unlock_frame: 1
   lock_frame: 330
+  toActivate: 0
 --- !u!114 &114369991156140442
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3670,6 +3690,18 @@ MonoBehaviour:
   dropHand: 1
   dropFrame: 181
   trashName: TrashBucket
+--- !u!114 &114413388867015454
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e72c07ae9fe847f19fb1b3a669e3399, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: w_sit_target
 --- !u!114 &114414756498390672
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3923,6 +3955,7 @@ MonoBehaviour:
   ObjectName: CWB_inner_open
   unlock_frame: 2
   lock_frame: 1644
+  toActivate: 0
 --- !u!114 &114449936601344160
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -4548,6 +4581,7 @@ MonoBehaviour:
   ObjectName: CWB_inner_open_in
   unlock_frame: 1
   lock_frame: 357
+  toActivate: 0
 --- !u!114 &114572495795223148
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -4638,6 +4672,7 @@ MonoBehaviour:
   ObjectName: CWB_inner_open
   unlock_frame: 0
   lock_frame: 200
+  toActivate: 0
 --- !u!114 &114607278075294694
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5385,6 +5420,7 @@ MonoBehaviour:
   ObjectName: CWB_inner_open_in
   unlock_frame: 1
   lock_frame: 357
+  toActivate: 0
 --- !u!114 &114758466503111510
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5798,6 +5834,17 @@ MonoBehaviour:
   dropHand: 0
   dropFrame: 181
   trashName: TrashBucket
+--- !u!114 &114845398452488348
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9b29f5ba63bb4aa5b477b8007d77187, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114847925696053680
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -6268,6 +6315,7 @@ MonoBehaviour:
   ObjectName: lube_syringe_noCup
   unlock_frame: 1404
   lock_frame: 1955
+  toActivate: 0
 --- !u!114 &114949533974641700
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -31311,6 +31359,9 @@ AnimatorState:
   - {fileID: 1101768783151415840}
   m_StateMachineBehaviours:
   - {fileID: 114733676765867158}
+  - {fileID: 114090531146132804}
+  - {fileID: 114845398452488348}
+  - {fileID: 114413388867015454}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1

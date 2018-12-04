@@ -11,6 +11,8 @@ public class UnlockAnimationState : StateMachineBehaviour
     protected float prevFrame = 0f;
     public int unlock_frame;
     public int lock_frame;
+    public bool toActivate = false;
+
 
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -20,6 +22,7 @@ public class UnlockAnimationState : StateMachineBehaviour
         if (unlock_frame == 0)
         {
             lock_function(false);
+  
         }
     }
 
@@ -46,10 +49,18 @@ public class UnlockAnimationState : StateMachineBehaviour
                         if (gameObj.GetComponent<ObjectStateManager>() != null)
                         {
                             gameObj.GetComponent<ObjectStateManager>().LockHoldState = value;
+                            if (toActivate)
+                            {
+                                gameObj.GetComponent<ObjectStateManager>().isActive = !value;
+                                Debug.Log(gameObj.GetComponent<ObjectStateManager>().isActive);
+                            }
+
+
                         }
                         else if (gameObj.GetComponent<Syringe>() != null)
                         {
                             gameObj.GetComponent<Syringe>().updatePlunger = !value;
+
                         }
                     }
                 }
