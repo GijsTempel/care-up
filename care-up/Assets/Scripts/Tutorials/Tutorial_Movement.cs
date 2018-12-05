@@ -57,7 +57,7 @@ public class Tutorial_Movement : TutorialManager
 					hintsN.LockTo("UI(Clone)", new Vector3(-393.80f, 214.70f, 0.00f));
                     //hintsBox.anchoredPosition = new Vector2(-0.00011874f, 0.00024414f);
                     //hintsBox.sizeDelta = new Vector2(788f, 524.9f);
-                    UItext.text = "Welkom! In deze leermodule zal je leren hoe je door de omgeving van Care Up kunt bewegen.";
+                    UItext.text = "Welkom, in deze leermodule leer je hoe je door de omgeving van Care Up kunt bewegen. ";
                     SetUpTutorialNextButton();
                     break;
                 case TutorialStep.Welcome:
@@ -68,7 +68,7 @@ public class Tutorial_Movement : TutorialManager
                         //hintsBox.sizeDelta = new Vector2(788f, 524.9f);
                         currentStep = TutorialStep.PointsExpl;
 
-                        UItext.text = "Binnen Care Up kun je bewegen door de omgeving door te klikken op interessante objecten. Interessante objecten kun je ontdekken door met de muis over objecten heen te bewegen. Op tablet of telefoon staan de namen van de interessante objecten boven de objecten weergegeven. ";
+                        UItext.text = "Binnen Care Up kun je bewegen door te klikken op interessante objecten. Je ontdekt de objecten door er met de muis overheen te bewegen. Speel je op de tablet of telefoon? Dan zijn de namen van de objecten ook weergegeven. ";
                         SetUpTutorialNextButton();
                     }
                     break;
@@ -99,7 +99,7 @@ public class Tutorial_Movement : TutorialManager
                         hintsN.LockTo("MoveBackButton", new Vector3(-59.90f, -87.00f, 0.00f));
                         hintsN.SetIconPosition(1);
                         currentStep = TutorialStep.MoveBack;
-                        UItext.text = "Je ziet dat we nu naar het werkveld zijn verplaatst. Je kunt op ieder moment weer terug keren naar de beginpositie. Dit noemen wij het overzicht. Keer terug naar het overzicht door te drukken op de knop 'Terug naar overzicht' rechtsboven in het scherm. ";
+                        UItext.text = "We zijn naar het werkveld verplaatst. Op ieder moment kun je terugkeren naar de beginpositie. Dit wordt het overzicht genoemd. Wil je terug? Klik dan rechtsboven in op de knop ‘Terug naar overzicht’. ";
 
                         player.tutorial_movedBack = false;
                     }
@@ -131,7 +131,7 @@ public class Tutorial_Movement : TutorialManager
                         hintsN.LockTo("/doc", new Vector3(345.90f, 1.40f, 707.00f));
                         hintsN.SetSize(675f, 400f);
                         currentStep = TutorialStep.FreeLookExpl;
-                        UItext.text = "Binnen Care Up kun je ook om je heen kijken. Om je heen kijken kun je doen door (Computer) De linkermuisknop in te drukken en ingedrukt te houden. Beweeg vervolgens de muis om rond te kijken. Laat de linkermuisknop los om te stoppen met rondkijken. (Mobiel/Tablet) Kijk op de Mobiel/Tablet rond door met je vinger over het beeld te 'swipen'. Klik hierbij niet op interessante objecten.  ";
+                        UItext.text = "Wil je om je heen kijken? Dat kan! Speel je op de computer dan doe je dit door de linkermuisknop in te drukken en ingedrukt te houden. Beweeg vervolgens de muis om rond te kijken. Laat de linkermuisknop los om te stoppen. Speel je op de mobiel of tablet? Kijk dan rond door met je vinger over het beeld te swipen. Klik hierbij niet op de interessante objecten. ";
                         SetUpTutorialNextButton();
                     }
                     break;

@@ -40,7 +40,7 @@ public class Tutorial_Picking : TutorialManager {
                     currentStep = TutorialStep.Welcome;
 					hintsN.SetSize(788f, 524.9f);
                     hintsN.LockTo("UI(Clone)", new Vector3(-393.80f, 214.70f, 0.00f));
-                    UItext.text = "Welkom. In deze leermodule zul je leren hoe je objecten kunt oppakken en terugleggen";
+                    UItext.text = "Welkom. In deze leermodule leer je hoe je objecten kunt oppakken en terugleggen. ";
                     SetUpTutorialNextButton();
 
                     break;
@@ -51,7 +51,7 @@ public class Tutorial_Picking : TutorialManager {
                         currentStep = TutorialStep.MoveTo;
 						hintsN.ResetSize();
 						hintsN.LockTo("WorkField", new Vector3(0.00f, 0.49f, -0.73f));
-                        UItext.text = "Laten we beginnen. Beweeg naar het werkveld door erop te klikken.";
+                        UItext.text = "Laten we beginnen. Beweeg naar het werkveld door op het werkveld te klikken. ";
 
                         player.tutorial_movedTo = false;
                     }
@@ -63,7 +63,7 @@ public class Tutorial_Picking : TutorialManager {
                         currentStep = TutorialStep.PickOne;
 						hintsN.LockTo("ClothPackage", new Vector3(0.00f, 0.14f, -0.13f));
 						hintsN.SetIconPosition(3);
-                        UItext.text = "Objecten oppakken kun je doen door erop te klikken. Probeer nu een gaasje te pakken uit de doos door op de doos te klikken.";
+                        UItext.text = "Objecten oppakken kun je doen door erop te klikken. Probeer een gaasje uit de doos te pakken door op de doos te klikken. ";
 
                         handsInventory.tutorial_pickedLeft = false;
                         itemToPick = "Cloth";
@@ -79,7 +79,7 @@ public class Tutorial_Picking : TutorialManager {
                         handsInventory.tutorial_pickedLeft = false;
                         currentStep = TutorialStep.PickTwo;
 						hintsN.LockTo("Medicine", new Vector3(0.00f, 0.16f, 0.00f));
-                        UItext.text = "Het eerst object die je pakt verschijnt altijd in je linkerhand. Probeer nu het medicijn op te pakken door erop te klikken.";
+                        UItext.text = "Het object welke je als eerste pakt verschijnt altijd in je linkerhand. Probeer nu het medicijn op te pakken door erop te klikken. ";
                         itemToPick = "Medicine";
                         handsInventory.tutorial_pickedRight = false;
 
@@ -95,7 +95,7 @@ public class Tutorial_Picking : TutorialManager {
 
                         currentStep = TutorialStep.DropOne;
                         hintsN.LockTo("/Cloth", new Vector3(0.00f, 0.16f, 0.00f));
-                        UItext.text = "Objecten kun je terug leggen door op hun silhouetten te klikken. klik nu op het silhoutte van het gaasje om deze terug te leggen.";
+                        UItext.text = "Objecten kun je terug leggen door op het silhouette  te klikken. Klik nu op het silhouette van het gaasje om deze terug te leggen. ";
 
                         itemToDrop = "Cloth";
                         handsInventory.tutorial_droppedLeft = false;
@@ -108,7 +108,7 @@ public class Tutorial_Picking : TutorialManager {
                         handsInventory.tutorial_droppedLeft = false;
                         hintsN.LockTo("/Medicine", new Vector3(0.00f, 0.16f, 0.00f));
                         currentStep = TutorialStep.DropTwo;
-                        UItext.text = "Voor ieder object die je oppakt verschijnt er een silhoutte. Klik nu op het silhoutte van het medicijn om ook deze terug te leggen. ";
+                        UItext.text = "Klik nu op het silhouette van het medicijn om deze ook terug te leggen.  ";
 
                         itemToDrop = "Medicine";
                         handsInventory.tutorial_droppedRight = false;
