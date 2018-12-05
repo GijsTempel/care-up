@@ -52,18 +52,6 @@ public class CatherisationPutClothUnder : CinematicAnimation
             inv.CreateAnimationObject("cloth_02_inHands", false);
         }
 
-        if (PlayerAnimationManager.CompareFrames(frame, prevFrame, dropClothFrame))
-        {
-            inv.DeleteAnimationObject();
-
-            if (GameObject.Find("cloth_02"))
-            {
-                if (GameObject.Find("cloth_02").GetComponent<MeshRenderer>() != null)
-                {
-                    GameObject.Find("cloth_02").GetComponent<MeshRenderer>().enabled = true;
-                }
-            }
-        }
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

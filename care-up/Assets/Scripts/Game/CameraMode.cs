@@ -497,6 +497,10 @@ public class CameraMode : MonoBehaviour {
 
     public void SetCinematicMode(Transform target)
     {
+        if (target.Find("CinematicTarget") == null)
+        {
+            return;
+        }
         ToggleCameraMode(Mode.Cinematic);
 
         if (cinematicToggle)
