@@ -35,7 +35,7 @@ namespace MBS
         static public string statusMessage = "";
 
         public GUISkin skin;
-
+        private GUIStyle guiStyle = new GUIStyle(); //create a new variable
         static public string Message
         {
             get { return statusMessage; }
@@ -71,12 +71,14 @@ namespace MBS
         {
             if ( Message != string.Empty )
             {
+                guiStyle.fontSize = 20;
+                guiStyle.normal.textColor = Color.white;
                 GUI.depth = 0;
                 GUI.skin = skin;
                 float width = Screen.width,
                       height = Screen.height;
                 GUI.Box( new Rect( 10f, height - 65f, width - 20, 60f ), "" );
-                GUI.Label( new Rect( 20f, height - 62f, width - 40, 57f ), Message );
+                GUI.Label( new Rect( 20f, height - 62f, width - 40, 57f ), Message, guiStyle );
             }
         }
 

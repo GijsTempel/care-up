@@ -311,7 +311,7 @@ namespace MBS
             email = email.Trim();
             if ( !email.IsValidEmailFormat() )
             {
-                Debug.LogWarning( $"{email} is not a valid email address" );
+                Debug.LogWarning( $"{email} is geen valide e-mailadres!" );
                 return;
             }
             CMLData data = new CMLData();
