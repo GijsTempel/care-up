@@ -9,9 +9,16 @@ using UnityEngine.UI;
 /// </summary>
 public class Cheat_CurrentAction : MonoBehaviour
 {
-    private Text textObject;
+    private Text textObjectDevHint;
+    private Text textObjectBiggerDevHint;
     private Text extraText;
     private GameObject extraPanel;
+
+    [SerializeField] private GameObject dev_Hint;
+    [SerializeField] private GameObject bigger_DevHint;
+
+    private bool biggerDevHintActive = false;
+    private bool devHintActive = true;
 
     private float animationTime = 1.0f;
     
@@ -57,7 +64,30 @@ public class Cheat_CurrentAction : MonoBehaviour
                 Debug.LogWarning("Game needs to be started from menu scene for CurrentAction hint to work correctly");
             }
         }
-        
+
+        if (GameObject.Find ("BiggerDevHint") != null) 
+        {
+            Init ();
+
+            if (GameObject.Find ("Preferences") != null) 
+            {
+
+                if ((!GameObject.Find ("Preferences").GetComponent<PlayerPrefsManager> ().practiceMode &&
+                    actionManager.GetComponent<TutorialManager> () == null) || (FindObjectOfType<TutorialManager> () != null && FindObjectOfType<Tutorial_UI> () == null)) 
+                
+                {
+                    GameObject.Find ("BiggerDevHint").SetActive (false);
+                    extraPanel.SetActive (false);
+                    extraButton.gameObject.SetActive (false);
+                }
+            } 
+            else 
+            {
+                Debug.LogWarning ("Game needs to be started from menu scene for CurrentAction hint to work correctly");
+            }
+        }
+
+
         timer = 0.0f;
         direction = 0;
 
@@ -67,7 +97,11 @@ public class Cheat_CurrentAction : MonoBehaviour
     private void Init()
     {
         GameObject devHint = GameObject.Find("DevHint");
-        textObject = devHint.transform.GetChild(0).GetComponent<Text>();
+        GameObject biggerDevHint = GameObject.Find ("BiggerDevHint");
+        textObjectDevHint = devHint.transform.GetChild(0).GetComponent<Text>();
+        textObjectBiggerDevHint = biggerDevHint.transform.GetChild (2).GetComponent<Text> ();
+
+        biggerDevHint.SetActive (false);
 
         extraText = extraPanel.transform.GetChild(0).GetComponent<Text>();
         extraPanel.SetActive(false);
@@ -82,46 +116,46 @@ public class Cheat_CurrentAction : MonoBehaviour
 
     private void Update()
     {
-        if (textObject == null)
+
+        if (textObjectDevHint == null)
             return;
 
-        if (!set)
-        {
-            textObject.text = actionManager.CurrentDescription;
+        if (textObjectBiggerDevHint == null)
+            return;
+
+        if (!set) {
+            textObjectDevHint.text = actionManager.CurrentDescription;
+            textObjectBiggerDevHint.text = actionManager.CurrentDescription;
             extraText.text = actionManager.CurrentExtraDescription;
             set = true;
         }
 
-        if ( direction == 1 )
-        {
-            if ( timer < animationTime )
-            {
+        if (direction == 1) {
+            if (timer < animationTime) {
                 timer += Time.deltaTime;
-                textObject.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
-                extraText.color = new Color(0.0f, 0.0f, 0.0f, 0.0f - timer / animationTime);
-            }
-            else
-            {
-                textObject.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
-                extraText.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
-                textObject.text = actionManager.CurrentDescription;
+                textObjectDevHint.color = new Color (0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
+                textObjectBiggerDevHint.color = new Color (0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
+                extraText.color = new Color (0.0f, 0.0f, 0.0f, 0.0f - timer / animationTime);
+            } else {
+                textObjectDevHint.color = new Color (0.0f, 0.0f, 0.0f, 0.0f);
+                textObjectBiggerDevHint.color = new Color (0.0f, 0.0f, 0.0f, 0.0f);
+                extraText.color = new Color (0.0f, 0.0f, 0.0f, 0.0f);
+                textObjectDevHint.text = actionManager.CurrentDescription;
+                textObjectBiggerDevHint.text = actionManager.CurrentDescription;
                 extraText.text = actionManager.CurrentExtraDescription;
                 timer = animationTime;
                 direction = -1;
             }
-        }
-        else if (direction == -1)
-        {
-            if (timer > 0.0f)
-            {
+        } else if (direction == -1) {
+            if (timer > 0.0f) {
                 timer -= Time.deltaTime;
-                textObject.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
-                extraText.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
-            }
-            else
-            {
-                textObject.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
-                extraText.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+                textObjectDevHint.color = new Color (0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
+                textObjectBiggerDevHint.color = new Color (0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
+                extraText.color = new Color (0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
+            } else {
+                textObjectDevHint.color = new Color (0.0f, 0.0f, 0.0f, 1.0f);
+                textObjectBiggerDevHint.color = new Color (0.0f, 0.0f, 0.0f, 1.0f);
+                extraText.color = new Color (0.0f, 0.0f, 0.0f, 1.0f);
                 timer = 0.0f;
                 direction = 0;
             }
@@ -155,5 +189,21 @@ public class Cheat_CurrentAction : MonoBehaviour
         {
             tutorial_extraClosed = true;
         }
+    }
+
+    public void ShowBiggerDevHint () {
+        dev_Hint.SetActive (false);
+        bigger_DevHint.SetActive (true);
+
+        biggerDevHintActive = true;
+        devHintActive = false;
+    }
+
+    public void RemoveBiggerDevHint () {
+        dev_Hint.SetActive (true);
+        bigger_DevHint.SetActive (false);
+
+        biggerDevHintActive = false;
+        devHintActive = true;
     }
 }

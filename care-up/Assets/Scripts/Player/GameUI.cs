@@ -14,7 +14,7 @@ public class GameUI : MonoBehaviour {
 	GameObject closeDialog;
     GameObject donePanelYesNo;
 
-	public void MoveBack()
+    public void MoveBack()
 	{
 		Player.GetComponent<PlayerScript>().MoveBackButton();
 	}

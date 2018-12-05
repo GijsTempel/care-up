@@ -115,8 +115,6 @@ namespace MBS
         private void ChangeRegistrationUIRed () {
             if(WULogin.EmailTheSame == true) {
 
-                Debug.Log ("hey");
-
                 RegEmailField = RegEmailField.GetComponent<Image> ();
 
                 RegEmailField.color = new Color32 (255, 0, 0, 150);
