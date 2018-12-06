@@ -175,11 +175,10 @@ public class EndScoreManager : MonoBehaviour {
             bl_SceneLoaderUtils.GetLoader.LoadLevel ("EndScore_Test");
         }
     }
-
     public void EndScoreSendMailResults()
     {
         string topic = "Care Up accreditatie aanvraag";
-        string content = "Completed scene: " + completedSceneName + "\n";
+        string content = "Completed scene: " + GameObject.FindObjectOfType<PlayerPrefsManager>().currentSceneVisualName + "\n";
         content += "Username: " + MBS.WULogin.username + "\n";
 
         Text text = GameObject.Find("Interactable Objects/Canvas/Send_Score/GameObject (1)/Username/Text").GetComponent<Text>();
