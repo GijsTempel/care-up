@@ -15,48 +15,75 @@ public class ShowOnFrame : StateMachineBehaviour
     protected float prevFrame;
 
 
-    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (PlayerAnimationManager.CompareFrames(frame, prevFrame, showFrame))
+        frame = 0f;
+        prevFrame = 0f;
+        if (showFrame == 0)
         {
-            if (ControlObjectName == "")
+            set_set();
+        }
+    }
+
+
+    void set_set()
+    {
+        if (ControlObjectName == "")
+        {
+            if (GameObject.FindObjectOfType<ObjectsIDController>() != null && ObjNames.Count != 0)
             {
-                if (GameObject.FindObjectOfType<ObjectsIDController>() != null && ObjNames.Count != 0)
+                ObjectsIDController idCont = GameObject.FindObjectOfType<ObjectsIDController>();
+                foreach (string __name in ObjNames)
                 {
-                    ObjectsIDController idCont = GameObject.FindObjectOfType<ObjectsIDController>();
-                    foreach (string __name in ObjNames)
+                    Obj = idCont.getFromHidden(__name);
+                    if (Obj != null)
                     {
-                        Obj = idCont.getFromHidden(__name);
-                        if (Obj != null)
-                        {
-                            Obj.SetActive(toShow);
-                        }
+                        Obj.SetActive(toShow);
                     }
                 }
-            }
-            else
-            {
-
-                if (GameObject.Find(ControlObjectName) != null && ObjNames.Count != 0)
-                {
-                    if (GameObject.Find(ControlObjectName).GetComponent<ExtraObjectOptions>() != null)
-                    {
-                        ExtraObjectOptions ControlObject = GameObject.Find(ControlObjectName).GetComponent<ExtraObjectOptions>();
-
-
-                        foreach (string __name in ObjNames)
-                        {
-                            ControlObject._show(__name, toShow);
-
-                        }
-                    }
-                }
-
             }
         }
+        else if (ControlObjectName == "-")
+        {
+            foreach (string __name in ObjNames)
+            {
+                if (GameObject.Find(__name) != null)
+                {
+                    GameObject.Find(__name).SetActive(toShow);
+                }
+            }
+        }
+        else
+        {
 
+            if (GameObject.Find(ControlObjectName) != null && ObjNames.Count != 0)
+            {
+                if (GameObject.Find(ControlObjectName).GetComponent<ExtraObjectOptions>() != null)
+                {
+                    ExtraObjectOptions ControlObject = GameObject.Find(ControlObjectName).GetComponent<ExtraObjectOptions>();
+
+
+                    foreach (string __name in ObjNames)
+                    {
+                        ControlObject._show(__name, toShow);
+
+                    }
+                }
+            }
+
+        }
+    }
+
+    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+    
         if (animator.speed != 0)
         {
+            if (PlayerAnimationManager.CompareFrames(frame, prevFrame, showFrame))
+            {
+                set_set();
+            }
+
             prevFrame = frame;
             frame += Time.deltaTime;
         }
