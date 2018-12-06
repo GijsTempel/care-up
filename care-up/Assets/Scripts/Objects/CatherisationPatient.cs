@@ -33,6 +33,9 @@ public class CatherisationPatient : PersonObject {
                     playerPosAtPatient.transform.position = playerPositionTarget.position;
                     playerPosAtPatient.transform.rotation = playerPositionTarget.rotation;
                     break;
+                case "HelpGetUp":
+                    animator.SetTrigger("helpGetUp");
+                    break;
                 default:
                     break;
             }
