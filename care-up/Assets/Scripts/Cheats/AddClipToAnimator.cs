@@ -9,32 +9,43 @@ using UnityEditor.Animations;
 
 public class AddClipToAnimator : MonoBehaviour {
 
-
+    public enum ActionType
+    {
+        Combine,
+        Use
+    };
 #if UNITY_EDITOR
-	public string subMachine = "";
+    public string subMachine = "";
     public AnimatorController animationController;
 	public AnimationClip leftClip;
     public AnimationClip rightClip;
 	public int LeftObjectsID = -1;
 	public int RightbjectsID = -1;
+    public ActionType actionType;
 
-    [ContextMenu("Run Test")]
+    [ContextMenu("Add animations")]
     public void Run()
     {
-		string sm = "Injection Scene";
+        string triger_base = "Combine";
+        if (actionType == AddClipToAnimator.ActionType.Use)
+        {
+            triger_base = "Use";
+        }
+
+        string sm = "Injection Scene";
 		if (subMachine != "")
 			sm = subMachine;
         if (leftClip != null) 
         { 
             Motion LeftMotion = (Motion)leftClip as Motion;
-            AddActionToMachine(0, "Combine Animations/" + sm, LeftMotion, LeftObjectsID, RightbjectsID, "Combine");
-			AddActionToMachine(1, "Combine Animations/" + sm, LeftMotion, LeftObjectsID, RightbjectsID, "S Combine");
+            AddActionToMachine(0, "Combine Animations/" + sm, LeftMotion, LeftObjectsID, RightbjectsID, triger_base);
+			AddActionToMachine(1, "Combine Animations/" + sm, LeftMotion, LeftObjectsID, RightbjectsID, "S " + triger_base);
 	    }
         if (rightClip != null)
         {
             Motion RightMotion = (Motion)rightClip as Motion;
-			AddActionToMachine(0, "Combine Animations/" + sm, RightMotion, RightbjectsID, LeftObjectsID, "Combine");
-			AddActionToMachine(1, "Combine Animations/" + sm, RightMotion, RightbjectsID, LeftObjectsID, "S Combine");
+			AddActionToMachine(0, "Combine Animations/" + sm, RightMotion, RightbjectsID, LeftObjectsID, triger_base);
+			AddActionToMachine(1, "Combine Animations/" + sm, RightMotion, RightbjectsID, LeftObjectsID, "S " + triger_base);
         }
     }
 
