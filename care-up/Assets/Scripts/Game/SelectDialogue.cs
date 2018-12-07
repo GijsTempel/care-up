@@ -94,7 +94,7 @@ public class SelectDialogue : MonoBehaviour {
 
     public void Init(bool selfDestroy = true)
     {
-        selectedMaterial = Color.blue;
+        //selectedMaterial = Color.blue;
         defaultMaterial = Color.white;
         correctMaterial = Color.green;
         wrongMaterial = Color.red;
@@ -229,13 +229,13 @@ public class SelectDialogue : MonoBehaviour {
                         {
                             case OptionSide.Bottom:
                                 bottom.color = wrongMaterial;
-                                firstCB.highlightedColor = new Color (255, 0, 0, 255);
-                                first.colors = firstCB;
+                                secondCB.highlightedColor = new Color (255, 0, 0, 255);
+                                second.colors = secondCB;
                                 break;
                             case OptionSide.Left:
                                 left.color = wrongMaterial;
-                                secondCB.highlightedColor = new Color (255, 0, 0, 255);
-                                second.colors = secondCB;
+                                fourthCB.highlightedColor = new Color (255, 0, 0, 255);
+                                fourth.colors = fourthCB;
                                 break;
                             case OptionSide.Right:
                                 right.color = wrongMaterial;
@@ -244,8 +244,8 @@ public class SelectDialogue : MonoBehaviour {
                                 break;
                             case OptionSide.Top:
                                 top.color = wrongMaterial;
-                                fourthCB.highlightedColor = new Color (255, 0, 0, 255);
-                                fourth.colors = fourthCB;
+                                firstCB.highlightedColor = new Color (255, 0, 0, 255);
+                                first.colors = firstCB;
                                 break;
                         }
 
