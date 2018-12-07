@@ -11,6 +11,8 @@ public class MainMenu : MonoBehaviour {
     private PlayerPrefsManager prefs;
 	public string eMail="info@triplemotion.nl";
 
+    public GameObject UpdatesPanel;
+
     private void Start()
     {
         if (GameObject.Find("Preferences") != null)
@@ -150,8 +152,13 @@ public class MainMenu : MonoBehaviour {
         canvas.transform.Find("BugReportUI").gameObject.SetActive(false);
 
     }
+    public void OnUpdatestCloseButtonClick()
+    {
+        //turning of the updates panel when button is clicked
+        UpdatesPanel.SetActive(false);
+    }
 
-	public void OnSendEmail()
+    public void OnSendEmail()
 	{
 		System.Diagnostics.Process.Start (("mailto:" + eMail + "?subject=" + "Fout melding Care-Up."
 		+ "&body="
