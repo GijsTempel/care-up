@@ -46,6 +46,14 @@ public class WalkToGroup : MonoBehaviour
         }
     }
 
+
+    public void SetTarget(Transform _target)
+    {
+        target = _target;
+    }
+
+
+
     private void Start()
     {
         gameLogic = GameObject.Find("GameLogic");
@@ -75,6 +83,8 @@ public class WalkToGroup : MonoBehaviour
             target = null;
         }
     }
+
+
 
     protected void Update()
     {
