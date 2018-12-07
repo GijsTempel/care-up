@@ -55,6 +55,12 @@ public class UsableObject : InteractableObject {
                                 patient.NextDialogue();
                             }
 
+                            CatherisationPatient catPatient = GameObject.FindObjectOfType<CatherisationPatient>();
+                            if (catPatient != null)
+                            {
+                                catPatient.NextDialogue();
+                            }
+
                             string message = "Zorg voor een zorgvuldige handhygiëne. Handhygiëne is in dit protocol versneld om de gebruikerservaring te verbeteren";
                             RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
                             messageCenter.NewMessage("Zorgvuldige handhygiëne", message, RobotUIMessageTab.Icon.Info);
