@@ -54,6 +54,16 @@ public class SelectDialogue : MonoBehaviour {
     private Image right;
     private Image left;
 
+    private Button first;
+    private Button second;
+    private Button third;
+    private Button fourth;
+
+    private ColorBlock firstCB;
+    private ColorBlock secondCB;
+    private ColorBlock thirdCB;
+    private ColorBlock fourthCB;
+
     private Color selectedMaterial;
     private Color defaultMaterial;
     private Color correctMaterial;
@@ -94,6 +104,16 @@ public class SelectDialogue : MonoBehaviour {
         right = transform.GetChild(3).GetComponent<Image>();
         left = transform.GetChild(4).GetComponent<Image>();
 
+        first = transform.GetChild (1).GetComponent<Button> ();
+        second = transform.GetChild (2).GetComponent<Button> ();
+        third = transform.GetChild (3).GetComponent<Button> ();
+        fourth = transform.GetChild (4).GetComponent<Button> ();
+
+        firstCB = first.colors;
+        secondCB = second.colors;
+        thirdCB = third.colors;
+        fourthCB = fourth.colors;
+
         top.color = defaultMaterial;
         bottom.color = defaultMaterial;
         right.color = defaultMaterial;
@@ -103,6 +123,11 @@ public class SelectDialogue : MonoBehaviour {
         bottom.gameObject.SetActive(false);
         right.gameObject.SetActive(false);
         left.gameObject.SetActive(false);
+
+        first.gameObject.SetActive (false);
+        second.gameObject.SetActive (false);
+        third.gameObject.SetActive (false);
+        fourth.gameObject.SetActive (false);
 
         //mouseState = Vector2.zero;
         currentOption = OptionSide.None;
@@ -199,19 +224,28 @@ public class SelectDialogue : MonoBehaviour {
                     }
                     else // no info means wrong choice
                     {
-                        switch(currentOption)
+
+                        switch (currentOption)
                         {
                             case OptionSide.Bottom:
                                 bottom.color = wrongMaterial;
+                                firstCB.highlightedColor = new Color (255, 0, 0, 255);
+                                first.colors = firstCB;
                                 break;
                             case OptionSide.Left:
                                 left.color = wrongMaterial;
+                                secondCB.highlightedColor = new Color (255, 0, 0, 255);
+                                second.colors = secondCB;
                                 break;
                             case OptionSide.Right:
                                 right.color = wrongMaterial;
+                                thirdCB.highlightedColor = new Color (255, 0, 0, 255);
+                                third.colors = thirdCB;
                                 break;
                             case OptionSide.Top:
                                 top.color = wrongMaterial;
+                                fourthCB.highlightedColor = new Color (255, 0, 0, 255);
+                                fourth.colors = fourthCB;
                                 break;
                         }
 
@@ -240,7 +274,7 @@ public class SelectDialogue : MonoBehaviour {
                 if ( state )
                 {
                     currentMaterial = top.color;
-                    top.color = selectedMaterial;
+                    //top.color = selectedMaterial;
                 }
                 else
                 {
@@ -251,7 +285,7 @@ public class SelectDialogue : MonoBehaviour {
                 if (state)
                 {
                     currentMaterial = bottom.color;
-                    bottom.color = selectedMaterial;
+                    //bottom.color = selectedMaterial;
                 }
                 else
                 {
@@ -262,7 +296,7 @@ public class SelectDialogue : MonoBehaviour {
                 if (state)
                 {
                     currentMaterial = right.color;
-                    right.color = selectedMaterial;
+                    //right.color = selectedMaterial;
                 }
                 else
                 {
@@ -273,7 +307,7 @@ public class SelectDialogue : MonoBehaviour {
                 if (state)
                 {
                     currentMaterial = left.color;
-                    left.color = selectedMaterial;
+                    //left.color = selectedMaterial;
                 }
                 else
                 {
