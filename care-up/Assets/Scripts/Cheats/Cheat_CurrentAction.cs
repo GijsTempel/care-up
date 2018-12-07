@@ -111,7 +111,9 @@ public class Cheat_CurrentAction : MonoBehaviour
         extraButton.onClick.AddListener(ToggleExtraInfoPanel);
 
         Button extraCloseBtn = extraPanel.transform.Find("Image").GetComponent<Button>();
+        Button extra_Close_Btn = extraPanel.transform.Find ("Image (1)").GetComponent<Button> ();
         extraCloseBtn.onClick.AddListener(ToggleExtraInfoPanel);
+        extra_Close_Btn.onClick.AddListener (ToggleExtraInfoPanel);
     }
 
     private void Update()
@@ -205,5 +207,13 @@ public class Cheat_CurrentAction : MonoBehaviour
 
         biggerDevHintActive = false;
         devHintActive = true;
+    }
+
+    public void RemoveDevHint () {
+        dev_Hint.SetActive (false);
+    }
+
+    public void ShowDevHint () {
+        dev_Hint.SetActive (true);
     }
 }
