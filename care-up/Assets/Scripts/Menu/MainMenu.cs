@@ -41,6 +41,21 @@ public class MainMenu : MonoBehaviour {
             {
                 text.text = "";
             }
+            //handle updates panel
+            bool updatesSeen = PlayerPrefs.GetInt("_updatesSeen") == 1;
+            string versionSeen = PlayerPrefs.GetString("__version", "");
+            string currentVersion = Application.version;
+
+            if (updatesSeen == false && versionSeen != currentVersion)
+            {
+                UpdatesPanel.SetActive(true);
+                PlayerPrefs.SetInt("_updatesSeen", 1);
+                PlayerPrefs.SetString("__version", currentVersion);
+            }
+            else
+            {
+                UpdatesPanel.SetActive(false);
+            }
         }
     }
 
