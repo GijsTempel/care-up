@@ -110,8 +110,8 @@ public class Cheat_CurrentAction : MonoBehaviour
 		extraButton = GameObject.Find("ExtraButton").GetComponent<Button>();
         extraButton.onClick.AddListener(ToggleExtraInfoPanel);
 
-        Button extraCloseBtn = extraPanel.transform.Find("Image").GetComponent<Button>();
-        Button extra_Close_Btn = extraPanel.transform.Find ("Image (1)").GetComponent<Button> ();
+        Button extraCloseBtn = extraPanel.transform.Find("CloseExtra").GetComponent<Button>();
+        Button extra_Close_Btn = extraPanel.transform.Find ("CloseExtraCheckmark").GetComponent<Button> ();
         extraCloseBtn.onClick.AddListener(ToggleExtraInfoPanel);
         extra_Close_Btn.onClick.AddListener (ToggleExtraInfoPanel);
     }
