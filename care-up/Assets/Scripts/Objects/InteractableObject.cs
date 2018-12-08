@@ -228,6 +228,12 @@ public class InteractableObject : MonoBehaviour {
         transform.rotation = savedRotation;
     }
 
+    public void BaseLoadPosition()
+    {
+        transform.position = savedPosition;
+        transform.rotation = savedRotation;
+    }
+
     public void GetSavesLocation(out Vector3 outPosition, out Quaternion outRotation)
     {
         outPosition = savedPosition;

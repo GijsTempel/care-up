@@ -91,7 +91,7 @@ public class PickableObject : InteractableObject
         {
             GameObject replaced = inventory.CreateObjectByName(prefabOutOfHands, savedPosition);
             replaced.GetComponent<PickableObject>().SavePosition(savedPosition, savedRotation, true);
-            replaced.GetComponent<PickableObject>().LoadPosition();
+            replaced.GetComponent<PickableObject>().BaseLoadPosition();
             Destroy(gameObject);
         }
         else
