@@ -28,7 +28,8 @@ namespace MBS
             termsandcondition_screen,
             terms_condition_screen,
             voorwaarden_screen,
-            custom_1;
+            custom_1,
+            start_menu;
         }
 
         [System.Serializable]
@@ -350,8 +351,8 @@ namespace MBS
                 RegPasswordField.color = new Color32 (255, 0, 0, 150);
                 RegRepeatPasswordField.color = new Color32 (255, 0, 0, 150);
 
-                StatusMessage.Message = localisation.AllFieldsRequired;
-                DisplayScreen (panels.login_menu);
+                StatusMessage.Message = "Niet elk veld is ingevuld.";
+                DisplayScreen (panels.register_screen);
                 return;
             }
             if ( fields.register_verify.text.Trim() != fields.register_password.text.Trim() )
@@ -362,8 +363,8 @@ namespace MBS
                 RegPasswordField.color = new Color32 (255, 0, 0, 150);
                 RegRepeatPasswordField.color = new Color32 (255, 0, 0, 150);
 
-                StatusMessage.Message = localisation.FailedVerification;
-                DisplayScreen (panels.login_menu);
+                StatusMessage.Message = "De wachtwoorden komen niet overeen.";
+                DisplayScreen (panels.register_screen);
                 return;
             }
             if ( !fields.register_email.text.Trim().IsValidEmailFormat() )
@@ -372,8 +373,8 @@ namespace MBS
                 
                 RegEmailField.color = new Color32 (255, 0, 0, 150);
               
-                StatusMessage.Message = localisation.InvalidEmail;
-                DisplayScreen (panels.login_menu);
+                StatusMessage.Message = "Het e-mailadres is niet geldig.";
+                DisplayScreen (panels.register_screen);
                 return;
             }
 
@@ -414,13 +415,14 @@ namespace MBS
                 MBSNotification.SpawnInstance(c , new Vector2( 270f, -30f ), new Vector2( -20f, -30f ), localisation.RegistrationSuccessHeader, localisation.RegistrationSuccessMessage );
             WULogin.HasSerial = true;
             WULogin.SerialNumber = response [0].String( "serial" );
-            bl_SceneLoaderUtils.GetLoader.LoadLevel("UMenuPro");
+            bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
         }
 
         void OnRegistrationFailed( CMLData response )
         {
+            Debug.Log("Gefaald");
             StatusMessage.Message = response.String( "message" );
-            DisplayScreen( panels.serialnumber_screen );
+            DisplayScreen( panels.register_screen);
         }
 #endif
 
@@ -606,7 +608,7 @@ namespace MBS
 #endregion
 
 #region ugui accessors
-        override public void ShowLoginMenuScreen() => DisplayScreen( panels.login_menu );
+        override public void ShowLoginMenuScreen() => DisplayScreen( panels.start_menu );
         public void ShowPreLoginMenu() => DisplayScreen( panels.login_menu );
         public void ShowPostLoginMenu() => DisplayScreen( panels.post_login_menu_screen );
         public void ShowLoginScreen() => DisplayScreen( panels.login_screen );
