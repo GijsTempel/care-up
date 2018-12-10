@@ -52,13 +52,13 @@ public class UsableObject : InteractableObject {
                             InjectionPatient patient = GameObject.FindObjectOfType<InjectionPatient>();
                             if (patient != null)
                             {
-                                patient.NextDialogue();
+                                patient.SkipGreetingDialogue();
                             }
 
                             CatherisationPatient catPatient = GameObject.FindObjectOfType<CatherisationPatient>();
                             if (catPatient != null)
                             {
-                                catPatient.NextDialogue();
+                                catPatient.SkipGreetingDialogue();
                             }
 
                             string message = "Zorg voor een zorgvuldige handhygiëne. Handhygiëne is in dit protocol versneld om de gebruikerservaring te verbeteren";

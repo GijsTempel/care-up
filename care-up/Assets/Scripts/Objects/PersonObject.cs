@@ -117,6 +117,14 @@ public class PersonObject : InteractableObject
         }
     }
 
+    public void SkipGreetingDialogue()
+    {
+        if (dialogueXmls[currentDialogueIndex] == "Greeting")
+        {
+            NextDialogue();
+        }
+    }
+
     /// <summary>
     /// Loads available topics to talk from xml file.
     /// </summary>
