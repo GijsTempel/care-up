@@ -28,6 +28,7 @@ namespace MBS
             termsandcondition_screen,
             terms_condition_screen,
             voorwaarden_screen,
+            error_pop_up,
             custom_1,
             start_menu;
         }
@@ -67,6 +68,8 @@ namespace MBS
         [SerializeField] private Image RegEmailField;
         [SerializeField] private Image RegPasswordField;
         [SerializeField] private Image RegRepeatPasswordField;
+
+        [SerializeField] private Text ErrorText;
 
         private bool remove_text = false;
 
@@ -116,6 +119,10 @@ namespace MBS
         private void ChangeRegistrationUIRed () {
             if(WULogin.EmailTheSame == true) {
 
+                DisplayScreen (panels.error_pop_up);
+
+                ErrorText.text = "Dit e-mailadres is al in gebruik.";
+
                 RegEmailField = RegEmailField.GetComponent<Image> ();
 
                 RegEmailField.color = new Color32 (255, 0, 0, 150);
@@ -126,6 +133,10 @@ namespace MBS
 
                 WULogin.EmailTheSame = false;
             } else {
+
+                DisplayScreen (panels.error_pop_up);
+
+                ErrorText.text = "Deze gebruikersnaam is al in gebruik.";
 
                 RegUsernameField = RegUsernameField.GetComponent<Image> ();
 
@@ -211,6 +222,8 @@ namespace MBS
             {
                 InitWULoginGUI();
             }
+
+            ErrorText.GetComponent<Text> ();
         }
 
         virtual protected void InitWULoginGUI()
@@ -341,6 +354,7 @@ namespace MBS
         {
             if ( fields.register_email.text.Trim() == string.Empty || fields.register_password.text.Trim() == string.Empty || fields.register_username.text.Trim() == string.Empty )
             {
+
                 RegUsernameField = RegUsernameField.GetComponent<Image> ();
                 RegEmailField = RegEmailField.GetComponent<Image> ();
                 RegPasswordField = RegPasswordField.GetComponent<Image> ();
@@ -350,31 +364,33 @@ namespace MBS
                 RegEmailField.color = new Color32 (255, 0, 0, 150);
                 RegPasswordField.color = new Color32 (255, 0, 0, 150);
                 RegRepeatPasswordField.color = new Color32 (255, 0, 0, 150);
-
-                StatusMessage.Message = "Niet elk veld is ingevuld.";
-                DisplayScreen (panels.register_screen);
+                
+                DisplayScreen (panels.error_pop_up);
+                ErrorText.text = "Je moet alle velden invullen";
                 return;
             }
             if ( fields.register_verify.text.Trim() != fields.register_password.text.Trim() )
             {
+
                 RegPasswordField = RegPasswordField.GetComponent<Image> ();
                 RegRepeatPasswordField = RegRepeatPasswordField.GetComponent<Image> ();
-                
+
                 RegPasswordField.color = new Color32 (255, 0, 0, 150);
                 RegRepeatPasswordField.color = new Color32 (255, 0, 0, 150);
-
-                StatusMessage.Message = "De wachtwoorden komen niet overeen.";
-                DisplayScreen (panels.register_screen);
+                
+                DisplayScreen (panels.error_pop_up);
+                ErrorText.text = "De wachtwoorden komen niet overeen.";
                 return;
             }
             if ( !fields.register_email.text.Trim().IsValidEmailFormat() )
             {
+
                 RegEmailField = RegEmailField.GetComponent<Image> ();
-                
+
                 RegEmailField.color = new Color32 (255, 0, 0, 150);
               
-                StatusMessage.Message = "Het e-mailadres is niet geldig.";
-                DisplayScreen (panels.register_screen);
+                DisplayScreen (panels.error_pop_up);
+                ErrorText.text = "Het ingevulde e-mailadres in niet geldig.";
                 return;
             }
 
