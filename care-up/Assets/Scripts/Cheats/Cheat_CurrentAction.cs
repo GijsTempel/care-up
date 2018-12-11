@@ -216,4 +216,12 @@ public class Cheat_CurrentAction : MonoBehaviour
     public void ShowDevHint () {
         dev_Hint.SetActive (true);
     }
+
+    public void OpeningTablet () {
+        dev_Hint.SetActive (true);
+        bigger_DevHint.SetActive (false);
+
+        devHintActive = true;
+        biggerDevHintActive = false;
+    }
 }
