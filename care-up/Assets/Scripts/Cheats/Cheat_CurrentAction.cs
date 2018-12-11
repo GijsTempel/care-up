@@ -35,11 +35,20 @@ public class Cheat_CurrentAction : MonoBehaviour
     [HideInInspector]
     public bool tutorial_extraClosed = false;
 
+    private PlayerPrefsManager manager;
+
     Tutorial_UI tutorial_UI;
 
     void Start()
     {
-		extraPanel = GameObject.Find("Extra").gameObject;
+        if (GameObject.Find ("Preferences") != null) {
+            manager = GameObject.Find ("Preferences").GetComponent<PlayerPrefsManager> ();
+            if (manager == null) Debug.LogWarning ("No prefs manager ( start from 1st scene? )");
+        } else {
+            Debug.LogWarning ("No prefs manager ( start from 1st scene? )");
+        }
+
+        extraPanel = GameObject.Find("Extra").gameObject;
         actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
         if (actionManager == null) Debug.LogError("No action manager found.");
 
@@ -194,34 +203,44 @@ public class Cheat_CurrentAction : MonoBehaviour
     }
 
     public void ShowBiggerDevHint () {
-        dev_Hint.SetActive (false);
-        bigger_DevHint.SetActive (true);
+        if (manager.practiceMode == true) {
+            dev_Hint.SetActive (false);
+            bigger_DevHint.SetActive (true);
 
-        biggerDevHintActive = true;
-        devHintActive = false;
+            biggerDevHintActive = true;
+            devHintActive = false;
+        }
     }
 
     public void RemoveBiggerDevHint () {
-        dev_Hint.SetActive (true);
-        bigger_DevHint.SetActive (false);
+        if (manager.practiceMode == true) {
+            dev_Hint.SetActive (true);
+            bigger_DevHint.SetActive (false);
 
-        biggerDevHintActive = false;
-        devHintActive = true;
+            biggerDevHintActive = false;
+            devHintActive = true;
+        }
     }
 
     public void RemoveDevHint () {
-        dev_Hint.SetActive (false);
+        if (manager.practiceMode == true) {
+            dev_Hint.SetActive (false);
+        }
     }
 
     public void ShowDevHint () {
-        dev_Hint.SetActive (true);
+        if (manager.practiceMode == true) {
+            dev_Hint.SetActive (true);
+        }
     }
 
     public void OpeningTablet () {
-        dev_Hint.SetActive (true);
-        bigger_DevHint.SetActive (false);
+        if (manager.practiceMode == true) {
+            dev_Hint.SetActive (true);
+            bigger_DevHint.SetActive (false);
 
-        devHintActive = true;
-        biggerDevHintActive = false;
+            devHintActive = true;
+            biggerDevHintActive = false;
+        }
     }
 }
