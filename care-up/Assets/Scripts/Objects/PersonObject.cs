@@ -119,9 +119,11 @@ public class PersonObject : InteractableObject
 
     public void SkipGreetingDialogue()
     {
-        if (dialogueXmls[currentDialogueIndex] == "Greeting")
-        {
-            NextDialogue();
+        if (currentDialogueIndex < dialogueXmls.Count) {
+            if (dialogueXmls[currentDialogueIndex] == "Greeting")
+            {
+                NextDialogue();
+            }
         }
     }
 
