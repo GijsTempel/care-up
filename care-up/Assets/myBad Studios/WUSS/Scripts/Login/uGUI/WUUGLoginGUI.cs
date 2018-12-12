@@ -107,6 +107,7 @@ namespace MBS
         }
 
         private void ChangeLoginUIRed () {
+
             LoginUsernameField = LoginUsernameField.GetComponent<Image> ();
             LoginPasswordField = LoginPasswordField.GetComponent<Image> ();
 
@@ -118,6 +119,8 @@ namespace MBS
 
         private void ChangeRegistrationUIRed () {
             if(WULogin.EmailTheSame == true) {
+
+                WULogin.ChangeAllToWhite = true;
 
                 DisplayScreen (panels.error_pop_up);
 
@@ -133,6 +136,7 @@ namespace MBS
 
                 WULogin.EmailTheSame = false;
             } else {
+                WULogin.ChangeAllToWhite = true;
 
                 DisplayScreen (panels.error_pop_up);
 
@@ -372,8 +376,15 @@ namespace MBS
             if ( fields.register_verify.text.Trim() != fields.register_password.text.Trim() )
             {
 
+                RegUsernameField = RegUsernameField.GetComponent<Image> ();
+                RegEmailField = RegEmailField.GetComponent<Image> ();
                 RegPasswordField = RegPasswordField.GetComponent<Image> ();
                 RegRepeatPasswordField = RegRepeatPasswordField.GetComponent<Image> ();
+
+                RegUsernameField.color = new Color32 (210, 210, 210, 150);
+                RegEmailField.color = new Color32 (210, 210, 210, 150);
+                RegPasswordField.color = new Color32 (210, 210, 210, 150);
+                RegRepeatPasswordField.color = new Color32 (210, 210, 210, 150);
 
                 RegPasswordField.color = new Color32 (255, 0, 0, 150);
                 RegRepeatPasswordField.color = new Color32 (255, 0, 0, 150);
@@ -385,7 +396,15 @@ namespace MBS
             if ( !fields.register_email.text.Trim().IsValidEmailFormat() )
             {
 
+                RegUsernameField = RegUsernameField.GetComponent<Image> ();
                 RegEmailField = RegEmailField.GetComponent<Image> ();
+                RegPasswordField = RegPasswordField.GetComponent<Image> ();
+                RegRepeatPasswordField = RegRepeatPasswordField.GetComponent<Image> ();
+
+                RegUsernameField.color = new Color32 (210, 210, 210, 150);
+                RegEmailField.color = new Color32 (210, 210, 210, 150);
+                RegPasswordField.color = new Color32 (210, 210, 210, 150);
+                RegRepeatPasswordField.color = new Color32 (210, 210, 210, 150);
 
                 RegEmailField.color = new Color32 (255, 0, 0, 150);
               

@@ -163,6 +163,7 @@ namespace MBS
             }
             catch ( WPServerErrorException e )
             {
+                WULogin.ChangeAllToWhite = true;
                 error.Set( "message", $"WPServer error: {e.Message}" );
 
                 if ( Instance.show_on_screen_errors )
