@@ -135,7 +135,8 @@ namespace MBS
                 RegUsernameField.color = new Color32 (210, 210, 210, 150);
 
                 WULogin.EmailTheSame = false;
-            } else {
+            } 
+            if(WULogin.UsernameTheSame == true) {
                 WULogin.ChangeAllToWhite = true;
 
                 DisplayScreen (panels.error_pop_up);
