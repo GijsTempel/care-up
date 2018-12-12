@@ -169,7 +169,7 @@ namespace MBS
                 if ( Instance.show_on_screen_errors )
                     StatusMessage.Message = e.Message;
 
-                if (e.Message == "Sorry, dit e-mailadres is al in gebruik!") {
+                if (e.Message == "Failed to create account: Sorry, dit e-mailadres is al in gebruik!") {
                     WULogin.EmailTheSame = true;
                     WULogin.on_Registration_Success = false;
                 }
