@@ -173,7 +173,11 @@ namespace MBS
                     WULogin.EmailTheSame = true;
                     WULogin.on_Registration_Success = false;
                 }
-                   
+
+                if (e.Message == "incorrect password") {
+                    WULogin.on_Login_Success = false;
+                }
+
 
                 failedresponse?.Invoke( error );
 

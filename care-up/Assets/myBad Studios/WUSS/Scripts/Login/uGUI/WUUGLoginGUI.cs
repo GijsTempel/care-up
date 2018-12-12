@@ -29,6 +29,7 @@ namespace MBS
             terms_condition_screen,
             voorwaarden_screen,
             error_pop_up,
+            error_login_pop_up,
             custom_1,
             start_menu;
         }
@@ -58,7 +59,7 @@ namespace MBS
             personal_email,
             personal_url,
             personal_bio,
-                serial_number;
+            serial_number;
         }
 
         [SerializeField] private Image LoginUsernameField;
@@ -70,13 +71,16 @@ namespace MBS
         [SerializeField] private Image RegRepeatPasswordField;
 
         [SerializeField] private Text ErrorText;
+        [SerializeField] private Text ErrorLoginText;
 
         private bool remove_text = false;
 
         void Update () {
             if (WULogin.on_Login_Success == false) {
                 ChangeLoginUIRed ();
-            }else if (WULogin.on_Registration_Success == false) {
+                DisplayScreen (panels.error_login_pop_up);
+                ErrorLoginText.text = "Het wachtwoord of gebruikersnaam is incorrect";
+            } else if (WULogin.on_Registration_Success == false) {
                 ChangeRegistrationUIRed ();
             }
 
@@ -123,15 +127,11 @@ namespace MBS
                 WULogin.ChangeAllToWhite = true;
 
                 DisplayScreen (panels.error_pop_up);
-
                 ErrorText.text = "Dit e-mailadres is al in gebruik.";
 
                 RegEmailField = RegEmailField.GetComponent<Image> ();
-
                 RegEmailField.color = new Color32 (255, 0, 0, 150);
-
                 RegUsernameField = RegUsernameField.GetComponent<Image> ();
-
                 RegUsernameField.color = new Color32 (210, 210, 210, 150);
 
                 WULogin.EmailTheSame = false;
@@ -139,11 +139,9 @@ namespace MBS
                 WULogin.ChangeAllToWhite = true;
 
                 DisplayScreen (panels.error_pop_up);
-
                 ErrorText.text = "Deze gebruikersnaam is al in gebruik.";
 
                 RegUsernameField = RegUsernameField.GetComponent<Image> ();
-
                 RegUsernameField.color = new Color32 (255, 0, 0, 150);
             }
 
@@ -228,6 +226,7 @@ namespace MBS
             }
 
             ErrorText.GetComponent<Text> ();
+            ErrorLoginText.GetComponent<Text> ();
         }
 
         virtual protected void InitWULoginGUI()
