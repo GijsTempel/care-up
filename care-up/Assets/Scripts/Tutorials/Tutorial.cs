@@ -29,6 +29,7 @@ public class Tutorial : TutorialManager {
     public bool closeTab = false;
     public bool expectedRobotUIstate = false;
     public bool expectedHintsState = false;
+    public bool biggerHintOpenend = false;
 
     protected override void Start () {
         base.Start ();
@@ -78,16 +79,19 @@ public class Tutorial : TutorialManager {
                 break;
                 case TutorialStep.DevHintsExpl:
                 if (nextButtonClicked) {
+
                     audioSource.PlayOneShot (Popup, 0.1F);
                     currentStep = TutorialStep.DevHintsMax;
-
+                    hintsN.ResetSize ();
+                    //hintsBox.anchoredPosition = new Vector2(-560, -68);
                     hintsN.SetIconPosition (0);
-                    hintsN.LockTo ("DevHint/Fullscreen", new Vector3 (375.39f, -84.72f, 0.00f));
+                    hintsN.LockTo ("/DevHint/Fullscreen", new Vector3 (375.39f, -84.72f, 0.00f));
                     UItext.text = "Klik op de vergroot knop.";
+                    biggerHintOpenend = true;
                 }
                 break;
                 case TutorialStep.DevHintsMax:
-                if (nextButtonClicked) {
+                if (biggerHintOpenend == true) {
                     audioSource.PlayOneShot (Popup, 0.1F);
                     currentStep = TutorialStep.DevHintsExplMax;
 
