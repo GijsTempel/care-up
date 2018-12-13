@@ -163,22 +163,32 @@ namespace MBS
             }
             catch ( WPServerErrorException e )
             {
-                error.Set( "message", $"WPServer error: {e.Message}" );
+                WULogin.ChangeAllToWhite = true;
+                error.Set ("message", $"WPServer error: {e.Message}" );
 
                 if ( Instance.show_on_screen_errors )
                     StatusMessage.Message = e.Message;
 
-                if (e.Message == "Sorry, dit e-mailadres is al in gebruik!") {
+                if (e.Message == "Failed to create account: Sorry, dit e-mailadres is al in gebruik!") {
                     WULogin.EmailTheSame = true;
                     WULogin.on_Registration_Success = false;
                 }
-                   
 
-                failedresponse?.Invoke( error );
+                if (e.Message == "Username already in use") {
+                    WULogin.UsernameTheSame = true;
+                    WULogin.on_Registration_Success = false;
+                }
 
-                if (e.Message == "Kan de server niet bereiken. Neem contact op via support@careup.nl")
+                if (e.Message == "incorrect password") {
+                    WULogin.on_Login_Success = false;
+                }
+
+                if (Instance.show_on_screen_errors)
+                    failedresponse?.Invoke (error);
+
+                    if (e.Message == "Kan de server niet bereiken. Neem contact op via support@careup.nl")
                     GameObject.Find("NoInternet").GetComponent<Animator>().SetTrigger("pop");
-                Debug.LogWarning( $"{e.Message}\n{w.downloadHandler.text}" );
+                Debug.LogWarning ($"{e.Message}\n{w.downloadHandler.text}" );
             }
         }
 

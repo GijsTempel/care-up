@@ -17,6 +17,7 @@ namespace CareUp.Actions
         public int pointValue;
         public bool notMandatory;
         public bool sceneDoneTrigger; // for test version, when all steps are optional
+        public float quizTriggerTime;
 
         protected ActionManager.ActionType type;
 
@@ -40,7 +41,7 @@ namespace CareUp.Actions
         /// <param name="index">Index of action (see xml)</param>
         /// <param name="descr">Sentence from xml, describing action</param>
         /// <param name="audio">Name of audiofile, that will be played when hint used</param>
-        public Action(ActionManager.ActionType t, int index, string sdescr, string fdescr, string audio, string extra, int points, bool notNeeded)
+        public Action(ActionManager.ActionType t, int index, string sdescr, string fdescr, string audio, string extra, int points, bool notNeeded, float quizTime)
         {
             type = t;
             subindex = index;
@@ -51,6 +52,7 @@ namespace CareUp.Actions
             pointValue = points;
             notMandatory = notNeeded;
             sceneDoneTrigger = false;
+            quizTriggerTime = quizTime;
         }
 
         /// <summary>
@@ -71,8 +73,8 @@ namespace CareUp.Actions
         private string leftInput;
         private string rightInput;
 
-        public CombineAction(string left, string right, int index, string sdescr, string fdescr, string audio, string extra, int points, bool notNeeded)
-            : base(ActionManager.ActionType.ObjectCombine, index, sdescr, fdescr, audio, extra, points, notNeeded)
+        public CombineAction(string left, string right, int index, string sdescr, string fdescr, string audio, string extra, int points, bool notNeeded, float quizTime)
+            : base(ActionManager.ActionType.ObjectCombine, index, sdescr, fdescr, audio, extra, points, notNeeded, quizTime)
         {
             leftInput = left;
             rightInput = right;
@@ -119,8 +121,8 @@ namespace CareUp.Actions
 
         public string buttonText;
 
-        public UseAction(string use, int index, string sdescr, string fdescr, string audio, string extra, string button, int points, bool notNeeded)
-            : base(ActionManager.ActionType.ObjectUse, index, sdescr, fdescr, audio, extra, points, notNeeded)
+        public UseAction(string use, int index, string sdescr, string fdescr, string audio, string extra, string button, int points, bool notNeeded, float quizTime)
+            : base(ActionManager.ActionType.ObjectUse, index, sdescr, fdescr, audio, extra, points, notNeeded, quizTime)
         {
             useInput = use;
             buttonText = button;
@@ -159,8 +161,8 @@ namespace CareUp.Actions
         private string topicInput;
         private string person = "Patient"; // TODO
 
-        public TalkAction(string topic, int index, string sdescr, string fdescr, string audio, string extra, int points, bool notNeeded)
-            : base(ActionManager.ActionType.PersonTalk, index, sdescr, fdescr, audio, extra, points, notNeeded)
+        public TalkAction(string topic, int index, string sdescr, string fdescr, string audio, string extra, int points, bool notNeeded, float quizTime)
+            : base(ActionManager.ActionType.PersonTalk, index, sdescr, fdescr, audio, extra, points, notNeeded, quizTime)
         {
             topicInput = topic;
         }
@@ -200,8 +202,8 @@ namespace CareUp.Actions
         
         public string buttonText;
 
-        public UseOnAction(string i, string t, int index, string sdescr, string fdescr, string audio, string extra, string button, int points, bool notNeeded)
-            : base(ActionManager.ActionType.ObjectUseOn, index, sdescr, fdescr, audio, extra, points, notNeeded)
+        public UseOnAction(string i, string t, int index, string sdescr, string fdescr, string audio, string extra, string button, int points, bool notNeeded, float quizTime)
+            : base(ActionManager.ActionType.ObjectUseOn, index, sdescr, fdescr, audio, extra, points, notNeeded, quizTime)
         {
             item = i;
             target = t;
@@ -247,8 +249,8 @@ namespace CareUp.Actions
         private string item;
         private string expected;
 
-        public ExamineAction(string i, string exp, int index, string sdescr, string fdescr, string audio, string extra, int points, bool notNeeded)
-            : base(ActionManager.ActionType.ObjectExamine, index, sdescr, fdescr, audio, extra, points, notNeeded)
+        public ExamineAction(string i, string exp, int index, string sdescr, string fdescr, string audio, string extra, int points, bool notNeeded, float quizTime)
+            : base(ActionManager.ActionType.ObjectExamine, index, sdescr, fdescr, audio, extra, points, notNeeded, quizTime)
         {
             item = i;
             expected = exp;
@@ -286,8 +288,8 @@ namespace CareUp.Actions
     {
         private string item;
 
-        public PickUpAction(string i, int index, string sdescr, string fdescr, string audio, string extra, int points, bool notNeeded)
-            : base(ActionManager.ActionType.PickUp, index, sdescr, fdescr, audio, extra, points, notNeeded)
+        public PickUpAction(string i, int index, string sdescr, string fdescr, string audio, string extra, int points, bool notNeeded, float quizTime)
+            : base(ActionManager.ActionType.PickUp, index, sdescr, fdescr, audio, extra, points, notNeeded, quizTime)
         {
             item = i;
         }
@@ -316,8 +318,8 @@ namespace CareUp.Actions
     {
         private string stepName;
 
-        public SequenceStepAction(string name, int index, string sdescr, string fdescr, string audio, string extra, int points, bool notNeeded)
-            : base(ActionManager.ActionType.SequenceStep, index, sdescr, fdescr, audio, extra, points, notNeeded)
+        public SequenceStepAction(string name, int index, string sdescr, string fdescr, string audio, string extra, int points, bool notNeeded, float quizTime)
+            : base(ActionManager.ActionType.SequenceStep, index, sdescr, fdescr, audio, extra, points, notNeeded, quizTime)
         {
             stepName = name;
         }
@@ -344,8 +346,8 @@ namespace CareUp.Actions
         private string objectName;
         private string dropPositionID;
 
-        public ObjectDropAction(string name, string posId, int index, string sdescr, string fdescr, string audio, string extra, int points, bool notNeeded)
-            : base(ActionManager.ActionType.ObjectDrop, index, sdescr, fdescr, audio, extra, points, notNeeded)
+        public ObjectDropAction(string name, string posId, int index, string sdescr, string fdescr, string audio, string extra, int points, bool notNeeded, float quizTime)
+            : base(ActionManager.ActionType.ObjectDrop, index, sdescr, fdescr, audio, extra, points, notNeeded, quizTime)
         {
             objectName = name;
             dropPositionID = posId;

@@ -203,23 +203,19 @@ public class Cheat_CurrentAction : MonoBehaviour
     }
 
     public void ShowBiggerDevHint () {
-        if (manager.practiceMode == true) {
-            dev_Hint.SetActive (false);
-            bigger_DevHint.SetActive (true);
+        dev_Hint.SetActive (false);
+        bigger_DevHint.SetActive (true);
 
-            biggerDevHintActive = true;
-            devHintActive = false;
-        }
+        biggerDevHintActive = true;
+        devHintActive = false;
     }
 
     public void RemoveBiggerDevHint () {
-        if (manager.practiceMode == true) {
-            dev_Hint.SetActive (true);
-            bigger_DevHint.SetActive (false);
+        dev_Hint.SetActive (true);
+        bigger_DevHint.SetActive (false);
 
-            biggerDevHintActive = false;
-            devHintActive = true;
-        }
+        biggerDevHintActive = false;
+        devHintActive = true;
     }
 
     public void RemoveDevHint () {
@@ -235,12 +231,8 @@ public class Cheat_CurrentAction : MonoBehaviour
     }
 
     public void OpeningTablet () {
-        if (manager.practiceMode == true) {
-            dev_Hint.SetActive (true);
-            bigger_DevHint.SetActive (false);
-
-            devHintActive = true;
-            biggerDevHintActive = false;
-        }
+        
+        bigger_DevHint.SetActive (false);
+        dev_Hint.SetActive (true);
     }
 }

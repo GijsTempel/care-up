@@ -15,6 +15,7 @@ namespace MBS
         static public bool on_Registration_Success = true;
         static public bool ChangeAllToWhite = false;
         static public bool EmailTheSame = false;
+        static public bool UsernameTheSame = false;
 
         #region RESPONSE DELEGATES
         static public Action<CML>

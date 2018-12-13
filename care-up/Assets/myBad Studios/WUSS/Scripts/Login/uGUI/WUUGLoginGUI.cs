@@ -28,6 +28,8 @@ namespace MBS
             termsandcondition_screen,
             terms_condition_screen,
             voorwaarden_screen,
+            error_pop_up,
+            error_login_pop_up,
             custom_1,
             start_menu;
         }
@@ -57,7 +59,7 @@ namespace MBS
             personal_email,
             personal_url,
             personal_bio,
-                serial_number;
+            serial_number;
         }
 
         [SerializeField] private Image LoginUsernameField;
@@ -68,12 +70,17 @@ namespace MBS
         [SerializeField] private Image RegPasswordField;
         [SerializeField] private Image RegRepeatPasswordField;
 
+        [SerializeField] private Text ErrorText;
+        [SerializeField] private Text ErrorLoginText;
+
         private bool remove_text = false;
 
         void Update () {
             if (WULogin.on_Login_Success == false) {
                 ChangeLoginUIRed ();
-            }else if (WULogin.on_Registration_Success == false) {
+                DisplayScreen (panels.error_login_pop_up);
+                ErrorLoginText.text = "Het wachtwoord of gebruikersnaam is incorrect";
+            } else if (WULogin.on_Registration_Success == false) {
                 ChangeRegistrationUIRed ();
             }
 
@@ -104,6 +111,7 @@ namespace MBS
         }
 
         private void ChangeLoginUIRed () {
+
             LoginUsernameField = LoginUsernameField.GetComponent<Image> ();
             LoginPasswordField = LoginPasswordField.GetComponent<Image> ();
 
@@ -116,19 +124,25 @@ namespace MBS
         private void ChangeRegistrationUIRed () {
             if(WULogin.EmailTheSame == true) {
 
+                WULogin.ChangeAllToWhite = true;
+
+                DisplayScreen (panels.error_pop_up);
+                ErrorText.text = "Dit e-mailadres is al in gebruik.";
+
                 RegEmailField = RegEmailField.GetComponent<Image> ();
-
                 RegEmailField.color = new Color32 (255, 0, 0, 150);
-
                 RegUsernameField = RegUsernameField.GetComponent<Image> ();
-
                 RegUsernameField.color = new Color32 (210, 210, 210, 150);
 
                 WULogin.EmailTheSame = false;
-            } else {
+            } 
+            if(WULogin.UsernameTheSame == true) {
+                WULogin.ChangeAllToWhite = true;
+
+                DisplayScreen (panels.error_pop_up);
+                ErrorText.text = "Deze gebruikersnaam is al in gebruik.";
 
                 RegUsernameField = RegUsernameField.GetComponent<Image> ();
-
                 RegUsernameField.color = new Color32 (255, 0, 0, 150);
             }
 
@@ -211,6 +225,9 @@ namespace MBS
             {
                 InitWULoginGUI();
             }
+
+            ErrorText.GetComponent<Text> ();
+            ErrorLoginText.GetComponent<Text> ();
         }
 
         virtual protected void InitWULoginGUI()
@@ -341,6 +358,7 @@ namespace MBS
         {
             if ( fields.register_email.text.Trim() == string.Empty || fields.register_password.text.Trim() == string.Empty || fields.register_username.text.Trim() == string.Empty )
             {
+
                 RegUsernameField = RegUsernameField.GetComponent<Image> ();
                 RegEmailField = RegEmailField.GetComponent<Image> ();
                 RegPasswordField = RegPasswordField.GetComponent<Image> ();
@@ -350,31 +368,48 @@ namespace MBS
                 RegEmailField.color = new Color32 (255, 0, 0, 150);
                 RegPasswordField.color = new Color32 (255, 0, 0, 150);
                 RegRepeatPasswordField.color = new Color32 (255, 0, 0, 150);
-
-                StatusMessage.Message = "Niet elk veld is ingevuld.";
-                DisplayScreen (panels.register_screen);
+                
+                DisplayScreen (panels.error_pop_up);
+                ErrorText.text = "Je moet alle velden invullen";
                 return;
             }
             if ( fields.register_verify.text.Trim() != fields.register_password.text.Trim() )
             {
+
+                RegUsernameField = RegUsernameField.GetComponent<Image> ();
+                RegEmailField = RegEmailField.GetComponent<Image> ();
                 RegPasswordField = RegPasswordField.GetComponent<Image> ();
                 RegRepeatPasswordField = RegRepeatPasswordField.GetComponent<Image> ();
-                
+
+                RegUsernameField.color = new Color32 (210, 210, 210, 150);
+                RegEmailField.color = new Color32 (210, 210, 210, 150);
+                RegPasswordField.color = new Color32 (210, 210, 210, 150);
+                RegRepeatPasswordField.color = new Color32 (210, 210, 210, 150);
+
                 RegPasswordField.color = new Color32 (255, 0, 0, 150);
                 RegRepeatPasswordField.color = new Color32 (255, 0, 0, 150);
-
-                StatusMessage.Message = "De wachtwoorden komen niet overeen.";
-                DisplayScreen (panels.register_screen);
+                
+                DisplayScreen (panels.error_pop_up);
+                ErrorText.text = "De wachtwoorden komen niet overeen.";
                 return;
             }
             if ( !fields.register_email.text.Trim().IsValidEmailFormat() )
             {
+
+                RegUsernameField = RegUsernameField.GetComponent<Image> ();
                 RegEmailField = RegEmailField.GetComponent<Image> ();
-                
+                RegPasswordField = RegPasswordField.GetComponent<Image> ();
+                RegRepeatPasswordField = RegRepeatPasswordField.GetComponent<Image> ();
+
+                RegUsernameField.color = new Color32 (210, 210, 210, 150);
+                RegEmailField.color = new Color32 (210, 210, 210, 150);
+                RegPasswordField.color = new Color32 (210, 210, 210, 150);
+                RegRepeatPasswordField.color = new Color32 (210, 210, 210, 150);
+
                 RegEmailField.color = new Color32 (255, 0, 0, 150);
               
-                StatusMessage.Message = "Het e-mailadres is niet geldig.";
-                DisplayScreen (panels.register_screen);
+                DisplayScreen (panels.error_pop_up);
+                ErrorText.text = "Het ingevulde e-mailadres in niet geldig.";
                 return;
             }
 

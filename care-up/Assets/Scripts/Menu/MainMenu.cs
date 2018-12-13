@@ -253,7 +253,13 @@ public class MainMenu : MonoBehaviour {
         string bundleName = "tutorial_theory";
         bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
     }
-    
+
+    public void OnTutorialButtonClick_Full () {
+        string sceneName = "Tutorial_Full";
+        string bundleName = "tutorial_full";
+        bl_SceneLoaderUtils.GetLoader.LoadLevel (sceneName, bundleName);
+    }
+
     void GetPlaysNumber(CML response)
     {
         // we're here only if we got data
