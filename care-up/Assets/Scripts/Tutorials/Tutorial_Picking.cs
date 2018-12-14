@@ -38,9 +38,10 @@ public class Tutorial_Picking : TutorialManager {
                 case TutorialStep.First:
                     audioSource.PlayOneShot (Popup, 0.1F);
                     currentStep = TutorialStep.Welcome;
-					hintsN.SetSize(788f, 524.9f);
-                    hintsN.LockTo("UI(Clone)", new Vector3(-393.80f, 214.70f, 0.00f));
-                    UItext.text = "Welkom. In deze leermodule leer je hoe je objecten kunt oppakken en terugleggen. ";
+                    hintsN.SetIconPosition(1);
+                    hintsN.SetSize(456f, 393f);
+                    hintsN.LockTo("robot", new Vector3(275.14f, 19.20f, -119.20f));
+                    UItext.text = "Goed dat je er weer bent. Ik zal je uitleggen hoe je objecten kunt oppakken en terugleggen. ";
                     SetUpTutorialNextButton();
 
                     break;
@@ -49,8 +50,9 @@ public class Tutorial_Picking : TutorialManager {
                     {
                         audioSource.PlayOneShot (Popup, 0.1F);
                         currentStep = TutorialStep.MoveTo;
-						hintsN.ResetSize();
-						hintsN.LockTo("WorkField", new Vector3(0.00f, 0.49f, -0.73f));
+                        hintsN.SetIconPosition(3);
+                        hintsN.SetSize(452f, 201.5f);
+                        hintsN.LockTo("WorkField", new Vector3(1.10f, 1.06f, -0.01f));
                         UItext.text = "Laten we beginnen. Beweeg naar het werkveld door op het werkveld te klikken. ";
 
                         player.tutorial_movedTo = false;
@@ -99,6 +101,8 @@ public class Tutorial_Picking : TutorialManager {
 
                         itemToDrop = "Cloth";
                         handsInventory.tutorial_droppedLeft = false;
+                        
+                        particleHint.transform.position = GameObject.Find("Cloth").transform.position;
                     }
                     break;
                 case TutorialStep.DropOne:
@@ -112,6 +116,7 @@ public class Tutorial_Picking : TutorialManager {
 
                         itemToDrop = "Medicine";
                         handsInventory.tutorial_droppedRight = false;
+                        particleHint.transform.position = GameObject.Find("Medicine").transform.position;
                     }
                     break;
                 case TutorialStep.DropTwo:
@@ -122,6 +127,7 @@ public class Tutorial_Picking : TutorialManager {
                         hintsN.SetIconPosition(0);
                         handsInventory.tutorial_droppedRight = false;
                         currentStep = TutorialStep.Done;
+                        particleHint.SetActive(true);
                         UItext.text = "Goed gedaan. Nu weet je hoe je objecten kunt oppakken en kunt terugleggen.";
                         itemToDrop = "";
                     }
