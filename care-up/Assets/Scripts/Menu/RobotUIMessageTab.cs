@@ -26,9 +26,9 @@ public class RobotUIMessageTab : RobotUITabs
 
     protected override void Start()
     {
-        errorIcon = Resources.Load<Sprite>("Sprites/ErrorIcon");
-        warningIcon = Resources.Load<Sprite>("Sprites/Sign-Alert");
-        infoIcon = Resources.Load<Sprite>("Sprites/Sign-Alert");
+        errorIcon = Resources.Load<Sprite>("Sprites/txt_field_ic_error");
+        warningIcon = Resources.Load<Sprite>("Sprites/exclamation_b");
+        infoIcon = Resources.Load<Sprite>("Sprites/question_t");
 
         _parent = transform.Find("GeneralDynamicCanvas").Find("ScrollViewTileMessege")
             .Find("Viewport").Find("Content");
