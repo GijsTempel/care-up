@@ -1,10 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Tutorial_Combining : TutorialManager {
 
     public AudioClip Popup;
+    public AudioClip Done;
+    public AudioClip Robot1;
+    public AudioClip Robot2;
+    public AudioClip Robot3;
+    public AudioClip RobotShort1;
+    public AudioClip RobotShort2;
+
     AudioSource audioSource;
 
     public enum TutorialStep {
@@ -39,12 +47,11 @@ public class Tutorial_Combining : TutorialManager {
 
                 case TutorialStep.First:
                 audioSource.PlayOneShot (Popup, 0.1F);
+                audioSource.PlayOneShot(Robot1, 0.1F);
                 currentStep = TutorialStep.Welcome;
-                //hintsBox.anchoredPosition = new Vector2(-14.8f, 9.9f);
-                //hintsBox.sizeDelta = new Vector2(788f, 524.9f);
                 hintsN.SetSize (788f, 524.9f);
                 hintsN.LockTo ("UI(Clone)", new Vector3 (-393.80f, 215f, 0.00f));
-                UItext.text = "Welkom. In deze leermodule zal je leren hoe je objecten in je handen kunt combineren en uit elkaar kunt halen.";
+                UItext.DOText("In deze les ga je leren hoe je objecten in je handen kunt combineren en uit elkaar kunt halen.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
                 SetUpTutorialNextButton ();
 
 
@@ -53,12 +60,11 @@ public class Tutorial_Combining : TutorialManager {
                     if (nextButtonClicked)
                     {
                         audioSource.PlayOneShot (Popup, 0.1F);
+                        audioSource.PlayOneShot(RobotShort1, 0.1F);
                         currentStep = TutorialStep.MoveTo;
-						//hintsBox.anchoredPosition = new Vector2(165f, -265.64f);
-						//hintsBox.sizeDelta = new Vector2(472.5f, 298.9f);
 						hintsN.ResetSize();
 						hintsN.LockTo("WorkField", new Vector3(0.00f, 0.51f, -0.75f));
-                        UItext.text = "Laten we beginnen door te bewegen naar het werkveld. Doe dit door te klikken op het werkveld.";
+                        UItext.DOText("We beginnen door te bewegen naar het werkveld. Klik op het werkveld. ", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
 
                         player.tutorial_movedTo = false;
                     }
@@ -68,10 +74,11 @@ public class Tutorial_Combining : TutorialManager {
                     {
                         player.tutorial_movedTo = false;
                         audioSource.PlayOneShot (Popup, 0.1F);
+                        audioSource.PlayOneShot(RobotShort1, 0.1F);
                         currentStep = TutorialStep.PickOne;
 						hintsN.SetIconPosition(3);
 						hintsN.LockTo("Syringe", new Vector3(0.00f, 0.11f, -0.10f));
-                        UItext.text = "We zien een spuit en een naald op het werkveld liggen. Pak de spuit op door erop te klikken.";
+                        UItext.DOText("Je ziet een spuit en een naald liggen. Pak de spuit door erop te klikken. ", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
 
                         handsInventory.tutorial_pickedLeft = false;
 
@@ -87,9 +94,9 @@ public class Tutorial_Combining : TutorialManager {
                         handsInventory.tutorial_pickedLeft = false;
                         audioSource.PlayOneShot (Popup, 0.1F);
                         currentStep = TutorialStep.PickTwo;
-                        UItext.text = "Heel goed! Pak nu ook de naald op. Doe dit door op de naald te klikken.";
+                        UItext.DOText("Heel goed! Pak nu ook de naald op door erop te klikken.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
 
-						hintsN.LockTo("AbsorptionNeedle", new Vector3(0.00f, 0.00f, -0.08f));
+                        hintsN.LockTo("AbsorptionNeedle", new Vector3(0.00f, 0.00f, -0.08f));
 
                         handsInventory.tutorial_pickedRight = false;
 
@@ -112,7 +119,7 @@ public class Tutorial_Combining : TutorialManager {
 						hintsN.SetIconPosition(0);
 
                         currentStep = TutorialStep.OpenControls;
-                        UItext.text = "Nu we beide objecten in onze handen hebben kunnen we erop klikken om de opties te tonen. Klik nu op de spuit.";
+                        UItext.DOText("Klik op de spuit om te zien welke opties je hebt. Je kunt op elk object klikken om de opties weer te geven. ", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
 
                         player.tutorial_itemControls = false;
                         player.itemControlsToInit = "Syringe";
@@ -126,7 +133,7 @@ public class Tutorial_Combining : TutorialManager {
 
                         currentStep = TutorialStep.ClickUseOn;
                         hintsN.LockTo("/ItemControls/ItemControlsGroup/UseOnButton", new Vector3(20.10f, -116.00f, 0.00f));
-                        UItext.text = "Klik op het + icoon. Het + icoon gebruik je in Care Up om objecten te combineren of met elkaar te gebruiken.'";
+                        UItext.DOText("Klik op het +icoon. Dit icoon zorgt ervoor dat je objecten kunt combineren.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
 
                         player.tutorial_UseOnControl = false;
                     }
@@ -142,6 +149,7 @@ public class Tutorial_Combining : TutorialManager {
                         hintsN.LockTo("/Player/CinematicControl/Arms/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/toolHolder.R/AbsorptionNeedle", new Vector3(-0.12f, -0.02f, 0.00f));
                         hintsN.SetIconPosition(1);
                         UItext.text = "Klik nu op het object in je andere hand om de objecten met elkaar te combineren.";
+                        UItext.DOText("Goed dat je er weer bent. Ik zal je uitleggen hoe je objecten kunt oppakken en terugleggen. ", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
 
                         handsInventory.tutorial_combined = false;
                     }
@@ -149,24 +157,11 @@ public class Tutorial_Combining : TutorialManager {
                 case TutorialStep.Combine:
                     if (handsInventory.tutorial_combined)
                     {
-                        audioSource.PlayOneShot (Popup, 0.1F);
                         handsInventory.tutorial_combined = false;
-
-                        currentStep = TutorialStep.Explanaiton;
-						hintsN.LockTo("UI(Clone)", new Vector3(-239.20f, 0.00f, 0.00f));
-						hintsN.SetIconPosition(0);
-                        UItext.text = "De opties tonen voor objecten kan zowel met het object in je linkerhand als in je rechterhand.";
-                        SetUpTutorialNextButton();
-                    }
-                    break;
-                case TutorialStep.Explanaiton:
-                    if (nextButtonClicked)
-                    {
                         audioSource.PlayOneShot (Popup, 0.1F);
                         currentStep = TutorialStep.OpenControls2;
 						hintsN.LockTo("SyringeWithAbsorptionNeedleCap", new Vector3(0.00f, 0.00f, -0.06f));
-                        UItext.text = "Laten we nu de dop van de naald afhalen. Dit noemen we in Care Up 'Scheiden'. Klik op de spuit met opzuignaald die je in je hand vast hebt om het opties menu te openen.";
-
+                        UItext.DOText("Haal de dop van de naald door op de spuit met opzuignaald te klikken. Hierdoor zie je weer de opties. ", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
                         player.tutorial_itemControls = false;
                         player.itemControlsToInit = "SyringeWithAbsorptionNeedleCap";
                     }
@@ -179,7 +174,7 @@ public class Tutorial_Combining : TutorialManager {
 
                         currentStep = TutorialStep.Decombine;
                         hintsN.LockTo("/ItemControls/ItemControlsGroup/CombineButton", new Vector3(35.60f, -106.60f, 0.00f));
-                        UItext.text = "Kies vervolgens het - icoon. Het - icoon gebruik je in Care Up om objecten te scheiden, uit elkaar te halen of te openen.";
+                        UItext.DOText("Klik op het –icoon. Met dit icoon haal je de objecten uit elkaar of open je een object. Bijvoorbeeld een verpakking. ", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
 
                         handsInventory.tutorial_combined = false;
                         decombiningAllowed = true;
@@ -189,10 +184,9 @@ public class Tutorial_Combining : TutorialManager {
                     if (handsInventory.tutorial_combined)
                     {
                         audioSource.PlayOneShot (Popup, 0.1F);
+                        audioSource.PlayOneShot(Done, 0.1F);
                         handsInventory.tutorial_combined = false;
-
-                        currentStep = TutorialStep.Done;
-                        
+                        currentStep = TutorialStep.Done;       
                         hintsN.LockTo("SceneLoader 1", new Vector3(262.50f, -69.10f, 0.00f));
                         UItext.text = "Goed gedaan! Dit was de leermodule over het combineren en scheiden van objecten.";
 
