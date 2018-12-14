@@ -87,7 +87,7 @@ public class Tutorial : TutorialManager {
                     hintsN.SetIconPosition (0);
                     hintsN.LockTo ("/DevHint/Fullscreen", new Vector3 (375.39f, -84.72f, 0.00f));
                     UItext.text = "Klik op de vergroot knop.";
-                    biggerHintOpenend = true;
+                    //biggerHintOpenend = true;
                 }
                 break;
                 case TutorialStep.DevHintsMax:

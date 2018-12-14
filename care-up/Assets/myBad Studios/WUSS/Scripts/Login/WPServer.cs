@@ -10,6 +10,7 @@ namespace MBS
 
     public class WPServer : MonoBehaviour
     {
+
         static WPServer _instance;
         static public WPServer Instance
         {
