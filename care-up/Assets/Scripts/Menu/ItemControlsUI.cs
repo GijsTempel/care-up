@@ -370,8 +370,10 @@ public class ItemControlsUI : MonoBehaviour {
                                 item = replaced.GetComponent<PickableObject>();
                             }
 
-                            handsInventory.PickItem(item);
-                            item.CreateGhostObject();
+                            if (handsInventory.PickItem(item))
+                            {
+                                item.CreateGhostObject();
+                            }
                         }
                     }
                     else if (item.sihlouette == true)
