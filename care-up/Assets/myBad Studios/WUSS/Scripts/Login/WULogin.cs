@@ -17,6 +17,9 @@ namespace MBS
         static public bool EmailTheSame = false;
         static public bool UsernameTheSame = false;
 
+        static private int FirstLogin = 1;
+        static private int SecondLogin = 2;
+
         #region RESPONSE DELEGATES
         static public Action<CML>
             onRegistered,
@@ -236,6 +239,14 @@ namespace MBS
             onLoggedIn?.Invoke( data );
             if ( email != string.Empty && null != __data && __data.FetchGravatar )
                 FetchProfileImage( __SetProfileImage, __data.GravatarType );
+
+            if (PlayerPrefs.GetInt ("FirstLogin") <= 1) {
+               
+                PlayerPrefs.SetInt ("FirstLogin", SecondLogin);
+                string sceneName = "Tutorial_UI";
+                string bundleName = "tutorial_ui";
+                bl_SceneLoaderUtils.GetLoader.LoadLevel (sceneName, bundleName);
+            }
         }
 
         static void __SetProfileImage( Texture2D image )
