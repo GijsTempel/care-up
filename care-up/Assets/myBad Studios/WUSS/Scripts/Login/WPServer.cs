@@ -183,7 +183,7 @@ namespace MBS
                     WULogin.on_Login_Success = false;
                 }
 
-                if (Instance.show_on_screen_errors)
+               //if (Instance.show_on_screen_errors)
                     failedresponse?.Invoke (error);
 
                     if (e.Message == "Kan de server niet bereiken. Neem contact op via support@careup.nl")
