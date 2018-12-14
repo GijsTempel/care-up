@@ -424,43 +424,55 @@ public class ActionManager : MonoBehaviour {
                 float.TryParse(action.Attributes["quiz"].Value, out quizTime);
             }
 
+            string messageTitle = "";
+            if (action.Attributes["messageTitle"] != null)
+            {
+                messageTitle = action.Attributes["messageTitle"].Value;
+            }
+
+            string messageContent = "";
+            if (action.Attributes["messageContent"] != null)
+            {
+                messageContent = action.Attributes["messageContent"].Value;
+            }
+
             switch (type)
             {
                 case "combine":
                     string left = action.Attributes["left"].Value;
                     string right = action.Attributes["right"].Value;
-                    actionList.Add(new CombineAction(left, right, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime));
+                    actionList.Add(new CombineAction(left, right, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent));
                     break;
                 case "use":
                     string use = action.Attributes["value"].Value;
-                    actionList.Add(new UseAction(use, index, descr, fDescr, audio, extra, buttonText, pointsValue, notNeeded, quizTime));
+                    actionList.Add(new UseAction(use, index, descr, fDescr, audio, extra, buttonText, pointsValue, notNeeded, quizTime, messageTitle, messageContent));
                     break;
                 case "talk":
                     string topic = action.Attributes["topic"].Value;
-                    actionList.Add(new TalkAction(topic, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime));
+                    actionList.Add(new TalkAction(topic, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent));
                     break;
                 case "useOn":
                     string useItem = action.Attributes["item"].Value;
                     string target = action.Attributes["target"].Value;
-                    actionList.Add(new UseOnAction(useItem, target, index, descr, fDescr, audio, extra, buttonText, pointsValue, notNeeded, quizTime));
+                    actionList.Add(new UseOnAction(useItem, target, index, descr, fDescr, audio, extra, buttonText, pointsValue, notNeeded, quizTime, messageTitle, messageContent));
                     break;
                 case "examine":
                     string exItem = action.Attributes["item"].Value;
                     string expected = action.Attributes["expected"].Value;
-                    actionList.Add(new ExamineAction(exItem, expected, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime));
+                    actionList.Add(new ExamineAction(exItem, expected, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent));
                     break;
                 case "pickUp":
                     string itemPicked = action.Attributes["item"].Value;
-                    actionList.Add(new PickUpAction(itemPicked, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime));
+                    actionList.Add(new PickUpAction(itemPicked, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent));
                     break;
                 case "sequenceStep":
                     string stepName = action.Attributes["value"].Value;
-                    actionList.Add(new SequenceStepAction(stepName, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime));
+                    actionList.Add(new SequenceStepAction(stepName, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent));
                     break;
                 case "drop":
                     string dropItem = action.Attributes["item"].Value;
                     string dropID = (action.Attributes["posID"] != null) ? action.Attributes["posID"].Value : "0";
-                    actionList.Add(new ObjectDropAction(dropItem, dropID, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime));
+                    actionList.Add(new ObjectDropAction(dropItem, dropID, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent));
                     break;
                 default:
                     Debug.LogError("No action type found: " + type);
@@ -730,6 +742,12 @@ public class ActionManager : MonoBehaviour {
                     if (action.quizTriggerTime >= 0.0f)
                     {
                         PlayerScript.TriggerQuizQuestion(action.quizTriggerTime);
+                    }
+
+                    if (action.messageContent != "" || action.messageTitle != "")
+                    {
+                        GameObject.FindObjectOfType<RobotUIMessageTab>().NewMessage(
+                            action.messageTitle, action.messageContent, RobotUIMessageTab.Icon.Info);
                     }
 
                     // count only 1 step, some steps are identical
