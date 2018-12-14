@@ -184,8 +184,16 @@ namespace MBS
                     WULogin.on_Login_Success = false;
                 }
 
-               //if (Instance.show_on_screen_errors)
-                    failedresponse?.Invoke (error);
+                if (e.Message == "No user found matching asdf@outlook.com") {
+                    WULogin.UserNotWithEmail = true;
+                }
+
+                if (e.Message == "No user found with username or email matching asdf") {
+                    WULogin.UserNotWithEmail = true;
+                }
+
+                //if (Instance.show_on_screen_errors)
+                failedresponse?.Invoke (error);
 
                     if (e.Message == "Kan de server niet bereiken. Neem contact op via support@careup.nl")
                     GameObject.Find("NoInternet").GetComponent<Animator>().SetTrigger("pop");

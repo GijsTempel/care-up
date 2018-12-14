@@ -76,6 +76,17 @@ namespace MBS
         private bool remove_text = false;
 
         void Update () {
+            if(WULogin.UserNotWithEmail == true) {
+                DisplayScreen (panels.error_login_pop_up);
+                ErrorLoginText.text = "Er is geen gebruikersnaam die bij deze e-mail hoort";
+                WULogin.UserNotWithEmail = false;
+            }
+            if (WULogin.UserNotFound == true) {
+                DisplayScreen (panels.error_login_pop_up);
+                ErrorLoginText.text = "Deze gebruikersnaam is niet gevonden";
+                WULogin.UserNotFound = false;
+            }
+
             if (WULogin.on_Login_Success == false) {
                 ChangeLoginUIRed ();
                 DisplayScreen (panels.error_login_pop_up);
@@ -522,13 +533,17 @@ namespace MBS
             fields.pass_reset_email.text = fields.pass_reset_email.text.Trim();
             if ( fields.pass_reset_email.text == string.Empty && fields.pass_reset_username.text.Trim() == string.Empty )
             {
-                StatusMessage.Message = localisation.NeedEmailOrUsername;
+                //StatusMessage.Message = localisation.NeedEmailOrUsername;
+                DisplayScreen (panels.error_login_pop_up);
+                ErrorLoginText.text = "Alle velden moeten worden ingevult";
                 return;
             }
             string login = fields.pass_reset_email.text == string.Empty ? fields.pass_reset_username.text.Trim() : fields.pass_reset_email.text;
             if ( fields.pass_reset_email.text != string.Empty && !fields.pass_reset_email.text.IsValidEmailFormat() )
             {
-                StatusMessage.Message = localisation.InvalidEmail;
+                //StatusMessage.Message = localisation.InvalidEmail;
+                DisplayScreen (panels.error_login_pop_up);
+                ErrorLoginText.text = "Het ingevulde e-mailadres in niet geldig.";
                 return;
             }
             CMLData data = new CMLData();
@@ -598,8 +613,10 @@ namespace MBS
 
         virtual public void OnReset( CML data )
         {
-            StatusMessage.Message = "Er is een e-mail naar je verzonden waarin je je wachtwoord kunt veranderen.";
-            DisplayScreen( panels.login_menu );
+            //StatusMessage.Message = "Er is een e-mail naar je verzonden waarin je je wachtwoord kunt veranderen.";
+            DisplayScreen (panels.error_login_pop_up);
+            ErrorLoginText.text = "Er is een e-mail naar je verzonden waarin je je wachtwoord kunt veranderen.";
+            //DisplayScreen ( panels.login_menu );
             fields.pass_reset_email.text = fields.pass_reset_username.text = string.Empty;
         }
 

@@ -16,6 +16,8 @@ namespace MBS
         static public bool ChangeAllToWhite = false;
         static public bool EmailTheSame = false;
         static public bool UsernameTheSame = false;
+        static public bool UserNotWithEmail = false;
+        static public bool UserNotFound = false;
 
         static private int FirstLogin = 1;
         static private int SecondLogin = 2;
