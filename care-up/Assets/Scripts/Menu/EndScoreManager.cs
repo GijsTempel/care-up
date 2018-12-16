@@ -185,6 +185,7 @@ public class EndScoreManager : MonoBehaviour {
         content += text.text;
 
         PlayerPrefsManager.__sendMail(topic, content);
+        Debug.Log("E-mail verzonden");
     }
 }
 

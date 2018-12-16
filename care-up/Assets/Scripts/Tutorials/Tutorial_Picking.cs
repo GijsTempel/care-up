@@ -72,6 +72,7 @@ public class Tutorial_Picking : TutorialManager {
                     {
                         audioSource.PlayOneShot (Popup, 0.1F);
                         audioSource.PlayOneShot(Robot2, 0.1F);
+                        hintsN.SetSize(452f, 300f);
                         currentStep = TutorialStep.PickOne;
 						hintsN.LockTo("ClothPackage", new Vector3(0.00f, 0.14f, -0.13f));
 						hintsN.SetIconPosition(3);
@@ -89,6 +90,7 @@ public class Tutorial_Picking : TutorialManager {
                     {
                         audioSource.PlayOneShot (Popup, 0.1F);
                         audioSource.PlayOneShot(Robot3, 0.1F);
+                        hintsN.SetSize(452f, 350f);
                         handsInventory.tutorial_pickedLeft = false;
                         currentStep = TutorialStep.PickTwo;
 						hintsN.LockTo("Medicine", new Vector3(0.00f, 0.16f, 0.00f));
@@ -106,7 +108,7 @@ public class Tutorial_Picking : TutorialManager {
                         audioSource.PlayOneShot(Robot1, 0.1F);
                         handsInventory.tutorial_pickedRight = false;
                         itemToPick = "";
-
+                        hintsN.SetSize(452f, 300f);
                         currentStep = TutorialStep.DropOne;
                         hintsN.LockTo("/Cloth", new Vector3(0.00f, 0.16f, 0.00f));
                         UItext.DOText("Objecten kun je terug leggen door op het silhouette  te klikken. Klik nu op het silhouette van het gaasje om deze terug te leggen.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
@@ -123,6 +125,7 @@ public class Tutorial_Picking : TutorialManager {
                     {
                         audioSource.PlayOneShot (Popup, 0.1F);
                         audioSource.PlayOneShot(RobotShort2, 0.1F);
+                        hintsN.SetSize(452f, 275f);
                         handsInventory.tutorial_droppedLeft = false;
                         hintsN.LockTo("/Medicine", new Vector3(0.00f, 0.16f, 0.00f));
                         currentStep = TutorialStep.DropTwo;

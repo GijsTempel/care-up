@@ -109,7 +109,7 @@ public class Tutorial_Movement : TutorialManager
                         //hintsBox.anchoredPosition = new Vector2(681f, 175f);
                         //hintsBox.sizeDelta = new Vector2(472.5f, 298.9f);
                         hintsN.LockTo("MoveBackButton", new Vector3(-59.90f, -160.20f, 0.00f));
-                        hintsN.SetSize(560f, 405f);
+                        hintsN.SetSize(560f, 425f);
                         hintsN.SetIconPosition(1);
                         currentStep = TutorialStep.MoveBack;
                         UItext.DOText("We zijn naar het werkveld verplaatst. Op ieder moment kun je terugkeren naar de beginpositie. Dit wordt het overzicht genoemd. Wil je terug? Klik dan rechtsboven in op de knop ‘Terug naar overzicht’. ", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
