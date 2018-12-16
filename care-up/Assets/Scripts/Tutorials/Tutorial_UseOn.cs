@@ -42,9 +42,11 @@ public class Tutorial_UseOn : TutorialManager {
             {
                 case TutorialStep.First:
                     audioSource.PlayOneShot (Popup, 0.1F);
+                    audioSource.PlayOneShot(Robot1, 0.1F);
                     currentStep = TutorialStep.Welcome;
-                    hintsN.SetSize(481.4f, 455.7f);
-                    hintsN.LockTo("robot", new Vector3(0.00f, -0.33f, 1.84f));
+                    hintsN.SetSize(481.4f, 521.7f);
+                    hintsN.SetIconPosition(1);
+                   hintsN.LockTo("robot", new Vector3(-393.80f,-3.00f,0.00f));
                     UItext.DOText("In deze training leer je hoe je gecombineerde objecten kunt gebruiken. Denk hierbij aan het weggooien van een naald in de naaldcontainer of het gebruiken van een injectiespuit op je cliënt.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
                     SetUpTutorialNextButton();
 
@@ -53,11 +55,12 @@ public class Tutorial_UseOn : TutorialManager {
                     if (nextButtonClicked)
                     {
                         audioSource.PlayOneShot (Popup, 0.1F);
-
-                        hintsN.ResetSize();
-						hintsN.LockTo("WorkField", new Vector3(0.00f, 0.51f, -0.73f));
+                        audioSource.PlayOneShot(RobotShort1, 0.1F);
+                        hintsN.SetSize(483.8f, 153.9f);
+                        hintsN.SetIconPosition(0);
+                        hintsN.LockTo("WorkField", new Vector3(2.23f, 0.59f, -1.30f));
                         currentStep = TutorialStep.MoveTo;
-                        UItext.DOText("We beginnen door te bewegen naar het werkveld. Klik op het werkveld.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
+                        UItext.DOText("We beginnen door te bewegen naar het werkveld. Klik op het werkveld.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
 
                         player.tutorial_movedTo = false;
                     }
@@ -66,8 +69,9 @@ public class Tutorial_UseOn : TutorialManager {
                     if (player.tutorial_movedTo)
                     {
                         audioSource.PlayOneShot (Popup, 0.1F);
+                        audioSource.PlayOneShot(RobotShort2, 0.1F);
                         player.tutorial_movedTo = false;
-
+                        hintsN.SetSize(506.8f, 154.9f);
                         currentStep = TutorialStep.PickNeedle;
 						hintsN.LockTo("AbsorptionNeedleNoCap", new Vector3(0.00f, 0.06f, -0.06f));
 						hintsN.SetIconPosition(3);
@@ -85,6 +89,7 @@ public class Tutorial_UseOn : TutorialManager {
                     if (handsInventory.tutorial_pickedLeft)
                     {
                         audioSource.PlayOneShot (Popup, 0.1F);
+                        audioSource.PlayOneShot(RobotShort2, 0.1F);
                         handsInventory.tutorial_pickedLeft = false;
                         itemToPick = "";
 
@@ -93,7 +98,7 @@ public class Tutorial_UseOn : TutorialManager {
                         currentStep = TutorialStep.OpenControls;
 						hintsN.LockTo("AbsorptionNeedleNoCap", new Vector3(0.00f, 0.00f, 0.00f));
 						hintsN.SetIconPosition(0);
-                        UItext.DOText("Klik op de opzuignaald om de opties te tonen. ", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
+                        UItext.DOText("Klik op de opzuignaald om de opties te tonen. ", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
 
                         player.tutorial_itemControls = false;
                         player.itemControlsToInit = "AbsorptionNeedleNoCap";
@@ -103,11 +108,12 @@ public class Tutorial_UseOn : TutorialManager {
                     if (player.tutorial_itemControls)
                     {
                         audioSource.PlayOneShot (Popup, 0.1F);
+                        audioSource.PlayOneShot(RobotShort1, 0.1F);
                         player.tutorial_itemControls = false;
 
                         currentStep = TutorialStep.ClickUseOn;
-                        hintsN.LockTo("UseOnButton", new Vector3(45.10f, -274.50f, 0.00f));
-                        hintsN.SetIconPosition(3);
+                        hintsN.LockTo("UseOnButton", new Vector3(-2.70f, -124.70f, 0.00f));
+                        hintsN.SetIconPosition(0);
                         UItext.DOText("Klik op het +icoon om de objecten met elkaar te combineren.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
 
                         player.tutorial_UseOnControl = false;
@@ -117,8 +123,9 @@ public class Tutorial_UseOn : TutorialManager {
                     if (player.tutorial_UseOnControl)
                     {
                         audioSource.PlayOneShot (Popup, 0.1F);
+                        audioSource.PlayOneShot(Robot2, 0.1F);
                         player.tutorial_UseOnControl = false;
-                        
+                        hintsN.SetSize(506.8f, 205.3f);
                         currentStep = TutorialStep.UseOn;
 						hintsN.LockTo("NeedleCup", new Vector3(0.00f, 0.00f, -0.15f));
 						hintsN.SetIconPosition(0);
@@ -131,6 +138,8 @@ public class Tutorial_UseOn : TutorialManager {
                     if (handsInventory.tutorial_itemUsedOn)
                     {
                         audioSource.PlayOneShot (Popup, 0.1F);
+                        audioSource.PlayOneShot(Robot3, 0.1F);
+                        hintsN.SetSize(506.8f, 277.6f);
                         handsInventory.tutorial_itemUsedOn = false;
                         currentStep = TutorialStep.Done;
 						hintsN.LockTo("SceneLoader 1", new Vector3(363.61f, -22.40f, 0.00f));
@@ -147,5 +156,12 @@ public class Tutorial_UseOn : TutorialManager {
                     break;
             }
         }
+    }
+
+    public void OnTutorialButtonClick_PersonDialogues()
+    {
+        string sceneName = "Tutorial_Talk";
+        string bundleName = "tutorial_talking";
+        bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
     }
 }
