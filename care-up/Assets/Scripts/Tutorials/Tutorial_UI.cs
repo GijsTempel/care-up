@@ -114,8 +114,8 @@ public class Tutorial_UI : TutorialManager
                         audioSource.PlayOneShot(Robot3, 0.1F);
                         currentStep = TutorialStep.OpenRobotUI;          
                         hintsN.SetIconPosition(0);
-                        hintsN.LockTo("/UI/RobotUITrigger", new Vector3(53.24f, -48.91f, 0.00f));
- 
+                        hintsN.LockTo("RobotUITrigger", new Vector3(53.24f, -101.46f, 0.00f));
+
                         UItext.DOText("Klik op het tableticoontje om de tablet te openen. Op de tablet kun je veel informatie vinden. Neem maar eens een kijkje!", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
                         expectedRobotUIstate = true;
                     }

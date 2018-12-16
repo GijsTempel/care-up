@@ -108,7 +108,7 @@ public class Tutorial_Movement : TutorialManager
                         hintsN.SetIconPosition(1);
                         //hintsBox.anchoredPosition = new Vector2(681f, 175f);
                         //hintsBox.sizeDelta = new Vector2(472.5f, 298.9f);
-                        hintsN.LockTo("MoveBackButton", new Vector3(-59.90f, -87.00f, 0.00f));
+                        hintsN.LockTo("MoveBackButton", new Vector3(-59.90f, -115.94f, 0.00f));
                         hintsN.SetSize(560f, 350f);
                         hintsN.SetIconPosition(1);
                         currentStep = TutorialStep.MoveBack;

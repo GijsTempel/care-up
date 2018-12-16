@@ -1,10 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Tutorial_UseOn : TutorialManager {
 
     public AudioClip Popup;
+    public AudioClip Done;
+    public AudioClip Robot1;
+    public AudioClip Robot2;
+    public AudioClip Robot3;
+    public AudioClip RobotShort1;
+    public AudioClip RobotShort2;
     AudioSource audioSource;
 
     public enum TutorialStep
@@ -36,28 +43,21 @@ public class Tutorial_UseOn : TutorialManager {
                 case TutorialStep.First:
                     audioSource.PlayOneShot (Popup, 0.1F);
                     currentStep = TutorialStep.Welcome;
-                    //hintsBox.anchoredPosition = new Vector2(-14.8f, 9.9f);
-                    //hintsBox.sizeDelta = new Vector2(788f, 524.9f);
-                    hintsN.SetSize(788f, 524.9f);
-                    hintsN.LockTo("UI(Clone)", new Vector3(-393.80f, 214.70f, 0.00f));
-                    UItext.text = "Welkom. In deze leermodule zal je leren hoe je objecten met andere objecten kunt gebruiken. Denk hierbij aan het weggooien van een naald in de naaldcontainer of het gebruiken van een injectiespuit op de cliënt.";
+                    hintsN.SetSize(481.4f, 455.7f);
+                    hintsN.LockTo("robot", new Vector3(0.00f, -0.33f, 1.84f));
+                    UItext.DOText("In deze training leer je hoe je gecombineerde objecten kunt gebruiken. Denk hierbij aan het weggooien van een naald in de naaldcontainer of het gebruiken van een injectiespuit op je cliënt.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
                     SetUpTutorialNextButton();
-
-     //               GameObject.Find("DevHint").SetActive(false);
-					//GameObject.Find("Extra").SetActive(false);
-                    //GameObject.Find("ExtraButton").SetActive(false);
 
                     break;
                 case TutorialStep.Welcome:
                     if (nextButtonClicked)
                     {
                         audioSource.PlayOneShot (Popup, 0.1F);
-                        //hintsBox.anchoredPosition = new Vector2(165f, -265.64f);
-                        //hintsBox.sizeDelta = new Vector2(472.5f, 298.9f);
+
                         hintsN.ResetSize();
 						hintsN.LockTo("WorkField", new Vector3(0.00f, 0.51f, -0.73f));
                         currentStep = TutorialStep.MoveTo;
-                        UItext.text = "Laten we beginnen door te bewegen naar het werkveld. Doe dit door te klikken op het werkveld.";
+                        UItext.DOText("We beginnen door te bewegen naar het werkveld. Klik op het werkveld.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
 
                         player.tutorial_movedTo = false;
                     }
@@ -69,10 +69,9 @@ public class Tutorial_UseOn : TutorialManager {
                         player.tutorial_movedTo = false;
 
                         currentStep = TutorialStep.PickNeedle;
-                        //hintsBox.anchoredPosition = new Vector2(372.73f, -237f);
 						hintsN.LockTo("AbsorptionNeedleNoCap", new Vector3(0.00f, 0.06f, -0.06f));
 						hintsN.SetIconPosition(3);
-                        UItext.text = "Heel goed. Laten we nu de gebruikte opzuignaald oppakken door erop te klikken.";
+                        UItext.DOText("Pak de gebruikte opzuignaald door erop te klikken. ", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
 
                         handsInventory.tutorial_pickedLeft = false;
                         
@@ -92,10 +91,9 @@ public class Tutorial_UseOn : TutorialManager {
                         particleHint.SetActive(false);
 
                         currentStep = TutorialStep.OpenControls;
-                        //hintsBox.anchoredPosition = new Vector2(207f, -138f);
 						hintsN.LockTo("AbsorptionNeedleNoCap", new Vector3(0.00f, 0.00f, 0.00f));
 						hintsN.SetIconPosition(0);
-                        UItext.text = "Nu je de naald vast hebt, klik nogmaals op de naald om de opties te tonen. ";
+                        UItext.DOText("Klik op de opzuignaald om de opties te tonen. ", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
 
                         player.tutorial_itemControls = false;
                         player.itemControlsToInit = "AbsorptionNeedleNoCap";
@@ -108,10 +106,9 @@ public class Tutorial_UseOn : TutorialManager {
                         player.tutorial_itemControls = false;
 
                         currentStep = TutorialStep.ClickUseOn;
-                        //hintsBox.anchoredPosition = new Vector2(527f, 68f);
                         hintsN.LockTo("UseOnButton", new Vector3(45.10f, -274.50f, 0.00f));
                         hintsN.SetIconPosition(3);
-                        UItext.text = "Klik op het + icoon om het object met een ander object te gebruiken. ";
+                        UItext.DOText("Klik op het +icoon om de objecten met elkaar te combineren.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
 
                         player.tutorial_UseOnControl = false;
                     }
@@ -123,10 +120,9 @@ public class Tutorial_UseOn : TutorialManager {
                         player.tutorial_UseOnControl = false;
                         
                         currentStep = TutorialStep.UseOn;
-                        //hintsBox.anchoredPosition = new Vector2(566f, -69f);
 						hintsN.LockTo("NeedleCup", new Vector3(0.00f, 0.00f, -0.15f));
 						hintsN.SetIconPosition(0);
-                        UItext.text = "Klik nu op het object waarmee je de naald wilt gebruiken. In dit geval de naaldcontainer.";
+                        UItext.DOText("Klik nu op het object waarmee je de naald wilt gebruiken. In dit geval klik je op de naaldcontainer. ", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
                         
                         handsInventory.tutorial_itemUsedOn = false;
                     }
@@ -138,10 +134,8 @@ public class Tutorial_UseOn : TutorialManager {
                         handsInventory.tutorial_itemUsedOn = false;
                         currentStep = TutorialStep.Done;
 						hintsN.LockTo("SceneLoader 1", new Vector3(363.61f, -22.40f, 0.00f));
-                        //hintsBox.anchoredPosition = new Vector2(513f, -304f);
-                        UItext.text = "Super! Dit was de leermodule over het gebruiken van een object in je hand met een ander object zoals de naaldcontainer.";
+                        UItext.DOText("Super! Dit was de leermodule over het gebruiken van een object in je hand met een ander object zoals de naaldcontainer.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
                         SetPauseTimer(4.0f);
-                    
                     }
                     break;
                 case TutorialStep.Done:
