@@ -145,7 +145,7 @@ public class Tutorial_Sequence : TutorialManager
                     {
                         audioSource.PlayOneShot (Popup, 0.1F);
                         audioSource.PlayOneShot(Robot3, 0.1F);
-                        hintsN.LockTo("RightArm", new Vector3(136.90f, -214.30f, -287.30f));
+                        hintsN.LockTo("RightArm", new Vector3(136.90f, -279.97f, -287.30f));
                         hintsN.SetIconPosition(1);
                         hintsN.SetSize(611.5f, 372.4f);
                         currentStep = TutorialStep.SequenceExplanation;
@@ -158,9 +158,9 @@ public class Tutorial_Sequence : TutorialManager
                     {
                         audioSource.PlayOneShot (Popup, 0.1F);
                         audioSource.PlayOneShot(RobotShort2, 0.1F);
-                        hintsN.LockTo("ExtraButton", new Vector3(119.30f, -28.90f, -287.30f));
+                        hintsN.LockTo("RightShoulder", new Vector3(58.70f, -80.90f, -46.70f));
                         hintsN.ResetSize();
-                        hintsN.SetIconPosition(0);
+                        hintsN.SetIconPosition(1);
                         currentStep = TutorialStep.CompleteSequence;
                         sequenceCompleted = sequenceLock = false;
                         PlayerAnimationManager.SequenceTutorialLock(false);
