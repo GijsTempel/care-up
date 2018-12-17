@@ -54,7 +54,7 @@ public class Tutorial_Talk : TutorialManager
                     GameObject.FindObjectOfType<InjectionPatient>().allowToTalk = false;
                     currentStep = TutorialStep.Welcome;
                     hintsN.SetIconPosition(1);
-                    hintsN.SetSize(366.8f, 377f);
+                    hintsN.SetSize(366.8f, 415f);
                     hintsN.LockTo("robot", new Vector3(-0.04f, -0.22f, 0.21f));
                     UItext.DOText("In deze training zul je leren hoe je met mensen een gesprek kunt aangaan.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
                     SetUpTutorialNextButton();

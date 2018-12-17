@@ -63,7 +63,7 @@ public class Tutorial_Sequence : TutorialManager
                     audioSource.PlayOneShot(RobotShort1, 0.1F);
                     GameObject.FindObjectOfType<InjectionPatient>().allowToTalk = false;
                     currentStep = TutorialStep.Welcome;
-                    hintsN.SetSize(551.6f, 311.9f);
+                    hintsN.SetSize(551.6f, 400f);
                     hintsN.SetIconPosition(1);
                     hintsN.LockTo("robot", new Vector3(-704.81f, 3.20f, 317.20f));
                     UItext.DOText("In deze tutorial zul je leren hoe je ingewikkelde handelingen, zoals injecteren, moet uitvoeren.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);

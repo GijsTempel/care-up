@@ -44,9 +44,9 @@ public class Tutorial_UseOn : TutorialManager {
                     audioSource.PlayOneShot (Popup, 0.1F);
                     audioSource.PlayOneShot(Robot1, 0.1F);
                     currentStep = TutorialStep.Welcome;
-                    hintsN.SetSize(481.4f, 521.7f);
+                    hintsN.SetSize(632.5f, 521.7f);
                     hintsN.SetIconPosition(1);
-                   hintsN.LockTo("robot", new Vector3(-393.80f,-3.00f,0.00f));
+                    hintsN.LockTo("robot", new Vector3(-380.15f, -6.04f, 188.40f));
                     UItext.DOText("In deze training leer je hoe je gecombineerde objecten kunt gebruiken. Denk hierbij aan het weggooien van een naald in de naaldcontainer of het gebruiken van een injectiespuit op je cliënt.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
                     SetUpTutorialNextButton();
 
@@ -56,7 +56,7 @@ public class Tutorial_UseOn : TutorialManager {
                     {
                         audioSource.PlayOneShot (Popup, 0.1F);
                         audioSource.PlayOneShot(RobotShort1, 0.1F);
-                        hintsN.SetSize(483.8f, 153.9f);
+                        hintsN.SetSize(483.8f, 210f);
                         hintsN.SetIconPosition(0);
                         hintsN.LockTo("WorkField", new Vector3(2.23f, 0.59f, -1.30f));
                         currentStep = TutorialStep.MoveTo;
@@ -71,7 +71,7 @@ public class Tutorial_UseOn : TutorialManager {
                         audioSource.PlayOneShot (Popup, 0.1F);
                         audioSource.PlayOneShot(RobotShort2, 0.1F);
                         player.tutorial_movedTo = false;
-                        hintsN.SetSize(506.8f, 154.9f);
+                        hintsN.SetSize(506.8f, 175f);
                         currentStep = TutorialStep.PickNeedle;
 						hintsN.LockTo("AbsorptionNeedleNoCap", new Vector3(0.00f, 0.06f, -0.06f));
 						hintsN.SetIconPosition(3);
@@ -139,6 +139,7 @@ public class Tutorial_UseOn : TutorialManager {
                     {
                         audioSource.PlayOneShot (Popup, 0.1F);
                         audioSource.PlayOneShot(Robot3, 0.1F);
+                        audioSource.PlayOneShot(Done, 0.1F);
                         hintsN.SetSize(506.8f, 277.6f);
                         handsInventory.tutorial_itemUsedOn = false;
                         currentStep = TutorialStep.Done;

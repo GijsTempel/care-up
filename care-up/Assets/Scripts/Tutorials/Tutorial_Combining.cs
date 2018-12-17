@@ -49,7 +49,7 @@ public class Tutorial_Combining : TutorialManager {
                 audioSource.PlayOneShot (Popup, 0.1F);
                 audioSource.PlayOneShot(Robot1, 0.1F);
                 currentStep = TutorialStep.Welcome;
-                hintsN.SetSize (445.2f, 373.7f);
+                hintsN.SetSize (445.2f, 400f);
                     hintsN.LockTo("robot", new Vector3(722.70f, -28.60f, -340.70f));
                     hintsN.SetIconPosition(1);
                     UItext.DOText("In deze training ga ik je leren hoe je objecten in je handen kunt combineren en uit elkaar kunt halen.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
