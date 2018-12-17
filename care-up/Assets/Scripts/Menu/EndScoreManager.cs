@@ -101,9 +101,7 @@ public class EndScoreManager : MonoBehaviour {
 
             actualScene = true;
 
-            // add send mail function to the button ?
-            Button btn = GameObject.Find("Interactable Objects/Canvas/Send_Score/Buttons/SendButton").GetComponent<Button>();
-            btn.onClick.AddListener(EndScoreSendMailResults);
+
 
             // show/hide buttons
             bool flag = (percent > 0.7f && GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed);
@@ -175,17 +173,6 @@ public class EndScoreManager : MonoBehaviour {
             bl_SceneLoaderUtils.GetLoader.LoadLevel ("EndScore_Test");
         }
     }
-    public void EndScoreSendMailResults()
-    {
-        string topic = "Care Up accreditatie aanvraag";
-        string content = "Completed scene: " + GameObject.FindObjectOfType<PlayerPrefsManager>().currentSceneVisualName + "\n";
-        content += "Username: " + MBS.WULogin.username + "\n";
 
-        Text text = GameObject.Find("Interactable Objects/Canvas/Send_Score/GameObject (1)/Username/Text").GetComponent<Text>();
-        content += text.text;
-
-        PlayerPrefsManager.__sendMail(topic, content);
-        Debug.Log("E-mail verzonden");
-    }
 }
 

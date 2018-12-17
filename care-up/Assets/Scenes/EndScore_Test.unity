@@ -1654,8 +1654,6 @@ GameObject:
   - component: {fileID: 678794660}
   - component: {fileID: 678794659}
   - component: {fileID: 678794662}
-  - component: {fileID: 678794663}
-  - component: {fileID: 678794664}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -1721,28 +1719,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eMail: info@triplemotion.nl
   UpdatesPanel: {fileID: 0}
---- !u!114 &678794663
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 678794658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7aa545d3bebf9b44a86fe30ade141a7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &678794664
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 678794658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d933868feb194dbca69c377b85e25fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &702041687
 GameObject:
   m_ObjectHideFlags: 0
@@ -2073,7 +2049,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0.95046496, y: 1}
-  m_AnchoredPosition: {x: 44.416992, y: -0.00003061685}
+  m_AnchoredPosition: {x: 44.416992, y: 0.00009145346}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &723847687
@@ -2591,6 +2567,7 @@ GameObject:
   - component: {fileID: 870364238}
   - component: {fileID: 870364237}
   - component: {fileID: 870364236}
+  - component: {fileID: 870364240}
   m_Layer: 5
   m_Name: SendButton
   m_TagString: Untagged
@@ -2686,8 +2663,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 678794664}
-        m_MethodName: screenshotButtonPressed
+      - m_Target: {fileID: 870364240}
+        m_MethodName: EndScoreSendMailResults
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2754,6 +2731,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 870364234}
+--- !u!114 &870364240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 870364234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07e2160d9be9a6e4d8ffe58ae939337f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &885728379
 GameObject:
   m_ObjectHideFlags: 0
@@ -3311,7 +3299,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0.95046496, y: 1}
-  m_AnchoredPosition: {x: 44.41565, y: 0.00003741373}
+  m_AnchoredPosition: {x: 44.41565, y: 0.00006793131}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1014527473
