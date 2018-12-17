@@ -75,6 +75,7 @@ public class PlayerScript : MonoBehaviour {
     public GameObject robotSavedRight;
 
     GameObject devHintUI = null;
+    GameObject biggerDevHintUI = null;
     GameObject tutorialCanvas;
 
     Tutorial_UI tutorial_UI;
@@ -82,6 +83,7 @@ public class PlayerScript : MonoBehaviour {
 
     bool moveBackBtnActiveForIpad = false;
     bool devHintActiveForIpad = false;
+    bool biggerDevHintActiveForIpad = false;
 
     GameObject extraButton;
     bool extraBtnActiveForIpad = false;
@@ -168,6 +170,8 @@ public class PlayerScript : MonoBehaviour {
 
         if (GameObject.Find("DevHint") != null)
             devHintUI = GameObject.Find("DevHint").gameObject;
+        if (GameObject.Find ("BiggerDevHint") != null)
+            biggerDevHintUI = GameObject.Find ("BiggerDevHint").gameObject;
 
         GameObject wrongActionPopUp = GameObject.Find("WrongAction").gameObject;
 		//GameObject warningPopUp = GameObject.Find("EmptyHandsWarning").gameObject;
@@ -460,6 +464,11 @@ public class PlayerScript : MonoBehaviour {
             devHintUI.SetActive(false);
         }
 
+        if (biggerDevHintUI != null) {
+            biggerDevHintActiveForIpad = biggerDevHintUI.activeSelf;
+            biggerDevHintUI.SetActive (false);
+        }
+
         if (extraButton != null)
         {
             extraBtnActiveForIpad = extraButton.activeSelf;
@@ -528,6 +537,10 @@ public class PlayerScript : MonoBehaviour {
             if (devHintUI != null)
             {
                 devHintUI.SetActive(devHintActiveForIpad);
+            }
+
+            if (biggerDevHintUI != null) {
+                biggerDevHintUI.SetActive (biggerDevHintActiveForIpad);
             }
 
             if (extraButton != null)
