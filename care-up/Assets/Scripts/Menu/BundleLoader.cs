@@ -32,7 +32,7 @@ public class BundleLoader : MonoBehaviour {
 
 		// Or customize the URL based on your deployment or configuration
 
-		AssetBundleManager.SetSourceAssetBundleURL("https://leren.careup.online/AssetBundlesStage/");
+		AssetBundleManager.SetSourceAssetBundleURL("https://leren.careup.online/AssetBundles/");
 #endif
         if (GameObject.Find("url_test") != null)
         {
