@@ -108,7 +108,7 @@ public class Tutorial_Picking : TutorialManager {
                         audioSource.PlayOneShot(Robot1, 0.1F);
                         handsInventory.tutorial_pickedRight = false;
                         itemToPick = "";
-                        hintsN.SetSize(452f, 300f);
+                        hintsN.SetSize(452f, 325f);
                         currentStep = TutorialStep.DropOne;
                         hintsN.LockTo("/Cloth", new Vector3(0.00f, 0.16f, 0.00f));
                         UItext.DOText("Objecten kun je terug leggen door op het silhouette  te klikken. Klik nu op het silhouette van het gaasje om deze terug te leggen.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
