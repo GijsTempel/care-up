@@ -36,14 +36,16 @@
 
   <action
     points="1"
-    description="Open de doos met katheter benodigdheden."
-    fullDescription=" Klik op de doos met katheter benodigdheden om deze open te maken."
+    description="Open de doos met katheterset."
+    fullDescription=" Klik op de katheterset om deze open te maken."
     audioHint="Injection/H2-2"
     index="2"
     type="use"
     value="catheterisation"
-    extra="Open de doos met katheter benodigdheden en maak een steriel werkveld met steriele doek. Zorg ervoor dat je het steriele vlak tijdens het openvouwen van de steriele doek niet aanraakt."></action>
-
+    extra="Open de katheterset en maak een steriel werkveld met steriele doek. Zorg ervoor dat je het steriele vlak tijdens het openvouwen van de steriele doek niet aanraakt."
+    messageTitle="Katheterset"
+    messageContent="Het gebruik van een katheterset verdient aanbeveling. Hierin bevinden zich alle benodigdheden voor het inbrengen van een katheter. Er is echter niet aangetoond dat het werken met een katheterset een meerwaarde heeft boven het verzamelen van de materialen afzonderlijk. Gazen voor het reinigen van de urethraopening hoeven niet steriel te zijn, wel schoon. Reden hiervoor is dat ze niet in aanraking komen met een steriel gebied (meatus)."></action>
+  
   <action
     comment="3. Open package of the syringe with 10 ml of sterile water. Leave the syringe in the package "
     points="1" 
@@ -146,7 +148,10 @@
     type="useOn"
     item="cotton_ball"
     target="w0_A"
-    extra="Reinig de labia en de meatus in 5 stappen met de wattenbollen."></action>
+    extra="Reinig de labia en de meatus in 5 stappen met de wattenbollen."
+    messageTitle="Reiniging genitaliën"
+    messageContent="Voordat een katheter wordt ingebracht, moeten de genitaliën van de cliënt gereinigd worden. Bij het inbrengen van verblijfskatheters wordt glijmiddel in de urethra aangebracht. (Bij een suprapubische katheter wordt glijmiddel in de fistel aangebracht)."
+    >"</action>
 
   <action 
     points="2" 
@@ -288,39 +293,7 @@
     extra="Trek de steriele handschoenen aan."
     quiz="2.0"
     messageTitle="Aantrekken steriele handschoenen"
-    messageContent="
-    Het aantrekken van steriele handschoenen vereist enige handigheid. Voorkom tijdens het aantrekken dat de handschoenen onsteriel worden.
-
- 
-
-Voorbereiding
-- Zorg voor een schoon, ruim en leeg werkvlak.
-- Neem de juiste maat handschoenen. De handschoenen moeten goed aansluiten. Met goed aangesloten handschoenen wordt zorgvuldiger gewerkt en is het risico op het scheuren van de handschoenen of prikken in de handschoenen kleiner.
-- Controleer of de verpakking intact is en de houdbaarheidsdatum niet overschreden is.
-- Doe ringen, armbanden en horloge af.
-- Pas handhygiëne toe en zorg voor handen die goed droog zijn. In een vochtig milieu gedijen bacteriën goed.
-- Open de verpakking van de handschoenen zoals aangegeven staat op de verpakking.
- 
-
-Handeling
-- Ontvouw de twee verpakkingen zodanig in de lengte dat ze niet in de oude vorm kunnen terugschieten.
-- Neem met de linkerduim en wijsvinger de rechterhandschoen aan de binnenkant op (linkshandigen nemen met de rechterduim en wijsvinger de linkerhandschoen op).
-- Steek de rechterhand in de rechterhandschoen. Probeer de duim en vingers direct in de juiste openingen te steken. Lukt dit niet wacht dan totdat de andere handschoen aangetrokken is.
-- Steek de vingers van de rechterhand onder de omvouw van de linkerhandschoen en neem de handschoenen op.
-- Steek de linkerhand in de handschoen.
-- Corrigeer zo nodig de beide handschoenen wanneer de vingers niet in de juiste openingen zitten.
-- Zorg ervoor dat de handschoenen geen onsteriele vlakken raken. Gebeurt dat wel, neem dan een paar nieuwe handschoenen en begin opnieuw.
- 
-
-Uittrekken
-- Pak met twee vingers en duim van de linkerhand de boord van de rechterhandschoen vast.
-- Plaats de vingers van de rechterhand tegen elkaar en leg de duim in de palm van de hand. Dit vergemakkelijkt het uittrekken van de handschoen.
-- Sla de boord om en stroop de handschoen van de hand af. Zo wordt de buitenkant van de handschoen de binnenkant, waardoor huidcontact met eventueel bloed of wondvocht vermeden wordt.
-- Werp de handschoen in de daarvoor bestemde afvalbak.
-- Herhaal de handeling met de andere handschoen. Vermijd contact van de blote hand met vuile gedeelten van de handschoen.
-- Pas handhygiëne toe.
-    "
-  ></action>
+    messageContent="Het aantrekken van steriele handschoenen vereist enige handigheid. Voorkom tijdens het aantrekken dat de handschoenen onsteriel worden."></action>
 
   <action
     comment="24. With the dominant hand, grasp the tube of the urine collection bag just behind the connection point and attach it to the catheter. Continue to hold the hose."
@@ -389,11 +362,14 @@ Uittrekken
     description="Schuif de katheter op tot er urine verschijnt en schuif de katheter daarna nog 2 cm verder op."
     points="3" type="sequenceStep"  
     extra="Schuif de katheter op tot er urine verschijnt en schuif de katheter daarna nog 2 cm verder op." 
-    fullDescription="Kies de juiste optie."></action>
-<action
+    fullDescription="Kies de juiste optie."
+    messageTitle="Voorzichtig inbrengen"
+    messageContent="Een katheter moet voorzichtig worden ingebracht. Forceer het inbrengen niet, omdat er een ‘fausse route’ kan ontstaan. waarbij de katheter zich door de wand van de urethra boort."></action>
+  
+  <action
     index="35"
     value="empty blather"
-    description="De blaas loopt leeg in de urineopvangzak. Oefen lichte druk uit op het gebied van symfyse en schaambeen als er geen urine wordt afgevoerd."
+    description="De blaas loopt leeg in de urineopvangzak."
     points="1" 
     type="sequenceStep"  
     extra="De blaas loopt leeg in de urineopvangzak. Oefen lichte druk uit op het gebied van symfyse en schaambeen als er geen urine wordt afgevoerd." 
