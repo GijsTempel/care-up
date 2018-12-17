@@ -218,6 +218,9 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 firstScene = false;
                 buttonInfo.OnMainButtonClick();
             }
+
+            sceneUnit.testDisabled = (xmlSceneNode.Attributes["test"] != null
+                && xmlSceneNode.Attributes["test"].Value == "disabled");
         }
     }
     

@@ -13,6 +13,7 @@ public class LevelButton : MonoBehaviour {
     public bool multiple;
     public string displayName;
     public Sprite image;
+    public bool testDisabled;
 
     private static Transform sceneInfoPanel;
     private static PlayerPrefsManager manager;
@@ -30,6 +31,7 @@ public class LevelButton : MonoBehaviour {
         public string description;
         public string result;
         public Sprite image;
+        public bool testDisabled;
     };
     
     public List<Info> variations = new List<Info>();
@@ -114,6 +116,14 @@ public class LevelButton : MonoBehaviour {
                     manager.currentSceneVisualName = displayName;
                 }
             }
+
+            // maybe disable test button
+            //GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/DialogTestPractice/Panel_UI/TestButton")
+            //    .GetComponent<Button>().interactable = !testDisabled;
+
+            //making button not interactable was not noticable (maybe change design), hiding instead
+            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/DialogTestPractice/Panel_UI/TestButton")
+                .SetActive(!testDisabled);
         }
     }
 
