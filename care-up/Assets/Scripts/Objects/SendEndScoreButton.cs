@@ -15,7 +15,7 @@ public class SendEndScoreButton : MonoBehaviour {
 
         Text text = GameObject.Find("Interactable Objects/Canvas/Send_Score/GameObject (1)/Username/Text").GetComponent<Text>();
 
-        content += "big- of registratienummer:" + text.text;
+        content += "Big- of registratienummer:" + text.text;
 
         PlayerPrefsManager.__sendMail(topic, content);
         Debug.Log("E-mail verzonden");
