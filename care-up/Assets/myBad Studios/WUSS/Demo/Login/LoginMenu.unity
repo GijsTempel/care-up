@@ -756,8 +756,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 441.41306, y: -276.81644}
-  m_SizeDelta: {x: 882.8261, y: 90.72657}
+  m_AnchoredPosition: {x: 455.8405, y: -268.28772}
+  m_SizeDelta: {x: 911.681, y: 87.31509}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &57551809
 MonoBehaviour:
@@ -3332,8 +3332,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 441.41306, y: -45.363285}
-  m_SizeDelta: {x: 882.8261, y: 90.72657}
+  m_AnchoredPosition: {x: 455.8405, y: -43.657543}
+  m_SizeDelta: {x: 911.681, y: 87.31509}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &271796318
 MonoBehaviour:
@@ -9665,7 +9665,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: -0.503}
   m_AnchorMax: {x: 1.006914, y: 0.4845085}
-  m_AnchoredPosition: {x: -2.9966125, y: 4.0000153}
+  m_AnchoredPosition: {x: -2.9966125, y: 4}
   m_SizeDelta: {x: -6.1799927, y: -8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &888235400
@@ -10054,12 +10054,12 @@ Prefab:
     - target: {fileID: 224268715766342320, guid: 0a9bca9bf7e384fc2a3f708b73a6a577,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0.511
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224268715766342320, guid: 0a9bca9bf7e384fc2a3f708b73a6a577,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224593196783935460, guid: 0a9bca9bf7e384fc2a3f708b73a6a577,
         type: 2}
@@ -10078,22 +10078,22 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1593336450347010, guid: 0a9bca9bf7e384fc2a3f708b73a6a577, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224124631034167902, guid: 0a9bca9bf7e384fc2a3f708b73a6a577,
         type: 2}
       propertyPath: m_AnchorMin.x
-      value: 0.511
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224124631034167902, guid: 0a9bca9bf7e384fc2a3f708b73a6a577,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0.511
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224124631034167902, guid: 0a9bca9bf7e384fc2a3f708b73a6a577,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 95144486063825700, guid: 0a9bca9bf7e384fc2a3f708b73a6a577,
         type: 2}
@@ -11782,6 +11782,7 @@ GameObject:
   - component: {fileID: 1134252865}
   - component: {fileID: 1134252864}
   - component: {fileID: 1134252863}
+  - component: {fileID: 1134252867}
   m_Layer: 5
   m_Name: Username
   m_TagString: Untagged
@@ -11921,7 +11922,18 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1134252867}
+        m_MethodName: Format
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.InputField+OnChangeEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
@@ -11964,6 +11976,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1134252861}
+--- !u!114 &1134252867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1134252861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82896d20b0badd740b360389b787ba55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1142345105
 GameObject:
   m_ObjectHideFlags: 0
@@ -12780,8 +12803,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 441.41306, y: -392.543}
-  m_SizeDelta: {x: 882.8261, y: 90.72657}
+  m_AnchoredPosition: {x: 455.8405, y: -380.60278}
+  m_SizeDelta: {x: 911.681, y: 87.31509}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1246867825
 MonoBehaviour:
@@ -16898,6 +16921,7 @@ GameObject:
   - component: {fileID: 1651684482}
   - component: {fileID: 1651684481}
   - component: {fileID: 1651684480}
+  - component: {fileID: 1651684484}
   m_Layer: 5
   m_Name: Username
   m_TagString: Untagged
@@ -16922,8 +16946,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 441.41306, y: -161.08986}
-  m_SizeDelta: {x: 882.8261, y: 90.72657}
+  m_AnchoredPosition: {x: 455.8405, y: -155.97263}
+  m_SizeDelta: {x: 911.681, y: 87.31509}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1651684480
 MonoBehaviour:
@@ -17080,6 +17104,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1651684478}
+--- !u!114 &1651684484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1651684478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82896d20b0badd740b360389b787ba55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1662297671
 GameObject:
   m_ObjectHideFlags: 0
@@ -20642,8 +20677,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.000013752956, y: -0.0000026131022}
   m_AnchorMax: {x: 1.0000035, y: 0.99999356}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 3.9417725}
+  m_SizeDelta: {x: 0, y: 7.8835}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2033465921
 MonoBehaviour:
@@ -20689,6 +20724,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!222 &2033465923
 CanvasRenderer:
   m_ObjectHideFlags: 0
