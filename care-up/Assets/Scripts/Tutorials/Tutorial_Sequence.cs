@@ -66,7 +66,7 @@ public class Tutorial_Sequence : TutorialManager
                     hintsN.SetSize(551.6f, 400f);
                     hintsN.SetIconPosition(1);
                     hintsN.LockTo("robot", new Vector3(-704.81f, 3.20f, 317.20f));
-                    UItext.DOText("In deze tutorial zul je leren hoe je ingewikkelde handelingen, zoals injecteren, moet uitvoeren.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
+                    UItext.DOText("In deze training leer je ingewikkelde handelingen uit te voeren.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
                     SetUpTutorialNextButton();
                     break;
                 case TutorialStep.Welcome:
@@ -78,7 +78,7 @@ public class Tutorial_Sequence : TutorialManager
                         hintsN.SetSize(452f, 157.4f);
                         hintsN.LockTo("WorkField", new Vector3(0.00f, 0.51f, -1.33f));
                         currentStep = TutorialStep.MoveTo;
-                        UItext.DOText("Beweeg naar het werkveld door erop te klikken.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
+                        UItext.DOText("Klik op het werkveld om te beginnen.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
 
                         player.tutorial_movedTo = false;
                     }
@@ -92,7 +92,7 @@ public class Tutorial_Sequence : TutorialManager
 						hintsN.LockTo("SyringeWithInjectionNeedleCap", new Vector3(0.00f, 0.12f, 0.00f));
 						hintsN.SetIconPosition(3);
                         currentStep = TutorialStep.PickSyringe;
-                        UItext.DOText("Pak de spuit met injectienaald door erop te klikken.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
+                        UItext.DOText("Klik op de spuit met injectienaald om deze op te pakken.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
                         handsInventory.tutorial_pickedLeft = false;
                         itemToPick = "SyringeWithInjectionNeedleCap";
                     }
@@ -130,13 +130,13 @@ public class Tutorial_Sequence : TutorialManager
                     if (patient.tutorial_talked)
                     {
                         audioSource.PlayOneShot (Popup, 0.1F);
-                        audioSource.PlayOneShot(RobotShort2, 0.1F);
+                        audioSource.PlayOneShot(Robot2, 0.1F);
                         patient.tutorial_talked = false;
                         hintsN.LockTo("RightArm", new Vector3(417.45f, -214.30f, -287.30f));
                         hintsN.SetIconPosition(3);
                         currentStep = TutorialStep.UseOnPatient;
                         UItext.text = "";
-                        UItext.DOText("Klik op de spuit met injectienaald. Klik daarna op het +icoon en klik vervolgens op de cliënt.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
+                        UItext.DOText("Gebruik de spuit door op het object te klikken. Klik daarna op het +icoon en vervolgens op de cliënt.", 1f, true, ScrambleMode.All).SetEase(Ease.Linear);
                         handsInventory.tutorial_itemUsedOn = false;
                     }
                     break;
@@ -164,7 +164,7 @@ public class Tutorial_Sequence : TutorialManager
                         currentStep = TutorialStep.CompleteSequence;
                         sequenceCompleted = sequenceLock = false;
                         PlayerAnimationManager.SequenceTutorialLock(false);
-                        UItext.DOText("In deze training zijn de juiste keuzes aangegeven in het groen. Doorloop de stappen door de juiste keuzes te selecteren.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
+                        UItext.DOText("De juiste keuzes zijn in het groen aangegeven. Selecteer de juiste keuze.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
                     }
                     break;
                 case TutorialStep.CompleteSequence:

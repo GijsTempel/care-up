@@ -14,9 +14,9 @@ public class SceneSelectionManager : MonoBehaviour {
     private PlayerPrefsManager manager;
     
     private string practiceText =
-        "Oefenen: Oefen de handeling waarin je elke stap van de werkwijze bovenin het scherm kunt zien. Volg de stappen om ze te oefenen en te leren.";
+        "Kies je voor oefenen, dan zie je bovenin het scherm elke stap van de werkwijze. ";
     private string testText =
-        "Toetsen: Toets je kennis. Tijdens een toets zie je geen hints en moet je de stappen van de handeling uit je hoofd uitvoeren. Je kunt nu iedere actie in een willekeurige volgorde uitvoeren. Je kunt dus dingen in de verkeerde volgorde doen of zelf vergeten. Net zoals tijdens een praktijktoets.";
+        "Kies je voor toetsen, dan zie je geen hints en moet je de stappen van de handelingen uit je hoofd uitvoeren. Let op de volgorde van de acties!";
     
     public void Start()
     {

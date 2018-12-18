@@ -302,7 +302,7 @@ public class Tutorial_UI : TutorialManager
                         hintsN.SetSize(452f, 162.1f);
                         hintsN.LockTo("RobotUI", new Vector3(-1650.00f, 936.80f, -99.80f));
                         hintsN.SetIconPosition(0);
-                        UItext.DOText("Sluit de aftekenlijst door op het pijltje te klikken.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
+                        UItext.DOText("Sluit de ‘Gegevens’ app door op het pijltje te klikken.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
 
                         RobotUITabs.tutorial_back = false;
                     }

@@ -271,7 +271,7 @@ public class MainMenu : MonoBehaviour {
     void ErrorHandle(CMLData response)
     {
         // we're here if we got error or no data which should be equal to 0 plays
-        AllowDenyContinue((response["message"] == "WPServer error: Empty response. No data found"));
+        AllowDenyContinue((response["message"] == "Geen data gevonden. Er wordt data aangemaakt."));
     }
 
     void AllowDenyContinue(bool allow)
