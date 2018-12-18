@@ -34,6 +34,10 @@ public class Cheat_CurrentAction : MonoBehaviour
     public bool tutorial_extraOpened = false;
     [HideInInspector]
     public bool tutorial_extraClosed = false;
+    [HideInInspector]
+    public bool tutorial_devHintOpened = false;
+    [HideInInspector]
+    public bool tutorial_devHintClosed = false;
 
     private PlayerPrefsManager manager;
 
@@ -203,6 +207,7 @@ public class Cheat_CurrentAction : MonoBehaviour
     }
 
     public void ShowBiggerDevHint () {
+        tutorial_devHintOpened = true;
         dev_Hint.SetActive (false);
         bigger_DevHint.SetActive (true);
 
@@ -211,6 +216,7 @@ public class Cheat_CurrentAction : MonoBehaviour
     }
 
     public void RemoveBiggerDevHint () {
+        tutorial_devHintClosed = true;
         dev_Hint.SetActive (true);
         bigger_DevHint.SetActive (false);
 

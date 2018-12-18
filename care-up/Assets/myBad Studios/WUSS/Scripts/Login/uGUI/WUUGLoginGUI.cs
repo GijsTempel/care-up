@@ -30,6 +30,7 @@ namespace MBS
             voorwaarden_screen,
             error_pop_up,
             error_login_pop_up,
+            registration_pop_up,
             custom_1,
             start_menu;
         }
@@ -93,6 +94,9 @@ namespace MBS
                 ErrorLoginText.text = "Het wachtwoord of gebruikersnaam is incorrect";
             } else if (WULogin.on_Registration_Success == false) {
                 ChangeRegistrationUIRed ();
+            } else if (WULogin.on_Registration == true) {
+                DisplayScreen (panels.registration_pop_up);
+                WULogin.on_Registration = false;
             }
 
             if (WULogin.ChangeAllToWhite == true) {
@@ -426,6 +430,7 @@ namespace MBS
 
             WULogin.onRegistrationFailed += On_Registration_Fail;
             WULogin.onRegistered += On_Registration;
+            WULogin.onRegistered += On_Registration_Succes;
             WULogin.onRegistered += RemoveText;
             WULogin.on_Registration_Success = true;
             CMLData data = new CMLData();
@@ -434,10 +439,11 @@ namespace MBS
             data.Set( "password", fields.register_password.text.Trim() );
             WULogin.RegisterAccount( data );
 
-            DisplayScreen( panels.login_menu );
+            DisplayScreen (panels.registration_pop_up);
         }
 
         void On_Registration_Fail (CMLData response) => WULogin.on_Registration_Success = false;
+        void On_Registration_Succes (CML response) => WULogin.on_Registration = true;
         void On_Registration (CML response) => WULogin.ChangeAllToWhite = true;
         void RemoveText (CML response) => remove_text = true;
 
