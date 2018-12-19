@@ -64,7 +64,7 @@ public class Tutorial_Talk : TutorialManager
                     {
                         audioSource.PlayOneShot (Popup, 0.1F);
                         audioSource.PlayOneShot(RobotShort2, 0.1F);
-                        hintsN.SetSize(452f, 111f);
+                        hintsN.SetSize(452f, 200f);
                         hintsN.LockTo("Patient", new Vector3(2.87f, 0.77f, 0.00f));
                         currentStep = TutorialStep.MoveTo;
                         UItext.DOText("Klik op de cliënt om naar hem toe te lopen.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);

@@ -125,7 +125,7 @@ public class Tutorial_UseOn : TutorialManager {
                         audioSource.PlayOneShot (Popup, 0.1F);
                         audioSource.PlayOneShot(Robot2, 0.1F);
                         player.tutorial_UseOnControl = false;
-                        hintsN.SetSize(506.8f, 205.3f);
+                        hintsN.SetSize(506.8f, 250f);
                         currentStep = TutorialStep.UseOn;
 						hintsN.LockTo("NeedleCup", new Vector3(0.00f, 0.00f, -0.15f));
 						hintsN.SetIconPosition(0);
