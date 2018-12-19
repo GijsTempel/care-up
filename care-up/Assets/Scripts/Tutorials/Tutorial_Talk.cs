@@ -94,7 +94,7 @@ public class Tutorial_Talk : TutorialManager
                         hintsN.SetSize(452f, 159f);
                         currentStep = TutorialStep.Talk;
 
-                        hintsN.LockTo("SelectionDialogue(Clone)", new Vector3(68.02f, 120.35f, 0.00f));
+                        hintsN.LockTo("SelectionDialogue(Clone)", new Vector3(35.80f, 59.50f, 0.00f));
                         hintsN.SetIconPosition(1);
                         UItext.DOText("Klik op “goedemorgen” om de cliënt te begroeten.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
                         patient.tutorial_talked = false;

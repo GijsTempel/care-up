@@ -413,7 +413,7 @@ public class Tutorial_UI : TutorialManager
                         currentStep = TutorialStep.CloseRobotUI;
                         audioSource.PlayOneShot(RobotShort1, 0.1F);
                         hintsN.SetSize(452f, 300f);
-                        hintsN.LockTo("RobotUI", new Vector3(1880.40f, 1299.00f, 0.00f));
+                        hintsN.LockTo("RobotUI", new Vector3(1880.40f, 1109.00f, 0.00f));
 						hintsN.SetIconPosition(1);
                         UItext.DOText("Sluit de tablet af door op het kruisje te klikken. Je kunt de tablet altijd weer openen door op het tableticoontje te klikken. ", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
                         expectedRobotUIstate = false;

@@ -60,7 +60,7 @@ public class Tutorial_Picking : TutorialManager {
                         audioSource.PlayOneShot(RobotShort1, 0.1F);
                         currentStep = TutorialStep.MoveTo;
                         hintsN.SetIconPosition(3);
-                        hintsN.SetSize(452f, 201.5f);
+                        hintsN.SetSize(452f, 250f);
                         hintsN.LockTo("WorkField", new Vector3(1.10f, 1.06f, -0.01f));
                         UItext.DOText("Laten we beginnen. Beweeg naar het werkveld door op het werkveld te klikken.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
 
