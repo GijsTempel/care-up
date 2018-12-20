@@ -34,6 +34,7 @@ public class Tutorial : TutorialManager {
         MoveBack,
         MoveToTable,
         CleanHands,
+        CleanTable,
         Done,
         None
     }
@@ -54,6 +55,8 @@ public class Tutorial : TutorialManager {
     private GameObject docPos;
     private GameObject cliëntPos;
 
+    private UsableObject handCleaner;
+
     public GameObject Tweenbutton;
 
     protected override void Start () {
@@ -64,6 +67,8 @@ public class Tutorial : TutorialManager {
         wfPos = GameObject.Find ("WorkFieldPos");
         docPos = GameObject.Find ("DoctorPos");
         cliëntPos = GameObject.Find ("PatientPos");
+
+        handCleaner = GameObject.Find ("HandCleaner").GetComponent<UsableObject>();
 
         wfPos.SetActive (false);
         docPos.SetActive (false);
@@ -292,16 +297,23 @@ public class Tutorial : TutorialManager {
                 case TutorialStep.MoveToTable:
                 if (player.tutorial_movedTo) {
                     audioSource.PlayOneShot (Popup, 0.1F);
-                    audioSource.PlayOneShot (RobotShort1, 0.1F);
-                    //hintsBox.anchoredPosition = new Vector2(165f, -265.64f);
-                    //hintsBox.sizeDelta = new Vector2(472.5f, 298.9f);
-                    hintsN.LockTo ("WorkField", new Vector3 (0.80f, 0.78f, 0.40f));
-                    hintsN.ResetSize ();
-                    currentStep = TutorialStep.MoveToTable;
-                    UItext.DOText ("Probeer nu naar het werkveld te bewegen. Dit kun je doen door op het werkveld te klikken.", 0.5f, true, ScrambleMode.All).SetEase (Ease.Linear);
-                    hintsN.SetIconPosition (2);
-                    player.tutorial_movedTo = false;
-                    wfPos.SetActive (true);
+                    currentStep = TutorialStep.CleanHands;
+                    audioSource.PlayOneShot (RobotShort2, 0.1F);
+                    hintsN.SetSize (452f, 414.7f);
+                    hintsN.LockTo ("ExtraButton", new Vector3 (450.00f, -550.00f, 0.00f));
+                    UItext.DOText ("Nu je bij het werkveld bent is het belangrijk dat je jouw handen goed wast dus klik op de hand hygiene pomp.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
+                    particleHint.SetActive (true);
+                    particleHint.transform.position = GameObject.Find ("HandCleaner").transform.position;
+                }
+                break;
+                case TutorialStep.CleanHands:
+                if (handCleaner.handsCleaned) {
+                    audioSource.PlayOneShot (Popup, 0.1F);
+                    currentStep = TutorialStep.CleanTable;
+                    audioSource.PlayOneShot (RobotShort2, 0.1F);
+                    hintsN.SetSize (452f, 414.7f);
+                    hintsN.LockTo ("ExtraButton", new Vector3 (450.00f, -550.00f, 0.00f));
+                    UItext.DOText ("Nu heb je jou handen gewassen en dus kan je het werkveld schoonmaken dat doe je door erop te klikken doe dit nu maar.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
                     particleHint.SetActive (true);
                     particleHint.transform.position = GameObject.Find ("WorkField").transform.position;
                 }

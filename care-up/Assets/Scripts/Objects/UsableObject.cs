@@ -10,6 +10,7 @@ public class UsableObject : InteractableObject {
 
     [HideInInspector]
     public bool tutorial_used = false;
+    public bool handsCleaned = false;
     public string PrefabToAppear = "";
     protected static HandsInventory handsInventory;
 
@@ -61,6 +62,7 @@ public class UsableObject : InteractableObject {
                                 catPatient.SkipGreetingDialogue();
                             }
 
+                            handsCleaned = true;
                             string message = "Zorg voor een zorgvuldige handhygiëne. Handhygiëne is in dit protocol versneld om de gebruikerservaring te verbeteren";
                             RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
                             messageCenter.NewMessage("Zorgvuldige handhygiëne", message, RobotUIMessageTab.Icon.Info);
