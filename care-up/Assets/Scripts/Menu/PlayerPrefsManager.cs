@@ -45,6 +45,10 @@ public class PlayerPrefsManager : MonoBehaviour
     [HideInInspector]
     public int plays = 0;
 
+    // used for storing scene name for test hightscore loading
+    private static string currentTestScene = "";
+    private static float currentTestScore = 0;
+    
     public string ActivatedScenes
     {
         get
@@ -331,5 +335,36 @@ public class PlayerPrefsManager : MonoBehaviour
             { return true; };
 
         smtpServer.Send(mail);
+    }
+
+    public void UpdateTestHighscore(float score)
+    {
+        currentTestScore = score * 100;
+        currentTestScene = currentSceneVisualName.Replace(" ", "_");
+        
+        WUData.FetchField(currentTestScene, "TestHighscores", GetTestHighscore, -1, GetTestHighscore_Error);
+    }
+
+    static void GetTestHighscore(CML response)
+    {
+        print(response.ToString());
+        float highscore = response[1].Float(currentTestScene);
+        if (highscore < currentTestScore)
+        {
+            CMLData data = new CMLData();
+            data.Set(currentTestScene, currentTestScore.ToString());
+            WUData.UpdateCategory("TestHighscores", data);
+        }
+    }
+
+    static void GetTestHighscore_Error(CMLData response)
+    {
+        print(response.ToString());
+        if ((response["message"] == "WPServer error: Empty response. No data found"))
+        {
+            CMLData data = new CMLData();
+            data.Set(currentTestScene, currentTestScore.ToString());
+            WUData.UpdateCategory("TestHighscores", data);
+        }
     }
 }

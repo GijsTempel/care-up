@@ -100,16 +100,17 @@ public class EndScoreManager : MonoBehaviour {
                 .GetComponent<Text> ().text = string.Format ("Tijd: {0}:{1:00}", (int)time / 60, (int)time % 60);
 
             actualScene = true;
-
-
-
+            
             // show/hide buttons
             bool flag = (percent > 0.7f && GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed);
             GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Buttons/NextButton").SetActive(flag);
             GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Buttons/Back to main menu").SetActive(!flag);
 
             GameObject.Find("Interactable Objects/Canvas/Send_Score/Top/Scenetitle").GetComponent<Text>().text = GameObject.FindObjectOfType<PlayerPrefsManager>().currentSceneVisualName;
-            
+
+            // update test highscore
+            GameObject.FindObjectOfType<PlayerPrefsManager>().UpdateTestHighscore(percent);
+
         } else {
             quizQuestionsTexts.Clear ();
             quizWrongIndexes.Clear ();
