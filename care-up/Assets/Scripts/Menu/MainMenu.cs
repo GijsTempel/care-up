@@ -56,6 +56,8 @@ public class MainMenu : MonoBehaviour {
             {
                 UpdatesPanel.SetActive(false);
             }
+
+            GameObject.FindObjectOfType<PlayerPrefsManager>().FetchTestHighScores();
         }
     }
 

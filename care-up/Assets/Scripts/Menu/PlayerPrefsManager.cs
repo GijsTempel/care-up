@@ -347,7 +347,6 @@ public class PlayerPrefsManager : MonoBehaviour
 
     static void GetTestHighscore(CML response)
     {
-        print(response.ToString());
         float highscore = response[1].Float(currentTestScene);
         if (highscore < currentTestScore)
         {
@@ -359,12 +358,40 @@ public class PlayerPrefsManager : MonoBehaviour
 
     static void GetTestHighscore_Error(CMLData response)
     {
-        print(response.ToString());
         if ((response["message"] == "WPServer error: Empty response. No data found"))
         {
             CMLData data = new CMLData();
             data.Set(currentTestScene, currentTestScore.ToString());
             WUData.UpdateCategory("TestHighscores", data);
+        }
+    }
+
+    public void FetchTestHighScores()
+    {
+        WUData.FetchCategory("TestHighscores", GetAllHighScores);
+    }
+
+    static void GetAllHighScores(CML response)
+    {
+        for(int i = 0; i < response.Elements[1].Keys.Length; ++i)
+        {
+            switch(response.Elements[1].Keys[i])
+            {
+                // we skip these keys cuz they hold no useful info about scenes
+                case "id":
+                case "category":
+                case "woocommerce-login-nonce":
+                case "_wpnonce":
+                    continue;
+                default:
+                    // here we get actual scenes and values
+                    string sceneName = response.Elements[1].Keys[i].Replace("_", " ");
+                    int percent = Mathf.FloorToInt(float.Parse(response.Elements[1].Values[i]));
+                    bool passed = percent > 70;
+                    // printing for now, until we get actual UI to fill with this info
+                    print(sceneName + " " + percent + " " + passed);
+                    break;
+            }
         }
     }
 }
