@@ -372,115 +372,115 @@ class DummyClient(WebSocketClient):
 		left_id = -1
 		right_id = -1
 		to_record = False
-		if 'leap_moton' in bpy.data.objects:
-			hand_l = None
-			hand_r = None
-			if (scn['Leap_Data']['marcer_left'] in bpy.data.objects):
-				hand_l = bpy.data.objects[scn['Leap_Data']['marcer_left']]
-			if (scn['Leap_Data']['marcer_right'] in bpy.data.objects):
-				hand_r = bpy.data.objects[scn['Leap_Data']['marcer_right']]
-			if 'hands' in data_dict:
-				for h in data_dict['hands']:
-					if h['type'] == 'left':
-						left_id = h['id']
-					if h['type'] == 'right':
-						right_id = h['id']
 
-					current_hand_obj = hand_l
-					if h['type'] == 'right':
-						current_hand_obj = hand_r
-					if current_hand_obj != None:
-						# current_hand_obj.rotation_mode = 'QUATERNION'
-						_dir = self.leap_to_vec(h['palmNormal'])
-						_up = self.leap_to_vec(h['direction'])
-						mat = mathutils.Matrix((_up.cross(_dir), _up, _dir))
-						qu = mat.inverted().to_quaternion()
-						current_hand_obj.rotation_quaternion = qu
-						current_hand_obj.location = self.leap_to_vec(h['palmPosition'], True)
-						if scn['Leap_Data']['to_record']:
-							if scn['Leap_Data']['recording_rig'] in bpy.data.objects:
-								if scn['Leap_Data']['tracking_rig'] in bpy.data.objects:
-									to_record = True
+		hand_l = None
+		hand_r = None
+		if (scn['Leap_Data']['marcer_left'] in bpy.data.objects):
+			hand_l = bpy.data.objects[scn['Leap_Data']['marcer_left']]
+		if (scn['Leap_Data']['marcer_right'] in bpy.data.objects):
+			hand_r = bpy.data.objects[scn['Leap_Data']['marcer_right']]
+		if 'hands' in data_dict:
+			for h in data_dict['hands']:
+				if h['type'] == 'left':
+					left_id = h['id']
+				if h['type'] == 'right':
+					right_id = h['id']
 
-				if 'pointables' in data_dict:
-					for pointable in data_dict['pointables']:
-						pref = 'left'
-						if pointable['handId']  == right_id:
-							pref = 'right'
+				current_hand_obj = hand_l
+				if h['type'] == 'right':
+					current_hand_obj = hand_r
+				if current_hand_obj != None:
+					# current_hand_obj.rotation_mode = 'QUATERNION'
+					_dir = self.leap_to_vec(h['palmNormal'])
+					_up = self.leap_to_vec(h['direction'])
+					mat = mathutils.Matrix((_up.cross(_dir), _up, _dir))
+					qu = mat.inverted().to_quaternion()
+					current_hand_obj.rotation_quaternion = qu
+					current_hand_obj.location = self.leap_to_vec(h['palmPosition'], True)
+					if scn['Leap_Data']['to_record']:
+						if scn['Leap_Data']['recording_rig'] in bpy.data.objects:
+							if scn['Leap_Data']['tracking_rig'] in bpy.data.objects:
+								to_record = True
 
-						i = int(pointable["type"])
-						j_list = ['carpPosition', 'mcpPosition', 'pipPosition', 'btipPosition']
-						for j in range(4):
-							o_name = scn['Leap_Data']['anch_' + pref][str(i)][str(j)]
-							if o_name in bpy.data.objects:
-								obj = bpy.data.objects[o_name]
-								obj.location = self.leap_to_vec(pointable[j_list[j]], True)
-								base = pointable['bases'][j]
-								__forw = self.leap_to_vec(base[0])
-								__up = self.leap_to_vec(base[1])
-								__left = self.leap_to_vec(base[2])
-								if pref == 'right':
-									__left = -__left
-								mat = mathutils.Matrix((__left, __up, __forw))
-								qu = mat.inverted().to_quaternion()
+			if 'pointables' in data_dict:
+				for pointable in data_dict['pointables']:
+					pref = 'left'
+					if pointable['handId']  == right_id:
+						pref = 'right'
 
-								obj.rotation_mode = 'QUATERNION'
-								obj.rotation_quaternion = qu
+					i = int(pointable["type"])
+					j_list = ['carpPosition', 'mcpPosition', 'pipPosition', 'btipPosition']
+					for j in range(4):
+						o_name = scn['Leap_Data']['anch_' + pref][str(i)][str(j)]
+						if o_name in bpy.data.objects:
+							obj = bpy.data.objects[o_name]
+							obj.location = self.leap_to_vec(pointable[j_list[j]], True)
+							base = pointable['bases'][j]
+							__forw = self.leap_to_vec(base[0])
+							__up = self.leap_to_vec(base[1])
+							__left = self.leap_to_vec(base[2])
+							if pref == 'right':
+								__left = -__left
+							mat = mathutils.Matrix((__left, __up, __forw))
+							qu = mat.inverted().to_quaternion()
+
+							obj.rotation_mode = 'QUATERNION'
+							obj.rotation_quaternion = qu
 
 
-				if to_record and frame != bpy.context.scene.frame_current:
-					frame = bpy.context.scene.frame_current
-					a = bpy.data.objects[scn['Leap_Data']['tracking_rig']]
-					b = bpy.data.objects[scn['Leap_Data']['recording_rig']]
-					action = b.animation_data.action
-					bones_list = [
-						'IK_hand.L',
-						'IK_hand.R',
-						'handRotation.L',
-						'handRotation.R',
+			if to_record and frame != bpy.context.scene.frame_current:
+				frame = bpy.context.scene.frame_current
+				a = bpy.data.objects[scn['Leap_Data']['tracking_rig']]
+				b = bpy.data.objects[scn['Leap_Data']['recording_rig']]
+				action = b.animation_data.action
+				bones_list = [
+					'IK_hand.L',
+					'IK_hand.R',
+					'handRotation.L',
+					'handRotation.R',
 
-						'LeftHandThumb1',
-						'LeftHandThumb3',
-						'LeftHandThumb2',
-						'LeftHandIndex1',
-						'LeftHandIndex2',
-						'LeftHandIndex3',
-						'LeftHandMiddle1',
-						'LeftHandMiddle2',
-						'LeftHandMiddle3',
-						'LeftHandRing1',
-						'LeftHandRing2',
-						'LeftHandRing3',
-						'LeftHandPinky1',
-						'LeftHandPinky2',
-						'LeftHandPinky3',
+					'LeftHandThumb1',
+					'LeftHandThumb3',
+					'LeftHandThumb2',
+					'LeftHandIndex1',
+					'LeftHandIndex2',
+					'LeftHandIndex3',
+					'LeftHandMiddle1',
+					'LeftHandMiddle2',
+					'LeftHandMiddle3',
+					'LeftHandRing1',
+					'LeftHandRing2',
+					'LeftHandRing3',
+					'LeftHandPinky1',
+					'LeftHandPinky2',
+					'LeftHandPinky3',
 
-						'RightHandThumb1',
-						'RightHandThumb2',
-						'RightHandThumb3',
-						'RightHandIndex1',
-						'RightHandIndex2',
-						'RightHandIndex3',
-						'RightHandMiddle1',
-						'RightHandMiddle2',
-						'RightHandMiddle3',
-						'RightHandRing1',
-						'RightHandRing2',
-						'RightHandRing3',
-						'RightHandPinky1',
-						'RightHandPinky2',
-						'RightHandPinky3'
-					]
+					'RightHandThumb1',
+					'RightHandThumb2',
+					'RightHandThumb3',
+					'RightHandIndex1',
+					'RightHandIndex2',
+					'RightHandIndex3',
+					'RightHandMiddle1',
+					'RightHandMiddle2',
+					'RightHandMiddle3',
+					'RightHandRing1',
+					'RightHandRing2',
+					'RightHandRing3',
+					'RightHandPinky1',
+					'RightHandPinky2',
+					'RightHandPinky3'
+				]
 
-					for _bone in bones_list:
-						if _bone in b.pose.bones and  _bone in a.pose.bones:
-							m = a.convert_space(a.pose.bones[_bone], a.pose.bones[_bone].matrix, 'POSE', 'LOCAL')
-							if _bone == 'IK_hand.L' or _bone == 'IK_hand.R':
-								b.pose.bones[_bone].location = m.to_translation()
-								b.keyframe_insert(data_path='pose.bones["' + _bone + '"].location')
-							else:
-								b.pose.bones[_bone].rotation_quaternion = m.to_quaternion()
-								b.keyframe_insert(data_path='pose.bones["' + _bone + '"].rotation_quaternion')
+				for _bone in bones_list:
+					if _bone in b.pose.bones and  _bone in a.pose.bones:
+						m = a.convert_space(a.pose.bones[_bone], a.pose.bones[_bone].matrix, 'POSE', 'LOCAL')
+						if _bone == 'IK_hand.L' or _bone == 'IK_hand.R':
+							b.pose.bones[_bone].location = m.to_translation()
+							b.keyframe_insert(data_path='pose.bones["' + _bone + '"].location')
+						else:
+							b.pose.bones[_bone].rotation_quaternion = m.to_quaternion()
+							b.keyframe_insert(data_path='pose.bones["' + _bone + '"].rotation_quaternion')
 
 class LeapData(bpy.types.Operator):
 	bl_idname = "anim.leap_data"
@@ -499,9 +499,12 @@ class LeapData(bpy.types.Operator):
 			scn['Leap_Data']['Offset_Obj'] = self.str_data
 		elif self.action == "marcer_left":
 			scn['Leap_Data']['marcer_left'] = self.str_data
+			if scn['Leap_Data']['marcer_left'] in bpy.data.objects:
+				bpy.data.objects[scn['Leap_Data']['marcer_left']].rotation_mode = 'QUATERNION'
 		elif self.action == "marcer_right":
 			scn['Leap_Data']['marcer_right'] = self.str_data
-
+			if scn['Leap_Data']['marcer_right'] in bpy.data.objects:
+				bpy.data.objects[scn['Leap_Data']['marcer_right']].rotation_mode = 'QUATERNION'
 		elif self.action == "tracking_rig":
 			scn['Leap_Data']['tracking_rig'] = self.str_data
 		elif self.action == "recording_rig":
