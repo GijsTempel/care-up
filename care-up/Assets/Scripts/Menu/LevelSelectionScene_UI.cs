@@ -54,7 +54,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
     void ClearUI()
     {
-        Transform parent1 = GameObject.Find("UMenuProManager/MenuCanvas/Play/LevelPanel/ViewPoint/List").transform;
+        Transform parent1 = GameObject.Find("UMenuProManager/MenuCanvas/Play/ProtocolList/ProtocolsHolder/Protocols/content").transform;
         for (int i = 0; i < parent1.childCount; ++i)
         {
             Destroy(parent1.GetChild(i).gameObject);
@@ -110,7 +110,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
             // if we're here, then we have real scene, that is not hidden
             // instantiating panel
             GameObject sceneUnitObject = Instantiate(Resources.Load<GameObject>("Prefabs/UI/SceneSelectionUnit"),
-                GameObject.Find("UMenuProManager/MenuCanvas/Play/LevelPanel/ViewPoint/List").transform);
+                GameObject.Find("UMenuProManager/MenuCanvas/Play/ProtocolList/ProtocolsHolder/Protocols/content").transform);
             sceneUnitObject.name = "SceneSelectionUnit"; // i dont like that 'clone' word at the end, ugh
             LevelButton sceneUnit = sceneUnitObject.GetComponent<LevelButton>();
             
@@ -201,7 +201,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 GameObject.Find("UMenuProManager/MenuCanvas/Leaderboard/LeftBar/Scroll View/Viewport/Content").transform);
             LeaderBoardSceneButton buttonInfo = button.GetComponent<LeaderBoardSceneButton>();
 
-            button.transform.GetChild(0).GetComponent<Text>().text = sceneUnit.displayName;
+            button.transform.GetComponent<Text>().text = sceneUnit.displayName;
             buttonInfo.sceneName = sceneUnit.sceneName;
             buttonInfo.multiple = sceneUnit.multiple;
             if (buttonInfo.multiple)

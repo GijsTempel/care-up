@@ -34,7 +34,7 @@ public class LeaderBoardSceneButton : MonoBehaviour
             for (int i = 0; i < sceneNames.Count; ++i)
             {
                 manager.variations[i].gameObject.SetActive(true);
-                manager.variations[i].GetChild(0).GetComponent<Text>().text = buttonNames[i];
+                manager.variations[i].GetComponent<Text>().text = buttonNames[i];
 
                 string variationSceneName = sceneNames[i];
                 manager.variations[i].GetComponent<Button>().onClick.AddListener(
