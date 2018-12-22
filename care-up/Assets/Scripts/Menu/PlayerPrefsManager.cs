@@ -388,6 +388,14 @@ public class PlayerPrefsManager : MonoBehaviour
                     string sceneName = response.Elements[1].Keys[i].Replace("_", " ");
                     int percent = Mathf.FloorToInt(float.Parse(response.Elements[1].Values[i]));
                     bool passed = percent > 70;
+
+                    GameObject layoutGroup = GameObject.Find("UMenuProManager/MenuCanvas/Account_Scores/Account_Panel_UI/LayoutGroup");
+                    GameObject scoreObject = Instantiate(Resources.Load<GameObject>("Prefabs/UI/TestHighscore"), layoutGroup.transform);
+                    scoreObject.transform.Find("SceneName").GetComponent<Text>().text = sceneName;
+                    scoreObject.transform.Find("Percent").GetComponent<Text>().text = percent.ToString() + "%";
+                    scoreObject.transform.Find("Passed").GetComponent<Text>().text = 
+                        (passed ? "Passed" : "NotPassed");
+
                     // printing for now, until we get actual UI to fill with this info
                     print(sceneName + " " + percent + " " + passed);
                     break;
