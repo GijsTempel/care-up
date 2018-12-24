@@ -139,6 +139,9 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 sceneUnit.transform.Find("Title").GetComponent<Text>().text
                     = sceneUnit.displayName = xmlSceneNode.Attributes["name"].Value;
 
+                ppManager.currentSceneVisualName = sceneUnit.displayName;
+                ppManager.UpdateTestHighscore(0.0f);
+
                 // saving bundle name for later
                 string bundleName = sceneUnit.bundleName = xmlSceneNode.Attributes["bundleName"].Value;
 
@@ -180,6 +183,9 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 // setting scene title
                 sceneUnit.transform.Find("Title").GetComponent<Text>().text
                     = sceneUnit.displayName = xmlSceneNode.Attributes["name"].Value;
+
+                ppManager.currentSceneVisualName = sceneUnit.displayName;
+                ppManager.UpdateTestHighscore(0.0f);
 
                 // setting description
                 if (xmlSceneNode.Attributes["description"].Value != "")
