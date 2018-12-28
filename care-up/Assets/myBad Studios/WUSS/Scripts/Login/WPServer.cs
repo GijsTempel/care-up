@@ -174,6 +174,11 @@ namespace MBS
                     WULogin.EmailTheSame = true;
                     WULogin.on_Registration_Success = false;
                 }
+                if (e.Message == "Username is not valid. Please select another")
+                {
+                    WULogin.UsernameNotValid = true;
+                    WULogin.on_Registration_Success = false;
+                }
 
                 if (e.Message == "Username already in use") {
                     WULogin.UsernameTheSame = true;
