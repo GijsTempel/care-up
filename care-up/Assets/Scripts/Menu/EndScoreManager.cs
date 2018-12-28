@@ -14,6 +14,8 @@ public class EndScoreManager : MonoBehaviour {
     private int score;
     private float time;
 
+    public float percent;
+
     public string completedSceneName;
     public string completedSceneBundle;
 
@@ -84,7 +86,7 @@ public class EndScoreManager : MonoBehaviour {
                 step.transform.Find ("ToggleNo").GetComponent<Toggle> ().isOn = wrong;
             }
 
-            float percent = 1.0f *
+            percent = 1.0f *
                 (correctStepIndexes.Count + (quizQuestionsTexts.Count - quizWrongIndexes.Count))
                 / (steps.Count + quizQuestionsTexts.Count);
 
