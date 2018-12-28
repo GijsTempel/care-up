@@ -69,7 +69,7 @@ public class LevelButton : MonoBehaviour {
         }
         else
         {
-            LevelButton mainBtn = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/DialogTestPractice/Panel_UI/Start").GetComponent<LevelButton>();
+            LevelButton mainBtn = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/DialogTestPractice/Panel_UI/Buttons/Start").GetComponent<LevelButton>();
 
             if (multiple)
             {
@@ -87,7 +87,7 @@ public class LevelButton : MonoBehaviour {
                 for (int i = 0; i < variations.Count; ++i)
                 {
                     LevelSelectionScene_UI_Option option =
-                        dialogue.transform.Find("Option_" + (i + 1)).GetComponent<LevelSelectionScene_UI_Option>();
+                        dialogue.transform.Find("Buttons/Option_" + (i + 1)).GetComponent<LevelSelectionScene_UI_Option>();
                     option.bundleName = variations[i].bundleName;
                     option.sceneName = variations[i].sceneName;
                     option.transform.GetComponentInChildren<Text>().text = variations[i].displayName;
@@ -122,7 +122,7 @@ public class LevelButton : MonoBehaviour {
             //    .GetComponent<Button>().interactable = !testDisabled;
 
             //making button not interactable was not noticable (maybe change design), hiding instead
-            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/DialogTestPractice/Panel_UI/TestButton")
+            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/DialogTestPractice/Panel_UI/Buttons/TestButton")
                 .SetActive(!testDisabled);
         }
     }

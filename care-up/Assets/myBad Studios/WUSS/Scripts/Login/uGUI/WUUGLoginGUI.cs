@@ -160,6 +160,16 @@ namespace MBS
                 RegUsernameField = RegUsernameField.GetComponent<Image> ();
                 RegUsernameField.color = new Color32 (255, 0, 0, 150);
             }
+            if (WULogin.UsernameNotValid == true)
+            {
+                WULogin.ChangeAllToWhite = true;
+
+                DisplayScreen(panels.error_pop_up);
+                ErrorText.text = "Gebruikersnaam niet toegestaan. Gebruik geen speciaal tekens, accenten of streepjes in je gebruikernaam.";
+
+                RegUsernameField = RegUsernameField.GetComponent<Image>();
+                RegUsernameField.color = new Color32(255, 0, 0, 150);
+            }
 
 
             WULogin.on_Registration_Success = true;
