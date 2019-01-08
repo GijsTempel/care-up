@@ -9,6 +9,8 @@ public class WorkField : UsableObject {
     private int toggleTime = 0;
     private bool toggle = false;
 
+    public bool tableCleaned = false;
+
     public bool cleaningLocked = true;
 
     protected override void Start()
@@ -38,6 +40,7 @@ public class WorkField : UsableObject {
             if (actionManager.CompareUseObject(name))
             {
                 tutorial_used = true;
+                tableCleaned = true;
                 PlayerAnimationManager.PlayAnimation("Use WorkField", transform);
 
                 if (toggleTime == 0)

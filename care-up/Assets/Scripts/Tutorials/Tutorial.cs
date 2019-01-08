@@ -35,6 +35,29 @@ public class Tutorial : TutorialManager {
         MoveToTable,
         CleanHands,
         CleanTable,
+        OpenRobotUI,
+        StopWatchExpl,
+        TimeExpl,
+        PercentExpl,
+        TabsExpl,
+        PressGeneral,
+        GeneralExpl,
+        PatientRecordsOpen, // new
+        PatientRecordsExpl,
+        PatientRecordsBack,
+        PatientPrescriptionOpen,
+        PatientPrescriptionExpl,
+        WritingDownExpl,
+        PrescriptionBack,   // end of new
+        GeneralBack,
+        PressChecklist,
+        ChecklistExpl,
+        ChecklistBack,
+        PressMessageCenter,
+        MessageCenterExpl,
+        OpenMessage,
+        CloseMessageCenter,
+        CloseRobotUI,
         Done,
         None
     }
@@ -50,12 +73,15 @@ public class Tutorial : TutorialManager {
     public bool expectedRobotUIstate = false;
     public bool expectedHintsState = false;
     public bool biggerHintOpenend = false;
+    public bool openMailMessage = false;
 
     private GameObject wfPos;
     private GameObject docPos;
     private GameObject cliëntPos;
+    [SerializeField]private GameObject robotUI;
 
     private UsableObject handCleaner;
+    private WorkField workfield;
 
     public GameObject Tweenbutton;
 
@@ -68,11 +94,13 @@ public class Tutorial : TutorialManager {
         docPos = GameObject.Find ("DoctorPos");
         cliëntPos = GameObject.Find ("PatientPos");
 
-        handCleaner = GameObject.Find ("HandCleaner").GetComponent<UsableObject>();
+        handCleaner = GameObject.Find ("HandCleaner").GetComponent<UsableObject> ();
+        workfield = GameObject.Find ("WorkField").GetComponent<WorkField> ();
 
         wfPos.SetActive (false);
         docPos.SetActive (false);
         cliëntPos.SetActive (false);
+        robotUI.SetActive (true);
 
         hintsUI = GameObject.FindObjectOfType<Cheat_CurrentAction> ();
     }
@@ -240,7 +268,7 @@ public class Tutorial : TutorialManager {
                     patient.tutorial_used = false;
                     hintsN.SetSize (452f, 159f);
                     currentStep = TutorialStep.Talk;
-
+                    robotUI.SetActive (true);
                     hintsN.LockTo ("SelectionDialogue(Clone)", new Vector3 (68.02f, 120.35f, 0.00f));
                     hintsN.SetIconPosition (1);
                     UItext.DOText ("Laten we de cliënt begroeten door de optie 'Goedemorgen' te kiezen.", 0.5f, true, ScrambleMode.All).SetEase (Ease.Linear);
@@ -316,6 +344,296 @@ public class Tutorial : TutorialManager {
                     UItext.DOText ("Nu heb je jou handen gewassen en dus kan je het werkveld schoonmaken dat doe je door erop te klikken doe dit nu maar.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
                     particleHint.SetActive (true);
                     particleHint.transform.position = GameObject.Find ("WorkField").transform.position;
+                }
+                break;
+                case TutorialStep.CleanTable:
+                if (workfield.tableCleaned) {
+                    hintsN.SetSize (570f, 226.6f);
+                    audioSource.PlayOneShot (Popup, 0.1F);
+                    audioSource.PlayOneShot (Robot3, 0.1F);
+                    currentStep = TutorialStep.OpenRobotUI;
+                    hintsN.SetIconPosition (0);
+                    hintsN.LockTo ("RobotUITrigger", new Vector3 (53.24f, -101.46f, 0.00f));
+                    robotUI.SetActive(true);
+                    UItext.DOText ("Klik op het tableticoontje om de tablet te openen. Op de tablet kun je veel informatie vinden. Neem maar eens een kijkje!", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
+                    expectedRobotUIstate = true;
+                }
+                break;
+                case TutorialStep.OpenRobotUI:
+                if (player.tutorial_robotUI_opened) {
+                    hintsN.ResetSize ();
+                    audioSource.PlayOneShot (Popup, 0.1F);
+                    audioSource.PlayOneShot (Robot3, 0.1F);
+                    currentStep = TutorialStep.StopWatchExpl;
+                    hintsN.LockTo ("Stopwatch", new Vector3 (107.20f, -143.10f, 0.00f));
+                    UItext.DOText ("Het klokje geeft aan hoe lang je bezig bent met de handeling. ", 0.5f, true, ScrambleMode.All).SetEase (Ease.Linear);
+                    SetUpTutorialNextButton ();
+                }
+                break;
+                case TutorialStep.StopWatchExpl:
+                if (nextButtonClicked) {
+                    audioSource.PlayOneShot (Popup, 0.1F);
+                    audioSource.PlayOneShot (Robot2, 0.1F);
+                    currentStep = TutorialStep.TimeExpl;
+
+                    hintsN.LockTo ("Stopwatch", new Vector3 (1297.10f, -149.20f, 0.00f));
+                    UItext.DOText ("Hier zie je het aantal punten dat je behaald hebt. ", 0.5f, true, ScrambleMode.All).SetEase (Ease.Linear);
+                    SetUpTutorialNextButton ();
+                }
+                break;
+                case TutorialStep.TimeExpl:
+                if (nextButtonClicked) {
+                    audioSource.PlayOneShot (Popup, 0.1F);
+                    audioSource.PlayOneShot (Robot1, 0.1F);
+                    currentStep = TutorialStep.PercentExpl;
+
+                    hintsN.LockTo ("Stopwatch", new Vector3 (2678.00f, -149.20f, 0.00f));
+                    UItext.DOText ("Bekijk hier je voortgang.", 0.5f, true, ScrambleMode.All).SetEase (Ease.Linear);
+                    SetUpTutorialNextButton ();
+                }
+                break;
+                case TutorialStep.PercentExpl:
+                if (nextButtonClicked) {
+                    audioSource.PlayOneShot (Popup, 0.1F);
+                    audioSource.PlayOneShot (RobotShort1, 0.1F);
+                    currentStep = TutorialStep.TabsExpl;
+
+                    hintsN.LockTo ("RobotUI", new Vector3 (-428.00f, -213.19f, 0.00f));
+                    UItext.DOText ("Klik op de apps om ze te openen.", 0.5f, true, ScrambleMode.All).SetEase (Ease.Linear);
+                    SetUpTutorialNextButton ();
+                }
+                break;
+                case TutorialStep.TabsExpl:
+                if (nextButtonClicked) {
+                    audioSource.PlayOneShot (Popup, 0.1F);
+                    audioSource.PlayOneShot (RobotShort2, 0.1F);
+                    currentStep = TutorialStep.PressGeneral;
+                    hintsN.SetSize (519f, 70.4f);
+                    hintsN.LockTo ("RobotUI", new Vector3 (-990.90f, -49.30f, -99.80f));
+                    UItext.DOText ("Klik op het icoontje ‘Gegevens’", 0.5f, true, ScrambleMode.All).SetEase (Ease.Linear);
+                    RobotUITabs.tutorial_generalOpened = false;
+                    tabToOpen = "GeneralTab";
+                }
+                break;
+                case TutorialStep.PressGeneral:
+                if (RobotUITabs.tutorial_generalOpened) {
+                    audioSource.PlayOneShot (Popup, 0.1F);
+                    audioSource.PlayOneShot (Robot1, 0.1F);
+                    currentStep = TutorialStep.GeneralExpl;
+                    hintsN.SetSize (788f, 318.3f);
+                    hintsN.LockTo ("RobotUI", new Vector3 (-1301.16f, -377.96f, 0.00f));
+                    UItext.DOText ("Hier vind je cliëntgegevens en de toedienlijst. Gebruik dit om gegevens te controleren, bekijken en de toedienlijst af te tekenen. ", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
+                    SetUpTutorialNextButton ();
+                }
+                break;
+                case TutorialStep.GeneralExpl:
+                if (nextButtonClicked) {
+                    audioSource.PlayOneShot (Popup, 0.1F);
+                    audioSource.PlayOneShot (RobotShort1, 0.1F);
+                    currentStep = TutorialStep.PatientRecordsOpen;
+                    UItext.text = "Bekijk de cliëntgegevens door op het icoontje te klikken. ";
+                    UItext.DOText ("Bekijk de cliëntgegevens door op het icoontje te klikken.", 0.5f, true, ScrambleMode.All).SetEase (Ease.Linear);
+                    hintsN.SetSize (452f, 164.8f);
+                    hintsN.LockTo ("RobotUI", new Vector3 (-1006.70f, 38.00f, -99.80f));
+                    RobotUITabs.tutorial_recordsOpened = false;
+                    tabToOpen = "RecordsTab";
+                }
+                break;
+                case TutorialStep.PatientRecordsOpen:
+                if (RobotUITabs.tutorial_recordsOpened) {
+                    audioSource.PlayOneShot (Popup, 0.1F);
+                    audioSource.PlayOneShot (Robot2, 0.1F);
+                    RobotUITabs.tutorial_recordsOpened = false;
+                    hintsN.SetSize (788f, 524.9f);
+                    hintsN.LockTo ("RobotUI", new Vector3 (-1301.16f, 958.30f, 0.00f));
+                    currentStep = TutorialStep.PatientRecordsExpl;
+                    UItext.DOText ("Bekijk en controleer hier de cliëntgegevens. De controle vindt automatisch plaats wanneer je de cliëntgegevens opent.  ", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
+
+                    SetUpTutorialNextButton ();
+                }
+                break;
+                case TutorialStep.PatientRecordsExpl:
+                if (nextButtonClicked) {
+                    audioSource.PlayOneShot (Popup, 0.1F);
+                    audioSource.PlayOneShot (RobotShort2, 0.1F);
+                    currentStep = TutorialStep.PatientRecordsBack;
+                    hintsN.SetSize (452f, 162.1f);
+                    hintsN.LockTo ("RobotUI", new Vector3 (-1726.40f, 1017.60f, 0.00f));
+                    UItext.DOText ("Sluit de cliëntgegevens door op het pijltje te klikken. ", 0.5f, true, ScrambleMode.All).SetEase (Ease.Linear);
+
+                    closeTab = true;
+                    tabToOpen = "GeneralTab";
+                    RobotUITabs.tutorial_back = false;
+                }
+                break;
+                case TutorialStep.PatientRecordsBack:
+                if (RobotUITabs.tutorial_back) {
+                    audioSource.PlayOneShot (Popup, 0.1F);
+                    audioSource.PlayOneShot (RobotShort1, 0.1F);
+                    currentStep = TutorialStep.PatientPrescriptionOpen;
+                    hintsN.LockTo ("RobotUI", new Vector3 (268.00f, 111.00f, 0.00f));
+                    UItext.DOText ("Open de toedienlijst door op het icoon te klikken. ", 0.5f, true, ScrambleMode.All).SetEase (Ease.Linear);
+
+                    RobotUITabs.tutorial_prescriptionOpened = false;
+                    tabToOpen = "PrescriptionTab";
+                }
+                break;
+                case TutorialStep.PatientPrescriptionOpen:
+                if (RobotUITabs.tutorial_prescriptionOpened) {
+                    audioSource.PlayOneShot (Popup, 0.1F);
+                    audioSource.PlayOneShot (Robot3, 0.1F);
+                    RobotUITabs.tutorial_prescriptionOpened = false;
+                    hintsN.SetSize (788f, 524.9f);
+                    hintsN.LockTo ("RobotUI", new Vector3 (-1301.16f, 958.30f, 0.00f));
+                    currentStep = TutorialStep.WritingDownExpl;
+                    UItext.DOText ("Bekijk en controleer hier de toedienlijst. De controle vindt automatisch plaats wanneer je de toedienlijst opent.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
+
+                    SetUpTutorialNextButton ();
+                }
+                break;
+                case TutorialStep.WritingDownExpl:
+                if (nextButtonClicked) {
+                    audioSource.PlayOneShot (Popup, 0.1F);
+                    audioSource.PlayOneShot (RobotShort2, 0.1F);
+                    currentStep = TutorialStep.PatientPrescriptionExpl;
+                    hintsN.SetIconPosition (0);
+                    hintsN.LockTo ("RobotUI", new Vector3 (-1650.00f, 1017.60f, 0.00f));
+                    hintsN.SetSize (452f, 162.1f);
+                    UItext.DOText ("Sluit de toedienlijst door op het pijltje te klikken.", 0.5f, true, ScrambleMode.All).SetEase (Ease.Linear);
+
+                    closeTab = true;
+                    tabToOpen = "GeneralTab";
+                    RobotUITabs.tutorial_back = false;
+                }
+                break;
+                case TutorialStep.PatientPrescriptionExpl:
+                if (RobotUITabs.tutorial_back) {
+                    audioSource.PlayOneShot (Popup, 0.1F);
+                    audioSource.PlayOneShot (Robot1, 0.1F);
+                    currentStep = TutorialStep.PrescriptionBack;
+                    hintsN.LockTo ("RobotUI", new Vector3 (845.00f, -105.00f, 0.00f));
+                    hintsN.SetIconPosition (1);
+                    hintsN.SetSize (465f, 408f);
+                    UItext.DOText ("Door op het aftekenicoon te klikken, kun je een handeling aftekenen. Let op: hiermee rond je de handeling ook af!", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
+
+                    SetUpTutorialNextButton ();
+                }
+                break;
+                case TutorialStep.PrescriptionBack:
+                if (nextButtonClicked) {
+                    audioSource.PlayOneShot (Popup, 0.1F);
+                    audioSource.PlayOneShot (RobotShort1, 0.1F);
+                    currentStep = TutorialStep.GeneralBack;
+                    hintsN.SetSize (452f, 162.1f);
+                    hintsN.LockTo ("RobotUI", new Vector3 (-1650.00f, 936.80f, -99.80f));
+                    hintsN.SetIconPosition (0);
+                    UItext.DOText ("Sluit de ‘Gegevens’ app door op het pijltje te klikken.", 0.5f, true, ScrambleMode.All).SetEase (Ease.Linear);
+
+                    RobotUITabs.tutorial_back = false;
+                }
+                break;
+                case TutorialStep.GeneralBack:
+                if (RobotUITabs.tutorial_back) {
+                    audioSource.PlayOneShot (Popup, 0.1F);
+                    audioSource.PlayOneShot (RobotShort1, 0.1F);
+                    closeTab = RobotUITabs.tutorial_back = false;
+                    currentStep = TutorialStep.PressChecklist;
+
+                    hintsN.LockTo ("RobotUI", new Vector3 (153.20f, 22.10f, 0.00f));
+                    UItext.DOText ("Open de checklist door op de checklist te klikken.", 0.5f, true, ScrambleMode.All).SetEase (Ease.Linear);
+                    RobotUITabs.tutorial_checkListOpened = false;
+                    tabToOpen = "CheckListTab";
+                }
+                break;
+                case TutorialStep.PressChecklist:
+                if (RobotUITabs.tutorial_checkListOpened) {
+                    audioSource.PlayOneShot (Popup, 0.1F);
+                    audioSource.PlayOneShot (Robot2, 0.1F);
+                    currentStep = TutorialStep.ChecklistExpl;
+                    hintsN.SetSize (788f, 524.9f);
+                    hintsN.LockTo ("RobotUI", new Vector3 (-1568.20f, 958.30f, 0.00f));
+                    UItext.DOText ("Tijdens het oefenen van een handeling kun je in de checklist zien welke stappen je hebt doorlopen.Ook zie je welke stappen je nog moet uitvoeren om het handeling af te ronden.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
+                    SetUpTutorialNextButton ();
+                }
+                break;
+                case TutorialStep.ChecklistExpl:
+                if (nextButtonClicked) {
+                    audioSource.PlayOneShot (Popup, 0.1F);
+                    audioSource.PlayOneShot (RobotShort2, 0.1F);
+                    currentStep = TutorialStep.ChecklistBack;
+                    hintsN.SetSize (452f, 162.1f);
+                    hintsN.LockTo ("RobotUI", new Vector3 (-1650.00f, 958.20f, -34.70f));
+                    UItext.DOText ("Klik op het pijltje om terug te gaan.", 0.5f, true, ScrambleMode.All).SetEase (Ease.Linear);
+                    closeTab = true;
+                }
+                break;
+                case TutorialStep.ChecklistBack:
+                if (RobotUITabs.tutorial_back) {
+                    audioSource.PlayOneShot (Popup, 0.1F);
+                    audioSource.PlayOneShot (RobotShort1, 0.1F);
+                    closeTab = RobotUITabs.tutorial_back = false;
+                    currentStep = TutorialStep.PressMessageCenter;
+                    UItext.DOText ("Je hebt een bericht! Klik op ‘Berichten’ om het bericht te openen. ", 0.5f, true, ScrambleMode.All).SetEase (Ease.Linear);
+                    hintsN.LockTo ("RobotUI", new Vector3 (849.00f, -244.00f, -34.70f));
+                    hintsN.SetSize (452f, 164.8f);
+                    hintsN.SetIconPosition (1);
+                    GameObject.FindObjectOfType<RobotUIMessageTab> ().NewMessage ("Leren Spelen",
+                        "De inhoud van de berichten verschijnt in dit venster. Klik op het pijltje linksboven in je scherm om terug te gaan. ",
+                        RobotUIMessageTab.Icon.Info);
+                    RobotUITabs.tutorial_messageCenterOpened = false;
+                    tabToOpen = "MessageCenter";
+                }
+                break;
+                case TutorialStep.PressMessageCenter:
+                if (RobotUITabs.tutorial_messageCenterOpened) {
+                    audioSource.PlayOneShot (Popup, 0.1F);
+                    tabToOpen = "";
+                    currentStep = TutorialStep.MessageCenterExpl;
+
+                    hintsN.SetIconPosition (0);
+                    hintsN.SetSize (512f, 332.5f);
+                    audioSource.PlayOneShot (Robot1, 0.1F);
+                    hintsN.LockTo ("RobotUI", new Vector3 (-1305.70f, 937.90f, 0.00f));
+                    UItext.DOText ("Tijdens het oefenen zullen wij jou berichten sturen om je te helpen en te informeren.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
+                    SetUpTutorialNextButton ();
+                }
+                break;
+                case TutorialStep.MessageCenterExpl:
+                if (nextButtonClicked) {
+                    audioSource.PlayOneShot (Popup, 0.1F);
+                    audioSource.PlayOneShot (RobotShort2, 0.1F);
+                    currentStep = TutorialStep.OpenMessage;
+                    hintsN.SetSize (452f, 73.6f);
+                    hintsN.LockTo ("RobotUI", new Vector3 (-1113.50f, 683.00f, 0.00f));
+                    UItext.DOText ("Klik op een bericht", 0.5f, true, ScrambleMode.All).SetEase (Ease.Linear);
+                    RobotUIMessageTab.tutorial_messageOpened = false;
+                    openMailMessage = true;
+                }
+                break;
+                case TutorialStep.OpenMessage:
+                if (RobotUIMessageTab.tutorial_messageOpened) {
+                    audioSource.PlayOneShot (Popup, 0.1F);
+                    audioSource.PlayOneShot (Robot2, 0.1F);
+                    currentStep = TutorialStep.CloseMessageCenter;
+                    hintsN.SetIconPosition (1);
+                    hintsN.SetSize (452f, 199.5f);
+                    hintsN.LockTo ("RobotUI", new Vector3 (-557.30f, 809.80f, 0.00f));
+                    UItext.DOText ("De inhoud van de berichten verschijnt in dit venster. Klik op het pijltje linksboven in je scherm om terug te gaan. ", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
+                    RobotUITabs.tutorial_back = false;
+                    closeTab = true;
+                }
+                break;
+                case TutorialStep.CloseMessageCenter:
+                if (RobotUITabs.tutorial_back) {
+                    audioSource.PlayOneShot (Popup, 0.1F);
+                    closeTab = RobotUITabs.tutorial_back = false;
+                    currentStep = TutorialStep.CloseRobotUI;
+                    audioSource.PlayOneShot (RobotShort1, 0.1F);
+                    hintsN.SetSize (452f, 300f);
+                    hintsN.LockTo ("RobotUI", new Vector3 (1880.40f, 1109.00f, 0.00f));
+                    hintsN.SetIconPosition (1);
+                    UItext.DOText ("Sluit de tablet af door op het kruisje te klikken. Je kunt de tablet altijd weer openen door op het tableticoontje te klikken. ", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
+                    expectedRobotUIstate = false;
                 }
                 break;
                 /*case TutorialStep.CloseHints:

@@ -16,6 +16,7 @@ public class Cheat_CurrentAction : MonoBehaviour
 
     [SerializeField] private GameObject dev_Hint;
     [SerializeField] private GameObject bigger_DevHint;
+    [SerializeField] private GameObject ipadTrigger;
 
     private bool biggerDevHintActive = false;
     private bool devHintActive = true;
