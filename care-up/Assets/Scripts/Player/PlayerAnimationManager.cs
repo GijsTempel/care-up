@@ -20,6 +20,7 @@ public class PlayerAnimationManager : MonoBehaviour
     public float rightModifier02 = 0f;
     private Transform propL;
     private Transform propR;
+    float syncSpeed = 0.01f;
 
     public float ikWeight = 1.0f;
 
@@ -80,13 +81,39 @@ public class PlayerAnimationManager : MonoBehaviour
         leftModifier02 = propL.localPosition.y;
         rightModifier02 = propR.localPosition.y;
 
-        //string RightAnimName = animationController.GetCurrentAnimatorClipInfo(0)[0].clip.name;
-        //string LeftAnimName = animationController.GetCurrentAnimatorClipInfo(1)[0].clip.name;
-        //float normalizedTime = animationController.GetCurrentAnimatorStateInfo(0).normalizedTime;
-        //if (RightAnimName == LeftAnimName && normalizedTime > 0.15f && normalizedTime < 0.85f)
-        //{
-        //    animationController.Play(LeftAnimName,1, normalizedTime);
-        //}
+        //Right and Left hands animation synchronization
+        int RightAnimHash = animationController.GetCurrentAnimatorStateInfo(0).nameHash;
+        int LeftAnimHash = animationController.GetCurrentAnimatorStateInfo(1).nameHash;
+
+        float normalizedTime_R = animationController.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        float normalizedTime_L = animationController.GetCurrentAnimatorStateInfo(1).normalizedTime;
+        float clipLength_R = animationController.GetCurrentAnimatorStateInfo(0).length;
+        float clipLength_L = animationController.GetCurrentAnimatorStateInfo(1).length;
+        float clipTime_R = clipLength_R * normalizedTime_R;
+        float clipTime_L = clipLength_L * normalizedTime_L;
+
+        if (RightAnimHash == LeftAnimHash
+            && (clipTime_R > 0.35f && clipTime_R < (clipLength_R - 0.35f)
+            && (clipTime_L > 0.35f && clipTime_L < (clipLength_L - 0.35f))))
+        {
+            //print(((normalizedTime_L - normalizedTime_R) * clipLength_R).ToString() + "  ||  " + normalizedTime_L.ToString() + "  " + normalizedTime_R.ToString());
+
+            if (Mathf.Abs(clipTime_L - clipTime_R) < syncSpeed)
+            {
+                animationController.Play(LeftAnimHash, 1, normalizedTime_R + Time.deltaTime / clipLength_L);
+            }
+            else
+            {
+                float syncStep = syncSpeed;
+                if ((normalizedTime_L - normalizedTime_R) > 0f)
+                {
+                    syncStep = -syncSpeed;
+                }
+                animationController.Play(LeftAnimHash, 1, (clipTime_L + (syncStep * 2f) + Time.deltaTime) / clipLength_L);
+            }
+
+        }
+
 
     }
 
