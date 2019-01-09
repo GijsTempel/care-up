@@ -291,9 +291,12 @@ public class CameraMode : MonoBehaviour {
                 #endif
             }
 
-			GameObject.Find("UI").transform.Find("ObjectViewButtons").gameObject.SetActive(true);
-//-----------------------------
-			camRotFrom = Camera.main.transform.localRotation;
+            //GameObject.Find("UI").GetComponent<ExtraObjectOptions>()._show("ObjectViewButtons", true);
+
+            GameObject.FindObjectOfType<GameUI>().transform.Find("ObjectViewButtons").gameObject.SetActive(true);
+            //GameObject.Find("UI").transform.Find("ObjectViewButtons").gameObject.SetActive(true);
+            //-----------------------------
+            camRotFrom = Camera.main.transform.localRotation;
 			startTime = Time.time;
 			camRotTo = Quaternion.Euler(8.0f, 0.0f, 0.0f);
 			camViewObject = true;
