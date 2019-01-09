@@ -86,6 +86,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 2
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 0730668a555cf7c4fa4121a4382a268d, type: 2}
   m_StaticBatchInfo:
@@ -139,7 +140,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.12, y: 0.09, z: 0.17}
+  m_Size: {x: 0.12, y: 0.21, z: 0.17}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114223224817259274
 MonoBehaviour:
@@ -152,13 +153,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8869c64db14af0240bdc9fd70ed6c2b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ObjectID: 0
   description: Gaasje
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
+  transparencyFix: 0
   tutorial_usedOn: 0
   leftControlBone: {fileID: 0}
   rightControlBone: {fileID: 0}
   holdAnimationID: 6
+  sihlouette: 0
+  positionID: 0
+  mainObject: {fileID: 0}
+  ghostObjects: []
+  prefabInHands: 
+  prefabOutOfHands: 
+  destroyOnDrop: 0
   basic: {fileID: 4300002, guid: d1b9925ca37d0b545889b6b4f1b7399b, type: 3}
   inHand: {fileID: 4300000, guid: a6328b44af9c587408fd8ce9328737d1, type: 3}
   folded: {fileID: 4300004, guid: 489484ca91486704ca2ee1689701dd38, type: 3}
