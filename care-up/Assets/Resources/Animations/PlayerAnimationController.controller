@@ -3404,8 +3404,8 @@ MonoBehaviour:
   ObjectName: Sink
   HandToSwitch: 0
   AnimationToChange: 1
-  NewAnimationName: idle
-  ActionFrame: 250
+  NewAnimationName: flow
+  ActionFrame: 60
 --- !u!114 &114307762776589488
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3510,21 +3510,6 @@ MonoBehaviour:
   ObjNames:
   - catheter_bag
   toShow: 1
---- !u!114 &114316407296752714
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 839bcc7f24a9c47f8af28e853187bfa2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObjectName: Sink
-  unlock_frame: 61
-  lock_frame: 62
-  toActivate: 1
 --- !u!114 &114317612086271524
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4727,22 +4712,6 @@ MonoBehaviour:
   audioFileName: Sound_Effects/Audio_RemovingCap
   audioFrame: 28
   volume: 0.1
---- !u!114 &114534723778987458
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a536a9682af347488b2cfd1a613bf7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObjectName: Sink
-  HandToSwitch: 0
-  AnimationToChange: 1
-  NewAnimationName: flow
-  ActionFrame: 60
 --- !u!114 &114537154165950136
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4952,21 +4921,6 @@ MonoBehaviour:
   takeOffCapFrame: 362
   dropCapFrame: 411
   takeClothAgain: 1535
---- !u!114 &114563256735235810
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 839bcc7f24a9c47f8af28e853187bfa2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObjectName: Sink
-  unlock_frame: 251
-  lock_frame: 252
-  toActivate: 1
 --- !u!114 &114563328346646864
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -5157,6 +5111,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9b29f5ba63bb4aa5b477b8007d77187, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114618124843469146
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a536a9682af347488b2cfd1a613bf7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: Sink
+  HandToSwitch: 0
+  AnimationToChange: 1
+  NewAnimationName: idle
+  ActionFrame: 250
 --- !u!114 &114618653108896864
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -43316,10 +43286,8 @@ AnimatorState:
   - {fileID: 1101721122888987502}
   m_StateMachineBehaviours:
   - {fileID: 114286232171007072}
-  - {fileID: 114534723778987458}
-  - {fileID: 114316407296752714}
   - {fileID: 114307638989663702}
-  - {fileID: 114563256735235810}
+  - {fileID: 114618124843469146}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1

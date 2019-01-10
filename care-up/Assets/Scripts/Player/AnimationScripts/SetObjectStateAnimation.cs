@@ -79,11 +79,11 @@ public class SetObjectStateAnimation : StateMachineBehaviour
 
                     if (AnimationToChange == SetObjectStateAnimation.AnimationType.Lie)
                     {
-                        obj.LieAnimName = NewAnimationName;
+                        obj.SetAnimation(true, NewAnimationName);
                     }
                     else
                     {
-                        obj.HoldAnimName = NewAnimationName;
+                        obj.SetAnimation(false, NewAnimationName);
                     }
 
                 }

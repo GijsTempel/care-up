@@ -25,19 +25,49 @@ public class ObjectStateManager : MonoBehaviour {
         }
     }
 
+    public void SetAnimation(bool isLieAnim = true, string animName = "")
+
+    {
+        if (animName != "")
+        {
+            if (isLieAnim && animName != LieAnimName)
+            {
+                LieAnimName = animName;
+                if (!isInHands())
+                {
+                    animator.Play(LieAnimName, 0, LieAnimValue);
+                }
+            }
+            else if (!isLieAnim && animName != HoldAnimName)
+            {
+                HoldAnimName = animName;
+                if (isInHands())
+                {
+                    animator.Play(HoldAnimName, 0, HoldAnimValue);
+                }
+            }
+        }
+    }
+
+
+    bool isInHands()
+    {
+        if (transform.parent == null)
+        {
+            return false;
+        }
+        return (transform.parent.name == "toolHolder.L" || transform.parent.name == "toolHolder.R");
+    }
+
+
 	void Update () {
         string anim_name = LieAnimName;
         float anim_value = LieAnimValue;
-        bool in_hands = false;
-        if (transform.parent != null)
-        {
-            in_hands = (transform.parent.name == "toolHolder.L" || transform.parent.name == "toolHolder.R");
-        }
 
         if (isActive)
         {
             animator.speed = 0;
-            if (in_hands)
+            if (isInHands())
             {
                 if (transform.parent.name == "toolHolder.L")
                 {
