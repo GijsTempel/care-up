@@ -1739,6 +1739,22 @@ MonoBehaviour:
   audioFileName: 
   audioFrame: 0
   volume: 1
+--- !u!114 &114013622424829618
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: 
+  showFrame: 114
+  ObjNames:
+  - water_flow_effect
+  toShow: 1
 --- !u!114 &114020137798212310
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -3297,7 +3313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ae6b455166f9b3499ec4217106f67ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audio: 1
+  audio: 0
   audioFileName: water-running
   audioFrame: 60
   positionObjectName: 
@@ -3402,10 +3418,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectName: Sink
-  HandToSwitch: 0
+  HandToSwitch: 2
   AnimationToChange: 1
-  NewAnimationName: flow
-  ActionFrame: 60
+  NewAnimationName: open
+  ActionFrame: 1
 --- !u!114 &114307762776589488
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5073,6 +5089,21 @@ MonoBehaviour:
   unlock_frame: 0
   lock_frame: 200
   toActivate: 0
+--- !u!114 &114605993226060442
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 839bcc7f24a9c47f8af28e853187bfa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: Sink
+  unlock_frame: 5
+  lock_frame: 550
+  toActivate: 1
 --- !u!114 &114607278075294694
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5126,7 +5157,7 @@ MonoBehaviour:
   HandToSwitch: 0
   AnimationToChange: 1
   NewAnimationName: idle
-  ActionFrame: 250
+  ActionFrame: 555
 --- !u!114 &114618653108896864
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6035,6 +6066,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5cacadbc71667048bc80fad5bb73881, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114775672064419004
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: 
+  showFrame: 503
+  ObjNames:
+  - water_flow_effect
+  toShow: 0
 --- !u!114 &114782193360675598
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -34432,7 +34479,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400124, guid: 5c96cfe96f822cb45850df6cc49f9009, type: 3}
+  m_Motion: {fileID: 7400128, guid: 5c96cfe96f822cb45850df6cc49f9009, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -43288,6 +43335,9 @@ AnimatorState:
   - {fileID: 114286232171007072}
   - {fileID: 114307638989663702}
   - {fileID: 114618124843469146}
+  - {fileID: 114605993226060442}
+  - {fileID: 114013622424829618}
+  - {fileID: 114775672064419004}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -43296,7 +43346,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400124, guid: 5c96cfe96f822cb45850df6cc49f9009, type: 3}
+  m_Motion: {fileID: 7400128, guid: 5c96cfe96f822cb45850df6cc49f9009, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -46553,7 +46603,7 @@ AnimatorStateMachine:
     m_Position: {x: 624, y: 888, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102963011981830854}
-    m_Position: {x: 1044, y: 252, z: 0}
+    m_Position: {x: 1068, y: 252, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102168430626683088}
     m_Position: {x: 1056, y: 360, z: 0}
