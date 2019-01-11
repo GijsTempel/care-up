@@ -117,7 +117,7 @@ public class Cheat_CurrentAction : MonoBehaviour
 
         biggerDevHint.SetActive (false);
 
-        extraText = extraPanel.transform.GetChild(0).GetComponent<Text>();
+        extraText = extraPanel.transform.GetChild(1).GetComponent<Text>();
         extraPanel.SetActive(false);
         set = false;
 
