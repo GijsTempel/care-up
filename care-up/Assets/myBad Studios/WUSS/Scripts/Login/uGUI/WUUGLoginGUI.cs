@@ -73,6 +73,7 @@ namespace MBS
 
         [SerializeField] private Text ErrorText;
         [SerializeField] private Text ErrorLoginText;
+        [SerializeField] private Text SuccesText;
 
         private bool remove_text = false;
 
@@ -630,8 +631,8 @@ namespace MBS
         virtual public void OnReset( CML data )
         {
             //StatusMessage.Message = "Er is een e-mail naar je verzonden waarin je je wachtwoord kunt veranderen.";
-            DisplayScreen (panels.error_login_pop_up);
-            ErrorLoginText.text = "Er is een e-mail naar je verzonden waarin je je wachtwoord kunt veranderen.";
+            DisplayScreen (panels.registration_pop_up);
+            SuccesText.text = "Er is een e-mail naar je verzonden waarin je je wachtwoord kunt veranderen.";
             //DisplayScreen ( panels.login_menu );
             fields.pass_reset_email.text = fields.pass_reset_username.text = string.Empty;
         }

@@ -58,6 +58,9 @@ public class Tutorial : TutorialManager {
         OpenMessage,
         CloseMessageCenter,
         CloseRobotUI,
+        PickOne,
+        CheckMedicine,
+        MedicineChecked,
         Done,
         None
     }
@@ -608,10 +611,12 @@ public class Tutorial : TutorialManager {
                     UItext.DOText ("Klik op een bericht", 0.5f, true, ScrambleMode.All).SetEase (Ease.Linear);
                     RobotUIMessageTab.tutorial_messageOpened = false;
                     openMailMessage = true;
+                    SetUpTutorialNextButton ();
                 }
                 break;
                 case TutorialStep.OpenMessage:
-                if (RobotUIMessageTab.tutorial_messageOpened) {
+                //if (RobotUIMessageTab.tutorial_messageOpened) {
+                if (nextButtonClicked) {
                     audioSource.PlayOneShot (Popup, 0.1F);
                     audioSource.PlayOneShot (Robot2, 0.1F);
                     currentStep = TutorialStep.CloseMessageCenter;
@@ -634,6 +639,33 @@ public class Tutorial : TutorialManager {
                     hintsN.SetIconPosition (1);
                     UItext.DOText ("Sluit de tablet af door op het kruisje te klikken. Je kunt de tablet altijd weer openen door op het tableticoontje te klikken. ", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
                     expectedRobotUIstate = false;
+                }
+                break;
+                case TutorialStep.PickOne:
+                if (player.tutorial_robotUI_closed) {
+                    audioSource.PlayOneShot (Popup, 0.1F);
+                    currentStep = TutorialStep.OpenExtraHints;
+                    audioSource.PlayOneShot (RobotShort2, 0.1F);
+                    hintsN.SetSize (452f, 414.7f);
+                    hintsN.LockTo ("RobotUITrigger", new Vector3 (81.50f, -22.50f, 0.00f));
+                    UItext.DOText ("Objecten oppakken kun je doen door erop te klikken. Probeer nu het medicijn op te pakken door erop te klikken.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
+                    itemToPick = "Medicine";
+                    handsInventory.tutorial_pickedRight = false;
+
+                    particleHint.transform.position = GameObject.Find ("Medicine").transform.position;
+                }
+                break; 
+                case TutorialStep.CheckMedicine:
+                if (nextButtonClicked) {
+                    audioSource.PlayOneShot (Popup, 0.1F);
+                    audioSource.PlayOneShot (Robot3, 0.1F);
+                    hintsN.SetSize (452f, 350f);
+                    currentStep = TutorialStep.CheckMedicine;
+                    hintsN.LockTo ("RobotUITrigger", new Vector3 (0.00f, 0.16f, 0.00f));
+                    UItext.DOText ("Het medicijn moet gecheckt worden dat doe je door op het medicijn in je hand te klikken en daarna op het vergrootglas, klik daar nu op.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
+                    itemToPick = "Medicine";
+
+                    particleHint.transform.position = GameObject.Find ("Medicine").transform.position;
                 }
                 break;
                 /*case TutorialStep.CloseHints:
