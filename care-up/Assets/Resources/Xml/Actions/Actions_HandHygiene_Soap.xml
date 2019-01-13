@@ -80,25 +80,25 @@
     points=""
     description="Spoel de handen goed af met water."
     fullDescription=""
-    type="sequenceStep"
     extra=""
-    value="rinse sink cabinet"></action>
+    type="use"
+    value="Sink_active"></action>
 
   <action
     index="9"
     points=""
     description="Droog de handen goed af met een wegwerpdoekje."
     fullDescription=""
-    type="sequenceStep"
+    type="use"
     extra=""
-    value="cloth box drying"></action>
+    value="PaperTowelDispenser"></action>
 
   <action
     index="10"
     points=""
     description="Gebruik het wegwerpdoekje om de kraan dicht te draaien."
     fullDescription=""
-    type="sequenceStep"
-    extra=""
-    value="sink off"></action>
+    type="useOn" 
+    item="Cloth" 
+    target="Sink_active"></action>
 </ActionList>
