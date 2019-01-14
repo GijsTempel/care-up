@@ -75,7 +75,7 @@ public class EndScoreManager : MonoBehaviour {
                 step.transform.Find ("ToggleNo").GetComponent<Toggle> ().isOn = !correct;
             }
 
-            Transform quizParent = GameObject.Find ("Interactable Objects/Canvas/StepScreen/QuizForm/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
+            Transform quizParent = GameObject.Find ("Interactable Objects/Canvas/Questionscreen/QuizForm/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
 
             for (int i = 0; i < quizQuestionsTexts.Count; ++i) {
                 GameObject step = GameObject.Instantiate (Resources.Load<GameObject> ("Prefabs/ProtocolQuestion"), quizParent);
