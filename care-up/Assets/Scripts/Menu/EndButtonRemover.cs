@@ -13,28 +13,48 @@ public class EndButtonRemover : MonoBehaviour {
     private GameObject StepPanel;
 
     [SerializeField]
+    private GameObject QuizPanel;
+
+    [SerializeField]
     private GameObject SendScorePanel;
 
     public void ButtonClick () {
         goToMenuButton.SetActive (false);
     }
 
-    public void OnFurtherButtonClick () {
+    public void OnToQuizClick () {
         StepPanel.GetComponent<Animator> ().SetBool ("pop", false);
         StepPanel.SetActive (false);
 
-        ScorePanel.SetActive (true);
-        ScorePanel.GetComponent<Animator> ().SetBool ("pop", true);
+        QuizPanel.SetActive (true);
+        QuizPanel.GetComponent<Animator> ().SetBool ("pop", true);
+    }
+    public void OnToScoreClick()
+    {
+        QuizPanel.GetComponent<Animator>().SetBool("pop", false);
+        QuizPanel.SetActive(false);
+
+        ScorePanel.SetActive(true);
+        ScorePanel.GetComponent<Animator>().SetBool("pop", true);
     }
 
-    public void OnBackButtonClick () {
+
+    public void OnBackToQuizClick () {
         ScorePanel.GetComponent<Animator> ().SetBool ("pop", false);
         ScorePanel.SetActive (false);
 
-        StepPanel.SetActive (true);
-        StepPanel.GetComponent<Animator> ().SetBool ("pop", true);
+        QuizPanel.SetActive (true);
+        QuizPanel.GetComponent<Animator> ().SetBool ("pop", true);
     }
 
+    public void OnBackToStepsClick()
+    {
+        QuizPanel.GetComponent<Animator>().SetBool("pop", false);
+        QuizPanel.SetActive(false);
+
+        StepPanel.SetActive(true);
+        StepPanel.GetComponent<Animator>().SetBool("pop", true);
+    }
     public void OnNextButton ()
     {
         ScorePanel.GetComponent<Animator>().SetBool("pop", false);
@@ -42,5 +62,13 @@ public class EndButtonRemover : MonoBehaviour {
 
         SendScorePanel.SetActive(true);
         SendScorePanel.GetComponent<Animator>().SetBool("pop", true);
+    }
+    public void OnBackToScoreButton()
+    {
+        ScorePanel.GetComponent<Animator>().SetBool("pop", true);
+        ScorePanel.SetActive(true);
+
+        SendScorePanel.SetActive(false);
+        SendScorePanel.GetComponent<Animator>().SetBool("pop", false);
     }
 }
