@@ -93,9 +93,10 @@ public class PlayerAnimationManager : MonoBehaviour
         float clipTime_L = clipLength_L * normalizedTime_L;
 
         if (RightAnimHash == LeftAnimHash
-            && (clipTime_R > 0.35f && clipTime_R < (clipLength_R - 0.35f)
-            && (clipTime_L > 0.35f && clipTime_L < (clipLength_L - 0.35f))))
+            && (clipTime_R > 0.35f && clipTime_R < (clipLength_R - 0.55f)
+            && (clipTime_L > 0.35f && clipTime_L < (clipLength_L - 0.55f))))
         {
+
             //print(((normalizedTime_L - normalizedTime_R) * clipLength_R).ToString() + "  ||  " + normalizedTime_L.ToString() + "  " + normalizedTime_R.ToString());
 
             if (Mathf.Abs(clipTime_L - clipTime_R) < syncSpeed)
