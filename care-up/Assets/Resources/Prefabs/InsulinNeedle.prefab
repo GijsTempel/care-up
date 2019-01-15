@@ -38,9 +38,9 @@ GameObject:
   - component: {fileID: 4154119219581648}
   - component: {fileID: 33836354491979002}
   - component: {fileID: 23212090428770044}
-  - component: {fileID: 65825838506613766}
   - component: {fileID: 54368529041326722}
   - component: {fileID: 114357331872952674}
+  - component: {fileID: 136410184863328354}
   m_Layer: 0
   m_Name: InsulinNeedle
   m_TagString: Untagged
@@ -88,6 +88,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: ada9783c13ef6464aabe598872deb119, type: 2}
   m_StaticBatchInfo:
@@ -122,6 +123,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: ada9783c13ef6464aabe598872deb119, type: 2}
   m_StaticBatchInfo:
@@ -170,20 +172,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
---- !u!65 &65825838506613766
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1946491309512822}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.03, y: 0.05, z: 0.08}
-  m_Center: {x: -0.0003349604, y: 3.3718444e-16, z: 0.09}
 --- !u!114 &114357331872952674
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -195,10 +185,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9683ce8fd2daab5488955af11cfc9707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ObjectID: 0
   description: BD autoshield duo naald
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
+  transparencyFix: 0
   tutorial_usedOn: 0
   leftControlBone: {fileID: 0}
   rightControlBone: {fileID: 0}
   holdAnimationID: 13
+  sihlouette: 0
+  positionID: 0
+  mainObject: {fileID: 0}
+  ghostObjects: []
+  prefabInHands: 
+  prefabOutOfHands: 
+  destroyOnDrop: 0
+--- !u!136 &136410184863328354
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1946491309512822}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.021816898
+  m_Height: 0.11
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0.080197915}

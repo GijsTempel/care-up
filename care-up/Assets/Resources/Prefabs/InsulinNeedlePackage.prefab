@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 23005310186693152}
   - component: {fileID: 54961405741991674}
   - component: {fileID: 114867582691264952}
-  - component: {fileID: 65599376330474578}
+  - component: {fileID: 136634615826232930}
   m_Layer: 0
   m_Name: InsulinNeedlePackage
   m_TagString: Untagged
@@ -115,7 +115,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1848709177815846}
   m_LocalRotation: {x: -0.7071006, y: 0.00001070641, z: -0.000010937089, w: 0.7071131}
-  m_LocalPosition: {x: 9.261, y: 1.0514561, z: 10.618}
+  m_LocalPosition: {x: 9.261, y: 1.037, z: 12.356}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4687420967875808}
@@ -318,20 +318,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
---- !u!65 &65599376330474578
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1848709177815846}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.03, y: 0.05, z: 0.08}
-  m_Center: {x: -0.0003349604, y: 3.3718444e-16, z: 0.09}
 --- !u!114 &114867582691264952
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -343,10 +331,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9683ce8fd2daab5488955af11cfc9707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ObjectID: 0
   description: BD autoshield duo naald (verpakt)
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
+  transparencyFix: 0
   tutorial_usedOn: 0
   leftControlBone: {fileID: 0}
   rightControlBone: {fileID: 0}
   holdAnimationID: 12
+  sihlouette: 0
+  positionID: 0
+  mainObject: {fileID: 0}
+  ghostObjects: []
+  prefabInHands: 
+  prefabOutOfHands: 
+  destroyOnDrop: 0
+--- !u!136 &136634615826232930
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1848709177815846}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.04
+  m_Height: 0.15
+  m_Direction: 2
+  m_Center: {x: -1.2386403e-13, y: 7.293958e-13, z: 0.08019794}

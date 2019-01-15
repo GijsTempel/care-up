@@ -74,8 +74,8 @@ GameObject:
   - component: {fileID: 23694207120172616}
   - component: {fileID: 114495355599101428}
   - component: {fileID: 54269921108902514}
-  - component: {fileID: 65248618525764478}
   - component: {fileID: 114109420830422034}
+  - component: {fileID: 136277680571072736}
   m_Layer: 0
   m_Name: InsulinPenWithNeedlePackage
   m_TagString: Untagged
@@ -182,6 +182,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: ada9783c13ef6464aabe598872deb119, type: 2}
   m_StaticBatchInfo:
@@ -216,6 +217,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: ada9783c13ef6464aabe598872deb119, type: 2}
   m_StaticBatchInfo:
@@ -250,6 +252,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 6510410cdf35dc94e925cca1aebebe20, type: 2}
   - {fileID: 2100000, guid: bfc0371eac079ea4fb4e3c10b974324e, type: 2}
@@ -285,6 +288,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: ada9783c13ef6464aabe598872deb119, type: 2}
   m_StaticBatchInfo:
@@ -319,6 +323,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 6510410cdf35dc94e925cca1aebebe20, type: 2}
   m_StaticBatchInfo:
@@ -388,20 +393,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
---- !u!65 &65248618525764478
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1680496686712572}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.022444189, y: 0.08, z: 0.24}
-  m_Center: {x: -0.00011752173, y: -0.00011330098, z: -0.009857178}
 --- !u!114 &114109420830422034
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -413,10 +406,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3e6a197b70106d4baa62069a18baf92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ObjectID: 0
   description: Insuline pen met naald in verpakking
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
+  transparencyFix: 0
   tutorial_used: 0
+  handsCleaned: 0
+  PrefabToAppear: 
 --- !u!114 &114495355599101428
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -428,11 +425,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11d5c93f8fb6c0848b1f9acb32874241, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ObjectID: 0
   description: Insuline pen met naald in verpakking
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
+  transparencyFix: 0
   tutorial_usedOn: 0
   leftControlBone: {fileID: 0}
   rightControlBone: {fileID: 0}
   holdAnimationID: 10
+  sihlouette: 0
+  positionID: 0
+  mainObject: {fileID: 0}
+  ghostObjects: []
+  prefabInHands: 
+  prefabOutOfHands: 
+  destroyOnDrop: 0
   animateButton: 0
+--- !u!136 &136277680571072736
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1680496686712572}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.07
+  m_Height: 0.38
+  m_Direction: 2
+  m_Center: {x: -0.00011847745, y: -0.000112467336, z: -0.014142985}
