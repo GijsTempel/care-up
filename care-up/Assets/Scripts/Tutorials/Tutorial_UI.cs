@@ -427,8 +427,8 @@ public class Tutorial_UI : TutorialManager
                         currentStep = TutorialStep.DevHintsExpl;
                         hintsN.SetSize(452f, 414.7f);
                         hintsN.SetIconPosition(0);
-                        hintsN.LockTo("DevHint", new Vector3(375.39f, -84.72f, 0.00f));
-                        UItext.DOText("Hiernaast zien we de werkwijze die je moet volgen om het handeling succesvol af te ronden.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
+                        hintsN.LockTo("DevHint", new Vector3(375.39f, -284.23f, 0.00f));
+                        UItext.DOText("Boven in het scherm zien we de werkwijze die je moet volgen om het handeling succesvol af te ronden.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
                         SetUpTutorialNextButton();
                     }
                     break;

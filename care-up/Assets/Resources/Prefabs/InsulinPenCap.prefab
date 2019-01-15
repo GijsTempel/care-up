@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23633350101645728}
   - component: {fileID: 54962296378632660}
   - component: {fileID: 114179405038199864}
-  - component: {fileID: 65775218366198094}
+  - component: {fileID: 136764376598619640}
   m_Layer: 0
   m_Name: InsulinPenCap
   m_TagString: Untagged
@@ -37,9 +37,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1757361315436194}
-  m_LocalRotation: {x: -0.35076356, y: -0.35075423, z: 0.6139859, w: 0.6139688}
-  m_LocalPosition: {x: -3.843, y: 1.112796, z: 0.834}
-  m_LocalScale: {x: 1.0000031, y: 1.0000042, z: 1.0000035}
+  m_LocalRotation: {x: -0.3507586, y: -0.35075873, z: 0.6139775, w: 0.61397755}
+  m_LocalPosition: {x: 9.385, y: 1.104, z: 11.771}
+  m_LocalScale: {x: 1.0000031, y: 1.0000038, z: 1.0000037}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -57,6 +57,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 6510410cdf35dc94e925cca1aebebe20, type: 2}
   m_StaticBatchInfo:
@@ -98,20 +99,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
---- !u!65 &65775218366198094
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1757361315436194}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.03, y: 0.06, z: 0.1}
-  m_Center: {x: 0, y: 0.0020337733, z: 0.048169624}
 --- !u!114 &114179405038199864
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -123,10 +112,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9683ce8fd2daab5488955af11cfc9707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ObjectID: 0
   description: Beschermdop
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
+  transparencyFix: 0
   tutorial_usedOn: 0
   leftControlBone: {fileID: 0}
   rightControlBone: {fileID: 0}
   holdAnimationID: 11
+  sihlouette: 0
+  positionID: 0
+  mainObject: {fileID: 0}
+  ghostObjects: []
+  prefabInHands: 
+  prefabOutOfHands: 
+  destroyOnDrop: 0
+--- !u!136 &136764376598619640
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1757361315436194}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.047849685
+  m_Height: 0.2
+  m_Direction: 2
+  m_Center: {x: 0.0000000037611985, y: 0.0020342523, z: 0.04816865}
