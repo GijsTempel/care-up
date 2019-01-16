@@ -86,56 +86,8 @@ public class AddClipToAnimator : MonoBehaviour {
 
             foreach (ChildAnimatorStateMachine c1 in i.stateMachine.stateMachines)
             {
-                stateMachine = c1.stateMachine;
-                ch_animStates = null;
-                ch_animStates = stateMachine.states;
+                CheckMachine(c1, c1.stateMachine.name + ".");
 
-                foreach (ChildAnimatorState j in ch_animStates) //for each state
-                {
-
-                    if (j.state.motion == null)
-                    {
-                        Debug.Log("No animation!!   " + j.state.name);
-                    }
-
-                }
-
-                foreach (ChildAnimatorStateMachine c2 in c1.stateMachine.stateMachines)
-                {
-                    stateMachine = c2.stateMachine;
-                    ch_animStates = null;
-                    ch_animStates = stateMachine.states;
-
-                    foreach (ChildAnimatorState j in ch_animStates) //for each state
-                    {
-
-            
-                        if (j.state.motion == null)
-                        {
-                            Debug.Log("No animation!!   " + j.state.name);
-                        }
-
-                    }
-
-                    foreach (ChildAnimatorStateMachine c3 in c2.stateMachine.stateMachines)
-                    {
-                        stateMachine = c3.stateMachine;
-                        ch_animStates = null;
-                        ch_animStates = stateMachine.states;
-
-                        foreach (ChildAnimatorState j in ch_animStates) //for each state
-                        {
-                     
-
-                            if (!j.state.motion)
-                            {
-                                Debug.Log("No animation!!   " + j.state.name);
-                            }
-
-                        }
-
-                    }
-                }
             }
         }
  
@@ -144,27 +96,26 @@ public class AddClipToAnimator : MonoBehaviour {
 
     }
 
-    //void CheckMachine(ChildAnimatorStateMachine m)
-    //{
-    //    ChildAnimatorState[] ch_animStates;
-    //    AnimatorStateMachine stateMachine;
+    void CheckMachine(ChildAnimatorStateMachine m, string _path)
+    {
+        ChildAnimatorState[] ch_animStates;
+        AnimatorStateMachine stateMachine;
+        foreach (ChildAnimatorStateMachine c in m.stateMachine.stateMachines)
+        {
+            stateMachine = c.stateMachine;
+            ch_animStates = null;
+            ch_animStates = stateMachine.states;
 
-    //    foreach (ChildAnimatorStateMachine c in m.stateMachine.stateMachines)
-    //    {
-
-    //        stateMachine = c.stateMachine;
-    //        ch_animStates = null;
-    //        ch_animStates = stateMachine.states;
-
-    //        foreach (ChildAnimatorState j in ch_animStates) //for each state
-    //        {
-    //            if (!j.state.motion)
-    //            {
-    //                Debug.Log("No animation!!   " + j.state.name);
-    //            }
-    //        }
-    //    }
-    //}
+            foreach (ChildAnimatorState j in ch_animStates) //for each state
+            {
+                if (!j.state.motion)
+                {
+                    Debug.Log("******* No animation!!   " + _path + c.stateMachine.name + "." + j.state.name);
+                }
+            }
+            CheckMachine(c, _path + c.stateMachine.name +  ".");
+        }
+    }
 
 
 
