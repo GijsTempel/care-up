@@ -78,10 +78,12 @@ public class UnlockAnimationState : StateMachineBehaviour
             {
                 lock_function(false);
             }
-
-            if (PlayerAnimationManager.CompareFrames(frame, prevFrame, lock_frame))
+            if (lock_frame > unlock_frame)
             {
-                lock_function(true);
+                if (PlayerAnimationManager.CompareFrames(frame, prevFrame, lock_frame))
+                {
+                    lock_function(true);
+                }
             }
             prevFrame = frame;
             frame += Time.deltaTime;
