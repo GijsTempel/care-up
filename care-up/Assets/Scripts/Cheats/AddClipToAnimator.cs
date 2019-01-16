@@ -49,6 +49,125 @@ public class AddClipToAnimator : MonoBehaviour {
         }
     }
 
+
+
+    [ContextMenu("Test Animation Existence")]
+    public void CheckAnimations()
+    {
+        string[] AnimStateNames;
+        AnimatorControllerLayer[] acLayers;
+        ChildAnimatorState[] ch_animStates;
+
+        Animator animator;
+        AnimatorController ac = animationController;
+        AnimatorStateMachine stateMachine;
+        int k = 0;
+
+
+     
+
+
+        foreach (AnimatorControllerLayer i in animationController.layers) //for each layer
+        {
+
+            Debug.Log("\nLayer : " + i.name);
+            stateMachine = i.stateMachine;
+            ch_animStates = null;
+            ch_animStates = stateMachine.states;
+
+            foreach (ChildAnimatorState j in ch_animStates) //for each state
+            {
+                if (j.state.motion == null)
+                {
+                    Debug.Log("No animation!!   " + j.state.name);
+                }
+
+            }
+
+            foreach (ChildAnimatorStateMachine c1 in i.stateMachine.stateMachines)
+            {
+                stateMachine = c1.stateMachine;
+                ch_animStates = null;
+                ch_animStates = stateMachine.states;
+
+                foreach (ChildAnimatorState j in ch_animStates) //for each state
+                {
+
+                    if (j.state.motion == null)
+                    {
+                        Debug.Log("No animation!!   " + j.state.name);
+                    }
+
+                }
+
+                foreach (ChildAnimatorStateMachine c2 in c1.stateMachine.stateMachines)
+                {
+                    stateMachine = c2.stateMachine;
+                    ch_animStates = null;
+                    ch_animStates = stateMachine.states;
+
+                    foreach (ChildAnimatorState j in ch_animStates) //for each state
+                    {
+
+            
+                        if (j.state.motion == null)
+                        {
+                            Debug.Log("No animation!!   " + j.state.name);
+                        }
+
+                    }
+
+                    foreach (ChildAnimatorStateMachine c3 in c2.stateMachine.stateMachines)
+                    {
+                        stateMachine = c3.stateMachine;
+                        ch_animStates = null;
+                        ch_animStates = stateMachine.states;
+
+                        foreach (ChildAnimatorState j in ch_animStates) //for each state
+                        {
+                     
+
+                            if (!j.state.motion)
+                            {
+                                Debug.Log("No animation!!   " + j.state.name);
+                            }
+
+                        }
+
+                    }
+                }
+            }
+        }
+ 
+
+
+
+    }
+
+    //void CheckMachine(ChildAnimatorStateMachine m)
+    //{
+    //    ChildAnimatorState[] ch_animStates;
+    //    AnimatorStateMachine stateMachine;
+
+    //    foreach (ChildAnimatorStateMachine c in m.stateMachine.stateMachines)
+    //    {
+
+    //        stateMachine = c.stateMachine;
+    //        ch_animStates = null;
+    //        ch_animStates = stateMachine.states;
+
+    //        foreach (ChildAnimatorState j in ch_animStates) //for each state
+    //        {
+    //            if (!j.state.motion)
+    //            {
+    //                Debug.Log("No animation!!   " + j.state.name);
+    //            }
+    //        }
+    //    }
+    //}
+
+
+
     void AddActionToMachine(int layer, string machineName, Motion clip, int leftID, int rightID, string trigger)
     {
         AnimatorStateMachine am = FindMachine(animationController.layers[layer].stateMachine, machineName);
