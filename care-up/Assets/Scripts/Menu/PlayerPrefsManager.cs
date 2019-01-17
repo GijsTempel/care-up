@@ -389,7 +389,7 @@ public class PlayerPrefsManager : MonoBehaviour
                     int percent = Mathf.FloorToInt(float.Parse(response.Elements[1].Values[i]));
                     bool passed = percent > 70;
 
-                    GameObject layoutGroup = GameObject.Find("UMenuProManager/MenuCanvas/Account_Scores/Account_Panel_UI/LayoutGroup");
+                    GameObject layoutGroup = GameObject.Find("UMenuProManager/MenuCanvas/Account_Scores/Account_Panel_UI/ScoresHolder/Scores/LayoutGroup");
                     GameObject scoreObject = Instantiate(Resources.Load<GameObject>("Prefabs/UI/TestHighscore"), layoutGroup.transform);
                     scoreObject.transform.Find("SceneName").GetComponent<Text>().text = sceneName;
                     scoreObject.transform.Find("Percent").GetComponent<Text>().text = percent.ToString() + "%";
