@@ -70,6 +70,10 @@ public class ObjectsIDController : MonoBehaviour
         new ObjectsIDs("catheter_bag_twisted", 46,0),
         new ObjectsIDs("fixator_folded", 52,0),
         new ObjectsIDs("fixation_folded_buttons", 53,0),
+        new ObjectsIDs("Sink_active2", -15,0),
+        new ObjectsIDs("PaperTowelInHand", 60,5),
+
+        //
 
 
     };
