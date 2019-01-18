@@ -207,7 +207,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 GameObject.Find("UMenuProManager/MenuCanvas/Leaderboard/LeftBar/Scroll View/Viewport/Content").transform);
             LeaderBoardSceneButton buttonInfo = button.GetComponent<LeaderBoardSceneButton>();
 
-            button.transform.GetComponent<Text>().text = sceneUnit.displayName;
+            button.transform.GetChild(0).GetComponent<Text>().text = sceneUnit.displayName;
             buttonInfo.sceneName = sceneUnit.sceneName;
             buttonInfo.multiple = sceneUnit.multiple;
             if (buttonInfo.multiple)
