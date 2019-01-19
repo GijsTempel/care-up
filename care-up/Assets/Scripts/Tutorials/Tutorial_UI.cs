@@ -287,8 +287,8 @@ public class Tutorial_UI : TutorialManager
                         currentStep = TutorialStep.PrescriptionBack;
                         hintsN.LockTo("RobotUI", new Vector3(845.00f, -105.00f, 0.00f));
                         hintsN.SetIconPosition(1);
-                        hintsN.SetSize(465f, 408f);
-                        UItext.DOText("Door op het aftekenicoon te klikken, kun je een handeling aftekenen. Let op: hiermee rond je de handeling ook af!", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
+                        hintsN.SetSize(652f, 408f);
+                        UItext.DOText("Door op het afteken-/afsluiticoon te klikken, kun je een handeling aftekenen of afsluiten. Let op: hiermee rond je de handeling ook af!", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
 
                         SetUpTutorialNextButton();
                     }
@@ -451,9 +451,9 @@ public class Tutorial_UI : TutorialManager
                         audioSource.PlayOneShot (Popup, 0.1F);
                         audioSource.PlayOneShot(Robot1, 0.1F);
                         currentStep = TutorialStep.CloseHints;
-                        hintsN.SetSize(323.8f, 674.1f);
-                        hintsN.LockTo("Extra", new Vector3(523.70f, 426.20f, 0.00f));
-                        UItext.DOText("Hier komt tijdens het spelen van de handeling extra uitleg te staan over hoe je een stap kunt uitvoeren. Laten we het scherm weer sluiten door nogmaals op het informatie icoon te klikken.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
+                        hintsN.SetSize(640f, 123f);
+                        hintsN.LockTo("Extra", new Vector3(19.91f, 235.20f, 0.00f));
+                        UItext.DOText("Hier komt tijdens het spelen van de handeling extra uitleg te staan over hoe je een stap kunt uitvoeren. Laten we het scherm weer sluiten door nogmaals op het informatie icoon te klikken of door op de knop met het vinkje te klikken..", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
                         hintsUI.tutorial_extraClosed = false;
                         expectedHintsState = false;
                     }
