@@ -46,8 +46,11 @@ public class PlayerPrefsManager : MonoBehaviour
     public int plays = 0;
 
     // used for storing scene name for test hightscore loading
-    private static string currentTestScene = "";
-    private static float currentTestScore = 0;
+    //private static string currentTestScene = "";
+    //private static float currentTestScore = 0;
+
+    private static Queue<string> currentTestScene;
+    private static Queue<float> currentTestScore;
     
     public string ActivatedScenes
     {
@@ -64,6 +67,11 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         transform.position =
         GameObject.FindObjectOfType<AudioListener>().transform.position;
+
+        currentTestScene = new Queue<string>();
+        currentTestScore = new Queue<float>();
+        currentTestScene.Clear();
+        currentTestScore.Clear();
 
         if (!(s.name == "Launch me 1" ||
               s.name == "MainMenu" ||
@@ -339,31 +347,41 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public void UpdateTestHighscore(float score)
     {
-        currentTestScore = score * 100;
-        currentTestScene = currentSceneVisualName.Replace(" ", "_");
-        
-        WUData.FetchField(currentTestScene, "TestHighscores", GetTestHighscore, -1, GetTestHighscore_Error);
+        currentTestScore.Enqueue(score * 100);
+        currentTestScene.Enqueue(currentSceneVisualName.Replace(" ", "_"));
+
+        WUData.FetchField(currentTestScene.Peek(), "TestHighscores", GetTestHighscore, -1, GetTestHighscore_Error);
     }
 
     static void GetTestHighscore(CML response)
     {
-        float highscore = response[1].Float(currentTestScene);
-        if (highscore < currentTestScore)
+        Debug.Log("GetTestHighscore::" + currentTestScene.Peek());
+        print(response.ToString());
+        float highscore = response[1].Float(currentTestScene.Peek());
+        if (highscore < currentTestScore.Peek())
         {
             CMLData data = new CMLData();
-            data.Set(currentTestScene, currentTestScore.ToString());
+            data.Set(currentTestScene.Peek(), currentTestScore.ToString());
             WUData.UpdateCategory("TestHighscores", data);
         }
+
+        currentTestScene.Dequeue();
+        currentTestScore.Dequeue();
     }
 
     static void GetTestHighscore_Error(CMLData response)
     {
+        Debug.Log("GetTestHighscore_Error::" + currentTestScene.Peek());
+        print(response.ToString());
         if ((response["message"] == "WPServer error: Empty response. No data found"))
         {
             CMLData data = new CMLData();
-            data.Set(currentTestScene, currentTestScore.ToString());
+            data.Set(currentTestScene.Peek(), currentTestScore.ToString());
             WUData.UpdateCategory("TestHighscores", data);
         }
+
+        currentTestScene.Dequeue();
+        currentTestScore.Dequeue();
     }
 
     public void FetchTestHighScores()
@@ -373,6 +391,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
     static void GetAllHighScores(CML response)
     {
+        print(response.ToString());
         for(int i = 0; i < response.Elements[1].Keys.Length; ++i)
         {
             switch(response.Elements[1].Keys[i])
@@ -389,15 +408,16 @@ public class PlayerPrefsManager : MonoBehaviour
                     int percent = Mathf.FloorToInt(float.Parse(response.Elements[1].Values[i]));
                     bool passed = percent > 70;
 
+                    if (percent == 0)
+                        break; // don't show 0 percent scores as they are not completed even once
+
                     GameObject layoutGroup = GameObject.Find("UMenuProManager/MenuCanvas/Account_Scores/Account_Panel_UI/ScoresHolder/Scores/LayoutGroup");
                     GameObject scoreObject = Instantiate(Resources.Load<GameObject>("Prefabs/UI/TestHighscore"), layoutGroup.transform);
                     scoreObject.transform.Find("SceneName").GetComponent<Text>().text = sceneName;
                     scoreObject.transform.Find("Percent").GetComponent<Text>().text = percent.ToString() + "%";
                     scoreObject.transform.Find("Passed").GetComponent<Text>().text = 
                         (passed ? "Voldoende" : "Onvoldoende");
-
-                    // printing for now, until we get actual UI to fill with this info
-                    print(sceneName + " " + percent + " " + passed);
+                    
                     break;
             }
         }

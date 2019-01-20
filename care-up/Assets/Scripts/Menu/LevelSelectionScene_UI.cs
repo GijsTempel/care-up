@@ -140,7 +140,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
                     = sceneUnit.displayName = xmlSceneNode.Attributes["name"].Value;
 
                 ppManager.currentSceneVisualName = sceneUnit.displayName;
-                ppManager.UpdateTestHighscore(0.0f);
+                //ppManager.UpdateTestHighscore(0.0f);
 
                 // saving bundle name for later
                 string bundleName = sceneUnit.bundleName = xmlSceneNode.Attributes["bundleName"].Value;
@@ -185,7 +185,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
                     = sceneUnit.displayName = xmlSceneNode.Attributes["name"].Value;
 
                 ppManager.currentSceneVisualName = sceneUnit.displayName;
-                ppManager.UpdateTestHighscore(0.0f);
+                //ppManager.UpdateTestHighscore(0.0f);
 
                 // setting description
                 if (xmlSceneNode.Attributes["description"].Value != "")
@@ -232,7 +232,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
     
     public void UpdateLeaderBoard(string sceneName)
     {
-        Debug.Log("UpdateLeaderBoard:::" + sceneName);
+        //Debug.Log("UpdateLeaderBoard:::" + sceneName);
         // let's clear current UI first, it might have some editor text or info from other scene we loaded before
         for (int i = 0; i < _Scores.Length; i++)
         {
