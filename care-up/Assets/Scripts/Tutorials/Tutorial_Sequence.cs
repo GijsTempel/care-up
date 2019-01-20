@@ -145,7 +145,7 @@ public class Tutorial_Sequence : TutorialManager
                     {
                         audioSource.PlayOneShot (Popup, 0.1F);
                         audioSource.PlayOneShot(Robot3, 0.1F);
-                        hintsN.LockTo("RightArm", new Vector3(136.90f, -279.97f, -287.30f));
+                        hintsN.LockTo("SelectionDialogue", new Vector3(136.90f, 94.20f, -287.30f));
                         hintsN.SetIconPosition(1);
                         hintsN.SetSize(611.5f, 372.4f);
                         currentStep = TutorialStep.SequenceExplanation;
@@ -158,13 +158,13 @@ public class Tutorial_Sequence : TutorialManager
                     {
                         audioSource.PlayOneShot (Popup, 0.1F);
                         audioSource.PlayOneShot(RobotShort2, 0.1F);
-                        hintsN.LockTo("RightShoulder", new Vector3(58.70f, -80.90f, -46.70f));
-                        hintsN.ResetSize();
+                        hintsN.LockTo("SelectionDialogue", new Vector3(584.80f, 435.86f, -46.70f));
+                        hintsN.SetSize(1079f, 105f);
                         hintsN.SetIconPosition(1);
                         currentStep = TutorialStep.CompleteSequence;
                         sequenceCompleted = sequenceLock = false;
                         PlayerAnimationManager.SequenceTutorialLock(false);
-                        UItext.DOText("De juiste keuzes zijn in het groen aangegeven. Selecteer de juiste keuze.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
+                        UItext.DOText("Probeer nu te injecteren door de juiste keuzes te selecteren.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
                     }
                     break;
                 case TutorialStep.CompleteSequence:
@@ -172,6 +172,7 @@ public class Tutorial_Sequence : TutorialManager
                     {
                         audioSource.PlayOneShot(Done, 0.1F);
                         audioSource.PlayOneShot(Robot2, 0.1F);
+                        hintsN.ResetSize();
                         hintsN.LockTo("SceneLoader 1", new Vector3(262.50f, -69.10f, 0.00f));
                         currentStep = TutorialStep.Done;
                         UItext.DOText("Gefeliciteerd! Je hebt de laatste training afgerond. Je bent klaar om verpleegtehcnische handelingen te oefenen en te toesten. ", 1f, true, ScrambleMode.All).SetEase(Ease.Linear);
