@@ -361,7 +361,7 @@ public class PlayerPrefsManager : MonoBehaviour
         if (highscore < currentTestScore.Peek())
         {
             CMLData data = new CMLData();
-            data.Set(currentTestScene.Peek(), currentTestScore.ToString());
+            data.Set(currentTestScene.Peek(), currentTestScore.Peek().ToString());
             WUData.UpdateCategory("TestHighscores", data);
         }
 
@@ -405,11 +405,15 @@ public class PlayerPrefsManager : MonoBehaviour
                 default:
                     // here we get actual scenes and values
                     string sceneName = response.Elements[1].Keys[i].Replace("_", " ");
-                    int percent = Mathf.FloorToInt(float.Parse(response.Elements[1].Values[i]));
+
+                    float fPercent = 0.0f;
+                    float.TryParse(response.Elements[1].Values[i], out fPercent);
+                    int percent = Mathf.FloorToInt(fPercent);
+
                     bool passed = percent > 70;
 
-                    if (percent == 0)
-                        break; // don't show 0 percent scores as they are not completed even once
+                    if (percent <= 0 || percent > 100)
+                        continue; // don't show 0 percent scores as they are not completed even once
 
                     GameObject layoutGroup = GameObject.Find("UMenuProManager/MenuCanvas/Account_Scores/Account_Panel_UI/ScoresHolder/Scores/LayoutGroup");
                     GameObject scoreObject = Instantiate(Resources.Load<GameObject>("Prefabs/UI/TestHighscore"), layoutGroup.transform);
