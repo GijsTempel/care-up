@@ -40,11 +40,11 @@ public class EndButtonRemover : MonoBehaviour {
 
 
     public void OnBackToQuizClick () {
-        ScorePanel.GetComponent<Animator> ().SetBool ("pop", false);
+        ScorePanel.GetComponent<Animator>().SetBool ("pop", false);
         ScorePanel.SetActive (false);
 
         QuizPanel.SetActive (true);
-        QuizPanel.GetComponent<Animator> ().SetBool ("pop", true);
+        QuizPanel.GetComponent<Animator>().SetBool ("pop", true);
     }
 
     public void OnBackToStepsClick()
