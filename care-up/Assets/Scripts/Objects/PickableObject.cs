@@ -323,18 +323,16 @@ public class PickableObject : InteractableObject
         {
             if (trash)
             {
+                string[] trashArray = { "TrashBucket", "PlasticTrashbucket", "Bin" };
                 Transform trashObj = null;
-                GameObject find = GameObject.Find("TrashBucket");
-                if (find != null)
+
+                foreach (string ta in trashArray)
                 {
-                    trashObj = find.transform;
-                }
-                else
-                {
-                    find = GameObject.Find("PlasticTrashbucket");
+                    GameObject find = GameObject.Find(ta);
                     if (find != null)
                     {
                         trashObj = find.transform;
+                        break;
                     }
                 }
 
