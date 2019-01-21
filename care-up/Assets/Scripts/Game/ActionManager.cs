@@ -464,9 +464,15 @@ public class ActionManager : MonoBehaviour {
             }
 
             string blockRequire = "";
-            if (action.Attributes["blockRequire"] != null)
+            if (action.Attributes["blockRequired"] != null)
             {
                 blockRequire = action.Attributes["blockRequire"].Value;
+            }
+
+            string blockLock = "";
+            if (action.Attributes["blockLock"] != null)
+            {
+                blockLock = action.Attributes["blockLock"].Value;
             }
 
             switch (type)
@@ -474,38 +480,38 @@ public class ActionManager : MonoBehaviour {
                 case "combine":
                     string left = action.Attributes["left"].Value;
                     string right = action.Attributes["right"].Value;
-                    actionList.Add(new CombineAction(left, right, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock));
+                    actionList.Add(new CombineAction(left, right, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock, blockLock));
                     break;
                 case "use":
                     string use = action.Attributes["value"].Value;
-                    actionList.Add(new UseAction(use, index, descr, fDescr, audio, extra, buttonText, pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock));
+                    actionList.Add(new UseAction(use, index, descr, fDescr, audio, extra, buttonText, pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock, blockLock));
                     break;
                 case "talk":
                     string topic = action.Attributes["topic"].Value;
-                    actionList.Add(new TalkAction(topic, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock));
+                    actionList.Add(new TalkAction(topic, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock, blockLock));
                     break;
                 case "useOn":
                     string useItem = action.Attributes["item"].Value;
                     string target = action.Attributes["target"].Value;
-                    actionList.Add(new UseOnAction(useItem, target, index, descr, fDescr, audio, extra, buttonText, pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock));
+                    actionList.Add(new UseOnAction(useItem, target, index, descr, fDescr, audio, extra, buttonText, pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock, blockLock));
                     break;
                 case "examine":
                     string exItem = action.Attributes["item"].Value;
                     string expected = action.Attributes["expected"].Value;
-                    actionList.Add(new ExamineAction(exItem, expected, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock));
+                    actionList.Add(new ExamineAction(exItem, expected, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock, blockLock));
                     break;
                 case "pickUp":
                     string itemPicked = action.Attributes["item"].Value;
-                    actionList.Add(new PickUpAction(itemPicked, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock));
+                    actionList.Add(new PickUpAction(itemPicked, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock, blockLock));
                     break;
                 case "sequenceStep":
                     string stepName = action.Attributes["value"].Value;
-                    actionList.Add(new SequenceStepAction(stepName, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock));
+                    actionList.Add(new SequenceStepAction(stepName, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock, blockLock));
                     break;
                 case "drop":
                     string dropItem = action.Attributes["item"].Value;
                     string dropID = (action.Attributes["posID"] != null) ? action.Attributes["posID"].Value : "0";
-                    actionList.Add(new ObjectDropAction(dropItem, dropID, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock));
+                    actionList.Add(new ObjectDropAction(dropItem, dropID, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock, blockLock));
                     break;
                 default:
                     Debug.LogError("No action type found: " + type);
@@ -789,6 +795,11 @@ public class ActionManager : MonoBehaviour {
                     if (action.blockUnlock != "")
                     {
                         unlockedBlocks.Add(action.blockUnlock);
+                    }
+
+                    if (action.blockLock != "")
+                    {
+                        unlockedBlocks.Remove(action.blockLock);
                     }
 
                     // count only 1 step, some steps are identical
