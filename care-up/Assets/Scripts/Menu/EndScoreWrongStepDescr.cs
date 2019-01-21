@@ -16,7 +16,7 @@ public class EndScoreWrongStepDescr : MonoBehaviour, IPointerEnterHandler
 
     void Start()
     {
-        GetComponent<Text>().color = wrong ? Color.red : Color.black;
+        GetComponent<Text>().color = wrong ? Color.red : Color.white;
 
         if (sounds == null)
         {
@@ -37,7 +37,7 @@ public class EndScoreWrongStepDescr : MonoBehaviour, IPointerEnterHandler
             text.color = text.GetComponent<EndScoreWrongStepDescr>().wrong ? redish : greyish;
         }
 
-        GetComponent<Text>().color = wrong ? Color.red : Color.black;
+        GetComponent<Text>().color = wrong ? Color.red : Color.white;
         GameObject.Find("StepDescription").GetComponent<Text>().text = text;
     }
 }
