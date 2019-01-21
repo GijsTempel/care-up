@@ -391,7 +391,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
     static void GetAllHighScores(CML response)
     {
-        print(response.ToString());
+        //print(response.ToString());
         for(int i = 0; i < response.Elements[1].Keys.Length; ++i)
         {
             switch(response.Elements[1].Keys[i])
