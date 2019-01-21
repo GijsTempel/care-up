@@ -466,7 +466,7 @@ public class ActionManager : MonoBehaviour {
             string blockRequire = "";
             if (action.Attributes["blockRequired"] != null)
             {
-                blockRequire = action.Attributes["blockRequire"].Value;
+                blockRequire = action.Attributes["blockRequired"].Value;
             }
 
             string blockLock = "";
