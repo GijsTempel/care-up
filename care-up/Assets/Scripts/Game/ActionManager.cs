@@ -60,6 +60,8 @@ public class ActionManager : MonoBehaviour {
 
     PlayerPrefsManager manager;
 
+    private List<string> unlockedBlocks = new List<string>();
+
     public List<Action> ActionList
     {
         get { return actionList; }
@@ -200,6 +202,10 @@ public class ActionManager : MonoBehaviour {
         List<Action> sublist = actionList.Where(action =>
                 action.SubIndex == currentActionIndex &&
                 action.matched == false).ToList();
+        sublist = sublist.Where(action =>
+            action.blockRequired == "" ||
+            unlockedBlocks.Contains(action.blockRequired)).ToList();
+
         foreach(Action a in sublist)
         {
             if (a.Type == ActionType.ObjectUse)
@@ -219,6 +225,9 @@ public class ActionManager : MonoBehaviour {
         List<Action> sublist = actionList.Where(action =>
                 action.SubIndex == currentActionIndex &&
                 action.matched == false).ToList();
+        sublist = sublist.Where(action =>
+            action.blockRequired == "" ||
+            unlockedBlocks.Contains(action.blockRequired)).ToList();
         foreach (Action a in sublist)
         {
             if (a.Type == ActionType.ObjectCombine)
@@ -244,6 +253,9 @@ public class ActionManager : MonoBehaviour {
         List<Action> sublist = actionList.Where(action =>
                 action.SubIndex == currentActionIndex &&
                 action.matched == false).ToList();
+        sublist = sublist.Where(action =>
+            action.blockRequired == "" ||
+            unlockedBlocks.Contains(action.blockRequired)).ToList();
         foreach (Action a in sublist)
         {
             if (a.Type == ActionType.ObjectUseOn)
@@ -265,6 +277,9 @@ public class ActionManager : MonoBehaviour {
         List<Action> sublist = actionList.Where(action =>
                 action.SubIndex == currentActionIndex &&
                 action.matched == false).ToList();
+        sublist = sublist.Where(action =>
+            action.blockRequired == "" ||
+            unlockedBlocks.Contains(action.blockRequired)).ToList();
         foreach (Action a in sublist)
         {
             if (a.Type == ActionType.PersonTalk)
@@ -282,6 +297,9 @@ public class ActionManager : MonoBehaviour {
         List<Action> sublist = actionList.Where(action =>
                action.SubIndex == currentActionIndex &&
                action.matched == false).ToList();
+        sublist = sublist.Where(action =>
+            action.blockRequired == "" ||
+            unlockedBlocks.Contains(action.blockRequired)).ToList();
 
         foreach (Action a in sublist)
         {
@@ -315,6 +333,9 @@ public class ActionManager : MonoBehaviour {
         List<Action> sublist = actionList.Where(action =>
                 action.SubIndex == currentActionIndex &&
                 action.matched == false).ToList();
+        sublist = sublist.Where(action =>
+            action.blockRequired == "" ||
+            unlockedBlocks.Contains(action.blockRequired)).ToList();
         foreach (Action a in sublist)
         {
             if (a.Type == ActionType.ObjectDrop)
@@ -436,43 +457,55 @@ public class ActionManager : MonoBehaviour {
                 messageContent = action.Attributes["messageContent"].Value;
             }
 
+            string blockUnlock = "";
+            if (action.Attributes["blockUnlock"] != null)
+            {
+                blockUnlock = action.Attributes["blockUnlock"].Value;
+            }
+
+            string blockRequire = "";
+            if (action.Attributes["blockRequire"] != null)
+            {
+                blockRequire = action.Attributes["blockRequire"].Value;
+            }
+
             switch (type)
             {
                 case "combine":
                     string left = action.Attributes["left"].Value;
                     string right = action.Attributes["right"].Value;
-                    actionList.Add(new CombineAction(left, right, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent));
+                    actionList.Add(new CombineAction(left, right, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock));
                     break;
                 case "use":
                     string use = action.Attributes["value"].Value;
-                    actionList.Add(new UseAction(use, index, descr, fDescr, audio, extra, buttonText, pointsValue, notNeeded, quizTime, messageTitle, messageContent));
+                    actionList.Add(new UseAction(use, index, descr, fDescr, audio, extra, buttonText, pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock));
                     break;
                 case "talk":
                     string topic = action.Attributes["topic"].Value;
-                    actionList.Add(new TalkAction(topic, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent));
+                    actionList.Add(new TalkAction(topic, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock));
                     break;
                 case "useOn":
                     string useItem = action.Attributes["item"].Value;
                     string target = action.Attributes["target"].Value;
-                    actionList.Add(new UseOnAction(useItem, target, index, descr, fDescr, audio, extra, buttonText, pointsValue, notNeeded, quizTime, messageTitle, messageContent));
+                    actionList.Add(new UseOnAction(useItem, target, index, descr, fDescr, audio, extra, buttonText, pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock));
                     break;
                 case "examine":
                     string exItem = action.Attributes["item"].Value;
                     string expected = action.Attributes["expected"].Value;
-                    actionList.Add(new ExamineAction(exItem, expected, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent));
+                    actionList.Add(new ExamineAction(exItem, expected, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock));
                     break;
                 case "pickUp":
                     string itemPicked = action.Attributes["item"].Value;
-                    actionList.Add(new PickUpAction(itemPicked, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent));
+                    actionList.Add(new PickUpAction(itemPicked, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock));
                     break;
                 case "sequenceStep":
                     string stepName = action.Attributes["value"].Value;
-                    actionList.Add(new SequenceStepAction(stepName, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent));
+                    actionList.Add(new SequenceStepAction(stepName, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock));
                     break;
                 case "drop":
                     string dropItem = action.Attributes["item"].Value;
                     string dropID = (action.Attributes["posID"] != null) ? action.Attributes["posID"].Value : "0";
-                    actionList.Add(new ObjectDropAction(dropItem, dropID, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent));
+                    actionList.Add(new ObjectDropAction(dropItem, dropID, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock));
                     break;
                 default:
                     Debug.LogError("No action type found: " + type);
@@ -714,6 +747,9 @@ public class ActionManager : MonoBehaviour {
         List<Action> sublist = actionList.Where(action =>
             action.SubIndex == currentActionIndex &&
             action.matched == false).ToList();
+        sublist = sublist.Where(action =>
+            action.blockRequired == "" ||
+            unlockedBlocks.Contains(action.blockRequired)).ToList();
         int subcategoryLength = sublist.Count;
         
         List<Action> subtypelist = sublist.Where(action => action.Type == type).ToList();
@@ -748,6 +784,11 @@ public class ActionManager : MonoBehaviour {
                     {
                         GameObject.FindObjectOfType<RobotUIMessageTab>().NewMessage(
                             action.messageTitle, action.messageContent, RobotUIMessageTab.Icon.Info);
+                    }
+
+                    if (action.blockUnlock != "")
+                    {
+                        unlockedBlocks.Add(action.blockUnlock);
                     }
 
                     // count only 1 step, some steps are identical
