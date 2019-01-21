@@ -8372,6 +8372,11 @@ RectTransform:
   m_PrefabParentObject: {fileID: 224621809265774218, guid: 17b9d69a1f1934c149d2127bdcbe0ba5,
     type: 2}
   m_PrefabInternal: {fileID: 1024534316}
+--- !u!1 &1024534318 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1958562710462302, guid: 17b9d69a1f1934c149d2127bdcbe0ba5,
+    type: 2}
+  m_PrefabInternal: {fileID: 1024534316}
 --- !u!1001 &1036836871
 Prefab:
   m_ObjectHideFlags: 0
@@ -12550,7 +12555,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 1
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1619388948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16232,6 +16237,7 @@ GameObject:
   - component: {fileID: 2099400781}
   - component: {fileID: 2099400780}
   - component: {fileID: 2099400779}
+  - component: {fileID: 2099400788}
   - component: {fileID: 2099400778}
   - component: {fileID: 2099400777}
   - component: {fileID: 2099400776}
@@ -16341,7 +16347,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2099400775}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: efbaf073c9ff28e41a96ce1a7c4c26ff, type: 3}
   m_Name: 
@@ -16375,7 +16381,7 @@ MonoBehaviour:
   biggerHintOpenend: 0
   openMailMessage: 0
   robotUI: {fileID: 417929661}
-  Tweenbutton: {fileID: 0}
+  Tweenbutton: {fileID: 1024534318}
 --- !u!114 &2099400779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16456,7 +16462,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorial_hintUsed: 0
-  actionListName: Tutorial_Full
+  actionListName: Tutorial
 --- !u!114 &2099400784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16527,6 +16533,45 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2099400788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2099400775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 581ddf0c3b9f122418b7dad2e2a21a90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementLock: 0
+  mouseClickLocked: 0
+  closeObjectViewLocked: 0
+  leftDropKeyLocked: 0
+  rightDropKeyLocked: 0
+  combineKeyLocked: 0
+  getHintKeyLocked: 0
+  pickObjectViewKeyLocked: 0
+  leftUseKeyLocked: 0
+  rightUseKeyLocked: 0
+  itemToPick: 
+  itemToPick2: 
+  itemToDrop: 
+  itemToDrop2: 
+  finished: 0
+  Popup: {fileID: 8300000, guid: dec2394cb24b6456999d7b149a7f9395, type: 3}
+  Done: {fileID: 8300000, guid: 6612bd4c03a359a47ac3519845970d63, type: 3}
+  Robot1: {fileID: 8300000, guid: 45a493fbbe2c0ba428dc14df59241fc8, type: 3}
+  Robot2: {fileID: 8300000, guid: ed8bcb010dc4295418f3e97dfb86c98b, type: 3}
+  Robot3: {fileID: 8300000, guid: 3f76431c314dd504d89f1cc082f28d3f, type: 3}
+  RobotShort1: {fileID: 8300000, guid: cbd6c7d4d5b4673429836550c34f53d8, type: 3}
+  RobotShort2: {fileID: 8300000, guid: 1d4f652c2c27c2043bfd7dd8ef910a1a, type: 3}
+  tabToOpen: 
+  closeTab: 0
+  expectedRobotUIstate: 0
+  expectedHintsState: 0
+  openMailMessage: 0
+  Tweenbutton: {fileID: 1024534318}
 --- !u!1001 &2110568819
 Prefab:
   m_ObjectHideFlags: 0

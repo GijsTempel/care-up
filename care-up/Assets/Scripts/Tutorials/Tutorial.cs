@@ -118,6 +118,7 @@ public class Tutorial : TutorialManager {
             switch (currentStep) {
                 case TutorialStep.First:
 
+                Tweenbutton.transform.DOScale (1f, 0.4f).SetLoops (-1, LoopType.Yoyo);
                 audioSource.PlayOneShot (Popup, 0.1F);
                 currentStep = TutorialStep.Welcome;
                 hintsN.SetSize (788f, 524.9f);
@@ -644,10 +645,11 @@ public class Tutorial : TutorialManager {
                 case TutorialStep.PickOne:
                 if (player.tutorial_robotUI_closed) {
                     audioSource.PlayOneShot (Popup, 0.1F);
-                    currentStep = TutorialStep.OpenExtraHints;
-                    audioSource.PlayOneShot (RobotShort2, 0.1F);
+                    audioSource.PlayOneShot (Robot1, 0.1F);
+                    currentStep = TutorialStep.DevHintsExpl;
                     hintsN.SetSize (452f, 414.7f);
-                    hintsN.LockTo ("RobotUITrigger", new Vector3 (81.50f, -22.50f, 0.00f));
+                    hintsN.SetIconPosition (0);
+                    hintsN.LockTo ("DevHint", new Vector3 (375.39f, -284.23f, 0.00f));
                     UItext.DOText ("Objecten oppakken kun je doen door erop te klikken. Probeer nu het medicijn op te pakken door erop te klikken.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
                     itemToPick = "Medicine";
                     handsInventory.tutorial_pickedRight = false;
