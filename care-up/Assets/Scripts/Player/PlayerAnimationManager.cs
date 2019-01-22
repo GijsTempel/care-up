@@ -18,8 +18,8 @@ public class PlayerAnimationManager : MonoBehaviour
     public int rightModifier01 = 0;
     public float leftModifier02 = 0f;
     public float rightModifier02 = 0f;
-    private Transform propL;
-    private Transform propR;
+    public Transform propL;
+    Transform propR;
     float syncSpeed = 0.01f;
 
     public float ikWeight = 1.0f;
@@ -38,6 +38,7 @@ public class PlayerAnimationManager : MonoBehaviour
 
     void Start()
     {
+        
         propL = GameObject.Find("prop.L").transform;
         propR = GameObject.Find("prop.R").transform;
 

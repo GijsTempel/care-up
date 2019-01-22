@@ -7,7 +7,7 @@ public class ObjectsIDs
 	public int ID;
 	public int State;
 	public string Name;
-
+   
 	public ObjectsIDs(string name, int id, int state)
 	{
 		Name = name;
@@ -36,8 +36,9 @@ public class ObjectsIDs
 public class ObjectsIDController : MonoBehaviour
 {
 	public bool Cheat = false;
+    public bool buildActionList = false;
     public List<GameObject> hidenObjects;
-
+    
     public ObjectsIDs[] Objects =
     {
         new ObjectsIDs("syringePack", 30, 0),

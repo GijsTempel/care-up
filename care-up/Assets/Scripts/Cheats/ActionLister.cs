@@ -10,8 +10,15 @@ public class ActionLister : MonoBehaviour {
     List<string> actions;
     public Animator currentAnimator;
     StreamWriter writer;
-    // Use this for initialization
+    bool buildActionList = false;
+
+
+
     void Start () {
+#if (UNITY_EDITOR)
+
+        buildActionList = GameObject.FindObjectOfType<ObjectsIDController>().buildActionList;
+        actions = new List<string>();
         if (GetComponent<Animator>() != null)
         {
             currentAnimator = GetComponent<Animator>();
@@ -23,20 +30,37 @@ public class ActionLister : MonoBehaviour {
         string scneName = SceneManager.GetActiveScene().name;
         string path = "Assets/ListOfActions/" + scneName + ".txt";
 
-        //Write some text to the test.txt file
-        writer = new StreamWriter(path, false);
-        writer.WriteLine("--- List of actions ---");
-        
+        if (buildActionList)
+        {
+            writer = new StreamWriter(path, false);
+        }
+#endif
     }
-	
-	// Update is called once per frame
-	void Update () {
-        print(currentAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
-	}
+
+
+    void Update()
+    {
+#if (UNITY_EDITOR)
+        if (currentAnimator != null && writer != null)
+        {
+            for (int i = 0; i <= currentAnimator.layerCount - 1; i++)
+            {
+                if (!actions.Contains(currentAnimator.GetCurrentAnimatorClipInfo(i)[0].clip.name))
+                {
+                    print(">>>  Action <<<  " + currentAnimator.GetCurrentAnimatorClipInfo(i)[0].clip.name);
+                    actions.Add(currentAnimator.GetCurrentAnimatorClipInfo(i)[0].clip.name);
+                    writer.WriteLine(currentAnimator.GetCurrentAnimatorClipInfo(i)[0].clip.name);
+                }
+            }
+        }
+#endif
+    }
 
     void OnApplicationQuit()
     {
+#if (UNITY_EDITOR)
         Debug.Log("Application ending after " + Time.time + " seconds");
         writer.Close();
+#endif
     }
 }
