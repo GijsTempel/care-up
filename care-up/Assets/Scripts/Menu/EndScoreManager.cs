@@ -75,17 +75,6 @@ public class EndScoreManager : MonoBehaviour {
                 step.transform.Find ("ToggleNo").GetComponent<Toggle> ().isOn = !correct;
             }
 
-            Transform quizParent = GameObject.Find ("Interactable Objects/Canvas/Questionscreen/QuizForm/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
-
-            for (int i = 0; i < quizQuestionsTexts.Count; ++i) {
-                GameObject step = GameObject.Instantiate (Resources.Load<GameObject> ("Prefabs/ProtocolQuestion"), quizParent);
-                step.transform.Find ("Text").GetComponent<Text> ().text = quizQuestionsTexts[i];
-
-                bool wrong = quizWrongIndexes.Contains (i);
-                step.transform.Find ("ToggleYes").GetComponent<Toggle> ().isOn = !wrong;
-                step.transform.Find ("ToggleNo").GetComponent<Toggle> ().isOn = wrong;
-            }
-
             percent = 1.0f *
                 (correctStepIndexes.Count + (quizQuestionsTexts.Count - quizWrongIndexes.Count))
                 / (steps.Count + quizQuestionsTexts.Count);
@@ -113,22 +102,31 @@ public class EndScoreManager : MonoBehaviour {
             // update test highscore
             GameObject.FindObjectOfType<PlayerPrefsManager>().UpdateTestHighscore(percent);
 
-        } else {
-            quizQuestionsTexts.Clear ();
-            quizWrongIndexes.Clear ();
         }
+        if (actualScene)
+        {
+            Transform quizParent = GameObject.Find("Interactable Objects/Canvas/Questionscreen/QuizForm/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
 
-        if (actualScene) {
+            for (int i = 0; i < quizQuestionsTexts.Count; ++i)
+            {
+                GameObject step = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/ProtocolQuestion"), quizParent);
+                step.transform.Find("Text").GetComponent<Text>().text = quizQuestionsTexts[i];
+
+                bool wrong = quizWrongIndexes.Contains(i);
+                step.transform.Find("ToggleYes").GetComponent<Toggle>().isOn = !wrong;
+                step.transform.Find("ToggleNo").GetComponent<Toggle>().isOn = wrong;
+            }
+            
             if (score >= 1.0f) {
-                GameObject.Find ("Star1").GetComponent<Image> ().sprite = fullStar;
+                GameObject.Find ("Interactable Objects/Canvas/ScoreScreen/Stars/Star1").GetComponent<Image> ().sprite = fullStar;
             }
 
             if (score >= 2.0f) {
-                GameObject.Find ("Star2").GetComponent<Image> ().sprite = fullStar;
+                GameObject.Find ("Interactable Objects/Canvas/ScoreScreen/Stars/Star2").GetComponent<Image> ().sprite = fullStar;
             }
 
             if (score >= 3.0f) {
-                GameObject.Find ("Star3").GetComponent<Image> ().sprite = fullStar;
+                GameObject.Find ("Interactable Objects/Canvas/ScoreScreen/Stars/Star3").GetComponent<Image> ().sprite = fullStar;
             }
 
             Cursor.lockState = CursorLockMode.None;
@@ -136,6 +134,11 @@ public class EndScoreManager : MonoBehaviour {
 
             GameObject.Find ("Preferences").GetComponent<PlayerPrefsManager> ().SetSceneCompletionData (
                 completedSceneName, points, Mathf.RoundToInt (time));
+        }
+        else
+        {
+            quizQuestionsTexts.Clear();
+            quizWrongIndexes.Clear();
         }
     }
 
