@@ -60,7 +60,8 @@ public class ActionLister : MonoBehaviour {
     {
 #if (UNITY_EDITOR)
         Debug.Log("Application ending after " + Time.time + " seconds");
-        writer.Close();
+        if (writer != null)
+            writer.Close();
 #endif
     }
 }
