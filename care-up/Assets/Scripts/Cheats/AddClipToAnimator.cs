@@ -3,6 +3,8 @@ using UnityEngine.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
+
 #if UNITY_EDITOR
 using UnityEditor.Animations;
 #endif
@@ -49,7 +51,68 @@ public class AddClipToAnimator : MonoBehaviour {
         }
     }
 
+    // Прохід по всьому списку анімації в машині станів та заміна анімації на відповідно з іншого файлу
+    // Go thru animation controller and replace animations with the same name from another file
+    public GameObject testObject;
 
+    [ContextMenu("Switch animation file")]
+    public void SwitchAnimationFile()
+    {
+        ChildAnimatorState[] ch_animStates;
+        AnimatorStateMachine stateMachine;
+
+
+
+        foreach (AnimatorControllerLayer i in animationController.layers) //for each layer
+        {
+            stateMachine = i.stateMachine;
+            ch_animStates = null;
+            ch_animStates = stateMachine.states;
+            foreach (ChildAnimatorState j in ch_animStates) //for each state
+            {
+                if (j.state.motion != null)
+                {
+
+                    Debug.Log((j.state.motion as AnimationClip).name);
+                }
+            }
+        }
+
+    }
+
+
+    //-------------------------------------------------
+
+    // Прохід по всьому списку анімації в машині станів та заміна анімації на відповідно з іншого файлу
+    // Go thru animation controller and replace animations with the same name from another file
+
+    [ContextMenu("Copy Right to Left")]
+    public void CopyStatesFromLeftToRight()
+    {
+        ChildAnimatorState[] ch_animStates;
+        AnimatorStateMachine stateMachine;
+
+        stateMachine = animationController.layers[0].stateMachine;
+        ch_animStates = null;
+        ch_animStates = stateMachine.states;
+        foreach (ChildAnimatorState j in ch_animStates) //for each state
+        {
+            string _name = j.state.name;
+            UnityEditor.Animations.AnimatorState leftState = GetAnimationClip(_name, 1);
+            if (leftState != null) {
+                //leftState.
+                print(j.position);
+            }
+            
+        }
+        
+
+    }
+
+
+
+
+    //-------------------------------------------------
 
     [ContextMenu("Test Animation Existence")]
     public void CheckAnimations()
@@ -61,11 +124,7 @@ public class AddClipToAnimator : MonoBehaviour {
         Animator animator;
         AnimatorController ac = animationController;
         AnimatorStateMachine stateMachine;
-        int k = 0;
-
-
-     
-
+      
 
         foreach (AnimatorControllerLayer i in animationController.layers) //for each layer
         {
@@ -90,11 +149,11 @@ public class AddClipToAnimator : MonoBehaviour {
 
             }
         }
- 
-
-
 
     }
+
+
+
 
     void CheckMachine(ChildAnimatorStateMachine m, string _path)
     {
@@ -167,17 +226,15 @@ public class AddClipToAnimator : MonoBehaviour {
         return null;
     }
     
-    
 
-    public UnityEditor.Animations.AnimatorState GetAnimationClip(string name)
+    public UnityEditor.Animations.AnimatorState GetAnimationClip(string name, int _layer = 0)
     {
         if (!animationController) return null;
-        
-		foreach (UnityEditor.Animations.ChildAnimatorState state in animationController.layers[0].stateMachine.states)
+        foreach (UnityEditor.Animations.ChildAnimatorState state in animationController.layers[_layer].stateMachine.states)
         {
-			if (state.state.name == name)
+		if (state.state.name == name)
             {
-				return state.state;
+		    return state.state;
             }
         }
         return null; // no clip by that name
