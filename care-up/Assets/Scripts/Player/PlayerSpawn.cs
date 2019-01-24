@@ -41,6 +41,12 @@ public class PlayerSpawn : MonoBehaviour {
         {
             player.GetComponentInChildren<Animator>().runtimeAnimatorController = animationController;
         }
+
+        if (player.GetComponentInChildren<Animator>().runtimeAnimatorController == null) {
+            player.GetComponentInChildren<Animator>().runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Animations/PlayerAnimationController");
+        }
+         
+       
         GameObject itemControls = Instantiate(Resources.Load("Prefabs/UI/ItemControls") as GameObject,
             transform.position, transform.rotation);
         itemControls.name = "ItemControls";

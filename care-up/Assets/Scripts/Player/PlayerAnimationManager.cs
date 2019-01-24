@@ -30,6 +30,7 @@ public class PlayerAnimationManager : MonoBehaviour
     private static Transform rightInteractObject;
 
     private static Animator animationController;
+
     private static CameraMode cameraMode;
     private static HandsInventory handsInventory;
     private static PlayerScript playerScript;
@@ -83,8 +84,8 @@ public class PlayerAnimationManager : MonoBehaviour
         rightModifier02 = propR.localPosition.y;
 
         //Right and Left hands animation synchronization
-        int RightAnimHash = animationController.GetCurrentAnimatorStateInfo(0).nameHash;
-        int LeftAnimHash = animationController.GetCurrentAnimatorStateInfo(1).nameHash;
+        int RightAnimHash = animationController.GetCurrentAnimatorStateInfo(0).shortNameHash;
+        int LeftAnimHash = animationController.GetCurrentAnimatorStateInfo(1).shortNameHash;
 
         float normalizedTime_R = animationController.GetCurrentAnimatorStateInfo(0).normalizedTime;
         float normalizedTime_L = animationController.GetCurrentAnimatorStateInfo(1).normalizedTime;
