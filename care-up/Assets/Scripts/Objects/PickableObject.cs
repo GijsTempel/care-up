@@ -76,7 +76,7 @@ public class PickableObject : InteractableObject
         if (rigidBody != null)
         {
             rigidBody.isKinematic = true;
-            rigidBody.constraints = RigidbodyConstraints.None;
+            rigidBody.constraints = RigidbodyConstraints.FreezeAll;
 
             LoadPosition();
             return true;
