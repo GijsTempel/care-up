@@ -558,7 +558,6 @@ public class PlayerScript : MonoBehaviour {
             }
         }
 
-        RobotManager.SetUITriggerActive(true);
         tutorial_robotUI_closed = true;
 
         MoveBackButtonObject.SetActive(moveBackBtnActiveForIpad);
