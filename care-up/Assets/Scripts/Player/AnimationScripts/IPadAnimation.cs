@@ -59,6 +59,8 @@ public class IPadAnimation : StateMachineBehaviour
         if (!openingAnimation)
         {
             GameObject.FindObjectOfType<PlayerScript>().PickItemsBackAfterRobotUI();
+
+            RobotManager.SetUITriggerActive(true);
         }
 
         PlayerScript.actionsLocked = false;
