@@ -454,6 +454,10 @@ public class PlayerScript : MonoBehaviour {
             handsInv.DropLeftObject();
             handsInv.DropRightObject();
         }
+        else
+        {
+            robotSavedLeft = robotSavedRight = null;
+        }
 
         PlayerAnimationManager.PlayAnimation("IpadCloseUp");
         robotUIopened = true;
@@ -585,6 +589,10 @@ public class PlayerScript : MonoBehaviour {
             robotSavedLeft.GetComponent<PickableObject>().CreateGhostObject();
             robotSavedLeft = null; // reset
         }
+        else
+        {
+            PlayerAnimationManager.SetHandItem(true, null);
+        }
 
         if (robotSavedRight != null)
         {
@@ -592,6 +600,12 @@ public class PlayerScript : MonoBehaviour {
             robotSavedRight.GetComponent<PickableObject>().CreateGhostObject();
             robotSavedRight = null; // reset
         }
+        else
+        {
+            PlayerAnimationManager.SetHandItem(false, null);
+        }
+
+        robotSavedLeft = robotSavedRight = null;
     }
 
     /// <summary>
