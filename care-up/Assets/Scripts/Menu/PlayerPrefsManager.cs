@@ -46,11 +46,8 @@ public class PlayerPrefsManager : MonoBehaviour
     public int plays = 0;
 
     // used for storing scene name for test hightscore loading
-    //private static string currentTestScene = "";
-    //private static float currentTestScore = 0;
-
-    private static Queue<string> currentTestScene;
-    private static Queue<float> currentTestScore;
+    private static string currentTestScene = "";
+    private static float currentTestScore = 0;
     
     public string ActivatedScenes
     {
@@ -67,11 +64,6 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         transform.position =
         GameObject.FindObjectOfType<AudioListener>().transform.position;
-
-        currentTestScene = new Queue<string>();
-        currentTestScore = new Queue<float>();
-        currentTestScene.Clear();
-        currentTestScore.Clear();
 
         if (!(s.name == "Launch me 1" ||
               s.name == "MainMenu" ||
@@ -324,8 +316,18 @@ public class PlayerPrefsManager : MonoBehaviour
         }
     }
 
+    public static string MyEscapeURL(string url)
+    {
+        return WWW.EscapeURL(url).Replace("+", "%20");
+    }
+
     public static void __sendMail(string topic, string message)
     {
+        topic = MyEscapeURL(topic);
+        message = MyEscapeURL(message);
+        Application.OpenURL("mailto:" + "info@careup.nl" + "?subject=" + topic + "&body=" + message);
+
+        /*
         MailMessage mail = new MailMessage();
 
         mail.From = new MailAddress("info@careup.nl");
@@ -343,45 +345,37 @@ public class PlayerPrefsManager : MonoBehaviour
             { return true; };
 
         smtpServer.Send(mail);
+        */
     }
 
     public void UpdateTestHighscore(float score)
-    {
-        currentTestScore.Enqueue(score * 100);
-        currentTestScene.Enqueue(currentSceneVisualName.Replace(" ", "_"));
+    {        
+		currentTestScore = score * 100;
+        currentTestScene = currentSceneVisualName.Replace(" ", "_");
+        
+        WUData.FetchField(currentTestScene, "TestHighscores", GetTestHighscore, -1, GetTestHighscore_Error);
 
-        WUData.FetchField(currentTestScene.Peek(), "TestHighscores", GetTestHighscore, -1, GetTestHighscore_Error);
     }
 
     static void GetTestHighscore(CML response)
-    {
-        Debug.Log("GetTestHighscore::" + currentTestScene.Peek());
-        print(response.ToString());
-        float highscore = response[1].Float(currentTestScene.Peek());
-        if (highscore < currentTestScore.Peek())
+    {        
+		float highscore = response[1].Float(currentTestScene);
+        if (highscore < currentTestScore)
         {
-            CMLData data = new CMLData();
-            data.Set(currentTestScene.Peek(), currentTestScore.Peek().ToString());
+            CMLData data = new CMLData();            
+			data.Set(currentTestScene, currentTestScore.ToString());
             WUData.UpdateCategory("TestHighscores", data);
         }
-
-        currentTestScene.Dequeue();
-        currentTestScore.Dequeue();
     }
 
     static void GetTestHighscore_Error(CMLData response)
     {
-        Debug.Log("GetTestHighscore_Error::" + currentTestScene.Peek());
-        print(response.ToString());
         if ((response["message"] == "WPServer error: Empty response. No data found"))
         {
             CMLData data = new CMLData();
-            data.Set(currentTestScene.Peek(), currentTestScore.ToString());
+            data.Set(currentTestScene, currentTestScore.ToString());
             WUData.UpdateCategory("TestHighscores", data);
         }
-
-        currentTestScene.Dequeue();
-        currentTestScore.Dequeue();
     }
 
     public void FetchTestHighScores()

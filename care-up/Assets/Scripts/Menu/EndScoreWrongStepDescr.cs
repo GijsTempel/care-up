@@ -10,7 +10,7 @@ public class EndScoreWrongStepDescr : MonoBehaviour, IPointerEnterHandler
     public bool wrong;
     
     private Color redish = new Color(0.5f, 0.0f, 0.0f, 1.0f);
-    private Color greyish = new Color(0.25f, 0.25f, 0.25f, 1.0f);
+    private Color greyish = new Color(1f, 1f, 1f, 1.0f);
 
     private static Button_Functions sounds;
 
