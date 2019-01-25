@@ -25,6 +25,7 @@ public class ItemControlsUI : MonoBehaviour {
     private GameObject useOnNTButton;
     private GameObject combineButton;
     private GameObject dropButton;
+    private GameObject discardButton;
 
     public Vector2 cursorOffset;
 
@@ -66,6 +67,8 @@ public class ItemControlsUI : MonoBehaviour {
         dropButton.SetActive(false);
 
         closeButton = transform.Find("CloseButton").gameObject;
+
+        discardButton = transform.Find("DiscardButton").gameObject;
 
         useOnNTtext = useOnNTButton.transform.GetChild(0).GetComponent<Text>().text;
         useText = useButton.transform.GetChild(0).GetComponent<Text>().text;
@@ -257,6 +260,10 @@ public class ItemControlsUI : MonoBehaviour {
                 useOnNTButton.SetActive(actionManager.CompareUseOnInfo(initedObject.name, ""));
                 useButton.SetActive(actionManager.CompareUseObject(initedObject.name));
 
+                bool discard = initedObject.GetComponent<PickableObject>() != null
+                    && initedObject.GetComponent<PickableObject>().destroyOnDrop == true;
+                discardButton.SetActive(discard);
+
                 initedObject.GetComponent<InteractableObject>().Reset();
             }
 
@@ -266,7 +273,8 @@ public class ItemControlsUI : MonoBehaviour {
                 !talkButton.activeSelf && 
                 !useOnButton.activeSelf && 
                 !useOnNTButton.activeSelf && 
-                !combineButton.activeSelf)
+                !combineButton.activeSelf &&
+                !discardButton.activeSelf)
             {
                 Close();
             }
