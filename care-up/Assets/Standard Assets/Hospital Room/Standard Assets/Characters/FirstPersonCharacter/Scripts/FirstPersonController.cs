@@ -236,7 +236,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void RotateView()
         {
-            m_MouseLook.LookRotation (transform, m_Camera.transform);
+            // why do we even have controller in project?
+            m_MouseLook.LookRotation (transform, m_Camera.transform, Vector2.zero);
         }
 
 
