@@ -249,7 +249,10 @@ public class PlayerScript : MonoBehaviour {
     public void LookRotationUpdate(Vector2 amount)
     {
         // OLD mouse look code, transfering to joystick
-        rotated += mouseLook.LookRotation(transform, Camera.main.transform, amount);
+        if (freeLook && !robotUIopened && cameraMode.CurrentMode == CameraMode.Mode.Free)
+        {
+            rotated += mouseLook.LookRotation(transform, Camera.main.transform, amount);
+        }
     }
 
     private void Update()
