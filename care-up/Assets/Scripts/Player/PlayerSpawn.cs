@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Xml;
-using UnityEditor.Animations;
+//using UnityEditor.Animations;
 
 public class PlayerSpawn : MonoBehaviour {
 
     public string quizName;
     public GameObject playerPrefab;
-    public UnityEditor.Animations.AnimatorController animationController = null;
+    //public UnityEditor.Animations.AnimatorController animationController = null;
     public Vector3 robotPosition;
     public Vector3 robotRotation;
 
@@ -37,11 +37,13 @@ public class PlayerSpawn : MonoBehaviour {
         GameObject player = Instantiate(playerPrefab,
             transform.position, transform.rotation);
         player.name = "Player";
-        if (animationController != null)
+        if (GetComponent<Animator>() != null)
         {
-            player.GetComponentInChildren<Animator>().runtimeAnimatorController = animationController;
+            if (GetComponent<Animator>().runtimeAnimatorController != null)
+            {
+                player.GetComponentInChildren<Animator>().runtimeAnimatorController = GetComponent<Animator>().runtimeAnimatorController;
+            }
         }
-
         if (player.GetComponentInChildren<Animator>().runtimeAnimatorController == null) {
             player.GetComponentInChildren<Animator>().runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Animations/PlayerAnimationController");
         }

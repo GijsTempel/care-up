@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEditor;
 using System.IO;
 using UnityEngine.SceneManagement;
+#if (UNITY_EDITOR)
 using UnityEditor.Animations;
-
+#endif
 public class ActionLister : MonoBehaviour {
     List<string> actions;
     public Animator currentAnimator;
