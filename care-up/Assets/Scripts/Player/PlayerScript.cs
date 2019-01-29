@@ -92,6 +92,9 @@ public class PlayerScript : MonoBehaviour {
 
     public static bool actionsLocked = false;
 
+    [HideInInspector]
+    public GameObject joystickObject;
+
     public GameObject MoveBackButtonObject
     {
         get { return moveBackButton.gameObject; }
@@ -526,6 +529,8 @@ public class PlayerScript : MonoBehaviour {
 
             robotUINotOpenedYet = false;
         }
+
+        joystickObject.SetActive(!robotUIopened);
     }
 
     public void CloseRobotUI()
@@ -571,6 +576,8 @@ public class PlayerScript : MonoBehaviour {
         tutorial_robotUI_closed = true;
 
         MoveBackButtonObject.SetActive(moveBackBtnActiveForIpad);
+
+        joystickObject.SetActive(!robotUIopened);
     }
 
     public void PickItemsBackAfterRobotUI()
