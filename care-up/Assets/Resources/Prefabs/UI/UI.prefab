@@ -443,6 +443,7 @@ GameObject:
   - component: {fileID: 58337133786004810}
   - component: {fileID: 222242591651742300}
   - component: {fileID: 114037338605593194}
+  - component: {fileID: 114526343465294160}
   m_Layer: 5
   m_Name: FingersJoystickPrefab
   m_TagString: Untagged
@@ -1580,7 +1581,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 45
+  m_Radius: 103.88
 --- !u!82 &82442334116329962
 AudioSource:
   m_ObjectHideFlags: 1
@@ -2770,8 +2771,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   JoystickImage: {fileID: 114785565280474124}
-  JoystickPower: 2
-  MaxExtentPercent: 0.1
+  JoystickPower: 0.01
+  MaxExtentPercent: 0.052
   EightAxisMode: 0
   AddUpToOne: 1
   CrossPlatformInputHorizontalAxisName: 
@@ -3134,7 +3135,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 6ebcb932301fce04e91ba48d33ce955a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3711e14b9663741eb9f3afd2d048606f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3831,6 +3832,21 @@ MonoBehaviour:
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   delegates: []
+--- !u!114 &114526343465294160
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1236592635380904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df4938520a48faa4ba619a44a5c19933, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  JoystickScript: {fileID: 114236838352446610}
+  Mover: {fileID: 1517292817646572}
+  Speed: 100
+  MoveJoystickToGestureStartLocation: 0
 --- !u!114 &114533677396847800
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4749,7 +4765,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: ba5068a9d4fbcc947a2bfa03e1a35af7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 21939c84930a5451c8189f8c407b52e7, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

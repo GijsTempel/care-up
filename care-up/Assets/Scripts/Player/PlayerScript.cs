@@ -246,6 +246,15 @@ public class PlayerScript : MonoBehaviour {
         }
     }
 
+    public void LookRotationUpdate(Vector2 amount)
+    {
+        // OLD mouse look code, transfering to joystick
+        if (freeLook && !robotUIopened && cameraMode.CurrentMode == CameraMode.Mode.Free)
+        {
+            rotated += mouseLook.LookRotation(transform, Camera.main.transform, amount);
+        }
+    }
+
     private void Update()
     {
         if (prefs != null)
@@ -262,10 +271,11 @@ public class PlayerScript : MonoBehaviour {
             Cursor.lockState = CursorLockMode.None;
         }
         
-        if (freeLook && !robotUIopened && cameraMode.CurrentMode == CameraMode.Mode.Free)
+        // OLD mouse look code, transfering to joystick
+        /*if (freeLook && !robotUIopened && cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
             rotated += mouseLook.LookRotation(transform, Camera.main.transform);
-        }
+        }*/
 
         if (!freeLook && controls.MouseClicked() && !robotUIopened)
         {

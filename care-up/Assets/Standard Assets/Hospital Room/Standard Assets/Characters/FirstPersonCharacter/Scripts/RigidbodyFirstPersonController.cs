@@ -56,7 +56,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
             // get the rotation before it's changed
             float oldYRotation = transform.eulerAngles.y;
 
-            tutorial_totalLookAround += mouseLook.LookRotation (transform, cam.transform);
+            // why do we even have contorller in project still?
+            tutorial_totalLookAround += mouseLook.LookRotation (transform, cam.transform, Vector2.zero);
             
             // Rotate the rigidbody velocity to match the new direction that the character is looking
             Quaternion velRotation = Quaternion.AngleAxis(transform.eulerAngles.y - oldYRotation, Vector3.up);

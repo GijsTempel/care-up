@@ -26,6 +26,13 @@ namespace DigitalRubyShared
         [Tooltip("Whether joystick moves to touch location")]
         public bool MoveJoystickToGestureStartLocation;
 
+        private PlayerScript player;
+
+        private void Start()
+        {
+            player = GameObject.FindObjectOfType<PlayerScript>();
+        }
+
         private void Awake()
         {
             JoystickScript.JoystickExecuted = JoystickExecuted;
@@ -39,6 +46,8 @@ namespace DigitalRubyShared
             pos.x += (amount.x * Speed * Time.deltaTime);
             pos.y += (amount.y * Speed * Time.deltaTime);
             Mover.transform.position = pos;
+
+            player.LookRotationUpdate(amount);
         }
     }
 }
