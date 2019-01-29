@@ -108,8 +108,8 @@ GameObject:
   - component: {fileID: 23972030315846056}
   - component: {fileID: 54328271627443964}
   - component: {fileID: 114004141582991228}
-  - component: {fileID: 65293362368763402}
   - component: {fileID: 114965641743949958}
+  - component: {fileID: 136548844061186748}
   m_Layer: 0
   m_Name: fraxi_pakage
   m_TagString: Untagged
@@ -136,8 +136,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1670220103262830}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 9.3562, y: 1.374, z: 11.584766}
+  m_LocalRotation: {x: 0.7070185, y: 0.011176653, z: -0.011176653, w: 0.7070185}
+  m_LocalPosition: {x: 9.4191, y: 1.0929, z: 12.0369}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4733883642570816}
@@ -147,7 +147,7 @@ Transform:
   - {fileID: 4319948842848188}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: -90.00001, z: -90.00001}
+  m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: -1.8110001}
 --- !u!4 &4319948842848188
 Transform:
   m_ObjectHideFlags: 1
@@ -465,20 +465,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
---- !u!65 &65293362368763402
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1670220103262830}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.04496101, y: 0.24258512, z: 0.032918487}
-  m_Center: {x: -5.1780097e-10, y: -0.000043552405, z: -0.01733653}
 --- !u!114 &114004141582991228
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -500,7 +488,12 @@ MonoBehaviour:
   rightControlBone: {fileID: 0}
   holdAnimationID: 16
   sihlouette: 0
-  pairedObject: {fileID: 0}
+  positionID: 0
+  mainObject: {fileID: 0}
+  ghostObjects: []
+  prefabInHands: 
+  prefabOutOfHands: 
+  destroyOnDrop: 0
 --- !u!114 &114965641743949958
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -526,3 +519,16 @@ MonoBehaviour:
     distanceFromCamera: 2
     rotationSensetivity: 90
   state: good
+--- !u!136 &136548844061186748
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1670220103262830}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.07
+  m_Height: 0.35
+  m_Direction: 1
+  m_Center: {x: -6.418499e-11, y: -0.00004355238, z: -0.017077226}
