@@ -29,9 +29,8 @@ public class PlayerSpawn : MonoBehaviour {
     {
 		if (GameObject.FindObjectOfType(typeof(GameUI)) == null)
 		{
-            // never used
-			//GameObject UIPrefab = 
-            Instantiate(Resources.Load("Prefabs/UI/UI") as GameObject);
+			GameObject UIPrefab = Instantiate(Resources.Load("Prefabs/UI/UI") as GameObject);
+            UIPrefab.name = "UI";
 	    }      
 
         GameObject player = Instantiate(playerPrefab,
@@ -100,6 +99,8 @@ public class PlayerSpawn : MonoBehaviour {
         GameTimer.FindObjectOfType<ActionManager>().SetUIObjects(
             GameObject.Find("TopBarUI").transform.Find("GeneralDynamicCanvas").Find("Points").Find("PointsText").GetComponent<Text>(),
             GameObject.Find("TopBarUI").transform.Find("GeneralDynamicCanvas").Find("Percentage").Find("PointsText").GetComponent<Text>());
+
+        player.GetComponent<PlayerScript>().joystickObject = GameObject.Find("FingersJoystickPrefab");
 
         Destroy(gameObject);
     }
