@@ -67,6 +67,7 @@ public class ItemControlsUI : MonoBehaviour {
         dropButton.SetActive(false);
 
         closeButton = transform.Find("CloseButton").gameObject;
+        closeButton.SetActive(false);
 
         discardButton = transform.Find("DiscardButton").gameObject;
 
@@ -191,7 +192,8 @@ public class ItemControlsUI : MonoBehaviour {
                 combineButton.SetActive(false);
             }
 
-            closeButton.SetActive(true);
+            // rip close button ?
+            //closeButton.SetActive(true);
 
             //talkin removed
             if (talkButton.activeSelf)
