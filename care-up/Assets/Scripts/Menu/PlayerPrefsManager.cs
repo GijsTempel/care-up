@@ -316,18 +316,8 @@ public class PlayerPrefsManager : MonoBehaviour
         }
     }
 
-    public static string MyEscapeURL(string url)
-    {
-        return WWW.EscapeURL(url).Replace("+", "%20");
-    }
-
     public static void __sendMail(string topic, string message)
     {
-        topic = MyEscapeURL(topic);
-        message = MyEscapeURL(message);
-        Application.OpenURL("mailto:" + "info@careup.nl" + "?subject=" + topic + "&body=" + message);
-
-        /*
         MailMessage mail = new MailMessage();
 
         mail.From = new MailAddress("info@careup.nl");
@@ -345,7 +335,6 @@ public class PlayerPrefsManager : MonoBehaviour
             { return true; };
 
         smtpServer.Send(mail);
-        */
     }
 
     public void UpdateTestHighscore(float score)
