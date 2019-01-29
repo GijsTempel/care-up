@@ -78,7 +78,7 @@ public class HandsInventory : MonoBehaviour {
     private ActionManager actionManager;
     //private PlayerPrefsManager prefsManager;
 
-    private TutorialManager tutorial;
+    //private TutorialManager tutorial;
 
     public GameObject LeftHandObject
     {
@@ -109,7 +109,8 @@ public class HandsInventory : MonoBehaviour {
         cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
         if (cameraMode == null) Debug.LogError("No camera mode found");
 
-        tutorial = GetComponent<TutorialManager>();
+        // never used
+        //tutorial = GetComponent<TutorialManager>();
 
         /* never used?
         if (GameObject.Find("Preferences"))
@@ -488,6 +489,12 @@ public class HandsInventory : MonoBehaviour {
     public void GlovesToggle(bool value)
     {
         glovesOn = value;
+
+        if (glovesOn)
+        {
+            // just so it shuts up with never used, we will 
+        }
+
         Renderer hands = GameObject.FindObjectOfType<PlayerScript>().transform.
             Find("CinematicControl/Arms/FPArms_Female").GetComponent<Renderer>();
 

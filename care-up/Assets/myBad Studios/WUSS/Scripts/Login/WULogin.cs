@@ -21,7 +21,8 @@ namespace MBS
         static public bool UserNotWithEmail = false;
         static public bool UserNotFound = false;
 
-        static private int FirstLogin = 1;
+        // never used apparently
+        //static private int FirstLogin = 1;
         static private int SecondLogin = 2;
 
         #region RESPONSE DELEGATES

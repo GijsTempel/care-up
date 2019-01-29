@@ -17,9 +17,7 @@ public class GestureControls : MonoBehaviour
     private TutorialManager tutorial;
     private CameraMode cameraMode;
     private Tutorial_Combining tutorialCombine;
-
-    private bool longTapFlag = false;
-
+    
     private void DebugText(string text, params object[] format)
     {
         //bottomLabel.text = string.Format(text, format);

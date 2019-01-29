@@ -18,8 +18,9 @@ public class Cheat_CurrentAction : MonoBehaviour
     [SerializeField] private GameObject bigger_DevHint;
     [SerializeField] private GameObject ipadTrigger;
 
-    private bool biggerDevHintActive = false;
-    private bool devHintActive = true;
+    // never used
+    //private bool biggerDevHintActive = false;
+    //private bool devHintActive = true;
 
     private float animationTime = 1.0f;
     
@@ -207,6 +208,7 @@ public class Cheat_CurrentAction : MonoBehaviour
         }
     }
 
+    /* NEVER USED ?
     public void ShowBiggerDevHint () {
         tutorial_devHintOpened = true;
         dev_Hint.SetActive (false);
@@ -223,7 +225,8 @@ public class Cheat_CurrentAction : MonoBehaviour
 
         biggerDevHintActive = false;
         devHintActive = true;
-    }
+    } 
+    */
 
     public void RemoveDevHint () {
         if (manager.practiceMode == true) {

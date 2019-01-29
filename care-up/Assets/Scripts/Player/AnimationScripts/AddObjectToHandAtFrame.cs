@@ -24,7 +24,9 @@ public class AddObjectToHandAtFrame : StateMachineBehaviour
     {
         if (PlayerAnimationManager.CompareFrames(frame, prevFrame, addFrame))
         {
-            GameObject obj = inventory.CreateObjectByName(objectName, Vector3.zero);
+            // never used
+            //GameObject obj = 
+            inventory.CreateObjectByName(objectName, Vector3.zero);
             inventory.ForcePickItem(objectName, hand);
         }
 

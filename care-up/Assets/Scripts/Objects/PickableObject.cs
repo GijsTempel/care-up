@@ -260,8 +260,9 @@ public class PickableObject : InteractableObject
                     {
                         actionManager.OnUseOnAction(transform.name, selectedName);
 
-                        ObjectsIDs objectID_Controller = ObjectsID_Controller.GetObject(ObjectsID_Controller.FindByName(transform.name));
-                        ObjectsIDs selectedID_Controller = ObjectsID_Controller.GetObject(ObjectsID_Controller.FindByName(selectedName));
+                        // never used
+                        //ObjectsIDs objectID_Controller = ObjectsID_Controller.GetObject(ObjectsID_Controller.FindByName(transform.name));
+                        //ObjectsIDs selectedID_Controller = ObjectsID_Controller.GetObject(ObjectsID_Controller.FindByName(selectedName));
 
                         int oId = ObjectsID_Controller.GetIDByName(transform.name);
                         int sId = ObjectsID_Controller.GetIDByName(selectedName);

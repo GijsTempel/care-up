@@ -7,12 +7,12 @@ using UnityEngine.UI;
 public class GridCorrector : MonoBehaviour {
     Vector2 dCellSize = new Vector2(400, 376);
     Vector2 dScreenSize = new Vector2(1920, 1080);
-    Vector2 ScreenSize;
+    //Vector2 ScreenSize;
     float wRatio = 4.8f;
 
     // Use this for initialization
     void Start () {
-        ScreenSize = new Vector2(Screen.width, Screen.height);
+        //ScreenSize = new Vector2(Screen.width, Screen.height);
      }
 
     private void Update()

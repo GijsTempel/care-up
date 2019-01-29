@@ -7,7 +7,7 @@ using UnityEngine.UI;
 /// </summary>
 public class InteractableObject : MonoBehaviour {
 	public int ObjectID = 0;
-    HandsInventory handsInventory;
+    //HandsInventory handsInventory;
 
     public string description;
     public bool muplipleMesh = false;
@@ -46,7 +46,7 @@ public class InteractableObject : MonoBehaviour {
 
     protected virtual void Start()
     {
-        handsInventory = GameObject.FindObjectOfType<HandsInventory>();
+        //handsInventory = GameObject.FindObjectOfType<HandsInventory>();
         rend = GetComponent<Renderer>();
 
         if (onMouseOverShaderSihlouette == null)

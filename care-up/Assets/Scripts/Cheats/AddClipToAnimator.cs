@@ -117,12 +117,13 @@ public class AddClipToAnimator : MonoBehaviour {
     [ContextMenu("Test Animation Existence")]
     public void CheckAnimations()
     {
-        string[] AnimStateNames;
-        AnimatorControllerLayer[] acLayers;
+        // never used stuff
+        //string[] AnimStateNames;
+        //AnimatorControllerLayer[] acLayers;
         ChildAnimatorState[] ch_animStates;
 
-        Animator animator;
-        AnimatorController ac = animationController;
+        //Animator animator;
+        //AnimatorController ac = animationController;
         AnimatorStateMachine stateMachine;
       
 
