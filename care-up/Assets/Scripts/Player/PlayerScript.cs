@@ -216,6 +216,8 @@ public class PlayerScript : MonoBehaviour {
 
         tutorial_UI = GameObject.FindObjectOfType<Tutorial_UI>();
         tutorial_theory = GameObject.FindObjectOfType<Tutorial_Theory>();
+        
+        GameObject.Find("GameLogic").AddComponent<GestureControls>();
     }
 
     public void EnterHover()
@@ -303,7 +305,11 @@ public class PlayerScript : MonoBehaviour {
                 }
                 else
                 {
-                    itemControls.Init(controls.SelectedObject);
+                    if (handsInv.LeftHandObject != controls.SelectedObject &&
+                        handsInv.RightHandObject != controls.SelectedObject)
+                    {
+                        itemControls.Init(controls.SelectedObject);
+                    }
                 }
             }
             else

@@ -32,6 +32,7 @@ public class AnimationPick : StateMachineBehaviour {
             }
 
             inv.ToggleControls(true);
+            PlayerScript.actionsLocked = true;
             
             prevFrame = frame;
             frame += Time.deltaTime;
@@ -42,6 +43,7 @@ public class AnimationPick : StateMachineBehaviour {
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         inv.ToggleControls(false);
+        PlayerScript.actionsLocked = false;
 
         if (GameObject.FindObjectOfType<TutorialManager>() == null ||
             GameObject.FindObjectOfType<Tutorial_UI>() != null ||
