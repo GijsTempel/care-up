@@ -91,9 +91,9 @@ public class GestureControls : MonoBehaviour
                 if (inv.LeftHandEmpty() == inv.RightHandEmpty())
                 {
                     // here we have either both hands filled or both hands empty, both wrong
-                    string message = "hands full warning message";
+                    string message = "Je hebt je handen vol!";
                     RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
-                    messageCenter.NewMessage("hands full warning", message, RobotUIMessageTab.Icon.Warning);
+                    messageCenter.NewMessage("Je kunt niet objecten scheiden/uit elkaar halen met beide handen vol. Leg een object terug om een hand vrij te maken.", message, RobotUIMessageTab.Icon.Warning);
                     return;
                 }
             }
