@@ -184,7 +184,7 @@ public class GestureControls : MonoBehaviour
         CreateLongPressGesture();
         
         // show touches, only do this for debugging as it can interfere with other canvases
-        FingersScript.Instance.ShowTouches = true;
+        //FingersScript.Instance.ShowTouches = true;
 
         controls = GameObject.FindObjectOfType<Controls>();
         inv = GameObject.FindObjectOfType<HandsInventory>();
