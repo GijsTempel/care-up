@@ -13,7 +13,7 @@ public class GestureControls : MonoBehaviour
 
     private GameObject initedObject = null;
     private Controls controls;
-    private HandsInventory inv;
+    private HandsInventory handsInventory;
     private TutorialManager tutorial;
     private CameraMode cameraMode;
     private Tutorial_Combining tutorialCombine;
@@ -28,20 +28,20 @@ public class GestureControls : MonoBehaviour
     {
         if (gesture.State == GestureRecognizerState.Ended)
         {
-            DebugText("Double tapped at {0}, {1}", gesture.FocusX, gesture.FocusY);
+            //DebugText("Double tapped at {0}, {1}", gesture.FocusX, gesture.FocusY);
             if (IsViableObject())
             {
                 if (tutorial == null || (tutorial != null &&
                 (tutorial.itemToDrop == initedObject.name ||
                 tutorial.itemToDrop2 == initedObject.name)))
                 {
-                    if (inv.LeftHandObject == initedObject)
+                    if (handsInventory.LeftHandObject == initedObject)
                     {
-                        inv.DropLeft();
+                        handsInventory.DropLeft();
                     }
-                    else if (inv.RightHandObject == initedObject)
+                    else if (handsInventory.RightHandObject == initedObject)
                     {
-                        inv.DropRight();
+                        handsInventory.DropRight();
                     }
 
                     PickableObject item = initedObject.GetComponent<PickableObject>();
@@ -71,7 +71,7 @@ public class GestureControls : MonoBehaviour
     {
         if (gesture.State == GestureRecognizerState.Ended)
         {
-            if (inv.LeftHandEmpty() && inv.RightHandEmpty())
+            if (handsInventory.LeftHandEmpty() && handsInventory.RightHandEmpty())
                 return; // both hands empty, nothing to combine/decombine
 
             //DebugText("Swiped from {0},{1} to {2},{3}; velocity: {4}, {5}", gesture.StartFocusX, gesture.StartFocusY, gesture.FocusX, gesture.FocusY, swipeGesture.VelocityX, swipeGesture.VelocityY);
@@ -79,7 +79,7 @@ public class GestureControls : MonoBehaviour
             {
                 // if we are here - this means it's more likely to be a horisontal swipe
                 // horisontal swipe mean we're trying to combine
-                if (inv.LeftHandEmpty() || inv.RightHandEmpty())
+                if (handsInventory.LeftHandEmpty() || handsInventory.RightHandEmpty())
                 {
                     // if we're here we're missing one object it seems, make a warning maybe somewhere?
                     string message = "missing something in hands? combining something + nothing?";
@@ -91,7 +91,7 @@ public class GestureControls : MonoBehaviour
             else // else it's a vertical swipe, vertical means we're trying to DEcombine
             {
                 // we can't decombine with both hands having an item, we need one item in hands and another one free
-                if (inv.LeftHandEmpty() == inv.RightHandEmpty())
+                if (handsInventory.LeftHandEmpty() == handsInventory.RightHandEmpty())
                 {
                     // here we have either both hands filled
                     string message = "Je hebt je handen vol!";
@@ -106,7 +106,7 @@ public class GestureControls : MonoBehaviour
                 return;
             }
             
-            inv.OnCombineAction();
+            handsInventory.OnCombineAction();
         }
     }
 
@@ -192,7 +192,7 @@ public class GestureControls : MonoBehaviour
         //FingersScript.Instance.ShowTouches = true;
 
         controls = GameObject.FindObjectOfType<Controls>();
-        inv = GameObject.FindObjectOfType<HandsInventory>();
+        handsInventory = GameObject.FindObjectOfType<HandsInventory>();
         tutorial = GameObject.FindObjectOfType<TutorialManager>();
         cameraMode = GameObject.FindObjectOfType<CameraMode>();
         tutorialCombine = GameObject.FindObjectOfType<Tutorial_Combining>();
@@ -209,7 +209,7 @@ public class GestureControls : MonoBehaviour
                 && !player.itemControls.gameObject.activeSelf
                 && !PlayerScript.actionsLocked
                 && !player.usingOnMode &&
-                 ((controls.SelectedObject == inv.LeftHandObject)
-                || (controls.SelectedObject == inv.RightHandObject));
+                 ((controls.SelectedObject == handsInventory.LeftHandObject)
+                || (controls.SelectedObject == handsInventory.RightHandObject));
     }
 }
