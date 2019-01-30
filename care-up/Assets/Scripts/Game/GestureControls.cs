@@ -160,9 +160,14 @@ public class GestureControls : MonoBehaviour
         if (gesture.State == GestureRecognizerState.Ended)
         {
             //DebugText("Tapped at {0}, {1}", gesture.FocusX, gesture.FocusY);
+            PlayerScript player = GameObject.FindObjectOfType<PlayerScript>();
             if (IsViableObject())
             {
-                GameObject.FindObjectOfType<PlayerScript>().itemControls.Init(controls.SelectedObject);
+                player.itemControls.Init(controls.SelectedObject);
+            }
+            else
+            {
+                player.itemControls.Close();
             }
         }
     }
