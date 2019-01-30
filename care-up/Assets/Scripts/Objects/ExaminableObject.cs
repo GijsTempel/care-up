@@ -12,6 +12,8 @@ public class ExaminableObject : InteractableObject {
     public bool tutorial_picked = false;
     [HideInInspector]
     public bool tutorial_closed = false;
+    [HideInInspector]
+    public bool tutorial_examined = false;
 
     public Vector3 examineRotation;
     public bool audioExamine = false;
@@ -36,7 +38,9 @@ public class ExaminableObject : InteractableObject {
     {
         if (!audioExamine)
         {
-            ToggleViewMode(true);
+            tutorial_examined = true;
+            Debug.Log (tutorial_examined);
+            ToggleViewMode (true);
             cameraMode.ToggleCameraMode(CameraMode.Mode.ObjectPreview);
             actionManager.OnExamineAction(name, state);
         }
@@ -79,6 +83,7 @@ public class ExaminableObject : InteractableObject {
         }
         else
         {
+            tutorial_examined = false;
             tutorial_closed = true;
             if (!animationExamine)
             {

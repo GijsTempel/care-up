@@ -144,7 +144,7 @@ public class Tutorial_Movement : TutorialManager
                         hintsN.LockTo("/doc", new Vector3(345.90f, 1.40f, 707.00f));
                         hintsN.SetSize(820f, 591f);
                         currentStep = TutorialStep.FreeLookExpl;
-                        UItext.DOText("Wil je om je heen kijken? Dat kan! Speel je op de computer dan doe je dit door de linkermuisknop in te drukken en ingedrukt te houden. Beweeg vervolgens de muis om rond te kijken. Laat de linkermuisknop los om te stoppen. Speel je op de mobiel of tablet? Kijk dan rond door met je vinger over het beeld te swipen. Klik hierbij niet op de interessante objecten.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
+                        UItext.DOText("Wil je om je heen kijken? Dat kan! Dat doe je doormiddel van de joystick linksonder in het beeld klik daarop en beweeg de joystick in de richting waar je heen wilt kijken en laat los om te stoppen met rondkijken.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
                         SetUpTutorialNextButton();
                     }
                     break;
