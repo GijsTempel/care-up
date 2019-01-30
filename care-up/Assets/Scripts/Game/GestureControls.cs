@@ -71,6 +71,9 @@ public class GestureControls : MonoBehaviour
     {
         if (gesture.State == GestureRecognizerState.Ended)
         {
+            if (inv.LeftHandEmpty() && inv.RightHandEmpty())
+                return; // both hands empty, nothing to combine/decombine
+
             //DebugText("Swiped from {0},{1} to {2},{3}; velocity: {4}, {5}", gesture.StartFocusX, gesture.StartFocusY, gesture.FocusX, gesture.FocusY, swipeGesture.VelocityX, swipeGesture.VelocityY);
             if (Mathf.Abs(swipeGesture.VelocityX) > Mathf.Abs(swipeGesture.VelocityY))
             {
@@ -90,7 +93,7 @@ public class GestureControls : MonoBehaviour
                 // we can't decombine with both hands having an item, we need one item in hands and another one free
                 if (inv.LeftHandEmpty() == inv.RightHandEmpty())
                 {
-                    // here we have either both hands filled or both hands empty, both wrong
+                    // here we have either both hands filled
                     string message = "Je hebt je handen vol!";
                     RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
                     messageCenter.NewMessage("Je kunt niet objecten scheiden/uit elkaar halen met beide handen vol. Leg een object terug om een hand vrij te maken.", message, RobotUIMessageTab.Icon.Warning);
@@ -104,7 +107,6 @@ public class GestureControls : MonoBehaviour
             }
             
             inv.OnCombineAction();
-
         }
     }
 
