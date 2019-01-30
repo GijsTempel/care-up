@@ -588,16 +588,27 @@ public class PlayerScript : MonoBehaviour {
 
     public void PickItemsBackAfterRobotUI()
     {
-        StartCoroutine(DelayedPickItemsAfterIpad(0.5f));
+        if (robotSavedLeft != null || robotSavedRight != null)
+        {
+            StartCoroutine(DelayedPickItemsAfterIpad(0.5f));
+        }
 
         if (robotSavedLeft != null)
         {
             PlayerAnimationManager.SetHandItem(true, robotSavedLeft.gameObject);
         }
+        else
+        {
+            PlayerAnimationManager.SetHandItem(true, null);
+        }
 
         if (robotSavedRight != null)
         {
             PlayerAnimationManager.SetHandItem(false, robotSavedRight.gameObject);
+        }
+        else
+        {
+            PlayerAnimationManager.SetHandItem(false, null);
         }
     }
 
@@ -611,20 +622,12 @@ public class PlayerScript : MonoBehaviour {
             robotSavedLeft.GetComponent<PickableObject>().CreateGhostObject();
             robotSavedLeft = null; // reset
         }
-        else
-        {
-            PlayerAnimationManager.SetHandItem(true, null);
-        }
 
         if (robotSavedRight != null)
         {
             handsInv.ForcePickItem(robotSavedRight.name, false);
             robotSavedRight.GetComponent<PickableObject>().CreateGhostObject();
             robotSavedRight = null; // reset
-        }
-        else
-        {
-            PlayerAnimationManager.SetHandItem(false, null);
         }
 
         robotSavedLeft = robotSavedRight = null;
