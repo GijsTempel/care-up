@@ -252,7 +252,7 @@ namespace MBS
 
             if (PlayerPrefs.GetInt ("FirstLogin") <= 1) {
 
-                WUAchieve.UpdateKeys (FirstLogin, 1);
+                WUAchieve.UpdateKeys ("FirstLogin", 1);
                 PlayerPrefs.SetInt ("FirstLogin", SecondLogin);
                 string sceneName = "Tutorial_UI";
                 string bundleName = "tutorial_ui";
