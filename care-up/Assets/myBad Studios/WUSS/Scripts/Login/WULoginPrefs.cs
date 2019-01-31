@@ -47,6 +47,8 @@ namespace MBS
         public int AvatarSize => avatar_size;
         public WULGravatarTypes GravatarType => gravatar_type;
 
+
+
 #if WUM
         [SerializeField] string[]   currencies = new string[]{"points"};
         public string [] Currencies => currencies;

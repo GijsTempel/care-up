@@ -21,7 +21,8 @@ namespace MBS
         static public bool UserNotWithEmail = false;
         static public bool UserNotFound = false;
 
-        // never used apparently
+        static public WUAchieveManager WUAchieve;
+        
         //static private int FirstLogin = 1;
         static private int SecondLogin = 2;
 
@@ -250,7 +251,8 @@ namespace MBS
             //PlayerPrefs.SetInt ("FirstLogin", FirstLogin);
 
             if (PlayerPrefs.GetInt ("FirstLogin") <= 1) {
-               
+
+                WUAchieve.UpdateKeys (FirstLogin, 1);
                 PlayerPrefs.SetInt ("FirstLogin", SecondLogin);
                 string sceneName = "Tutorial_UI";
                 string bundleName = "tutorial_ui";
