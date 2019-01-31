@@ -57,6 +57,7 @@ public class ObjectsIDController : MonoBehaviour
         new ObjectsIDs("lube_syringe_pack_empty", 48, 2),
         new ObjectsIDs("lube_syringe_pack_cover", 48, 0),
         new ObjectsIDs("w0_A", -5, 0),
+        new ObjectsIDs("m1_A", -6, 0),
         new ObjectsIDs("Sink", -10, 0),
         new ObjectsIDs("GauzeTrayFull", 38,0),
 		new ObjectsIDs("cotton_ball", 40,0),
