@@ -381,7 +381,8 @@ public class PlayerScript : MonoBehaviour {
 
         robot.transform.position = group.robotPosition;
         robot.transform.rotation = Quaternion.Euler(group.robotRotation);
-        
+
+        freeLook = false;
     }
 
     private void ToggleAway(bool _away = false)

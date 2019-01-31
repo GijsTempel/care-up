@@ -119,6 +119,7 @@ public class Controls : MonoBehaviour {
     public void ResetObject()
     {
         selectedObject = null;
+        canInteract = false;
     }
 
     PlayerPrefsManager prefs;
@@ -136,17 +137,7 @@ public class Controls : MonoBehaviour {
     /// Sets canInteract based of distance to aimed object.
     /// </summary>
 	void LateUpdate() {
-
-        if (UnityEngine.EventSystems.EventSystem.current != null)
-        {
-            if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
-            {
-                selectedObject = null;
-                canInteract = false;
-                return;
-            }
-        }
-
+        
         // raycast only in this script
         Vector3 screenPosition = (Input.touchCount > 0) ? 
             new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y) : 
@@ -168,6 +159,8 @@ public class Controls : MonoBehaviour {
         {
             ResetObject();
         }
+
+        UpdateUIDetection();
 
         keyUsed = false;
         
@@ -193,6 +186,17 @@ public class Controls : MonoBehaviour {
         #endif
     }
 
+    private void UpdateUIDetection()
+    {
+        if (UnityEngine.EventSystems.EventSystem.current != null)
+        {
+            if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+            {
+                ResetObject();
+            }
+        }
+    }
+
     /// <summary>
     /// Checks if "LeftMouse" clicked, including alternatives for gamepads.
     /// </summary>
@@ -209,9 +213,11 @@ public class Controls : MonoBehaviour {
             LateUpdate();
         }
 
-        return (Input.touchCount > 0) ?
+        bool result = (Input.touchCount > 0) ?
             Input.GetTouch(0).phase == TouchPhase.Began
             : (Input.GetMouseButtonDown(0) || keyPreferences.mouseClickKey.Pressed());
+       
+        return result;
     }
     /// <summary>
     /// Checks if "RightMouse" clicked, including alternatives for gamepads.
@@ -224,7 +230,9 @@ public class Controls : MonoBehaviour {
 
     public static bool MouseReleased()
     {
-        return (Input.touchCount > 0) ?
+        bool result = (Input.touchCount > 0) ?
             Input.GetTouch(0).phase == TouchPhase.Ended : (Input.GetMouseButtonUp(0));
+        
+        return result;
     }
 }
