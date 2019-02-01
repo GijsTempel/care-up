@@ -20,8 +20,7 @@ namespace MBS
         static public bool UsernameNotValid = false;
         static public bool UserNotWithEmail = false;
         static public bool UserNotFound = false;
-
-        static public WUAchieveManager WUAchieve;
+        static public bool FirstLoginAchievment = false;
         
         //static private int FirstLogin = 1;
         static private int SecondLogin = 2;
@@ -252,11 +251,8 @@ namespace MBS
 
             if (PlayerPrefs.GetInt ("FirstLogin") <= 1) {
 
-                WUAchieve.UpdateKeys ("FirstLogin", 1);
+                FirstLoginAchievment = true;
                 PlayerPrefs.SetInt ("FirstLogin", SecondLogin);
-                string sceneName = "Tutorial_UI";
-                string bundleName = "tutorial_ui";
-                bl_SceneLoaderUtils.GetLoader.LoadLevel (sceneName, bundleName);
             }
         }
 
