@@ -82,11 +82,8 @@ namespace MBS
         void Update () {
             if (WULogin.FirstLoginAchievment == true) {
 
-                WUAchieve.UpdateKeys ("FirstLogin");
+                //WUAchieve.UpdateKeys ("FirstLogin");
                 WULogin.FirstLoginAchievment = false;
-                string sceneName = "Tutorial_UI";
-                string bundleName = "tutorial_ui";
-                bl_SceneLoaderUtils.GetLoader.LoadLevel (sceneName, bundleName);
                 Debug.Log ("hi");
             }
 

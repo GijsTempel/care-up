@@ -253,6 +253,9 @@ namespace MBS
 
                 FirstLoginAchievment = true;
                 PlayerPrefs.SetInt ("FirstLogin", SecondLogin);
+                string sceneName = "Tutorial_UI";
+                string bundleName = "tutorial_ui";
+                bl_SceneLoaderUtils.GetLoader.LoadLevel (sceneName, bundleName);
             }
         }
 
