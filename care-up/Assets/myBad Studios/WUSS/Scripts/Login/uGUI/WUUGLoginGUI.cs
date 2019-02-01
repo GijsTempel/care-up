@@ -75,9 +75,20 @@ namespace MBS
         [SerializeField] private Text ErrorLoginText;
         [SerializeField] private Text SuccesText;
 
+        [SerializeField] private WUAchieveManager WUAchieve;
+
         private bool remove_text = false;
 
         void Update () {
+            if (WULogin.FirstLoginAchievment == true) {
+                //WUAchieve.UpdateKeys ("FirstLogin");
+                WULogin.FirstLoginAchievment = false;
+                string sceneName = "Tutorial_UI";
+                string bundleName = "tutorial_ui";
+                bl_SceneLoaderUtils.GetLoader.LoadLevel (sceneName, bundleName);
+                Debug.Log ("hi");
+            }
+
             if(WULogin.UserNotWithEmail == true) {
                 DisplayScreen (panels.error_login_pop_up);
                 ErrorLoginText.text = "Er is geen gebruikersnaam die bij deze e-mail hoort";
