@@ -82,7 +82,7 @@ namespace MBS
         void Update () {
             if (WULogin.FirstLoginAchievment == true) {
 
-                //WUAchieve.UpdateKeys ("FirstLogin");
+                //WUAchieve.UpdateKeys ("FirstLoginAchiev", 1);
                 WULogin.FirstLoginAchievment = false;
                 Debug.Log ("hi");
             }

@@ -222,7 +222,7 @@ namespace MBS {
             Keys.AddNode( "Keys" );
         }
 
-        public void UpdateKeys( string name, int qty = 1 )
+        public void UpdateKeys( string name, int qty = 0 )
         {
             //Save the current tracking keys so we are up to date across game sessions
             _keys.Add( qty, name );

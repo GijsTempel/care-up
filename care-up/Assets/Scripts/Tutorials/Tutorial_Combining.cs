@@ -118,17 +118,18 @@ public class Tutorial_Combining : TutorialManager {
 
 						hintsN.LockTo("Syringe", new Vector3(0.00f, -0.03f, -0.03f));
 						hintsN.SetIconPosition(0);
-                        hintsN.SetSize(495.7f, 240.7f);
+                        hintsN.SetSize(600, 500f);
                         currentStep = TutorialStep.OpenControls;
-                        UItext.DOText("Klik op de spuit om te zien welke opties je hebt. Je kunt op elk object klikken om de opties weer te geven. ", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
+                        UItext.DOText("Je kan door op je beeldscherm te swipen van rechts naar links en vice versa de objecten combineren. Op de computer doe je dit door van rechts naar links en vice versa te klikken en ingedrukt te houden met je muis.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
 
                         player.tutorial_itemControls = false;
                         player.itemControlsToInit = "Syringe";
                         particleHint.transform.position = GameObject.Find("Syringe").transform.position;
-                    }
+                        SetUpTutorialNextButton ();
+                }
                     break;
                 case TutorialStep.OpenControls:
-                    if (player.tutorial_itemControls)
+                    if (nextButtonClicked)
                     {
                         audioSource.PlayOneShot (Popup, 0.1F);
                         audioSource.PlayOneShot(RobotShort1, 0.1F);
@@ -136,7 +137,7 @@ public class Tutorial_Combining : TutorialManager {
                         hintsN.SetSize(495.7f, 162f);
                         currentStep = TutorialStep.ClickUseOn;
                         hintsN.LockTo("UseOnButton", new Vector3(11.60f, -124.40f, 0.00f));
-                        UItext.DOText("Klik op het +icoon. Dit icoon zorgt ervoor dat je objecten kunt combineren.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
+                        UItext.DOText("Swipe nu om de naald en spuit te combineren.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
                         particleHint.SetActive(false);
                         player.tutorial_UseOnControl = false;
                     }
