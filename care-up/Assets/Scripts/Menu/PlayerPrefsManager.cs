@@ -318,23 +318,43 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public static void __sendMail(string topic, string message)
     {
-        MailMessage mail = new MailMessage();
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+        {   // apparently SMTP doesnt work with webgl
+            __sendMailApp(topic, message);
+            return;
+        }
+        else
+        {
+            MailMessage mail = new MailMessage();
 
-        mail.From = new MailAddress("info@careup.nl");
-        mail.To.Add("info@careup.nl");
-        mail.Subject = topic;
-        mail.Body = message;
+            mail.From = new MailAddress("info@careup.nl");
+            mail.To.Add("info@careup.nl");
+            mail.Subject = topic;
+            mail.Body = message;
 
-        SmtpClient smtpServer = new SmtpClient("smtp.strato.de");
-        smtpServer.Port = 587;
-        smtpServer.Credentials = new System.Net.NetworkCredential("info@careup.nl", "TripleMotionMedia3") as ICredentialsByHost;
-        smtpServer.EnableSsl = true;
+            SmtpClient smtpServer = new SmtpClient("smtp.strato.de");
+            smtpServer.Port = 587;
+            smtpServer.Credentials = new System.Net.NetworkCredential("info@careup.nl", "TripleMotionMedia3") as ICredentialsByHost;
+            smtpServer.EnableSsl = true;
 
-        ServicePointManager.ServerCertificateValidationCallback =
-            delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
-            { return true; };
+            ServicePointManager.ServerCertificateValidationCallback =
+                delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+                { return true; };
 
-        smtpServer.Send(mail);
+            smtpServer.Send(mail);
+        }
+    }
+
+    public static string MyEscapeURL(string url)
+    {
+        return WWW.EscapeURL(url).Replace("+", "%20");
+    }
+    
+    public static void __sendMailApp(string topic, string message)
+    {
+        topic = MyEscapeURL(topic);
+        message = MyEscapeURL(message);
+        Application.OpenURL("mailto:" + "info@careup.nl" + "?subject=" + topic + "&body=" + message);
     }
 
     public void UpdateTestHighscore(float score)
