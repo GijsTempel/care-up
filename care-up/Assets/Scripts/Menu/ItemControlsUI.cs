@@ -198,15 +198,7 @@ public class ItemControlsUI : MonoBehaviour {
             //talkin removed
             if (talkButton.activeSelf)
             {
-                if (controls.CanInteract)
-                {
-                    Talk();
-                }
-                else
-                {
-                    cameraMode.ToggleCameraMode(CameraMode.Mode.Free);
-                    return;
-                }
+                Talk();
             }
             else if ((pickButton.activeSelf && !examineButton.activeSelf)
                 || (initedObject.GetComponent<PickableObject>() != null
