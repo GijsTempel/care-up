@@ -59,10 +59,10 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
         //Debug.Log("PlaysNumber::Server returned number of plays: " + response[1].Int("Plays_Number"));
         manager.plays = response[1].Int("Plays_Number");
         //Debug.Log("PlaysNumber::Plays number saved to local variable. Local variable state: " + manager.plays);
-        bool result = manager.plays < 3 ? true : false;
+        bool result = manager.plays < 5 ? true : false;
         AllowDenyLoadMainMenu(result, true);
     }
-
+    
     void ErrorHandle(CMLData response)
     {
         //Debug.Log("PlaysNumber::Server returned error. (response below)");
