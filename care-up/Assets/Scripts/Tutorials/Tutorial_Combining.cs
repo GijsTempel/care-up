@@ -116,77 +116,30 @@ public class Tutorial_Combining : TutorialManager {
                         handsInventory.tutorial_pickedRight = false;
                         itemToPick = "";
 
-						hintsN.LockTo("Syringe", new Vector3(0.00f, -0.03f, -0.03f));
-						hintsN.SetIconPosition(0);
-                        hintsN.SetSize(600, 500f);
-                        currentStep = TutorialStep.OpenControls;
-                        UItext.DOText("Je kan door op je beeldscherm te swipen van rechts naar links en vice versa de objecten combineren. Op de computer doe je dit door van rechts naar links en vice versa te klikken en ingedrukt te houden met je muis.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
-
-                        player.tutorial_itemControls = false;
-                        player.itemControlsToInit = "Syringe";
-                        particleHint.transform.position = GameObject.Find("Syringe").transform.position;
-                        SetUpTutorialNextButton ();
-                }
-                    break;
-                case TutorialStep.OpenControls:
-                    if (nextButtonClicked)
-                    {
-                        audioSource.PlayOneShot (Popup, 0.1F);
-                        audioSource.PlayOneShot(RobotShort1, 0.1F);
-                        player.tutorial_itemControls = false;
-                        hintsN.SetSize(495.7f, 162f);
-                        currentStep = TutorialStep.ClickUseOn;
-                        hintsN.LockTo("UseOnButton", new Vector3(11.60f, -124.40f, 0.00f));
+                        hintsN.LockTo("robot", new Vector3(-1.22f, 0.00f, 1.13f)); hintsN.LockTo("robot", new Vector3(-1.22f, 0.00f, 1.13f));
                         UItext.DOText("Swipe nu om de naald en spuit te combineren.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
                         particleHint.SetActive(false);
-                        player.tutorial_UseOnControl = false;
-                    }
-                    break;
-                case TutorialStep.ClickUseOn:
-                    if (player.tutorial_UseOnControl)
-                    {
-                        audioSource.PlayOneShot (Popup, 0.1F);
-                        audioSource.PlayOneShot(RobotShort2, 0.1F);
-                        player.tutorial_UseOnControl = false;
-                        hintsN.SetSize(495.7f, 227.1f);
-                        currentStep = TutorialStep.Combine;
-                        hintsN.LockTo("/Player/CinematicControl/Arms/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/toolHolder.R/AbsorptionNeedle", new Vector3(-0.12f, -0.02f, 0.00f));
-                        hintsN.SetIconPosition(1);
 
-                        UItext.DOText("Klik nu op het object in je andere hand om de objecten met elkaar te combineren.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
-                        particleHint.SetActive(true);
-                        particleHint.transform.position = GameObject.Find("AbsorptionNeedle").transform.position;
+                        currentStep = TutorialStep.Combine;
                         handsInventory.tutorial_combined = false;
+                        decombiningAllowed = true;
                     }
                     break;
                 case TutorialStep.Combine:
                     if (handsInventory.tutorial_combined)
                     {
+                        decombiningAllowed = false;
                         handsInventory.tutorial_combined = false;
                         audioSource.PlayOneShot (Popup, 0.1F);
                         audioSource.PlayOneShot(Robot3, 0.1F);
-                        currentStep = TutorialStep.OpenControls2;
+
                         hintsN.LockTo("robot", new Vector3(-1.22f, 0.00f, 1.13f)); hintsN.LockTo("robot", new Vector3(-1.22f, 0.00f, 1.13f));
-                        UItext.DOText("Haal de dop van de naald door op de spuit met opzuignaald te klikken. Hierdoor zie je weer de opties. ", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
+                        UItext.DOText("Swipe vertically", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
                         particleHint.SetActive(false);
-                        player.tutorial_itemControls = false;
                         hintsN.SetIconPosition(0);
                         hintsN.SetSize(495.7f, 266.6f);
-                        player.itemControlsToInit = "SyringeWithAbsorptionNeedleCap";
-                        //particleHint.transform.position = GameObject.Find("SyringeWithAbsorptionNeedleCap").transform.position;
-                    }
-                    break;
-                case TutorialStep.OpenControls2:
-                    if (player.tutorial_itemControls)
-                    {
-                        audioSource.PlayOneShot (Popup, 0.1F);
-                        audioSource.PlayOneShot(Robot1, 0.1F);
-                        player.tutorial_itemControls = false;
-                        hintsN.SetIconPosition(0);
+
                         currentStep = TutorialStep.Decombine;
-                        hintsN.LockTo("CombineButton", new Vector3(-2.71f, -137.70f, 0.00f));
-                        UItext.DOText("Klik op het –icoon. Met dit icoon haal je de objecten uit elkaar of open je een object. Bijvoorbeeld een verpakking. ", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
-                        particleHint.SetActive(false);
                         handsInventory.tutorial_combined = false;
                         decombiningAllowed = true;
                     }
@@ -194,6 +147,7 @@ public class Tutorial_Combining : TutorialManager {
                 case TutorialStep.Decombine:
                     if (handsInventory.tutorial_combined)
                     {
+                        decombiningAllowed = false;
                         audioSource.PlayOneShot (Popup, 0.1F);
                         audioSource.PlayOneShot(Done, 0.1F);
                         audioSource.PlayOneShot(RobotShort1, 0.1F);
