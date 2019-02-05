@@ -115,7 +115,7 @@ public class Tutorial_Picking : TutorialManager {
                         itemToPick = "";
                         hintsN.SetSize(452f, 325f);
                         currentStep = TutorialStep.DropOne;
-                        hintsN.LockTo("/Cloth", new Vector3(0.00f, 0.16f, 0.00f));
+                        hintsN.LockTo("Cloth", new Vector3(0.26f, -0.12f, 0.00f));
                         UItext.DOText("Objecten kun je terug leggen door dubbel te klikken op het object. Dubbelklik nu op het gaasje om deze terug te leggen. ", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
                         UItext.text = " ";
 
@@ -129,10 +129,11 @@ public class Tutorial_Picking : TutorialManager {
                 if (handsInventory.tutorial_droppedLeft) {
                     audioSource.PlayOneShot (Popup, 0.1F);
                     audioSource.PlayOneShot (RobotShort2, 0.1F);
-                    hintsN.SetSize (550f, 350f);
-                    hintsN.LockTo ("WorkField", new Vector3 (0.00f, 0.16f, 0.00f));
-                    currentStep = TutorialStep.InspectMedicine;
-                    UItext.DOText ("Altijd voordat je begint met de handelingen moet je het medicijn checken of het goed is dat doe je door erop te drukken en ingedrukt houden. druk nu in op het medicijn.", 0.5f, true, ScrambleMode.All).SetEase (Ease.Linear);
+                    hintsN.SetSize (550f, 415f);
+                        hintsN.SetIconPosition(1);
+                        hintsN.LockTo("Medicine", new Vector3(0.19f, -0.08f, 0.00f));
+                        currentStep = TutorialStep.InspectMedicine;
+                    UItext.DOText ("Sommige objecten kun je controleren. Zoals het medicijn. Controleer het medicijn door op het medicijn te klikken en de muisknop of je vinger ingedrukt te houden. Controleer nu het medicijn.", 0.5f, true, ScrambleMode.All).SetEase (Ease.Linear);
                     particleHint.transform.position = GameObject.Find ("Medicine").transform.position;
                 }
                 break;
@@ -140,10 +141,10 @@ public class Tutorial_Picking : TutorialManager {
                 if (medicine.tutorial_examined == true) {
                     audioSource.PlayOneShot (Popup, 0.1F);
                     audioSource.PlayOneShot (RobotShort2, 0.1F);
-                    hintsN.SetSize (452f, 275f);
-                    hintsN.LockTo ("/Medicine", new Vector3 (0.00f, 0.16f, 0.00f));
-                    currentStep = TutorialStep.CloseInspect;
-                    UItext.DOText ("Goedzo! Je bent weet nu hoe je het medicijn moet checken. Ga nu weer terug door ergens op je beeld te tikken.", 0.5f, true, ScrambleMode.All).SetEase (Ease.Linear);
+                    hintsN.SetSize (452f, 350f);
+                        hintsN.LockTo("Medicine", new Vector3(70.70f, 0.76f, 0.00f));
+                        currentStep = TutorialStep.CloseInspect;
+                    UItext.DOText ("Goedzo! Je bent weet nu hoe je objecten kunt controleren. Klik nu ergens op het scherm of op de 'terug' knop om verder te gaan.", 0.5f, true, ScrambleMode.All).SetEase (Ease.Linear);
                     particleHint.transform.position = GameObject.Find ("Medicine").transform.position;
                 }
                 break;
@@ -152,11 +153,12 @@ public class Tutorial_Picking : TutorialManager {
                     {
                         audioSource.PlayOneShot (Popup, 0.1F);
                         audioSource.PlayOneShot(RobotShort2, 0.1F);
-                        hintsN.SetSize(550f, 400f);
+                        hintsN.SetSize(550f, 425f);
                         handsInventory.tutorial_droppedLeft = false;
-                        hintsN.LockTo("/Medicine", new Vector3(0.00f, 0.16f, 0.00f));
+                        hintsN.SetIconPosition(3);
+                        hintsN.LockTo("robot", new Vector3(0.00f, -0.28f, -0.51f));
                         currentStep = TutorialStep.DropTwo;
-                        UItext.DOText("Objecten kun je ook terug leggen door op het silhouette te klikken. Klik nu op het silhouette van het medicijn om deze terug te leggen.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
+                        UItext.DOText("Objecten kun je ook terug leggen door op het silhouette te klikken. Gebruik de joystick om naar het werkveld te kijken. Klik vervolgens op het silhouette van het medicijn om deze terug te leggen.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
                         itemToDrop = "Medicine";
                         handsInventory.tutorial_droppedRight = false;
                         particleHint.transform.position = GameObject.Find("Medicine").transform.position;
