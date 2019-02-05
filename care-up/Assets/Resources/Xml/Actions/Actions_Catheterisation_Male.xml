@@ -36,14 +36,16 @@
 
   <action
     points="1"
-    description="Open catheterisatie pakket"
-    fullDescription=" Klik op het catheterisatie pakket om deze open te maken."
+    description="Open de katheterset."
+    fullDescription="Klik op de katheterset om deze open te maken."
     audioHint="Injection/H2-2"
     index="2"
     type="use"
     value="catheterisation"
-    extra="Maak een schoon catheterisation. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen."></action>
-
+    extra="Maak een schoon catheterisation. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen."
+    messageTitle="Katheterset"
+    messageContent="Het gebruik van een katheterset verdient aanbeveling. Hierin bevinden zich alle benodigdheden voor het inbrengen van een katheter. Er is echter niet aangetoond dat het werken met een katheterset een meerwaarde heeft boven het verzamelen van de materialen afzonderlijk. Gazen voor het reinigen van de urethraopening hoeven niet steriel te zijn, wel schoon. Reden hiervoor is dat ze niet in aanraking komen met een steriel gebied (meatus)."></action>
+  
   <action
     comment="3. Open package of the syringe with 10 ml of sterile water. Leave the syringe in the package "
     points="1" 
@@ -53,20 +55,22 @@
     index="3" type="combine" 
     left="water_syringe_pack" 
     right="" 
-    extra=""></action>
+    extra="Open de spuit met 10 ml steriel water, laat de spuit in de verpakking."></action>
 
   <action
     comment="4. Pour tap water from a large tap (or sterile water) over the gauze."
     points="1" 
-    description="Giet kraanwater uit een flink stromende kraan (of steriel water) over de gaasjes." 
+    description="Giet kraanwater uit een flink stromende kraan (of steriel water) over de wattenbollen." 
     audioHint="Injection/H8-2" 
     index="4" 
     type="useOn" 
     item="GauzeTrayFull" 
     target="Sink" 
-    buttonText="" 
-    extra="" 
-    fullDescription=""></action>
+    extra="Giet kraanwater uit een flink stromende kraan (of steriel water) over de wattenbollen." 
+    fullDescription="Pak het bakje met wattenbollen van het werkveld. Beweeg naar de kraan. Klik op het bakje met wattenbollen. Klik vervolgens op het + icoon en klik daarna op de kraan om de wattenbollen nat te maken. "
+    messageTitle="Gebruik kraanwater"
+    messageContent="Als in een geprotocolleerde werkinstructie kraanwater als spoelvloeistof wordt gebruikt, dient dit water uit een flink stromende kraan te zijn. Laat de kraan eerst 30 seconden goed doorstromen alvorens het water op te vangen voor gebruik. Gebruik voor lichaamsverzorging en spoelen van wonden lauw kraanwater."></action>
+    
 
   <action
     comment="____________________________5. Ask the client to uncover the lower body and lie on the back with the legs spread apart and the knees raised."
@@ -76,9 +80,9 @@
     index="5" 
     type="talk" 
     topic="LayOnBed" 
-    extra="do it!" 
-    fullDescription="Vraag de cliënt het onderlichaam te ontbloten en op de rug te gaan liggen met de benen gespreid en de
-    knieën opgetrokken."/>
+    extra="Vraag de cliënt het onderlichaam te ontbloten en op de rug te gaan liggen met de benen gespreid en de
+    knieën opgetrokken." 
+    fullDescription="Beweeg naar de cliënt. Klik vervolgens op de cliënt om een dialoog te starten. Kies vervolgens voor de juiste optie."/>
 
   <action
     comment="6. Place a pad under the buttocks and thighs of the cliënt."
@@ -90,15 +94,30 @@
     type="useOn"
     item="cloth_02_folded"
     target="m1_A"
-    extra="Start met het toedienen van de injectie. Alles is klaar voor gebruik en je kunt dus starten met injecteren."></action>
+    extra="Leg een onderlegger onder de billen en dijen van de cliënt."></action>
 
   <action
     comment="7. Place the tray with gauze on the underpad."
-    points="1" description="Zet het bakje met gaasjes op de onderlegger" fullDescription="pak het bakje op ga dan naar de cliënt en klik op de onderlegger om hem neer te zetten" audioHint="" index="7" type="drop" item="GauzeTrayWet" posID="2" extra=""/>
+    points="1" description="Zet het bakje met wattenbollen op de onderlegger" 
+    fullDescription="Pak het bakje met wattenbollen van het werkveld. Beweeg vervolgens naar de cliënt. Klik tot slot op het silhouet van het bakje met wattenbollen."
+    audioHint="" 
+    index="7" 
+    type="drop" 
+    item="GauzeTrayWet" 
+    posID="2" 
+    extra="Zet het bakje met wattenbollen op de onderlegger."/>
 
   <action
     comment="8. Open the packaging of the syringe with lubricant, leave the syringe in the packaging."
-    points="1" description="Open de verpakking van de spuit met glijmiddel, laat de spuit in de verpakking. " fullDescription="pak de spuit op van het werkveld. Klik op de spuit en klik dan op het min teken om het te scheiden" audioHint="Injection/H4-2" index="8" type="combine" left="lube_syringe_pack" right="" extra=""></action>
+    points="1" 
+    description="Open de verpakking van de spuit met glijmiddel, laat de spuit in de verpakking. " 
+    fullDescription="Pak de spuit met glijmiddel van het werkveld. Klik op de spuit met glijmiddel in je hand. Klik tot slot op het - icoon." 
+    audioHint="" 
+    index="8" 
+    type="combine" 
+    left="lube_syringe_pack" 
+    right="" 
+    extra="Open de verpakking van de spuit met glijmiddel, laat de spuit in de verpakking."></action>
 
   <action
     comment=""
