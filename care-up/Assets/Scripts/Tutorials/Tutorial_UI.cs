@@ -22,9 +22,6 @@ public class Tutorial_UI : TutorialManager
         Welcome,
         RobotIntro,
         OpenRobotUI,
-        TimeExpl,
-        PointsExpl,
-        PercentExpl,
         TabsExpl,
         PressGeneral,     
         GeneralExpl,       
@@ -122,42 +119,6 @@ public class Tutorial_UI : TutorialManager
                     break;
                 case TutorialStep.OpenRobotUI:
                     if (player.tutorial_robotUI_opened)
-                    {
-                        hintsN.ResetSize();
-                        audioSource.PlayOneShot (Popup, 0.1F);
-                        audioSource.PlayOneShot(Robot3, 0.1F);
-                        currentStep = TutorialStep.TimeExpl;
-                        hintsN.LockTo("Stopwatch", new Vector3(107.20f, -143.10f, 0.00f));
-                        UItext.DOText("Het klokje geeft aan hoe lang je bezig bent met de handeling. ", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
-                        SetUpTutorialNextButton();
-                    }
-                    break;
-                case TutorialStep.TimeExpl:
-                    if (nextButtonClicked)
-                    {
-                        audioSource.PlayOneShot (Popup, 0.1F);
-                        audioSource.PlayOneShot(Robot2, 0.1F);
-                        currentStep = TutorialStep.PointsExpl;
-
-                        hintsN.LockTo("Stopwatch", new Vector3(1297.10f, -149.20f, 0.00f));
-                        UItext.DOText("Hier zie je het aantal punten dat je behaald hebt. ", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
-                        SetUpTutorialNextButton();
-                    }
-                    break;
-                case TutorialStep.PointsExpl:
-                    if (nextButtonClicked)
-                    {
-                        audioSource.PlayOneShot (Popup, 0.1F);
-                        audioSource.PlayOneShot(Robot1, 0.1F);
-                        currentStep = TutorialStep.PercentExpl;
-
-                        hintsN.LockTo("Stopwatch", new Vector3(2678.00f, -149.20f, 0.00f));
-                        UItext.DOText("Bekijk hier je voortgang.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
-                        SetUpTutorialNextButton();
-                    }
-                    break;
-                case TutorialStep.PercentExpl:
-                    if (nextButtonClicked)
                     {
                         audioSource.PlayOneShot (Popup, 0.1F);
                         audioSource.PlayOneShot(RobotShort1, 0.1F);
