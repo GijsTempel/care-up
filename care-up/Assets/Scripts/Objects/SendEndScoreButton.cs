@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class SendEndScoreButton : MonoBehaviour {
 
+    public static bool EmailSent { get; set; }
+
     public void EndScoreSendMailResults()
     {
         string topic = "Care Up accreditatie aanvraag";
@@ -20,5 +22,6 @@ public class SendEndScoreButton : MonoBehaviour {
 
         PlayerPrefsManager.__sendMail(topic, content);
         Debug.Log("E-mail verzonden");
+        EmailSent = true;
     }
 }

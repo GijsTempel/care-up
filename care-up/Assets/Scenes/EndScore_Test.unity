@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 8
+  serializedVersion: 9
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -39,6 +39,7 @@ RenderSettings:
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
   m_IndirectSpecularColor: {r: 0.8018667, g: 0.89806044, b: 0.9576196, a: 1}
+  m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -54,11 +55,10 @@ LightmapSettings:
     m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 0
   m_LightmapEditorSettings:
-    serializedVersion: 9
+    serializedVersion: 10
     m_Resolution: 3
     m_BakeResolution: 30
-    m_TextureWidth: 1024
-    m_TextureHeight: 1024
+    m_AtlasSize: 1024
     m_AO: 0
     m_AOMaxDistance: 1
     m_CompAOExponent: 1
@@ -765,8 +765,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1676.225, y: -76.84665}
-  m_SizeDelta: {x: 477.49286, y: 143.6933}
+  m_AnchoredPosition: {x: 1676.225, y: -71.40144}
+  m_SizeDelta: {x: 477.49286, y: 132.80289}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &243368003
 MonoBehaviour:
@@ -2399,8 +2399,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 721.23926, y: -76.84665}
-  m_SizeDelta: {x: 477.49286, y: 143.6933}
+  m_AnchoredPosition: {x: 721.23926, y: -71.40144}
+  m_SizeDelta: {x: 477.49286, y: 132.80289}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &716668266
 MonoBehaviour:
@@ -2623,7 +2623,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0.95046496, y: 1}
-  m_AnchoredPosition: {x: 44.416992, y: -0.000000099273166}
+  m_AnchoredPosition: {x: 44.416992, y: 0.000061035156}
   m_SizeDelta: {x: 0, y: 20}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &723847687
@@ -3267,6 +3267,7 @@ GameObject:
   - component: {fileID: 870364237}
   - component: {fileID: 870364236}
   - component: {fileID: 870364240}
+  - component: {fileID: 870364241}
   m_Layer: 5
   m_Name: SendButton
   m_TagString: Untagged
@@ -3395,6 +3396,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 870364241}
+        m_MethodName: Confirmation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &870364238
@@ -3441,6 +3453,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07e2160d9be9a6e4d8ffe58ae939337f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &870364241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 870364234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f346aeace6661f43b58de9f2cb0c8e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popUpObject: {fileID: 1203357036}
 --- !u!1 &885728379
 GameObject:
   m_ObjectHideFlags: 0
@@ -3813,8 +3837,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 1203357037}
   - {fileID: 1507631242}
+  - {fileID: 1203357037}
   - {fileID: 1176767564}
   - {fileID: 1171106552}
   - {fileID: 1730984484}
@@ -4562,6 +4586,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!225 &1171106554
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -4647,6 +4672,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1177721808
 GameObject:
   m_ObjectHideFlags: 0
@@ -4832,7 +4858,7 @@ RectTransform:
   m_GameObject: {fileID: 1203357036}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9997528, y: 0.9997528, z: 0.9997528}
+  m_LocalScale: {x: 0.9997527, y: 0.9997527, z: 0.9997527}
   m_Children:
   - {fileID: 1241330615}
   - {fileID: 1089852714}
@@ -4841,11 +4867,11 @@ RectTransform:
   - {fileID: 1576705903}
   - {fileID: 1000358600}
   m_Father: {fileID: 951378016}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.000013752956, y: -0.023419961}
   m_AnchorMax: {x: 1.0000035, y: 1.0062088}
-  m_AnchoredPosition: {x: -0.000025348738, y: 12.6968975}
+  m_AnchoredPosition: {x: -0.000061035156, y: 12.696899}
   m_SizeDelta: {x: 0.47973633, y: -25.123291}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &1203357038
@@ -4903,6 +4929,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!222 &1203357041
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5240,8 +5267,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1198.7322, y: -76.84665}
-  m_SizeDelta: {x: 477.49286, y: 143.6933}
+  m_AnchoredPosition: {x: 1198.7322, y: -71.40144}
+  m_SizeDelta: {x: 477.49286, y: 132.80289}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1241799557
 MonoBehaviour:
@@ -6265,7 +6292,7 @@ RectTransform:
   - {fileID: 1809994385}
   - {fileID: 1367373992}
   m_Father: {fileID: 951378016}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -6300,6 +6327,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1524678515
 GameObject:
   m_ObjectHideFlags: 0
@@ -7192,7 +7220,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 433755864}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -7470,6 +7498,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!225 &1730984486
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -7560,8 +7589,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 243.74643, y: -76.84665}
-  m_SizeDelta: {x: 477.49286, y: 143.6933}
+  m_AnchoredPosition: {x: 243.74643, y: -71.40144}
+  m_SizeDelta: {x: 477.49286, y: 132.80289}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1820138592
 MonoBehaviour:
@@ -8328,7 +8357,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 772651737}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99999994
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
