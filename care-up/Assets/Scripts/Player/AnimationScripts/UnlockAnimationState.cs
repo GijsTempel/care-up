@@ -52,7 +52,7 @@ public class UnlockAnimationState : StateMachineBehaviour
                             if (toActivate)
                             {
                                 gameObj.GetComponent<ObjectStateManager>().isActive = !value;
-                                Debug.Log(gameObj.GetComponent<ObjectStateManager>().isActive);
+                                //Debug.Log(gameObj.GetComponent<ObjectStateManager>().isActive);
                             }
 
 
