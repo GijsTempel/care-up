@@ -12,6 +12,7 @@ public class ObjectStateManager : MonoBehaviour {
     public bool LockHoldState = true;
     public bool follow_left = true;
     public bool isActive = true;
+    public bool followHoldingHand = true;
 
 
     // Use this for initialization
@@ -69,7 +70,20 @@ public class ObjectStateManager : MonoBehaviour {
             animator.speed = 0;
             if (isInHands())
             {
-                if (transform.parent.name == "toolHolder.L")
+                bool f_left = true;
+
+                if (followHoldingHand)
+                {
+                    f_left = transform.parent.name == "toolHolder.L";
+                }
+                else
+                {
+                    f_left = follow_left;
+                }
+
+
+
+                if (f_left)
                 {
                     anim_name = HoldAnimName;
                     if (!LockHoldState)
@@ -78,7 +92,7 @@ public class ObjectStateManager : MonoBehaviour {
                     }
                     anim_value = HoldAnimValue;
                 }
-                else if (transform.parent.name == "toolHolder.R")
+                else
                 {
                     anim_name = HoldAnimName;
                     if (!LockHoldState)
