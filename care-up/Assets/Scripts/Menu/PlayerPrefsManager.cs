@@ -13,6 +13,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
+using PaperPlaneTools;
 
 /// <summary>
 /// Handles quick access to saved data.
@@ -296,6 +297,10 @@ public class PlayerPrefsManager : MonoBehaviour
         PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
         manager.plays = response[1].Int("Plays_Number") + 1;
         Debug.Log("Added plays, current plays: " + manager.plays);
+     
+        RateBox.Instance.IncrementCustomCounter();
+        RateBox.Instance.Show();
+
         // update +1
         CMLData data = new CMLData();
         data.Set("Plays_Number", manager.plays.ToString());

@@ -18,6 +18,9 @@ public class Cheat_CurrentAction : MonoBehaviour
     [SerializeField] private GameObject bigger_DevHint;
     [SerializeField] private GameObject ipadTrigger;
 
+    private Image background;
+    private Image fullscr;
+
     // never used
     //private bool biggerDevHintActive = false;
     //private bool devHintActive = true;
@@ -31,6 +34,7 @@ public class Cheat_CurrentAction : MonoBehaviour
     private ActionManager actionManager;
 
     private bool set = false; // fix
+    private bool bgFade = false;
 
     [HideInInspector]
     public bool tutorial_extraOpened = false;
@@ -129,6 +133,9 @@ public class Cheat_CurrentAction : MonoBehaviour
         Button extra_Close_Btn = extraPanel.transform.Find ("CloseExtraCheckmark").GetComponent<Button> ();
         extraCloseBtn.onClick.AddListener(ToggleExtraInfoPanel);
         extra_Close_Btn.onClick.AddListener (ToggleExtraInfoPanel);
+        
+        background = devHint.GetComponent<Image>();
+        fullscr = devHint.transform.Find("FullScreen").GetComponent<Image>();
     }
 
     private void Update()
@@ -148,44 +155,81 @@ public class Cheat_CurrentAction : MonoBehaviour
         }
 
         if (direction == 1) {
-            if (timer < animationTime) {
+            if (timer < animationTime)
+            {
                 timer += Time.deltaTime;
-                textObjectDevHint.color = new Color (0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
-                textObjectBiggerDevHint.color = new Color (0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
-                extraText.color = new Color (0.0f, 0.0f, 0.0f, 0.0f - timer / animationTime);
-            } else {
-                textObjectDevHint.color = new Color (0.0f, 0.0f, 0.0f, 0.0f);
-                textObjectBiggerDevHint.color = new Color (0.0f, 0.0f, 0.0f, 0.0f);
-                extraText.color = new Color (0.0f, 0.0f, 0.0f, 0.0f);
+
+                textObjectDevHint.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
+                textObjectBiggerDevHint.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
+                extraText.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
+                if (!bgFade)
+                {
+                    background.color = new Color(1.0f, 1.0f, 1.0f, 1.0f - timer / animationTime);
+                    fullscr.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
+                }
+            }
+            else
+            {
+                textObjectDevHint.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+                textObjectBiggerDevHint.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+                extraText.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+                if (!bgFade)
+                {
+                    background.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+                    fullscr.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+                }
+
                 textObjectDevHint.text = actionManager.CurrentDescription;
                 textObjectBiggerDevHint.text = actionManager.CurrentDescription;
                 extraText.text = actionManager.CurrentExtraDescription;
+
                 timer = animationTime;
-                direction = -1;
+                direction = bgFade ? -1 : 0;
             }
         } else if (direction == -1) {
-            if (timer > 0.0f) {
+            if (timer > 0.0f)
+            {
                 timer -= Time.deltaTime;
-                textObjectDevHint.color = new Color (0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
-                textObjectBiggerDevHint.color = new Color (0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
-                extraText.color = new Color (0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
-            } else {
-                textObjectDevHint.color = new Color (0.0f, 0.0f, 0.0f, 1.0f);
-                textObjectBiggerDevHint.color = new Color (0.0f, 0.0f, 0.0f, 1.0f);
-                extraText.color = new Color (0.0f, 0.0f, 0.0f, 1.0f);
+
+                textObjectDevHint.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
+                textObjectBiggerDevHint.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
+                extraText.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
+                if (!bgFade)
+                {
+                    background.color = new Color(1.0f, 1.0f, 1.0f, 1.0f - timer / animationTime);
+                    fullscr.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
+                }
+            }
+            else
+            {
+                textObjectDevHint.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+                textObjectBiggerDevHint.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+                extraText.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+                if (!bgFade)
+                {
+                    background.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+                    fullscr.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+                }
+
                 timer = 0.0f;
                 direction = 0;
             }
         }
     }
 
-    public void UpdateAction()
+    public void UpdateAction(bool flag)
     {
         direction = 1;
+        bgFade = flag;
         if (extraPanel != null)
         {
             extraPanel.SetActive(false);
         }
+    }
+
+    public void PostAnimationFadeIn()
+    {
+        direction = -1;
     }
 
     public void ToggleExtraInfoPanel()

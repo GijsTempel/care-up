@@ -124,8 +124,14 @@ public class GestureControls : MonoBehaviour
         if (gesture.State == GestureRecognizerState.Began)
         {
             //DebugText("Long press began: {0}, {1}", gesture.FocusX, gesture.FocusY);
-
+            
+            PlayerScript player = GameObject.FindObjectOfType<PlayerScript>();
             if (IsViableObject())
+            {
+                player.itemControls.Init(controls.SelectedObject);
+            }
+
+            /*if (IsViableObject())
             {
                 if (initedObject.GetComponent<ExaminableObject>() != null)
                 {
@@ -143,7 +149,7 @@ public class GestureControls : MonoBehaviour
                         }
                     }
                 }
-            }
+            }*/
         }
     }
 
@@ -161,14 +167,7 @@ public class GestureControls : MonoBehaviour
         {
             //DebugText("Tapped at {0}, {1}", gesture.FocusX, gesture.FocusY);
             PlayerScript player = GameObject.FindObjectOfType<PlayerScript>();
-            if (IsViableObject())
-            {
-                player.itemControls.Init(controls.SelectedObject);
-            }
-            else
-            {
-                player.itemControls.Close();
-            }
+            player.itemControls.Close();
         }
     }
 

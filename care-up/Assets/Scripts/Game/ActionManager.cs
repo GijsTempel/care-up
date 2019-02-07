@@ -655,7 +655,7 @@ public class ActionManager : MonoBehaviour {
         Debug.Log("Say " + topic + " with result " + occured);
 
         if (!CheckScenarioCompleted() && occured)
-            ActionManager.CorrectAction();
+            ActionManager.CorrectAction(true);
     }
     
     /// <summary>
@@ -709,7 +709,7 @@ public class ActionManager : MonoBehaviour {
         }
 
         if (!CheckScenarioCompleted() && occured)
-            ActionManager.CorrectAction();
+            ActionManager.CorrectAction(true);
     }
 
     public void OnSequenceStepAction(string stepName)
@@ -736,7 +736,7 @@ public class ActionManager : MonoBehaviour {
         }
 
         if (!CheckScenarioCompleted() && occured)
-            ActionManager.CorrectAction();
+            ActionManager.CorrectAction(true);
     }
 
     /// <summary>
@@ -972,16 +972,16 @@ public class ActionManager : MonoBehaviour {
         lastAction.matched = false;
         currentActionIndex = lastAction.SubIndex;
         currentAction = lastAction;
-        GameObject.FindObjectOfType<Cheat_CurrentAction>().UpdateAction();
+        GameObject.FindObjectOfType<Cheat_CurrentAction>().UpdateAction(false);
     }
 
-    public static void PlayAddPointSound()
+    public static void PlayAddPointSound(bool flag)
     {
         Narrator.PlaySound("PointScored", 0.1f);
         // todo move somewhere else
         if (GameObject.Find("_Dev") != null)
         {
-            GameObject.Find("_Dev").GetComponent<Cheat_CurrentAction>().UpdateAction();
+            GameObject.Find("_Dev").GetComponent<Cheat_CurrentAction>().UpdateAction(flag);
         }
     }
 
@@ -1039,10 +1039,10 @@ public class ActionManager : MonoBehaviour {
         }
     }
 
-    public static void CorrectAction()
+    public static void CorrectAction(bool flag = false)
     {
         RobotManager.RobotCorrectAction();
-        ActionManager.PlayAddPointSound();
+        ActionManager.PlayAddPointSound(flag);
     }
 
     public void UpdatePoints(int value)
