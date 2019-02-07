@@ -37,6 +37,7 @@ public class ActionManager : MonoBehaviour {
     // name of the xml file with actions
     public string actionListName;
 
+
     // actual list of actions
     private List<Action> actionList = new List<Action>();
 
@@ -827,7 +828,7 @@ public class ActionManager : MonoBehaviour {
                 wrongStepIndexes.Add(index);
             }
 
-            if (manager == null || manager.practiceMode)
+            if (sublist.Count > 0 && (manager == null || manager.practiceMode))
             {
                 RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
                 messageCenter.NewMessage("Verkeerde handeling!", sublist[0].extraDescr, RobotUIMessageTab.Icon.Error);
