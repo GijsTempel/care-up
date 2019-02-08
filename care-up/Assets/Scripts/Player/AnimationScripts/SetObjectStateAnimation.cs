@@ -19,10 +19,19 @@ public class SetObjectStateAnimation : StateMachineBehaviour
         Hold
     };
 
+    public enum FollowStates
+    {
+        None,
+        Fallow,
+        NotFallow
+    };
+
+
 
     public string ObjectName = "";
     public Hand HandToSwitch;
     public AnimationType AnimationToChange;
+    public FollowStates ToFollowHoldingHand;
     public string NewAnimationName = "";
 
     protected float frame = 0f;
@@ -61,10 +70,17 @@ public class SetObjectStateAnimation : StateMachineBehaviour
     {
         if (GameObject.Find(ObjectName) != null)
         {
-
+           
             if (GameObject.Find(ObjectName).GetComponent<ObjectStateManager>() != null)
             {
                 ObjectStateManager obj = GameObject.Find(ObjectName).GetComponent<ObjectStateManager>();
+
+
+                if (ToFollowHoldingHand != SetObjectStateAnimation.FollowStates.None)
+                {
+                    obj.followHoldingHand = ToFollowHoldingHand == SetObjectStateAnimation.FollowStates.Fallow;
+                }
+
                 if (HandToSwitch == SetObjectStateAnimation.Hand.Left)
                 {
                     obj.follow_left = true;
