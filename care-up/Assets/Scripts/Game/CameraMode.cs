@@ -37,7 +37,6 @@ public class CameraMode : MonoBehaviour {
 
     [HideInInspector]
     public bool animating = false;
-    private bool lastFrameAnimatingState = false;
     [HideInInspector]
     public bool animationEnded = false;
     [HideInInspector]
@@ -223,14 +222,6 @@ public class CameraMode : MonoBehaviour {
                 }
             }
         }
-
-        if (animating == false && lastFrameAnimatingState == true)
-        {
-            GameObject.FindObjectOfType<Cheat_CurrentAction>().PostAnimationFadeIn();
-        }
-
-        lastFrameAnimatingState = animating;
-
     }
 
     public void ObjectViewPickUpButton()
@@ -281,8 +272,6 @@ public class CameraMode : MonoBehaviour {
             {
                 RobotManager.SetUITriggerActive(true);
             }
-
-            GameObject.FindObjectOfType<Cheat_CurrentAction>().PostAnimationFadeIn();
         }
 
         if (mode == Mode.ObjectPreview)
@@ -409,8 +398,6 @@ public class CameraMode : MonoBehaviour {
                 RobotManager.SetUITriggerActive(true);
             }
             dontMoveCamera = false;
-
-            GameObject.FindObjectOfType<Cheat_CurrentAction>().PostAnimationFadeIn();
         }
         currentMode = mode;
         controls.ResetObject();
