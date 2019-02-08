@@ -1787,6 +1787,7 @@ MonoBehaviour:
   ObjectName: Sink_active2
   HandToSwitch: 2
   AnimationToChange: 1
+  ToFollowHoldingHand: 0
   NewAnimationName: open2
   ActionFrame: 75
 --- !u!114 &114011665359794206
@@ -2144,6 +2145,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combineFrame: 158
+--- !u!114 &114055627610881110
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75d5649a1875edf478a49f715e29c332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showFrame: 4804
+  toPickup: 0
 --- !u!114 &114056772713692714
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2421,6 +2435,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deleteFrame: 116
   hand: 1
+--- !u!114 &114095192359785198
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7f8245cec82648289be348a2189ab01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addFrame: 3757
+  deleteFrame: 4328
+  objectName: cotton_ball
+  hand: 1
 --- !u!114 &114098967332021792
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2518,6 +2547,22 @@ MonoBehaviour:
   buttonEnd: 192
   button2Start: 437
   button2End: 525
+--- !u!114 &114116324855453064
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: m1_A
+  showFrame: 4554
+  ObjNames:
+  - CWB_inner_open_in
+  toShow: 1
 --- !u!114 &114118635965240648
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -2894,6 +2939,7 @@ MonoBehaviour:
   ObjectName: CWB_inner_open_in
   HandToSwitch: 1
   AnimationToChange: 1
+  ToFollowHoldingHand: 0
   NewAnimationName: catheter_fixate
   ActionFrame: 0
 --- !u!114 &114197794986282410
@@ -3023,6 +3069,7 @@ MonoBehaviour:
   ObjectName: CWB_inner_open_in
   HandToSwitch: 1
   AnimationToChange: 1
+  ToFollowHoldingHand: 0
   NewAnimationName: sit
   ActionFrame: 0
 --- !u!114 &114222829485028356
@@ -3683,6 +3730,7 @@ MonoBehaviour:
   ObjectName: Sink_active
   HandToSwitch: 2
   AnimationToChange: 1
+  ToFollowHoldingHand: 0
   NewAnimationName: open
   ActionFrame: 1
 --- !u!114 &114307762776589488
@@ -3711,6 +3759,7 @@ MonoBehaviour:
   ObjectName: CWB_inner_open_in2
   HandToSwitch: 1
   AnimationToChange: 1
+  ToFollowHoldingHand: 0
   NewAnimationName: buttons
   ActionFrame: 0
 --- !u!114 &114310562670795976
@@ -3741,6 +3790,7 @@ MonoBehaviour:
   ObjectName: CWB_inner_open_in
   HandToSwitch: 1
   AnimationToChange: 1
+  ToFollowHoldingHand: 0
   NewAnimationName: catheter_fixate
   ActionFrame: 0
 --- !u!114 &114312913301661110
@@ -3757,6 +3807,7 @@ MonoBehaviour:
   ObjectName: CWB_inner_open_in2
   HandToSwitch: 1
   AnimationToChange: 1
+  ToFollowHoldingHand: 0
   NewAnimationName: sit
   ActionFrame: 192
 --- !u!114 &114314042353684346
@@ -3892,6 +3943,36 @@ MonoBehaviour:
   ObjNames:
   - fixation_buttons
   toShow: 1
+--- !u!114 &114332181656826100
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 839bcc7f24a9c47f8af28e853187bfa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: water_syringe
+  unlock_frame: 2130
+  lock_frame: 2646
+  toActivate: 0
+--- !u!114 &114332573034172078
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7f8245cec82648289be348a2189ab01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addFrame: 3135
+  deleteFrame: 3688
+  objectName: cotton_ball
+  hand: 1
 --- !u!114 &114342345932785404
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -4776,6 +4857,19 @@ MonoBehaviour:
   hand: 1
   plungerStart: 190
   plungerEnd: 800
+--- !u!114 &114465240634882824
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftHand: 0
+  dropFrame: 4554
 --- !u!114 &114468245424858762
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4916,6 +5010,7 @@ MonoBehaviour:
   ObjectName: SoapDispenser
   HandToSwitch: 0
   AnimationToChange: 1
+  ToFollowHoldingHand: 0
   NewAnimationName: idle
   ActionFrame: 213
 --- !u!114 &114499061942355258
@@ -5081,6 +5176,7 @@ MonoBehaviour:
   ObjectName: Sink_active2
   HandToSwitch: 2
   AnimationToChange: 1
+  ToFollowHoldingHand: 0
   NewAnimationName: close2
   ActionFrame: 56
 --- !u!114 &114525183389825964
@@ -5190,6 +5286,7 @@ MonoBehaviour:
   ObjectName: CWB_inner_open_in2
   HandToSwitch: 1
   AnimationToChange: 1
+  ToFollowHoldingHand: 0
   NewAnimationName: buttons
   ActionFrame: 0
 --- !u!114 &114549925872623006
@@ -5607,8 +5704,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectName: m1_A
-  HandToSwitch: 1
+  HandToSwitch: 2
   AnimationToChange: 1
+  ToFollowHoldingHand: 0
   NewAnimationName: insert_sq
   ActionFrame: 2
 --- !u!114 &114618124843469146
@@ -5625,6 +5723,7 @@ MonoBehaviour:
   ObjectName: Sink_active
   HandToSwitch: 0
   AnimationToChange: 1
+  ToFollowHoldingHand: 0
   NewAnimationName: idle
   ActionFrame: 555
 --- !u!114 &114618653108896864
@@ -5694,6 +5793,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combineFrame: 300
+--- !u!114 &114624920113262180
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9b29f5ba63bb4aa5b477b8007d77187, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114625391426486600
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5858,6 +5968,7 @@ MonoBehaviour:
   ObjectName: CWB_inner_open_in
   HandToSwitch: 1
   AnimationToChange: 1
+  ToFollowHoldingHand: 0
   NewAnimationName: catheter_fixate
   ActionFrame: 0
 --- !u!114 &114663549799182482
@@ -6696,6 +6807,21 @@ MonoBehaviour:
   audioFileName: Sound_Effects/Audio_SyringeClick
   audioFrame: 300
   volume: 0.1
+--- !u!114 &114792890908855342
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7f8245cec82648289be348a2189ab01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addFrame: 4804
+  deleteFrame: 4870
+  objectName: gloves_folded
+  hand: 0
 --- !u!114 &114793376922212620
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -6903,6 +7029,7 @@ MonoBehaviour:
   ObjectName: m1_A
   HandToSwitch: 2
   AnimationToChange: 1
+  ToFollowHoldingHand: 0
   NewAnimationName: clear_sq
   ActionFrame: 20
 --- !u!114 &114828250901371266
@@ -7220,6 +7347,21 @@ MonoBehaviour:
   ObjNames:
   - cotton_ball__
   toShow: 0
+--- !u!114 &114883146832334344
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7f8245cec82648289be348a2189ab01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addFrame: 2126
+  deleteFrame: 2642
+  objectName: water_syringe
+  hand: 0
 --- !u!114 &114885004016596416
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -7440,6 +7582,22 @@ MonoBehaviour:
   ObjNames:
   - pi
   toShow: 1
+--- !u!114 &114917676623249546
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: CWB_inner_open
+  showFrame: 1017
+  ObjNames:
+  - pi
+  toShow: 1
 --- !u!114 &114917988199531278
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7610,8 +7768,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectName: CWB_inner_open
-  HandToSwitch: 1
+  HandToSwitch: 2
   AnimationToChange: 2
+  ToFollowHoldingHand: 2
   NewAnimationName: insert
   ActionFrame: 2
 --- !u!114 &114939977383823834
@@ -44000,6 +44159,16 @@ AnimatorState:
   - {fileID: 114879888637246718}
   - {fileID: 114982299838626520}
   - {fileID: 114688839234781212}
+  - {fileID: 114116324855453064}
+  - {fileID: 114465240634882824}
+  - {fileID: 114883146832334344}
+  - {fileID: 114332573034172078}
+  - {fileID: 114095192359785198}
+  - {fileID: 114792890908855342}
+  - {fileID: 114624920113262180}
+  - {fileID: 114055627610881110}
+  - {fileID: 114332181656826100}
+  - {fileID: 114917676623249546}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
