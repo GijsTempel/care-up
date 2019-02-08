@@ -127,7 +127,7 @@ public class Tutorial_Combining : TutorialManager {
 
                         currentStep = TutorialStep.ExplainHSwipe;
 
-                        UItext.DOText("Je kunt objecten met elkaar combineren door rechts of links te swipen op je tablet of telefoon.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
+                        UItext.DOText("Je kunt objecten met elkaar combineren door naar rechts of links te swipen op je tablet of telefoon.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
 
                         SetUpTutorialNextButton();
                     }
@@ -144,7 +144,7 @@ public class Tutorial_Combining : TutorialManager {
                         hintsN.LockTo("robot", new Vector3(-0.79f, -0.19f, 1.40f));
 
                         currentStep = TutorialStep.ExplainHSwipe2;
-                        UItext.DOText("Op de computer kan dit door op de linkermuisknop te klikken en ingedrukte houden. Beweeg vervolgens de muis naar links of rechts terwijl je de linkermuisknop ingedrukt houd.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
+                        UItext.DOText("Op de computer kan dit door op de linkermuisknop te klikken en ingedrukt te houden. Beweeg vervolgens de muis naar links of rechts terwijl je de linkermuisknop ingedrukt houdt.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
 
                         SetUpTutorialNextButton();
                     }
@@ -158,7 +158,7 @@ public class Tutorial_Combining : TutorialManager {
                         hintsN.SetSize(585f, 315f);
                         hintsN.LockTo("robot", new Vector3(-1.70f, -0.81f, 0.85f));
 
-                        UItext.DOText("Combineer nu de spuit met de naald door te links/recht te swipen of door de linkermuisknop ingedrukt te houden en de muis naar links/rechts te bewegen.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
+                        UItext.DOText("Combineer de spuit met de naald door naar links/recht te swipen of door de linkermuisknop ingedrukt te houden en de muis naar links/rechts te bewegen.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
                         particleHint.SetActive(false);
 
                         currentStep = TutorialStep.Combine;
@@ -194,7 +194,7 @@ public class Tutorial_Combining : TutorialManager {
 
                         hintsN.SetSize(900f, 480f);
                         hintsN.LockTo("robot", new Vector3(-0.79f, -0.19f, 1.40f));
-                        UItext.DOText("Op de computer kan dit door op de linkermuisknop te klikken en ingedrukte houden. Beweeg vervolgens de muis naar omhoog of omlaag terwijl je de linkermuisknop ingedrukt houd.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
+                        UItext.DOText("Op de computer kan dit door op de linkermuisknop te klikken en ingedrukt te houden. Beweeg vervolgens de muis omhoog of omlaag terwijl je de linkermuisknop ingedrukt houdt.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
 
                          currentStep = TutorialStep.ExplainVSwipe2;
                          SetUpTutorialNextButton();
@@ -208,7 +208,7 @@ public class Tutorial_Combining : TutorialManager {
 
                         hintsN.SetSize(585f, 345f);
                         hintsN.LockTo("robot", new Vector3(-1.70f, -0.75f, 0.85f));
-                        UItext.DOText("Haal nu de dop van de naald door te omhoog/omlaag te swipen of door de linkermuisknop ingedrukt te houden en de muis naar omhoog/omlaag te bewegen.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
+                        UItext.DOText("Haal de dop van de naald door omhoog/omlaag te swipen of door de linkermuisknop ingedrukt te houden en de muis omhoog/omlaag te bewegen.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
                         particleHint.SetActive(false);
 
                         currentStep = TutorialStep.Decombine;
