@@ -28,6 +28,8 @@ public class Tutorial_Combining : TutorialManager {
         OpenControls2,
         Decombine,
         Done,
+        ExplainHSwipe,
+        ExplainVSwipe,
         None
     }
 
@@ -111,10 +113,23 @@ public class Tutorial_Combining : TutorialManager {
                 case TutorialStep.PickTwo:
                     if (handsInventory.tutorial_pickedRight)
                     {
-                        audioSource.PlayOneShot (Popup, 0.1F);
+                        audioSource.PlayOneShot(Popup, 0.1F);
                         audioSource.PlayOneShot(Robot2, 0.1F);
                         handsInventory.tutorial_pickedRight = false;
                         itemToPick = "";
+
+                        hintsN.LockTo("robot", new Vector3(-1.22f, 0.00f, 1.13f)); hintsN.LockTo("robot", new Vector3(-1.22f, 0.00f, 1.13f));
+                        currentStep = TutorialStep.ExplainHSwipe;
+                        UItext.DOText("horisontal swipe explanation", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
+
+                        SetUpTutorialNextButton();
+                    }
+                    break;
+                case TutorialStep.ExplainHSwipe:
+                    if (nextButtonClicked)
+                    {
+                        audioSource.PlayOneShot(Popup, 0.1F);
+                        audioSource.PlayOneShot(Robot2, 0.1F);
 
                         hintsN.LockTo("robot", new Vector3(-1.22f, 0.00f, 1.13f)); hintsN.LockTo("robot", new Vector3(-1.22f, 0.00f, 1.13f));
                         UItext.DOText("Swipe nu om de naald en spuit te combineren.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
@@ -131,6 +146,19 @@ public class Tutorial_Combining : TutorialManager {
                         decombiningAllowed = false;
                         handsInventory.tutorial_combined = false;
                         audioSource.PlayOneShot (Popup, 0.1F);
+                        audioSource.PlayOneShot(Robot3, 0.1F);
+
+                        hintsN.LockTo("robot", new Vector3(-1.22f, 0.00f, 1.13f)); hintsN.LockTo("robot", new Vector3(-1.22f, 0.00f, 1.13f));
+                        UItext.DOText("Vertical swipe explanation", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
+
+                        currentStep = TutorialStep.ExplainVSwipe;
+                        SetUpTutorialNextButton();
+                    }
+                    break;
+                case TutorialStep.ExplainVSwipe:
+                    if (nextButtonClicked)
+                    {
+                        audioSource.PlayOneShot(Popup, 0.1F);
                         audioSource.PlayOneShot(Robot3, 0.1F);
 
                         hintsN.LockTo("robot", new Vector3(-1.22f, 0.00f, 1.13f)); hintsN.LockTo("robot", new Vector3(-1.22f, 0.00f, 1.13f));
