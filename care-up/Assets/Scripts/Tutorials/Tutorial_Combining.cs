@@ -29,7 +29,9 @@ public class Tutorial_Combining : TutorialManager {
         Decombine,
         Done,
         ExplainHSwipe,
+        ExplainHSwipe2,
         ExplainVSwipe,
+        ExplainVSwipe2,
         None
     }
 
@@ -67,7 +69,7 @@ public class Tutorial_Combining : TutorialManager {
                         currentStep = TutorialStep.MoveTo;
                         hintsN.SetSize(445.2f, 225.1f);
                         hintsN.LockTo("WorkField", new Vector3(0.00f, 0.51f, -0.75f));
-                        UItext.DOText("We beginnen door te bewegen naar het werkveld. Klik op het werkveld. ", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
+                        UItext.DOText("We beginnen door te bewegen naar het werkveld. Klik op het werkveld.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
                         hintsN.SetIconPosition(0);
                         player.tutorial_movedTo = false;
                         particleHint.SetActive(true);
@@ -115,12 +117,17 @@ public class Tutorial_Combining : TutorialManager {
                     {
                         audioSource.PlayOneShot(Popup, 0.1F);
                         audioSource.PlayOneShot(Robot2, 0.1F);
+
                         handsInventory.tutorial_pickedRight = false;
                         itemToPick = "";
 
-                        hintsN.LockTo("robot", new Vector3(-1.22f, 0.00f, 1.13f)); hintsN.LockTo("robot", new Vector3(-1.22f, 0.00f, 1.13f));
+                        hintsN.SetSize(620f, 430f);
+                        hintsN.LockTo("robot", new Vector3(-0.79f, -0.19f, 1.13f));
+                        hintsN.SetIconPosition(0);
+
                         currentStep = TutorialStep.ExplainHSwipe;
-                        UItext.DOText("horisontal swipe explanation", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
+
+                        UItext.DOText("Je kunt objecten met elkaar combineren door rechts of links te swipen op je tablet of telefoon.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
 
                         SetUpTutorialNextButton();
                     }
@@ -130,9 +137,28 @@ public class Tutorial_Combining : TutorialManager {
                     {
                         audioSource.PlayOneShot(Popup, 0.1F);
                         audioSource.PlayOneShot(Robot2, 0.1F);
+                        handsInventory.tutorial_pickedRight = false;
+                        itemToPick = "";
 
-                        hintsN.LockTo("robot", new Vector3(-1.22f, 0.00f, 1.13f)); hintsN.LockTo("robot", new Vector3(-1.22f, 0.00f, 1.13f));
-                        UItext.DOText("Swipe nu om de naald en spuit te combineren.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
+                        hintsN.SetSize(900f, 480f);
+                        hintsN.LockTo("robot", new Vector3(-0.79f, -0.19f, 1.40f));
+
+                        currentStep = TutorialStep.ExplainHSwipe2;
+                        UItext.DOText("Op de computer kan dit door op de linkermuisknop te klikken en ingedrukte houden. Beweeg vervolgens de muis naar links of rechts terwijl je de linkermuisknop ingedrukt houd.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
+
+                        SetUpTutorialNextButton();
+                    }
+                    break;
+                case TutorialStep.ExplainHSwipe2:
+                    if (nextButtonClicked)
+                    {
+                        audioSource.PlayOneShot(Popup, 0.1F);
+                        audioSource.PlayOneShot(Robot2, 0.1F);
+
+                        hintsN.SetSize(585f, 315f);
+                        hintsN.LockTo("robot", new Vector3(-1.70f, -0.81f, 0.85f));
+
+                        UItext.DOText("Combineer nu de spuit met de naald door te links/recht te swipen of door de linkermuisknop ingedrukt te houden en de muis naar links/rechts te bewegen.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
                         particleHint.SetActive(false);
 
                         currentStep = TutorialStep.Combine;
@@ -148,8 +174,10 @@ public class Tutorial_Combining : TutorialManager {
                         audioSource.PlayOneShot (Popup, 0.1F);
                         audioSource.PlayOneShot(Robot3, 0.1F);
 
-                        hintsN.LockTo("robot", new Vector3(-1.22f, 0.00f, 1.13f)); hintsN.LockTo("robot", new Vector3(-1.22f, 0.00f, 1.13f));
-                        UItext.DOText("Vertical swipe explanation", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
+                        hintsN.SetSize(759f, 450f);
+                        hintsN.LockTo("robot", new Vector3(-0.79f, -0.29f, 1.20f));
+
+                        UItext.DOText("Objecten uit elkaar halen of scheiden, zoals een spuit uit de verpakking halen of de dop van een naald verwijderen, doe je door omhoog of omlaag te swipen op je tablet of telefoon.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
 
                         currentStep = TutorialStep.ExplainVSwipe;
                         SetUpTutorialNextButton();
@@ -158,14 +186,30 @@ public class Tutorial_Combining : TutorialManager {
                 case TutorialStep.ExplainVSwipe:
                     if (nextButtonClicked)
                     {
+                        
+                        decombiningAllowed = false;
+                        handsInventory.tutorial_combined = false;
                         audioSource.PlayOneShot(Popup, 0.1F);
                         audioSource.PlayOneShot(Robot3, 0.1F);
 
-                        hintsN.LockTo("robot", new Vector3(-1.22f, 0.00f, 1.13f)); hintsN.LockTo("robot", new Vector3(-1.22f, 0.00f, 1.13f));
-                        UItext.DOText("Swipe vertically", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
+                        hintsN.SetSize(900f, 480f);
+                        hintsN.LockTo("robot", new Vector3(-0.79f, -0.19f, 1.40f));
+                        UItext.DOText("Op de computer kan dit door op de linkermuisknop te klikken en ingedrukte houden. Beweeg vervolgens de muis naar omhoog of omlaag terwijl je de linkermuisknop ingedrukt houd.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
+
+                         currentStep = TutorialStep.ExplainVSwipe2;
+                         SetUpTutorialNextButton();
+                        }
+                        break;
+                case TutorialStep.ExplainVSwipe2:
+                    if (nextButtonClicked)
+                    {
+                        audioSource.PlayOneShot(Popup, 0.1F);
+                        audioSource.PlayOneShot(Robot3, 0.1F);
+
+                        hintsN.SetSize(585f, 345f);
+                        hintsN.LockTo("robot", new Vector3(-1.70f, -0.75f, 0.85f));
+                        UItext.DOText("Haal nu de dop van de naald door te omhoog/omlaag te swipen of door de linkermuisknop ingedrukt te houden en de muis naar omhoog/omlaag te bewegen.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
                         particleHint.SetActive(false);
-                        hintsN.SetIconPosition(0);
-                        hintsN.SetSize(495.7f, 266.6f);
 
                         currentStep = TutorialStep.Decombine;
                         handsInventory.tutorial_combined = false;
