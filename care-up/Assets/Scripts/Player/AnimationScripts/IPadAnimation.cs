@@ -61,8 +61,6 @@ public class IPadAnimation : StateMachineBehaviour
             GameObject.FindObjectOfType<PlayerScript>().PickItemsBackAfterRobotUI();
 
             RobotManager.SetUITriggerActive(true);
-
-            GameObject.FindObjectOfType<Cheat_CurrentAction>().PostAnimationFadeIn();
         }
 
         PlayerScript.actionsLocked = false;

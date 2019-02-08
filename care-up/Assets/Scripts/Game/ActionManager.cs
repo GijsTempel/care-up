@@ -37,6 +37,7 @@ public class ActionManager : MonoBehaviour {
     // name of the xml file with actions
     public string actionListName;
 
+
     // actual list of actions
     private List<Action> actionList = new List<Action>();
 
@@ -655,7 +656,7 @@ public class ActionManager : MonoBehaviour {
         Debug.Log("Say " + topic + " with result " + occured);
 
         if (!CheckScenarioCompleted() && occured)
-            ActionManager.CorrectAction(true);
+            ActionManager.CorrectAction();
     }
     
     /// <summary>
@@ -709,7 +710,7 @@ public class ActionManager : MonoBehaviour {
         }
 
         if (!CheckScenarioCompleted() && occured)
-            ActionManager.CorrectAction(true);
+            ActionManager.CorrectAction();
     }
 
     public void OnSequenceStepAction(string stepName)
@@ -736,7 +737,7 @@ public class ActionManager : MonoBehaviour {
         }
 
         if (!CheckScenarioCompleted() && occured)
-            ActionManager.CorrectAction(true);
+            ActionManager.CorrectAction();
     }
 
     /// <summary>
@@ -827,7 +828,7 @@ public class ActionManager : MonoBehaviour {
                 wrongStepIndexes.Add(index);
             }
 
-            if (manager == null || manager.practiceMode)
+            if (sublist.Count > 0 && (manager == null || manager.practiceMode))
             {
                 RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
                 messageCenter.NewMessage("Verkeerde handeling!", sublist[0].extraDescr, RobotUIMessageTab.Icon.Error);
@@ -972,16 +973,16 @@ public class ActionManager : MonoBehaviour {
         lastAction.matched = false;
         currentActionIndex = lastAction.SubIndex;
         currentAction = lastAction;
-        GameObject.FindObjectOfType<Cheat_CurrentAction>().UpdateAction(false);
+        GameObject.FindObjectOfType<Cheat_CurrentAction>().UpdateAction();
     }
 
-    public static void PlayAddPointSound(bool flag)
+    public static void PlayAddPointSound()
     {
         Narrator.PlaySound("PointScored", 0.1f);
         // todo move somewhere else
         if (GameObject.Find("_Dev") != null)
         {
-            GameObject.Find("_Dev").GetComponent<Cheat_CurrentAction>().UpdateAction(flag);
+            GameObject.Find("_Dev").GetComponent<Cheat_CurrentAction>().UpdateAction();
         }
     }
 
@@ -1039,10 +1040,10 @@ public class ActionManager : MonoBehaviour {
         }
     }
 
-    public static void CorrectAction(bool flag = false)
+    public static void CorrectAction()
     {
         RobotManager.RobotCorrectAction();
-        ActionManager.PlayAddPointSound(flag);
+        ActionManager.PlayAddPointSound();
     }
 
     public void UpdatePoints(int value)

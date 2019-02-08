@@ -127,31 +127,7 @@ public class Tutorial_Picking : TutorialManager {
                     break;
                 case TutorialStep.DropOne:
                 if (handsInventory.tutorial_droppedLeft) {
-                    audioSource.PlayOneShot (Popup, 0.1F);
-                    audioSource.PlayOneShot (RobotShort2, 0.1F);
-                    hintsN.SetSize (550f, 415f);
-                        hintsN.SetIconPosition(1);
-                        hintsN.LockTo("Medicine", new Vector3(0.19f, -0.08f, 0.00f));
-                        currentStep = TutorialStep.InspectMedicine;
-                    UItext.DOText ("Sommige objecten kun je controleren. Zoals het medicijn. Controleer het medicijn door op het medicijn te klikken en de muisknop of je vinger ingedrukt te houden. Controleer nu het medicijn.", 0.5f, true, ScrambleMode.All).SetEase (Ease.Linear);
-                    particleHint.transform.position = GameObject.Find ("Medicine").transform.position;
-                }
-                break;
-                case TutorialStep.InspectMedicine:
-                if (medicine.tutorial_examined == true) {
-                    audioSource.PlayOneShot (Popup, 0.1F);
-                    audioSource.PlayOneShot (RobotShort2, 0.1F);
-                    hintsN.SetSize (452f, 350f);
-                        hintsN.LockTo("Medicine", new Vector3(70.70f, 0.76f, 0.00f));
-                        currentStep = TutorialStep.CloseInspect;
-                    UItext.DOText ("Goedzo! Je bent weet nu hoe je objecten kunt controleren. Klik nu ergens op het scherm of op de 'terug' knop om verder te gaan.", 0.5f, true, ScrambleMode.All).SetEase (Ease.Linear);
-                    particleHint.transform.position = GameObject.Find ("Medicine").transform.position;
-                }
-                break;
-                case TutorialStep.CloseInspect:
-                    if (medicine.tutorial_examined == false)
-                    {
-                        audioSource.PlayOneShot (Popup, 0.1F);
+                        audioSource.PlayOneShot(Popup, 0.1F);
                         audioSource.PlayOneShot(RobotShort2, 0.1F);
                         hintsN.SetSize(550f, 425f);
                         handsInventory.tutorial_droppedLeft = false;
@@ -162,8 +138,8 @@ public class Tutorial_Picking : TutorialManager {
                         itemToDrop = "Medicine";
                         handsInventory.tutorial_droppedRight = false;
                         particleHint.transform.position = GameObject.Find("Medicine").transform.position;
-                    }
-                    break;
+                }
+                break;
                 case TutorialStep.DropTwo:
                     if (handsInventory.tutorial_droppedRight)
                     {
