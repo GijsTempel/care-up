@@ -385,6 +385,7 @@ public class Tutorial_UI : TutorialManager
                         currentStep = TutorialStep.CloseHints;
                         hintsN.SetSize(640f, 412f);
                         hintsN.LockTo("Extra", new Vector3(19.91f, 235.20f, 0.00f));
+                        GameObject.FindObjectOfType<GameUI>().Blink.SetTrigger("BlinkStop");
                         UItext.DOText("Hier komt tijdens het spelen van de handeling extra uitleg te staan over hoe je een stap kunt uitvoeren. Laten we het scherm weer sluiten door nogmaals op het informatie icoon te klikken of door op de knop met het vinkje te klikken..", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
                         hintsUI.tutorial_extraClosed = false;
                         expectedHintsState = false;
