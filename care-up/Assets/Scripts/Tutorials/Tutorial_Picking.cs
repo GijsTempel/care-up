@@ -129,12 +129,12 @@ public class Tutorial_Picking : TutorialManager {
                 if (handsInventory.tutorial_droppedLeft) {
                         audioSource.PlayOneShot(Popup, 0.1F);
                         audioSource.PlayOneShot(RobotShort2, 0.1F);
-                        hintsN.SetSize(550f, 425f);
+                        hintsN.SetSize(550f, 300f);
                         handsInventory.tutorial_droppedLeft = false;
-                        hintsN.SetIconPosition(3);
-                        hintsN.LockTo("robot", new Vector3(0.00f, -0.28f, -0.51f));
+                        hintsN.SetIconPosition(2);
+                        hintsN.LockTo("robot", new Vector3(0.00f, -1.76f, 0.21f));
                         currentStep = TutorialStep.DropTwo;
-                        UItext.DOText("Objecten kun je ook terug leggen door op het silhouette te klikken. Gebruik de joystick om naar het werkveld te kijken. Klik vervolgens op het silhouette van het medicijn om deze terug te leggen.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
+                        UItext.DOText("Objecten kun je ook terug leggen door op het blauwe silhouette te klikken van het object. Klik op het silhouette van het medicijn om deze terug te leggen.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
                         itemToDrop = "Medicine";
                         handsInventory.tutorial_droppedRight = false;
                         particleHint.transform.position = GameObject.Find("Medicine").transform.position;
