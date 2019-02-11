@@ -17,6 +17,8 @@ public class GestureControls : MonoBehaviour
     private TutorialManager tutorial;
     private CameraMode cameraMode;
     private Tutorial_Combining tutorialCombine;
+
+    private PlayerScript player;
     
     private void DebugText(string text, params object[] format)
     {
@@ -69,7 +71,7 @@ public class GestureControls : MonoBehaviour
 
     private void SwipeGestureCallback(DigitalRubyShared.GestureRecognizer gesture)
     {
-        if (gesture.State == GestureRecognizerState.Ended)
+        if (gesture.State == GestureRecognizerState.Ended && !player.freeLook)
         {
             if (handsInventory.LeftHandEmpty() && handsInventory.RightHandEmpty())
                 return; // both hands empty, nothing to combine/decombine
@@ -181,6 +183,8 @@ public class GestureControls : MonoBehaviour
 
     private void Start()
     {
+        player = GameObject.FindObjectOfType<PlayerScript>();
+
         // don't reorder the creation of these :)
         CreateDoubleTapGesture();
         CreateTapGesture();
