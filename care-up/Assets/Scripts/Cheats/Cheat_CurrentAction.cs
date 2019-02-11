@@ -11,7 +11,7 @@ public class Cheat_CurrentAction : MonoBehaviour
 {
     private Text textObjectDevHint;
     private Text textObjectBiggerDevHint;
-    private Text extraText;
+    public Text extraText;
     private GameObject extraPanel;
 
     [SerializeField] private GameObject dev_Hint;
@@ -23,11 +23,11 @@ public class Cheat_CurrentAction : MonoBehaviour
     //private bool devHintActive = true;
 
     private float animationTime = 1.0f;
-    
+
     private int direction;
     private float timer;
-	Button extraButton;
-    
+    Button extraButton;
+
     private ActionManager actionManager;
 
     private bool set = false; // fix
@@ -47,11 +47,14 @@ public class Cheat_CurrentAction : MonoBehaviour
 
     void Start()
     {
-        if (GameObject.Find ("Preferences") != null) {
-            manager = GameObject.Find ("Preferences").GetComponent<PlayerPrefsManager> ();
-            if (manager == null) Debug.LogWarning ("No prefs manager ( start from 1st scene? )");
-        } else {
-            Debug.LogWarning ("No prefs manager ( start from 1st scene? )");
+        if (GameObject.Find("Preferences") != null)
+        {
+            manager = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
+            if (manager == null) Debug.LogWarning("No prefs manager ( start from 1st scene? )");
+        }
+        else
+        {
+            Debug.LogWarning("No prefs manager ( start from 1st scene? )");
         }
 
         extraPanel = GameObject.Find("Extra").gameObject;
@@ -60,18 +63,18 @@ public class Cheat_CurrentAction : MonoBehaviour
 
         if (GameObject.Find("DevHint") != null)
         {
-			Init();
+            Init();
 
             if (GameObject.Find("Preferences") != null)
             {
-            
-				if ((!GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().practiceMode &&
-				     actionManager.GetComponent<TutorialManager>() == null) || (FindObjectOfType<TutorialManager>() != null && FindObjectOfType<Tutorial_UI>() == null))
-			
+
+                if ((!GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().practiceMode &&
+                     actionManager.GetComponent<TutorialManager>() == null) || (FindObjectOfType<TutorialManager>() != null && FindObjectOfType<Tutorial_UI>() == null))
+
                 {
                     GameObject.Find("DevHint").SetActive(false);
-					extraPanel.SetActive(false);
-					extraButton.gameObject.SetActive(false);
+                    extraPanel.SetActive(false);
+                    extraButton.gameObject.SetActive(false);
                 }
             }
             else
@@ -80,25 +83,25 @@ public class Cheat_CurrentAction : MonoBehaviour
             }
         }
 
-        if (GameObject.Find ("BiggerDevHint") != null) 
+        if (GameObject.Find("BiggerDevHint") != null)
         {
-            Init ();
+            Init();
 
-            if (GameObject.Find ("Preferences") != null) 
+            if (GameObject.Find("Preferences") != null)
             {
 
-                if ((!GameObject.Find ("Preferences").GetComponent<PlayerPrefsManager> ().practiceMode &&
-                    actionManager.GetComponent<TutorialManager> () == null) || (FindObjectOfType<TutorialManager> () != null && FindObjectOfType<Tutorial_UI> () == null)) 
-                
+                if ((!GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().practiceMode &&
+                    actionManager.GetComponent<TutorialManager>() == null) || (FindObjectOfType<TutorialManager>() != null && FindObjectOfType<Tutorial_UI>() == null))
+
                 {
-                    GameObject.Find ("BiggerDevHint").SetActive (false);
-                    extraPanel.SetActive (false);
-                    extraButton.gameObject.SetActive (false);
+                    GameObject.Find("BiggerDevHint").SetActive(false);
+                    extraPanel.SetActive(false);
+                    extraButton.gameObject.SetActive(false);
                 }
-            } 
-            else 
+            }
+            else
             {
-                Debug.LogWarning ("Game needs to be started from menu scene for CurrentAction hint to work correctly");
+                Debug.LogWarning("Game needs to be started from menu scene for CurrentAction hint to work correctly");
             }
         }
 
@@ -112,23 +115,23 @@ public class Cheat_CurrentAction : MonoBehaviour
     private void Init()
     {
         GameObject devHint = GameObject.Find("DevHint");
-        GameObject biggerDevHint = GameObject.Find ("BiggerDevHint");
+        GameObject biggerDevHint = GameObject.Find("BiggerDevHint");
         textObjectDevHint = devHint.transform.GetChild(0).GetComponent<Text>();
-        textObjectBiggerDevHint = biggerDevHint.transform.GetChild (2).GetComponent<Text> ();
+        textObjectBiggerDevHint = biggerDevHint.transform.GetChild(2).GetComponent<Text>();
 
-        biggerDevHint.SetActive (false);
+        biggerDevHint.SetActive(false);
 
         extraText = extraPanel.transform.GetChild(1).GetComponent<Text>();
         extraPanel.SetActive(false);
         set = false;
 
-		extraButton = GameObject.Find("ExtraButton").GetComponent<Button>();
+        extraButton = GameObject.Find("ExtraButton").GetComponent<Button>();
         extraButton.onClick.AddListener(ToggleExtraInfoPanel);
 
         Button extraCloseBtn = extraPanel.transform.Find("CloseExtra").GetComponent<Button>();
-        Button extra_Close_Btn = extraPanel.transform.Find ("CloseExtraCheckmark").GetComponent<Button> ();
+        Button extra_Close_Btn = extraPanel.transform.Find("CloseExtraCheckmark").GetComponent<Button>();
         extraCloseBtn.onClick.AddListener(ToggleExtraInfoPanel);
-        extra_Close_Btn.onClick.AddListener (ToggleExtraInfoPanel);
+        extra_Close_Btn.onClick.AddListener(ToggleExtraInfoPanel);
     }
 
     private void Update()
@@ -140,39 +143,50 @@ public class Cheat_CurrentAction : MonoBehaviour
         if (textObjectBiggerDevHint == null)
             return;
 
-        if (!set) {
+        if (!set)
+        {
             textObjectDevHint.text = actionManager.CurrentDescription;
             textObjectBiggerDevHint.text = actionManager.CurrentDescription;
-            extraText.text = actionManager.CurrentExtraDescription;
+            if (extraText != null)
+                extraText.text = actionManager.CurrentExtraDescription;
             set = true;
         }
 
-        if (direction == 1) {
-            if (timer < animationTime) {
+        if (direction == 1)
+        {
+            if (timer < animationTime)
+            {
                 timer += Time.deltaTime;
-                textObjectDevHint.color = new Color (0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
-                textObjectBiggerDevHint.color = new Color (0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
-                extraText.color = new Color (0.0f, 0.0f, 0.0f, 0.0f - timer / animationTime);
-            } else {
-                textObjectDevHint.color = new Color (0.0f, 0.0f, 0.0f, 0.0f);
-                textObjectBiggerDevHint.color = new Color (0.0f, 0.0f, 0.0f, 0.0f);
-                extraText.color = new Color (0.0f, 0.0f, 0.0f, 0.0f);
+                textObjectDevHint.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
+                textObjectBiggerDevHint.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
+                extraText.color = new Color(0.0f, 0.0f, 0.0f, 0.0f - timer / animationTime);
+            }
+            else
+            {
+                textObjectDevHint.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+                textObjectBiggerDevHint.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+                extraText.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
                 textObjectDevHint.text = actionManager.CurrentDescription;
                 textObjectBiggerDevHint.text = actionManager.CurrentDescription;
                 extraText.text = actionManager.CurrentExtraDescription;
                 timer = animationTime;
                 direction = -1;
             }
-        } else if (direction == -1) {
-            if (timer > 0.0f) {
+        }
+        else if (direction == -1)
+        {
+            if (timer > 0.0f)
+            {
                 timer -= Time.deltaTime;
-                textObjectDevHint.color = new Color (0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
-                textObjectBiggerDevHint.color = new Color (0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
-                extraText.color = new Color (0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
-            } else {
-                textObjectDevHint.color = new Color (0.0f, 0.0f, 0.0f, 1.0f);
-                textObjectBiggerDevHint.color = new Color (0.0f, 0.0f, 0.0f, 1.0f);
-                extraText.color = new Color (0.0f, 0.0f, 0.0f, 1.0f);
+                textObjectDevHint.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
+                textObjectBiggerDevHint.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
+                extraText.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
+            }
+            else
+            {
+                textObjectDevHint.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+                textObjectBiggerDevHint.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+                extraText.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
                 timer = 0.0f;
                 direction = 0;
             }
@@ -228,21 +242,26 @@ public class Cheat_CurrentAction : MonoBehaviour
     } 
     */
 
-    public void RemoveDevHint () {
-        if (manager.practiceMode == true) {
-            dev_Hint.SetActive (false);
+    public void RemoveDevHint()
+    {
+        if (manager.practiceMode == true)
+        {
+            dev_Hint.SetActive(false);
         }
     }
 
-    public void ShowDevHint () {
-        if (manager.practiceMode == true) {
-            dev_Hint.SetActive (true);
+    public void ShowDevHint()
+    {
+        if (manager.practiceMode == true)
+        {
+            dev_Hint.SetActive(true);
         }
     }
 
-    public void OpeningTablet () {
-        
-        bigger_DevHint.SetActive (false);
-        dev_Hint.SetActive (true);
+    public void OpeningTablet()
+    {
+
+        bigger_DevHint.SetActive(false);
+        dev_Hint.SetActive(true);
     }
 }
