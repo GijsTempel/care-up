@@ -260,8 +260,8 @@ public class Cheat_CurrentAction : MonoBehaviour
 
     public void OpeningTablet()
     {
-
         bigger_DevHint.SetActive(false);
-        dev_Hint.SetActive(true);
+        // I HAVE SEVERAL QUESTIONS
+        //dev_Hint.SetActive(true); 
     }
 }
