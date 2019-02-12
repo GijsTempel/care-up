@@ -109,6 +109,7 @@ public class Tutorial_Movement : TutorialManager
                         //hintsBox.anchoredPosition = new Vector2(681f, 175f);
                         //hintsBox.sizeDelta = new Vector2(472.5f, 298.9f);
                         hintsN.LockTo("MoveBackButton", new Vector3(-59.90f, -160.20f, 0.00f));
+                        GameObject.Find("MoveBackButton").GetComponent<Animator>().SetTrigger("BlinkStart");
                         hintsN.SetSize(560f, 425f);
                         hintsN.SetIconPosition(1);
                         currentStep = TutorialStep.MoveBack;
@@ -127,6 +128,8 @@ public class Tutorial_Movement : TutorialManager
                         hintsN.SetIconPosition(0);
                         hintsN.LockTo("doc", new Vector3(-34.60f, 8.00f, -20.00f));
                         currentStep = TutorialStep.MoveToDoctor;
+                        GameObject.Find("JoystickKnob").GetComponent<Animator>().SetTrigger("BlinkStart");
+                        GameObject.Find("JoystickBackground").GetComponent<Animator>().SetTrigger("BlinkStart");
                         UItext.DOText("Heel goed. Probeer nu richting je collega te bewegen door op haar te klikken.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
                         player.tutorial_movedTo = false;
                         docPos.SetActive(true);
@@ -151,6 +154,8 @@ public class Tutorial_Movement : TutorialManager
                 case TutorialStep.FreeLookExpl:
                     if (nextButtonClicked)
                     {
+                        GameObject.Find("JoystickKnob").GetComponent<Animator>().SetTrigger("BlinkStart");
+                        GameObject.Find("JoystickBackground").GetComponent<Animator>().SetTrigger("BlinkStart");
                         audioSource.PlayOneShot (Popup, 0.1F);
                         audioSource.PlayOneShot(Robot2, 0.1F);
                         currentStep = TutorialStep.MoveWithFreeLook;
