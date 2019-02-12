@@ -10,5 +10,11 @@ public class ButtonBlinking : MonoBehaviour {
     public void StopBlinking()
     {
         GetComponent<Animator>().SetTrigger("BlinkStop");
-    }    
+    }
+
+    public void JoystickStopBlinking()
+    {
+        GameObject.Find("JoystickKnob").GetComponent<Animator>().SetTrigger("BlinkStop");
+        GameObject.Find("JoystickBackground").GetComponent<Animator>().SetTrigger("BlinkStop");
+    }
 }
