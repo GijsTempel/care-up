@@ -306,15 +306,12 @@ public class PlayerScript : MonoBehaviour
                 }
                 else
                 {
-                    if (handsInv.LeftHandObject != controls.SelectedObject &&
-                        handsInv.RightHandObject != controls.SelectedObject)
-                    {
-                        itemControls.Init(controls.SelectedObject);
-                    }
+                    itemControls.Init(controls.SelectedObject);
                 }
             }
             else
             {
+                itemControls.Close();
                 FreeLookButton();
             }
         }
@@ -482,7 +479,7 @@ public class PlayerScript : MonoBehaviour
 
         PlayerAnimationManager.PlayAnimation("IpadCloseUp");
         robotUIopened = true;
-
+        
         if (devHintUI != null)
         {
             devHintActiveForIpad = devHintUI.activeSelf;

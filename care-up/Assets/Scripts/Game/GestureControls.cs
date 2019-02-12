@@ -31,12 +31,15 @@ public class GestureControls : MonoBehaviour
         if (gesture.State == GestureRecognizerState.Ended)
         {
             //DebugText("Double tapped at {0}, {1}", gesture.FocusX, gesture.FocusY);
-            if (IsViableObject())
+            if (IsViableWithUIOpen())
             {
                 if (tutorial == null || (tutorial != null &&
                 (tutorial.itemToDrop == initedObject.name ||
                 tutorial.itemToDrop2 == initedObject.name)))
                 {
+                    PlayerScript player = GameObject.FindObjectOfType<PlayerScript>();
+                    player.itemControls.Close();
+
                     if (handsInventory.LeftHandObject == initedObject)
                     {
                         handsInventory.DropLeft();
@@ -127,13 +130,7 @@ public class GestureControls : MonoBehaviour
         {
             //DebugText("Long press began: {0}, {1}", gesture.FocusX, gesture.FocusY);
             
-            PlayerScript player = GameObject.FindObjectOfType<PlayerScript>();
-            if (IsViableObject())
-            {
-                player.itemControls.Init(controls.SelectedObject);
-            }
-
-            /*if (IsViableObject())
+            if (IsViableWithUIOpen())
             {
                 if (initedObject.GetComponent<ExaminableObject>() != null)
                 {
@@ -151,7 +148,7 @@ public class GestureControls : MonoBehaviour
                         }
                     }
                 }
-            }*/
+            }
         }
     }
 
@@ -168,8 +165,8 @@ public class GestureControls : MonoBehaviour
         if (gesture.State == GestureRecognizerState.Ended)
         {
             //DebugText("Tapped at {0}, {1}", gesture.FocusX, gesture.FocusY);
-            PlayerScript player = GameObject.FindObjectOfType<PlayerScript>();
-            player.itemControls.Close();
+            //PlayerScript player = GameObject.FindObjectOfType<PlayerScript>();
+            //player.itemControls.Close();
         }
     }
 
@@ -212,6 +209,19 @@ public class GestureControls : MonoBehaviour
                 && !player.itemControls.gameObject.activeSelf
                 && !PlayerScript.actionsLocked
                 && !player.usingOnMode &&
+                 ((controls.SelectedObject == handsInventory.LeftHandObject)
+                || (controls.SelectedObject == handsInventory.RightHandObject));
+    }
+
+    private bool IsViableWithUIOpen()
+    {
+        initedObject = controls.SelectedObject;
+
+        PlayerScript player = GameObject.FindObjectOfType<PlayerScript>();
+
+        return !player.away && controls.SelectedObject != null
+                && controls.SelectedObject.GetComponent<InteractableObject>() != null
+                && !PlayerScript.actionsLocked &&
                  ((controls.SelectedObject == handsInventory.LeftHandObject)
                 || (controls.SelectedObject == handsInventory.RightHandObject));
     }
