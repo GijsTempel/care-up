@@ -36,6 +36,8 @@ public class ItemControlsUI : MonoBehaviour {
 
     private Tutorial_Combining tutorialCombine;
 
+    public bool instantCloseFixFlag = false;
+
     private void OnEnterHover()
     {
         UIhover = true;
@@ -259,6 +261,8 @@ public class ItemControlsUI : MonoBehaviour {
                 discardButton.SetActive(discard);
 
                 initedObject.GetComponent<InteractableObject>().Reset();
+
+                instantCloseFixFlag = true;
             }
 
             if (!pickButton.activeSelf && 
@@ -275,8 +279,14 @@ public class ItemControlsUI : MonoBehaviour {
         }
     }
 
-    public void Close()
+    public void Close(bool bypass = false)
     {
+        if (instantCloseFixFlag && !bypass)
+        {
+            instantCloseFixFlag = false;
+            return;
+        }
+
         gameObject.SetActive(false);
         if (cameraMode.CurrentMode == CameraMode.Mode.ItemControlsUI)
         {
@@ -422,7 +432,7 @@ public class ItemControlsUI : MonoBehaviour {
 
         Close();
     }
-
+    
     public void Drop(GameObject ghost = null)
     {
         if (initedObject != null)
@@ -431,6 +441,8 @@ public class ItemControlsUI : MonoBehaviour {
             (tutorial.itemToDrop == initedObject.name ||
             tutorial.itemToDrop2 == initedObject.name)))
             {
+                PickableObject item = initedObject.GetComponent<PickableObject>();
+                
                 if (handsInventory.LeftHandObject == initedObject)
                 {
                     handsInventory.DropLeft(ghost);
@@ -440,7 +452,6 @@ public class ItemControlsUI : MonoBehaviour {
                     handsInventory.DropRight(ghost);
                 }
 
-                PickableObject item = initedObject.GetComponent<PickableObject>();
                 if (item != null)
                 {
                     for (int i = item.ghostObjects.Count-1; i >= 0; --i)

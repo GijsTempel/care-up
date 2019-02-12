@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DigitalRubyShared;
+using System.Linq;
 
 public class GestureControls : MonoBehaviour
 {
@@ -26,6 +27,15 @@ public class GestureControls : MonoBehaviour
         Debug.Log(string.Format(text, format));
     }
 
+    void DebugList(List<PickableObject> items)
+    {
+        foreach(PickableObject i in items)
+        {
+            Debug.Log(i.name + " " + i.positionID + " " +
+                Vector3.Distance(i.transform.position, player.transform.position));
+        }
+    }
+
     private void DoubleTapGestureCallback(DigitalRubyShared.GestureRecognizer gesture)
     {
         if (gesture.State == GestureRecognizerState.Ended)
@@ -38,18 +48,26 @@ public class GestureControls : MonoBehaviour
                 tutorial.itemToDrop2 == initedObject.name)))
                 {
                     PlayerScript player = GameObject.FindObjectOfType<PlayerScript>();
-                    player.itemControls.Close();
+                    player.itemControls.Close(true);
+
+                    PickableObject item = initedObject.GetComponent<PickableObject>();
+                    
+                    DebugList(item.ghostObjects);
+                    List<PickableObject> ghosts = item.ghostObjects.OrderBy(x => 
+                        Vector3.Distance(x.transform.position, player.transform.position)).ToList();
+                    DebugList(ghosts);
+
+                    GameObject ghost = ghosts[0].gameObject;
 
                     if (handsInventory.LeftHandObject == initedObject)
                     {
-                        handsInventory.DropLeft();
+                        handsInventory.DropLeft(ghost);
                     }
                     else if (handsInventory.RightHandObject == initedObject)
                     {
-                        handsInventory.DropRight();
+                        handsInventory.DropRight(ghost);
                     }
 
-                    PickableObject item = initedObject.GetComponent<PickableObject>();
                     if (item != null)
                     {
                         for (int i = item.ghostObjects.Count - 1; i >= 0; --i)
@@ -166,8 +184,8 @@ public class GestureControls : MonoBehaviour
         if (gesture.State == GestureRecognizerState.Ended)
         {
             //DebugText("Tapped at {0}, {1}", gesture.FocusX, gesture.FocusY);
-            //PlayerScript player = GameObject.FindObjectOfType<PlayerScript>();
-            //player.itemControls.Close();
+            PlayerScript player = GameObject.FindObjectOfType<PlayerScript>();
+            player.itemControls.Close();
         }
     }
 

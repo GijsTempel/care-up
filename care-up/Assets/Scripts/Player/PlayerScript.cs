@@ -311,7 +311,6 @@ public class PlayerScript : MonoBehaviour
             }
             else
             {
-                itemControls.Close();
                 FreeLookButton();
             }
         }
