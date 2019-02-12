@@ -283,8 +283,8 @@ public class ItemControlsUI : MonoBehaviour {
 
     public void Close(bool bypass = false)
     {
-        if (instantCloseFixFlag && !bypass)
-        {
+        if (instantCloseFixFlag && !bypass) {
+            
             instantCloseFixFlag = false;
             return;
         }
@@ -335,7 +335,9 @@ public class ItemControlsUI : MonoBehaviour {
             cameraMode.selectedObject = initedObject.GetComponent<ExaminableObject>();
             if (cameraMode.selectedObject != null) // if there is a component
             {
-                tutorialUseOn.examined = true;
+                if (tutorialUseOn != null) {
+                    tutorialUseOn.examined = true;
+                }
                 cameraMode.selectedObject.OnExamine();
                 controls.ResetObject();
             }
@@ -346,7 +348,8 @@ public class ItemControlsUI : MonoBehaviour {
             }*/
         }
 
-        Close();
+        
+        Close ();
     }
 
     public void Pick()
