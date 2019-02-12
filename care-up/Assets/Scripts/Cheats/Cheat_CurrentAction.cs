@@ -19,8 +19,8 @@ public class Cheat_CurrentAction : MonoBehaviour
     [SerializeField] private GameObject ipadTrigger;
 
     // never used
-    //private bool biggerDevHintActive = false;
-    //private bool devHintActive = true;
+    private bool biggerDevHintActive = false;
+    private bool devHintActive = true;
 
     private float animationTime = 1.0f;
 
@@ -222,10 +222,8 @@ public class Cheat_CurrentAction : MonoBehaviour
         }
     }
 
-    /* NEVER USED ?
     public void ShowBiggerDevHint () {
         tutorial_devHintOpened = true;
-        dev_Hint.SetActive (false);
         bigger_DevHint.SetActive (true);
 
         biggerDevHintActive = true;
@@ -234,13 +232,12 @@ public class Cheat_CurrentAction : MonoBehaviour
 
     public void RemoveBiggerDevHint () {
         tutorial_devHintClosed = true;
-        dev_Hint.SetActive (true);
         bigger_DevHint.SetActive (false);
 
         biggerDevHintActive = false;
         devHintActive = true;
     } 
-    */
+
 
     public void RemoveDevHint()
     {
@@ -258,10 +255,4 @@ public class Cheat_CurrentAction : MonoBehaviour
         }
     }
 
-    public void OpeningTablet()
-    {
-
-        bigger_DevHint.SetActive(false);
-        dev_Hint.SetActive(true);
-    }
 }

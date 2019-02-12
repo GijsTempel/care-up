@@ -15,6 +15,8 @@ public class ExaminableObject : InteractableObject {
     [HideInInspector]
     public bool tutorial_examined = false;
 
+    private Tutorial_UseOn tutorialUseOn;
+
     public Vector3 examineRotation;
     public bool audioExamine = false;
     public bool animationExamine = false;
@@ -31,6 +33,10 @@ public class ExaminableObject : InteractableObject {
     
     private bool viewMode = false;
     
+    void Awake () {
+        tutorialUseOn = GameObject.FindObjectOfType<Tutorial_UseOn> ();
+    }
+
     /// <summary>
     /// Action examining, handles special cases aswell as switching camera modes.
     /// </summary>
@@ -85,9 +91,12 @@ public class ExaminableObject : InteractableObject {
         {
             tutorial_examined = false;
             tutorial_closed = true;
+            if (tutorialUseOn != null) {
+                tutorialUseOn.stopExamined = true;
+            }
             if (!animationExamine)
             {
-                LoadPosition();
+                LoadPosition ();
 
                 if (inventory.LeftHandObject == gameObject ||
                     inventory.RightHandObject == gameObject)

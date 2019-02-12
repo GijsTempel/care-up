@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DigitalRubyShared;
+using System.Linq;
 
 public class GestureControls : MonoBehaviour
 {
@@ -26,27 +27,47 @@ public class GestureControls : MonoBehaviour
         Debug.Log(string.Format(text, format));
     }
 
+    void DebugList(List<PickableObject> items)
+    {
+        foreach(PickableObject i in items)
+        {
+            Debug.Log(i.name + " " + i.positionID + " " +
+                Vector3.Distance(i.transform.position, player.transform.position));
+        }
+    }
+
     private void DoubleTapGestureCallback(DigitalRubyShared.GestureRecognizer gesture)
     {
         if (gesture.State == GestureRecognizerState.Ended)
         {
             //DebugText("Double tapped at {0}, {1}", gesture.FocusX, gesture.FocusY);
-            if (IsViableObject())
+            if (IsViableWithUIOpen())
             {
                 if (tutorial == null || (tutorial != null &&
                 (tutorial.itemToDrop == initedObject.name ||
                 tutorial.itemToDrop2 == initedObject.name)))
                 {
+                    PlayerScript player = GameObject.FindObjectOfType<PlayerScript>();
+                    player.itemControls.Close(true);
+
+                    PickableObject item = initedObject.GetComponent<PickableObject>();
+                    
+                    DebugList(item.ghostObjects);
+                    List<PickableObject> ghosts = item.ghostObjects.OrderBy(x => 
+                        Vector3.Distance(x.transform.position, player.transform.position)).ToList();
+                    DebugList(ghosts);
+
+                    GameObject ghost = ghosts[0].gameObject;
+
                     if (handsInventory.LeftHandObject == initedObject)
                     {
-                        handsInventory.DropLeft();
+                        handsInventory.DropLeft(ghost);
                     }
                     else if (handsInventory.RightHandObject == initedObject)
                     {
-                        handsInventory.DropRight();
+                        handsInventory.DropRight(ghost);
                     }
 
-                    PickableObject item = initedObject.GetComponent<PickableObject>();
                     if (item != null)
                     {
                         for (int i = item.ghostObjects.Count - 1; i >= 0; --i)
@@ -84,9 +105,9 @@ public class GestureControls : MonoBehaviour
                 if (handsInventory.LeftHandEmpty() || handsInventory.RightHandEmpty())
                 {
                     // if we're here we're missing one object it seems, make a warning maybe somewhere?
-                    string message = "missing something in hands? combining something + nothing?";
+                    string message = "Je hebt geen object om mee te combineren. Zorg dat je een object in beide handen hebt om ze met elkaar te combineren. ";
                     RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
-                    messageCenter.NewMessage("missing 2nd object", message, RobotUIMessageTab.Icon.Warning);
+                    messageCenter.NewMessage("Geen tweede object", message, RobotUIMessageTab.Icon.Warning);
                     return;
                 }
             }
@@ -96,9 +117,9 @@ public class GestureControls : MonoBehaviour
                 if (handsInventory.LeftHandEmpty() == handsInventory.RightHandEmpty())
                 {
                     // here we have either both hands filled
-                    string message = "Je hebt je handen vol!";
+                    string message = "Je kunt niet objecten scheiden/uit elkaar halen met beide handen vol. Leg een object terug om een hand vrij te maken.";
                     RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
-                    messageCenter.NewMessage("Je kunt niet objecten scheiden/uit elkaar halen met beide handen vol. Leg een object terug om een hand vrij te maken.", message, RobotUIMessageTab.Icon.Warning);
+                    messageCenter.NewMessage("Je hebt je handen vol.", message, RobotUIMessageTab.Icon.Warning);
                     return;
                 }
             }
@@ -107,7 +128,8 @@ public class GestureControls : MonoBehaviour
             {
                 return;
             }
-            
+
+            player.itemControls.Close();
             handsInventory.OnCombineAction();
         }
     }
@@ -127,13 +149,7 @@ public class GestureControls : MonoBehaviour
         {
             //DebugText("Long press began: {0}, {1}", gesture.FocusX, gesture.FocusY);
             
-            PlayerScript player = GameObject.FindObjectOfType<PlayerScript>();
-            if (IsViableObject())
-            {
-                player.itemControls.Init(controls.SelectedObject);
-            }
-
-            /*if (IsViableObject())
+            if (IsViableWithUIOpen())
             {
                 if (initedObject.GetComponent<ExaminableObject>() != null)
                 {
@@ -151,7 +167,7 @@ public class GestureControls : MonoBehaviour
                         }
                     }
                 }
-            }*/
+            }
         }
     }
 
@@ -212,6 +228,19 @@ public class GestureControls : MonoBehaviour
                 && !player.itemControls.gameObject.activeSelf
                 && !PlayerScript.actionsLocked
                 && !player.usingOnMode &&
+                 ((controls.SelectedObject == handsInventory.LeftHandObject)
+                || (controls.SelectedObject == handsInventory.RightHandObject));
+    }
+
+    private bool IsViableWithUIOpen()
+    {
+        initedObject = controls.SelectedObject;
+
+        PlayerScript player = GameObject.FindObjectOfType<PlayerScript>();
+
+        return !player.away && controls.SelectedObject != null
+                && controls.SelectedObject.GetComponent<InteractableObject>() != null
+                && !PlayerScript.actionsLocked &&
                  ((controls.SelectedObject == handsInventory.LeftHandObject)
                 || (controls.SelectedObject == handsInventory.RightHandObject));
     }

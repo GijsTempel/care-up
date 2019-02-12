@@ -177,7 +177,7 @@ public class Tutorial_Combining : TutorialManager {
                         hintsN.SetSize(759f, 450f);
                         hintsN.LockTo("robot", new Vector3(-0.79f, -0.29f, 1.20f));
 
-                        UItext.DOText("Objecten uit elkaar halen of scheiden, zoals een spuit uit de verpakking halen of de dop van een naald verwijderen, doe je door omhoog of omlaag te swipen op je tablet of telefoon.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
+                        UItext.DOText("Objecten uit elkaar halen of scheiden, zoals een spuit uit de verpakking halen of de dop van een naald verwijderen, doe je door omhoog te swipen op je tablet of telefoon.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
 
                         currentStep = TutorialStep.ExplainVSwipe;
                         SetUpTutorialNextButton();
@@ -194,7 +194,7 @@ public class Tutorial_Combining : TutorialManager {
 
                         hintsN.SetSize(900f, 480f);
                         hintsN.LockTo("robot", new Vector3(-0.79f, -0.19f, 1.40f));
-                        UItext.DOText("Op de computer kan dit door op de linkermuisknop te klikken en ingedrukt te houden. Beweeg vervolgens de muis omhoog of omlaag terwijl je de linkermuisknop ingedrukt houdt.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
+                        UItext.DOText("Op de computer kan dit door op de linkermuisknop te klikken en ingedrukt te houden. Beweeg vervolgens de muis omhoog terwijl je de linkermuisknop ingedrukt houdt.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
 
                          currentStep = TutorialStep.ExplainVSwipe2;
                          SetUpTutorialNextButton();
@@ -208,7 +208,7 @@ public class Tutorial_Combining : TutorialManager {
 
                         hintsN.SetSize(585f, 345f);
                         hintsN.LockTo("robot", new Vector3(-1.70f, -0.75f, 0.85f));
-                        UItext.DOText("Haal de dop van de naald door omhoog/omlaag te swipen of door de linkermuisknop ingedrukt te houden en de muis omhoog/omlaag te bewegen.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
+                        UItext.DOText("Haal de dop van de naald door omhoog/omlaag te swipen of door de linkermuisknop ingedrukt te houden en de muis omhoog te bewegen.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
                         particleHint.SetActive(false);
 
                         currentStep = TutorialStep.Decombine;
