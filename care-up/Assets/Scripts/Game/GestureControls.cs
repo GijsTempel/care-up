@@ -110,7 +110,8 @@ public class GestureControls : MonoBehaviour
             {
                 return;
             }
-            
+
+            player.itemControls.Close();
             handsInventory.OnCombineAction();
         }
     }
