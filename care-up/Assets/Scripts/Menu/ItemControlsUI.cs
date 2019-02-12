@@ -35,6 +35,7 @@ public class ItemControlsUI : MonoBehaviour {
     private bool UIhover;
 
     private Tutorial_Combining tutorialCombine;
+    private Tutorial_UseOn tutorialUseOn;
 
     public bool instantCloseFixFlag = false;
 
@@ -131,6 +132,7 @@ public class ItemControlsUI : MonoBehaviour {
         combineButton.GetComponent<EventTrigger>().triggers.Add(event3);
         
         tutorialCombine = GameObject.FindObjectOfType<Tutorial_Combining>();
+        tutorialUseOn = GameObject.FindObjectOfType<Tutorial_UseOn> ();
     }
 
     public void Init(GameObject iObject)
@@ -333,6 +335,7 @@ public class ItemControlsUI : MonoBehaviour {
             cameraMode.selectedObject = initedObject.GetComponent<ExaminableObject>();
             if (cameraMode.selectedObject != null) // if there is a component
             {
+                tutorialUseOn.examined = true;
                 cameraMode.selectedObject.OnExamine();
                 controls.ResetObject();
             }
