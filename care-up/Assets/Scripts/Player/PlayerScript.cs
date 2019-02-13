@@ -311,14 +311,14 @@ public class PlayerScript : MonoBehaviour
             }
             else
             {
-                FreeLookButton();
+                //FreeLookButton();
             }
         }
         else if (Input.GetMouseButtonDown(1) && usingOnMode)
         {
             ToggleUsingOnMode(false);
         }
-        else if (Controls.MouseReleased() && freeLook)
+        else if (Controls.MouseReleased())// && freeLook)
         {
             if (rotated < 3.0f && controls.SelectedObject != null &&
                 controls.SelectedObject.GetComponent<WalkToGroup>())
@@ -327,7 +327,8 @@ public class PlayerScript : MonoBehaviour
             }
             else
             {
-                FreeLookButton();
+                freeLook = false;
+                //FreeLookButton();
             }
         }
 
