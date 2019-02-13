@@ -5,7 +5,6 @@
     points="1"
     description="Begroet de cliënt."
     fullDescription="Begroet de cliënt door op hem te klikken. Daarna klik je nogmaals op de cliënt om een gesprek aan te gaan. Klik vervolgens op de juiste optie."
-    audioHint=""
     type="talk"
     topic="Hello"
     extra="Ondanks dat het begroeten niet in de werkwijze is vermeld. Is het wel netjes om contact te leggen met de cliënt."
@@ -17,28 +16,30 @@
     points="3"
     description="Pas handhygiëne toe."
     fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp."
-    audioHint="Injection/H1-2"
     type="use"
     value="HandCleaner"
-    extra="Pas handhygiëne toe. Handhygiëne is het allerbelangrijkste als het gaat om voorkomen van besmetting met ziektekiemen. Dit betekent je handen reinigen op de juiste manier en op de juiste momenten. Begin een handeling altijd met handhygiëne."></action>
-
-
+    extra="Pas handhygiëne toe. Handhygiëne is het allerbelangrijkste als het gaat om voorkomen van besmetting met ziektekiemen. Dit betekent je handen reinigen op de juiste manier en op de juiste momenten. Begin een handeling altijd met handhygiëne."
+    messageTitle="Handhygiëne"
+    messageContent="Handhygiëne is het allerbelangrijkste als het gaat om voorkomen van besmetting met ziektekiemen. Dit betekent je handen reinigen op de juiste manier en op de juiste momenten. Begin een handeling altijd met handhygiëne."
+   ></action>
+  
   <action
     comment="2. Create a clean work area and put the equipment within reach"
     index="1"
     points="2"
     description="Maak een schoon werkveld en zet de benodigdheden binnen bereik."
     fullDescription=" Klik op het werkveld om deze schoon te maken."
-    audioHint="Injection/H2-2"
     type="use"
     value="WorkField"
-    extra="Maak een schoon werkveld. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen."></action>
-
+    extra="Maak een schoon werkveld."
+    messageTitle="Hygiënisch werken"
+    messageContent="Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen."
+  ></action>
+  
   <action
     points="1"
     description="Open de katheterset."
     fullDescription="Klik op de katheterset om deze open te maken."
-    audioHint="Injection/H2-2"
     index="2"
     type="use"
     value="catheterisation"
@@ -125,8 +126,9 @@
     type="drop"
     item="PlasticTrashbucket"
     posID="2"
-    extra="Leg het plastic afvalbakje op de onderlegger."/>
-
+    extra="Leg het plastic afvalbakje op de onderlegger."
+  ></action>
+  
   <action
     comment="9. Put on gloves."
     points="2"
@@ -139,7 +141,7 @@
     quiz="2.0"
     messageTitle="Gebruik handschoenen"
     messageContent="Gebruik handschoenen eenmalig en bij dezelfde cliënt. Trek ze na gebruik direct uit. Vermijd tijdens het dragen van handschoenen contact met deurknopen, telefoon, apparatuur, toetsenborden, enzovoort. Was of desinfecteer de handen na het uittrekken van de handschoenen altijd. Bij het uittrekken van de handschoenen kunnen de handen namelijk besmet zijn geraakt."
-  >"</action>
+  ></action>
 
   <action
     comment=""
@@ -477,12 +479,12 @@
     comment="____________help patient to get up"
     index="46"
     point="1"
-    description="Help de cliënt in een comfortabele houding"
+    description="Help de cliënt in een comfortabele houding."
     fullDescription="Klik op de cliënt om een dialoog te starten. Kies vervolgens de juiste optie."
     audioHint=""
     type="talk"
     topic="HelpGetUp"
-    extra="Help de cliënt in een comfortabele houding"
+    extra="Help de cliënt in een comfortabele houding."
     blockRequired="fixate catheter"
     blockUnlock="patient get up"
     blockLock="patient lay down"
@@ -491,12 +493,12 @@
   <action
     comment="Check the cloth pad"
     index="47"
-    points="3"
-    description="Controleer of de cliënt en het bed droog zijn gebleven"
+    points="1"
+    description="Controleer of de cliënt en het bed droog zijn gebleven."
     fullDescription="Klik op de onderlegger om te kijken of deze droog is gebleven."
     type="use"
     value="cloth_02"
-    extra="Controleer of de cliënt en het bed droog zijn gebleven"
+    extra="Controleer of de cliënt en het bed droog zijn gebleven."
     blockRequired="patient get up"
   ></action>
 
