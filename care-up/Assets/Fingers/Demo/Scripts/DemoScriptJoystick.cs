@@ -39,6 +39,11 @@ namespace DigitalRubyShared
  
             player.freeLook = true;
             player.LookRotationUpdate(amount);
+
+            if (player.itemControls.gameObject.activeSelf)
+            {
+                player.itemControls.Close();
+            }
         }
     }
 }
