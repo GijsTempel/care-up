@@ -318,6 +318,7 @@ public class PlayerScript : MonoBehaviour
             }
             else
             {
+                rotated = 0.0f;
                 freeLook = false;
                 //FreeLookButton();
             }
@@ -528,6 +529,8 @@ public class PlayerScript : MonoBehaviour
         }
         if (joystickObject != null)
             joystickObject.SetActive(!robotUIopened);
+
+        itemControls.Close();
     }
 
     public void CloseRobotUI()
