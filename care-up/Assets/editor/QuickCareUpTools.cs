@@ -5,7 +5,7 @@ using UnityEditor;
 
 public class QuickCareUpTools
 {
-    [MenuItem("Tools/Set Triggers %#x")]
+    [MenuItem("Tools/Start Action %#x")]
     private static void SetTriggers()
     {
         ActionStarter actionStarter = GameObject.FindObjectOfType<ActionStarter>();
