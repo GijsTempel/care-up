@@ -33,13 +33,22 @@ public class Tutorial_UseOn : TutorialManager {
         OpenOptions2,
         ExplainCombine,
         Combine,
+        ExplainDeCombine,
+        DeCombine,
+        OpenOptions3,
+        ExplainActions,
+        VentInsulin,
+        ExplainRemoveNeedle,
+        RemoveNeedle,
+        OpenActions4,
+        ExplainUseOn,
+        ClickPlus,
+        ClickContainer,
         Done,
         None
     }
 
     private TutorialStep currentStep = TutorialStep.First;
-
-    public bool decombiningAllowed = false;
 
     protected override void Update () {
         base.Update ();
@@ -222,16 +231,16 @@ public class Tutorial_UseOn : TutorialManager {
                     audioSource.PlayOneShot (Done, 0.1F);
                     hintsN.SetSize (506.8f, 277.6f);
                     handsInventory.tutorial_itemUsedOn = false;
-                    currentStep = TutorialStep.Combine;
                     hintsN.LockTo ("SceneLoader 1", new Vector3 (363.61f, -22.40f, 0.00f));
                     UItext.DOText ("Combineer nu de naald met de insuline pen.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
 
+                    currentStep = TutorialStep.Combine;
                     handsInventory.tutorial_combined = false;
-                    decombiningAllowed = true;
                 }
                 break;
                 case TutorialStep.Combine:
                 if (handsInventory.tutorial_combined) {
+                    handsInventory.tutorial_combined = false;
                     audioSource.PlayOneShot (Popup, 0.1F);
                     audioSource.PlayOneShot (Done, 0.1F);
                     audioSource.PlayOneShot (RobotShort1, 0.1F);
