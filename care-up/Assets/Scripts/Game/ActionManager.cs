@@ -839,11 +839,9 @@ public class ActionManager : MonoBehaviour {
             penalized = true;
 
             bool practice = (manager != null) ? manager.practiceMode : true;
-            if (type == ActionType.SequenceStep && practice)
-            {
-                GameObject.Find("WrongAction").GetComponent<TimedPopUp>().Set(sublist[0].extraDescr);
-            }
+           
         }
+     
         else
         {
             currentPointAward = currentAction.pointValue;
