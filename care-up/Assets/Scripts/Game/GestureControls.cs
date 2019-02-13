@@ -108,6 +108,7 @@ public class GestureControls : MonoBehaviour
                     string message = "Je hebt geen object om mee te combineren. Zorg dat je een object in beide handen hebt om ze met elkaar te combineren. ";
                     RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
                     messageCenter.NewMessage("Geen tweede object", message, RobotUIMessageTab.Icon.Warning);
+                    player.itemControls.Close();
                     return;
                 }
             }
@@ -120,6 +121,7 @@ public class GestureControls : MonoBehaviour
                     string message = "Je kunt niet objecten scheiden/uit elkaar halen met beide handen vol. Leg een object terug om een hand vrij te maken.";
                     RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
                     messageCenter.NewMessage("Je hebt je handen vol.", message, RobotUIMessageTab.Icon.Warning);
+                    player.itemControls.Close();
                     return;
                 }
             }
