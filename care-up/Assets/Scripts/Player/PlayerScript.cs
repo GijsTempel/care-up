@@ -327,6 +327,7 @@ public class PlayerScript : MonoBehaviour
             }
             else
             {
+                rotated = 0.0f;
                 freeLook = false;
                 //FreeLookButton();
             }
