@@ -4888,7 +4888,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectName: m1_A
-  unlock_frame: 55
+  unlock_frame: 5
   lock_frame: 210
   toActivate: 1
 --- !u!114 &114432902427948712
@@ -11013,6 +11013,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: helppatientgetup
     m_EventTreshold: 1
+  - m_ConditionMode: 6
+    m_ConditionEvent: sceneID
+    m_EventTreshold: 25
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102135777159988746}
   m_Solo: 0
@@ -15249,6 +15252,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: S helppatientgetup
     m_EventTreshold: 1
+  - m_ConditionMode: 6
+    m_ConditionEvent: sceneID
+    m_EventTreshold: 25
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102476146568791440}
   m_Solo: 0
@@ -16135,8 +16141,11 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: test
+    m_ConditionEvent: helppatientgetup
     m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: sceneID
+    m_EventTreshold: 26
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102167120096723664}
   m_Solo: 0
@@ -19927,8 +19936,11 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: S test
+    m_ConditionEvent: S helppatientgetup
     m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: sceneID
+    m_EventTreshold: 26
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102323851304642632}
   m_Solo: 0
