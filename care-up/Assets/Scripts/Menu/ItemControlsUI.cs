@@ -260,7 +260,8 @@ public class ItemControlsUI : MonoBehaviour {
 
                 bool discard = initedObject.GetComponent<PickableObject>() != null
                     && initedObject.GetComponent<PickableObject>().destroyOnDrop == true;
-                discardButton.SetActive(discard);
+                //discardButton.SetActive(discard);
+                discardButton.SetActive(false); // for now disable discard button
 
                 initedObject.GetComponent<InteractableObject>().Reset();
 
