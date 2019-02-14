@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 4210275239433908}
   - component: {fileID: 33629125914929970}
   - component: {fileID: 23185240832421740}
+  - component: {fileID: 65385112254481884}
+  - component: {fileID: 114106752581864446}
   m_Layer: 0
   m_Name: BandAid 1
   m_TagString: Untagged
@@ -35,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1388300151484188}
   m_LocalRotation: {x: -0.50000006, y: 0.4999999, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 9.297, y: 1.098, z: 11.74947}
+  m_LocalPosition: {x: 9.421157, y: 1.1017607, z: 11.688235}
   m_LocalScale: {x: 100, y: 100, z: 50}
   m_Children: []
   m_Father: {fileID: 0}
@@ -53,7 +55,7 @@ MeshRenderer:
   m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
+  m_ReflectionProbeUsage: 2
   m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 0e062697694a85e4c841fd205f24ca91, type: 2}
@@ -83,3 +85,34 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1388300151484188}
   m_Mesh: {fileID: 4300000, guid: 2a4ce7a081687124c8b8b273a1c339b1, type: 3}
+--- !u!65 &65385112254481884
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1388300151484188}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.00028672224, y: 0.0010421784, z: 0.000011381634}
+  m_Center: {x: 5.9402035e-15, y: 0.000000007450575, z: -0.00000039863994}
+--- !u!114 &114106752581864446
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1388300151484188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3e6a197b70106d4baa62069a18baf92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectID: 0
+  description: BandAid
+  muplipleMesh: 0
+  descriptionOffset: {x: 0, y: 0, z: 0}
+  transparencyFix: 0
+  tutorial_used: 0
+  handsCleaned: 0
+  PrefabToAppear: 
