@@ -340,8 +340,10 @@ public class Tutorial_UseOn : TutorialManager {
                     audioSource.PlayOneShot (Done, 0.1F);
                     hintsN.SetSize (550.5f, 450.7f);
                     handsInventory.tutorial_itemUsedOn = false;
-                        hintsN.LockTo("robot", new Vector3(0.00f, -0.33f, 0.13f));
-                        UItext.DOText ("Probeer nu de naald van de insuline spuit te halen door te swipen of door het optie menu te gebruiken.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
+                    hintsN.LockTo("robot", new Vector3(0.00f, -0.33f, 0.13f));
+                    UItext.DOText ("Probeer nu de naald van de insuline spuit te halen door te swipen of door het optie menu te gebruiken.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
+
+                    handsInventory.ReplaceHandObject (true, "InsulinPenWithNeedle");
 
                     currentStep = TutorialStep.RemoveNeedle;
                     handsInventory.tutorial_combined = false;
