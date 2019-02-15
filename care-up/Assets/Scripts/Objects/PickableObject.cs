@@ -14,6 +14,8 @@ public class PickableObject : InteractableObject
 {
     [HideInInspector]
     public bool tutorial_usedOn = false;
+    [HideInInspector]
+    public bool depoistNeedle = false;
 
     [HideInInspector]
     public Transform leftControlBone;
@@ -130,6 +132,12 @@ public class PickableObject : InteractableObject
     public virtual bool Use(bool hand, bool noTarget = false)
     {
         tutorial_usedOn = true;
+
+        Debug.Log (depoistNeedle);
+
+        if(depoistNeedle == true) {
+            return false;
+        }
 
         if (controls.SelectedObject != null && controls.CanInteract)
         {

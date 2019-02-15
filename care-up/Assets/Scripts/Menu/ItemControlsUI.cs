@@ -432,6 +432,10 @@ public class ItemControlsUI : MonoBehaviour {
             return;
         }
 
+        if (tutorialUseOn != null && !tutorialUseOn.decombiningAllowed) {
+            return;
+        }
+
         if (handsInventory.LeftHandEmpty() ^ handsInventory.RightHandEmpty())
         {
             handsInventory.OnCombineAction();
@@ -484,6 +488,11 @@ public class ItemControlsUI : MonoBehaviour {
 
     public void UseOnNoTarget()
     {
+
+        if (tutorialUseOn != null && !tutorialUseOn.ventAllowed) {
+            return;
+        }
+
         if (initedObject == handsInventory.LeftHandObject)
         {
             handsInventory.LeftHandObject.GetComponent<PickableObject>().Use(true, true);
