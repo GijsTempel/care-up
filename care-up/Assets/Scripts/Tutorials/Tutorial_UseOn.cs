@@ -38,7 +38,6 @@ public class Tutorial_UseOn : TutorialManager {
         OpenOptions3,
         ExplainActions,
         VentInsulin,
-        ExplainRemoveNeedle,
         RemoveNeedle,
         OpenActions4,
         ExplainUseOn,
@@ -336,22 +335,6 @@ public class Tutorial_UseOn : TutorialManager {
                 if (handsInventory.LeftHandObject.GetComponent<PickableObject> ().tutorial_usedOn) {
                     handsInventory.LeftHandObject.GetComponent<PickableObject> ().tutorial_usedOn = false;
                     ventAllowed = false;
-                    audioSource.PlayOneShot (Popup, 0.1F);
-                    audioSource.PlayOneShot (Robot3, 0.1F);
-                    audioSource.PlayOneShot (Done, 0.1F);
-                    hintsN.SetSize (550.5f, 450.7f);
-                    handsInventory.tutorial_itemUsedOn = false;
-                    currentStep = TutorialStep.ExplainRemoveNeedle;
-                        hintsN.LockTo("robot", new Vector3(0.00f, -0.33f, 1.56f));
-                        UItext.DOText ("Na het prikken van de insuline moet je de naald nog verwijderen dat kan je doen door het optie menu met het - icoon of omhoog swipen met je vinger of met de muis van onder naar boven kliken en ingedrukt houden.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
-
-                    handsInventory.ReplaceHandObject (true, "InsulinPenWithNeedle");
-
-                    SetUpTutorialNextButton ();
-                }
-                break;
-                case TutorialStep.ExplainRemoveNeedle:
-                if (nextButtonClicked) {
                     audioSource.PlayOneShot (Popup, 0.1F);
                     audioSource.PlayOneShot (Robot3, 0.1F);
                     audioSource.PlayOneShot (Done, 0.1F);
