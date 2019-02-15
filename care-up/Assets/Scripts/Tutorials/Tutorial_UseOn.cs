@@ -67,10 +67,10 @@ public class Tutorial_UseOn : TutorialManager {
                 decombiningAllowed = false;
                 audioSource.PlayOneShot (Robot1, 0.1F);
                 currentStep = TutorialStep.Welcome;
-                hintsN.SetSize (632.5f, 521.7f);
+                hintsN.SetSize (496f, 422f);
                 hintsN.SetIconPosition (1);
                 hintsN.LockTo ("robot", new Vector3 (-380.15f, -6.04f, 188.40f));
-                UItext.DOText ("In deze training leer je hoe je gecombineerde objecten kunt gebruiken. Denk hierbij aan het weggooien van een naald in de naaldcontainer of het gebruiken van een injectiespuit op je cliënt.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
+                UItext.DOText ("In deze training leer je hoe je het optie menu kunt gebruiken. ", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
                 SetUpTutorialNextButton ();
 
                 break;
@@ -78,7 +78,7 @@ public class Tutorial_UseOn : TutorialManager {
                 if (nextButtonClicked) {
                     audioSource.PlayOneShot (Popup, 0.1F);
                     audioSource.PlayOneShot (RobotShort1, 0.1F);
-                    hintsN.SetSize (483.8f, 210f);
+                    hintsN.SetSize (483.8f, 230f);
                     hintsN.SetIconPosition (0);
                     hintsN.LockTo ("WorkField", new Vector3 (2.23f, 0.59f, -1.30f));
                     currentStep = TutorialStep.MoveTo;
@@ -94,7 +94,7 @@ public class Tutorial_UseOn : TutorialManager {
                     player.tutorial_movedTo = false;
                     hintsN.SetSize (506.8f, 175f);
                     currentStep = TutorialStep.Pickinsulin;
-                    hintsN.LockTo ("InsulinPen", new Vector3 (0.00f, 0.06f, -0.06f));
+                    hintsN.LockTo("InsulinPen", new Vector3(0.00f, 0.13f, -0.06f));
                     hintsN.SetIconPosition (3);
                     UItext.DOText ("Pak de insuline pen op door erop te klikken. ", 0.5f, true, ScrambleMode.All).SetEase (Ease.Linear);
 
@@ -116,10 +116,10 @@ public class Tutorial_UseOn : TutorialManager {
                     particleHint.SetActive (false);
 
                     currentStep = TutorialStep.ExplainOptions;
-                    hintsN.SetSize (632.5f, 660.7f);
-                    hintsN.LockTo ("InsulinPen", new Vector3 (0.00f, 0.00f, 0.00f));
-                    hintsN.SetIconPosition (0);
-                    UItext.DOText ("Je kan in Care Up een optie menu openen. In het optie menu kan je door op het + icoon te klikken objecten in je handen combineren en door op het - icoon te klikken kan je objecten uit elkaar houden. Met het vergrootglas kan je het object inspecteren. En speciale handelingen zoals ontluchten kan je ook via dit optie menu doen.", 0.5f, true, ScrambleMode.All).SetEase (Ease.Linear);
+                    hintsN.SetSize (632.5f, 360f);
+                    hintsN.LockTo("robot", new Vector3(0.63f, -0.63f, -0.33f));
+                    hintsN.SetIconPosition (1);
+                    UItext.DOText ("Ieder object binnen Care Up heeft een optie menu. Met het optie menu kun bepaalde acties uitvoeren.", 0.5f, true, ScrambleMode.All).SetEase (Ease.Linear);
                     
                     SetUpTutorialNextButton ();
                 }
@@ -132,11 +132,12 @@ public class Tutorial_UseOn : TutorialManager {
 
                     currentStep = TutorialStep.OpenOptions;
                     hintsN.SetSize (506.8f, 175f);
-                    hintsN.LockTo ("UseOnButton", new Vector3 (-2.70f, -124.70f, 0.00f));
-                    hintsN.SetIconPosition (0);
+                        hintsN.LockTo("InsulinPen", new Vector3(0.00f, 0.00f, -0.06f));
+                        hintsN.SetIconPosition (0);
                     UItext.DOText ("Open het optie menu door op de insuline pen te klikken", 0.5f, true, ScrambleMode.All).SetEase (Ease.Linear);
-
-                    player.tutorial_itemControls = false;
+                        particleHint.SetActive(true);
+                        particleHint.transform.position = GameObject.Find("InsulinPen").transform.position;
+                        player.tutorial_itemControls = false;
                     player.itemControlsToInit = "InsulinPen";
                 }
                 break;
@@ -147,9 +148,9 @@ public class Tutorial_UseOn : TutorialManager {
                     player.tutorial_UseOnControl = false;
                     hintsN.SetSize (506.8f, 300f);
                     currentStep = TutorialStep.ExplainInspecting;
-                    hintsN.LockTo ("NeedleCup", new Vector3 (0.00f, 0.00f, -0.15f));
-                    hintsN.SetIconPosition (0);
-                    UItext.DOText ("Nu zie je het optie menu en kan je door op het vergrootglas de insuline pen inspecteren.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
+                        hintsN.LockTo("robot", new Vector3(0.00f, -0.31f, -0.02f));
+                        hintsN.SetIconPosition (1);
+                    UItext.DOText ("Klikken op een object in je hand opent het optie menu.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
 
                     SetUpTutorialNextButton ();
                 }
@@ -162,8 +163,9 @@ public class Tutorial_UseOn : TutorialManager {
                     hintsN.SetSize (506.8f, 277.6f);
                     handsInventory.tutorial_itemUsedOn = false;
                     currentStep = TutorialStep.Inspect;
-                    hintsN.LockTo ("NeedleCup", new Vector3 (0.00f, 0.00f, -0.15f));
-                    UItext.DOText ("Inspecteer nu de insuline pen.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
+                        hintsN.LockTo("robot", new Vector3(0.00f, -0.31f, -0.02f));
+                        hintsN.SetIconPosition(1);
+                        UItext.DOText ("Probeer de insuline pen te controleren door op het vergrootglas icoon te klikken.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
 
                     examined = false;
                 }
@@ -173,11 +175,12 @@ public class Tutorial_UseOn : TutorialManager {
                     audioSource.PlayOneShot (Popup, 0.1F);
                     audioSource.PlayOneShot (Robot3, 0.1F);
                     audioSource.PlayOneShot (Done, 0.1F);
-                    hintsN.SetSize (506.8f, 277.6f);
+                    hintsN.SetSize (600f, 400f);
                     handsInventory.tutorial_itemUsedOn = false;
                     currentStep = TutorialStep.CloseInspect;
-                    hintsN.LockTo ("SceneLoader 1", new Vector3 (363.61f, -22.40f, 0.00f));
-                    UItext.DOText ("Stop nu met inspecteren door ergens op het scherm te klikken.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
+                        hintsN.SetIconPosition(0);
+                        hintsN.LockTo("SceneLoader 1", new Vector3(-295.60f, 155.50f, 0.00f));
+                        UItext.DOText ("Heel goed! Objecten die gecontroleerd moeten worden hebben altijd een vergrootglas icoon in het optie menu. Sluit de controle door ergens op het scherm te klikken of door op de 'Sluiten' knop te drukken.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
 
                     stopExamined = false;
                 }
@@ -190,8 +193,9 @@ public class Tutorial_UseOn : TutorialManager {
                     hintsN.SetSize (506.8f, 277.6f);
                     handsInventory.tutorial_itemUsedOn = false;
                     currentStep = TutorialStep.PickNeedle;
-                    hintsN.LockTo ("InsulinOpenedNeedlePackage", new Vector3 (363.61f, -22.40f, 0.00f));
-                    UItext.DOText ("Pak nu de naald van de tafel door erop te klikken.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
+                        hintsN.SetIconPosition(2);
+                        hintsN.LockTo("robot", new Vector3(0.00f, 0.34f, 0.33f));
+                        UItext.DOText ("Pak de naald van het werkveld door erop te klikken.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
 
                     handsInventory.tutorial_pickedRight = false;
 
@@ -209,8 +213,10 @@ public class Tutorial_UseOn : TutorialManager {
                     hintsN.SetSize (506.8f, 277.6f);
                     handsInventory.tutorial_itemUsedOn = false;
                     currentStep = TutorialStep.OpenOptions2;
-                    hintsN.LockTo ("SceneLoader 1", new Vector3 (363.61f, -22.40f, 0.00f));
-                    UItext.DOText ("Open nu de opties van de naald door erop te klikken.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
+
+                    hintsN.SetIconPosition(1);
+                        hintsN.LockTo("InsulinOpenedNeedlePackage", new Vector3(0.00f, -0.12f, -0.09f));
+                        UItext.DOText ("Open nu het optie menu van de naald door op de naald te klikken.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
 
                     particleHint.SetActive (false);
 
@@ -223,12 +229,12 @@ public class Tutorial_UseOn : TutorialManager {
                     audioSource.PlayOneShot (Popup, 0.1F);
                     audioSource.PlayOneShot (Robot3, 0.1F);
                     audioSource.PlayOneShot (Done, 0.1F);
-                    hintsN.SetSize (550.5f, 450.7f);
+                    hintsN.SetSize (600f, 450.7f);
                     handsInventory.tutorial_itemUsedOn = false;
                     currentStep = TutorialStep.ExplainCombine;
-                    hintsN.LockTo ("InsulinPen", new Vector3 (0.00f, 0.00f, 0.00f));
-                    decombiningAllowed = false;
-                    UItext.DOText ("Je kan twee objecten met elkaar te combineren door op het + icoon te klikken en dan op het andere object waar me je wilt combineren.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
+                        hintsN.LockTo("robot", new Vector3(0.00f, -0.17f, 0.22f));
+                        decombiningAllowed = false;
+                    UItext.DOText ("Naast swipen, kun je objecten ook combineren door op het + icoon te klikken. Vervolgens klik je op het andere object in je hand.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
                     SetUpTutorialNextButton ();
                 }
                 break;
@@ -239,8 +245,9 @@ public class Tutorial_UseOn : TutorialManager {
                     audioSource.PlayOneShot (Done, 0.1F);
                     hintsN.SetSize (506.8f, 277.6f);
                     handsInventory.tutorial_itemUsedOn = false;
-                    hintsN.LockTo ("SceneLoader 1", new Vector3 (363.61f, -22.40f, 0.00f));
-                    UItext.DOText ("Combineer nu de naald met de insuline pen.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
+                        hintsN.LockTo("robot", new Vector3(0.00f, -0.30f, 0.14f));
+                        hintsN.SetIconPosition(1);
+                     UItext.DOText ("Combineer nu de naald met de insuline pen door op het + icoon te selecteren en vervolgens op de insulinepen te klikken", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
 
                     currentStep = TutorialStep.Combine;
                     handsInventory.tutorial_combined = false;
@@ -256,8 +263,8 @@ public class Tutorial_UseOn : TutorialManager {
                     hintsN.SetSize (515.8f, 290.6f);
                     currentStep = TutorialStep.ExplainDeCombine;
                     handsInventory.tutorial_itemUsedOn = false;
-                    hintsN.LockTo ("SceneLoader 1", new Vector3 (363.61f, -22.40f, 0.00f));
-                    UItext.DOText ("Door het optie menu te openen en dan op het - icoon te klikken kan je objecten van elkaar scheiden. Open nu het optie menu door op de insuline pen te klikken.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
+                        hintsN.LockTo("robot", new Vector3(0.00f, -0.35f, 0.04f));
+                        UItext.DOText ("Keurig! Open het optie menu van de insuline pen door op de insuline pen te klikken.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
 
                     player.tutorial_itemControls = false;
                     player.itemControlsToInit = "InsulinPenWithNeedlePackage";
@@ -270,8 +277,9 @@ public class Tutorial_UseOn : TutorialManager {
                     audioSource.PlayOneShot (Done, 0.1F);
                     hintsN.SetSize (506.8f, 277.6f);
                     handsInventory.tutorial_itemUsedOn = false;
-                    hintsN.LockTo ("SceneLoader 1", new Vector3 (363.61f, -22.40f, 0.00f));
-                    UItext.DOText ("Scheid de insuline pen en het kaapje van de naald nu.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
+                        hintsN.LockTo("robot", new Vector3(0.00f, -0.35f, 0.04f));
+                        hintsN.SetIconPosition(1);
+                    UItext.DOText ("Naast omhoog/omlaag swipen, kun je objecten ook scheiden door op het - icoon te klikken, Probeer dit nu.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
 
                     currentStep = TutorialStep.DeCombine;
                     handsInventory.tutorial_combined = false;
@@ -287,8 +295,8 @@ public class Tutorial_UseOn : TutorialManager {
                     hintsN.SetSize (506.8f, 277.6f);
                     currentStep = TutorialStep.OpenOptions3;
                     handsInventory.tutorial_itemUsedOn = false;
-                    hintsN.LockTo ("SceneLoader 1", new Vector3 (363.61f, -22.40f, 0.00f));
-                    UItext.DOText ("Open het optie menu door op de insuline pen te klikken.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
+                        hintsN.LockTo("robot", new Vector3(0.00f, -0.35f, 0.04f));
+                        UItext.DOText ("Open nogmaals het optie menu door op de insuline pen te klikken.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
 
                     player.tutorial_itemControls = false;
                     player.itemControlsToInit = "InsulinPenWithNeedle";
@@ -302,8 +310,9 @@ public class Tutorial_UseOn : TutorialManager {
                     hintsN.SetSize (550.5f, 450.7f);
                     handsInventory.tutorial_itemUsedOn = false;
                     currentStep = TutorialStep.ExplainActions;
-                    hintsN.LockTo ("InsulinPen", new Vector3 (0.00f, 0.00f, 0.00f));
-                    UItext.DOText ("Bij het het doen van een protocol moet je soms special acties doen om verder te kunnen bijvoorbeeld het zwenken van de insuline pen, die speciale acties kan je doen via het optie menu door op de knop te drukken die tevoorschijn komt.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
+                        hintsN.LockTo("robot", new Vector3(0.00f, -0.33f, 0.05f));
+                        hintsN.SetIconPosition(1);
+                        UItext.DOText ("Sommige handelingen bevatten speciale acties. Deze speciale acties worden in het optie menu getoond wanneer je de actie dient uit te voeren.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
                     SetUpTutorialNextButton ();
                 }
                 break;
@@ -315,8 +324,9 @@ public class Tutorial_UseOn : TutorialManager {
                     hintsN.SetSize (550.5f, 450.7f);
                     handsInventory.tutorial_itemUsedOn = false;
                     currentStep = TutorialStep.VentInsulin;
-                    hintsN.LockTo ("InsulinPen", new Vector3 (0.00f, 0.00f, 0.00f));
-                    UItext.DOText ("Ontlucht nu de insuline pen door de knop ontluchten in het optie menu te kiezen.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
+                        hintsN.SetIconPosition(1);
+                        hintsN.LockTo("robot", new Vector3(0.00f, -0.33f, 0.05f));
+                        UItext.DOText ("Ontlucht nu de insuline pen door 'Ontluchten' te selecteren in het optie menu.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
 
                     handsInventory.LeftHandObject.GetComponent<PickableObject> ().tutorial_usedOn = false;
                     ventAllowed = true;
@@ -332,8 +342,8 @@ public class Tutorial_UseOn : TutorialManager {
                     hintsN.SetSize (550.5f, 450.7f);
                     handsInventory.tutorial_itemUsedOn = false;
                     currentStep = TutorialStep.ExplainRemoveNeedle;
-                    hintsN.LockTo ("InsulinPen", new Vector3 (0.00f, 0.00f, 0.00f));
-                    UItext.DOText ("Na het prikken van de insuline moet je de naald nog verwijderen dat kan je doen door het optie menu met het - icoon of omhoog swipen met je vinger of met de muis van onder naar boven kliken en ingedrukt houden.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
+                        hintsN.LockTo("robot", new Vector3(0.00f, -0.33f, 1.56f));
+                        UItext.DOText ("Na het prikken van de insuline moet je de naald nog verwijderen dat kan je doen door het optie menu met het - icoon of omhoog swipen met je vinger of met de muis van onder naar boven kliken en ingedrukt houden.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
 
                     handsInventory.ReplaceHandObject (true, "InsulinPenWithNeedle");
 
@@ -347,8 +357,8 @@ public class Tutorial_UseOn : TutorialManager {
                     audioSource.PlayOneShot (Done, 0.1F);
                     hintsN.SetSize (550.5f, 450.7f);
                     handsInventory.tutorial_itemUsedOn = false;
-                    hintsN.LockTo ("InsulinPen", new Vector3 (0.00f, 0.00f, 0.00f));
-                    UItext.DOText ("Verwijder nu de naald op één van die manieren", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
+                        hintsN.LockTo("robot", new Vector3(0.00f, -0.33f, 0.13f));
+                        UItext.DOText ("Probeer nu de naald van de insuline spuit te halen door te swipen of door het optie menu te gebruiken.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
 
                     currentStep = TutorialStep.RemoveNeedle;
                     handsInventory.tutorial_combined = false;
@@ -361,11 +371,11 @@ public class Tutorial_UseOn : TutorialManager {
                     audioSource.PlayOneShot (Popup, 0.1F);
                     audioSource.PlayOneShot (Robot3, 0.1F);
                     audioSource.PlayOneShot (Done, 0.1F);
-                    hintsN.SetSize (550.5f, 450.7f);
-                    handsInventory.tutorial_itemUsedOn = false;
+                        hintsN.SetSize(550.5f, 150f);
+                        handsInventory.tutorial_itemUsedOn = false;
                     currentStep = TutorialStep.OpenActions4;
-                    hintsN.LockTo ("InsulinPen", new Vector3 (0.00f, 0.00f, 0.00f));
-                    UItext.DOText ("Open het optie menu van de naald.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
+                        hintsN.LockTo("robot", new Vector3(0.00f, -0.33f, 0.13f));
+                        UItext.DOText ("Open het optie menu van de naald.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
 
                     player.tutorial_itemControls = false;
                     player.itemControlsToInit = "InsulinNeedle";
@@ -376,11 +386,11 @@ public class Tutorial_UseOn : TutorialManager {
                     audioSource.PlayOneShot (Popup, 0.1F);
                     audioSource.PlayOneShot (Robot3, 0.1F);
                     audioSource.PlayOneShot (Done, 0.1F);
-                    hintsN.SetSize (550.5f, 450.7f);
+                    hintsN.SetSize (700f, 600f);
                     handsInventory.tutorial_itemUsedOn = false;
                     currentStep = TutorialStep.ExplainUseOn;
-                    hintsN.LockTo ("InsulinPen", new Vector3 (0.00f, 0.00f, 0.00f));
-                    UItext.DOText ("Uitleg dat het + icoon ook werkt voor als je de naald in de naaldencontaner wil doen en niet alleen combineren.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
+                        hintsN.LockTo("robot", new Vector3(0.00f, -0.33f, 0.13f));
+                        UItext.DOText ("Naast het combineren kan het + icoon kan ook worden gebruikt om objecten met elkaar te gebruiken. Denk hierbij aan het weggooien van de naald in de naalden container of het gebruiken van de spuit op een cliënt om het injecteren te starten.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
                     handsInventory.RightHandObject.GetComponent<PickableObject> ().depoistNeedle = true;
 
                     SetUpTutorialNextButton ();
@@ -391,11 +401,11 @@ public class Tutorial_UseOn : TutorialManager {
                     audioSource.PlayOneShot (Popup, 0.1F);
                     audioSource.PlayOneShot (Robot3, 0.1F);
                     audioSource.PlayOneShot (Done, 0.1F);
-                    hintsN.SetSize (550.5f, 450.7f);
+                    hintsN.SetSize (550.5f, 150f);
                     handsInventory.tutorial_itemUsedOn = false;
                     currentStep = TutorialStep.ClickPlus;
-                    hintsN.LockTo ("InsulinPen", new Vector3 (0.00f, 0.00f, 0.00f));
-                    UItext.DOText ("Klik nu op het + icoon.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
+                        hintsN.LockTo("robot", new Vector3(0.00f, -0.37f, 0.13f));
+                        UItext.DOText ("Klik nu op het + icoon in het optie menu", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
 
                     player.tutorial_UseOnControl = false;
                 }
@@ -405,11 +415,12 @@ public class Tutorial_UseOn : TutorialManager {
                     audioSource.PlayOneShot (Popup, 0.1F);
                     audioSource.PlayOneShot (Robot3, 0.1F);
                     audioSource.PlayOneShot (Done, 0.1F);
-                    hintsN.SetSize (550.5f, 450.7f);
-                    handsInventory.tutorial_itemUsedOn = false;
+                        hintsN.SetSize(550.5f, 150f);
+                        handsInventory.tutorial_itemUsedOn = false;
                     currentStep = TutorialStep.ClickContainer;
-                    hintsN.LockTo ("InsulinPen", new Vector3 (0.00f, 0.00f, 0.00f));
-                    UItext.DOText ("Klik nu op de naalden container", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
+                        hintsN.SetIconPosition(0);
+                        hintsN.LockTo("NeedleCup", new Vector3(0.00f, 0.28f, -0.17f));
+                        UItext.DOText ("Klik vervolgens op de naalden container", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
                     handsInventory.RightHandObject.GetComponent<PickableObject> ().depoistNeedle = false;
 
                     handsInventory.tutorial_itemUsedOn = false;
