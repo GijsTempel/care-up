@@ -41,6 +41,7 @@ GameObject:
   - component: {fileID: 54750252138012940}
   - component: {fileID: 114512636177625134}
   - component: {fileID: 65746022885664390}
+  - component: {fileID: 114373342302446342}
   m_Layer: 0
   m_Name: MedicineBag
   m_TagString: Untagged
@@ -68,7 +69,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1251329539492126}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 8.935364, y: 1.5668486, z: 11.302385}
+  m_LocalPosition: {x: 9.353805, y: 1.1071041, z: 12.055263}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children:
   - {fileID: 4383424570505728}
@@ -186,6 +187,32 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.0011642437, y: 0.0011642433, z: 0.00011295453}
   m_Center: {x: 0, y: 5.820765e-11, z: 0}
+--- !u!114 &114373342302446342
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1251329539492126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6095384fe7173243b9fb25bc8b25d06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectID: 0
+  description: Medicijn in flacon
+  muplipleMesh: 0
+  descriptionOffset: {x: 0, y: 0, z: 0}
+  transparencyFix: 0
+  tutorial_picked: 0
+  tutorial_closed: 0
+  tutorial_examined: 0
+  examineRotation: {x: -90, y: 0, z: 90}
+  audioExamine: 0
+  animationExamine: 1
+  viewSettings:
+    distanceFromCamera: 0.35
+    rotationSensetivity: 90
+  state: good
 --- !u!114 &114512636177625134
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -203,6 +230,7 @@ MonoBehaviour:
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
   tutorial_usedOn: 0
+  depoistNeedle: 0
   leftControlBone: {fileID: 0}
   rightControlBone: {fileID: 0}
   holdAnimationID: 0
