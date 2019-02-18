@@ -177,14 +177,6 @@ public class PlayerScript : MonoBehaviour
         if (GameObject.Find("BiggerDevHint") != null)
             biggerDevHintUI = GameObject.Find("BiggerDevHint").gameObject;
 
-        GameObject wrongActionPopUp = GameObject.Find("WrongAction").gameObject;
-        //GameObject warningPopUp = GameObject.Find("EmptyHandsWarning").gameObject;
-
-        wrongActionPopUp.AddComponent<EventTrigger>();
-        wrongActionPopUp.GetComponent<EventTrigger>().triggers.Add(event1);
-        wrongActionPopUp.GetComponent<EventTrigger>().triggers.Add(event2);
-        wrongActionPopUp.GetComponent<EventTrigger>().triggers.Add(event3);
-
         // warningPopUp.AddComponent<EventTrigger>();
         //warningPopUp.GetComponent<EventTrigger>().triggers.Add(event1);
         // warningPopUp.GetComponent<EventTrigger>().triggers.Add(event2);
@@ -194,7 +186,6 @@ public class PlayerScript : MonoBehaviour
         event3.eventID = EventTriggerType.PointerClick;
         event3.callback.AddListener((eventData) => { TimedPopUp.ForceHide(); });
 
-        wrongActionPopUp.GetComponent<EventTrigger>().triggers.Add(closePopUp);
         //warningPopUp.GetComponent<EventTrigger>().triggers.Add(closePopUp);
 
         if (GameObject.Find("GameLogic").GetComponent<TutorialManager>() != null)
