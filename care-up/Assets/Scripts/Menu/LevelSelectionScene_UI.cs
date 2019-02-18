@@ -266,9 +266,8 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 _Scores[i].SetScoreLine(name, score, i);
         }
 
-        LeaderBoardSceneButton button = new LeaderBoardSceneButton();
-
         // loading icon is shown
-        button.Loading(true, 0f);
+        GameObject.FindObjectOfType<LeaderBoard>().leaderBoardIcon.SetActive(false);
+        GameObject.FindObjectOfType<LeaderBoard>().leaderboard.SetActive(true);       
     }
 }
