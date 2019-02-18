@@ -623,6 +623,30 @@ public class HandsInventory : MonoBehaviour {
         SetHold(hand);
     }
 
+    public void ForcePickItem(GameObject obj, PlayerAnimationManager.Hand hand)
+    {
+        if (hand == PlayerAnimationManager.Hand.Left)
+        {
+            leftHandObject = obj.GetComponent<PickableObject>();
+            leftHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            leftHandObject.GetComponent<Rigidbody>().isKinematic = false;
+            leftHandObject.leftControlBone = leftControlBone;
+            leftHandObject.rightControlBone = rightControlBone;
+            leftHandObject.SavePosition();
+        }
+        else
+        {
+            rightHandObject = obj.GetComponent<PickableObject>();
+            rightHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            rightHandObject.GetComponent<Rigidbody>().isKinematic = false;
+            rightHandObject.leftControlBone = leftControlBone;
+            rightHandObject.rightControlBone = rightControlBone;
+            rightHandObject.SavePosition();
+        }
+
+        SetHold(hand == PlayerAnimationManager.Hand.Left);
+    }
+
     /// <summary>
     /// Hold object now (from animation behaviour) at certain frame.
     /// </summary>
