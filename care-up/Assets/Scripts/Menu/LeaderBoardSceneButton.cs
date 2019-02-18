@@ -15,11 +15,14 @@ public class LeaderBoardSceneButton : MonoBehaviour
     private void Start()
     {
         buttons.Add(this);
-    }
+    }  
 
     public void OnMainButtonClick()
     {
         LevelSelectionScene_UI manager = GameObject.FindObjectOfType<LevelSelectionScene_UI>();
+
+        // loading icon is shown
+        Loading(false, 0.729f);       
 
         // clear variations to fill
         foreach (Transform t in manager.variations)
@@ -83,5 +86,13 @@ public class LeaderBoardSceneButton : MonoBehaviour
         }
         //color
         manager.variations[variation].GetComponent<Button>().interactable = false;
+    }
+
+    public void Loading(bool isActive, float colorAlphaComponent)
+    {
+        GameObject.FindObjectOfType<LeaderBoard>().leaderboard.SetActive(isActive);
+        var color = GameObject.FindObjectOfType<LeaderBoard>().image.color;
+        color.a = colorAlphaComponent;
+        GameObject.FindObjectOfType<LeaderBoard>().image.color = color;
     }
 }

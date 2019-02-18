@@ -93,7 +93,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
         XmlNodeList xmlSceneList = xmlFile.FirstChild.NextSibling.FirstChild.ChildNodes;
         
         // leaderboard stuff
-        bool firstScene = true;
+        // bool firstScene = true;
         LeaderBoardSceneButton.buttons.Clear();
 
         foreach (XmlNode xmlSceneNode in xmlSceneList)
@@ -218,12 +218,13 @@ public class LevelSelectionScene_UI : MonoBehaviour
                     buttonInfo.buttonNames.Add(v.displayName);
                 }
             }
+            // As the design is going to be changed
 
-            if (firstScene)
-            {
-                firstScene = false;
-                buttonInfo.OnMainButtonClick();
-            }
+            //if (firstScene)
+            //{
+            //    firstScene = false;
+            //    buttonInfo.OnMainButtonClick();
+            //}
 
             sceneUnit.testDisabled = (xmlSceneNode.Attributes["test"] != null
                 && xmlSceneNode.Attributes["test"].Value == "disabled");
@@ -264,5 +265,10 @@ public class LevelSelectionScene_UI : MonoBehaviour
             if (i < _Scores.Length)
                 _Scores[i].SetScoreLine(name, score, i);
         }
+
+        LeaderBoardSceneButton button = new LeaderBoardSceneButton();
+
+        // loading icon is shown
+        button.Loading(true, 0f);
     }
 }
