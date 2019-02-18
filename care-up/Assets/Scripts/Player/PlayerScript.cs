@@ -624,14 +624,14 @@ public class PlayerScript : MonoBehaviour
 
         if (robotSavedLeft != null)
         {
-            handsInv.ForcePickItem(robotSavedLeft.name, true);
+            handsInv.ForcePickItem(robotSavedLeft, PlayerAnimationManager.Hand.Left);
             robotSavedLeft.GetComponent<PickableObject>().CreateGhostObject();
             robotSavedLeft = null; // reset
         }
 
         if (robotSavedRight != null)
         {
-            handsInv.ForcePickItem(robotSavedRight.name, false);
+            handsInv.ForcePickItem(robotSavedRight, PlayerAnimationManager.Hand.Right);
             robotSavedRight.GetComponent<PickableObject>().CreateGhostObject();
             robotSavedRight = null; // reset
         }
