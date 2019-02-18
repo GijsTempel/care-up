@@ -93,7 +93,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
         XmlNodeList xmlSceneList = xmlFile.FirstChild.NextSibling.FirstChild.ChildNodes;
         
         // leaderboard stuff
-        // bool firstScene = true;
+        bool firstScene = true;
         LeaderBoardSceneButton.buttons.Clear();
 
         foreach (XmlNode xmlSceneNode in xmlSceneList)
@@ -220,11 +220,11 @@ public class LevelSelectionScene_UI : MonoBehaviour
             }
             // As the design is going to be changed
 
-            //if (firstScene)
-            //{
-            //    firstScene = false;
-            //    buttonInfo.OnMainButtonClick();
-            //}
+            if (firstScene)
+            {
+                firstScene = false;
+                buttonInfo.OnMainButtonClick();
+            }
 
             sceneUnit.testDisabled = (xmlSceneNode.Attributes["test"] != null
                 && xmlSceneNode.Attributes["test"].Value == "disabled");
@@ -267,7 +267,8 @@ public class LevelSelectionScene_UI : MonoBehaviour
         }
 
         // loading icon is shown
+        GameObject.FindObjectOfType<LeaderBoard>().leftBar.SetActive(true);
+        GameObject.FindObjectOfType<LeaderBoard>().infoBar.SetActive(true);
         GameObject.FindObjectOfType<LeaderBoard>().leaderBoardIcon.SetActive(false);
-        GameObject.FindObjectOfType<LeaderBoard>().leaderboard.SetActive(true);       
     }
 }
