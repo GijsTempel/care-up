@@ -373,6 +373,16 @@ public class PlayerScript : MonoBehaviour
         robot.transform.rotation = Quaternion.Euler(group.robotRotation);
 
         freeLook = false;
+
+        foreach (WalkToGroup g in groups)
+        {
+            if (g != currentWalkPosition)
+            {
+                g.HighlightGroup(false);
+                g.enabled = true;
+                g.GetComponent<Collider>().enabled = true;
+            }
+        }
     }
 
     private void ToggleAway(bool _away = false)

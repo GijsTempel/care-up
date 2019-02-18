@@ -260,7 +260,8 @@ public class ItemControlsUI : MonoBehaviour {
 
                 bool discard = initedObject.GetComponent<PickableObject>() != null
                     && initedObject.GetComponent<PickableObject>().destroyOnDrop == true;
-                discardButton.SetActive(discard);
+                //discardButton.SetActive(discard);
+                discardButton.SetActive(false); // for now disable discard button
 
                 initedObject.GetComponent<InteractableObject>().Reset();
 
@@ -431,6 +432,10 @@ public class ItemControlsUI : MonoBehaviour {
             return;
         }
 
+        if (tutorialUseOn != null && !tutorialUseOn.decombiningAllowed) {
+            return;
+        }
+
         if (handsInventory.LeftHandEmpty() ^ handsInventory.RightHandEmpty())
         {
             handsInventory.OnCombineAction();
@@ -483,13 +488,26 @@ public class ItemControlsUI : MonoBehaviour {
 
     public void UseOnNoTarget()
     {
+
+        if (tutorialUseOn != null && !tutorialUseOn.ventAllowed) {
+            return;
+        }
+
         if (initedObject == handsInventory.LeftHandObject)
         {
             handsInventory.LeftHandObject.GetComponent<PickableObject>().Use(true, true);
+
+            if (tutorialUseOn != null) {
+                handsInventory.LeftHandObject.GetComponent<PickableObject> ().tutorial_usedOn = true;
+            }
         }
         else
         {
             handsInventory.RightHandObject.GetComponent<PickableObject>().Use(false, true);
+
+            if (tutorialUseOn != null) {
+                handsInventory.RightHandObject.GetComponent<PickableObject> ().tutorial_usedOn = true;
+            }
         }
 
         Close();

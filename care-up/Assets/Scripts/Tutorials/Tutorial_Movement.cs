@@ -125,8 +125,8 @@ public class Tutorial_Movement : TutorialManager
                         audioSource.PlayOneShot(RobotShort2, 0.1F);
                         player.tutorial_movedBack = false;
                         hintsN.SetSize(560f, 177f);
-                        hintsN.SetIconPosition(0);
-                        hintsN.LockTo("doc", new Vector3(-34.60f, 8.00f, -20.00f));
+                        hintsN.SetIconPosition(3);
+                        hintsN.LockTo("doc", new Vector3(-34.60f, 0.67f, -20.00f));
                         currentStep = TutorialStep.MoveToDoctor;
                         GameObject.Find("JoystickKnob").GetComponent<Animator>().SetTrigger("BlinkStart");
                         GameObject.Find("JoystickBackground").GetComponent<Animator>().SetTrigger("BlinkStart");
@@ -144,10 +144,11 @@ public class Tutorial_Movement : TutorialManager
                         audioSource.PlayOneShot(Robot1, 0.1F);
                         docPos.SetActive(false);
                         player.tutorial_movedTo = false;
-                        hintsN.LockTo("/doc", new Vector3(345.90f, 1.40f, 707.00f));
+                        hintsN.LockTo("doc", new Vector3(126.70f, 17.26f, 274.22f));
                         hintsN.SetSize(820f, 591f);
                         currentStep = TutorialStep.FreeLookExpl;
-                        UItext.DOText("Wil je om je heen kijken? Dat kan! Dat doe je doormiddel van de joystick linksonder in het beeld klik daarop en beweeg de joystick in de richting waar je heen wilt kijken en laat los om te stoppen met rondkijken.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
+                        hintsN.SetIconPosition(0);
+                        UItext.DOText("Wil je om je heen kijken? Dit kan door middel van de joystick. Beweeg de joystick in de richting waar je heen wilt kijken en laat los om te stoppen met rondkijken.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
                         SetUpTutorialNextButton();
                     }
                     break;
@@ -162,7 +163,7 @@ public class Tutorial_Movement : TutorialManager
                         UItext.DOText("Beweeg vanaf je collega direct naar het werkveld zonder terug te keren naar het overzicht.", 1, true, ScrambleMode.All).SetEase(Ease.Linear);
 						hintsN.ResetSize();
 						hintsN.SetIconPosition(1);
-                        hintsN.LockTo("doc", new Vector3(0.48f, 1.32f, 1.22f));
+                        hintsN.LockTo("doc", new Vector3(0.48f, 2.43f, 1.22f));
                         player.MoveBackButtonObject.SetActive(false);
                         player.tutorial_movedTo = false;
                         wfPos.SetActive(true);

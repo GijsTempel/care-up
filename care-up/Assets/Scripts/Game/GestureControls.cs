@@ -131,7 +131,7 @@ public class GestureControls : MonoBehaviour
                 return;
             }
 
-            player.itemControls.Close();
+            player.itemControls.Close(true);
             handsInventory.OnCombineAction();
         }
     }
@@ -153,6 +153,9 @@ public class GestureControls : MonoBehaviour
             
             if (IsViableWithUIOpen())
             {
+                if (cameraMode.CurrentMode == CameraMode.Mode.ItemControlsUI)
+                    GameObject.FindObjectOfType<PlayerScript>().itemControls.Close();
+
                 if (initedObject.GetComponent<ExaminableObject>() != null)
                 {
                     if (cameraMode.CurrentMode == CameraMode.Mode.ItemControlsUI)

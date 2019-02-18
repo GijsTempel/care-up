@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 8
+  serializedVersion: 9
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -39,6 +39,7 @@ RenderSettings:
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
   m_IndirectSpecularColor: {r: 0.80614936, g: 0.8996111, b: 0.95831925, a: 1}
+  m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -54,11 +55,10 @@ LightmapSettings:
     m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 0
   m_LightmapEditorSettings:
-    serializedVersion: 9
+    serializedVersion: 10
     m_Resolution: 3
     m_BakeResolution: 30
-    m_TextureWidth: 1024
-    m_TextureHeight: 1024
+    m_AtlasSize: 1024
     m_AO: 1
     m_AOMaxDistance: 1
     m_CompAOExponent: 1
@@ -917,6 +917,8 @@ MonoBehaviour:
   RobotShort2: {fileID: 8300000, guid: 1d4f652c2c27c2043bfd7dd8ef910a1a, type: 3}
   examined: 0
   stopExamined: 0
+  decombiningAllowed: 0
+  ventAllowed: 0
 --- !u!114 &204503200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1009,7 +1011,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3b985248e9b9f24d99e0c11f2a50def, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  combinationListName: InjectionScene
+  combinationListName: InsulinInjection
 --- !u!114 &204503206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1098,54 +1100,69 @@ AudioSource:
   rolloffCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - serializedVersion: 2
+    - serializedVersion: 3
       time: 0
       value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
-    - serializedVersion: 2
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
       time: 1
       value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   panLevelCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - serializedVersion: 2
+    - serializedVersion: 3
       time: 0
       value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
   spreadCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - serializedVersion: 2
+    - serializedVersion: 3
       time: 0
       value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - serializedVersion: 2
+    - serializedVersion: 3
       time: 0
       value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
@@ -1300,8 +1317,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 8.6, y: 1, z: 12}
   rotation: {x: 30, y: 95.5, z: 0}
-  robotPosition: {x: 0, y: 0, z: 0}
-  robotRotation: {x: 0, y: 0, z: 0}
+  robotPosition: {x: 11, y: 1.153, z: 11}
+  robotRotation: {x: -5, y: -60, z: 0}
 --- !u!65 &218468751
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1692,6 +1709,48 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 404304, guid: 7e8e61eb58bb4064aa448891e368b648, type: 2}
   m_PrefabInternal: {fileID: 258558796}
+--- !u!1001 &278016993
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 532238239}
+    m_Modifications:
+    - target: {fileID: 4405023099832756, guid: 29005710551304da0b97315eb527431d, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 9.460798
+      objectReference: {fileID: 0}
+    - target: {fileID: 4405023099832756, guid: 29005710551304da0b97315eb527431d, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 1.0978246
+      objectReference: {fileID: 0}
+    - target: {fileID: 4405023099832756, guid: 29005710551304da0b97315eb527431d, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 11.428757
+      objectReference: {fileID: 0}
+    - target: {fileID: 4405023099832756, guid: 29005710551304da0b97315eb527431d, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0.5951887
+      objectReference: {fileID: 0}
+    - target: {fileID: 4405023099832756, guid: 29005710551304da0b97315eb527431d, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0.38177276
+      objectReference: {fileID: 0}
+    - target: {fileID: 4405023099832756, guid: 29005710551304da0b97315eb527431d, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0.38177276
+      objectReference: {fileID: 0}
+    - target: {fileID: 4405023099832756, guid: 29005710551304da0b97315eb527431d, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.5951887
+      objectReference: {fileID: 0}
+    - target: {fileID: 4405023099832756, guid: 29005710551304da0b97315eb527431d, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 29005710551304da0b97315eb527431d, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &297667901
 Prefab:
   m_ObjectHideFlags: 0
@@ -1902,7 +1961,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4853544864937212, guid: cc8efae539623aa418e05003c8e81089, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cc8efae539623aa418e05003c8e81089, type: 2}
@@ -2134,6 +2193,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 3ecb95f2097b7484fb5e495cfb4e97e1, type: 3}
   m_StaticBatchInfo:
@@ -2362,6 +2422,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1768974667}
   - {fileID: 584035198}
   - {fileID: 1815079682}
   - {fileID: 563827676}
@@ -2411,7 +2472,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000013167861998, guid: 04ef50acd91b5534f94bead71accf78d, type: 2}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1000010764973712, guid: 04ef50acd91b5534f94bead71accf78d, type: 2}
       propertyPath: m_IsActive
@@ -4798,54 +4859,69 @@ AudioSource:
   rolloffCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - serializedVersion: 2
+    - serializedVersion: 3
       time: 0
       value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
-    - serializedVersion: 2
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
       time: 1
       value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   panLevelCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - serializedVersion: 2
+    - serializedVersion: 3
       time: 0
       value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
   spreadCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - serializedVersion: 2
+    - serializedVersion: 3
       time: 0
       value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - serializedVersion: 2
+    - serializedVersion: 3
       time: 0
       value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
@@ -6391,54 +6467,69 @@ AudioSource:
   rolloffCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - serializedVersion: 2
+    - serializedVersion: 3
       time: 0
       value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
-    - serializedVersion: 2
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
       time: 1
       value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   panLevelCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - serializedVersion: 2
+    - serializedVersion: 3
       time: 0
       value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
   spreadCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - serializedVersion: 2
+    - serializedVersion: 3
       time: 0
       value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - serializedVersion: 2
+    - serializedVersion: 3
       time: 0
       value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
@@ -6832,6 +6923,11 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 404304, guid: 7e8e61eb58bb4064aa448891e368b648, type: 2}
   m_PrefabInternal: {fileID: 1766809699}
+--- !u!4 &1768974667 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4405023099832756, guid: 29005710551304da0b97315eb527431d,
+    type: 2}
+  m_PrefabInternal: {fileID: 278016993}
 --- !u!1001 &1775139133
 Prefab:
   m_ObjectHideFlags: 0
@@ -7056,7 +7152,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000010661730444, guid: 160c0d1fbef191045a350915d5992d54, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4000010661730444, guid: 160c0d1fbef191045a350915d5992d54, type: 2}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -7289,6 +7385,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 9bfdd4140d0c1a74d9380a12692bbee0, type: 2}
   m_StaticBatchInfo:
@@ -8132,6 +8229,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 0}
   m_StaticBatchInfo:

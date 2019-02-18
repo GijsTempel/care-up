@@ -25,6 +25,8 @@ public class HandsInventory : MonoBehaviour {
     [HideInInspector]
     public bool tutorial_InspectItem = false;
 
+    private Tutorial_UseOn tutorialUseOn;
+
     // position in air 
     public float horisontalOffset = 0.5f;
     public float distanceFromCamera = 1.0f;
@@ -94,7 +96,9 @@ public class HandsInventory : MonoBehaviour {
 
     void Start()
     {
-		ObjectsID_Controller = GameObject.Find("GameLogic").GetComponent<ObjectsIDController>();
+        tutorialUseOn = GameObject.FindObjectOfType<Tutorial_UseOn> ();
+
+        ObjectsID_Controller = GameObject.Find("GameLogic").GetComponent<ObjectsIDController>();
 
         combinationManager = GameObject.Find("GameLogic").GetComponent<CombinationManager>();
         if (combinationManager == null) Debug.LogError("No combination manager found.");
@@ -844,6 +848,10 @@ public class HandsInventory : MonoBehaviour {
 
     public void OnCombineAction()
     {
+        if (tutorialUseOn != null && !tutorialUseOn.decombiningAllowed) {
+            return;
+        }
+
         string leftName = leftHandObject ? leftHandObject.name : "";
         string rightName = rightHandObject ? rightHandObject.name : "";
         
