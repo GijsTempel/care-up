@@ -588,7 +588,7 @@ public class PlayerScript : MonoBehaviour
 
         MoveBackButtonObject.SetActive(moveBackBtnActiveForIpad);
 
-        if (joystickObject != null)
+        if (joystickObject != null && !PlayerScript.actionsLocked)
             joystickObject.SetActive(!robotUIopened);
     }
 

@@ -220,10 +220,10 @@ public void OnContinueButton()
         icons.Find("QuizTab").gameObject.SetActive(false);
         // close tab
         BackButton();
+        // enable player if needed
+        PlayerScript.actionsLocked = false; // before close robot UI (!)
         // close UI 
         GameObject.FindObjectOfType<PlayerScript>().CloseRobotUI();
-        // enable player if needed
-        PlayerScript.actionsLocked = false;
     }
 
     public void Continue()
