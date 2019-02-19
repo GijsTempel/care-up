@@ -7,7 +7,7 @@ public class ObjectsIDs
 	public int ID;
 	public int State;
 	public string Name;
-
+   
 	public ObjectsIDs(string name, int id, int state)
 	{
 		Name = name;
@@ -38,7 +38,7 @@ public class ObjectsIDController : MonoBehaviour
 	public bool Cheat = false;
     public bool buildActionList = false;
     public List<GameObject> hidenObjects;
-
+    
     public ObjectsIDs[] Objects =
     {
         new ObjectsIDs("syringePack", 30, 0),
@@ -60,11 +60,11 @@ public class ObjectsIDController : MonoBehaviour
         new ObjectsIDs("m1_A", -6, 0),
         new ObjectsIDs("Sink", -10, 0),
         new ObjectsIDs("GauzeTrayFull", 38,0),
-				new ObjectsIDs("cotton_ball", 40,0),
-				new ObjectsIDs("catheter_bag_packed", 42,0),
-				new ObjectsIDs("catheter_bag_packed_opened", 42,1),
-				new ObjectsIDs("catheter_bag_packed_empty", 42,2),
-				new ObjectsIDs("catheter", 43,0),
+		new ObjectsIDs("cotton_ball", 40,0),
+		new ObjectsIDs("catheter_bag_packed", 42,0),
+		new ObjectsIDs("catheter_bag_packed_opened", 42,1),
+		new ObjectsIDs("catheter_bag_packed_empty", 42,2),
+		new ObjectsIDs("catheter", 43,0),
         new ObjectsIDs("catheter_inner", 44,0),
         new ObjectsIDs("x_test", 101,0),
         new ObjectsIDs("CWB_inner_open", 50,0),
@@ -74,7 +74,6 @@ public class ObjectsIDController : MonoBehaviour
         new ObjectsIDs("fixation_folded_buttons", 53,0),
         new ObjectsIDs("Sink_active2", -15,0),
         new ObjectsIDs("PaperTowelInHand", 60,5),
-        new ObjectsIDs("MedicineBag", 102,0),
 
         //
 
@@ -141,7 +140,7 @@ public class ObjectsIDController : MonoBehaviour
         }
         return (Objects[n].State);
     }
-
+    
 
 	public string GetName(int n)
     {
@@ -162,14 +161,16 @@ public class ObjectsIDController : MonoBehaviour
             ObjectsIDs o = GetObject(byName);
             return o.GetID() * 100 + o.GetState();
         }
-
+      
         return (0);
     }
 
 
     // Use this for initialization
     void Start () {
-
+		
 	}
 
 }
+
+   
