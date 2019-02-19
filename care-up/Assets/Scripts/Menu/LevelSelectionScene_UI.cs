@@ -218,6 +218,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
                     buttonInfo.buttonNames.Add(v.displayName);
                 }
             }
+            // As the design is going to be changed
 
             if (firstScene)
             {
@@ -264,5 +265,10 @@ public class LevelSelectionScene_UI : MonoBehaviour
             if (i < _Scores.Length)
                 _Scores[i].SetScoreLine(name, score, i);
         }
+
+        // loading icon is shown
+        GameObject.FindObjectOfType<LeaderBoard>().leftBar.SetActive(true);
+        GameObject.FindObjectOfType<LeaderBoard>().infoBar.SetActive(true);
+        GameObject.FindObjectOfType<LeaderBoard>().leaderBoardIcon.SetActive(false);
     }
 }

@@ -15,10 +15,15 @@ public class LeaderBoardSceneButton : MonoBehaviour
     private void Start()
     {
         buttons.Add(this);
-    }
+    }  
 
     public void OnMainButtonClick()
     {
+        // loading icon is shown
+        GameObject.FindObjectOfType<LeaderBoard>().leftBar.SetActive(false);
+        GameObject.FindObjectOfType<LeaderBoard>().infoBar.SetActive(false);
+        GameObject.FindObjectOfType<LeaderBoard>().leaderBoardIcon.SetActive(true);
+
         LevelSelectionScene_UI manager = GameObject.FindObjectOfType<LevelSelectionScene_UI>();
 
         // clear variations to fill
