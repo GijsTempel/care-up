@@ -2746,21 +2746,6 @@ MonoBehaviour:
   ObjNames:
   - CWB_inner_open_in
   toShow: 1
---- !u!114 &114118377335406734
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7f8245cec82648289be348a2189ab01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  addFrame: 42
-  deleteFrame: 78
-  objectName: MedicineBag
-  hand: 0
 --- !u!114 &114118635965240648
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -3277,19 +3262,6 @@ MonoBehaviour:
   audioFrame: 1
   positionObjectName: 
   volume: 1
---- !u!114 &114207366653115902
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftHand: 1
-  dropFrame: 41
 --- !u!114 &114207607412705100
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -5762,6 +5734,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionFrame: 87
+--- !u!114 &114518330085570624
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftHand: 0
+  dropFrame: 79
 --- !u!114 &114521502063949914
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6307,6 +6292,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combineFrame: 107
+--- !u!114 &114609797759353646
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftHand: 0
+  dropFrame: 79
 --- !u!114 &114612848387266286
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6484,21 +6482,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combineFrame: 300
---- !u!114 &114624676225115086
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7f8245cec82648289be348a2189ab01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  addFrame: 42
-  deleteFrame: 78
-  objectName: MedicineBag
-  hand: 0
 --- !u!114 &114624920113262180
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6606,6 +6589,18 @@ MonoBehaviour:
   changeClothModelFrame: 30
   dropClothFrame: 78
   clothPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &114642230610621862
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5879d561c03f44906a01b56f8c828e6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionFrame: 41
 --- !u!114 &114648122120092304
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9086,19 +9081,6 @@ MonoBehaviour:
   audioFileName: Sound_Effects/Audio_SyringeClick
   audioFrame: 460
   volume: 1
---- !u!114 &114976519533186588
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftHand: 0
-  dropFrame: 41
 --- !u!114 &114978205205160226
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -20424,7 +20406,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: RightHandState
-    m_EventTreshold: 0
+    m_EventTreshold: 1
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102208755839579306}
   m_Solo: 0
@@ -40123,11 +40105,10 @@ AnimatorState:
   - {fileID: 1101608241486510274}
   m_StateMachineBehaviours:
   - {fileID: 114475169524274934}
-  - {fileID: 114976519533186588}
   - {fileID: 114988879178260880}
-  - {fileID: 114118377335406734}
   - {fileID: 114712205200688762}
   - {fileID: 114382149409143236}
+  - {fileID: 114518330085570624}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -45650,11 +45631,11 @@ AnimatorState:
   - {fileID: 1101791876650803700}
   m_StateMachineBehaviours:
   - {fileID: 114735827339090204}
-  - {fileID: 114207366653115902}
   - {fileID: 114727862711948016}
-  - {fileID: 114624676225115086}
   - {fileID: 114221632859188158}
   - {fileID: 114053360776659804}
+  - {fileID: 114642230610621862}
+  - {fileID: 114609797759353646}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -49571,7 +49552,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 1102611657394067996}
-    m_Position: {x: -1344, y: -552, z: 0}
+    m_Position: {x: -1236, y: -696, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102348847386240966}
     m_Position: {x: -1320, y: -300, z: 0}
@@ -49580,7 +49561,7 @@ AnimatorStateMachine:
     m_Position: {x: -1560, y: -300, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102757710632104992}
-    m_Position: {x: -1344, y: -696, z: 0}
+    m_Position: {x: -1440, y: -804, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102170378369458060}
     m_Position: {x: -1320, y: -216, z: 0}
@@ -49794,8 +49775,8 @@ AnimatorStateMachine:
   - {fileID: 1109166650086243654}
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: -1296, y: -444, z: 0}
-  m_EntryPosition: {x: -1548, y: -492, z: 0}
+  m_AnyStatePosition: {x: -1188, y: -540, z: 0}
+  m_EntryPosition: {x: -1548, y: -540, z: 0}
   m_ExitPosition: {x: -1344, y: -408, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: 1102171060287172588}
@@ -53064,7 +53045,7 @@ AnimatorTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: RightHandState
-    m_EventTreshold: 102
+    m_EventTreshold: 4
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102205338689852116}
   m_Solo: 0
@@ -53596,7 +53577,7 @@ AnimatorTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: RightHandState
-    m_EventTreshold: 102
+    m_EventTreshold: 1
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102381998621036386}
   m_Solo: 0
