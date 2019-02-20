@@ -595,39 +595,34 @@ public class HandsInventory : MonoBehaviour {
         }
     }
 
-    public void ForcePickItem(string name, PlayerAnimationManager.Hand hand)
+    public void ForcePickItem(string name, PlayerAnimationManager.Hand hand, bool createGhost = false)
     {
-        ForcePickItem(name, hand == PlayerAnimationManager.Hand.Left);
+        ForcePickItem(name, hand == PlayerAnimationManager.Hand.Left, createGhost);
     }
 
-    public void ForcePickItem(string name, bool hand)
+    public void ForcePickItem(string name, bool hand, bool createGhost = false)
     {
-        if (hand)
-        { 
-            leftHandObject = GameObject.Find(name).GetComponent<PickableObject>();
-            leftHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-            leftHandObject.GetComponent<Rigidbody>().isKinematic = false;
-            leftHandObject.leftControlBone = leftControlBone;
-            leftHandObject.rightControlBone = rightControlBone;
-            leftHandObject.SavePosition();
-        }
-        else
+        ForcePickItem(GameObject.Find(name).gameObject,
+            (hand ? PlayerAnimationManager.Hand.Left : PlayerAnimationManager.Hand.Right)
+            , createGhost);
+    }
+
+    public void ForcePickItem(GameObject obj, PlayerAnimationManager.Hand hand, bool createGhost = false)
+    {
+        PickableObject item = obj.GetComponent<PickableObject>();
+        if (item != null && item.prefabInHands != "")
         {
-            rightHandObject = GameObject.Find(name).GetComponent<PickableObject>();
-            rightHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-            rightHandObject.GetComponent<Rigidbody>().isKinematic = false;
-            rightHandObject.leftControlBone = leftControlBone;
-            rightHandObject.rightControlBone = rightControlBone;
-            rightHandObject.SavePosition();
+            item.SavePosition();
+            GameObject replaced = CreateObjectByName(item.prefabInHands, Vector3.zero);
+            replaced.GetComponent<PickableObject>().SavePosition(item.SavedPosition, item.SavedRotation, true);
+            item.DeleteGhostObject();
+            Destroy(item.gameObject);
+            item = replaced.GetComponent<PickableObject>();
         }
-        SetHold(hand);
-    }
 
-    public void ForcePickItem(GameObject obj, PlayerAnimationManager.Hand hand)
-    {
         if (hand == PlayerAnimationManager.Hand.Left)
         {
-            leftHandObject = obj.GetComponent<PickableObject>();
+            leftHandObject = item;
             leftHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             leftHandObject.GetComponent<Rigidbody>().isKinematic = false;
             leftHandObject.leftControlBone = leftControlBone;
@@ -636,7 +631,7 @@ public class HandsInventory : MonoBehaviour {
         }
         else
         {
-            rightHandObject = obj.GetComponent<PickableObject>();
+            rightHandObject = item;
             rightHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             rightHandObject.GetComponent<Rigidbody>().isKinematic = false;
             rightHandObject.leftControlBone = leftControlBone;
@@ -644,6 +639,11 @@ public class HandsInventory : MonoBehaviour {
             rightHandObject.SavePosition();
         }
 
+        if (createGhost)
+        {
+            item.CreateGhostObject();
+        }
+        
         SetHold(hand == PlayerAnimationManager.Hand.Left);
     }
 
