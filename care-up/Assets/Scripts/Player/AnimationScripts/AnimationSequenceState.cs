@@ -15,7 +15,9 @@ public class AnimationSequenceState : StateMachineBehaviour {
     protected HandsInventory inv;
 
 	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
-	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
+	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+
+    {
         keyFrame = 0;
         frame = 0f;
         prevFrame = 0f;
@@ -25,7 +27,9 @@ public class AnimationSequenceState : StateMachineBehaviour {
         {
             PlayerAnimationManager.PlayAnimationSequence(SequenceName);
         }
-
+        
+        if (GameObject.Find("ItemDescription") != null)
+            GameObject.Find("ItemDescription").SetActive(false);
     }
 
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
