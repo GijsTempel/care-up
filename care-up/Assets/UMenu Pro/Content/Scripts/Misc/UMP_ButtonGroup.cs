@@ -31,6 +31,8 @@ public class UMP_ButtonGroup : MonoBehaviour, IPointerClickHandler {
             }
         }
         button.interactable = false;
+
+        GameObject.FindObjectOfType<LeaderBoard>().button.GetComponent<Image>().sprite = FindObjectOfType<LeaderBoard>().universalBackground;
     }
 
     public void UnSelect()

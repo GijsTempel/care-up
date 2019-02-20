@@ -32,7 +32,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
         // variations buttons should be disabled from the beginning
         for (int i = 0; i < 3; ++i)
         {
-            Transform v = leaderPanel.parent.Find("InfoBar/menu/d" + (i+1));
+            Transform v = leaderPanel.parent.Find("InfoBar/menu/d" + (i + 1));
             variations.Add(v);
             v.gameObject.SetActive(false);
         }
@@ -91,17 +91,17 @@ public class LevelSelectionScene_UI : MonoBehaviour
         XmlDocument xmlFile = new XmlDocument();
         xmlFile.LoadXml(textAsset.text);
         XmlNodeList xmlSceneList = xmlFile.FirstChild.NextSibling.FirstChild.ChildNodes;
-        
+
         // leaderboard stuff
         bool firstScene = true;
         LeaderBoardSceneButton.buttons.Clear();
 
         foreach (XmlNode xmlSceneNode in xmlSceneList)
         {
-           // bool activated = PlayerPrefs.GetInt(xmlSceneNode.Attributes["id"].Value + " activated") == 1;
+            // bool activated = PlayerPrefs.GetInt(xmlSceneNode.Attributes["id"].Value + " activated") == 1;
             bool activated = true;
             bool hidden = xmlSceneNode.Attributes["hidden"] != null;
-            if ((!activated && hidden) || hidden )
+            if ((!activated && hidden) || hidden)
             {
                 // not activated and hidden scene should not even create a panel, so just end up here
                 continue;
@@ -113,7 +113,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 GameObject.Find("UMenuProManager/MenuCanvas/Play/ProtocolList/ProtocolsHolder/Protocols/content").transform);
             sceneUnitObject.name = "SceneSelectionUnit"; // i dont like that 'clone' word at the end, ugh
             LevelButton sceneUnit = sceneUnitObject.GetComponent<LevelButton>();
-            
+
             if (!activated && !hidden)
             {
                 // but if scene is not activated and NOT hidden either
@@ -206,19 +206,22 @@ public class LevelSelectionScene_UI : MonoBehaviour
             GameObject button = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/UI/LeaderBoardSceneButton"),
                 GameObject.Find("UMenuProManager/MenuCanvas/Leaderboard/LeftBar/Scroll View/Viewport/Content").transform);
             LeaderBoardSceneButton buttonInfo = button.GetComponent<LeaderBoardSceneButton>();
+            button.transform.Find("Text").GetComponent<Text>().text = sceneUnit.displayName;
+            button.transform.Find("LevelPreview").GetComponent<Image>().sprite = sceneUnit.image;  
 
-            button.transform.GetChild(0).GetComponent<Text>().text = sceneUnit.displayName;
             buttonInfo.sceneName = sceneUnit.sceneName;
             buttonInfo.multiple = sceneUnit.multiple;
+
+
             if (buttonInfo.multiple)
             {
-                foreach(LevelButton.Info v in sceneUnit.variations)
+                foreach (LevelButton.Info v in sceneUnit.variations)
                 {
                     buttonInfo.sceneNames.Add(v.sceneName);
                     buttonInfo.buttonNames.Add(v.displayName);
                 }
             }
-            // As the design is going to be changed
+
 
             if (firstScene)
             {
@@ -230,7 +233,6 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 && xmlSceneNode.Attributes["test"].Value == "disabled");
         }
     }
-    
     public void UpdateLeaderBoard(string sceneName)
     {
         //Debug.Log("UpdateLeaderBoard:::" + sceneName);
@@ -261,14 +263,20 @@ public class LevelSelectionScene_UI : MonoBehaviour
         {
             string name = sortedEntries[i].String("dname");
             string score = sortedEntries[i].String("score");
-            
+
             if (i < _Scores.Length)
                 _Scores[i].SetScoreLine(name, score, i);
         }
 
         // loading icon is shown
-        GameObject.FindObjectOfType<LeaderBoard>().leftBar.SetActive(true);
-        GameObject.FindObjectOfType<LeaderBoard>().infoBar.SetActive(true);
-        GameObject.FindObjectOfType<LeaderBoard>().leaderBoardIcon.SetActive(false);
+        if (GameObject.FindObjectOfType<LeaderBoard>().leftBar.activeSelf)
+            GameObject.FindObjectOfType<LeaderBoard>().infoBar.SetActive(false);
+        else
+        {
+            GameObject.FindObjectOfType<LeaderBoard>().top.SetActive(false);
+            GameObject.FindObjectOfType<LeaderBoard>().infoBar.SetActive(true);
+            GameObject.FindObjectOfType<LeaderBoard>().description.GetComponent<Text>().text = LeaderBoardSceneButton.Descripton;
+            GameObject.FindObjectOfType<LeaderBoard>().leaderboard.SetActive(false);
+        }       
     }
 }
