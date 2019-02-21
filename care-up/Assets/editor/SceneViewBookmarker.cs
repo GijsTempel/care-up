@@ -43,6 +43,11 @@ namespace SceneViewBookmarker
         }
     }
 
+
+
+
+
+
     static class BookmarkManager
     {
         const int undoSlot = 0;
