@@ -89,7 +89,8 @@ namespace CareUpBookmarks
                     {
                         Selection.activeObject = AssetDatabase.LoadMainAssetAtPath(Bookmark.Read(i).filePath);
                     }
-                    GUILayout.Label(Bookmark.Read(i).filePath);
+                    string[] label = Bookmark.Read(i).filePath.Split('/');
+                    GUILayout.Label(label[label.Length - 1]);
 
                     if (GUILayout.Button("X", GUILayout.Width(50)))
                     {
