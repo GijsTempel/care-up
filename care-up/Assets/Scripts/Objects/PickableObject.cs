@@ -370,7 +370,7 @@ public class PickableObject : InteractableObject
         }
     }
 
-    private void InstantiateGhostObject(Vector3 pos, Quaternion rot, int posID = 0)
+    public void InstantiateGhostObject(Vector3 pos, Quaternion rot, int posID = 0)
     {
         GameObject ghost = Instantiate(Resources.Load<GameObject>("Prefabs/" + this.name),
             pos, rot);

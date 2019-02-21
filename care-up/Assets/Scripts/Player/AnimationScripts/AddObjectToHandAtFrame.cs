@@ -8,10 +8,21 @@ public class AddObjectToHandAtFrame : StateMachineBehaviour
     public string objectName;
     public PlayerAnimationManager.Hand hand;
 
-    protected float frame;
+    protected float frame = 0f;
     protected float prevFrame;
 
     HandsInventory inventory;
+    GameObject obj = null;
+    public string GhostObjectTarget = "";
+    public DestroyStates destroyOnDrop;
+
+    public enum DestroyStates
+    {
+        None,
+        True,
+        False
+    };
+
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -22,11 +33,11 @@ public class AddObjectToHandAtFrame : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        Debug.Log(frame);
         if (PlayerAnimationManager.CompareFrames(frame, prevFrame, addFrame))
         {
-            GameObject obj = inventory.CreateObjectByName(objectName, Vector3.zero);
+            obj = inventory.CreateObjectByName(objectName, Vector3.zero);
             inventory.ForcePickItem(objectName, hand);
-        
             PlayerAnimationManager.SetHandItem(hand == PlayerAnimationManager.Hand.Left, obj);
         }
 
@@ -36,4 +47,25 @@ public class AddObjectToHandAtFrame : StateMachineBehaviour
             frame += Time.deltaTime;
         }
     }
+
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        if (GhostObjectTarget != "" && obj != null)
+        {
+            if (GameObject.Find(GhostObjectTarget) != null)
+            {
+                Transform targetObj = GameObject.Find(GhostObjectTarget).transform;
+                obj.GetComponent<PickableObject>().InstantiateGhostObject(targetObj.position, targetObj.rotation, 0);
+                if (destroyOnDrop != AddObjectToHandAtFrame.DestroyStates.None)
+                {
+                    bool dod = destroyOnDrop == AddObjectToHandAtFrame.DestroyStates.True;
+                    obj.GetComponent<PickableObject>().destroyOnDrop = dod;
+                }
+            }
+        }
+        frame = 0f;
+        obj = null;
+
+    }
+
 }

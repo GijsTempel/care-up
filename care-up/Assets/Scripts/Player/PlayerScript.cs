@@ -468,11 +468,49 @@ public class PlayerScript : MonoBehaviour
 
         if (!handsInv.Empty())
         {
-            robotSavedLeft = handsInv.LeftHandObject;
-            robotSavedRight = handsInv.RightHandObject;
+            if (handsInv.LeftHandObject != null)
+            {
+                robotSavedLeft = handsInv.LeftHandObject;
 
-            handsInv.DropLeftObject();
-            handsInv.DropRightObject();
+                bool leftAlt = false;
+                string leftObjName = "";
+                if (robotSavedLeft.GetComponent<PickableObject>().prefabOutOfHands != "")
+                {
+                    leftAlt = true;
+                    leftObjName = robotSavedLeft.GetComponent<PickableObject>().prefabOutOfHands;
+                }
+
+                handsInv.DropLeftObject();
+
+                if (leftAlt)
+                {
+                    robotSavedLeft = GameObject.Find(leftObjName);
+                }
+            }
+            else
+            {
+                robotSavedLeft = null;
+            }
+
+            if (handsInv.rightHandObject != null)
+            {
+                robotSavedRight = handsInv.RightHandObject;
+
+                bool rightAlt = false;
+                string rightObjName = "";
+                if (robotSavedRight.GetComponent<PickableObject>().prefabOutOfHands != "")
+                {
+                    rightAlt = true;
+                    rightObjName = robotSavedRight.GetComponent<PickableObject>().prefabOutOfHands;
+                }
+
+                handsInv.DropRightObject();
+                
+                if (rightAlt)
+                {
+                    robotSavedRight = GameObject.Find(rightObjName);
+                }
+            }
         }
         else
         {
@@ -601,7 +639,7 @@ public class PlayerScript : MonoBehaviour
 
         if (robotSavedLeft != null)
         {
-            PlayerAnimationManager.SetHandItem(true, robotSavedLeft.gameObject);
+            PlayerAnimationManager.SetHandItem(true, robotSavedLeft);
         }
         else
         {
@@ -610,7 +648,7 @@ public class PlayerScript : MonoBehaviour
 
         if (robotSavedRight != null)
         {
-            PlayerAnimationManager.SetHandItem(false, robotSavedRight.gameObject);
+            PlayerAnimationManager.SetHandItem(false, robotSavedRight);
         }
         else
         {
@@ -624,15 +662,13 @@ public class PlayerScript : MonoBehaviour
 
         if (robotSavedLeft != null)
         {
-            handsInv.ForcePickItem(robotSavedLeft.name, true);
-            robotSavedLeft.GetComponent<PickableObject>().CreateGhostObject();
+            handsInv.ForcePickItem(robotSavedLeft, PlayerAnimationManager.Hand.Left, true);
             robotSavedLeft = null; // reset
         }
 
         if (robotSavedRight != null)
         {
-            handsInv.ForcePickItem(robotSavedRight.name, false);
-            robotSavedRight.GetComponent<PickableObject>().CreateGhostObject();
+            handsInv.ForcePickItem(robotSavedRight, PlayerAnimationManager.Hand.Right, true);
             robotSavedRight = null; // reset
         }
 

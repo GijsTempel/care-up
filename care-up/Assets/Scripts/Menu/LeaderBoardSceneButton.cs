@@ -9,20 +9,19 @@ public class LeaderBoardSceneButton : MonoBehaviour
     public bool multiple;
     public List<string> sceneNames = new List<string>();
     public List<string> buttonNames = new List<string>();
-
+   
     public static List<LeaderBoardSceneButton> buttons = new List<LeaderBoardSceneButton>();
+    public static string Descripton { get; set; }
 
     private void Start()
     {
         buttons.Add(this);
-    }  
+    }
 
     public void OnMainButtonClick()
     {
         // loading icon is shown
-        GameObject.FindObjectOfType<LeaderBoard>().leftBar.SetActive(false);
-        GameObject.FindObjectOfType<LeaderBoard>().infoBar.SetActive(false);
-        GameObject.FindObjectOfType<LeaderBoard>().leaderBoardIcon.SetActive(true);
+        HideElements();
 
         LevelSelectionScene_UI manager = GameObject.FindObjectOfType<LevelSelectionScene_UI>();
 
@@ -44,10 +43,6 @@ public class LeaderBoardSceneButton : MonoBehaviour
                 string variationSceneName = sceneNames[i];
                 manager.variations[i].GetComponent<Button>().onClick.AddListener(
                     delegate { manager.UpdateLeaderBoard(variationSceneName); });
-
-                int variationId = i;
-                manager.variations[i].GetComponent<Button>().onClick.AddListener(
-                    delegate { VariationsColoring(variationId); });
             }
         }
 
@@ -59,34 +54,23 @@ public class LeaderBoardSceneButton : MonoBehaviour
         {
             b.GetComponent<Button>().interactable = true;
         }
-
-        // color
-        GetComponent<Button>().interactable = false;
-
-        // clear variations to color
-        foreach (Transform t in manager.variations)
-        {
-            t.GetComponent<Button>().interactable = true;
-        }
-
-        // color 1st variation
-        if (multiple)
-        {
-            manager.variations[0].GetComponent<Button>().interactable = false;
-        }
     }
-
-    // variations coloring
-    public void VariationsColoring(int variation)
+   
+    public void HideElements()
     {
-        LevelSelectionScene_UI manager = GameObject.FindObjectOfType<LevelSelectionScene_UI>();
-        
-        // clear variations to color
-        foreach (Transform t in manager.variations)
+        GameObject.Find("ButtonClickSound").GetComponent<AudioSource>().Play();
+        Descripton = transform.Find("Text").GetComponent<Text>().text;
+
+        GameObject.FindObjectOfType<LeaderBoard>().topDescription.SetActive(false);
+        GameObject.FindObjectOfType<LeaderBoard>().separator.SetActive(false);
+        GameObject.FindObjectOfType<LeaderBoard>().leftBar.SetActive(false);
+        GameObject.FindObjectOfType<LeaderBoard>().infoBar.SetActive(false);
+        GameObject.FindObjectOfType<LeaderBoard>().leaderboard.SetActive(true);
+
+        if (GameObject.FindObjectOfType<LeaderBoard>().leaderboard.activeSelf)
         {
-            t.GetComponent<Button>().interactable = true;
+            GameObject.FindObjectOfType<LeaderBoard>().button.GetComponent<Button>().interactable = true;
+            GameObject.FindObjectOfType<LeaderBoard>().button.GetComponent<Image>().sprite = FindObjectOfType<LeaderBoard>().buttonBackground;
         }
-        //color
-        manager.variations[variation].GetComponent<Button>().interactable = false;
     }
 }

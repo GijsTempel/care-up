@@ -12,6 +12,8 @@ public class AnimationCombine : StateMachineBehaviour {
     protected HandsInventory inv;
     protected CameraMode mode;
 
+    private bool moveBackBtnState = false;
+
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
 
@@ -20,6 +22,9 @@ public class AnimationCombine : StateMachineBehaviour {
 
         mode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
         mode.animating = true;
+
+        moveBackBtnState = GameObject.FindObjectOfType<PlayerScript>().MoveBackButtonObject.activeSelf;
+        GameObject.FindObjectOfType<PlayerScript>().MoveBackButtonObject.SetActive(false);
         //mode.SetCameraUpdating(true);
 
         frame = 0f;
@@ -62,6 +67,8 @@ public class AnimationCombine : StateMachineBehaviour {
         {
             RobotManager.SetUITriggerActive(true);
         }
+
+        GameObject.FindObjectOfType<PlayerScript>().MoveBackButtonObject.SetActive(moveBackBtnState);
     }
 
 	// OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here

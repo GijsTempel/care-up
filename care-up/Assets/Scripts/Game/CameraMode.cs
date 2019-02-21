@@ -388,7 +388,7 @@ public class CameraMode : MonoBehaviour {
                 GameObject.FindObjectOfType<TutorialManager>() == null)
             {
                 playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
-                playerScript.joystickObject.SetActive(!playerScript.robotUIopened);
+                playerScript.joystickObject.SetActive(!playerScript.robotUIopened && !PlayerScript.actionsLocked);
             }
 
             if (GameObject.FindObjectOfType<TutorialManager>() == null ||
