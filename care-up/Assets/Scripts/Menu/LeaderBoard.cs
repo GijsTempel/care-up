@@ -15,4 +15,5 @@ public class LeaderBoard : MonoBehaviour
     public GameObject topDescription;
     public GameObject separator;
     public GameObject animator;
+    public GameObject backButton;
 }

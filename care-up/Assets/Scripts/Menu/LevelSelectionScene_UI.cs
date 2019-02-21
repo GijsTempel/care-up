@@ -272,8 +272,9 @@ public class LevelSelectionScene_UI : MonoBehaviour
         if (GameObject.FindObjectOfType<LeaderBoard>().leftBar.activeSelf)
             GameObject.FindObjectOfType<LeaderBoard>().infoBar.SetActive(false);
         else
-        {
+        {           
             GameObject.FindObjectOfType<LeaderBoard>().top.SetActive(false);
+            GameObject.FindObjectOfType<LeaderBoard>().backButton.GetComponent<Button>().interactable = true;
             GameObject.FindObjectOfType<LeaderBoard>().infoBar.SetActive(true);
             GameObject.FindObjectOfType<LeaderBoard>().description.GetComponent<Text>().text = LeaderBoardSceneButton.Descripton;
             GameObject.FindObjectOfType<LeaderBoard>().leaderboard.SetActive(false);
