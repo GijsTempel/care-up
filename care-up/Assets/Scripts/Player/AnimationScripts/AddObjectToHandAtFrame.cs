@@ -8,7 +8,7 @@ public class AddObjectToHandAtFrame : StateMachineBehaviour
     public string objectName;
     public PlayerAnimationManager.Hand hand;
 
-    protected float frame;
+    protected float frame = 0f;
     protected float prevFrame;
 
     HandsInventory inventory;
@@ -33,11 +33,11 @@ public class AddObjectToHandAtFrame : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        Debug.Log(frame);
         if (PlayerAnimationManager.CompareFrames(frame, prevFrame, addFrame))
         {
             obj = inventory.CreateObjectByName(objectName, Vector3.zero);
             inventory.ForcePickItem(objectName, hand);
-        
             PlayerAnimationManager.SetHandItem(hand == PlayerAnimationManager.Hand.Left, obj);
         }
 
@@ -63,6 +63,9 @@ public class AddObjectToHandAtFrame : StateMachineBehaviour
                 }
             }
         }
+        frame = 0f;
+        obj = null;
+
     }
 
 }
