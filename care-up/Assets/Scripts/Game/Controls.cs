@@ -106,6 +106,9 @@ public class Controls : MonoBehaviour {
     private GameObject selectedObject;
     private bool canInteract;
 
+    private bool clickFlag = false;
+    private bool clickBuffer = false;
+
     public GameObject SelectedObject
     {
         get { return selectedObject; }
@@ -163,6 +166,15 @@ public class Controls : MonoBehaviour {
         UpdateUIDetection();
 
         keyUsed = false;
+
+        if (clickBuffer)
+        {
+            clickBuffer = clickFlag = false;
+        }
+        else if (clickFlag)
+        {
+            clickBuffer = true;
+        }
         
         #if UNITY_EDITOR
         if (devInteractionDisplay)
@@ -207,18 +219,24 @@ public class Controls : MonoBehaviour {
         {
             return false;
         }
-
-        if (Input.touchCount > 0)
-        {
-            LateUpdate();
-        }
-
+        
         bool result = (Input.touchCount > 0) ?
             Input.GetTouch(0).phase == TouchPhase.Began
             : (Input.GetMouseButtonDown(0) || keyPreferences.mouseClickKey.Pressed());
        
+        if (result)
+        {
+            result = clickFlag;
+            clickFlag = true;
+        }
+        else
+        {
+            result = clickFlag;
+        }
+
         return result;
     }
+    
     /// <summary>
     /// Checks if "RightMouse" clicked, including alternatives for gamepads.
     /// </summary>
