@@ -195,6 +195,9 @@ namespace DigitalRubyShared
                     JoystickImage.transform.parent.position = new Vector3(gesture.FocusX, gesture.FocusY, JoystickImage.transform.parent.position.z);
                 }
                 startCenter = JoystickImage.rectTransform.anchoredPosition;
+
+                // call update at least at start
+                ExecuteCallback(Vector2.zero);
             }
             else if (gesture.State == GestureRecognizerState.Ended)
             {
