@@ -243,6 +243,11 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
+    public void ResetTargetRot()
+    {
+        mouseLook.Init(transform, Camera.main.transform);
+    }
+
     public void LookRotationUpdate(Vector2 amount)
     {
         // OLD mouse look code, transfering to joystick

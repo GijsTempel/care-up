@@ -29,19 +29,16 @@ namespace DigitalRubyShared
         {
             JoystickScript.JoystickExecuted = JoystickExecuted;
             JoystickScript.MoveJoystickToGestureStartLocation = MoveJoystickToGestureStartLocation;
-        }
+        } 
 
-        private void JoystickExecuted(FingersJoystickScript script, Vector2 amount)
+         private void JoystickExecuted(FingersJoystickScript script, Vector2 amount)
         {
             //Debug.LogFormat("Joystick: {0}", amount);
 
             player.freeLook = true;
 
-            if (amount.x != 0 || amount.y != 0)
-            {
-                player.LookRotationUpdate(amount);
-            }               
-
+            player.LookRotationUpdate(amount);
+            
             if (player.itemControls.gameObject.activeSelf)
             {
                 player.itemControls.Close();

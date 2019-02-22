@@ -177,7 +177,7 @@ namespace DigitalRubyShared
                 }
                 ExecuteCallback(offset);
 
-                if (crossPlatformInputHorizontalAxisObject!= null)
+                if (crossPlatformInputHorizontalAxisObject != null)
                 {
                     FingersCrossPlatformInputReflectionScript.UpdateVirtualAxis(crossPlatformInputHorizontalAxisObject, offset.x);
                 }
@@ -188,6 +188,8 @@ namespace DigitalRubyShared
             }
             else if (gesture.State == GestureRecognizerState.Began)
             {
+                GameObject.FindObjectOfType<PlayerScript>().ResetTargetRot();
+
                 if (MoveJoystickToGestureStartLocation)
                 {
                     JoystickImage.transform.parent.position = new Vector3(gesture.FocusX, gesture.FocusY, JoystickImage.transform.parent.position.z);
