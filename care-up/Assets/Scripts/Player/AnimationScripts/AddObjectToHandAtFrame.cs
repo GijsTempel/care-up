@@ -33,7 +33,7 @@ public class AddObjectToHandAtFrame : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Debug.Log(frame);
+        //Debug.Log(frame);
         if (PlayerAnimationManager.CompareFrames(frame, prevFrame, addFrame))
         {
             obj = inventory.CreateObjectByName(objectName, Vector3.zero);
