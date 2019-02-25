@@ -5,7 +5,13 @@ using UnityEngine.UI;
 
 public class SendEndScoreButton : MonoBehaviour {
 
+    private MBS.WUADisplay achievements;
+
     public static bool EmailSent { get; set; }
+
+    void Start () {
+        achievements = GameObject.Find ("AchievementsDisplayPrefab").GetComponent<MBS.WUADisplay> ();
+    }
 
     public void EndScoreSendMailResults()
     {
@@ -19,6 +25,8 @@ public class SendEndScoreButton : MonoBehaviour {
         content += "Big- of registratienummer:" + text.text + "\n";
         float percent = GameObject.FindObjectOfType<EndScoreManager>().percent;
         content += "Percentage: " + Mathf.FloorToInt(percent * 100f).ToString() + "%\n";
+
+        achievements.UpdateKeys ("StudyPoints", 1);
 
         PlayerPrefsManager.__sendMail(topic, content);
         Debug.Log("E-mail verzonden");

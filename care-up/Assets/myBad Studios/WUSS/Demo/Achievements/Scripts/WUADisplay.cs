@@ -25,6 +25,7 @@ namespace MBS {
 
 		void Start()
 		{
+            DontDestroyOnLoad (gameObject.transform.parent);
             //wait until login was successful then download all keys
             //this is great during the demo but if you spawn your prefab(s) mid game
             //you might have to call it manually. Either way, see the FetchAwards function to see how
@@ -81,6 +82,7 @@ namespace MBS {
                 view.Initialize();
             }
             ShowHowmanyIAmTracking();
+            UpdateKeys ("FirstLoginAchiev", 1);
         }
 
         void ShowHowmanyIAmTracking()
@@ -91,7 +93,8 @@ namespace MBS {
         public void UpdateKeys( string name, int qty )
         {
             //Save the current tracking keys so we are up to date across game sessions
-            _keys.Add( qty, name );
+            //_keys.Add( qty, name );
+            _keys.Remove (name);
             Keys.Save( "achievements" );
             Debug.LogWarning( Keys.ToString() );
 

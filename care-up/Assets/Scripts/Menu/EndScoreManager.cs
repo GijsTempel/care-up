@@ -24,6 +24,8 @@ public class EndScoreManager : MonoBehaviour {
     private List<int> wrongStepIndexes;
     private List<int> correctStepIndexes;
 
+    private MBS.WUADisplay achievements;
+
     public List<string> quizQuestionsTexts = new List<string> ();
     public List<int> quizWrongIndexes = new List<int> ();
 
@@ -35,6 +37,8 @@ public class EndScoreManager : MonoBehaviour {
 
     void Start () {
         SceneManager.sceneLoaded += OnLoaded;
+
+        achievements = GameObject.Find ("AchievementsDisplayPrefab").GetComponent<MBS.WUADisplay> ();
 
         fullStar = Resources.Load<Sprite> ("Sprites/Stars/star");
     }
@@ -96,6 +100,10 @@ public class EndScoreManager : MonoBehaviour {
             bool flag = (percent > 0.7f && GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed);
             GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Buttons/NextButton").SetActive(flag);
             GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Buttons/Back to main menu").SetActive(!flag);
+
+            //if (flag == true) {
+                //achievements.UpdateKeys ("FirstPassedExam", 1);
+            //}
 
             GameObject.Find("Interactable Objects/Canvas/Send_Score/Top/Scenetitle").GetComponent<Text>().text = GameObject.FindObjectOfType<PlayerPrefsManager>().currentSceneVisualName;
 
