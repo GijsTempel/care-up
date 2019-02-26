@@ -24,6 +24,8 @@ public class PlayerPrefsManager : MonoBehaviour
     public bool VR = true;
     public bool practiceMode = true;
 
+    static private MBS.WUADisplay achievements;
+
     // store value here after getting from server
     public bool tutorialCompleted;
 
@@ -107,6 +109,8 @@ public class PlayerPrefsManager : MonoBehaviour
     void Start()
     {
         SceneManager.sceneLoaded += OnLoaded;
+
+        achievements = GameObject.Find ("AchievementsDisplayPrefab").GetComponent<MBS.WUADisplay> ();
 
         AudioListener.volume = Volume;
         Debug.Log("Volume is set to saved value: " + Volume);
@@ -296,6 +300,9 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
         manager.plays = response[1].Int("Plays_Number") + 1;
+
+        achievements.UpdateKeys ("FinishedProtocol", 1);
+
         Debug.Log("Added plays, current plays: " + manager.plays);
      
         RateBox.Instance.IncrementCustomCounter();

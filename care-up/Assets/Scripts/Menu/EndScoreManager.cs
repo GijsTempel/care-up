@@ -98,12 +98,13 @@ public class EndScoreManager : MonoBehaviour {
             
             // show/hide buttons
             bool flag = (percent > 0.7f && GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed);
+            flag = true;
             GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Buttons/NextButton").SetActive(flag);
             GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Buttons/Back to main menu").SetActive(!flag);
 
-            //if (flag == true) {
-                //achievements.UpdateKeys ("FirstPassedExam", 1);
-            //}
+            if (flag == true) {
+                achievements.UpdateKeys ("FirstPassedExam", 1);
+            }
 
             GameObject.Find("Interactable Objects/Canvas/Send_Score/Top/Scenetitle").GetComponent<Text>().text = GameObject.FindObjectOfType<PlayerPrefsManager>().currentSceneVisualName;
 
@@ -135,6 +136,12 @@ public class EndScoreManager : MonoBehaviour {
 
             if (score >= 3.0f) {
                 GameObject.Find ("Interactable Objects/Canvas/ScoreScreen/Stars/Star3").GetComponent<Image> ().sprite = fullStar;
+            }
+
+            if (time >= 900.0f) {
+                achievements.UpdateKeys ("MoreThan15", 1);
+            }else if (time <= 300.0f) {
+                achievements.UpdateKeys ("within5", 1);
             }
 
             Cursor.lockState = CursorLockMode.None;

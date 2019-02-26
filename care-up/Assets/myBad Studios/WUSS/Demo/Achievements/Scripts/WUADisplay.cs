@@ -9,6 +9,9 @@ namespace MBS {
         [SerializeField] WUAView	view_prefab;
         [SerializeField] bool destroy_contents_on_load = true;
 
+        private Text achieveText;
+        private GameObject achieveGameObject;
+
         //we are going to store our tracking info offline so we can continue
         //tracking achievement award states between games. This has nothing to do with 
         //what is unlocked or not. That info comes from the server. This is you keeping
@@ -25,6 +28,8 @@ namespace MBS {
 
 		void Start()
 		{
+            achieveText = GameObject.Find ("AchieveTitle").GetComponent<Text> ();
+
             DontDestroyOnLoad (gameObject.transform.parent);
             //wait until login was successful then download all keys
             //this is great during the demo but if you spawn your prefab(s) mid game
@@ -99,10 +104,10 @@ namespace MBS {
             Debug.LogWarning( Keys.ToString() );
 
             //since the keys have been updated, let's see if anything is now unlocked
-            ScanUnlockedStatus();
+            ScanUnlockedStatus(name);
         }
 
-        public void ScanUnlockedStatus()
+        public void ScanUnlockedStatus(string name)
         {
             bool achieved = true;
             List<int> new_unlocks = new List<int>();
@@ -118,6 +123,12 @@ namespace MBS {
                 //next we test each requirement in turn to see if all of them past their respective tests...
                 foreach ( string requirement in requirements )
                 {
+                    if (achieved) {
+                        Debug.Log ("ferro");
+                        GameObject.Find ("AchievementPop").GetComponent<Animator> ().SetTrigger ("pop");
+                        achieveText.text = name;
+                        Debug.Log ("ferro1");
+                    }
                     //if one of the requirements failed then there is no point in continuing to test the rest. Move on to the next achievement
                     if ( !achieved )
                         continue;
