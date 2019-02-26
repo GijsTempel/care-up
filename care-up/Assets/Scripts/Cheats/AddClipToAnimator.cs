@@ -4,12 +4,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using System.IO;
+using UnityEngine.SceneManagement;
 
 #if UNITY_EDITOR
 using UnityEditor.Animations;
+
 #endif
 
 public class AddClipToAnimator : MonoBehaviour {
+
+
+    StreamWriter writer;
 
     public enum ActionType
     {
@@ -241,8 +247,54 @@ public class AddClipToAnimator : MonoBehaviour {
         return null; // no clip by that name
     }
 
+
+    //Output the all structure from animation controller to the file
+    [ContextMenu("Print All Actions")]
+    public void PrintAllActions()
+    {
+
+        string scneName = SceneManager.GetActiveScene().name;
+        string path = "Assets/ListOfActions/full_" + scneName + ".txt";
+
+        writer = new StreamWriter(path, false);
+
+        if (!animationController)
+            return;
+
+
+        foreach (UnityEditor.Animations.ChildAnimatorState state in animationController.layers[0].stateMachine.states)
+        {
+            writer.WriteLine('"' + "RightHand." + state.state.name + '"' + ",");
+        }
+
+        foreach (UnityEditor.Animations.ChildAnimatorStateMachine machine in animationController.layers[0].stateMachine.stateMachines)
+        {
+            RecursPrintStates(machine, "RightHand");
+        }
+        writer.Close();
+    }
+
+    public void RecursPrintStates(UnityEditor.Animations.ChildAnimatorStateMachine chS, string prevAddr)
+    {
+        foreach (UnityEditor.Animations.ChildAnimatorState state in chS.stateMachine.states)
+        {
+            writer.WriteLine('"' + prevAddr + "." + chS.stateMachine.name + "." + state.state.name + '"' + ",");
+        }
+        foreach (UnityEditor.Animations.ChildAnimatorStateMachine machine in chS.stateMachine.stateMachines)
+        {
+            string pa = "";
+            if (prevAddr != "")
+                pa = prevAddr + ".";
+            RecursPrintStates(machine, pa + chS.stateMachine.name);
+
+
+        }
+
+    }
+
+
+
 #endif
 }
 
 
- 
