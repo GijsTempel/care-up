@@ -7,8 +7,9 @@ using UnityEngine.UI;
 /// <summary>
 /// Instance of dialogue with up to 4 options.
 /// </summary>
-public class SelectDialogue : MonoBehaviour {
-    
+public class SelectDialogue : MonoBehaviour
+{
+
     public bool tutorial_lock = false;
     public bool cheated = false;
 
@@ -40,7 +41,7 @@ public class SelectDialogue : MonoBehaviour {
         Right,
         Left
     };
-    
+
     private List<DialogueOption> options = new List<DialogueOption>();
 
     //private Vector2 mouseState = new Vector2();
@@ -104,10 +105,10 @@ public class SelectDialogue : MonoBehaviour {
         right = transform.GetChild(3).GetComponent<Image>();
         left = transform.GetChild(4).GetComponent<Image>();
 
-        first = transform.GetChild (1).GetComponent<Button> ();
-        second = transform.GetChild (2).GetComponent<Button> ();
-        third = transform.GetChild (3).GetComponent<Button> ();
-        fourth = transform.GetChild (4).GetComponent<Button> ();
+        first = transform.GetChild(1).GetComponent<Button>();
+        second = transform.GetChild(2).GetComponent<Button>();
+        third = transform.GetChild(3).GetComponent<Button>();
+        fourth = transform.GetChild(4).GetComponent<Button>();
 
         firstCB = first.colors;
         secondCB = second.colors;
@@ -118,16 +119,16 @@ public class SelectDialogue : MonoBehaviour {
         bottom.color = defaultMaterial;
         right.color = defaultMaterial;
         left.color = defaultMaterial;
-        
+
         top.gameObject.SetActive(false);
         bottom.gameObject.SetActive(false);
         right.gameObject.SetActive(false);
         left.gameObject.SetActive(false);
 
-        first.gameObject.SetActive (false);
-        second.gameObject.SetActive (false);
-        third.gameObject.SetActive (false);
-        fourth.gameObject.SetActive (false);
+        first.gameObject.SetActive(false);
+        second.gameObject.SetActive(false);
+        third.gameObject.SetActive(false);
+        fourth.gameObject.SetActive(false);
 
         //mouseState = Vector2.zero;
         currentOption = OptionSide.None;
@@ -143,7 +144,7 @@ public class SelectDialogue : MonoBehaviour {
 
     public void AddOptions(List<DialogueOption> list, bool cheat = false)
     {
-        foreach(DialogueOption item in list )
+        foreach (DialogueOption item in list)
         {
             options.Add(item);
         }
@@ -190,7 +191,7 @@ public class SelectDialogue : MonoBehaviour {
             left.transform.GetChild(0).GetComponent<Text>().text = options[3].text;
         }
 
-        if ( cheated )
+        if (cheated)
         {
             ShowAnswer();
         }
@@ -211,40 +212,64 @@ public class SelectDialogue : MonoBehaviour {
                 optionSelected = false;
 
                 DialogueOption option = options.Find(x => x.side == currentOption);
+
                 if (option != null)
                 {
+                    if (GameObject.FindObjectOfType<PlayerPrefsManager>() != null)
+                    {
+                        if (GameObject.FindObjectOfType<PlayerPrefsManager>().testingMode)
+                        {
+                            foreach (DialogueOption dialoqueOption in options)
+                            {
+                                if (dialoqueOption.attribute != "" && dialoqueOption.attribute != "CM_Leave")
+                                    option.attribute = dialoqueOption.attribute;
+                            }
+
+                            option.function(option.attribute);
+
+                            if (destroy)
+                            {
+                                Destroy(gameObject);
+                                cameraMode.ToggleCameraMode(CameraMode.Mode.Free);
+                            }
+
+                            return;
+                        }
+                    }
+
                     if (option.attribute != "")
                     {
                         option.function(option.attribute);
+
                         if (destroy)
                         {
                             Destroy(gameObject);
                             cameraMode.ToggleCameraMode(CameraMode.Mode.Free);
                         }
                     }
+
                     else // no info means wrong choice
                     {
-
                         switch (currentOption)
                         {
                             case OptionSide.Bottom:
                                 bottom.color = wrongMaterial;
-                                secondCB.highlightedColor = new Color (255, 0, 0, 255);
+                                secondCB.highlightedColor = new Color(255, 0, 0, 255);
                                 second.colors = secondCB;
                                 break;
                             case OptionSide.Left:
                                 left.color = wrongMaterial;
-                                fourthCB.highlightedColor = new Color (255, 0, 0, 255);
+                                fourthCB.highlightedColor = new Color(255, 0, 0, 255);
                                 fourth.colors = fourthCB;
                                 break;
                             case OptionSide.Right:
                                 right.color = wrongMaterial;
-                                thirdCB.highlightedColor = new Color (255, 0, 0, 255);
+                                thirdCB.highlightedColor = new Color(255, 0, 0, 255);
                                 third.colors = thirdCB;
                                 break;
                             case OptionSide.Top:
                                 top.color = wrongMaterial;
-                                firstCB.highlightedColor = new Color (255, 0, 0, 255);
+                                firstCB.highlightedColor = new Color(255, 0, 0, 255);
                                 first.colors = firstCB;
                                 break;
                         }
@@ -258,20 +283,20 @@ public class SelectDialogue : MonoBehaviour {
 
     private void SetSelected(OptionSide option)
     {
-        if ( option != currentOption )
+        if (option != currentOption)
         {
             SetOptionTo(currentOption, false);
             SetOptionTo(option, true);
             currentOption = option;
         }
     }
-    
+
     private void SetOptionTo(OptionSide option, bool state)
     {
         switch (option)
         {
             case OptionSide.Top:
-                if ( state )
+                if (state)
                 {
                     currentMaterial = top.color;
                     //top.color = selectedMaterial;
@@ -340,11 +365,11 @@ public class SelectDialogue : MonoBehaviour {
 
     public void ShowAnswer()
     {
-        if ( cheated )
+        if (cheated)
         {
             foreach (DialogueOption o in options)
             {
-                if ( o.attribute != "" && o.attribute != "CM_Leave")
+                if (o.attribute != "" && o.attribute != "CM_Leave")
                 {
                     switch (o.side)
                     {
@@ -366,6 +391,7 @@ public class SelectDialogue : MonoBehaviour {
         }
     }
 
+
     public void ButtonClick(int num)
     {
         OptionSide side = OptionSide.None;
@@ -382,7 +408,7 @@ public class SelectDialogue : MonoBehaviour {
                 side = OptionSide.Right;
                 break;
             case (3):
-                side = OptionSide.Left ;
+                side = OptionSide.Left;
                 break;
         }
 

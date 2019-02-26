@@ -510,7 +510,7 @@ public class PlayerScript : MonoBehaviour
                 }
 
                 handsInv.DropRightObject();
-                
+
                 if (rightAlt)
                 {
                     robotSavedRight = GameObject.Find(rightObjName);
@@ -524,7 +524,7 @@ public class PlayerScript : MonoBehaviour
 
         PlayerAnimationManager.PlayAnimation("IpadCloseUp");
         robotUIopened = true;
-        
+
         if (devHintUI != null)
         {
             devHintActiveForIpad = devHintUI.activeSelf;
@@ -688,6 +688,11 @@ public class PlayerScript : MonoBehaviour
     /// <param name="delay">Delay before opening ipad.</param>
     public static void TriggerQuizQuestion(float delay = 0.0f)
     {
+        // dont trigger quiz if a testing mode is on
+        if (GameObject.FindObjectOfType<PlayerPrefsManager>() != null)
+            if (GameObject.FindObjectOfType<PlayerPrefsManager>().testingMode)
+                return;
+
         // just dont trigger quiz if it's a tutorial for all cases
         if (GameObject.FindObjectOfType<TutorialManager>() != null)
             return;

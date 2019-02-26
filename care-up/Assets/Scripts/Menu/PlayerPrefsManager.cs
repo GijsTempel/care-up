@@ -40,6 +40,9 @@ public class PlayerPrefsManager : MonoBehaviour
     // is this game version is demo version
     public bool demoVersion = false;
 
+    // indicates if game is played in testing mode (only editor mode)
+    public bool testingMode = false;
+
     // save info about subscription
     [HideInInspector]
     public bool subscribed = false;
@@ -93,6 +96,10 @@ public class PlayerPrefsManager : MonoBehaviour
 
     void Awake()
     {
+        if(!Application.isEditor)
+        {
+            testingMode = false;
+        }
         if ( instance )
         {
             Destroy(gameObject);
