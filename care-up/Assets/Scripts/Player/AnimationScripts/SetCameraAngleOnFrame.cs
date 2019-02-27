@@ -4,12 +4,21 @@ using UnityEngine;
 
 public class SetCameraAngleOnFrame : StateMachineBehaviour
 {
-    public int angleFrame;
+    public int angleFrame = 0;
     public Vector3 angle;
 
     protected float frame = 0f;
     protected float prevFrame = 0f;
-    
+
+
+    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+
+       
+    }
+
+
+
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (PlayerAnimationManager.CompareFrames(frame, prevFrame, angleFrame))
@@ -23,4 +32,13 @@ public class SetCameraAngleOnFrame : StateMachineBehaviour
             frame += Time.deltaTime;
         }
     }
+
+
+
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        frame = 0;
+        prevFrame = 0;
+    }
+
 }

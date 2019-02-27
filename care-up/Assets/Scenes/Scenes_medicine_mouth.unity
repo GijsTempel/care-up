@@ -1162,7 +1162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d63b85af3e941bbbb677de1a5b9540, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Cheat: 1
+  Cheat: 0
   buildActionList: 0
   hidenObjects:
   - {fileID: 500814320}
@@ -1198,8 +1198,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   triggers:
-  - givingMedicine
-  - S givingMedicine
+  - Use
+  - S Use
+  - 10300 leftID
+  - -700 rightID
 --- !u!1001 &265411573
 Prefab:
   m_ObjectHideFlags: 0
@@ -7390,7 +7392,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1912054954}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4d4d9b1976464e43a435f18ed9b02d4, type: 3}
+  m_Script: {fileID: 11500000, guid: 7995c0621054a451081c6de8cee6c0a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectID: 0
@@ -7405,6 +7407,9 @@ MonoBehaviour:
   - Greeting
   - Dialog_Medicine_Swallow
   - Dialog_Medicine_Mouth_Sit
+  playerPosition: {x: 0, y: 0, z: 0}
+  playerRotation: {x: 0, y: 0, z: 0}
+  playerPositionTarget: {fileID: 0}
 --- !u!82 &1912054957
 AudioSource:
   m_ObjectHideFlags: 0

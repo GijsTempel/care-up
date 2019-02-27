@@ -3470,6 +3470,19 @@ MonoBehaviour:
   audioFrame: 0
   positionObjectName: 
   volume: 1
+--- !u!114 &114821042318306990
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftHand: 1
+  dropFrame: 457
 --- !u!114 &114837686838021528
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3793,6 +3806,21 @@ MonoBehaviour:
   swapHandsFrame: 1265
   takeOffCapFrame: 0
   dropCapFrame: 0
+--- !u!114 &114978354199995464
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4b30a118a14541d2b62aa59ff91d6b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  next: 1
+  actionFrame: 0
+  ObjectName: m1_B
+  DialogueNum: 0
 --- !u!114 &114981343371385822
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -8932,8 +8960,14 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: givingMedicine
+    m_ConditionEvent: Use
     m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: leftID
+    m_EventTreshold: 10300
+  - m_ConditionMode: 6
+    m_ConditionEvent: rightID
+    m_EventTreshold: -700
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102245759430386886}
   m_Solo: 0
@@ -12112,8 +12146,14 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: S givingMedicine
+    m_ConditionEvent: S Use
     m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: leftID
+    m_EventTreshold: 10300
+  - m_ConditionMode: 6
+    m_ConditionEvent: rightID
+    m_EventTreshold: -700
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102166791044119800}
   m_Solo: 0
@@ -14377,6 +14417,7 @@ AnimatorState:
   - {fileID: 114213895559837020}
   - {fileID: 114210885935690236}
   - {fileID: 114127271576720788}
+  - {fileID: 114821042318306990}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -15044,6 +15085,7 @@ AnimatorState:
   - {fileID: 1101110150952449116}
   m_StateMachineBehaviours:
   - {fileID: 114842506452010480}
+  - {fileID: 114978354199995464}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
