@@ -187,6 +187,7 @@ public class HandsInventory : MonoBehaviour {
                 leftHandObject.rightControlBone = rightControlBone;
                 actionManager.OnPickUpAction(leftHandObject.name);
                 PlayerAnimationManager.PlayAnimation("LeftPick");
+                PlayerScript.actionsLocked = true;
                 PlayerAnimationManager.SetHandItem(true, item.gameObject);
                 leftHold = false;
             }
@@ -202,6 +203,7 @@ public class HandsInventory : MonoBehaviour {
                 rightHandObject.rightControlBone = rightControlBone;
                 actionManager.OnPickUpAction(rightHandObject.name);
                 PlayerAnimationManager.PlayAnimation("RightPick");
+                PlayerScript.actionsLocked = true;
                 PlayerAnimationManager.SetHandItem(false, item.gameObject);
                 rightHold = false;
             }
@@ -220,6 +222,7 @@ public class HandsInventory : MonoBehaviour {
                 leftHandObject.rightControlBone = rightControlBone;
                 actionManager.OnPickUpAction(leftHandObject.name);
                 PlayerAnimationManager.PlayAnimation("LeftPick");
+                PlayerScript.actionsLocked = true;
                 PlayerAnimationManager.SetHandItem(true, item.gameObject);
             }
         }
@@ -237,6 +240,7 @@ public class HandsInventory : MonoBehaviour {
                 rightHandObject.rightControlBone = rightControlBone;
                 actionManager.OnPickUpAction(rightHandObject.name);
                 PlayerAnimationManager.PlayAnimation("RightPick");
+                PlayerScript.actionsLocked = true;
                 PlayerAnimationManager.SetHandItem(false, item.gameObject);
             }
         }

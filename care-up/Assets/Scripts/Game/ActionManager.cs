@@ -731,7 +731,7 @@ public class ActionManager : MonoBehaviour {
         bool occured = Check(info, ActionType.ObjectDrop);
         UpdatePoints(occured ? 1 : 0); // no penalty
 
-        if (occured || true)
+        if (occured)
         {
             Debug.Log("Dropped " + item + " on position #" + posId);
         }
