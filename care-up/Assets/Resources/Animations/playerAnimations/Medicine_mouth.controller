@@ -2021,6 +2021,23 @@ MonoBehaviour:
   audioFrame: 0
   positionObjectName: 
   volume: 1
+--- !u!114 &114127271576720788
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a536a9682af347488b2cfd1a613bf7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: m1_B
+  HandToSwitch: 1
+  AnimationToChange: 1
+  ToFollowHoldingHand: 0
+  NewAnimationName: open_mouth
+  ActionFrame: 1
 --- !u!114 &114163186900458834
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -2076,6 +2093,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5cacadbc71667048bc80fad5bb73881, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114210885935690236
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 839bcc7f24a9c47f8af28e853187bfa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: m1_B
+  unlock_frame: 2
+  lock_frame: 560
+  toActivate: 1
 --- !u!114 &114213895559837020
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -14343,6 +14375,8 @@ AnimatorState:
   m_StateMachineBehaviours:
   - {fileID: 114069114051782904}
   - {fileID: 114213895559837020}
+  - {fileID: 114210885935690236}
+  - {fileID: 114127271576720788}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
