@@ -108,6 +108,7 @@ public class Controls : MonoBehaviour {
 
     private bool clickFlag = false;
     private bool clickBuffer = false;
+    private bool touchEnded = false;
 
     public GameObject SelectedObject
     {
@@ -175,6 +176,16 @@ public class Controls : MonoBehaviour {
         {
             clickBuffer = true;
         }
+
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
+        {
+            touchEnded = true;
+        }
+
+        if (touchEnded)
+        {
+            ResetObject();
+        }
         
         #if UNITY_EDITOR
         if (devInteractionDisplay)
@@ -228,6 +239,9 @@ public class Controls : MonoBehaviour {
         {
             result = clickFlag;
             clickFlag = true;
+
+            if (Input.touchCount > 0)
+                touchEnded = false;
         }
         else
         {
