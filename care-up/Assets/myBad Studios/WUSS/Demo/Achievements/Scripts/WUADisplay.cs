@@ -12,6 +12,8 @@ namespace MBS {
         private Text achieveText;
         private GameObject achieveGameObject;
 
+        private PlayerPrefsManager manager;
+
         //we are going to store our tracking info offline so we can continue
         //tracking achievement award states between games. This has nothing to do with 
         //what is unlocked or not. That info comes from the server. This is you keeping
@@ -29,6 +31,7 @@ namespace MBS {
 		void Start()
 		{
             achieveText = GameObject.Find ("AchieveTitle").GetComponent<Text> ();
+            manager = GameObject.Find ("Preferences").GetComponent<PlayerPrefsManager> ();
 
             DontDestroyOnLoad (gameObject.transform.parent);
             //wait until login was successful then download all keys
@@ -98,8 +101,8 @@ namespace MBS {
         public void UpdateKeys( string name, int qty )
         {
             //Save the current tracking keys so we are up to date across game sessions
-            //_keys.Add( qty, name );
-            _keys.Remove (name);
+            _keys.Add( qty, name );
+            //_keys.Remove (name);
             Keys.Save( "achievements" );
             Debug.LogWarning( Keys.ToString() );
 
@@ -123,12 +126,6 @@ namespace MBS {
                 //next we test each requirement in turn to see if all of them past their respective tests...
                 foreach ( string requirement in requirements )
                 {
-                    if (achieved) {
-                        Debug.Log ("ferro");
-                        GameObject.Find ("AchievementPop").GetComponent<Animator> ().SetTrigger ("pop");
-                        achieveText.text = name;
-                        Debug.Log ("ferro1");
-                    }
                     //if one of the requirements failed then there is no point in continuing to test the rest. Move on to the next achievement
                     if ( !achieved )
                         continue;
@@ -180,6 +177,26 @@ namespace MBS {
             {
                 foreach ( int aid in new_unlocks )
                     WUAchieve.UnlockAchievement( aid, _updateAchievements );
+                    if (name == "FirstLoginAchiev") {
+                        GameObject.Find ("AchieveTitle").GetComponent<Text> ().text = "Eerste inlog";
+                    } else if (name == "StudyPoints") {
+                        GameObject.Find ("AchieveTitle").GetComponent<Text> ().text = "Pak die punten!";
+                    } else if (name == "FirstPassedExam") {
+                        GameObject.Find ("AchieveTitle").GetComponent<Text> ().text = "Geslaagd!";
+                    } else if (name == "MoreThan15") {
+                        GameObject.Find ("AchieveTitle").GetComponent<Text> ().text = "Neem de tijd";
+                    } else if (name == "within5") {
+                        GameObject.Find ("AchieveTitle").GetComponent<Text> ().text = "Super snel!";
+                    } else if (name == "FinishedTutorial") {
+                        GameObject.Find ("AchieveTitle").GetComponent<Text> ().text = "Training gehaald";
+                    } else if (name == "FinishedProtocol" && manager.plays == 5) {
+                        GameObject.Find ("AchieveTitle").GetComponent<Text> ().text = "5 handelingen afgerond";
+                    } else if (name == "FinishedProtocol" && manager.plays == 3) {
+                        GameObject.Find ("AchieveTitle").GetComponent<Text> ().text = "3 handelingen afgerond";
+                    } else if (name == "FinishedProtocol" && manager.plays == 1) {
+                        GameObject.Find ("AchieveTitle").GetComponent<Text> ().text = "Afronden van de eerste handeling";
+                    }
+                    GameObject.Find ("AchievementPop").GetComponent<Animator> ().SetTrigger ("pop");
             }
         }
 

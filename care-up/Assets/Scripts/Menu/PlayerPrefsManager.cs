@@ -95,6 +95,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
     void Awake()
     {
+        //plays = 0;
         if ( instance )
         {
             Destroy(gameObject);
@@ -301,7 +302,8 @@ public class PlayerPrefsManager : MonoBehaviour
         PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
         manager.plays = response[1].Int("Plays_Number") + 1;
 
-        achievements.UpdateKeys ("FinishedProtocol", 1);
+        achievements.UpdateKeys ("5 handelingen afgerond", 1);
+        achievements.UpdateKeys ("3 handelingen afgerond.", 1);
 
         Debug.Log("Added plays, current plays: " + manager.plays);
      
@@ -310,6 +312,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
         // update +1
         CMLData data = new CMLData();
+        //manager.plays = response[1].Int ("Plays_Number") + 2;
         data.Set("Plays_Number", manager.plays.ToString());
         WUData.UpdateCategory("AccountStats", data);
     }

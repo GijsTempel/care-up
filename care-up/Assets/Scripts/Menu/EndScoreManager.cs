@@ -14,6 +14,8 @@ public class EndScoreManager : MonoBehaviour {
     private int score;
     private float time;
 
+    private PlayerPrefsManager manager;
+
     public float percent;
 
     public string completedSceneName;
@@ -38,6 +40,7 @@ public class EndScoreManager : MonoBehaviour {
     void Start () {
         SceneManager.sceneLoaded += OnLoaded;
 
+        manager = GameObject.Find ("Preferences").GetComponent<PlayerPrefsManager> ();
         achievements = GameObject.Find ("AchievementsDisplayPrefab").GetComponent<MBS.WUADisplay> ();
 
         fullStar = Resources.Load<Sprite> ("Sprites/Stars/star");
@@ -142,6 +145,14 @@ public class EndScoreManager : MonoBehaviour {
                 achievements.UpdateKeys ("MoreThan15", 1);
             }else if (time <= 300.0f) {
                 achievements.UpdateKeys ("within5", 1);
+            }
+
+            if (manager.plays == 1) {
+                achievements.UpdateKeys ("FinishedProtocol", 1);
+            }else if (manager.plays == 3) {
+                achievements.UpdateKeys ("FinishedProtocol", 2);
+            } else if (manager.plays == 5) {
+                achievements.UpdateKeys ("FinishedProtocol", 2);
             }
 
             Cursor.lockState = CursorLockMode.None;
