@@ -8,7 +8,10 @@
     type="talk"
     topic="Hello"
     extra="Ondanks dat het begroeten niet in de werkwijze staat, is het wel netjes om contact te leggen met de cliënt."
-    optional=""/>
+    optional=""
+    messageTitle="Handhygiëne"
+    messageContent="Handhygiëne is het allerbelangrijkste als het gaat om voorkomen van besmetting met ziektekiemen. Dit betekent je handen reinigen op de juiste manier en op de juiste momenten. Begin een handeling altijd met handhygiëne."
+  ></action>
 
   <action
     points="3"
@@ -17,8 +20,10 @@
     index="0"
     type="use"
     value="HandCleaner"
-    extra="Pas handhygiëne toe. Handhygiëne is het allerbelangrijkste als het gaat om voorkomen van besmetting met ziektekiemen. Dit betekent je handen reinigen op de juiste manier en op de juiste momenten. Begin een handeling altijd met handhygiëne."></action>
-
+    messageTitle="Handhygiëne"
+    messageContent="Handhygiëne is het allerbelangrijkste als het gaat om voorkomen van besmetting met ziektekiemen. Dit betekent je handen reinigen op de juiste manier en op de juiste momenten. Begin een handeling altijd met handhygiëne."
+   ></action>
+  
   <action
     points="1"
     description="Maak een schoon werkveld door op het werkveld te klikken."
@@ -26,7 +31,10 @@
     index="1"
     type="use"
     value="WorkField"
-    extra="Maak een schoon werkveld. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen."></action>
+    extra="Maak een schoon werkveld."    
+    messageTitle="Hygiënisch werken door op het werkveld te klikken."
+    messageContent="Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen."
+  ></action>
 
     <action
     points="1"
@@ -67,7 +75,7 @@
     description="Controleer de toedienlijst."
     fullDescription="Open de tablet door op het tablet icoon te drukken. Klik op de App 'Gegevens'. Kies vervolgens voor de toedienlijst."
     audioHint="InjectionSubcutaneous/Step 5"
-    index="5"
+    index="4"
     type="examine"
     item="PrescriptionForm"
     expected="good"
@@ -78,7 +86,7 @@
     points="1"
     description="Maak het medicijn gereed voor toediening door het medicijn zakje te openen."
     fullDescription="Open het medicijn zakje door omhoog te swipen of door op het medicijn zakje te klikken en vervolgens op het - icoon te klikken."
-    index="6"
+    index="5"
     type="combine"
     left="MedicineBag"
     right=""
@@ -89,7 +97,7 @@
     points="1"
     description="Instrueer de cliënt de medicijnen niet door te slikken."
     fullDescription="Instrueer de cliënt door op hem te klikken. Daarna klik je nogmaals op de cliënt om een gesprek aan te gaan. Klik vervolgens op de juiste optie."
-    index="7"
+    index="6"
     type="talk"
     topic="NoSwallow"
     extra="Instrueer de cliënt de medicijnen niet door te slikken."></action>
@@ -99,14 +107,14 @@
     points="1"
     description="Vraag de cliënt te gaan zitten."
     fullDescription="Vraag de cliënt door op hem te klikken. Daarna klik je nogmaals op de cliënt om een gesprek aan te gaan. Klik vervolgens op de juiste optie."
-    index="8"
+    index="7"
     type="talk"
     topic="Sitstraight"
     extra="Vraag de cliënt te gaan zitten."></action>
 
   <action
     comment="Start sequence by using the pill on the patient"
-    index="9"
+    index="8"
     points="1"
     description="Neem het medicijn in de hand en geef het aan de cliënt."
     fullDescription="Ga naar de cliënt. Klik op het medicijn in je hand. Klik op het + icoon. Klik vervolgens op de client. "
@@ -119,7 +127,7 @@
 
   <action
     comment="Patient opens mouth and bring the tip of the tongue against the palate"
-    index="10"
+    index="9"
     value="open mouth"
     description="Vraag de cliënt de punt van de tong tegen het verhemelte te brengen."
     points="2"
@@ -129,7 +137,7 @@
 
   <action
     comment="Player places the pill under the tongue of the patient"
-    index="11"
+    index="10"
     value="place pill under tongue"
     description="Leg het medicijn onder de tong van de cliënt."
     points="2"
@@ -138,7 +146,7 @@
     fullDescription="Kies de juiste optie."></action>
   <action
     comment="Client closes his mouth to swallow pill"
-    index="12"
+    index="11"
     value="close mouth"
     description="Vraag de cliënt onmiddellijk de mond dicht te doen."
     points="2"
@@ -151,7 +159,7 @@
     description="Ruim de materialen op door op de tafel te klikken."
     fullDescription="Leg de spuit terug op het werkveld door op het silhoutte te klikken. Klik vervolgens op het werkveld om deze schoon te maken."
     audioHint="Injection/EAS3-2"
-    index="13"
+    index="12"
     type="use"
     value="WorkField"
     extra=" Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen."></action>
@@ -160,7 +168,7 @@
     description="Pas handhygiëne toe."
     fullDescription="Klik op de hygiënepomp om deze te gebruiken.)"
     audioHint="Injection/EAS5-2"
-    index="14"
+    index="13"
     type="use"
     value="HandCleaner"
     extra="Handhygiëne is het allerbelangrijkste als het gaat om voorkomen van besmetting met ziektekiemen. Dit betekent je handen reinigen op de juiste manier en op de juiste momenten. Sluit handelingen af met handhygiëne."></action>
@@ -169,7 +177,7 @@
     description="Teken toedienlijst af."
     fullDescription="Open de tablet door op het tablet icoon te drukken. Klik op de App 'Gegevens'. Kies vervolgens voor de toedienlijst. Klik tot slot op het afteken icoon.)"
     audioHint="Injection/EAS4-2"
-    index="15"
+    index="14"
     type="use"
     value="PaperAndPen"
     extra="Teken toedienlijst af of noteer tijdstip, soort medicijn, concentratie, hoeveelheid, wijze van toediening en noteer bevindingen."></action>
