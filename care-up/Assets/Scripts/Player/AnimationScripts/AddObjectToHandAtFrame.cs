@@ -56,6 +56,27 @@ public class AddObjectToHandAtFrame : StateMachineBehaviour
             {
                 Transform targetObj = GameObject.Find(GhostObjectTarget).transform;
                 obj.GetComponent<PickableObject>().InstantiateGhostObject(targetObj.position, targetObj.rotation, 0);
+                bool isInList = false;
+                HandsInventory.GhostPosition CGP = new HandsInventory.GhostPosition();
+                CGP.position = targetObj.position;
+                CGP.rotation = targetObj.rotation.eulerAngles;
+                CGP.objectName = objectName;
+                if (inventory.customGhostPositions.Count > 0)
+                {
+                    for (int i = 0; i < inventory.customGhostPositions.Count; i++)
+                    {
+                        if (inventory.customGhostPositions[i].objectName == objectName)
+                        {
+                            isInList = true;
+                            inventory.customGhostPositions[i] = CGP;
+                        }
+                    }
+                }
+                if (!isInList)
+                {
+                    inventory.customGhostPositions.Add(CGP);
+                }
+               
                 if (destroyOnDrop != AddObjectToHandAtFrame.DestroyStates.None)
                 {
                     bool dod = destroyOnDrop == AddObjectToHandAtFrame.DestroyStates.True;
