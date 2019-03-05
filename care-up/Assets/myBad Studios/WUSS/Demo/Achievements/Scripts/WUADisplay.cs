@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 namespace MBS {
 	public class WUADisplay : MonoBehaviour {
@@ -8,9 +9,15 @@ namespace MBS {
         [SerializeField] RectTransform content_area;
         [SerializeField] WUAView	view_prefab;
         [SerializeField] bool destroy_contents_on_load = true;
+        private bool spawnContent = false;
+
+        private GameObject achievePanel;
 
         private Text achieveText;
         private GameObject achieveGameObject;
+        private bl_SceneLoader sceneloader;
+
+        private Scene currentScene;
 
         private PlayerPrefsManager manager;
 
@@ -30,6 +37,7 @@ namespace MBS {
 
 		void Start()
 		{
+            currentScene = SceneManager.GetActiveScene ();
             achieveText = GameObject.Find ("AchieveTitle").GetComponent<Text> ();
             manager = GameObject.Find ("Preferences").GetComponent<PlayerPrefsManager> ();
 
@@ -37,7 +45,8 @@ namespace MBS {
             //wait until login was successful then download all keys
             //this is great during the demo but if you spawn your prefab(s) mid game
             //you might have to call it manually. Either way, see the FetchAwards function to see how
-            WULogin.onLoggedIn += FetchAwards;
+            //WULogin.onLoggedIn += FetchAwards;
+            SceneManager.sceneLoaded += OnSceneLoaded;
 
             //load the achievement tracking info from our previous play session (if any)
             Keys = new CML();
@@ -57,7 +66,26 @@ namespace MBS {
 					Destroy (view.gameObject);
 		}
 
-        void OnDestroy() => WULogin.onLoggedIn -= FetchAwards;
+        void Update() {
+            
+        }
+
+        void OnSceneLoaded (Scene scene, LoadSceneMode mode) {
+            Debug.Log ("OnSceneLoaded: " + scene.name);
+
+            currentScene = SceneManager.GetActiveScene ();
+
+            if (currentScene.name == "MainMenu") {
+                achievePanel = GameObject.Find ("Account_Achievements");
+                content_area = GameObject.Find ("LayoutGroupAchieve").GetComponent<RectTransform> ();
+                WUAchieve.FetchEverything (GenerateEntries);
+
+                
+            }
+        }
+
+        //void OnDestroy() => WULogin.onLoggedIn -= FetchAwards;
+        void OnDestroy () => SceneManager.sceneLoaded -= OnSceneLoaded;
 
         //manually decide what achievements to award or take away...
         public void AwardAchievement( int aid ) => WUAchieve.UnlockAchievement( aid, _updateAfterManualAwards );
@@ -91,6 +119,7 @@ namespace MBS {
             }
             ShowHowmanyIAmTracking();
             UpdateKeys ("FirstLoginAchiev", 1);
+            //achievePanel.SetActive (false);
         }
 
         void ShowHowmanyIAmTracking()

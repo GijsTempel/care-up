@@ -57,7 +57,7 @@ public class bl_SceneLoader : MonoBehaviour
     private bl_SceneLoaderManager Manager = null;
     private AsyncOperation async;
     private bool isOperationStarted = false;
-    private bool FinishLoad = false;
+    public bool FinishLoad = false;
     private CanvasGroup RootAlpha;
     private CanvasGroup BackgroundAlpha = null;
     private CanvasGroup LoadingBarAlpha = null;
