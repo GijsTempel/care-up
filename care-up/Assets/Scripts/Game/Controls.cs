@@ -107,7 +107,7 @@ public class Controls : MonoBehaviour {
     private bool canInteract;
 
     private bool clickFlag = false;
-    private bool clickBuffer = false;
+    private int clickBuffer = 0;
     private bool touchEnded = false;
 
     public GameObject SelectedObject
@@ -167,24 +167,22 @@ public class Controls : MonoBehaviour {
         UpdateUIDetection();
 
         keyUsed = false;
-
-        if (clickBuffer)
-        {
-            clickBuffer = clickFlag = false;
-        }
-        else if (clickFlag)
-        {
-            clickBuffer = true;
-        }
-
+        
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
         {
             touchEnded = true;
+        } else if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        {
+            touchEnded = false;
         }
 
         if (touchEnded)
         {
             ResetObject();
+            if (GameObject.Find("ItemDescription") != null)
+            {
+                GameObject.Find("ItemDescription").SetActive(false);
+            }
         }
         
         #if UNITY_EDITOR
@@ -213,9 +211,20 @@ public class Controls : MonoBehaviour {
     {
         if (UnityEngine.EventSystems.EventSystem.current != null)
         {
-            if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+            if (Input.touchCount > 0)
             {
-                ResetObject();
+                if (UnityEngine.EventSystems.EventSystem.current.
+                    IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+                {
+                    ResetObject();
+                }
+            }
+            else
+            {
+                if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+                {
+                    ResetObject();
+                }
             }
         }
     }
@@ -235,19 +244,6 @@ public class Controls : MonoBehaviour {
             Input.GetTouch(0).phase == TouchPhase.Began
             : (Input.GetMouseButtonDown(0) || keyPreferences.mouseClickKey.Pressed());
        
-        if (result)
-        {
-            result = clickFlag;
-            clickFlag = true;
-
-            if (Input.touchCount > 0)
-                touchEnded = false;
-        }
-        else
-        {
-            result = clickFlag;
-        }
-
         return result;
     }
     
