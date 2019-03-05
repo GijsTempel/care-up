@@ -77,6 +77,7 @@ public class ObjectsIDController : MonoBehaviour
         new ObjectsIDs("PaperTowelInHand", 60,5),
 		new ObjectsIDs("MedicineBag", 102,00),
         new ObjectsIDs("TabletRound1", 103,00),
+        new ObjectsIDs("BandAidPackage", 105,00),
 
 
         //
