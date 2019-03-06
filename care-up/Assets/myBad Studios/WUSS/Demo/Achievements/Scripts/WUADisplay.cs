@@ -117,8 +117,8 @@ namespace MBS {
                 view.Fields = entry;
                 view.Initialize();
             }
-            ShowHowmanyIAmTracking();
             UpdateKeys ("FirstLoginAchiev", 1);
+            ShowHowmanyIAmTracking ();
             //achievePanel.SetActive (false);
         }
 
