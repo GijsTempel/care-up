@@ -61,6 +61,7 @@ public class LeaderBoardSceneButton : MonoBehaviour
         GameObject.Find("ButtonClickSound").GetComponent<AudioSource>().Play();
         Descripton = transform.Find("Text").GetComponent<Text>().text;
 
+        GameObject.FindObjectOfType<UMP_Manager>().LeaderBoardSearchBar.gameObject.SetActive(false);
         GameObject.FindObjectOfType<LeaderBoard>().topDescription.SetActive(false);
         GameObject.FindObjectOfType<LeaderBoard>().separator.SetActive(false);
         GameObject.FindObjectOfType<LeaderBoard>().leftBar.SetActive(false);
