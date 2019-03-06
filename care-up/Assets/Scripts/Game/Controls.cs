@@ -179,6 +179,10 @@ public class Controls : MonoBehaviour {
         if (touchEnded)
         {
             ResetObject();
+            if (GameObject.Find("ItemDescription") != null)
+            {
+                GameObject.Find("ItemDescription").SetActive(false);
+            }
         }
         
         #if UNITY_EDITOR
@@ -207,9 +211,20 @@ public class Controls : MonoBehaviour {
     {
         if (UnityEngine.EventSystems.EventSystem.current != null)
         {
-            if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+            if (Input.touchCount > 0)
             {
-                ResetObject();
+                if (UnityEngine.EventSystems.EventSystem.current.
+                    IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+                {
+                    ResetObject();
+                }
+            }
+            else
+            {
+                if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+                {
+                    ResetObject();
+                }
             }
         }
     }

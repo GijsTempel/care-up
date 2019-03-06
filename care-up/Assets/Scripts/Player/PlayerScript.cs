@@ -666,6 +666,8 @@ public class PlayerScript : MonoBehaviour
         {
             PlayerAnimationManager.SetHandItem(false, null);
         }
+
+        itemControls.Close();
     }
 
     IEnumerator DelayedPickItemsAfterIpad(float delay)
