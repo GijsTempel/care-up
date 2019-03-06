@@ -279,7 +279,9 @@ public class PlayerScript : MonoBehaviour
             rotated += mouseLook.LookRotation(transform, Camera.main.transform);
         }*/
 
-        if (!freeLook && controls.MouseClicked() && !robotUIopened)
+        if (!freeLook && !robotUIopened &&
+            ((Input.touchCount < 1 && controls.MouseClicked()) || 
+            (Input.touchCount > 0 && Controls.MouseReleased())))
         {
             if (!away && controls.SelectedObject != null
                 && controls.SelectedObject.GetComponent<InteractableObject>() != null
@@ -305,9 +307,14 @@ public class PlayerScript : MonoBehaviour
                     itemControls.Init(controls.SelectedObject);
                 }
             }
-            else
+            else if (Input.touchCount > 0 && Controls.MouseReleased())
             {
-                //FreeLookButton();
+                // catch falling touch here
+                if (controls.SelectedObject != null &&
+                    controls.SelectedObject.GetComponent<WalkToGroup>())
+                {
+                    WalkToGroup(controls.SelectedObject.GetComponent<WalkToGroup>());
+                }
             }
         }
         else if (Input.GetMouseButtonDown(1) && usingOnMode)
@@ -659,6 +666,8 @@ public class PlayerScript : MonoBehaviour
         {
             PlayerAnimationManager.SetHandItem(false, null);
         }
+
+        itemControls.Close();
     }
 
     IEnumerator DelayedPickItemsAfterIpad(float delay)
