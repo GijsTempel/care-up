@@ -212,7 +212,9 @@ public class Cheat_CurrentAction : MonoBehaviour
 
         if (controller != null)
         {
-            uipanel_direction = (controller.GetCurrentAnimatorStateInfo(0).IsTag("UI_On")) ? 1 : -1;
+            uipanel_direction = (controller.GetCurrentAnimatorStateInfo(0).IsTag("UI_On") ||
+                (controller.GetCurrentAnimatorStateInfo(0).IsTag("UI_On_Sequence") 
+                && controller.speed == 0)) ? 1 : -1;
 
             // very hard mix with everything else that updates text, needs testing
             uipanel_timer += Time.deltaTime * uipanel_direction;
