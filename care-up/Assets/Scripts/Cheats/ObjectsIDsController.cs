@@ -16,12 +16,17 @@ public class ObjectsIDsController : MonoBehaviour
     public bool cheat = false;
     public bool buildActionList = false;
 
-    private List<ObjectsIDs> objectsIDsList = new List<ObjectsIDs>();
-    public List<GameObject> hidenObjects;   
+    public List<ObjectsIDs> objectsIDsList = new List<ObjectsIDs>();
+    public List<GameObject> hidenObjects;
+
+    private void Start()
+    {
+        GetObjectsIDsInfo();
+    }
 
     public void GetObjectsIDsInfo()
     {
-        TextAsset textAsset = (TextAsset)Resources.Load("Xml/Combinations/GameObjects");
+        TextAsset textAsset = (TextAsset)Resources.Load("Xml/GameObjects");
         XmlDocument xmlFile = new XmlDocument();
         xmlFile.LoadXml(textAsset.text);
         XmlNodeList list = xmlFile.FirstChild.NextSibling.ChildNodes;
