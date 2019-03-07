@@ -244,10 +244,10 @@ public class PickableObject : InteractableObject
                     return true;
                 }
             }
-            else if (GameObject.FindObjectOfType<ObjectsIDController>() != null)
+            else if (GameObject.FindObjectOfType<ObjectsIDsController>() != null)
             {
       
-                ObjectsIDController ObjectsID_Controller = GameObject.FindObjectOfType<ObjectsIDController>();
+                ObjectsIDsController ObjectsID_Controller = GameObject.FindObjectOfType<ObjectsIDsController>();
                 string selectedName = controls.SelectedObject.transform.name;
                 if (controls.SelectedObject.GetComponent<PersonObjectPart>() != null)
                 {
@@ -258,7 +258,7 @@ public class PickableObject : InteractableObject
                     bool alloweUse = actionManager.CompareUseOnInfo(transform.name, selectedName);
                     if (ObjectsID_Controller != null)
                     {
-                        if (ObjectsID_Controller.Cheat && Application.isEditor)
+                        if (ObjectsID_Controller.cheat && Application.isEditor)
                         {
                             alloweUse = true;
                         }
