@@ -302,9 +302,6 @@ public class PlayerPrefsManager : MonoBehaviour
         PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
         manager.plays = response[1].Int("Plays_Number") + 1;
 
-        achievements.UpdateKeys ("5 handelingen afgerond", 1);
-        achievements.UpdateKeys ("3 handelingen afgerond.", 1);
-
         Debug.Log("Added plays, current plays: " + manager.plays);
      
         RateBox.Instance.IncrementCustomCounter();

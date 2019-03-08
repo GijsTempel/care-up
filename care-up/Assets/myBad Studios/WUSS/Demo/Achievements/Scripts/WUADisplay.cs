@@ -46,7 +46,7 @@ namespace MBS {
             //wait until login was successful then download all keys
             //this is great during the demo but if you spawn your prefab(s) mid game
             //you might have to call it manually. Either way, see the FetchAwards function to see how
-            //WULogin.onLoggedIn += FetchAwards;
+            WULogin.onLoggedIn += FetchAwards;
             SceneManager.sceneLoaded += OnSceneLoaded;
 
             //load the achievement tracking info from our previous play session (if any)
@@ -77,18 +77,26 @@ namespace MBS {
             currentScene = SceneManager.GetActiveScene ();
 
             if (currentScene.name == "MainMenu") {
-                //achievementButton = achieveGameObject.Find ("slot (3)").GetComponent<Button> ();
+
                 achievePanel = GameObject.Find ("Account_Achievements");
                 content_area = GameObject.Find ("LayoutGroupAchieve").GetComponent<RectTransform> ();
                 achievementButton = GameObject.Find ("AchievementBTN").GetComponent<Button> ();
                 achievementButton.onClick.AddListener (OnAchievementButtonClick);
-                GameObject.Find ("Account").SetActive (false);
+
+                if (achievePanel != null && GameObject.Find ("Account") != null) {
+                    GameObject.Find ("Account").SetActive (false);
+                    achievePanel.SetActive (false);
+                }
+
                 UpdateKeys ("FirstLoginAchiev", 1);
             }
         }
 
-        //void OnDestroy() => WULogin.onLoggedIn -= FetchAwards;
-        void OnDestroy () => SceneManager.sceneLoaded -= OnSceneLoaded;
+        void OnDestroy () {
+
+            WULogin.onLoggedIn -= FetchAwards;
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
 
         //manually decide what achievements to award or take away...
         public void AwardAchievement( int aid ) => WUAchieve.UnlockAchievement( aid, _updateAfterManualAwards );
@@ -142,7 +150,8 @@ namespace MBS {
             Debug.LogWarning( Keys.ToString() );
 
             //since the keys have been updated, let's see if anything is now unlocked
-            ScanUnlockedStatus(name);
+            ShowHowmanyIAmTracking ();
+            ScanUnlockedStatus (name);
         }
 
         public void ScanUnlockedStatus(string name)
