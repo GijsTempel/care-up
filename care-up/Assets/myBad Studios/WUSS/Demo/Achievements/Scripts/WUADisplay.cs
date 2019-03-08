@@ -9,6 +9,7 @@ namespace MBS {
         [SerializeField] RectTransform content_area;
         [SerializeField] WUAView	view_prefab;
         [SerializeField] bool destroy_contents_on_load = true;
+        [SerializeField] private Button achievementButton;
         private bool spawnContent = false;
 
         private GameObject achievePanel;
@@ -76,11 +77,13 @@ namespace MBS {
             currentScene = SceneManager.GetActiveScene ();
 
             if (currentScene.name == "MainMenu") {
+                //achievementButton = achieveGameObject.Find ("slot (3)").GetComponent<Button> ();
                 achievePanel = GameObject.Find ("Account_Achievements");
                 content_area = GameObject.Find ("LayoutGroupAchieve").GetComponent<RectTransform> ();
-                WUAchieve.FetchEverything (GenerateEntries);
-
-                
+                achievementButton = GameObject.Find ("AchievementBTN").GetComponent<Button> ();
+                achievementButton.onClick.AddListener (OnAchievementButtonClick);
+                GameObject.Find ("Account").SetActive (false);
+                UpdateKeys ("FirstLoginAchiev", 1);
             }
         }
 
@@ -97,6 +100,9 @@ namespace MBS {
         void FetchAwards( CML response ) => WUAchieve.FetchEverything( GenerateEntries );
         void GenerateEntries( CML response )
         {
+            foreach(Transform child in content_area.transform) {
+                GameObject.Destroy (child.gameObject);
+            }
             //store the server results then extract the achievements to work with in this function
             all_awards = response;
             List<CMLData> entries = all_awards.Children( 0 );
@@ -105,6 +111,8 @@ namespace MBS {
             GridLayoutGroup glg = content_area.GetComponent<GridLayoutGroup>();
             content_area.sizeDelta = new Vector2( content_area.sizeDelta.x, entries.Count * ( view_prefab.GetComponent<RectTransform>().sizeDelta.y + glg.spacing.y ) );
             content_area.sizeDelta = new Vector2( content_area.sizeDelta.x, entries.Count * ( glg.cellSize.y + glg.spacing.y ) );
+
+            tracked.Clear ();
 
             //and now spawn them...
             foreach ( CMLData entry in entries )
@@ -117,9 +125,7 @@ namespace MBS {
                 view.Fields = entry;
                 view.Initialize();
             }
-            UpdateKeys ("FirstLoginAchiev", 1);
             ShowHowmanyIAmTracking ();
-            //achievePanel.SetActive (false);
         }
 
         void ShowHowmanyIAmTracking()
@@ -281,6 +287,11 @@ namespace MBS {
                 }
             }
             ShowHowmanyIAmTracking();
+        }
+
+        public void OnAchievementButtonClick () {
+
+            WUAchieve.FetchEverything (GenerateEntries);
         }
 	}
 }
