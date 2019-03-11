@@ -30,12 +30,12 @@ public class ShowOnFrame : StateMachineBehaviour
     {
         if (ControlObjectName == "")
         {
-            if (GameObject.FindObjectOfType<ObjectsIDController>() != null && ObjNames.Count != 0)
+            if (GameObject.FindObjectOfType<ObjectsIDsController>() != null && ObjNames.Count != 0)
             {
-                ObjectsIDController idCont = GameObject.FindObjectOfType<ObjectsIDController>();
+                ObjectsIDsController idCont = GameObject.FindObjectOfType<ObjectsIDsController>();
                 foreach (string __name in ObjNames)
                 {
-                    Obj = idCont.getFromHidden(__name);
+                    Obj = idCont.GetFromHidden(__name);
                     if (Obj != null)
                     {
                         Obj.SetActive(toShow);

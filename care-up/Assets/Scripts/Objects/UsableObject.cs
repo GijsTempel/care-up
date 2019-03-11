@@ -46,9 +46,9 @@ public class UsableObject : InteractableObject {
             // CHeat mode for testing the game
             bool cheat = false;
 #if UNITY_EDITOR
-            if (GameObject.FindObjectOfType<ObjectsIDController>() != null)
+            if (GameObject.FindObjectOfType<ObjectsIDsController>() != null)
             {
-                cheat = GameObject.FindObjectOfType<ObjectsIDController>().Cheat;
+                cheat = GameObject.FindObjectOfType<ObjectsIDsController>().cheat;
             }
 #endif
             if (actionManager.CompareUseObject(name) || cheat)
