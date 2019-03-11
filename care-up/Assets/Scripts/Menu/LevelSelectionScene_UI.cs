@@ -67,14 +67,16 @@ public class LevelSelectionScene_UI : MonoBehaviour
         }
     }
 
+
     public void OnSceneTabSwitch()
-    {
+    {      
         ClearUI();
-        UpdateSceneUI();
+        UpdateSceneUI();           
     }
 
     void UpdateSceneUI()
     {
+       
         // load xml
         TextAsset textAsset;
 
@@ -272,7 +274,8 @@ public class LevelSelectionScene_UI : MonoBehaviour
         if (GameObject.FindObjectOfType<LeaderBoard>().leftBar.activeSelf)
             GameObject.FindObjectOfType<LeaderBoard>().infoBar.SetActive(false);
         else
-        {           
+        {
+            GameObject.FindObjectOfType<UMP_Manager>().LeaderBoardSearchBar.gameObject.SetActive(false);
             GameObject.FindObjectOfType<LeaderBoard>().top.SetActive(false);
             GameObject.FindObjectOfType<LeaderBoard>().backButton.GetComponent<Button>().interactable = true;
             GameObject.FindObjectOfType<LeaderBoard>().infoBar.SetActive(true);

@@ -9,6 +9,9 @@ public class UMP_Manager : MonoBehaviour {
     [Header("Level Manager")]
     public List<LevelInfo> Levels = new List<LevelInfo>();
 
+    public InputField SceneSearchBar;
+    public InputField LeaderBoardSearchBar;
+    
     [Header("Settings")]
     public string PlayButtonName = "QUICKPLAY >";
 
@@ -51,17 +54,20 @@ public class UMP_Manager : MonoBehaviour {
     /// <param name="disable">disabled currents window?</param>
     public void ChangeWindow(int id)
     {
+        SceneSearchBar.text = "";
+        LeaderBoardSearchBar.text = "";
+
         if (CurrentWindow == id)
             return;
 
             for (int i = 0; i < Windows.Count; i++)
             {
                 Windows[i].SetActive(false);
-            }
-           
+            }           
         
         CurrentWindow = id;
-        Windows[id].SetActive(true);
+        Windows[id].SetActive(true);   
+            
     }
 
     /// <summary>

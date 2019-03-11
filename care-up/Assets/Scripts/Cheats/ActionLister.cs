@@ -216,8 +216,8 @@ public class ActionLister : MonoBehaviour {
 
     void Start () {
 #if (UNITY_EDITOR)
-        if(GameObject.FindObjectOfType<ObjectsIDController>() != null)
-            buildActionList = GameObject.FindObjectOfType<ObjectsIDController>().buildActionList;
+        if(GameObject.FindObjectOfType<ObjectsIDsController>() != null)
+            buildActionList = GameObject.FindObjectOfType<ObjectsIDsController>().buildActionList;
         actions = new List<string>();
         if (GetComponent<Animator>() != null)
         {

@@ -33,7 +33,7 @@ public class HandsInventory : MonoBehaviour {
     public bool dropPenalty = true;
 
 
-	ObjectsIDController ObjectsID_Controller;
+	ObjectsIDsController ObjectsID_Controller;
 
     [System.Serializable]
     public struct ItemPosition
@@ -98,7 +98,7 @@ public class HandsInventory : MonoBehaviour {
     {
         tutorialUseOn = GameObject.FindObjectOfType<Tutorial_UseOn> ();
 
-        ObjectsID_Controller = GameObject.Find("GameLogic").GetComponent<ObjectsIDController>();
+        ObjectsID_Controller = GameObject.Find("GameLogic").GetComponent<ObjectsIDsController>();
 
         combinationManager = GameObject.Find("GameLogic").GetComponent<CombinationManager>();
         if (combinationManager == null) Debug.LogError("No combination manager found.");
@@ -896,7 +896,7 @@ public class HandsInventory : MonoBehaviour {
 
         if (ObjectsID_Controller != null)
 		{
-			if (ObjectsID_Controller.Cheat && Application.isEditor)
+			if (ObjectsID_Controller.cheat && Application.isEditor)
 			{
 				alloweCombine = true;
 			}
@@ -908,7 +908,7 @@ public class HandsInventory : MonoBehaviour {
 			//--------------------------------------------------------------------
 			bool idModeAllow = false;
 
-			if (GameObject.Find("GameLogic").GetComponent<ObjectsIDController>() != null)
+			if (GameObject.Find("GameLogic").GetComponent<ObjectsIDsController>() != null)
 			{
 				if (ObjectsID_Controller.FindByName(leftName) != -1 || ObjectsID_Controller.FindByName(rightName) != -1)
 				{
