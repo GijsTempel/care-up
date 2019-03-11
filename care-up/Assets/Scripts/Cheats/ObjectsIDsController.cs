@@ -16,7 +16,7 @@ public class ObjectsIDsController : MonoBehaviour
     public bool cheat = false;
     public bool buildActionList = false;
 
-    public List<ObjectsIDs> objectsIDsList = new List<ObjectsIDs>();
+    private List<ObjectsIDs> objectsIDsList = new List<ObjectsIDs>();
     public List<GameObject> hidenObjects;
 
     private void Start()
@@ -132,42 +132,4 @@ public class ObjectsIDsController : MonoBehaviour
         return (0);
     }
 
-    //public ObjectsIDs[] Objects =
-    //{
-    //      new ObjectsIDs("syringePack", 30, 0),
-    //      new ObjectsIDs("Syringe", 2, 1),
-    //      new ObjectsIDs("AbsorptionNeedle", 20, 0),
-    //      new ObjectsIDs("InjectionNeedle", 20, 0),
-    //      new ObjectsIDs("cloth_02_folded", 33, 0),
-    //      new ObjectsIDs("cloth_02", 53,1),
-    //      new ObjectsIDs("water_syringe_pack", 35, 0),
-    //      new ObjectsIDs("water_syringe_pack_no_cover", 35, 1),
-    //      new ObjectsIDs("water_syringe_pack_empty", 35, 2),
-    //      new ObjectsIDs("water_syringe_pack_cover", 36, 0),
-    //      new ObjectsIDs("lube_syringe_pack", 48, 0),
-    //      new ObjectsIDs("lube_syringe_pack_noCover", 48, 1),
-    //      new ObjectsIDs("lube_syringe_pack_empty", 48, 2),
-    //      new ObjectsIDs("lube_syringe_pack_cover", 48, 0),
-    //      new ObjectsIDs("w0_A", -5, 0),
-    //      new ObjectsIDs("m1_A", -6, 0),
-    //      new ObjectsIDs("m1_B", -7, 0),
-    //      new ObjectsIDs("Sink", -10, 0),
-    //      new ObjectsIDs("GauzeTrayFull", 38,0),
-    //      new ObjectsIDs("cotton_ball", 40,0),
-    //      new ObjectsIDs("catheter_bag_packed", 42,0),
-    //      new ObjectsIDs("catheter_bag_packed_opened", 42,1),
-    //      new ObjectsIDs("catheter_bag_packed_empty", 42,2),
-    //      new ObjectsIDs("catheter", 43,0),
-    //      new ObjectsIDs("catheter_inner", 44,0),
-    //      new ObjectsIDs("x_test", 101,0),
-    //      new ObjectsIDs("CWB_inner_open", 50,0),
-    //      new ObjectsIDs("CWB_inner_open_in2", 50,1),
-    //      new ObjectsIDs("catheter_bag_twisted", 46,0),
-    //      new ObjectsIDs("fixator_folded", 52,0),
-    //      new ObjectsIDs("fixation_folded_buttons", 53,0),
-    //      new ObjectsIDs("Sink_active2", -15,0),
-    //      new ObjectsIDs("PaperTowelInHand", 60,5),
-    //      new ObjectsIDs("MedicineBag", 102,00),
-    //      new ObjectsIDs("TabletRound1", 103,00),
-    //};
 }
