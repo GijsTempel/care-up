@@ -1827,6 +1827,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combineFrame: 100
+--- !u!114 &114036120824077944
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1d577ba52e334ef39dfa878ef5c62b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addFrame: 100
+  objectName: DesinfectionCloth
+  hand: 0
+  GhostObjectTarget: 
+  destroyOnDrop: 0
 --- !u!114 &114047090090785350
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1957,6 +1973,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combineFrame: 0
+--- !u!114 &114097727543025558
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftHand: 0
+  dropFrame: 100
 --- !u!114 &114102024089791480
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1984,6 +2013,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combineFrame: 300
+--- !u!114 &114105223587142738
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1d577ba52e334ef39dfa878ef5c62b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addFrame: 100
+  objectName: DesinfectionCloth
+  hand: 1
+  GhostObjectTarget: 
+  destroyOnDrop: 0
 --- !u!114 &114119500728585294
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -3724,6 +3769,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combineFrame: 100
+--- !u!114 &114906163143716424
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftHand: 1
+  dropFrame: 100
 --- !u!114 &114913210402914718
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -16449,6 +16507,8 @@ AnimatorState:
   - {fileID: 1101761106698587684}
   m_StateMachineBehaviours:
   - {fileID: 114439713844478652}
+  - {fileID: 114906163143716424}
+  - {fileID: 114105223587142738}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -16937,6 +16997,8 @@ AnimatorState:
   - {fileID: 1101534269300556374}
   m_StateMachineBehaviours:
   - {fileID: 114406914550622138}
+  - {fileID: 114097727543025558}
+  - {fileID: 114036120824077944}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -20708,7 +20770,7 @@ AnimatorTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: RightHandState
-    m_EventTreshold: 107
+    m_EventTreshold: 6
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102569707098585974}
   m_Solo: 0
@@ -20975,7 +21037,7 @@ AnimatorTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: LeftHandState
-    m_EventTreshold: 107
+    m_EventTreshold: 6
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102062900748929452}
   m_Solo: 0
