@@ -14,6 +14,8 @@ public class EndScoreManager : MonoBehaviour {
     private int score;
     private float time;
 
+    private PlayerPrefsManager manager;
+
     public float percent;
 
     public string completedSceneName;
@@ -23,6 +25,8 @@ public class EndScoreManager : MonoBehaviour {
     private List<string> stepsDescr;
     private List<int> wrongStepIndexes;
     private List<int> correctStepIndexes;
+
+    private MBS.WUADisplay achievements;
 
     public List<string> quizQuestionsTexts = new List<string> ();
     public List<int> quizWrongIndexes = new List<int> ();
@@ -35,6 +39,9 @@ public class EndScoreManager : MonoBehaviour {
 
     void Start () {
         SceneManager.sceneLoaded += OnLoaded;
+
+        manager = GameObject.Find ("Preferences").GetComponent<PlayerPrefsManager> ();
+        achievements = GameObject.Find ("AchievementsDisplayPrefab").GetComponent<MBS.WUADisplay> ();
 
         fullStar = Resources.Load<Sprite> ("Sprites/Stars/star");
     }
@@ -102,6 +109,9 @@ public class EndScoreManager : MonoBehaviour {
             // update test highscore
             GameObject.FindObjectOfType<PlayerPrefsManager>().UpdateTestHighscore(percent);
 
+            if (flag == true) {
+                achievements.UpdateKeys ("FirstPassedExam", 1);
+            }
         }
         if (actualScene)
         {
@@ -127,6 +137,20 @@ public class EndScoreManager : MonoBehaviour {
 
             if (score >= 3.0f) {
                 GameObject.Find ("Interactable Objects/Canvas/ScoreScreen/Stars/Star3").GetComponent<Image> ().sprite = fullStar;
+            }
+
+            if (time >= 900.0f) {
+                achievements.UpdateKeys ("MoreThan15", 1);
+            }else if (time <= 300.0f) {
+                achievements.UpdateKeys ("within5", 1);
+            }
+
+            if (manager.plays == 1) {
+                achievements.UpdateKeys ("FinishedProtocol", 1);
+            }else if (manager.plays == 3) {
+                achievements.UpdateKeys ("FinishedProtocol", 2);
+            } else if (manager.plays == 5) {
+                achievements.UpdateKeys ("FinishedProtocol", 2);
             }
 
             Cursor.lockState = CursorLockMode.None;
