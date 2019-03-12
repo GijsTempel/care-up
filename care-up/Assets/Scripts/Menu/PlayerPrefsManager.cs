@@ -33,6 +33,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
     // sets up after selecting scene in "scene selection"
     public string currentSceneVisualName;
+    public bool validatedScene;
 
     // post processing on camera
     public bool postProcessingEnabled = false;

@@ -100,11 +100,11 @@ public class EndScoreManager : MonoBehaviour {
             actualScene = true;
             
             // show/hide buttons
-            bool flag = (percent > 0.7f && GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed);
+            bool flag = (percent > 0.7f && manager.subscribed && manager.validatedScene);
             GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Buttons/NextButton").SetActive(flag);
             GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Buttons/Back to main menu").SetActive(!flag);
 
-            GameObject.Find("Interactable Objects/Canvas/Send_Score/Top/Scenetitle").GetComponent<Text>().text = GameObject.FindObjectOfType<PlayerPrefsManager>().currentSceneVisualName;
+            GameObject.Find("Interactable Objects/Canvas/Send_Score/Top/Scenetitle").GetComponent<Text>().text = manager.currentSceneVisualName;
 
             // update test highscore
             GameObject.FindObjectOfType<PlayerPrefsManager>().UpdateTestHighscore(percent);
