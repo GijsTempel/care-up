@@ -70,10 +70,6 @@ namespace MBS {
 					Destroy (view.gameObject);
 		}
 
-        void Update() {
-            
-        }
-
         void OnSceneLoaded (Scene scene, LoadSceneMode mode) {
             Debug.Log ("OnSceneLoaded: " + scene.name);
 
