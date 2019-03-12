@@ -153,7 +153,7 @@ namespace MBS {
             _keys.Add( qty, name );
             //_keys.Remove (name);
             Keys.Save( "achievements" );
-            Debug.LogWarning( Keys.ToString() );
+            //Debug.LogWarning( Keys.ToString() );
 
             //since the keys have been updated, let's see if anything is now unlocked
             ShowHowmanyIAmTracking ();
