@@ -375,7 +375,6 @@ public class PlayerPrefsManager : MonoBehaviour
         currentTestScene = currentSceneVisualName.Replace(" ", "_");
         
         WUData.FetchField(currentTestScene, "TestHighscores", GetTestHighscore, -1, GetTestHighscore_Error);
-
     }
 
     static void GetTestHighscore(CML response)
@@ -439,6 +438,37 @@ public class PlayerPrefsManager : MonoBehaviour
                     
                     break;
             }
+        }
+    }
+
+    public void SetTutorialCompletedWU()
+    {
+        tutorialCompleted = true;
+
+        CMLData data = new CMLData();
+        data.Set("TutorialCompleted", "true");
+        WUData.UpdateCategory("AccountStats", data);
+    }
+
+    public void GetTutorialCompletedWU()
+    {
+        WUData.FetchField("TutorialCompleted", "AccountStats", GetTutorialCompleted, 
+            -1, GetTutorialCompleted_Error);
+    }
+
+    static void GetTutorialCompleted(CML response)
+    {
+        bool completed = response[1].Bool("TutorialCompleted");
+        // do smth
+    }
+
+    static void GetTutorialCompleted_Error(CMLData response)
+    {
+        if ((response["message"] == "WPServer error: Empty response. No data found"))
+        {
+            CMLData data = new CMLData();
+            data.Set("TutorialCompleted", "false");
+            WUData.UpdateCategory("AccountStats", data);
         }
     }
 }
