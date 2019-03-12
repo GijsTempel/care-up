@@ -11,12 +11,15 @@ namespace MBS {
         [SerializeField] bool destroy_contents_on_load = true;
         [SerializeField] private Button achievementButton;
         private bool spawnContent = false;
+        private bool destroyPrefab = false;
 
         private GameObject achievePanel;
 
         private Text achieveText;
         private GameObject achieveGameObject;
         private bl_SceneLoader sceneloader;
+
+        private WUADisplay instance;
 
         private Scene currentScene;
 
@@ -36,7 +39,7 @@ namespace MBS {
         //we only try to auto award the achievements with requirements set on server side
         List<CMLData> tracked;
 
-		void Start()
+        void Start()
 		{
             currentScene = SceneManager.GetActiveScene ();
             achieveText = GameObject.Find ("AchieveTitle").GetComponent<Text> ();
@@ -76,6 +79,12 @@ namespace MBS {
 
             currentScene = SceneManager.GetActiveScene ();
 
+            if (currentScene.name == "LoginMenu" && destroyPrefab == true) {
+                Debug.Log ("hi");
+                Destroy (transform.parent.gameObject);
+                destroyPrefab = false;
+            }
+
             if (currentScene.name == "MainMenu") {
 
                 achievePanel = GameObject.Find ("Account_Achievements");
@@ -89,6 +98,7 @@ namespace MBS {
                 }
 
                 UpdateKeys ("FirstLoginAchiev", 1);
+                destroyPrefab = true;
             }
         }
 
