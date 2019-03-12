@@ -26,6 +26,7 @@ public class CameraMode : MonoBehaviour
     float camRotTime;
     float camMovementSpeed = 1f;
     float camMoveBackAt = float.PositiveInfinity;
+    bool robotUIFlag = false;
     //bool backFromObjectPreview = false; never used?
 
     public float minZoom = 0.5f;
@@ -101,12 +102,28 @@ public class CameraMode : MonoBehaviour
 
         if (camViewObject)
         {
+            robotUIFlag = false;
+            if (GameObject.FindObjectOfType<TutorialManager>() == null ||
+                GameObject.FindObjectOfType<Tutorial_UI>() != null ||
+                GameObject.FindObjectOfType<Tutorial_Theory>() != null)
+            {
+                RobotManager.SetUITriggerActive(false);
+            }
+
             camRotTime = (Time.time - startTime) / camMovementSpeed;
             Camera.main.transform.localRotation = Quaternion.Lerp(camRotFrom, camRotTo, camRotTime);
             if (camRotTime > camMovementSpeed)
             {
+                robotUIFlag = true;
                 camViewObject = false;
                 camMovementSpeed = 1f;
+
+                if (GameObject.FindObjectOfType<TutorialManager>() == null ||
+                GameObject.FindObjectOfType<Tutorial_UI>() != null ||
+                GameObject.FindObjectOfType<Tutorial_Theory>() != null)
+                {
+                    RobotManager.SetUITriggerActive(true);
+                }
             }
             return;
         }
@@ -239,6 +256,13 @@ public class CameraMode : MonoBehaviour
 
     public void ObjectViewPutDownButton()
     {
+        robotUIFlag = false;
+        if (GameObject.FindObjectOfType<TutorialManager>() == null ||
+               GameObject.FindObjectOfType<Tutorial_UI>() != null ||
+               GameObject.FindObjectOfType<Tutorial_Theory>() != null)
+        {
+            RobotManager.SetUITriggerActive(false);
+        }
         ToggleCameraMode(Mode.Free);
 
         selectedObject.ToggleViewMode(false);
@@ -252,6 +276,8 @@ public class CameraMode : MonoBehaviour
 
     public void ToggleCameraMode(Mode mode)
     {
+        robotUIFlag = false;
+
         if (currentMode == Mode.ObjectPreview && mode == Mode.Free)
         {
             camMoveBackAt = Time.time + 0.5f;
@@ -265,13 +291,12 @@ public class CameraMode : MonoBehaviour
             playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
             playerScript.joystickObject.SetActive(!playerScript.robotUIopened);
 
-            if (GameObject.FindObjectOfType<TutorialManager>() == null ||
+            if ((GameObject.FindObjectOfType<TutorialManager>() == null ||
                 GameObject.FindObjectOfType<Tutorial_UI>() != null ||
-                GameObject.FindObjectOfType<Tutorial_Theory>() != null)
+                GameObject.FindObjectOfType<Tutorial_Theory>() != null) && robotUIFlag)
             {
                 RobotManager.SetUITriggerActive(true);
             }
-
         }
 
         if (mode == Mode.ObjectPreview)
