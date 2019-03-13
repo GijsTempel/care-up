@@ -751,14 +751,20 @@ public class ActionManager : MonoBehaviour {
     {
         bool matched = false;
 
+        // make a selection from all actions list
+        // create a sublist with not completed actions of current action index only
         List<Action> sublist = actionList.Where(action =>
             action.SubIndex == currentActionIndex &&
             action.matched == false).ToList();
+        
+        // make sublist even smaller, leaving only actions that are not blocked by other steps
         sublist = sublist.Where(action =>
             action.blockRequired == "" ||
             unlockedBlocks.Contains(action.blockRequired)).ToList();
+
         int subcategoryLength = sublist.Count;
         
+        // make a list from sublist with actions of performed action type only
         List<Action> subtypelist = sublist.Where(action => action.Type == type).ToList();
         if (sublist.Count != 0)
         {
@@ -828,17 +834,54 @@ public class ActionManager : MonoBehaviour {
                 wrongStepIndexes.Add(index);
             }
 
-            if (sublist.Count > 0 && (manager == null || manager.practiceMode))
+            bool practice = (manager != null) ? manager.practiceMode : true;
+
+            if (practice)
             {
-                RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
-                messageCenter.NewMessage("Verkeerde handeling!", sublist[0].extraDescr, RobotUIMessageTab.Icon.Error);
+                if (sublist.Count > 0)
+                {
+                    RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
+                    messageCenter.NewMessage("Verkeerde handeling!", sublist[0].extraDescr, RobotUIMessageTab.Icon.Error);
+                }
+            }
+            else // test mode error, check for blocks
+            {
+                // action not matched this check, so list didnt change
+                // so we can perform same selection as before
+                List<Action> sublistWithoutBlocks = actionList.Where(action =>
+                    action.SubIndex == currentActionIndex &&
+                    action.matched == false && action.Type == type).ToList();
+
+                // make a flag that will become true if there is a step that is blocked
+                // and could actually be performed if there would be no block
+                bool foundBlockedStep = false;
+
+                if (sublistWithoutBlocks.Count != 0)
+                {
+                    foreach (Action action in sublistWithoutBlocks)
+                    {
+                        if (action.Compare(info))
+                        {
+                            foundBlockedStep = true;
+                            break; // found step, no need to continue
+                        }
+                    }
+                }
+
+                // if there's actually such step, make  message
+                if (foundBlockedStep)
+                {
+                    string title = "Step is blocked";
+                    string message = "Looks like this stepped cannot be performed YET. You need to do something before it.";
+                    RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
+                    messageCenter.NewMessage(title, message, RobotUIMessageTab.Icon.Error);
+                }
             }
 
             ActionManager.WrongAction(type != ActionType.SequenceStep); 
 
             penalized = true;
 
-            bool practice = (manager != null) ? manager.practiceMode : true;
            
         }
      
