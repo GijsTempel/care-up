@@ -14,6 +14,7 @@ public class LevelButton : MonoBehaviour {
     public string displayName;
     public Sprite image;
     public bool testDisabled;
+    public bool validated;
 
     private static Transform sceneInfoPanel;
     private static PlayerPrefsManager manager;
@@ -32,6 +33,7 @@ public class LevelButton : MonoBehaviour {
         public string result;
         public Sprite image;
         public bool testDisabled;
+        public bool validated;
     };
     
     public List<Info> variations = new List<Info>();
@@ -81,6 +83,7 @@ public class LevelButton : MonoBehaviour {
                 if (manager != null)
                 {
                     manager.currentSceneVisualName = displayName;
+                    manager.validatedScene = validated;
                 }
 
                 // filling up options
@@ -114,6 +117,7 @@ public class LevelButton : MonoBehaviour {
                 if (manager != null)
                 {
                     manager.currentSceneVisualName = displayName;
+                    manager.validatedScene = validated;
                 }
             }
 

@@ -29,6 +29,14 @@ public class Cheat_CurrentAction : MonoBehaviour
     Button extraButton;
 
     private ActionManager actionManager;
+    private Animator controller;
+
+    private float uipanel_animationTime = 0.5f;
+    private int uipanel_direction = 1;
+    private float uipanel_timer = 1;
+
+    private Image devHintBackground;
+    private Image fullscrButton;
 
     private bool set = false; // fix
 
@@ -108,6 +116,8 @@ public class Cheat_CurrentAction : MonoBehaviour
 
         timer = 0.0f;
         direction = 0;
+        uipanel_timer = 1.0f;
+        uipanel_direction = 1;
 
         tutorial_UI = GameObject.FindObjectOfType<Tutorial_UI>();
     }
@@ -132,11 +142,13 @@ public class Cheat_CurrentAction : MonoBehaviour
         Button extra_Close_Btn = extraPanel.transform.Find("CloseExtraCheckmark").GetComponent<Button>();
         extraCloseBtn.onClick.AddListener(ToggleExtraInfoPanel);
         extra_Close_Btn.onClick.AddListener(ToggleExtraInfoPanel);
+
+        devHintBackground = devHint.GetComponent<Image>();
+        fullscrButton = devHint.transform.GetChild(1).GetComponent<Image>();
     }
 
     private void Update()
     {
-
         if (textObjectDevHint == null)
             return;
 
@@ -190,6 +202,31 @@ public class Cheat_CurrentAction : MonoBehaviour
                 timer = 0.0f;
                 direction = 0;
             }
+        }
+
+        if (controller == null && GameObject.FindObjectOfType<PlayerScript>() != null)
+        {
+            controller = GameObject.FindObjectOfType<PlayerScript>()
+                .transform.GetChild(0).GetChild(0).GetComponent<Animator>();
+        }
+
+        if (controller != null)
+        {
+            uipanel_direction = (controller.GetCurrentAnimatorStateInfo(0).IsTag("UI_On") ||
+                (controller.GetCurrentAnimatorStateInfo(0).IsTag("UI_On_Sequence") 
+                && controller.speed == 0)) ? 1 : -1;
+
+            // very hard mix with everything else that updates text, needs testing
+            uipanel_timer += Time.deltaTime * uipanel_direction;
+            uipanel_timer = Mathf.Clamp(uipanel_timer, 0, uipanel_animationTime);
+
+            float alpha = uipanel_timer / uipanel_animationTime;
+            
+            if (direction == 0 || uipanel_timer != uipanel_animationTime)
+                textObjectDevHint.color = new Color(0.0f, 0.0f, 0.0f, alpha);
+
+            devHintBackground.color = new Color(1.0f, 1.0f, 1.0f, alpha);
+            fullscrButton.color = new Color(1.0f, 1.0f, 1.0f, alpha);
         }
     }
 

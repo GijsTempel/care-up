@@ -75,17 +75,10 @@ namespace MBS
         [SerializeField] private Text ErrorLoginText;
         [SerializeField] private Text SuccesText;
 
-        [SerializeField] private WUAchieveManager WUAchieve;
 
         private bool remove_text = false;
 
         void Update () {
-            if (WULogin.FirstLoginAchievment == true) {
-
-                //WUAchieve.UpdateKeys ("FirstLoginAchiev", 1);
-                WULogin.FirstLoginAchievment = false;
-                Debug.Log ("hi");
-            }
 
             if(WULogin.UserNotWithEmail == true) {
                 DisplayScreen (panels.error_login_pop_up);

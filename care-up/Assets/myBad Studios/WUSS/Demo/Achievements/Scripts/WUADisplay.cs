@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 namespace MBS {
 	public class WUADisplay : MonoBehaviour {
@@ -8,6 +9,21 @@ namespace MBS {
         [SerializeField] RectTransform content_area;
         [SerializeField] WUAView	view_prefab;
         [SerializeField] bool destroy_contents_on_load = true;
+        [SerializeField] private Button achievementButton;
+        private bool spawnContent = false;
+        private bool destroyPrefab = false;
+
+        private GameObject achievePanel;
+
+        private Text achieveText;
+        private GameObject achieveGameObject;
+        private bl_SceneLoader sceneloader;
+
+        private WUADisplay instance;
+
+        private Scene currentScene;
+
+        private PlayerPrefsManager manager;
 
         //we are going to store our tracking info offline so we can continue
         //tracking achievement award states between games. This has nothing to do with 
@@ -23,12 +39,18 @@ namespace MBS {
         //we only try to auto award the achievements with requirements set on server side
         List<CMLData> tracked;
 
-		void Start()
+        void Start()
 		{
+            currentScene = SceneManager.GetActiveScene ();
+            achieveText = GameObject.Find ("AchieveTitle").GetComponent<Text> ();
+            manager = GameObject.Find ("Preferences").GetComponent<PlayerPrefsManager> ();
+
+            DontDestroyOnLoad (gameObject.transform.parent);
             //wait until login was successful then download all keys
             //this is great during the demo but if you spawn your prefab(s) mid game
             //you might have to call it manually. Either way, see the FetchAwards function to see how
             WULogin.onLoggedIn += FetchAwards;
+            SceneManager.sceneLoaded += OnSceneLoaded;
 
             //load the achievement tracking info from our previous play session (if any)
             Keys = new CML();
@@ -48,7 +70,39 @@ namespace MBS {
 					Destroy (view.gameObject);
 		}
 
-        void OnDestroy() => WULogin.onLoggedIn -= FetchAwards;
+        void OnSceneLoaded (Scene scene, LoadSceneMode mode) {
+            Debug.Log ("OnSceneLoaded: " + scene.name);
+
+            currentScene = SceneManager.GetActiveScene ();
+
+            if (currentScene.name == "LoginMenu" && destroyPrefab == true) {
+                Debug.Log ("hi");
+                Destroy (transform.parent.gameObject);
+                destroyPrefab = false;
+            }
+
+            if (currentScene.name == "MainMenu") {
+
+                achievePanel = GameObject.Find ("Account_Achievements");
+                content_area = GameObject.Find ("LayoutGroupAchieve").GetComponent<RectTransform> ();
+                achievementButton = GameObject.Find ("AchievementBTN").GetComponent<Button> ();
+                achievementButton.onClick.AddListener (OnAchievementButtonClick);
+
+                if (achievePanel != null && GameObject.Find ("Account") != null) {
+                    GameObject.Find ("Account").SetActive (false);
+                    achievePanel.SetActive (false);
+                }
+
+                UpdateKeys ("FirstLoginAchiev", 1);
+                destroyPrefab = true;
+            }
+        }
+
+        void OnDestroy () {
+
+            WULogin.onLoggedIn -= FetchAwards;
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
 
         //manually decide what achievements to award or take away...
         public void AwardAchievement( int aid ) => WUAchieve.UnlockAchievement( aid, _updateAfterManualAwards );
@@ -60,6 +114,9 @@ namespace MBS {
         void FetchAwards( CML response ) => WUAchieve.FetchEverything( GenerateEntries );
         void GenerateEntries( CML response )
         {
+            foreach(Transform child in content_area.transform) {
+                GameObject.Destroy (child.gameObject);
+            }
             //store the server results then extract the achievements to work with in this function
             all_awards = response;
             List<CMLData> entries = all_awards.Children( 0 );
@@ -68,6 +125,8 @@ namespace MBS {
             GridLayoutGroup glg = content_area.GetComponent<GridLayoutGroup>();
             content_area.sizeDelta = new Vector2( content_area.sizeDelta.x, entries.Count * ( view_prefab.GetComponent<RectTransform>().sizeDelta.y + glg.spacing.y ) );
             content_area.sizeDelta = new Vector2( content_area.sizeDelta.x, entries.Count * ( glg.cellSize.y + glg.spacing.y ) );
+
+            tracked.Clear ();
 
             //and now spawn them...
             foreach ( CMLData entry in entries )
@@ -80,7 +139,7 @@ namespace MBS {
                 view.Fields = entry;
                 view.Initialize();
             }
-            ShowHowmanyIAmTracking();
+            ShowHowmanyIAmTracking ();
         }
 
         void ShowHowmanyIAmTracking()
@@ -92,14 +151,16 @@ namespace MBS {
         {
             //Save the current tracking keys so we are up to date across game sessions
             _keys.Add( qty, name );
+            //_keys.Remove (name);
             Keys.Save( "achievements" );
-            Debug.LogWarning( Keys.ToString() );
+            //Debug.LogWarning( Keys.ToString() );
 
             //since the keys have been updated, let's see if anything is now unlocked
-            ScanUnlockedStatus();
+            ShowHowmanyIAmTracking ();
+            ScanUnlockedStatus (name);
         }
 
-        public void ScanUnlockedStatus()
+        public void ScanUnlockedStatus(string name)
         {
             bool achieved = true;
             List<int> new_unlocks = new List<int>();
@@ -166,6 +227,26 @@ namespace MBS {
             {
                 foreach ( int aid in new_unlocks )
                     WUAchieve.UnlockAchievement( aid, _updateAchievements );
+                    if (name == "FirstLoginAchiev") {
+                        GameObject.Find ("AchieveTitle").GetComponent<Text> ().text = "Eerste inlog";
+                    } else if (name == "StudyPoints") {
+                        GameObject.Find ("AchieveTitle").GetComponent<Text> ().text = "Pak die punten!";
+                    } else if (name == "FirstPassedExam") {
+                        GameObject.Find ("AchieveTitle").GetComponent<Text> ().text = "Geslaagd!";
+                    } else if (name == "MoreThan15") {
+                        GameObject.Find ("AchieveTitle").GetComponent<Text> ().text = "Neem de tijd";
+                    } else if (name == "within5") {
+                        GameObject.Find ("AchieveTitle").GetComponent<Text> ().text = "Super snel!";
+                    } else if (name == "FinishedTutorial") {
+                        GameObject.Find ("AchieveTitle").GetComponent<Text> ().text = "Training gehaald";
+                    } else if (name == "FinishedProtocol" && manager.plays == 5) {
+                        GameObject.Find ("AchieveTitle").GetComponent<Text> ().text = "5 handelingen afgerond";
+                    } else if (name == "FinishedProtocol" && manager.plays == 3) {
+                        GameObject.Find ("AchieveTitle").GetComponent<Text> ().text = "3 handelingen afgerond";
+                    } else if (name == "FinishedProtocol" && manager.plays == 1) {
+                        GameObject.Find ("AchieveTitle").GetComponent<Text> ().text = "Afronden van de eerste handeling";
+                    }
+                    GameObject.Find ("AchievementPop").GetComponent<Animator> ().SetTrigger ("pop");
             }
         }
 
@@ -221,6 +302,11 @@ namespace MBS {
                 }
             }
             ShowHowmanyIAmTracking();
+        }
+
+        public void OnAchievementButtonClick () {
+
+            WUAchieve.FetchEverything (GenerateEntries);
         }
 	}
 }

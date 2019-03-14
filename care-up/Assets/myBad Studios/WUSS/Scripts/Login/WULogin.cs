@@ -20,7 +20,6 @@ namespace MBS
         static public bool UsernameNotValid = false;
         static public bool UserNotWithEmail = false;
         static public bool UserNotFound = false;
-        static public bool FirstLoginAchievment = false;
         
         //static private int FirstLogin = 1;
         static private int SecondLogin = 2;
@@ -250,8 +249,7 @@ namespace MBS
             //PlayerPrefs.SetInt ("FirstLogin", FirstLogin);
 
             if (PlayerPrefs.GetInt ("FirstLogin") <= 1) {
-
-                FirstLoginAchievment = true;
+                
                 PlayerPrefs.SetInt ("FirstLogin", SecondLogin);
                 string sceneName = "Tutorial_UI";
                 string bundleName = "tutorial_ui";

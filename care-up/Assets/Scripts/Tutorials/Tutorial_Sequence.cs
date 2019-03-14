@@ -13,6 +13,7 @@ public class Tutorial_Sequence : TutorialManager
     public AudioClip RobotShort1;
     public AudioClip RobotShort2;
     AudioSource audioSource;
+    private MBS.WUADisplay achievements;
 
     public enum TutorialStep
     {
@@ -44,6 +45,7 @@ public class Tutorial_Sequence : TutorialManager
     {
         base.Start();
 
+        achievements = GameObject.Find ("AchievementsDisplayPrefab").GetComponent<MBS.WUADisplay> ();
         patient = GameObject.FindObjectOfType<InjectionPatient>();
     }
 
@@ -176,6 +178,7 @@ public class Tutorial_Sequence : TutorialManager
                         hintsN.LockTo("SceneLoader 1", new Vector3(262.50f, -69.10f, 0.00f));
                         currentStep = TutorialStep.Done;
                         UItext.DOText("Gefeliciteerd! Je hebt de laatste training afgerond. Je bent klaar om verpleegtehcnische handelingen te oefenen en te toesten. ", 1f, true, ScrambleMode.All).SetEase(Ease.Linear);
+                        achievements.UpdateKeys ("FinishedTutorial", 1);
                     }
                     break;
                 case TutorialStep.Done:
