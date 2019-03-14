@@ -820,7 +820,40 @@ public class ActionManager : MonoBehaviour {
             currentStepHintUsed = false;
 			GameObject.FindObjectOfType<GameUI>().ButtonBlink(false);
         }
-        
+        else if (manager != null && !manager.practiceMode) // test mode error, check for blocks
+        {
+            // action not matched this check, so list didnt change
+            // so we can perform same selection as before
+            List<Action> sublistWithoutBlocks = actionList.Where(action =>
+                action.SubIndex == currentActionIndex &&
+                action.matched == false && action.Type == type).ToList();
+
+            // make a flag that will become true if there is a step that is blocked
+            // and could actually be performed if there would be no block
+            bool foundBlockedStep = false;
+
+            if (sublistWithoutBlocks.Count != 0)
+            {
+                foreach (Action action in sublistWithoutBlocks)
+                {
+                    if (action.Compare(info))
+                    {
+                        foundBlockedStep = true;
+                        break; // found step, no need to continue
+                    }
+                }
+            }
+
+            // if there's actually such step, make  message
+            if (foundBlockedStep)
+            {
+                string title = "Step is blocked";
+                string message = "Looks like this stepped cannot be performed YET. You need to do something before it.";
+                RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
+                messageCenter.NewMessage(title, message, RobotUIMessageTab.Icon.Error);
+            }
+        }
+
         if (matched && subcategoryLength <= 1)
         {
             currentActionIndex += 1;
@@ -844,47 +877,11 @@ public class ActionManager : MonoBehaviour {
                     messageCenter.NewMessage("Verkeerde handeling!", sublist[0].extraDescr, RobotUIMessageTab.Icon.Error);
                 }
             }
-            else // test mode error, check for blocks
-            {
-                // action not matched this check, so list didnt change
-                // so we can perform same selection as before
-                List<Action> sublistWithoutBlocks = actionList.Where(action =>
-                    action.SubIndex == currentActionIndex &&
-                    action.matched == false && action.Type == type).ToList();
-
-                // make a flag that will become true if there is a step that is blocked
-                // and could actually be performed if there would be no block
-                bool foundBlockedStep = false;
-
-                if (sublistWithoutBlocks.Count != 0)
-                {
-                    foreach (Action action in sublistWithoutBlocks)
-                    {
-                        if (action.Compare(info))
-                        {
-                            foundBlockedStep = true;
-                            break; // found step, no need to continue
-                        }
-                    }
-                }
-
-                // if there's actually such step, make  message
-                if (foundBlockedStep)
-                {
-                    string title = "Step is blocked";
-                    string message = "Looks like this stepped cannot be performed YET. You need to do something before it.";
-                    RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
-                    messageCenter.NewMessage(title, message, RobotUIMessageTab.Icon.Error);
-                }
-            }
 
             ActionManager.WrongAction(type != ActionType.SequenceStep); 
 
             penalized = true;
-
-           
         }
-     
         else
         {
             currentPointAward = currentAction.pointValue;
