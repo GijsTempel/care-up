@@ -69,6 +69,8 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
         //Debug.Log(response.ToString());
         //Debug.Log("PlaysNumber::Error might just mean there was no fields with plays number. If so - still allow to play. Checking..");
         // we're here if we got error or no data which should be equal to 0 plays
+        if (response["message"] == "WPServer error: Empty response. No data found")
+            GameObject.FindObjectOfType<PlayerPrefsManager>().plays = 0;
         AllowDenyLoadMainMenu((response["message"] == "WPServer error: Empty response. No data found"), true);
     }
 
