@@ -50,10 +50,21 @@
    ></action>
 
   <action
+      comment="Open bladder spool bag"
+      points="1"
+      description="Bereid een oplossing van NaCl voordat je het uit de verpakking haalt."
+      fullDescription="Open het medicijn zakje door omhoog te swipen of door op het medicijn zakje te klikken en vervolgens op het - icoon te klikken."
+      index="3"
+      type="combine"
+      left="BladderSpoolBagPacked"
+      right=""
+      extra="Maak het medicijn gereed voor toediening door het medicijn zakje te openen."></action>
+
+  <action
    points="2"
    description="Controleer cliëntgegevens."
    fullDescription="Open de tablet door op het tablet icoon te drukken. Klik op de App 'Gegevens'. Kies vervolgens voor de cliëntgegevens."
-   index="3"
+   index="4"
    type="examine"
    item="PatientRecords"
    expected="good"
@@ -64,7 +75,7 @@
     description="Controleer de toedienlijst."
     fullDescription="Open de tablet door op het tablet icoon te drukken. Klik op de App 'Gegevens'. Kies vervolgens voor de toedienlijst."
     audioHint="InjectionSubcutaneous/Step 5"
-		index="4"
+		index="5"
     type="examine"
     item="PrescriptionForm"
     expected="good"
@@ -76,18 +87,30 @@
       - toedieningstijdstip"
     ></action>
 
-    <action
+
+  <action
     points="2"
     description="Controleer of de klem van het spoelzakje dicht is."
     fullDescription=""
-    index="5"
+    index="6"
     type="examine"
     item="BladderSpoolBag"
     expected="good"
-    extra=""
-    messageTitle=""
-    messageContent=""
-     ></action>
+    extra="Controleer het medicijn."
+    messageTitle="Dubbele controle van medicijnen."
+    messageContent="Dubbele controle is nodig bij die medicijnen die naar het oordeel van de apotheker een onacceptabel risico vormen bij verkeerde dosering. Bij medicijnen op rol is de apotheker degene die de eerste controle uitvoert, en voert de zorgmedewerker de tweede controle uit. Bepaalde medicijnen die los geleverd worden, moeten bij toediening dubbel gecontroleerd en afgetekend worden met paraaf op de toedieningslijst.
+    Ga altijd met de apotheker na of de medicijnen door de apotheker in een medicijnrol kunnen worden aangeboden. Hiermee voorkom je dat er een dubbele controle op de werkvloer / bij de cliënt plaats moet vinden.
+     " ></action>
+
+  <action
+    index="7"
+    points="1"
+    description="Vraag de cliënt het onderlichaam te ontbloten en op de rug te gaan liggen. "
+    fullDescription="Begroet de cliënt door op hem te klikken. Daarna klik je nogmaals op de cliënt om een gesprek aan te gaan. Klik vervolgens op de juiste optie."
+    type="talk"
+    topic="Hello"
+    extra="Ondanks dat het begroeten niet in de werkwijze is vermeld. Is het wel netjes om contact te leggen met de cliënt."
+    optional=""/>
 
   <action
     comment="46. Apply hand hygiene."

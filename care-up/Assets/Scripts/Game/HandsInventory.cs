@@ -611,6 +611,13 @@ public class HandsInventory : MonoBehaviour {
             , createGhost);
     }
 
+    public void ForcePickItem(GameObject obj, bool hand, bool createGhost = false)
+    {
+        ForcePickItem(obj,
+            (hand ? PlayerAnimationManager.Hand.Left : PlayerAnimationManager.Hand.Right)
+            , createGhost);
+    }
+
     public void ForcePickItem(GameObject obj, PlayerAnimationManager.Hand hand, bool createGhost = false)
     {
         PickableObject item = obj.GetComponent<PickableObject>();
