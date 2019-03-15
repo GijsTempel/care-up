@@ -2,7 +2,8 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class UMP_ButtonGroup : MonoBehaviour, IPointerClickHandler {
+public class UMP_ButtonGroup : MonoBehaviour, IPointerClickHandler
+{
 
     public int GroupID = 0;
     public bool Select = false;
@@ -15,7 +16,7 @@ public class UMP_ButtonGroup : MonoBehaviour, IPointerClickHandler {
         }
     }
 
-	public void OnPointerClick(PointerEventData e)
+    public void OnPointerClick(PointerEventData e)
     {
         OnSelect();
     }
@@ -37,7 +38,7 @@ public class UMP_ButtonGroup : MonoBehaviour, IPointerClickHandler {
 
     public void UnSelect()
     {
-
+        
         button.interactable = true;
     }
 
@@ -46,11 +47,11 @@ public class UMP_ButtonGroup : MonoBehaviour, IPointerClickHandler {
     {
         get
         {
-            if(_button == null)
+            if (_button == null)
             {
                 _button = GetComponent<Button>();
             }
             return _button;
-        }       
+        }
     }
 }
