@@ -153,8 +153,8 @@
     messageTitle="Reiniging genitaliën"
     messageContent="Voordat een katheter wordt ingebracht, moeten de genitaliën van de cliënt gereinigd worden. Bij het inbrengen van verblijfskatheters wordt glijmiddel in de urethra aangebracht. (Bij een suprapubische katheter wordt glijmiddel in de fistel aangebracht)."
     blockRequired="patient lay down"
-    blockTitle="Handeling onmogelijk"
-    blockMessage="Deze handeling kan niet worden gedaan omdat je de cliënt zijn genitaliën niet kan schoonmaken als deze niet op het bed ligt."
+    blockTitle="Handeling niet mogelijk."
+    blockMessage="Deze handeling is nog niet mogelijk. Zorg ervoor dat de cliënt klaar is voor blaaskatheterisatie."
   ></action>
 
   <action
@@ -215,7 +215,14 @@
     messageTitle="Verdovend glijmiddel"
     messageContent="Als het glijmiddel een verdovend middel bevat: laat voor een verdovend effect het glijmiddel inwerken gedurende de in de bijsluiter vermelde tijd (minimaal 5 minuten). Gebruik eventueel een penisklem. Gooi de spuit in de afvalbak."
     fullDescription="Kies de juiste optie."></action>
-  <action comment="Throw the syringe into the waste bin" points="1" description="Gooi de spuit in de afvalbak." index="20" type="sequenceStep" value="trash syringe" extra="Gooi de spuit in de afvalbak." fullDescription="Kies de juiste optie."></action>
+  <action 
+    comment="Throw the syringe into the waste bin" 
+    points="1" 
+    description="Gooi de spuit in de afvalbak." 
+    index="20" type="sequenceStep" 
+    value="trash syringe" 
+    extra="Gooi de spuit in de afvalbak." 
+    fullDescription="Kies de juiste optie."></action>
   <action
     comment="Take off gloves"
     points="1"
@@ -295,7 +302,7 @@
   <action
     comment="24. With the dominant hand, grasp the tube of the urine collection bag just behind the connection point and attach it to the catheter. Continue to hold the hose."
     index="28"
-    points="1"
+    points="2"
     description="Verwijder de afsluitdop van de urineopvangzak en bevestig deze aan de katheter."
     fullDescription="Pak de urineopvangzak en de katheter op van het werkveld. Swipe links of rechts om te combineren of gebruik het optie menu."
     audioHint="Injection/H4-2"
@@ -325,13 +332,26 @@
     type="sequenceStep"
     extra=""
     fullDescription="Kies de juiste optie."></action>
-  <action index="31" value="bring penis up" description="Breng de penis loodrecht omhoog met de vrije hand. " points="1" type="sequenceStep" extra="Breng de penis loodrecht omhoog met de vrije hand." fullDescription="Kies de juiste optie."></action>
-  <action index="32" value="insert catheter" description="Breng de katheterpunt met een vloeiende beweging in." points="1" type="sequenceStep" extra="Breng de katheterpunt met een vloeiende beweging in." fullDescription="Kies de juiste optie."></action>
+  <action 
+    index="31" 
+    value="bring penis up" 
+    description="Breng de penis loodrecht omhoog met de vrije hand. " 
+    points="1" type="sequenceStep" 
+    extra="Breng de penis loodrecht omhoog met de vrije hand." 
+    fullDescription="Kies de juiste optie."></action>
+  <action 
+    index="32" 
+    value="insert catheter" 
+    description="Breng de katheterpunt met een vloeiende beweging in." 
+    points="3" 
+    type="sequenceStep" 
+    extra="Breng de katheterpunt met een vloeiende beweging in." 
+    fullDescription="Kies de juiste optie."></action>
   <action
     index="33"
     value="insert till urine"
     description="Schuif de katheter op tot je urine ziet aflopen."
-    points="1"
+    points="3"
     type="sequenceStep"
     extra="Als je weerstand voelt: buig de penis naar voren (richting de voeten), schuif de katheter op tot je urine ziet aflopen. Het kan soms even duren voor de urine begint te lopen. Oefen lichte druk uit op het gebied van symfyse en schaambeen als er geen urine wordt afgevoerd."
     fullDescription="Kies de juiste optie."></action>
@@ -339,7 +359,7 @@
     index="34"
     value="shift till bifurcation"
     description="Schuif de katheter op tot de vertakking."
-    points="1"
+    points="3"
     audioHint="Injection/AS1-2"
     type="sequenceStep"
     extra="Schuif de katheter op tot de vertakking."
@@ -348,28 +368,46 @@
     index="35"
     value="hold catheter bladder"
     description="Houd de katheter vast, zodat deze niet uit de blaas glijdt."
-    points="1"
+    points="2"
     type="sequenceStep"
     extra="Houd de katheter vast, zodat deze niet uit de blaas glijdt."
-    fullDescription="Kies de juiste optie."></action>
+    fullDescription="Kies de juiste optie."
+    ></action>
   <action
     index="36"
     value="place syringe"
     description="Plaats de spuit met de voorgeschreven vloeistof op het katheterballonkanaal."
-    points="1"
+    points="2"
     type="sequenceStep"
     extra="Plaats de spuit met de voorgeschreven vloeistof op het katheterballonkanaal."
-    fullDescription="Kies de juiste optie."></action>
+    fullDescription="Kies de juiste optie."
+    ></action>
   <action
     index="37"
     value="insert liquid"
     description="Spuit de voorgeschreven hoeveelheid vloeistof langzaam in de katheterballon."
-    points="1"
+    points="3"
     type="sequenceStep"
     extra="Spuit de voorgeschreven hoeveelheid vloeistof langzaam in de katheterballon."
-    fullDescription="Kies de juiste optie."></action>
-  <action index="38" value="remove syringe" description="Verwijder de spuit." points="1" type="sequenceStep" extra="Verwijder de spuit." fullDescription="Kies de juiste optie."></action>
-  <action index="39" value="pull catheter" description="Trek de katheter iets terug totdat je weerstand voelt." points="1" type="sequenceStep" extra="Trek de katheter iets terug totdat je weerstand voelt." fullDescription="Kies de juiste optie."></action>
+    fullDescription="Kies de juiste optie."
+    ></action>
+  <action 
+    index="38" 
+    value="remove syringe" 
+    description="Verwijder de spuit." 
+    points="1" type="sequenceStep" 
+    extra="Verwijder de spuit." 
+    fullDescription="Kies de juiste optie."
+    ></action>
+  <action 
+    index="39" 
+    value="pull catheter" 
+    description="Trek de katheter iets terug totdat je weerstand voelt." 
+    points="2" 
+    type="sequenceStep" 
+    extra="Trek de katheter iets terug totdat je weerstand voelt." 
+    fullDescription="Kies de juiste optie."
+    ></action>
   <action
     index="40"
     value="clean penis"
@@ -377,10 +415,29 @@
     points="1"
     type="sequenceStep"
     extra="Reinig en droog de penis en schuif de voorhuid weer op zijn plaats."
-    fullDescription="Kies de juiste optie."></action>
-  <action index="41" value="remove gloves" description="Trek de handschoenen uit." points="1" type="sequenceStep" extra="Trek de handschoenen uit." fullDescription="Kies de juiste optie." blockUnlock="pull off gloves"></action>
+    fullDescription="Kies de juiste optie."
+    ></action>
+  <action 
+    index="41" 
+    value="remove gloves" 
+    description="Trek de handschoenen uit." 
+    points="1" 
+    type="sequenceStep" 
+    extra="Trek de handschoenen uit."
+    fullDescription="Kies de juiste optie." 
+    blockUnlock="pull off gloves"
+    ></action>
 
-  <action comment="46. Apply hand hygiene." index="42" points="3" description="Pas handhygiëne toe." fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp." type="use" value="HandCleaner" extra=""></action>
+  <action 
+    comment="46. Apply hand hygiene." 
+    index="42" 
+    points="3" 
+    description="Pas handhygiëne toe." 
+    fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp." 
+    type="use" 
+    value="HandCleaner" 
+    extra="Pas handhygiëne toe."
+    ></action>
 
   <action
     index="43"
@@ -394,8 +451,8 @@
     extra="Fixeer de katheter op het bovenbeen met een strook katheter fixatieband. Zorg dat de katheter en de afvoerslang nergens kunnen knikken."
     blockUnlock="fixate catheter"
     blockRequired="pull off gloves"
-    blockTitle="Handeling onmogelijk"
-    blockMessage="Deze handeling kan niet worden gedaan omdat je de katheter niet kan fixeren met fixatiemateriaal als er geen katheter is in gebracht."
+    blockTitle="Handeling niet mogelijk."
+    blockMessage="Deze handeling is nog niet mogelijk. Zorg ervoor dat de kathter is ingebracht bij de cliënt."
     ></action>
 
   <action
@@ -411,8 +468,8 @@
     blockRequired="fixate catheter"
     blockUnlock="patient get up"
     blockLock="patient lay down"
-    blockTitle="Handeling onmogelijk"
-    blockMessage="Deze handeling kan niet worden gedaan omdat nadat je de patient omhoog hebt te helpen hoeft ze niet meer te gaan liggen."
+    blockTitle="Handeling niet mogelijk."
+    blockMessage="Deze handeling is niet mogelijk. De kathter is ingebracht bij de cliënt. De cliënt hoeft niet opnieuw te gaan liggen."
     ></action>
 
   <action
@@ -425,8 +482,8 @@
     value="cloth_02"
     extra="Controleer of de cliënt en het bed droog zijn gebleven."
     blockRequired="patient get up"
-    blockTitle="Handeling onmogelijk"
-    blockMessage="Deze handeling kan niet worden gedaan omdat je de cliënt en het bed niet goed kan checken als de cliënt er nog op ligt."
+    blockTitle="Handeling niet mogelijk."
+    blockMessage="Deze handeling is nog niet mogelijk. Help eerst de cliënt in een comfortabele positie zodat je goed het bed kunt controleren."
     ></action>
 
   <action
@@ -440,8 +497,8 @@
     target="m1_A"
     extra="Fixeer de katheter op het bovenbeen met nog een een strook fixatiemateriaal. Zorg dat de katheter en de afvoerslang nergens kunnen knikken."
     blockRequire="patient get up"
-    blockTitle="Handeling onmogelijk"
-    blockMessage="Deze handeling kan niet worden gedaan omdat de urineopvangzak moet vast gemaakt worden als de cliënt rechtop zit."
+    blockTitle="Handeling niet mogelijk"
+    blockMessage="Deze handeling is nog niet mogelijk. Help eerst de cliënt in een comfortabele positie."
     ></action>
 
   <action
