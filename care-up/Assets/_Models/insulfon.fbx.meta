@@ -45,6 +45,24 @@ ModelImporter:
     100078: tIK2_end
     100080: tM
     100082: tM_end
+    100084: bf 1
+    100086: cap
+    100088: inner
+    100090: insolfonArm
+    100092: outer
+    100094: puller 1
+    100096: ring
+    100098: tube
+    100100: i_connector
+    100102: OmniflushSyringeBarrel
+    100104: OmniflushSyringePlunger
+    100106: plunger
+    100108: plunger_end
+    100110: puller.001
+    100112: puller.001 1
+    100114: puller.001_end
+    100116: ring.002
+    100118: cap.001
     400000: Circle.001
     400002: Cylinder.019
     400004: Cylinder.020
@@ -87,8 +105,32 @@ ModelImporter:
     400078: tIK2_end
     400080: tM
     400082: tM_end
+    400084: bf 1
+    400086: cap
+    400088: inner
+    400090: insolfonArm
+    400092: outer
+    400094: puller 1
+    400096: ring
+    400098: tube
+    400100: i_connector
+    400102: OmniflushSyringeBarrel
+    400104: OmniflushSyringePlunger
+    400106: plunger
+    400108: plunger_end
+    400110: puller.001
+    400112: puller.001 1
+    400114: puller.001_end
+    400116: ring.002
+    400118: cap.001
     2100000: insulfonMat
     2100002: insulfonMatT
+    2100004: Material.009
+    2100006: OmniflushSyringeBarrelMat
+    2100008: OmniflushSyringePlungerMat
+    2100010: OmniflushSyringeBarrel
+    2100012: plunger
+    2100014: blk
     2300000: Circle.001
     2300002: Cylinder.019
     2300004: Cylinder.020
@@ -100,6 +142,13 @@ ModelImporter:
     2300016: Cylinder.026
     2300018: Plane.005
     2300020: th
+    2300022: bf
+    2300024: cap
+    2300026: inner
+    2300028: outer
+    2300030: puller
+    2300032: ring
+    2300034: tube
     3300000: Circle.001
     3300002: Cylinder.019
     3300004: Cylinder.020
@@ -111,6 +160,13 @@ ModelImporter:
     3300016: Cylinder.026
     3300018: Plane.005
     3300020: th
+    3300022: bf
+    3300024: cap
+    3300026: inner
+    3300028: outer
+    3300030: puller
+    3300032: ring
+    3300034: tube
     4300000: Cylinder.026
     4300002: Cylinder.025
     4300004: Cylinder.024
@@ -122,9 +178,55 @@ ModelImporter:
     4300016: Plane.005
     4300018: Circle.001
     4300020: th
+    4300022: bf
+    4300024: cap
+    4300026: tube
+    4300028: ring
+    4300030: puller
+    4300032: outer
+    4300034: inner
+    4300036: i_connector
+    4300038: puller.001
+    4300040: ring.002
+    4300042: OmniflushSyringeBarrel
+    4300044: OmniflushSyringePlunger
+    4300046: cap.001
+    7400000: insolfonArm|i_idle
+    7400002: insolfonArm|i590_backed_L_Lib.001
+    7400004: insolfonArm|i610_backed_L_Lib.001
+    9500000: //RootNode
     10800000: Hemi
     10800002: Hemi.002
+    13700000: bf
+    13700002: cap
+    13700004: inner
+    13700006: outer
+    13700008: puller
+    13700010: ring
+    13700012: th
+    13700014: tube
+    13700016: i_connector
+    13700018: OmniflushSyringeBarrel
+    13700020: OmniflushSyringePlunger
+    13700022: puller.001
+    13700024: ring.002
+    13700026: cap.001
   externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.009
+    second: {fileID: 2100000, guid: 084fe2bd0d0c841e1bcc5fbf893cdbff, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: OmniflushSyringeBarrel
+    second: {fileID: 2100000, guid: 6ada8bb146a0f4aa6bec7d6c490614c7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: blk
+    second: {fileID: 2100000, guid: fe1fe8970e9b4413d865e97142755beb, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -135,6 +237,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: insulfonMatT
     second: {fileID: 2100000, guid: 5ce4ac7efa610614d82a4e5b961733a5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: plunger
+    second: {fileID: 2100000, guid: 73b1d22b464c74a178ddf790626f9e28, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -154,7 +261,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -206,10 +313,10 @@ ModelImporter:
     rootMotionBoneName: 
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
