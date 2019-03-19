@@ -283,15 +283,21 @@ public class HandsInventory : MonoBehaviour {
     {
         if (hand)
         {
-            leftHandObject.DeleteGhostObject();
-            Destroy(leftHandObject.gameObject);
-            leftHandObject = null;
+            if (leftHandObject != null)
+            {
+                leftHandObject.DeleteGhostObject();
+                Destroy(leftHandObject.gameObject);
+                leftHandObject = null;
+            }
         }
         else
         {
-            rightHandObject.DeleteGhostObject();
-            Destroy(rightHandObject.gameObject);
-            rightHandObject = null;
+            if (rightHandObject != null)
+            {
+                rightHandObject.DeleteGhostObject();
+                Destroy(rightHandObject.gameObject);
+                rightHandObject = null;
+            }
         }
         UpdateHoldAnimation();
     }
@@ -607,6 +613,13 @@ public class HandsInventory : MonoBehaviour {
     public void ForcePickItem(string name, bool hand, bool createGhost = false)
     {
         ForcePickItem(GameObject.Find(name).gameObject,
+            (hand ? PlayerAnimationManager.Hand.Left : PlayerAnimationManager.Hand.Right)
+            , createGhost);
+    }
+
+    public void ForcePickItem(GameObject obj, bool hand, bool createGhost = false)
+    {
+        ForcePickItem(obj,
             (hand ? PlayerAnimationManager.Hand.Left : PlayerAnimationManager.Hand.Right)
             , createGhost);
     }
