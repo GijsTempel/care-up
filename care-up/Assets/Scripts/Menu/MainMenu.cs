@@ -41,6 +41,7 @@ public class MainMenu : MonoBehaviour {
             {
                 text.text = "";
             }
+
             //handle updates panel
             bool updatesSeen = PlayerPrefs.GetInt("_updatesSeen") == 1;
             string versionSeen = PlayerPrefs.GetString("__version", "");
@@ -59,9 +60,19 @@ public class MainMenu : MonoBehaviour {
 
             GameObject.FindObjectOfType<PlayerPrefsManager>().FetchTestHighScores();
 
-            GameObject.Find("UMenuProManager/MenuCanvas/Account/Account_Panel_UI/InfoHolder/Account_Username")
+            GameObject.FindObjectOfType<PlayerPrefsManager>().FetchLatestVersion();
+
+            GameObject.Find("UMenuProManager/MenuCanvas/Account/Account_Panel_UI/Account_Username")
                 .GetComponent<Text>().text = MBS.WULogin.display_name;
         }
+    }
+
+    public void UpdateLatestVersionDev()
+    {
+        // makes current version - latest on database for further comparison
+        CMLData data = new CMLData();
+        data.Set("LatestVersion", Application.version);
+        WUData.UpdateSharedCategory("GameInfo", data);
     }
 
     public void OnStartButtonClick()
