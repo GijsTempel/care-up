@@ -66,6 +66,52 @@ MonoBehaviour:
   - catheter
   - catheter_bag
   toShow: 1
+--- !u!114 &114463030331057036
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a536a9682af347488b2cfd1a613bf7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: CWB_inner_open_Bladder
+  HandToSwitch: 0
+  AnimationToChange: 1
+  ToFollowHoldingHand: 0
+  NewAnimationName: 77
+  ActionFrame: 0
+--- !u!114 &114572574256918500
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 839bcc7f24a9c47f8af28e853187bfa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: CWB_inner_open_Bladder
+  unlock_frame: 0
+  lock_frame: 175
+  toActivate: 0
+--- !u!114 &114616383209915932
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0b960189e3c63e4bbf73b5119c0281e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionFrame: 0
+  trigger: 77
+  ObjectName: CWB_inner_open_Bladder
 --- !u!114 &114791482223405388
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -79,23 +125,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hideFrame: 47
   hideObjName: W0:Harvey_fscrubbottoms2_L_Lib
---- !u!114 &114849649578541480
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ControlObjectName: CWB_inner_open_Bladder
-  showFrame: 1
-  ObjNames:
-  - catheter
-  - catheter_bag
-  toShow: 1
 --- !u!1101 &1101136873771191336
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -202,7 +231,9 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours:
-  - {fileID: 114849649578541480}
+  - {fileID: 114463030331057036}
+  - {fileID: 114572574256918500}
+  - {fileID: 114616383209915932}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
