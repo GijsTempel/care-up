@@ -75,6 +75,7 @@ GameObject:
   - component: {fileID: 54967397246613506}
   - component: {fileID: 114909581732335392}
   - component: {fileID: 65695749078915542}
+  - component: {fileID: 114872650923261516}
   m_Layer: 0
   m_Name: BladderSpoolBagPacked
   m_TagString: Untagged
@@ -99,6 +100,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1880331921995630
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4818475026870760}
+  - component: {fileID: 33770025263418920}
+  - component: {fileID: 23143001933876896}
+  m_Layer: 0
+  m_Name: ClipClosed
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &4044690558235270
 Transform:
   m_ObjectHideFlags: 1
@@ -108,7 +126,8 @@ Transform:
   m_LocalRotation: {x: 1.4058451e-15, y: -1.4058882e-15, z: -0.70711136, w: 0.70710224}
   m_LocalPosition: {x: -0.0013776273, y: -0.000112921, z: -0.0069144806}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4818475026870760}
   m_Father: {fileID: 4185810689782418}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -168,6 +187,54 @@ Transform:
   m_Father: {fileID: 4185810689782418}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4818475026870760
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1880331921995630}
+  m_LocalRotation: {x: -0.000000063219865, y: -0.00000006322068, z: 0.70711136, w: 0.70710224}
+  m_LocalPosition: {x: -0.0026, y: -0.092, z: 0.0085}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4044690558235270}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &23143001933876896
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1880331921995630}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
+  m_Materials:
+  - {fileID: 2100000, guid: 11e9e089167b9634c909275c0103d95e, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!23 &23291981443187928
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -378,6 +445,13 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1137545395819656}
   m_Mesh: {fileID: 4300006, guid: c541734340b5b5a41a7777c440a33f17, type: 3}
+--- !u!33 &33770025263418920
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1880331921995630}
+  m_Mesh: {fileID: 4300000, guid: fac1783caf369c944b827314c550bfc3, type: 3}
 --- !u!54 &54967397246613506
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -405,6 +479,32 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5165023, y: 0.20947763, z: 0.061690133}
   m_Center: {x: -0.010497205, y: 0.0000033676633, z: -0.003523617}
+--- !u!114 &114872650923261516
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1588996646000582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6095384fe7173243b9fb25bc8b25d06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectID: 0
+  description: 
+  muplipleMesh: 0
+  descriptionOffset: {x: 0, y: 0, z: 0}
+  transparencyFix: 0
+  tutorial_picked: 0
+  tutorial_closed: 0
+  tutorial_examined: 0
+  examineRotation: {x: 0, y: 0, z: 0}
+  audioExamine: 0
+  animationExamine: 1
+  viewSettings:
+    distanceFromCamera: 2
+    rotationSensetivity: 90
+  state: good
 --- !u!114 &114909581732335392
 MonoBehaviour:
   m_ObjectHideFlags: 1
