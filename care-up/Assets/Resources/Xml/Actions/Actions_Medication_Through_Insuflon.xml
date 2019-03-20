@@ -31,72 +31,121 @@
     value="WorkField"
     extra="Maak een schoon werkveld. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen."/>
 
-  <action 
-    points="2" 
-    description="Controleer cliëntgegevens." 
-    fullDescription="Open de tablet door op het tablet icoon te drukken. Klik op de App 'Gegevens'. Kies vervolgens voor de cliëntgegevens." 
-    audioHint="Injection/H3-2"
-		index="2" 
-    type="examine" 
-    item="PatientRecords" 
-    expected="good" 
-    extra="Controleer de cliëntgegevens. Het is belangrijk dat je de juiste persoon voor je hebt."></action>
-  
-  <action 
-    points="2" 
-    description="Controleer het medicijn." 
+  <action
+    points="2"
+    description="Controleer het medicijn."
     fullDescription="Klik op het medicijn om deze op te pakken. Klik hierna nogmaals op het medicijn en klik op het vergrootglas icoon."
     audioHint="Injection/H3-2"
-		index="2" 
-    type="examine" 
-    item="OmniflushSyringeBag2" 
+		index="2"
+    type="examine"
+    item="OmniflushSyringeBag2"
     expected="good"
     extra="Controleer het medicijn. Controleer altijd het medicijn op vervaldatum, toedienwijze, kleur en substantie om er zeker van te zijn dat je het juiste medicijn hebt. Vergelijk de informatie van het medicijn met die van de toedienlijst."></action>
-  
-  <action 
-    points="2" 
-    description="Controleer de toedienlijst." 
-    fullDescription="Open de tablet door op het tablet icoon te drukken. Klik op de App 'Gegevens'. Kies vervolgens voor de toedienlijst." 
+
+
+  <action
+    points="2"
+    description="Controleer cliëntgegevens."
+    fullDescription="Open de tablet door op het tablet icoon te drukken. Klik op de App 'Gegevens'. Kies vervolgens voor de cliëntgegevens."
+    audioHint="Injection/H3-2"
+		index="3"
+    type="examine"
+    item="PatientRecords"
+    expected="good"
+    extra="Controleer de cliëntgegevens. Het is belangrijk dat je de juiste persoon voor je hebt."></action>
+
+
+  <action
+    points="2"
+    description="Controleer de toedienlijst."
+    fullDescription="Open de tablet door op het tablet icoon te drukken. Klik op de App 'Gegevens'. Kies vervolgens voor de toedienlijst."
     audioHint="InjectionSubcutaneous/Step 5"
-		index="2" 
-    type="examine" 
-    item="PrescriptionForm" 
-    expected="good" 
+		index="4"
+    type="examine"
+    item="PrescriptionForm"
+    expected="good"
     extra="Controleer de toedienlijst. Controleer de toedienlijst op soort, dosering en toedientijdstip "></action>
 
   <action
-       comment="(5)Ask client to show injection spot."
-       points="2"
-       description="Vraag de cliënt de insteekplaats te ontbloten of maak de insteekplaats bereikbaar. "
-       fullDescription="Klik op de cliënt en kies de juiste optie."
-       index="3"
-       type="talk"
-       topic="show injection spot"
-       extra="Vraag de cliënt de insteekplaats te ontbloten of maak de insteekplaats bereikbaar. "></action>
+    points="3"
+    description="Vraag je collega om dubbele controle."
+    fullDescription="Klik op de 'Terug naar overzicht' knop rechtsboven in het scherm om terug te gaan naar het overzicht. Klik daarna op de collega. Klik nogmaals op de collega om te praten. Klik op de optie 'Zou je mij kunnen helpen met de dubbele controle?"
+    audioHint=""
+    index="5"
+    type="talk"
+    topic="DoubleCheck"
+    extra="Voer een dubbele controle uit. Het verkeerd toedienen van medicijnen brengt risico’s met zich mee. Het risico op blijvend letsel bij verkeerde dosering of toediening verschilt, afhankelijk van het medicijn. Ook is de ene toedieningsweg risicovoller dan een andere. Dubbele controle van de medicatie is belangrijk voor de veiligheid, met name bij risicovolle medicatie. Laat ook je berekeningen die je hebt gemaakt checken."></action>
+
+  <action
+    comment="(4)Open package of OmniflushSyringeBag"
+    points="1"
+    description="Open de verpakking van de Omniflush NaCl 0,9% spuit."
+    fullDescription="Pak de verpakte Saf-T-Intima. Swipe vervolgens omhoog of gebruik het optiemenu en klik op het - icoon."
+    index="6"
+    type="combine"
+    left="OmniflushSyringeBag"
+    right=""
+    extra="Leg de spuit Omniflush NaCl 0,9% klaar in een geopende verpakking."
+    messageTitle="Voorverpakte Omniflush NaCl 0,9% niet aanwezig."
+    messageContent="Wanneer er geen Omniflush NaCl 0,9% aanwezig is. Maak je een spuit met NaCl 0,9% uit een ampul klaar, ontlucht je de spuit en leg de spuit terug in de geopende verpakking. "/>
+
+  <action
+    comment="Open de verpakking van de spuit met het medicijn."
+    points="1"
+    description="Open de verpakking van de spuit met het medicijn."
+    fullDescription=""
+    index="6"
+    type="combine"
+    left="OmniflushSyringeBag2"
+    right=""
+    extra=""
+    messageTitle=""
+    messageContent=""/>
 
   <action
       comment="(6)Combine gauze with alcohol"
       points="1"
       description="Overgiet een gaasje met alcohol."
       fullDescription="Pak de alcohol en het gaasje door op de voorwerpen te klikken. Klik vervolgens op de alcohol of het gaasje in je hand en Klik op het + icoon. Klik vervolgens op het voorwerp in de andere hand."
-      index="4"
+      index="7"
       type="combine"
       left="Cloth2"
       right="Alcohol2"
       extra="Overgiet een gaasje met alcohol. De desinfectans wordt aangebracht op een gaasje. Het is eveneens mogelijk om gebruik te maken van alcohol swabs. Alcohol 70% heeft een totaal spectrum en werkt slechts tijdelijk. Omdat bij het inbrengen van een infuus de desinfectie langer moet aanhouden, wordt gedesinfecteerd met alcohol 70% bewaard in opgelost chloorhexidine 0,5%."></action>
 
+
   <action
-    comment="(8) Put on gloves."
-    points="3"
-    description="Trek handschoenen aan."
-    fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp."
-    index="5"
-    type="use"
-    value="gloveBox"
-    extra="Pas handhygiëne toe. Handhygiëne is het allerbelangrijkste als het gaat om voorkomen van besmetting met ziektekiemen. Dit betekent je handen reinigen op de juiste manier en op de juiste momenten. Begin een handeling altijd met handhygiëne."
+   comment="(8) Put on gloves."
+   points="3"
+   description="Trek handschoenen aan."
+   fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp."
+   index="8"
+   type="use"
+   value="gloveBox"
+   extra="Pas handhygiëne toe. Handhygiëne is het allerbelangrijkste als het gaat om voorkomen van besmetting met ziektekiemen. Dit betekent je handen reinigen op de juiste manier en op de juiste momenten. Begin een handeling altijd met handhygiëne."
   ></action>
 
+  <action
+    comment="(5)Ask client to show injection spot."
+    points="2"
+    description="Vraag de cliënt de insteekplaats te ontbloten of maak de insteekplaats bereikbaar. "
+    fullDescription="Klik op de cliënt en kies de juiste optie."
+    index="9"
+    type="talk"
+    topic="show injection spot"
+    extra="Vraag de cliënt de insteekplaats te ontbloten of maak de insteekplaats bereikbaar. "></action>
 
+
+  <action
+   comment="Leg de onderlegger onder de plaats van de subcutane canule. "
+   points="2"
+   description="Leg de onderlegger onder de plaats van de subcutane canule. "
+   fullDescription="Pak de onderlegger van het werkveld. Beweeg naar de cliënt. Klik vervolgens op de onderlegger in je hand. Klik op het + icoon en klik daarna op de cliënt."
+   index="10"
+   type="useOn"
+   item="cloth_02_folded"
+   target="m0_underwear"
+   extra="Leg de onderlegger onder de injectieplaats van de cliënt."></action>
 
   <action
     comment="(18)Create a clean workfield"
