@@ -7,17 +7,17 @@ assignees: ''
 
 ---
 
-**Implement Animation sequence created in issue**
-Issue #
+Creating & implementing animation sequence. Below are all steps listed with dutch translation. Use the translation to match it with the XML file  
 
-* [ ]  Importing the animation sequence in Unity
+XML: 
+
+Video References: 
+
 
 * [ ]  Creating an AnimSeq_XML for the animation sequence with questions
-* 1. 
-  **Animation step:**
-* 2.
-  **Animation step:** 
-* 3.
-  **Animation step:** Client closes his mouth to swallow pill
-
-* [ ]  Creating new steps in Action XML and connect them to AnimSeq XML. To this by giving the values of the steps in action XML the same values as the one in AnimSeq XML.
+1. **Animation step:**
+_Dutch translation:_
+2. **Animation step:**
+_Dutch translation:_
+3. **Animation step:**
+_Dutch translation:_
