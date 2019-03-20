@@ -452,6 +452,11 @@ Transform:
 Transform:
   m_PrefabParentObject: {fileID: 420104, guid: c26e5e269b00392438540d063caf09c8, type: 2}
   m_PrefabInternal: {fileID: 1366366211}
+--- !u!1 &100203230 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1744536612245210, guid: 4019e2a5291414148bd4b6bb6810f6f9,
+    type: 2}
+  m_PrefabInternal: {fileID: 202685757}
 --- !u!1001 &111055355
 Prefab:
   m_ObjectHideFlags: 0
@@ -798,6 +803,11 @@ Prefab:
     - target: {fileID: 4863847062660300, guid: 4019e2a5291414148bd4b6bb6810f6f9, type: 2}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114595817605939532, guid: 4019e2a5291414148bd4b6bb6810f6f9,
+        type: 2}
+      propertyPath: holdAnimationID
+      value: 120
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4019e2a5291414148bd4b6bb6810f6f9, type: 2}
@@ -1227,7 +1237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d63b85af3e941bbbb677de1a5b9540, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cheat: 0
+  cheat: 1
   buildActionList: 0
   hidenObjects:
   - {fileID: 0}
@@ -8133,7 +8143,7 @@ Prefab:
         type: 2}
       propertyPath: objects.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 100203230}
     - target: {fileID: 114050206014620304, guid: 160c0d1fbef191045a350915d5992d54,
         type: 2}
       propertyPath: objects.Array.data[1]
@@ -8919,7 +8929,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2085113767}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4d4d9b1976464e43a435f18ed9b02d4, type: 3}
+  m_Script: {fileID: 11500000, guid: cc667f4a3e25e474297c25b8c88761cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectID: 0
@@ -8932,7 +8942,10 @@ MonoBehaviour:
   allowToTalk: 1
   dialogueXmls:
   - Greeting
-  - Dialog_Insuflon_Injection
+  - Dialog_Giving_Medication_Through_Insuflon_Insertation
+  playerPosition: {x: 0, y: 0, z: 0}
+  playerRotation: {x: 0, y: 0, z: 0}
+  playerPositionTarget: {fileID: 0}
 --- !u!114 &2085113770
 MonoBehaviour:
   m_ObjectHideFlags: 0
