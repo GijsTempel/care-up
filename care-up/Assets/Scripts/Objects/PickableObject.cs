@@ -298,11 +298,21 @@ public class PickableObject : InteractableObject
                 }
             }
                 
-           }
+        }
 
-        actionManager.OnUseOnAction(name, controls.SelectedObject != null ? controls.SelectedObject.name : "");
+        // fix for person objects
+        // normal assignment
+        string targetObject = controls.SelectedObject != null ? controls.SelectedObject.name : "";
+        // check if target is person object part
+        if (controls.SelectedObject != null && controls.SelectedObject.GetComponent<PersonObjectPart>() != null)
+        {
+            // reassign to the main person object part for correct name
+            targetObject = controls.SelectedObject.GetComponent<PersonObjectPart>().Person.name;
+        }
 
-        return (controls.SelectedObject != null && actionManager.CompareUseOnInfo(name, controls.SelectedObject.name));
+        actionManager.OnUseOnAction(name, targetObject);
+
+        return (controls.SelectedObject != null && actionManager.CompareUseOnInfo(name, targetObject));
     }
     
     public virtual void Pick()
