@@ -470,6 +470,35 @@ public class PlayerPrefsManager : MonoBehaviour
             CMLData data = new CMLData();
             data.Set("TutorialCompleted", "false");
             WUData.UpdateCategory("AccountStats", data);
+		}
+	}
+	
+    public void FetchLatestVersion()
+    {
+        WUData.FetchSharedField("LatestVersion", "GameInfo", GetLatestVersion, -1, GetLatestVersionError);
+    }
+
+    static void GetLatestVersion(CML response)
+    {
+        string currentVersion = Application.version;
+        string latestVersion = response[1].String("LatestVersion");
+
+        if (currentVersion != latestVersion)
+        {
+            // player can download new version
+            Debug.Log("show panel 'you can download new version'");
+        }
+        else
+        {
+            Debug.Log("hide panel 'you can download new version'");
+        }
+    }
+
+    static void GetLatestVersionError(CMLData response)
+    {
+        if ((response["message"] == "WPServer error: Empty response. No data found"))
+        {
+            Debug.Log("hide panel 'you can download new version'");
         }
     }
 }

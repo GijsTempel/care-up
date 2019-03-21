@@ -156,7 +156,6 @@ namespace MBS
                     GameObject.FindObjectOfType<AchievementsLoader>().loadingIcon.SetActive(false);
                     GameObject.FindObjectOfType<AchievementsLoader>().backButton.GetComponent<Button>().interactable = true;
                     GameObject.FindObjectOfType<AchievementsLoader>().backButton.GetComponent<Animator>().SetTrigger("start");
-                    GameObject.FindObjectOfType<AchievementsLoader>().separator.GetComponent<Animator>().SetTrigger("start");
                 }
 
                 if (GameObject.Find("Achievement_Panel_UI") != null)

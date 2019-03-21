@@ -63,7 +63,6 @@ public class LeaderBoardSceneButton : MonoBehaviour
 
         GameObject.FindObjectOfType<UMP_Manager>().LeaderBoardSearchBar.gameObject.SetActive(false);
         GameObject.FindObjectOfType<LeaderBoard>().topDescription.SetActive(false);
-        GameObject.FindObjectOfType<LeaderBoard>().separator.SetActive(false);
         GameObject.FindObjectOfType<LeaderBoard>().leftBar.SetActive(false);
         GameObject.FindObjectOfType<LeaderBoard>().infoBar.SetActive(false);
         GameObject.FindObjectOfType<LeaderBoard>().leaderboard.SetActive(true);
