@@ -229,7 +229,8 @@
       extra="Vraag de cliënt de insteekplaats te ontbloten of maak de insteekplaats bereikbaar."
       messageTitle="Voorkeursplaats voor inbrengen."
       messageContent="In deze handeling is er gekozen voor de dij als voorkeursplaats voor inbrengen. Bepaal, zo mogelijk samen met de cliënt, de voorkeursplaats voor inbrengen. Een subcutane canule kan ingebracht worden in bovenarm, onder het sleutelbeen, borstwand, bovenrug,
-buik en dijen. De huid moet intact zijn en er moet voldoende subcutaan weefsel aanwezig zijn. "></action>
+buik en dijen. De huid moet intact zijn en er moet voldoende subcutaan weefsel aanwezig zijn. "
+      blockUnlock="show injection spot"></action>
 
   <action
    comment="Place a pad under the buttocks and thighs of the cliënt."
@@ -241,9 +242,6 @@ buik en dijen. De huid moet intact zijn en er moet voldoende subcutaan weefsel a
    item="cloth_02_folded"
    target="m0_underwear"
    extra="Leg de onderlegger onder de injectieplaats van de cliënt."
-   blockRequired="(5)Ask client to show injection spot."
-   blockTitle="Handeling niet mogelijk."
-   blockMessage="Deze handeling is nog niet mogelijk omdat je moet eerst de injectieplaats hebben ontbloot."
    ></action>
   
 
@@ -259,9 +257,9 @@ buik en dijen. De huid moet intact zijn en er moet voldoende subcutaan weefsel a
      extra="Desinfecteer de insteekplaats met het alcoholgaasje en laat het drogen."
      messageTitle="Overmatig haargroei."
      messageContent="Verwijder zo nodig overmatige haargroei met een schone schaar of tondeuse."
-     blockRequired="(8) Put on gloves.    ----Start sequence"
+     blockRequired="show injection spot"
      blockTitle="Handeling niet mogelijk."
-     blockMessage="Deze handeling is nog niet mogelijk omdat je de spullen nog niet hebt klaar gezet"
+     blockMessage="Deze handeling is nog niet mogelijk. Vraag eerst de cliënt om de insteekplaats te ontbloten"
      ></action>
 
   <action
