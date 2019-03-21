@@ -10,11 +10,14 @@ public class MainMenu : MonoBehaviour {
     private LoadingScreen loadingScreen;
     private PlayerPrefsManager prefs;
 	public string eMail="info@triplemotion.nl";
+    public string key = "274757cc8e3dc122bd77a1248812db59d1cd8120";
 
     public GameObject UpdatesPanel;
 
     private void Start()
     {
+        Smartlook.Init(key);
+
         if (GameObject.Find("Preferences") != null)
         {
             loadingScreen = GameObject.Find("Preferences").GetComponent<LoadingScreen>();
