@@ -59,7 +59,7 @@ public class MainMenu : MonoBehaviour {
             }
 
             GameObject.FindObjectOfType<PlayerPrefsManager>().FetchTestHighScores();
-
+			
             GameObject.FindObjectOfType<PlayerPrefsManager>().FetchLatestVersion();
 
             GameObject.Find("UMenuProManager/MenuCanvas/Account/Account_Panel_UI/InfoHolder/Account_Username")
