@@ -240,7 +240,12 @@ buik en dijen. De huid moet intact zijn en er moet voldoende subcutaan weefsel a
    type="useOn"
    item="cloth_02_folded"
    target="m0_underwear"
-   extra="Leg de onderlegger onder de injectieplaats van de cliënt."></action>
+   extra="Leg de onderlegger onder de injectieplaats van de cliënt."
+   blockRequired="(5)Ask client to show injection spot."
+   blockTitle="Handeling niet mogelijk."
+   blockMessage="Deze handeling is nog niet mogelijk omdat je moet eerst de injectieplaats hebben ontbloot."
+   ></action>
+  
 
   <action
      comment="(7)Desinfect the insertion spot with the alcohol gauze and allow to dry. --Start sequence2"
@@ -253,7 +258,11 @@ buik en dijen. De huid moet intact zijn en er moet voldoende subcutaan weefsel a
      target="m0_underwear"
      extra="Desinfecteer de insteekplaats met het alcoholgaasje en laat het drogen."
      messageTitle="Overmatig haargroei."
-      messageContent="Verwijder zo nodig overmatige haargroei met een schone schaar of tondeuse."></action>
+     messageContent="Verwijder zo nodig overmatige haargroei met een schone schaar of tondeuse."
+     blockRequired="(8) Put on gloves.    ----Start sequence"
+     blockTitle="Handeling niet mogelijk."
+     blockMessage="Deze handeling is nog niet mogelijk omdat je de spullen nog niet hebt klaar gezet"
+     ></action>
 
   <action
     comment="(1) Remove the protection cap from needle ."
