@@ -62,7 +62,7 @@ public class MainMenu : MonoBehaviour {
 
             GameObject.FindObjectOfType<PlayerPrefsManager>().FetchLatestVersion();
 
-            GameObject.Find("UMenuProManager/MenuCanvas/Account/Account_Panel_UI/Account_Username")
+            GameObject.Find("UMenuProManager/MenuCanvas/Account/Account_Panel_UI/InfoHolder/Account_Username")
                 .GetComponent<Text>().text = MBS.WULogin.display_name;
         }
     }
