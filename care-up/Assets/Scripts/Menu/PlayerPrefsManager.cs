@@ -459,7 +459,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
     static void GetTutorialCompleted(CML response)
     {
-        bool completed = response[1].Bool("TutorialCompleted");
+        //bool completed = response[1].Bool("TutorialCompleted");
         // do smth
     }
 
@@ -490,7 +490,7 @@ public class PlayerPrefsManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("hide panel 'you can download new version'");
+            Debug.Log("Hide panel 'you can download new version'");
         }
     }
 
@@ -498,7 +498,7 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         if ((response["message"] == "WPServer error: Empty response. No data found"))
         {
-            Debug.Log("hide panel 'you can download new version'");
+            Debug.Log("Hide panel 'you can download new version'");
         }
     }
 }
