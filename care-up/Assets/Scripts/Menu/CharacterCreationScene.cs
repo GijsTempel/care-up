@@ -26,10 +26,12 @@ public class CharacterCreationScene : MonoBehaviour
     private List<Transform> maleGlasses = new List<Transform>();
     private List<Transform> femaleGlasses = new List<Transform>();
 
+    /*
     private Text genderLabel;
     private Text headLabel;
     private Text bodyLabel;
     private Text glassesLabel;
+    */
 
 	void Start ()
     {
@@ -61,22 +63,25 @@ public class CharacterCreationScene : MonoBehaviour
         maleGlasses = maleHeads.GetRange(maleHeads.Count - 3, 3);
         maleHeads.RemoveRange(maleHeads.Count - 3, 3);
 
-        // set up labels/buttons
+        /* set up labels/buttons
         genderLabel = GameObject.Find("Canvas/CharacterPanel/Panel/Gender/Label").GetComponent<Text>();
         headLabel = GameObject.Find("Canvas/CharacterPanel/Panel/Head/Label").GetComponent<Text>();
         bodyLabel = GameObject.Find("Canvas/CharacterPanel/Panel/Body/Label").GetComponent<Text>();
         glassesLabel = GameObject.Find("Canvas/CharacterPanel/Panel/Glasses/Label").GetComponent<Text>();
-        
+        */
+
         // set up initial info
         SetCurrent(CharGender.Female, 0, 0, -1);
     }
 	
     void UpdateLabels()
     {
+        /*
         genderLabel.text = (gender == CharGender.Male) ? "Male" : "Female";
         headLabel.text = "Head #" + (headType+1); // first type is 0
         bodyLabel.text = "Body #" + (bodyType+1); // which is weird for non-programmers :D
         glassesLabel.text = (glassesType >= 0) ? "Glasses #" + (glassesType + 1) : "None";
+        */
     }
 
     void UpdateMaleHeads()
@@ -322,6 +327,16 @@ public class CharacterCreationScene : MonoBehaviour
         }
 
         UpdateLabels();
+    }
+
+    public void MaleBtn()
+    {
+        SetCurrent(CharGender.Male, 0, 0, -1);
+    }
+
+    public void FemaleBtn()
+    {
+        SetCurrent(CharGender.Female, 0, 0, -1);
     }
 
     public void Save()
