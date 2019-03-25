@@ -501,4 +501,32 @@ public class PlayerPrefsManager : MonoBehaviour
             Debug.Log("hide panel 'you can download new version'");
         }
     }
+
+    public void SetCharacterCreationCompleted()
+    {
+        CMLData data = new CMLData();
+        data.Set("CharacterCreated", "true");
+        WUData.UpdateCategory("AccountStats", data);
+    }
+
+    public void GetCharacterCreationCompletionWU()
+    {
+        WUData.FetchField("CharacterCreated", "AccountStats", GetCharacterCreationCompletion,
+            -1, GetCharacterCreationCompletion_Error);
+    }
+
+    static void GetCharacterCreationCompletion(CML response)
+    {
+        bool creationCompleted = response[1].Bool("CharacterCreated");
+    }
+
+    static void GetCharacterCreationCompletion_Error(CMLData response)
+    {
+        if ((response["message"] == "WPServer error: Empty response. No data found"))
+        {
+            CMLData data = new CMLData();
+            data.Set("CharacterCreated", "false");
+            WUData.UpdateCategory("AccountStats", data);
+        }
+    }
 }
