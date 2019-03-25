@@ -487,10 +487,11 @@ public class PlayerPrefsManager : MonoBehaviour
         {
             // player can download new version
             Debug.Log("show panel 'you can download new version'");
+            GameObject.Find("UMenuProManager/MenuCanvas/VersionUpdatePanel").SetActive(true);
         }
         else
         {
-            Debug.Log("Hide panel 'you can download new version'");
+            GameObject.Find("UMenuProManager/MenuCanvas/VersionUpdatePanel").SetActive(false);
         }
     }
 
@@ -498,7 +499,7 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         if ((response["message"] == "WPServer error: Empty response. No data found"))
         {
-            Debug.Log("Hide panel 'you can download new version'");
+            GameObject.Find("UMenuProManager/MenuCanvas/VersionUpdatePanel").SetActive(false);
         }
     }
 }
