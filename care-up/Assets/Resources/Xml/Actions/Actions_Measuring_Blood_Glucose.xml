@@ -21,194 +21,62 @@
     extra="Pas handhygiëne toe. Handhygiëne is het allerbelangrijkste als het gaat om voorkomen van besmetting met ziektekiemen. Dit betekent je handen reinigen op de juiste manier en op de juiste momenten. Begin een handeling altijd met handhygiëne."/>
 
   <action
-    comment="Step 3: Ask client to wash his hand with soap."
-    points="3"
-    description="Laat de cliënt de handen wassen"
-    fullDescription="Laat de cliënt de handen wassen met bij voorkeur warm water en zeep en goed afdrogen."
+    points="1"
+    description="Maak een schoon werkveld door op het werkveld te klikken."
+    fullDescription="Klik op het werkveld om deze schoon te maken."
     index="1"
-    type="talk"
-    value="Patient"
-    extra="Laat de cliënt de handen wassen met bij voorkeur warm water en zeep en goed afdrogen."/>
+    type="use"
+    value="WorkField"
+    extra="Maak een schoon werkveld."
+    messageTitle="Hygiënisch werken door op het werkveld te klikken."
+    messageContent="Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen.">  
+  </action>
+
+  <action
+      comment="(3)Ask client to wash his hand with soap."
+      points="3"
+      description="Laat de cliënt de handen wassen"
+      fullDescription=""
+      index="2"
+      type="talk"
+      topic="WashHands"
+      extra=""
+      messageTitle=""
+      messageContent=""></action>
 
   <action
     comment="Step 4: Check expiration date of the teststrips."
     points="3"
     description="Controleer de vervaldatum en de periode van houdbaarheid van de teststrips."
     fullDescription="Controleer de vervaldatum en de periode van houdbaarheid van de teststrips. Noteer de datum van openen op de verpakking als je een nieuwe koker opent."
-    index="2"
+    index="3"
     type="examine"
-    value="teststrips"
-    extra="Controleer de vervaldatum en de periode van houdbaarheid van de teststrips. Noteer de datum van openen op de verpakking als je een nieuwe koker opent."/>
+    item="TeststripsPackage"
+    expected="good"
+    extra="Controleer de vervaldatum en de periode van houdbaarheid van de teststrips. Noteer de datum van openen op de verpakking als je een nieuwe koker opent."
+    messageTitle=""
+    messageContent=""></action>
 
   <action
-    comment="Step 5: Remove cap from the lancet."
-    points="3"
-    description="Verwijder het dopje van de lancet."
-    fullDescription="Verwijder het dopje van de lancet zodat je het kan gaan gebruiken."
-    index="4"
-    type="combine"
-    value="lancet"
-    extra="Verwijder het dopje van de lancet zodat je het kan gaan gebruiken."/>
+      comment="Step 5: Remove cap from the lancet."
+      points="3"
+      description="Verwijder het dopje van de lancet."
+      fullDescription="Verwijder het dopje van de lancet zodat je het kan gaan gebruiken."
+      index="4"
+      type="combine"
+      left="Scarifier"
+      right=""
+      extra="Verwijder het dopje van de lancet zodat je het kan gaan gebruiken."/>
 
   <action
-    comment="Step 6: Place lancet within the pricking pen."
+    comment="Step 6: Place teststrip in the blood glucose meter"
     points="3"
     description="Plaats de lancet op de prik pen."
     fullDescription="Plaats de lancet op de prik pen zodat het klaar is voor gebruik."
     index="5"
     type="combine"
-    value="pricking_pen"
+    left="Scarifier"
+    right=""
     extra="Plaats de lancet op de prik pen zodat het klaar is voor gebruik."/>
   
-  <action
-    comment="Step 7.1: turn on glucose measuring tool."
-    points="3"
-    description="Zet bloedglucosemeter aan."
-    fullDescription="Zet bloedglucosemeter aan voor gebruik."
-    index="6"
-    type="use"
-    value="BloodGlucoseMeter"
-    extra="Zet bloedglucosemeter aan voor gebruik."/>
-  
-  <action
-    comment="Step 7.2: Place teststrips in the blood gluose measuring tool."
-    points="3"
-    description="Plaats de test strip op de bloedglucosemeter."
-    fullDescription="Plaats de test strip op de bloedglucosemeter zodat het klaar is voor gebruik."
-    index="6"
-    type="use"
-    value="bloodGlucoseMeter"
-    extra="Plaats de test strip op de bloedglucosemeter zodat het klaar is voor gebruik."/>
-
-  <action
-    comment="8. Put on gloves.    Start sequence"
-    points="2"
-    description="Trek handschoenen aan."
-    fullDescription="Beweeg naar het werkveld. Klik vervolgens op de handschoenen."
-    index="7"
-    type="use"
-    value="gloveBox"
-    extra="Trek handschoenen aan."
-    quiz="2.0"
-    messageTitle="Gebruik handschoenen"
-    messageContent="Gebruik handschoenen eenmalig en bij dezelfde cliënt. Trek ze na gebruik direct uit. Vermijd tijdens het dragen van handschoenen contact met deurknopen, telefoon, apparatuur, toetsenborden, enzovoort. Was of desinfecteer de handen na het uittrekken van de handschoenen altijd. Bij het uittrekken van de handschoenen kunnen de handen namelijk besmet zijn geraakt."/>
-
-  <action
-    comment="Step 9: Check if injectionspot is warm."
-    points="3"
-    description="Check of de injectie plaats warm is."
-    fullDescription="Check of de injectie plaats warm is."
-    index="8"
-    type="sequenceStep"
-    extra="Check of de injectie plaats warm is."/>
-
-  <action
-    comment="Step 10: Inject pricking pen on the side of the finger top."
-    points="3"
-    description="Prik met de prikpen aan de zijkant van de vingertop."
-    fullDescription="Prik met de prikpen aan de zijkant van de vingertop, stuw de vinger niet."
-    index="9"
-    type="sequenceStep"
-    extra="Prik met de prikpen aan de zijkant van de vingertop, stuw de vinger niet."/>
-
-  <action
-    comment="Step 11: Wipe away the first blood drop with a gauze."
-    points="3"
-    description="Veeg de eerste bloeddruppel weg met een gaasje."
-    fullDescription="Veeg de eerste bloeddruppel weg met een gaasje."
-    index="10"
-    type="sequenceStep"
-    extra="Veeg de eerste bloeddruppel weg met een gaasje."/>
-  
-  <action
-    comment="Step 12: Fill the test strip's test field with the blood drop. Make sure the blood drop covers the entire test field. Do not smear the blood."
-    points="3"
-    description="Vul het testveld van de teststrip met de bloeddruppel."
-    fullDescription="Vul het testveld van de teststrip met de bloeddruppel. Zorg dat de bloeddruppel het hele testveld bedekt. Smeer het bloed niet uit."
-    index="11"
-    type="sequenceStep"
-    extra="Vul het testveld van de teststrip met de bloeddruppel. Zorg dat de bloeddruppel het hele testveld bedekt. Smeer het bloed niet uit."/>
-  
-  <action
-    comment="Step 13: Apply a gauze to collect any blood drops. Do not massage."
-    points="3"
-    description="Breng een gaasje aan voor de opvang van eventuele bloeddruppels."
-    fullDescription="Breng een gaasje aan voor de opvang van eventuele bloeddruppels. Masseer niet."
-    index="12"
-    type="sequenceStep"
-    extra="Breng een gaasje aan voor de opvang van eventuele bloeddruppels. Masseer niet."/>
-
-  <action
-    comment="Step 14: Read the blood glucose values of the blood glucose measuring tool."
-    points="3"
-    description="Lees de bloedglucosewaarden van het bloedglucosemeter."
-    fullDescription="Lees de bloedglucosewaarden van het bloedglucosemeter."
-    index="13"
-    type="sequenceStep"
-    extra="Lees de bloedglucosewaarden van het bloedglucosemeter."/>
-
-  <action
-    comment="Step 15: Remove teststrip from blood glucose measuring tool."
-    points="3"
-    description="Verwijder de test strip van de bloedglucosemeter."
-    fullDescription="Verwijder de test strip van de bloedglucosemeter, volgens gebruiksinstructie bloedglucosemeter, en gooi deze in de afvalbak."
-    index="14"
-    type="sequenceStep"
-    extra="Verwijder de test strip van de bloedglucosemeter, volgens gebruiksinstructie bloedglucosemeter, en gooi deze in de afvalbak."/>
-
-  <action
-    comment="Step 16: turn off the glucose measuring tool."
-    points="3"
-    description="Zet bloedglucosemeter uit."
-    fullDescription="Zet bloedglucosemeter uit."
-    index="15"
-    type="sequenceStep"
-    extra="Zet bloedglucosemeter uit."/>
-
-  <action
-    comment="Step 17: Remove the lancet from the lancing device or finger pricker, according to instructions for use lancing device, and throw it in the needle cup."
-    points="3"
-    description="Verwijder het lancet uit de prikpen"
-    fullDescription="Verwijder het lancet uit de prikpen, volgens gebruiksinstructie prikpen, en gooi het in de naaldenbeker."
-    index="16"
-    type="sequenceStep"
-    extra="Verwijder het lancet uit de prikpen, volgens gebruiksinstructie prikpen, en gooi het in de naaldenbeker."/>
-
-  <action
-    comment="Step 18: Take off the gloves.   End sequence"
-    points="3"
-    description="Trek handschoenen uit."
-    fullDescription="Trek handschoenen uit."
-    index="17"
-    type="sequenceStep"
-    extra="Trek handschoenen uit."/>
-
-  <action
-    comment="Step 19: Apply hand hygiene."
-    index="18"
-    points="3"
-    description="Pas handhygiëne toe."
-    fullDescription="Beweeg naar het werkveld. Klik daarna op de handhygiënepomp."
-    type="use"
-    value="HandCleaner"
-    extra=""/>
-
-  <action
-    points="1"
-    description="Ruim de materialen op door met lege handen op het werkveld te klikken."
-    fullDescription="Klik op het werkveld om deze schoon te maken."
-    index="19"
-    type="use"
-    value="WorkField"
-    extra=" Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen."/>
-
-  <action
-    comment="Step 20: last step"
-    index="20"
-    points="1"
-    description="Noteer datum en tijdstip, reden voor katheterisatie, soort, maat en merk katheter, hoeveelheid ingebrachte vloeistof in ballon en andere bevindingen."
-    fullDescription="Open de tablet door op het tablet icoon te drukken. Klik op de App 'Gegevens'. Kies vervolgens voor de toedienlijst. Klik tot slot op het afteken icoon."
-    type="use"
-    value="PaperAndPen"
-    extra="Teken de toedienlijst af en noteer het tijdstip, het soort medicijn, de concentratie, de hoeveelheid en de wijze van toediening. Noteer tot slot je bevindingen."/>
 </ActionList>
