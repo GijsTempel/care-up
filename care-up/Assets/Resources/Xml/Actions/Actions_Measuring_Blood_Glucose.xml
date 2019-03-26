@@ -57,8 +57,9 @@
     messageTitle=""
     messageContent=""></action>
 
+  
   <action
-      comment="Step 5: Remove cap from the lancet."
+      comment="Step 4: Remove cap from the lancet."
       points="3"
       description="Verwijder het dopje van de lancet."
       fullDescription="Verwijder het dopje van de lancet zodat je het kan gaan gebruiken."
@@ -68,15 +69,59 @@
       right=""
       extra="Verwijder het dopje van de lancet zodat je het kan gaan gebruiken."/>
 
+  
   <action
-    comment="Step 6: Place teststrip in the blood glucose meter"
+     comment="Step 5: Take test strip from pack."
+     points="3"
+     description="Take test strip from pack."
+     fullDescription=""
+     index="5"
+     type="combine"
+     left="TeststripsPackage"
+     right=""
+     extra="Verwijder het dopje van de lancet zodat je het kan gaan gebruiken."/>
+
+  <action
+    comment="Step 7: Place teststrip in the blood glucose meter"
     points="3"
     description="Plaats de lancet op de prik pen."
     fullDescription="Plaats de lancet op de prik pen zodat het klaar is voor gebruik."
-    index="5"
+    index="6"
     type="combine"
-    left="Scarifier"
-    right=""
+    left="BloodGlucoseMeter"
+    right="Teststrip"
     extra="Plaats de lancet op de prik pen zodat het klaar is voor gebruik."/>
+
+  <action
+   comment="8. Put on gloves."
+   points="3"
+   description="Trek handschoenen aan."
+   fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp."
+   index="7"
+   type="use"
+   value="gloveBox"
+   extra=""></action>
+
+
+  <action
+   points="2"
+   description="Pas handhygiëne toe."
+   fullDescription="Klik op de hygiënepomp om deze te gebruiken.)"
+   audioHint="Injection/EAS5-2"
+   index="13"
+   type="use"
+   value="HandCleaner"
+   extra="Handhygiëne is het allerbelangrijkste als het gaat om voorkomen van besmetting met ziektekiemen. Dit betekent je handen reinigen op de juiste manier en op de juiste momenten. Sluit handelingen af met handhygiëne."></action>
   
+  <action
+    points="3"
+    description="Teken toedienlijst af."
+    fullDescription="Open de tablet door op het tablet icoon te drukken. Klik op de App 'Gegevens'. Kies vervolgens voor de toedienlijst. Klik tot slot op het afteken icoon.)"
+    audioHint="Injection/EAS4-2"
+    index="14"
+    type="use"
+    value="PaperAndPen"
+    extra="Teken toedienlijst af of noteer tijdstip, soort medicijn, concentratie, hoeveelheid, wijze van toediening en noteer bevindingen."></action>
+
+
 </ActionList>
