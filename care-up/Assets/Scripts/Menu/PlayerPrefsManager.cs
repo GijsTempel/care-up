@@ -50,7 +50,7 @@ public class PlayerPrefsManager : MonoBehaviour
     [HideInInspector]
     public int plays = 0;
 
-    public CharacterCreation character;    
+    public CharacterInfo character;    
 
     // used for storing scene name for test hightscore loading
     private static string currentTestScene = "";

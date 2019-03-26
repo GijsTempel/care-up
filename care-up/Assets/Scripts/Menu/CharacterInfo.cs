@@ -1,7 +1,7 @@
 ﻿using MBS;
 using UnityEngine;
 
-public class CharacterCreation : MonoBehaviour
+public class CharacterInfo : MonoBehaviour
 {
     public string sex;
     public int headType;
@@ -12,7 +12,7 @@ public class CharacterCreation : MonoBehaviour
     static bool currentStateChecked = false;
 
     //is used for character characteristics comparison between data received form database and newly entered
-    public static CharacterCreation currentCharacter = new CharacterCreation();
+    public static CharacterInfo currentCharacter = new CharacterInfo();
 
     public void SetCharacterCharacteristicsWU(string sexType, int head, int body, int glasses)
     {
