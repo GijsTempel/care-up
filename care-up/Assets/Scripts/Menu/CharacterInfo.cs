@@ -146,7 +146,8 @@ public class CharacterInfo : MonoBehaviour
 
     static void GetCharacterCreationCompletion(CML response)
     {
-        bool creationCompleted = response[1].Bool("CharacterCreated");
+        WULogin.characterCreated = response[1].Bool("CharacterCreated");
+        Debug.Log("Character created = " + WULogin.characterCreated);
     }
 
     static void GetCharacterCreationCompletion_Error(CMLData response)

@@ -20,7 +20,8 @@ namespace MBS
         static public bool UsernameNotValid = false;
         static public bool UserNotWithEmail = false;
         static public bool UserNotFound = false;
-        
+        static public bool characterCreated = false;
+
         //static private int FirstLogin = 1;
         static private int SecondLogin = 2;
 
@@ -235,6 +236,9 @@ namespace MBS
 
         static void __onLoginSuccess( CML data )
         {
+            if (GameObject.FindObjectOfType<PlayerPrefsManager>() != null)
+                GameObject.FindObjectOfType<PlayerPrefsManager>().character.GetCharacterCreationCompletionWU();
+
             StoreFetchedInfo ( data );
             logged_in = true;
             user_gravatar = null;
@@ -251,6 +255,13 @@ namespace MBS
             if (PlayerPrefs.GetInt ("FirstLogin") <= 1) {
                 
                 PlayerPrefs.SetInt ("FirstLogin", SecondLogin);
+
+                //if(characterCreated == false)
+                //{
+                //    bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Character_Customisation");
+                //    //to be continued...
+                //}        
+
                 string sceneName = "Tutorial_UI";
                 string bundleName = "tutorial_ui";
                 bl_SceneLoaderUtils.GetLoader.LoadLevel (sceneName, bundleName);
