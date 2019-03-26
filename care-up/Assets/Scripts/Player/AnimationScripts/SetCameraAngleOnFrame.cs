@@ -13,7 +13,10 @@ public class SetCameraAngleOnFrame : StateMachineBehaviour
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-
+        if (frame == 0)
+        {
+            Camera.main.transform.localRotation = Quaternion.Euler(angle);
+        }
        
     }
 
