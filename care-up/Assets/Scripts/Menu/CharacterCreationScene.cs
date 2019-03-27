@@ -341,12 +341,23 @@ public class CharacterCreationScene : MonoBehaviour
 
     public void Save()
     {
-        PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
-        if (manager != null)
+        CharacterInfo.currentCharacter.SetCharacterCharacteristicsWU(
+            ((gender == CharGender.Female) ? "Female" : "Male"),
+            headType, bodyType, glassesType);
+
+        // so while we're saving info we're back to our weird tutorial completion check
+        if (PlayerPrefs.GetInt("FirstLogin") <= 1)
         {
-            // get class from manager, assign variable there
-            // then call function to save to database too
-            // which afterwards should call a function to save flag that character is actually created
+            PlayerPrefs.SetInt("FirstLogin", 2);
+
+            string sceneName = "Tutorial_UI";
+            string bundleName = "tutorial_ui";
+            bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
+        }
+        else
+        {
+            // tutorial was already played, load main menu? 
+            bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
         }
     }
 }

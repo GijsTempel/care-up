@@ -236,9 +236,6 @@ namespace MBS
 
         static void __onLoginSuccess( CML data )
         {
-            if (GameObject.FindObjectOfType<PlayerPrefsManager>() != null)
-                GameObject.FindObjectOfType<PlayerPrefsManager>().character.GetCharacterCreationCompletionWU();
-
             StoreFetchedInfo ( data );
             logged_in = true;
             user_gravatar = null;
@@ -247,25 +244,6 @@ namespace MBS
             onLoggedIn?.Invoke( data );
             if ( email != string.Empty && null != __data && __data.FetchGravatar )
                 FetchProfileImage( __SetProfileImage, __data.GravatarType );
-
-            //When trying to test the tutorials with the first time logging make the if under this comment a comment.
-            //And uncomment the comment under this one one then start the scene log in the stop the scene and change the comments back to normal and BOOM! next time you login it will be your first.
-            //PlayerPrefs.SetInt ("FirstLogin", FirstLogin);
-
-            if (PlayerPrefs.GetInt ("FirstLogin") <= 1) {
-                
-                PlayerPrefs.SetInt ("FirstLogin", SecondLogin);
-
-                //if(characterCreated == false)
-                //{
-                //    bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Character_Customisation");
-                //    //to be continued...
-                //}        
-
-                string sceneName = "Tutorial_UI";
-                string bundleName = "tutorial_ui";
-                bl_SceneLoaderUtils.GetLoader.LoadLevel (sceneName, bundleName);
-            }
         }
 
         static void __SetProfileImage( Texture2D image )

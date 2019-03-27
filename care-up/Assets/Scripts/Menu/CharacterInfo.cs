@@ -49,14 +49,16 @@ public class CharacterInfo : MonoBehaviour
 
         WUData.UpdateCategory("AccountStats", data);
         currentStateChecked = false;
+
+        SetCharacterCreationCompleted();
     }
 
-    public void GetCharacterCharacteristicsWU()
+    static public void GetCharacterCharacteristicsWU()
     {
         WUData.FetchCategory("AccountStats", GetCharacterCharacteristics);
     }
 
-    void GetCharacterCharacteristics(CML response)
+    static void GetCharacterCharacteristics(CML response)
     {
         for (int i = 0; i < response.Elements[1].Keys.Length; ++i)
         {
@@ -82,7 +84,14 @@ public class CharacterInfo : MonoBehaviour
                     break;
             }
         }
+
         currentStateChecked = true;
+        
+        CharacterInfo info = GameObject.FindObjectOfType<CharacterInfo>();
+        info.sex = currentCharacter.sex;
+        info.headType = currentCharacter.headType;
+        info.bodyType = currentCharacter.bodyType;
+        info.glassesType = currentCharacter.glassesType;
     }
 
 
@@ -136,27 +145,5 @@ public class CharacterInfo : MonoBehaviour
         CMLData data = new CMLData();
         data.Set("CharacterCreated", "true");
         WUData.UpdateCategory("AccountStats", data);
-    }
-
-    public void GetCharacterCreationCompletionWU()
-    {
-        WUData.FetchField("CharacterCreated", "AccountStats", GetCharacterCreationCompletion,
-            -1, GetCharacterCreationCompletion_Error);
-    }
-
-    static void GetCharacterCreationCompletion(CML response)
-    {
-        WULogin.characterCreated = response[1].Bool("CharacterCreated");
-        Debug.Log("Character created = " + WULogin.characterCreated);
-    }
-
-    static void GetCharacterCreationCompletion_Error(CMLData response)
-    {
-        if ((response["message"] == "WPServer error: Empty response. No data found"))
-        {
-            CMLData data = new CMLData();
-            data.Set("CharacterCreated", "false");
-            WUData.UpdateCategory("AccountStats", data);
-        }
     }
 }

@@ -49,9 +49,7 @@ public class PlayerPrefsManager : MonoBehaviour
     public bool subscribed = false;
     [HideInInspector]
     public int plays = 0;
-
-    public CharacterInfo character;    
-
+    
     // used for storing scene name for test hightscore loading
     private static string currentTestScene = "";
     private static float currentTestScore = 0;
