@@ -41,7 +41,7 @@ public class GestureControls : MonoBehaviour
         if (gesture.State == GestureRecognizerState.Ended)
         {
             //DebugText("Double tapped at {0}, {1}", gesture.FocusX, gesture.FocusY);
-            if (IsViableWithUIOpen())
+            if (IsViableWithUIOpen() && cameraMode.animating == false)
             {
                 if (tutorial == null || (tutorial != null &&
                 (tutorial.itemToDrop == initedObject.name ||
