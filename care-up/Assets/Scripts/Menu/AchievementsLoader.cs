@@ -8,4 +8,11 @@ public class AchievementsLoader : MonoBehaviour
     public GameObject image;
     public GameObject title;
     public GameObject separator;
+
+    public void Update()
+    {
+        if (accountAchievementsPanel.activeInHierarchy == false && loadingIcon.activeInHierarchy)
+            loadingIcon.SetActive(false);
+    }
 }
+

@@ -11,12 +11,12 @@ namespace MBS
         [SerializeField] WUAView view_prefab;
         [SerializeField] bool destroy_contents_on_load = true;
         [SerializeField] private Button achievementButton;
-        private bool spawnContent = false;
+        //private bool spawnContent = false;
         private bool destroyPrefab = false;
 
         private GameObject achievePanel;
 
-        private Text achieveText;
+        //private Text achieveText;
         private GameObject achieveGameObject;
         private bl_SceneLoader sceneloader;
 
@@ -44,9 +44,9 @@ namespace MBS
 
         void Start()
         {
-            currentScene = SceneManager.GetActiveScene();
-            achieveText = GameObject.Find("AchieveTitle").GetComponent<Text>();
+            currentScene = SceneManager.GetActiveScene();            
             manager = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
+            //achieveText = GameObject.Find("AchieveTitle").GetComponent<Text>();
 
             DontDestroyOnLoad(gameObject.transform.parent);
             //wait until login was successful then download all keys
@@ -162,12 +162,12 @@ namespace MBS
                     GameObject.Find("Achievement_Panel_UI").GetComponent<Animator>().SetTrigger("start");
             }
 
-            ShowHowmanyIAmTracking();
+           // ShowHowmanyIAmTracking();
         }
 
         void ShowHowmanyIAmTracking()
         {
-            Debug.LogWarning($"Tracking {(null == tracked ? 0 : tracked.Count)}");
+            Debug.Log($"Tracking achievements: {(null == tracked ? 0 : tracked.Count)}");
         }
 
         public void UpdateKeys(string name, int qty)

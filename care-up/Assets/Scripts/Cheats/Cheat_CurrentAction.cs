@@ -19,8 +19,8 @@ public class Cheat_CurrentAction : MonoBehaviour
     [SerializeField] private GameObject ipadTrigger;
 
     // never used
-    private bool biggerDevHintActive = false;
-    private bool devHintActive = true;
+    //private bool biggerDevHintActive = false;
+    //private bool devHintActive = true;
 
     private float animationTime = 1.0f;
 
@@ -263,16 +263,16 @@ public class Cheat_CurrentAction : MonoBehaviour
         tutorial_devHintOpened = true;
         bigger_DevHint.SetActive (true);
 
-        biggerDevHintActive = true;
-        devHintActive = false;
+        //biggerDevHintActive = true;
+        //devHintActive = false;
     }
 
     public void RemoveBiggerDevHint () {
         tutorial_devHintClosed = true;
         bigger_DevHint.SetActive (false);
 
-        biggerDevHintActive = false;
-        devHintActive = true;
+        //biggerDevHintActive = false;
+        //devHintActive = true;
     } 
 
 

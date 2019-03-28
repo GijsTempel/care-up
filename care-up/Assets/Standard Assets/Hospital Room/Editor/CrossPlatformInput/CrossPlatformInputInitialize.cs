@@ -101,7 +101,9 @@ namespace UnityStandardAssets.CrossPlatformInput.Inspector
                 BuildTargetGroup.iOS,
                 BuildTargetGroup.WSA,
                 //BuildTargetGroup.BlackBerry,
+#pragma warning disable CS0618 // Type or member is obsolete
 				BuildTargetGroup.PSM, 
+#pragma warning restore CS0618 // Type or member is obsolete
 				BuildTargetGroup.Tizen, 
 				BuildTargetGroup.WSA 
             };
