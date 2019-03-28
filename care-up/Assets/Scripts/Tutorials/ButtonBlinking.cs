@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-public class ButtonBlinking : MonoBehaviour {
-
+public class ButtonBlinking : MonoBehaviour
+{
     public void StartBlinking()
     {
         GetComponent<Animator>().SetTrigger("BlinkStart");
@@ -9,7 +9,8 @@ public class ButtonBlinking : MonoBehaviour {
 
     public void StopBlinking()
     {
-        GetComponent<Animator>().SetTrigger("BlinkStop");
+        if (GetComponent<Animator>() != null && GetComponent<Animator>().isActiveAndEnabled)
+            GetComponent<Animator>().SetTrigger("BlinkStop");
     }
 
     public void JoystickStopBlinking()

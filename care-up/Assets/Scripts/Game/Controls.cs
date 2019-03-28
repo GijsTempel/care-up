@@ -106,8 +106,6 @@ public class Controls : MonoBehaviour {
     private GameObject selectedObject;
     private bool canInteract;
 
-    private bool clickFlag = false;
-    private int clickBuffer = 0;
     private bool touchEnded = false;
 
     public GameObject SelectedObject

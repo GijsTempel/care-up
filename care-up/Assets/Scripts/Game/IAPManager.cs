@@ -4,16 +4,19 @@ using System.Collections.Generic;
 
 public class IAPManager : MonoBehaviour, IStoreListener
 {
-    private IStoreController controller;
+#pragma warning disable CS0414
     private IExtensionProvider extensions;
+#pragma warning restore CS0414
+
+    private IStoreController controller;
 
     private IAppleExtensions m_AppleExtensions;
 
     Dictionary<string, string> introductory_info_dict;
-       
+
     private void Start()
     {
-        #if UNITY_IOS
+#if UNITY_IOS
             var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
             builder.AddProduct("CareUp_Lidmaatschap", ProductType.Subscription, new IDs
             {
@@ -23,11 +26,11 @@ public class IAPManager : MonoBehaviour, IStoreListener
             });
 
             UnityPurchasing.Initialize(this, builder);
-        #else
-            Debug.Log("Not an iOS. Destroying IAP.");
-            Destroy(this);
-            return;
-        #endif
+#else
+        Debug.Log("Not an iOS. Destroying IAP.");
+        Destroy(this);
+        return;
+#endif
     }
 
     /// <summary>
@@ -38,10 +41,10 @@ public class IAPManager : MonoBehaviour, IStoreListener
         this.controller = controller;
         this.extensions = extensions;
 
-        #if UNITY_IOS
+#if UNITY_IOS
             m_AppleExtensions = extensions.GetExtension<IAppleExtensions>();
             introductory_info_dict = m_AppleExtensions.GetIntroductoryPriceDictionary();
-        #endif
+#endif
     }
 
     /// <summary>
@@ -69,7 +72,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
     /// </summary>
     public void OnPurchaseFailed(Product i, PurchaseFailureReason p)
     {
-        
+
     }
 
     public void OnPurchaseClicked(string productId = "CareUp_Lidmaatschap")
