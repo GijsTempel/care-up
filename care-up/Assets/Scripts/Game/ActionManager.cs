@@ -476,43 +476,71 @@ public class ActionManager : MonoBehaviour {
                 blockLock = action.Attributes["blockLock"].Value;
             }
 
+            string blockTitle = "";
+            string blockMsg = "";
+            if (action.Attributes["blockTitle"] != null)
+            {
+                blockTitle = action.Attributes["blockTitle"].Value;
+            }
+
+            if (action.Attributes["blockMessage"] != null)
+            {
+                blockMsg = action.Attributes["blockMessage"].Value;
+            }
+
             switch (type)
             {
                 case "combine":
                     string left = action.Attributes["left"].Value;
                     string right = action.Attributes["right"].Value;
-                    actionList.Add(new CombineAction(left, right, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock, blockLock));
+                    actionList.Add(new CombineAction(left, right, index, descr, fDescr, audio, extra, 
+                        pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, 
+                        blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
                 case "use":
                     string use = action.Attributes["value"].Value;
-                    actionList.Add(new UseAction(use, index, descr, fDescr, audio, extra, buttonText, pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock, blockLock));
+                    actionList.Add(new UseAction(use, index, descr, fDescr, audio, extra, buttonText, 
+                        pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, 
+                        blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
                 case "talk":
                     string topic = action.Attributes["topic"].Value;
-                    actionList.Add(new TalkAction(topic, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock, blockLock));
+                    actionList.Add(new TalkAction(topic, index, descr, fDescr, audio, extra, pointsValue, 
+                        notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock, 
+                        blockLock, blockTitle, blockMsg));
                     break;
                 case "useOn":
                     string useItem = action.Attributes["item"].Value;
                     string target = action.Attributes["target"].Value;
-                    actionList.Add(new UseOnAction(useItem, target, index, descr, fDescr, audio, extra, buttonText, pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock, blockLock));
+                    actionList.Add(new UseOnAction(useItem, target, index, descr, fDescr, audio, extra, 
+                        buttonText, pointsValue, notNeeded, quizTime, messageTitle, messageContent, 
+                        blockRequire, blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
                 case "examine":
                     string exItem = action.Attributes["item"].Value;
                     string expected = action.Attributes["expected"].Value;
-                    actionList.Add(new ExamineAction(exItem, expected, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock, blockLock));
+                    actionList.Add(new ExamineAction(exItem, expected, index, descr, fDescr, audio, extra, 
+                        pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, 
+                        blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
                 case "pickUp":
                     string itemPicked = action.Attributes["item"].Value;
-                    actionList.Add(new PickUpAction(itemPicked, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock, blockLock));
+                    actionList.Add(new PickUpAction(itemPicked, index, descr, fDescr, audio, extra, 
+                        pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, 
+                        blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
                 case "sequenceStep":
                     string stepName = action.Attributes["value"].Value;
-                    actionList.Add(new SequenceStepAction(stepName, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock, blockLock));
+                    actionList.Add(new SequenceStepAction(stepName, index, descr, fDescr, audio, extra, 
+                        pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, 
+                        blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
                 case "drop":
                     string dropItem = action.Attributes["item"].Value;
                     string dropID = (action.Attributes["posID"] != null) ? action.Attributes["posID"].Value : "0";
-                    actionList.Add(new ObjectDropAction(dropItem, dropID, index, descr, fDescr, audio, extra, pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock, blockLock));
+                    actionList.Add(new ObjectDropAction(dropItem, dropID, index, descr, fDescr, audio, extra, 
+                        pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, 
+                        blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
                 default:
                     Debug.LogError("No action type found: " + type);
@@ -751,14 +779,20 @@ public class ActionManager : MonoBehaviour {
     {
         bool matched = false;
 
+        // make a selection from all actions list
+        // create a sublist with not completed actions of current action index only
         List<Action> sublist = actionList.Where(action =>
             action.SubIndex == currentActionIndex &&
             action.matched == false).ToList();
+        
+        // make sublist even smaller, leaving only actions that are not blocked by other steps
         sublist = sublist.Where(action =>
             action.blockRequired == "" ||
             unlockedBlocks.Contains(action.blockRequired)).ToList();
+
         int subcategoryLength = sublist.Count;
         
+        // make a list from sublist with actions of performed action type only
         List<Action> subtypelist = sublist.Where(action => action.Type == type).ToList();
         if (sublist.Count != 0)
         {
@@ -814,7 +848,53 @@ public class ActionManager : MonoBehaviour {
             currentStepHintUsed = false;
 			GameObject.FindObjectOfType<GameUI>().ButtonBlink(false);
         }
-        
+        else if (manager != null && !manager.practiceMode) // test mode error, check for blocks
+        {
+            // action not matched this check, so list didnt change
+            // so we can perform same selection as before
+            List<Action> sublistWithoutBlocks = actionList.Where(action =>
+                action.SubIndex == currentActionIndex &&
+                action.matched == false && action.Type == type).ToList();
+
+            // make a flag that will become true if there is a step that is blocked
+            // and could actually be performed if there would be no block
+            bool foundBlockedStep = false;
+            Action foundAction = null;
+
+            if (sublistWithoutBlocks.Count != 0)
+            {
+                foreach (Action action in sublistWithoutBlocks)
+                {
+                    if (action.Compare(info))
+                    {
+                        foundAction = action;
+                        foundBlockedStep = true;
+                        break; // found step, no need to continue
+                    }
+                }
+            }
+
+            // if there's actually such step, make  message
+            if (foundBlockedStep)
+            {
+                string title, message; 
+                // found action will be assigned if foundBlockedStep == true
+                if (foundAction.blockTitle != "" && foundAction.blockMessage != "")
+                {
+                    title = foundAction.blockTitle;
+                    message = foundAction.blockMessage;
+                }
+                else
+                {
+                    title = "Step is blocked";
+                    message = "Looks like this stepped cannot be performed YET. You need to do something before it.";
+                }
+
+                RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
+                messageCenter.NewMessage(title, message, RobotUIMessageTab.Icon.Error);
+            }
+        }
+
         if (matched && subcategoryLength <= 1)
         {
             currentActionIndex += 1;
@@ -828,20 +908,21 @@ public class ActionManager : MonoBehaviour {
                 wrongStepIndexes.Add(index);
             }
 
-            if (sublist.Count > 0 && (manager == null || manager.practiceMode))
+            bool practice = (manager != null) ? manager.practiceMode : true;
+
+            if (practice)
             {
-                RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
-                messageCenter.NewMessage("Verkeerde handeling!", sublist[0].extraDescr, RobotUIMessageTab.Icon.Error);
+                if (sublist.Count > 0)
+                {
+                    RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
+                    messageCenter.NewMessage("Verkeerde handeling!", sublist[0].extraDescr, RobotUIMessageTab.Icon.Error);
+                }
             }
 
             ActionManager.WrongAction(type != ActionType.SequenceStep); 
 
             penalized = true;
-
-            bool practice = (manager != null) ? manager.practiceMode : true;
-           
         }
-     
         else
         {
             currentPointAward = currentAction.pointValue;

@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class InsulfonInsertationPatient : PersonObject {
 
-    private Animator PatientAnimator;
+   // private Animator PatientAnimator;
 
     private Animator PlayerAnimator;
 
@@ -16,7 +14,7 @@ public class InsulfonInsertationPatient : PersonObject {
     {
         base.Start();
         PlayerAnimator = GameObject.FindObjectOfType<PlayerAnimationManager>().GetComponent<Animator>();
-        PatientAnimator = GetComponent<Animator>();
+      //  PatientAnimator = GetComponent<Animator>();
     }
 
     public override void Talk(string topic = "")

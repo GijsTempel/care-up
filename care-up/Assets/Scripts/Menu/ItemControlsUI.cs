@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
@@ -32,7 +30,9 @@ public class ItemControlsUI : MonoBehaviour {
     private string useOnNTtext;
     private string useText;
 
+#pragma warning disable CS0414
     private bool UIhover;
+#pragma warning restore CS0414
 
     private Tutorial_Combining tutorialCombine;
     private Tutorial_UseOn tutorialUseOn;
@@ -258,8 +258,8 @@ public class ItemControlsUI : MonoBehaviour {
                 useOnNTButton.SetActive(actionManager.CompareUseOnInfo(initedObject.name, ""));
                 useButton.SetActive(actionManager.CompareUseObject(initedObject.name));
 
-                bool discard = initedObject.GetComponent<PickableObject>() != null
-                    && initedObject.GetComponent<PickableObject>().destroyOnDrop == true;
+                //bool discard = initedObject.GetComponent<PickableObject>() != null
+                //    && initedObject.GetComponent<PickableObject>().destroyOnDrop == true;
                 //discardButton.SetActive(discard);
                 discardButton.SetActive(false); // for now disable discard button
 

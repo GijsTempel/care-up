@@ -44,10 +44,13 @@ namespace MBS {
             UnlockedImg = Resources.Load<Sprite>( ResourceFilename( Fields.String( "unlocked_url" ) ) );
             DisplayRelevantVersion();
 
-            if ( null == LockedImg )
-                StartCoroutine( FetchImageOnline( Fields.String( "locked_url" ), true ) );
-            if ( null == UnlockedImg )
-                StartCoroutine( FetchImageOnline( Fields.String( "unlocked_url" ), false ) );
+            if (GameObject.Find("Account_Achievements"))
+            {
+                if (null == LockedImg)
+                    StartCoroutine(FetchImageOnline(Fields.String("locked_url"), true));
+                if (null == UnlockedImg)
+                    StartCoroutine(FetchImageOnline(Fields.String("unlocked_url"), false));
+            }           
         }
 
         public void DisplayRelevantVersion()

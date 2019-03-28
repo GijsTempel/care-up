@@ -33,6 +33,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
     // sets up after selecting scene in "scene selection"
     public string currentSceneVisualName;
+    public bool validatedScene;
 
     // post processing on camera
     public bool postProcessingEnabled = false;
@@ -375,7 +376,6 @@ public class PlayerPrefsManager : MonoBehaviour
         currentTestScene = currentSceneVisualName.Replace(" ", "_");
         
         WUData.FetchField(currentTestScene, "TestHighscores", GetTestHighscore, -1, GetTestHighscore_Error);
-
     }
 
     static void GetTestHighscore(CML response)
@@ -439,6 +439,67 @@ public class PlayerPrefsManager : MonoBehaviour
                     
                     break;
             }
+        }
+    }
+
+    public void SetTutorialCompletedWU()
+    {
+        tutorialCompleted = true;
+
+        CMLData data = new CMLData();
+        data.Set("TutorialCompleted", "true");
+        WUData.UpdateCategory("AccountStats", data);
+    }
+
+    public void GetTutorialCompletedWU()
+    {
+        WUData.FetchField("TutorialCompleted", "AccountStats", GetTutorialCompleted, 
+            -1, GetTutorialCompleted_Error);
+    }
+
+    static void GetTutorialCompleted(CML response)
+    {
+        //bool completed = response[1].Bool("TutorialCompleted");
+        // do smth
+    }
+
+    static void GetTutorialCompleted_Error(CMLData response)
+    {
+        if ((response["message"] == "WPServer error: Empty response. No data found"))
+        {
+            CMLData data = new CMLData();
+            data.Set("TutorialCompleted", "false");
+            WUData.UpdateCategory("AccountStats", data);
+		}
+	}
+	
+    public void FetchLatestVersion()
+    {
+        WUData.FetchSharedField("LatestVersion", "GameInfo", GetLatestVersion, -1, GetLatestVersionError);
+    }
+
+    static void GetLatestVersion(CML response)
+    {
+        string currentVersion = Application.version;
+        string latestVersion = response[1].String("LatestVersion");
+
+        if (currentVersion != latestVersion)
+        {
+            // player can download new version
+            Debug.Log("show panel 'you can download new version'");
+            GameObject.Find("UMenuProManager/MenuCanvas/VersionUpdatePanel").SetActive(true);
+        }
+        else
+        {
+            GameObject.Find("UMenuProManager/MenuCanvas/VersionUpdatePanel").SetActive(false);
+        }
+    }
+
+    static void GetLatestVersionError(CMLData response)
+    {
+        if ((response["message"] == "WPServer error: Empty response. No data found"))
+        {
+            GameObject.Find("UMenuProManager/MenuCanvas/VersionUpdatePanel").SetActive(false);
         }
     }
 }

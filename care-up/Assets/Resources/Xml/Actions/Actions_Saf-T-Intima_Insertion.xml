@@ -115,6 +115,7 @@
       type="combine"
       left="Cloth2"
       right="Alcohol2"
+      quiz="2.0"
       extra="Overgiet een gaasje met desinfectans. De desinfectans wordt aangebracht op een gaasje. Het is eveneens mogelijk om gebruik te maken van alcohol swabs. Alcohol 70% heeft een totaal spectrum en werkt slechts tijdelijk. Omdat bij het inbrengen van een infuus de desinfectie langer moet aanhouden, wordt gedesinfecteerd met alcohol 70% bewaard in opgelost chloorhexidine 0,5%."/>
 
 
@@ -229,7 +230,8 @@
       extra="Vraag de cliënt de insteekplaats te ontbloten of maak de insteekplaats bereikbaar."
       messageTitle="Voorkeursplaats voor inbrengen."
       messageContent="In deze handeling is er gekozen voor de dij als voorkeursplaats voor inbrengen. Bepaal, zo mogelijk samen met de cliënt, de voorkeursplaats voor inbrengen. Een subcutane canule kan ingebracht worden in bovenarm, onder het sleutelbeen, borstwand, bovenrug,
-buik en dijen. De huid moet intact zijn en er moet voldoende subcutaan weefsel aanwezig zijn. "></action>
+buik en dijen. De huid moet intact zijn en er moet voldoende subcutaan weefsel aanwezig zijn. "
+      blockUnlock="show injection spot"></action>
 
   <action
    comment="Place a pad under the buttocks and thighs of the cliënt."
@@ -240,7 +242,9 @@ buik en dijen. De huid moet intact zijn en er moet voldoende subcutaan weefsel a
    type="useOn"
    item="cloth_02_folded"
    target="m0_underwear"
-   extra="Leg de onderlegger onder de injectieplaats van de cliënt."></action>
+   extra="Leg de onderlegger onder de injectieplaats van de cliënt."
+   ></action>
+  
 
   <action
      comment="(7)Desinfect the insertion spot with the alcohol gauze and allow to dry. --Start sequence2"
@@ -253,7 +257,11 @@ buik en dijen. De huid moet intact zijn en er moet voldoende subcutaan weefsel a
      target="m0_underwear"
      extra="Desinfecteer de insteekplaats met het alcoholgaasje en laat het drogen."
      messageTitle="Overmatig haargroei."
-      messageContent="Verwijder zo nodig overmatige haargroei met een schone schaar of tondeuse."></action>
+     messageContent="Verwijder zo nodig overmatige haargroei met een schone schaar of tondeuse."
+     blockRequired="show injection spot"
+     blockTitle="Handeling niet mogelijk."
+     blockMessage="Deze handeling is nog niet mogelijk. Vraag eerst de cliënt om de insteekplaats te ontbloten"
+     ></action>
 
   <action
     comment="(1) Remove the protection cap from needle ."

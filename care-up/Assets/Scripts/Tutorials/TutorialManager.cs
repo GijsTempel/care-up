@@ -118,7 +118,8 @@ public class TutorialManager : MonoBehaviour
 
     public void EndButtonClick()
     {
-        GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().tutorialCompleted = true;
+        // TUTORIAL COMPLETION, used only after last tutorial
+        GameObject.FindObjectOfType<PlayerPrefsManager>().SetTutorialCompletedWU();
         bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
     }
 

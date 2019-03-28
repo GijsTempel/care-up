@@ -143,6 +143,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
                 ppManager.currentSceneVisualName = sceneUnit.displayName;
                 //ppManager.UpdateTestHighscore(0.0f);
+                ppManager.validatedScene = sceneUnit.validated;
 
                 // saving bundle name for later
                 string bundleName = sceneUnit.bundleName = xmlSceneNode.Attributes["bundleName"].Value;
@@ -157,6 +158,8 @@ public class LevelSelectionScene_UI : MonoBehaviour
                     info.displayName = variation.Attributes["displayname"].Value;
                     info.description = variation.Attributes["description"].Value;
                     info.image = Resources.Load<Sprite>("Sprites/ScenePreview/" + variation.Attributes["image"].Value);
+                    info.validated = variation.Attributes["validated"] != null ?
+                         variation.Attributes["validated"].Value == "true" : false;
 
                     sceneUnit.variations.Add(info);
 
@@ -165,6 +168,10 @@ public class LevelSelectionScene_UI : MonoBehaviour
                         // set the image as main if this is 1st variation
                         sceneUnit.image = sceneUnit.variations[i].image;
                         sceneUnit.transform.Find("LevelPreview").GetComponent<Image>().sprite = sceneUnit.image;
+
+                        sceneUnit.validated = sceneUnit.variations[i].validated;
+                        sceneUnit.transform.Find("Validation").GetComponent<Text>().text =
+                            sceneUnit.validated ? "Geaccrediteerd" : "";
 
                         // also make 1st option 'selected'
                         sceneUnit.sceneName = sceneUnit.variations[i].sceneName;
@@ -201,6 +208,13 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 {
                     sceneUnit.image = Resources.Load<Sprite>("Sprites/ScenePreview/" + xmlSceneNode.Attributes["image"].Value);
                     sceneUnit.transform.Find("LevelPreview").GetComponent<Image>().sprite = sceneUnit.image;
+                }
+
+                if (xmlSceneNode.Attributes["validated"] != null)
+                {
+                    sceneUnit.validated = xmlSceneNode.Attributes["validated"].Value == "true";
+                    sceneUnit.transform.Find("Validation").GetComponent<Text>().text =
+                        sceneUnit.validated ? "Geaccrediteerd" : "";
                 }
             }
 
