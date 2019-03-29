@@ -283,15 +283,21 @@ public class HandsInventory : MonoBehaviour {
     {
         if (hand)
         {
-            leftHandObject.DeleteGhostObject();
-            Destroy(leftHandObject.gameObject);
-            leftHandObject = null;
+            if (leftHandObject != null)
+            {
+                leftHandObject.DeleteGhostObject();
+                Destroy(leftHandObject.gameObject);
+                leftHandObject = null;
+            }
         }
         else
         {
-            rightHandObject.DeleteGhostObject();
-            Destroy(rightHandObject.gameObject);
-            rightHandObject = null;
+            if (rightHandObject != null)
+            {
+                rightHandObject.DeleteGhostObject();
+                Destroy(rightHandObject.gameObject);
+                rightHandObject = null;
+            }
         }
         UpdateHoldAnimation();
     }
