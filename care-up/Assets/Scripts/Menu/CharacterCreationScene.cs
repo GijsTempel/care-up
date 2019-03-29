@@ -33,12 +33,20 @@ public class CharacterCreationScene : MonoBehaviour
     private Text glassesLabel;
     */
 
-	void Start ()
+    void Start()
     {
-        // main objects for genders
+        // main objects for genders    
         femaleChar = GameObject.Find("Female_Citizens_customizable");
         maleChar = GameObject.Find("Male_Citizens_customizable");
-        
+
+        Initialize();
+
+        // set up initial info
+        SetCurrent(CharGender.Female, 0, 0, -1);
+    }
+
+    public void Initialize()
+    {
         // bodies
         femaleChar.transform.GetComponentsInChildren<Transform>(true, femaleBodies);
         maleChar.transform.GetComponentsInChildren<Transform>(true, maleBodies);
@@ -46,7 +54,7 @@ public class CharacterCreationScene : MonoBehaviour
         // filter bodies lists, leave only correct ones (thx unity3d)
         femaleBodies = femaleBodies.Where(b => b.name.Contains("f_body_")).ToList();
         maleBodies = maleBodies.Where(b => b.name.Contains("Body_")).ToList();
-        
+
         // heads
         femaleChar.transform.Find("Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Neck/Bip001 Head/HEAD_CONTAINER")
             .GetComponentsInChildren<Transform>(true, femaleHeads);
@@ -69,11 +77,7 @@ public class CharacterCreationScene : MonoBehaviour
         bodyLabel = GameObject.Find("Canvas/CharacterPanel/Panel/Body/Label").GetComponent<Text>();
         glassesLabel = GameObject.Find("Canvas/CharacterPanel/Panel/Glasses/Label").GetComponent<Text>();
         */
-
-        // set up initial info
-        SetCurrent(CharGender.Female, 0, 0, -1);
     }
-	
     void UpdateLabels()
     {
         /*
@@ -99,7 +103,7 @@ public class CharacterCreationScene : MonoBehaviour
             h.gameObject.SetActive(femaleHeads.IndexOf(h) == headType && gender == CharGender.Female);
         }
     }
-    
+
     void UpdateMaleBodies()
     {
         foreach (Transform b in maleBodies)
@@ -118,7 +122,7 @@ public class CharacterCreationScene : MonoBehaviour
 
     void UpdateMaleGlasses()
     {
-        foreach(Transform g in maleGlasses)
+        foreach (Transform g in maleGlasses)
         {
             g.gameObject.SetActive(maleGlasses.IndexOf(g) == glassesType && gender == CharGender.Male);
         }
@@ -358,6 +362,56 @@ public class CharacterCreationScene : MonoBehaviour
         {
             // tutorial was already played, load main menu? 
             bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
+        }
+    }
+    
+    public void ShowCharacter(GameObject male, GameObject female)
+    {
+        femaleChar = female;
+        maleChar = male;
+
+        Initialize();
+
+        switch (CharacterInfo.currentCharacter.sex)
+        {
+            case "Female":
+                {
+                    foreach (Transform h in femaleHeads)
+                    {
+                        h.gameObject.SetActive(femaleHeads.IndexOf(h) == CharacterInfo.currentCharacter.headType);
+                    }
+
+                    foreach (Transform h in femaleBodies)
+                    {
+                        h.gameObject.SetActive(femaleBodies.IndexOf(h) == CharacterInfo.currentCharacter.bodyType);
+                    }
+
+                    foreach (Transform h in femaleGlasses)
+                    {
+                        h.gameObject.SetActive(femaleGlasses.IndexOf(h) == CharacterInfo.currentCharacter.glassesType);
+                    }
+
+                    break;
+                }
+            case "Male":
+                {
+                    foreach (Transform h in maleHeads)
+                    {
+                        h.gameObject.SetActive(maleHeads.IndexOf(h) == CharacterInfo.currentCharacter.headType);
+                    }
+
+                    foreach (Transform h in maleBodies)
+                    {
+                        h.gameObject.SetActive(maleBodies.IndexOf(h) == CharacterInfo.currentCharacter.bodyType);
+                    }
+
+                    foreach (Transform h in maleGlasses)
+                    {
+                        h.gameObject.SetActive(maleGlasses.IndexOf(h) == CharacterInfo.currentCharacter.glassesType);
+                    }
+
+                    break;
+                }
         }
     }
 }
