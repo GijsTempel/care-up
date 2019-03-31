@@ -26,7 +26,7 @@
     comment="2. Create a clean work area and put the equipment within reach"
     index="1"
     points="2"
-    description="Maak een schoon werkveld en zet de benodigdheden binnen bereik."
+    description="Maak het werkveld schoon en zet de benodigdheden binnen bereik."
     fullDescription=" Klik op het werkveld om deze schoon te maken."
     type="use"
     value="WorkField"
@@ -75,13 +75,13 @@
   <action
     comment="Open bladder spool bag"
     points="1"
-    description="Bereid een oplossing van NaCl voordat je het uit de verpakking haalt."
-    fullDescription="Open het medicijn zakje door omhoog te swipen of door op het medicijn zakje te klikken en vervolgens op het - icoon te klikken."
+    description="Open de verpakking van het spoelzakje."
+    fullDescription="Open de verpakking van het spoelzakje door omhoog te swipen of door op het medicijn zakje te klikken en vervolgens op het - icoon te klikken."
     index="3"
     type="combine"
     left="BladderSpoolBagPacked"
     right=""
-    extra="Maak het medicijn gereed voor toediening door het medicijn zakje te openen."></action>
+    extra="Open de verpakking van het spoelzakje."></action>
 
   <action 
     points="2"
@@ -103,8 +103,8 @@
     index="5"
     type="talk"
     topic="LayOnBed" 
-    extra=""
-    fullDescription=""
+    extra="Vraag de cliënt het onderlichaam te ontbloten en op de rug te gaan liggen."
+    fullDescription="Beweeg naar de cliënt. Klik vervolgens op de cliënt om een dialoog te starten. Kies vervolgens voor de juiste optie."
     blockUnlock="patient lay down"></action>
 
   <action
@@ -116,7 +116,9 @@
     type="useOn"
     item="cloth_02_folded"
     target="w0_A"
-    extra="Leg een onderlegger onder de billen en dijen van de cliënt."></action>
+    extra="Leg een onderlegger onder de billen en dijen van de cliënt."
+    quiz="2.0"
+    ></action>
 
   <action
     comment="Place TrahbucketPlastic under the connection point of catheter/urinebag and take the catheter off the leg."
@@ -257,12 +259,14 @@
     fullDescription="Beweeg naar het werkveld. Klik daarna op de handhygiënepomp." 
     type="use" 
     value="HandCleaner" 
-    extra=""></action>
+    extra="Pas handhygiëne toe"
+    quiz="2.0"
+    ></action>
 
   <action
     points="1"
     description="Ruim de materialen op door met lege handen op het werkveld te klikken."
-    fullDescription="Klik op het werkveld om deze schoon te maken."
+    fullDescription="Klik op het werkveld om deze schoon te maken. Zorg ervoor dat je handen leeg zijn. "
     index="21"
     type="use"
     value="WorkField"
@@ -272,10 +276,10 @@
     comment="last step"
     index="22"
     points="1"
-    description="Noteer datum en tijdstip, reden voor katheterisatie, soort, maat en merk katheter, hoeveelheid ingebrachte vloeistof in ballon en andere bevindingen."
+    description="Noteer de tijdstip, soort en hoeveelheid spoelvloeistof. Noteer ook eventuele andere bevindingen. "
     fullDescription="Open de tablet door op het tablet icoon te drukken. Klik op de App 'Gegevens'. Kies vervolgens voor de toedienlijst. Klik tot slot op het afteken icoon."
     type="use"
     value="PaperAndPen"
-    extra="Teken de toedienlijst af en noteer het tijdstip, het soort medicijn, de concentratie, de hoeveelheid en de wijze van toediening. Noteer tot slot je bevindingen."></action>
+    extra="Noteer de tijdstip, soort en hoeveelheid spoelvloeistof. Noteer ook eventuele andere bevindingen. "></action>
 
 </ActionList>
