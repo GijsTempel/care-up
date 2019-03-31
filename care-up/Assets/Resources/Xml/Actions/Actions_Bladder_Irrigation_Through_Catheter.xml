@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ActionList>
+  <action
+    index="0"
+    points="1"
+    description="Begroet de cliënt."
+    fullDescription="Begroet de cliënt door op hem te klikken. Daarna klik je nogmaals op de cliënt om een gesprek aan te gaan. Klik vervolgens op de juiste optie."
+    type="talk"
+    topic="Hello"
+    extra="Ondanks dat het begroeten niet in de werkwijze is vermeld. Is het wel netjes om contact te leggen met de cliënt."
+    optional=""/>
+
+  <action
+    comment="1. Apply hand hygiene"
+    index="0"
+    points="3"
+    description="Pas handhygiëne toe."
+    fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp."
+    type="use"
+    value="HandCleaner"
+    extra="Pas handhygiëne toe. Handhygiëne is het allerbelangrijkste als het gaat om voorkomen van besmetting met ziektekiemen. Dit betekent je handen reinigen op de juiste manier en op de juiste momenten. Begin een handeling altijd met handhygiëne."
+    messageTitle="Handhygiëne"
+    messageContent="Handhygiëne is het allerbelangrijkste als het gaat om voorkomen van besmetting met ziektekiemen. Dit betekent je handen reinigen op de juiste manier en op de juiste momenten. Begin een handeling altijd met handhygiëne."></action>
+
+  <action
+    comment="2. Create a clean work area and put the equipment within reach"
+    index="1"
+    points="2"
+    description="Maak het werkveld schoon en zet de benodigdheden binnen bereik."
+    fullDescription=" Klik op het werkveld om deze schoon te maken."
+    type="use"
+    value="WorkField"
+    extra="Maak een schoon werkveld."
+    messageTitle="Hygiënisch werken"
+    messageContent="Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen."></action>
+
+  <action
+    points="2" 
+    description="Controleer het spoelzakje" 
+    fullDescription=""
+    index="2" 
+    type="examine"
+    item="BladderSpoolBagPacked" 
+    expected="good"
+    extra=""
+    messageTitle="" 
+    messageContent=""></action>
+
+  <action
+    points="2"
+    description="Controleer cliëntgegevens."
+    fullDescription="Open de tablet door op het tablet icoon te drukken. Klik op de App 'Gegevens'. Kies vervolgens voor de cliëntgegevens."
+    index="2"
+    type="examine"
+    item="PatientRecords"
+    expected="good"
+    extra="Controleer de cliëntgegevens. Het is belangrijk dat je de juiste persoon voor je hebt."></action>
+
+  <action
+    points="2"
+    description="Controleer de toedienlijst."
+    fullDescription="Open de tablet door op het tablet icoon te drukken. Klik op de App 'Gegevens'. Kies vervolgens voor de toedienlijst."
+    audioHint="InjectionSubcutaneous/Step 5"
+    index="2"
+    type="examine"
+    item="PrescriptionForm"
+    expected="good"
+    extra="Controleer de toedienlijst op soort, dosering en toedientijdstip. "
+    messageTitle="Controle toedienlijst"
+    messageContent="Vergelijk het medicijn met de toedieningslijst.
+      - soort
+      - dosering
+      - toedieningstijdstip"></action>
+
+  <action
+    comment="Open bladder spool bag"
+    points="1"
+    description="Open de verpakking van het spoelzakje."
+    fullDescription="Open de verpakking van het spoelzakje door omhoog te swipen of door op het medicijn zakje te klikken en vervolgens op het - icoon te klikken."
+    index="3"
+    type="combine"
+    left="BladderSpoolBagPacked"
+    right=""
+    extra="Open de verpakking van het spoelzakje."></action>
+
+  <action 
+    points="2"
+    description="Controleer of de klem van het spoelzakje dicht is." 
+    fullDescription="" 
+    index="4"
+    type="examine" 
+    item="BladderSpoolBag" 
+    expected="good"
+    extra="Controleer het medicijn." 
+    messageTitle="" 
+    messageContent=""></action>
+
+  <action 
+    comment=""
+    points="1" 
+    description="Vraag de cliënt het onderlichaam te ontbloten en op de rug te gaan liggen." 
+    audioHint=""
+    index="5"
+    type="talk"
+    topic="LayOnBed" 
+    extra="Vraag de cliënt het onderlichaam te ontbloten en op de rug te gaan liggen."
+    fullDescription="Beweeg naar de cliënt. Klik vervolgens op de cliënt om een dialoog te starten. Kies vervolgens voor de juiste optie."
+    blockUnlock="patient lay down"></action>
+
+  <action
+    comment="Place a pad under the buttocks and thighs of the cliënt."
+    points="2"
+    description="Leg een onderlegger onder de billen en dijen van de cliënt."
+    fullDescription="Pak de onderlegger van het werkveld. Beweeg naar de cliënt. Klik vervolgens op de onderlegger in je hand. Klik op het + icoon en klik daarna op de cliënt."
+    index="6"
+    type="useOn"
+    item="cloth_02_folded"
+    target="w0_A"
+    extra="Leg een onderlegger onder de billen en dijen van de cliënt."
+    quiz="2.0"
+    ></action>
+
+  <action
+    comment="Place TrahbucketPlastic under the connection point of catheter/urinebag and take the catheter off the leg."
+    points="1"
+    description="Leg het plastic afvalbakje op de onderlegger."
+    fullDescription="Pak het plastic afvalbakje van het werkveld. Beweeg vervolgens naar de cliënt. Klik tot slot op het silhouet van het plastic afvalbakje."
+    index="7"
+    type="drop"
+    item="PlasticTrashbucket"
+    posID="2"
+    extra="Leg het plastic afvalbakje op de onderlegger."></action>
+
+  <action
+    comment="Put on gloves."
+    points="3"
+    description="Trek handschoenen aan."
+    fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp."
+    index="8"
+    type="use"
+    value="gloveBox"
+    extra="Pas handhygiëne toe. Handhygiëne is het allerbelangrijkste als het gaat om voorkomen van besmetting met ziektekiemen. Dit betekent je handen reinigen op de juiste manier en op de juiste momenten. Begin een handeling altijd met handhygiëne."></action>
+
+  <action
+    comment="Clamp off the catheter at the connection between the catheter and urinebag"
+    points="1"
+    description="Klem de katheter af."
+    index="9"
+    type="sequenceStep"
+    value="clamp katheter"
+    extra="Klem de katheter af."
+    fullDescription="Kies de juiste optie."></action>
+
+  <action
+    comment="Take off the urinebag (and empty it according to the rules within the institute)"
+    points="1"
+    description="Ontkoppel de urineopvangzak en voer deze af. Doe dit volgens de binnen de instelling geldende regels."
+    index="10"
+    type="sequenceStep"
+    value="remove urinebag"
+    extra="Ontkoppel de urineopvangzak en voer deze af. Doe dit volgens de binnen de instelling geldende regels."
+    fullDescription="Kies de juiste optie."></action>
+
+  <action
+    comment="Attach the bladder spool bag to the catheter."
+    points="1"
+    description="Sluit het spoelzakje aan op de katheter."
+    index="11"
+    type="sequenceStep"
+    value="attach bladder spool bag"
+    extra="Sluit het spoelzakje aan op de katheter."
+    fullDescription="Kies de juiste optie."></action>
+
+  <action 
+    comment="Open the clamp of the bladder spool bag" 
+    points="1" 
+    description="Open de klem van het spoelzakje." 
+    index="12" 
+    type="sequenceStep" 
+    value="open clamp" 
+    extra="Open de klem van het spoelzakje." 
+    fullDescription="Kies de juiste optie."></action>
+
+  <action
+    comment="Hold the bladder spool bag above bladder level and let the fluid run in the bladder. lightly squeeze the bladder spool bag if fluid does not run into the bladder by itself. "
+    points="1"
+    description="Houd het spoelzakje boven het niveau van de blaas en laat de spoelvloeistof inlopen."
+    index="13"
+    type="sequenceStep"
+    value="hold bladder spool bag"
+    extra="Houd het spoelzakje boven het niveau van de blaas en laat de spoelvloeistof inlopen."
+    fullDescription="Kies de juiste optie."></action>
+
+  <action
+    comment="Let the fluid run back int the bladder spool bag. "
+    points="1"
+    description="Laat de vloeistof teruglopen in het spoelzakje nadat de voorgeschreven tijd is verstreken."
+    index="14"
+    type="sequenceStep"
+    value="fluid back"
+    extra="Laat de vloeistof teruglopen in het spoelzakje nadat de voorgeschreven tijd is verstreken."
+    fullDescription="Kies de juiste optie."></action>
+
+  <action
+    comment="Close the clamp of the bladder spool bag "
+    points="1"
+    description="Sluit de klem van het spoelzakje."
+    index="15"
+    type="sequenceStep"
+    value="close clamp"
+    extra="Sluit de klem van het spoelzakje."
+    fullDescription="Kies de juiste optie."></action>
+
+  <action
+    comment="Clamp off the catheter at the connection between the catheter and urinebag"
+    points="1"
+    description="Klem de katheter af."
+    index="16"
+    type="sequenceStep"
+    value="clamp katheter again"
+    extra="Klem de katheter af."
+    fullDescription="Kies de juiste optie."></action>
+
+  <action
+    comment="Disconnect the bladder spool bag from the catheter (and throw away the bladder spool bag) "
+    points="1"
+    description="Ontkoppel het spoelzakje van de katheter en gooi het spoelzakje weg."
+    index="17"
+    type="sequenceStep"
+    value="remove bladder spool bag"
+    extra="Ontkoppel het spoelzakje van de katheter en gooi het spoelzakje weg."
+    fullDescription="Kies de juiste optie."></action>
+
+  <action
+    comment="Reconnect the urine bag to the catheter"
+    points="1"
+    description="Sluit de urineopvangzak aan op de katheter."
+    index="18"
+    type="sequenceStep"
+    value="attach urinebag"
+    extra="Sluit de urineopvangzak aan op de katheter."
+    fullDescription="Kies de juiste optie."></action>
+
+  <action 
+    comment="Pull off the gloves." 
+    points="1"
+    description="Trek de handschoenen uit." 
+    index="19" 
+    type="sequenceStep" 
+    value="pull off gloves" 
+    extra="Trek de handschoenen uit." 
+    fullDescription="Kies de juiste optie."></action>
+
+  <action 
+    comment="46. Apply hand hygiene."
+    index="20" 
+    points="3" 
+    description="Pas handhygiëne toe."
+    fullDescription="Beweeg naar het werkveld. Klik daarna op de handhygiënepomp." 
+    type="use" 
+    value="HandCleaner" 
+    extra="Pas handhygiëne toe"
+    quiz="2.0"
+    ></action>
+
+  <action
+    points="1"
+    description="Ruim de materialen op door met lege handen op het werkveld te klikken."
+    fullDescription="Klik op het werkveld om deze schoon te maken. Zorg ervoor dat je handen leeg zijn. "
+    index="21"
+    type="use"
+    value="WorkField"
+    extra=" Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen."></action>
+
+  <action
+    comment="last step"
+    index="22"
+    points="1"
+    description="Noteer de tijdstip, soort en hoeveelheid spoelvloeistof. Noteer ook eventuele andere bevindingen. "
+    fullDescription="Open de tablet door op het tablet icoon te drukken. Klik op de App 'Gegevens'. Kies vervolgens voor de toedienlijst. Klik tot slot op het afteken icoon."
+    type="use"
+    value="PaperAndPen"
+    extra="Noteer de tijdstip, soort en hoeveelheid spoelvloeistof. Noteer ook eventuele andere bevindingen. "></action>
+
+</ActionList>
