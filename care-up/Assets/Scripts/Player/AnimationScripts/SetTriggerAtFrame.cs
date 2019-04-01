@@ -10,6 +10,7 @@ public class SetTriggerAtFrame : StateMachineBehaviour
     public int actionFrame;
     public string trigger;
     public string ObjectName = "";
+    public bool toPrintFrames = false;
 
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -32,10 +33,8 @@ public class SetTriggerAtFrame : StateMachineBehaviour
         {
             if (GameObject.Find(ObjectName) != null)
             {
-                if (GameObject.Find(ObjectName).GetComponent<Animator>() != null)
-                {
+                if (GameObject.Find(ObjectName).GetComponent<Animator>() != null)                
                     GameObject.Find(ObjectName).GetComponent<Animator>().SetTrigger(trigger);
-                }
             }
         }
     }

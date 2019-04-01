@@ -75,7 +75,7 @@ public class MoveToPoint : MonoBehaviour {
                 }
 
 
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, angleTarget, 1.5f);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, angleTarget, speed * 2f);
 
                 if (Vector3.Distance(transform.position, nextPoint.transform.position) < 0.001f)
                 {
