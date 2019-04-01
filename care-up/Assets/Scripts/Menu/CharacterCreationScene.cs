@@ -372,10 +372,13 @@ public class CharacterCreationScene : MonoBehaviour
 
         Initialize();
 
+        print(CharacterInfo.currentCharacter.headType + " " + CharacterInfo.currentCharacter.bodyType + " " + CharacterInfo.currentCharacter.glassesType);
+
         switch (CharacterInfo.currentCharacter.sex)
         {
             case "Female":
                 {
+                    maleChar.SetActive(false);
                     foreach (Transform h in femaleHeads)
                     {
                         h.gameObject.SetActive(femaleHeads.IndexOf(h) == CharacterInfo.currentCharacter.headType);
@@ -395,6 +398,7 @@ public class CharacterCreationScene : MonoBehaviour
                 }
             case "Male":
                 {
+                    femaleChar.SetActive(false);
                     foreach (Transform h in maleHeads)
                     {
                         h.gameObject.SetActive(maleHeads.IndexOf(h) == CharacterInfo.currentCharacter.headType);
