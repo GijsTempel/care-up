@@ -8,14 +8,21 @@ public class MoveToPoint : MonoBehaviour {
     public List<GameObject> KyePoints;
     int NextPointIndex = 0;
     public bool toWalk = false;
+    public string EndTriggerObjName = "";
+    public List<string> EndTriggers;
 
-    // Use this for initialization
-    void Awake()
+
+  
+    public void SetEndTriggers(string ETObjName, List<string> ETriggers)
     {
-        if (NextPointIndex < KyePoints.Count)
-            transform.LookAt(KyePoints[NextPointIndex].transform.position);
-        
-    } 
+        EndTriggerObjName = ETObjName;
+        EndTriggers.Clear();
+        foreach(string t in ETriggers)
+        {
+            EndTriggers.Add(t);
+        }
+    }
+
     public void SetKeyPoints(string PointHolderName)
     {
         if (GameObject.Find(PointHolderName) != null)
@@ -30,6 +37,8 @@ public class MoveToPoint : MonoBehaviour {
                 }
                 NextPointIndex = 0;
                 toWalk = true;
+                if (NextPointIndex < KyePoints.Count)
+                    transform.LookAt(KyePoints[NextPointIndex].transform.position);
             }
         }
     }
@@ -38,6 +47,8 @@ public class MoveToPoint : MonoBehaviour {
     {
         NextPointIndex = 0;
         toWalk = true;
+        if (NextPointIndex < KyePoints.Count)
+            transform.LookAt(KyePoints[NextPointIndex].transform.position);
     }
 
     // Update is called once per frame
@@ -48,10 +59,7 @@ public class MoveToPoint : MonoBehaviour {
             GameObject nextPoint = null;
             if (NextPointIndex < KyePoints.Count)
                 nextPoint = KyePoints[NextPointIndex];
-            else
-            {
-                toWalk = false;
-            }
+           
             float step = speed * Time.deltaTime;
 
             if (nextPoint != null)
@@ -63,7 +71,47 @@ public class MoveToPoint : MonoBehaviour {
 
                     transform.position = nextPoint.transform.position;
                     NextPointIndex++;
-                    transform.LookAt(KyePoints[NextPointIndex].transform.position);
+                    if (NextPointIndex < KyePoints.Count)
+                        transform.LookAt(KyePoints[NextPointIndex].transform.position);
+                    else
+                    {
+                        if ((NextPointIndex - 1) < KyePoints.Count)
+                            transform.rotation = KyePoints[NextPointIndex - 1].transform.rotation;
+                        toWalk = false;
+                        if (GameObject.Find(EndTriggerObjName) && EndTriggers.Count > 0)
+                        {
+                            if (GameObject.Find(EndTriggerObjName).GetComponent<Animator>() != null) {
+                                Animator actor = GameObject.Find(EndTriggerObjName).GetComponent<Animator>();
+                                int j = -999;
+
+                                foreach (string t in EndTriggers)
+                                {
+                                    if (t != "")
+                                    {
+                                        string[] strArr = t.Split(char.Parse(" "));
+                                        int.TryParse(strArr[0], out j);
+                                        if (j != 0)
+                                        {
+                                            string intName = "";
+                                            for (int i = 1; i < strArr.Length; i++)
+                                            {
+                                                if (i != 1)
+                                                    intName += " ";
+                                                intName += strArr[i];
+                                            }
+                                            print(intName);
+                                            actor.SetInteger(intName, j);
+                                        }
+                                        else
+                                        {
+                                            actor.SetTrigger(t);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
                 }
             }
 
