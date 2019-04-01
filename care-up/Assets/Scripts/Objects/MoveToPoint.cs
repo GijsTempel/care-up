@@ -11,7 +11,6 @@ public class MoveToPoint : MonoBehaviour {
     public string EndTriggerObjName = "";
     public List<string> EndTriggers;
 
-
   
     public void SetEndTriggers(string ETObjName, List<string> ETriggers)
     {
@@ -37,18 +36,19 @@ public class MoveToPoint : MonoBehaviour {
                 }
                 NextPointIndex = 0;
                 toWalk = true;
-                if (NextPointIndex < KyePoints.Count)
-                    transform.LookAt(KyePoints[NextPointIndex].transform.position);
+                //if (NextPointIndex < KyePoints.Count)
+                    //transform.LookAt(KyePoints[NextPointIndex].transform.position);
             }
         }
     }
 
     public void StartWalking()
     {
+        //print("sssssssssss");
         NextPointIndex = 0;
         toWalk = true;
-        if (NextPointIndex < KyePoints.Count)
-            transform.LookAt(KyePoints[NextPointIndex].transform.position);
+        //if (NextPointIndex < KyePoints.Count)
+        //    transform.LookAt(KyePoints[NextPointIndex].transform.position);
     }
 
     // Update is called once per frame
@@ -65,6 +65,17 @@ public class MoveToPoint : MonoBehaviour {
             if (nextPoint != null)
             {
                 transform.position = Vector3.MoveTowards(transform.position, nextPoint.transform.position, step);
+                Vector3 dir = (nextPoint.transform.position - transform.position).normalized;
+
+                Quaternion angleTarget = Quaternion.LookRotation(dir);
+                float pointDistance = Vector3.Distance(transform.position, nextPoint.transform.position);
+                if ((NextPointIndex + 1 == KyePoints.Count) && pointDistance < 0.8f)
+                {
+                    angleTarget = nextPoint.transform.rotation;
+                }
+
+
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, angleTarget, 1.5f);
 
                 if (Vector3.Distance(transform.position, nextPoint.transform.position) < 0.001f)
                 {
@@ -72,15 +83,18 @@ public class MoveToPoint : MonoBehaviour {
                     transform.position = nextPoint.transform.position;
                     NextPointIndex++;
                     if (NextPointIndex < KyePoints.Count)
-                        transform.LookAt(KyePoints[NextPointIndex].transform.position);
+                    {
+                        //    transform.LookAt(KyePoints[NextPointIndex].transform.position);
+                    }
                     else
                     {
-                        if ((NextPointIndex - 1) < KyePoints.Count)
-                            transform.rotation = KyePoints[NextPointIndex - 1].transform.rotation;
+                        //if ((NextPointIndex - 1) < KyePoints.Count)
+                        //    transform.rotation = KyePoints[NextPointIndex - 1].transform.rotation;
                         toWalk = false;
                         if (GameObject.Find(EndTriggerObjName) && EndTriggers.Count > 0)
                         {
-                            if (GameObject.Find(EndTriggerObjName).GetComponent<Animator>() != null) {
+                            if (GameObject.Find(EndTriggerObjName).GetComponent<Animator>() != null)
+                            {
                                 Animator actor = GameObject.Find(EndTriggerObjName).GetComponent<Animator>();
                                 int j = -999;
 
@@ -99,7 +113,7 @@ public class MoveToPoint : MonoBehaviour {
                                                     intName += " ";
                                                 intName += strArr[i];
                                             }
-                                            print(intName);
+                                            //print(intName);
                                             actor.SetInteger(intName, j);
                                         }
                                         else
