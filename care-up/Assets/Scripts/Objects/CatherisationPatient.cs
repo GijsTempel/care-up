@@ -36,6 +36,12 @@ public class CatherisationPatient : PersonObject {
                 case "HelpGetUp":
                     PlayerAnimationManager.PlayAnimation("helppatientgetup");
                     break;
+
+                case "WashHands":
+                    animator.SetTrigger("patient_standup");
+                    break;
+
+                    
                 default:
                     break;
             }
