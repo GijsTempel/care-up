@@ -41,6 +41,7 @@ public class CatherisationPatient : PersonObject {
                     print("ttttttt");
                     Animator PlayerAnim = GameObject.FindObjectOfType<PlayerAnimationManager>().GetComponent<Animator>();
                     PlayerAnim.SetTrigger("MoveToSide");
+                    PlayerAnim.SetTrigger("S MoveToSide");
 
                     animator.SetTrigger("patient_standup");
                     break;
