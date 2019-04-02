@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ActionList points="22">
   <action
-  points="1"
-  description="Begroet de cliënt."
-  fullDescription="Begroet de cliënt door op hem te klikken. Daarna klik je nogmaals op de cliënt om een gesprek aan te gaan. Klik vervolgens op de juiste optie."
-  index="0"
-  type="talk"
-  topic="Hello"
-  extra="Ondanks dat het begroeten niet in de werkwijze is vermeld, is het wel netjes om contact te leggen met de cliënt."
-  optional="" />
+    points="1"
+    description="Begroet de cliënt."
+    fullDescription="Begroet de cliënt door op hem te klikken. Daarna klik je nogmaals op de cliënt om een gesprek aan te gaan. Klik vervolgens op de juiste optie."
+    index="0"
+    type="talk"
+    topic="Hello"
+    extra="Ondanks dat het begroeten niet in de werkwijze is vermeld, is het wel netjes om contact te leggen met de cliënt."
+    optional=""/>
 
   <action
     comment="(1)Apply handhygiene"
@@ -29,20 +29,9 @@
     value="WorkField"
     extra="Maak een schoon werkveld."
     messageTitle="Hygiënisch werken door op het werkveld te klikken."
-    messageContent="Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen.">  
-  </action>
+    messageContent="Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen."></action>
 
-  <action
-      comment="(3)Ask client to wash his hand with soap."
-      points="3"
-      description="Laat de cliënt de handen wassen"
-      fullDescription=""
-      index="0"
-      type="talk"
-      topic="WashHands"
-      extra=""
-      messageTitle=""
-      messageContent=""></action>
+  <action comment="(3)Ask client to wash his hand with soap." points="3" description="Laat de cliënt de handen wassen" fullDescription="" index="2" type="talk" topic="WashHands" extra="" messageTitle="" messageContent=""></action>
 
   <action
     comment="Step 4: Check expiration date of the teststrips."
@@ -57,43 +46,29 @@
     messageTitle=""
     messageContent=""></action>
 
-  
   <action
-      comment="Step 4: Remove cap from the lancet."
-      points="3"
-      description="Verwijder het dopje van de lancet."
-      fullDescription="Verwijder het dopje van de lancet zodat je het kan gaan gebruiken."
-      index="4"
-      type="combine"
-      left="Scarifier"
-      right=""
-      extra="Verwijder het dopje van de lancet zodat je het kan gaan gebruiken."/>
+    comment="Step 4: Remove cap from the lancet."
+    points="3"
+    description="Verwijder het dopje van de lancet."
+    fullDescription="Verwijder het dopje van de lancet zodat je het kan gaan gebruiken."
+    index="4"
+    type="combine"
+    left="Scarifier"
+    right=""
+    extra="Verwijder het dopje van de lancet zodat je het kan gaan gebruiken."/>
 
+  <action points="2" description="Turn on Glucose meter." fullDescription="" audioHint="" index="5" type="useOn" item="BloodGlucoseMeter" target="" extra="" buttonText="Turn on glucose meter" messageTitle="" messegeContent=""></action>
 
   <action
-    points="2"
-    description="Turn on Glucose meter."
+    comment="Step 5: Take test strip from pack."
+    points="3"
+    description="Take test strip from pack."
     fullDescription=""
-    audioHint=""
-		index="0"
-    type="useOn"
-    item="BloodGlucoseMeter"
-    target=""
-    extra="" buttonText="Turn on glucose meter"
-    messageTitle=""
-    messegeContent=""
-  ></action>
-  
-  <action
-     comment="Step 5: Take test strip from pack."
-     points="3"
-     description="Take test strip from pack."
-     fullDescription=""
-     index="6"
-     type="combine"
-     left="TeststripsPackage"
-     right=""
-     extra="Verwijder het dopje van de lancet zodat je het kan gaan gebruiken."/>
+    index="6"
+    type="combine"
+    left="TeststripsPackage"
+    right=""
+    extra="Verwijder het dopje van de lancet zodat je het kan gaan gebruiken."/>
 
   <action
     comment="Step 7: Place teststrip in the blood glucose meter"
@@ -106,36 +81,55 @@
     right="Teststrip"
     extra="Plaats de lancet op de prik pen zodat het klaar is voor gebruik."/>
 
-  <action
-   comment="8. Put on gloves."
-   points="3"
-   description="Trek handschoenen aan."
-   fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp."
-   index="8"
-   type="use"
-   value="gloveBox"
-   extra=""></action>
+  <action comment="8. Put on gloves." points="3" description="Trek handschoenen aan." fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp." index="8" type="use" value="gloveBox" extra=""></action>
 
+  <action points="1" description="" index="9" type="sequenceStep" value="place finger" extra="" fullDescription=""></action>
+
+  <action points="1" description="" index="10" type="sequenceStep" value="puncture" extra="" fullDescription=""></action>
+
+  <action points="1" description="" index="11" type="sequenceStep" value="whipe blood" extra="" fullDescription=""></action>
+
+  <action points="1" description="" index="12" type="sequenceStep" value="fill in teststrip" extra="" fullDescription=""></action>
+
+  <action points="1" description="" index="13" type="sequenceStep" value="apply gauze" extra="" fullDescription=""></action>
+
+  <action points="1" description="" index="14" type="sequenceStep" value="read values" extra="" fullDescription=""></action>
+
+  <action points="1" description="" index="15" type="sequenceStep" value="remove strip" extra="" fullDescription=""></action>
+
+  <action points="1" description="" index="16" type="sequenceStep" value="turn off" extra="" fullDescription=""></action>
+
+  <action points="1" description="" index="17" type="sequenceStep" value="throw finger pin" extra="" fullDescription=""></action>
+
+  <action points="1" description="" index="18" type="sequenceStep" value="pull of gloves" extra="" fullDescription=""></action>
 
   <action
-   points="2"
-   description="Pas handhygiëne toe."
-   fullDescription="Klik op de hygiënepomp om deze te gebruiken.)"
-   audioHint="Injection/EAS5-2"
-   index="13"
-   type="use"
-   value="HandCleaner"
-   extra="Handhygiëne is het allerbelangrijkste als het gaat om voorkomen van besmetting met ziektekiemen. Dit betekent je handen reinigen op de juiste manier en op de juiste momenten. Sluit handelingen af met handhygiëne."></action>
-  
+    points="2"
+    description="Pas handhygiëne toe."
+    fullDescription="Klik op de hygiënepomp om deze te gebruiken.)"
+    audioHint="Injection/EAS5-2"
+    index="19"
+    type="use"
+    value="HandCleaner"
+    extra="Handhygiëne is het allerbelangrijkste als het gaat om voorkomen van besmetting met ziektekiemen. Dit betekent je handen reinigen op de juiste manier en op de juiste momenten. Sluit handelingen af met handhygiëne."></action>
+
+<action
+  points="1"
+  description="Ruim de materialen op door met lege handen op het werkveld te klikken."
+  fullDescription="Klik op het werkveld om deze schoon te maken."
+  index="20"
+  type="use"
+  value="WorkField"
+  extra=" Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen."></action>
+
   <action
     points="3"
     description="Teken toedienlijst af."
     fullDescription="Open de tablet door op het tablet icoon te drukken. Klik op de App 'Gegevens'. Kies vervolgens voor de toedienlijst. Klik tot slot op het afteken icoon.)"
     audioHint="Injection/EAS4-2"
-    index="14"
+    index="21"
     type="use"
     value="PaperAndPen"
     extra="Teken toedienlijst af of noteer tijdstip, soort medicijn, concentratie, hoeveelheid, wijze van toediening en noteer bevindingen."></action>
-
 
 </ActionList>
