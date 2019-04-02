@@ -372,8 +372,6 @@ public class CharacterCreationScene : MonoBehaviour
 
         Initialize();
 
-        print(CharacterInfo.currentCharacter.headType + " " + CharacterInfo.currentCharacter.bodyType + " " + CharacterInfo.currentCharacter.glassesType);
-
         switch (CharacterInfo.currentCharacter.sex)
         {
             case "Female":
