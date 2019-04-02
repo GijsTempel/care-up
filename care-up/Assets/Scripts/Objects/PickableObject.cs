@@ -131,7 +131,6 @@ public class PickableObject : InteractableObject
     /// <returns>True if used</returns>
     public virtual bool Use(bool hand, bool noTarget = false)
     {
-        print("_______________________" + controls.SelectedObject.name);
         tutorial_usedOn = true;
 
         Debug.Log (depoistNeedle);
