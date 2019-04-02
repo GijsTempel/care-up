@@ -13,25 +13,25 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: sit
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: patient_standup
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: wash
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -63,13 +63,28 @@ MonoBehaviour:
   EndTriggers:
   - sit
   walkingSpeed: -1
---- !u!114 &114571266041177188
+--- !u!114 &114111225528917772
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0b960189e3c63e4bbf73b5119c0281e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionFrame: 0
+  trigger: go
+  ObjectName: PatientEmpty
+  toPrintFrames: 0
+--- !u!114 &114571266041177188
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbc986389109174c8dd8fbae4f645af, type: 3}
   m_Name: 
@@ -101,6 +116,27 @@ AnimatorStateTransition:
   m_TransitionOffset: 0
   m_ExitTime: 0.9234694
   m_HasExitTime: 0
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
+--- !u!1101 &1101154248857133432
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 1102893421436446576}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.75
+  m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -169,7 +205,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -249,7 +285,8 @@ AnimatorState:
   m_Name: Stand 0
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions: []
+  m_Transitions:
+  - {fileID: 1101154248857133432}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -383,6 +420,7 @@ AnimatorState:
   - {fileID: 1101006599103057674}
   m_StateMachineBehaviours:
   - {fileID: 114571266041177188}
+  - {fileID: 114111225528917772}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -410,19 +448,19 @@ AnimatorStateMachine:
     m_Position: {x: 180, y: 252, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102919066028507116}
-    m_Position: {x: 504, y: 168, z: 0}
+    m_Position: {x: 180, y: 312, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102768313258809794}
-    m_Position: {x: 636, y: -204, z: 0}
+    m_Position: {x: 180, y: 432, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102944925753038760}
-    m_Position: {x: 612, y: -24, z: 0}
+    m_Position: {x: 180, y: 372, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102760847015321904}
-    m_Position: {x: 924, y: -168, z: 0}
+    m_Position: {x: 180, y: 492, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102569911091703612}
-    m_Position: {x: 984, y: -48, z: 0}
+    m_Position: {x: 540, y: 492, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
