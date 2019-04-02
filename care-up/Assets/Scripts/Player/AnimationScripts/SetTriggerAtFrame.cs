@@ -33,11 +33,8 @@ public class SetTriggerAtFrame : StateMachineBehaviour
         {
             if (GameObject.Find(ObjectName) != null)
             {
-                if (GameObject.Find(ObjectName).GetComponent<ComplexActionsController>())
-                {
-                    GameObject.Find(ObjectName).GetComponent<ComplexActionsController>().SetTrigger(trigger);
-                }
-                else if (GameObject.Find(ObjectName).GetComponent<Animator>() != null)                
+               
+                if (GameObject.Find(ObjectName).GetComponent<Animator>() != null)                
                     GameObject.Find(ObjectName).GetComponent<Animator>().SetTrigger(trigger);
             }
         }
