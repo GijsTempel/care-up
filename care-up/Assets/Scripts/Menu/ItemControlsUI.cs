@@ -495,18 +495,33 @@ public class ItemControlsUI : MonoBehaviour {
 
         if (initedObject == handsInventory.LeftHandObject)
         {
-            handsInventory.LeftHandObject.GetComponent<PickableObject>().Use(true, true);
+            if (handsInventory.LeftHandObject.name == "BloodGlucoseMeter")
+            {
+                GameObject.FindObjectOfType<PlayerAnimationManager>().GetComponent<Animator>().SetTrigger("turnon_left");
+            }
+            else
+            {
+                handsInventory.LeftHandObject.GetComponent<PickableObject>().Use(true, true);
 
-            if (tutorialUseOn != null) {
-                handsInventory.LeftHandObject.GetComponent<PickableObject> ().tutorial_usedOn = true;
+                if (tutorialUseOn != null)
+                {
+                    handsInventory.LeftHandObject.GetComponent<PickableObject>().tutorial_usedOn = true;
+                }
             }
         }
         else
         {
-            handsInventory.RightHandObject.GetComponent<PickableObject>().Use(false, true);
-
-            if (tutorialUseOn != null) {
-                handsInventory.RightHandObject.GetComponent<PickableObject> ().tutorial_usedOn = true;
+            if (handsInventory.RightHandObject.name == "BloodGlucoseMeter")
+            {
+                GameObject.FindObjectOfType<PlayerAnimationManager>().GetComponent<Animator>().SetTrigger("turnon_right");
+            }
+            else
+            {
+                handsInventory.RightHandObject.GetComponent<PickableObject>().Use(false, true);
+                if (tutorialUseOn != null)
+                {
+                    handsInventory.RightHandObject.GetComponent<PickableObject>().tutorial_usedOn = true;
+                }
             }
         }
 

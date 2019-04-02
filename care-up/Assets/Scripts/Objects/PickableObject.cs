@@ -131,6 +131,7 @@ public class PickableObject : InteractableObject
     /// <returns>True if used</returns>
     public virtual bool Use(bool hand, bool noTarget = false)
     {
+        print("_______________________" + controls.SelectedObject.name);
         tutorial_usedOn = true;
 
         Debug.Log (depoistNeedle);
@@ -141,6 +142,7 @@ public class PickableObject : InteractableObject
 
         if (controls.SelectedObject != null && controls.CanInteract)
         {
+            print("ffffffffffffffffff");
             if ((actionManager.CompareUseOnInfo("InjectionNeedle", "NeedleCup", this.name) ||
                 actionManager.CompareUseOnInfo("AbsorptionNeedle", "NeedleCup", this.name) ||
                 actionManager.CompareUseOnInfo("InjectionSNeedle", "NeedleCup", this.name) ||
@@ -246,7 +248,7 @@ public class PickableObject : InteractableObject
             }
             else if (GameObject.FindObjectOfType<ObjectsIDsController>() != null)
             {
-      
+                print("bbbbbbbbbbbbbbb");
                 ObjectsIDsController ObjectsID_Controller = GameObject.FindObjectOfType<ObjectsIDsController>();
                 string selectedName = controls.SelectedObject.transform.name;
                 if (controls.SelectedObject.GetComponent<PersonObjectPart>() != null)
@@ -284,7 +286,7 @@ public class PickableObject : InteractableObject
                         {
                             t = controls.SelectedObject.transform;
                         }
-
+                        print(oId.ToString() + "   " + sId.ToString());
                         if (hand)
                         {
                             PlayerAnimationManager.PlayUseAnimation(oId, sId, t);

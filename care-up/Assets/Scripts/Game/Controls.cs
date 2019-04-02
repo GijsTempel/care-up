@@ -103,8 +103,8 @@ public class Controls : MonoBehaviour {
 
     static public bool keyUsed = false;
 
-    private GameObject selectedObject;
-    private bool canInteract;
+    public GameObject selectedObject;
+    public bool canInteract;
 
     private bool touchEnded = false;
 
