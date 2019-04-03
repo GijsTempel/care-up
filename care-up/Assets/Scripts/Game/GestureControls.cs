@@ -92,6 +92,9 @@ public class GestureControls : MonoBehaviour
 
     private void SwipeGestureCallback(DigitalRubyShared.GestureRecognizer gesture)
     {
+        if (PlayerScript.actionsLocked == true)
+            return;
+
         if (gesture.State == GestureRecognizerState.Ended && !player.freeLook)
         {
             if (handsInventory.LeftHandEmpty() && handsInventory.RightHandEmpty())
