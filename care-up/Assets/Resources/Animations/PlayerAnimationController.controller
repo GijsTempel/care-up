@@ -2383,6 +2383,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: target_001
+  resetCamera: 0
 --- !u!114 &114067195201846002
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -2435,6 +2436,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: w_sit_target
+  resetCamera: 0
 --- !u!114 &114073671283099594
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2564,6 +2566,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SequenceName: AnimSeq_Catherisation_Male_Clean
   keyFrames: 05000000c1000000e1040000030800001b0a0000360c0000440f0000de110000b3120000
+--- !u!114 &114088174047881754
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: Sink
+  showFrame: 421
+  ObjNames:
+  - water_flow_effect
+  toShow: 0
 --- !u!114 &114090531146132804
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2664,22 +2682,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftHand: 0
   dropFrame: 88
---- !u!114 &114102157933139198
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ae6b455166f9b3499ec4217106f67ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audio: 1
-  audioFileName: water-running
-  audioFrame: 1
-  positionObjectName: 
-  volume: 1
 --- !u!114 &114103235276556022
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -2717,6 +2719,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: w_clean_target
+  resetCamera: 0
 --- !u!114 &114107080608609124
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -3110,6 +3113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: check_bag_target
+  resetCamera: 0
 --- !u!114 &114168657016249712
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3121,9 +3125,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b03eeecfc46c784a9e981273a503cc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swapFrame: 127
+  swapFrame: 269
   swapObjName: GauzeTrayWet
   leftHand: 1
+--- !u!114 &114169996638882866
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: Sink
+  showFrame: 112
+  ObjNames:
+  - water_flow_effect
+  toShow: 1
 --- !u!114 &114174587081283294
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3292,22 +3312,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combineFrame: 210
---- !u!114 &114202746988410382
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ae6b455166f9b3499ec4217106f67ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audio: 1
-  audioFileName: water-running
-  audioFrame: 1
-  positionObjectName: 
-  volume: 1
 --- !u!114 &114207607412705100
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -3331,6 +3335,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: w_button_target
+  resetCamera: 0
 --- !u!114 &114210530969172280
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3534,6 +3539,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combineFrame: 52
+--- !u!114 &114231806191123720
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 839bcc7f24a9c47f8af28e853187bfa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: Sink
+  unlock_frame: 1
+  lock_frame: 531
+  toActivate: 1
 --- !u!114 &114233835219918376
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3678,6 +3698,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: target_001
+  resetCamera: 0
 --- !u!114 &114242475246348800
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4296,6 +4317,19 @@ MonoBehaviour:
   ObjNames:
   - catheter_bag
   toShow: 1
+--- !u!114 &114316940965995774
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e72c07ae9fe847f19fb1b3a669e3399, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: 
+  resetCamera: 0
 --- !u!114 &114317612086271524
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4518,6 +4552,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: w_clean_target
+  resetCamera: 0
 --- !u!114 &114344955884438892
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4660,6 +4695,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: w_button_target
+  resetCamera: 0
 --- !u!114 &114360281391223580
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4691,6 +4727,21 @@ MonoBehaviour:
   unlock_frame: 1
   lock_frame: 330
   toActivate: 0
+--- !u!114 &114366277660312674
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 839bcc7f24a9c47f8af28e853187bfa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: Sink
+  unlock_frame: 1
+  lock_frame: 531
+  toActivate: 1
 --- !u!114 &114369991156140442
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4703,6 +4754,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: w_clean_target
+  resetCamera: 0
 --- !u!114 &114370812158076016
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4943,6 +4995,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: w_clean_target
+  resetCamera: 0
 --- !u!114 &114394866152433814
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5107,6 +5160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: w_sit_target
+  resetCamera: 0
 --- !u!114 &114414756498390672
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5323,6 +5377,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: xxx
+  resetCamera: 0
 --- !u!114 &114440946923929580
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -5423,6 +5478,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncFrames: 40000000
+--- !u!114 &114444784898026856
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b03eeecfc46c784a9e981273a503cc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  swapFrame: 269
+  swapObjName: GauzeTrayWet
+  leftHand: 1
 --- !u!114 &114445823841637542
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5555,6 +5624,22 @@ MonoBehaviour:
   audioFrame: 20
   positionObjectName: HandCleaner
   volume: 0.2
+--- !u!114 &114457664623169384
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: Sink
+  showFrame: 421
+  ObjNames:
+  - water_flow_effect
+  toShow: 0
 --- !u!114 &114458725991173468
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5834,6 +5919,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: xxx
+  resetCamera: 0
 --- !u!114 &114508534870808570
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5991,6 +6077,23 @@ MonoBehaviour:
   audioFileName: Sound_Effects/Audio_RemovingCap
   audioFrame: 28
   volume: 0.1
+--- !u!114 &114533574995259322
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a536a9682af347488b2cfd1a613bf7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: Sink
+  HandToSwitch: 0
+  AnimationToChange: 1
+  ToFollowHoldingHand: 0
+  NewAnimationName: Open21
+  ActionFrame: 0
 --- !u!114 &114537154165950136
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6029,6 +6132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: Sterile_workpad
+  resetCamera: 0
 --- !u!114 &114544244587412676
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -6406,6 +6510,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toClose: 1
   actionFrame: 5144
+--- !u!114 &114597668963772202
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e72c07ae9fe847f19fb1b3a669e3399, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: 
+  resetCamera: 0
 --- !u!114 &114598564185149768
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -6742,6 +6859,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: clean_target
+  resetCamera: 0
 --- !u!114 &114648122120092304
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7071,6 +7189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: w_clean_target
+  resetCamera: 0
 --- !u!114 &114693426079482208
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -7852,6 +7971,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: w_sit_target
+  resetCamera: 0
 --- !u!114 &114782193360675598
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7864,6 +7984,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: w_clean_target
+  resetCamera: 0
 --- !u!114 &114786141328687240
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8040,6 +8161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: Bin2
+  resetCamera: 0
 --- !u!114 &114802879887399398
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8233,6 +8355,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: w_button_target
+  resetCamera: 0
+--- !u!114 &114827664752008094
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a536a9682af347488b2cfd1a613bf7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: Sink
+  HandToSwitch: 0
+  AnimationToChange: 1
+  ToFollowHoldingHand: 0
+  NewAnimationName: Open21
+  ActionFrame: 0
 --- !u!114 &114828250901371266
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -8836,6 +8976,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dropLeftFrame: 0
   dropRightFrame: -1
+--- !u!114 &114914128534991356
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: Sink
+  showFrame: 112
+  ObjNames:
+  - water_flow_effect
+  toShow: 1
 --- !u!114 &114914195764406144
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9263,6 +9419,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: w_button_target
+  resetCamera: 0
 --- !u!114 &114953393082203866
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9368,6 +9525,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: w_clean_target
+  resetCamera: 0
 --- !u!114 &114973792731198066
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -9530,6 +9688,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: w_clean_target
+  resetCamera: 0
 --- !u!114 &114988134696072150
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9636,6 +9795,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: w_button_target
+  resetCamera: 0
 --- !u!114 &114995993197309124
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9648,6 +9808,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: Sterile_workpad
+  resetCamera: 0
 --- !u!114 &114998115931217532
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40384,7 +40545,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400042, guid: 5c96cfe96f822cb45850df6cc49f9009, type: 3}
+  m_Motion: {fileID: 7400132, guid: 5c96cfe96f822cb45850df6cc49f9009, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -41924,7 +42085,11 @@ AnimatorState:
   - {fileID: 1101595916301547194}
   m_StateMachineBehaviours:
   - {fileID: 114168657016249712}
-  - {fileID: 114102157933139198}
+  - {fileID: 114316940965995774}
+  - {fileID: 114827664752008094}
+  - {fileID: 114231806191123720}
+  - {fileID: 114914128534991356}
+  - {fileID: 114457664623169384}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -41933,7 +42098,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400042, guid: 5c96cfe96f822cb45850df6cc49f9009, type: 3}
+  m_Motion: {fileID: 7400132, guid: 5c96cfe96f822cb45850df6cc49f9009, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -44332,7 +44497,12 @@ AnimatorState:
   m_Transitions:
   - {fileID: 1101583894152841310}
   m_StateMachineBehaviours:
-  - {fileID: 114202746988410382}
+  - {fileID: 114597668963772202}
+  - {fileID: 114444784898026856}
+  - {fileID: 114533574995259322}
+  - {fileID: 114366277660312674}
+  - {fileID: 114169996638882866}
+  - {fileID: 114088174047881754}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -44341,7 +44511,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400044, guid: 5c96cfe96f822cb45850df6cc49f9009, type: 3}
+  m_Motion: {fileID: 7400134, guid: 5c96cfe96f822cb45850df6cc49f9009, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -47895,7 +48065,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400044, guid: 5c96cfe96f822cb45850df6cc49f9009, type: 3}
+  m_Motion: {fileID: 7400134, guid: 5c96cfe96f822cb45850df6cc49f9009, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
