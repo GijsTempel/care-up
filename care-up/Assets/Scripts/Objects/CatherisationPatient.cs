@@ -24,6 +24,7 @@ public class CatherisationPatient : PersonObject {
 
         if (actionManager.CompareTopic(topic))
         {
+      
             switch (topic)
             {
                 case "LayOnBed":
@@ -36,6 +37,15 @@ public class CatherisationPatient : PersonObject {
                 case "HelpGetUp":
                     PlayerAnimationManager.PlayAnimation("helppatientgetup");
                     break;
+                case "WashHands":
+                    Animator PlayerAnim = GameObject.FindObjectOfType<PlayerAnimationManager>().GetComponent<Animator>();
+                    PlayerAnim.SetTrigger("MoveToSide");
+                    PlayerAnim.SetTrigger("S MoveToSide");
+
+                    animator.SetTrigger("patient_standup");
+                    break;
+
+                    
                 default:
                     break;
             }
