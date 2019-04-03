@@ -32,17 +32,27 @@ public class CharacterCreationScene : MonoBehaviour
     private Text bodyLabel;
     private Text glassesLabel;
     */
-
-    void Start()
+    
+    private void OnLevelWasLoaded(int level)
     {
-        // main objects for genders    
         femaleChar = GameObject.Find("Female_Citizens_customizable");
         maleChar = GameObject.Find("Male_Citizens_customizable");
 
         Initialize();
 
         // set up initial info
-        SetCurrent(CharGender.Female, 0, 0, -1);
+        PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
+        if (manager != null && manager.GetComponent<CharacterInfo>().sex != "")
+        {
+            CharacterInfo info = manager.GetComponent<CharacterInfo>();
+            SetCurrent(
+                info.sex == "Female" ? CharGender.Female : CharGender.Male,
+                info.headType, info.bodyType, info.glassesType);
+        }
+        else
+        {
+            SetCurrent(CharGender.Female, 0, 0, -1);
+        }
     }
 
     public void Initialize()
