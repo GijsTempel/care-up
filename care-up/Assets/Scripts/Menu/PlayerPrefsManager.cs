@@ -72,7 +72,8 @@ public class PlayerPrefsManager : MonoBehaviour
 
         if (!(s.name == "Launch me 1" ||
               s.name == "MainMenu" ||
-              s.name == "SceneSelection"))
+              s.name == "SceneSelection" ||
+              s.name == "Scenes_Character_Customisation"))
         {
             // game scenes
             GetComponent<AudioSource>().Stop();
