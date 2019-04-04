@@ -390,7 +390,7 @@ public class CameraMode : MonoBehaviour
             //camPosition = Camera.main.transform.localRotation; never used
 
             playerScript.MoveBackButtonObject.SetActive(false);
-            playerScript.joystickObject.SetActive(false);
+            //playerScript.joystickObject.SetActive(false);
             RobotManager.SetUITriggerActive(false);
         }
         else if (currentMode == Mode.Cinematic && mode == Mode.Free)
@@ -412,7 +412,7 @@ public class CameraMode : MonoBehaviour
                 GameObject.FindObjectOfType<TutorialManager>() == null)
             {
                 playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
-                playerScript.joystickObject.SetActive(!playerScript.robotUIopened && !PlayerScript.actionsLocked);
+                //playerScript.joystickObject.SetActive(!playerScript.robotUIopened && !PlayerScript.actionsLocked);
             }
 
             if (GameObject.FindObjectOfType<TutorialManager>() == null ||
