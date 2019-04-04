@@ -13,6 +13,16 @@ public class WalkToGroup : MonoBehaviour
 
     private GameObject text;
 
+    public enum GroupType
+    {
+        NotSet,
+        WorkField,
+        Doctor,
+        Patient,
+        Sink
+    };
+
+    public WalkToGroup.GroupType WalkToGroupType;
     CameraMode cameraMode;
     Controls controls;
 

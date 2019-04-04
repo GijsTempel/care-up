@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class GameUI : MonoBehaviour {
 	GameObject Player;
 	public Animator Blink;
@@ -13,6 +14,8 @@ public class GameUI : MonoBehaviour {
 	GameObject closeButton;
 	GameObject closeDialog;
     GameObject donePanelYesNo;
+    GameObject WalkToGroupPanel;
+
 
     public void MoveBack()
 	{
@@ -76,7 +79,8 @@ public class GameUI : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Player = GameObject.Find("Player");
+        WalkToGroupPanel = GameObject.Find("MovementButtons");
+        Player = GameObject.Find("Player");
 		closeButton = transform.Find("CloseBtn").gameObject;
 		closeDialog = transform.Find("CloseDialog").gameObject;
 		closeDialog.SetActive(false);
@@ -85,7 +89,58 @@ public class GameUI : MonoBehaviour {
 
         donePanelYesNo = transform.Find("DonePanelYesNo").gameObject;
         donePanelYesNo.SetActive(false);
+        if (WalkToGroupPanel != null)
+        {
+            Dictionary<string, WalkToGroupButton> WTGButtons = new Dictionary<string, WalkToGroupButton>();
 
+            foreach (WalkToGroupButton b in GameObject.FindObjectsOfType<WalkToGroupButton>())
+            {
+                string key = "";
+                switch (b.name)
+                {
+                    case "MoveWorkfield":
+                        key = "WorkField";
+                        break;
+                    case "Movepatient":
+                        key = "Patient";
+                        break;
+                    case "MoveCollegue":
+                        key = "Doctor";
+                        break;
+                    case "MoveSink":
+                        key = "Sink";
+                        break;
+                }
+                if (key != "")
+                {
+                    WTGButtons.Add(key, b);
+                }
+                b.gameObject.SetActive(false);
+            }
+            foreach (WalkToGroup g in GameObject.FindObjectsOfType<WalkToGroup>())
+            {
+                switch (g.WalkToGroupType) 
+                {
+                    case WalkToGroup.GroupType.WorkField:
+                        WTGButtons["WorkField"].setWalkToGroup(g);
+                        WTGButtons["WorkField"].gameObject.SetActive(true);
+                        break;
+                    case WalkToGroup.GroupType.Doctor:
+                        WTGButtons["Doctor"].setWalkToGroup(g);
+                        WTGButtons["Doctor"].gameObject.SetActive(true);
+                        break;
+                    case WalkToGroup.GroupType.Patient:
+                        WTGButtons["Patient"].setWalkToGroup(g);
+                        WTGButtons["Patient"].gameObject.SetActive(true);
+                        break;
+                    case WalkToGroup.GroupType.Sink:
+                        WTGButtons["Sink"].setWalkToGroup(g);
+                        WTGButtons["Sink"].gameObject.SetActive(true);
+                        break;
+                }
+            }
+
+        }
         //Debug.Log(Application.isEditor);
     }
 
@@ -107,7 +162,10 @@ public class GameUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		testValue = RobotManager.UIElementsState[0];
+        if (WalkToGroupPanel != null)
+            WalkToGroupPanel.SetActive(GameObject.Find("MoveBackButton") == null);
+
+        testValue = RobotManager.UIElementsState[0];
 	}
 
     public void OpenDonePanelYesNo()
