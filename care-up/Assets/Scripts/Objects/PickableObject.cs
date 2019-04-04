@@ -299,6 +299,24 @@ public class PickableObject : InteractableObject
             }
                 
         }
+        else if (noTarget)
+        {
+            if (actionManager.CompareUseOnInfo(name, ""))
+            {
+                if (inventory.LeftHandEmpty())
+                {
+                    PlayerAnimationManager.PlayAnimation("UseRight " + name);
+                    actionManager.OnUseOnAction(name, "");
+                    return true; 
+                }
+                else if (inventory.RightHandEmpty())
+                {
+                    PlayerAnimationManager.PlayAnimation("UseLeft " + name);
+                    actionManager.OnUseOnAction(name, "");
+                    return true;
+                }
+            }
+        }
 
         // fix for person objects
         // normal assignment
