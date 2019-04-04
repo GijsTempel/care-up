@@ -32,11 +32,17 @@ public class CharacterCreationScene : MonoBehaviour
     private Text bodyLabel;
     private Text glassesLabel;
     */
-    
+
+    private Image maleBtn;
+    private Image femaleBtn;
+
     private void OnLevelWasLoaded(int level)
     {
         femaleChar = GameObject.Find("Female_Citizens_customizable");
         maleChar = GameObject.Find("Male_Citizens_customizable");
+
+        maleBtn = GameObject.Find("Canvas/CharacterPanel/MaleBtn").GetComponent<Image>();
+        femaleBtn = GameObject.Find("Canvas/CharacterPanel/FemaleBtn").GetComponent<Image>();
 
         Initialize();
 
@@ -174,6 +180,10 @@ public class CharacterCreationScene : MonoBehaviour
 
         UpdateLabels();
         UpdateActiveObjects();
+
+        // updating gender buttons
+        maleBtn.color = (gender == CharGender.Female) ? Color.white : Color.green;
+        femaleBtn.color = (gender == CharGender.Female) ? Color.green : Color.white;
     }
 
     public void PreviousGender()
@@ -346,11 +356,17 @@ public class CharacterCreationScene : MonoBehaviour
     public void MaleBtn()
     {
         SetCurrent(CharGender.Male, 0, 0, -1);
+
+        maleBtn.color = Color.green;
+        femaleBtn.color = Color.white;
     }
 
     public void FemaleBtn()
     {
         SetCurrent(CharGender.Female, 0, 0, -1);
+
+        maleBtn.color = Color.white;
+        femaleBtn.color = Color.green;
     }
 
     public void Save()
@@ -358,6 +374,12 @@ public class CharacterCreationScene : MonoBehaviour
         CharacterInfo.currentCharacter.SetCharacterCharacteristicsWU(
             ((gender == CharGender.Female) ? "Female" : "Male"),
             headType, bodyType, glassesType);
+
+        CharacterInfo info = GameObject.FindObjectOfType<CharacterInfo>();
+        info.sex = (gender == CharGender.Female) ? "Female" : "Male";
+        info.headType = headType;
+        info.bodyType = bodyType;
+        info.glassesType = glassesType;
 
         // so while we're saving info we're back to our weird tutorial completion check
         if (PlayerPrefs.GetInt("FirstLogin") <= 1)
