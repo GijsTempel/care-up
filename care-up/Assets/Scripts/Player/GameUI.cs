@@ -15,7 +15,7 @@ public class GameUI : MonoBehaviour {
 	GameObject closeDialog;
     GameObject donePanelYesNo;
     GameObject WalkToGroupPanel;
-
+    public GameObject MoveBackButton;
 
     public void MoveBack()
 	{
@@ -163,7 +163,7 @@ public class GameUI : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (WalkToGroupPanel != null)
-            WalkToGroupPanel.SetActive(GameObject.Find("MoveBackButton") == null);
+            WalkToGroupPanel.SetActive(GameObject.FindObjectOfType<PlayerScript>().away);
 
         testValue = RobotManager.UIElementsState[0];
 	}

@@ -10,13 +10,19 @@ public class WalkToGroupButton : MonoBehaviour {
     {
         linkedWalkToGroup = wtg;
     }
-    
+
+    public void HighlightGroup(bool value)
+    {
+        if (linkedWalkToGroup != null)
+            linkedWalkToGroup.ButtonHovered = value;
+    }
 
     public void MoveToGroup()
     {
         if (linkedWalkToGroup != null)
         {
             GameObject.FindObjectOfType<PlayerScript>().WalkToGroup(linkedWalkToGroup);
+            linkedWalkToGroup.ButtonHovered = false;
         }
     }
 
