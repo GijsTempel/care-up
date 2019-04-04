@@ -41,7 +41,7 @@ public class PlayerScript : MonoBehaviour
     private Vector3 savedPos;
     private Quaternion savedRot;
     private List<WalkToGroup> groups;
-    private WalkToGroup currentWalkPosition;
+    public WalkToGroup currentWalkPosition;
 
     RobotManager robot;
     private Vector3 savedRobotPos;
@@ -450,21 +450,19 @@ public class PlayerScript : MonoBehaviour
 
     public void MoveBackButton()
     {
-        if (true)
+        ToggleAway(true);
+        transform.position = savedPos;
+        if (prefs == null || (prefs != null && !prefs.VR))
         {
-            ToggleAway(true);
-            transform.position = savedPos;
-            if (prefs == null || (prefs != null && !prefs.VR))
-            {
-                transform.rotation = Quaternion.Euler(0.0f, savedRot.eulerAngles.y, 0.0f);
-                Camera.main.transform.localRotation = Quaternion.Euler(savedRot.eulerAngles.x, 0.0f, 0.0f);
-                mouseLook.SaveRot(transform, Camera.main.transform);
-            }
-            currentWalkPosition = null;
-
-            robot.transform.position = savedRobotPos;
-            robot.transform.rotation = savedRobotRot;
+            transform.rotation = Quaternion.Euler(0.0f, savedRot.eulerAngles.y, 0.0f);
+            Camera.main.transform.localRotation = Quaternion.Euler(savedRot.eulerAngles.x, 0.0f, 0.0f);
+            mouseLook.SaveRot(transform, Camera.main.transform);
         }
+        currentWalkPosition = null;
+
+        robot.transform.position = savedRobotPos;
+        robot.transform.rotation = savedRobotRot;
+
     }
 
     public void OpenRobotUI()
