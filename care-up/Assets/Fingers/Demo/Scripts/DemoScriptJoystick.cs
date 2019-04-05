@@ -27,8 +27,9 @@ namespace DigitalRubyShared
 
         private void Awake()
         {
-            JoystickScript.JoystickExecuted = JoystickExecuted;
-            JoystickScript.MoveJoystickToGestureStartLocation = MoveJoystickToGestureStartLocation;
+            //JoystickScript.JoystickExecuted = JoystickExecuted;
+            //JoystickScript.MoveJoystickToGestureStartLocation = MoveJoystickToGestureStartLocation;
+            Destroy(this.gameObject);
         } 
 
          private void JoystickExecuted(FingersJoystickScript script, Vector2 amount)
