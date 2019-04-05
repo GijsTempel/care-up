@@ -200,6 +200,12 @@ public class GameUI : MonoBehaviour {
                 LeftSideButton.gameObject.SetActive(false);
                 RightSideButton.gameObject.SetActive(false);
             }
+            if (!MoveBackButton.activeSelf)
+            {
+                LeftSideButton.gameObject.SetActive(false);
+                RightSideButton.gameObject.SetActive(false);
+            }
+
         }
 
         testValue = RobotManager.UIElementsState[0];
