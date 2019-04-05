@@ -16,13 +16,22 @@ public class GameUI : MonoBehaviour {
     GameObject donePanelYesNo;
     GameObject WalkToGroupPanel;
     public GameObject MoveBackButton;
+    public WalkToGroupButton LeftSideButton;
+    public WalkToGroupButton RightSideButton;
+    public Dictionary<string, WalkToGroupButton> WTGButtons;
+    WalkToGroup prevWalkToGroup = null;
 
     public void MoveBack()
 	{
 		Player.GetComponent<PlayerScript>().MoveBackButton();
 	}
 
-	public void OpenRobotUI()
+    //public WalkToGroupButton GetWTGButton(string key)
+    //{
+
+    //}
+
+    public void OpenRobotUI()
     {
 		RobotManager.UIElementsState[0] = false;
         Player.GetComponent<PlayerScript>().OpenRobotUI();
@@ -91,29 +100,40 @@ public class GameUI : MonoBehaviour {
         donePanelYesNo.SetActive(false);
         if (WalkToGroupPanel != null)
         {
-            Dictionary<string, WalkToGroupButton> WTGButtons = new Dictionary<string, WalkToGroupButton>();
+            WTGButtons = new Dictionary<string, WalkToGroupButton>();
 
             foreach (WalkToGroupButton b in GameObject.FindObjectsOfType<WalkToGroupButton>())
             {
-                string key = "";
-                switch (b.name)
+                if (b.name == "MoveLeft")
                 {
-                    case "MoveWorkfield":
-                        key = "WorkField";
-                        break;
-                    case "Movepatient":
-                        key = "Patient";
-                        break;
-                    case "MoveCollegue":
-                        key = "Doctor";
-                        break;
-                    case "MoveSink":
-                        key = "Sink";
-                        break;
+                    LeftSideButton = b;
                 }
-                if (key != "")
+                else if (b.name == "MoveRight")
                 {
-                    WTGButtons.Add(key, b);
+                    RightSideButton = b;
+                }
+                else
+                {
+                    string key = "";
+                    switch (b.name)
+                    {
+                        case "MoveWorkfield":
+                            key = "WorkField";
+                            break;
+                        case "Movepatient":
+                            key = "Patient";
+                            break;
+                        case "MoveCollegue":
+                            key = "Doctor";
+                            break;
+                        case "MoveSink":
+                            key = "Sink";
+                            break;
+                    }
+                    if (key != "")
+                    {
+                        WTGButtons.Add(key, b);
+                    }
                 }
                 b.gameObject.SetActive(false);
             }
@@ -163,7 +183,36 @@ public class GameUI : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (WalkToGroupPanel != null)
-            WalkToGroupPanel.SetActive(GameObject.FindObjectOfType<PlayerScript>().away);
+        {
+            PlayerScript ps = GameObject.FindObjectOfType<PlayerScript>();
+            if (prevWalkToGroup != ps.currentWalkPosition)
+            {
+                WalkToGroupPanel.SetActive(ps.away);
+                if (!ps.away)
+                {
+                    LeftSideButton.gameObject.SetActive(ps.currentWalkPosition.LeftWalkToGroup != null);
+                    RightSideButton.gameObject.SetActive(ps.currentWalkPosition.RightWalkToGroup != null);
+                    if (ps.currentWalkPosition.LeftWalkToGroup != null)
+                        LeftSideButton.setWalkToGroup(ps.currentWalkPosition.LeftWalkToGroup);
+
+                    if (ps.currentWalkPosition.RightWalkToGroup != null)
+                        RightSideButton.setWalkToGroup(ps.currentWalkPosition.RightWalkToGroup);
+                }
+                else
+                {
+                    LeftSideButton.gameObject.SetActive(false);
+                    RightSideButton.gameObject.SetActive(false);
+                }
+                prevWalkToGroup = ps.currentWalkPosition;
+            }
+            if (!MoveBackButton.activeSelf)
+            {
+                LeftSideButton.gameObject.SetActive(false);
+                RightSideButton.gameObject.SetActive(false);
+                prevWalkToGroup = null;
+            }
+
+        }
 
         testValue = RobotManager.UIElementsState[0];
 	}

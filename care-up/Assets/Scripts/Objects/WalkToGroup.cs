@@ -15,6 +15,8 @@ public class WalkToGroup : MonoBehaviour
     public GameObject cone;
     public bool ButtonHovered = false;
 
+    public WalkToGroup LeftWalkToGroup = null;
+    public WalkToGroup RightWalkToGroup = null;
 
     public enum GroupType
     {
