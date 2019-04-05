@@ -47,7 +47,8 @@ public class WalkToGroupButton : MonoBehaviour {
         if (SideButton)
         {
             GameUI gameUI = GameObject.FindObjectOfType<GameUI>();
-
+            if (_icon == null)
+                _icon = transform.Find("icon").gameObject;
             switch (wtg.WalkToGroupType)
             {
                 case WalkToGroup.GroupType.WorkField:

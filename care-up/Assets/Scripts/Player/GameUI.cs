@@ -19,6 +19,7 @@ public class GameUI : MonoBehaviour {
     public WalkToGroupButton LeftSideButton;
     public WalkToGroupButton RightSideButton;
     public Dictionary<string, WalkToGroupButton> WTGButtons;
+    WalkToGroup prevWalkToGroup = null;
 
     public void MoveBack()
 	{
@@ -184,26 +185,31 @@ public class GameUI : MonoBehaviour {
         if (WalkToGroupPanel != null)
         {
             PlayerScript ps = GameObject.FindObjectOfType<PlayerScript>();
-            WalkToGroupPanel.SetActive(ps.away);
-            if (!ps.away)
+            if (prevWalkToGroup != ps.currentWalkPosition)
             {
-                LeftSideButton.gameObject.SetActive(ps.currentWalkPosition.LeftWalkToGroup != null);
-                RightSideButton.gameObject.SetActive(ps.currentWalkPosition.RightWalkToGroup != null);
-                if (ps.currentWalkPosition.LeftWalkToGroup != null)
-                    LeftSideButton.setWalkToGroup(ps.currentWalkPosition.LeftWalkToGroup);
+                WalkToGroupPanel.SetActive(ps.away);
+                if (!ps.away)
+                {
+                    LeftSideButton.gameObject.SetActive(ps.currentWalkPosition.LeftWalkToGroup != null);
+                    RightSideButton.gameObject.SetActive(ps.currentWalkPosition.RightWalkToGroup != null);
+                    if (ps.currentWalkPosition.LeftWalkToGroup != null)
+                        LeftSideButton.setWalkToGroup(ps.currentWalkPosition.LeftWalkToGroup);
 
-                if (ps.currentWalkPosition.RightWalkToGroup != null)
-                    RightSideButton.setWalkToGroup(ps.currentWalkPosition.RightWalkToGroup);
-            }
-            else
-            {
-                LeftSideButton.gameObject.SetActive(false);
-                RightSideButton.gameObject.SetActive(false);
+                    if (ps.currentWalkPosition.RightWalkToGroup != null)
+                        RightSideButton.setWalkToGroup(ps.currentWalkPosition.RightWalkToGroup);
+                }
+                else
+                {
+                    LeftSideButton.gameObject.SetActive(false);
+                    RightSideButton.gameObject.SetActive(false);
+                }
+                prevWalkToGroup = ps.currentWalkPosition;
             }
             if (!MoveBackButton.activeSelf)
             {
                 LeftSideButton.gameObject.SetActive(false);
                 RightSideButton.gameObject.SetActive(false);
+                prevWalkToGroup = null;
             }
 
         }
