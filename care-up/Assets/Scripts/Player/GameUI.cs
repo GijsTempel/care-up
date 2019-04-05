@@ -195,6 +195,11 @@ public class GameUI : MonoBehaviour {
                 if (ps.currentWalkPosition.RightWalkToGroup != null)
                     RightSideButton.setWalkToGroup(ps.currentWalkPosition.RightWalkToGroup);
             }
+            else
+            {
+                LeftSideButton.gameObject.SetActive(false);
+                RightSideButton.gameObject.SetActive(false);
+            }
         }
 
         testValue = RobotManager.UIElementsState[0];
