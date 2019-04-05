@@ -10,9 +10,13 @@ public class WalkToGroupButton : MonoBehaviour {
     Color ButtonColor = Color.white;
 
     //button components
+    [HideInInspector]
     public GameObject blur;
+    [HideInInspector]
     public GameObject bg;
+    [HideInInspector]
     public GameObject bg_h;
+    [HideInInspector]
     public GameObject _icon;
 
     void Start()
