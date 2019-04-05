@@ -15,7 +15,6 @@
     points="3" 
     description="Pas handhygiëne toe." 
     fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp." 
-    audioHint="Injection/H1-2"
 		index="0" 
     type="use" 
     value="HandCleaner" 
@@ -111,7 +110,8 @@ Of en hoe controle plaatsvindt van deze voorbehouden handelingen, is een afspraa
 		index="5" 
     type="useOn" 
     item="Frexi_with_needle_cap" 
-    target="" 
+    target=""
+    buttonText="Controleer luchtbel"
     extra="Ontlucht een voorgevulde kant-en-klare spuit niet, tenzij de fabrikant anders adviseert. De luchtbel in de spuit zorg ervoor dat de vloeistof volledig wordt ingespoten. De luchtbel dient bij de zuiger te zitten." buttonText="Controleer luchtbel"
     messageTitle="Luchtbel"
     messegeContent="Voor bepaalde medicijnen in kant-en-klaarspuiten geldt dat ze precies in de voorgeschreven hoeveelheid moeten worden toegediend (zoals Clexane, Heparine enz). In deze spuiten bevindt zich een luchtbel. Tijdens het inspuiten van het medicijn moet de luchtbel zich aan de kant van de zuiger bevinden. De luchtbel vult na het toedienen van de medicatie de overgebleven dode ruimte van de injectiespuit en -naald. De WHO stelt dat hetzelfde geldt wanneer zich een luchtbel in een voorgevulde spuit met vaccin bevindt" 
@@ -122,8 +122,16 @@ Of en hoe controle plaatsvindt van deze voorbehouden handelingen, is een afspraa
     description="Vraag de cliënt de injectieplaats te ontbloten." fullDescription="Klik op de spuit + injectienaald + beschermdop in je hand op de 'Terug naar overzich' knop rechtsboven in het scherm om terug te gaan naar het overzicht. Klik daarna op de cliënt. Klik nogmaals op de cliënt om te praten. Kies de optie 'Zou u uw mouw omhoog kunnen doen?'." audioHint="Injection/H12-2"
 		index="6" type="talk" topic="ShowBellyForInsulin" extra="Vraag de cliënt de injectieplaats te ontbloten en te ontspannen zodat je makkelijk bij de injectieplaats kunt."></action>
 
-  <action points="1" description="Start injecteren." fullDescription="Klik op de spuit + injectienaald + beschermdop en klik op het + icoon. Klik vervolgens op de cliënt."	audioHint="Injection/H13-2"
-		index="7" type="useOn" item="Frexi_with_needle_cap" target="Patient" extra="Start met het toedienen van de injectie. Alles is klaar voor gebruik en je kunt starten met injecteren."></action>
+  <action points="1" 
+          description="Start injecteren." 
+          fullDescription="Klik op de spuit + injectienaald + beschermdop en klik op het + icoon. Klik vervolgens op de cliënt."	audioHint="Injection/H13-2"
+		index="7" 
+          type="useOn" 
+          item="Frexi_with_needle_cap" 
+          target="" 
+          buttonText="Start injecteren"
+          extra="Start met het toedienen van de injectie. Alles is klaar voor gebruik en je kunt starten met injecteren."
+          ></action>
 
   <action points="1" description="Palpeer de injectieplaats en controleer of de injectieplaats schoon en droog is." fullDescription="Klik op de juiste optie." audioHint="Injection/AS1-2"
 		index="8" type="sequenceStep" value="Check" extra="Controleer of de injectieplaats schoon en droog is om besmetting van ziektekiemen te voorkomen."></action>
