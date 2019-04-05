@@ -39,7 +39,7 @@ public class ActionManager : MonoBehaviour {
 
 
     // actual list of actions
-    private List<Action> actionList = new List<Action>();
+    public List<Action> actionList = new List<Action>();
 
     // list of descriptions of steps, player got penalty on
     private List<string> stepsList = new List<string>();
@@ -50,7 +50,8 @@ public class ActionManager : MonoBehaviour {
     private int totalPoints = 0;         // max points of scene
     private int points = 0;              // current points
     private int currentActionIndex = 0;  // index of current action
-    private Action currentAction;        // current action instance
+
+    public  Action currentAction;        // current action instance
     private int currentPointAward = 1;
     private bool penalized = false;
 
@@ -577,6 +578,7 @@ public class ActionManager : MonoBehaviour {
     /// </summary>
     void Update()
     {
+        
         if (controls.keyPreferences.GetHintKey.Pressed())
         {
             if (Narrator.PlayHintSound(CurrentAudioHint)) // if sound played
