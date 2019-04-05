@@ -303,17 +303,44 @@ public class PickableObject : InteractableObject
         {
             if (actionManager.CompareUseOnInfo(name, ""))
             {
+                //-------------------------------------------------------------------------------
+                int objectID = -1;
+
+                if (GameObject.Find("GameLogic").GetComponent<ObjectsIDsController>() != null)
+                {
+                    ObjectsIDsController ObjectsID_Controller = GameObject.Find("GameLogic").GetComponent<ObjectsIDsController>();
+                    if (ObjectsID_Controller.FindByName(name) != -1)
+                        objectID = ObjectsID_Controller.GetIDByName(name);
+                }
+                
                 if (inventory.LeftHandEmpty())
                 {
-                    PlayerAnimationManager.PlayAnimation("UseRight " + name);
-                    actionManager.OnUseOnAction(name, "");
-                    return true; 
+                    if (objectID == -1)
+                    {
+                        PlayerAnimationManager.PlayAnimation("UseRight " + name);
+                        actionManager.OnUseOnAction(name, "");
+                        return true;
+                    }
+                    else
+                    {
+                        print("__________________________________Right");
+                        PlayerAnimationManager.PlayUseOnIDAnimation(objectID, false);
+                    }
                 }
                 else if (inventory.RightHandEmpty())
                 {
-                    PlayerAnimationManager.PlayAnimation("UseLeft " + name);
-                    actionManager.OnUseOnAction(name, "");
-                    return true;
+                    if (objectID == -1)
+                    {
+                        PlayerAnimationManager.PlayAnimation("UseLeft " + name);
+                        actionManager.OnUseOnAction(name, "");
+                        return true;
+                    }
+                    else
+                    {
+                        print("__________________________________Left");
+                        PlayerAnimationManager.PlayUseOnIDAnimation(objectID, true);
+                    }
+
                 }
             }
         }

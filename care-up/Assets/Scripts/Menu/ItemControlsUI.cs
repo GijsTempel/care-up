@@ -498,7 +498,7 @@ public class ItemControlsUI : MonoBehaviour {
             handsInventory.LeftHandObject.GetComponent<PickableObject>().Use(true, true);
 
             if (tutorialUseOn != null) {
-                handsInventory.LeftHandObject.GetComponent<PickableObject> ().tutorial_usedOn = true;
+                handsInventory.LeftHandObject.GetComponent<PickableObject>().tutorial_usedOn = true;
             }
         }
         else
