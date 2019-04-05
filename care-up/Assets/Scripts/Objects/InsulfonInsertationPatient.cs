@@ -33,7 +33,8 @@ public class InsulfonInsertationPatient : PersonObject {
                     break;
 
                 case "SitInBed":
-                    PlayerAnimator.SetTrigger("sit_up_in_bed");
+                    PlayerAnimator.SetTrigger("StartSittingInBedAnimation");
+                    PlayerAnimator.SetTrigger("S StartSittingInBedAnimation");
                     break;
 
                 default:
