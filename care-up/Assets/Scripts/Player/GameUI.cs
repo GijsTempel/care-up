@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using UnityEngine.EventSystems;
+
 
 public class GameUI : MonoBehaviour {
 	GameObject Player;
@@ -182,7 +184,17 @@ public class GameUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (WalkToGroupPanel != null)
+        PointerEventData pe = new PointerEventData(EventSystem.current);
+        pe.position = Input.mousePosition;
+        List<RaycastResult> hits = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pe, hits);
+        foreach (RaycastResult h in hits)
+        {
+            if (h.gameObject.GetComponent<WalkToGroupButton>() != null)
+                h.gameObject.GetComponent<WalkToGroupButton>().HighlightButton(true);
+        }
+
+            if (WalkToGroupPanel != null)
         {
             PlayerScript ps = GameObject.FindObjectOfType<PlayerScript>();
             if (prevWalkToGroup != ps.currentWalkPosition)
@@ -190,16 +202,22 @@ public class GameUI : MonoBehaviour {
                 WalkToGroupPanel.SetActive(ps.away);
                 if (!ps.away)
                 {
+
                     LeftSideButton.gameObject.SetActive(ps.currentWalkPosition.LeftWalkToGroup != null);
                     RightSideButton.gameObject.SetActive(ps.currentWalkPosition.RightWalkToGroup != null);
                     if (ps.currentWalkPosition.LeftWalkToGroup != null)
+                    {
                         LeftSideButton.setWalkToGroup(ps.currentWalkPosition.LeftWalkToGroup);
+                    }
 
                     if (ps.currentWalkPosition.RightWalkToGroup != null)
+                    {
                         RightSideButton.setWalkToGroup(ps.currentWalkPosition.RightWalkToGroup);
+                    }
                 }
                 else
                 {
+
                     LeftSideButton.gameObject.SetActive(false);
                     RightSideButton.gameObject.SetActive(false);
                 }
@@ -207,6 +225,7 @@ public class GameUI : MonoBehaviour {
             }
             if (!MoveBackButton.activeSelf)
             {
+
                 LeftSideButton.gameObject.SetActive(false);
                 RightSideButton.gameObject.SetActive(false);
                 prevWalkToGroup = null;

@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+
+
 
 
 public class WalkToGroupButton : MonoBehaviour {
 
     WalkToGroup linkedWalkToGroup = null;
     Color ButtonColor = Color.white;
-
+    bool mouse_over = false;
     //button components
     [HideInInspector]
     public GameObject blur;
@@ -20,6 +23,15 @@ public class WalkToGroupButton : MonoBehaviour {
     public GameObject _icon;
 
     public bool SideButton = false;
+
+
+    void OnMouseOver()
+    {
+        //If your mouse hovers over the GameObject with the script attached, output this message
+        Debug.Log("Mouse is over GameObject.  " + name);
+    }
+
+
 
     void Start()
     {
@@ -78,11 +90,11 @@ public class WalkToGroupButton : MonoBehaviour {
         linkedWalkToGroup.ButtonHovered = value;
    
         HighlightButton(value);
-        print(name);
     }
 
     public void HighlightButton(bool value)
     {
+        mouse_over = value;
         if (blur != null)
         {
             blur.SetActive(value);
@@ -109,13 +121,28 @@ public class WalkToGroupButton : MonoBehaviour {
 
     }
 
+    void OnEnable()
+    {
+        HighlightButton(false);
+        PointerEventData pe = new PointerEventData(EventSystem.current);
+        pe.position = Input.mousePosition;
+        List<RaycastResult> hits = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pe, hits);
+        foreach (RaycastResult h in hits)
+        {
+            if (h.gameObject == gameObject)
+                HighlightButton(true);
+        }
+    }
+
     public void MoveToGroup()
     {
         if (linkedWalkToGroup != null)
         {
             GameObject.FindObjectOfType<PlayerScript>().WalkToGroup(linkedWalkToGroup);
             linkedWalkToGroup.ButtonHovered = false;
-            HighlightButton(false);
+            if (!SideButton)
+                HighlightButton(false);
         }
     }
 
