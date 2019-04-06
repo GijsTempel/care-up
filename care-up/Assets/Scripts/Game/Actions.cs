@@ -25,6 +25,8 @@ namespace CareUp.Actions
         public string blockLock;
         public string blockTitle;
         public string blockMessage;
+        public string comment;
+        public string commentUA;
 
         protected ActionManager.ActionType type;
 

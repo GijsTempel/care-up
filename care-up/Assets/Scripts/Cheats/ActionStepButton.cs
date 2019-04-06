@@ -35,7 +35,19 @@ public class ActionStepButton : MonoBehaviour {
             }
             else if (lastMode == ActionsPanel.Mode.Type)
             {
-                main_text.text = action.Type.ToString();
+                string ss = action.Type.ToString();
+                ss += "\n";
+                string[] ObjectNames = new string[0];
+                action.ObjectNames(out ObjectNames);
+                foreach (string s in ObjectNames)
+                {
+                    ss += s + "  ";
+                }
+                main_text.text = ss;
+            }
+            else if (lastMode == ActionsPanel.Mode.Comment)
+            {
+                main_text.text = action.comment;
             }
         }
         int index = action.SubIndex;

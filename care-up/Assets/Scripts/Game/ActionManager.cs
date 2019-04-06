@@ -381,6 +381,19 @@ public class ActionManager : MonoBehaviour {
             string type = action.Attributes["type"].Value;
             string descr = action.Attributes["description"].Value;
 
+
+            string comment = "";
+            if (action.Attributes["comment"] != null)
+            {
+                comment = action.Attributes["comment"].Value;
+            }
+
+            string commentUA = "";
+            if (action.Attributes["comment"] != null)
+            {
+                commentUA = action.Attributes["comment"].Value;
+            }
+
             string audio = "";
             if (action.Attributes["audioHint"] != null)
             {
@@ -546,6 +559,9 @@ public class ActionManager : MonoBehaviour {
                     Debug.LogError("No action type found: " + type);
                     break;
             }
+            actionList[actionList.Count - 1].comment = comment;
+            actionList[actionList.Count - 1].commentUA = commentUA;
+
         }
         actionList.Last<Action>().sceneDoneTrigger = true;
 

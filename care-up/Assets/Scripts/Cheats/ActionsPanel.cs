@@ -12,6 +12,8 @@ public class ActionsPanel : MonoBehaviour {
     {
         ShortDescr,
         Type,
+        Comment,
+        CommentUA,
     };
 
     public ActionsPanel.Mode mode;
