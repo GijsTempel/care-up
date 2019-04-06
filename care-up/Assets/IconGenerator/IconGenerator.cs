@@ -4,17 +4,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine;
+
 using UnityEngine.UI;
 using UnityEditor;
 
 public class IconGenerator : MonoBehaviour {
-	
+
     // I should really develop a custom inspector for the next release ;)
     // Also, would you like to have custom overlays for every target?
 
-	[Header("Prefabs")]
+    [Header("Prefabs")]
+    public bool allPrefabs = false;
     [Tooltip("IconGenerator will generate icons from these prefabs / objects")]
-    public Target[] targets;
+    public List<Target> targets;
     [Tooltip("These images will be applied to EVERY icon generated. Higher index = on top")]
     public Sprite[] overlays;
 
@@ -31,8 +34,24 @@ public class IconGenerator : MonoBehaviour {
 
     private byte[] overlayBytes;
 
+    GameObject[] prefabs;
+
 	void Start ()
 	{
+        if (allPrefabs)
+        {
+            targets.Clear();
+            prefabs = Resources.LoadAll<GameObject>("Prefabs");
+            foreach (GameObject o in prefabs)
+            {
+                //if (o.GetComponent<PickableObject>() != null)
+                //{
+                    Target t = new Target();
+                    t.obj = o;
+                    targets.Add(t);
+                //}
+            }
+        }
         GetOverlayTextures();
 		int targetCount = 0;
 		string iconName;
@@ -62,17 +81,23 @@ public class IconGenerator : MonoBehaviour {
 			rawIcon = AssetPreview.GetAssetPreview (targetObj);
 			icon = rawIcon as Texture2D;
 
-            if (overlayIcons.Count != 0)
+            //if (overlayIcons.Count != 0)
+            //{
+            //    if(icon == null)
+            //    {
+            //        Debug.LogError("There was an error generating image from " + targetObj.name + "! Are you sure this is an 3D object?"); 
+            //        continue;
+            //    }
+
+            //    icon = GetFinalTexture(icon, targetCount);
+            //}
+            //if (icon == null)
+            //continue;
+            if (icon == null)
             {
-                if(icon == null)
-                {
-                    Debug.LogError("There was an error generating image from " + targetObj.name + "! Are you sure this is an 3D object?"); 
-                    continue;
-                }
-
-                icon = GetFinalTexture(icon, targetCount);
+                print("_____________" + targetObj.name);
+                continue;
             }
-
             byte[] bytes = icon.EncodeToPNG ();
 
             if (IsNullOrWhiteSpace(target.name)) // Check if custom name is applied

@@ -14,6 +14,7 @@ public class ActionsPanel : MonoBehaviour {
         Type,
         Comment,
         CommentUA,
+        Icons,
     };
 
     public ActionsPanel.Mode mode;

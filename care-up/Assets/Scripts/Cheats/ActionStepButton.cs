@@ -9,6 +9,7 @@ public class ActionStepButton : MonoBehaviour {
     Action action;
     ActionsPanel.Mode lastMode;
     public Text main_text;
+    public GameObject icons;
     ActionsPanel actionsPanel;
 	void Start () {
         actionsPanel = GameObject.FindObjectOfType<ActionsPanel>();
@@ -28,6 +29,7 @@ public class ActionStepButton : MonoBehaviour {
             return;
         if (lastMode != actionsPanel.mode)
         {
+            icons.SetActive(false);
             lastMode = actionsPanel.mode;
             if (lastMode == ActionsPanel.Mode.ShortDescr)
             {
@@ -52,6 +54,39 @@ public class ActionStepButton : MonoBehaviour {
             else if (lastMode == ActionsPanel.Mode.CommentUA)
             {
                 main_text.text = action.commentUA;
+            }
+            else if (lastMode == ActionsPanel.Mode.Icons)
+            {
+                main_text.text = action.Type.ToString();
+                icons.SetActive(true);
+                string[] ObjectNames = new string[0];
+                action.ObjectNames(out ObjectNames);
+                Sprite x = Resources.Load("Sprites/Prefab_Icons/x", typeof(Sprite)) as Sprite;
+                if (ObjectNames.Length >= 1)
+                {
+                    Sprite l = Resources.Load("Sprites/Prefab_Icons/" + ObjectNames[0], typeof(Sprite)) as Sprite;
+                    if (l != null)
+                        icons.transform.Find("left").GetComponent<Image>().sprite = l;
+                    else
+                        icons.transform.Find("left").GetComponent<Image>().sprite = x;
+                }
+                else
+                {
+                    icons.transform.Find("left").GetComponent<Image>().sprite = x;
+                }
+                if (ObjectNames.Length >= 2)
+                {
+                    Sprite r = Resources.Load("Sprites/Prefab_Icons/" + ObjectNames[1], typeof(Sprite)) as Sprite;
+
+                    if (r != null)
+                        icons.transform.Find("right").GetComponent<Image>().sprite = r;
+                    else
+                        icons.transform.Find("right").GetComponent<Image>().sprite = x;
+                }
+                else
+                {
+                    icons.transform.Find("right").GetComponent<Image>().sprite = x;
+                }
             }
         }
         int index = action.SubIndex;
