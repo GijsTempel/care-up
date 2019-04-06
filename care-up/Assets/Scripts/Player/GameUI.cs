@@ -90,6 +90,11 @@ public class GameUI : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+#if !UNITY_EDITOR
+        if(GameObject.Find("ActionsPanel") != null)
+            GameObject.Find("ActionsPanel").SetActive(false);
+#endif
         WalkToGroupPanel = GameObject.Find("MovementButtons");
         Player = GameObject.Find("Player");
 		closeButton = transform.Find("CloseBtn").gameObject;
@@ -184,15 +189,7 @@ public class GameUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        PointerEventData pe = new PointerEventData(EventSystem.current);
-        pe.position = Input.mousePosition;
-        List<RaycastResult> hits = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(pe, hits);
-        foreach (RaycastResult h in hits)
-        {
-            if (h.gameObject.GetComponent<WalkToGroupButton>() != null)
-                h.gameObject.GetComponent<WalkToGroupButton>().HighlightButton(true);
-        }
+
 
             if (WalkToGroupPanel != null)
         {

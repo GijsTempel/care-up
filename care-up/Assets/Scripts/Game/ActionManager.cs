@@ -39,7 +39,7 @@ public class ActionManager : MonoBehaviour {
 
 
     // actual list of actions
-    private List<Action> actionList = new List<Action>();
+    public List<Action> actionList = new List<Action>();
 
     // list of descriptions of steps, player got penalty on
     private List<string> stepsList = new List<string>();
