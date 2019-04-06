@@ -7,20 +7,37 @@ using UnityEngine.UI;
 
 public class ActionStepButton : MonoBehaviour {
     Action action;
+    ActionsPanel.Mode lastMode;
+    public Text main_text;
+    ActionsPanel actionsPanel;
 	void Start () {
-	}
+        actionsPanel = GameObject.FindObjectOfType<ActionsPanel>();
+
+    }
 
     public void setAction(Action a)
     {
         action = a;
-
+        if (main_text != null)
+            main_text.text = a.shortDescr;
     }
 
     public void updateLook(int currentIndex)
     {
         if (action == null)
             return;
-
+        if (lastMode != actionsPanel.mode)
+        {
+            lastMode = actionsPanel.mode;
+            if (lastMode == ActionsPanel.Mode.ShortDescr)
+            {
+                main_text.text = action.shortDescr;
+            }
+            else if (lastMode == ActionsPanel.Mode.Type)
+            {
+                main_text.text = action.Type.ToString();
+            }
+        }
         int index = action.SubIndex;
         if (currentIndex == index)
         {

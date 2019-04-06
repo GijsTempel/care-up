@@ -7,6 +7,14 @@ using CareUp.Actions;
 public class ActionsPanel : MonoBehaviour {
     bool slideState = false;
     int lastStepId = -1;
+
+    public enum Mode
+    {
+        ShortDescr,
+        Type,
+    };
+
+    public ActionsPanel.Mode mode;
     ActionManager am;
 	// Use this for initialization
 	void Start () {
@@ -15,9 +23,16 @@ public class ActionsPanel : MonoBehaviour {
             am = GameObject.FindObjectOfType<ActionManager>();
         }
         buildActionsList();
-
     }
-	
+
+
+    public void SetMode(int _mode) 
+    {
+        mode = (ActionsPanel.Mode)_mode;
+        lastStepId = -1;
+        print(mode.ToString());
+    }
+
 	// Update is called once per frame
 	void Update () {
         if (am != null)
@@ -47,7 +62,8 @@ public class ActionsPanel : MonoBehaviour {
             foreach (Action a in am.actionList)
             {
                 GameObject ActionStep = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/UI/ActionStepButton"), content);
-                ActionStep.transform.Find("Text").GetComponent<Text>().text = a.SubIndex.ToString() + " " + a.shortDescr ;
+                ActionStep.transform.Find("Text").GetComponent<Text>().text = a.SubIndex.ToString() + " " + a.shortDescr + 
+                "// " + a.Type;
                 ActionStep.GetComponent<ActionStepButton>().setAction(a);
             }
         }
