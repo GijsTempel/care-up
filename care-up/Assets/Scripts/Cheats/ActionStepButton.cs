@@ -49,6 +49,10 @@ public class ActionStepButton : MonoBehaviour {
             {
                 main_text.text = action.comment;
             }
+            else if (lastMode == ActionsPanel.Mode.CommentUA)
+            {
+                main_text.text = action.commentUA;
+            }
         }
         int index = action.SubIndex;
         if (currentIndex == index)

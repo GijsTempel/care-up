@@ -389,9 +389,9 @@ public class ActionManager : MonoBehaviour {
             }
 
             string commentUA = "";
-            if (action.Attributes["comment"] != null)
+            if (action.Attributes["commentUA"] != null)
             {
-                commentUA = action.Attributes["comment"].Value;
+                commentUA = action.Attributes["commentUA"].Value;
             }
 
             string audio = "";
