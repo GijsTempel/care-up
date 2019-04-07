@@ -144,6 +144,7 @@ public class GameUI : MonoBehaviour {
                 }
                 b.gameObject.SetActive(false);
             }
+            int activeGroupButtons = 0;
             foreach (WalkToGroup g in GameObject.FindObjectsOfType<WalkToGroup>())
             {
                 switch (g.WalkToGroupType) 
@@ -151,10 +152,12 @@ public class GameUI : MonoBehaviour {
                     case WalkToGroup.GroupType.WorkField:
                         WTGButtons["WorkField"].setWalkToGroup(g);
                         WTGButtons["WorkField"].gameObject.SetActive(true);
+                        activeGroupButtons++;
                         break;
                     case WalkToGroup.GroupType.Doctor:
                         WTGButtons["Doctor"].setWalkToGroup(g);
                         WTGButtons["Doctor"].gameObject.SetActive(true);
+                        activeGroupButtons++;
                         break;
                     case WalkToGroup.GroupType.Patient:
                         WTGButtons["Patient"].setWalkToGroup(g);
@@ -163,9 +166,16 @@ public class GameUI : MonoBehaviour {
                     case WalkToGroup.GroupType.Sink:
                         WTGButtons["Sink"].setWalkToGroup(g);
                         WTGButtons["Sink"].gameObject.SetActive(true);
+                        activeGroupButtons++;
                         break;
                 }
             }
+            if (!WTGButtons["Sink"].gameObject.activeSelf)
+                WalkToGroupPanel.transform.Find("spacer0").gameObject.SetActive(false);
+            if (!WTGButtons["Patient"].gameObject.activeSelf)
+                WalkToGroupPanel.transform.Find("spacer2").gameObject.SetActive(false);
+            if (activeGroupButtons == 0)
+                WalkToGroupPanel.transform.Find("spacer1").gameObject.SetActive(false);
 
         }
         //Debug.Log(Application.isEditor);
