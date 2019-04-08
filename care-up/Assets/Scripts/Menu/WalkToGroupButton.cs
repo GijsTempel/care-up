@@ -1,11 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-
-
-
 
 public class WalkToGroupButton : MonoBehaviour {
 
@@ -24,15 +20,12 @@ public class WalkToGroupButton : MonoBehaviour {
 
     public bool SideButton = false;
 
-
     void OnMouseOver()
     {
         //If your mouse hovers over the GameObject with the script attached, output this message
         Debug.Log("Mouse is over GameObject.  " + name);
     }
-
-
-
+    
     void Start()
     {
         ButtonColor = GetComponent<Image>().color;
@@ -49,7 +42,6 @@ public class WalkToGroupButton : MonoBehaviour {
             _icon = transform.Find("icon").gameObject;
             if (!SideButton)
                _icon.GetComponent<Image>().sprite = Resources.Load("Sprites/WalkGroup_Icons/" + name, typeof(Sprite)) as Sprite;
-
         }
     }
 
@@ -136,7 +128,7 @@ public class WalkToGroupButton : MonoBehaviour {
     }
 
     public void MoveToGroup()
-    {
+    {       
         if (linkedWalkToGroup != null)
         {
             GameObject.FindObjectOfType<PlayerScript>().WalkToGroup(linkedWalkToGroup);
@@ -145,5 +137,4 @@ public class WalkToGroupButton : MonoBehaviour {
                 HighlightButton(false);
         }
     }
-
 }

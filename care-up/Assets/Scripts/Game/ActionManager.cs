@@ -31,7 +31,8 @@ public class ActionManager : MonoBehaviour {
         ObjectExamine,
         PickUp,
         SequenceStep,
-        ObjectDrop
+        ObjectDrop,
+        Movement
     };
 
     // name of the xml file with actions
@@ -351,6 +352,29 @@ public class ActionManager : MonoBehaviour {
         return result;
     }
 
+    public bool CompareMovementPosition(string position)
+    {
+        bool result = false;
+
+        List<Action> sublist = actionList.Where(action =>
+                action.SubIndex == currentActionIndex &&
+                action.matched == false).ToList();
+        sublist = sublist.Where(action =>
+            action.blockRequired == "" ||
+            unlockedBlocks.Contains(action.blockRequired)).ToList();
+
+        foreach (Action a in sublist)
+        {
+            if (a.Type == ActionType.Movement)
+            {
+                if (((MovementAction)a).GetInfo() == position)
+                    result = true;
+            }
+        }
+
+        return result;
+    }
+
     private Controls controls;
 
     /// <summary>
@@ -555,6 +579,12 @@ public class ActionManager : MonoBehaviour {
                     string dropID = (action.Attributes["posID"] != null) ? action.Attributes["posID"].Value : "0";
                     actionList.Add(new ObjectDropAction(dropItem, dropID, index, descr, fDescr, audio, extra, 
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire, 
+                        blockUnlock, blockLock, blockTitle, blockMsg));
+                    break;
+                case "movement":
+                    string movement = action.Attributes["value"].Value;
+                    actionList.Add(new MovementAction(movement, index, descr, fDescr, audio, extra,
+                        pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
                         blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
                 default:
@@ -785,6 +815,11 @@ public class ActionManager : MonoBehaviour {
 
         if (!CheckScenarioCompleted() && occured)
             ActionManager.CorrectAction();
+    }
+
+    public void OnMovementAction(string position)
+    {
+        Debug.Log($"Player moved to {position.Replace("Pos", "")} position");
     }
 
     /// <summary>
