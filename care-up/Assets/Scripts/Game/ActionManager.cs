@@ -32,7 +32,8 @@ public class ActionManager : MonoBehaviour {
         PickUp,
         SequenceStep,
         ObjectDrop,
-        Movement
+        Movement,
+        OpenItemControls
     };
 
     // name of the xml file with actions
@@ -582,8 +583,14 @@ public class ActionManager : MonoBehaviour {
                         blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
                 case "movement":
-                    string movement = action.Attributes["value"].Value;
+                    string movement = "";
                     actionList.Add(new MovementAction(movement, index, descr, fDescr, audio, extra,
+                        pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
+                        blockUnlock, blockLock, blockTitle, blockMsg));
+                    break;
+                case "openItemControls":
+                    string item = action.Attributes["item"].Value;
+                    actionList.Add(new OpenItemControlsAction(item, index, descr, fDescr, audio, extra,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
                         blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
@@ -821,6 +828,19 @@ public class ActionManager : MonoBehaviour {
     {
         Debug.Log($"Player moved to {position.Replace("Pos", "")} position");
     }
+
+    public void OnOpenItemControlsAction(string item)
+    {
+        string[] info = { item };
+        bool occured = Check(info, ActionType.OpenItemControls);
+        //UpdatePoints(occured ? 1 : 0); // temporarily disabled
+
+        Debug.Log($"Item contols group opened on {item} item with result {occured}");
+
+        if (!CheckScenarioCompleted() && occured)
+            ActionManager.CorrectAction();
+    }
+
 
     /// <summary>
     /// Checks if triggered action is correct ( expected to be done in action list ).

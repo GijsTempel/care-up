@@ -449,4 +449,42 @@ namespace CareUp.Actions
             name = res;
         }
     }
+
+    public class OpenItemControlsAction : Action
+    {
+        private string itemName;
+
+        public OpenItemControlsAction(string item, int index, string sdescr, string fdescr,
+            string audio, string extra, int points, bool notNeeded, float quizTime, string title,
+            string content, string blockReq, string blockUnl, string blockL, string blockTitl, string blockMsg)
+            : base(ActionManager.ActionType.ObjectDrop, index, sdescr, fdescr, audio, extra, points,
+                  notNeeded, quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg)
+        {
+            itemName = item;
+        }
+
+        public override bool Compare(string[] info)
+        {
+            bool same = false;
+            if (info.Length == 1)
+            {
+                if (info[0] == itemName)
+                {
+                    same = true;
+                }
+            }
+            return same;
+        }
+
+        public string GetObjectName()
+        {
+            return itemName;
+        }
+
+        public override void ObjectNames(out string[] name)
+        {
+            string[] res = { itemName };
+            name = res;
+        }
+    }
 }
