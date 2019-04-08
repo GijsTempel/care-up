@@ -379,6 +379,11 @@ public class PlayerScript : MonoBehaviour
         if (robotUIopened)
             return;
 
+        if (GameObject.FindObjectOfType<ObjectsPanel>() != null)
+        {
+            GameObject.FindObjectOfType<ObjectsPanel>().UpdatePanel();
+        }
+
         ToggleAway();
         transform.position = group.Position;
         if (prefs == null || (prefs != null && !prefs.VR))

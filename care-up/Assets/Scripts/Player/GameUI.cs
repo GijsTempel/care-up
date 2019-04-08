@@ -22,7 +22,6 @@ public class GameUI : MonoBehaviour {
     public WalkToGroupButton RightSideButton;
     public Dictionary<string, WalkToGroupButton> WTGButtons;
     WalkToGroup prevWalkToGroup = null;
-
     public void MoveBack()
 	{
 		Player.GetComponent<PlayerScript>().MoveBackButton();

@@ -65,8 +65,6 @@ public class ActionsPanel : MonoBehaviour {
             foreach (Action a in am.actionList)
             {
                 GameObject ActionStep = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/UI/ActionStepButton"), content);
-                ActionStep.transform.Find("Text").GetComponent<Text>().text = a.SubIndex.ToString() + " " + a.shortDescr + 
-                "// " + a.Type;
                 ActionStep.GetComponent<ActionStepButton>().setAction(a);
             }
         }
