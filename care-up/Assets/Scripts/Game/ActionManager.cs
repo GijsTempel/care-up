@@ -457,6 +457,8 @@ public class ActionManager : MonoBehaviour {
             if (action.Attributes["quiz"] != null)
             {
                 float.TryParse(action.Attributes["quiz"].Value, out quizTime);
+                if (quizTime < 0.1f)
+                    quizTime = 2.0f;
             }
 
             string messageTitle = "";
