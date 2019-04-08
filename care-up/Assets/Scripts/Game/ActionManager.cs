@@ -826,14 +826,15 @@ public class ActionManager : MonoBehaviour {
                     //inserted checklist stuff
                     //RobotUITabChecklist.StrikeStep(index);
                     
-                    if (type == ActionType.SequenceStep && penalized)
+                    if (action.blockUnlock != "")
                     {
-                        wrongStepIndexes.Add(index);
-                        break;
+                        unlockedBlocks.Add(action.blockUnlock);
                     }
 
-                    // end checklist
-                    correctStepIndexes.Add(index);
+                    if (action.blockLock != "")
+                    {
+                        unlockedBlocks.Remove(action.blockLock);
+                    }
 
                     if (action.quizTriggerTime >= 0.0f)
                     {
@@ -846,14 +847,14 @@ public class ActionManager : MonoBehaviour {
                             action.messageTitle, action.messageContent, RobotUIMessageTab.Icon.Info);
                     }
 
-                    if (action.blockUnlock != "")
+                    if (type == ActionType.SequenceStep && penalized)
                     {
-                        unlockedBlocks.Add(action.blockUnlock);
+                        wrongStepIndexes.Add(index);
                     }
-
-                    if (action.blockLock != "")
+                    else
                     {
-                        unlockedBlocks.Remove(action.blockLock);
+                        // end checklist
+                        correctStepIndexes.Add(index);
                     }
 
                     // count only 1 step, some steps are identical
