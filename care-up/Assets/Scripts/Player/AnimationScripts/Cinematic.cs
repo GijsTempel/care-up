@@ -7,6 +7,7 @@ public class Cinematic : StateMachineBehaviour
     public string target;
     public bool resetCamera = false;
     protected CameraMode mode;
+    public bool ExitCinematicAtEnd = false;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -21,6 +22,10 @@ public class Cinematic : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         mode.animationEnded = true;
+        if (ExitCinematicAtEnd)
+        {
+            mode.ToggleCameraMode(CameraMode.Mode.Free);
+        }
     }
 
    
