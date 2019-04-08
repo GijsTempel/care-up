@@ -21,6 +21,7 @@ public class Cinematic : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         mode.animationEnded = true;
+     
     }
 
    
