@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class AnimationSequenceState : StateMachineBehaviour {
 
+
     public string SequenceName = "";
+    public bool TuggleFromCinematic = true;
     public List<int> keyFrames = new List<int>();
 
     protected int keyFrame = 0;
 
     protected float frame = 0f;
     protected float prevFrame = 0f;
+    
 
     protected HandsInventory inv;
 
@@ -61,11 +64,13 @@ public class AnimationSequenceState : StateMachineBehaviour {
 
 	// OnStateExit is called when a transition ends and the state machine finishes evaluating this state
 	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-        CameraMode cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
-        cameraMode.ToggleCameraMode(CameraMode.Mode.Cinematic);
-        cameraMode.animationEnded = true;
-        cameraMode.cinematicToggle = false;
-
+        if (TuggleFromCinematic)
+        {
+            CameraMode cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
+            cameraMode.ToggleCameraMode(CameraMode.Mode.Cinematic);
+            cameraMode.animationEnded = true;
+            cameraMode.cinematicToggle = false;
+        }
         // unlock 2nd workfield action
         WorkField wf = GameObject.FindObjectOfType<WorkField>();
         if (wf != null)
