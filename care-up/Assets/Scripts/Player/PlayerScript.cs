@@ -43,6 +43,8 @@ public class PlayerScript : MonoBehaviour
     private List<WalkToGroup> groups;
     public WalkToGroup currentWalkPosition;
 
+    private ActionManager actionManager;
+
     RobotManager robot;
     private Vector3 savedRobotPos;
     private Quaternion savedRobotRot;
@@ -115,6 +117,12 @@ public class PlayerScript : MonoBehaviour
     {
         instance = this;
         actionsLocked = false;
+
+
+        if (GameObject.Find("GameLogic") != null)
+        {
+            actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
+        }
 
         mouseLook.Init(transform, cam.transform);
 
@@ -395,6 +403,8 @@ public class PlayerScript : MonoBehaviour
                 g.GetComponent<Collider>().enabled = true;
             }
         }
+
+        actionManager.OnMovementAction(currentWalkPosition.name);
     }
 
     private void ToggleAway(bool _away = false)

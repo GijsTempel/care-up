@@ -916,9 +916,7 @@ public class HandsInventory : MonoBehaviour {
 		}
 		if (alloweCombine)
         {
-            tutorial_combined = true;
- 
-			//--------------------------------------------------------------------
+            tutorial_combined = true; 
 			bool idModeAllow = false;
 
 			if (GameObject.Find("GameLogic").GetComponent<ObjectsIDsController>() != null)
@@ -947,7 +945,6 @@ public class HandsInventory : MonoBehaviour {
 
             combineDelayed = true;
             ToggleControls(true);
-
         }
     }
 

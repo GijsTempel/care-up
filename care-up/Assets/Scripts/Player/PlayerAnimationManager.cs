@@ -257,6 +257,5 @@ public class PlayerAnimationManager : MonoBehaviour
     {
         float targetFrame = compareFrame / 60f; // 60fps
         return (currentFrame >= targetFrame && previousFrame < targetFrame);
-
     }
 }
