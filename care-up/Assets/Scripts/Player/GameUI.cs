@@ -170,11 +170,11 @@ public class GameUI : MonoBehaviour {
                         break;
                 }
             }
-            if (!WTGButtons["Sink"].gameObject.activeSelf)
+            if (!WTGButtons["Sink"].gameObject.activeSelf || activeGroupButtons < 2)
                 WalkToGroupPanel.transform.Find("spacer0").gameObject.SetActive(false);
-            if (!WTGButtons["Patient"].gameObject.activeSelf)
+            if (!WTGButtons["Patient"].gameObject.activeSelf || activeGroupButtons < 2)
                 WalkToGroupPanel.transform.Find("spacer2").gameObject.SetActive(false);
-            if (activeGroupButtons == 0)
+            if (activeGroupButtons < 2)
                 WalkToGroupPanel.transform.Find("spacer1").gameObject.SetActive(false);
 
         }
