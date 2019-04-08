@@ -826,14 +826,14 @@ public class ActionManager : MonoBehaviour {
 
     public void OnMovementAction(string position)
     {
-        string[] info = { position };
-        bool occured = Check(info, ActionType.Movement);
-        //UpdatePoints(occured ? 1 : 0); // temporarily disabled
+        //string[] info = { position };
+        //bool occured = Check(info, ActionType.Movement);
+        ////UpdatePoints(occured ? 1 : 0); // temporarily disabled
 
-        Debug.Log($"Player moved to {position.Replace("Pos", "")} position");
+        //Debug.Log($"Player moved to {position.Replace("Pos", "")} position");
 
-        if (!CheckScenarioCompleted() && occured)
-            ActionManager.CorrectAction();
+        //if (!CheckScenarioCompleted() && occured)
+            //ActionManager.CorrectAction();
     }
 
     public void OnOpenItemControlsAction(string item)
