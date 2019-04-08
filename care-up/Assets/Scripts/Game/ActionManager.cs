@@ -583,7 +583,7 @@ public class ActionManager : MonoBehaviour {
                         blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
                 case "movement":
-                    string movement = "";
+                    string movement = action.Attributes["value"].Value; 
                     actionList.Add(new MovementAction(movement, index, descr, fDescr, audio, extra,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
                         blockUnlock, blockLock, blockTitle, blockMsg));
@@ -826,7 +826,14 @@ public class ActionManager : MonoBehaviour {
 
     public void OnMovementAction(string position)
     {
+        string[] info = { position };
+        bool occured = Check(info, ActionType.Movement);
+        //UpdatePoints(occured ? 1 : 0); // temporarily disabled
+
         Debug.Log($"Player moved to {position.Replace("Pos", "")} position");
+
+        if (!CheckScenarioCompleted() && occured)
+            ActionManager.CorrectAction();
     }
 
     public void OnOpenItemControlsAction(string item)
