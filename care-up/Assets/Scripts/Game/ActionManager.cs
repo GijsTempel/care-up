@@ -33,7 +33,6 @@ public class ActionManager : MonoBehaviour {
         SequenceStep,
         ObjectDrop,
         Movement,
-        OpenItemControls
     };
 
     // name of the xml file with actions
@@ -588,12 +587,6 @@ public class ActionManager : MonoBehaviour {
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
                         blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
-                case "openItemControls":
-                    string item = action.Attributes["item"].Value;
-                    actionList.Add(new OpenItemControlsAction(item, index, descr, fDescr, audio, extra,
-                        pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
-                        blockUnlock, blockLock, blockTitle, blockMsg));
-                    break;
                 default:
                     Debug.LogError("No action type found: " + type);
                     break;
@@ -826,32 +819,14 @@ public class ActionManager : MonoBehaviour {
 
     public void OnMovementAction(string position)
     {
-        return;
-
         string[] info = { position };
         bool occured = Check(info, ActionType.Movement);
-        //UpdatePoints(occured ? 1 : 0); // temporarily disabled
 
-        Debug.Log($"Player moved to {position.Replace("Pos", "")} position");
-
-        if (!CheckScenarioCompleted() && occured)
-            ActionManager.CorrectAction();
-    }
-
-    public void OnOpenItemControlsAction(string item)
-    {
-        return;
-
-        string[] info = { item };
-        bool occured = Check(info, ActionType.OpenItemControls);
-        //UpdatePoints(occured ? 1 : 0); // temporarily disabled
-
-        Debug.Log($"Item contols group opened on {item} item with result {occured}");
+        Debug.Log($"Player moved to {position.Replace("Pos", "")} position with result {occured}");
 
         if (!CheckScenarioCompleted() && occured)
             ActionManager.CorrectAction();
     }
-
 
     /// <summary>
     /// Checks if triggered action is correct ( expected to be done in action list ).
@@ -876,11 +851,12 @@ public class ActionManager : MonoBehaviour {
             unlockedBlocks.Contains(action.blockRequired)).ToList();
 
         int subcategoryLength = sublist.Count;
-        
+
         // make a list from sublist with actions of performed action type only
         List<Action> subtypelist = sublist.Where(action => action.Type == type).ToList();
+ 
         if (sublist.Count != 0)
-        {
+           {           
             foreach (Action action in subtypelist)
             {
                 if (action.Compare(info))
@@ -889,6 +865,7 @@ public class ActionManager : MonoBehaviour {
                     action.matched = true;
 
                     int index = actionList.IndexOf(action);
+
                     //inserted checklist stuff
                     //RobotUITabChecklist.StrikeStep(index);
                     
@@ -986,7 +963,7 @@ public class ActionManager : MonoBehaviour {
             currentActionIndex += 1;
         }
         
-        if (!matched && type != ActionType.ObjectExamine && type != ActionType.PickUp && type != ActionType.ObjectDrop)
+        if (!matched && type != ActionType.ObjectExamine && type != ActionType.PickUp && type != ActionType.ObjectDrop && type != ActionType.Movement)
         {
             int index = actionList.IndexOf(currentAction);
             if ( sublist.Count > 0 && !wrongStepIndexes.Contains(index) )
@@ -1018,9 +995,9 @@ public class ActionManager : MonoBehaviour {
             
             currentAction = actionsLeft.Count > 0 ? actionsLeft.First() : null;
 
-            if (manager == null || manager.practiceMode)
+            if ((manager == null || manager.practiceMode) && type != ActionType.Movement)
             {
-                // now we have not mandatory actions, let's skip them and add to mistakes
+                //now we have not mandatory actions, let's skip them and add to mistakes
                 List<Action> skippableActions = actionsLeft.Where(action => action.notMandatory == true).ToList();
                 if (actionsLeft.Count == skippableActions.Count) // all of them are skippable
                 {
@@ -1032,7 +1009,7 @@ public class ActionManager : MonoBehaviour {
                         action.SubIndex == currentActionIndex &&
                         action.matched == false).ToList();
 
-                    currentAction = actionsLeft.Count > 0 ? actionsLeft.First() : null;
+                   currentAction = actionsLeft.Count > 0 ? actionsLeft.First() : null;
                 }
             }
         }

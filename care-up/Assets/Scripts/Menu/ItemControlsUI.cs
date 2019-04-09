@@ -161,7 +161,6 @@ public class ItemControlsUI : MonoBehaviour {
             if (initedObject.GetComponent<PickableObject>() != null
                  && handsInventory.IsInHand(initedObject))
             {
-                actionManager.OnOpenItemControlsAction(initedObject.name);
                 useOnButton.SetActive(true);
                 useOnNTButton.SetActive(true);
                 combineButton.SetActive(true);
