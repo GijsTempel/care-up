@@ -119,11 +119,14 @@ public class WalkToGroupButton : MonoBehaviour {
         PointerEventData pe = new PointerEventData(EventSystem.current);
         pe.position = Input.mousePosition;
         List<RaycastResult> hits = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(pe, hits);
-        foreach (RaycastResult h in hits)
+        if (EventSystem.current != null)
         {
-            if (h.gameObject == gameObject)
-                HighlightButton(true);
+            EventSystem.current.RaycastAll(pe, hits);
+            foreach (RaycastResult h in hits)
+            {
+                if (h.gameObject == gameObject)
+                    HighlightButton(true);
+            }
         }
     }
 
