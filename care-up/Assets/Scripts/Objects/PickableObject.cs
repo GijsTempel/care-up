@@ -360,6 +360,7 @@ public class PickableObject : InteractableObject
         return (controls.SelectedObject != null && actionManager.CompareUseOnInfo(name, targetObject));
     }
     
+
     public virtual void Pick()
     {
         // callback for handling different OnPick mechanics

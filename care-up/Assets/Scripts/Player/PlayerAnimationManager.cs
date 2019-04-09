@@ -140,6 +140,7 @@ public class PlayerAnimationManager : MonoBehaviour
 
     public static void PlayUseOnIDAnimation(int UseObjID, bool isLeft = false)
     {
+         print(" PlayUseOnIDAnimation(int UseObjID, bool isLeft = false)");
         if (isLeft)
         {
             animationController.SetTrigger("UseLeft");
