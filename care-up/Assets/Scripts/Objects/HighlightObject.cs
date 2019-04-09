@@ -6,15 +6,23 @@ public class HighlightObject : MonoBehaviour {
     Transform target;
     HighlightControl hl_control;
     HighlightObject.type currentType;
+    public List<GameObject> BallElements;
+    public List<GameObject> QubeElements;
+
     float timeLeft = float.PositiveInfinity;
     public enum type
     {
-        Ball
+        Ball,
+        Qube
     };
 
     public void setType(HighlightObject.type _type)
     {
         currentType = _type;
+        foreach (GameObject b in BallElements)
+            b.SetActive(currentType == HighlightObject.type.Ball);
+        foreach (GameObject q in QubeElements)
+           q.SetActive(currentType == HighlightObject.type.Qube);
     }
     // Use this for initialization
     void Start () {
@@ -71,6 +79,8 @@ public class HighlightObject : MonoBehaviour {
             if (hl_control != null)
             {
                 transform.position = hl_control.transform.position;
+                transform.rotation = hl_control.transform.rotation;
+
             }
             else if(target.GetComponent<Collider>() != null)
             {
@@ -80,6 +90,8 @@ public class HighlightObject : MonoBehaviour {
             else
             {
                 transform.position = target.position;
+                transform.rotation = target.rotation;
+
             }
         }
 	}

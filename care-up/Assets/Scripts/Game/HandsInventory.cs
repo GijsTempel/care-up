@@ -94,8 +94,8 @@ public class HandsInventory : MonoBehaviour {
 
         HighlightObject hl = hl_obj.GetComponent<HighlightObject>();
         hl.name = hl_name;
-        hl.setTarget(target);
         hl.setType(hl_type);
+        hl.setTarget(target);
         hl.setTimer(LifeTime);
         return hl_obj;
     }
