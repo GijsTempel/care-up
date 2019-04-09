@@ -146,7 +146,9 @@ public class InteractableObject : MonoBehaviour {
                     if (rend.material.shader == onMouseExitShader)
                     {
                         SetShaderTo(onMouseOverShader);
-                        inventory.AddHighlight(transform, "hl");
+
+                        if (!inventory.IsInHand(gameObject))
+                            inventory.AddHighlight(transform, "hl");
                     }
 
                     if (!itemDescription.activeSelf)

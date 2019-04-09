@@ -285,7 +285,6 @@ public class GameUI : MonoBehaviour {
                     showCombin = false;
                 }
             }
-
             if (!REmpty)
             {
                 if (handsInventory.rightHandObject.name == "ipad")
