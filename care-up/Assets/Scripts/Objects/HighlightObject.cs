@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class HighlightObject : MonoBehaviour {
-    public Transform target;
+    Transform target;
+    HighlightControl hl_control;
     HighlightObject.type currentType;
     float timeLeft = float.PositiveInfinity;
     public enum type
@@ -23,7 +24,21 @@ public class HighlightObject : MonoBehaviour {
     public void setTarget(Transform t)
     {
         target = t;
-        if (target.GetComponent<Collider>() != null)
+
+        if (target.GetComponentInChildren<HighlightControl>() != null)
+            hl_control = target.GetComponentInChildren<HighlightControl>();
+        else
+            hl_control = null;
+
+        if (hl_control != null)
+        {
+            transform.position = hl_control.transform.position;
+            transform.rotation = hl_control.transform.rotation;
+            transform.localScale = hl_control.transform.localScale;
+            setType(hl_control.hl_type);
+        }
+        
+        else if (target.GetComponent<Collider>() != null)
         {
             Collider c = target.gameObject.GetComponent<Collider>();
             transform.position = c.bounds.center;
@@ -53,7 +68,11 @@ public class HighlightObject : MonoBehaviour {
 
 		if (target != null)
         {
-            if (target.GetComponent<Collider>() != null)
+            if (hl_control != null)
+            {
+                transform.position = hl_control.transform.position;
+            }
+            else if(target.GetComponent<Collider>() != null)
             {
                 Collider c = target.gameObject.GetComponent<Collider>();
                 transform.position = c.bounds.center;
