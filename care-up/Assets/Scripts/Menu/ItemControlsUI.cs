@@ -480,8 +480,12 @@ public class ItemControlsUI : MonoBehaviour {
 
     public void UseOn()
     {
-        player.usingOnHand = initedObject == handsInventory.LeftHandObject;
-        player.ToggleUsingOnMode(true);
+        //player.usingOnHand = initedObject == handsInventory.LeftHandObject;
+        //player.ToggleUsingOnMode(true);
+        if (!(handsInventory.LeftHandEmpty() && handsInventory.RightHandEmpty()))
+        {
+            handsInventory.OnCombineAction();
+        }
 
         Close();
     }
