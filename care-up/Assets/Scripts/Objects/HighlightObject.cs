@@ -23,7 +23,15 @@ public class HighlightObject : MonoBehaviour {
     public void setTarget(Transform t)
     {
         target = t;
-        name = "hl_" + target.name;
+        if (target.GetComponent<Collider>() != null)
+        {
+            Collider c = target.gameObject.GetComponent<Collider>();
+            transform.position = c.bounds.center;
+        }
+        else
+        {
+            transform.position = target.position;
+        }
     }
 
     public void setTimer(float time)
