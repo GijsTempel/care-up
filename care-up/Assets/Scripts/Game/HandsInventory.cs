@@ -84,6 +84,30 @@ public class HandsInventory : MonoBehaviour {
 
     //private TutorialManager tutorial;
 
+
+    public GameObject AddHighlight(Transform target, HighlightObject.type hl_type = HighlightObject.type.Ball, float LifeTime = float.PositiveInfinity)
+    {
+        if (GameObject.Find("hl_" + target.name) != null || target.GetComponent<WorkField>() != null)
+            return null;
+        GameObject hl_obj = Instantiate(Resources.Load<GameObject>("Prefabs\\HighlightObject"), target.position, new Quaternion()) as GameObject;
+
+        HighlightObject hl = hl_obj.GetComponent<HighlightObject>();
+        hl.setTarget(target);
+        hl.setType(hl_type);
+        hl.setTimer(LifeTime);
+        return hl_obj;
+    }
+
+    public void RemoveHighlight(string hl_name)
+    {
+        if(GameObject.Find(hl_name) != null)
+        {
+            if (GameObject.Find(hl_name).GetComponent<HighlightObject>())
+                GameObject.Find(hl_name).GetComponent<HighlightObject>().Destroy();
+        }
+    }
+
+
     public GameObject LeftHandObject
     {
         get { return leftHandObject ? leftHandObject.gameObject : null; }

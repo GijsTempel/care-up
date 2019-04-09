@@ -158,8 +158,8 @@ public class PickableObject : InteractableObject
                 }
                 inventory.RemoveHandObject(hand);
             }
-            else if ((actionManager.CompareUseOnInfo("AbsorptionNeedleNoCap", "NeedleCup", this.name) ||
-                actionManager.CompareUseOnInfo("InjectionNeedleNoCap", "NeedleCup", this.name) ||
+            else if ((//actionManager.CompareUseOnInfo("AbsorptionNeedleNoCap", "NeedleCup", this.name) ||
+                //actionManager.CompareUseOnInfo("InjectionNeedleNoCap", "NeedleCup", this.name) ||
                 actionManager.CompareUseOnInfo("ClothWithAmpouleTop", "NeedleCup", this.name) ||
                 actionManager.CompareUseOnInfo("InsulinNeedle", "NeedleCup", this.name))
                 && controls.SelectedObject.name == "NeedleCup")
@@ -249,6 +249,7 @@ public class PickableObject : InteractableObject
       
                 ObjectsIDsController ObjectsID_Controller = GameObject.FindObjectOfType<ObjectsIDsController>();
                 string selectedName = controls.SelectedObject.transform.name;
+                print("=============" + name + " selected = " + selectedName);
                 if (controls.SelectedObject.GetComponent<PersonObjectPart>() != null)
                 {
                     selectedName = controls.SelectedObject.GetComponent<PersonObjectPart>().Person.name;
@@ -313,7 +314,7 @@ public class PickableObject : InteractableObject
                         objectID = ObjectsID_Controller.GetIDByName(name);
                 }
                 
-                if (inventory.LeftHandEmpty())
+                if (inventory.rightHandObject == GetComponent<PickableObject>())
                 {
                     if (objectID == -1)
                     {
@@ -323,11 +324,10 @@ public class PickableObject : InteractableObject
                     }
                     else
                     {
-                        print("__________________________________Right");
                         PlayerAnimationManager.PlayUseOnIDAnimation(objectID, false);
                     }
                 }
-                else if (inventory.RightHandEmpty())
+                else if (inventory.leftHandObject == GetComponent<PickableObject>())
                 {
                     if (objectID == -1)
                     {
@@ -337,7 +337,6 @@ public class PickableObject : InteractableObject
                     }
                     else
                     {
-                        print("__________________________________Left");
                         PlayerAnimationManager.PlayUseOnIDAnimation(objectID, true);
                     }
 
@@ -360,6 +359,7 @@ public class PickableObject : InteractableObject
         return (controls.SelectedObject != null && actionManager.CompareUseOnInfo(name, targetObject));
     }
     
+
     public virtual void Pick()
     {
         // callback for handling different OnPick mechanics
