@@ -33,6 +33,7 @@ public class GameUI : MonoBehaviour {
     public GameObject noTargetButton;
     PickableObject currentLeft;
     PickableObject currentRight;
+    string useOnNTtext;
     bool ICPCurrentState = false;
 
     public void MoveBack()
@@ -47,6 +48,7 @@ public class GameUI : MonoBehaviour {
 
     void Awake()
     {
+        useOnNTtext = noTargetButton.transform.GetChild(0).GetComponent<Text>().text;
         handsInventory = GameObject.FindObjectOfType<HandsInventory>();
         tutorialCombine = GameObject.FindObjectOfType<Tutorial_Combining>();
         tutorialUseOn = GameObject.FindObjectOfType<Tutorial_UseOn>();
@@ -298,6 +300,8 @@ public class GameUI : MonoBehaviour {
                 if (actionManager.CompareUseOnInfo(handsInventory.leftHandObject.name, ""))
                 {
                     showNoTarget = true;
+                    noTargetButton.transform.GetChild(0).GetComponent<Text>().text =
+                        actionManager.CurrentButtonText(handsInventory.leftHandObject.name);
                 }
             }
             if (!REmpty)
@@ -305,6 +309,8 @@ public class GameUI : MonoBehaviour {
                 if (actionManager.CompareUseOnInfo(handsInventory.rightHandObject.name, ""))
                 {
                     showNoTarget = true;
+                    noTargetButton.transform.GetChild(0).GetComponent<Text>().text =
+                       actionManager.CurrentButtonText(handsInventory.rightHandObject.name);
                 }
             }
             noTargetButton.SetActive(showNoTarget);
