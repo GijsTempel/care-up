@@ -38,7 +38,7 @@ public class ActionStepButton : MonoBehaviour {
             else if (lastMode == ActionsPanel.Mode.Type)
             {
                 string ss = action.SubIndex.ToString() + " " + action.Type.ToString();
-                ss += " bu: " + action.blockUnlock + " br: " + action.blockRequired;
+                //ss += action.
                 ss += "\n";
                 string[] ObjectNames = new string[0];
                 action.ObjectNames(out ObjectNames);

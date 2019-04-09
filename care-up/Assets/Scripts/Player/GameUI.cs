@@ -22,6 +22,19 @@ public class GameUI : MonoBehaviour {
     public WalkToGroupButton RightSideButton;
     public Dictionary<string, WalkToGroupButton> WTGButtons;
     WalkToGroup prevWalkToGroup = null;
+    private Tutorial_Combining tutorialCombine;
+    private Tutorial_UseOn tutorialUseOn;
+    private HandsInventory handsInventory;
+    private ActionManager actionManager;
+
+    public GameObject ItemControlPanel;
+    public GameObject combineButton;
+    public GameObject decombineButton;
+    public GameObject noTargetButton;
+    PickableObject currentLeft;
+    PickableObject currentRight;
+    bool ICPCurrentState = false;
+
     public void MoveBack()
 	{
 		Player.GetComponent<PlayerScript>().MoveBackButton();
@@ -31,6 +44,59 @@ public class GameUI : MonoBehaviour {
     //{
 
     //}
+
+    void Awake()
+    {
+        handsInventory = GameObject.FindObjectOfType<HandsInventory>();
+        tutorialCombine = GameObject.FindObjectOfType<Tutorial_Combining>();
+        tutorialUseOn = GameObject.FindObjectOfType<Tutorial_UseOn>();
+        actionManager = GameObject.FindObjectOfType<ActionManager>();
+    }
+
+    public void UseOn()
+    {
+
+        if (!(handsInventory.LeftHandEmpty() && handsInventory.RightHandEmpty()))
+        {
+            handsInventory.OnCombineAction();
+        }
+    }
+
+
+
+    public void UseOnNoTarget()
+    {
+        if (tutorialUseOn != null && !tutorialUseOn.ventAllowed)
+        {
+            return;
+        }
+
+        if (!handsInventory.LeftHandEmpty())
+        {
+            if (actionManager.CompareUseOnInfo(handsInventory.leftHandObject.name, ""))
+            {
+                handsInventory.LeftHandObject.GetComponent<PickableObject>().Use(true, true);
+
+                if (tutorialUseOn != null)
+                {
+                    handsInventory.LeftHandObject.GetComponent<PickableObject>().tutorial_usedOn = true;
+                }
+                return;
+            }
+        }
+        if (!handsInventory.RightHandEmpty())
+        {
+            if (actionManager.CompareUseOnInfo(handsInventory.rightHandObject.name, ""))
+            {
+                handsInventory.RightHandObject.GetComponent<PickableObject>().Use(false, true);
+
+                if (tutorialUseOn != null)
+                {
+                    handsInventory.RightHandObject.GetComponent<PickableObject>().tutorial_usedOn = true;
+                }
+            }
+        }
+    }
 
     public void OpenRobotUI()
     {
@@ -199,8 +265,55 @@ public class GameUI : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+        ItemControlPanel.SetActive(GameObject.Find("RobotUITrigger") != null);
+        if (currentLeft != handsInventory.leftHandObject || currentRight != handsInventory.rightHandObject
+        || (ICPCurrentState != ItemControlPanel.activeSelf && ItemControlPanel.activeSelf))
+        {
+            currentLeft = handsInventory.leftHandObject;
+            currentRight = handsInventory.rightHandObject;
+            bool LEmpty = handsInventory.LeftHandEmpty();
+            bool REmpty = handsInventory.RightHandEmpty();
+            bool showDecomb = (LEmpty && !REmpty) || (!LEmpty && REmpty);
+            bool showCombin = !LEmpty && !REmpty;
+            if (!LEmpty)
+            {
+                if (handsInventory.leftHandObject.name == "ipad")
+                {
+                    showDecomb = false;
+                    showCombin = false;
+                }
+            }
 
-            if (WalkToGroupPanel != null)
+            if (!REmpty)
+            {
+                if (handsInventory.rightHandObject.name == "ipad")
+                {
+                    showDecomb = false;
+                    showCombin = false;
+                }
+            }
+            bool showNoTarget = false;
+            if (!LEmpty)
+            {
+                if (actionManager.CompareUseOnInfo(handsInventory.leftHandObject.name, ""))
+                {
+                    showNoTarget = true;
+                }
+            }
+            if (!REmpty)
+            {
+                if (actionManager.CompareUseOnInfo(handsInventory.rightHandObject.name, ""))
+                {
+                    showNoTarget = true;
+                }
+            }
+            noTargetButton.SetActive(showNoTarget);
+            decombineButton.SetActive(showDecomb);
+            combineButton.SetActive(showCombin);
+        }
+
+        ICPCurrentState = ItemControlPanel.activeSelf;
+        if (WalkToGroupPanel != null)
         {
             PlayerScript ps = GameObject.FindObjectOfType<PlayerScript>();
             if (prevWalkToGroup != ps.currentWalkPosition)
