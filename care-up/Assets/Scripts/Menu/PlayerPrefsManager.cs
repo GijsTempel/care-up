@@ -49,7 +49,7 @@ public class PlayerPrefsManager : MonoBehaviour
     public bool subscribed = false;
     [HideInInspector]
     public int plays = 0;
-
+    
     // used for storing scene name for test hightscore loading
     private static string currentTestScene = "";
     private static float currentTestScore = 0;
@@ -72,7 +72,8 @@ public class PlayerPrefsManager : MonoBehaviour
 
         if (!(s.name == "Launch me 1" ||
               s.name == "MainMenu" ||
-              s.name == "SceneSelection"))
+              s.name == "SceneSelection" ||
+              s.name == "Scenes_Character_Customisation"))
         {
             // game scenes
             GetComponent<AudioSource>().Stop();
