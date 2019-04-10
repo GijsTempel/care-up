@@ -94,8 +94,13 @@ public class CameraMode : MonoBehaviour
         {
             startTime = Time.time;
             camRotTo = camRotFrom;
+            if (!playerScript.away)
+            {
+                WalkToGroup group = playerScript.currentWalkPosition;
+                camRotTo = Quaternion.Euler(group.Rotation.x, 0.0f, 0.0f);
+            }
             camRotFrom = Camera.main.transform.localRotation;
-            camMovementSpeed = 0.75f;
+            camMovementSpeed = 1f;
             camViewObject = true;
             camMoveBackAt = float.PositiveInfinity;
         }
@@ -117,7 +122,6 @@ public class CameraMode : MonoBehaviour
                 robotUIFlag = true;
                 camViewObject = false;
                 camMovementSpeed = 1f;
-
                 if (GameObject.FindObjectOfType<TutorialManager>() == null ||
                 GameObject.FindObjectOfType<Tutorial_UI>() != null ||
                 GameObject.FindObjectOfType<Tutorial_Theory>() != null)
