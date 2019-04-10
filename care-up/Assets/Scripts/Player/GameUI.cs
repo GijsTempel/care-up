@@ -34,6 +34,7 @@ public class GameUI : MonoBehaviour {
     PickableObject currentLeft;
     PickableObject currentRight;
     string useOnNTtext;
+    PlayerScript ps;
     bool ICPCurrentState = false;
 
     public void MoveBack()
@@ -49,10 +50,7 @@ public class GameUI : MonoBehaviour {
     void Awake()
     {
         useOnNTtext = noTargetButton.transform.GetChild(0).GetComponent<Text>().text;
-        handsInventory = GameObject.FindObjectOfType<HandsInventory>();
-        tutorialCombine = GameObject.FindObjectOfType<Tutorial_Combining>();
-        tutorialUseOn = GameObject.FindObjectOfType<Tutorial_UseOn>();
-        actionManager = GameObject.FindObjectOfType<ActionManager>();
+       
     }
 
     public void UseOn()
@@ -157,7 +155,11 @@ public class GameUI : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+        ps = GameObject.FindObjectOfType<PlayerScript>();
+        handsInventory = GameObject.FindObjectOfType<HandsInventory>();
+        tutorialCombine = GameObject.FindObjectOfType<Tutorial_Combining>();
+        tutorialUseOn = GameObject.FindObjectOfType<Tutorial_UseOn>();
+        actionManager = GameObject.FindObjectOfType<ActionManager>();
 #if !UNITY_EDITOR
         if(GameObject.Find("ActionsPanel") != null)
             GameObject.Find("ActionsPanel").SetActive(false);
@@ -263,11 +265,12 @@ public class GameUI : MonoBehaviour {
 
         donePanel.SetActive(false);
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update() {
+        
         bool showItemControlPanel = GameObject.Find("RobotUITrigger") != null;
-        if (GameObject.Find("ObjectViewButtons") != null)
+        if (GameObject.Find("ObjectViewButtons") != null || ps.away)
             showItemControlPanel = false;
         ItemControlPanel.SetActive(showItemControlPanel);
         if (currentLeft != handsInventory.leftHandObject || currentRight != handsInventory.rightHandObject
@@ -322,7 +325,7 @@ public class GameUI : MonoBehaviour {
         ICPCurrentState = ItemControlPanel.activeSelf;
         if (WalkToGroupPanel != null)
         {
-            PlayerScript ps = GameObject.FindObjectOfType<PlayerScript>();
+            
             if (prevWalkToGroup != ps.currentWalkPosition)
             {
                 WalkToGroupPanel.SetActive(ps.away);
