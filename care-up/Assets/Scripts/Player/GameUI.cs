@@ -31,9 +31,15 @@ public class GameUI : MonoBehaviour {
     public GameObject combineButton;
     public GameObject decombineButton;
     public GameObject noTargetButton;
+    private CameraMode cameraMode;
+
+    public GameObject zoomButtonLeft;
+    public GameObject zoomButtonRight;
+
     PickableObject currentLeft;
     PickableObject currentRight;
     string useOnNTtext;
+    PlayerScript ps;
     bool ICPCurrentState = false;
 
     public void MoveBack()
@@ -48,11 +54,7 @@ public class GameUI : MonoBehaviour {
 
     void Awake()
     {
-        useOnNTtext = noTargetButton.transform.GetChild(0).GetComponent<Text>().text;
-        handsInventory = GameObject.FindObjectOfType<HandsInventory>();
-        tutorialCombine = GameObject.FindObjectOfType<Tutorial_Combining>();
-        tutorialUseOn = GameObject.FindObjectOfType<Tutorial_UseOn>();
-        actionManager = GameObject.FindObjectOfType<ActionManager>();
+        
     }
 
     public void UseOn()
@@ -155,8 +157,50 @@ public class GameUI : MonoBehaviour {
         }
 	}
 
-	// Use this for initialization
-	void Start () {
+
+    public void Examine(bool leftHand = true)
+    {
+        if (leftHand && handsInventory.LeftHandEmpty())
+            return;
+        if (!leftHand && handsInventory.RightHandEmpty())
+            return;
+        GameObject initedObject = null;
+        if (leftHand)
+            initedObject = handsInventory.leftHandObject.gameObject;
+        else
+            initedObject = handsInventory.rightHandObject.gameObject;
+
+        cameraMode.selectedObject = initedObject.GetComponent<ExaminableObject>();
+        if (cameraMode.selectedObject != null) // if there is a component
+        {
+            if (tutorialUseOn != null)
+            {
+                tutorialUseOn.examined = true;
+            }
+            cameraMode.selectedObject.OnExamine();
+            //controls.ResetObject();
+        }
+
+
+    }
+
+
+    // Use this for initialization
+    void Start () {
+        useOnNTtext = noTargetButton.transform.GetChild(0).GetComponent<Text>().text;
+        ps = GameObject.FindObjectOfType<PlayerScript>();
+        cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
+        handsInventory = GameObject.FindObjectOfType<HandsInventory>();
+        tutorialCombine = GameObject.FindObjectOfType<Tutorial_Combining>();
+        tutorialUseOn = GameObject.FindObjectOfType<Tutorial_UseOn>();
+        actionManager = GameObject.FindObjectOfType<ActionManager>();
+
+        zoomButtonLeft.SetActive(false);
+        zoomButtonRight.SetActive(false);
+        combineButton.SetActive(false);
+        decombineButton.SetActive(false);
+        noTargetButton.SetActive(false);
+        ItemControlPanel.SetActive(false);
 
 #if !UNITY_EDITOR
         if(GameObject.Find("ActionsPanel") != null)
@@ -263,11 +307,12 @@ public class GameUI : MonoBehaviour {
 
         donePanel.SetActive(false);
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update() {
+        
         bool showItemControlPanel = GameObject.Find("RobotUITrigger") != null;
-        if (GameObject.Find("ObjectViewButtons") != null)
+        if (GameObject.Find("ObjectViewButtons") != null || ps.away)
             showItemControlPanel = false;
         ItemControlPanel.SetActive(showItemControlPanel);
         if (currentLeft != handsInventory.leftHandObject || currentRight != handsInventory.rightHandObject
@@ -279,6 +324,9 @@ public class GameUI : MonoBehaviour {
             bool REmpty = handsInventory.RightHandEmpty();
             bool showDecomb = (LEmpty && !REmpty) || (!LEmpty && REmpty);
             bool showCombin = !LEmpty && !REmpty;
+            bool showZoomLeft = false;
+            bool showZoomRight = false;
+
             if (!LEmpty)
             {
                 if (handsInventory.leftHandObject.name == "ipad")
@@ -298,6 +346,8 @@ public class GameUI : MonoBehaviour {
             bool showNoTarget = false;
             if (!LEmpty)
             {
+                if (handsInventory.leftHandObject.GetComponent<ExaminableObject>() != null)
+                    showZoomLeft = true;
                 if (actionManager.CompareUseOnInfo(handsInventory.leftHandObject.name, ""))
                 {
                     showNoTarget = true;
@@ -307,6 +357,8 @@ public class GameUI : MonoBehaviour {
             }
             if (!REmpty)
             {
+                if (handsInventory.rightHandObject.GetComponent<ExaminableObject>() != null)
+                    showZoomRight = true;
                 if (actionManager.CompareUseOnInfo(handsInventory.rightHandObject.name, ""))
                 {
                     showNoTarget = true;
@@ -314,6 +366,8 @@ public class GameUI : MonoBehaviour {
                        actionManager.CurrentButtonText(handsInventory.rightHandObject.name);
                 }
             }
+            zoomButtonLeft.SetActive(showZoomLeft);
+            zoomButtonRight.SetActive(showZoomRight);
             noTargetButton.SetActive(showNoTarget);
             decombineButton.SetActive(showDecomb);
             combineButton.SetActive(showCombin);
@@ -322,7 +376,7 @@ public class GameUI : MonoBehaviour {
         ICPCurrentState = ItemControlPanel.activeSelf;
         if (WalkToGroupPanel != null)
         {
-            PlayerScript ps = GameObject.FindObjectOfType<PlayerScript>();
+            
             if (prevWalkToGroup != ps.currentWalkPosition)
             {
                 WalkToGroupPanel.SetActive(ps.away);
