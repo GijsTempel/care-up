@@ -266,8 +266,10 @@ public class GameUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-        ItemControlPanel.SetActive(GameObject.Find("RobotUITrigger") != null);
+        bool showItemControlPanel = GameObject.Find("RobotUITrigger") != null;
+        if (GameObject.Find("ObjectViewButtons") != null)
+            showItemControlPanel = false;
+        ItemControlPanel.SetActive(showItemControlPanel);
         if (currentLeft != handsInventory.leftHandObject || currentRight != handsInventory.rightHandObject
         || (ICPCurrentState != ItemControlPanel.activeSelf && ItemControlPanel.activeSelf))
         {
