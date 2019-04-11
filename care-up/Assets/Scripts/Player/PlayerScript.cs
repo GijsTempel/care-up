@@ -591,6 +591,7 @@ public class PlayerScript : MonoBehaviour
 
         moveBackBtnActiveForIpad = MoveBackButtonObject.activeSelf;
         MoveBackButtonObject.SetActive(false);
+        GameObject.FindObjectOfType<GameUI>().allowObjectControlUI = false;
 
         if (robotUINotOpenedYet)
         {
@@ -650,6 +651,7 @@ public class PlayerScript : MonoBehaviour
         tutorial_robotUI_closed = true;
 
         MoveBackButtonObject.SetActive(moveBackBtnActiveForIpad);
+        GameObject.FindObjectOfType<GameUI>().allowObjectControlUI = true;
 
         if (joystickObject != null)
             joystickObject.SetActive(!robotUIopened);

@@ -15,7 +15,12 @@ public class ActionsPanel : MonoBehaviour {
         Comment,
         CommentUA,
         Icons,
+        Requirements
     };
+    public void UpdatePanel()
+    {
+        lastStepId = -1;
+    }
 
     public ActionsPanel.Mode mode;
     ActionManager am;
@@ -35,6 +40,7 @@ public class ActionsPanel : MonoBehaviour {
         lastStepId = -1;
         print(mode.ToString());
     }
+
 
 	// Update is called once per frame
 	void Update () {

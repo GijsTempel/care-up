@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 using UnityEngine.EventSystems;
 
-
 public class GameUI : MonoBehaviour {
 	GameObject Player;
 	public Animator Blink;
@@ -26,6 +25,7 @@ public class GameUI : MonoBehaviour {
     private Tutorial_UseOn tutorialUseOn;
     private HandsInventory handsInventory;
     private ActionManager actionManager;
+    private Animator controller;
 
     public GameObject ItemControlPanel;
     public GameObject combineButton;
@@ -35,13 +35,14 @@ public class GameUI : MonoBehaviour {
 
     public GameObject zoomButtonLeft;
     public GameObject zoomButtonRight;
+    public GameObject animTester;
 
     PickableObject currentLeft;
     PickableObject currentRight;
     string useOnNTtext;
     PlayerScript ps;
     bool ICPCurrentState = false;
-
+    public bool allowObjectControlUI = true;
     public void MoveBack()
 	{
 		Player.GetComponent<PlayerScript>().MoveBackButton();
@@ -189,6 +190,7 @@ public class GameUI : MonoBehaviour {
     void Start () {
         useOnNTtext = noTargetButton.transform.GetChild(0).GetComponent<Text>().text;
         ps = GameObject.FindObjectOfType<PlayerScript>();
+        controller = GameObject.FindObjectOfType<PlayerAnimationManager>().GetComponent<Animator>();
         cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
         handsInventory = GameObject.FindObjectOfType<HandsInventory>();
         tutorialCombine = GameObject.FindObjectOfType<Tutorial_Combining>();
@@ -310,11 +312,26 @@ public class GameUI : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        
-        bool showItemControlPanel = GameObject.Find("RobotUITrigger") != null;
-        if (GameObject.Find("ObjectViewButtons") != null || ps.away)
-            showItemControlPanel = false;
-        ItemControlPanel.SetActive(showItemControlPanel);
+
+        //string sss = controller.GetCurrentAnimatorStateInfo(1).length.ToString();
+        //sss += " " + controller.GetCurrentAnimatorStateInfo(1).normalizedTime.ToString();
+        //print(sss);
+        bool animationUiBlock = true;
+        if (controller.GetCurrentAnimatorStateInfo(1).length > 0.2f && controller.GetCurrentAnimatorStateInfo(1).normalizedTime < 1f)
+            animationUiBlock = false;
+        if (controller.GetCurrentAnimatorStateInfo(0).length > 0.2f && controller.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
+            animationUiBlock = false;
+        if (cameraMode.camViewObject)
+            animationUiBlock = false;
+        if (controller.GetNextAnimatorStateInfo(1).length > 0.2f && controller.GetAnimatorTransitionInfo(1).normalizedTime != 0)
+            animationUiBlock = false;
+        if (controller.GetNextAnimatorStateInfo(0).length > 0.2f && controller.GetAnimatorTransitionInfo(0).normalizedTime != 0)
+            animationUiBlock = false;
+
+        animTester.SetActive(animationUiBlock);
+
+        bool showItemControlPanel = allowObjectControlUI && animationUiBlock;
+
         if (currentLeft != handsInventory.leftHandObject || currentRight != handsInventory.rightHandObject
         || (ICPCurrentState != ItemControlPanel.activeSelf && ItemControlPanel.activeSelf))
         {
@@ -331,16 +348,14 @@ public class GameUI : MonoBehaviour {
             {
                 if (handsInventory.leftHandObject.name == "ipad")
                 {
-                    showDecomb = false;
-                    showCombin = false;
+                    showItemControlPanel = false;
                 }
             }
             if (!REmpty)
             {
                 if (handsInventory.rightHandObject.name == "ipad")
                 {
-                    showDecomb = false;
-                    showCombin = false;
+                    showItemControlPanel = false;
                 }
             }
             bool showNoTarget = false;
@@ -372,6 +387,7 @@ public class GameUI : MonoBehaviour {
             decombineButton.SetActive(showDecomb);
             combineButton.SetActive(showCombin);
         }
+        ItemControlPanel.SetActive(showItemControlPanel);
 
         ICPCurrentState = ItemControlPanel.activeSelf;
         if (WalkToGroupPanel != null)

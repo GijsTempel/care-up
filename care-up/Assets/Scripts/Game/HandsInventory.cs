@@ -223,7 +223,7 @@ public class HandsInventory : MonoBehaviour {
                 rightHandObject = item;
                 picked = true;
                 tutorial_pickedRight = true;
-                leftHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                rightHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 rightHandObject.GetComponent<Rigidbody>().isKinematic = false;
                 //rightHandObject.GetComponent<Collider>().enabled = false;
                 rightHandObject.leftControlBone = leftControlBone;
@@ -260,7 +260,8 @@ public class HandsInventory : MonoBehaviour {
                 rightHandObject = item;
                 picked = true;
                 tutorial_pickedRight = true;
-                leftHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                //-----------------------------------------------------------------------
+                rightHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 rightHandObject.GetComponent<Rigidbody>().isKinematic = false;
                 //rightHandObject.GetComponent<Collider>().enabled = false;
                 rightHandObject.leftControlBone = leftControlBone;
@@ -912,6 +913,21 @@ public class HandsInventory : MonoBehaviour {
         GameObject left = (leftHandObject != null) ? leftHandObject.gameObject : null;
         GameObject right = (rightHandObject != null) ? rightHandObject.gameObject : null;
         return (target == left || target == right) && target != null;
+    }
+
+    public class HandObject
+    {
+        public GameObject left;
+        public GameObject right;
+    }
+
+    public HandObject IsInOneOfHands()
+    {
+        HandObject handObject = new HandObject();
+        handObject.left = (leftHandObject != null) ? leftHandObject.gameObject : null;
+        handObject.right = (rightHandObject != null) ? rightHandObject.gameObject : null;
+        print(handObject.left);
+        return handObject;
     }
 
     public void OnCombineAction()
