@@ -1089,36 +1089,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 37620efdd9e41c444af49d4f4225f8eb, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &245685917
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1314064308543704, guid: cdb6524090b2ff049a29ca7c4b7b0037,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 245685918}
-  m_Layer: 0
-  m_Name: CinematicTarget
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 1
-  m_IsActive: 1
---- !u!4 &245685918
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 4634585598884878, guid: cdb6524090b2ff049a29ca7c4b7b0037,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 245685917}
-  m_LocalRotation: {x: 0.0022181612, y: 0.49640018, z: -0.0012903544, w: -0.86809003}
-  m_LocalPosition: {x: 0.47090596, y: -0.15252519, z: 0.32036653}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 310503390}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0.149, y: 90, z: 0.256}
 --- !u!1 &251147189
 GameObject:
   m_ObjectHideFlags: 0
@@ -1214,6 +1184,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tutorial_hintUsed: 0
   _QuizWaitTime: 0
+  actionsCount: 0
   actionListName: Actions_InjectionScene
 --- !u!114 &251147194
 MonoBehaviour:
@@ -1276,6 +1247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f6c60efe1b820478392239be6dd432, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camViewObject: 0
   minZoom: 0.5
   maxZoom: 1.75
   currentMode: 0
@@ -1343,9 +1315,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   triggers:
-  - 11502 leftID
-  - UseLeft
-  - S UseLeft
+  - 11301 rightID
+  - UseRight
+  - S UseRight
 --- !u!1001 &265411573
 Prefab:
   m_ObjectHideFlags: 0
@@ -1625,7 +1597,7 @@ Transform:
   m_LocalPosition: {x: 9.682568, y: 0.6612418, z: 9.60704}
   m_LocalScale: {x: 1.1982796, y: 1.1982802, z: 1.1982802}
   m_Children:
-  - {fileID: 245685918}
+  - {fileID: 974810944}
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: -0.195, y: -141.59, z: 0.082}
@@ -3235,6 +3207,36 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b78c832ecb0cbbd4a9015dfddddc3ad6, type: 3}
   m_IsPrefabParent: 0
+--- !u!1 &974810943
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1314064308543704, guid: cdb6524090b2ff049a29ca7c4b7b0037,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 974810944}
+  m_Layer: 0
+  m_Name: CinematicTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 1
+  m_IsActive: 1
+--- !u!4 &974810944
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4634585598884878, guid: cdb6524090b2ff049a29ca7c4b7b0037,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 974810943}
+  m_LocalRotation: {x: -5.8207647e-11, y: -0, z: -2.3283059e-10, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 310503390}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -0.195, y: -141.59, z: 0.082}
 --- !u!1001 &1004223083
 Prefab:
   m_ObjectHideFlags: 0
