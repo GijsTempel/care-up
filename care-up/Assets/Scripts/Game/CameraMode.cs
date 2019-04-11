@@ -552,6 +552,20 @@ public class CameraMode : MonoBehaviour
         targetRot = savedRot * Quaternion.Euler(25.0f, 0.0f, 0.0f);
     }
 
+    public void Teleport(Transform target)
+    {
+        if (target.Find("CinematicTarget") == null)
+        {
+            return;
+        }
+        Transform cTarget = target.Find("CinematicTarget");
+        cinematicTargetRot = cTarget.rotation;
+        cinematicTargetPos = cTarget.position;
+        cinematicControl = playerScript.transform.GetChild(0);
+        cinematicControl.transform.position = cinematicTargetPos;
+        cinematicControl.Find("Arms").transform.rotation = cinematicTargetRot;
+    }
+        
     public void SetCinematicMode(Transform target)
     {
         if (target.Find("CinematicTarget") == null)
