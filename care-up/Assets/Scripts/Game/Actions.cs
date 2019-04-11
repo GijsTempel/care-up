@@ -27,6 +27,9 @@ namespace CareUp.Actions
         public string blockMessage;
         public string comment;
         public string commentUA;
+        public string leftHandRequirement;
+        public string rightHandRequirement;
+        public string placeRequirement;
 
         protected ActionManager.ActionType type;
 

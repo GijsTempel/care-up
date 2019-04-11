@@ -914,6 +914,21 @@ public class HandsInventory : MonoBehaviour {
         return (target == left || target == right) && target != null;
     }
 
+    public class HandObject
+    {
+        public GameObject left;
+        public GameObject right;
+    }
+
+    public HandObject IsInOneOfHands()
+    {
+        HandObject handObject = new HandObject();
+        handObject.left = (leftHandObject != null) ? leftHandObject.gameObject : null;
+        handObject.right = (rightHandObject != null) ? rightHandObject.gameObject : null;
+        print(handObject.left);
+        return handObject;
+    }
+
     public void OnCombineAction()
     {
         if (tutorialUseOn != null && !tutorialUseOn.decombiningAllowed) {

@@ -89,8 +89,16 @@ public class ActionStepButton : MonoBehaviour {
                     icons.transform.Find("right").GetComponent<Image>().sprite = x;
                 }
             }
+            
         }
+
+        if (actionsPanel.mode == ActionsPanel.Mode.Requirements)
+        {
+            main_text.text = "l:" + action.leftHandRequirement + " r:" + action.rightHandRequirement + " p:" + action.placeRequirement;
+        }
+
         int index = action.SubIndex;
+
         if (currentIndex == index)
         {
             GetComponent<Image>().color = new Color(0f, 1f, 0f, 0.4f);
