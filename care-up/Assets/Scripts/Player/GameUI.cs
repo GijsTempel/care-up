@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -35,14 +36,20 @@ public class GameUI : MonoBehaviour {
 
     public GameObject zoomButtonLeft;
     public GameObject zoomButtonRight;
-    public GameObject animTester;
 
-    PickableObject currentLeft;
-    PickableObject currentRight;
+    float cooldownTime = 0;
+    float lastCooldownTime = 0;
+    int currentActionsCount = 0;
+
+    bool currentItemControlPanelState = false;
+    int currentLeft;
+    int currentRight;
     string useOnNTtext;
     PlayerScript ps;
     bool ICPCurrentState = false;
     public bool allowObjectControlUI = true;
+
+
     public void MoveBack()
 	{
 		Player.GetComponent<PlayerScript>().MoveBackButton();
@@ -291,7 +298,6 @@ public class GameUI : MonoBehaviour {
                 WalkToGroupPanel.transform.Find("spacer1").gameObject.SetActive(false);
 
         }
-        //Debug.Log(Application.isEditor);
     }
 
 	public void ShowDonePanel(bool value)
@@ -312,10 +318,9 @@ public class GameUI : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-
-        //string sss = controller.GetCurrentAnimatorStateInfo(1).length.ToString();
-        //sss += " " + controller.GetCurrentAnimatorStateInfo(1).normalizedTime.ToString();
-        //print(sss);
+        
+        //Don't show object control panel if animation is playing
+        //if animation is longer than 0.2 (is not hold animation)
         bool animationUiBlock = true;
         if (controller.GetCurrentAnimatorStateInfo(1).length > 0.2f && controller.GetCurrentAnimatorStateInfo(1).normalizedTime < 1f)
             animationUiBlock = false;
@@ -323,20 +328,49 @@ public class GameUI : MonoBehaviour {
             animationUiBlock = false;
         if (cameraMode.camViewObject)
             animationUiBlock = false;
-        if (controller.GetNextAnimatorStateInfo(1).length > 0.2f && controller.GetAnimatorTransitionInfo(1).normalizedTime != 0)
+        //if animation is in transition to not holding animation
+        if (controller.GetNextAnimatorStateInfo(1).length > 0.2f && controller.GetAnimatorTransitionInfo(1).normalizedTime < 0.01)
             animationUiBlock = false;
-        if (controller.GetNextAnimatorStateInfo(0).length > 0.2f && controller.GetAnimatorTransitionInfo(0).normalizedTime != 0)
+        if (controller.GetNextAnimatorStateInfo(0).length > 0.2f && controller.GetAnimatorTransitionInfo(0).normalizedTime < 0.01)
             animationUiBlock = false;
 
-        animTester.SetActive(animationUiBlock);
+        //If in transition from long animation to short one
+        if (controller.GetCurrentAnimatorStateInfo(1).length > 0.2f && 
+        controller.GetAnimatorTransitionInfo(1).normalizedTime < 0.01 &&
+            controller.GetNextAnimatorStateInfo(1).length < 0.2f)
+            animationUiBlock = false;
+        if (controller.GetCurrentAnimatorStateInfo(0).length > 0.2f &&
+        controller.GetAnimatorTransitionInfo(0).normalizedTime < 0.01 &&
+            controller.GetNextAnimatorStateInfo(0).length < 0.2f)
+            animationUiBlock = false;
 
+        //to show object control panel if no animation block and action block
         bool showItemControlPanel = allowObjectControlUI && animationUiBlock;
 
-        if (currentLeft != handsInventory.leftHandObject || currentRight != handsInventory.rightHandObject
-        || (ICPCurrentState != ItemControlPanel.activeSelf && ItemControlPanel.activeSelf))
+        //if some object was added or removed to hands
+        int lHash = 0;
+        if (handsInventory.leftHandObject != null)
+            lHash = handsInventory.leftHandObject.gameObject.GetHashCode();
+        int rHash = 0;
+        if (handsInventory.rightHandObject != null)
+            rHash = handsInventory.rightHandObject.gameObject.GetHashCode();
+
+
+        bool handsStateChanged = (currentLeft != lHash || currentRight != rHash
+        || (ICPCurrentState != ItemControlPanel.activeSelf) 
+        || currentActionsCount != actionManager.actionsCount);
+
+        if (handsStateChanged) 
         {
-            currentLeft = handsInventory.leftHandObject;
-            currentRight = handsInventory.rightHandObject;
+            currentActionsCount = actionManager.actionsCount;
+            //hide panel for the first frame of hands state change
+            //prevent quick blinking of buttons before animation starts
+            showItemControlPanel = false;
+
+            //Update current hands state 
+            currentLeft = lHash;
+            currentRight = rHash;
+
             bool LEmpty = handsInventory.LeftHandEmpty();
             bool REmpty = handsInventory.RightHandEmpty();
             bool showDecomb = (LEmpty && !REmpty) || (!LEmpty && REmpty);
@@ -344,20 +378,6 @@ public class GameUI : MonoBehaviour {
             bool showZoomLeft = false;
             bool showZoomRight = false;
 
-            if (!LEmpty)
-            {
-                if (handsInventory.leftHandObject.name == "ipad")
-                {
-                    showItemControlPanel = false;
-                }
-            }
-            if (!REmpty)
-            {
-                if (handsInventory.rightHandObject.name == "ipad")
-                {
-                    showItemControlPanel = false;
-                }
-            }
             bool showNoTarget = false;
             if (!LEmpty)
             {
@@ -387,6 +407,17 @@ public class GameUI : MonoBehaviour {
             decombineButton.SetActive(showDecomb);
             combineButton.SetActive(showCombin);
         }
+
+        if (!currentItemControlPanelState && showItemControlPanel)
+        {
+            cooldownTime = 0.4f;
+        }
+        lastCooldownTime = cooldownTime;
+        if (cooldownTime > 0)
+            cooldownTime -= Time.deltaTime;
+        currentItemControlPanelState = showItemControlPanel;
+        if (cooldownTime > 0)
+            showItemControlPanel = false;
         ItemControlPanel.SetActive(showItemControlPanel);
 
         ICPCurrentState = ItemControlPanel.activeSelf;

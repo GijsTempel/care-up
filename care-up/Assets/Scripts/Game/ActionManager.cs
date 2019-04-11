@@ -21,7 +21,7 @@ public class ActionManager : MonoBehaviour
     public float _QuizWaitTime;
     private Text pointsText;
     private Text percentageText;
-
+    public int actionsCount = 0;
     // list of types of actions
     public enum ActionType
     {
@@ -1187,6 +1187,7 @@ public class ActionManager : MonoBehaviour
 
     public static void CorrectAction()
     {
+        GameObject.FindObjectOfType<ActionManager>().actionsCount++;
         RobotManager.RobotCorrectAction();
         ActionManager.PlayAddPointSound();
 
