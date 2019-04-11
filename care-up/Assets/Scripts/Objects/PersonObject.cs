@@ -59,6 +59,16 @@ public class PersonObject : InteractableObject
         rend = GetComponentInChildren<SkinnedMeshRenderer>();
     }
 
+    public bool hasTopic(string topic)
+    {
+        foreach (SelectDialogue.DialogueOption sd in optionsList)
+        {
+            if (sd.attribute == topic)
+                return true;
+        }
+        return false;
+    }
+
     protected override void Update()
     {
         CallerUpdate();

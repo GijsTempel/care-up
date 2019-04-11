@@ -1209,6 +1209,11 @@ public class ActionManager : MonoBehaviour
             switch (a.Type)
             {
                 case ActionType.PersonTalk:
+                    foreach (PersonObject po in GameObject.FindObjectsOfType<PersonObject>())
+                    {
+                        if (po.hasTopic(a._topic))
+                            a.placeRequirement = ActionManager.FindNearest(po.name, "");
+                    }
                     //a.placeRequirement = ActionManager.FindNearest(ObjectNames[0], "");
                     break;
                 case ActionType.ObjectCombine:

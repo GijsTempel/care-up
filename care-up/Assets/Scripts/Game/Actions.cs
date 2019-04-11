@@ -30,6 +30,7 @@ namespace CareUp.Actions
         public string leftHandRequirement;
         public string rightHandRequirement;
         public string placeRequirement;
+        public string _topic;
 
         protected ActionManager.ActionType type;
 
@@ -195,6 +196,7 @@ namespace CareUp.Actions
                   quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg)
         {
             topicInput = topic;
+            _topic = topic;
         }
 
         public override bool Compare(string[] info)

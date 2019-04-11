@@ -60,11 +60,6 @@ public class GameUI : MonoBehaviour {
 
     //}
 
-    void Awake()
-    {
-        
-    }
-
     public void UseOn()
     {
 
@@ -73,8 +68,6 @@ public class GameUI : MonoBehaviour {
             handsInventory.OnCombineAction();
         }
     }
-
-
 
     public void UseOnNoTarget()
     {
@@ -203,7 +196,7 @@ public class GameUI : MonoBehaviour {
         tutorialCombine = GameObject.FindObjectOfType<Tutorial_Combining>();
         tutorialUseOn = GameObject.FindObjectOfType<Tutorial_UseOn>();
         actionManager = GameObject.FindObjectOfType<ActionManager>();
-
+        ActionManager.BuildRequirements();
         zoomButtonLeft.SetActive(false);
         zoomButtonRight.SetActive(false);
         combineButton.SetActive(false);
