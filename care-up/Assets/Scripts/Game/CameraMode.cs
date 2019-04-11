@@ -8,6 +8,7 @@ using UnityEngine.UI;
 /// </summary>
 public class CameraMode : MonoBehaviour
 {
+    GameUI gameUI;
 
     public enum Mode
     {
@@ -19,7 +20,7 @@ public class CameraMode : MonoBehaviour
         ItemControlsUI      // UI showing actions is active
     };
 
-    bool camViewObject = false;
+    public bool camViewObject = false;
     Quaternion camRotFrom;
     Quaternion camRotTo;
     float startTime;
@@ -74,6 +75,7 @@ public class CameraMode : MonoBehaviour
 
     void Start()
     {
+        gameUI = GameObject.FindObjectOfType<GameUI>();
         controls = GameObject.Find("GameLogic").GetComponent<Controls>();
         if (controls == null) Debug.LogError("No controls script found");
 
@@ -293,6 +295,7 @@ public class CameraMode : MonoBehaviour
 
             GameObject.Find("ObjectViewButtons").SetActive(false);
             playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
+            gameUI.allowObjectControlUI = !playerScript.away;
             //playerScript.joystickObject.SetActive(!playerScript.robotUIopened);
 
             if ((GameObject.FindObjectOfType<TutorialManager>() == null ||
@@ -333,6 +336,7 @@ public class CameraMode : MonoBehaviour
 
 
             playerScript.MoveBackButtonObject.SetActive(false);
+            gameUI.allowObjectControlUI = false;
             //playerScript.joystickObject.SetActive(false);
             RobotManager.SetUITriggerActive(false);
 
@@ -343,6 +347,8 @@ public class CameraMode : MonoBehaviour
         {
             TogglePlayerScript(false);
             playerScript.MoveBackButtonObject.SetActive(false);
+            gameUI.allowObjectControlUI = false;
+
             //playerScript.joystickObject.SetActive(false);
             RobotManager.SetUITriggerActive(false);
             GameObject.FindObjectOfType<RobotManager>().top = false;
@@ -351,6 +357,8 @@ public class CameraMode : MonoBehaviour
         {
             TogglePlayerScript(true);
             playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
+            gameUI.allowObjectControlUI = !playerScript.away;
+
             //playerScript.joystickObject.SetActive(!playerScript.robotUIopened);
             if (GameObject.FindObjectOfType<TutorialManager>() == null ||
                 GameObject.FindObjectOfType<Tutorial_UI>() != null ||
@@ -368,6 +376,8 @@ public class CameraMode : MonoBehaviour
             confirmUI.SetActive(true);
 
             playerScript.MoveBackButtonObject.SetActive(false);
+            gameUI.allowObjectControlUI = false;
+
             //playerScript.joystickObject.SetActive(false);
             RobotManager.SetUITriggerActive(false);
         }
@@ -377,6 +387,8 @@ public class CameraMode : MonoBehaviour
             confirmUI.SetActive(false);
 
             playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
+            gameUI.allowObjectControlUI = !playerScript.away;
+
             //playerScript.joystickObject.SetActive(!playerScript.robotUIopened);
             if (GameObject.FindObjectOfType<TutorialManager>() == null ||
                 GameObject.FindObjectOfType<Tutorial_UI>() != null ||
@@ -394,6 +406,8 @@ public class CameraMode : MonoBehaviour
             //camPosition = Camera.main.transform.localRotation; never used
 
             playerScript.MoveBackButtonObject.SetActive(false);
+            gameUI.allowObjectControlUI = false;
+
             //playerScript.joystickObject.SetActive(false);
             RobotManager.SetUITriggerActive(false);
         }
@@ -416,6 +430,7 @@ public class CameraMode : MonoBehaviour
                 GameObject.FindObjectOfType<TutorialManager>() == null)
             {
                 playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
+                gameUI.allowObjectControlUI = !playerScript.away;
                 //playerScript.joystickObject.SetActive(!playerScript.robotUIopened && !PlayerScript.actionsLocked);
             }
 
@@ -454,6 +469,7 @@ public class CameraMode : MonoBehaviour
     /// </summary>
     void CinematicUpdate()
     {
+        print(cinematicDirection);
         if (cinematicDirection == 1 || animationEnded)
         {
             cinematicLerp = Mathf.Clamp01(cinematicLerp + 2 * Time.deltaTime * cinematicDirection);
@@ -507,6 +523,8 @@ public class CameraMode : MonoBehaviour
                 soloCamera = false;
 
                 playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
+                gameUI.allowObjectControlUI = !playerScript.away;
+
                 if (GameObject.FindObjectOfType<TutorialManager>() == null ||
                     GameObject.FindObjectOfType<Tutorial_UI>() != null ||
                     GameObject.FindObjectOfType<Tutorial_Theory>() != null)
@@ -527,6 +545,7 @@ public class CameraMode : MonoBehaviour
             cinematicDirection = 1;
 
             playerScript.MoveBackButtonObject.SetActive(false);
+            gameUI.allowObjectControlUI = false;
             RobotManager.SetUITriggerActive(false);
         }
 
