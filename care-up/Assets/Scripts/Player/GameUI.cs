@@ -312,22 +312,26 @@ public class GameUI : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        
+
         //string sss = controller.GetCurrentAnimatorStateInfo(1).length.ToString();
         //sss += " " + controller.GetCurrentAnimatorStateInfo(1).normalizedTime.ToString();
         //print(sss);
+        bool animationUiBlock = true;
+        if (controller.GetCurrentAnimatorStateInfo(1).length > 0.2f && controller.GetCurrentAnimatorStateInfo(1).normalizedTime < 1f)
+            animationUiBlock = false;
+        if (controller.GetCurrentAnimatorStateInfo(0).length > 0.2f && controller.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
+            animationUiBlock = false;
+        if (cameraMode.camViewObject)
+            animationUiBlock = false;
+        if (controller.GetNextAnimatorStateInfo(1).length > 0.2f && controller.GetAnimatorTransitionInfo(1).normalizedTime != 0)
+            animationUiBlock = false;
+        if (controller.GetNextAnimatorStateInfo(0).length > 0.2f && controller.GetAnimatorTransitionInfo(0).normalizedTime != 0)
+            animationUiBlock = false;
 
-        //if (controller.GetCurrentAnimatorStateInfo(1).length > 0.2f && controller.GetCurrentAnimatorStateInfo(1).normalizedTime < 1f)
-        //    allowUI = false;
-        //if (controller.GetCurrentAnimatorStateInfo(0).length > 0.2f && controller.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
-        //    allowUI = false;
-        //if (cameraMode.camViewObject)
-        //    allowUI = false;
-        animTester.SetActive(allowObjectControlUI);
-        bool showItemControlPanel = GameObject.Find("RobotUITrigger") != null;
-        if (GameObject.Find("ObjectViewButtons") != null || ps.away)
-            showItemControlPanel = false;
-        ItemControlPanel.SetActive(showItemControlPanel);
+        animTester.SetActive(animationUiBlock);
+
+        bool showItemControlPanel = allowObjectControlUI && animationUiBlock;
+
         if (currentLeft != handsInventory.leftHandObject || currentRight != handsInventory.rightHandObject
         || (ICPCurrentState != ItemControlPanel.activeSelf && ItemControlPanel.activeSelf))
         {
@@ -344,16 +348,14 @@ public class GameUI : MonoBehaviour {
             {
                 if (handsInventory.leftHandObject.name == "ipad")
                 {
-                    showDecomb = false;
-                    showCombin = false;
+                    showItemControlPanel = false;
                 }
             }
             if (!REmpty)
             {
                 if (handsInventory.rightHandObject.name == "ipad")
                 {
-                    showDecomb = false;
-                    showCombin = false;
+                    showItemControlPanel = false;
                 }
             }
             bool showNoTarget = false;
@@ -385,6 +387,7 @@ public class GameUI : MonoBehaviour {
             decombineButton.SetActive(showDecomb);
             combineButton.SetActive(showCombin);
         }
+        ItemControlPanel.SetActive(showItemControlPanel);
 
         ICPCurrentState = ItemControlPanel.activeSelf;
         if (WalkToGroupPanel != null)

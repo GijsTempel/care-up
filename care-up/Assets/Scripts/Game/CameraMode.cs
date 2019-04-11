@@ -469,7 +469,6 @@ public class CameraMode : MonoBehaviour
     /// </summary>
     void CinematicUpdate()
     {
-        print(cinematicDirection);
         if (cinematicDirection == 1 || animationEnded)
         {
             cinematicLerp = Mathf.Clamp01(cinematicLerp + 2 * Time.deltaTime * cinematicDirection);
