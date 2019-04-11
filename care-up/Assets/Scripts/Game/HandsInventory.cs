@@ -223,7 +223,7 @@ public class HandsInventory : MonoBehaviour {
                 rightHandObject = item;
                 picked = true;
                 tutorial_pickedRight = true;
-                leftHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                rightHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 rightHandObject.GetComponent<Rigidbody>().isKinematic = false;
                 //rightHandObject.GetComponent<Collider>().enabled = false;
                 rightHandObject.leftControlBone = leftControlBone;
@@ -260,7 +260,8 @@ public class HandsInventory : MonoBehaviour {
                 rightHandObject = item;
                 picked = true;
                 tutorial_pickedRight = true;
-                leftHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                //-----------------------------------------------------------------------
+                rightHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 rightHandObject.GetComponent<Rigidbody>().isKinematic = false;
                 //rightHandObject.GetComponent<Collider>().enabled = false;
                 rightHandObject.leftControlBone = leftControlBone;

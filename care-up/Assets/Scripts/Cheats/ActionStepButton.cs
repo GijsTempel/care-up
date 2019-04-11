@@ -20,7 +20,7 @@ public class ActionStepButton : MonoBehaviour {
     {
         action = a;
         if (main_text != null)
-            main_text.text = action.SubIndex.ToString() + " " + action.Type.ToString();
+            main_text.text = action.SubIndex.ToString() + " " + action.shortDescr;
     }
 
     public void updateLook(int currentIndex)
@@ -33,7 +33,7 @@ public class ActionStepButton : MonoBehaviour {
             lastMode = actionsPanel.mode;
             if (lastMode == ActionsPanel.Mode.ShortDescr)
             {
-                main_text.text = action.SubIndex.ToString() + " " + action.Type.ToString();
+                main_text.text = action.SubIndex.ToString() + " " + action.shortDescr;
             }
             else if (lastMode == ActionsPanel.Mode.Type)
             {
