@@ -6,15 +6,16 @@ using UnityEngine.UI;
 
 using UnityEngine.EventSystems;
 
-public class GameUI : MonoBehaviour {
-	GameObject Player;
-	public Animator Blink;
-	public Animator IPadBlink;
-	public bool BlinkState = false;
-	public bool testValue;
-	GameObject donePanel;
-	GameObject closeButton;
-	GameObject closeDialog;
+public class GameUI : MonoBehaviour
+{
+    GameObject Player;
+    public Animator Blink;
+    public Animator IPadBlink;
+    public bool BlinkState = false;
+    public bool testValue;
+    GameObject donePanel;
+    GameObject closeButton;
+    GameObject closeDialog;
     GameObject donePanelYesNo;
     GameObject WalkToGroupPanel;
     public GameObject MoveBackButton;
@@ -53,9 +54,9 @@ public class GameUI : MonoBehaviour {
 
 
     public void MoveBack()
-	{
-		Player.GetComponent<PlayerScript>().MoveBackButton();
-	}
+    {
+        Player.GetComponent<PlayerScript>().MoveBackButton();
+    }
 
     //public WalkToGroupButton GetWTGButton(string key)
     //{
@@ -107,58 +108,56 @@ public class GameUI : MonoBehaviour {
 
     public void OpenRobotUI()
     {
-		RobotManager.UIElementsState[0] = false;
+        RobotManager.UIElementsState[0] = false;
         Player.GetComponent<PlayerScript>().OpenRobotUI();
     }
 
-	public void ToggleUsingOnMode()
+    public void ToggleUsingOnMode()
     {
-		Player.GetComponent<PlayerScript>().ToggleUsingOnMode(false);
+        Player.GetComponent<PlayerScript>().ToggleUsingOnMode(false);
     }
 
-	public void CloseButtonPressed(bool value)
-	{
-		closeDialog.SetActive(value);
-		closeButton.SetActive(!value);
+    public void CloseButtonPressed(bool value)
+    {
+        closeDialog.SetActive(value);
+        closeButton.SetActive(!value);
 
-		if (value)
-		{
-			GameObject.FindObjectOfType<PlayerScript>().robotUIopened = true;
-		}
-		else
-		{
-			GameObject.FindObjectOfType<PlayerScript>().robotUIopened = false;
-		}
-	}
+        if (value)
+        {
+            GameObject.FindObjectOfType<PlayerScript>().robotUIopened = true;
+        }
+        else
+        {
+            GameObject.FindObjectOfType<PlayerScript>().robotUIopened = false;
+        }
+    }
 
-	public void CloseGame()
-	{
-		bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
-	}
+    public void CloseGame()
+    {
+        bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
+    }
 
-
-	public void ButtonBlink(bool ToBlink)
-	{
-
-		if (BlinkState == ToBlink)
-			return;
-		BlinkState = ToBlink;
+    public void ButtonBlink(bool ToBlink)
+    {
+        if (BlinkState == ToBlink)
+            return;
+        BlinkState = ToBlink;
         if (transform.Find("Extra").gameObject.activeSelf)
         {
             Blink.SetTrigger("BlinkOnes");
-			BlinkState = false;
+            BlinkState = false;
         }
         else if (ToBlink)
         {
             Blink.SetTrigger("BlinkStart");
-			RobotManager.UIElementsState[1] = true;
+            RobotManager.UIElementsState[1] = true;
         }
         else
         {
             Blink.SetTrigger("BlinkStop");
-			RobotManager.UIElementsState[1] = false;
+            RobotManager.UIElementsState[1] = false;
         }
-	}
+    }
 
 
     public void Examine(bool leftHand = true)
@@ -183,13 +182,11 @@ public class GameUI : MonoBehaviour {
             cameraMode.selectedObject.OnExamine();
             //controls.ResetObject();
         }
-
-
     }
 
-
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         useOnNTtext = noTargetButton.transform.GetChild(0).GetComponent<Text>().text;
         ps = GameObject.FindObjectOfType<PlayerScript>();
         controller = GameObject.FindObjectOfType<PlayerAnimationManager>().GetComponent<Animator>();
@@ -198,7 +195,7 @@ public class GameUI : MonoBehaviour {
         tutorialCombine = GameObject.FindObjectOfType<Tutorial_Combining>();
         tutorialUseOn = GameObject.FindObjectOfType<Tutorial_UseOn>();
         actionManager = GameObject.FindObjectOfType<ActionManager>();
-        //ActionManager.BuildRequirements();
+        ActionManager.BuildRequirements();
         zoomButtonLeft.SetActive(false);
         zoomButtonRight.SetActive(false);
         combineButton.SetActive(false);
@@ -213,11 +210,11 @@ public class GameUI : MonoBehaviour {
 #endif
         WalkToGroupPanel = GameObject.Find("MovementButtons");
         Player = GameObject.Find("Player");
-		closeButton = transform.Find("CloseBtn").gameObject;
-		closeDialog = transform.Find("CloseDialog").gameObject;
-		closeDialog.SetActive(false);
-		donePanel = transform.Find("DonePanel").gameObject;
-		donePanel.SetActive(false);
+        closeButton = transform.Find("CloseBtn").gameObject;
+        closeDialog = transform.Find("CloseDialog").gameObject;
+        closeDialog.SetActive(false);
+        donePanel = transform.Find("DonePanel").gameObject;
+        donePanel.SetActive(false);
 
         donePanelYesNo = transform.Find("DonePanelYesNo").gameObject;
         donePanelYesNo.SetActive(false);
@@ -263,7 +260,7 @@ public class GameUI : MonoBehaviour {
             int activeGroupButtons = 0;
             foreach (WalkToGroup g in GameObject.FindObjectsOfType<WalkToGroup>())
             {
-                switch (g.WalkToGroupType) 
+                switch (g.WalkToGroupType)
                 {
                     case WalkToGroup.GroupType.WorkField:
                         WTGButtons["WorkField"].setWalkToGroup(g);
@@ -296,25 +293,29 @@ public class GameUI : MonoBehaviour {
         }
     }
 
-	public void ShowDonePanel(bool value)
-	{
-		donePanel.SetActive(value);
-	}
-    
-	public void EndScene()
+    public void ShowDonePanel(bool value)
     {
-		if (GameObject.Find("Preferences") != null){
-			GameObject.Find("Preferences").GetComponent<EndScoreManager>().LoadEndScoreScene();
-		}else{
-			bl_SceneLoaderUtils.GetLoader.LoadLevel("UMenuPro");
-		}
+        donePanel.SetActive(value);
+    }
+
+    public void EndScene()
+    {
+        if (GameObject.Find("Preferences") != null)
+        {
+            GameObject.Find("Preferences").GetComponent<EndScoreManager>().LoadEndScoreScene();
+        }
+        else
+        {
+            bl_SceneLoaderUtils.GetLoader.LoadLevel("UMenuPro");
+        }
 
         donePanel.SetActive(false);
     }
 
     // Update is called once per frame
-    void Update() {
-        
+    void Update()
+    {
+
         //Don't show object control panel if animation is playing
         //if animation is longer than 0.2 (is not hold animation)
         bool animationUiBlock = true;
@@ -346,10 +347,10 @@ public class GameUI : MonoBehaviour {
 
 
         bool handsStateChanged = (currentLeft != lHash || currentRight != rHash
-        || (ICPCurrentState != ItemControlPanel.activeSelf) 
+        || (ICPCurrentState != ItemControlPanel.activeSelf)
         || currentActionsCount != actionManager.actionsCount);
 
-        if (handsStateChanged) 
+        if (handsStateChanged)
         {
             currentActionsCount = actionManager.actionsCount;
             //hide panel for the first frame of hands state change
@@ -413,7 +414,7 @@ public class GameUI : MonoBehaviour {
         ICPCurrentState = ItemControlPanel.activeSelf;
         if (WalkToGroupPanel != null)
         {
-            
+
             if (prevWalkToGroup != ps.currentWalkPosition)
             {
                 WalkToGroupPanel.SetActive(ps.away);
@@ -451,7 +452,7 @@ public class GameUI : MonoBehaviour {
         }
 
         testValue = RobotManager.UIElementsState[0];
-	}
+    }
 
     public void OpenDonePanelYesNo()
     {
