@@ -417,6 +417,8 @@ public class GameUI : MonoBehaviour
         currentItemControlPanelState = showItemControlPanel;
         if (cooldownTime > 0)
             showItemControlPanel = false;
+        if (PlayerScript.actionsLocked)
+            showItemControlPanel = false;
         ItemControlPanel.SetActive(showItemControlPanel);
 
         ICPCurrentState = ItemControlPanel.activeSelf;
@@ -426,11 +428,13 @@ public class GameUI : MonoBehaviour
             if (prevWalkToGroup != ps.currentWalkPosition)
             {
                 WalkToGroupPanel.SetActive(ps.away);
+                
                 if (!ps.away)
                 {
 
                     LeftSideButton.gameObject.SetActive(ps.currentWalkPosition.LeftWalkToGroup != null);
                     RightSideButton.gameObject.SetActive(ps.currentWalkPosition.RightWalkToGroup != null);
+                    
                     if (ps.currentWalkPosition.LeftWalkToGroup != null)
                     {
                         LeftSideButton.setWalkToGroup(ps.currentWalkPosition.LeftWalkToGroup);

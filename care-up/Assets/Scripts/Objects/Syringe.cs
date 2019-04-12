@@ -194,57 +194,26 @@ public class Syringe : PickableObjectWithInfo {
                     }
                 }
             }
-
-            // venting
-            if (name == "SyringeWithAbsorptionNeedle" && noTarget
-                && name == "SyringeWithAbsorptionNeedle")
-            {
-                if (actionManager.CompareUseOnInfo("SyringeWithAbsorptionNeedle", ""))
-                {
-                    if (inventory.LeftHandEmpty())
-                    {
-                        PlayerAnimationManager.PlayAnimation("UseRight " + name);
-                        actionManager.OnUseOnAction("SyringeWithAbsorptionNeedle", "");
-                        return true; // fix for venting syringe
-                    }
-                    else if (inventory.RightHandEmpty())
-                    {
-                        PlayerAnimationManager.PlayAnimation("UseLeft " + name);
-                        actionManager.OnUseOnAction("SyringeWithAbsorptionNeedle", "");
-                        return true; // fix for venting syringe
-                    }
-                    else
-                    {
-                        EmptyHandsWarning();
-                        return false;
-                    }
-                }
-            }
         }
         else // cannot interact or target == ""
         {
-            if (name == "SyringeWithAbsorptionNeedle" && noTarget
-                && name == "SyringeWithAbsorptionNeedle")
+            if (name == "SyringeWithAbsorptionNeedle" && noTarget)
             {
                 if (actionManager.CompareUseOnInfo("SyringeWithAbsorptionNeedle", ""))
                 {
-                    if (inventory.LeftHandEmpty())
+                    if (inventory.rightHandObject == this)
                     {
                         PlayerAnimationManager.PlayAnimation("UseRight " + name);
                         actionManager.OnUseOnAction("SyringeWithAbsorptionNeedle", "");
                         return true; // fix for venting syringe
                     }
-                    else if (inventory.RightHandEmpty())
+                    else if (inventory.leftHandObject == this)
                     {
                         PlayerAnimationManager.PlayAnimation("UseLeft " + name);
                         actionManager.OnUseOnAction("SyringeWithAbsorptionNeedle", "");
                         return true; // fix for venting syringe
                     }
-                    else
-                    {
-                        EmptyHandsWarning();
-                        return false;
-                    }
+
                 }
             }
             else if (name == "SyringeWithAbsorptionSNeedle" && noTarget
