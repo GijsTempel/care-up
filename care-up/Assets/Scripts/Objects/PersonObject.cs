@@ -28,6 +28,7 @@ public class PersonObject : InteractableObject
     private bool direction = true;
     private float inhaleCounter = 1.0f;
 
+
     protected AudioSource audioSource;
 
     protected bool lookAtCamera;
@@ -57,6 +58,7 @@ public class PersonObject : InteractableObject
         lookAtCamera = true;
 
         rend = GetComponentInChildren<SkinnedMeshRenderer>();
+        
     }
 
     protected override void Update()
@@ -98,6 +100,9 @@ public class PersonObject : InteractableObject
 
             switch (topic)
             {
+                case "DoubleCheck":
+                   this.GetComponent<MoveToPoint>().toWalk = true;
+                    break;
                 default:
                     break;
             }

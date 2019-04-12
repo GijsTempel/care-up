@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 95009182766757784}
   - component: {fileID: 82729162590868316}
   - component: {fileID: 114579634128648494}
+  - component: {fileID: 114017726456870824}
   m_Layer: 0
   m_Name: Doctor
   m_TagString: Untagged
@@ -3429,7 +3430,7 @@ AudioSource:
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   spreadCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -3459,7 +3460,7 @@ AudioSource:
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
 --- !u!95 &95009182766757784
 Animator:
   serializedVersion: 3
@@ -3478,6 +3479,29 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114017726456870824
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1012617578749984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31e52223aab19e24eb2b195d26a64e42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1.5
+  KyePoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  toWalk: 0
+  EndTriggerObjName: 
+  EndTriggers:
+  - stopwalk
+  StartTrigger: walk
+  StopTrigger: stopwalk
+  person: {fileID: 95009182766757784}
 --- !u!114 &114570585803601748
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3509,7 +3533,7 @@ MonoBehaviour:
   description: Collega
   muplipleMesh: 1
   descriptionOffset: {x: 0, y: 1, z: 0}
-  transparencyFix: 0
+  transparencyFix: 1
   tutorial_talked: 0
   tutorial_used: 0
   allowToTalk: 1
