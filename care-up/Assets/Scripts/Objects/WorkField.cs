@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class WorkField : UsableObject {
@@ -75,6 +74,7 @@ public class WorkField : UsableObject {
             
             ++toggleTime;
         }
+        ActionManager.BuildRequirements();
     }
 
     protected override void Update()

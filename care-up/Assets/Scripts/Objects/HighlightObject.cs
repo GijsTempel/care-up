@@ -69,20 +69,21 @@ public class HighlightObject : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        if (target == null)
+            Destroy();
         if (timeLeft < 0f)
             GameObject.DestroyImmediate(gameObject);
+
         if (timeLeft < float.PositiveInfinity)
             timeLeft -= Time.deltaTime;
-
-		if (target != null)
-        {
+        if (target != null){
             if (hl_control != null)
             {
                 transform.position = hl_control.transform.position;
                 transform.rotation = hl_control.transform.rotation;
 
             }
-            else if(target.GetComponent<Collider>() != null)
+            else if (target.GetComponent<Collider>() != null)
             {
                 Collider c = target.gameObject.GetComponent<Collider>();
                 transform.position = c.bounds.center;
@@ -91,7 +92,6 @@ public class HighlightObject : MonoBehaviour {
             {
                 transform.position = target.position;
                 transform.rotation = target.rotation;
-
             }
         }
 	}
