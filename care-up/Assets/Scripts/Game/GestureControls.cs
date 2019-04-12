@@ -210,11 +210,13 @@ public class GestureControls : MonoBehaviour
         player = GameObject.FindObjectOfType<PlayerScript>();
 
         // don't reorder the creation of these :)
+        /* disabling gestures ? i forgot if i needed to disable
         CreateDoubleTapGesture();
         CreateTapGesture();
         CreateSwipeGesture();
         CreateLongPressGesture();
-        
+        */
+
         // show touches, only do this for debugging as it can interfere with other canvases
         //FingersScript.Instance.ShowTouches = true;
 
