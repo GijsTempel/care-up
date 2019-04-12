@@ -3,7 +3,9 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class ItemControlsUI : MonoBehaviour {
-    
+
+    public bool oldInitDisabled = true;
+
     public GameObject initedObject;
 
     private Controls controls;
@@ -278,6 +280,12 @@ public class ItemControlsUI : MonoBehaviour {
                 !discardButton.activeSelf)
             {
                 Close();
+            }
+            
+            if (oldInitDisabled)
+            {
+                // must be last, after all the checks in Init and with bypass=true
+                Close(true);
             }
         }
     }
