@@ -197,46 +197,20 @@ public class Syringe : PickableObjectWithInfo {
         }
         else // cannot interact or target == ""
         {
-            if (name == "SyringeWithAbsorptionNeedle" && noTarget)
-            {
-                if (actionManager.CompareUseOnInfo("SyringeWithAbsorptionNeedle", ""))
+            if (noTarget) {
+                if (actionManager.CompareUseOnInfo(name, ""))
                 {
                     if (inventory.rightHandObject == this)
                     {
                         PlayerAnimationManager.PlayAnimation("UseRight " + name);
-                        actionManager.OnUseOnAction("SyringeWithAbsorptionNeedle", "");
-                        return true; // fix for venting syringe
+                        actionManager.OnUseOnAction(name, "");
+                        return true; 
                     }
-                    else if (inventory.leftHandObject == this)
+                    if (inventory.leftHandObject == this)
                     {
                         PlayerAnimationManager.PlayAnimation("UseLeft " + name);
-                        actionManager.OnUseOnAction("SyringeWithAbsorptionNeedle", "");
-                        return true; // fix for venting syringe
-                    }
-
-                }
-            }
-            else if (name == "SyringeWithAbsorptionSNeedle" && noTarget
-                && name == "SyringeWithAbsorptionSNeedle")
-            {
-                if (actionManager.CompareUseOnInfo("SyringeWithAbsorptionSNeedle", ""))
-                {
-                    if (inventory.LeftHandEmpty())
-                    {
-                        PlayerAnimationManager.PlayAnimation("UseRight " + name);
-                        actionManager.OnUseOnAction("SyringeWithAbsorptionSNeedle", "");
-                        return true; // fix for venting syringe
-                    }
-                    else if (inventory.RightHandEmpty())
-                    {
-                        PlayerAnimationManager.PlayAnimation("UseLeft " + name);
-                        actionManager.OnUseOnAction("SyringeWithAbsorptionSNeedle", "");
-                        return true; // fix for venting syringe
-                    }
-                    else
-                    {
-                        EmptyHandsWarning();
-                        return false;
+                        actionManager.OnUseOnAction(name, "");
+                        return true;
                     }
                 }
             }
