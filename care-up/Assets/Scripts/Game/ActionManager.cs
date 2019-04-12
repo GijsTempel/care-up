@@ -18,7 +18,6 @@ public class ActionManager : MonoBehaviour
     [HideInInspector]
     public bool tutorial_hintUsed = false;
     private bool currentStepHintUsed = false;
-    public float _QuizWaitTime;
     private Text pointsText;
     private Text percentageText;
     public int actionsCount = 0;
@@ -628,7 +627,6 @@ public class ActionManager : MonoBehaviour
     /// </summary>
     void Update()
     {
-        _QuizWaitTime = currentAction.quizTriggerTime;
         if (controls.keyPreferences.GetHintKey.Pressed())
         {
             if (Narrator.PlayHintSound(CurrentAudioHint)) // if sound played

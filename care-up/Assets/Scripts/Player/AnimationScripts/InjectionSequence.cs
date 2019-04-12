@@ -16,8 +16,6 @@ public class InjectionSequence : AnimationSequenceState
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
 
-        inv.PutAllOnTable();
-
         inv.sequenceAborted = false;
     }
 
