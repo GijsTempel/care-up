@@ -31,6 +31,8 @@ public class GameUI : MonoBehaviour {
     public GameObject ItemControlPanel;
     public GameObject combineButton;
     public GameObject decombineButton;
+    public GameObject decombineButton_right;
+
     public GameObject noTargetButton;
     private CameraMode cameraMode;
 
@@ -196,11 +198,12 @@ public class GameUI : MonoBehaviour {
         tutorialCombine = GameObject.FindObjectOfType<Tutorial_Combining>();
         tutorialUseOn = GameObject.FindObjectOfType<Tutorial_UseOn>();
         actionManager = GameObject.FindObjectOfType<ActionManager>();
-        ActionManager.BuildRequirements();
+        //ActionManager.BuildRequirements();
         zoomButtonLeft.SetActive(false);
         zoomButtonRight.SetActive(false);
         combineButton.SetActive(false);
         decombineButton.SetActive(false);
+        decombineButton_right.SetActive(false);
         noTargetButton.SetActive(false);
         ItemControlPanel.SetActive(false);
 
@@ -315,27 +318,20 @@ public class GameUI : MonoBehaviour {
         //Don't show object control panel if animation is playing
         //if animation is longer than 0.2 (is not hold animation)
         bool animationUiBlock = true;
-        if (controller.GetCurrentAnimatorStateInfo(1).length > 0.2f && controller.GetCurrentAnimatorStateInfo(1).normalizedTime < 1f)
-            animationUiBlock = false;
-        if (controller.GetCurrentAnimatorStateInfo(0).length > 0.2f && controller.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
-            animationUiBlock = false;
-        if (cameraMode.camViewObject)
-            animationUiBlock = false;
-        //if animation is in transition to not holding animation
-        if (controller.GetNextAnimatorStateInfo(1).length > 0.2f && controller.GetAnimatorTransitionInfo(1).normalizedTime < 0.01)
-            animationUiBlock = false;
-        if (controller.GetNextAnimatorStateInfo(0).length > 0.2f && controller.GetAnimatorTransitionInfo(0).normalizedTime < 0.01)
-            animationUiBlock = false;
-
-        //If in transition from long animation to short one
-        if (controller.GetCurrentAnimatorStateInfo(1).length > 0.2f && 
-        controller.GetAnimatorTransitionInfo(1).normalizedTime < 0.01 &&
-            controller.GetNextAnimatorStateInfo(1).length < 0.2f)
-            animationUiBlock = false;
-        if (controller.GetCurrentAnimatorStateInfo(0).length > 0.2f &&
-        controller.GetAnimatorTransitionInfo(0).normalizedTime < 0.01 &&
-            controller.GetNextAnimatorStateInfo(0).length < 0.2f)
-            animationUiBlock = false;
+        for (int i = 0; i < 3; i++)
+        {
+            if (controller.GetCurrentAnimatorStateInfo(i).length > 0.2f && controller.GetCurrentAnimatorStateInfo(i).normalizedTime < 1f)
+                animationUiBlock = false;
+            if (controller.GetNextAnimatorStateInfo(i).length > 0.2f && controller.GetAnimatorTransitionInfo(i).normalizedTime < 0.01)
+                animationUiBlock = false;
+            if (i < 2)
+            {
+                if (controller.GetCurrentAnimatorStateInfo(i).length > 0.2f &&
+                    controller.GetAnimatorTransitionInfo(i).normalizedTime < 0.01 &&
+                    controller.GetNextAnimatorStateInfo(i).length < 0.2f)
+                    animationUiBlock = false;
+            }
+        }
 
         //to show object control panel if no animation block and action block
         bool showItemControlPanel = allowObjectControlUI && animationUiBlock;
@@ -397,7 +393,8 @@ public class GameUI : MonoBehaviour {
             zoomButtonLeft.SetActive(showZoomLeft);
             zoomButtonRight.SetActive(showZoomRight);
             noTargetButton.SetActive(showNoTarget);
-            decombineButton.SetActive(showDecomb);
+            decombineButton.SetActive(showDecomb && REmpty);
+            decombineButton_right.SetActive(showDecomb && LEmpty);
             combineButton.SetActive(showCombin);
         }
 
