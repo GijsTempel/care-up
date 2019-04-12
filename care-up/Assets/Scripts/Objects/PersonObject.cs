@@ -15,7 +15,7 @@ public class PersonObject : InteractableObject
     public bool tutorial_talked = false;
     [HideInInspector]
     public bool tutorial_used = false;
-	public bool allowToTalk = true;
+    public bool allowToTalk = true;
 
     public List<string> dialogueXmls;
     protected int currentDialogueIndex = 0;
@@ -61,11 +61,12 @@ public class PersonObject : InteractableObject
 
     public bool hasTopic(string topic)
     {
-        foreach (SelectDialogue.DialogueOption sd in optionsList)
-        {
-            if (sd.attribute == topic)
-                return true;
-        }
+        if (optionsList != null)
+            foreach (SelectDialogue.DialogueOption sd in optionsList)
+            {
+                if (sd.attribute == topic)
+                    return true;
+            }
         return false;
     }
 
@@ -101,7 +102,7 @@ public class PersonObject : InteractableObject
     {
         if (ViewModeActive() || topic == "CM_Leave" || topic == "")
             return;
-        
+
         if (actionManager.CompareTopic(topic))
         {
             tutorial_talked = true;
@@ -117,7 +118,7 @@ public class PersonObject : InteractableObject
 
         actionManager.OnTalkAction(topic);
     }
-    
+
     public void NextDialogue()
     {
         ++currentDialogueIndex;
@@ -139,7 +140,8 @@ public class PersonObject : InteractableObject
 
     public void SkipGreetingDialogue()
     {
-        if (currentDialogueIndex < dialogueXmls.Count) {
+        if (currentDialogueIndex < dialogueXmls.Count)
+        {
             if (dialogueXmls[currentDialogueIndex] == "Greeting")
             {
                 NextDialogue();
@@ -155,7 +157,7 @@ public class PersonObject : InteractableObject
     {
 
         optionsList.Clear();
-        
+
         TextAsset textAsset = (TextAsset)Resources.Load("Xml/PersonDialogues/" + filename);
         XmlDocument xmlFile = new XmlDocument();
         xmlFile.LoadXml(textAsset.text);
@@ -187,10 +189,10 @@ public class PersonObject : InteractableObject
     /// </summary>
     public void CreateSelectionDialogue()
     {
-		if (!allowToTalk)
-		{
-			return;
-		}
+        if (!allowToTalk)
+        {
+            return;
+        }
 
         tutorial_used = true;
         GameObject dialogueObject = Instantiate(Resources.Load<GameObject>("Prefabs/UI/SelectionDialogue"),
