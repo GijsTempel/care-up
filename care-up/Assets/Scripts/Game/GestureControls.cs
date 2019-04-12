@@ -210,8 +210,8 @@ public class GestureControls : MonoBehaviour
         player = GameObject.FindObjectOfType<PlayerScript>();
 
         // don't reorder the creation of these :)
+        CreateDoubleTapGesture(); // double tap for dropping still enabled
         /* disabling gestures ? i forgot if i needed to disable
-        CreateDoubleTapGesture();
         CreateTapGesture();
         CreateSwipeGesture();
         CreateLongPressGesture();
