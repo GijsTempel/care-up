@@ -35,6 +35,8 @@ public class GameUI : MonoBehaviour
     public GameObject decombineButton_right;
 
     public GameObject noTargetButton;
+    public GameObject noTargetButton_right;
+
     private CameraMode cameraMode;
 
     public GameObject zoomButtonLeft;
@@ -203,6 +205,7 @@ public class GameUI : MonoBehaviour
         decombineButton_right.SetActive(false);
         noTargetButton.SetActive(false);
         ItemControlPanel.SetActive(false);
+        noTargetButton_right.SetActive(false);
 
 #if !UNITY_EDITOR
         if(GameObject.Find("ActionsPanel") != null)
@@ -369,6 +372,8 @@ public class GameUI : MonoBehaviour
             bool showZoomRight = false;
 
             bool showNoTarget = false;
+            bool showNoTarget_right = false;
+
             if (!LEmpty)
             {
                 if (handsInventory.leftHandObject.GetComponent<ExaminableObject>() != null)
@@ -378,6 +383,7 @@ public class GameUI : MonoBehaviour
                     showNoTarget = true;
                     noTargetButton.transform.GetChild(0).GetComponent<Text>().text =
                         actionManager.CurrentButtonText(handsInventory.leftHandObject.name);
+                    
                 }
             }
             if (!REmpty)
@@ -386,16 +392,18 @@ public class GameUI : MonoBehaviour
                     showZoomRight = true;
                 if (actionManager.CompareUseOnInfo(handsInventory.rightHandObject.name, ""))
                 {
-                    showNoTarget = true;
-                    noTargetButton.transform.GetChild(0).GetComponent<Text>().text =
+                    showNoTarget_right = true;
+                    noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text =
                        actionManager.CurrentButtonText(handsInventory.rightHandObject.name);
                 }
             }
             zoomButtonLeft.SetActive(showZoomLeft);
             zoomButtonRight.SetActive(showZoomRight);
             noTargetButton.SetActive(showNoTarget);
-            decombineButton.SetActive(showDecomb && REmpty);
-            decombineButton_right.SetActive(showDecomb && LEmpty);
+            noTargetButton_right.SetActive(showNoTarget_right);
+
+            decombineButton.SetActive(showDecomb && REmpty && !showNoTarget);
+            decombineButton_right.SetActive(showDecomb && LEmpty && !showNoTarget_right);
             combineButton.SetActive(showCombin);
         }
 

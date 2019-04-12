@@ -58,7 +58,7 @@ public class WalkToGroupButton : MonoBehaviour {
                 case WalkToGroup.GroupType.WorkField:
                     _icon.GetComponent<Image>().sprite = Resources.Load("Sprites/WalkGroup_Icons/MoveWorkfield" , typeof(Sprite)) as Sprite;
                     GetComponent<Image>().color = gameUI.WTGButtons["WorkField"].GetComponent<Image>().color;
-                    if (blur != null)
+                    if (blur != null) 
                         blur.GetComponent<Image>().color = gameUI.WTGButtons["WorkField"].GetComponent<Image>().color;
                     break;
                 case WalkToGroup.GroupType.Doctor:
