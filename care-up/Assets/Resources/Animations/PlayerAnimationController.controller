@@ -12011,8 +12011,8 @@ AnimatorStateTransition:
   m_PrefabInternal: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 6
-    m_ConditionEvent: sceneID
+  - m_ConditionMode: 1
+    m_ConditionEvent: S UseLeft
     m_EventTreshold: 1
   - m_ConditionMode: 1
     m_ConditionEvent: S UseRight SyringeWithInjectionNeedleCap
@@ -21303,10 +21303,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: S UseLeft
-    m_EventTreshold: 0
-  - m_ConditionMode: 6
-    m_ConditionEvent: leftID
+    m_ConditionEvent: S UseRight SyringeWithInjectionNeedleCap
     m_EventTreshold: 11301
   - m_ConditionMode: 6
     m_ConditionEvent: sceneID
@@ -26441,15 +26438,12 @@ AnimatorStateTransition:
   m_PrefabInternal: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: UseRight
-    m_EventTreshold: 0
-  - m_ConditionMode: 6
-    m_ConditionEvent: rightID
-    m_EventTreshold: 11301
   - m_ConditionMode: 6
     m_ConditionEvent: sceneID
     m_EventTreshold: 2
+  - m_ConditionMode: 1
+    m_ConditionEvent: UseLeft SyringeWithInjectionNeedleCap
+    m_EventTreshold: 11301
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102926097139822452}
   m_Solo: 0
@@ -34958,15 +34952,12 @@ AnimatorStateTransition:
   m_PrefabInternal: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: UseLeft
-    m_EventTreshold: 0
-  - m_ConditionMode: 6
-    m_ConditionEvent: leftID
-    m_EventTreshold: 11301
   - m_ConditionMode: 6
     m_ConditionEvent: sceneID
     m_EventTreshold: 2
+  - m_ConditionMode: 1
+    m_ConditionEvent: UseRight SyringeWithInjectionNeedleCap
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102471192983418888}
   m_Solo: 0
@@ -35253,11 +35244,8 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: S UseRight
+    m_ConditionEvent: S UseLeft SyringeWithInjectionNeedleCap
     m_EventTreshold: 0
-  - m_ConditionMode: 6
-    m_ConditionEvent: rightID
-    m_EventTreshold: 11301
   - m_ConditionMode: 6
     m_ConditionEvent: sceneID
     m_EventTreshold: 2
