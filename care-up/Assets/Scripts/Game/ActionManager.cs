@@ -139,10 +139,19 @@ public class ActionManager : MonoBehaviour
         get
         {
             string result = "";
+            bool Ua = false;
+
+#if UNITY_EDITOR
+            if (GameObject.FindObjectOfType<GameUI>() != null)
+                Ua = GameObject.FindObjectOfType<ObjectsIDsController>().Ua;
+#endif
 
             if (manager != null && !manager.practiceMode && currentAction != null)
             {
                 result = currentAction.shortDescr;
+                if (Ua && currentAction.commentUA != "")
+                    result = currentAction.commentUA;
+
             }
             else
             {
@@ -152,7 +161,10 @@ public class ActionManager : MonoBehaviour
 
                 foreach (Action a in sublist)
                 {
-                    result += " - " + a.shortDescr + "\n";
+                    if (!Ua || a.commentUA == "")
+                        result += " - " + a.shortDescr + "\n";
+                    if (Ua)
+                        result += " - " + a.commentUA + "\n";
                 }
             }
 

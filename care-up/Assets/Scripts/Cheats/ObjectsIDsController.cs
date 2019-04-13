@@ -15,6 +15,7 @@ public class ObjectsIDsController : MonoBehaviour
 {
     public bool cheat = false;
     public bool buildActionList = false;
+    public bool Ua = false;
 
     private List<ObjectsIDs> objectsIDsList = new List<ObjectsIDs>();
     public List<GameObject> hidenObjects;
