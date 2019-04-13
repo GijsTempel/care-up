@@ -56,6 +56,8 @@ public class CameraMode : MonoBehaviour
     private Quaternion savedRot;
     private Quaternion targetRot;
     private bool soloCamera;
+    private bool closingEyes = false;
+    private bool closeEyesTriggered = false;
 
     //private Quaternion camPosition; never used
 
@@ -473,12 +475,28 @@ public class CameraMode : MonoBehaviour
         {
             cinematicLerp = Mathf.Clamp01(cinematicLerp + 2 * Time.deltaTime * cinematicDirection);
         }
+        
+        // set the lerp breakpoint value accordingly to closing eyes animation length
+        float lerpBreakpoint = 0.5f;
+        bool wayInFlag = closingEyes && cinematicLerp < lerpBreakpoint && cinematicDirection == 1;
+        bool wayOutFlag = closingEyes && cinematicLerp > (1 - lerpBreakpoint) && cinematicDirection == -1 && animationEnded;
 
-        cinematicControl.transform.position =
-            Vector3.Lerp(cinematicPos, cinematicTargetPos, cinematicLerp);
-        if (animationEnded || cinematicDirection == 1)
-            cinematicControl.Find("Arms").transform.rotation =
-                Quaternion.Lerp(cinematicRot, cinematicTargetRot, cinematicLerp);
+        if (wayInFlag || wayOutFlag)
+        {
+            if (closeEyesTriggered == false)
+            {
+                closeEyesTriggered = true;
+                PlayerAnimationManager.SetTrigger("close_eyes");
+            }
+        }
+        else
+        {
+            cinematicControl.transform.position =
+                Vector3.Lerp(cinematicPos, cinematicTargetPos, cinematicLerp);
+            if (animationEnded || cinematicDirection == 1)
+                cinematicControl.Find("Arms").transform.rotation =
+                    Quaternion.Lerp(cinematicRot, cinematicTargetRot, cinematicLerp);
+        }
 
         //if (!dontMoveCamera)
         //    AnimationCameraUpdate(false);
@@ -488,12 +506,19 @@ public class CameraMode : MonoBehaviour
             cinematicDirection = -1;
             if (cinematicToggle)
                 PlayerAnimationManager.ToggleAnimationSpeed();
+
+            // open eyes i assume
+            PlayerAnimationManager.SetTrigger("open_eyes");
+            closeEyesTriggered = false;
         }
         else if (cinematicDirection == -1 && cinematicLerp == 0.0f)
         {
             ToggleCameraMode(Mode.Free);
             cinematicDirection = 1;
             animationEnded = false;
+
+            // open eyes i assume
+            PlayerAnimationManager.SetTrigger("open_eyes");
         }
     }
 
@@ -591,5 +616,11 @@ public class CameraMode : MonoBehaviour
 
         if (!dontMoveCamera)
             SetCameraUpdating(false);
+
+        // calculate distance between start/end
+        // in order to know if need to close eyes
+        float distance = Vector3.Distance(cinematicPos, cinematicTargetPos);
+        closingEyes = distance > 1.8f; // set distance breakpoint here
+        closeEyesTriggered = false;
     }
 }
