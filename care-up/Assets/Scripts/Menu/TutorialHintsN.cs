@@ -75,12 +75,20 @@ public class TutorialHintsN : MonoBehaviour
 
     void Start()
     {
-        cam = GameObject.Find("Camera").GetComponent<Camera>();
-        UpdateToScreenResolution();
-		originalPos = new Vector2(267f, -176f);
-		originalSize = new Vector2(452f, 300f);
+        Setup();
     }
 
+
+    void Setup()
+    {
+        if (Camera.main != null)
+        {
+            cam = Camera.main.GetComponent<Camera>();
+            UpdateToScreenResolution();
+            originalPos = new Vector2(267f, -176f);
+            originalSize = new Vector2(452f, 300f);
+        }
+    }
 
 	public void SetSize(float x, float y)
 	{
@@ -169,9 +177,17 @@ public class TutorialHintsN : MonoBehaviour
 			ScriptCommand = ("hintsN.LockTo(\"" + (path).ToString() + "\", new Vector3(" + x+y+z + "));");
             if (WorldObject.GetComponent<RectTransform>() == null)
             {
-                Vector3 ObjWorldPos = WorldObject.transform.position;
-                Vector3 ScreenPos = cam.WorldToScreenPoint(ObjWorldPos + offset) / screenCorrection;
-                GetComponent<RectTransform>().anchoredPosition = LimitScreenPos(ScreenPos);
+                if (cam == null)
+                {
+                    Setup();
+                    return;
+                }
+                else
+                {
+                    Vector3 ObjWorldPos = WorldObject.transform.position;
+                    Vector3 ScreenPos = cam.WorldToScreenPoint(ObjWorldPos + offset) / screenCorrection;
+                    GetComponent<RectTransform>().anchoredPosition = LimitScreenPos(ScreenPos);
+                }
             }
             else
             {
