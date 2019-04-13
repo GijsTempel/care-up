@@ -2354,7 +2354,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SequenceName: SubcutaneousInjection
   TuggleFromCinematic: 1
-  keyFrames: 050000000c010000f60100005902000019030000ad0300001404000016050000
+  keyFrames: 230000000c010000f60100005902000019030000ad0300001404000016050000
   takeSyringeFrame: 311
   takeOffCapFrame: 362
   dropCapFrame: 411
@@ -2755,7 +2755,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 522f6b56c9a2b7d4d8b535cd9870c5c7, type: 3}
   m_Name: 
@@ -4368,7 +4368,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SequenceName: SubcutaneousInjection
   TuggleFromCinematic: 1
-  keyFrames: 050000000c010000f60100005902000019030000ad0300001404000016050000
+  keyFrames: 230000000c010000f60100005902000019030000ad0300001404000016050000
   takeSyringeFrame: 311
   takeOffCapFrame: 362
   dropCapFrame: 411
@@ -5918,7 +5918,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d1d577ba52e334ef39dfa878ef5c62b5, type: 3}
   m_Name: 
@@ -6779,7 +6779,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e72c07ae9fe847f19fb1b3a669e3399, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: Patient
+  target: sq_target
   resetCamera: 0
   maxDist: 2
 --- !u!114 &114533574995259322
@@ -8925,7 +8925,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
   m_Name: 
@@ -9143,7 +9143,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d1d577ba52e334ef39dfa878ef5c62b5, type: 3}
   m_Name: 
@@ -9283,7 +9283,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
   m_Name: 
@@ -10336,7 +10336,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 522f6b56c9a2b7d4d8b535cd9870c5c7, type: 3}
   m_Name: 
@@ -10864,7 +10864,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e72c07ae9fe847f19fb1b3a669e3399, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: Patient
+  target: sq_target
   resetCamera: 0
   maxDist: 2
 --- !u!114 &114995470745257930
@@ -12336,11 +12336,8 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: UseLeft
+    m_ConditionEvent: UseLeft SyringeWithInjectionNeedleCap
     m_EventTreshold: 0
-  - m_ConditionMode: 6
-    m_ConditionEvent: leftID
-    m_EventTreshold: 11301
   - m_ConditionMode: 6
     m_ConditionEvent: sceneID
     m_EventTreshold: 4
@@ -16158,11 +16155,8 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: UseRight
+    m_ConditionEvent: UseRight SyringeWithInjectionNeedleCap
     m_EventTreshold: 0
-  - m_ConditionMode: 6
-    m_ConditionEvent: rightID
-    m_EventTreshold: 11301
   - m_ConditionMode: 6
     m_ConditionEvent: sceneID
     m_EventTreshold: 4
@@ -31881,11 +31875,8 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: S UseLeft
+    m_ConditionEvent: S UseLeft SyringeWithInjectionNeedleCap
     m_EventTreshold: 0
-  - m_ConditionMode: 6
-    m_ConditionEvent: leftID
-    m_EventTreshold: 11301
   - m_ConditionMode: 6
     m_ConditionEvent: sceneID
     m_EventTreshold: 4
@@ -35586,11 +35577,8 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: S UseRight
+    m_ConditionEvent: S UseRight SyringeWithInjectionNeedleCap
     m_EventTreshold: 0
-  - m_ConditionMode: 6
-    m_ConditionEvent: rightID
-    m_EventTreshold: 11301
   - m_ConditionMode: 6
     m_ConditionEvent: sceneID
     m_EventTreshold: 4
@@ -54682,7 +54670,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 1102639720320762762}
-    m_Position: {x: 804, y: 384, z: 0}
+    m_Position: {x: 564, y: 372, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102310531895873830}
     m_Position: {x: 288, y: 120, z: 0}
@@ -54718,7 +54706,7 @@ AnimatorStateMachine:
     m_Position: {x: 24, y: 384, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102504736667454010}
-    m_Position: {x: -48, y: 492, z: 0}
+    m_Position: {x: -72, y: 492, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102015252017713710}
     m_Position: {x: -144, y: 576, z: 0}
@@ -55725,7 +55713,7 @@ AnimatorStateMachine:
     m_Position: {x: 48, y: 468, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102784014801043740}
-    m_Position: {x: -24, y: 612, z: 0}
+    m_Position: {x: -48, y: 612, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102500488211612456}
     m_Position: {x: -144, y: 720, z: 0}
