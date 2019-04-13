@@ -259,4 +259,9 @@ public class PlayerAnimationManager : MonoBehaviour
         float targetFrame = compareFrame / 60f; // 60fps
         return (currentFrame >= targetFrame && previousFrame < targetFrame);
     }
+
+    public static void SetTrigger(string trigger)
+    {
+        animationController.SetTrigger(trigger);
+    }
 }
