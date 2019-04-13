@@ -11,6 +11,21 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1501461977280342}
   m_IsPrefabParent: 1
+--- !u!1 &1190805358466350
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4287482169483714}
+  m_Layer: 0
+  m_Name: CinematicTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1239277106049356
 GameObject:
   m_ObjectHideFlags: 0
@@ -68,9 +83,10 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1501461977280342}
   m_LocalRotation: {x: -0.5, y: -0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: -3.775, y: 1.117, z: 2.793}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalPosition: {x: -3.78, y: 1.117, z: 2.794}
+  m_LocalScale: {x: 1.5, y: 1, z: 1}
   m_Children:
+  - {fileID: 4287482169483714}
   - {fileID: 4832606079786436}
   - {fileID: 4245406432261430}
   m_Father: {fileID: 0}
@@ -87,8 +103,21 @@ Transform:
   m_LocalScale: {x: 1.73, y: 0.92, z: 0.59}
   m_Children: []
   m_Father: {fileID: 4024304949179862}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4287482169483714
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1190805358466350}
+  m_LocalRotation: {x: -0.5234491, y: -0.58103013, z: -0.45883256, w: -0.42175555}
+  m_LocalPosition: {x: -0.95000005, y: 0.36479098, z: -0.16100274}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4024304949179862}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 76.038, y: -202.32599, z: -203.51}
 --- !u!4 &4832606079786436
 Transform:
   m_ObjectHideFlags: 1
@@ -100,7 +129,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4024304949179862}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 76.038, y: -202.32599, z: -203.51}
 --- !u!23 &23792081792209650
 MeshRenderer:
