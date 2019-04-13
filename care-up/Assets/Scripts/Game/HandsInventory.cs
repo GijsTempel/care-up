@@ -202,23 +202,7 @@ public class HandsInventory : MonoBehaviour {
         bool picked = false;
         if (hand == "")
         {
-            if (leftHandObject == null)
-            {
-                leftHandObject = item;
-                picked = true;
-                tutorial_pickedLeft = true;
-                leftHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                leftHandObject.GetComponent<Rigidbody>().isKinematic = false; 
-                //leftHandObject.GetComponent<Collider>().enabled = false;
-                leftHandObject.leftControlBone = leftControlBone;
-                leftHandObject.rightControlBone = rightControlBone;
-                actionManager.OnPickUpAction(leftHandObject.name);
-                PlayerAnimationManager.PlayAnimation("LeftPick");
-                PlayerScript.actionsLocked = true;
-                PlayerAnimationManager.SetHandItem(true, item.gameObject);
-                leftHold = false;
-            }
-            else if (rightHandObject == null)
+            if (rightHandObject == null)
             {
                 rightHandObject = item;
                 picked = true;
@@ -233,6 +217,22 @@ public class HandsInventory : MonoBehaviour {
                 PlayerScript.actionsLocked = true;
                 PlayerAnimationManager.SetHandItem(false, item.gameObject);
                 rightHold = false;
+            }
+            else if (leftHandObject == null)
+            {
+                leftHandObject = item;
+                picked = true;
+                tutorial_pickedLeft = true;
+                leftHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                leftHandObject.GetComponent<Rigidbody>().isKinematic = false; 
+                //leftHandObject.GetComponent<Collider>().enabled = false;
+                leftHandObject.leftControlBone = leftControlBone;
+                leftHandObject.rightControlBone = rightControlBone;
+                actionManager.OnPickUpAction(leftHandObject.name);
+                PlayerAnimationManager.PlayAnimation("LeftPick");
+                PlayerScript.actionsLocked = true;
+                PlayerAnimationManager.SetHandItem(true, item.gameObject);
+                leftHold = false;
             }
         }
         else if (hand == "left")
