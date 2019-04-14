@@ -342,6 +342,33 @@ public class ActionManager : MonoBehaviour
         return "";
     }
 
+    public string CurrentDecombineButtonText(string itemName)
+    {
+        List<Action> sublist = actionList.Where(action =>
+               action.SubIndex == currentActionIndex &&
+               action.matched == false).ToList();
+        sublist = sublist.Where(action =>
+            action.blockRequired == "" ||
+            unlockedBlocks.Contains(action.blockRequired)).ToList();
+
+        foreach (Action a in sublist)
+        {
+            if (a.Type == ActionType.ObjectCombine)
+            {
+                CombineAction useA = (CombineAction)a;
+                string[] combineObjectNames;
+                useA.ObjectNames(out combineObjectNames);
+                if ((combineObjectNames[0] == itemName && combineObjectNames[1] == "")
+                    || (combineObjectNames[1] == itemName && combineObjectNames[0] == ""))
+                {
+                    return useA.decombineText;
+                }
+            }
+        }
+
+        return "";
+    }
+
     public bool CompareDropPos(string item, int pos)
     {
         bool result = false;
@@ -541,6 +568,12 @@ public class ActionManager : MonoBehaviour
                 blockMsg = action.Attributes["blockMessage"].Value;
             }
 
+            string decombineText = "Scheiden";
+            if (action.Attributes["decombineText"] != null)
+            {
+                decombineText = action.Attributes["decombineText"].Value;
+            }
+
             switch (type)
             {
                 case "combine":
@@ -548,7 +581,7 @@ public class ActionManager : MonoBehaviour
                     string right = action.Attributes["right"].Value;
                     actionList.Add(new CombineAction(left, right, index, descr, fDescr, audio, extra,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
-                        blockUnlock, blockLock, blockTitle, blockMsg));
+                        blockUnlock, blockLock, blockTitle, blockMsg, decombineText));
                     break;
                 case "use":
                     string use = action.Attributes["value"].Value;
