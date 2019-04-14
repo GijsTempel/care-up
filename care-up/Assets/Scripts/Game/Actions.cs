@@ -95,14 +95,19 @@ namespace CareUp.Actions
         private string leftInput;
         private string rightInput;
 
+        public string decombineText;
+
         public CombineAction(string left, string right, int index, string sdescr, string fdescr, string audio, 
             string extra, int points, bool notNeeded, float quizTime, string title, string content, 
-            string blockReq, string blockUnl, string blockL, string blockTitl, string blockMsg)
+            string blockReq, string blockUnl, string blockL, string blockTitl, string blockMsg, 
+            string decombineBtnText)
             : base(ActionManager.ActionType.ObjectCombine, index, sdescr, fdescr, audio, extra, points, 
                   notNeeded, quizTime, title, content,blockReq, blockUnl, blockL, blockTitl, blockMsg)
         {
             leftInput = left;
             rightInput = right;
+
+            decombineText = decombineBtnText;
         }
 
         /// <summary>

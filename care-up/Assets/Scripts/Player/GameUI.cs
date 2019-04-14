@@ -339,7 +339,7 @@ public class GameUI : MonoBehaviour
 
         //to show object control panel if no animation block and action block
         bool showItemControlPanel = allowObjectControlUI && animationUiBlock;
-
+        
         //if some object was added or removed to hands
         int lHash = 0;
         if (handsInventory.leftHandObject != null)
@@ -385,6 +385,11 @@ public class GameUI : MonoBehaviour
                         actionManager.CurrentButtonText(handsInventory.leftHandObject.name);
                     
                 }
+
+                decombineButton.transform.GetChild(0).GetComponent<Text>().text =
+                (actionManager.CompareCombineObjects(handsInventory.leftHandObject.name, "")) ?
+                    actionManager.CurrentDecombineButtonText(handsInventory.leftHandObject.name)
+                    : "Scheiden";
             }
             if (!REmpty)
             {
@@ -396,6 +401,11 @@ public class GameUI : MonoBehaviour
                     noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text =
                        actionManager.CurrentButtonText(handsInventory.rightHandObject.name);
                 }
+
+                decombineButton_right.transform.GetChild(0).GetComponent<Text>().text =
+                (actionManager.CompareCombineObjects("", handsInventory.rightHandObject.name)) ?
+                    actionManager.CurrentDecombineButtonText(handsInventory.rightHandObject.name)
+                    : "Scheiden";
             }
             zoomButtonLeft.SetActive(showZoomLeft);
             zoomButtonRight.SetActive(showZoomRight);
