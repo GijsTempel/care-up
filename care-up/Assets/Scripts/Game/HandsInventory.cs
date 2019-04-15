@@ -284,6 +284,8 @@ public class HandsInventory : MonoBehaviour {
             messageCenter.NewMessage("Je hebt je handen vol!", message, RobotUIMessageTab.Icon.Warning);
         }
 
+        ActionManager.UpdateRequirements();
+
         return picked;
     }
 
@@ -575,6 +577,8 @@ public class HandsInventory : MonoBehaviour {
             PlayerAnimationManager.SetHandItem(false, null);
             
         }
+
+        ActionManager.UpdateRequirements();
     }
 
     public void DropLeftObject()
@@ -587,6 +591,7 @@ public class HandsInventory : MonoBehaviour {
             leftHandObject = null;
             leftHold = false;
             PlayerAnimationManager.SetHandItem(true, null);
+            ActionManager.UpdateRequirements();
         }
     }
 
@@ -600,6 +605,7 @@ public class HandsInventory : MonoBehaviour {
             rightHandObject = null;
             rightHold = false;
             PlayerAnimationManager.SetHandItem(false, null);
+            ActionManager.UpdateRequirements();
         }
     }
 
@@ -1039,7 +1045,7 @@ public class HandsInventory : MonoBehaviour {
             leftHandObject = null;
             leftHold = false;
             PlayerAnimationManager.SetHandItem(true, null);
-
+            ActionManager.UpdateRequirements();
         }
     }
 
@@ -1072,6 +1078,7 @@ public class HandsInventory : MonoBehaviour {
             rightHandObject = null;
             rightHold = false;
             PlayerAnimationManager.SetHandItem(false, null);
+            ActionManager.UpdateRequirements();
         }
     }
 

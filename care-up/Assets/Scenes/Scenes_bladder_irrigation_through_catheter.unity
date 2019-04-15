@@ -919,7 +919,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorial_hintUsed: 0
-  _QuizWaitTime: 0
+  actionsCount: 0
   actionListName: Actions_Bladder_Irrigation_Through_Catheter
 --- !u!114 &233021379
 MonoBehaviour:
@@ -982,6 +982,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f6c60efe1b820478392239be6dd432, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camViewObject: 0
   minZoom: 0.5
   maxZoom: 1.75
   currentMode: 0
@@ -1017,6 +1018,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cheat: 0
   buildActionList: 0
+  Ua: 0
+  testingMode: 0
   hidenObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -5275,6 +5278,68 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 6787c28a8e5d1cb4c9c678d8d0d27a5c, type: 3}
   m_PrefabInternal: {fileID: 1046259261}
+--- !u!1001 &1065721932
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4067369505319520, guid: 880e60984a1ed4140b38191f37c8a277, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 9.201
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067369505319520, guid: 880e60984a1ed4140b38191f37c8a277, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067369505319520, guid: 880e60984a1ed4140b38191f37c8a277, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 16.285
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067369505319520, guid: 880e60984a1ed4140b38191f37c8a277, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067369505319520, guid: 880e60984a1ed4140b38191f37c8a277, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0.9245322
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067369505319520, guid: 880e60984a1ed4140b38191f37c8a277, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067369505319520, guid: 880e60984a1ed4140b38191f37c8a277, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.3811042
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067369505319520, guid: 880e60984a1ed4140b38191f37c8a277, type: 2}
+      propertyPath: m_RootOrder
+      value: 30
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 880e60984a1ed4140b38191f37c8a277, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1 &1065721933 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1135038296684742, guid: 880e60984a1ed4140b38191f37c8a277,
+    type: 2}
+  m_PrefabInternal: {fileID: 1065721932}
+--- !u!1 &1065721934 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1428842115651536, guid: 880e60984a1ed4140b38191f37c8a277,
+    type: 2}
+  m_PrefabInternal: {fileID: 1065721932}
+--- !u!1 &1065721935 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1129227623956416, guid: 880e60984a1ed4140b38191f37c8a277,
+    type: 2}
+  m_PrefabInternal: {fileID: 1065721932}
+--- !u!1 &1065721936 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1143520553561570, guid: 880e60984a1ed4140b38191f37c8a277,
+    type: 2}
+  m_PrefabInternal: {fileID: 1065721932}
 --- !u!114 &1075822019 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114638031359880624, guid: feaf2346e5a4c4d1ea7533851b62df27,
@@ -7118,6 +7183,26 @@ Prefab:
       propertyPath: reverbZoneMixCustomCurve.m_RotationOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114017726456870824, guid: 37620efdd9e41c444af49d4f4225f8eb,
+        type: 2}
+      propertyPath: KyePoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 1065721936}
+    - target: {fileID: 114017726456870824, guid: 37620efdd9e41c444af49d4f4225f8eb,
+        type: 2}
+      propertyPath: KyePoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 1065721933}
+    - target: {fileID: 114017726456870824, guid: 37620efdd9e41c444af49d4f4225f8eb,
+        type: 2}
+      propertyPath: KyePoints.Array.data[2]
+      value: 
+      objectReference: {fileID: 1065721935}
+    - target: {fileID: 114017726456870824, guid: 37620efdd9e41c444af49d4f4225f8eb,
+        type: 2}
+      propertyPath: KyePoints.Array.data[3]
+      value: 
+      objectReference: {fileID: 1065721934}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 37620efdd9e41c444af49d4f4225f8eb, type: 2}
   m_IsPrefabParent: 0
