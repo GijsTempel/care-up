@@ -41,7 +41,9 @@ public class PlayerScript : MonoBehaviour
     private Vector3 savedPos;
     private Quaternion savedRot;
     private List<WalkToGroup> groups;
-    private WalkToGroup currentWalkPosition;
+    public WalkToGroup currentWalkPosition;
+
+    private ActionManager actionManager;
 
     RobotManager robot;
     private Vector3 savedRobotPos;
@@ -115,6 +117,12 @@ public class PlayerScript : MonoBehaviour
     {
         instance = this;
         actionsLocked = false;
+
+
+        if (GameObject.Find("GameLogic") != null)
+        {
+            actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
+        }
 
         mouseLook.Init(transform, cam.transform);
 
@@ -371,6 +379,11 @@ public class PlayerScript : MonoBehaviour
         if (robotUIopened)
             return;
 
+        //if (GameObject.FindObjectOfType<ObjectsPanel>() != null)
+        //{
+        //    GameObject.FindObjectOfType<ObjectsPanel>().UpdatePanel();
+        //}
+
         ToggleAway();
         transform.position = group.Position;
         if (prefs == null || (prefs != null && !prefs.VR))
@@ -395,6 +408,8 @@ public class PlayerScript : MonoBehaviour
                 g.GetComponent<Collider>().enabled = true;
             }
         }
+
+        actionManager.OnMovementAction(currentWalkPosition.name);
     }
 
     private void ToggleAway(bool _away = false)
@@ -450,21 +465,19 @@ public class PlayerScript : MonoBehaviour
 
     public void MoveBackButton()
     {
-        if (true)
+        ToggleAway(true);
+        transform.position = savedPos;
+        if (prefs == null || (prefs != null && !prefs.VR))
         {
-            ToggleAway(true);
-            transform.position = savedPos;
-            if (prefs == null || (prefs != null && !prefs.VR))
-            {
-                transform.rotation = Quaternion.Euler(0.0f, savedRot.eulerAngles.y, 0.0f);
-                Camera.main.transform.localRotation = Quaternion.Euler(savedRot.eulerAngles.x, 0.0f, 0.0f);
-                mouseLook.SaveRot(transform, Camera.main.transform);
-            }
-            currentWalkPosition = null;
-
-            robot.transform.position = savedRobotPos;
-            robot.transform.rotation = savedRobotRot;
+            transform.rotation = Quaternion.Euler(0.0f, savedRot.eulerAngles.y, 0.0f);
+            Camera.main.transform.localRotation = Quaternion.Euler(savedRot.eulerAngles.x, 0.0f, 0.0f);
+            mouseLook.SaveRot(transform, Camera.main.transform);
         }
+        currentWalkPosition = null;
+
+        robot.transform.position = savedRobotPos;
+        robot.transform.rotation = savedRobotRot;
+
     }
 
     public void OpenRobotUI()
@@ -578,6 +591,7 @@ public class PlayerScript : MonoBehaviour
 
         moveBackBtnActiveForIpad = MoveBackButtonObject.activeSelf;
         MoveBackButtonObject.SetActive(false);
+        GameObject.FindObjectOfType<GameUI>().allowObjectControlUI = false;
 
         if (robotUINotOpenedYet)
         {
@@ -637,6 +651,7 @@ public class PlayerScript : MonoBehaviour
         tutorial_robotUI_closed = true;
 
         MoveBackButtonObject.SetActive(moveBackBtnActiveForIpad);
+        GameObject.FindObjectOfType<GameUI>().allowObjectControlUI = true;
 
         if (joystickObject != null)
             joystickObject.SetActive(!robotUIopened);
@@ -698,10 +713,14 @@ public class PlayerScript : MonoBehaviour
     public static void TriggerQuizQuestion(float delay = 0.0f)
     {
         // dont trigger quiz if a testing mode is on
+#if UNITY_EDITOR
         if (GameObject.FindObjectOfType<PlayerPrefsManager>() != null)
             if (GameObject.FindObjectOfType<PlayerPrefsManager>().testingMode)
                 return;
-
+        if (GameObject.FindObjectOfType<ObjectsIDsController>() != null)
+            if (GameObject.FindObjectOfType<ObjectsIDsController>().testingMode)
+                return;
+#endif
         // just dont trigger quiz if it's a tutorial for all cases
         if (GameObject.FindObjectOfType<TutorialManager>() != null)
             return;

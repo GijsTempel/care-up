@@ -22,7 +22,7 @@
     messageTitle="Handhygiëne"
     messageContent="Handhygiëne is het allerbelangrijkste als het gaat om voorkomen van besmetting met ziektekiemen. Dit betekent je handen reinigen op de juiste manier en op de juiste momenten. Begin een handeling altijd met handhygiëne."
    ></action>
-  
+
   <action
     comment="2. Create a clean work area and put the equipment within reach"
     index="1"
@@ -35,6 +35,8 @@
     messageTitle="Hygiënisch werken"
     messageContent="Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen."
   ></action>
+
+ 
   
   <action
     points="1"
@@ -64,8 +66,8 @@
     index="4"
     type="useOn"
     item="GauzeTrayFull"
-    target="Sink"
-    buttonText=""
+    target=""
+    buttonText="Wattenbollen nat maken."
     extra="Giet kraanwater uit een flink stromende kraan (of steriel water) over de wattenbollen."
     fullDescription="Pak het bakje met wattenbollen van het werkveld. Beweeg naar de kraan. Klik op het bakje met wattenbollen. Klik vervolgens op het + icoon en klik daarna op de kraan om de wattenbollen nat te maken. "
     messageTitle="Gebruik kraanwater"
@@ -91,8 +93,9 @@
     fullDescription="Pak de onderlegger van het werkveld. Beweeg naar de cliënt. Klik vervolgens op de onderlegger in je hand. Klik op het + icoon en klik daarna op de cliënt."
     index="6"
     type="useOn"
+    target=""
     item="cloth_02_folded"
-    target="w0_A"
+    buttonText="Onderlegger plaatsen."
     extra="Leg een onderlegger onder de billen en dijen van de cliënt."></action>
 
   <action
@@ -128,7 +131,7 @@
     posID="2"
     extra="Leg het plastic afvalbakje op de onderlegger."
   ></action>
-  
+
   <action
     comment="9. Put on gloves."
     points="2"
@@ -138,7 +141,7 @@
     type="use"
     value="gloveBox"
     extra="Trek handschoenen aan."
-    quiz="2.0"
+    quiz="2"
     messageTitle="Gebruik handschoenen"
     messageContent="Gebruik handschoenen eenmalig en bij dezelfde cliënt. Trek ze na gebruik direct uit. Vermijd tijdens het dragen van handschoenen contact met deurknopen, telefoon, apparatuur, toetsenborden, enzovoort. Was of desinfecteer de handen na het uittrekken van de handschoenen altijd. Bij het uittrekken van de handschoenen kunnen de handen namelijk besmet zijn geraakt."
   ></action>
@@ -151,7 +154,8 @@
     index="11"
     type="useOn"
     item="cotton_ball"
-    target="w0_A"
+    target=""
+    buttonText="Reinigen"
     extra="Reinig de labia en de meatus in 5 stappen met de wattenbollen."
     messageTitle="Reiniging genitaliën"
     messageContent="Voordat een katheter wordt ingebracht, moeten de genitaliën van de cliënt gereinigd worden. Bij het inbrengen van verblijfskatheters wordt glijmiddel in de urethra aangebracht. (Bij een suprapubische katheter wordt glijmiddel in de fistel aangebracht)."
@@ -286,7 +290,7 @@
     type="use"
     value="SterileGloves"
     extra="Trek de steriele handschoenen aan."
-    quiz="2.0"
+    quiz="2"
     messageTitle="Aantrekken steriele handschoenen"
     messageContent="Het aantrekken van steriele handschoenen vereist enige handigheid. Voorkom tijdens het aantrekken dat de handschoenen onsteriel worden."></action>
 
@@ -472,7 +476,8 @@
     fullDescription="Pak de katheter fixatieband van het werkveld en beweeg daarna naar de cliënt toe. Klik dan op de katheter fixatieband. Klik vervolgens op het + icoon en klik daarna op de cliënt."
     type="useOn"
     item="fixator_folded"
-    target="w0_A"
+    target=""
+    buttonText="Fixeer katheter"
     extra="Fixeer de katheter op het bovenbeen met een strook fixatiemateriaal. Zorg dat de katheter en de afvoerslang nergens kunnen knikken."
     blockUnlock="fixate catheter"
     blockRequired="pull off gloves"
@@ -520,8 +525,9 @@
     description="Bevestig de urineopvangzak aan het been of ophangrekje."
     fullDescription="Pak het fixatiemateriaal van het werkveld en beweeg daarna naar de cliënt toe. Klik op het fixatiemateriaal. Klik vervolgens op het + icoon en klik daarna op de cliënt."
     type="useOn"
+    target=""
     item="fixation_folded_buttons"
-    target="w0_A"
+    buttonText="Bevestig urineopvangzak"
     extra="Bevestig de urineopvangzak aan het been of ophangrekje."
     blockRequired="patient get up"
     blockTitle="Handeling niet mogelijk"

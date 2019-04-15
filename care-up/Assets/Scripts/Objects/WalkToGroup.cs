@@ -12,7 +12,22 @@ public class WalkToGroup : MonoBehaviour
     public Vector3 robotRotation;
 
     private GameObject text;
+    public GameObject cone;
+    public bool ButtonHovered = false;
 
+    public WalkToGroup LeftWalkToGroup = null;
+    public WalkToGroup RightWalkToGroup = null;
+
+    public enum GroupType
+    {
+        NotSet,
+        WorkField,
+        Doctor,
+        Patient,
+        Sink
+    };
+
+    public WalkToGroup.GroupType WalkToGroupType;
     CameraMode cameraMode;
     Controls controls;
 
@@ -47,8 +62,10 @@ public class WalkToGroup : MonoBehaviour
         if (SystemInfo.deviceType == DeviceType.Handheld)
             return;
         text.SetActive(value);
+        if (cone != null)
+            cone.SetActive(value);
 
-        text.transform.rotation = Camera.main.transform.rotation;
+        //text.transform.rotation = Camera.main.transform.rotation;
 
         if (particles != null)
         {
@@ -72,10 +89,13 @@ public class WalkToGroup : MonoBehaviour
         cameraMode = gameLogic.GetComponent<CameraMode>();
         controls = gameLogic.GetComponent<Controls>();
 
-        text = transform.GetChild(0).gameObject;
+        text = transform.Find("TextMesh").gameObject;
+
         if (SystemInfo.deviceType != DeviceType.Handheld)
         {
             text.SetActive(false);
+            if (cone != null)
+                cone.SetActive(false);
         }
 
         particles = GetComponent<ParticleSystem>();
@@ -101,7 +121,7 @@ public class WalkToGroup : MonoBehaviour
     {
         if (cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
-            if (controls.SelectedObject == gameObject && !cameraMode.animating /*&& (player.away || player.freeLook)*/)
+            if (controls.SelectedObject == gameObject && !cameraMode.animating || ButtonHovered/*&& (player.away || player.freeLook)*/)
             {
                 if (gameLogic.GetComponent<TutorialManager>() != null)
                     if (gameLogic.GetComponent<TutorialManager>().TutorialEnding)

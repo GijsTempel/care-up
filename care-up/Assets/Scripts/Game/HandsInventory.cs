@@ -84,6 +84,33 @@ public class HandsInventory : MonoBehaviour {
 
     //private TutorialManager tutorial;
 
+
+    public GameObject AddHighlight(Transform target, string prefix, HighlightObject.type hl_type = HighlightObject.type.Ball, float LifeTime = float.PositiveInfinity)
+    {
+        string hl_name = prefix + "_" + target.name;
+        if (GameObject.Find(hl_name) != null || target.GetComponent<WorkField>() != null)
+            return null;
+        GameObject hl_obj = Instantiate(Resources.Load<GameObject>("Prefabs\\HighlightObject"), target.position, new Quaternion()) as GameObject;
+
+        HighlightObject hl = hl_obj.GetComponent<HighlightObject>();
+        hl.name = hl_name;
+        hl.setType(hl_type);
+        hl.setTarget(target);
+        hl.setTimer(LifeTime);
+        return hl_obj;
+    }
+
+    public void RemoveHighlight(string prefix, string _name)
+    {
+        string hl_name = prefix + "_" + _name;
+        if (GameObject.Find(hl_name) != null)
+        {
+            if (GameObject.Find(hl_name).GetComponent<HighlightObject>())
+                GameObject.Find(hl_name).GetComponent<HighlightObject>().Destroy();
+        }
+    }
+
+
     public GameObject LeftHandObject
     {
         get { return leftHandObject ? leftHandObject.gameObject : null; }
@@ -175,7 +202,23 @@ public class HandsInventory : MonoBehaviour {
         bool picked = false;
         if (hand == "")
         {
-            if (leftHandObject == null)
+            if (rightHandObject == null)
+            {
+                rightHandObject = item;
+                picked = true;
+                tutorial_pickedRight = true;
+                rightHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                rightHandObject.GetComponent<Rigidbody>().isKinematic = false;
+                //rightHandObject.GetComponent<Collider>().enabled = false;
+                rightHandObject.leftControlBone = leftControlBone;
+                rightHandObject.rightControlBone = rightControlBone;
+                actionManager.OnPickUpAction(rightHandObject.name);
+                PlayerAnimationManager.PlayAnimation("RightPick");
+                PlayerScript.actionsLocked = true;
+                PlayerAnimationManager.SetHandItem(false, item.gameObject);
+                rightHold = false;
+            }
+            else if (leftHandObject == null)
             {
                 leftHandObject = item;
                 picked = true;
@@ -190,22 +233,6 @@ public class HandsInventory : MonoBehaviour {
                 PlayerScript.actionsLocked = true;
                 PlayerAnimationManager.SetHandItem(true, item.gameObject);
                 leftHold = false;
-            }
-            else if (rightHandObject == null)
-            {
-                rightHandObject = item;
-                picked = true;
-                tutorial_pickedRight = true;
-                leftHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                rightHandObject.GetComponent<Rigidbody>().isKinematic = false;
-                //rightHandObject.GetComponent<Collider>().enabled = false;
-                rightHandObject.leftControlBone = leftControlBone;
-                rightHandObject.rightControlBone = rightControlBone;
-                actionManager.OnPickUpAction(rightHandObject.name);
-                PlayerAnimationManager.PlayAnimation("RightPick");
-                PlayerScript.actionsLocked = true;
-                PlayerAnimationManager.SetHandItem(false, item.gameObject);
-                rightHold = false;
             }
         }
         else if (hand == "left")
@@ -233,7 +260,8 @@ public class HandsInventory : MonoBehaviour {
                 rightHandObject = item;
                 picked = true;
                 tutorial_pickedRight = true;
-                leftHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                //-----------------------------------------------------------------------
+                rightHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 rightHandObject.GetComponent<Rigidbody>().isKinematic = false;
                 //rightHandObject.GetComponent<Collider>().enabled = false;
                 rightHandObject.leftControlBone = leftControlBone;
@@ -887,6 +915,21 @@ public class HandsInventory : MonoBehaviour {
         return (target == left || target == right) && target != null;
     }
 
+    public class HandObject
+    {
+        public GameObject left;
+        public GameObject right;
+    }
+
+    public HandObject IsInOneOfHands()
+    {
+        HandObject handObject = new HandObject();
+        handObject.left = (leftHandObject != null) ? leftHandObject.gameObject : null;
+        handObject.right = (rightHandObject != null) ? rightHandObject.gameObject : null;
+        print(handObject.left);
+        return handObject;
+    }
+
     public void OnCombineAction()
     {
         if (tutorialUseOn != null && !tutorialUseOn.decombiningAllowed) {
@@ -916,9 +959,7 @@ public class HandsInventory : MonoBehaviour {
 		}
 		if (alloweCombine)
         {
-            tutorial_combined = true;
- 
-			//--------------------------------------------------------------------
+            tutorial_combined = true; 
 			bool idModeAllow = false;
 
 			if (GameObject.Find("GameLogic").GetComponent<ObjectsIDsController>() != null)
@@ -947,7 +988,6 @@ public class HandsInventory : MonoBehaviour {
 
             combineDelayed = true;
             ToggleControls(true);
-
         }
     }
 
