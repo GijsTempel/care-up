@@ -490,8 +490,8 @@ public class GameUI : MonoBehaviour
 
             if (data.completed)
             {
-                startTag = "<b>";
-                endTag = "</b>";
+                startTag = "<color=#008000ff>";
+                endTag = "</color>";
             }
             ss += startTag + data.requirement + endTag + "\n";
         }
