@@ -384,7 +384,7 @@ public class GameUI : MonoBehaviour
                 decombineButton.transform.GetChild(0).GetComponent<Text>().text =
                 (actionManager.CompareCombineObjects(handsInventory.leftHandObject.name, "")) ?
                     actionManager.CurrentDecombineButtonText(handsInventory.leftHandObject.name)
-                    : "Scheiden";
+                    : "Openen";
             }
             if (!REmpty)
             {
@@ -400,7 +400,7 @@ public class GameUI : MonoBehaviour
                 decombineButton_right.transform.GetChild(0).GetComponent<Text>().text =
                 (actionManager.CompareCombineObjects("", handsInventory.rightHandObject.name)) ?
                     actionManager.CurrentDecombineButtonText(handsInventory.rightHandObject.name)
-                    : "Scheiden";
+                    : "Openen";
             }
             zoomButtonLeft.SetActive(showZoomLeft);
             zoomButtonRight.SetActive(showZoomRight);

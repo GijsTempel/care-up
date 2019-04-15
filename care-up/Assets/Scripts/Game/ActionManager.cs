@@ -631,7 +631,7 @@ public class ActionManager : MonoBehaviour
                 blockMsg = action.Attributes["blockMessage"].Value;
             }
 
-            string decombineText = "Scheiden";
+            string decombineText = "Openen";
             if (action.Attributes["decombineText"] != null)
             {
                 decombineText = action.Attributes["decombineText"].Value;
