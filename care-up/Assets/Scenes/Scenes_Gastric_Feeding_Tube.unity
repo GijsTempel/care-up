@@ -1387,6 +1387,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorial_hintUsed: 0
+  actionsCount: 0
   actionListName: Actions_Gastric_Feeding_Tube
 --- !u!114 &251147194
 MonoBehaviour:
@@ -1449,6 +1450,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f6c60efe1b820478392239be6dd432, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camViewObject: 0
   minZoom: 0.5
   maxZoom: 1.75
   currentMode: 0
@@ -1484,6 +1486,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cheat: 0
   buildActionList: 0
+  Ua: 0
+  testingMode: 0
   hidenObjects:
   - {fileID: 1193409567}
   - {fileID: 0}
@@ -2448,6 +2452,11 @@ MonoBehaviour:
   rotation: {x: 37, y: 93, z: 0}
   robotPosition: {x: 0, y: 0, z: 0}
   robotRotation: {x: 0, y: 0, z: 0}
+  cone: {fileID: 0}
+  ButtonHovered: 0
+  LeftWalkToGroup: {fileID: 0}
+  RightWalkToGroup: {fileID: 0}
+  WalkToGroupType: 0
 --- !u!65 &459153946
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2535,6 +2544,11 @@ MonoBehaviour:
   rotation: {x: 11, y: 45, z: 0}
   robotPosition: {x: 0, y: 0, z: 0}
   robotRotation: {x: 0, y: 0, z: 0}
+  cone: {fileID: 0}
+  ButtonHovered: 0
+  LeftWalkToGroup: {fileID: 0}
+  RightWalkToGroup: {fileID: 0}
+  WalkToGroupType: 0
 --- !u!65 &460098980
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6460,6 +6474,11 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 9a92be027983d2642a8e7498c512ca2d, type: 3}
   m_PrefabInternal: {fileID: 1132703669}
+--- !u!1 &1142159290 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1989992145686568, guid: 3face7d0743df544f95be60b52514bdb,
+    type: 2}
+  m_PrefabInternal: {fileID: 1734659296}
 --- !u!1 &1158525734
 GameObject:
   m_ObjectHideFlags: 0
@@ -6507,6 +6526,11 @@ MonoBehaviour:
   rotation: {x: 23, y: 100.5, z: 0}
   robotPosition: {x: 0, y: 0, z: 0}
   robotRotation: {x: 0, y: 0, z: 0}
+  cone: {fileID: 0}
+  ButtonHovered: 0
+  LeftWalkToGroup: {fileID: 0}
+  RightWalkToGroup: {fileID: 0}
+  WalkToGroupType: 0
 --- !u!65 &1158525737
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11717,7 +11741,7 @@ Prefab:
         type: 2}
       propertyPath: objects.Array.data[2]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1142159290}
     - target: {fileID: 114050206014620304, guid: 160c0d1fbef191045a350915d5992d54,
         type: 2}
       propertyPath: objects.Array.data[3]
