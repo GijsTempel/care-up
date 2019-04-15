@@ -18,6 +18,10 @@ public class ActionManager : MonoBehaviour
     private Text pointsText;
     private Text percentageText;
     public int actionsCount = 0;
+
+
+   
+
     // list of types of actions
     public enum ActionType
     {
@@ -165,11 +169,12 @@ public class ActionManager : MonoBehaviour
 
                     if (GameObject.Find(hand) != null)
                     {
-                        if (GameObject.Find(hand).GetComponent<PickableObject>() != null)
+                        if (GameObject.Find(hand).GetComponent<InteractableObject>() != null)
                         {
-                            if (GameObject.Find(hand).GetComponent<PickableObject>().description != "")
-                                handValue = GameObject.Find(hand).GetComponent<PickableObject>().description;
+                            if (GameObject.Find(hand).GetComponent<InteractableObject>().description != "")
+                                handValue = GameObject.Find(hand).GetComponent<InteractableObject>().description;
                         }
+                       
                     }
 
                     bool completed = false;
@@ -185,8 +190,12 @@ public class ActionManager : MonoBehaviour
                         if (inventory.rightHandObject.name == hand)
                             completed = true;
                     }
-
-                    stepsList.Add(new StepData(completed, $"- Pick up {handValue}"));
+                    string keyWords = "- Pick up ";
+                    //if (a.Type == ActionType.ObjectUse)
+                    //    keyWords = "- Use ";
+                    //if (a.Type == ActionType.PersonTalk)
+                        //keyWords = "- Talk to ";
+                    stepsList.Add(new StepData(completed, keyWords + handValue));
                 }
             }
         }
@@ -1337,7 +1346,10 @@ public class ActionManager : MonoBehaviour
                     foreach (PersonObject po in GameObject.FindObjectsOfType<PersonObject>())
                     {
                         if (po.hasTopic(a._topic))
+                        {
                             a.placeRequirement = ActionManager.FindNearest(new string[] { po.name });
+                            //a.leftHandRequirement = po.GetComponent<InteractableObject>().description;
+                        }
                     }
                     break;
                 case ActionType.ObjectCombine:
@@ -1362,7 +1374,7 @@ public class ActionManager : MonoBehaviour
                     a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
                     break;
                 case ActionType.ObjectUse:
-                    a.leftHandRequirement = ObjectNames[0];
+                    //a.leftHandRequirement = ObjectNames[0];
                     a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
                     break;
             }
@@ -1379,6 +1391,7 @@ public class ActionManager : MonoBehaviour
     {
         List<GameObject> anchors = new List<GameObject>();
         WorkField workField = GameObject.FindObjectOfType<WorkField>();
+        CatheterPack catheterPack = GameObject.FindObjectOfType<CatheterPack>();
 
         foreach (string o in objectNames)
         {
@@ -1397,12 +1410,29 @@ public class ActionManager : MonoBehaviour
                         }
                     }
                 }
-                if (found)
-                    continue;
-                if (GameObject.Find(o) != null)
+            }
+            if (found)
+                continue;
+            if (catheterPack != null)
+            {
+                foreach (GameObject catObject in catheterPack.objects)
                 {
-                    anchors.Add(GameObject.Find(o));
+                    if (catObject != null)
+                    {
+                        if (catObject.name == o)
+                        {
+                            anchors.Add(workField.gameObject);
+                            found = true;
+                            break;
+                        }
+                    }
                 }
+            }
+            if (found)
+                continue;
+            if (GameObject.Find(o) != null)
+            {
+                anchors.Add(GameObject.Find(o));
             }
         }
         return anchors;

@@ -40,6 +40,7 @@ public class GameUI : MonoBehaviour
     public GameObject SubStepsPanel;
     Text SubStepsText;
 
+
     float cooldownTime = 0;
     float lastCooldownTime = 0;
     int currentActionsCount = 0;
