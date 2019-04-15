@@ -78,6 +78,7 @@ public class PlayerAnimationManager : MonoBehaviour
         InteractableObject.ResetDescription();
     }
 
+
     void Update()
     {
         leftModifier02 = propL.localPosition.y;
@@ -136,6 +137,25 @@ public class PlayerAnimationManager : MonoBehaviour
     }
 
 
+
+    public static void PlayUseOnIDAnimation(int UseObjID, bool isLeft = false)
+    {
+         print(" PlayUseOnIDAnimation(int UseObjID, bool isLeft = false)");
+        if (isLeft)
+        {
+            animationController.SetTrigger("UseLeft");
+            animationController.SetTrigger("S UseLeft");
+            animationController.SetInteger("leftID", UseObjID);
+        }
+        else
+        {
+            animationController.SetTrigger("UseRight");
+            animationController.SetTrigger("S UseRight");
+            animationController.SetInteger("rightID", UseObjID);
+        }
+
+        InteractableObject.ResetDescription();
+    }
 
 
     public static void PlayAnimation(string name, Transform target = null)
@@ -238,6 +258,10 @@ public class PlayerAnimationManager : MonoBehaviour
     {
         float targetFrame = compareFrame / 60f; // 60fps
         return (currentFrame >= targetFrame && previousFrame < targetFrame);
+    }
 
+    public static void SetTrigger(string trigger)
+    {
+        animationController.SetTrigger(trigger);
     }
 }

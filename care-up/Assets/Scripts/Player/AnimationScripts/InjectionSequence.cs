@@ -15,9 +15,7 @@ public class InjectionSequence : AnimationSequenceState
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
-
         inv.PutAllOnTable();
-
         inv.sequenceAborted = false;
     }
 
@@ -30,7 +28,8 @@ public class InjectionSequence : AnimationSequenceState
             PlayerAnimationManager.SetHandItem(false, GameObject.Find("SyringeWithInjectionNeedleCap"));
             inv.RightHandObject.GetComponent<Syringe>().updatePlunger = true;
         }
-        else if (PlayerAnimationManager.CompareFrames(frame, prevFrame, swapHandsFrame))
+        else
+         if (PlayerAnimationManager.CompareFrames(frame, prevFrame, swapHandsFrame))
         {
             inv.SwapHands();
         }

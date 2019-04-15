@@ -92,6 +92,9 @@ public class GestureControls : MonoBehaviour
 
     private void SwipeGestureCallback(DigitalRubyShared.GestureRecognizer gesture)
     {
+        if (PlayerScript.actionsLocked == true)
+            return;
+
         if (gesture.State == GestureRecognizerState.Ended && !player.freeLook)
         {
             if (handsInventory.LeftHandEmpty() && handsInventory.RightHandEmpty())
@@ -207,11 +210,13 @@ public class GestureControls : MonoBehaviour
         player = GameObject.FindObjectOfType<PlayerScript>();
 
         // don't reorder the creation of these :)
-        CreateDoubleTapGesture();
+        CreateDoubleTapGesture(); // double tap for dropping still enabled
+        /* disabling gestures ? i forgot if i needed to disable
         CreateTapGesture();
         CreateSwipeGesture();
         CreateLongPressGesture();
-        
+        */
+
         // show touches, only do this for debugging as it can interfere with other canvases
         //FingersScript.Instance.ShowTouches = true;
 

@@ -146,6 +146,9 @@ public class InteractableObject : MonoBehaviour {
                     if (rend.material.shader == onMouseExitShader)
                     {
                         SetShaderTo(onMouseOverShader);
+
+                        if (!inventory.IsInHand(gameObject))
+                            inventory.AddHighlight(transform, "hl");
                     }
 
                     if (!itemDescription.activeSelf)
@@ -158,6 +161,8 @@ public class InteractableObject : MonoBehaviour {
                 else if (!controls.CanInteract && rend.material.shader == onMouseOverShader)
                 {
                     SetShaderTo(onMouseExitShader);
+                    inventory.RemoveHighlight("hl", transform.name);
+
                     itemDescription.SetActive(false);
                 }
             }
@@ -165,6 +170,8 @@ public class InteractableObject : MonoBehaviour {
             {
                 if (rend.material.shader == onMouseOverShader)
                 {
+                    inventory.RemoveHighlight("hl", transform.name);
+
                     SetShaderTo(onMouseExitShader);
                 }
 
@@ -186,6 +193,7 @@ public class InteractableObject : MonoBehaviour {
         if (rend)
         {
             SetShaderTo(onMouseExitShader);
+            inventory.RemoveHighlight("hl", transform.name);
             itemDescription.SetActive(false);
         }
     }
@@ -301,6 +309,7 @@ public class InteractableObject : MonoBehaviour {
         {
             if (rend.material.shader == onMouseOverShader)
                 SetShaderTo(onMouseExitShader);
+                inventory.RemoveHighlight("hl", transform.name);
         }
     }
 }
