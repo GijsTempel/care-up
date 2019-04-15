@@ -290,6 +290,7 @@ public class GameUI : MonoBehaviour
             if (activeGroupButtons < 2)
                 WalkToGroupPanel.transform.Find("spacer1").gameObject.SetActive(false);
         }
+        ActionManager.UpdateRequirements();
     }
 
     public void ShowDonePanel(bool value)

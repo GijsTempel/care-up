@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 
+public struct NameAndDescription
+{
+    public string name;
+    public string Description;
+}
 /// <summary>
 /// Static object that can be used
 /// </summary>
@@ -12,7 +17,7 @@ public class UsableObject : InteractableObject {
     public bool tutorial_used = false;
     public bool handsCleaned = false;
     public string PrefabToAppear = "";
-    public List<string> objectsToCreate;
+    public List<NameAndDescription> objectsToCreate;
     protected static HandsInventory handsInventory;
 
     protected override void Start()
@@ -26,12 +31,21 @@ public class UsableObject : InteractableObject {
         }
     }
 
-    public bool WillCreateObject(string str)
+    public string WillCreateObject(string str)
     {
         if (objectsToCreate == null)
-            return false;
-        
-        return objectsToCreate.Contains(str); 
+            return "";
+        foreach(NameAndDescription nd in objectsToCreate)
+        {
+            if (nd.name == str)
+            {
+                string result = str;
+                if (nd.Description != "")
+                    result = nd.Description;
+                return result;
+            }
+        }
+        return ""; 
     }
 
     public virtual void Use()

@@ -1375,7 +1375,7 @@ public class ActionManager : MonoBehaviour
         {
             foreach (UsableObject usableObject in GameObject.FindObjectsOfType<UsableObject>())
             {
-                if (usableObject.WillCreateObject(leftObjName))
+                if (usableObject.WillCreateObject(leftObjName) != "")
                     leftObj = usableObject.gameObject;
             }
         }
@@ -1386,7 +1386,8 @@ public class ActionManager : MonoBehaviour
         {
             foreach (UsableObject usableobject in GameObject.FindObjectsOfType<UsableObject>())
             {
-                if (usableobject.WillCreateObject(rightObjName))
+
+                if (usableobject.WillCreateObject(rightObjName) != "")
                     rightObj = usableobject.gameObject;
             }
         }
