@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 /// <summary>
@@ -12,6 +12,7 @@ public class UsableObject : InteractableObject {
     public bool tutorial_used = false;
     public bool handsCleaned = false;
     public string PrefabToAppear = "";
+    public List<string> objectsToCreate;
     protected static HandsInventory handsInventory;
 
     protected override void Start()
@@ -23,6 +24,14 @@ public class UsableObject : InteractableObject {
             handsInventory = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
             if (handsInventory == null) Debug.LogError("No inventory found");
         }
+    }
+
+    public bool WillCreateObject(string str)
+    {
+        if (objectsToCreate == null)
+            return false;
+        
+        return objectsToCreate.Contains(str); 
     }
 
     public virtual void Use()

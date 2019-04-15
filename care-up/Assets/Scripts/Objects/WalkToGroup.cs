@@ -14,6 +14,7 @@ public class WalkToGroup : MonoBehaviour
     private GameObject text;
     public GameObject cone;
     public bool ButtonHovered = false;
+    public string description;
 
     public WalkToGroup LeftWalkToGroup = null;
     public WalkToGroup RightWalkToGroup = null;

@@ -1,10 +1,6 @@
-﻿using System.Collections;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
-using UnityEngine.EventSystems;
 
 public class GameUI : MonoBehaviour
 {
@@ -41,6 +37,8 @@ public class GameUI : MonoBehaviour
 
     public GameObject zoomButtonLeft;
     public GameObject zoomButtonRight;
+    public GameObject SubStepsPanel;
+    Text SubStepsText;
 
     float cooldownTime = 0;
     float lastCooldownTime = 0;
@@ -67,7 +65,6 @@ public class GameUI : MonoBehaviour
 
     public void UseOn()
     {
-
         if (!(handsInventory.LeftHandEmpty() && handsInventory.RightHandEmpty()))
         {
             handsInventory.OnCombineAction();
@@ -161,7 +158,6 @@ public class GameUI : MonoBehaviour
         }
     }
 
-
     public void Examine(bool leftHand = true)
     {
         if (leftHand && handsInventory.LeftHandEmpty())
@@ -189,6 +185,7 @@ public class GameUI : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        SubStepsText = SubStepsPanel.transform.Find("Text").GetComponent<Text>();
         useOnNTtext = noTargetButton.transform.GetChild(0).GetComponent<Text>().text;
         ps = GameObject.FindObjectOfType<PlayerScript>();
         controller = GameObject.FindObjectOfType<PlayerAnimationManager>().GetComponent<Animator>();
@@ -292,7 +289,6 @@ public class GameUI : MonoBehaviour
                 WalkToGroupPanel.transform.Find("spacer2").gameObject.SetActive(false);
             if (activeGroupButtons < 2)
                 WalkToGroupPanel.transform.Find("spacer1").gameObject.SetActive(false);
-
         }
     }
 
@@ -339,7 +335,7 @@ public class GameUI : MonoBehaviour
 
         //to show object control panel if no animation block and action block
         bool showItemControlPanel = allowObjectControlUI && animationUiBlock;
-        
+
         //if some object was added or removed to hands
         int lHash = 0;
         if (handsInventory.leftHandObject != null)
@@ -347,7 +343,6 @@ public class GameUI : MonoBehaviour
         int rHash = 0;
         if (handsInventory.rightHandObject != null)
             rHash = handsInventory.rightHandObject.gameObject.GetHashCode();
-
 
         bool handsStateChanged = (currentLeft != lHash || currentRight != rHash
         || (ICPCurrentState != ItemControlPanel.activeSelf)
@@ -383,7 +378,6 @@ public class GameUI : MonoBehaviour
                     showNoTarget = true;
                     noTargetButton.transform.GetChild(0).GetComponent<Text>().text =
                         actionManager.CurrentButtonText(handsInventory.leftHandObject.name);
-                    
                 }
 
                 decombineButton.transform.GetChild(0).GetComponent<Text>().text =
@@ -434,17 +428,15 @@ public class GameUI : MonoBehaviour
         ICPCurrentState = ItemControlPanel.activeSelf;
         if (WalkToGroupPanel != null)
         {
-
             if (prevWalkToGroup != ps.currentWalkPosition)
             {
                 WalkToGroupPanel.SetActive(ps.away);
-                
+
                 if (!ps.away)
                 {
-
                     LeftSideButton.gameObject.SetActive(ps.currentWalkPosition.LeftWalkToGroup != null);
                     RightSideButton.gameObject.SetActive(ps.currentWalkPosition.RightWalkToGroup != null);
-                    
+
                     if (ps.currentWalkPosition.LeftWalkToGroup != null)
                     {
                         LeftSideButton.setWalkToGroup(ps.currentWalkPosition.LeftWalkToGroup);
@@ -457,7 +449,6 @@ public class GameUI : MonoBehaviour
                 }
                 else
                 {
-
                     LeftSideButton.gameObject.SetActive(false);
                     RightSideButton.gameObject.SetActive(false);
                 }
@@ -465,14 +456,11 @@ public class GameUI : MonoBehaviour
             }
             if (!MoveBackButton.activeSelf)
             {
-
                 LeftSideButton.gameObject.SetActive(false);
                 RightSideButton.gameObject.SetActive(false);
                 prevWalkToGroup = null;
             }
-
         }
-
         testValue = RobotManager.UIElementsState[0];
     }
 
@@ -490,5 +478,23 @@ public class GameUI : MonoBehaviour
     public void DonePanelNo()
     {
         donePanelYesNo.SetActive(false);
+    }
+
+    public void UpdateRequirements(List<ActionManager.StepData> lst)
+    {
+        string ss = "";
+        foreach (ActionManager.StepData data in lst)
+        {
+            string startTag = "";
+            string endTag = "";
+
+            if (data.completed)
+            {
+                startTag = "<b>";
+                endTag = "</b>";
+            }
+            ss += startTag + data.requirement + endTag + "\n";
+        }
+        SubStepsText.text = ss;
     }
 }
