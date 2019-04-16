@@ -42,7 +42,6 @@ public class GameUI : MonoBehaviour
     public GameObject SubStepsPanel;
     Text SubStepsText;
 
-
     float cooldownTime = 0;
     float lastCooldownTime = 0;
     int currentActionsCount = 0;
@@ -55,16 +54,10 @@ public class GameUI : MonoBehaviour
     bool ICPCurrentState = false;
     public bool allowObjectControlUI = true;
 
-
     public void MoveBack()
     {
         Player.GetComponent<PlayerScript>().MoveBackButton();
     }
-
-    //public WalkToGroupButton GetWTGButton(string key)
-    //{
-
-    //}
 
     public void UseOn()
     {
@@ -189,6 +182,9 @@ public class GameUI : MonoBehaviour
     void Start()
     {
         SubStepsText = SubStepsPanel.transform.Find("Text").GetComponent<Text>();
+        SubStepsText.color.SetAlpha(0.0f);
+        Color zm = SubStepsText.color;  //  makes a new color zm
+        zm.a = 0.0f;
         useOnNTtext = noTargetButton.transform.GetChild(0).GetComponent<Text>().text;
         ps = GameObject.FindObjectOfType<PlayerScript>();
         controller = GameObject.FindObjectOfType<PlayerAnimationManager>().GetComponent<Animator>();
@@ -504,11 +500,13 @@ public class GameUI : MonoBehaviour
 
             if (data.completed)
             {
-                startTag = "<color=#008000ff>";
+                startTag = "<color=#0AAF0A>";
                 endTag = "</color>";
             }
+           
+            
             ss += startTag + data.requirement + endTag + "\n";
-        }
-        SubStepsText.text = ss;
+        }      
+        SubStepsText.text = ss.Remove(ss.Length - 1);         
     }
 }
