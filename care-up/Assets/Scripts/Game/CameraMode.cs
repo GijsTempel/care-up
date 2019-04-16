@@ -508,8 +508,11 @@ public class CameraMode : MonoBehaviour
                 PlayerAnimationManager.ToggleAnimationSpeed();
 
             // open eyes i assume
-            PlayerAnimationManager.SetTrigger("open_eyes");
-            closeEyesTriggered = false;
+            if (closingEyes)
+            {
+                PlayerAnimationManager.SetTrigger("open_eyes");
+                closeEyesTriggered = false;
+            }
         }
         else if (cinematicDirection == -1 && cinematicLerp == 0.0f)
         {
@@ -518,7 +521,10 @@ public class CameraMode : MonoBehaviour
             animationEnded = false;
 
             // open eyes i assume
-            PlayerAnimationManager.SetTrigger("open_eyes");
+            if (closingEyes)
+            {
+                PlayerAnimationManager.SetTrigger("open_eyes");
+            }
         }
     }
 
@@ -622,5 +628,6 @@ public class CameraMode : MonoBehaviour
         float distance = Vector3.Distance(cinematicPos, cinematicTargetPos);
         closingEyes = distance > 1.8f; // set distance breakpoint here
         closeEyesTriggered = false;
+        animationEnded = false;
     }
 }
