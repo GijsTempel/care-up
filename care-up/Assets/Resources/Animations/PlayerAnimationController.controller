@@ -2355,7 +2355,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SequenceName: SubcutaneousInjection
   TuggleFromCinematic: 1
-  keyFrames: 230000000c010000f60100005902000019030000ad0300001404000016050000
+  keyFrames: 410000000c010000f60100005902000019030000ad0300001404000016050000
   takeSyringeFrame: 311
   takeOffCapFrame: 362
   dropCapFrame: 411
@@ -4424,7 +4424,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SequenceName: SubcutaneousInjection
   TuggleFromCinematic: 1
-  keyFrames: 230000000c010000f60100005902000019030000ad0300001404000016050000
+  keyFrames: 410000000c010000f60100005902000019030000ad0300001404000016050000
   takeSyringeFrame: 311
   takeOffCapFrame: 362
   dropCapFrame: 411
@@ -12157,7 +12157,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: S UseRight SyringeWithInjectionNeedleCap
+    m_ConditionEvent: S UseLeft SyringeWithInjectionNeedleCap
     m_EventTreshold: 0
   - m_ConditionMode: 6
     m_ConditionEvent: sceneID
@@ -16268,6 +16268,27 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!1101 &1101168951229476272
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 1107000013396830544}
+  m_DstState: {fileID: 0}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.9404762
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1101 &1101169300134701988
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -17740,11 +17761,8 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: UseRight
+    m_ConditionEvent: UseRight Frexi
     m_EventTreshold: 0
-  - m_ConditionMode: 6
-    m_ConditionEvent: rightID
-    m_EventTreshold: 11603
   - m_ConditionMode: 6
     m_ConditionEvent: extra
     m_EventTreshold: 2
@@ -18826,11 +18844,8 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: S UseLeft
+    m_ConditionEvent: S UseLeft Frexi
     m_EventTreshold: 0
-  - m_ConditionMode: 6
-    m_ConditionEvent: leftID
-    m_EventTreshold: 11603
   - m_ConditionMode: 6
     m_ConditionEvent: extra
     m_EventTreshold: 2
@@ -22741,7 +22756,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: S UseRight SyringeWithInjectionNeedleCap
+    m_ConditionEvent: S UseLeft SyringeWithInjectionNeedleCap
     m_EventTreshold: 0
   - m_ConditionMode: 6
     m_ConditionEvent: sceneID
@@ -26200,11 +26215,8 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: S UseRight
+    m_ConditionEvent: S UseRight Frexi
     m_EventTreshold: 0
-  - m_ConditionMode: 6
-    m_ConditionEvent: rightID
-    m_EventTreshold: 11603
   - m_ConditionMode: 6
     m_ConditionEvent: extra
     m_EventTreshold: 2
@@ -26230,11 +26242,8 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: UseLeft
+    m_ConditionEvent: UseLeft Frexi
     m_EventTreshold: 0
-  - m_ConditionMode: 6
-    m_ConditionEvent: leftID
-    m_EventTreshold: 11603
   - m_ConditionMode: 6
     m_ConditionEvent: extra
     m_EventTreshold: 2
@@ -41991,7 +42000,8 @@ AnimatorState:
   m_Name: Armature|841_remove_clothAroundAmpoule_Left_L_Lib
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions: []
+  m_Transitions:
+  - {fileID: 1101168951229476272}
   m_StateMachineBehaviours:
   - {fileID: 114789958714204118}
   - {fileID: 114424933933103266}
