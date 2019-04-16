@@ -78,14 +78,14 @@ public class InsulinPen : PickableObjectWithInfo {
             {
                 PlayerAnimationManager.PlayAnimation("UseRight " + name);
                 actionManager.OnUseOnAction(name, "");
-                name = "VentedInsulinPenWithNeedle";
+                //name = "VentedInsulinPenWithNeedle";
                 return true;
             }
             else if (inventory.RightHandEmpty())
             {
                 PlayerAnimationManager.PlayAnimation("UseLeft " + name);
                 actionManager.OnUseOnAction(name, "");
-                name = "VentedInsulinPenWithNeedle";
+                //name = "VentedInsulinPenWithNeedle";
                 return true;
             }
             else
@@ -101,14 +101,14 @@ public class InsulinPen : PickableObjectWithInfo {
             {
                 PlayerAnimationManager.PlayAnimation("UseRight " + name);
                 actionManager.OnUseOnAction(name, "");
-                name = "InsulinPenWithNeedle";
+                //name = "InsulinPenWithNeedle";
                 return true;
             }
             else if (inventory.RightHandEmpty())
             {
                 PlayerAnimationManager.PlayAnimation("UseLeft " + name);
                 actionManager.OnUseOnAction(name, "");
-                name = "InsulinPenWithNeedle";
+                //name = "InsulinPenWithNeedle";
                 return true;
             }
             else
