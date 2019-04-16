@@ -19,9 +19,6 @@ public class ActionManager : MonoBehaviour
     private Text percentageText;
     public int actionsCount = 0;
 
-
-   
-
     // list of types of actions
     public enum ActionType
     {
@@ -154,7 +151,9 @@ public class ActionManager : MonoBehaviour
                 if (GameObject.Find(a.placeRequirement).GetComponent<WalkToGroup>().description != "")
                     placeName = GameObject.Find(a.placeRequirement).GetComponent<WalkToGroup>().description;
 
-                bool completed = playerScript.currentWalkPosition.name == a.placeRequirement;
+                bool completed = false;
+                if (playerScript.currentWalkPosition != null)
+                    completed = playerScript.currentWalkPosition.name == a.placeRequirement;
 
                 stepsList.Add(new StepData(completed, $"- At the {placeName}"));
             }
@@ -166,15 +165,70 @@ public class ActionManager : MonoBehaviour
                 if (!string.IsNullOrEmpty(hand))
                 {
                     string handValue = hand;
+                    bool found = false;
 
                     if (GameObject.Find(hand) != null)
                     {
                         if (GameObject.Find(hand).GetComponent<InteractableObject>() != null)
                         {
                             if (GameObject.Find(hand).GetComponent<InteractableObject>().description != "")
+                            {
                                 handValue = GameObject.Find(hand).GetComponent<InteractableObject>().description;
+                                found = true;
+                            }
                         }
-                       
+                    }
+                    if (GameObject.FindObjectOfType<ExtraObjectOptions>() != null && !found)
+                    {
+                        foreach (ExtraObjectOptions extraObject in GameObject.FindObjectsOfType<ExtraObjectOptions>())
+                        {
+                            string desc = extraObject.HasNeeded(hand);
+                            if (desc != "")
+                            {
+                                handValue = desc;
+                                found = true;
+                            }
+                        }
+                    }
+                    if (GameObject.FindObjectOfType<WorkField>() != null && !found)
+                    {
+                        foreach (WorkField w in GameObject.FindObjectsOfType<WorkField>())
+                        {
+                            foreach(GameObject obj in w.objects)
+                            {
+                                if (obj != null)
+                                {
+                                    if (obj.name == hand)
+                                    {
+                                        handValue = obj.GetComponent<InteractableObject>().description;
+                                        found = true;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (found)
+                                break;
+                        }
+                    }
+                    if (GameObject.FindObjectsOfType<CatheterPack>() != null && !found)
+                    {
+                        foreach (CatheterPack w in GameObject.FindObjectsOfType<CatheterPack>())
+                        {
+                            foreach (GameObject obj in w.objects)
+                            {
+                                if (obj != null)
+                                {
+                                    if (obj.name == hand)
+                                    {
+                                        handValue = obj.GetComponent<InteractableObject>().description;
+                                        found = true;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (found)
+                                break;
+                        }
                     }
 
                     bool completed = false;
@@ -194,7 +248,7 @@ public class ActionManager : MonoBehaviour
                     //if (a.Type == ActionType.ObjectUse)
                     //    keyWords = "- Use ";
                     //if (a.Type == ActionType.PersonTalk)
-                        //keyWords = "- Talk to ";
+                    //keyWords = "- Talk to ";
                     stepsList.Add(new StepData(completed, keyWords + handValue));
                 }
             }
@@ -1326,7 +1380,6 @@ public class ActionManager : MonoBehaviour
         ActionManager.UpdateRequirements();
     }
 
-
     //-------------------------------------------------------------------------------------------------------------
     public static void BuildRequirements()
     {
@@ -1355,15 +1408,20 @@ public class ActionManager : MonoBehaviour
                 case ActionType.ObjectCombine:
                     a.leftHandRequirement = ObjectNames[0];
                     a.rightHandRequirement = ObjectNames[1];
-                    a.placeRequirement = ActionManager.FindNearest( new string[] { ObjectNames[0], ObjectNames[1] });
+                    a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0], ObjectNames[1] });
                     break;
                 case ActionType.ObjectUseOn:
                     a.leftHandRequirement = ObjectNames[0];
                     a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
                     break;
                 case ActionType.ObjectExamine:
-                    a.leftHandRequirement = ObjectNames[0];
-                    a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
+                    if (ObjectNames[0] == "PatientRecords" || ObjectNames[0] == "PrescriptionForm")
+                        a.leftHandRequirement = "ipad";
+                    else
+                    {
+                        a.leftHandRequirement = ObjectNames[0];
+                        a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
+                    }
                     break;
                 case ActionType.PickUp:
                     a.leftHandRequirement = ObjectNames[0];
@@ -1383,11 +1441,7 @@ public class ActionManager : MonoBehaviour
             GameObject.FindObjectOfType<ActionsPanel>().UpdatePanel();
     }
 
-
-    //public static void BuildRequirements()
-    //{
-    //}
-    public static List<GameObject> FindAchers(string[] objectNames)
+    public static List<GameObject> FindAnchers(string[] objectNames)
     {
         List<GameObject> anchors = new List<GameObject>();
         WorkField workField = GameObject.FindObjectOfType<WorkField>();
@@ -1396,6 +1450,20 @@ public class ActionManager : MonoBehaviour
         foreach (string o in objectNames)
         {
             bool found = false;
+            foreach (ExtraObjectOptions e in GameObject.FindObjectsOfType<ExtraObjectOptions>())                
+            {
+                if(e.HasNeeded(o) != "")
+                {
+                    anchors.Add(e.gameObject);
+                    found = true;
+                    print("_______________ " + e.name);
+                    break;
+                }
+            }
+
+            if (found)
+                continue;
+
             if (workField != null)
             {
                 foreach (GameObject workFieldObject in workField.objects)
@@ -1413,6 +1481,7 @@ public class ActionManager : MonoBehaviour
             }
             if (found)
                 continue;
+
             if (catheterPack != null)
             {
                 foreach (GameObject catObject in catheterPack.objects)
@@ -1454,12 +1523,10 @@ public class ActionManager : MonoBehaviour
         return nearest;
     }
 
-
     public static string FindNearest(string[] objectNames)
     {
-
         List<WalkToGroup> nearestGroups = new List<WalkToGroup>();
-        List<GameObject> anchors = ActionManager.FindAchers(objectNames);
+        List<GameObject> anchors = ActionManager.FindAnchers(objectNames);
         if (anchors != null)
         {
             foreach (GameObject a in anchors)
@@ -1468,7 +1535,7 @@ public class ActionManager : MonoBehaviour
             }
         }
 
-        if (nearestGroups.Count > 0) 
+        if (nearestGroups.Count > 0)
         {
             WalkToGroup ng = nearestGroups[0];
             foreach (WalkToGroup w in nearestGroups)
@@ -1476,7 +1543,7 @@ public class ActionManager : MonoBehaviour
                 if (ng != w)
                     return "";
             }
-            
+
             return ng.name;
         }
 

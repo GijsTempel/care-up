@@ -24,6 +24,8 @@ public class GameUI : MonoBehaviour
     private HandsInventory handsInventory;
     private ActionManager actionManager;
     private Animator controller;
+    private float startTimeOut = 2f;
+    private bool timeOutEnded = false;
 
     public GameObject ItemControlPanel;
     public GameObject combineButton;
@@ -316,6 +318,15 @@ public class GameUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(!timeOutEnded)
+        {
+            startTimeOut -= Time.deltaTime;
+            if(startTimeOut < 0)
+            {
+                timeOutEnded = true;
+                ActionManager.UpdateRequirements();
+            }
+        }
 
         //Don't show object control panel if animation is playing
         //if animation is longer than 0.2 (is not hold animation)
@@ -352,6 +363,7 @@ public class GameUI : MonoBehaviour
 
         if (handsStateChanged)
         {
+            ActionManager.UpdateRequirements();
             currentActionsCount = actionManager.actionsCount;
             //hide panel for the first frame of hands state change
             //prevent quick blinking of buttons before animation starts

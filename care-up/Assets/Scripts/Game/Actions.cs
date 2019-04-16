@@ -30,6 +30,7 @@ namespace CareUp.Actions
         public string leftHandRequirement;
         public string rightHandRequirement;
         public string placeRequirement;
+        public string secondPlaceRequirement;
         public string _topic;
 
         protected ActionManager.ActionType type;
