@@ -10,6 +10,7 @@ public class HighlightObject : MonoBehaviour {
     public List<GameObject> BallElements;
     public List<GameObject> QubeElements;
     public List<GameObject> ArrowElements;
+    bool gold = false;
 
     float lifetime = float.PositiveInfinity;
     float startDelay = 0;
@@ -21,6 +22,26 @@ public class HighlightObject : MonoBehaviour {
         Qube,
         Arrow
     };
+
+    public void setGold(bool value)
+    {
+        setMaterial("goldHint");
+        foreach (GameObject b in BallElements)
+            if (b.name == "b1")
+                b.SetActive(false);
+        foreach (GameObject q in QubeElements)
+            if (q.name == "q1")
+                q.SetActive(false);
+        transform.localScale = 1.2f * transform.localScale;
+    }
+
+    public void setMaterial(string matName)
+    {
+        foreach (GameObject b in BallElements)
+            b.GetComponent<MeshRenderer>().material = Resources.Load("Materials/" + matName, typeof(Material)) as Material;
+        foreach (GameObject q in QubeElements)
+            q.GetComponent<MeshRenderer>().material = Resources.Load("Materials/" + matName, typeof(Material)) as Material;
+    }
 
     public void setType(HighlightObject.type _type)
     {

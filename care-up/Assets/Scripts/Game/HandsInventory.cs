@@ -87,7 +87,7 @@ public class HandsInventory : MonoBehaviour {
     //private TutorialManager tutorial;
 
 
-    public GameObject AddHighlight(Transform target, string prefix, HighlightObject.type hl_type = HighlightObject.type.NoChange, float startDelay = 0, float LifeTime = float.PositiveInfinity)
+    public HighlightObject AddHighlight(Transform target, string prefix, HighlightObject.type hl_type = HighlightObject.type.NoChange, float startDelay = 0, float LifeTime = float.PositiveInfinity)
     {
         string hl_name = prefix + "_" + target.name;
         if (GameObject.Find(hl_name) != null || target.GetComponent<WorkField>() != null)
@@ -102,7 +102,7 @@ public class HandsInventory : MonoBehaviour {
         hl.setTimer(LifeTime);
         if (startDelay > 0)
             hl.setStartDelay(startDelay);
-        return hl_obj;
+        return hl_obj.GetComponent<HighlightObject>();
     }
 
     public void RemoveHighlight(string prefix, string _name)
@@ -118,8 +118,10 @@ public class HandsInventory : MonoBehaviour {
     public void UpdateHelpHighlight()
     {
         string prefix = "helpHL";
+
         if (!LeftHandEmpty())
             RemoveHighlight(prefix, leftHandObject.name);
+        
         if (!RightHandEmpty())
             RemoveHighlight(prefix, rightHandObject.name);
         
@@ -146,7 +148,9 @@ public class HandsInventory : MonoBehaviour {
                     }
                     if (GameObject.Find(r) != null)
                     {
-                        AddHighlight(GameObject.Find(r).transform, prefix, HighlightObject.type.Arrow, 2f + Random.Range(0f,0.5f));
+                        HighlightObject h = AddHighlight(GameObject.Find(r).transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f,0.5f));
+                        if (h != null)
+                            h.setGold(true);
                     }
                 }
             }
