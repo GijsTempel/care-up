@@ -11,21 +11,34 @@ public class HighlightObject : MonoBehaviour {
     public List<GameObject> QubeElements;
     public List<GameObject> ArrowElements;
     bool gold = false;
-
+    GameUI gameUI;
+    public GameObject audioEffect;
     float lifetime = float.PositiveInfinity;
     float startDelay = 0;
+    WalkToGroup currentWalkToGroup;
+    PlayerScript player;
+
+    protected void Start()
+    {
+        gameUI = GameObject.FindObjectOfType<GameUI>();
+        currentWalkToGroup = ActionManager.NearestWalkToGroup(gameObject);
+        player = GameObject.FindObjectOfType<PlayerScript>();
+    }
+
+
 
     public enum type
     {
         NoChange,
         Ball,
         Qube,
-        Arrow
+        Arrow,
+        none
     };
 
     public void setGold(bool value)
     {
-        //setMaterial("goldHint");
+        setMaterial("goldHint");
         foreach (GameObject b in BallElements)
             if (b.name == "b1")
                 b.SetActive(false);
@@ -59,10 +72,6 @@ public class HighlightObject : MonoBehaviour {
         }
     }
 
-    // Use this for initialization
-    void Start () {
-		
-	}
 
     public void setStartDelay(float value)
     {
@@ -72,6 +81,8 @@ public class HighlightObject : MonoBehaviour {
             startDelay = value;
         }
     }
+
+
 
     public void setTarget(Transform t)
     {
@@ -121,7 +132,17 @@ public class HighlightObject : MonoBehaviour {
         if (startDelay > 0)
             startDelay -= Time.deltaTime;
         else if (!content.activeSelf)
-            content.SetActive(transform);
+        {
+            if (!gameUI.currentAnimLock || player.currentWalkPosition != currentWalkToGroup)
+            {
+                startDelay = 2f;
+            }
+            else
+            {
+                content.SetActive(transform);
+                audioEffect.SetActive(true);
+            }
+        }
 
         if (target == null)
             Destroy();

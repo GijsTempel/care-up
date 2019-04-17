@@ -42,6 +42,8 @@ public class GameUI : MonoBehaviour
     public GameObject SubStepsPanel;
     Text SubStepsText;
 
+    public bool currentAnimLock = false;
+
     float cooldownTime = 0;
     float lastCooldownTime = 0;
     int currentActionsCount = 0;
@@ -469,7 +471,9 @@ public class GameUI : MonoBehaviour
             }
         }
         testValue = RobotManager.UIElementsState[0];
+        currentAnimLock = animationUiBlock;
     }
+
 
     public void OpenDonePanelYesNo()
     {
