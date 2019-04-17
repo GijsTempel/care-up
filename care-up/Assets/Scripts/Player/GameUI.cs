@@ -327,7 +327,6 @@ public class GameUI : MonoBehaviour
     //----------------------------------------------------------------------------------------------------------
     public void UpdateHelpHighlight()
     {
-        print("+++++++");
         List<string> newHLObjects = new List<string>();
 
         string prefix = "helpHL";
@@ -347,10 +346,10 @@ public class GameUI : MonoBehaviour
             string[] ObjectNames = new string[0];
             a.ObjectNames(out ObjectNames);
 
-            if (a.Type == ActionManager.ActionType.ObjectUse ||
-            a.Type == ActionManager.ActionType.ObjectDrop)
+            //if (a.Type == ActionManager.ActionType.ObjectUse ||
+            //a.Type == ActionManager.ActionType.ObjectDrop)
+            foreach(string objectToUse in ObjectNames)
             {
-                string objectToUse = ObjectNames[0];
                 if (GameObject.Find(objectToUse) != null)
                 {
                     if (handsInventory.IsInHand(GameObject.Find(objectToUse)))
@@ -360,24 +359,23 @@ public class GameUI : MonoBehaviour
                         h.setGold(true);
                     newHLObjects.Add(objectToUse);
                 }
-            }
-            else
-            {
-                string[] requirementObjects = { a.leftHandRequirement, a.rightHandRequirement };
-                foreach (string r in requirementObjects)
+                else
                 {
-                    if (r != "")
+                    GameObject usableHL = null;
+                    foreach (UsableObject u in GameObject.FindObjectsOfType<UsableObject>())
                     {
-                        
-                        if (GameObject.Find(r) != null)
+                        if (u.PrefabToAppear == objectToUse)
                         {
-                            if (handsInventory.IsInHand(GameObject.Find(r)))
-                                continue;
-                            HighlightObject h = AddHighlight(GameObject.Find(r).transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f, 0.5f));
-                            if (h != null)
-                                h.setGold(true);
-                            newHLObjects.Add(r);
+                            usableHL = u.gameObject;
+                            break;
                         }
+                    }
+                    if (usableHL != null)
+                    {
+                        HighlightObject h = AddHighlight(usableHL.transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f, 0.5f));
+                        if (h != null)
+                            h.setGold(true);
+                        newHLObjects.Add(usableHL.name);
                     }
                 }
             }
@@ -389,7 +387,6 @@ public class GameUI : MonoBehaviour
         {
             if (!newHLObjects.Contains(activeHighlighted[i]))
             {
-                print("[[[[[[[[[[[[[[[[[[[[[[[[[[    " + activeHighlighted[i]);
                 RemoveHighlight(prefix, activeHighlighted[i]);
             }
         }

@@ -140,7 +140,8 @@ public class HighlightObject : MonoBehaviour {
             else
             {
                 content.SetActive(transform);
-                audioEffect.SetActive(true);
+                if (currentType != HighlightObject.type.none)
+                    audioEffect.SetActive(true);
             }
         }
 
