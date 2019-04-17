@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using CareUp.Actions;
+using System.Linq;
 
 /// <summary>
 /// Handles things in hands.
@@ -85,7 +87,7 @@ public class HandsInventory : MonoBehaviour {
     //private TutorialManager tutorial;
 
 
-    public GameObject AddHighlight(Transform target, string prefix, HighlightObject.type hl_type = HighlightObject.type.Ball, float LifeTime = float.PositiveInfinity)
+    public GameObject AddHighlight(Transform target, string prefix, HighlightObject.type hl_type = HighlightObject.type.NoChange, float startDelay = 0, float LifeTime = float.PositiveInfinity)
     {
         string hl_name = prefix + "_" + target.name;
         if (GameObject.Find(hl_name) != null || target.GetComponent<WorkField>() != null)
@@ -94,9 +96,12 @@ public class HandsInventory : MonoBehaviour {
 
         HighlightObject hl = hl_obj.GetComponent<HighlightObject>();
         hl.name = hl_name;
-        hl.setType(hl_type);
         hl.setTarget(target);
+        if (hl_type != HighlightObject.type.NoChange)
+            hl.setType(hl_type);
         hl.setTimer(LifeTime);
+        if (startDelay > 0)
+            hl.setStartDelay(startDelay);
         return hl_obj;
     }
 
@@ -110,6 +115,43 @@ public class HandsInventory : MonoBehaviour {
         }
     }
 
+    public void UpdateHelpHighlight()
+    {
+        string prefix = "helpHL";
+        if (!LeftHandEmpty())
+            RemoveHighlight(prefix, leftHandObject.name);
+        if (!RightHandEmpty())
+            RemoveHighlight(prefix, rightHandObject.name);
+        
+        List<Action> sublist = actionManager.actionList.Where(action =>
+           action.SubIndex == actionManager.currentActionIndex &&
+           action.matched == false).ToList();
+
+        foreach(Action a in sublist)
+        {
+            string[] requirementObjects = {a.leftHandRequirement, a.rightHandRequirement};
+            foreach(string r in requirementObjects)
+            {
+                if (r != "")
+                {
+                    if (!LeftHandEmpty())
+                    {
+                        if (leftHandObject.name == r)
+                            continue;
+                    }
+                    if (!RightHandEmpty())
+                    {
+                        if (rightHandObject.name == r)
+                            continue;
+                    }
+                    if (GameObject.Find(r) != null)
+                    {
+                        AddHighlight(GameObject.Find(r).transform, prefix, HighlightObject.type.Arrow, 2f + Random.Range(0f,0.5f));
+                    }
+                }
+            }
+        }
+    }
 
     public GameObject LeftHandObject
     {
