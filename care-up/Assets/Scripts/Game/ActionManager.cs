@@ -1053,6 +1053,7 @@ public class ActionManager : MonoBehaviour
         public bool completed;
         public string requirement;
         public int subindex = 0;
+        public bool disabled = false;
 
         public StepData(bool completedValue, string requirementValue, int index)
         {
