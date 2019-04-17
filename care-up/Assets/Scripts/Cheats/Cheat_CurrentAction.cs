@@ -69,8 +69,6 @@ public class Cheat_CurrentAction : MonoBehaviour
         actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
         if (actionManager == null) Debug.LogError("No action manager found.");
 
-        if (GameObject.Find("DevHint") != null)
-        {
             Init();
 
             if (GameObject.Find("Preferences") != null)
@@ -89,7 +87,7 @@ public class Cheat_CurrentAction : MonoBehaviour
             {
                 Debug.LogWarning("Game needs to be started from menu scene for CurrentAction hint to work correctly");
             }
-        }
+        
 
         if (GameObject.Find("BiggerDevHint") != null)
         {
@@ -123,6 +121,8 @@ public class Cheat_CurrentAction : MonoBehaviour
 
     private void Init()
     {
+        ActionManager.UpdateRequirements(); 
+       
         GameObject biggerDevHint = GameObject.Find("BiggerDevHint");
         textObjectBiggerDevHint = biggerDevHint.transform.GetChild(2).GetComponent<Text>();
 
@@ -147,16 +147,11 @@ public class Cheat_CurrentAction : MonoBehaviour
 
     private void Update()
     {
-        if (hintPanelText == null)
-            return;
-
         if (textObjectBiggerDevHint == null)
             return;
 
         if (!set)
         {
-            hintPanelText.text = actionManager.CurrentDescription.Remove(actionManager.CurrentDescription.Length - 1); ;
-            textObjectBiggerDevHint.text = actionManager.CurrentDescription;
             if (extraText != null)
                 extraText.text = actionManager.CurrentExtraDescription;
             set = true;
@@ -167,17 +162,15 @@ public class Cheat_CurrentAction : MonoBehaviour
             if (timer < animationTime)
             {
                 timer += Time.deltaTime;
-                hintPanelText.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
+                GameObject.FindObjectOfType<GameUI>().SetHintPanelAlpha(1.0f - timer / animationTime);
                 textObjectBiggerDevHint.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
                 extraText.color = new Color(0.0f, 0.0f, 0.0f, 0.0f - timer / animationTime);
             }
             else
             {
-                hintPanelText.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+                GameObject.FindObjectOfType<GameUI>().SetHintPanelAlpha(0.0f);
                 textObjectBiggerDevHint.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
                 extraText.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
-                hintPanelText.text = actionManager.CurrentDescription.Remove(actionManager.CurrentDescription.Length -1);
-                textObjectBiggerDevHint.text = actionManager.CurrentDescription;
                 extraText.text = actionManager.CurrentExtraDescription;
                 timer = animationTime;
                 direction = -1;
@@ -188,14 +181,14 @@ public class Cheat_CurrentAction : MonoBehaviour
             if (timer > 0.0f)
             {
                 timer -= Time.deltaTime;
-                hintPanelText.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
+                GameObject.FindObjectOfType<GameUI>().SetHintPanelAlpha(1.0f - timer / animationTime);
 
                 textObjectBiggerDevHint.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
                 extraText.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
             }
             else
             {
-                hintPanelText.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+                GameObject.FindObjectOfType<GameUI>().SetHintPanelAlpha(1.0f);
 
                 textObjectBiggerDevHint.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
                 extraText.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
@@ -224,10 +217,11 @@ public class Cheat_CurrentAction : MonoBehaviour
 
             if (direction == 0 || uipanel_timer != uipanel_animationTime)
             {
-                hintPanelText.color = new Color(0.0f, 0.0f, 0.0f, alpha);
+                GameObject.FindObjectOfType<GameUI>().SetHintPanelAlpha(alpha);
             }
 
-            hintPanelBackground.color = new Color(1.0f, 1.0f, 1.0f, alpha);
+            GameObject.FindObjectOfType<GameUI>().SetHintPanelAlpha(alpha);
+
             fullScreenButtonBackground.color = new Color(1.0f, 1.0f, 1.0f, alpha);
         }
     }

@@ -181,10 +181,6 @@ public class GameUI : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        SubStepsText = SubStepsPanel.transform.Find("Text").GetComponent<Text>();
-        SubStepsText.color.SetAlpha(0.0f);
-        Color zm = SubStepsText.color;  //  makes a new color zm
-        zm.a = 0.0f;
         useOnNTtext = noTargetButton.transform.GetChild(0).GetComponent<Text>().text;
         ps = GameObject.FindObjectOfType<PlayerScript>();
         controller = GameObject.FindObjectOfType<PlayerAnimationManager>().GetComponent<Animator>();
@@ -314,10 +310,10 @@ public class GameUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!timeOutEnded)
+        if (!timeOutEnded)
         {
             startTimeOut -= Time.deltaTime;
-            if(startTimeOut < 0)
+            if (startTimeOut < 0)
             {
                 timeOutEnded = true;
                 ActionManager.UpdateRequirements();
@@ -488,25 +484,65 @@ public class GameUI : MonoBehaviour
     public void DonePanelNo()
     {
         donePanelYesNo.SetActive(false);
+    }      
+
+    public void ClearHintPanel()
+    {
+        Transform panel = GameObject.Find("UI/DetailedHintPanel/HintContainer").transform;
+        for (int i = 0; i < panel.childCount; ++i)
+        {
+            Destroy(panel.GetChild(i).gameObject);
+        }
     }
 
-    public void UpdateRequirements(List<ActionManager.StepData> lst)
+    public void SetHintPanelAlpha(float alpha)
     {
-        string ss = "";
-        foreach (ActionManager.StepData data in lst)
-        {
-            string startTag = "";
-            string endTag = "";
+        Transform panel = GameObject.Find("UI/DetailedHintPanel").transform;
+        Color panelColor = panel.GetComponent<Image>().color;
+        panelColor.a = alpha;
+        panel.GetComponent<Image>().color = panelColor;
+        foreach(Text t in panel.GetComponentsInChildren<Text>()) {
+            Color c = t.color;
+            c.a = alpha;
+            t.GetComponent<Text>().color = c;
+        }
+    }
+    public void UpdateRequirements(List<ActionManager.StepData> subTasks)
+    {
+        ClearHintPanel();
 
-            if (data.completed)
+        GameObject hintPanel = GameObject.Find("DetailedHintPanel");
+        Text hintText;
+        Text subTaskText;
+
+        for (int i = 0; i < actionManager.CurrentDescription.Count; i++)
+        {
+            GameObject currentHintPanel = null;
+            if (Resources.Load<GameObject>("Prefabs/UI/HintPanel") != null && GameObject.Find("UI/DetailedHintPanel/HintContainer") != null)
             {
-                startTag = "<color=#0AAF0A>";
-                endTag = "</color>";
+                currentHintPanel = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/UI/HintPanel"), GameObject.Find("UI/DetailedHintPanel/HintContainer").transform);
+                hintText = currentHintPanel.transform.Find("Text").gameObject.GetComponent<Text>();
+                hintText.text = actionManager.CurrentDescription[i];
             }
-           
-            
-            ss += startTag + data.requirement + endTag + "\n";
-        }      
-        SubStepsText.text = ss.Remove(ss.Length - 1);         
+
+            for (int y = 0; y < subTasks.Count; y++)
+            {
+
+                if (subTasks[y].subindex == i)
+                {
+                    if (Resources.Load<GameObject>("Prefabs/UI/SubtaskHints") != null )
+                    {
+                        if (!subTasks[y].completed)
+                        {
+                            GameObject subtaskPanel = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/UI/SubtaskHints"), currentHintPanel.transform);
+                            subTaskText = subtaskPanel.transform.Find("Text").GetComponent<Text>();
+                            subTaskText.text = subTasks[y].requirement;
+                        }
+                    }
+                }
+            }
+            float alpha = hintPanel.GetComponent<Image>().color.a;
+            SetHintPanelAlpha(alpha);
+        }
     }
 }
