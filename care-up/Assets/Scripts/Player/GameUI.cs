@@ -30,7 +30,7 @@ public class GameUI : MonoBehaviour
     private float startTimeOut = 2f;
     private bool timeOutEnded = false;
 
-    Dictionary<string, bool> activeHighlighted = new Dictionary<string, bool>();
+    List<string> activeHighlighted = new List<string>();
 
     public GameObject ItemControlPanel;
     public GameObject combineButton;
@@ -327,6 +327,9 @@ public class GameUI : MonoBehaviour
     //----------------------------------------------------------------------------------------------------------
     public void UpdateHelpHighlight()
     {
+        print("+++++++");
+        List<string> newHLObjects = new List<string>();
+
         string prefix = "helpHL";
 
         if (!handsInventory.LeftHandEmpty())
@@ -341,30 +344,61 @@ public class GameUI : MonoBehaviour
 
         foreach (Action a in sublist)
         {
-            string[] requirementObjects = { a.leftHandRequirement, a.rightHandRequirement };
-            foreach (string r in requirementObjects)
+            string[] ObjectNames = new string[0];
+            a.ObjectNames(out ObjectNames);
+
+            if (a.Type == ActionManager.ActionType.ObjectUse ||
+            a.Type == ActionManager.ActionType.ObjectDrop)
             {
-                if (r != "")
+                string objectToUse = ObjectNames[0];
+                if (GameObject.Find(objectToUse) != null)
                 {
-                    if (!handsInventory.LeftHandEmpty())
+                    if (handsInventory.IsInHand(GameObject.Find(objectToUse)))
+                        continue;
+                    HighlightObject h = AddHighlight(GameObject.Find(objectToUse).transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f, 0.5f));
+                    if (h != null)
+                        h.setGold(true);
+                    newHLObjects.Add(objectToUse);
+                }
+            }
+            else
+            {
+                string[] requirementObjects = { a.leftHandRequirement, a.rightHandRequirement };
+                foreach (string r in requirementObjects)
+                {
+                    if (r != "")
                     {
-                        if (handsInventory.leftHandObject.name == r)
-                            continue;
-                    }
-                    if (!handsInventory.RightHandEmpty())
-                    {
-                        if (handsInventory.rightHandObject.name == r)
-                            continue;
-                    }
-                    if (GameObject.Find(r) != null)
-                    {
-                        HighlightObject h = AddHighlight(GameObject.Find(r).transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f, 0.5f));
-                        if (h != null)
-                            h.setGold(true);
+                        
+                        if (GameObject.Find(r) != null)
+                        {
+                            if (handsInventory.IsInHand(GameObject.Find(r)))
+                                continue;
+                            HighlightObject h = AddHighlight(GameObject.Find(r).transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f, 0.5f));
+                            if (h != null)
+                                h.setGold(true);
+                            newHLObjects.Add(r);
+                        }
                     }
                 }
             }
         }
+
+        //clear highlights
+
+        for (int i = 0; i < activeHighlighted.Count; i++)
+        {
+            if (!newHLObjects.Contains(activeHighlighted[i]))
+            {
+                print("[[[[[[[[[[[[[[[[[[[[[[[[[[    " + activeHighlighted[i]);
+                RemoveHighlight(prefix, activeHighlighted[i]);
+            }
+        }
+        activeHighlighted.Clear();
+        foreach (string s in newHLObjects)
+        {
+            activeHighlighted.Add(s);
+        }
+       
     }
 
 
@@ -400,6 +434,7 @@ public class GameUI : MonoBehaviour
             {
                 timeOutEnded = true;
                 ActionManager.UpdateRequirements();
+                UpdateHelpHighlight();
             }
         }
 
