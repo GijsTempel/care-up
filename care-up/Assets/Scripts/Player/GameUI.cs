@@ -356,6 +356,7 @@ public class GameUI : MonoBehaviour
         if (handsStateChanged)
         {
             ActionManager.UpdateRequirements();
+            handsInventory.UpdateHelpHighlight();
             currentActionsCount = actionManager.actionsCount;
             //hide panel for the first frame of hands state change
             //prevent quick blinking of buttons before animation starts
