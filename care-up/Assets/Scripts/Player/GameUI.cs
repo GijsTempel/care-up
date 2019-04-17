@@ -506,7 +506,8 @@ public class GameUI : MonoBehaviour
            
             
             ss += startTag + data.requirement + endTag + "\n";
-        }      
-        SubStepsText.text = ss.Remove(ss.Length - 1);         
+        }  
+        if (ss.Length > 0)
+            SubStepsText.text = ss.Remove(ss.Length - 1);         
     }
 }
