@@ -5,7 +5,7 @@ using UnityEngine;
 public class MedicineMouthPatient : PersonObject {
 
     private Animator animator;
-
+    private Animator PlayerAnimator;
     public Vector3 playerPosition;
     public Vector3 playerRotation;
     public Transform playerPositionTarget;
@@ -13,7 +13,7 @@ public class MedicineMouthPatient : PersonObject {
     protected override void Start()
     {
         base.Start();
-        
+        PlayerAnimator = GameObject.FindObjectOfType<PlayerAnimationManager>().GetComponent<Animator>();
         animator = GetComponent<Animator>();
     }
 
@@ -27,7 +27,7 @@ public class MedicineMouthPatient : PersonObject {
             switch (topic)
             {
                 case "Sitstraight":
-                    animator.SetTrigger("Player_TakeOffBlanket");
+                    PlayerAnimator.SetTrigger("Player_TakeOffBlanket");
                     break;
                 default:
                     break;

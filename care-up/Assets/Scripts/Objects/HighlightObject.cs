@@ -5,16 +5,43 @@ using UnityEngine;
 public class HighlightObject : MonoBehaviour {
     Transform target;
     HighlightControl hl_control;
-    HighlightObject.type currentType;
+    HighlightObject.type currentType = HighlightObject.type.NoChange;
+    public GameObject content;
     public List<GameObject> BallElements;
     public List<GameObject> QubeElements;
+    public List<GameObject> ArrowElements;
+    bool gold = false;
 
-    float timeLeft = float.PositiveInfinity;
+    float lifetime = float.PositiveInfinity;
+    float startDelay = 0;
+
     public enum type
     {
+        NoChange,
         Ball,
-        Qube
+        Qube,
+        Arrow
     };
+
+    public void setGold(bool value)
+    {
+        setMaterial("goldHint");
+        foreach (GameObject b in BallElements)
+            if (b.name == "b1")
+                b.SetActive(false);
+        foreach (GameObject q in QubeElements)
+            if (q.name == "q1")
+                q.SetActive(false);
+        transform.localScale = 1.2f * transform.localScale;
+    }
+
+    public void setMaterial(string matName)
+    {
+        foreach (GameObject b in BallElements)
+            b.GetComponent<MeshRenderer>().material = Resources.Load("Materials/" + matName, typeof(Material)) as Material;
+        foreach (GameObject q in QubeElements)
+            q.GetComponent<MeshRenderer>().material = Resources.Load("Materials/" + matName, typeof(Material)) as Material;
+    }
 
     public void setType(HighlightObject.type _type)
     {
@@ -22,12 +49,29 @@ public class HighlightObject : MonoBehaviour {
         foreach (GameObject b in BallElements)
             b.SetActive(currentType == HighlightObject.type.Ball);
         foreach (GameObject q in QubeElements)
-           q.SetActive(currentType == HighlightObject.type.Qube);
+            q.SetActive(currentType == HighlightObject.type.Qube);
+        foreach (GameObject a in ArrowElements)
+            a.SetActive(currentType == HighlightObject.type.Arrow);
+        if (_type == HighlightObject.type.Arrow)
+        {
+            transform.rotation = new Quaternion();
+            transform.localScale = new Vector3(1,1,1);
+        }
     }
+
     // Use this for initialization
     void Start () {
 		
 	}
+
+    public void setStartDelay(float value)
+    {
+        if(value > 0)
+        {
+            content.SetActive(false);
+            startDelay = value;
+        }
+    }
 
     public void setTarget(Transform t)
     {
@@ -40,12 +84,15 @@ public class HighlightObject : MonoBehaviour {
 
         if (hl_control != null)
         {
-            transform.position = hl_control.transform.position;
-            transform.rotation = hl_control.transform.rotation;
-            transform.localScale = hl_control.transform.localScale;
             setType(hl_control.hl_type);
+            transform.position = hl_control.transform.position;
+            if (currentType != HighlightObject.type.Arrow)
+            {   
+                transform.rotation = hl_control.transform.rotation;
+                transform.localScale = hl_control.transform.localScale;
+            }
+            
         }
-        
         else if (target.GetComponent<Collider>() != null)
         {
             Collider c = target.gameObject.GetComponent<Collider>();
@@ -55,11 +102,13 @@ public class HighlightObject : MonoBehaviour {
         {
             transform.position = target.position;
         }
+        if (currentType == HighlightObject.type.NoChange)
+            setType(HighlightObject.type.Ball);
     }
 
     public void setTimer(float time)
     {
-        timeLeft = time;
+        lifetime = time;
     }
 
     public void Destroy()
@@ -69,18 +118,24 @@ public class HighlightObject : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        if (startDelay > 0)
+            startDelay -= Time.deltaTime;
+        else if (!content.activeSelf)
+            content.SetActive(transform);
+
         if (target == null)
             Destroy();
-        if (timeLeft < 0f)
+        if (lifetime < 0f)
             GameObject.DestroyImmediate(gameObject);
 
-        if (timeLeft < float.PositiveInfinity)
-            timeLeft -= Time.deltaTime;
+        if (lifetime < float.PositiveInfinity)
+            lifetime -= Time.deltaTime;
         if (target != null){
             if (hl_control != null)
             {
                 transform.position = hl_control.transform.position;
-                transform.rotation = hl_control.transform.rotation;
+                if (currentType != HighlightObject.type.Arrow)
+                    transform.rotation = hl_control.transform.rotation;
 
             }
             else if (target.GetComponent<Collider>() != null)
@@ -91,7 +146,8 @@ public class HighlightObject : MonoBehaviour {
             else
             {
                 transform.position = target.position;
-                transform.rotation = target.rotation;
+                if (currentType != HighlightObject.type.Arrow)
+                    transform.rotation = target.rotation;
             }
         }
 	}

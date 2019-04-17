@@ -47,7 +47,7 @@ public class ActionManager : MonoBehaviour
 
     private int totalPoints = 0;         // max points of scene
     private int points = 0;              // current points
-    private int currentActionIndex = 0;  // index of current action
+    public int currentActionIndex = 0;  // index of current action
     private Action currentAction;        // current action instance
     private int currentPointAward = 1;
     private bool penalized = false;
