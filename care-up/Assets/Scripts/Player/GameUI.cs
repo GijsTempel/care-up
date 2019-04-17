@@ -489,24 +489,31 @@ public class GameUI : MonoBehaviour
 
     public void ClearHintPanel()
     {
-        Transform panel = GameObject.Find("UI/DetailedHintPanel/HintContainer").transform;
-        for (int i = 0; i < panel.childCount; ++i)
+        if(GameObject.Find("UI/DetailedHintPanel/HintContainer") != null)
         {
-            Destroy(panel.GetChild(i).gameObject);
-        }
+            Transform panel = GameObject.Find("UI/DetailedHintPanel/HintContainer").transform;
+            for (int i = 0; i < panel.childCount; ++i)
+            {
+                Destroy(panel.GetChild(i).gameObject);
+            }
+        }        
     }
 
     public void SetHintPanelAlpha(float alpha)
     {
-        Transform panel = GameObject.Find("UI/DetailedHintPanel").transform;
-        Color panelColor = panel.GetComponent<Image>().color;
-        panelColor.a = alpha;
-        panel.GetComponent<Image>().color = panelColor;
-        foreach(Text t in panel.GetComponentsInChildren<Text>()) {
-            Color c = t.color;
-            c.a = alpha;
-            t.GetComponent<Text>().color = c;
-        }
+        if(GameObject.Find("UI/DetailedHintPanel") != null)
+        {
+            Transform panel = GameObject.Find("UI/DetailedHintPanel").transform;
+            Color panelColor = panel.GetComponent<Image>().color;
+            panelColor.a = alpha;
+            panel.GetComponent<Image>().color = panelColor;
+            foreach (Text t in panel.GetComponentsInChildren<Text>())
+            {
+                Color c = t.color;
+                c.a = alpha;
+                t.GetComponent<Text>().color = c;
+            }
+        }       
     }
     public void UpdateRequirements(List<ActionManager.StepData> subTasks)
     {
