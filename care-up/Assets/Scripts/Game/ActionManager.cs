@@ -141,9 +141,14 @@ public class ActionManager : MonoBehaviour
         List<StepData> stepsList = new List<StepData>();
 
         HandsInventory inventory = GameObject.FindObjectOfType<HandsInventory>();
-
+        int i = 0;
         foreach (Action a in sublist)
         {
+            StepData placeData = null;
+            StepData secondPlaceData = null;
+            bool correctObjectsInHands = true;
+            List<StepData> objectsData = new List<StepData>();
+
             if (!string.IsNullOrEmpty(a.placeRequirement))
             {
                 string placeName = a.placeRequirement;
@@ -155,7 +160,22 @@ public class ActionManager : MonoBehaviour
                 if (playerScript.currentWalkPosition != null)
                     completed = playerScript.currentWalkPosition.name == a.placeRequirement;
 
-                stepsList.Add(new StepData(completed, $"- At the {placeName}"));
+                //stepsList.Add(new StepData(completed, $"- At the {placeName}", i));
+                placeData = new StepData(completed, $"- At the {placeName}", i);
+            }
+
+            if (!string.IsNullOrEmpty(a.secondPlaceRequirement))
+            {
+                string placeName = a.secondPlaceRequirement;
+
+                if (GameObject.Find(a.secondPlaceRequirement).GetComponent<WalkToGroup>().description != "")
+                    placeName = GameObject.Find(a.secondPlaceRequirement).GetComponent<WalkToGroup>().description;
+
+                bool completed = false;
+                if (playerScript.currentWalkPosition != null)
+                    completed = playerScript.currentWalkPosition.name == a.secondPlaceRequirement;
+
+                secondPlaceData = new StepData(completed, $"- At the {placeName}", i);
             }
 
             string[] actionHand = { a.leftHandRequirement, a.rightHandRequirement };
@@ -249,10 +269,25 @@ public class ActionManager : MonoBehaviour
                     //    keyWords = "- Use ";
                     //if (a.Type == ActionType.PersonTalk)
                     //keyWords = "- Talk to ";
-                    stepsList.Add(new StepData(completed, keyWords + handValue));
+                    if (!completed)
+                        correctObjectsInHands = false;
+                    objectsData.Add(new StepData(completed, keyWords + handValue, i));
                 }
             }
+            if (placeData != null)
+            {
+                if (secondPlaceData != null && correctObjectsInHands)
+                    stepsList.Add(secondPlaceData);
+                else
+                    stepsList.Add(placeData);
+            }
+            foreach (StepData sd in objectsData)
+            {
+                stepsList.Add(sd);
+            }
+            i++;
         }
+
         GameObject.FindObjectOfType<GameUI>().UpdateRequirements(stepsList);
     }
 
@@ -579,6 +614,12 @@ public class ActionManager : MonoBehaviour
                 comment = action.Attributes["comment"].Value;
             }
 
+            string secondPlace = "";
+            if (action.Attributes["secondPlace"] != null)
+            {
+                secondPlace = action.Attributes["secondPlace"].Value;
+            }
+
             string commentUA = "";
             if (action.Attributes["commentUA"] != null)
             {
@@ -766,6 +807,8 @@ public class ActionManager : MonoBehaviour
             }
             actionList[actionList.Count - 1].comment = comment;
             actionList[actionList.Count - 1].commentUA = commentUA;
+            actionList[actionList.Count - 1].secondPlaceRequirement = secondPlace;
+
 
         }
         actionList.Last<Action>().sceneDoneTrigger = true;
@@ -1009,11 +1052,13 @@ public class ActionManager : MonoBehaviour
     {
         public bool completed;
         public string requirement;
+        public int subindex = 0;
 
-        public StepData(bool completedValue, string requirementValue)
+        public StepData(bool completedValue, string requirementValue, int index)
         {
             completed = completedValue;
             requirement = requirementValue;
+            subindex = index;
         }
     }
 
