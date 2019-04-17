@@ -78,7 +78,7 @@ public class Cheat_CurrentAction : MonoBehaviour
                      actionManager.GetComponent<TutorialManager>() == null) || (FindObjectOfType<TutorialManager>() != null && FindObjectOfType<Tutorial_UI>() == null))
 
                 {
-                    GameObject.Find("DevHint").SetActive(false);
+                    GameObject.Find("DetailedHintPanel").SetActive(false);
                     extraPanel.SetActive(false);
                     extraButton.gameObject.SetActive(false);
                 }

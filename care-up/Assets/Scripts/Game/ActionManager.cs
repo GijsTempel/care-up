@@ -160,7 +160,6 @@ public class ActionManager : MonoBehaviour
                 if (playerScript.currentWalkPosition != null)
                     completed = playerScript.currentWalkPosition.name == a.placeRequirement;
 
-                //stepsList.Add(new StepData(completed, $"- At the {placeName}", i));
                 placeData = new StepData(completed, $"- At the {placeName}", i);
             }
 
@@ -175,7 +174,7 @@ public class ActionManager : MonoBehaviour
                 if (playerScript.currentWalkPosition != null)
                     completed = playerScript.currentWalkPosition.name == a.secondPlaceRequirement;
 
-                secondPlaceData = new StepData(completed, $"! At the {placeName}", i);
+                secondPlaceData = new StepData(completed, $"- At the {placeName}", i);
             }
 
             string[] actionHand = { a.leftHandRequirement, a.rightHandRequirement };
@@ -264,7 +263,7 @@ public class ActionManager : MonoBehaviour
                         if (inventory.rightHandObject.name == hand)
                             completed = true;
                     }
-                    string keyWords = "! Pick up ";
+                    string keyWords = "- Pick up ";
                     //if (a.Type == ActionType.ObjectUse)
                     //    keyWords = "- Use ";
                     //if (a.Type == ActionType.PersonTalk)
@@ -285,9 +284,9 @@ public class ActionManager : MonoBehaviour
             {
                 stepsList.Add(sd);
             }
+
             i++;
         }
-
         GameObject.FindObjectOfType<GameUI>().UpdateRequirements(stepsList);
     }
 
@@ -1425,7 +1424,6 @@ public class ActionManager : MonoBehaviour
         ActionManager.UpdateRequirements();
     }
 
-    //-------------------------------------------------------------------------------------------------------------
     public static void BuildRequirements()
     {
         ActionManager am = GameObject.FindObjectOfType<ActionManager>();
@@ -1446,7 +1444,6 @@ public class ActionManager : MonoBehaviour
                         if (po.hasTopic(a._topic))
                         {
                             a.placeRequirement = ActionManager.FindNearest(new string[] { po.name });
-                            //a.leftHandRequirement = po.GetComponent<InteractableObject>().description;
                         }
                     }
                     break;
@@ -1477,7 +1474,6 @@ public class ActionManager : MonoBehaviour
                     a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
                     break;
                 case ActionType.ObjectUse:
-                    //a.leftHandRequirement = ObjectNames[0];
                     a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
                     break;
             }
@@ -1592,70 +1588,6 @@ public class ActionManager : MonoBehaviour
         }
 
         return "";
-
-        //    GameObject leftObj = GameObject.Find(leftObjName);
-
-        //if (leftObj == null)
-        //{
-        //    foreach (UsableObject usableObject in GameObject.FindObjectsOfType<UsableObject>())
-        //    {
-        //        if (usableObject.WillCreateObject(leftObjName) != "")
-        //            leftObj = usableObject.gameObject;
-        //    }
-        //}
-
-        //GameObject rightObj = GameObject.Find(rightObjName);
-
-        //if (rightObj == null)
-        //{
-        //    foreach (UsableObject usableobject in GameObject.FindObjectsOfType<UsableObject>())
-        //    {
-
-        //        if (usableobject.WillCreateObject(rightObjName) != "")
-        //            rightObj = usableobject.gameObject;
-        //    }
-        //}
-        //if (leftObj == null && rightObj == null)
-        //    return "";
-
-        //List<WalkToGroup> walkToGroups = new List<WalkToGroup>();
-
-        //foreach (WalkToGroup wToGroup in GameObject.FindObjectsOfType<WalkToGroup>())
-        //{
-        //    walkToGroups.Add(wToGroup);
-        //}
-
-        //WalkToGroup nearestLeft = walkToGroups[0];
-        //WalkToGroup nearestRight = walkToGroups[0];
-
-        //if (leftObj == null)
-        //    nearestLeft = null;
-        //if (rightObj == null)
-        //    nearestRight = null;
-
-        //for (int i = 1; i < walkToGroups.Count; i++)
-        //{
-        //    if (nearestLeft != null)
-        //    {
-        //        float nearestDistanceLeft = Vector3.Distance(nearestLeft.transform.position, leftObj.transform.position);
-        //        if (Vector3.Distance(walkToGroups[i].transform.position, leftObj.transform.position) < nearestDistanceLeft)
-        //            nearestLeft = walkToGroups[i];
-        //    }
-        //    if (nearestRight != null)
-        //    {
-        //        float nearestDistanceRight = Vector3.Distance(nearestRight.transform.position, rightObj.transform.position);
-        //        if (Vector3.Distance(walkToGroups[i].transform.position, rightObj.transform.position) < nearestDistanceRight)
-        //            nearestRight = walkToGroups[i];
-        //    }
-        //}
-        //if ((nearestLeft != null && nearestRight != null) && (nearestLeft != nearestRight))
-        //    return "";
-        //if (nearestLeft != null)
-        //    return nearestLeft.name;
-        //if (nearestRight != null)
-        //    return nearestRight.name;
-
-        //return "";
     }
 
     public void UpdatePoints(int value)
