@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
@@ -9,12 +7,17 @@ using UnityEngine.UI;
 /// </summary>
 public class Cheat_CurrentAction : MonoBehaviour
 {
-    private Text textObjectDevHint;
     private Text textObjectBiggerDevHint;
     public Text extraText;
-    private GameObject extraPanel;
 
-    [SerializeField] private GameObject dev_Hint;
+    private GameObject extraPanel;
+    private Image hintPanelBackground;
+    private Image fullScreenButtonBackground;
+
+    [SerializeField] private Text hintPanelText;
+    [SerializeField] private GameObject fullScreenButton;
+
+    [SerializeField] private GameObject hintPanel;
     [SerializeField] private GameObject bigger_DevHint;
     [SerializeField] private GameObject ipadTrigger;
 
@@ -34,9 +37,6 @@ public class Cheat_CurrentAction : MonoBehaviour
     private float uipanel_animationTime = 0.5f;
     private int uipanel_direction = 1;
     private float uipanel_timer = 1;
-
-    private Image devHintBackground;
-    private Image fullscrButton;
 
     private bool set = false; // fix
 
@@ -113,7 +113,6 @@ public class Cheat_CurrentAction : MonoBehaviour
             }
         }
 
-
         timer = 0.0f;
         direction = 0;
         uipanel_timer = 1.0f;
@@ -124,9 +123,7 @@ public class Cheat_CurrentAction : MonoBehaviour
 
     private void Init()
     {
-        GameObject devHint = GameObject.Find("DevHint");
         GameObject biggerDevHint = GameObject.Find("BiggerDevHint");
-        textObjectDevHint = devHint.transform.GetChild(0).GetComponent<Text>();
         textObjectBiggerDevHint = biggerDevHint.transform.GetChild(2).GetComponent<Text>();
 
         biggerDevHint.SetActive(false);
@@ -143,13 +140,14 @@ public class Cheat_CurrentAction : MonoBehaviour
         extraCloseBtn.onClick.AddListener(ToggleExtraInfoPanel);
         extra_Close_Btn.onClick.AddListener(ToggleExtraInfoPanel);
 
-        devHintBackground = devHint.GetComponent<Image>();
-        fullscrButton = devHint.transform.GetChild(1).GetComponent<Image>();
+        hintPanelBackground = hintPanel.GetComponent<Image>();
+
+        fullScreenButtonBackground = fullScreenButton.GetComponent<Image>();
     }
 
     private void Update()
     {
-        if (textObjectDevHint == null)
+        if (hintPanelText == null)
             return;
 
         if (textObjectBiggerDevHint == null)
@@ -157,7 +155,7 @@ public class Cheat_CurrentAction : MonoBehaviour
 
         if (!set)
         {
-            textObjectDevHint.text = actionManager.CurrentDescription;
+            hintPanelText.text = actionManager.CurrentDescription.Remove(actionManager.CurrentDescription.Length - 1); ;
             textObjectBiggerDevHint.text = actionManager.CurrentDescription;
             if (extraText != null)
                 extraText.text = actionManager.CurrentExtraDescription;
@@ -169,16 +167,16 @@ public class Cheat_CurrentAction : MonoBehaviour
             if (timer < animationTime)
             {
                 timer += Time.deltaTime;
-                textObjectDevHint.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
+                hintPanelText.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
                 textObjectBiggerDevHint.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
                 extraText.color = new Color(0.0f, 0.0f, 0.0f, 0.0f - timer / animationTime);
             }
             else
             {
-                textObjectDevHint.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+                hintPanelText.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
                 textObjectBiggerDevHint.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
                 extraText.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
-                textObjectDevHint.text = actionManager.CurrentDescription;
+                hintPanelText.text = actionManager.CurrentDescription.Remove(actionManager.CurrentDescription.Length -1);
                 textObjectBiggerDevHint.text = actionManager.CurrentDescription;
                 extraText.text = actionManager.CurrentExtraDescription;
                 timer = animationTime;
@@ -190,13 +188,15 @@ public class Cheat_CurrentAction : MonoBehaviour
             if (timer > 0.0f)
             {
                 timer -= Time.deltaTime;
-                textObjectDevHint.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
+                hintPanelText.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
+
                 textObjectBiggerDevHint.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
                 extraText.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
             }
             else
             {
-                textObjectDevHint.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+                hintPanelText.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+
                 textObjectBiggerDevHint.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
                 extraText.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
                 timer = 0.0f;
@@ -213,7 +213,7 @@ public class Cheat_CurrentAction : MonoBehaviour
         if (controller != null)
         {
             uipanel_direction = (controller.GetCurrentAnimatorStateInfo(0).IsTag("UI_On") ||
-                (controller.GetCurrentAnimatorStateInfo(0).IsTag("UI_On_Sequence") 
+                (controller.GetCurrentAnimatorStateInfo(0).IsTag("UI_On_Sequence")
                 && controller.speed == 0)) ? 1 : -1;
 
             // very hard mix with everything else that updates text, needs testing
@@ -221,12 +221,14 @@ public class Cheat_CurrentAction : MonoBehaviour
             uipanel_timer = Mathf.Clamp(uipanel_timer, 0, uipanel_animationTime);
 
             float alpha = uipanel_timer / uipanel_animationTime;
-            
-            if (direction == 0 || uipanel_timer != uipanel_animationTime)
-                textObjectDevHint.color = new Color(0.0f, 0.0f, 0.0f, alpha);
 
-            devHintBackground.color = new Color(1.0f, 1.0f, 1.0f, alpha);
-            fullscrButton.color = new Color(1.0f, 1.0f, 1.0f, alpha);
+            if (direction == 0 || uipanel_timer != uipanel_animationTime)
+            {
+                hintPanelText.color = new Color(0.0f, 0.0f, 0.0f, alpha);
+            }
+
+            hintPanelBackground.color = new Color(1.0f, 1.0f, 1.0f, alpha);
+            fullScreenButtonBackground.color = new Color(1.0f, 1.0f, 1.0f, alpha);
         }
     }
 
@@ -259,28 +261,29 @@ public class Cheat_CurrentAction : MonoBehaviour
         }
     }
 
-    public void ShowBiggerDevHint () {
+    public void ShowBiggerDevHint()
+    {
         tutorial_devHintOpened = true;
-        bigger_DevHint.SetActive (true);
+        bigger_DevHint.SetActive(true);
 
         //biggerDevHintActive = true;
         //devHintActive = false;
     }
 
-    public void RemoveBiggerDevHint () {
+    public void RemoveBiggerDevHint()
+    {
         tutorial_devHintClosed = true;
-        bigger_DevHint.SetActive (false);
+        bigger_DevHint.SetActive(false);
 
         //biggerDevHintActive = false;
         //devHintActive = true;
-    } 
-
+    }
 
     public void RemoveDevHint()
     {
         if (manager.practiceMode == true)
         {
-            dev_Hint.SetActive(false);
+            hintPanel.SetActive(false);
         }
     }
 
@@ -288,8 +291,7 @@ public class Cheat_CurrentAction : MonoBehaviour
     {
         if (manager.practiceMode == true)
         {
-            dev_Hint.SetActive(true);
+            hintPanel.SetActive(true);
         }
     }
-
 }

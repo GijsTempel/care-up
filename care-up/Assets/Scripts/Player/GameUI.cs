@@ -24,6 +24,8 @@ public class GameUI : MonoBehaviour
     private HandsInventory handsInventory;
     private ActionManager actionManager;
     private Animator controller;
+    private float startTimeOut = 2f;
+    private bool timeOutEnded = false;
 
     public GameObject ItemControlPanel;
     public GameObject combineButton;
@@ -40,7 +42,6 @@ public class GameUI : MonoBehaviour
     public GameObject SubStepsPanel;
     Text SubStepsText;
 
-
     float cooldownTime = 0;
     float lastCooldownTime = 0;
     int currentActionsCount = 0;
@@ -53,16 +54,10 @@ public class GameUI : MonoBehaviour
     bool ICPCurrentState = false;
     public bool allowObjectControlUI = true;
 
-
     public void MoveBack()
     {
         Player.GetComponent<PlayerScript>().MoveBackButton();
     }
-
-    //public WalkToGroupButton GetWTGButton(string key)
-    //{
-
-    //}
 
     public void UseOn()
     {
@@ -187,6 +182,9 @@ public class GameUI : MonoBehaviour
     void Start()
     {
         SubStepsText = SubStepsPanel.transform.Find("Text").GetComponent<Text>();
+        SubStepsText.color.SetAlpha(0.0f);
+        Color zm = SubStepsText.color;  //  makes a new color zm
+        zm.a = 0.0f;
         useOnNTtext = noTargetButton.transform.GetChild(0).GetComponent<Text>().text;
         ps = GameObject.FindObjectOfType<PlayerScript>();
         controller = GameObject.FindObjectOfType<PlayerAnimationManager>().GetComponent<Animator>();
@@ -316,6 +314,15 @@ public class GameUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(!timeOutEnded)
+        {
+            startTimeOut -= Time.deltaTime;
+            if(startTimeOut < 0)
+            {
+                timeOutEnded = true;
+                ActionManager.UpdateRequirements();
+            }
+        }
 
         //Don't show object control panel if animation is playing
         //if animation is longer than 0.2 (is not hold animation)
@@ -352,6 +359,7 @@ public class GameUI : MonoBehaviour
 
         if (handsStateChanged)
         {
+            ActionManager.UpdateRequirements();
             currentActionsCount = actionManager.actionsCount;
             //hide panel for the first frame of hands state change
             //prevent quick blinking of buttons before animation starts
@@ -492,11 +500,13 @@ public class GameUI : MonoBehaviour
 
             if (data.completed)
             {
-                startTag = "<color=#008000ff>";
+                startTag = "<color=#0AAF0A>";
                 endTag = "</color>";
             }
+           
+            
             ss += startTag + data.requirement + endTag + "\n";
-        }
-        SubStepsText.text = ss;
+        }      
+        SubStepsText.text = ss.Remove(ss.Length - 1);         
     }
 }
