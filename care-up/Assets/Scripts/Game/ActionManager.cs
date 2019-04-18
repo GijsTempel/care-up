@@ -163,7 +163,7 @@ public class ActionManager : MonoBehaviour
                 if (playerScript.currentWalkPosition != null)
                     completed = playerScript.currentWalkPosition.name == a.placeRequirement;
 
-                placeData = new StepData(completed, $"- At the {placeName}", i, a.Type.ToString());
+                placeData = new StepData(completed, $"- Ga naar {placeName}", i);
             }
 
             if (!string.IsNullOrEmpty(a.secondPlaceRequirement))
@@ -177,10 +177,12 @@ public class ActionManager : MonoBehaviour
                 if (playerScript.currentWalkPosition != null)
                     completed = playerScript.currentWalkPosition.name == a.secondPlaceRequirement;
 
-                secondPlaceData = new StepData(completed, $"- At the {placeName}", i, a.Type.ToString());
+                secondPlaceData = new StepData(completed, $"- Ga naar {placeName}", i);
             }
 
             string[] actionHand = { a.leftHandRequirement, a.rightHandRequirement };
+            GameObject leftR = null;
+            GameObject rightR = null;
 
             foreach (string hand in actionHand)
             {
@@ -254,13 +256,14 @@ public class ActionManager : MonoBehaviour
                     }
 
                     bool completed = false;
-
+               
                     if (!inventory.LeftHandEmpty())
                     {
                         if (inventory.leftHandObject.name == hand)
                         {
                             completed = true;
-                            leftObject = hand;
+                            leftObject = inventory.leftHandObject.description;
+                            leftR = inventory.leftHandObject.gameObject;
                         }                          
                     }
 
@@ -269,24 +272,26 @@ public class ActionManager : MonoBehaviour
                         if (inventory.rightHandObject.name == hand)
                         {
                             completed = true;
-                            rightObject = hand;
+                            rightObject = inventory.rightHandObject.description;
+                            rightR = inventory.rightHandObject.gameObject;
                         }
                     }
 
                     string keyWords = "- Pick up ";
 
-                    if (!inventory.LeftHandEmpty() && !inventory.RightHandEmpty() && inventory.rightHandObject.name == rightObject && inventory.leftHandObject.name == leftObject && a.Type == ActionType.ObjectCombine)
+                    if(leftR != null && rightR != null && a.Type == ActionType.ObjectCombine)
                     {
-                        objectsData.Add(new StepData(completed, $"- Combine {leftObject} and {rightObject}", i, a.Type.ToString()));
+                        objectsData.Add(new StepData(false, $"- Combineer {leftObject} met {rightObject}", i));
                     }
                     
                     if (a.Type == ActionType.ObjectUse)
                         keyWords = "- Use ";
                     if (a.Type == ActionType.PersonTalk)
-                        keyWords = "- Talk to ";
+                        keyWords = "- Vraage ";
                     if (!completed)
                         correctObjectsInHands = false;
-                    objectsData.Add(new StepData(completed, keyWords + handValue, i, a.Type.ToString()));
+
+                    objectsData.Add(new StepData(completed, keyWords + handValue, i));
                 }
             }
             if (placeData != null)
@@ -1070,12 +1075,11 @@ public class ActionManager : MonoBehaviour
         public string actionType;
         public bool disabled = false;
 
-        public StepData(bool completedValue, string requirementValue, int index, string type)
+        public StepData(bool completedValue, string requirementValue, int index)
         {
             completed = completedValue;
             requirement = requirementValue;
             subindex = index;
-            actionType = type;
         }
     }
 
