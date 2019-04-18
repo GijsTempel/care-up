@@ -19,6 +19,7 @@ public class WalkToGroup : MonoBehaviour
     public WalkToGroup LeftWalkToGroup = null;
     [HideInInspector]
     public WalkToGroup RightWalkToGroup = null;
+    PlayerScript player;
 
     public enum GroupType
     {
@@ -75,6 +76,7 @@ public class WalkToGroup : MonoBehaviour
 
     private void Start()
     {
+        player = GameObject.FindObjectOfType<PlayerScript>();
         FindNeighbors();   
         gameLogic = GameObject.Find("GameLogic");
 
@@ -151,18 +153,21 @@ public class WalkToGroup : MonoBehaviour
 
     protected void Update()
     {
-        if (cameraMode.CurrentMode == CameraMode.Mode.Free)
+        if (player.away)
         {
-            if (controls.SelectedObject == gameObject && !cameraMode.animating || ButtonHovered/*&& (player.away || player.freeLook)*/)
+            if (cameraMode.CurrentMode == CameraMode.Mode.Free)
             {
-                if (gameLogic.GetComponent<TutorialManager>() != null)
-                    if (gameLogic.GetComponent<TutorialManager>().TutorialEnding)
-                        return;
-                HighlightGroup(true);
-            }
-            else
-            {
-                HighlightGroup(false);
+                if (controls.SelectedObject == gameObject && !cameraMode.animating || ButtonHovered/*&& (player.away || player.freeLook)*/)
+                {
+                    if (gameLogic.GetComponent<TutorialManager>() != null)
+                        if (gameLogic.GetComponent<TutorialManager>().TutorialEnding)
+                            return;
+                    HighlightGroup(true);
+                }
+                else
+                {
+                    HighlightGroup(false);
+                }
             }
         }
     }

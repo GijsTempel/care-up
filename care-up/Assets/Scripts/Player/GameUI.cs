@@ -426,10 +426,16 @@ public class GameUI : MonoBehaviour
 
         donePanel.SetActive(false);
     }
-
+    void OnGUI()
+    {
+#if !UNITY_EDITOR
+        GUI.Label(new Rect(0, 0, 100, 100), ((int)(1.0f / Time.smoothDeltaTime)).ToString());
+#endif
+    }
     // Update is called once per frame
     void Update()
     {
+
         if (!timeOutEnded)
         {
             startTimeOut -= Time.deltaTime;
