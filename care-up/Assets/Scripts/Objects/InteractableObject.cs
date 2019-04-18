@@ -10,6 +10,10 @@ public class InteractableObject : MonoBehaviour {
     //HandsInventory handsInventory;
 
     public string description;
+    public string pickUpActionCommand;
+    public string combineActionCommand;
+    public string useOnActionCommand;
+
     public bool muplipleMesh = false;
     public Vector3 descriptionOffset;
     GameUI gameUI;
