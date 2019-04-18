@@ -285,7 +285,7 @@ public class GameUI : MonoBehaviour
                         break;
                 }
             }
-            if (!WTGButtons["Sink"].gameObject.activeSelf || activeGroupButtons < 2)
+            if (!WTGButtons["Sink"].gameObject.activeSelf || activeGroupButtons <= 2)
                 WalkToGroupPanel.transform.Find("spacer0").gameObject.SetActive(false);
             if (!WTGButtons["Patient"].gameObject.activeSelf || activeGroupButtons < 2)
                 WalkToGroupPanel.transform.Find("spacer2").gameObject.SetActive(false);
@@ -327,6 +327,12 @@ public class GameUI : MonoBehaviour
     //----------------------------------------------------------------------------------------------------------
     public void UpdateHelpHighlight()
     {
+        bool practiceMode = true;
+        if (GameObject.FindObjectOfType<PlayerPrefsManager>() != null)
+            practiceMode = GameObject.FindObjectOfType<PlayerPrefsManager>().practiceMode;
+        if (!practiceMode)
+            return;
+
         List<string> newHLObjects = new List<string>();
 
         string prefix = "helpHL";
@@ -420,10 +426,16 @@ public class GameUI : MonoBehaviour
 
         donePanel.SetActive(false);
     }
-
+    void OnGUI()
+    {
+#if UNITY_EDITOR
+        GUI.Label(new Rect(0, 0, 100, 100), ((int)(1.0f / Time.smoothDeltaTime)).ToString());
+#endif
+    }
     // Update is called once per frame
     void Update()
     {
+
         if (!timeOutEnded)
         {
             startTimeOut -= Time.deltaTime;
