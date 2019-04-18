@@ -348,7 +348,7 @@ public class GameUI : MonoBehaviour
 
             //if (a.Type == ActionManager.ActionType.ObjectUse ||
             //a.Type == ActionManager.ActionType.ObjectDrop)
-            foreach(string objectToUse in ObjectNames)
+            foreach (string objectToUse in ObjectNames)
             {
                 if (GameObject.Find(objectToUse) != null)
                 {
@@ -395,7 +395,7 @@ public class GameUI : MonoBehaviour
         {
             activeHighlighted.Add(s);
         }
-       
+
     }
 
 
@@ -602,23 +602,23 @@ public class GameUI : MonoBehaviour
     public void DonePanelNo()
     {
         donePanelYesNo.SetActive(false);
-    }      
+    }
 
     public void ClearHintPanel()
     {
-        if(GameObject.Find("UI/DetailedHintPanel/HintContainer") != null)
+        if (GameObject.Find("UI/DetailedHintPanel/HintContainer") != null)
         {
             Transform panel = GameObject.Find("UI/DetailedHintPanel/HintContainer").transform;
             for (int i = 0; i < panel.childCount; ++i)
             {
                 Destroy(panel.GetChild(i).gameObject);
             }
-        }        
+        }
     }
 
     public void SetHintPanelAlpha(float alpha)
     {
-        if(GameObject.Find("UI/DetailedHintPanel") != null)
+        if (GameObject.Find("UI/DetailedHintPanel") != null)
         {
             Transform panel = GameObject.Find("UI/DetailedHintPanel").transform;
             Color panelColor = panel.GetComponent<Image>().color;
@@ -630,12 +630,14 @@ public class GameUI : MonoBehaviour
                 c.a = alpha;
                 t.GetComponent<Text>().color = c;
             }
-        }       
+        }
     }
+
+
+
     public void UpdateRequirements(List<ActionManager.StepData> subTasks)
     {
         ClearHintPanel();
-
         GameObject hintPanel = GameObject.Find("DetailedHintPanel");
         Text hintText;
         Text subTaskText;
@@ -652,19 +654,18 @@ public class GameUI : MonoBehaviour
 
             for (int y = 0; y < subTasks.Count; y++)
             {
-
                 if (subTasks[y].subindex == i)
                 {
-                    if (Resources.Load<GameObject>("Prefabs/UI/SubtaskHints") != null )
+                    if (Resources.Load<GameObject>("Prefabs/UI/SubtaskHints") != null)
                     {
                         if (!subTasks[y].completed)
                         {
                             GameObject subtaskPanel = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/UI/SubtaskHints"), currentHintPanel.transform);
                             subTaskText = subtaskPanel.transform.Find("Text").GetComponent<Text>();
                             subTaskText.text = subTasks[y].requirement;
-                        }
+                        }                       
                     }
-                }
+                }            
             }
             float alpha = hintPanel.GetComponent<Image>().color.a;
             SetHintPanelAlpha(alpha);

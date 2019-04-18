@@ -129,6 +129,9 @@ public class ActionManager : MonoBehaviour
 
     public static void UpdateRequirements()
     {
+        string leftObject = null;
+        string rightObject = null;
+
         if (playerScript == null)
             playerScript = GameObject.FindObjectOfType<PlayerScript>();
 
@@ -160,7 +163,7 @@ public class ActionManager : MonoBehaviour
                 if (playerScript.currentWalkPosition != null)
                     completed = playerScript.currentWalkPosition.name == a.placeRequirement;
 
-                placeData = new StepData(completed, $"- At the {placeName}", i);
+                placeData = new StepData(completed, $"- At the {placeName}", i, a.Type.ToString());
             }
 
             if (!string.IsNullOrEmpty(a.secondPlaceRequirement))
@@ -174,7 +177,7 @@ public class ActionManager : MonoBehaviour
                 if (playerScript.currentWalkPosition != null)
                     completed = playerScript.currentWalkPosition.name == a.secondPlaceRequirement;
 
-                secondPlaceData = new StepData(completed, $"- At the {placeName}", i);
+                secondPlaceData = new StepData(completed, $"- At the {placeName}", i, a.Type.ToString());
             }
 
             string[] actionHand = { a.leftHandRequirement, a.rightHandRequirement };
@@ -255,22 +258,35 @@ public class ActionManager : MonoBehaviour
                     if (!inventory.LeftHandEmpty())
                     {
                         if (inventory.leftHandObject.name == hand)
+                        {
                             completed = true;
+                            leftObject = hand;
+                        }                          
                     }
 
                     if (!inventory.RightHandEmpty())
                     {
                         if (inventory.rightHandObject.name == hand)
+                        {
                             completed = true;
+                            rightObject = hand;
+                        }
                     }
+
                     string keyWords = "- Pick up ";
-                    //if (a.Type == ActionType.ObjectUse)
-                    //    keyWords = "- Use ";
-                    //if (a.Type == ActionType.PersonTalk)
-                    //keyWords = "- Talk to ";
+
+                    if (!inventory.LeftHandEmpty() && !inventory.RightHandEmpty() && inventory.rightHandObject.name == rightObject && inventory.leftHandObject.name == leftObject && a.Type == ActionType.ObjectCombine)
+                    {
+                        objectsData.Add(new StepData(completed, $"- Combine {leftObject} and {rightObject}", i, a.Type.ToString()));
+                    }
+                    
+                    if (a.Type == ActionType.ObjectUse)
+                        keyWords = "- Use ";
+                    if (a.Type == ActionType.PersonTalk)
+                        keyWords = "- Talk to ";
                     if (!completed)
                         correctObjectsInHands = false;
-                    objectsData.Add(new StepData(completed, keyWords + handValue, i));
+                    objectsData.Add(new StepData(completed, keyWords + handValue, i, a.Type.ToString()));
                 }
             }
             if (placeData != null)
@@ -322,9 +338,9 @@ public class ActionManager : MonoBehaviour
                 foreach (Action a in sublist)
                 {
                     if (!Ua || a.commentUA == "")
-                        actionsDescription.Add(" - " + a.shortDescr);
+                        actionsDescription.Add(a.shortDescr);
                     if (Ua)
-                        actionsDescription.Add(" - " + a.commentUA);
+                        actionsDescription.Add(a.commentUA);
                 }
             }
             return actionsDescription;
@@ -1051,13 +1067,15 @@ public class ActionManager : MonoBehaviour
         public bool completed;
         public string requirement;
         public int subindex = 0;
+        public string actionType;
         public bool disabled = false;
 
-        public StepData(bool completedValue, string requirementValue, int index)
+        public StepData(bool completedValue, string requirementValue, int index, string type)
         {
             completed = completedValue;
             requirement = requirementValue;
             subindex = index;
+            actionType = type;
         }
     }
 
