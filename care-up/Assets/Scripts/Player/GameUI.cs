@@ -327,6 +327,12 @@ public class GameUI : MonoBehaviour
     //----------------------------------------------------------------------------------------------------------
     public void UpdateHelpHighlight()
     {
+        bool practiceMode = true;
+        if (GameObject.FindObjectOfType<PlayerPrefsManager>() != null)
+            practiceMode = GameObject.FindObjectOfType<PlayerPrefsManager>().practiceMode;
+        if (!practiceMode)
+            return;
+
         List<string> newHLObjects = new List<string>();
 
         string prefix = "helpHL";
