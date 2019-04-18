@@ -479,7 +479,7 @@ public class PlayerScript : MonoBehaviour
 
         robot.transform.position = savedRobotPos;
         robot.transform.rotation = savedRobotRot;
-
+        gameUI.UpdateWalkToGtoupUI(true);
     }
 
     public void OpenRobotUI()

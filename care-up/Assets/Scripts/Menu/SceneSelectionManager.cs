@@ -67,7 +67,7 @@ public class SceneSelectionManager : MonoBehaviour {
         practiceButton.color = Color.green;
         testButton.color = Color.white;
 
-        description.text = practiceText;
+        
 
         if (manager)
         {
@@ -89,7 +89,7 @@ public class SceneSelectionManager : MonoBehaviour {
         practiceButton.color = Color.white;
         testButton.color = Color.green;
 
-        description.text = testText;
+       
 
         if (manager)
         {
