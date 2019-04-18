@@ -9,7 +9,6 @@ public class SceneSelectionManager : MonoBehaviour {
 
     public Image practiceButton;
     public Image testButton;
-    public Text description;
 
     private PlayerPrefsManager manager;
 
@@ -45,7 +44,7 @@ public class SceneSelectionManager : MonoBehaviour {
         }
 
         //description = GameObject.Find("PracticeTestDescription").GetComponent<Text>();
-        description.text = practiceText;
+        //description.text = practiceText;
 
         // we need start button to exist but hide it
         startButton.gameObject.SetActive(false);
@@ -64,8 +63,8 @@ public class SceneSelectionManager : MonoBehaviour {
 
     public void OnPracticeButtonClick() 
     {
-        practiceButton.color = Color.green;
-        testButton.color = Color.white;
+        //practiceButton.color = Color.green;
+        //testButton.color = Color.white;
 
         
 
