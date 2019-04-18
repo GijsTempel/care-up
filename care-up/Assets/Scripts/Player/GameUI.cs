@@ -188,6 +188,56 @@ public class GameUI : MonoBehaviour
         }
     }
 
+    public void UpdateWalkToGroupButtons()
+    {
+        if (WTGButtons == null)
+            return;
+        if (WTGButtons.Count == 0)
+            return;
+
+        foreach (string k in WTGButtons.Keys)
+        {
+            WTGButtons[k].gameObject.SetActive(false);
+        }
+
+        int activeGroupButtons = 0;
+        foreach (WalkToGroup g in GameObject.FindObjectsOfType<WalkToGroup>())
+        {
+            switch (g.WalkToGroupType)
+            {
+                case WalkToGroup.GroupType.WorkField:
+                    WTGButtons["WorkField"].setWalkToGroup(g);
+                    WTGButtons["WorkField"].gameObject.SetActive(true);
+                    activeGroupButtons++;
+                    break;
+                case WalkToGroup.GroupType.Doctor:
+                    WTGButtons["Doctor"].setWalkToGroup(g);
+                    WTGButtons["Doctor"].gameObject.SetActive(true);
+                    activeGroupButtons++;
+                    break;
+                case WalkToGroup.GroupType.Patient:
+                    WTGButtons["Patient"].setWalkToGroup(g);
+                    WTGButtons["Patient"].gameObject.SetActive(true);
+                    break;
+                case WalkToGroup.GroupType.Sink:
+                    WTGButtons["Sink"].setWalkToGroup(g);
+                    WTGButtons["Sink"].gameObject.SetActive(true);
+                    activeGroupButtons++;
+                    break;
+            }
+        }
+        if (!WTGButtons["Sink"].gameObject.activeSelf || activeGroupButtons <= 2)
+            WalkToGroupPanel.transform.Find("spacer0").gameObject.SetActive(false);
+        if (!WTGButtons["Patient"].gameObject.activeSelf || activeGroupButtons < 2)
+            WalkToGroupPanel.transform.Find("spacer2").gameObject.SetActive(false);
+        if (activeGroupButtons < 2)
+            WalkToGroupPanel.transform.Find("spacer1").gameObject.SetActive(false);
+        foreach(WalkToGroup w in GameObject.FindObjectsOfType<WalkToGroup>())
+        {
+            w.FindNeighbors();
+        }
+    }
+
     // Use this for initialization
     void Start()
     {
@@ -262,42 +312,9 @@ public class GameUI : MonoBehaviour
                         WTGButtons.Add(key, b);
                     }
                 }
-                b.gameObject.SetActive(false);
             }
-            int activeGroupButtons = 0;
-            foreach (WalkToGroup g in GameObject.FindObjectsOfType<WalkToGroup>())
-            {
-                switch (g.WalkToGroupType)
-                {
-                    case WalkToGroup.GroupType.WorkField:
-                        WTGButtons["WorkField"].setWalkToGroup(g);
-                        WTGButtons["WorkField"].gameObject.SetActive(true);
-                        activeGroupButtons++;
-                        break;
-                    case WalkToGroup.GroupType.Doctor:
-                        WTGButtons["Doctor"].setWalkToGroup(g);
-                        WTGButtons["Doctor"].gameObject.SetActive(true);
-                        activeGroupButtons++;
-                        break;
-                    case WalkToGroup.GroupType.Patient:
-                        WTGButtons["Patient"].setWalkToGroup(g);
-                        WTGButtons["Patient"].gameObject.SetActive(true);
-                        break;
-                    case WalkToGroup.GroupType.Sink:
-                        WTGButtons["Sink"].setWalkToGroup(g);
-                        WTGButtons["Sink"].gameObject.SetActive(true);
-                        activeGroupButtons++;
-                        break;
-                }
-            }
-            if (!WTGButtons["Sink"].gameObject.activeSelf || activeGroupButtons <= 2)
-                WalkToGroupPanel.transform.Find("spacer0").gameObject.SetActive(false);
-            if (!WTGButtons["Patient"].gameObject.activeSelf || activeGroupButtons < 2)
-                WalkToGroupPanel.transform.Find("spacer2").gameObject.SetActive(false);
-            if (activeGroupButtons < 2)
-                WalkToGroupPanel.transform.Find("spacer1").gameObject.SetActive(false);
         }
-        //ActionManager.UpdateRequirements();
+        UpdateWalkToGroupButtons();
     }
 
     public HighlightObject AddHighlight(Transform target, string prefix, HighlightObject.type hl_type = HighlightObject.type.NoChange, float startDelay = 0, float LifeTime = float.PositiveInfinity)

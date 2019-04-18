@@ -77,7 +77,7 @@ public class WalkToGroup : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindObjectOfType<PlayerScript>();
-        FindNeighbors();   
+        //FindNeighbors();   
         gameLogic = GameObject.Find("GameLogic");
 
         cameraMode = gameLogic.GetComponent<CameraMode>();
@@ -109,7 +109,7 @@ public class WalkToGroup : MonoBehaviour
         }
     }
 
-    void FindNeighbors()
+    public void FindNeighbors()
     {
         Vector3 tVec = transform.forward;
         WalkToGroup closestLeft = null;
