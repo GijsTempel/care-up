@@ -29,6 +29,9 @@ public class GameUI : MonoBehaviour
     private Animator controller;
     private float startTimeOut = 2f;
     private bool timeOutEnded = false;
+    PlayerPrefsManager prefs;
+
+    GameObject DetailedHintPanel;
 
     List<string> activeHighlighted = new List<string>();
 
@@ -126,11 +129,11 @@ public class GameUI : MonoBehaviour
 
         if (value)
         {
-            GameObject.FindObjectOfType<PlayerScript>().robotUIopened = true;
+            ps.robotUIopened = true;
         }
         else
         {
-            GameObject.FindObjectOfType<PlayerScript>().robotUIopened = false;
+            ps.robotUIopened = false;
         }
     }
 
@@ -188,6 +191,8 @@ public class GameUI : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
+        DetailedHintPanel = GameObject.Find("DetailedHintPanel");
         useOnNTtext = noTargetButton.transform.GetChild(0).GetComponent<Text>().text;
         ps = GameObject.FindObjectOfType<PlayerScript>();
         controller = GameObject.FindObjectOfType<PlayerAnimationManager>().GetComponent<Animator>();
@@ -328,8 +333,8 @@ public class GameUI : MonoBehaviour
     public void UpdateHelpHighlight()
     {
         bool practiceMode = true;
-        if (GameObject.FindObjectOfType<PlayerPrefsManager>() != null)
-            practiceMode = GameObject.FindObjectOfType<PlayerPrefsManager>().practiceMode;
+        if (prefs != null)
+            practiceMode = prefs.practiceMode;
         if (!practiceMode)
             return;
 
@@ -354,7 +359,7 @@ public class GameUI : MonoBehaviour
 
             //if (a.Type == ActionManager.ActionType.ObjectUse ||
             //a.Type == ActionManager.ActionType.ObjectDrop)
-            foreach (string objectToUse in ObjectNames)
+            foreach(string objectToUse in ObjectNames)
             {
                 if (GameObject.Find(objectToUse) != null)
                 {
@@ -401,7 +406,7 @@ public class GameUI : MonoBehaviour
         {
             activeHighlighted.Add(s);
         }
-
+       
     }
 
 
@@ -435,7 +440,6 @@ public class GameUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (!timeOutEnded)
         {
             startTimeOut -= Time.deltaTime;
@@ -450,20 +454,20 @@ public class GameUI : MonoBehaviour
         //Don't show object control panel if animation is playing
         //if animation is longer than 0.2 (is not hold animation)
         bool animationUiBlock = true;
-        for (int i = 0; i < 3; i++)
-        {
-            if (controller.GetCurrentAnimatorStateInfo(i).length > 0.2f && controller.GetCurrentAnimatorStateInfo(i).normalizedTime < 1f)
-                animationUiBlock = false;
-            if (controller.GetNextAnimatorStateInfo(i).length > 0.2f && controller.GetAnimatorTransitionInfo(i).normalizedTime < 0.01)
-                animationUiBlock = false;
-            if (i < 2)
-            {
-                if (controller.GetCurrentAnimatorStateInfo(i).length > 0.2f &&
-                    controller.GetAnimatorTransitionInfo(i).normalizedTime < 0.01 &&
-                    controller.GetNextAnimatorStateInfo(i).length < 0.2f)
-                    animationUiBlock = false;
-            }
-        }
+        //for (int i = 0; i < 3; i++)
+        //{
+        //    if (controller.GetCurrentAnimatorStateInfo(i).length > 0.2f && controller.GetCurrentAnimatorStateInfo(i).normalizedTime < 1f)
+        //        animationUiBlock = false;
+        //    if (controller.GetNextAnimatorStateInfo(i).length > 0.2f && controller.GetAnimatorTransitionInfo(i).normalizedTime < 0.01)
+        //        animationUiBlock = false;
+        //    if (i < 2)
+        //    {
+        //        if (controller.GetCurrentAnimatorStateInfo(i).length > 0.2f &&
+        //            controller.GetAnimatorTransitionInfo(i).normalizedTime < 0.01 &&
+        //            controller.GetNextAnimatorStateInfo(i).length < 0.2f)
+        //            animationUiBlock = false;
+        //    }
+        //}
 
         //to show object control panel if no animation block and action block
         bool showItemControlPanel = allowObjectControlUI && animationUiBlock;
@@ -479,6 +483,7 @@ public class GameUI : MonoBehaviour
         bool handsStateChanged = (currentLeft != lHash || currentRight != rHash
         || (ICPCurrentState != ItemControlPanel.activeSelf)
         || currentActionsCount != actionManager.actionsCount);
+
 
         if (handsStateChanged)
         {
@@ -545,6 +550,7 @@ public class GameUI : MonoBehaviour
             combineButton.SetActive(showCombin);
         }
 
+
         if (!currentItemControlPanelState && showItemControlPanel)
         {
             cooldownTime = 0.4f;
@@ -560,43 +566,44 @@ public class GameUI : MonoBehaviour
         ItemControlPanel.SetActive(showItemControlPanel);
 
         ICPCurrentState = ItemControlPanel.activeSelf;
-        if (WalkToGroupPanel != null)
+
+        testValue = RobotManager.UIElementsState[0];
+        currentAnimLock = animationUiBlock;
+    }
+
+    public void UpdateWalkToGtoupUI(bool value)
+    {
+        allowObjectControlUI = value;
+        if (!value)
         {
-            if (prevWalkToGroup != ps.currentWalkPosition)
+            LeftSideButton.gameObject.SetActive(false);
+            RightSideButton.gameObject.SetActive(false);
+            WalkToGroupPanel.SetActive(false);
+        }
+        else
+        {
+            WalkToGroupPanel.SetActive(ps.away);
+            if (!ps.away)
             {
-                WalkToGroupPanel.SetActive(ps.away);
+                LeftSideButton.gameObject.SetActive(ps.currentWalkPosition.LeftWalkToGroup != null);
+                RightSideButton.gameObject.SetActive(ps.currentWalkPosition.RightWalkToGroup != null);
 
-                if (!ps.away)
+                if (ps.currentWalkPosition.LeftWalkToGroup != null)
                 {
-                    LeftSideButton.gameObject.SetActive(ps.currentWalkPosition.LeftWalkToGroup != null);
-                    RightSideButton.gameObject.SetActive(ps.currentWalkPosition.RightWalkToGroup != null);
-
-                    if (ps.currentWalkPosition.LeftWalkToGroup != null)
-                    {
-                        LeftSideButton.setWalkToGroup(ps.currentWalkPosition.LeftWalkToGroup);
-                    }
-
-                    if (ps.currentWalkPosition.RightWalkToGroup != null)
-                    {
-                        RightSideButton.setWalkToGroup(ps.currentWalkPosition.RightWalkToGroup);
-                    }
+                    LeftSideButton.setWalkToGroup(ps.currentWalkPosition.LeftWalkToGroup);
                 }
-                else
+
+                if (ps.currentWalkPosition.RightWalkToGroup != null)
                 {
-                    LeftSideButton.gameObject.SetActive(false);
-                    RightSideButton.gameObject.SetActive(false);
+                    RightSideButton.setWalkToGroup(ps.currentWalkPosition.RightWalkToGroup);
                 }
-                prevWalkToGroup = ps.currentWalkPosition;
             }
-            if (!MoveBackButton.activeSelf)
+            else
             {
                 LeftSideButton.gameObject.SetActive(false);
                 RightSideButton.gameObject.SetActive(false);
-                prevWalkToGroup = null;
             }
         }
-        testValue = RobotManager.UIElementsState[0];
-        currentAnimLock = animationUiBlock;
     }
 
 
@@ -607,79 +614,70 @@ public class GameUI : MonoBehaviour
 
     public void DonePanelYes()
     {
-        FindObjectOfType<ActionManager>().OnUseAction("PaperAndPen");
+        actionManager.OnUseAction("PaperAndPen");
         donePanelYesNo.SetActive(false);
     }
 
     public void DonePanelNo()
     {
         donePanelYesNo.SetActive(false);
-    }
+    }      
 
     public void ClearHintPanel()
     {
-        if (GameObject.Find("UI/DetailedHintPanel/HintContainer") != null)
+        if(DetailedHintPanel.transform.Find("HintContainer") != null)
         {
-            Transform panel = GameObject.Find("UI/DetailedHintPanel/HintContainer").transform;
+            Transform panel = DetailedHintPanel.transform.Find("HintContainer").transform;
             for (int i = 0; i < panel.childCount; ++i)
             {
                 Destroy(panel.GetChild(i).gameObject);
             }
-        }
+        }        
     }
 
     public void SetHintPanelAlpha(float alpha)
     {
-        if (GameObject.Find("UI/DetailedHintPanel") != null)
+        Color panelColor = DetailedHintPanel.GetComponent<Image>().color;
+        panelColor.a = alpha;
+        DetailedHintPanel.GetComponent<Image>().color = panelColor;
+        foreach (Text t in DetailedHintPanel.GetComponentsInChildren<Text>())
         {
-            Transform panel = GameObject.Find("UI/DetailedHintPanel").transform;
-            Color panelColor = panel.GetComponent<Image>().color;
-            panelColor.a = alpha;
-            panel.GetComponent<Image>().color = panelColor;
-            foreach (Text t in panel.GetComponentsInChildren<Text>())
-            {
-                Color c = t.color;
-                c.a = alpha;
-                t.GetComponent<Text>().color = c;
-            }
+            Color c = t.color;
+            c.a = alpha;
+            t.GetComponent<Text>().color = c;
         }
     }
-
-
-
     public void UpdateRequirements(List<ActionManager.StepData> subTasks)
     {
         ClearHintPanel();
-        GameObject hintPanel = GameObject.Find("DetailedHintPanel");
         Text hintText;
         Text subTaskText;
 
         for (int i = 0; i < actionManager.CurrentDescription.Count; i++)
         {
             GameObject currentHintPanel = null;
-            if (Resources.Load<GameObject>("Prefabs/UI/HintPanel") != null && GameObject.Find("UI/DetailedHintPanel/HintContainer") != null)
-            {
-                currentHintPanel = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/UI/HintPanel"), GameObject.Find("UI/DetailedHintPanel/HintContainer").transform);
-                hintText = currentHintPanel.transform.Find("Text").gameObject.GetComponent<Text>();
-                hintText.text = actionManager.CurrentDescription[i];
-            }
+          
+            currentHintPanel = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/UI/HintPanel"), DetailedHintPanel.transform.Find("HintContainer").transform);
+            hintText = currentHintPanel.transform.Find("Text").gameObject.GetComponent<Text>();
+            hintText.text = actionManager.CurrentDescription[i];
 
             for (int y = 0; y < subTasks.Count; y++)
             {
+
                 if (subTasks[y].subindex == i)
                 {
-                    if (Resources.Load<GameObject>("Prefabs/UI/SubtaskHints") != null)
+                    if (Resources.Load<GameObject>("Prefabs/UI/SubtaskHints") != null )
                     {
                         if (!subTasks[y].completed)
                         {
                             GameObject subtaskPanel = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/UI/SubtaskHints"), currentHintPanel.transform);
                             subTaskText = subtaskPanel.transform.Find("Text").GetComponent<Text>();
                             subTaskText.text = subTasks[y].requirement;
-                        }                       
+                        }
                     }
-                }            
+                }
             }
-            float alpha = hintPanel.GetComponent<Image>().color.a;
+            float alpha = DetailedHintPanel.GetComponent<Image>().color.a;
             SetHintPanelAlpha(alpha);
         }
     }
