@@ -471,121 +471,127 @@ public class GameUI : MonoBehaviour
         //Don't show object control panel if animation is playing
         //if animation is longer than 0.2 (is not hold animation)
         bool animationUiBlock = true;
-        //for (int i = 0; i < 3; i++)
-        //{
-        //    if (controller.GetCurrentAnimatorStateInfo(i).length > 0.2f && controller.GetCurrentAnimatorStateInfo(i).normalizedTime < 1f)
-        //        animationUiBlock = false;
-        //    if (controller.GetNextAnimatorStateInfo(i).length > 0.2f && controller.GetAnimatorTransitionInfo(i).normalizedTime < 0.01)
-        //        animationUiBlock = false;
-        //    if (i < 2)
-        //    {
-        //        if (controller.GetCurrentAnimatorStateInfo(i).length > 0.2f &&
-        //            controller.GetAnimatorTransitionInfo(i).normalizedTime < 0.01 &&
-        //            controller.GetNextAnimatorStateInfo(i).length < 0.2f)
-        //            animationUiBlock = false;
-        //    }
-        //}
+        if (allowObjectControlUI)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                if (controller.GetCurrentAnimatorStateInfo(i).length > 0.2f && controller.GetCurrentAnimatorStateInfo(i).normalizedTime < 1f)
+                    animationUiBlock = false;
+                if (controller.GetNextAnimatorStateInfo(i).length > 0.2f && controller.GetAnimatorTransitionInfo(i).normalizedTime < 0.01)
+                    animationUiBlock = false;
+                if (i < 2)
+                {
+                    if (controller.GetCurrentAnimatorStateInfo(i).length > 0.2f &&
+                        controller.GetAnimatorTransitionInfo(i).normalizedTime < 0.01 &&
+                        controller.GetNextAnimatorStateInfo(i).length < 0.2f)
+                        animationUiBlock = false;
+                }
+            }
+        }
 
         //to show object control panel if no animation block and action block
         bool showItemControlPanel = allowObjectControlUI && animationUiBlock;
 
         //if some object was added or removed to hands
-        int lHash = 0;
-        if (handsInventory.leftHandObject != null)
-            lHash = handsInventory.leftHandObject.gameObject.GetHashCode();
-        int rHash = 0;
-        if (handsInventory.rightHandObject != null)
-            rHash = handsInventory.rightHandObject.gameObject.GetHashCode();
-
-        bool handsStateChanged = (currentLeft != lHash || currentRight != rHash
-        || (ICPCurrentState != ItemControlPanel.activeSelf)
-        || currentActionsCount != actionManager.actionsCount);
-
-
-        if (handsStateChanged)
+        if (showItemControlPanel)
         {
-            ActionManager.UpdateRequirements();
-            UpdateHelpHighlight();
-            currentActionsCount = actionManager.actionsCount;
-            //hide panel for the first frame of hands state change
-            //prevent quick blinking of buttons before animation starts
-            showItemControlPanel = false;
+            int lHash = 0;
+            if (handsInventory.leftHandObject != null)
+                lHash = handsInventory.leftHandObject.gameObject.GetHashCode();
+            int rHash = 0;
+            if (handsInventory.rightHandObject != null)
+                rHash = handsInventory.rightHandObject.gameObject.GetHashCode();
 
-            //Update current hands state 
-            currentLeft = lHash;
-            currentRight = rHash;
+            bool handsStateChanged = (currentLeft != lHash || currentRight != rHash
+            || (ICPCurrentState != ItemControlPanel.activeSelf)
+            || currentActionsCount != actionManager.actionsCount);
 
-            bool LEmpty = handsInventory.LeftHandEmpty();
-            bool REmpty = handsInventory.RightHandEmpty();
-            bool showDecomb = (LEmpty && !REmpty) || (!LEmpty && REmpty);
-            bool showCombin = !LEmpty && !REmpty;
-            bool showZoomLeft = false;
-            bool showZoomRight = false;
 
-            bool showNoTarget = false;
-            bool showNoTarget_right = false;
-
-            if (!LEmpty)
+            if (handsStateChanged)
             {
-                if (handsInventory.leftHandObject.GetComponent<ExaminableObject>() != null)
-                    showZoomLeft = true;
-                if (actionManager.CompareUseOnInfo(handsInventory.leftHandObject.name, ""))
-                {
-                    showNoTarget = true;
-                    noTargetButton.transform.GetChild(0).GetComponent<Text>().text =
-                        actionManager.CurrentButtonText(handsInventory.leftHandObject.name);
-                }
+                ActionManager.UpdateRequirements();
+                UpdateHelpHighlight();
+                currentActionsCount = actionManager.actionsCount;
+                //hide panel for the first frame of hands state change
+                //prevent quick blinking of buttons before animation starts
+                showItemControlPanel = false;
 
-                decombineButton.transform.GetChild(0).GetComponent<Text>().text =
-                (actionManager.CompareCombineObjects(handsInventory.leftHandObject.name, "")) ?
-                    actionManager.CurrentDecombineButtonText(handsInventory.leftHandObject.name)
-                    : "Openen";
+                //Update current hands state 
+                currentLeft = lHash;
+                currentRight = rHash;
+
+                bool LEmpty = handsInventory.LeftHandEmpty();
+                bool REmpty = handsInventory.RightHandEmpty();
+                bool showDecomb = (LEmpty && !REmpty) || (!LEmpty && REmpty);
+                bool showCombin = !LEmpty && !REmpty;
+                bool showZoomLeft = false;
+                bool showZoomRight = false;
+
+                bool showNoTarget = false;
+                bool showNoTarget_right = false;
+
+                if (!LEmpty)
+                {
+                    if (handsInventory.leftHandObject.GetComponent<ExaminableObject>() != null)
+                        showZoomLeft = true;
+                    if (actionManager.CompareUseOnInfo(handsInventory.leftHandObject.name, ""))
+                    {
+                        showNoTarget = true;
+                        noTargetButton.transform.GetChild(0).GetComponent<Text>().text =
+                            actionManager.CurrentButtonText(handsInventory.leftHandObject.name);
+                    }
+
+                    decombineButton.transform.GetChild(0).GetComponent<Text>().text =
+                    (actionManager.CompareCombineObjects(handsInventory.leftHandObject.name, "")) ?
+                        actionManager.CurrentDecombineButtonText(handsInventory.leftHandObject.name)
+                        : "Openen";
+                }
+                if (!REmpty)
+                {
+                    if (handsInventory.rightHandObject.GetComponent<ExaminableObject>() != null)
+                        showZoomRight = true;
+                    if (actionManager.CompareUseOnInfo(handsInventory.rightHandObject.name, ""))
+                    {
+                        showNoTarget_right = true;
+                        noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text =
+                           actionManager.CurrentButtonText(handsInventory.rightHandObject.name);
+                    }
+
+                    decombineButton_right.transform.GetChild(0).GetComponent<Text>().text =
+                    (actionManager.CompareCombineObjects("", handsInventory.rightHandObject.name)) ?
+                        actionManager.CurrentDecombineButtonText(handsInventory.rightHandObject.name)
+                        : "Openen";
+                }
+                zoomButtonLeft.SetActive(showZoomLeft);
+                zoomButtonRight.SetActive(showZoomRight);
+                noTargetButton.SetActive(showNoTarget);
+                noTargetButton_right.SetActive(showNoTarget_right);
+
+                decombineButton.SetActive(showDecomb && REmpty && !showNoTarget);
+                decombineButton_right.SetActive(showDecomb && LEmpty && !showNoTarget_right);
+                combineButton.SetActive(showCombin);
             }
-            if (!REmpty)
+
+
+            if (!currentItemControlPanelState && showItemControlPanel)
             {
-                if (handsInventory.rightHandObject.GetComponent<ExaminableObject>() != null)
-                    showZoomRight = true;
-                if (actionManager.CompareUseOnInfo(handsInventory.rightHandObject.name, ""))
-                {
-                    showNoTarget_right = true;
-                    noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text =
-                       actionManager.CurrentButtonText(handsInventory.rightHandObject.name);
-                }
-
-                decombineButton_right.transform.GetChild(0).GetComponent<Text>().text =
-                (actionManager.CompareCombineObjects("", handsInventory.rightHandObject.name)) ?
-                    actionManager.CurrentDecombineButtonText(handsInventory.rightHandObject.name)
-                    : "Openen";
+                cooldownTime = 0.4f;
             }
-            zoomButtonLeft.SetActive(showZoomLeft);
-            zoomButtonRight.SetActive(showZoomRight);
-            noTargetButton.SetActive(showNoTarget);
-            noTargetButton_right.SetActive(showNoTarget_right);
+            lastCooldownTime = cooldownTime;
+            if (cooldownTime > 0)
+                cooldownTime -= Time.deltaTime;
+            currentItemControlPanelState = showItemControlPanel;
+            if (cooldownTime > 0)
+                showItemControlPanel = false;
+            if (PlayerScript.actionsLocked)
+                showItemControlPanel = false;
+            ItemControlPanel.SetActive(showItemControlPanel);
 
-            decombineButton.SetActive(showDecomb && REmpty && !showNoTarget);
-            decombineButton_right.SetActive(showDecomb && LEmpty && !showNoTarget_right);
-            combineButton.SetActive(showCombin);
+            ICPCurrentState = ItemControlPanel.activeSelf;
         }
-
-
-        if (!currentItemControlPanelState && showItemControlPanel)
-        {
-            cooldownTime = 0.4f;
-        }
-        lastCooldownTime = cooldownTime;
-        if (cooldownTime > 0)
-            cooldownTime -= Time.deltaTime;
-        currentItemControlPanelState = showItemControlPanel;
-        if (cooldownTime > 0)
-            showItemControlPanel = false;
-        if (PlayerScript.actionsLocked)
-            showItemControlPanel = false;
-        ItemControlPanel.SetActive(showItemControlPanel);
-
-        ICPCurrentState = ItemControlPanel.activeSelf;
-
-        testValue = RobotManager.UIElementsState[0];
+        
         currentAnimLock = animationUiBlock;
+
     }
 
     public void UpdateWalkToGtoupUI(bool value)
@@ -596,6 +602,7 @@ public class GameUI : MonoBehaviour
             LeftSideButton.gameObject.SetActive(false);
             RightSideButton.gameObject.SetActive(false);
             WalkToGroupPanel.SetActive(false);
+            ItemControlPanel.SetActive(false);
         }
         else
         {
