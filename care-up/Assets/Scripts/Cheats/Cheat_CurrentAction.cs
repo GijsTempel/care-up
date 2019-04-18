@@ -13,7 +13,7 @@ public class Cheat_CurrentAction : MonoBehaviour
     private GameObject extraPanel;
     private Image hintPanelBackground;
     private Image fullScreenButtonBackground;
-
+    GameUI gameUI;
     [SerializeField] private Text hintPanelText;
     [SerializeField] private GameObject fullScreenButton;
 
@@ -55,6 +55,7 @@ public class Cheat_CurrentAction : MonoBehaviour
 
     void Start()
     {
+        gameUI = GameObject.FindObjectOfType<GameUI>();
         if (GameObject.Find("Preferences") != null)
         {
             manager = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
@@ -69,25 +70,26 @@ public class Cheat_CurrentAction : MonoBehaviour
         actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
         if (actionManager == null) Debug.LogError("No action manager found.");
 
-            Init();
+        Init();
 
-            if (GameObject.Find("Preferences") != null)
+        if (GameObject.Find("Preferences") != null)
+        {
+
+            if ((!GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().practiceMode &&
+                 actionManager.GetComponent<TutorialManager>() == null) || (FindObjectOfType<TutorialManager>() != null && FindObjectOfType<Tutorial_UI>() == null))
+
             {
-
-                if ((!GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().practiceMode &&
-                     actionManager.GetComponent<TutorialManager>() == null) || (FindObjectOfType<TutorialManager>() != null && FindObjectOfType<Tutorial_UI>() == null))
-
-                {
-                    GameObject.Find("DetailedHintPanel").SetActive(false);
-                    extraPanel.SetActive(false);
-                    extraButton.gameObject.SetActive(false);
-                }
+                GameObject.Find("DetailedHintPanel").SetActive(false);
+                extraPanel.SetActive(false);
+                extraButton.gameObject.SetActive(false);
+                gameUI.UpdateWalkToGtoupUI(false);
             }
-            else
-            {
-                Debug.LogWarning("Game needs to be started from menu scene for CurrentAction hint to work correctly");
-            }
-        
+        }
+        else
+        {
+            Debug.LogWarning("Game needs to be started from menu scene for CurrentAction hint to work correctly");
+        }
+
 
         if (GameObject.Find("BiggerDevHint") != null)
         {
@@ -103,6 +105,8 @@ public class Cheat_CurrentAction : MonoBehaviour
                     GameObject.Find("BiggerDevHint").SetActive(false);
                     extraPanel.SetActive(false);
                     extraButton.gameObject.SetActive(false);
+                    gameUI.UpdateWalkToGtoupUI(false);
+
                 }
             }
             else
@@ -121,8 +125,8 @@ public class Cheat_CurrentAction : MonoBehaviour
 
     private void Init()
     {
-        ActionManager.UpdateRequirements(); 
-       
+        ActionManager.UpdateRequirements();
+
         GameObject biggerDevHint = GameObject.Find("BiggerDevHint");
         textObjectBiggerDevHint = biggerDevHint.transform.GetChild(2).GetComponent<Text>();
 
@@ -162,13 +166,13 @@ public class Cheat_CurrentAction : MonoBehaviour
             if (timer < animationTime)
             {
                 timer += Time.deltaTime;
-                GameObject.FindObjectOfType<GameUI>().SetHintPanelAlpha(1.0f - timer / animationTime);
+                gameUI.SetHintPanelAlpha(1.0f - timer / animationTime);
                 textObjectBiggerDevHint.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
                 extraText.color = new Color(0.0f, 0.0f, 0.0f, 0.0f - timer / animationTime);
             }
             else
             {
-                GameObject.FindObjectOfType<GameUI>().SetHintPanelAlpha(0.0f);
+                gameUI.SetHintPanelAlpha(0.0f);
                 textObjectBiggerDevHint.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
                 extraText.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
                 extraText.text = actionManager.CurrentExtraDescription;
@@ -181,14 +185,14 @@ public class Cheat_CurrentAction : MonoBehaviour
             if (timer > 0.0f)
             {
                 timer -= Time.deltaTime;
-                GameObject.FindObjectOfType<GameUI>().SetHintPanelAlpha(1.0f - timer / animationTime);
+                gameUI.SetHintPanelAlpha(1.0f - timer / animationTime);
 
                 textObjectBiggerDevHint.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
                 extraText.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - timer / animationTime);
             }
             else
             {
-                GameObject.FindObjectOfType<GameUI>().SetHintPanelAlpha(1.0f);
+                gameUI.SetHintPanelAlpha(1.0f);
 
                 textObjectBiggerDevHint.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
                 extraText.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
@@ -217,10 +221,10 @@ public class Cheat_CurrentAction : MonoBehaviour
 
             if (direction == 0 || uipanel_timer != uipanel_animationTime)
             {
-                GameObject.FindObjectOfType<GameUI>().SetHintPanelAlpha(alpha);
+                gameUI.SetHintPanelAlpha(alpha);
             }
 
-            GameObject.FindObjectOfType<GameUI>().SetHintPanelAlpha(alpha);
+            gameUI.SetHintPanelAlpha(alpha);
 
             fullScreenButtonBackground.color = new Color(1.0f, 1.0f, 1.0f, alpha);
         }

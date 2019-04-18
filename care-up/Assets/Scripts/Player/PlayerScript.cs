@@ -31,7 +31,7 @@ public class PlayerScript : MonoBehaviour
     public Camera cam;
     public MouseLook mouseLook = new MouseLook();
     public bool freeLook = false;
-
+    GameUI gameUI;
     PlayerPrefsManager prefs;
     Controls controls;
     HandsInventory handsInv;
@@ -117,7 +117,7 @@ public class PlayerScript : MonoBehaviour
     {
         instance = this;
         actionsLocked = false;
-
+        gameUI = GameObject.FindObjectOfType<GameUI>();
 
         if (GameObject.Find("GameLogic") != null)
         {
@@ -410,6 +410,8 @@ public class PlayerScript : MonoBehaviour
         }
 
         actionManager.OnMovementAction(currentWalkPosition.name);
+        gameUI.UpdateWalkToGtoupUI(true);
+
     }
 
     private void ToggleAway(bool _away = false)
@@ -561,6 +563,7 @@ public class PlayerScript : MonoBehaviour
         {
             extraBtnActiveForIpad = extraButton.activeSelf;
             extraButton.SetActive(false);
+            gameUI.UpdateWalkToGtoupUI(false);
         }
 
         if (extraPanel == null)
@@ -640,6 +643,8 @@ public class PlayerScript : MonoBehaviour
             if (extraButton != null)
             {
                 extraButton.SetActive(extraBtnActiveForIpad);
+                gameUI.UpdateWalkToGtoupUI(extraBtnActiveForIpad);
+
             }
 
             if (extraPanel != null)
