@@ -15,8 +15,9 @@ public class WalkToGroup : MonoBehaviour
     public GameObject cone;
     public bool ButtonHovered = false;
     public string description;
-
+    [HideInInspector]
     public WalkToGroup LeftWalkToGroup = null;
+    [HideInInspector]
     public WalkToGroup RightWalkToGroup = null;
 
     public enum GroupType
@@ -74,6 +75,7 @@ public class WalkToGroup : MonoBehaviour
 
     private void Start()
     {
+        FindNeighbors();   
         gameLogic = GameObject.Find("GameLogic");
 
         cameraMode = gameLogic.GetComponent<CameraMode>();
@@ -105,7 +107,47 @@ public class WalkToGroup : MonoBehaviour
         }
     }
 
+    void FindNeighbors()
+    {
+        Vector3 tVec = transform.forward;
+        WalkToGroup closestLeft = null;
+        WalkToGroup closestRight = null;
+        foreach (WalkToGroup w in GameObject.FindObjectsOfType<WalkToGroup>())
+        {
+            if (w != this)
+            {
+                Vector3 direct = (transform.position - w.position).normalized;
+                float wDot = Vector3.Dot(tVec, direct);
+                if (wDot < 0)
+                {
+                    if (closestLeft == null)
+                        closestLeft = w;
+                    else
+                    {
+                        float currentDist = Vector3.Distance(closestLeft.transform.position, transform.position);
+                        float candidateDist = Vector3.Distance(w.transform.position, transform.position);
+                        if (candidateDist < currentDist)
+                            closestLeft = w;
+                    }
+                }
+                else
+                {
+                    if (closestRight == null)
+                        closestRight = w;
+                    else
+                    {
+                        float currentDist = Vector3.Distance(closestRight.transform.position, transform.position);
+                        float candidateDist = Vector3.Distance(w.transform.position, transform.position);
+                        if (candidateDist < currentDist)
+                            closestRight = w;
+                    }
+                }
 
+            }
+        }
+        LeftWalkToGroup = closestLeft;
+        RightWalkToGroup = closestRight;
+    }
 
     protected void Update()
     {

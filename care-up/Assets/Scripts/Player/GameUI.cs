@@ -285,7 +285,7 @@ public class GameUI : MonoBehaviour
                         break;
                 }
             }
-            if (!WTGButtons["Sink"].gameObject.activeSelf || activeGroupButtons < 2)
+            if (!WTGButtons["Sink"].gameObject.activeSelf || activeGroupButtons <= 2)
                 WalkToGroupPanel.transform.Find("spacer0").gameObject.SetActive(false);
             if (!WTGButtons["Patient"].gameObject.activeSelf || activeGroupButtons < 2)
                 WalkToGroupPanel.transform.Find("spacer2").gameObject.SetActive(false);
