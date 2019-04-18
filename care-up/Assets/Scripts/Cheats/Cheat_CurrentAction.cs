@@ -70,25 +70,26 @@ public class Cheat_CurrentAction : MonoBehaviour
         actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
         if (actionManager == null) Debug.LogError("No action manager found.");
 
-            Init();
+        Init();
 
-            if (GameObject.Find("Preferences") != null)
+        if (GameObject.Find("Preferences") != null)
+        {
+
+            if ((!GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().practiceMode &&
+                 actionManager.GetComponent<TutorialManager>() == null) || (FindObjectOfType<TutorialManager>() != null && FindObjectOfType<Tutorial_UI>() == null))
+
             {
-
-                if ((!GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().practiceMode &&
-                     actionManager.GetComponent<TutorialManager>() == null) || (FindObjectOfType<TutorialManager>() != null && FindObjectOfType<Tutorial_UI>() == null))
-
-                {
-                    GameObject.Find("DetailedHintPanel").SetActive(false);
-                    extraPanel.SetActive(false);
-                    extraButton.gameObject.SetActive(false);
-                }
+                GameObject.Find("DetailedHintPanel").SetActive(false);
+                extraPanel.SetActive(false);
+                extraButton.gameObject.SetActive(false);
+                gameUI.UpdateWalkToGtoupUI(false);
             }
-            else
-            {
-                Debug.LogWarning("Game needs to be started from menu scene for CurrentAction hint to work correctly");
-            }
-        
+        }
+        else
+        {
+            Debug.LogWarning("Game needs to be started from menu scene for CurrentAction hint to work correctly");
+        }
+
 
         if (GameObject.Find("BiggerDevHint") != null)
         {
@@ -104,6 +105,8 @@ public class Cheat_CurrentAction : MonoBehaviour
                     GameObject.Find("BiggerDevHint").SetActive(false);
                     extraPanel.SetActive(false);
                     extraButton.gameObject.SetActive(false);
+                    gameUI.UpdateWalkToGtoupUI(false);
+
                 }
             }
             else
@@ -122,8 +125,8 @@ public class Cheat_CurrentAction : MonoBehaviour
 
     private void Init()
     {
-        ActionManager.UpdateRequirements(); 
-       
+        ActionManager.UpdateRequirements();
+
         GameObject biggerDevHint = GameObject.Find("BiggerDevHint");
         textObjectBiggerDevHint = biggerDevHint.transform.GetChild(2).GetComponent<Text>();
 

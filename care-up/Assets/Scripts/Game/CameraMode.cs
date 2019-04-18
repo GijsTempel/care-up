@@ -297,7 +297,8 @@ public class CameraMode : MonoBehaviour
 
             GameObject.Find("ObjectViewButtons").SetActive(false);
             playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
-            gameUI.allowObjectControlUI = !playerScript.away;
+            //gameUI.allowObjectControlUI = !playerScript.away;
+            gameUI.UpdateWalkToGtoupUI(!playerScript.away);
             //playerScript.joystickObject.SetActive(!playerScript.robotUIopened);
 
             if ((GameObject.FindObjectOfType<TutorialManager>() == null ||
@@ -338,7 +339,7 @@ public class CameraMode : MonoBehaviour
 
 
             playerScript.MoveBackButtonObject.SetActive(false);
-            gameUI.allowObjectControlUI = false;
+            gameUI.UpdateWalkToGtoupUI(false);
             //playerScript.joystickObject.SetActive(false);
             RobotManager.SetUITriggerActive(false);
 
@@ -349,7 +350,7 @@ public class CameraMode : MonoBehaviour
         {
             TogglePlayerScript(false);
             playerScript.MoveBackButtonObject.SetActive(false);
-            gameUI.allowObjectControlUI = false;
+            gameUI.UpdateWalkToGtoupUI(false);
 
             //playerScript.joystickObject.SetActive(false);
             RobotManager.SetUITriggerActive(false);
@@ -359,7 +360,7 @@ public class CameraMode : MonoBehaviour
         {
             TogglePlayerScript(true);
             playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
-            gameUI.allowObjectControlUI = !playerScript.away;
+            gameUI.UpdateWalkToGtoupUI(!playerScript.away);
 
             //playerScript.joystickObject.SetActive(!playerScript.robotUIopened);
             if (GameObject.FindObjectOfType<TutorialManager>() == null ||
@@ -378,7 +379,7 @@ public class CameraMode : MonoBehaviour
             confirmUI.SetActive(true);
 
             playerScript.MoveBackButtonObject.SetActive(false);
-            gameUI.allowObjectControlUI = false;
+            gameUI.UpdateWalkToGtoupUI(false);
 
             //playerScript.joystickObject.SetActive(false);
             RobotManager.SetUITriggerActive(false);
@@ -389,7 +390,7 @@ public class CameraMode : MonoBehaviour
             confirmUI.SetActive(false);
 
             playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
-            gameUI.allowObjectControlUI = !playerScript.away;
+            gameUI.UpdateWalkToGtoupUI(!playerScript.away);
 
             //playerScript.joystickObject.SetActive(!playerScript.robotUIopened);
             if (GameObject.FindObjectOfType<TutorialManager>() == null ||
@@ -408,7 +409,7 @@ public class CameraMode : MonoBehaviour
             //camPosition = Camera.main.transform.localRotation; never used
 
             playerScript.MoveBackButtonObject.SetActive(false);
-            gameUI.allowObjectControlUI = false;
+            gameUI.UpdateWalkToGtoupUI(false);
 
             //playerScript.joystickObject.SetActive(false);
             RobotManager.SetUITriggerActive(false);
@@ -432,7 +433,7 @@ public class CameraMode : MonoBehaviour
                 GameObject.FindObjectOfType<TutorialManager>() == null)
             {
                 playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
-                gameUI.allowObjectControlUI = !playerScript.away;
+                gameUI.UpdateWalkToGtoupUI(!playerScript.away);
                 //playerScript.joystickObject.SetActive(!playerScript.robotUIopened && !PlayerScript.actionsLocked);
             }
 
@@ -553,7 +554,7 @@ public class CameraMode : MonoBehaviour
                 soloCamera = false;
 
                 playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
-                gameUI.allowObjectControlUI = !playerScript.away;
+                gameUI.UpdateWalkToGtoupUI(!playerScript.away);
 
                 if (GameObject.FindObjectOfType<TutorialManager>() == null ||
                     GameObject.FindObjectOfType<Tutorial_UI>() != null ||
@@ -575,7 +576,7 @@ public class CameraMode : MonoBehaviour
             cinematicDirection = 1;
 
             playerScript.MoveBackButtonObject.SetActive(false);
-            gameUI.allowObjectControlUI = false;
+            gameUI.UpdateWalkToGtoupUI(false);
             RobotManager.SetUITriggerActive(false);
         }
 
