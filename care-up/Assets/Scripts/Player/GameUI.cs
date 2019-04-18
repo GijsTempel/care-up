@@ -427,9 +427,6 @@ public class GameUI : MonoBehaviour
     }
 
 
-
-
-
     public void ShowDonePanel(bool value)
     {
         donePanel.SetActive(value);
@@ -591,6 +588,8 @@ public class GameUI : MonoBehaviour
         }
         
         currentAnimLock = animationUiBlock;
+        if (!showItemControlPanel)
+            currentAnimLock = false;
 
     }
 
