@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using CareUp.Actions;
+using System.Linq;
+
 
 public class GameUI : MonoBehaviour
 {
@@ -27,6 +30,8 @@ public class GameUI : MonoBehaviour
     private float startTimeOut = 2f;
     private bool timeOutEnded = false;
 
+    List<string> activeHighlighted = new List<string>();
+
     public GameObject ItemControlPanel;
     public GameObject combineButton;
     public GameObject decombineButton;
@@ -41,6 +46,8 @@ public class GameUI : MonoBehaviour
     public GameObject zoomButtonRight;
     public GameObject SubStepsPanel;
     Text SubStepsText;
+
+    public bool currentAnimLock = false;
 
     float cooldownTime = 0;
     float lastCooldownTime = 0;
@@ -181,10 +188,6 @@ public class GameUI : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        SubStepsText = SubStepsPanel.transform.Find("Text").GetComponent<Text>();
-        SubStepsText.color.SetAlpha(0.0f);
-        Color zm = SubStepsText.color;  //  makes a new color zm
-        zm.a = 0.0f;
         useOnNTtext = noTargetButton.transform.GetChild(0).GetComponent<Text>().text;
         ps = GameObject.FindObjectOfType<PlayerScript>();
         controller = GameObject.FindObjectOfType<PlayerAnimationManager>().GetComponent<Animator>();
@@ -292,6 +295,113 @@ public class GameUI : MonoBehaviour
         //ActionManager.UpdateRequirements();
     }
 
+    public HighlightObject AddHighlight(Transform target, string prefix, HighlightObject.type hl_type = HighlightObject.type.NoChange, float startDelay = 0, float LifeTime = float.PositiveInfinity)
+    {
+        string hl_name = prefix + "_" + target.name;
+        if (GameObject.Find(hl_name) != null || target.GetComponent<WorkField>() != null)
+            return null;
+        GameObject hl_obj = Instantiate(Resources.Load<GameObject>("Prefabs\\HighlightObject"), target.position, new Quaternion()) as GameObject;
+
+        HighlightObject hl = hl_obj.GetComponent<HighlightObject>();
+        hl.name = hl_name;
+        hl.setTarget(target);
+        if (hl_type != HighlightObject.type.NoChange)
+            hl.setType(hl_type);
+        hl.setTimer(LifeTime);
+        if (startDelay > 0)
+            hl.setStartDelay(startDelay);
+        return hl_obj.GetComponent<HighlightObject>();
+    }
+
+    public void RemoveHighlight(string prefix, string _name)
+    {
+        string hl_name = prefix + "_" + _name;
+        if (GameObject.Find(hl_name) != null)
+        {
+            if (GameObject.Find(hl_name).GetComponent<HighlightObject>())
+                GameObject.Find(hl_name).GetComponent<HighlightObject>().Destroy();
+        }
+    }
+
+
+    //----------------------------------------------------------------------------------------------------------
+    public void UpdateHelpHighlight()
+    {
+        List<string> newHLObjects = new List<string>();
+
+        string prefix = "helpHL";
+
+        if (!handsInventory.LeftHandEmpty())
+            RemoveHighlight(prefix, handsInventory.leftHandObject.name);
+
+        if (!handsInventory.RightHandEmpty())
+            RemoveHighlight(prefix, handsInventory.rightHandObject.name);
+
+        List<Action> sublist = actionManager.actionList.Where(action =>
+           action.SubIndex == actionManager.currentActionIndex &&
+           action.matched == false).ToList();
+
+        foreach (Action a in sublist)
+        {
+            string[] ObjectNames = new string[0];
+            a.ObjectNames(out ObjectNames);
+
+            //if (a.Type == ActionManager.ActionType.ObjectUse ||
+            //a.Type == ActionManager.ActionType.ObjectDrop)
+            foreach(string objectToUse in ObjectNames)
+            {
+                if (GameObject.Find(objectToUse) != null)
+                {
+                    if (handsInventory.IsInHand(GameObject.Find(objectToUse)))
+                        continue;
+                    HighlightObject h = AddHighlight(GameObject.Find(objectToUse).transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f, 0.5f));
+                    if (h != null)
+                        h.setGold(true);
+                    newHLObjects.Add(objectToUse);
+                }
+                else
+                {
+                    GameObject usableHL = null;
+                    foreach (UsableObject u in GameObject.FindObjectsOfType<UsableObject>())
+                    {
+                        if (u.PrefabToAppear == objectToUse)
+                        {
+                            usableHL = u.gameObject;
+                            break;
+                        }
+                    }
+                    if (usableHL != null)
+                    {
+                        HighlightObject h = AddHighlight(usableHL.transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f, 0.5f));
+                        if (h != null)
+                            h.setGold(true);
+                        newHLObjects.Add(usableHL.name);
+                    }
+                }
+            }
+        }
+
+        //clear highlights
+
+        for (int i = 0; i < activeHighlighted.Count; i++)
+        {
+            if (!newHLObjects.Contains(activeHighlighted[i]))
+            {
+                RemoveHighlight(prefix, activeHighlighted[i]);
+            }
+        }
+        activeHighlighted.Clear();
+        foreach (string s in newHLObjects)
+        {
+            activeHighlighted.Add(s);
+        }
+       
+    }
+
+
+
+
+
     public void ShowDonePanel(bool value)
     {
         donePanel.SetActive(value);
@@ -314,13 +424,14 @@ public class GameUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!timeOutEnded)
+        if (!timeOutEnded)
         {
             startTimeOut -= Time.deltaTime;
-            if(startTimeOut < 0)
+            if (startTimeOut < 0)
             {
                 timeOutEnded = true;
                 ActionManager.UpdateRequirements();
+                UpdateHelpHighlight();
             }
         }
 
@@ -360,7 +471,7 @@ public class GameUI : MonoBehaviour
         if (handsStateChanged)
         {
             ActionManager.UpdateRequirements();
-            handsInventory.UpdateHelpHighlight();
+            UpdateHelpHighlight();
             currentActionsCount = actionManager.actionsCount;
             //hide panel for the first frame of hands state change
             //prevent quick blinking of buttons before animation starts
@@ -473,7 +584,9 @@ public class GameUI : MonoBehaviour
             }
         }
         testValue = RobotManager.UIElementsState[0];
+        currentAnimLock = animationUiBlock;
     }
+
 
     public void OpenDonePanelYesNo()
     {
@@ -489,26 +602,72 @@ public class GameUI : MonoBehaviour
     public void DonePanelNo()
     {
         donePanelYesNo.SetActive(false);
+    }      
+
+    public void ClearHintPanel()
+    {
+        if(GameObject.Find("UI/DetailedHintPanel/HintContainer") != null)
+        {
+            Transform panel = GameObject.Find("UI/DetailedHintPanel/HintContainer").transform;
+            for (int i = 0; i < panel.childCount; ++i)
+            {
+                Destroy(panel.GetChild(i).gameObject);
+            }
+        }        
     }
 
-    public void UpdateRequirements(List<ActionManager.StepData> lst)
+    public void SetHintPanelAlpha(float alpha)
     {
-        string ss = "";
-        foreach (ActionManager.StepData data in lst)
+        if(GameObject.Find("UI/DetailedHintPanel") != null)
         {
-            string startTag = "";
-            string endTag = "";
-
-            if (data.completed)
+            Transform panel = GameObject.Find("UI/DetailedHintPanel").transform;
+            Color panelColor = panel.GetComponent<Image>().color;
+            panelColor.a = alpha;
+            panel.GetComponent<Image>().color = panelColor;
+            foreach (Text t in panel.GetComponentsInChildren<Text>())
             {
-                startTag = "<color=#0AAF0A>";
-                endTag = "</color>";
+                Color c = t.color;
+                c.a = alpha;
+                t.GetComponent<Text>().color = c;
             }
-           
-            
-            ss += startTag + data.requirement + endTag + "\n";
-        }  
-        if (ss.Length > 0)
-            SubStepsText.text = ss.Remove(ss.Length - 1);         
+        }       
+    }
+    public void UpdateRequirements(List<ActionManager.StepData> subTasks)
+    {
+        ClearHintPanel();
+
+        GameObject hintPanel = GameObject.Find("DetailedHintPanel");
+        Text hintText;
+        Text subTaskText;
+
+        for (int i = 0; i < actionManager.CurrentDescription.Count; i++)
+        {
+            GameObject currentHintPanel = null;
+            if (Resources.Load<GameObject>("Prefabs/UI/HintPanel") != null && GameObject.Find("UI/DetailedHintPanel/HintContainer") != null)
+            {
+                currentHintPanel = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/UI/HintPanel"), GameObject.Find("UI/DetailedHintPanel/HintContainer").transform);
+                hintText = currentHintPanel.transform.Find("Text").gameObject.GetComponent<Text>();
+                hintText.text = actionManager.CurrentDescription[i];
+            }
+
+            for (int y = 0; y < subTasks.Count; y++)
+            {
+
+                if (subTasks[y].subindex == i)
+                {
+                    if (Resources.Load<GameObject>("Prefabs/UI/SubtaskHints") != null )
+                    {
+                        if (!subTasks[y].completed)
+                        {
+                            GameObject subtaskPanel = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/UI/SubtaskHints"), currentHintPanel.transform);
+                            subTaskText = subtaskPanel.transform.Find("Text").GetComponent<Text>();
+                            subTaskText.text = subTasks[y].requirement;
+                        }
+                    }
+                }
+            }
+            float alpha = hintPanel.GetComponent<Image>().color.a;
+            SetHintPanelAlpha(alpha);
+        }
     }
 }

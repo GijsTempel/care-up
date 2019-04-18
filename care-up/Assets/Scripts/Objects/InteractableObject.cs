@@ -143,8 +143,8 @@ public class InteractableObject : MonoBehaviour {
             {
                 if (controls.CanInteract)
                 {
-                    if (!inventory.IsInHand(gameObject))
-                        inventory.AddHighlight(transform, "hl");
+                    if (!inventory.IsInHand(gameObject) && GameObject.FindObjectOfType<GameUI>() != null)
+                        GameObject.FindObjectOfType<GameUI>().AddHighlight(transform, "hl");
 
                     /*if (rend.material.shader == onMouseExitShader)
                     {
@@ -161,14 +161,16 @@ public class InteractableObject : MonoBehaviour {
                 else if (!controls.CanInteract)// && rend.material.shader == onMouseOverShader)
                 {
                     //SetShaderTo(onMouseExitShader);
-                    inventory.RemoveHighlight("hl", transform.name);
+                    if (GameObject.FindObjectOfType<GameUI>() != null)
+                        GameObject.FindObjectOfType<GameUI>().RemoveHighlight("hl", transform.name);
 
                     itemDescription.SetActive(false);
                 }
             }
             else
             {
-                inventory.RemoveHighlight("hl", transform.name);
+                if (GameObject.FindObjectOfType<GameUI>() != null)
+                    GameObject.FindObjectOfType<GameUI>().RemoveHighlight("hl", transform.name);
                 /*if (rend.material.shader == onMouseOverShader)
                 {
                     SetShaderTo(onMouseExitShader);
@@ -192,7 +194,8 @@ public class InteractableObject : MonoBehaviour {
         if (rend)
         {
             //SetShaderTo(onMouseExitShader);
-            inventory.RemoveHighlight("hl", transform.name);
+            if (GameObject.FindObjectOfType<GameUI>() != null)
+                GameObject.FindObjectOfType<GameUI>()   .RemoveHighlight("hl", transform.name);
             itemDescription.SetActive(false);
         }
     }
@@ -308,7 +311,8 @@ public class InteractableObject : MonoBehaviour {
         {
             if (rend.material.shader == onMouseOverShader)
                 SetShaderTo(onMouseExitShader);
-                inventory.RemoveHighlight("hl", transform.name);
+            if (GameObject.FindObjectOfType<GameUI>() != null)
+                GameObject.FindObjectOfType<GameUI>().RemoveHighlight("hl", transform.name);
         }
     }
 }
