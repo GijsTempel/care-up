@@ -3,8 +3,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using CareUp.Actions;
 using System.Linq;
-
-
 public class GameUI : MonoBehaviour
 {
     GameObject Player;
@@ -17,7 +15,6 @@ public class GameUI : MonoBehaviour
     GameObject closeDialog;
     GameObject donePanelYesNo;
     GameObject WalkToGroupPanel;
-    public GameObject MoveBackButton;
     public WalkToGroupButton LeftSideButton;
     public WalkToGroupButton RightSideButton;
     public Dictionary<string, WalkToGroupButton> WTGButtons;
@@ -63,11 +60,6 @@ public class GameUI : MonoBehaviour
     PlayerScript ps;
     bool ICPCurrentState = false;
     public bool allowObjectControlUI = true;
-
-    public void MoveBack()
-    {
-        Player.GetComponent<PlayerScript>().MoveBackButton();
-    }
 
     public void UseOn()
     {
