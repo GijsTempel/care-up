@@ -111,7 +111,6 @@ public class UsableObject : InteractableObject {
             }
 
             actionManager.OnUseAction(gameObject.name);
-            print("BBBBBBBBBBBBB");
             GameObject.FindObjectOfType<GameUI>().UpdateHelpHighlight();
             Reset();
         }

@@ -398,7 +398,7 @@ public class GameUI : MonoBehaviour
                     GameObject usableHL = null;
                     foreach (UsableObject u in GameObject.FindObjectsOfType<UsableObject>())
                     {
-                        if (u.PrefabToAppear == objectToUse)
+                        if (u.PrefabToAppear == objectToUse && u.PrefabToAppear != "")
                         {
                             usableHL = u.gameObject;
                             break;
