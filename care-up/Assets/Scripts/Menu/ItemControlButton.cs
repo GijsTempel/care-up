@@ -2,10 +2,9 @@
 
 public class ItemControlButton : MonoBehaviour
 {
-
     public GameUI.ItemControlButtonType buttonType;
     GameUI gameUI;
-    // Use this for initialization
+
     void Start()
     {
         gameUI = GameObject.FindObjectOfType<GameUI>();
@@ -21,12 +20,5 @@ public class ItemControlButton : MonoBehaviour
         {
             GetComponent<Animator>().SetTrigger("BlinkOn");
         }
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    }   
 }

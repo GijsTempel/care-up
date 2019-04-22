@@ -282,36 +282,46 @@ public class ActionManager : MonoBehaviour
 
                     string keyWords = null;
 
-                    if (leftR != null && rightR != null && a.Type == ActionType.ObjectCombine)
+                    if (leftR != null && rightR != null && (leftR != rightR) && a.Type == ActionType.ObjectCombine)
                     {
                         objectsData.Add(new StepData(false, $"- Combineer {leftObject} met {rightObject}.", i));
                         gameUI.CombineButtonBlink();
                         gameUI.buttonToBlink = GameUI.ItemControlButtonType.Combine;
                     }
 
-                    if (leftR != null)
+                    else if (leftR != null)
                     {
                         if (manager.CompareUseOnInfo(inventory.leftHandObject.name, ""))
                         {
-                            gameUI.buttonToBlink = GameUI.ItemControlButtonType.NoTargetLeft;
-
                             keyWords = manager.CurrentButtonText(inventory.leftHandObject.name);
                             objectsData.Add(new StepData(false, $"- {keyWords}.", i));
+                            gameUI.buttonToBlink = GameUI.ItemControlButtonType.NoTargetLeft;
                         }
                         else if (a.Type == ActionType.ObjectDrop)
                         {
                             keyWords = "Drop";
                             objectsData.Add(new StepData(false, $"- {keyWords} {handValue}.", i));
+                            gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
+
                         }
+                        //else if (a.Type == ActionType.ObjectExamine)
+                        //{
+                        //    gameUI.buttonToBlink = GameUI.ItemControlButtonType.ZoomLeft;
+                        //}
+                        //if (a.Type != ActionType.ObjectExamine && gameUI.buttonToBlink == GameUI.ItemControlButtonType.ZoomLeft)
+                        //{
+                        //    gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
+                        //}
                         else if (!string.IsNullOrEmpty(manager.CurrentDecombineButtonText(inventory.leftHandObject.name)))
                         {
-                            gameUI.DecombineButtonBlink();
                             keyWords = manager.CurrentDecombineButtonText(inventory.leftHandObject.name);
                             objectsData.Add(new StepData(false, $"- {keyWords} {handValue}.", i));
                             gameUI.buttonToBlink = GameUI.ItemControlButtonType.DecombineLeft;
                         }
+                        else
+                            gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
                     }
-                    if (rightR != null)
+                    else if (rightR != null)
                     {
                         if (manager.CompareUseOnInfo(inventory.rightHandObject.name, ""))
                         {
@@ -321,17 +331,32 @@ public class ActionManager : MonoBehaviour
                         }
                         else if (a.Type == ActionType.ObjectDrop)
                         {
+                            gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
+
                             keyWords = "Drop";
                             objectsData.Add(new StepData(false, $"- {keyWords} {handValue}.", i));
                         }
+                        //else if (a.Type == ActionType.ObjectExamine)
+                        //{
+                        //    gameUI.buttonToBlink = GameUI.ItemControlButtonType.ZoomRight;
+                        //}
+                        //if (a.Type != ActionType.ObjectExamine && gameUI.buttonToBlink == GameUI.ItemControlButtonType.ZoomRight)
+                        //{
+                        //    gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
+                        //}
+
                         else if (!string.IsNullOrEmpty(manager.CurrentDecombineButtonText(inventory.RightHandObject.name)))
                         {
-                            gameUI.DecombineButtonBlink();
                             keyWords = manager.CurrentDecombineButtonText(inventory.rightHandObject.name);
                             objectsData.Add(new StepData(false, $"- {keyWords} {handValue}.", i));
                             gameUI.buttonToBlink = GameUI.ItemControlButtonType.DecombineRight;
                         }
+                        else
+                            gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
                     }
+                    else
+                        gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
+
 
                     if (!completed)
                         correctObjectsInHands = false;
