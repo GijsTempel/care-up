@@ -163,7 +163,7 @@ public class ActionManager : MonoBehaviour
                 if (playerScript.currentWalkPosition != null)
                     completed = playerScript.currentWalkPosition.name == a.placeRequirement;
 
-                placeData = new StepData(completed, $"- Ga naar {placeName}", i);
+                placeData = new StepData(completed, $"- Ga naar {placeName}.", i);
             }
 
             if (!string.IsNullOrEmpty(a.secondPlaceRequirement))
@@ -177,7 +177,7 @@ public class ActionManager : MonoBehaviour
                 if (playerScript.currentWalkPosition != null)
                     completed = playerScript.currentWalkPosition.name == a.secondPlaceRequirement;
 
-                secondPlaceData = new StepData(completed, $"- Ga naar {placeName}", i);
+                secondPlaceData = new StepData(completed, $"- Ga naar {placeName}.", i);
             }
 
             string[] actionHand = { a.leftHandRequirement, a.rightHandRequirement };
@@ -256,42 +256,81 @@ public class ActionManager : MonoBehaviour
                     }
 
                     bool completed = false;
-               
+
                     if (!inventory.LeftHandEmpty())
                     {
                         if (inventory.leftHandObject.name == hand)
                         {
-                            completed = true;
-                            leftObject = inventory.leftHandObject.description;
+                            completed = true;                           
+                            leftObject = System.Char.ToLowerInvariant(inventory.leftHandObject.description[0]) + inventory.leftHandObject.description.Substring(1);
                             leftR = inventory.leftHandObject.gameObject;
-                        }                          
+                        }
                     }
 
                     if (!inventory.RightHandEmpty())
                     {
                         if (inventory.rightHandObject.name == hand)
                         {
-                            completed = true;
-                            rightObject = inventory.rightHandObject.description;
+                            completed = true;                        
+                            rightObject = System.Char.ToLowerInvariant(inventory.rightHandObject.description[0]) + inventory.rightHandObject.description.Substring(1);
                             rightR = inventory.rightHandObject.gameObject;
                         }
                     }
 
+                    handValue = System.Char.ToLowerInvariant(handValue[0]) + handValue.Substring(1);
+
                     string keyWords = "- Pick up ";
 
-                    if(leftR != null && rightR != null && a.Type == ActionType.ObjectCombine)
+                    if (leftR != null && rightR != null && a.Type == ActionType.ObjectCombine)
                     {
-                        objectsData.Add(new StepData(false, $"- Combineer {leftObject} met {rightObject}", i));
+                        objectsData.Add(new StepData(false, $"- Combineer {leftObject} met {rightObject}.", i));
                     }
-                    
-                    if (a.Type == ActionType.ObjectUse)
-                        keyWords = "- Use ";
-                    if (a.Type == ActionType.PersonTalk)
-                        keyWords = "- Vraage ";
+
+                    if (leftR != null)
+                    {
+                        if (manager.CompareUseOnInfo(inventory.leftHandObject.name, ""))
+                        {
+                            keyWords = manager.CurrentButtonText(inventory.leftHandObject.name);
+                            objectsData.Add(new StepData(false, $"- {keyWords}", i));
+                        }
+                        else if (a.Type == ActionType.ObjectDrop)
+                        {
+                            keyWords = "Drop";
+                            objectsData.Add(new StepData(false, $"- {keyWords} {handValue}.", i));
+                        }
+                        else 
+                        {
+                            keyWords = (manager.CompareCombineObjects(inventory.leftHandObject.name, "")) ?
+                                manager.CurrentDecombineButtonText(inventory.leftHandObject.name)
+                                : "Open";
+                            objectsData.Add(new StepData(false, $"- {keyWords} {handValue}.", i));
+                        }
+                    }
+                    if (rightR != null)
+                    {
+                        if (manager.CompareUseOnInfo(inventory.rightHandObject.name, ""))
+                        {
+                            keyWords = manager.CurrentButtonText(inventory.rightHandObject.name);
+                            objectsData.Add(new StepData(false, $"- {keyWords}", i));
+                        }
+                        else if(a.Type == ActionType.ObjectDrop)
+                        {
+                            keyWords = "Drop";
+                            objectsData.Add(new StepData(false, $"- {keyWords} {handValue}.", i));
+                        }
+                        else 
+                        {
+                            keyWords = (manager.CompareCombineObjects("", inventory.rightHandObject.name)) ?
+                               manager.CurrentDecombineButtonText(inventory.rightHandObject.name)
+                               : "Open";
+                            objectsData.Add(new StepData(false, $"- {keyWords} {handValue}.", i));
+                        }
+                    }              
+                       
                     if (!completed)
                         correctObjectsInHands = false;
 
-                    objectsData.Add(new StepData(completed, keyWords + handValue, i));
+                    objectsData.Add(new StepData(completed, keyWords + handValue + ".", i));
                 }
             }
             if (placeData != null)

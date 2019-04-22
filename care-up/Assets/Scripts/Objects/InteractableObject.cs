@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 
 /// <summary>
@@ -7,12 +6,9 @@ using UnityEngine.UI;
 /// </summary>
 public class InteractableObject : MonoBehaviour {
 	public int ObjectID = 0;
-    //HandsInventory handsInventory;
 
     public string description;
-    public string pickUpActionCommand;
-    public string combineActionCommand;
-    public string useOnActionCommand;
+    public string nameArticle;
 
     public bool muplipleMesh = false;
     public Vector3 descriptionOffset;

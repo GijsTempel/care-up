@@ -54,7 +54,6 @@ public class PlayerScript : MonoBehaviour
     private float fadeTimer = 0.0f;
     Texture fadeTex;
 
-    Button moveBackButton;
     public ItemControlsUI itemControls;
 
     public bool usingOnMode = false;
@@ -84,7 +83,6 @@ public class PlayerScript : MonoBehaviour
     Tutorial_UI tutorial_UI;
     Tutorial_Theory tutorial_theory;
 
-    bool moveBackBtnActiveForIpad = false;
     bool devHintActiveForIpad = false;
     bool biggerDevHintActiveForIpad = false;
 
@@ -97,11 +95,6 @@ public class PlayerScript : MonoBehaviour
 
     [HideInInspector]
     public GameObject joystickObject;
-
-    public GameObject MoveBackButtonObject
-    {
-        get { return moveBackButton.gameObject; }
-    }
 
     public bool UIHover
     {
@@ -139,9 +132,6 @@ public class PlayerScript : MonoBehaviour
             GameObject.FindObjectsOfType<WalkToGroup>());
 
         fadeTex = Resources.Load<Texture>("Sprites/Black");
-
-        moveBackButton = GameObject.Find("MoveBackButton").GetComponent<Button>();
-        moveBackButton.gameObject.SetActive(false);
 
         extraButton = GameObject.Find("ExtraButton");
         extraPanel = GameObject.Find("Extra");
@@ -343,8 +333,6 @@ public class PlayerScript : MonoBehaviour
                 //FreeLookButton();
             }
         }
-
-        moveBackButton.GetComponent<Button>().interactable = !tutorial_movementLock;
     }
 
     public void ToggleUsingOnMode(bool value)
@@ -424,7 +412,6 @@ public class PlayerScript : MonoBehaviour
             g.enabled = away;
             g.GetComponent<Collider>().enabled = away;
         }
-        moveBackButton.gameObject.SetActive(!away);
 
         itemControls.Close();
 
@@ -464,24 +451,6 @@ public class PlayerScript : MonoBehaviour
             }
         }
     }
-
-    public void MoveBackButton()
-    {
-        ToggleAway(true);
-        transform.position = savedPos;
-        if (prefs == null || (prefs != null && !prefs.VR))
-        {
-            transform.rotation = Quaternion.Euler(0.0f, savedRot.eulerAngles.y, 0.0f);
-            Camera.main.transform.localRotation = Quaternion.Euler(savedRot.eulerAngles.x, 0.0f, 0.0f);
-            mouseLook.SaveRot(transform, Camera.main.transform);
-        }
-        currentWalkPosition = null;
-
-        robot.transform.position = savedRobotPos;
-        robot.transform.rotation = savedRobotRot;
-        gameUI.UpdateWalkToGtoupUI(true);
-    }
-
     public void OpenRobotUI()
     {
         if (robotUIopened)
@@ -592,8 +561,6 @@ public class PlayerScript : MonoBehaviour
 
         tutorial_robotUI_opened = true;
 
-        moveBackBtnActiveForIpad = MoveBackButtonObject.activeSelf;
-        MoveBackButtonObject.SetActive(false);
         GameObject.FindObjectOfType<GameUI>().allowObjectControlUI = false;
 
         if (robotUINotOpenedYet)
@@ -655,7 +622,6 @@ public class PlayerScript : MonoBehaviour
 
         tutorial_robotUI_closed = true;
 
-        MoveBackButtonObject.SetActive(moveBackBtnActiveForIpad);
         GameObject.FindObjectOfType<GameUI>().allowObjectControlUI = true;
 
         if (joystickObject != null)
