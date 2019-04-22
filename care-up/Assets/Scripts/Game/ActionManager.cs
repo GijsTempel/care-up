@@ -136,6 +136,7 @@ public class ActionManager : MonoBehaviour
             playerScript = GameObject.FindObjectOfType<PlayerScript>();
 
         ActionManager manager = GameObject.FindObjectOfType<ActionManager>();
+        GameUI gameUI = GameObject.FindObjectOfType<GameUI>();
 
         List<Action> sublist = manager.actionList.Where(action =>
                action.SubIndex == manager.currentActionIndex &&
@@ -261,7 +262,7 @@ public class ActionManager : MonoBehaviour
                     {
                         if (inventory.leftHandObject.name == hand)
                         {
-                            completed = true;                           
+                            completed = true;
                             leftObject = System.Char.ToLowerInvariant(inventory.leftHandObject.description[0]) + inventory.leftHandObject.description.Substring(1);
                             leftR = inventory.leftHandObject.gameObject;
                         }
@@ -271,7 +272,7 @@ public class ActionManager : MonoBehaviour
                     {
                         if (inventory.rightHandObject.name == hand)
                         {
-                            completed = true;                        
+                            completed = true;
                             rightObject = System.Char.ToLowerInvariant(inventory.rightHandObject.description[0]) + inventory.rightHandObject.description.Substring(1);
                             rightR = inventory.rightHandObject.gameObject;
                         }
@@ -279,18 +280,43 @@ public class ActionManager : MonoBehaviour
 
                     handValue = System.Char.ToLowerInvariant(handValue[0]) + handValue.Substring(1);
 
-                    string keyWords = "- Pick up ";
+                    string keyWords = null;
 
                     if (leftR != null && rightR != null && a.Type == ActionType.ObjectCombine)
                     {
                         objectsData.Add(new StepData(false, $"- Combineer {leftObject} met {rightObject}.", i));
+                        gameUI.CombineButtonBlink();
+                        gameUI.buttonToBlink = GameUI.ItemControlButtonType.Combine;
                     }
 
                     if (leftR != null)
                     {
                         if (manager.CompareUseOnInfo(inventory.leftHandObject.name, ""))
                         {
+                            gameUI.buttonToBlink = GameUI.ItemControlButtonType.NoTargetLeft;
+
                             keyWords = manager.CurrentButtonText(inventory.leftHandObject.name);
+                            objectsData.Add(new StepData(false, $"- {keyWords}.", i));
+                        }
+                        else if (a.Type == ActionType.ObjectDrop)
+                        {
+                            keyWords = "Drop";
+                            objectsData.Add(new StepData(false, $"- {keyWords} {handValue}.", i));
+                        }
+                        else if (!string.IsNullOrEmpty(manager.CurrentDecombineButtonText(inventory.leftHandObject.name)))
+                        {
+                            gameUI.DecombineButtonBlink();
+                            keyWords = manager.CurrentDecombineButtonText(inventory.leftHandObject.name);
+                            objectsData.Add(new StepData(false, $"- {keyWords} {handValue}.", i));
+                            gameUI.buttonToBlink = GameUI.ItemControlButtonType.DecombineLeft;
+                        }
+                    }
+                    if (rightR != null)
+                    {
+                        if (manager.CompareUseOnInfo(inventory.rightHandObject.name, ""))
+                        {
+                            gameUI.buttonToBlink = GameUI.ItemControlButtonType.NoTargetRight;
+                            keyWords = manager.CurrentButtonText(inventory.rightHandObject.name);
                             objectsData.Add(new StepData(false, $"- {keyWords}", i));
                         }
                         else if (a.Type == ActionType.ObjectDrop)
@@ -298,37 +324,20 @@ public class ActionManager : MonoBehaviour
                             keyWords = "Drop";
                             objectsData.Add(new StepData(false, $"- {keyWords} {handValue}.", i));
                         }
-                        else 
+                        else if (!string.IsNullOrEmpty(manager.CurrentDecombineButtonText(inventory.RightHandObject.name)))
                         {
-                            keyWords = (manager.CompareCombineObjects(inventory.leftHandObject.name, "")) ?
-                                manager.CurrentDecombineButtonText(inventory.leftHandObject.name)
-                                : "Open";
+                            gameUI.DecombineButtonBlink();
+                            keyWords = manager.CurrentDecombineButtonText(inventory.rightHandObject.name);
                             objectsData.Add(new StepData(false, $"- {keyWords} {handValue}.", i));
+                            gameUI.buttonToBlink = GameUI.ItemControlButtonType.DecombineRight;
                         }
                     }
-                    if (rightR != null)
-                    {
-                        if (manager.CompareUseOnInfo(inventory.rightHandObject.name, ""))
-                        {
-                            keyWords = manager.CurrentButtonText(inventory.rightHandObject.name);
-                            objectsData.Add(new StepData(false, $"- {keyWords}", i));
-                        }
-                        else if(a.Type == ActionType.ObjectDrop)
-                        {
-                            keyWords = "Drop";
-                            objectsData.Add(new StepData(false, $"- {keyWords} {handValue}.", i));
-                        }
-                        else 
-                        {
-                            keyWords = (manager.CompareCombineObjects("", inventory.rightHandObject.name)) ?
-                               manager.CurrentDecombineButtonText(inventory.rightHandObject.name)
-                               : "Open";
-                            objectsData.Add(new StepData(false, $"- {keyWords} {handValue}.", i));
-                        }
-                    }              
-                       
+
                     if (!completed)
                         correctObjectsInHands = false;
+
+
+                    keyWords = "- Pick up ";
 
                     objectsData.Add(new StepData(completed, keyWords + handValue + ".", i));
                 }
