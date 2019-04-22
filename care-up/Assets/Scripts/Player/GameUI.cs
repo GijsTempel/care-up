@@ -30,7 +30,7 @@ public class GameUI : MonoBehaviour
 
     GameObject DetailedHintPanel;
 
-    List<string> activeHighlighted = new List<string>();
+    public List<string> activeHighlighted = new List<string>();
 
     public GameObject ItemControlPanel;
     public GameObject combineButton;

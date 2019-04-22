@@ -76,7 +76,7 @@ public class UsableObject : InteractableObject {
 #endif
             if (actionManager.CompareUseObject(name) || cheat)
             {
-                GameObject.FindObjectOfType<GameUI>().UpdateHelpHighlight();
+                
                 switch (name)
                 {
                     case "HandCleaner":
@@ -111,7 +111,8 @@ public class UsableObject : InteractableObject {
             }
 
             actionManager.OnUseAction(gameObject.name);
-
+            print("BBBBBBBBBBBBB");
+            GameObject.FindObjectOfType<GameUI>().UpdateHelpHighlight();
             Reset();
         }
     }
