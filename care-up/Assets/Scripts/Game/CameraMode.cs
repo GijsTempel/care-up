@@ -47,7 +47,7 @@ public class CameraMode : MonoBehaviour
     [HideInInspector]
     public bool cinematicToggle = false;
     private int cinematicDirection = 1;
-    private float cinematicLerp = 0.0f;
+    public float cinematicLerp = 0.0f;
     private Vector3 cinematicPos;
     private Quaternion cinematicRot;
     private Vector3 cinematicTargetPos;
@@ -58,6 +58,7 @@ public class CameraMode : MonoBehaviour
     private bool soloCamera;
     private bool closingEyes = false;
     private bool closeEyesTriggered = false;
+    public bool moveBackFromExam = false;
 
     //private Quaternion camPosition; never used
 
@@ -96,6 +97,7 @@ public class CameraMode : MonoBehaviour
     {
         if (Time.time > camMoveBackAt)
         {
+            moveBackFromExam = true;
             startTime = Time.time;
             camRotTo = camRotFrom;
             if (!playerScript.away)
@@ -118,8 +120,15 @@ public class CameraMode : MonoBehaviour
             {
                 RobotManager.SetUITriggerActive(false);
             }
-
+            //if (!playerScript.away)
+            //{
+            //    WalkToGroup group = playerScript.currentWalkPosition;
+            //    camRotTo = Quaternion.Euler(group.Rotation.x, 0.0f, 0.0f);
+            //    Debug.Log("______________" + group.name);
+            //}
             camRotTime = (Time.time - startTime) / camMovementSpeed;
+            if (!playerScript.away && moveBackFromExam)
+                camRotTo = Quaternion.Euler(playerScript.currentWalkPosition.Rotation.x, 0.0f, 0.0f);
             Camera.main.transform.localRotation = Quaternion.Lerp(camRotFrom, camRotTo, camRotTime);
             if (camRotTime > camMovementSpeed)
             {
@@ -132,6 +141,7 @@ public class CameraMode : MonoBehaviour
                 {
                     RobotManager.SetUITriggerActive(true);
                 }
+                moveBackFromExam = false;
             }
             return;
         }
@@ -288,6 +298,7 @@ public class CameraMode : MonoBehaviour
 
         if (currentMode == Mode.ObjectPreview && mode == Mode.Free)
         {
+
             camMoveBackAt = Time.time + 0.5f;
 
             TogglePlayerScript(true);
