@@ -5,6 +5,7 @@ using UnityEngine;
 public class DropFromHandAndReturn : StateMachineBehaviour
 {
     //Temporary from object, and pick up at the end of animation
+    public string ReplaceThisWith = "DropAndReturn";
     PickableObject obj = null;
     public PlayerAnimationManager.Hand hand;
 
