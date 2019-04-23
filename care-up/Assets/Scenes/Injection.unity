@@ -1159,6 +1159,8 @@ MonoBehaviour:
   animating: 0
   animationEnded: 0
   cinematicToggle: 0
+  cinematicLerp: 0
+  moveBackFromExam: 0
   dontMoveCamera: 0
 --- !u!4 &251147197
 Transform:
@@ -1861,6 +1863,59 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 6787c28a8e5d1cb4c9c678d8d0d27a5c, type: 3}
   m_PrefabInternal: {fileID: 1649221014}
+--- !u!1 &457758240
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 457758242}
+  - component: {fileID: 457758241}
+  m_Layer: 0
+  m_Name: extraWorkFieldObjects
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &457758241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 457758240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4c9b1c7c042e4794b2aca8df5be8730, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TrashBin: 
+  hidenObjects: []
+  neededObjects:
+  - {fileID: 1000010468456350, guid: d386861ab85135740bc2db9a4c131ccb, type: 2}
+  - {fileID: 1000010468456350, guid: 0c5e45f280755ff4e86ab1920cc4a18c, type: 2}
+  - {fileID: 1000010468456350, guid: 01bde81f3bb85c74a9209652f455da9f, type: 2}
+  - {fileID: 1000010468456350, guid: d640fb5e59136594684acf6cbd9a1527, type: 2}
+  - {fileID: 1000010468456350, guid: 1c94a408d12a7d34aa0438d0a8d5578b, type: 2}
+  - {fileID: 1000010468456350, guid: f5b45bc58b586bb499cde2f2c8b21078, type: 2}
+  - {fileID: 1000010468456350, guid: 9f694905b32a7a04286fd6bb63415158, type: 2}
+  - {fileID: 1000011901168042, guid: e9c1b87835e3c1242882ffce0d221211, type: 2}
+  - {fileID: 1000011901168042, guid: 157080881d663a44f98578b742b9c277, type: 2}
+  - {fileID: 1000011901168042, guid: 48f2ca7f70973f541ad8b759105d7506, type: 2}
+--- !u!4 &457758242
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 457758240}
+  m_LocalRotation: {x: -0, y: 0.7236592, z: -0, w: 0.6901575}
+  m_LocalPosition: {x: 9.41, y: 0.56, z: 12.082}
+  m_LocalScale: {x: 1.2808356, y: 1.0247941, z: 1.44}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &482116763 stripped
 Transform:
   m_PrefabParentObject: {fileID: 496776, guid: 1a630c1668d50a44eb7c7c2808fa8581, type: 2}
@@ -5320,9 +5375,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: Stoppen
-  pickUpActionCommand: 
-  combineActionCommand: 
-  useOnActionCommand: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
