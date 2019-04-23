@@ -146,6 +146,7 @@ public class ActionManager : MonoBehaviour
 
         HandsInventory inventory = GameObject.FindObjectOfType<HandsInventory>();
         int i = 0;
+        bool foundComplitedAction = false;
         foreach (Action a in sublist)
         {
             StepData placeData = null;
@@ -184,6 +185,7 @@ public class ActionManager : MonoBehaviour
             string[] actionHand = { a.leftHandRequirement, a.rightHandRequirement };
             GameObject leftR = null;
             GameObject rightR = null;
+            bool objectCombinationCheck = false;
 
             foreach (string hand in actionHand)
             {
@@ -282,11 +284,19 @@ public class ActionManager : MonoBehaviour
 
                     string keyWords = null;
 
-                    if (leftR != null && rightR != null && (leftR != rightR) && a.Type == ActionType.ObjectCombine)
+                    if (leftR != null && rightR != null)
+                    {
+                        objectCombinationCheck = ((leftR.name == a.leftHandRequirement) && (rightR.name == a.rightHandRequirement)) || ((rightR.name == a.leftHandRequirement) && (leftR.name == a.rightHandRequirement));
+                    }
+
+                    if (objectCombinationCheck && a.Type == ActionType.ObjectCombine)
                     {
                         objectsData.Add(new StepData(false, "- Klik op de 'Combineer' knop.", i));
-                        gameUI.CombineButtonBlink();
-                        gameUI.buttonToBlink = GameUI.ItemControlButtonType.Combine;
+                        if (!foundComplitedAction)
+                        {
+                            foundComplitedAction = true;
+                            gameUI.buttonToBlink = GameUI.ItemControlButtonType.Combine;
+                        }
                     }
 
                     else if (leftR != null)
@@ -294,52 +304,106 @@ public class ActionManager : MonoBehaviour
                         if (manager.CompareUseOnInfo(inventory.leftHandObject.name, ""))
                         {
                             keyWords = manager.CurrentButtonText(inventory.leftHandObject.name);
-                            objectsData.Add(new StepData(false, $"- {keyWords}.", i));
-                            gameUI.buttonToBlink = GameUI.ItemControlButtonType.NoTargetLeft;
+
+                            if (keyWords.Substring(keyWords.Length - 1, 1) != ".")
+                                keyWords += ".";
+
+                            objectsData.Add(new StepData(false, $"- {keyWords}", i));
+                            if (!foundComplitedAction)
+                            {
+                                foundComplitedAction = true;
+                                gameUI.buttonToBlink = GameUI.ItemControlButtonType.NoTargetLeft;
+                            }
                         }
-                        else if (a.Type == ActionType.ObjectDrop)
+                        else if (a.Type == ActionType.ObjectDrop && a.leftHandRequirement == inventory.leftHandObject.name)
                         {
                             keyWords = "- Drop";
                             objectsData.Add(new StepData(false, $"{keyWords} {handValue}.", i));
-                            gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
-
+                            if (!foundComplitedAction)
+                            {
+                                foundComplitedAction = true;
+                                gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
+                            }
+                        }
+                        else if (a.Type == ActionType.ObjectExamine && inventory.leftHandObject.name == a.leftHandRequirement)
+                        {
+                            objectsData.Add(new StepData(false, $"- Klik op de 'Controleren' knop.", i));
+                            if (!foundComplitedAction)
+                            {
+                                foundComplitedAction = true;
+                                gameUI.buttonToBlink = GameUI.ItemControlButtonType.ZoomLeft;
+                            }
                         }
 
                         else if (!string.IsNullOrEmpty(manager.CurrentDecombineButtonText(inventory.leftHandObject.name)))
                         {
                             keyWords = manager.CurrentDecombineButtonText(inventory.leftHandObject.name);
                             objectsData.Add(new StepData(false, $"- Klik op de '{manager.CurrentDecombineButtonText(inventory.leftHandObject.name)}' knop.", i));
-                            gameUI.buttonToBlink = GameUI.ItemControlButtonType.DecombineLeft;
+                            if (!foundComplitedAction)
+                            {
+                                foundComplitedAction = true;
+                                gameUI.buttonToBlink = GameUI.ItemControlButtonType.DecombineLeft;
+                            }
                         }
-                        else
+                        else if (!foundComplitedAction)
                             gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
                     }
+
                     else if (rightR != null)
                     {
                         if (manager.CompareUseOnInfo(inventory.rightHandObject.name, ""))
                         {
-                            gameUI.buttonToBlink = GameUI.ItemControlButtonType.NoTargetRight;
                             keyWords = manager.CurrentButtonText(inventory.rightHandObject.name);
-                            objectsData.Add(new StepData(false, $"- {keyWords}.", i));
+                            if (keyWords.Substring(keyWords.Length - 1, 1) != ".")
+                                keyWords += ".";
+
+                            objectsData.Add(new StepData(false, $"- {keyWords}", i));
+                            if (!foundComplitedAction)
+                            {
+                                foundComplitedAction = true;
+                                gameUI.buttonToBlink = GameUI.ItemControlButtonType.NoTargetRight;
+                            }
                         }
                         else if (a.Type == ActionType.ObjectDrop)
                         {
-                            gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
-
                             keyWords = "- Drop";
                             objectsData.Add(new StepData(false, $" {keyWords} {handValue}.", i));
+                            if (!foundComplitedAction)
+                            {
+                                foundComplitedAction = true;
+                                gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
+                            }
                         }
-
+                        else if (a.Type == ActionType.ObjectExamine && inventory.rightHandObject.name == a.leftHandRequirement)
+                        {
+                            objectsData.Add(new StepData(false, $"- Klik op de 'Controleren' knop.", i));
+                            if (!foundComplitedAction)
+                            {
+                                foundComplitedAction = true;
+                                gameUI.buttonToBlink = GameUI.ItemControlButtonType.ZoomRight;
+                            }
+                        }
+                        else if (a.Type == ActionType.PersonTalk)
+                        {
+                            if (!foundComplitedAction)
+                            {
+                                gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
+                            }
+                        }
                         else if (!string.IsNullOrEmpty(manager.CurrentDecombineButtonText(inventory.RightHandObject.name)))
                         {
                             keyWords = manager.CurrentDecombineButtonText(inventory.rightHandObject.name);
                             objectsData.Add(new StepData(false, $"- Klik op de '{manager.CurrentDecombineButtonText(inventory.rightHandObject.name)}' knop.", i));
-                            gameUI.buttonToBlink = GameUI.ItemControlButtonType.DecombineRight;
+                            if (!foundComplitedAction)
+                            {
+                                foundComplitedAction = true;
+                                gameUI.buttonToBlink = GameUI.ItemControlButtonType.DecombineRight;
+                            }
                         }
                         else
                             gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
                     }
-                    else
+                    else if (!foundComplitedAction)
                         gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
 
 
@@ -368,6 +432,7 @@ public class ActionManager : MonoBehaviour
                 else
                     stepsList.Add(placeData);
             }
+
             foreach (StepData sd in objectsData)
             {
                 stepsList.Add(sd);
@@ -375,6 +440,7 @@ public class ActionManager : MonoBehaviour
 
             i++;
         }
+
         GameObject.FindObjectOfType<GameUI>().UpdateRequirements(stepsList);
     }
 
