@@ -284,7 +284,7 @@ public class ActionManager : MonoBehaviour
 
                     if (leftR != null && rightR != null && (leftR != rightR) && a.Type == ActionType.ObjectCombine)
                     {
-                        objectsData.Add(new StepData(false, $"- Combineer {leftObject} met {rightObject}.", i));
+                        objectsData.Add(new StepData(false, "Klik op de 'Combenereen' knop.", i));
                         gameUI.CombineButtonBlink();
                         gameUI.buttonToBlink = GameUI.ItemControlButtonType.Combine;
                     }
@@ -306,6 +306,7 @@ public class ActionManager : MonoBehaviour
                         }
                         //else if (a.Type == ActionType.ObjectExamine)
                         //{
+                        //objectsData.Add(new StepData(false, "Klik op de 'Controleeren' knop.", i));
                         //    gameUI.buttonToBlink = GameUI.ItemControlButtonType.ZoomLeft;
                         //}
                         //if (a.Type != ActionType.ObjectExamine && gameUI.buttonToBlink == GameUI.ItemControlButtonType.ZoomLeft)
@@ -348,7 +349,8 @@ public class ActionManager : MonoBehaviour
                         else if (!string.IsNullOrEmpty(manager.CurrentDecombineButtonText(inventory.RightHandObject.name)))
                         {
                             keyWords = manager.CurrentDecombineButtonText(inventory.rightHandObject.name);
-                            objectsData.Add(new StepData(false, $"- {keyWords} {handValue}.", i));
+                            print("3" + keyWords);
+                            objectsData.Add(new StepData(false, "Klik op de 'Openen' knop.", i));
                             gameUI.buttonToBlink = GameUI.ItemControlButtonType.DecombineRight;
                         }
                         else
