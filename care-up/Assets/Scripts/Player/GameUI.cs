@@ -321,6 +321,7 @@ public class GameUI : MonoBehaviour
             }
         }
         UpdateWalkToGroupButtons();
+        UpdateWalkToGtoupUI(true);
     }
 
     public HighlightObject AddHighlight(Transform target, string prefix, HighlightObject.type hl_type = HighlightObject.type.NoChange, float startDelay = 0, float LifeTime = float.PositiveInfinity)
