@@ -185,8 +185,7 @@ public class TutorialManager : MonoBehaviour
     protected void TutorialEnd()
     {
         endPanel.SetActive(true);
-        player.MoveBackButtonObject.SetActive(false);
-
+        GameObject.FindObjectOfType<GameUI>().allowObjectControlUI = false;
         player.enabled = false;
         GameObject.FindObjectOfType<RobotManager>().enabled = false;
         foreach (InteractableObject o in GameObject.FindObjectsOfType<InteractableObject>())

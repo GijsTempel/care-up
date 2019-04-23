@@ -53,6 +53,8 @@ public class PlayerPrefsManager : MonoBehaviour
     // used for storing scene name for test hightscore loading
     private static string currentTestScene = "";
     private static float currentTestScore = 0;
+
+    private static string practiceScene = "";
     
     public string ActivatedScenes
     {
@@ -400,6 +402,59 @@ public class PlayerPrefsManager : MonoBehaviour
         }
     }
 
+    public static void AddOneToPracticePlays(string scene)
+    {
+        // pretty sure it is safe to use this variable again
+        practiceScene = scene.Replace(" ", "_");
+        
+        WUData.FetchField(practiceScene, "PracticePlays", GetPracticePlays, -1, GetPracticePlays_Error);
+    }
+
+    static void GetPracticePlays(CML response)
+    {
+        int plays = response[1].Int(practiceScene);
+
+        CMLData data = new CMLData();
+        data.Set(practiceScene, (plays + 1).ToString());
+        WUData.UpdateCategory("PracticePlays", data);
+    }
+
+    static void GetPracticePlays_Error(CMLData response)
+    {
+        if ((response["message"] == "WPServer error: Empty response. No data found"))
+        {
+            // if no data found when we're adding +1, create data with 1
+            CMLData data = new CMLData();
+            data.Set(practiceScene, "1");
+            WUData.UpdateCategory("PracticePlays", data);
+        }
+    }
+
+    public void FetchPracticePlays(string scene)
+    {
+        practiceScene = scene.Replace(" ", "_");
+        WUData.FetchField(practiceScene, "PracticePlays", FetchPracticePlays_success, -1, FetchPracticePlays_Error);
+    }
+    
+    static void FetchPracticePlays_success(CML response)
+    {
+        Button testBtn = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
+            "DialogTestPractice/Panel_UI/Buttons/TestButton").GetComponent<Button>();
+
+        int plays = response[1].Int(practiceScene);
+        testBtn.interactable = plays >= 3;
+    }
+
+    static void FetchPracticePlays_Error(CMLData response)
+    {
+        if ((response["message"] == "WPServer error: Empty response. No data found"))
+        {
+            // no data == 0 plays
+            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
+            "DialogTestPractice/Panel_UI/Buttons/TestButton").GetComponent<Button>().interactable = false;
+        }
+    }
+
     public void FetchTestHighScores()
     {
         WUData.FetchCategory("TestHighscores", GetAllHighScores);
@@ -487,7 +542,6 @@ public class PlayerPrefsManager : MonoBehaviour
         if (currentVersion != latestVersion)
         {
             // player can download new version
-            Debug.Log("show panel 'you can download new version'");
             GameObject.Find("UMenuProManager/MenuCanvas/VersionUpdatePanel").SetActive(true);
         }
         else

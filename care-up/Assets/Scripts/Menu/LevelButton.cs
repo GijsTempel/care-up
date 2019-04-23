@@ -128,12 +128,24 @@ public class LevelButton : MonoBehaviour {
             //making button not interactable was not noticable (maybe change design), hiding instead
             GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/DialogTestPractice/Panel_UI/Buttons/TestButton")
                 .SetActive(!testDisabled);
+
+            // now we can fetch practice plays number in order to know whethere to hide or show test button
+            // making test button inactive from the beginning before fetching
+            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
+            "DialogTestPractice/Panel_UI/Buttons/TestButton").GetComponent<Button>().interactable = false;
+            manager.FetchPracticePlays(manager.currentSceneVisualName);
         }
     }
 
-    public void OnStartButtonClick()
+    public void OnStartButtonClick() 
     {
         PlayerPrefsManager.AddOneToPlaysNumber();
+
+        if (manager.practiceMode)
+        {
+            PlayerPrefsManager.AddOneToPracticePlays(manager.currentSceneVisualName);
+        }
+
         bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
     }
     

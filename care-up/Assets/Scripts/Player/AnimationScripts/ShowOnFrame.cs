@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class ShowOnFrame : StateMachineBehaviour
 {
-
     public string ControlObjectName = "";
     public int showFrame;
     private GameObject Obj = null;
@@ -13,7 +11,6 @@ public class ShowOnFrame : StateMachineBehaviour
 
     protected float frame;
     protected float prevFrame;
-
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -25,7 +22,6 @@ public class ShowOnFrame : StateMachineBehaviour
         }
     }
 
-
     void set_set()
     {
         if (ControlObjectName == "")
@@ -35,10 +31,17 @@ public class ShowOnFrame : StateMachineBehaviour
                 ObjectsIDsController idCont = GameObject.FindObjectOfType<ObjectsIDsController>();
                 foreach (string __name in ObjNames)
                 {
-                    Obj = idCont.GetFromHidden(__name);
-                    if (Obj != null)
+                    if (GameObject.Find(__name) != null && !toShow)
                     {
-                        Obj.SetActive(toShow);
+                        GameObject.Find(__name).SetActive(false);
+                    }
+                    else
+                    {
+                        Obj = idCont.GetFromHidden(__name);
+                        if (Obj != null)
+                        {
+                            Obj.SetActive(toShow);
+                        }
                     }
                 }
             }
@@ -55,28 +58,25 @@ public class ShowOnFrame : StateMachineBehaviour
         }
         else
         {
-
             if (GameObject.Find(ControlObjectName) != null && ObjNames.Count != 0)
             {
                 if (GameObject.Find(ControlObjectName).GetComponent<ExtraObjectOptions>() != null)
                 {
                     ExtraObjectOptions ControlObject = GameObject.Find(ControlObjectName).GetComponent<ExtraObjectOptions>();
 
-
                     foreach (string __name in ObjNames)
                     {
                         ControlObject._show(__name, toShow);
-
                     }
                 }
             }
-
         }
+        ActionManager.BuildRequirements();
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-    
+
         if (animator.speed != 0)
         {
             if (PlayerAnimationManager.CompareFrames(frame, prevFrame, showFrame))
@@ -87,8 +87,5 @@ public class ShowOnFrame : StateMachineBehaviour
             prevFrame = frame;
             frame += Time.deltaTime;
         }
-
     }
-
-
 }

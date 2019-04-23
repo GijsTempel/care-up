@@ -31,7 +31,7 @@ public class PlayerScript : MonoBehaviour
     public Camera cam;
     public MouseLook mouseLook = new MouseLook();
     public bool freeLook = false;
-
+    GameUI gameUI;
     PlayerPrefsManager prefs;
     Controls controls;
     HandsInventory handsInv;
@@ -41,7 +41,9 @@ public class PlayerScript : MonoBehaviour
     private Vector3 savedPos;
     private Quaternion savedRot;
     private List<WalkToGroup> groups;
-    private WalkToGroup currentWalkPosition;
+    public WalkToGroup currentWalkPosition;
+
+    private ActionManager actionManager;
 
     RobotManager robot;
     private Vector3 savedRobotPos;
@@ -52,7 +54,6 @@ public class PlayerScript : MonoBehaviour
     private float fadeTimer = 0.0f;
     Texture fadeTex;
 
-    Button moveBackButton;
     public ItemControlsUI itemControls;
 
     public bool usingOnMode = false;
@@ -82,7 +83,6 @@ public class PlayerScript : MonoBehaviour
     Tutorial_UI tutorial_UI;
     Tutorial_Theory tutorial_theory;
 
-    bool moveBackBtnActiveForIpad = false;
     bool devHintActiveForIpad = false;
     bool biggerDevHintActiveForIpad = false;
 
@@ -95,11 +95,6 @@ public class PlayerScript : MonoBehaviour
 
     [HideInInspector]
     public GameObject joystickObject;
-
-    public GameObject MoveBackButtonObject
-    {
-        get { return moveBackButton.gameObject; }
-    }
 
     public bool UIHover
     {
@@ -115,6 +110,12 @@ public class PlayerScript : MonoBehaviour
     {
         instance = this;
         actionsLocked = false;
+        gameUI = GameObject.FindObjectOfType<GameUI>();
+
+        if (GameObject.Find("GameLogic") != null)
+        {
+            actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
+        }
 
         mouseLook.Init(transform, cam.transform);
 
@@ -131,9 +132,6 @@ public class PlayerScript : MonoBehaviour
             GameObject.FindObjectsOfType<WalkToGroup>());
 
         fadeTex = Resources.Load<Texture>("Sprites/Black");
-
-        moveBackButton = GameObject.Find("MoveBackButton").GetComponent<Button>();
-        moveBackButton.gameObject.SetActive(false);
 
         extraButton = GameObject.Find("ExtraButton");
         extraPanel = GameObject.Find("Extra");
@@ -335,8 +333,6 @@ public class PlayerScript : MonoBehaviour
                 //FreeLookButton();
             }
         }
-
-        moveBackButton.GetComponent<Button>().interactable = !tutorial_movementLock;
     }
 
     public void ToggleUsingOnMode(bool value)
@@ -371,6 +367,11 @@ public class PlayerScript : MonoBehaviour
         if (robotUIopened)
             return;
 
+        //if (GameObject.FindObjectOfType<ObjectsPanel>() != null)
+        //{
+        //    GameObject.FindObjectOfType<ObjectsPanel>().UpdatePanel();
+        //}
+
         ToggleAway();
         transform.position = group.Position;
         if (prefs == null || (prefs != null && !prefs.VR))
@@ -395,6 +396,10 @@ public class PlayerScript : MonoBehaviour
                 g.GetComponent<Collider>().enabled = true;
             }
         }
+
+        actionManager.OnMovementAction(currentWalkPosition.name);
+        gameUI.UpdateWalkToGtoupUI(true);
+
     }
 
     private void ToggleAway(bool _away = false)
@@ -407,7 +412,6 @@ public class PlayerScript : MonoBehaviour
             g.enabled = away;
             g.GetComponent<Collider>().enabled = away;
         }
-        moveBackButton.gameObject.SetActive(!away);
 
         itemControls.Close();
 
@@ -447,26 +451,6 @@ public class PlayerScript : MonoBehaviour
             }
         }
     }
-
-    public void MoveBackButton()
-    {
-        if (true)
-        {
-            ToggleAway(true);
-            transform.position = savedPos;
-            if (prefs == null || (prefs != null && !prefs.VR))
-            {
-                transform.rotation = Quaternion.Euler(0.0f, savedRot.eulerAngles.y, 0.0f);
-                Camera.main.transform.localRotation = Quaternion.Euler(savedRot.eulerAngles.x, 0.0f, 0.0f);
-                mouseLook.SaveRot(transform, Camera.main.transform);
-            }
-            currentWalkPosition = null;
-
-            robot.transform.position = savedRobotPos;
-            robot.transform.rotation = savedRobotRot;
-        }
-    }
-
     public void OpenRobotUI()
     {
         if (robotUIopened)
@@ -548,6 +532,7 @@ public class PlayerScript : MonoBehaviour
         {
             extraBtnActiveForIpad = extraButton.activeSelf;
             extraButton.SetActive(false);
+            gameUI.UpdateWalkToGtoupUI(false);
         }
 
         if (extraPanel == null)
@@ -576,8 +561,7 @@ public class PlayerScript : MonoBehaviour
 
         tutorial_robotUI_opened = true;
 
-        moveBackBtnActiveForIpad = MoveBackButtonObject.activeSelf;
-        MoveBackButtonObject.SetActive(false);
+        GameObject.FindObjectOfType<GameUI>().allowObjectControlUI = false;
 
         if (robotUINotOpenedYet)
         {
@@ -626,6 +610,8 @@ public class PlayerScript : MonoBehaviour
             if (extraButton != null)
             {
                 extraButton.SetActive(extraBtnActiveForIpad);
+                gameUI.UpdateWalkToGtoupUI(extraBtnActiveForIpad);
+
             }
 
             if (extraPanel != null)
@@ -636,7 +622,7 @@ public class PlayerScript : MonoBehaviour
 
         tutorial_robotUI_closed = true;
 
-        MoveBackButtonObject.SetActive(moveBackBtnActiveForIpad);
+        GameObject.FindObjectOfType<GameUI>().allowObjectControlUI = true;
 
         if (joystickObject != null)
             joystickObject.SetActive(!robotUIopened);
@@ -698,10 +684,14 @@ public class PlayerScript : MonoBehaviour
     public static void TriggerQuizQuestion(float delay = 0.0f)
     {
         // dont trigger quiz if a testing mode is on
+#if UNITY_EDITOR
         if (GameObject.FindObjectOfType<PlayerPrefsManager>() != null)
             if (GameObject.FindObjectOfType<PlayerPrefsManager>().testingMode)
                 return;
-
+        if (GameObject.FindObjectOfType<ObjectsIDsController>() != null)
+            if (GameObject.FindObjectOfType<ObjectsIDsController>().testingMode)
+                return;
+#endif
         // just dont trigger quiz if it's a tutorial for all cases
         if (GameObject.FindObjectOfType<TutorialManager>() != null)
             return;

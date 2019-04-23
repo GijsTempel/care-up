@@ -8,6 +8,7 @@ using UnityEngine.UI;
 /// </summary>
 public class CameraMode : MonoBehaviour
 {
+    GameUI gameUI;
 
     public enum Mode
     {
@@ -19,7 +20,7 @@ public class CameraMode : MonoBehaviour
         ItemControlsUI      // UI showing actions is active
     };
 
-    bool camViewObject = false;
+    public bool camViewObject = false;
     Quaternion camRotFrom;
     Quaternion camRotTo;
     float startTime;
@@ -46,7 +47,7 @@ public class CameraMode : MonoBehaviour
     [HideInInspector]
     public bool cinematicToggle = false;
     private int cinematicDirection = 1;
-    private float cinematicLerp = 0.0f;
+    public float cinematicLerp = 0.0f;
     private Vector3 cinematicPos;
     private Quaternion cinematicRot;
     private Vector3 cinematicTargetPos;
@@ -55,6 +56,9 @@ public class CameraMode : MonoBehaviour
     private Quaternion savedRot;
     private Quaternion targetRot;
     private bool soloCamera;
+    private bool closingEyes = false;
+    private bool closeEyesTriggered = false;
+    public bool moveBackFromExam = false;
 
     //private Quaternion camPosition; never used
 
@@ -74,6 +78,7 @@ public class CameraMode : MonoBehaviour
 
     void Start()
     {
+        gameUI = GameObject.FindObjectOfType<GameUI>();
         controls = GameObject.Find("GameLogic").GetComponent<Controls>();
         if (controls == null) Debug.LogError("No controls script found");
 
@@ -92,10 +97,16 @@ public class CameraMode : MonoBehaviour
     {
         if (Time.time > camMoveBackAt)
         {
+            moveBackFromExam = true;
             startTime = Time.time;
             camRotTo = camRotFrom;
+            if (!playerScript.away)
+            {
+                WalkToGroup group = playerScript.currentWalkPosition;
+                camRotTo = Quaternion.Euler(group.Rotation.x, 0.0f, 0.0f);
+            }
             camRotFrom = Camera.main.transform.localRotation;
-            camMovementSpeed = 0.75f;
+            camMovementSpeed = 1f;
             camViewObject = true;
             camMoveBackAt = float.PositiveInfinity;
         }
@@ -109,21 +120,28 @@ public class CameraMode : MonoBehaviour
             {
                 RobotManager.SetUITriggerActive(false);
             }
-
+            //if (!playerScript.away)
+            //{
+            //    WalkToGroup group = playerScript.currentWalkPosition;
+            //    camRotTo = Quaternion.Euler(group.Rotation.x, 0.0f, 0.0f);
+            //    Debug.Log("______________" + group.name);
+            //}
             camRotTime = (Time.time - startTime) / camMovementSpeed;
+            if (!playerScript.away && moveBackFromExam)
+                camRotTo = Quaternion.Euler(playerScript.currentWalkPosition.Rotation.x, 0.0f, 0.0f);
             Camera.main.transform.localRotation = Quaternion.Lerp(camRotFrom, camRotTo, camRotTime);
             if (camRotTime > camMovementSpeed)
             {
                 robotUIFlag = true;
                 camViewObject = false;
                 camMovementSpeed = 1f;
-
                 if (GameObject.FindObjectOfType<TutorialManager>() == null ||
                 GameObject.FindObjectOfType<Tutorial_UI>() != null ||
                 GameObject.FindObjectOfType<Tutorial_Theory>() != null)
                 {
                     RobotManager.SetUITriggerActive(true);
                 }
+                moveBackFromExam = false;
             }
             return;
         }
@@ -280,6 +298,7 @@ public class CameraMode : MonoBehaviour
 
         if (currentMode == Mode.ObjectPreview && mode == Mode.Free)
         {
+
             camMoveBackAt = Time.time + 0.5f;
 
             TogglePlayerScript(true);
@@ -288,8 +307,9 @@ public class CameraMode : MonoBehaviour
             blur.enabled = false;
 
             GameObject.Find("ObjectViewButtons").SetActive(false);
-            playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
-            playerScript.joystickObject.SetActive(!playerScript.robotUIopened);
+            //gameUI.allowObjectControlUI = !playerScript.away;
+            gameUI.UpdateWalkToGtoupUI(!playerScript.away);
+            //playerScript.joystickObject.SetActive(!playerScript.robotUIopened);
 
             if ((GameObject.FindObjectOfType<TutorialManager>() == null ||
                 GameObject.FindObjectOfType<Tutorial_UI>() != null ||
@@ -327,9 +347,8 @@ public class CameraMode : MonoBehaviour
             camViewObject = true;
             //Camera.main.transform.localRotation = Quaternion.Euler(8.0f, 0.0f, 0.0f);
 
-
-            playerScript.MoveBackButtonObject.SetActive(false);
-            playerScript.joystickObject.SetActive(false);
+            gameUI.UpdateWalkToGtoupUI(false);
+            //playerScript.joystickObject.SetActive(false);
             RobotManager.SetUITriggerActive(false);
 
             previewModeFrame = true;
@@ -338,16 +357,18 @@ public class CameraMode : MonoBehaviour
         else if (mode == Mode.SelectionDialogue)
         {
             TogglePlayerScript(false);
-            playerScript.MoveBackButtonObject.SetActive(false);
-            playerScript.joystickObject.SetActive(false);
+            gameUI.UpdateWalkToGtoupUI(false);
+
+            //playerScript.joystickObject.SetActive(false);
             RobotManager.SetUITriggerActive(false);
             GameObject.FindObjectOfType<RobotManager>().top = false;
         }
         else if (currentMode == Mode.SelectionDialogue)
         {
             TogglePlayerScript(true);
-            playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
-            playerScript.joystickObject.SetActive(!playerScript.robotUIopened);
+            gameUI.UpdateWalkToGtoupUI(!playerScript.away);
+
+            //playerScript.joystickObject.SetActive(!playerScript.robotUIopened);
             if (GameObject.FindObjectOfType<TutorialManager>() == null ||
                 GameObject.FindObjectOfType<Tutorial_UI>() != null ||
                 GameObject.FindObjectOfType<Tutorial_Theory>() != null)
@@ -363,8 +384,9 @@ public class CameraMode : MonoBehaviour
             confirmUI.transform.rotation = Camera.main.transform.rotation;
             confirmUI.SetActive(true);
 
-            playerScript.MoveBackButtonObject.SetActive(false);
-            playerScript.joystickObject.SetActive(false);
+            gameUI.UpdateWalkToGtoupUI(false);
+
+            //playerScript.joystickObject.SetActive(false);
             RobotManager.SetUITriggerActive(false);
         }
         else if (currentMode == Mode.ConfirmUI && mode == Mode.Free)
@@ -372,8 +394,9 @@ public class CameraMode : MonoBehaviour
             TogglePlayerScript(true);
             confirmUI.SetActive(false);
 
-            playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
-            playerScript.joystickObject.SetActive(!playerScript.robotUIopened);
+            gameUI.UpdateWalkToGtoupUI(!playerScript.away);
+
+            //playerScript.joystickObject.SetActive(!playerScript.robotUIopened);
             if (GameObject.FindObjectOfType<TutorialManager>() == null ||
                 GameObject.FindObjectOfType<Tutorial_UI>() != null ||
                 GameObject.FindObjectOfType<Tutorial_Theory>() != null)
@@ -389,8 +412,9 @@ public class CameraMode : MonoBehaviour
 
             //camPosition = Camera.main.transform.localRotation; never used
 
-            playerScript.MoveBackButtonObject.SetActive(false);
-            playerScript.joystickObject.SetActive(false);
+            gameUI.UpdateWalkToGtoupUI(false);
+
+            //playerScript.joystickObject.SetActive(false);
             RobotManager.SetUITriggerActive(false);
         }
         else if (currentMode == Mode.Cinematic && mode == Mode.Free)
@@ -411,8 +435,8 @@ public class CameraMode : MonoBehaviour
                 !GameObject.FindObjectOfType<TutorialManager>().finished) ||
                 GameObject.FindObjectOfType<TutorialManager>() == null)
             {
-                playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
-                playerScript.joystickObject.SetActive(!playerScript.robotUIopened && !PlayerScript.actionsLocked);
+                gameUI.UpdateWalkToGtoupUI(!playerScript.away);
+                //playerScript.joystickObject.SetActive(!playerScript.robotUIopened && !PlayerScript.actionsLocked);
             }
 
             if (GameObject.FindObjectOfType<TutorialManager>() == null ||
@@ -454,12 +478,28 @@ public class CameraMode : MonoBehaviour
         {
             cinematicLerp = Mathf.Clamp01(cinematicLerp + 2 * Time.deltaTime * cinematicDirection);
         }
+        
+        // set the lerp breakpoint value accordingly to closing eyes animation length
+        float lerpBreakpoint = 0.5f;
+        bool wayInFlag = closingEyes && cinematicLerp < lerpBreakpoint && cinematicDirection == 1;
+        bool wayOutFlag = closingEyes && cinematicLerp > (1 - lerpBreakpoint) && cinematicDirection == -1 && animationEnded;
 
-        cinematicControl.transform.position =
-            Vector3.Lerp(cinematicPos, cinematicTargetPos, cinematicLerp);
-        if (animationEnded || cinematicDirection == 1)
-            cinematicControl.Find("Arms").transform.rotation =
-                Quaternion.Lerp(cinematicRot, cinematicTargetRot, cinematicLerp);
+        if (wayInFlag || wayOutFlag)
+        {
+            if (closeEyesTriggered == false)
+            {
+                closeEyesTriggered = true;
+                PlayerAnimationManager.SetTrigger("close_eyes");
+            }
+        }
+        else
+        {
+            cinematicControl.transform.position =
+                Vector3.Lerp(cinematicPos, cinematicTargetPos, cinematicLerp);
+            if (animationEnded || cinematicDirection == 1)
+                cinematicControl.Find("Arms").transform.rotation =
+                    Quaternion.Lerp(cinematicRot, cinematicTargetRot, cinematicLerp);
+        }
 
         //if (!dontMoveCamera)
         //    AnimationCameraUpdate(false);
@@ -469,12 +509,25 @@ public class CameraMode : MonoBehaviour
             cinematicDirection = -1;
             if (cinematicToggle)
                 PlayerAnimationManager.ToggleAnimationSpeed();
+
+            // open eyes i assume
+            if (closingEyes)
+            {
+                PlayerAnimationManager.SetTrigger("open_eyes");
+                closeEyesTriggered = false;
+            }
         }
         else if (cinematicDirection == -1 && cinematicLerp == 0.0f)
         {
             ToggleCameraMode(Mode.Free);
             cinematicDirection = 1;
             animationEnded = false;
+
+            // open eyes i assume
+            if (closingEyes)
+            {
+                PlayerAnimationManager.SetTrigger("open_eyes");
+            }
         }
     }
 
@@ -502,7 +555,8 @@ public class CameraMode : MonoBehaviour
                 animationEnded = false;
                 soloCamera = false;
 
-                playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
+                gameUI.UpdateWalkToGtoupUI(!playerScript.away);
+
                 if (GameObject.FindObjectOfType<TutorialManager>() == null ||
                     GameObject.FindObjectOfType<Tutorial_UI>() != null ||
                     GameObject.FindObjectOfType<Tutorial_Theory>() != null)
@@ -522,7 +576,7 @@ public class CameraMode : MonoBehaviour
             cinematicLerp = 0.0f;
             cinematicDirection = 1;
 
-            playerScript.MoveBackButtonObject.SetActive(false);
+            gameUI.UpdateWalkToGtoupUI(false);
             RobotManager.SetUITriggerActive(false);
         }
 
@@ -530,6 +584,20 @@ public class CameraMode : MonoBehaviour
         targetRot = savedRot * Quaternion.Euler(25.0f, 0.0f, 0.0f);
     }
 
+    public void Teleport(Transform target)
+    {
+        if (target.Find("CinematicTarget") == null)
+        {
+            return;
+        }
+        Transform cTarget = target.Find("CinematicTarget");
+        cinematicTargetRot = cTarget.rotation;
+        cinematicTargetPos = cTarget.position;
+        cinematicControl = playerScript.transform.GetChild(0);
+        cinematicControl.transform.position = cinematicTargetPos;
+        cinematicControl.Find("Arms").transform.rotation = cinematicTargetRot;
+    }
+        
     public void SetCinematicMode(Transform target)
     {
         if (target.Find("CinematicTarget") == null)
@@ -555,5 +623,12 @@ public class CameraMode : MonoBehaviour
 
         if (!dontMoveCamera)
             SetCameraUpdating(false);
+
+        // calculate distance between start/end
+        // in order to know if need to close eyes
+        float distance = Vector3.Distance(cinematicPos, cinematicTargetPos);
+        closingEyes = distance > 1.8f; // set distance breakpoint here
+        closeEyesTriggered = false;
+        animationEnded = false;
     }
 }

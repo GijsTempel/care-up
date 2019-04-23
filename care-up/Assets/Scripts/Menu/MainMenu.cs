@@ -200,7 +200,14 @@ public class MainMenu : MonoBehaviour {
     public void OnRetryButtonClick()
     {
         PlayerPrefsManager.AddOneToPlaysNumber();
+
         EndScoreManager manager = loadingScreen.GetComponent<EndScoreManager>();
+
+        if (prefs.practiceMode)
+        {
+            PlayerPrefsManager.AddOneToPracticePlays(prefs.currentSceneVisualName);
+        }
+
         bl_SceneLoaderUtils.GetLoader.LoadLevel(manager.completedSceneName, manager.completedSceneBundle);
     }
 

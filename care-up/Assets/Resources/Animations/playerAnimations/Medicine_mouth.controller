@@ -1688,6 +1688,42 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
+  - m_Name: UseLeft
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: S UseLeft
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: UseRight
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: S UseRight
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: Player_TakeOffBlanket
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: S Player_TakeOffBlanket
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: RightHand
@@ -1934,6 +1970,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: w_sit_target
+  resetCamera: 0
+  maxDist: 1.8
 --- !u!114 &114069114051782904
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1946,6 +1984,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: sequenceTarget
+  resetCamera: 0
+  maxDist: 1.8
 --- !u!114 &114077741522578380
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1982,6 +2022,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SequenceName: AnimSeq_Medicine_Mouth
+  TuggleFromCinematic: 1
   keyFrames: 7900000038010000d5010000
 --- !u!114 &114103235276556022
 MonoBehaviour:
@@ -2051,6 +2092,21 @@ MonoBehaviour:
   ToFollowHoldingHand: 0
   NewAnimationName: open_mouth
   ActionFrame: 1
+--- !u!114 &114138627581205044
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 839bcc7f24a9c47f8af28e853187bfa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: BlanketOpenWhole
+  unlock_frame: 1
+  lock_frame: 400
+  toActivate: 0
 --- !u!114 &114163186900458834
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -2171,6 +2227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SequenceName: 
+  TuggleFromCinematic: 1
   keyFrames: 05000000610100009a010000570200005d02000089020000
 --- !u!114 &114238600058322352
 MonoBehaviour:
@@ -2378,6 +2435,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SequenceName: 
+  TuggleFromCinematic: 1
   keyFrames: 05000000610100009a010000570200005d0200008902000075030000eb04000014050000
   takeSyringeFrame: 311
   swapHandsFrame: 1265
@@ -2680,6 +2738,23 @@ MonoBehaviour:
   hand: 0
   plungerStart: 100
   plungerEnd: 470
+--- !u!114 &114443383965881312
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a536a9682af347488b2cfd1a613bf7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: BlanketOpenWhole
+  HandToSwitch: 0
+  AnimationToChange: 1
+  ToFollowHoldingHand: 0
+  NewAnimationName: BlanketOffMotion
+  ActionFrame: 0
 --- !u!114 &114449936601344160
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -2800,6 +2875,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SequenceName: 
+  TuggleFromCinematic: 1
   keyFrames: 05000000610100009a010000570200005d0200008902000075030000eb040000
   takeSyringeFrame: 311
   swapHandsFrame: 1265
@@ -2874,6 +2950,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combineFrame: 100
+--- !u!114 &114538876778422290
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 839bcc7f24a9c47f8af28e853187bfa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: m1_B
+  unlock_frame: 1
+  lock_frame: 400
+  toActivate: 0
 --- !u!114 &114544244587412676
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -2910,6 +3001,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SequenceName: 
+  TuggleFromCinematic: 1
   keyFrames: 05000000610100009a010000570200005d0200008902000075030000eb040000
   takeSyringeFrame: 311
   swapHandsFrame: 1265
@@ -2961,6 +3053,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SequenceName: 
+  TuggleFromCinematic: 1
   keyFrames: 05000000610100009a010000570200005d0200008902000075030000eb040000
   dropClothFrame: 268
   takeSyringeFrame: 311
@@ -3001,11 +3094,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SequenceName: 
+  TuggleFromCinematic: 1
   keyFrames: 05000000610100009a010000570200005d0200008902000075030000eb04000014050000
   takeSyringeFrame: 311
   swapHandsFrame: 1265
   takeOffCapFrame: 0
   dropCapFrame: 0
+--- !u!114 &114632190878882954
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9b29f5ba63bb4aa5b477b8007d77187, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114651904835252962
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -3100,6 +3205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SequenceName: 
+  TuggleFromCinematic: 1
   keyFrames: 05000000610100009a010000570200005d0200008902000075030000eb040000
   dropClothFrame: 268
   takeSyringeFrame: 311
@@ -3131,6 +3237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SequenceName: 
+  TuggleFromCinematic: 1
   keyFrames: 05000000610100009a010000570200005d02000089020000
 --- !u!114 &114699032165616630
 MonoBehaviour:
@@ -3292,6 +3399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SequenceName: 
+  TuggleFromCinematic: 1
   keyFrames: 05000000610100009a010000570200005d0200008902000075030000eb04000014050000
   takeSyringeFrame: 311
   swapHandsFrame: 1265
@@ -3440,6 +3548,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5cacadbc71667048bc80fad5bb73881, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114806917159077146
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a536a9682af347488b2cfd1a613bf7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: m1_B
+  HandToSwitch: 0
+  AnimationToChange: 1
+  ToFollowHoldingHand: 0
+  NewAnimationName: SitInBedWithBlanket_
+  ActionFrame: 0
 --- !u!114 &114814914823302324
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -3650,6 +3775,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SequenceName: 
+  TuggleFromCinematic: 1
   keyFrames: 05000000610100009a010000570200005d02000089020000
 --- !u!114 &114915552969357588
 MonoBehaviour:
@@ -3802,6 +3928,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: w_clean_target
+  resetCamera: 0
+  maxDist: 1.8
 --- !u!114 &114974517681902748
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -3814,6 +3942,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SequenceName: 
+  TuggleFromCinematic: 1
   keyFrames: 05000000610100009a010000570200005d0200008902000075030000eb040000
   takeSyringeFrame: 311
   swapHandsFrame: 1265
@@ -3846,6 +3975,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SequenceName: 
+  TuggleFromCinematic: 1
   keyFrames: 05000000610100009a010000570200005d0200008902000075030000eb040000
   dropClothFrame: 268
   takeSyringeFrame: 311
@@ -3889,6 +4019,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: w_button_target
+  resetCamera: 0
+  maxDist: 1.8
 --- !u!1101 &1101001213762382906
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -4731,6 +4863,30 @@ AnimatorStateTransition:
   m_TransitionOffset: 0
   m_ExitTime: 0.9668874
   m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
+--- !u!1101 &1101069958621110304
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: Player_TakeOffBlanket
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 1102992003049580490}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.75
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -5971,6 +6127,27 @@ AnimatorStateTransition:
   m_ExitTime: 1
   m_HasExitTime: 1
   m_HasFixedDuration: 0
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
+--- !u!1101 &1101207030051543664
+AnimatorStateTransition:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 0}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 1
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.9625
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
@@ -7993,6 +8170,27 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!1101 &1101435756169782896
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 0}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 1
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.9625
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1101 &1101437739446956010
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -8812,6 +9010,27 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!1101 &1101519940401395798
+AnimatorStateTransition:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 1107153178216169846}
+  m_DstState: {fileID: 0}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.9761526
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1101 &1101521775916577406
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -8972,15 +9191,12 @@ AnimatorStateTransition:
   m_PrefabInternal: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: Use
-    m_EventTreshold: 0
   - m_ConditionMode: 6
     m_ConditionEvent: leftID
     m_EventTreshold: 10300
-  - m_ConditionMode: 6
-    m_ConditionEvent: rightID
-    m_EventTreshold: -700
+  - m_ConditionMode: 1
+    m_ConditionEvent: UseLeft
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102245759430386886}
   m_Solo: 0
@@ -10996,6 +11212,30 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!1101 &1101745990194337892
+AnimatorStateTransition:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: S Player_TakeOffBlanket
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 1102028834470201050}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.75
+  m_HasExitTime: 0
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1101 &1101749949281555022
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -12159,14 +12399,11 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: S Use
+    m_ConditionEvent: S UseLeft
     m_EventTreshold: 0
   - m_ConditionMode: 6
     m_ConditionEvent: leftID
     m_EventTreshold: 10300
-  - m_ConditionMode: 6
-    m_ConditionEvent: rightID
-    m_EventTreshold: -700
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102166791044119800}
   m_Solo: 0
@@ -12850,6 +13087,27 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!1101 &1101964677655321126
+AnimatorStateTransition:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 1107153178216169846}
+  m_DstState: {fileID: 0}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.9761526
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1101 &1101969826029933546
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -12938,6 +13196,27 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0.9112426
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
+--- !u!1101 &1101981708680238886
+AnimatorStateTransition:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 1107000013396830544}
+  m_DstState: {fileID: 0}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.9761526
   m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -13176,6 +13455,32 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400010, guid: 5c96cfe96f822cb45850df6cc49f9009, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &1102028834470201050
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Empty5sec
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions:
+  - {fileID: 1101207030051543664}
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400026, guid: 6538ce6eeda872744af13b4922237288, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -17292,6 +17597,37 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1102 &1102992003049580490
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Empty5sec
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions:
+  - {fileID: 1101435756169782896}
+  m_StateMachineBehaviours:
+  - {fileID: 114632190878882954}
+  - {fileID: 114443383965881312}
+  - {fileID: 114138627581205044}
+  - {fileID: 114806917159077146}
+  - {fileID: 114538876778422290}
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400026, guid: 6538ce6eeda872744af13b4922237288, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1102 &1102993828169622250
 AnimatorState:
   serializedVersion: 5
@@ -17339,6 +17675,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 1102388286911786498}
     m_Position: {x: -1128, y: -660, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 1102992003049580490}
+    m_Position: {x: -1296, y: -204, z: 0}
   m_ChildStateMachines:
   - serializedVersion: 1
     m_StateMachine: {fileID: 1107007893727009562}
@@ -17362,6 +17701,7 @@ AnimatorStateMachine:
   - {fileID: 1101626696594971386}
   - {fileID: 1101986665000452826}
   - {fileID: 1101533517908699956}
+  - {fileID: 1101069958621110304}
   m_EntryTransitions:
   - {fileID: 1109370133204736836}
   - {fileID: 1109243951094598896}
@@ -17565,6 +17905,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 1102082239106407876}
     m_Position: {x: -1080, y: -612, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 1102028834470201050}
+    m_Position: {x: -1248, y: -204, z: 0}
   m_ChildStateMachines:
   - serializedVersion: 1
     m_StateMachine: {fileID: 1107403398125922242}
@@ -17588,6 +17931,7 @@ AnimatorStateMachine:
   - {fileID: 1101020909448920382}
   - {fileID: 1101531603158782584}
   - {fileID: 1101879192965446002}
+  - {fileID: 1101745990194337892}
   m_EntryTransitions:
   - {fileID: 1109006110899316866}
   - {fileID: 1109166650086243654}
@@ -17955,7 +18299,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 1102245759430386886}
-    m_Position: {x: 288, y: 216, z: 0}
+    m_Position: {x: 300, y: 276, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

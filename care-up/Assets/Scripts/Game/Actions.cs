@@ -25,6 +25,13 @@ namespace CareUp.Actions
         public string blockLock;
         public string blockTitle;
         public string blockMessage;
+        public string comment;
+        public string commentUA;
+        public string leftHandRequirement;
+        public string rightHandRequirement;
+        public string placeRequirement;
+        public string secondPlaceRequirement;
+        public string _topic;
 
         protected ActionManager.ActionType type;
 
@@ -89,14 +96,19 @@ namespace CareUp.Actions
         private string leftInput;
         private string rightInput;
 
+        public string decombineText;
+
         public CombineAction(string left, string right, int index, string sdescr, string fdescr, string audio, 
             string extra, int points, bool notNeeded, float quizTime, string title, string content, 
-            string blockReq, string blockUnl, string blockL, string blockTitl, string blockMsg)
+            string blockReq, string blockUnl, string blockL, string blockTitl, string blockMsg, 
+            string decombineBtnText)
             : base(ActionManager.ActionType.ObjectCombine, index, sdescr, fdescr, audio, extra, points, 
                   notNeeded, quizTime, title, content,blockReq, blockUnl, blockL, blockTitl, blockMsg)
         {
             leftInput = left;
             rightInput = right;
+
+            decombineText = decombineBtnText;
         }
 
         /// <summary>
@@ -190,6 +202,7 @@ namespace CareUp.Actions
                   quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg)
         {
             topicInput = topic;
+            _topic = topic;
         }
 
         public override bool Compare(string[] info)
@@ -406,6 +419,44 @@ namespace CareUp.Actions
         public override void ObjectNames(out string[] name)
         {
             string[] res = { objectName, dropPositionID };
+            name = res;
+        }
+    }
+
+    public class MovementAction : Action
+    {
+        private string positionInput;
+
+        public MovementAction(string position, int index, string sdescr, string fdescr,
+            string audio, string extra, int points, bool notNeeded, float quizTime, string title,
+            string content, string blockReq, string blockUnl, string blockL, string blockTitl, string blockMsg)
+            : base(ActionManager.ActionType.Movement, index, sdescr, fdescr, audio, extra, points,
+                  notNeeded, quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg)
+        {
+            positionInput = position;
+        }
+
+        public override bool Compare(string[] info)
+        {
+            bool same = false;
+            if (info.Length == 1)
+            {
+                if (info[0] == positionInput)
+                {
+                    same = true;
+                }
+            }
+            return same;
+        }
+
+        public string GetInfo()
+        {
+            return positionInput;
+        }
+
+        public override void ObjectNames(out string[] name)
+        {
+            string[] res = { positionInput };
             name = res;
         }
     }

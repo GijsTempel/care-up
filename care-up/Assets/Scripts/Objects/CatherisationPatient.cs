@@ -5,7 +5,7 @@ using UnityEngine;
 public class CatherisationPatient : PersonObject {
 
     private Animator animator;
-
+    private Animator PlayerAnimator;
     public Vector3 playerPosition;
     public Vector3 playerRotation;
     public Transform playerPositionTarget;
@@ -13,7 +13,7 @@ public class CatherisationPatient : PersonObject {
     protected override void Start()
     {
         base.Start();
-        
+        PlayerAnimator = GameObject.FindObjectOfType<PlayerAnimationManager>().GetComponent<Animator>();
         animator = GetComponent<Animator>();
     }
 
@@ -32,6 +32,8 @@ public class CatherisationPatient : PersonObject {
                     GameObject playerPosAtPatient = GameObject.Find("PlayerPositions/PatientPos/Target");
                     playerPosAtPatient.transform.position = playerPositionTarget.position;
                     playerPosAtPatient.transform.rotation = playerPositionTarget.rotation;
+                    PlayerAnimator.SetTrigger("CloseCurtains");
+                    PlayerAnimator.SetTrigger("S CloseCurtains");
                     break;
                 case "HelpGetUp":
                     PlayerAnimationManager.PlayAnimation("helppatientgetup");

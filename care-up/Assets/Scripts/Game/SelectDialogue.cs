@@ -215,27 +215,39 @@ public class SelectDialogue : MonoBehaviour
 
                 if (option != null)
                 {
+                    bool testingMode = false;
+
+#if UNITY_EDITOR
                     if (GameObject.FindObjectOfType<PlayerPrefsManager>() != null)
                     {
                         if (GameObject.FindObjectOfType<PlayerPrefsManager>().testingMode)
-                        {
-                            foreach (DialogueOption dialoqueOption in options)
-                            {
-                                if (dialoqueOption.attribute != "" && dialoqueOption.attribute != "CM_Leave")
-                                    option.attribute = dialoqueOption.attribute;
-                            }
-
-                            option.function(option.attribute);
-
-                            if (destroy)
-                            {
-                                Destroy(gameObject);
-                                cameraMode.ToggleCameraMode(CameraMode.Mode.Free);
-                            }
-
-                            return;
-                        }
+                            testingMode = true;
                     }
+                    if (GameObject.FindObjectOfType<ObjectsIDsController>() != null)
+                    {
+                        if (GameObject.FindObjectOfType<ObjectsIDsController>().testingMode)
+                            testingMode = true;
+                    }
+#endif
+                    if (testingMode)
+                    {
+                        foreach (DialogueOption dialoqueOption in options)
+                        {
+                            if (dialoqueOption.attribute != "" && dialoqueOption.attribute != "CM_Leave")
+                                option.attribute = dialoqueOption.attribute;
+                        }
+
+                        option.function(option.attribute);
+
+                        if (destroy)
+                        {
+                            Destroy(gameObject);
+                            cameraMode.ToggleCameraMode(CameraMode.Mode.Free);
+                        }
+
+                        return;
+                    }
+
 
                     if (option.attribute != "")
                     {

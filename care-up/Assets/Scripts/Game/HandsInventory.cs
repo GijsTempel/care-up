@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using CareUp.Actions;
+using System.Linq;
 
 /// <summary>
 /// Handles things in hands.
@@ -83,6 +85,7 @@ public class HandsInventory : MonoBehaviour {
     //private PlayerPrefsManager prefsManager;
 
     //private TutorialManager tutorial;
+
 
     public GameObject LeftHandObject
     {
@@ -175,7 +178,23 @@ public class HandsInventory : MonoBehaviour {
         bool picked = false;
         if (hand == "")
         {
-            if (leftHandObject == null)
+            if (rightHandObject == null)
+            {
+                rightHandObject = item;
+                picked = true;
+                tutorial_pickedRight = true;
+                rightHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                rightHandObject.GetComponent<Rigidbody>().isKinematic = false;
+                //rightHandObject.GetComponent<Collider>().enabled = false;
+                rightHandObject.leftControlBone = leftControlBone;
+                rightHandObject.rightControlBone = rightControlBone;
+                actionManager.OnPickUpAction(rightHandObject.name);
+                PlayerAnimationManager.PlayAnimation("RightPick");
+                PlayerScript.actionsLocked = true;
+                PlayerAnimationManager.SetHandItem(false, item.gameObject);
+                rightHold = false;
+            }
+            else if (leftHandObject == null)
             {
                 leftHandObject = item;
                 picked = true;
@@ -190,22 +209,6 @@ public class HandsInventory : MonoBehaviour {
                 PlayerScript.actionsLocked = true;
                 PlayerAnimationManager.SetHandItem(true, item.gameObject);
                 leftHold = false;
-            }
-            else if (rightHandObject == null)
-            {
-                rightHandObject = item;
-                picked = true;
-                tutorial_pickedRight = true;
-                leftHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                rightHandObject.GetComponent<Rigidbody>().isKinematic = false;
-                //rightHandObject.GetComponent<Collider>().enabled = false;
-                rightHandObject.leftControlBone = leftControlBone;
-                rightHandObject.rightControlBone = rightControlBone;
-                actionManager.OnPickUpAction(rightHandObject.name);
-                PlayerAnimationManager.PlayAnimation("RightPick");
-                PlayerScript.actionsLocked = true;
-                PlayerAnimationManager.SetHandItem(false, item.gameObject);
-                rightHold = false;
             }
         }
         else if (hand == "left")
@@ -233,7 +236,8 @@ public class HandsInventory : MonoBehaviour {
                 rightHandObject = item;
                 picked = true;
                 tutorial_pickedRight = true;
-                leftHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                //-----------------------------------------------------------------------
+                rightHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 rightHandObject.GetComponent<Rigidbody>().isKinematic = false;
                 //rightHandObject.GetComponent<Collider>().enabled = false;
                 rightHandObject.leftControlBone = leftControlBone;
@@ -255,6 +259,8 @@ public class HandsInventory : MonoBehaviour {
             RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
             messageCenter.NewMessage("Je hebt je handen vol!", message, RobotUIMessageTab.Icon.Warning);
         }
+
+        ActionManager.UpdateRequirements();
 
         return picked;
     }
@@ -547,6 +553,8 @@ public class HandsInventory : MonoBehaviour {
             PlayerAnimationManager.SetHandItem(false, null);
             
         }
+
+        ActionManager.UpdateRequirements();
     }
 
     public void DropLeftObject()
@@ -559,6 +567,7 @@ public class HandsInventory : MonoBehaviour {
             leftHandObject = null;
             leftHold = false;
             PlayerAnimationManager.SetHandItem(true, null);
+            ActionManager.UpdateRequirements();
         }
     }
 
@@ -572,6 +581,7 @@ public class HandsInventory : MonoBehaviour {
             rightHandObject = null;
             rightHold = false;
             PlayerAnimationManager.SetHandItem(false, null);
+            ActionManager.UpdateRequirements();
         }
     }
 
@@ -887,6 +897,21 @@ public class HandsInventory : MonoBehaviour {
         return (target == left || target == right) && target != null;
     }
 
+    public class HandObject
+    {
+        public GameObject left;
+        public GameObject right;
+    }
+
+    public HandObject IsInOneOfHands()
+    {
+        HandObject handObject = new HandObject();
+        handObject.left = (leftHandObject != null) ? leftHandObject.gameObject : null;
+        handObject.right = (rightHandObject != null) ? rightHandObject.gameObject : null;
+        print(handObject.left);
+        return handObject;
+    }
+
     public void OnCombineAction()
     {
         if (tutorialUseOn != null && !tutorialUseOn.decombiningAllowed) {
@@ -916,9 +941,7 @@ public class HandsInventory : MonoBehaviour {
 		}
 		if (alloweCombine)
         {
-            tutorial_combined = true;
- 
-			//--------------------------------------------------------------------
+            tutorial_combined = true; 
 			bool idModeAllow = false;
 
 			if (GameObject.Find("GameLogic").GetComponent<ObjectsIDsController>() != null)
@@ -947,7 +970,6 @@ public class HandsInventory : MonoBehaviour {
 
             combineDelayed = true;
             ToggleControls(true);
-
         }
     }
 
@@ -999,7 +1021,7 @@ public class HandsInventory : MonoBehaviour {
             leftHandObject = null;
             leftHold = false;
             PlayerAnimationManager.SetHandItem(true, null);
-
+            ActionManager.UpdateRequirements();
         }
     }
 
@@ -1032,6 +1054,7 @@ public class HandsInventory : MonoBehaviour {
             rightHandObject = null;
             rightHold = false;
             PlayerAnimationManager.SetHandItem(false, null);
+            ActionManager.UpdateRequirements();
         }
     }
 
