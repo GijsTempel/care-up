@@ -375,7 +375,7 @@ public class PlayerPrefsManager : MonoBehaviour
     public void UpdateTestHighscore(float score)
     {        
 		currentTestScore = score * 100;
-        currentTestScene = currentSceneVisualName.Replace(" ", "_");
+        currentTestScene = FormatSceneName(currentSceneVisualName);
         
         WUData.FetchField(currentTestScene, "TestHighscores", GetTestHighscore, -1, GetTestHighscore_Error);
     }
@@ -404,8 +404,8 @@ public class PlayerPrefsManager : MonoBehaviour
     public static void AddOneToPracticePlays(string scene)
     {
         // pretty sure it is safe to use this variable again
-        practiceScene = scene.Replace(" ", "_");
-        
+        practiceScene = FormatSceneName(scene);
+        Debug.Log("AddOneToPracticePlays::" + practiceScene);
         WUData.FetchField(practiceScene, "PracticePlays", GetPracticePlays, -1, GetPracticePlays_Error);
     }
 
@@ -431,12 +431,15 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public void FetchPracticePlays(string scene)
     {
-        practiceScene = scene.Replace(" ", "_");
+        practiceScene = FormatSceneName(scene);
+        Debug.Log("Fetching " + practiceScene);
         WUData.FetchField(practiceScene, "PracticePlays", FetchPracticePlays_success, -1, FetchPracticePlays_Error);
     }
     
     static void FetchPracticePlays_success(CML response)
     {
+        Debug.Log(response.ToString());
+
         Button testBtn = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
             "DialogTestPractice/Panel_UI/Buttons/TestButton").GetComponent<Button>();
 
@@ -446,6 +449,8 @@ public class PlayerPrefsManager : MonoBehaviour
 
     static void FetchPracticePlays_Error(CMLData response)
     {
+        Debug.Log(response.ToString());
+
         if ((response["message"] == "WPServer error: Empty response. No data found"))
         {
             // no data == 0 plays
@@ -555,5 +560,12 @@ public class PlayerPrefsManager : MonoBehaviour
         {
             GameObject.Find("UMenuProManager/MenuCanvas/VersionUpdatePanel").SetActive(false);
         }
+    }
+
+    static string FormatSceneName(string sceneName)
+    {
+        string res = sceneName.Replace(" ", "_");
+        res = res.Replace(".", "");
+        return res;
     }
 }
