@@ -147,6 +147,7 @@ public class ActionManager : MonoBehaviour
         HandsInventory inventory = GameObject.FindObjectOfType<HandsInventory>();
         int i = 0;
         bool foundComplitedAction = false;
+        gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
         foreach (Action a in sublist)
         {
             StepData placeData = null;
