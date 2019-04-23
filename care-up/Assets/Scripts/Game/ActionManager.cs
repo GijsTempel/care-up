@@ -284,7 +284,7 @@ public class ActionManager : MonoBehaviour
 
                     if (leftR != null && rightR != null && (leftR != rightR) && a.Type == ActionType.ObjectCombine)
                     {
-                        objectsData.Add(new StepData(false, "Klik op de 'Combenereen' knop.", i));
+                        objectsData.Add(new StepData(false, "- Klik op de 'Combineer' knop.", i));
                         gameUI.CombineButtonBlink();
                         gameUI.buttonToBlink = GameUI.ItemControlButtonType.Combine;
                     }
@@ -299,24 +299,16 @@ public class ActionManager : MonoBehaviour
                         }
                         else if (a.Type == ActionType.ObjectDrop)
                         {
-                            keyWords = "Drop";
-                            objectsData.Add(new StepData(false, $"- {keyWords} {handValue}.", i));
+                            keyWords = "- Drop";
+                            objectsData.Add(new StepData(false, $"{keyWords} {handValue}.", i));
                             gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
 
                         }
-                        //else if (a.Type == ActionType.ObjectExamine)
-                        //{
-                        //objectsData.Add(new StepData(false, "Klik op de 'Controleeren' knop.", i));
-                        //    gameUI.buttonToBlink = GameUI.ItemControlButtonType.ZoomLeft;
-                        //}
-                        //if (a.Type != ActionType.ObjectExamine && gameUI.buttonToBlink == GameUI.ItemControlButtonType.ZoomLeft)
-                        //{
-                        //    gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
-                        //}
+
                         else if (!string.IsNullOrEmpty(manager.CurrentDecombineButtonText(inventory.leftHandObject.name)))
                         {
                             keyWords = manager.CurrentDecombineButtonText(inventory.leftHandObject.name);
-                            objectsData.Add(new StepData(false, $"- {keyWords} {handValue}.", i));
+                            objectsData.Add(new StepData(false, $"- Klik op de '{manager.CurrentDecombineButtonText(inventory.leftHandObject.name)}' knop.", i));
                             gameUI.buttonToBlink = GameUI.ItemControlButtonType.DecombineLeft;
                         }
                         else
@@ -328,29 +320,20 @@ public class ActionManager : MonoBehaviour
                         {
                             gameUI.buttonToBlink = GameUI.ItemControlButtonType.NoTargetRight;
                             keyWords = manager.CurrentButtonText(inventory.rightHandObject.name);
-                            objectsData.Add(new StepData(false, $"- {keyWords}", i));
+                            objectsData.Add(new StepData(false, $"- {keyWords}.", i));
                         }
                         else if (a.Type == ActionType.ObjectDrop)
                         {
                             gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
 
-                            keyWords = "Drop";
-                            objectsData.Add(new StepData(false, $"- {keyWords} {handValue}.", i));
+                            keyWords = "- Drop";
+                            objectsData.Add(new StepData(false, $" {keyWords} {handValue}.", i));
                         }
-                        //else if (a.Type == ActionType.ObjectExamine)
-                        //{
-                        //    gameUI.buttonToBlink = GameUI.ItemControlButtonType.ZoomRight;
-                        //}
-                        //if (a.Type != ActionType.ObjectExamine && gameUI.buttonToBlink == GameUI.ItemControlButtonType.ZoomRight)
-                        //{
-                        //    gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
-                        //}
 
                         else if (!string.IsNullOrEmpty(manager.CurrentDecombineButtonText(inventory.RightHandObject.name)))
                         {
                             keyWords = manager.CurrentDecombineButtonText(inventory.rightHandObject.name);
-                            print("3" + keyWords);
-                            objectsData.Add(new StepData(false, "Klik op de 'Openen' knop.", i));
+                            objectsData.Add(new StepData(false, $"- Klik op de '{manager.CurrentDecombineButtonText(inventory.rightHandObject.name)}' knop.", i));
                             gameUI.buttonToBlink = GameUI.ItemControlButtonType.DecombineRight;
                         }
                         else
@@ -364,9 +347,18 @@ public class ActionManager : MonoBehaviour
                         correctObjectsInHands = false;
 
 
-                    keyWords = "- Pac";
+                    keyWords = "- Pak";
+                    string article = null;
 
-                    objectsData.Add(new StepData(completed,$"{keyWords} {GameObject.Find(hand).GetComponent<InteractableObject>().nameArticle} " + handValue + ".", i));
+                    if (GameObject.Find(hand) != null)
+                    {
+                        if (GameObject.Find(hand).GetComponent<InteractableObject>() != null)
+                        {
+                            article = GameObject.Find(hand).GetComponent<InteractableObject>().nameArticle;
+                        }
+                    }
+
+                    objectsData.Add(new StepData(completed, $"{keyWords} {article} {handValue}.", i));
                 }
             }
             if (placeData != null)
