@@ -5,6 +5,7 @@ using CareUp.Actions;
 using System.Linq;
 public class GameUI : MonoBehaviour
 {
+
     GameObject Player;
     public Animator Blink;
     public Animator IPadBlink;
@@ -36,6 +37,7 @@ public class GameUI : MonoBehaviour
     public GameObject combineButton;
     public GameObject decombineButton;
     public GameObject decombineButton_right;
+    public GameUI.ItemControlButtonType buttonToBlink;
 
     public GameObject noTargetButton;
     public GameObject noTargetButton_right;
@@ -60,6 +62,18 @@ public class GameUI : MonoBehaviour
     PlayerScript ps;
     bool ICPCurrentState = false;
     public bool allowObjectControlUI = true;
+
+    public enum ItemControlButtonType
+    {
+        None,
+        Combine,
+        DecombineLeft,
+        DecombineRight,
+        NoTargetLeft,
+        NoTargetRight,
+        ZoomLeft,
+        ZoomRight
+    }
 
     public void UseOn()
     {
@@ -224,7 +238,7 @@ public class GameUI : MonoBehaviour
             WalkToGroupPanel.transform.Find("spacer2").gameObject.SetActive(false);
         if (activeGroupButtons < 2)
             WalkToGroupPanel.transform.Find("spacer1").gameObject.SetActive(false);
-        foreach(WalkToGroup w in GameObject.FindObjectsOfType<WalkToGroup>())
+        foreach (WalkToGroup w in GameObject.FindObjectsOfType<WalkToGroup>())
         {
             w.FindNeighbors();
         }
@@ -368,7 +382,7 @@ public class GameUI : MonoBehaviour
 
             //if (a.Type == ActionManager.ActionType.ObjectUse ||
             //a.Type == ActionManager.ActionType.ObjectDrop)
-            foreach(string objectToUse in ObjectNames)
+            foreach (string objectToUse in ObjectNames)
             {
                 if (GameObject.Find(objectToUse) != null)
                 {
@@ -415,7 +429,7 @@ public class GameUI : MonoBehaviour
         {
             activeHighlighted.Add(s);
         }
-       
+
     }
 
 
@@ -530,6 +544,7 @@ public class GameUI : MonoBehaviour
                             actionManager.CurrentButtonText(handsInventory.leftHandObject.name);
                     }
 
+                    decombineButton.GetComponent<Animator>().SetTrigger("BlinkOn");
                     decombineButton.transform.GetChild(0).GetComponent<Text>().text =
                     (actionManager.CompareCombineObjects(handsInventory.leftHandObject.name, "")) ?
                         actionManager.CurrentDecombineButtonText(handsInventory.leftHandObject.name)
@@ -557,6 +572,9 @@ public class GameUI : MonoBehaviour
                 noTargetButton_right.SetActive(showNoTarget_right);
 
                 decombineButton.SetActive(showDecomb && REmpty && !showNoTarget);
+                if(decombineButton.activeSelf)
+                decombineButton.GetComponent<Animator>().SetTrigger("BlinkOn");
+
                 decombineButton_right.SetActive(showDecomb && LEmpty && !showNoTarget_right);
                 combineButton.SetActive(showCombin);
             }
@@ -578,7 +596,7 @@ public class GameUI : MonoBehaviour
 
             ICPCurrentState = ItemControlPanel.activeSelf;
         }
-        
+
         currentAnimLock = animationUiBlock;
         if (!showItemControlPanel)
             currentAnimLock = false;
@@ -636,18 +654,18 @@ public class GameUI : MonoBehaviour
     public void DonePanelNo()
     {
         donePanelYesNo.SetActive(false);
-    }      
+    }
 
     public void ClearHintPanel()
     {
-        if(DetailedHintPanel.transform.Find("HintContainer") != null)
+        if (DetailedHintPanel.transform.Find("HintContainer") != null)
         {
             Transform panel = DetailedHintPanel.transform.Find("HintContainer").transform;
             for (int i = 0; i < panel.childCount; ++i)
             {
                 Destroy(panel.GetChild(i).gameObject);
             }
-        }        
+        }
     }
 
     public void SetHintPanelAlpha(float alpha)
@@ -671,7 +689,7 @@ public class GameUI : MonoBehaviour
         for (int i = 0; i < actionManager.CurrentDescription.Count; i++)
         {
             GameObject currentHintPanel = null;
-          
+
             currentHintPanel = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/UI/HintPanel"), DetailedHintPanel.transform.Find("HintContainer").transform);
             hintText = currentHintPanel.transform.Find("Text").gameObject.GetComponent<Text>();
             hintText.text = actionManager.CurrentDescription[i];
@@ -681,7 +699,7 @@ public class GameUI : MonoBehaviour
 
                 if (subTasks[y].subindex == i)
                 {
-                    if (Resources.Load<GameObject>("Prefabs/UI/SubtaskHints") != null )
+                    if (Resources.Load<GameObject>("Prefabs/UI/SubtaskHints") != null)
                     {
                         if (!subTasks[y].completed)
                         {
@@ -695,5 +713,43 @@ public class GameUI : MonoBehaviour
             float alpha = DetailedHintPanel.GetComponent<Image>().color.a;
             SetHintPanelAlpha(alpha);
         }
+    }
+
+    public void DecombineButtonBlink()
+    {
+        print("DecombineButtonBlink");
+        if (decombineButton.activeSelf)
+            decombineButton.GetComponent<Animator>().SetTrigger("BlinkOn");
+        else
+            print("not not decombineButton.");
+
+        if (decombineButton_right.activeSelf)
+            decombineButton_right.GetComponent<Animator>().SetTrigger("BlinkOn");
+        else
+            print("not not decombineButton_right.");
+
+    }
+
+    public void CombineButtonBlink()
+    {
+        print("CombineButtonBlink");
+        if (combineButton.activeSelf)
+            combineButton.GetComponent<Animator>().SetTrigger("BlinkOn");
+        else
+            print("not not combineButton.");
+    }
+
+    public void NoTargetButtonBlink()
+    {
+        print("NoTargetButtonBlink");
+        if (noTargetButton.activeSelf)
+            noTargetButton.GetComponent<Animator>().SetTrigger("BlinkOn");
+        else
+            print("not not noTargetButton.");
+
+        if (noTargetButton_right.activeSelf)
+            noTargetButton_right.GetComponent<Animator>().SetTrigger("BlinkOn");
+        else
+            print("not not noTargetButton_right.");
     }
 }
