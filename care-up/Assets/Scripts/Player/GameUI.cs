@@ -25,7 +25,7 @@ public class GameUI : MonoBehaviour
     private HandsInventory handsInventory;
     private ActionManager actionManager;
     private Animator controller;
-    private float startTimeOut = 2f;
+    private float startTimeOut = 0.5f;
     private bool timeOutEnded = false;
     PlayerPrefsManager prefs;
 
@@ -467,7 +467,10 @@ public class GameUI : MonoBehaviour
             if (startTimeOut < 0)
             {
                 timeOutEnded = true;
+                
+                ActionManager.BuildRequirements();
                 ActionManager.UpdateRequirements();
+
                 UpdateHelpHighlight();
             }
         }
@@ -714,43 +717,5 @@ public class GameUI : MonoBehaviour
             float alpha = DetailedHintPanel.GetComponent<Image>().color.a;
             SetHintPanelAlpha(alpha);
         }
-    }
-
-    public void DecombineButtonBlink()
-    {
-        print("DecombineButtonBlink");
-        if (decombineButton.activeSelf)
-            decombineButton.GetComponent<Animator>().SetTrigger("BlinkOn");
-        else
-            print("not not decombineButton.");
-
-        if (decombineButton_right.activeSelf)
-            decombineButton_right.GetComponent<Animator>().SetTrigger("BlinkOn");
-        else
-            print("not not decombineButton_right.");
-
-    }
-
-    public void CombineButtonBlink()
-    {
-        print("CombineButtonBlink");
-        if (combineButton.activeSelf)
-            combineButton.GetComponent<Animator>().SetTrigger("BlinkOn");
-        else
-            print("not not combineButton.");
-    }
-
-    public void NoTargetButtonBlink()
-    {
-        print("NoTargetButtonBlink");
-        if (noTargetButton.activeSelf)
-            noTargetButton.GetComponent<Animator>().SetTrigger("BlinkOn");
-        else
-            print("not not noTargetButton.");
-
-        if (noTargetButton_right.activeSelf)
-            noTargetButton_right.GetComponent<Animator>().SetTrigger("BlinkOn");
-        else
-            print("not not noTargetButton_right.");
     }
 }
