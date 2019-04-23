@@ -362,9 +362,9 @@ public class ActionManager : MonoBehaviour
                         correctObjectsInHands = false;
 
 
-                    keyWords = "- Pick up ";
+                    keyWords = "- Pac";
 
-                    objectsData.Add(new StepData(completed, keyWords + handValue + ".", i));
+                    objectsData.Add(new StepData(completed,$"{keyWords} {GameObject.Find(hand).GetComponent<InteractableObject>().nameArticle} " + handValue + ".", i));
                 }
             }
             if (placeData != null)
