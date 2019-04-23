@@ -31,12 +31,12 @@ public class DropAndReturn : StateMachineBehaviour {
     {
         if (rightObj != null)
         {
-            inv.ForcePickItem(rightObj.gameObject, false);
+            inv.ForcePickItem(rightObj.gameObject, false, true);
             PlayerAnimationManager.SetHandItem(false, rightObj.gameObject);
         }
         if (leftObj != null)
         {
-            inv.ForcePickItem(leftObj.gameObject, true);
+            inv.ForcePickItem(leftObj.gameObject, true, true);
             PlayerAnimationManager.SetHandItem(true, leftObj.gameObject);
         }
     }
