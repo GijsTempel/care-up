@@ -10,25 +10,46 @@ public class ItemControlButton : MonoBehaviour
         gameUI = GameObject.FindObjectOfType<GameUI>();
     }
 
-    private void OnEnable()
+
+    public void undateBlinkState()
     {
-        if(gameUI == null)
+        GetComponent<Animator>().ResetTrigger("BlinkOn");
+        GetComponent<Animator>().ResetTrigger("BlinkOff");
+        bool toBlink = false;
+        if (gameUI == null)
         {
             gameUI = GameObject.FindObjectOfType<GameUI>();
         }
+
         if (buttonType == GameUI.ItemControlButtonType.DropLeft)
         {
             if (gameUI.DropLeftBlink)
+            {
                 GetComponent<Animator>().SetTrigger("BlinkOn");
+                toBlink = true;
+            }
         }
         else if (buttonType == GameUI.ItemControlButtonType.DropRight)
         {
             if (gameUI.DropRightBlink)
+            {
                 GetComponent<Animator>().SetTrigger("BlinkOn");
+                toBlink = true;
+            }
         }
-        else if(gameUI.buttonToBlink == buttonType)
+        else if (gameUI.buttonToBlink == buttonType)
         {
-            GetComponent<Animator>().SetTrigger("BlinkOn");
+            {
+                GetComponent<Animator>().SetTrigger("BlinkOn");
+                toBlink = true;
+            }
         }
+        if (!toBlink && GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ItemBlink"))
+            GetComponent<Animator>().SetTrigger("BlinkOff");
+    }
+
+    private void OnEnable()
+    {
+        undateBlinkState();
     }   
 }

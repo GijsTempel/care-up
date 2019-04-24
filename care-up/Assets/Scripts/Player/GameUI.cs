@@ -513,7 +513,13 @@ public class GameUI : MonoBehaviour
 
     }
 
-
+    public void updateButtonsBlink()
+    {
+        foreach (ItemControlButton b in GameObject.FindObjectsOfType<ItemControlButton>())
+        {
+            b.undateBlinkState();
+        }
+    }
 
 
         // Update is called once per frame
@@ -710,6 +716,7 @@ public class GameUI : MonoBehaviour
                 RightSideButton.gameObject.SetActive(false);
             }
         }
+        updateButtonsBlink();
     }
 
 

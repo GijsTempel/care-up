@@ -345,12 +345,22 @@ public class ActionManager : MonoBehaviour
                         else if (a.Type == ActionType.ObjectDrop && a.leftHandRequirement == inventory.leftHandObject.name)
                         {
                             keyWords = "- Drop";
-                            objectsData.Add(new StepData(false, $"{keyWords} {handValue}.", i));
                             if (!foundComplitedAction)
                             {
                                 foundComplitedAction = true;
                                 gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
                             }
+                            if (secondPlaceData != null)
+                            {
+                                if (secondPlaceData.completed)
+                                {
+                                    gameUI.DropRightBlink = true;
+                                    objectsData.Add(new StepData(false, $"{keyWords} {handValue}.", i));
+                                }
+                            }
+                            else
+                                objectsData.Add(new StepData(false, $"{keyWords} {handValue}.", i));
+
                         }
                         else if (a.Type == ActionType.ObjectExamine && inventory.leftHandObject.name == a.leftHandRequirement)
                         {
@@ -392,12 +402,22 @@ public class ActionManager : MonoBehaviour
                         else if (a.Type == ActionType.ObjectDrop)
                         {
                             keyWords = "- Drop";
-                            objectsData.Add(new StepData(false, $" {keyWords} {handValue}.", i));
                             if (!foundComplitedAction)
                             {
                                 foundComplitedAction = true;
                                 gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
                             }
+                            if (secondPlaceData != null)
+                            {
+                                if (secondPlaceData.completed)
+                                {
+                                    gameUI.DropRightBlink = true;
+                                    objectsData.Add(new StepData(false, $" {keyWords} {handValue}.", i));
+                                }
+                            }
+                            else
+                                objectsData.Add(new StepData(false, $" {keyWords} {handValue}.", i));
+
                         }
                         else if (a.Type == ActionType.ObjectExamine && inventory.rightHandObject.name == a.leftHandRequirement)
                         {
@@ -431,16 +451,6 @@ public class ActionManager : MonoBehaviour
                     else if (!foundComplitedAction)
                         gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
 
-
-                    //if (leftIncorrect && !inventory.LeftHandEmpty())
-                    //{
-                    //    objectsData.Add(new StepData(false, $"- Drop {article} {currentLeftObject}.", i));
-                    //}
-
-                    //if (rightIncorrect && !inventory.RightHandEmpty())
-                    //{
-                    //    objectsData.Add(new StepData(false, $"- Drop {article} {currentRightObject}.", i));
-                    //}
 
                     if (!completed)
                         correctObjectsInHands = false;
