@@ -463,7 +463,7 @@ public class ActionManager : MonoBehaviour
             gameUI.DropLeftBlink = true;
         if (rightIncorrect && !inventory.RightHandEmpty())
             gameUI.DropRightBlink = true;
-        GameObject.FindObjectOfType<GameUI>().UpdateRequirements(stepsList);
+        GameObject.FindObjectOfType<GameUI>().UpdateHintPanel(stepsList);
     }
 
     /// <summary>
