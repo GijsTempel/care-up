@@ -415,15 +415,15 @@ public class ActionManager : MonoBehaviour
                         gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
 
 
-                    if (leftIncorrect && !inventory.LeftHandEmpty())
-                    {
-                        objectsData.Add(new StepData(false, $"- Drop {article} {currentLeftObject}.", i));
-                    }
+                    //if (leftIncorrect && !inventory.LeftHandEmpty())
+                    //{
+                    //    objectsData.Add(new StepData(false, $"- Drop {article} {currentLeftObject}.", i));
+                    //}
 
-                    if (rightIncorrect && !inventory.RightHandEmpty())
-                    {
-                        objectsData.Add(new StepData(false, $"- Drop {article} {currentRightObject}.", i));
-                    }
+                    //if (rightIncorrect && !inventory.RightHandEmpty())
+                    //{
+                    //    objectsData.Add(new StepData(false, $"- Drop {article} {currentRightObject}.", i));
+                    //}
 
                     if (!completed)
                         correctObjectsInHands = false;
