@@ -28,6 +28,7 @@ public class GameUI : MonoBehaviour
     private float startTimeOut = 0.5f;
     private bool timeOutEnded = false;
     PlayerPrefsManager prefs;
+    public string debugSS = "";
 
     GameObject DetailedHintPanel;
 
@@ -452,12 +453,22 @@ public class GameUI : MonoBehaviour
 
         donePanel.SetActive(false);
     }
+
+
+
+
     void OnGUI()
     {
 #if UNITY_EDITOR
         GUI.Label(new Rect(0, 0, 100, 100), ((int)(1.0f / Time.smoothDeltaTime)).ToString());
+        //GUI.Label(new Rect(20, 700, 1000, 100), debugSS);
+
 #endif
     }
+
+
+
+
     // Update is called once per frame
     void Update()
     {

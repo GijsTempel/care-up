@@ -129,9 +129,6 @@ public class ActionManager : MonoBehaviour
 
     public static void UpdateRequirements()
     {
-        string leftObject = null;
-        string rightObject = null;
-
         if (playerScript == null)
             playerScript = GameObject.FindObjectOfType<PlayerScript>();
 
@@ -148,6 +145,9 @@ public class ActionManager : MonoBehaviour
         int i = 0;
         bool foundComplitedAction = false;
         gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
+        bool leftIncorrect = true;
+        bool rightIncorrect = true;
+
         foreach (Action a in sublist)
         {
             StepData placeData = null;
@@ -265,8 +265,8 @@ public class ActionManager : MonoBehaviour
                     {
                         if (inventory.leftHandObject.name == hand)
                         {
+                            leftIncorrect = false;
                             completed = true;
-                            leftObject = System.Char.ToLowerInvariant(inventory.leftHandObject.description[0]) + inventory.leftHandObject.description.Substring(1);
                             leftR = inventory.leftHandObject.gameObject;
                         }
                     }
@@ -275,8 +275,8 @@ public class ActionManager : MonoBehaviour
                     {
                         if (inventory.rightHandObject.name == hand)
                         {
+                            rightIncorrect = false;
                             completed = true;
-                            rightObject = System.Char.ToLowerInvariant(inventory.rightHandObject.description[0]) + inventory.rightHandObject.description.Substring(1);
                             rightR = inventory.rightHandObject.gameObject;
                         }
                     }
@@ -442,6 +442,17 @@ public class ActionManager : MonoBehaviour
             i++;
         }
 
+        string ss = "";
+        if (leftIncorrect && !inventory.LeftHandEmpty())
+        {
+            ss += inventory.leftHandObject.name;
+            ss += " ";
+        }
+        if (rightIncorrect && !inventory.RightHandEmpty())
+        {
+            ss += inventory.rightHandObject.name;
+        }
+        gameUI.debugSS = ss;
         GameObject.FindObjectOfType<GameUI>().UpdateRequirements(stepsList);
     }
 
