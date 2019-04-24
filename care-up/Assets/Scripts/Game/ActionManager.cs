@@ -127,6 +127,7 @@ public class ActionManager : MonoBehaviour
         set { currentActionIndex = value; }
     }
 
+    // Will be refactored
     public static void UpdateRequirements()
     {
         if (playerScript == null)
@@ -186,6 +187,10 @@ public class ActionManager : MonoBehaviour
             string[] actionHand = { a.leftHandRequirement, a.rightHandRequirement };
             GameObject leftR = null;
             GameObject rightR = null;
+            string article = null;
+            string currentLeftObject = null;
+            string currentRightObject = null;
+
             bool objectCombinationCheck = false;
 
             foreach (string hand in actionHand)
@@ -263,6 +268,8 @@ public class ActionManager : MonoBehaviour
 
                     if (!inventory.LeftHandEmpty())
                     {
+                        currentLeftObject = System.Char.ToLowerInvariant(inventory.leftHandObject.description[0]) + inventory.leftHandObject.description.Substring(1);
+
                         if (inventory.leftHandObject.name == hand)
                         {
                             leftIncorrect = false;
@@ -273,6 +280,8 @@ public class ActionManager : MonoBehaviour
 
                     if (!inventory.RightHandEmpty())
                     {
+                        currentRightObject = System.Char.ToLowerInvariant(inventory.rightHandObject.description[0]) + inventory.rightHandObject.description.Substring(1);
+
                         if (inventory.rightHandObject.name == hand)
                         {
                             rightIncorrect = false;
@@ -408,13 +417,22 @@ public class ActionManager : MonoBehaviour
                         gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
 
 
+                    if (leftIncorrect && !inventory.LeftHandEmpty())
+                    {                        
+                        objectsData.Add(new StepData(false, $"- Drop {article} {currentLeftObject}.", i));
+
+                    }
+                    if (rightIncorrect && !inventory.RightHandEmpty())
+                    {
+                     
+                        objectsData.Add(new StepData(false, $"- Drop {article} {currentRightObject}.", i));
+                    }
+
                     if (!completed)
                         correctObjectsInHands = false;
 
-
                     keyWords = "- Pak";
-                    string article = null;
-
+                  
                     if (GameObject.Find(hand) != null)
                     {
                         if (GameObject.Find(hand).GetComponent<InteractableObject>() != null)
@@ -426,6 +444,7 @@ public class ActionManager : MonoBehaviour
                     objectsData.Add(new StepData(completed, $"{keyWords} {article} {handValue}.", i));
                 }
             }
+
             if (placeData != null)
             {
                 if (secondPlaceData != null && correctObjectsInHands)
@@ -441,18 +460,6 @@ public class ActionManager : MonoBehaviour
 
             i++;
         }
-
-        string ss = "";
-        if (leftIncorrect && !inventory.LeftHandEmpty())
-        {
-            ss += inventory.leftHandObject.name;
-            ss += " ";
-        }
-        if (rightIncorrect && !inventory.RightHandEmpty())
-        {
-            ss += inventory.rightHandObject.name;
-        }
-        gameUI.debugSS = ss;
         GameObject.FindObjectOfType<GameUI>().UpdateRequirements(stepsList);
     }
 
