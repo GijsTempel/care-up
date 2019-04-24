@@ -476,6 +476,8 @@ public class GameUI : MonoBehaviour
     }
 
 
+
+
     public void DropFromHand(bool leftHand = true)
     {
         if (leftHand && !handsInventory.LeftHandEmpty())

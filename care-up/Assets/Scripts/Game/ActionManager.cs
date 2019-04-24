@@ -56,7 +56,6 @@ public class ActionManager : MonoBehaviour
     private List<GameObject> particleHints;
     private bool menuScene;
     private bool uiSet = false;
-    ObjectsIDsController objectsIDsController;
     PlayerPrefsManager manager;
     HandsInventory inventory;
     static PlayerScript playerScript;
@@ -225,6 +224,8 @@ public class ActionManager : MonoBehaviour
                             {
                                 handValue = desc;
                                 found = true;
+                                foundDescr = true;
+
                             }
                         }
                     }
@@ -300,11 +301,10 @@ public class ActionManager : MonoBehaviour
 #if UNITY_EDITOR
                     if (!foundDescr)
                     {
-                        if(GameObject.FindObjectOfType<ObjectsIDsController>() != null)
+                        if(GameObject.FindObjectOfType<NeededObjectsLister>() != null)
                         {
-                            if (!GameObject.FindObjectOfType<ObjectsIDsController>().addNeeded(hand))
+                            if (!GameObject.FindObjectOfType<NeededObjectsLister>().addNeeded(hand))
                                 print("______Add to extra______   " + hand);
-
                         }
                     }
 #endif
