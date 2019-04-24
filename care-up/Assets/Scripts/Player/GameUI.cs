@@ -29,6 +29,7 @@ public class GameUI : MonoBehaviour
     private bool timeOutEnded = false;
     PlayerPrefsManager prefs;
     public string debugSS = "";
+    ObjectsIDsController objectsIDsController;
 
     public bool DropLeftBlink = false;
     public bool DropRightBlink = false;
@@ -255,6 +256,7 @@ public class GameUI : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        objectsIDsController = GameObject.FindObjectOfType<ObjectsIDsController>();
         prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
         DetailedHintPanel = GameObject.Find("DetailedHintPanel");
         useOnNTtext = noTargetButton.transform.GetChild(0).GetComponent<Text>().text;
@@ -470,43 +472,52 @@ public class GameUI : MonoBehaviour
     {
 #if UNITY_EDITOR
         GUI.Label(new Rect(0, 0, 100, 100), ((int)(1.0f / Time.smoothDeltaTime)).ToString());
+        if (objectsIDsController != null)
+        {
+            if (objectsIDsController.cheat)
+                GUI.Label(new Rect(30, 0, 100, 100), "Cheat enabled");
+        }
+
         //GUI.Label(new Rect(20, 700, 1000, 100), debugSS);
 
 #endif
     }
 
 
-
-
     public void DropFromHand(bool leftHand = true)
     {
+        PickableObject item = null;
         if (leftHand && !handsInventory.LeftHandEmpty())
-        {
-            GameObject ghost = null;
-            if (handsInventory.leftHandObject.ghostObjects != null)
-            {
-                if (handsInventory.leftHandObject.ghostObjects.Count > 0)
-                    ghost = handsInventory.leftHandObject.ghostObjects[0].gameObject;
-            }
-            handsInventory.leftHandObject.DeleteGhostObject();
-            handsInventory.DropLeft(ghost);
-
-        }
+            item = handsInventory.leftHandObject;
         else if (!leftHand && !handsInventory.RightHandEmpty())
+            item = handsInventory.rightHandObject;
+        if (item != null)
         {
             GameObject ghost = null;
-            if (handsInventory.rightHandObject.ghostObjects != null)
+            List<PickableObject> ghosts = item.ghostObjects.OrderBy(x =>
+                    Vector3.Distance(x.transform.position, ps.transform.position)).ToList();
+
+            ghost = ghosts[0].gameObject;
+            if (leftHand)
+                handsInventory.DropLeft(ghost);
+            else
+                handsInventory.DropRight(ghost);
+
+            for (int i = item.ghostObjects.Count - 1; i >= 0; --i)
             {
-                if (handsInventory.rightHandObject.ghostObjects.Count > 0)
-                    ghost = handsInventory.rightHandObject.ghostObjects[0].gameObject;
+                GameObject g = item.ghostObjects[i].gameObject;
+                item.ghostObjects.RemoveAt(i);
+                Destroy(g);
             }
-            handsInventory.rightHandObject.DeleteGhostObject();
-            handsInventory.DropRight(ghost);
         }
+
     }
 
+
+
+
         // Update is called once per frame
-        void Update()
+    void Update()
     {
         if (!timeOutEnded)
         {
