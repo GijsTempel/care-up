@@ -38,6 +38,7 @@ public class NeededObjectsLister : MonoBehaviour {
 
 
     void Start () {
+#if (UNITY_EDITOR)
         string scneName = SceneManager.GetActiveScene().name;
         string path = "Assets/ListOfActions/__o__" + scneName + ".txt";
 
@@ -45,10 +46,12 @@ public class NeededObjectsLister : MonoBehaviour {
         {
             writer = new StreamWriter(path, false);
         }
+#endif
+
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
 		
 	}
 

@@ -150,7 +150,7 @@ public class ActionManager : MonoBehaviour
 
         bool leftIncorrect = true;
         bool rightIncorrect = true;
-
+        bool noObjectActions = true;
         foreach (Action a in sublist)
         {
             StepData placeData = null;
@@ -472,13 +472,16 @@ public class ActionManager : MonoBehaviour
                 stepsList.Add(sd);
             }
 
+            if (objectsData.Count > 0)
+                noObjectActions = false;
             i++;
+
         }
         GameObject.FindObjectOfType<GameUI>().UpdateHintPanel(stepsList);
 
-        if (leftIncorrect && !inventory.LeftHandEmpty())
+        if (leftIncorrect && !inventory.LeftHandEmpty() && !noObjectActions)
             gameUI.DropLeftBlink = true;
-        if (rightIncorrect && !inventory.RightHandEmpty())
+        if (rightIncorrect && !inventory.RightHandEmpty() && !noObjectActions)
             gameUI.DropRightBlink = true;
         GameObject.FindObjectOfType<GameUI>().UpdateHintPanel(stepsList);
     }
