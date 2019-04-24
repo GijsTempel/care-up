@@ -30,6 +30,9 @@ public class GameUI : MonoBehaviour
     PlayerPrefsManager prefs;
     public string debugSS = "";
 
+    public bool DropLeftBlink = false;
+    public bool DropRightBlink = false;
+
     GameObject DetailedHintPanel;
 
     public List<string> activeHighlighted = new List<string>();
@@ -51,6 +54,8 @@ public class GameUI : MonoBehaviour
     Text SubStepsText;
 
     public bool currentAnimLock = false;
+    public GameObject DropLeftButton;
+    public GameObject DropRightButton;
 
     float cooldownTime = 0;
     float lastCooldownTime = 0;
@@ -73,7 +78,9 @@ public class GameUI : MonoBehaviour
         NoTargetLeft,
         NoTargetRight,
         ZoomLeft,
-        ZoomRight
+        ZoomRight,
+        DropLeft,
+        DropRight
     }
 
     public void UseOn()
@@ -267,6 +274,8 @@ public class GameUI : MonoBehaviour
         noTargetButton.SetActive(false);
         ItemControlPanel.SetActive(false);
         noTargetButton_right.SetActive(false);
+        DropRightButton.SetActive(false);
+        DropLeftButton.SetActive(false);
 
 #if !UNITY_EDITOR
         if(GameObject.Find("ActionsPanel") != null)
@@ -467,10 +476,35 @@ public class GameUI : MonoBehaviour
     }
 
 
+    public void DropFromHand(bool leftHand = true)
+    {
+        if (leftHand && !handsInventory.LeftHandEmpty())
+        {
+            GameObject ghost = null;
+            if (handsInventory.leftHandObject.ghostObjects != null)
+            {
+                if (handsInventory.leftHandObject.ghostObjects.Count > 0)
+                    ghost = handsInventory.leftHandObject.ghostObjects[0].gameObject;
+            }
+            handsInventory.leftHandObject.DeleteGhostObject();
+            handsInventory.DropLeft(ghost);
 
+        }
+        else if (!leftHand && !handsInventory.RightHandEmpty())
+        {
+            GameObject ghost = null;
+            if (handsInventory.rightHandObject.ghostObjects != null)
+            {
+                if (handsInventory.rightHandObject.ghostObjects.Count > 0)
+                    ghost = handsInventory.rightHandObject.ghostObjects[0].gameObject;
+            }
+            handsInventory.rightHandObject.DeleteGhostObject();
+            handsInventory.DropRight(ghost);
+        }
+    }
 
-    // Update is called once per frame
-    void Update()
+        // Update is called once per frame
+        void Update()
     {
         if (!timeOutEnded)
         {
@@ -550,6 +584,7 @@ public class GameUI : MonoBehaviour
 
                 if (!LEmpty)
                 {
+                    DropLeftButton.SetActive(true);
                     if (handsInventory.leftHandObject.GetComponent<ExaminableObject>() != null)
                         showZoomLeft = true;
                     if (actionManager.CompareUseOnInfo(handsInventory.leftHandObject.name, ""))
@@ -565,8 +600,14 @@ public class GameUI : MonoBehaviour
                         actionManager.CurrentDecombineButtonText(handsInventory.leftHandObject.name)
                         : "Openen";
                 }
+                else
+                {
+                    DropLeftButton.SetActive(false);
+                }
                 if (!REmpty)
                 {
+                    DropRightButton.SetActive(true);
+
                     if (handsInventory.rightHandObject.GetComponent<ExaminableObject>() != null)
                         showZoomRight = true;
                     if (actionManager.CompareUseOnInfo(handsInventory.rightHandObject.name, ""))
@@ -580,6 +621,10 @@ public class GameUI : MonoBehaviour
                     (actionManager.CompareCombineObjects("", handsInventory.rightHandObject.name)) ?
                         actionManager.CurrentDecombineButtonText(handsInventory.rightHandObject.name)
                         : "Openen";
+                }
+                else
+                {
+                    DropRightButton.SetActive(false);
                 }
                 zoomButtonLeft.SetActive(showZoomLeft);
                 zoomButtonRight.SetActive(showZoomRight);
