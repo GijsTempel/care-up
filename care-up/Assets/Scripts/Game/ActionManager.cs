@@ -56,7 +56,7 @@ public class ActionManager : MonoBehaviour
     private List<GameObject> particleHints;
     private bool menuScene;
     private bool uiSet = false;
-
+    ObjectsIDsController objectsIDsController;
     PlayerPrefsManager manager;
     HandsInventory inventory;
     static PlayerScript playerScript;
@@ -198,6 +198,7 @@ public class ActionManager : MonoBehaviour
 
             foreach (string hand in actionHand)
             {
+                bool foundDescr = false;
                 if (!string.IsNullOrEmpty(hand))
                 {
                     string handValue = hand;
@@ -211,6 +212,7 @@ public class ActionManager : MonoBehaviour
                             {
                                 handValue = GameObject.Find(hand).GetComponent<InteractableObject>().description;
                                 found = true;
+                                foundDescr = true;
                             }
                         }
                     }
@@ -226,6 +228,7 @@ public class ActionManager : MonoBehaviour
                             }
                         }
                     }
+                   
                     if (GameObject.FindObjectOfType<WorkField>() != null && !found)
                     {
                         foreach (WorkField w in GameObject.FindObjectsOfType<WorkField>())
@@ -237,6 +240,7 @@ public class ActionManager : MonoBehaviour
                                     if (obj.name == hand)
                                     {
                                         handValue = obj.GetComponent<InteractableObject>().description;
+                                        foundDescr = true;
                                         found = true;
                                         break;
                                     }
@@ -257,6 +261,7 @@ public class ActionManager : MonoBehaviour
                                     if (obj.name == hand)
                                     {
                                         handValue = obj.GetComponent<InteractableObject>().description;
+                                        foundDescr = true;
                                         found = true;
                                         break;
                                     }
@@ -292,6 +297,18 @@ public class ActionManager : MonoBehaviour
                             rightR = inventory.rightHandObject.gameObject;
                         }
                     }
+#if UNITY_EDITOR
+                    if (!foundDescr)
+                    {
+                        if(GameObject.FindObjectOfType<ObjectsIDsController>() != null)
+                        {
+                            if (!GameObject.FindObjectOfType<ObjectsIDsController>().addNeeded(hand))
+                                print("______Add to extra______   " + hand);
+
+                        }
+                    }
+#endif
+
 
                     handValue = System.Char.ToLowerInvariant(handValue[0]) + handValue.Substring(1);
 

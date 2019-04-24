@@ -21,10 +21,32 @@ public class ObjectsIDsController : MonoBehaviour
     private List<ObjectsIDs> objectsIDsList = new List<ObjectsIDs>();
     public List<GameObject> hidenObjects;
 
+    public List<string> objectsNeeded = new List<string>();
     private void Start()
     {
         GetObjectsIDsInfo();
     }
+
+    public bool addNeeded(string value)
+    {
+        bool has = false;
+        foreach (string o in objectsNeeded)
+        {
+            if (o == value)
+            {
+                has = true;
+                break;
+            }
+        }
+        if (!has)
+        {
+            objectsNeeded.Add(value);
+            return false;
+        }
+
+        return true;
+    }
+
 
     public void GetObjectsIDsInfo()
     {
