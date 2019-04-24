@@ -16,7 +16,17 @@ public class ItemControlButton : MonoBehaviour
         {
             gameUI = GameObject.FindObjectOfType<GameUI>();
         }
-        if(gameUI.buttonToBlink == buttonType)
+        if (buttonType == GameUI.ItemControlButtonType.DropLeft)
+        {
+            if (gameUI.DropLeftBlink)
+                GetComponent<Animator>().SetTrigger("BlinkOn");
+        }
+        else if (buttonType == GameUI.ItemControlButtonType.DropRight)
+        {
+            if (gameUI.DropRightBlink)
+                GetComponent<Animator>().SetTrigger("BlinkOn");
+        }
+        else if(gameUI.buttonToBlink == buttonType)
         {
             GetComponent<Animator>().SetTrigger("BlinkOn");
         }

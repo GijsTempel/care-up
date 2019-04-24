@@ -146,6 +146,9 @@ public class ActionManager : MonoBehaviour
         int i = 0;
         bool foundComplitedAction = false;
         gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
+        gameUI.DropLeftBlink = false;
+        gameUI.DropRightBlink = false;
+
         bool leftIncorrect = true;
         bool rightIncorrect = true;
 
@@ -313,7 +316,7 @@ public class ActionManager : MonoBehaviour
                     {
                         if (manager.CompareUseOnInfo(inventory.leftHandObject.name, ""))
                         {
-                            keyWords = manager.CurrentButtonText(inventory.leftHandObject.name);                          
+                            keyWords = manager.CurrentButtonText(inventory.leftHandObject.name);
 
                             objectsData.Add(new StepData(false, $"- Klik op de '{keyWords}' knop.", i));
                             if (!foundComplitedAction)
@@ -412,21 +415,21 @@ public class ActionManager : MonoBehaviour
                         gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
 
 
-                    if (leftIncorrect && !inventory.LeftHandEmpty())
-                    {                        
-                        objectsData.Add(new StepData(false, $"- Drop {article} {currentLeftObject}.", i));
-                    }
+                    //if (leftIncorrect && !inventory.LeftHandEmpty())
+                    //{
+                    //    objectsData.Add(new StepData(false, $"- Drop {article} {currentLeftObject}.", i));
+                    //}
 
-                    if (rightIncorrect && !inventory.RightHandEmpty())
-                    {                     
-                        objectsData.Add(new StepData(false, $"- Drop {article} {currentRightObject}.", i));
-                    }
+                    //if (rightIncorrect && !inventory.RightHandEmpty())
+                    //{
+                    //    objectsData.Add(new StepData(false, $"- Drop {article} {currentRightObject}.", i));
+                    //}
 
                     if (!completed)
                         correctObjectsInHands = false;
 
                     keyWords = "- Pak";
-                  
+
                     if (GameObject.Find(hand) != null)
                     {
                         if (GameObject.Find(hand).GetComponent<InteractableObject>() != null)
@@ -454,6 +457,12 @@ public class ActionManager : MonoBehaviour
 
             i++;
         }
+        GameObject.FindObjectOfType<GameUI>().UpdateHintPanel(stepsList);
+
+        if (leftIncorrect && !inventory.LeftHandEmpty())
+            gameUI.DropLeftBlink = true;
+        if (rightIncorrect && !inventory.RightHandEmpty())
+            gameUI.DropRightBlink = true;
         GameObject.FindObjectOfType<GameUI>().UpdateHintPanel(stepsList);
     }
 
@@ -1534,7 +1543,7 @@ public class ActionManager : MonoBehaviour
     {
         Transform gameOver = GameObject.Find("UI").transform.Find("GameOver");
         gameOver.gameObject.SetActive(true);
-            
+
         if (GameObject.Find("GameLogic") != null)
         {
             controls.keyPreferences.ToggleLock();
@@ -1544,7 +1553,7 @@ public class ActionManager : MonoBehaviour
         PlayerScript player = GameObject.Find("Player").GetComponent<PlayerScript>();
         Crosshair crosshair = GameObject.Find("Player").GetComponent<Crosshair>();
         Animator animator = player.transform.GetChild(0).GetChild(0).GetComponent<Animator>();
-        
+
         player.enabled = false;
         crosshair.enabled = false;
 
