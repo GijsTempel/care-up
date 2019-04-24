@@ -2069,7 +2069,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: w_sit_target
   resetCamera: 0
-  maxDist: 1.8
 --- !u!114 &114077741522578380
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -2172,6 +2171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 048a5ef94a6d86b4695f923fee66a91e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ReplaceThisWith: DropAndReturn
   hand: 1
 --- !u!114 &114125593250340196
 MonoBehaviour:
@@ -2635,6 +2635,21 @@ MonoBehaviour:
   - Connector.002
   - Tube.002
   toShow: 0
+--- !u!114 &114295275729500930
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 839bcc7f24a9c47f8af28e853187bfa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: w0_A
+  unlock_frame: 0
+  lock_frame: 171
+  toActivate: 0
 --- !u!114 &114296222160166632
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -2708,7 +2723,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: _curtainstarget
   resetCamera: 0
-  maxDist: 1.8
 --- !u!114 &114318959747429632
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2722,7 +2736,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: 
   resetCamera: 0
-  maxDist: 1.8
 --- !u!114 &114322994088285966
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2736,7 +2749,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: cloth_target
   resetCamera: 1
-  maxDist: 1.8
 --- !u!114 &114325967471301024
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2791,7 +2803,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combineFrame: 100
---- !u!114 &114338730643081362
+--- !u!114 &114333413647635544
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -2799,10 +2811,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 048a5ef94a6d86b4695f923fee66a91e, type: 3}
+  m_Script: {fileID: 11500000, guid: 8a536a9682af347488b2cfd1a613bf7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hand: 0
+  ObjectName: w0_A
+  HandToSwitch: 0
+  AnimationToChange: 1
+  ToFollowHoldingHand: 0
+  NewAnimationName: StandUpAfterProcedure
+  ActionFrame: 4501
 --- !u!114 &114346461618767698
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3224,6 +3241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 048a5ef94a6d86b4695f923fee66a91e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ReplaceThisWith: DropAndReturn
   hand: 0
 --- !u!114 &114470391426185914
 MonoBehaviour:
@@ -3588,7 +3606,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: w_clean_target
   resetCamera: 1
-  maxDist: 1.8
 --- !u!114 &114617105891984348
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3661,7 +3678,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: cloth_target
   resetCamera: 1
-  maxDist: 1.8
 --- !u!114 &114631538542969602
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -3961,6 +3977,19 @@ MonoBehaviour:
   unlock_frame: 1
   lock_frame: 210
   toActivate: 1
+--- !u!114 &114733062125549980
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22a8116c83a5f4d4089789b9fa16ac5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftHand: 1
+  rightHand: 1
 --- !u!114 &114733128126102786
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -4671,7 +4700,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: w_clean_target
   resetCamera: 0
-  maxDist: 1.8
 --- !u!114 &114974517681902748
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -4747,7 +4775,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: w_button_target
   resetCamera: 0
-  maxDist: 1.8
 --- !u!1101 &1101001213762382906
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -17558,6 +17585,8 @@ AnimatorState:
   - {fileID: 114115893742877698}
   - {fileID: 114583127148196438}
   - {fileID: 114318959747429632}
+  - {fileID: 114333413647635544}
+  - {fileID: 114295275729500930}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -20723,8 +20752,8 @@ AnimatorState:
   - {fileID: 114310868658204124}
   - {fileID: 114856699872790356}
   - {fileID: 114857024131914060}
-  - {fileID: 114338730643081362}
   - {fileID: 114156085572909364}
+  - {fileID: 114733062125549980}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1

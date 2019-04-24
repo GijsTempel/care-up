@@ -992,6 +992,8 @@ MonoBehaviour:
   animating: 0
   animationEnded: 0
   cinematicToggle: 0
+  cinematicLerp: 0
+  moveBackFromExam: 0
   dontMoveCamera: 0
 --- !u!4 &233021382
 Transform:
@@ -2461,9 +2463,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: Stoppen
-  pickUpActionCommand: 
-  combineActionCommand: 
-  useOnActionCommand: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -3667,9 +3667,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: Onderlegger
-  pickUpActionCommand: 
-  combineActionCommand: 
-  useOnActionCommand: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -3860,6 +3858,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 4.2380004, y: 91.950005, z: 0.70500004}
+--- !u!1 &698025615
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1207722336163528, guid: 5e4eb7639d1134b4ba850647fd8cc90b,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 698025616}
+  m_Layer: 0
+  m_Name: _theEndPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &698025616
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4168592584641856, guid: 5e4eb7639d1134b4ba850647fd8cc90b,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 698025615}
+  m_LocalRotation: {x: 0.025353521, y: 0.7077767, z: -0.02400096, w: 0.7055731}
+  m_LocalPosition: {x: 8.604974, y: 0.84497917, z: 8.995718}
+  m_LocalScale: {x: 1.198284, y: 1.1982841, z: 1.1982833}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 33
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &706193541
 Prefab:
   m_ObjectHideFlags: 0
@@ -4322,6 +4350,10 @@ Prefab:
     - target: {fileID: 1983893151224658, guid: d5eeabf49cc1cb14a8f7b1cef4f2cfd8, type: 2}
       propertyPath: m_Name
       value: w0_A
+      objectReference: {fileID: 0}
+    - target: {fileID: 1893724601819630, guid: d5eeabf49cc1cb14a8f7b1cef4f2cfd8, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d5eeabf49cc1cb14a8f7b1cef4f2cfd8, type: 2}
@@ -6040,9 +6072,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: Kraan
-  pickUpActionCommand: 
-  combineActionCommand: 
-  useOnActionCommand: 
+  nameArticle: 
   muplipleMesh: 1
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -7935,6 +7965,42 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -0.15300001
       objectReference: {fileID: 0}
+    - target: {fileID: 4168592584641856, guid: 5e4eb7639d1134b4ba850647fd8cc90b, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -1.222
+      objectReference: {fileID: 0}
+    - target: {fileID: 4168592584641856, guid: 5e4eb7639d1134b4ba850647fd8cc90b, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0.626
+      objectReference: {fileID: 0}
+    - target: {fileID: 4168592584641856, guid: 5e4eb7639d1134b4ba850647fd8cc90b, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -0.307
+      objectReference: {fileID: 0}
+    - target: {fileID: 4168592584641856, guid: 5e4eb7639d1134b4ba850647fd8cc90b, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0.0256702
+      objectReference: {fileID: 0}
+    - target: {fileID: 4168592584641856, guid: 5e4eb7639d1134b4ba850647fd8cc90b, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0.63794273
+      objectReference: {fileID: 0}
+    - target: {fileID: 4168592584641856, guid: 5e4eb7639d1134b4ba850647fd8cc90b, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0.021285336
+      objectReference: {fileID: 0}
+    - target: {fileID: 4168592584641856, guid: 5e4eb7639d1134b4ba850647fd8cc90b, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.7693615
+      objectReference: {fileID: 0}
+    - target: {fileID: 4168592584641856, guid: 5e4eb7639d1134b4ba850647fd8cc90b, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4168592584641856, guid: 5e4eb7639d1134b4ba850647fd8cc90b, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 79.33
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5e4eb7639d1134b4ba850647fd8cc90b, type: 2}
   m_IsPrefabParent: 0
@@ -8444,9 +8510,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
-  pickUpActionCommand: 
-  combineActionCommand: 
-  useOnActionCommand: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
