@@ -313,12 +313,9 @@ public class ActionManager : MonoBehaviour
                     {
                         if (manager.CompareUseOnInfo(inventory.leftHandObject.name, ""))
                         {
-                            keyWords = manager.CurrentButtonText(inventory.leftHandObject.name);
+                            keyWords = manager.CurrentButtonText(inventory.leftHandObject.name);                          
 
-                            if (keyWords.Substring(keyWords.Length - 1, 1) != ".")
-                                keyWords += ".";
-
-                            objectsData.Add(new StepData(false, $"- {keyWords}", i));
+                            objectsData.Add(new StepData(false, $"- Klik op de '{keyWords}' knop.", i));
                             if (!foundComplitedAction)
                             {
                                 foundComplitedAction = true;
@@ -364,10 +361,8 @@ public class ActionManager : MonoBehaviour
                         if (manager.CompareUseOnInfo(inventory.rightHandObject.name, ""))
                         {
                             keyWords = manager.CurrentButtonText(inventory.rightHandObject.name);
-                            if (keyWords.Substring(keyWords.Length - 1, 1) != ".")
-                                keyWords += ".";
 
-                            objectsData.Add(new StepData(false, $"- {keyWords}", i));
+                            objectsData.Add(new StepData(false, $"- Klik op de '{keyWords}' knop.", i));
                             if (!foundComplitedAction)
                             {
                                 foundComplitedAction = true;
@@ -420,11 +415,10 @@ public class ActionManager : MonoBehaviour
                     if (leftIncorrect && !inventory.LeftHandEmpty())
                     {                        
                         objectsData.Add(new StepData(false, $"- Drop {article} {currentLeftObject}.", i));
-
                     }
+
                     if (rightIncorrect && !inventory.RightHandEmpty())
-                    {
-                     
+                    {                     
                         objectsData.Add(new StepData(false, $"- Drop {article} {currentRightObject}.", i));
                     }
 
@@ -460,7 +454,7 @@ public class ActionManager : MonoBehaviour
 
             i++;
         }
-        GameObject.FindObjectOfType<GameUI>().UpdateRequirements(stepsList);
+        GameObject.FindObjectOfType<GameUI>().UpdateHintPanel(stepsList);
     }
 
     /// <summary>
