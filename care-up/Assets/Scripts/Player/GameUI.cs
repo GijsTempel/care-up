@@ -695,7 +695,8 @@ public class GameUI : MonoBehaviour
             t.GetComponent<Text>().color = c;
         }
     }
-    public void UpdateRequirements(List<ActionManager.StepData> subTasks)
+
+    public void UpdateHintPanel(List<ActionManager.StepData> subTasks)
     {
         ClearHintPanel();
         Text hintText;
