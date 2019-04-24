@@ -984,6 +984,8 @@ MonoBehaviour:
   animating: 0
   animationEnded: 0
   cinematicToggle: 0
+  cinematicLerp: 0
+  moveBackFromExam: 0
   dontMoveCamera: 0
 --- !u!4 &251147197
 Transform:
@@ -1047,10 +1049,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   triggers:
-  - Use
-  - S Use
+  - UseLeft
+  - S UseLeft
   - 10300 leftID
-  - -700 rightID
 --- !u!1001 &265411573
 Prefab:
   m_ObjectHideFlags: 0
@@ -2313,6 +2314,46 @@ Prefab:
     - target: {fileID: 4008600462981328, guid: 5e4eb7639d1134b4ba850647fd8cc90b, type: 2}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -0.15300001
+      objectReference: {fileID: 0}
+    - target: {fileID: 4168592584641856, guid: 5e4eb7639d1134b4ba850647fd8cc90b, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0.11010864
+      objectReference: {fileID: 0}
+    - target: {fileID: 4168592584641856, guid: 5e4eb7639d1134b4ba850647fd8cc90b, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0.75749046
+      objectReference: {fileID: 0}
+    - target: {fileID: 4168592584641856, guid: 5e4eb7639d1134b4ba850647fd8cc90b, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0.068424225
+      objectReference: {fileID: 0}
+    - target: {fileID: 4168592584641856, guid: 5e4eb7639d1134b4ba850647fd8cc90b, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.6398456
+      objectReference: {fileID: 0}
+    - target: {fileID: 4168592584641856, guid: 5e4eb7639d1134b4ba850647fd8cc90b, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -1.3177179
+      objectReference: {fileID: 0}
+    - target: {fileID: 4168592584641856, guid: 5e4eb7639d1134b4ba850647fd8cc90b, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0.62756383
+      objectReference: {fileID: 0}
+    - target: {fileID: 4168592584641856, guid: 5e4eb7639d1134b4ba850647fd8cc90b, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0.20028612
+      objectReference: {fileID: 0}
+    - target: {fileID: 4168592584641856, guid: 5e4eb7639d1134b4ba850647fd8cc90b, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 14.156001
+      objectReference: {fileID: 0}
+    - target: {fileID: 4168592584641856, guid: 5e4eb7639d1134b4ba850647fd8cc90b, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 100.20701
+      objectReference: {fileID: 0}
+    - target: {fileID: 4168592584641856, guid: 5e4eb7639d1134b4ba850647fd8cc90b, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 4.688
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5e4eb7639d1134b4ba850647fd8cc90b, type: 2}
@@ -5014,6 +5055,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: Stoppen
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -5518,6 +5560,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -5548,6 +5591,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -5578,6 +5622,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -5608,6 +5653,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -5638,6 +5684,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -5668,6 +5715,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -5698,6 +5746,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -5728,6 +5777,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -5758,6 +5808,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -5788,6 +5839,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -6927,6 +6979,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: "Cli\xEBnt"
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0

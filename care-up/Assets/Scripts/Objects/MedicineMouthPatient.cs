@@ -28,6 +28,7 @@ public class MedicineMouthPatient : PersonObject {
             {
                 case "Sitstraight":
                     PlayerAnimator.SetTrigger("Player_TakeOffBlanket");
+                    PlayerAnimator.SetTrigger("S Player_TakeOffBlanket");
                     break;
                 default:
                     break;
