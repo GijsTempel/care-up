@@ -705,6 +705,7 @@ GameObject:
   - component: {fileID: 233021375}
   - component: {fileID: 233021383}
   - component: {fileID: 233021384}
+  - component: {fileID: 233021385}
   m_Layer: 0
   m_Name: GameLogic
   m_TagString: Untagged
@@ -854,6 +855,8 @@ MonoBehaviour:
   animating: 0
   animationEnded: 0
   cinematicToggle: 0
+  cinematicLerp: 0
+  moveBackFromExam: 0
   dontMoveCamera: 0
 --- !u!4 &233021382
 Transform:
@@ -909,6 +912,19 @@ MonoBehaviour:
   RightbjectsID: -500
   actionType: 0
   testObject: {fileID: 0}
+--- !u!114 &233021385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 233021374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2864bf716b76342c2a6c1726b631a67d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildList: 1
+  objectsNeeded: []
 --- !u!1 &255968373
 GameObject:
   m_ObjectHideFlags: 0
@@ -1785,6 +1801,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: Stoppen
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -5304,6 +5321,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 1
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0

@@ -514,6 +514,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -1361,6 +1362,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -2598,8 +2600,8 @@ GameObject:
   - component: {fileID: 402590244}
   - component: {fileID: 402590243}
   - component: {fileID: 402590251}
-  - component: {fileID: 402590252}
   - component: {fileID: 402590253}
+  - component: {fileID: 402590252}
   m_Layer: 0
   m_Name: GameLogic
   m_TagString: Untagged
@@ -2743,6 +2745,8 @@ MonoBehaviour:
   animating: 0
   animationEnded: 0
   cinematicToggle: 0
+  cinematicLerp: 0
+  moveBackFromExam: 0
   dontMoveCamera: 0
 --- !u!4 &402590250
 Transform:
@@ -2781,9 +2785,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 402590242}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7aa545d3bebf9b44a86fe30ade141a7e, type: 3}
+  m_Script: {fileID: 11500000, guid: 2864bf716b76342c2a6c1726b631a67d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buildList: 1
+  objectsNeeded: []
 --- !u!114 &402590253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5396,6 +5402,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -5582,6 +5589,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -6051,6 +6059,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -6591,6 +6600,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -7341,6 +7351,48 @@ Transform:
   m_Father: {fileID: 2121875578}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1121197030
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4764081968280112, guid: 19a33f7821e3f4dc5b4b557ae848c219, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 9.186162
+      objectReference: {fileID: 0}
+    - target: {fileID: 4764081968280112, guid: 19a33f7821e3f4dc5b4b557ae848c219, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 1.1014563
+      objectReference: {fileID: 0}
+    - target: {fileID: 4764081968280112, guid: 19a33f7821e3f4dc5b4b557ae848c219, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 12.006
+      objectReference: {fileID: 0}
+    - target: {fileID: 4764081968280112, guid: 19a33f7821e3f4dc5b4b557ae848c219, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4764081968280112, guid: 19a33f7821e3f4dc5b4b557ae848c219, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4764081968280112, guid: 19a33f7821e3f4dc5b4b557ae848c219, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4764081968280112, guid: 19a33f7821e3f4dc5b4b557ae848c219, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4764081968280112, guid: 19a33f7821e3f4dc5b4b557ae848c219, type: 2}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 19a33f7821e3f4dc5b4b557ae848c219, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &1125687838
 Prefab:
   m_ObjectHideFlags: 0
@@ -7924,6 +7976,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: "Cli\xEBnt"
+  nameArticle: 
   muplipleMesh: 1
   descriptionOffset: {x: 0, y: 0.5, z: 0}
   transparencyFix: 1
@@ -8405,6 +8458,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -9182,6 +9236,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -9541,6 +9596,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: Stoppen
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -10383,6 +10439,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -11454,6 +11511,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
