@@ -43,6 +43,8 @@ public class GameUI : MonoBehaviour
     public GameObject decombineButton;
     public GameObject decombineButton_right;
     public GameUI.ItemControlButtonType buttonToBlink;
+    public GameUI.ItemControlButtonType moveButtonToBlink;
+
 
     public GameObject noTargetButton;
     public GameObject noTargetButton_right;
@@ -480,7 +482,7 @@ public class GameUI : MonoBehaviour
                 GUI.Label(new Rect(30, 0, 100, 100), "Cheat enabled");
         }
 
-        //GUI.Label(new Rect(20, 700, 1000, 100), debugSS);
+        GUI.Label(new Rect(20, 700, 1000, 100), debugSS);
 
 #endif
     }
@@ -522,7 +524,6 @@ public class GameUI : MonoBehaviour
             b.undateBlinkState();
         }
     }
-
 
         // Update is called once per frame
     void Update()

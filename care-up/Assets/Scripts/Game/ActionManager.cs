@@ -151,6 +151,9 @@ public class ActionManager : MonoBehaviour
         bool leftIncorrect = true;
         bool rightIncorrect = true;
         bool noObjectActions = true;
+        bool anyCorrectPlace = false;
+        List<string> placesReqList = new List<string>();
+
         foreach (Action a in sublist)
         {
             StepData placeData = null;
@@ -170,6 +173,8 @@ public class ActionManager : MonoBehaviour
                     completed = playerScript.currentWalkPosition.name == a.placeRequirement;
 
                 placeData = new StepData(completed, $"- Ga naar {placeName}.", i);
+                if (completed)
+                    anyCorrectPlace = true;
             }
 
             if (!string.IsNullOrEmpty(a.secondPlaceRequirement))
@@ -184,6 +189,8 @@ public class ActionManager : MonoBehaviour
                     completed = playerScript.currentWalkPosition.name == a.secondPlaceRequirement;
 
                 secondPlaceData = new StepData(completed, $"- Ga naar {placeName}.", i);
+                if (completed)
+                    anyCorrectPlace = true;
             }
 
             string[] actionHand = { a.leftHandRequirement, a.rightHandRequirement };
@@ -192,9 +199,7 @@ public class ActionManager : MonoBehaviour
             string article = null;
             string currentLeftObject = null;
             string currentRightObject = null;
-
             bool objectCombinationCheck = false;
-
             foreach (string hand in actionHand)
             {
                 bool foundDescr = false;
@@ -472,10 +477,17 @@ public class ActionManager : MonoBehaviour
             if (placeData != null)
             {
                 if (secondPlaceData != null && correctObjectsInHands)
+                {
                     stepsList.Add(secondPlaceData);
+                    placesReqList.Add(a.secondPlaceRequirement);
+                }
                 else
+                {
                     stepsList.Add(placeData);
+                    placesReqList.Add(a.placeRequirement);
+                }
             }
+
 
             foreach (StepData sd in objectsData)
             {
@@ -484,9 +496,49 @@ public class ActionManager : MonoBehaviour
 
             if (objectsData.Count > 0)
                 noObjectActions = false;
+
+            string sss = "";
+            foreach (string s in placesReqList)
+                sss += s + " | ";
+            //gameUI.debugSS = anyCorrectPlace.ToString() + " " + sss;
+            gameUI.moveButtonToBlink = GameUI.ItemControlButtonType.None;
+
+            if (!anyCorrectPlace && ! playerScript.away && placesReqList.Count > 0)
+            {
+                WalkToGroup currentWTG = playerScript.currentWalkPosition;
+
+                string leftPlaceName = "";
+                string rightPlaceName = "";
+                if (currentWTG.LeftWalkToGroup != null)
+                    leftPlaceName = currentWTG.LeftWalkToGroup.name;
+                if (currentWTG.RightWalkToGroup != null)
+                    rightPlaceName = currentWTG.RightWalkToGroup.name;
+                foreach (string s in placesReqList)
+                {
+                    if (s == leftPlaceName)
+                    {
+                        gameUI.moveButtonToBlink = GameUI.ItemControlButtonType.MoveLeft;
+                        break;
+                    }
+                    if (s == rightPlaceName)
+                    {
+                        gameUI.moveButtonToBlink = GameUI.ItemControlButtonType.MoveRight;
+                        break;
+                    }
+                }
+                
+            }
+
             i++;
+        }
+        if (gameUI.moveButtonToBlink != GameUI.ItemControlButtonType.None)
+        {
+            gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
+            gameUI.DropRightBlink = false;
+            gameUI.DropLeftBlink = false;
 
         }
+
         GameObject.FindObjectOfType<GameUI>().UpdateHintPanel(stepsList);
 
         if (leftIncorrect && !inventory.LeftHandEmpty() && !noObjectActions)
@@ -494,6 +546,8 @@ public class ActionManager : MonoBehaviour
         if (rightIncorrect && !inventory.RightHandEmpty() && !noObjectActions)
             gameUI.DropRightBlink = true;
         GameObject.FindObjectOfType<GameUI>().UpdateHintPanel(stepsList);
+
+        gameUI.updateButtonsBlink();
     }
 
     /// <summary>

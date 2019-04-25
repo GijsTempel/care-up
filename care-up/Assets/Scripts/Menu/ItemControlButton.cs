@@ -37,6 +37,16 @@ public class ItemControlButton : MonoBehaviour
                 toBlink = true;
             }
         }
+        else if (buttonType == GameUI.ItemControlButtonType.MoveLeft || buttonType == GameUI.ItemControlButtonType.MoveRight)
+        {
+            if (gameUI.moveButtonToBlink == buttonType)
+            {
+                {
+                    GetComponent<Animator>().SetTrigger("BlinkOn");
+                    toBlink = true;
+                }
+            }
+        }
         else if (gameUI.buttonToBlink == buttonType)
         {
             {
@@ -44,6 +54,7 @@ public class ItemControlButton : MonoBehaviour
                 toBlink = true;
             }
         }
+
         if (!toBlink && GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ItemBlink"))
             GetComponent<Animator>().SetTrigger("BlinkOff");
     }
