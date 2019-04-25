@@ -10,18 +10,16 @@ public class ItemControlButton : MonoBehaviour
         gameUI = GameObject.FindObjectOfType<GameUI>();
     }
 
-
     public void updateBlinkState()
     {
         GetComponent<Animator>().ResetTrigger("BlinkOn");
         GetComponent<Animator>().ResetTrigger("BlinkOff");
         bool toBlink = false;
         if (gameUI == null)
-        {
             gameUI = GameObject.FindObjectOfType<GameUI>();
-        }
+        bool directionActive = gameUI.moveButtonToBlink != GameUI.ItemControlButtonType.None;
 
-        if (buttonType == GameUI.ItemControlButtonType.DropLeft)
+        if (buttonType == GameUI.ItemControlButtonType.DropLeft && !directionActive)
         {
             if (gameUI.DropLeftBlink)
             {
@@ -29,7 +27,7 @@ public class ItemControlButton : MonoBehaviour
                 toBlink = true;
             }
         }
-        else if (buttonType == GameUI.ItemControlButtonType.DropRight)
+        else if (buttonType == GameUI.ItemControlButtonType.DropRight && !directionActive)
         {
             if (gameUI.DropRightBlink)
             {
@@ -47,7 +45,7 @@ public class ItemControlButton : MonoBehaviour
                 }
             }
         }
-        else if (gameUI.buttonToBlink == buttonType)
+        else if (gameUI.buttonToBlink == buttonType && !directionActive)
         {
             {
                 GetComponent<Animator>().SetTrigger("BlinkOn");
@@ -55,8 +53,17 @@ public class ItemControlButton : MonoBehaviour
             }
         }
 
-        if (!toBlink && GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ItemBlink"))
-            GetComponent<Animator>().SetTrigger("BlinkOff");
+
+        if (!toBlink) 
+        {
+            if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ItemBlink"))
+                GetComponent<Animator>().SetTrigger("BlinkOff");
+        }
+        else if (!GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ItemBlink"))
+            GetComponent<Animator>().SetTrigger("BlinkOn");
+
+
+
     }
 
     private void OnEnable()
