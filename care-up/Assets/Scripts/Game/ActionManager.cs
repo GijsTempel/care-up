@@ -190,8 +190,8 @@ public class ActionManager : MonoBehaviour
                     completed = playerScript.currentWalkPosition.name == a.secondPlaceRequirement;
 
                 secondPlaceData = new StepData(completed, $"- Ga naar {placeName}.", i);
-                if (completed)
-                    anyCorrectPlace = true;
+                //if (completed)
+                    //anyCorrectPlace = true;
             }
 
             string[] actionHand = { a.leftHandRequirement, a.rightHandRequirement };
@@ -480,7 +480,7 @@ public class ActionManager : MonoBehaviour
                 if (secondPlaceData != null && correctObjectsInHands)
                 {
                     stepsList.Add(secondPlaceData);
-                    placesReqList.Add(a.secondPlaceRequirement);
+                    //placesReqList.Add(a.secondPlaceRequirement);
                     if (!secondPlaceData.completed)
                         uncomplitedSecondPlace = a.secondPlaceRequirement;
                 }
@@ -512,28 +512,29 @@ public class ActionManager : MonoBehaviour
             string sss = "";
             foreach (string s in placesReqList)
                 sss += s + " | ";
-            //gameUI.debugSS = anyCorrectPlace.ToString() + " " + sss;
 
+            //gameUI.debugSS = anyCorrectPlace.ToString() + " " + sss;
+            //if (!playerScript.away)
+            //    gameUI.debugSS = gameUI.FindDirection("WorkFieldPos", playerScript.currentWalkPosition, 0).ToString();
+            //else
+                //gameUI.debugSS = "";
+
+            //FindDirection(string neededWalkToGroup, WalkToGroup startWalkToGtoup, int direction)
 
 
             if ((!anyCorrectPlace || uncomplitedSecondPlace != "") && ! playerScript.away && placesReqList.Count > 0)
             {
                 WalkToGroup currentWTG = playerScript.currentWalkPosition;
 
-                string leftPlaceName = "";
-                string rightPlaceName = "";
-                if (currentWTG.LeftWalkToGroup != null)
-                    leftPlaceName = currentWTG.LeftWalkToGroup.name;
-                if (currentWTG.RightWalkToGroup != null)
-                    rightPlaceName = currentWTG.RightWalkToGroup.name;
                 foreach (string s in placesReqList)
                 {
-                    if (s == leftPlaceName)
+                    int dir = gameUI.FindDirection(s, playerScript.currentWalkPosition, 0);
+                    if(dir == -1)
                     {
                         gameUI.moveButtonToBlink = GameUI.ItemControlButtonType.MoveLeft;
                         break;
                     }
-                    if (s == rightPlaceName)
+                    else if (dir == 1)
                     {
                         gameUI.moveButtonToBlink = GameUI.ItemControlButtonType.MoveRight;
                         break;

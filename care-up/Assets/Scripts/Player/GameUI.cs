@@ -525,12 +525,40 @@ public class GameUI : MonoBehaviour
         }
     }
 
-    public int FindDirection(string neededWalkToGroup)
+    public int FindDirection(string neededWalkToGroup, WalkToGroup startWalkToGtoup, int direction)
     {
-        WalkToGroup currentWTG = ps.currentWalkPosition;
-        if (currentWTG.name == neededWalkToGroup)
+        if (startWalkToGtoup.name == neededWalkToGroup)
             return 0;
+        WalkToGroup l = null;
+        WalkToGroup r = null;
+        if (startWalkToGtoup.LeftWalkToGroup != null)
+            l = startWalkToGtoup.LeftWalkToGroup;
+        if (startWalkToGtoup.RightWalkToGroup != null)
+            r = startWalkToGtoup.RightWalkToGroup;
 
+        if (direction != 1 && l != null)
+        {
+            if (l.name == neededWalkToGroup)
+                return -1;
+            else 
+            {
+                int a = FindDirection(neededWalkToGroup, l, -1);
+                if (a != 0)
+                    return a;
+            }
+        }
+
+        if (direction != -1 && r != null)
+        {
+            if (r.name == neededWalkToGroup)
+                return 1;
+            else
+            {
+                int a = FindDirection(neededWalkToGroup, r, 1);
+                if (a != 0)
+                    return a;
+            }
+        }
 
         return 0;
     }
