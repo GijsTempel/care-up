@@ -23,7 +23,7 @@ public class ItemControlButton : MonoBehaviour
         {
             if (gameUI.DropLeftBlink)
             {
-                GetComponent<Animator>().SetTrigger("BlinkOn");
+                //GetComponent<Animator>().SetTrigger("BlinkOn");
                 toBlink = true;
             }
         }
@@ -31,7 +31,7 @@ public class ItemControlButton : MonoBehaviour
         {
             if (gameUI.DropRightBlink)
             {
-                GetComponent<Animator>().SetTrigger("BlinkOn");
+                //GetComponent<Animator>().SetTrigger("BlinkOn");
                 toBlink = true;
             }
         }
@@ -40,7 +40,7 @@ public class ItemControlButton : MonoBehaviour
             if (gameUI.moveButtonToBlink == buttonType)
             {
                 {
-                    GetComponent<Animator>().SetTrigger("BlinkOn");
+                    //GetComponent<Animator>().SetTrigger("BlinkOn");
                     toBlink = true;
                 }
             }
@@ -48,7 +48,7 @@ public class ItemControlButton : MonoBehaviour
         else if (gameUI.buttonToBlink == buttonType && !directionActive)
         {
             {
-                GetComponent<Animator>().SetTrigger("BlinkOn");
+                //GetComponent<Animator>().SetTrigger("BlinkOn");
                 toBlink = true;
             }
         }

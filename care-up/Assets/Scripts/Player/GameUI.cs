@@ -44,7 +44,8 @@ public class GameUI : MonoBehaviour
     public GameObject decombineButton_right;
     public GameUI.ItemControlButtonType buttonToBlink;
     public GameUI.ItemControlButtonType moveButtonToBlink;
-
+    public bool prescriptionButtonBlink;
+    public bool recordsButtonBlink;
 
     public GameObject noTargetButton;
     public GameObject noTargetButton_right;
@@ -85,7 +86,11 @@ public class GameUI : MonoBehaviour
         DropLeft,
         DropRight,
         MoveLeft,
-        MoveRight
+        MoveRight,
+        Records,
+        Prescription, 
+        Ipad,
+        General
     }
 
     public void UseOn()
@@ -522,6 +527,10 @@ public class GameUI : MonoBehaviour
         foreach (ItemControlButton b in GameObject.FindObjectsOfType<ItemControlButton>())
         {
             b.updateBlinkState();
+        }
+        foreach (ButtonBlinking b in GameObject.FindObjectsOfType<ButtonBlinking>())
+        {
+            b.UpdateButtonState();
         }
     }
 
