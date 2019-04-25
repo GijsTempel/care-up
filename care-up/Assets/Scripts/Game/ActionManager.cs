@@ -151,6 +151,10 @@ public class ActionManager : MonoBehaviour
         bool leftIncorrect = true;
         bool rightIncorrect = true;
         bool noObjectActions = true;
+        bool anyCorrectPlace = false;
+        List<string> placesReqList = new List<string>();
+        string uncomplitedSecondPlace = "";
+
         foreach (Action a in sublist)
         {
             StepData placeData = null;
@@ -170,6 +174,8 @@ public class ActionManager : MonoBehaviour
                     completed = playerScript.currentWalkPosition.name == a.placeRequirement;
 
                 placeData = new StepData(completed, $"- Ga naar {placeName}.", i);
+                if (completed)
+                    anyCorrectPlace = true;
             }
 
             if (!string.IsNullOrEmpty(a.secondPlaceRequirement))
@@ -184,6 +190,8 @@ public class ActionManager : MonoBehaviour
                     completed = playerScript.currentWalkPosition.name == a.secondPlaceRequirement;
 
                 secondPlaceData = new StepData(completed, $"- Ga naar {placeName}.", i);
+                //if (completed)
+                    //anyCorrectPlace = true;
             }
 
             string[] actionHand = { a.leftHandRequirement, a.rightHandRequirement };
@@ -192,9 +200,7 @@ public class ActionManager : MonoBehaviour
             string article = null;
             string currentLeftObject = null;
             string currentRightObject = null;
-
             bool objectCombinationCheck = false;
-
             foreach (string hand in actionHand)
             {
                 bool foundDescr = false;
@@ -472,10 +478,19 @@ public class ActionManager : MonoBehaviour
             if (placeData != null)
             {
                 if (secondPlaceData != null && correctObjectsInHands)
+                {
                     stepsList.Add(secondPlaceData);
+                    //placesReqList.Add(a.secondPlaceRequirement);
+                    if (!secondPlaceData.completed)
+                        uncomplitedSecondPlace = a.secondPlaceRequirement;
+                }
                 else
+                {
                     stepsList.Add(placeData);
+                    placesReqList.Add(a.placeRequirement);
+                }
             }
+
 
             foreach (StepData sd in objectsData)
             {
@@ -484,9 +499,60 @@ public class ActionManager : MonoBehaviour
 
             if (objectsData.Count > 0)
                 noObjectActions = false;
+
+            gameUI.moveButtonToBlink = GameUI.ItemControlButtonType.None;
+
+            if (uncomplitedSecondPlace != "")
+            {
+                placesReqList.Clear();
+                placesReqList.Add(uncomplitedSecondPlace);
+            }
+
+
+            string sss = "";
+            foreach (string s in placesReqList)
+                sss += s + " | ";
+
+            //gameUI.debugSS = anyCorrectPlace.ToString() + " " + sss;
+            //if (!playerScript.away)
+            //    gameUI.debugSS = gameUI.FindDirection("WorkFieldPos", playerScript.currentWalkPosition, 0).ToString();
+            //else
+                //gameUI.debugSS = "";
+
+            //FindDirection(string neededWalkToGroup, WalkToGroup startWalkToGtoup, int direction)
+
+
+            if ((!anyCorrectPlace || uncomplitedSecondPlace != "") && ! playerScript.away && placesReqList.Count > 0)
+            {
+                WalkToGroup currentWTG = playerScript.currentWalkPosition;
+
+                foreach (string s in placesReqList)
+                {
+                    int dir = gameUI.FindDirection(s, playerScript.currentWalkPosition, 0);
+                    if(dir == -1)
+                    {
+                        gameUI.moveButtonToBlink = GameUI.ItemControlButtonType.MoveLeft;
+                        break;
+                    }
+                    else if (dir == 1)
+                    {
+                        gameUI.moveButtonToBlink = GameUI.ItemControlButtonType.MoveRight;
+                        break;
+                    }
+                }
+                
+            }
+
             i++;
+        }
+        if (gameUI.moveButtonToBlink != GameUI.ItemControlButtonType.None)
+        {
+            gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
+            gameUI.DropRightBlink = false;
+            gameUI.DropLeftBlink = false;
 
         }
+
         GameObject.FindObjectOfType<GameUI>().UpdateHintPanel(stepsList);
 
         if (leftIncorrect && !inventory.LeftHandEmpty() && !noObjectActions)
@@ -494,6 +560,8 @@ public class ActionManager : MonoBehaviour
         if (rightIncorrect && !inventory.RightHandEmpty() && !noObjectActions)
             gameUI.DropRightBlink = true;
         GameObject.FindObjectOfType<GameUI>().UpdateHintPanel(stepsList);
+
+        gameUI.updateButtonsBlink();
     }
 
     /// <summary>

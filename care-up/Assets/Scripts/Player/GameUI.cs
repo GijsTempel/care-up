@@ -43,6 +43,8 @@ public class GameUI : MonoBehaviour
     public GameObject decombineButton;
     public GameObject decombineButton_right;
     public GameUI.ItemControlButtonType buttonToBlink;
+    public GameUI.ItemControlButtonType moveButtonToBlink;
+
 
     public GameObject noTargetButton;
     public GameObject noTargetButton_right;
@@ -480,7 +482,7 @@ public class GameUI : MonoBehaviour
                 GUI.Label(new Rect(30, 0, 100, 100), "Cheat enabled");
         }
 
-        //GUI.Label(new Rect(20, 700, 1000, 100), debugSS);
+        GUI.Label(new Rect(20, 700, 1000, 100), debugSS);
 
 #endif
     }
@@ -519,10 +521,47 @@ public class GameUI : MonoBehaviour
     {
         foreach (ItemControlButton b in GameObject.FindObjectsOfType<ItemControlButton>())
         {
-            b.undateBlinkState();
+            b.updateBlinkState();
         }
     }
 
+    public int FindDirection(string neededWalkToGroup, WalkToGroup startWalkToGtoup, int direction)
+    {
+        if (startWalkToGtoup.name == neededWalkToGroup)
+            return 0;
+        WalkToGroup l = null;
+        WalkToGroup r = null;
+        if (startWalkToGtoup.LeftWalkToGroup != null)
+            l = startWalkToGtoup.LeftWalkToGroup;
+        if (startWalkToGtoup.RightWalkToGroup != null)
+            r = startWalkToGtoup.RightWalkToGroup;
+
+        if (direction != 1 && l != null)
+        {
+            if (l.name == neededWalkToGroup)
+                return -1;
+            else 
+            {
+                int a = FindDirection(neededWalkToGroup, l, -1);
+                if (a != 0)
+                    return a;
+            }
+        }
+
+        if (direction != -1 && r != null)
+        {
+            if (r.name == neededWalkToGroup)
+                return 1;
+            else
+            {
+                int a = FindDirection(neededWalkToGroup, r, 1);
+                if (a != 0)
+                    return a;
+            }
+        }
+
+        return 0;
+    }
 
         // Update is called once per frame
     void Update()
