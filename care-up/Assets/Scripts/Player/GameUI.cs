@@ -521,8 +521,18 @@ public class GameUI : MonoBehaviour
     {
         foreach (ItemControlButton b in GameObject.FindObjectsOfType<ItemControlButton>())
         {
-            b.undateBlinkState();
+            b.updateBlinkState();
         }
+    }
+
+    public int FindDirection(string neededWalkToGroup)
+    {
+        WalkToGroup currentWTG = ps.currentWalkPosition;
+        if (currentWTG.name == neededWalkToGroup)
+            return 0;
+
+
+        return 0;
     }
 
         // Update is called once per frame

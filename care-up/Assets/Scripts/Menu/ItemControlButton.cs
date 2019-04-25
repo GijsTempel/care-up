@@ -11,7 +11,7 @@ public class ItemControlButton : MonoBehaviour
     }
 
 
-    public void undateBlinkState()
+    public void updateBlinkState()
     {
         GetComponent<Animator>().ResetTrigger("BlinkOn");
         GetComponent<Animator>().ResetTrigger("BlinkOff");
@@ -61,6 +61,6 @@ public class ItemControlButton : MonoBehaviour
 
     private void OnEnable()
     {
-        undateBlinkState();
+        updateBlinkState();
     }   
 }

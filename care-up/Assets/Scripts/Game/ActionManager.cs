@@ -153,6 +153,7 @@ public class ActionManager : MonoBehaviour
         bool noObjectActions = true;
         bool anyCorrectPlace = false;
         List<string> placesReqList = new List<string>();
+        string uncomplitedSecondPlace = "";
 
         foreach (Action a in sublist)
         {
@@ -480,6 +481,8 @@ public class ActionManager : MonoBehaviour
                 {
                     stepsList.Add(secondPlaceData);
                     placesReqList.Add(a.secondPlaceRequirement);
+                    if (!secondPlaceData.completed)
+                        uncomplitedSecondPlace = a.secondPlaceRequirement;
                 }
                 else
                 {
@@ -497,13 +500,23 @@ public class ActionManager : MonoBehaviour
             if (objectsData.Count > 0)
                 noObjectActions = false;
 
+            gameUI.moveButtonToBlink = GameUI.ItemControlButtonType.None;
+
+            if (uncomplitedSecondPlace != "")
+            {
+                placesReqList.Clear();
+                placesReqList.Add(uncomplitedSecondPlace);
+            }
+
+
             string sss = "";
             foreach (string s in placesReqList)
                 sss += s + " | ";
             //gameUI.debugSS = anyCorrectPlace.ToString() + " " + sss;
-            gameUI.moveButtonToBlink = GameUI.ItemControlButtonType.None;
 
-            if (!anyCorrectPlace && ! playerScript.away && placesReqList.Count > 0)
+
+
+            if ((!anyCorrectPlace || uncomplitedSecondPlace != "") && ! playerScript.away && placesReqList.Count > 0)
             {
                 WalkToGroup currentWTG = playerScript.currentWalkPosition;
 
