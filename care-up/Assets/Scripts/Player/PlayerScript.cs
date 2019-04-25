@@ -92,7 +92,7 @@ public class PlayerScript : MonoBehaviour
     bool extraPanelActiveForIpad = false;
 
     public static bool actionsLocked = false;
-
+    float defaultInteractionDistance = -1;
     [HideInInspector]
     public GameObject joystickObject;
 
@@ -399,6 +399,16 @@ public class PlayerScript : MonoBehaviour
 
         actionManager.OnMovementAction(currentWalkPosition.name);
         gameUI.UpdateWalkToGtoupUI(true);
+
+        if (defaultInteractionDistance <= 0f)
+        {
+            defaultInteractionDistance = controls.interactionDistance;
+        }
+        if (group.interactionDistance > 0)
+            controls.interactionDistance = group.interactionDistance;
+        else
+            controls.interactionDistance = defaultInteractionDistance;
+
 
     }
 

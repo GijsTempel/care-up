@@ -10,6 +10,7 @@ public class WalkToGroup : MonoBehaviour
     
     public Vector3 robotPosition;
     public Vector3 robotRotation;
+  
 
     private GameObject text;
     public GameObject cone;
@@ -20,6 +21,8 @@ public class WalkToGroup : MonoBehaviour
     [HideInInspector]
     public WalkToGroup RightWalkToGroup = null;
     PlayerScript player;
+
+    public float interactionDistance = -1;
 
     public enum GroupType
     {
