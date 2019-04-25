@@ -11,9 +11,7 @@ public class WalkToGroupButton : MonoBehaviour {
     //button components
     [HideInInspector]
     public GameObject blur;
-    [HideInInspector]
     public GameObject bg;
-    [HideInInspector]
     public GameObject bg_h;
     [HideInInspector]
     public GameObject _icon;
@@ -35,7 +33,7 @@ public class WalkToGroupButton : MonoBehaviour {
             Color b2 = ButtonColor;
             b2.a = 0.4f;
             blur.GetComponent<Image>().color = b2;
-            blur.SetActive(false);
+            //blur.SetActive(false);
             bg = transform.Find("bg").gameObject;
             bg_h = transform.Find("bg_h").gameObject;
             bg_h.SetActive(false);
@@ -97,7 +95,7 @@ public class WalkToGroupButton : MonoBehaviour {
         mouse_over = value;
         if (blur != null)
         {
-            blur.SetActive(value);
+            //blur.SetActive(value);
             if (value)
             {
                 if (!SideButton)

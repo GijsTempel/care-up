@@ -81,7 +81,9 @@ public class GameUI : MonoBehaviour
         ZoomLeft,
         ZoomRight,
         DropLeft,
-        DropRight
+        DropRight,
+        MoveLeft,
+        MoveRight
     }
 
     public void UseOn()
