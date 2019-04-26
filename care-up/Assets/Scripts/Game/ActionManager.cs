@@ -490,6 +490,11 @@ public class ActionManager : MonoBehaviour
 
                         keyWords = "- Pak";
 
+                        if (a.Type == ActionType.ObjectUse)
+                        {
+                            keyWords = "- Klik op";
+                        }
+
                         if (GameObject.Find(hand) != null)
                         {
                             if (GameObject.Find(hand).GetComponent<InteractableObject>() != null)
