@@ -66,11 +66,5 @@ public class LeaderBoardSceneButton : MonoBehaviour
         GameObject.FindObjectOfType<LeaderBoard>().leftBar.SetActive(false);
         GameObject.FindObjectOfType<LeaderBoard>().infoBar.SetActive(false);
         GameObject.FindObjectOfType<LeaderBoard>().leaderboard.SetActive(true);
-
-        if (GameObject.FindObjectOfType<LeaderBoard>().leaderboard.activeSelf)
-        {
-            GameObject.FindObjectOfType<LeaderBoard>().button.GetComponent<Button>().interactable = true;
-            GameObject.FindObjectOfType<LeaderBoard>().button.GetComponent<Image>().sprite = FindObjectOfType<LeaderBoard>().buttonBackground;
-        }
     }
 }
