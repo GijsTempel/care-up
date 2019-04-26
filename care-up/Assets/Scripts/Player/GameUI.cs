@@ -100,6 +100,7 @@ public class GameUI : MonoBehaviour
         if (!(handsInventory.LeftHandEmpty() && handsInventory.RightHandEmpty()))
         {
             handsInventory.OnCombineAction();
+
         }
     }
 
@@ -114,7 +115,10 @@ public class GameUI : MonoBehaviour
         {
             if (actionManager.CompareUseOnInfo(handsInventory.leftHandObject.name, ""))
             {
-                handsInventory.LeftHandObject.GetComponent<PickableObject>().Use(true, true);
+                if (handsInventory.LeftHandObject.GetComponent<PickableObject>().Use(true, true))
+                {
+                    UpdateWalkToGtoupUI(false);
+                }
 
                 if (tutorialUseOn != null)
                 {
@@ -127,7 +131,10 @@ public class GameUI : MonoBehaviour
         {
             if (actionManager.CompareUseOnInfo(handsInventory.rightHandObject.name, ""))
             {
-                handsInventory.RightHandObject.GetComponent<PickableObject>().Use(false, true);
+                if (handsInventory.RightHandObject.GetComponent<PickableObject>().Use(false, true))
+                {
+                    UpdateWalkToGtoupUI(false);
+                }
 
                 if (tutorialUseOn != null)
                 {
