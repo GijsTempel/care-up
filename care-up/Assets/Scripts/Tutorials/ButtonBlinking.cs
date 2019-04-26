@@ -6,6 +6,16 @@ public class ButtonBlinking : MonoBehaviour
 
     GameUI gameUI;
 
+    public void Start()
+    {
+        gameUI = GameObject.FindObjectOfType<GameUI>();
+    }
+
+    public void OnEnable()
+    {
+        UpdateButtonState();
+    }
+
     public void UpdateButtonState()
     {
         GetComponent<Animator>().ResetTrigger("BlinkStart");
@@ -19,7 +29,7 @@ public class ButtonBlinking : MonoBehaviour
 
         if (buttonType == GameUI.ItemControlButtonType.Ipad)
         {
-            if (gameUI.prescriptionButtonBlink || gameUI.recordsButtonBlink)
+            if (gameUI.prescriptionButtonBlink || gameUI.recordsButtonBlink || gameUI.paperAndPenButtonblink)
                 toBlink = true;
         }
         else if (buttonType == GameUI.ItemControlButtonType.Records)
@@ -34,7 +44,12 @@ public class ButtonBlinking : MonoBehaviour
         }
         else if (buttonType == GameUI.ItemControlButtonType.General)
         {
-            if (gameUI.prescriptionButtonBlink || gameUI.recordsButtonBlink)
+            if (gameUI.prescriptionButtonBlink || gameUI.recordsButtonBlink || gameUI.paperAndPenButtonblink)
+                toBlink = true;
+        }
+        else if (buttonType == GameUI.ItemControlButtonType.PaperAndPen)
+        {
+            if (gameUI.paperAndPenButtonblink)
                 toBlink = true;
         }
 
@@ -52,16 +67,7 @@ public class ButtonBlinking : MonoBehaviour
                 GetComponent<Animator>().ResetTrigger("BlinkStop");
             }
         }
-    }
-
-    public void OnEnable()
-    {
-        UpdateButtonState();
-    }
-    public void Start()
-    {
-        gameUI = GameObject.FindObjectOfType<GameUI>();
-    }
+    }   
 
     public void StartBlinking()
     {

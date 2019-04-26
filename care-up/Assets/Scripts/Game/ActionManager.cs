@@ -207,7 +207,7 @@ public class ActionManager : MonoBehaviour
             bool objectCombinationCheck = false;
 
 
-            bool iPad = a.leftHandRequirement == "PatientRecords" || a.leftHandRequirement == "PrescriptionForm";
+            bool iPad = a.leftHandRequirement == "PatientRecords" || a.leftHandRequirement == "PrescriptionForm" || a.leftHandRequirement == "PaperAndPen";
 
             if (iPad)
             {
@@ -220,7 +220,11 @@ public class ActionManager : MonoBehaviour
                 else if (a.leftHandRequirement == "PrescriptionForm")
                 {
                     gameUI.prescriptionButtonBlink = true;
-                }                
+                }
+                else if (a.leftHandRequirement == "PaperAndPen")
+                {
+                    gameUI.paperAndPenButtonblink = true;
+                }
             }
             else
             {
@@ -1767,6 +1771,7 @@ public class ActionManager : MonoBehaviour
                     a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
                     break;
                 case ActionType.ObjectUse:
+                    a.leftHandRequirement = ObjectNames[0];
                     a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
                     break;
             }
