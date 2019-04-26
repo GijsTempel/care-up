@@ -46,6 +46,7 @@ public class GameUI : MonoBehaviour
     public GameUI.ItemControlButtonType moveButtonToBlink;
     public bool prescriptionButtonBlink;
     public bool recordsButtonBlink;
+    public bool paperAndPenButtonblink;
 
     public GameObject noTargetButton;
     public GameObject noTargetButton_right;
@@ -90,7 +91,8 @@ public class GameUI : MonoBehaviour
         Records,
         Prescription, 
         Ipad,
-        General
+        General,
+        PaperAndPen
     }
 
     public void UseOn()
