@@ -35,17 +35,17 @@ public class SetTriggerAtFrame : StateMachineBehaviour
                 if (GameObject.Find(ObjectName).GetComponent<Animator>() != null)
                 {
                     GameObject.Find(ObjectName).GetComponent<Animator>().SetTrigger(trigger);
-                    Debug.Log("ffffffffffffffffffffffff " + ObjectName);
+                    //Debug.Log("ffffffffffffffffffffffff " + ObjectName);
                 }
                 else
                 {
-                    Debug.Log("___Animator in " + ObjectName);
+                    //Debug.Log("___Animator in " + ObjectName);
 
                 }
             }
             else
             {
-                Debug.Log("___No object " + ObjectName);
+                //Debug.Log("___No object " + ObjectName);
             }
         }
     }

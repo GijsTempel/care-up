@@ -744,6 +744,12 @@ public class GameUI : MonoBehaviour
     public void UpdateWalkToGtoupUI(bool value)
     {
         allowObjectControlUI = value;
+        //print("++++++++++++++++ " + cameraMode.currentMode.ToString());
+        if (cameraMode != null)
+            if (cameraMode.currentMode == CameraMode.Mode.ObjectPreview)
+            {
+                value = false;
+            }
         if (!value)
         {
             LeftSideButton.gameObject.SetActive(false);

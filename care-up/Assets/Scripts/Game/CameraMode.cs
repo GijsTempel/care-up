@@ -114,12 +114,14 @@ public class CameraMode : MonoBehaviour
         if (camViewObject)
         {
             robotUIFlag = false;
-            if (GameObject.FindObjectOfType<TutorialManager>() == null ||
-                GameObject.FindObjectOfType<Tutorial_UI>() != null ||
-                GameObject.FindObjectOfType<Tutorial_Theory>() != null)
-            {
-                RobotManager.SetUITriggerActive(false);
-            }
+            //if (GameObject.FindObjectOfType<TutorialManager>() == null ||
+            //    GameObject.FindObjectOfType<Tutorial_UI>() != null ||
+            //    GameObject.FindObjectOfType<Tutorial_Theory>() != null)
+            //{
+            //    RobotManager.SetUITriggerActive(false);
+            //}
+
+
             //if (!playerScript.away)
             //{
             //    WalkToGroup group = playerScript.currentWalkPosition;
@@ -164,6 +166,7 @@ public class CameraMode : MonoBehaviour
         // handle object preview, close/pick,zoom
         if (currentMode == Mode.ObjectPreview && !selectedObject.animationExamine)
         {
+     
             if (controls.keyPreferences.closeObjectView.Pressed())
             {
                 ToggleCameraMode(Mode.Free);
@@ -347,7 +350,6 @@ public class CameraMode : MonoBehaviour
             camViewObject = true;
             //Camera.main.transform.localRotation = Quaternion.Euler(8.0f, 0.0f, 0.0f);
 
-            gameUI.UpdateWalkToGtoupUI(false);
             //playerScript.joystickObject.SetActive(false);
             RobotManager.SetUITriggerActive(false);
 
@@ -357,7 +359,6 @@ public class CameraMode : MonoBehaviour
         else if (mode == Mode.SelectionDialogue)
         {
             TogglePlayerScript(false);
-            gameUI.UpdateWalkToGtoupUI(false);
 
             //playerScript.joystickObject.SetActive(false);
             RobotManager.SetUITriggerActive(false);
@@ -366,7 +367,6 @@ public class CameraMode : MonoBehaviour
         else if (currentMode == Mode.SelectionDialogue)
         {
             TogglePlayerScript(true);
-            gameUI.UpdateWalkToGtoupUI(!playerScript.away);
 
             //playerScript.joystickObject.SetActive(!playerScript.robotUIopened);
             if (GameObject.FindObjectOfType<TutorialManager>() == null ||
@@ -384,7 +384,6 @@ public class CameraMode : MonoBehaviour
             confirmUI.transform.rotation = Camera.main.transform.rotation;
             confirmUI.SetActive(true);
 
-            gameUI.UpdateWalkToGtoupUI(false);
 
             //playerScript.joystickObject.SetActive(false);
             RobotManager.SetUITriggerActive(false);
@@ -394,7 +393,6 @@ public class CameraMode : MonoBehaviour
             TogglePlayerScript(true);
             confirmUI.SetActive(false);
 
-            gameUI.UpdateWalkToGtoupUI(!playerScript.away);
 
             //playerScript.joystickObject.SetActive(!playerScript.robotUIopened);
             if (GameObject.FindObjectOfType<TutorialManager>() == null ||
@@ -412,7 +410,6 @@ public class CameraMode : MonoBehaviour
 
             //camPosition = Camera.main.transform.localRotation; never used
 
-            gameUI.UpdateWalkToGtoupUI(false);
 
             //playerScript.joystickObject.SetActive(false);
             RobotManager.SetUITriggerActive(false);
@@ -431,19 +428,12 @@ public class CameraMode : MonoBehaviour
             playerScript.mouseLook.clampHorisontalRotation = false;
             playerScript.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
 
-            if ((GameObject.FindObjectOfType<TutorialManager>() != null &&
-                !GameObject.FindObjectOfType<TutorialManager>().finished) ||
-                GameObject.FindObjectOfType<TutorialManager>() == null)
-            {
-                gameUI.UpdateWalkToGtoupUI(!playerScript.away);
-                //playerScript.joystickObject.SetActive(!playerScript.robotUIopened && !PlayerScript.actionsLocked);
-            }
-
+  
             if (GameObject.FindObjectOfType<TutorialManager>() == null ||
                 GameObject.FindObjectOfType<Tutorial_UI>() != null ||
                 GameObject.FindObjectOfType<Tutorial_Theory>() != null)
             {
-                RobotManager.SetUITriggerActive(true);
+                 RobotManager.SetUITriggerActive(!playerScript.robotUIopened);
             }
             dontMoveCamera = false;
         }
@@ -499,6 +489,7 @@ public class CameraMode : MonoBehaviour
             if (animationEnded || cinematicDirection == 1)
                 cinematicControl.Find("Arms").transform.rotation =
                     Quaternion.Lerp(cinematicRot, cinematicTargetRot, cinematicLerp);
+            //GameObject.FindObjectOfType<GameUI>().UpdateWalkToGtoupUI(true);
         }
 
         //if (!dontMoveCamera)
@@ -555,7 +546,6 @@ public class CameraMode : MonoBehaviour
                 animationEnded = false;
                 soloCamera = false;
 
-                gameUI.UpdateWalkToGtoupUI(!playerScript.away);
 
                 if (GameObject.FindObjectOfType<TutorialManager>() == null ||
                     GameObject.FindObjectOfType<Tutorial_UI>() != null ||
@@ -576,7 +566,6 @@ public class CameraMode : MonoBehaviour
             cinematicLerp = 0.0f;
             cinematicDirection = 1;
 
-            gameUI.UpdateWalkToGtoupUI(false);
             RobotManager.SetUITriggerActive(false);
         }
 

@@ -11,7 +11,14 @@ public class Cinematic : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         mode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
-        mode.SetCinematicMode(GameObject.Find(target).transform);
+        if (GameObject.Find(target) == null)
+        {
+            Debug.Log("Cinematic target can't be found -- " + target);
+        }
+        else
+        {
+            mode.SetCinematicMode(GameObject.Find(target).transform);
+        }
         if (resetCamera)
         {
             Camera.main.transform.localRotation = Quaternion.Euler(Vector3.zero);
