@@ -15,10 +15,8 @@ public class Cheat_CurrentAction : MonoBehaviour
     private Image fullScreenButtonBackground;
     GameUI gameUI;
     [SerializeField] private Text hintPanelText;
-    [SerializeField] private GameObject fullScreenButton;
 
     [SerializeField] private GameObject hintPanel;
-    [SerializeField] private GameObject bigger_DevHint;
     [SerializeField] private GameObject ipadTrigger;
 
     // never used
@@ -136,9 +134,6 @@ public class Cheat_CurrentAction : MonoBehaviour
         extraPanel.SetActive(false);
         set = false;
 
-        extraButton = GameObject.Find("ExtraButton").GetComponent<Button>();
-        extraButton.onClick.AddListener(ToggleExtraInfoPanel);
-
         Button extraCloseBtn = extraPanel.transform.Find("CloseExtra").GetComponent<Button>();
         Button extra_Close_Btn = extraPanel.transform.Find("CloseExtraCheckmark").GetComponent<Button>();
         extraCloseBtn.onClick.AddListener(ToggleExtraInfoPanel);
@@ -146,7 +141,7 @@ public class Cheat_CurrentAction : MonoBehaviour
 
         hintPanelBackground = hintPanel.GetComponent<Image>();
 
-        fullScreenButtonBackground = fullScreenButton.GetComponent<Image>();
+       
     }
 
     private void Update()
@@ -226,7 +221,7 @@ public class Cheat_CurrentAction : MonoBehaviour
 
             gameUI.SetHintPanelAlpha(alpha);
 
-            fullScreenButtonBackground.color = new Color(1.0f, 1.0f, 1.0f, alpha);
+            
         }
     }
 
@@ -259,23 +254,6 @@ public class Cheat_CurrentAction : MonoBehaviour
         }
     }
 
-    public void ShowBiggerDevHint()
-    {
-        tutorial_devHintOpened = true;
-        bigger_DevHint.SetActive(true);
-
-        //biggerDevHintActive = true;
-        //devHintActive = false;
-    }
-
-    public void RemoveBiggerDevHint()
-    {
-        tutorial_devHintClosed = true;
-        bigger_DevHint.SetActive(false);
-
-        //biggerDevHintActive = false;
-        //devHintActive = true;
-    }
 
     public void RemoveDevHint()
     {
