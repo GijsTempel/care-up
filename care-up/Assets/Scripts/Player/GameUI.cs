@@ -187,12 +187,14 @@ public class GameUI : MonoBehaviour
         }
         else if (ToBlink)
         {
-            Blink.SetTrigger("BlinkStart");
+            if (Blink != null)
+                Blink.SetTrigger("BlinkStart");
             RobotManager.UIElementsState[1] = true;
         }
         else
         {
-            Blink.SetTrigger("BlinkStop");
+            if (Blink != null)
+                Blink.SetTrigger("BlinkStop");
             RobotManager.UIElementsState[1] = false;
         }
     }
@@ -259,11 +261,11 @@ public class GameUI : MonoBehaviour
                     break;
             }
         }
-        if (!WTGButtons["Sink"].gameObject.activeSelf || activeGroupButtons <= 2)
+        if ((!WTGButtons["Sink"].gameObject.activeSelf || activeGroupButtons <= 2) && WalkToGroupPanel.transform.Find("spacer0") != null)
             WalkToGroupPanel.transform.Find("spacer0").gameObject.SetActive(false);
-        if (!WTGButtons["Patient"].gameObject.activeSelf || activeGroupButtons < 2)
+        if ((!WTGButtons["Patient"].gameObject.activeSelf || activeGroupButtons < 2) && WalkToGroupPanel.transform.Find("spacer2") != null)
             WalkToGroupPanel.transform.Find("spacer2").gameObject.SetActive(false);
-        if (activeGroupButtons < 2)
+        if ((activeGroupButtons < 2) && WalkToGroupPanel.transform.Find("spacer1") != null)
             WalkToGroupPanel.transform.Find("spacer1").gameObject.SetActive(false);
         foreach (WalkToGroup w in GameObject.FindObjectsOfType<WalkToGroup>())
         {

@@ -924,6 +924,13 @@ public class ActionManager : MonoBehaviour
                 secondPlace = action.Attributes["secondPlace"].Value;
             }
 
+            string place = "";
+            if (action.Attributes["place"] != null)
+            {
+                secondPlace = action.Attributes["place"].Value;
+            }
+
+
             string commentUA = "";
             if (action.Attributes["commentUA"] != null)
             {
@@ -1112,6 +1119,8 @@ public class ActionManager : MonoBehaviour
             actionList[actionList.Count - 1].comment = comment;
             actionList[actionList.Count - 1].commentUA = commentUA;
             actionList[actionList.Count - 1].secondPlaceRequirement = secondPlace;
+            actionList[actionList.Count - 1].placeRequirement = place;
+
 
 
         }
@@ -1757,27 +1766,33 @@ public class ActionManager : MonoBehaviour
                 case ActionType.ObjectCombine:
                     a.leftHandRequirement = ObjectNames[0];
                     a.rightHandRequirement = ObjectNames[1];
-                    a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0], ObjectNames[1] });
+                    if (a.placeRequirement == "")
+                        a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0], ObjectNames[1] });
                     break;
                 case ActionType.ObjectUseOn:
                     a.leftHandRequirement = ObjectNames[0];
-                    a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
+                    if (a.placeRequirement == "")
+                        a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
                     break;
                 case ActionType.ObjectExamine:
                     a.leftHandRequirement = ObjectNames[0];
-                    a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
+                    if (a.placeRequirement == "")
+                        a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
                     break;
                 case ActionType.PickUp:
                     a.leftHandRequirement = ObjectNames[0];
-                    a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
+                    if (a.placeRequirement == "")
+                        a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
                     break;
                 case ActionType.ObjectDrop:
                     a.leftHandRequirement = ObjectNames[0];
-                    a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
+                    if (a.placeRequirement == "")
+                        a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
                     break;
                 case ActionType.ObjectUse:
                     a.leftHandRequirement = ObjectNames[0];
-                    a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
+                    if (a.placeRequirement == "")
+                        a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
                     break;
             }
         }
