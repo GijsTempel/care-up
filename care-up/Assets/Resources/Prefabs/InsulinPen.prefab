@@ -66,6 +66,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1956203267689756
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4525995797741484}
+  - component: {fileID: 114662966183481786}
+  m_Layer: 0
+  m_Name: hl
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &4015164588679086
 Transform:
   m_ObjectHideFlags: 1
@@ -78,6 +94,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4853544864937212}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4525995797741484
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1956203267689756}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.41853827, y: 0.4489299, z: 1.304675}
+  m_Children: []
+  m_Father: {fileID: 4853544864937212}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4790482484190976
 Transform:
@@ -99,11 +128,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1459596654828566}
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: 9.293524, y: 1.1025481, z: 10.5282}
+  m_LocalPosition: {x: 9.477059, y: 1.1014563, z: 11.872863}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4015164588679086}
   - {fileID: 4790482484190976}
+  - {fileID: 4525995797741484}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
@@ -261,8 +291,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectID: 0
-  description: Insulinepen
-  nameArticle: 
+  description: insulinepen
+  nameArticle: de
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -279,6 +309,18 @@ MonoBehaviour:
   prefabOutOfHands: 
   destroyOnDrop: 0
   animateButton: 0
+--- !u!114 &114662966183481786
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1956203267689756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c34eecdde24d47db816fe0faca03a6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hl_type: 2
 --- !u!114 &114797203157176558
 MonoBehaviour:
   m_ObjectHideFlags: 1
