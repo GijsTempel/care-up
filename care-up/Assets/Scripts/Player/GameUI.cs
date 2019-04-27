@@ -187,12 +187,14 @@ public class GameUI : MonoBehaviour
         }
         else if (ToBlink)
         {
-            Blink.SetTrigger("BlinkStart");
+            if (Blink != null)
+                Blink.SetTrigger("BlinkStart");
             RobotManager.UIElementsState[1] = true;
         }
         else
         {
-            Blink.SetTrigger("BlinkStop");
+            if (Blink != null)
+                Blink.SetTrigger("BlinkStop");
             RobotManager.UIElementsState[1] = false;
         }
     }
