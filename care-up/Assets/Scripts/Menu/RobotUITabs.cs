@@ -19,8 +19,6 @@ public class RobotUITabs : MonoBehaviour
     [HideInInspector]
     public static bool tutorial_generalOpened = false;
     [HideInInspector]
-    public static bool tutorial_checkListOpened = false;
-    [HideInInspector]
     public static bool tutorial_messageCenterOpened = false;
     [HideInInspector]
     public static bool tutorial_infoTabOpened = false;
@@ -76,7 +74,7 @@ public class RobotUITabs : MonoBehaviour
         {
             if (!GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().practiceMode)
             {
-                if (name == "InfoTab" || name == "CheckListTab")
+                if (name == "InfoTab")
                 {
                     SetTabActive(false);
                     gameObject.SetActive(false);
@@ -162,9 +160,6 @@ public class RobotUITabs : MonoBehaviour
         {
             case "GeneralTab":
                 tutorial_generalOpened = true;
-                break;
-            case "CheckListTab":
-                tutorial_checkListOpened = true;
                 break;
             case "MessageCenter":
                 tutorial_messageCenterOpened = true;
