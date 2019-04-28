@@ -230,6 +230,14 @@ public class ActionManager : MonoBehaviour
             {
                 foreach (string hand in actionHand)
                 {
+                    if (GameObject.Find(hand) != null)
+                    {
+                        if (GameObject.Find(hand).GetComponent<InteractableObject>() != null)
+                        {
+                            article = GameObject.Find(hand).GetComponent<InteractableObject>().nameArticle;
+                        }
+                    }
+
                     bool foundDescr = false;
                     if (!string.IsNullOrEmpty(hand))
                     {
@@ -377,7 +385,6 @@ public class ActionManager : MonoBehaviour
                             }
                             else if (a.Type == ActionType.ObjectDrop && a.leftHandRequirement == inventory.leftHandObject.name)
                             {
-                                keyWords = "- Drop";
                                 if (!foundComplitedAction)
                                 {
                                     foundComplitedAction = true;
@@ -388,12 +395,11 @@ public class ActionManager : MonoBehaviour
                                     if (secondPlaceData.completed)
                                     {
                                         gameUI.DropRightBlink = true;
-                                        objectsData.Add(new StepData(false, $"{keyWords} {handValue}.", i));
+                                        objectsData.Add(new StepData(false, $"Leg {article} {handValue} neer.", i));
                                     }
                                 }
                                 else
-                                    objectsData.Add(new StepData(false, $"{keyWords} {handValue}.", i));
-
+                                    objectsData.Add(new StepData(false, $"Leg {article} {handValue} neer.", i));
                             }
                             else if (a.Type == ActionType.ObjectExamine && inventory.leftHandObject.name == a.leftHandRequirement)
                             {
@@ -434,7 +440,6 @@ public class ActionManager : MonoBehaviour
                             }
                             else if (a.Type == ActionType.ObjectDrop)
                             {
-                                keyWords = "- Drop";
                                 if (!foundComplitedAction)
                                 {
                                     foundComplitedAction = true;
@@ -445,12 +450,11 @@ public class ActionManager : MonoBehaviour
                                     if (secondPlaceData.completed)
                                     {
                                         gameUI.DropRightBlink = true;
-                                        objectsData.Add(new StepData(false, $" {keyWords} {handValue}.", i));
+                                        objectsData.Add(new StepData(false, $"Leg {article} {handValue} neer.", i));
                                     }
                                 }
                                 else
-                                    objectsData.Add(new StepData(false, $" {keyWords} {handValue}.", i));
-
+                                    objectsData.Add(new StepData(false, $"Leg {article} {handValue} neer.", i));
                             }
                             else if (a.Type == ActionType.ObjectExamine && inventory.rightHandObject.name == a.leftHandRequirement)
                             {
@@ -493,15 +497,7 @@ public class ActionManager : MonoBehaviour
                         if (a.Type == ActionType.ObjectUse)
                         {
                             keyWords = "- Klik op";
-                        }
-
-                        if (GameObject.Find(hand) != null)
-                        {
-                            if (GameObject.Find(hand).GetComponent<InteractableObject>() != null)
-                            {
-                                article = GameObject.Find(hand).GetComponent<InteractableObject>().nameArticle;
-                            }
-                        }
+                        }                       
 
                         objectsData.Add(new StepData(completed, $"{keyWords} {article} {handValue}.", i));
                     }
@@ -523,7 +519,6 @@ public class ActionManager : MonoBehaviour
                 }
             }
 
-
             foreach (StepData sd in objectsData)
             {
                 stepsList.Add(sd);
@@ -539,7 +534,6 @@ public class ActionManager : MonoBehaviour
                 placesReqList.Clear();
                 placesReqList.Add(uncomplitedSecondPlace);
             }
-
 
             string sss = "";
             foreach (string s in placesReqList)
@@ -572,7 +566,6 @@ public class ActionManager : MonoBehaviour
                         break;
                     }
                 }
-
             }
 
             i++;
@@ -582,7 +575,6 @@ public class ActionManager : MonoBehaviour
             gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
             gameUI.DropRightBlink = false;
             gameUI.DropLeftBlink = false;
-
         }
 
         GameObject.FindObjectOfType<GameUI>().UpdateHintPanel(stepsList);
