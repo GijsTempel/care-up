@@ -117,6 +117,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1834583080365090
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4162893883832974}
+  - component: {fileID: 114970333394031106}
+  m_Layer: 0
+  m_Name: hl
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &4150570353859264
 Transform:
   m_ObjectHideFlags: 1
@@ -137,7 +153,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1670220103262830}
   m_LocalRotation: {x: 0.7070185, y: 0.011176653, z: -0.011176653, w: 0.7070185}
-  m_LocalPosition: {x: 9.4191, y: 1.0929, z: 12.0369}
+  m_LocalPosition: {x: 9.280339, y: 1.1014563, z: 11.815914}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4733883642570816}
@@ -145,9 +161,23 @@ Transform:
   - {fileID: 4882339449454562}
   - {fileID: 4819272444302608}
   - {fileID: 4319948842848188}
+  - {fileID: 4162893883832974}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: -1.8110001}
+--- !u!4 &4162893883832974
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1834583080365090}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0, z: -0.0101}
+  m_LocalScale: {x: 0.5609244, y: 1.3731945, z: 0.41508922}
+  m_Children: []
+  m_Father: {fileID: 4152444599418084}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4319948842848188
 Transform:
   m_ObjectHideFlags: 1
@@ -479,8 +509,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectID: 0
-  description: Fraxiparine verpakt
-  nameArticle: 
+  description: fraxiparine spuit
+  nameArticle: de
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 1
@@ -523,6 +553,18 @@ MonoBehaviour:
     distanceFromCamera: 2
     rotationSensetivity: 90
   state: good
+--- !u!114 &114970333394031106
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1834583080365090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c34eecdde24d47db816fe0faca03a6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hl_type: 2
 --- !u!136 &136548844061186748
 CapsuleCollider:
   m_ObjectHideFlags: 1
