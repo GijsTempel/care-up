@@ -13,6 +13,7 @@ public class NeededObjectsLister : MonoBehaviour {
 
     public bool addNeeded(string value)
     {
+        return true;
         bool has = false;
         foreach (string o in objectsNeeded)
         {
@@ -38,6 +39,7 @@ public class NeededObjectsLister : MonoBehaviour {
 
 
     void Start () {
+        return;
 #if (UNITY_EDITOR)
         string scneName = SceneManager.GetActiveScene().name;
         string path = "Assets/ListOfActions/__o__" + scneName + ".txt";
@@ -58,6 +60,7 @@ public class NeededObjectsLister : MonoBehaviour {
 
     void OnApplicationQuit()
     {
+        return;
 #if (UNITY_EDITOR)
         Debug.Log("Application ending after " + Time.time + " seconds");
         if (writer != null)

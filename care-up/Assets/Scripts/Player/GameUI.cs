@@ -302,6 +302,12 @@ public class GameUI : MonoBehaviour
         DropRightButton.SetActive(false);
         DropLeftButton.SetActive(false);
 
+        ActionManager.practiceMode = true;
+        if (prefs != null)
+        {
+            ActionManager.practiceMode = prefs.practiceMode;
+        }
+
 #if !UNITY_EDITOR
         if(GameObject.Find("ActionsPanel") != null)
             GameObject.Find("ActionsPanel").SetActive(false);
@@ -450,8 +456,27 @@ public class GameUI : MonoBehaviour
                     {
                         HighlightObject h = AddHighlight(usableHL.transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f, 0.5f));
                         if (h != null)
+                        {
                             h.setGold(true);
-                        newHLObjects.Add(usableHL.name);
+                            newHLObjects.Add(usableHL.name);
+                        }
+                        
+
+                    }
+                    else
+                    {
+                        foreach (PickableObject p in GameObject.FindObjectsOfType<PickableObject>())
+                        {
+                            if (p.prefabInHands == objectToUse && p.prefabInHands != "")
+                            {
+                                HighlightObject h = AddHighlight(p.transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f, 0.5f));
+                                if (h != null)
+                                {
+                                    h.setGold(true);
+                                    newHLObjects.Add(p.name);
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -544,6 +569,12 @@ public class GameUI : MonoBehaviour
 
     public void updateButtonsBlink()
     {
+        bool practiceMode = true;
+        if (prefs != null)
+            practiceMode = prefs.practiceMode;
+        if (!practiceMode)
+            return;
+
         foreach (ItemControlButton b in GameObject.FindObjectsOfType<ItemControlButton>())
         {
             b.updateBlinkState();
