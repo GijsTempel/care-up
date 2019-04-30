@@ -473,7 +473,7 @@ public class GameUI : MonoBehaviour
                                 if (h != null)
                                 {
                                     h.setGold(true);
-                                    newHLObjects.Add(usableHL.name);
+                                    newHLObjects.Add(p.name);
                                 }
                             }
                         }
