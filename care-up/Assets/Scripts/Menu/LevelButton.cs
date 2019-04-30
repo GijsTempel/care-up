@@ -134,6 +134,7 @@ public class LevelButton : MonoBehaviour {
             GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
             "DialogTestPractice/Panel_UI/Buttons/TestButton").GetComponent<Button>().interactable = false;
             manager.FetchPracticePlays(manager.currentSceneVisualName);
+            manager.FetchPracticeHighscore(manager.currentSceneVisualName);
         }
     }
 
