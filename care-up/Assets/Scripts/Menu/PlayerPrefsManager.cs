@@ -440,12 +440,14 @@ public class PlayerPrefsManager : MonoBehaviour
     static void FetchPracticePlays_success(CML response)
     {
         Debug.Log(response.ToString());
+        if (GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" + "DialogTestPractice/Panel_UI/Buttons/TestButton") != null) 
+        {
+            Button testBtn = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
+                "DialogTestPractice/Panel_UI/Buttons/TestButton").GetComponent<Button>();
 
-        Button testBtn = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-            "DialogTestPractice/Panel_UI/Buttons/TestButton").GetComponent<Button>();
-
-        int plays = response[1].Int(practiceScene);
-        testBtn.interactable = plays >= 3;
+            int plays = response[1].Int(practiceScene);
+            testBtn.interactable = plays >= 3;
+        }
     }
 
     static void FetchPracticePlays_Error(CMLData response)
