@@ -451,7 +451,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
             GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
                 "DialogTestPractice/Panel_UI/Buttons/TestButton/contentlocked/practiceamount")
-                .GetComponent<Text>().text = plays.ToString();
+                .GetComponent<Text>().text = plays.ToString() + " keer";
             
             if (testBtn.interactable)
             {
@@ -476,7 +476,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
             GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
                 "DialogTestPractice/Panel_UI/Buttons/TestButton/contentlocked/practiceamount")
-                .GetComponent<Text>().text = "0%";
+                .GetComponent<Text>().text = "0 keer";
         }
     }
 
