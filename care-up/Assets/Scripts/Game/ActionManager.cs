@@ -398,7 +398,8 @@ public class ActionManager : MonoBehaviour
                                 {
                                     if (secondPlaceData.completed)
                                     {
-                                        gameUI.DropRightBlink = true;
+                                        gameUI.DropLeftBlink = true;
+                                        
                                         objectsData.Add(new StepData(false, $"- Leg {article} {handValue} neer.", i));
                                     }
                                 }
