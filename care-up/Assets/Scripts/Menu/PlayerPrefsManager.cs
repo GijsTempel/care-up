@@ -476,7 +476,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
             GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
                 "DialogTestPractice/Panel_UI/Buttons/TestButton/contentlocked/practiceamount")
-                .GetComponent<Text>().text = "0";
+                .GetComponent<Text>().text = "0%";
         }
     }
 
@@ -638,17 +638,20 @@ public class PlayerPrefsManager : MonoBehaviour
             "DialogTestPractice/Panel_UI/Buttons/PracticeButton/content/score").
             GetComponent<Text>().text = highscore.ToString();
         
+        Sprite grey = Resources.Load<Sprite>("Sprites/Stars/star 1");
+        Sprite gold = Resources.Load<Sprite>("Sprites/Stars/star_128x128px");
+
         GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
             "DialogTestPractice/Panel_UI/Buttons/PracticeButton/content/Stars/Star1")
-            .SetActive(stars >= 1.0f);
+            .GetComponent<Image>().sprite = (stars >= 1.0f) ? gold : grey;
 
         GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
             "DialogTestPractice/Panel_UI/Buttons/PracticeButton/content/Stars/Star2")
-            .SetActive(stars >= 2.0f);
+            .GetComponent<Image>().sprite = (stars >= 2.0f) ? gold : grey;
 
         GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
             "DialogTestPractice/Panel_UI/Buttons/PracticeButton/content/Stars/Star3")
-            .SetActive(stars >= 3.0f);
+            .GetComponent<Image>().sprite = (stars >= 3.0f) ? gold : grey;
     }
 
     static void FetchPracticeHighscore_Error(CMLData response)
@@ -660,18 +663,20 @@ public class PlayerPrefsManager : MonoBehaviour
             data.Set("stars_" + practiceScene, currentPracticeStars.ToString());
             WUData.UpdateCategory("PracticeHighscores", data);
 
+            Sprite grey = Resources.Load<Sprite>("Sprites/Stars/star 1");
+
             GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
                 "DialogTestPractice/Panel_UI/Buttons/PracticeButton/content/score").
                 GetComponent<Text>().text = "0";
             GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
                 "DialogTestPractice/Panel_UI/Buttons/PracticeButton/content/Stars/Star1")
-                .SetActive(false);
+                .GetComponent<Image>().sprite = grey;
             GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
                 "DialogTestPractice/Panel_UI/Buttons/PracticeButton/content/Stars/Star2")
-                .SetActive(false);
+                .GetComponent<Image>().sprite = grey;
             GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
                 "DialogTestPractice/Panel_UI/Buttons/PracticeButton/content/Stars/Star3")
-                .SetActive(false);
+                .GetComponent<Image>().sprite = grey;
         }
     }
 
@@ -684,8 +689,8 @@ public class PlayerPrefsManager : MonoBehaviour
 
     static void FetchTestHighscore(CML response)
     {
-        float highscore = response[1].Float(currentTestScene);
-
+        string highscoreString = response[1].String(currentTestScene);
+        float highscore = float.Parse(highscoreString.Replace(",", "."));
         GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
                 "DialogTestPractice/Panel_UI/Buttons/TestButton/contentunlocked/percentage")
                 .GetComponent<Text>().text = Mathf.RoundToInt(highscore).ToString() + "%";
