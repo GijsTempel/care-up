@@ -1905,7 +1905,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorial_hintUsed: 0
+  actionsCount: 0
   actionListName: Actions_Measuring_Blood_Glucose
+  currentActionIndex: 0
 --- !u!114 &251147194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1961,6 +1963,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f6c60efe1b820478392239be6dd432, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camViewObject: 0
   minZoom: 0.5
   maxZoom: 1.75
   currentMode: 0
@@ -1969,6 +1972,8 @@ MonoBehaviour:
   animating: 0
   animationEnded: 0
   cinematicToggle: 0
+  cinematicLerp: 0
+  moveBackFromExam: 0
   dontMoveCamera: 0
 --- !u!4 &251147197
 Transform:
@@ -2007,6 +2012,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cheat: 0
   buildActionList: 0
+  Ua: 0
+  testingMode: 0
   hidenObjects: []
 --- !u!114 &251147200
 MonoBehaviour:
@@ -3904,6 +3911,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: Stoppen
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -5018,6 +5026,13 @@ MonoBehaviour:
   rotation: {x: 23, y: 100.5, z: 0}
   robotPosition: {x: 0, y: 0, z: 0}
   robotRotation: {x: 0, y: 0, z: 0}
+  cone: {fileID: 0}
+  ButtonHovered: 0
+  description: 
+  LeftWalkToGroup: {fileID: 0}
+  RightWalkToGroup: {fileID: 0}
+  interactionDistance: -1
+  WalkToGroupType: 0
 --- !u!65 &968179956
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5511,6 +5526,13 @@ MonoBehaviour:
   rotation: {x: 11, y: 45, z: 0}
   robotPosition: {x: 0, y: 0, z: 0}
   robotRotation: {x: 0, y: 0, z: 0}
+  cone: {fileID: 0}
+  ButtonHovered: 0
+  description: 
+  LeftWalkToGroup: {fileID: 0}
+  RightWalkToGroup: {fileID: 0}
+  interactionDistance: -1
+  WalkToGroupType: 0
 --- !u!65 &1103418565
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6072,6 +6094,13 @@ MonoBehaviour:
   rotation: {x: 37, y: 93, z: 0}
   robotPosition: {x: 0, y: 0, z: 0}
   robotRotation: {x: 0, y: 0, z: 0}
+  cone: {fileID: 0}
+  ButtonHovered: 0
+  description: 
+  LeftWalkToGroup: {fileID: 0}
+  RightWalkToGroup: {fileID: 0}
+  interactionDistance: -1
+  WalkToGroupType: 0
 --- !u!65 &1265076965
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6084,6 +6113,68 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.78684807, y: 1.8526411, z: 1.700408}
   m_Center: {x: 1.03, y: 0.87303734, z: 0.25}
+--- !u!1001 &1281860189
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4067369505319520, guid: 880e60984a1ed4140b38191f37c8a277, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 9.201
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067369505319520, guid: 880e60984a1ed4140b38191f37c8a277, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067369505319520, guid: 880e60984a1ed4140b38191f37c8a277, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 16.285
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067369505319520, guid: 880e60984a1ed4140b38191f37c8a277, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067369505319520, guid: 880e60984a1ed4140b38191f37c8a277, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0.9245322
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067369505319520, guid: 880e60984a1ed4140b38191f37c8a277, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067369505319520, guid: 880e60984a1ed4140b38191f37c8a277, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.3811042
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067369505319520, guid: 880e60984a1ed4140b38191f37c8a277, type: 2}
+      propertyPath: m_RootOrder
+      value: 16
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 880e60984a1ed4140b38191f37c8a277, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1 &1281860190 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1135038296684742, guid: 880e60984a1ed4140b38191f37c8a277,
+    type: 2}
+  m_PrefabInternal: {fileID: 1281860189}
+--- !u!1 &1281860191 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1428842115651536, guid: 880e60984a1ed4140b38191f37c8a277,
+    type: 2}
+  m_PrefabInternal: {fileID: 1281860189}
+--- !u!1 &1281860192 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1129227623956416, guid: 880e60984a1ed4140b38191f37c8a277,
+    type: 2}
+  m_PrefabInternal: {fileID: 1281860189}
+--- !u!1 &1281860193 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1143520553561570, guid: 880e60984a1ed4140b38191f37c8a277,
+    type: 2}
+  m_PrefabInternal: {fileID: 1281860189}
 --- !u!1001 &1288296792
 Prefab:
   m_ObjectHideFlags: 0
@@ -6422,6 +6513,26 @@ Prefab:
       propertyPath: reverbZoneMixCustomCurve.m_RotationOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114017726456870824, guid: 37620efdd9e41c444af49d4f4225f8eb,
+        type: 2}
+      propertyPath: KyePoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 1281860193}
+    - target: {fileID: 114017726456870824, guid: 37620efdd9e41c444af49d4f4225f8eb,
+        type: 2}
+      propertyPath: KyePoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 1281860190}
+    - target: {fileID: 114017726456870824, guid: 37620efdd9e41c444af49d4f4225f8eb,
+        type: 2}
+      propertyPath: KyePoints.Array.data[2]
+      value: 
+      objectReference: {fileID: 1281860192}
+    - target: {fileID: 114017726456870824, guid: 37620efdd9e41c444af49d4f4225f8eb,
+        type: 2}
+      propertyPath: KyePoints.Array.data[3]
+      value: 
+      objectReference: {fileID: 1281860191}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 37620efdd9e41c444af49d4f4225f8eb, type: 2}
   m_IsPrefabParent: 0
@@ -7001,12 +7112,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1.9
+  delay: 0
   KyePoints:
   - {fileID: 0}
   - {fileID: 0}
   toWalk: 0
   EndTriggerObjName: 
   EndTriggers: []
+  StartTrigger: walk
+  StopTrigger: stopwalk
+  personToMove: {fileID: 0}
 --- !u!4 &1668683516
 Transform:
   m_ObjectHideFlags: 0
@@ -7796,6 +7911,7 @@ MonoBehaviour:
   TrashBin: 
   hidenObjects:
   - {fileID: 0}
+  neededObjects: []
 --- !u!1001 &1926948925
 Prefab:
   m_ObjectHideFlags: 0
@@ -8552,6 +8668,7 @@ MonoBehaviour:
   hidenObjects:
   - {fileID: 1768686990}
   - {fileID: 1433572831}
+  neededObjects: []
 --- !u!1001 &2017358983
 Prefab:
   m_ObjectHideFlags: 0
