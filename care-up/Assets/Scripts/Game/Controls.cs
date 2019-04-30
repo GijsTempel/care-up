@@ -103,8 +103,8 @@ public class Controls : MonoBehaviour {
 
     static public bool keyUsed = false;
 
-    private GameObject selectedObject;
-    private bool canInteract;
+    public GameObject selectedObject;
+    public bool canInteract;
 
     private bool touchEnded = false;
 
@@ -139,21 +139,33 @@ public class Controls : MonoBehaviour {
     /// Sets canInteract based of distance to aimed object.
     /// </summary>
 	void LateUpdate() {
-        
+
         // raycast only in this script
+        Camera cam = null;
+        foreach(Camera c in GameObject.FindObjectsOfType<Camera>())
+        {
+            if (c.transform.parent != null)
+            {
+                if (c.transform.parent.name == "Head")
+                    cam = c;
+            }
+        }
+        if (cam == null)
+            return;
+
         Vector3 screenPosition = (Input.touchCount > 0) ? 
             new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y) : 
             Input.mousePosition;
         Ray ray = ((prefs == null) ? false : prefs.VR) ?
-            new Ray(Camera.main.transform.position, Camera.main.transform.forward)
-            : Camera.main.ScreenPointToRay(screenPosition);
+            new Ray(cam.transform.position, cam.transform.forward)
+            : cam.ScreenPointToRay(screenPosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
             selectedObject = hit.transform.gameObject;
             //canInteract = (hit.distance <= interactionDistance) ? true : false;
             canInteract = (interactionDistance == 0.0f) ? true : Vector2.Distance(
-                new Vector2(Camera.main.transform.position.x, Camera.main.transform.position.z),
+                new Vector2(cam.transform.position.x, cam.transform.position.z),
                 new Vector2(hit.transform.position.x, hit.transform.position.z))
                 <= interactionDistance ? true : false;
         }
@@ -186,7 +198,7 @@ public class Controls : MonoBehaviour {
         #if UNITY_EDITOR
         if (devInteractionDisplay)
         {
-            Vector3 origin = Camera.main.transform.position;
+            Vector3 origin = cam.transform.position;
 
             Vector3 from = new Vector3(0.0f, -1.0f, interactionDistance);
             for (float i = -1.0f; i < 1.0f; i += 0.1f)
