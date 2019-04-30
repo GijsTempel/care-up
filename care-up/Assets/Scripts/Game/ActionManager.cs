@@ -919,7 +919,7 @@ public class ActionManager : MonoBehaviour
             string place = "";
             if (action.Attributes["place"] != null)
             {
-                secondPlace = action.Attributes["place"].Value;
+                place = action.Attributes["place"].Value;
             }
 
 
