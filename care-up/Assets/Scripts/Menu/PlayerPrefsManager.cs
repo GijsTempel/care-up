@@ -441,7 +441,6 @@ public class PlayerPrefsManager : MonoBehaviour
     
     static void FetchPracticePlays_success(CML response)
     {
-        Debug.Log(response.ToString());
         if (GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" + "DialogTestPractice/Panel_UI/Buttons/TestButton") != null) 
         {
             Button testBtn = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
@@ -449,27 +448,25 @@ public class PlayerPrefsManager : MonoBehaviour
             
             int plays = response[1].Int(practiceScene);
             testBtn.interactable = plays >= 3;
+
+            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
+                "DialogTestPractice/Panel_UI/Buttons/TestButton/contentlocked/practiceamount")
+                .GetComponent<Text>().text = plays.ToString();
+            
+            if (testBtn.interactable)
+            {
+                GameObject.FindObjectOfType<PlayerPrefsManager>().FetchTestHighscore(practiceScene);
+            }
+
+            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
+                "DialogTestPractice/Panel_UI/Buttons/TestButton/contentunlocked").SetActive(testBtn.interactable);
+            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
+                "DialogTestPractice/Panel_UI/Buttons/TestButton/contentlocked").SetActive(!testBtn.interactable);
         }
-
-        GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-            "DialogTestPractice/Panel_UI/Buttons/TestButton/contentlocked/practiceamount")
-            .GetComponent<Text>().text = plays.ToString();
-
-        if (testBtn.interactable)
-        {
-            GameObject.FindObjectOfType<PlayerPrefsManager>().FetchTestHighscore(practiceScene);
-        }
-
-        GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-            "DialogTestPractice/Panel_UI/Buttons/TestButton/contentunlocked").SetActive(testBtn.interactable);
-        GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-            "DialogTestPractice/Panel_UI/Buttons/TestButton/contentlocked").SetActive(!testBtn.interactable);
     }
 
     static void FetchPracticePlays_Error(CMLData response)
     {
-        Debug.Log(response.ToString());
-
         if ((response["message"] == "WPServer error: Empty response. No data found"))
         {
             // no data == 0 plays
