@@ -450,8 +450,27 @@ public class GameUI : MonoBehaviour
                     {
                         HighlightObject h = AddHighlight(usableHL.transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f, 0.5f));
                         if (h != null)
+                        {
                             h.setGold(true);
-                        newHLObjects.Add(usableHL.name);
+                            newHLObjects.Add(usableHL.name);
+                        }
+                        
+
+                    }
+                    else
+                    {
+                        foreach (PickableObject p in GameObject.FindObjectsOfType<PickableObject>())
+                        {
+                            if (p.prefabInHands == objectToUse && p.prefabInHands != "")
+                            {
+                                HighlightObject h = AddHighlight(p.transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f, 0.5f));
+                                if (h != null)
+                                {
+                                    h.setGold(true);
+                                    newHLObjects.Add(usableHL.name);
+                                }
+                            }
+                        }
                     }
                 }
             }
