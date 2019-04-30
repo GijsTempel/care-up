@@ -18,6 +18,7 @@ public class ActionManager : MonoBehaviour
     private Text pointsText;
     private Text percentageText;
     public int actionsCount = 0;
+    public static bool practiceMode = true;
 
     // list of types of actions
     public enum ActionType
@@ -129,6 +130,9 @@ public class ActionManager : MonoBehaviour
     // Will be refactored
     public static void UpdateRequirements()
     {
+        if (!practiceMode)
+            return;
+
         if (playerScript == null)
             playerScript = GameObject.FindObjectOfType<PlayerScript>();
 
@@ -1728,12 +1732,16 @@ public class ActionManager : MonoBehaviour
         GameObject.FindObjectOfType<ActionManager>().actionsCount++;
         RobotManager.RobotCorrectAction();
         ActionManager.PlayAddPointSound();
+
         ActionManager.BuildRequirements();
         ActionManager.UpdateRequirements();
     }
 
     public static void BuildRequirements()
     {
+        if (!practiceMode)
+            return;
+
         ActionManager am = GameObject.FindObjectOfType<ActionManager>();
         List<Action> sublist = am.actionList.Where(action =>
                action.SubIndex == am.currentActionIndex &&

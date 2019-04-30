@@ -302,6 +302,12 @@ public class GameUI : MonoBehaviour
         DropRightButton.SetActive(false);
         DropLeftButton.SetActive(false);
 
+        ActionManager.practiceMode = true;
+        if (prefs != null)
+        {
+            ActionManager.practiceMode = prefs.practiceMode;
+        }
+
 #if !UNITY_EDITOR
         if(GameObject.Find("ActionsPanel") != null)
             GameObject.Find("ActionsPanel").SetActive(false);
@@ -563,6 +569,12 @@ public class GameUI : MonoBehaviour
 
     public void updateButtonsBlink()
     {
+        bool practiceMode = true;
+        if (prefs != null)
+            practiceMode = prefs.practiceMode;
+        if (!practiceMode)
+            return;
+
         foreach (ItemControlButton b in GameObject.FindObjectsOfType<ItemControlButton>())
         {
             b.updateBlinkState();
