@@ -395,11 +395,11 @@ public class ActionManager : MonoBehaviour
                                     if (secondPlaceData.completed)
                                     {
                                         gameUI.DropRightBlink = true;
-                                        objectsData.Add(new StepData(false, $"Leg {article} {handValue} neer.", i));
+                                        objectsData.Add(new StepData(false, $"- Leg {article} {handValue} neer.", i));
                                     }
                                 }
                                 else
-                                    objectsData.Add(new StepData(false, $"Leg {article} {handValue} neer.", i));
+                                    objectsData.Add(new StepData(false, $"- Leg {article} {handValue} neer.", i));
                             }
                             else if (a.Type == ActionType.ObjectExamine && inventory.leftHandObject.name == a.leftHandRequirement)
                             {
@@ -450,11 +450,11 @@ public class ActionManager : MonoBehaviour
                                     if (secondPlaceData.completed)
                                     {
                                         gameUI.DropRightBlink = true;
-                                        objectsData.Add(new StepData(false, $"Leg {article} {handValue} neer.", i));
+                                        objectsData.Add(new StepData(false, $"- Leg {article} {handValue} neer.", i));
                                     }
                                 }
                                 else
-                                    objectsData.Add(new StepData(false, $"Leg {article} {handValue} neer.", i));
+                                    objectsData.Add(new StepData(false, $"- Leg {article} {handValue} neer.", i));
                             }
                             else if (a.Type == ActionType.ObjectExamine && inventory.rightHandObject.name == a.leftHandRequirement)
                             {
