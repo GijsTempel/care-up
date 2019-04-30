@@ -362,7 +362,7 @@ public class GameUI : MonoBehaviour
     public HighlightObject AddHighlight(Transform target, string prefix, HighlightObject.type hl_type = HighlightObject.type.NoChange, float startDelay = 0, float LifeTime = float.PositiveInfinity)
     {
         string hl_name = prefix + "_" + target.name;
-        if (GameObject.Find(hl_name) != null || target.GetComponent<WorkField>() != null)
+        if (GameObject.Find(hl_name) != null )
             return null;
         GameObject hl_obj = Instantiate(Resources.Load<GameObject>("Prefabs\\HighlightObject"), target.position, new Quaternion()) as GameObject;
 
@@ -422,9 +422,14 @@ public class GameUI : MonoBehaviour
             {
                 if (GameObject.Find(objectToUse) != null)
                 {
+                    HighlightObject.type hl_type = HighlightObject.type.NoChange;
+                    if (GameObject.Find(objectToUse).GetComponent<WorkField>() != null)
+                    {
+                        hl_type = HighlightObject.type.Hand;
+                    }
                     if (handsInventory.IsInHand(GameObject.Find(objectToUse)))
                         continue;
-                    HighlightObject h = AddHighlight(GameObject.Find(objectToUse).transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f, 0.5f));
+                    HighlightObject h = AddHighlight(GameObject.Find(objectToUse).transform, prefix, hl_type, 2f + Random.Range(0f, 0.5f));
                     if (h != null)
                         h.setGold(true);
                     newHLObjects.Add(objectToUse);
@@ -432,6 +437,7 @@ public class GameUI : MonoBehaviour
                 else
                 {
                     GameObject usableHL = null;
+                       
                     foreach (UsableObject u in GameObject.FindObjectsOfType<UsableObject>())
                     {
                         if (u.PrefabToAppear == objectToUse && u.PrefabToAppear != "")
