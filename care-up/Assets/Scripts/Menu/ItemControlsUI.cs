@@ -3,9 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class ItemControlsUI : MonoBehaviour {
-
-    public bool oldInitDisabled = true;
-
+    
     public GameObject initedObject;
 
     private Controls controls;
@@ -281,12 +279,6 @@ public class ItemControlsUI : MonoBehaviour {
             {
                 Close();
             }
-            
-            if (oldInitDisabled)
-            {
-                // must be last, after all the checks in Init and with bypass=true
-                Close(true);
-            }
         }
     }
 
@@ -488,12 +480,8 @@ public class ItemControlsUI : MonoBehaviour {
 
     public void UseOn()
     {
-        //player.usingOnHand = initedObject == handsInventory.LeftHandObject;
-        //player.ToggleUsingOnMode(true);
-        if (!(handsInventory.LeftHandEmpty() && handsInventory.RightHandEmpty()))
-        {
-            handsInventory.OnCombineAction();
-        }
+        player.usingOnHand = initedObject == handsInventory.LeftHandObject;
+        player.ToggleUsingOnMode(true);
 
         Close();
     }
@@ -507,18 +495,28 @@ public class ItemControlsUI : MonoBehaviour {
 
         if (initedObject == handsInventory.LeftHandObject)
         {
+            //if (handsInventory.LeftHandObject.name == "BloodGlucoseMeter")
+            //{
+            //    GameObject.FindObjectOfType<PlayerAnimationManager>().GetComponent<Animator>().SetTrigger("turnon_left");
+            //}
+            
             handsInventory.LeftHandObject.GetComponent<PickableObject>().Use(true, true);
 
-            if (tutorialUseOn != null) {
+            if (tutorialUseOn != null)
+            {
                 handsInventory.LeftHandObject.GetComponent<PickableObject>().tutorial_usedOn = true;
+                
             }
         }
         else
         {
+            //if (handsInventory.RightHandObject.name == "BloodGlucoseMeter")
+            //{
+            //    GameObject.FindObjectOfType<PlayerAnimationManager>().GetComponent<Animator>().SetTrigger("turnon_right");
             handsInventory.RightHandObject.GetComponent<PickableObject>().Use(false, true);
-
-            if (tutorialUseOn != null) {
-                handsInventory.RightHandObject.GetComponent<PickableObject> ().tutorial_usedOn = true;
+            if (tutorialUseOn != null)
+            {
+                handsInventory.RightHandObject.GetComponent<PickableObject>().tutorial_usedOn = true;
             }
         }
 

@@ -141,6 +141,7 @@ public class PickableObject : InteractableObject
 
         if (controls.SelectedObject != null && controls.CanInteract)
         {
+            print("ffffffffffffffffff");
             if ((actionManager.CompareUseOnInfo("InjectionNeedle", "NeedleCup", this.name) ||
                 actionManager.CompareUseOnInfo("AbsorptionNeedle", "NeedleCup", this.name) ||
                 actionManager.CompareUseOnInfo("InjectionSNeedle", "NeedleCup", this.name) ||
@@ -158,8 +159,8 @@ public class PickableObject : InteractableObject
                 }
                 inventory.RemoveHandObject(hand);
             }
-            else if ((//actionManager.CompareUseOnInfo("AbsorptionNeedleNoCap", "NeedleCup", this.name) ||
-                //actionManager.CompareUseOnInfo("InjectionNeedleNoCap", "NeedleCup", this.name) ||
+            else if ((actionManager.CompareUseOnInfo("AbsorptionNeedleNoCap", "NeedleCup", this.name) ||
+                actionManager.CompareUseOnInfo("InjectionNeedleNoCap", "NeedleCup", this.name) ||
                 actionManager.CompareUseOnInfo("ClothWithAmpouleTop", "NeedleCup", this.name) ||
                 actionManager.CompareUseOnInfo("InsulinNeedle", "NeedleCup", this.name))
                 && controls.SelectedObject.name == "NeedleCup")
@@ -246,10 +247,9 @@ public class PickableObject : InteractableObject
             }
             else if (GameObject.FindObjectOfType<ObjectsIDsController>() != null)
             {
-      
+                print("bbbbbbbbbbbbbbb");
                 ObjectsIDsController ObjectsID_Controller = GameObject.FindObjectOfType<ObjectsIDsController>();
                 string selectedName = controls.SelectedObject.transform.name;
-                print("=============" + name + " selected = " + selectedName);
                 if (controls.SelectedObject.GetComponent<PersonObjectPart>() != null)
                 {
                     selectedName = controls.SelectedObject.GetComponent<PersonObjectPart>().Person.name;
@@ -285,7 +285,7 @@ public class PickableObject : InteractableObject
                         {
                             t = controls.SelectedObject.transform;
                         }
-
+                        print(oId.ToString() + "   " + sId.ToString());
                         if (hand)
                         {
                             PlayerAnimationManager.PlayUseAnimation(oId, sId, t);
@@ -304,42 +304,17 @@ public class PickableObject : InteractableObject
         {
             if (actionManager.CompareUseOnInfo(name, ""))
             {
-                //-------------------------------------------------------------------------------
-                int objectID = -1;
-
-                if (GameObject.Find("GameLogic").GetComponent<ObjectsIDsController>() != null)
+                if (inventory.LeftHandEmpty())
                 {
-                    ObjectsIDsController ObjectsID_Controller = GameObject.Find("GameLogic").GetComponent<ObjectsIDsController>();
-                    if (ObjectsID_Controller.FindByName(name) != -1)
-                        objectID = ObjectsID_Controller.GetIDByName(name);
+                    PlayerAnimationManager.PlayAnimation("UseRight " + name);
+                    actionManager.OnUseOnAction(name, "");
+                    return true; 
                 }
-                
-                if (inventory.rightHandObject == GetComponent<PickableObject>())
+                else if (inventory.RightHandEmpty())
                 {
-                    if (objectID == -1)
-                    {
-                        PlayerAnimationManager.PlayAnimation("UseRight " + name);
-                        actionManager.OnUseOnAction(name, "");
-                        return true;
-                    }
-                    else
-                    {
-                        PlayerAnimationManager.PlayUseOnIDAnimation(objectID, false);
-                    }
-                }
-                else if (inventory.leftHandObject == GetComponent<PickableObject>())
-                {
-                    if (objectID == -1)
-                    {
-                        PlayerAnimationManager.PlayAnimation("UseLeft " + name);
-                        actionManager.OnUseOnAction(name, "");
-                        return true;
-                    }
-                    else
-                    {
-                        PlayerAnimationManager.PlayUseOnIDAnimation(objectID, true);
-                    }
-
+                    PlayerAnimationManager.PlayAnimation("UseLeft " + name);
+                    actionManager.OnUseOnAction(name, "");
+                    return true;
                 }
             }
         }
@@ -359,7 +334,6 @@ public class PickableObject : InteractableObject
         return (controls.SelectedObject != null && actionManager.CompareUseOnInfo(name, targetObject));
     }
     
-
     public virtual void Pick()
     {
         // callback for handling different OnPick mechanics
