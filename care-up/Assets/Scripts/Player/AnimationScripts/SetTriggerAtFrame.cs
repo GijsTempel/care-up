@@ -10,14 +10,13 @@ public class SetTriggerAtFrame : StateMachineBehaviour
     public int actionFrame;
     public string trigger;
     public string ObjectName = "";
-    public bool atTheEnd = false;
 
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         currentFrame = 0f;
         prevFrame = 0f;
-        if (actionFrame == 0 && !atTheEnd)
+        if (actionFrame == 0)
         {
             set_trigger(animator);
         }
@@ -33,9 +32,20 @@ public class SetTriggerAtFrame : StateMachineBehaviour
         {
             if (GameObject.Find(ObjectName) != null)
             {
-               
-                if (GameObject.Find(ObjectName).GetComponent<Animator>() != null)                
+                if (GameObject.Find(ObjectName).GetComponent<Animator>() != null)
+                {
                     GameObject.Find(ObjectName).GetComponent<Animator>().SetTrigger(trigger);
+                    //Debug.Log("ffffffffffffffffffffffff " + ObjectName);
+                }
+                else
+                {
+                    //Debug.Log("___Animator in " + ObjectName);
+
+                }
+            }
+            else
+            {
+                //Debug.Log("___No object " + ObjectName);
             }
         }
     }
@@ -44,26 +54,14 @@ public class SetTriggerAtFrame : StateMachineBehaviour
     {
         if (animator.speed != 0)
         {
-            if (!atTheEnd)
+            if (PlayerAnimationManager.CompareFrames(currentFrame, prevFrame, actionFrame))
             {
-                if (PlayerAnimationManager.CompareFrames(currentFrame, prevFrame, actionFrame))
-                {
-                    set_trigger(animator);
-                }
-
-                prevFrame = currentFrame;
-                currentFrame += Time.deltaTime;
+                set_trigger(animator);
             }
+
+            prevFrame = currentFrame;
+            currentFrame += Time.deltaTime;
         }
     }
 
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        currentFrame = 0;
-        prevFrame = 0;
-        if (atTheEnd)
-        {
-            set_trigger(animator);
-        }
-    }
 }
