@@ -177,6 +177,9 @@ public class GameUI : MonoBehaviour
 
     public void ButtonBlink(bool ToBlink)
     {
+        if (prefs != null)
+            if (!prefs.practiceMode)
+                return;
         if (BlinkState == ToBlink)
             return;
         BlinkState = ToBlink;

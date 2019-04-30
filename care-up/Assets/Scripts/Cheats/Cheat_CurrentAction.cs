@@ -79,7 +79,8 @@ public class Cheat_CurrentAction : MonoBehaviour
             {
                 GameObject.Find("DetailedHintPanel").SetActive(false);
                 extraPanel.SetActive(false);
-                extraButton.gameObject.SetActive(false);
+                if (extraButton != null)
+                    extraButton.gameObject.SetActive(false);
                 gameUI.UpdateWalkToGtoupUI(false);
             }
         }

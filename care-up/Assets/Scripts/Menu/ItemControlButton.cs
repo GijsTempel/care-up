@@ -4,14 +4,21 @@ public class ItemControlButton : MonoBehaviour
 {
     public GameUI.ItemControlButtonType buttonType;
     GameUI gameUI;
+    PlayerPrefsManager prefs;
+
 
     void Start()
     {
         gameUI = GameObject.FindObjectOfType<GameUI>();
+        prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
+
     }
 
     public void updateBlinkState()
     {
+        if (prefs != null)
+            if (!prefs.practiceMode)
+                return;
         GetComponent<Animator>().ResetTrigger("BlinkOn");
         GetComponent<Animator>().ResetTrigger("BlinkOff");
         bool toBlink = false;
@@ -68,6 +75,8 @@ public class ItemControlButton : MonoBehaviour
 
     private void OnEnable()
     {
+        prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
+
         updateBlinkState();
     }   
 }
