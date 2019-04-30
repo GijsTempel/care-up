@@ -120,7 +120,7 @@ public class RobotManager : MonoBehaviour {
 		if (n > notificationCount)
 		{
             if (UI_trigger.GetComponent<Animator>() != null && UI_trigger.GetComponent<Animator>().isActiveAndEnabled)
-                UI_trigger.GetComponent<Animator>().SetTrigger("BlinkStart");
+                UI_trigger.GetComponent<Animator>().SetTrigger("BlinkWithoutHint");
             UIElementsState[0] = true;
 		}
 
