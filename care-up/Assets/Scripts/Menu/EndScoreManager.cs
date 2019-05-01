@@ -70,6 +70,10 @@ public class EndScoreManager : MonoBehaviour {
                 stepObjects[i].wrong = wrongStepIndexes.Contains (i);
             }
             actualScene = true;
+
+            //update practice score & stars, update UI accordingly
+            GameObject.FindObjectOfType<PlayerPrefsManager>().UpdatePracticeHighscore(points, score);
+
         } else if (SceneManager.GetActiveScene ().name == "EndScore_Test") {
             Transform stepParent = GameObject.Find ("Interactable Objects/Canvas/StepScreen/ObservationForm/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
 

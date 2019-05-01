@@ -18,6 +18,7 @@ public class ActionManager : MonoBehaviour
     private Text pointsText;
     private Text percentageText;
     public int actionsCount = 0;
+    public static bool practiceMode = true;
 
     // list of types of actions
     public enum ActionType
@@ -129,6 +130,9 @@ public class ActionManager : MonoBehaviour
     // Will be refactored
     public static void UpdateRequirements()
     {
+        if (!practiceMode)
+            return;
+
         if (playerScript == null)
             playerScript = GameObject.FindObjectOfType<PlayerScript>();
 
@@ -394,12 +398,13 @@ public class ActionManager : MonoBehaviour
                                 {
                                     if (secondPlaceData.completed)
                                     {
-                                        gameUI.DropRightBlink = true;
-                                        objectsData.Add(new StepData(false, $"Leg {article} {handValue} neer.", i));
+                                        gameUI.DropLeftBlink = true;
+                                        
+                                        objectsData.Add(new StepData(false, $"- Leg {article} {handValue} neer.", i));
                                     }
                                 }
                                 else
-                                    objectsData.Add(new StepData(false, $"Leg {article} {handValue} neer.", i));
+                                    objectsData.Add(new StepData(false, $"- Leg {article} {handValue} neer.", i));
                             }
                             else if (a.Type == ActionType.ObjectExamine && inventory.leftHandObject.name == a.leftHandRequirement)
                             {
@@ -450,11 +455,11 @@ public class ActionManager : MonoBehaviour
                                     if (secondPlaceData.completed)
                                     {
                                         gameUI.DropRightBlink = true;
-                                        objectsData.Add(new StepData(false, $"Leg {article} {handValue} neer.", i));
+                                        objectsData.Add(new StepData(false, $"- Leg {article} {handValue} neer.", i));
                                     }
                                 }
                                 else
-                                    objectsData.Add(new StepData(false, $"Leg {article} {handValue} neer.", i));
+                                    objectsData.Add(new StepData(false, $"- Leg {article} {handValue} neer.", i));
                             }
                             else if (a.Type == ActionType.ObjectExamine && inventory.rightHandObject.name == a.leftHandRequirement)
                             {
@@ -919,7 +924,7 @@ public class ActionManager : MonoBehaviour
             string place = "";
             if (action.Attributes["place"] != null)
             {
-                secondPlace = action.Attributes["place"].Value;
+                place = action.Attributes["place"].Value;
             }
 
 
@@ -1728,12 +1733,16 @@ public class ActionManager : MonoBehaviour
         GameObject.FindObjectOfType<ActionManager>().actionsCount++;
         RobotManager.RobotCorrectAction();
         ActionManager.PlayAddPointSound();
+
         ActionManager.BuildRequirements();
         ActionManager.UpdateRequirements();
     }
 
     public static void BuildRequirements()
     {
+        if (!practiceMode)
+            return;
+
         ActionManager am = GameObject.FindObjectOfType<ActionManager>();
         List<Action> sublist = am.actionList.Where(action =>
                action.SubIndex == am.currentActionIndex &&

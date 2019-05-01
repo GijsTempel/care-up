@@ -19,10 +19,12 @@ public class UsableObject : InteractableObject {
     public string PrefabToAppear = "";
     public List<NameAndDescription> objectsToCreate;
     protected static HandsInventory handsInventory;
+    GameUI gameUI;
 
     protected override void Start()
     {
         base.Start();
+        gameUI = GameObject.FindObjectOfType<GameUI>();
 
         if (handsInventory == null)
         {
@@ -111,7 +113,7 @@ public class UsableObject : InteractableObject {
             }
 
             actionManager.OnUseAction(gameObject.name);
-            GameObject.FindObjectOfType<GameUI>().UpdateHelpHighlight();
+            gameUI.UpdateHelpHighlight();
             Reset();
         }
     }

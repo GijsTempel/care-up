@@ -249,7 +249,7 @@ public class PickableObject : InteractableObject
       
                 ObjectsIDsController ObjectsID_Controller = GameObject.FindObjectOfType<ObjectsIDsController>();
                 string selectedName = controls.SelectedObject.transform.name;
-                print("=============" + name + " selected = " + selectedName);
+                //print("=============" + name + " selected = " + selectedName);
                 if (controls.SelectedObject.GetComponent<PersonObjectPart>() != null)
                 {
                     selectedName = controls.SelectedObject.GetComponent<PersonObjectPart>().Person.name;

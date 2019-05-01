@@ -380,21 +380,8 @@ public class CharacterCreationScene : MonoBehaviour
         info.headType = headType;
         info.bodyType = bodyType;
         info.glassesType = glassesType;
-
-        // so while we're saving info we're back to our weird tutorial completion check
-        if (PlayerPrefs.GetInt("FirstLogin") <= 1)
-        {
-            PlayerPrefs.SetInt("FirstLogin", 2);
-
-            string sceneName = "Tutorial_UI";
-            string bundleName = "tutorial_ui";
-            bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
-        }
-        else
-        {
-            // tutorial was already played, load main menu? 
-            bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
-        }
+        
+        bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
     }
     
     public void ShowCharacter(GameObject male, GameObject female)

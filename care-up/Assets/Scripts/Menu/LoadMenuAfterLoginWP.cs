@@ -40,25 +40,8 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
         if (WULogin.characterCreated)
         {
             CharacterInfo.GetCharacterCharacteristicsWU();
-
-            // so character was created, we're getting info about that meanwhile
-            // checking if tutorial was completed and if not - loading it
-            if (PlayerPrefs.GetInt("FirstLogin") <= 1)
-            {
-                // very weird piece of code, i assume setting it to "2" will mean player started tutorial once
-                // we'll need to do same thing in the function that loads tutorial after character creation
-                PlayerPrefs.SetInt("FirstLogin", 2);
-
-                string sceneName = "Tutorial_UI";
-                string bundleName = "tutorial_ui";
-                bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
-            }
-            else
-            {
-                // if we're here - both character is created AND tutorial was player
-                // back to normal checks for serial/sub/plays number
-                CheckForSerials();
-            }
+            
+            CheckForSerials();
         }
         else
         {

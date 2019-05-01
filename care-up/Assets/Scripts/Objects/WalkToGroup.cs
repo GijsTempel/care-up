@@ -54,6 +54,17 @@ public class WalkToGroup : MonoBehaviour
 
     public void HighlightGroup(bool value)
     {
+        Camera cam = null;
+        foreach(Camera c in GameObject.FindObjectsOfType<Camera>())
+        {
+            if (c.transform.parent != null)
+            {
+                if (c.transform.parent.name == "Head")
+                    cam = c;
+            }
+        }
+        if (cam == null)
+            return;
         if (SystemInfo.deviceType == DeviceType.Handheld)
             return;
         text.SetActive(value);

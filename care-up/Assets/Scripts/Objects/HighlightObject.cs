@@ -13,6 +13,8 @@ public class HighlightObject : MonoBehaviour {
     bool gold = false;
     GameUI gameUI;
     public GameObject audioEffect;
+    public GameObject hand_hl;
+
     float lifetime = float.PositiveInfinity;
     float startDelay = 0;
     WalkToGroup currentWalkToGroup;
@@ -33,7 +35,8 @@ public class HighlightObject : MonoBehaviour {
         Ball,
         Qube,
         Arrow,
-        none
+        none,
+        Hand
     };
 
     public void setGold(bool value)
@@ -65,11 +68,12 @@ public class HighlightObject : MonoBehaviour {
             q.SetActive(currentType == HighlightObject.type.Qube);
         foreach (GameObject a in ArrowElements)
             a.SetActive(currentType == HighlightObject.type.Arrow);
-        if (_type == HighlightObject.type.Arrow)
+        if (_type == HighlightObject.type.Arrow || _type == HighlightObject.type.Hand)
         {
             transform.rotation = new Quaternion();
             transform.localScale = new Vector3(1,1,1);
         }
+        hand_hl.SetActive(currentType == HighlightObject.type.Hand);
     }
 
 
@@ -97,7 +101,7 @@ public class HighlightObject : MonoBehaviour {
         {
             setType(hl_control.hl_type);
             transform.position = hl_control.transform.position;
-            if (currentType != HighlightObject.type.Arrow)
+            if (currentType != HighlightObject.type.Arrow && currentType != HighlightObject.type.Hand)
             {   
                 transform.rotation = hl_control.transform.rotation;
                 transform.localScale = hl_control.transform.localScale;

@@ -3,21 +3,28 @@
 public class ButtonBlinking : MonoBehaviour
 {
     public GameUI.ItemControlButtonType buttonType;
+    PlayerPrefsManager prefs;
 
     GameUI gameUI;
 
     public void Start()
     {
         gameUI = GameObject.FindObjectOfType<GameUI>();
+        prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
     }
 
     public void OnEnable()
     {
+        prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
+
         UpdateButtonState();
     }
 
     public void UpdateButtonState()
     {
+        if (prefs != null)
+            if (!prefs.practiceMode)
+                return;
         GetComponent<Animator>().ResetTrigger("BlinkStart");
         GetComponent<Animator>().ResetTrigger("BlinkStop");
         GetComponent<Animator>().ResetTrigger("BlinkOnes");

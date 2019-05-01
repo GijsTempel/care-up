@@ -177,6 +177,9 @@ public class GameUI : MonoBehaviour
 
     public void ButtonBlink(bool ToBlink)
     {
+        if (prefs != null)
+            if (!prefs.practiceMode)
+                return;
         if (BlinkState == ToBlink)
             return;
         BlinkState = ToBlink;
@@ -299,6 +302,12 @@ public class GameUI : MonoBehaviour
         DropRightButton.SetActive(false);
         DropLeftButton.SetActive(false);
 
+        ActionManager.practiceMode = true;
+        if (prefs != null)
+        {
+            ActionManager.practiceMode = prefs.practiceMode;
+        }
+
 #if !UNITY_EDITOR
         if(GameObject.Find("ActionsPanel") != null)
             GameObject.Find("ActionsPanel").SetActive(false);
@@ -359,7 +368,7 @@ public class GameUI : MonoBehaviour
     public HighlightObject AddHighlight(Transform target, string prefix, HighlightObject.type hl_type = HighlightObject.type.NoChange, float startDelay = 0, float LifeTime = float.PositiveInfinity)
     {
         string hl_name = prefix + "_" + target.name;
-        if (GameObject.Find(hl_name) != null || target.GetComponent<WorkField>() != null)
+        if (GameObject.Find(hl_name) != null )
             return null;
         GameObject hl_obj = Instantiate(Resources.Load<GameObject>("Prefabs\\HighlightObject"), target.position, new Quaternion()) as GameObject;
 
@@ -419,9 +428,14 @@ public class GameUI : MonoBehaviour
             {
                 if (GameObject.Find(objectToUse) != null)
                 {
+                    HighlightObject.type hl_type = HighlightObject.type.NoChange;
+                    if (GameObject.Find(objectToUse).GetComponent<WorkField>() != null)
+                    {
+                        hl_type = HighlightObject.type.Hand;
+                    }
                     if (handsInventory.IsInHand(GameObject.Find(objectToUse)))
                         continue;
-                    HighlightObject h = AddHighlight(GameObject.Find(objectToUse).transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f, 0.5f));
+                    HighlightObject h = AddHighlight(GameObject.Find(objectToUse).transform, prefix, hl_type, 2f + Random.Range(0f, 0.5f));
                     if (h != null)
                         h.setGold(true);
                     newHLObjects.Add(objectToUse);
@@ -429,6 +443,7 @@ public class GameUI : MonoBehaviour
                 else
                 {
                     GameObject usableHL = null;
+                       
                     foreach (UsableObject u in GameObject.FindObjectsOfType<UsableObject>())
                     {
                         if (u.PrefabToAppear == objectToUse && u.PrefabToAppear != "")
@@ -441,8 +456,27 @@ public class GameUI : MonoBehaviour
                     {
                         HighlightObject h = AddHighlight(usableHL.transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f, 0.5f));
                         if (h != null)
+                        {
                             h.setGold(true);
-                        newHLObjects.Add(usableHL.name);
+                            newHLObjects.Add(usableHL.name);
+                        }
+                        
+
+                    }
+                    else
+                    {
+                        foreach (PickableObject p in GameObject.FindObjectsOfType<PickableObject>())
+                        {
+                            if (p.prefabInHands == objectToUse && p.prefabInHands != "")
+                            {
+                                HighlightObject h = AddHighlight(p.transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f, 0.5f));
+                                if (h != null)
+                                {
+                                    h.setGold(true);
+                                    newHLObjects.Add(p.name);
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -535,6 +569,12 @@ public class GameUI : MonoBehaviour
 
     public void updateButtonsBlink()
     {
+        bool practiceMode = true;
+        if (prefs != null)
+            practiceMode = prefs.practiceMode;
+        if (!practiceMode)
+            return;
+
         foreach (ItemControlButton b in GameObject.FindObjectsOfType<ItemControlButton>())
         {
             b.updateBlinkState();
