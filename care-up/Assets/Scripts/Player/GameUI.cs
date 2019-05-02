@@ -5,7 +5,6 @@ using CareUp.Actions;
 using System.Linq;
 public class GameUI : MonoBehaviour
 {
-
     GameObject Player;
     public Animator Blink;
     public Animator IPadBlink;
@@ -73,7 +72,6 @@ public class GameUI : MonoBehaviour
     PlayerScript ps;
     bool ICPCurrentState = false;
     public bool allowObjectControlUI = true;
-
     public enum ItemControlButtonType
     {
         None,
@@ -392,8 +390,7 @@ public class GameUI : MonoBehaviour
                 GameObject.Find(hl_name).GetComponent<HighlightObject>().Destroy();
         }
     }
-
-
+    
     //----------------------------------------------------------------------------------------------------------
     public void UpdateHelpHighlight()
     {
@@ -496,10 +493,8 @@ public class GameUI : MonoBehaviour
         {
             activeHighlighted.Add(s);
         }
-
     }
-
-
+    
     public void ShowDonePanel(bool value)
     {
         donePanel.SetActive(value);
@@ -518,10 +513,7 @@ public class GameUI : MonoBehaviour
 
         donePanel.SetActive(false);
     }
-
-
-
-
+    
     void OnGUI()
     {
 #if UNITY_EDITOR
@@ -533,10 +525,8 @@ public class GameUI : MonoBehaviour
         }
 
         GUI.Label(new Rect(20, 700, 1000, 100), debugSS);
-
 #endif
     }
-
 
     public void DropFromHand(bool leftHand = true)
     {
@@ -564,7 +554,6 @@ public class GameUI : MonoBehaviour
                 Destroy(g);
             }
         }
-
     }
 
     public void updateButtonsBlink()
@@ -780,7 +769,6 @@ public class GameUI : MonoBehaviour
         currentAnimLock = animationUiBlock;
         if (!showItemControlPanel)
             currentAnimLock = false;
-
     }
 
     public void UpdateWalkToGtoupUI(bool value)
