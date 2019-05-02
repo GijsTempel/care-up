@@ -317,7 +317,7 @@ public class ItemControlsUI : MonoBehaviour {
             if (cameraMode.CurrentMode == CameraMode.Mode.ItemControlsUI)
             {
                 // specific case for "catheterisation" it doesnt need hands empty
-                if (handsInventory.Empty() || initedObject.name == "catheterisation")
+                if ((handsInventory.Empty() || initedObject.name == "catheterisation") || initedObject.GetComponent<UsableObject>().UseWithObjectsInHands)
                 {
                     initedObject.GetComponent<UsableObject>().Use();
                 }

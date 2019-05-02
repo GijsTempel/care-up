@@ -19,8 +19,9 @@ public class UsableObject : InteractableObject {
     public string PrefabToAppear = "";
     public List<NameAndDescription> objectsToCreate;
     protected static HandsInventory handsInventory;
-    GameUI gameUI;
 
+    GameUI gameUI;
+    public bool UseWithObjectsInHands = false;
     protected override void Start()
     {
         base.Start();
