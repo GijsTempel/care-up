@@ -702,12 +702,21 @@ public class GameUI : MonoBehaviour
                         noTargetButton.transform.GetChild(0).GetComponent<Text>().text =
                             actionManager.CurrentButtonText(handsInventory.leftHandObject.name);
                     }
+                    if (REmpty)
+                    {
+                        bool show_decomb_left = actionManager.CompareCombineObjects(handsInventory.leftHandObject.name, "");
+                        decombineButton.SetActive(show_decomb_left);
+                        decombineButton.GetComponent<Animator>().SetTrigger("BlinkOn");
+                        decombineButton.transform.GetChild(0).GetComponent<Text>().text =
+                        (actionManager.CompareCombineObjects(handsInventory.leftHandObject.name, "")) ?
+                            actionManager.CurrentDecombineButtonText(handsInventory.leftHandObject.name)
+                            : "Openen";
+                    }
+                    else
+                    {
+                        decombineButton.SetActive(false);
 
-                    decombineButton.GetComponent<Animator>().SetTrigger("BlinkOn");
-                    decombineButton.transform.GetChild(0).GetComponent<Text>().text =
-                    (actionManager.CompareCombineObjects(handsInventory.leftHandObject.name, "")) ?
-                        actionManager.CurrentDecombineButtonText(handsInventory.leftHandObject.name)
-                        : "Openen";
+                    }
                 }
                 else
                 {
@@ -725,11 +734,20 @@ public class GameUI : MonoBehaviour
                         noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text =
                            actionManager.CurrentButtonText(handsInventory.rightHandObject.name);
                     }
+                    if (LEmpty)
+                    {
+                        bool show_decomb_right = actionManager.CompareCombineObjects(handsInventory.rightHandObject.name, "");
+                        decombineButton_right.SetActive(show_decomb_right);
+                        decombineButton_right.transform.GetChild(0).GetComponent<Text>().text =
+                        (actionManager.CompareCombineObjects("", handsInventory.rightHandObject.name)) ?
+                            actionManager.CurrentDecombineButtonText(handsInventory.rightHandObject.name)
+                            : "Openen";
+                    }
+                    else
+                    {
+                        decombineButton_right.SetActive(false);
 
-                    decombineButton_right.transform.GetChild(0).GetComponent<Text>().text =
-                    (actionManager.CompareCombineObjects("", handsInventory.rightHandObject.name)) ?
-                        actionManager.CurrentDecombineButtonText(handsInventory.rightHandObject.name)
-                        : "Openen";
+                    }
                 }
                 else
                 {
@@ -740,11 +758,11 @@ public class GameUI : MonoBehaviour
                 noTargetButton.SetActive(showNoTarget);
                 noTargetButton_right.SetActive(showNoTarget_right);
 
-                decombineButton.SetActive(showDecomb && REmpty && !showNoTarget);
-                if(decombineButton.activeSelf)
-                decombineButton.GetComponent<Animator>().SetTrigger("BlinkOn");
+                //decombineButton.SetActive(showDecomb && REmpty && !showNoTarget);
+                //if(decombineButton.activeSelf)
+                //decombineButton.GetComponent<Animator>().SetTrigger("BlinkOn");
 
-                decombineButton_right.SetActive(showDecomb && LEmpty && !showNoTarget_right);
+                //decombineButton_right.SetActive(showDecomb && LEmpty && !showNoTarget_right);
                 combineButton.SetActive(showCombin);
             }
 
