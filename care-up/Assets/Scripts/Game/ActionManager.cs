@@ -167,8 +167,10 @@ public class ActionManager : MonoBehaviour
             bool correctObjectsInHands = true;
             List<StepData> objectsData = new List<StepData>();
 
-            //if (ObjectNames[0] == "PatientRecords" || ObjectNames[0] == "PrescriptionForm")
+            bool dialog = false;
 
+            if (a.placeRequirement == "PatientPos" || a.placeRequirement == "DoctorPos" || a.secondPlaceRequirement == "PatientPos" || a.secondPlaceRequirement == "DoctorPos")
+                dialog = true;
 
             if (!string.IsNullOrEmpty(a.placeRequirement))
             {
@@ -184,6 +186,11 @@ public class ActionManager : MonoBehaviour
                 placeData = new StepData(completed, $"- Ga naar {placeName}.", i);
                 if (completed)
                     anyCorrectPlace = true;
+
+                if (a.Type == ActionType.PersonTalk && dialog)
+                {
+                    objectsData.Add(new StepData(false, $"- Klik op {placeName}.", i));
+                }
             }
 
             if (!string.IsNullOrEmpty(a.secondPlaceRequirement))
@@ -198,9 +205,12 @@ public class ActionManager : MonoBehaviour
                     completed = playerScript.currentWalkPosition.name == a.secondPlaceRequirement;
 
                 secondPlaceData = new StepData(completed, $"- Ga naar {placeName}.", i);
-                //if (completed)
-                //anyCorrectPlace = true;
-            }
+
+                if (a.Type == ActionType.PersonTalk && dialog)
+                {
+                    objectsData.Add(new StepData(false, $"- Klik op {placeName}.", i));
+                }
+            }          
 
             string[] actionHand = { a.leftHandRequirement, a.rightHandRequirement };
             GameObject leftR = null;
@@ -209,7 +219,6 @@ public class ActionManager : MonoBehaviour
             string currentLeftObject = null;
             string currentRightObject = null;
             bool objectCombinationCheck = false;
-
 
             bool iPad = a.leftHandRequirement == "PatientRecords" || a.leftHandRequirement == "PrescriptionForm" || a.leftHandRequirement == "PaperAndPen";
 
@@ -353,8 +362,7 @@ public class ActionManager : MonoBehaviour
                             }
                         }
 #endif
-
-
+                        
                         handValue = System.Char.ToLowerInvariant(handValue[0]) + handValue.Substring(1);
 
                         string keyWords = null;
