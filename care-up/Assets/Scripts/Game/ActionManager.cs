@@ -243,15 +243,8 @@ public class ActionManager : MonoBehaviour
             {
                 foreach (string hand in actionHand)
                 {
-                    if (GameObject.Find(hand) != null)
-                    {
-                        if (GameObject.Find(hand).GetComponent<InteractableObject>() != null)
-                        {
-                            article = GameObject.Find(hand).GetComponent<InteractableObject>().nameArticle;
-                        }
-                    }
-
                     bool foundDescr = false;
+
                     if (!string.IsNullOrEmpty(hand))
                     {
                         string handValue = hand;
@@ -264,6 +257,7 @@ public class ActionManager : MonoBehaviour
                                 if (GameObject.Find(hand).GetComponent<InteractableObject>().description != "")
                                 {
                                     handValue = GameObject.Find(hand).GetComponent<InteractableObject>().description;
+                                    article = GameObject.Find(hand).GetComponent<InteractableObject>().nameArticle;
                                     found = true;
                                     foundDescr = true;
                                 }
@@ -273,9 +267,10 @@ public class ActionManager : MonoBehaviour
                         {
                             foreach (ExtraObjectOptions extraObject in GameObject.FindObjectsOfType<ExtraObjectOptions>())
                             {
-                                string desc = extraObject.HasNeeded(hand);
+                                string desc = extraObject.HasNeeded(hand);                                
                                 if (desc != "")
                                 {
+                                    article = extraObject.HasNeededArticle(hand);
                                     handValue = desc;
                                     found = true;
                                     foundDescr = true;
@@ -294,6 +289,7 @@ public class ActionManager : MonoBehaviour
                                     {
                                         if (obj.name == hand)
                                         {
+                                            article = obj.GetComponent<InteractableObject>().nameArticle;
                                             handValue = obj.GetComponent<InteractableObject>().description;
                                             foundDescr = true;
                                             found = true;
@@ -316,6 +312,7 @@ public class ActionManager : MonoBehaviour
                                         if (obj.name == hand)
                                         {
                                             handValue = obj.GetComponent<InteractableObject>().description;
+                                            article = obj.GetComponent<InteractableObject>().nameArticle;
                                             foundDescr = true;
                                             found = true;
                                             break;
