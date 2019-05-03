@@ -87,7 +87,7 @@ public class GameUI : MonoBehaviour
         MoveLeft,
         MoveRight,
         Records,
-        Prescription, 
+        Prescription,
         Ipad,
         General,
         PaperAndPen
@@ -366,7 +366,7 @@ public class GameUI : MonoBehaviour
     public HighlightObject AddHighlight(Transform target, string prefix, HighlightObject.type hl_type = HighlightObject.type.NoChange, float startDelay = 0, float LifeTime = float.PositiveInfinity)
     {
         string hl_name = prefix + "_" + target.name;
-        if (GameObject.Find(hl_name) != null )
+        if (GameObject.Find(hl_name) != null)
             return null;
         GameObject hl_obj = Instantiate(Resources.Load<GameObject>("Prefabs\\HighlightObject"), target.position, new Quaternion()) as GameObject;
 
@@ -390,7 +390,7 @@ public class GameUI : MonoBehaviour
                 GameObject.Find(hl_name).GetComponent<HighlightObject>().Destroy();
         }
     }
-    
+
     //----------------------------------------------------------------------------------------------------------
     public void UpdateHelpHighlight()
     {
@@ -440,7 +440,7 @@ public class GameUI : MonoBehaviour
                 else
                 {
                     GameObject usableHL = null;
-                       
+
                     foreach (UsableObject u in GameObject.FindObjectsOfType<UsableObject>())
                     {
                         if (u.PrefabToAppear == objectToUse && u.PrefabToAppear != "")
@@ -453,12 +453,8 @@ public class GameUI : MonoBehaviour
                     {
                         HighlightObject h = AddHighlight(usableHL.transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f, 0.5f));
                         if (h != null)
-                        {
                             h.setGold(true);
-                            newHLObjects.Add(usableHL.name);
-                        }
-                        
-
+                        newHLObjects.Add(usableHL.name);
                     }
                     else
                     {
@@ -468,10 +464,8 @@ public class GameUI : MonoBehaviour
                             {
                                 HighlightObject h = AddHighlight(p.transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f, 0.5f));
                                 if (h != null)
-                                {
                                     h.setGold(true);
-                                    newHLObjects.Add(p.name);
-                                }
+                                newHLObjects.Add(p.name);
                             }
                         }
                     }
@@ -494,7 +488,7 @@ public class GameUI : MonoBehaviour
             activeHighlighted.Add(s);
         }
     }
-    
+
     public void ShowDonePanel(bool value)
     {
         donePanel.SetActive(value);
@@ -513,7 +507,7 @@ public class GameUI : MonoBehaviour
 
         donePanel.SetActive(false);
     }
-    
+
     void OnGUI()
     {
 #if UNITY_EDITOR
@@ -589,7 +583,7 @@ public class GameUI : MonoBehaviour
         {
             if (l.name == neededWalkToGroup)
                 return -1;
-            else 
+            else
             {
                 int a = FindDirection(neededWalkToGroup, l, -1);
                 if (a != 0)
@@ -612,7 +606,7 @@ public class GameUI : MonoBehaviour
         return 0;
     }
 
-        // Update is called once per frame
+    // Update is called once per frame
     void Update()
     {
         if (!timeOutEnded)
@@ -621,7 +615,7 @@ public class GameUI : MonoBehaviour
             if (startTimeOut < 0)
             {
                 timeOutEnded = true;
-                
+
                 ActionManager.BuildRequirements();
                 ActionManager.UpdateRequirements();
 
