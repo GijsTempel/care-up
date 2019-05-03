@@ -628,20 +628,7 @@ public class GameUI : MonoBehaviour
         bool animationUiBlock = true;
         if (allowObjectControlUI)
         {
-            for (int i = 0; i < 3; i++)
-            {
-                if (controller.GetCurrentAnimatorStateInfo(i).length > 0.2f && controller.GetCurrentAnimatorStateInfo(i).normalizedTime < 1f)
-                    animationUiBlock = false;
-                if (controller.GetNextAnimatorStateInfo(i).length > 0.2f && controller.GetAnimatorTransitionInfo(i).normalizedTime < 0.01)
-                    animationUiBlock = false;
-                if (i < 2)
-                {
-                    if (controller.GetCurrentAnimatorStateInfo(i).length > 0.2f &&
-                        controller.GetAnimatorTransitionInfo(i).normalizedTime < 0.01 &&
-                        controller.GetNextAnimatorStateInfo(i).length < 0.2f)
-                        animationUiBlock = false;
-                }
-            }
+            animationUiBlock = controller.GetComponent<PlayerAnimationManager>().IsLongAnimation();
         }
 
         //to show object control panel if no animation block and action block

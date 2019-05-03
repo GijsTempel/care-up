@@ -37,6 +37,27 @@ public class PlayerAnimationManager : MonoBehaviour
 
     private static AnimationSequence animationSequence;
 
+
+    public bool IsLongAnimation()
+    {
+        bool isLognAnim = true;
+        for (int i = 0; i < 3; i++)
+        {
+            if (animationController.GetCurrentAnimatorStateInfo(i).length > 0.2f && animationController.GetCurrentAnimatorStateInfo(i).normalizedTime < 1f)
+                isLognAnim = false;
+            if (animationController.GetNextAnimatorStateInfo(i).length > 0.2f && animationController.GetAnimatorTransitionInfo(i).normalizedTime < 0.01)
+                isLognAnim = false;
+            if (i < 2)
+            {
+                if (animationController.GetCurrentAnimatorStateInfo(i).length > 0.2f &&
+                    animationController.GetAnimatorTransitionInfo(i).normalizedTime < 0.01 &&
+                    animationController.GetNextAnimatorStateInfo(i).length < 0.2f)
+                    isLognAnim = false;
+            }
+        }
+        return isLognAnim;
+    }
+
     void Start()
     {
         
