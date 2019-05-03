@@ -9,6 +9,8 @@ public class ExtraObjectOptions : MonoBehaviour
     public List<GameObject> neededObjects;
 
     public Dictionary<string, string> neededObjectsData = new Dictionary<string, string>();
+    public Dictionary<string, string> neededObjectsArticle = new Dictionary<string, string>();
+
 
     void Start()
     {
@@ -17,6 +19,8 @@ public class ExtraObjectOptions : MonoBehaviour
             if (obj.GetComponent<InteractableObject>() != null)
             {
                 neededObjectsData.Add(obj.name, obj.GetComponent<InteractableObject>().description);
+                neededObjectsArticle.Add(obj.name, obj.GetComponent<InteractableObject>().nameArticle);
+
             }
         }       
     }
@@ -25,6 +29,13 @@ public class ExtraObjectOptions : MonoBehaviour
     {
         if (neededObjectsData.ContainsKey(str))
             return neededObjectsData[str];
+        return "";
+    }
+
+    public string HasNeededArticle(string str)
+    {
+        if (neededObjectsArticle.ContainsKey(str))
+            return neededObjectsArticle[str];
         return "";
     }
 
