@@ -628,7 +628,7 @@ public class GameUI : MonoBehaviour
         bool animationUiBlock = true;
         if (allowObjectControlUI)
         {
-            animationUiBlock = controller.GetComponent<PlayerAnimationManager>().IsLongAnimation();
+            animationUiBlock = !PlayerAnimationManager.IsLongAnimation();
         }
 
         //to show object control panel if no animation block and action block

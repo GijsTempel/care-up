@@ -12,7 +12,7 @@ public class InteractableObject : MonoBehaviour {
 
     public bool muplipleMesh = false;
     public Vector3 descriptionOffset;
-    GameUI gameUI;
+    GameUI gameUI__;
 
     protected Renderer rend;
     protected Shader onMouseOverShader;
@@ -48,7 +48,7 @@ public class InteractableObject : MonoBehaviour {
     protected virtual void Start()
     {
         //handsInventory = GameObject.FindObjectOfType<HandsInventory>();
-        gameUI = GameObject.FindObjectOfType<GameUI>();
+        gameUI__ = GameObject.FindObjectOfType<GameUI>();
         rend = GetComponent<Renderer>();
 
         if (onMouseOverShaderSihlouette == null)
@@ -146,7 +146,7 @@ public class InteractableObject : MonoBehaviour {
                 if (controls.CanInteract)
                 {
                     if (!inventory.IsInHand(gameObject))
-                        gameUI.AddHighlight(transform, "hl");
+                        gameUI__.AddHighlight(transform, "hl");
 
                     /*if (rend.material.shader == onMouseExitShader)
                     {
@@ -163,14 +163,14 @@ public class InteractableObject : MonoBehaviour {
                 else if (!controls.CanInteract)// && rend.material.shader == onMouseOverShader)
                 {
                     //SetShaderTo(onMouseExitShader);
-                    gameUI.RemoveHighlight("hl", transform.name);
+                    gameUI__.RemoveHighlight("hl", transform.name);
 
                     itemDescription.SetActive(false);
                 }
             }
             else
             {
-                gameUI.RemoveHighlight("hl", transform.name);
+                gameUI__.RemoveHighlight("hl", transform.name);
                 /*if (rend.material.shader == onMouseOverShader)
                 {
                     SetShaderTo(onMouseExitShader);
@@ -193,7 +193,7 @@ public class InteractableObject : MonoBehaviour {
     {
         if (rend)
         {
-            gameUI.RemoveHighlight("hl", transform.name);
+            gameUI__.RemoveHighlight("hl", transform.name);
             itemDescription.SetActive(false);
         }
     }
@@ -310,7 +310,7 @@ public class InteractableObject : MonoBehaviour {
             if (rend.material.shader == onMouseOverShader)
                 SetShaderTo(onMouseExitShader);
             
-            gameUI.RemoveHighlight("hl", transform.name);
+            gameUI__.RemoveHighlight("hl", transform.name);
         }
     }
 }
