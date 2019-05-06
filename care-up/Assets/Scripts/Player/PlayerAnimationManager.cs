@@ -38,21 +38,21 @@ public class PlayerAnimationManager : MonoBehaviour
     private static AnimationSequence animationSequence;
 
 
-    public bool IsLongAnimation()
+    public static bool IsLongAnimation()
     {
-        bool isLognAnim = true;
+        bool isLognAnim = false;
         for (int i = 0; i < 3; i++)
         {
             if (animationController.GetCurrentAnimatorStateInfo(i).length > 0.2f && animationController.GetCurrentAnimatorStateInfo(i).normalizedTime < 1f)
-                isLognAnim = false;
+                isLognAnim = true;
             if (animationController.GetNextAnimatorStateInfo(i).length > 0.2f && animationController.GetAnimatorTransitionInfo(i).normalizedTime < 0.01)
-                isLognAnim = false;
+                isLognAnim = true;
             if (i < 2)
             {
                 if (animationController.GetCurrentAnimatorStateInfo(i).length > 0.2f &&
                     animationController.GetAnimatorTransitionInfo(i).normalizedTime < 0.01 &&
                     animationController.GetNextAnimatorStateInfo(i).length < 0.2f)
-                    isLognAnim = false;
+                    isLognAnim = true;
             }
         }
         return isLognAnim;

@@ -11,7 +11,6 @@ public class CharacterInfo : MonoBehaviour
     //indicates that the current character state has been checked
     static bool currentStateChecked = false;
 
-    //is used for character characteristics comparison between data received form database and newly entered
     public static CharacterInfo currentCharacter = new CharacterInfo();
 
     public void SetCharacterCharacteristicsWU(string sexType, int head, int body, int glasses)
@@ -23,29 +22,11 @@ public class CharacterInfo : MonoBehaviour
 
         CMLData data = new CMLData();
 
-        if (currentStateChecked)
-        {
-            if (sex != currentCharacter.sex)
-                if (!string.IsNullOrEmpty(sex))
-                    data.Set("CharacterSex", sex);
-
-            if (headType != currentCharacter.headType)
-                data.Set("CharacterHeadType", headType.ToString());
-
-            if (bodyType != currentCharacter.bodyType)
-                data.Set("CharacterBodyType", bodyType.ToString());
-
-            if (glassesType != currentCharacter.glassesType)
-                data.Set("CharacterGlassesType", glassesType.ToString());
-        }
-        else
-        {
-            if (!string.IsNullOrEmpty(sex))
-                data.Set("CharacterSex", sex);
-            data.Set("CharacterHeadType", headType.ToString());
-            data.Set("CharacterBodyType", bodyType.ToString());
-            data.Set("CharacterGlassesType", glassesType.ToString());
-        }
+        if (!string.IsNullOrEmpty(sex))
+            data.Set("CharacterSex", sex);
+        data.Set("CharacterHeadType", headType.ToString());
+        data.Set("CharacterBodyType", bodyType.ToString());
+        data.Set("CharacterGlassesType", glassesType.ToString());
 
         WUData.UpdateCategory("AccountStats", data);
         currentStateChecked = false;
@@ -86,7 +67,7 @@ public class CharacterInfo : MonoBehaviour
         }
 
         currentStateChecked = true;
-        
+
         CharacterInfo info = GameObject.FindObjectOfType<CharacterInfo>();
         info.sex = currentCharacter.sex;
         info.headType = currentCharacter.headType;
