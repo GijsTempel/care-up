@@ -53,6 +53,8 @@ public class UsableObject : InteractableObject {
 
     public virtual void Use()
     {
+        //if (PlayerAnimationManager.IsLongAnimation())
+        //    return;
         if (!ViewModeActive())
         {
             // unique object, not usable, but picking performed instead
