@@ -137,7 +137,9 @@ public class WalkToGroupButton : MonoBehaviour {
     }
 
     public void MoveToGroup()
-    {       
+    {
+        if (PlayerAnimationManager.IsLongAnimation())
+            return;
         if (linkedWalkToGroup != null)
         {
             GameObject.FindObjectOfType<PlayerScript>().WalkToGroup(linkedWalkToGroup);
