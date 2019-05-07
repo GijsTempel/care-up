@@ -651,6 +651,8 @@ public class GameUI : MonoBehaviour
 
             if (handsStateChanged)
             {
+                decombineButton.SetActive(false);
+                decombineButton_right.SetActive(false);
                 ActionManager.UpdateRequirements();
                 UpdateHelpHighlight();
                 currentActionsCount = actionManager.actionsCount;
