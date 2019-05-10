@@ -690,7 +690,8 @@ public class PlayerPrefsManager : MonoBehaviour
     static void FetchTestHighscore(CML response)
     {
         string highscoreString = response[1].String(currentTestScene);
-        float highscore = float.Parse(highscoreString.Replace(",", "."));
+        float highscore = 0;
+        float.TryParse(highscoreString.Replace(",", "."), out highscore);
         GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
                 "DialogTestPractice/Panel_UI/Buttons/TestButton/contentunlocked/percentage")
                 .GetComponent<Text>().text = Mathf.RoundToInt(highscore).ToString() + "%";
@@ -704,5 +705,69 @@ public class PlayerPrefsManager : MonoBehaviour
             data.Set(currentTestScene, currentTestScore.ToString());
             WUData.UpdateCategory("TestHighscores", data);
         }
+    }
+
+    /// <summary>
+    /// Generates and opens link for certificate generation.
+    /// Mirrors the safety measures of database script to generate safety key, included in the link.
+    /// </summary>
+    /// <param name="firstName"></param>
+    /// <param name="secondName"></param>
+    /// <param name="scene"></param>
+    /// <param name="score"></param>
+    static void __openCertificate(string firstName, string secondName, string scene, string score)
+    {
+        int keyValue = 192378; // salt
+        keyValue += __sumString(firstName);
+        keyValue += __sumString(secondName);
+        keyValue += __sumString(scene);
+        keyValue += __sumString(score) * 521; // salt
+
+        string day = DateTime.Now.Day.ToString();
+        if (day.Length == 1) day = "0" + day;
+        string month = DateTime.Now.Month.ToString();
+        if (month.Length == 1) month = "0" + month;
+
+        string date = day + month + DateTime.Now.Year.ToString();
+        keyValue += __sumString(date) * 13;
+        
+        string hexKey = Convert.ToString(keyValue, 16);
+        hexKey = __trashFillString(hexKey);
+
+        string link = "https://leren.careup.online/certificate.php?";
+        link += "first=" + firstName;
+        link += "&second=" + secondName;
+        link += "&scene=" + scene;
+        link += "&score=" + score;
+        link += "&date=" + date;
+        link += "&misc=" + hexKey;
+        
+        Application.OpenURL(link);
+    }
+
+    static int __sumString(string str)
+    {
+        int sum = 0;
+        for (int i = 0; i < str.Length; ++i)
+        {
+            sum += (byte)str[i];
+        }
+        return sum;
+    }
+
+    static string __trashFillString(string str)
+    {
+        string res = "";
+
+        string allowedChars = "ghijkmnopqrstuvwxyzGHJKLMNOPQRSTUVWXYZ";
+        System.Random random = new System.Random();
+
+        for (int i = 0; i < str.Length; ++i)
+        {
+            res += (random.Next(0, 1) > 0 ? str[i].ToString().ToUpper() : str[i].ToString().ToLower());
+            res += allowedChars[random.Next(0, allowedChars.Length)];
+        }
+
+        return res;
     }
 }
