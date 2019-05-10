@@ -27,7 +27,7 @@ public class CameraMode : MonoBehaviour
     float camRotTime;
     float camMovementSpeed = 1f;
     float camMoveBackAt = float.PositiveInfinity;
-    bool robotUIFlag = false;
+    public bool robotUIFlag = false;
     //bool backFromObjectPreview = false; never used?
 
     public float minZoom = 0.5f;
@@ -165,8 +165,7 @@ public class CameraMode : MonoBehaviour
 
         // handle object preview, close/pick,zoom
         if (currentMode == Mode.ObjectPreview && !selectedObject.animationExamine)
-        {
-     
+        {     
             if (controls.keyPreferences.closeObjectView.Pressed())
             {
                 ToggleCameraMode(Mode.Free);
