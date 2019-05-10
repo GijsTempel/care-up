@@ -688,7 +688,7 @@ public class GameUI : MonoBehaviour
                     if (REmpty)
                     {
                         bool show_decomb_left = actionManager.CompareCombineObjects(handsInventory.leftHandObject.name, "");
-                        decombineButton.SetActive(show_decomb_left);
+                        decombineButton.SetActive(show_decomb_left && !showNoTarget);
                         decombineButton.GetComponent<Animator>().SetTrigger("BlinkOn");
                         decombineButton.transform.GetChild(0).GetComponent<Text>().text =
                         (actionManager.CompareCombineObjects(handsInventory.leftHandObject.name, "")) ?
@@ -720,7 +720,7 @@ public class GameUI : MonoBehaviour
                     if (LEmpty)
                     {
                         bool show_decomb_right = actionManager.CompareCombineObjects(handsInventory.rightHandObject.name, "");
-                        decombineButton_right.SetActive(show_decomb_right);
+                        decombineButton_right.SetActive(show_decomb_right && !showNoTarget_right);
                         decombineButton_right.transform.GetChild(0).GetComponent<Text>().text =
                         (actionManager.CompareCombineObjects("", handsInventory.rightHandObject.name)) ?
                             actionManager.CurrentDecombineButtonText(handsInventory.rightHandObject.name)
@@ -740,6 +740,11 @@ public class GameUI : MonoBehaviour
                 zoomButtonRight.SetActive(showZoomRight);
                 noTargetButton.SetActive(showNoTarget);
                 noTargetButton_right.SetActive(showNoTarget_right);
+                //if (showNoTarget)
+                //    decombineButton.SetActive(false);
+                //if(showNoTarget_right)
+                //    decombineButton_right.SetActive(false);
+
 
                 //decombineButton.SetActive(showDecomb && REmpty && !showNoTarget);
                 //if(decombineButton.activeSelf)
