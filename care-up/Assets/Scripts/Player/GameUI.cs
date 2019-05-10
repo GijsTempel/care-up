@@ -60,6 +60,9 @@ public class GameUI : MonoBehaviour
     public bool currentAnimLock = false;
     public GameObject DropLeftButton;
     public GameObject DropRightButton;
+    public GameObject BlockPopUp;
+    public Text BlockTitle;
+    public Text BlockMessage;
 
     float cooldownTime = 0;
     float lastCooldownTime = 0;
@@ -100,6 +103,19 @@ public class GameUI : MonoBehaviour
             handsInventory.OnCombineAction();
 
         }
+    }
+
+
+    public void ShowBlockMessage(string Title, string Message)
+    {
+        BlockTitle.text = Title;
+        BlockMessage.text = Message;
+        BlockPopUp.GetComponent<Animator>().SetTrigger("pop");
+    }
+
+    public void HideBlockMessage()
+    {
+        BlockPopUp.GetComponent<Animator>().SetTrigger("fold");
     }
 
     public void UseOnNoTarget()

@@ -11,6 +11,7 @@ public class RobotUIMessageTab : RobotUITabs
     private Sprite infoIcon;
 
     private Transform _parent;
+    GameUI gameUI;
 
     private static Transform notification;
 
@@ -26,6 +27,7 @@ public class RobotUIMessageTab : RobotUITabs
 
     protected override void Start()
     {
+        gameUI = GameObject.FindObjectOfType<GameUI>();
         errorIcon = Resources.Load<Sprite>("Sprites/txt_field_ic_error");
         warningIcon = Resources.Load<Sprite>("Sprites/exclamation_b");
         infoIcon = Resources.Load<Sprite>("Sprites/question_t");
@@ -52,6 +54,17 @@ public class RobotUIMessageTab : RobotUITabs
             // ik, condition is dumb, but whatever
             return;
         }
+
+        //--------------------------------------------------------
+        if (icon == Icon.Error)
+        {
+            print(title + "  ___ " + content);
+            gameUI.ShowBlockMessage(title, content);
+        }
+
+        //--------------------------------------------------------
+
+
 
         GameObject button = Instantiate(buttonPrefab, _parent);
 
