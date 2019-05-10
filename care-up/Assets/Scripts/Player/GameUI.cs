@@ -108,6 +108,8 @@ public class GameUI : MonoBehaviour
 
     public void ShowBlockMessage(string Title, string Message)
     {
+        if (Message == "")
+            return;
         BlockTitle.text = Title;
         BlockMessage.text = Message;
         BlockPopUp.GetComponent<Animator>().SetTrigger("pop");
