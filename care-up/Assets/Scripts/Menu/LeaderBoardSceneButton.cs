@@ -1,9 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+#if UNITY_5_3 || UNITY_5_3_OR_NEWER
+using UnityEngine.SceneManagement;
+#endif
 
-public class LeaderBoardSceneButton : MonoBehaviour
+public class LeaderBoardSceneButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler
 {
     public string sceneName;
     public bool multiple;
@@ -12,10 +15,22 @@ public class LeaderBoardSceneButton : MonoBehaviour
    
     public static List<LeaderBoardSceneButton> buttons = new List<LeaderBoardSceneButton>();
     public static string Descripton { get; set; }
+    static Button_Functions sounds;
 
     private void Start()
     {
         buttons.Add(this);
+        sounds = GameObject.FindObjectOfType<Button_Functions>();
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        sounds.OnButtonHover();
+    }  
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        sounds.OnButtonClick();
     }
 
     public void OnMainButtonClick()
