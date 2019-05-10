@@ -463,11 +463,11 @@ public class PlayerScript : MonoBehaviour
     }
     public void OpenRobotUI()
     {
-        if (cameraMode.camViewObject)
-            return;
+        //if (cameraMode.camViewObject)
+        //    return;
 
-        if (PlayerAnimationManager.IsLongAnimation())
-            return;
+        //if (PlayerAnimationManager.IsLongAnimation())
+        //    return;
 
         if (robotUIopened)
             return;

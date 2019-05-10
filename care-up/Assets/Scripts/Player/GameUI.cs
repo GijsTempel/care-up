@@ -144,6 +144,12 @@ public class GameUI : MonoBehaviour
 
     public void OpenRobotUI()
     {
+        if (cameraMode.camViewObject)
+            return;
+
+        if (PlayerAnimationManager.IsLongAnimation())
+            return;
+
         RobotManager.UIElementsState[0] = false;
         Player.GetComponent<PlayerScript>().OpenRobotUI();
     }
