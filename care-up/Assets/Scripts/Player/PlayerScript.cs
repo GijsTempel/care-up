@@ -278,7 +278,7 @@ public class PlayerScript : MonoBehaviour
         }*/
 
         if (!freeLook && !robotUIopened &&
-            ((Input.touchCount < 1 && controls.MouseClicked()) || 
+            ((Input.touchCount < 1 && controls.MouseClicked()) ||
             (Input.touchCount > 0 && Controls.MouseReleased())))
         {
             if (!away && controls.SelectedObject != null
@@ -463,6 +463,12 @@ public class PlayerScript : MonoBehaviour
     }
     public void OpenRobotUI()
     {
+        if (cameraMode.camViewObject)
+            return;
+
+        if (PlayerAnimationManager.IsLongAnimation())
+            return;
+
         if (robotUIopened)
             return;
 
