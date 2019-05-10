@@ -690,7 +690,8 @@ public class PlayerPrefsManager : MonoBehaviour
     static void FetchTestHighscore(CML response)
     {
         string highscoreString = response[1].String(currentTestScene);
-        float highscore = float.Parse(highscoreString.Replace(",", "."));
+        float highscore = 0;
+        float.TryParse(highscoreString.Replace(",", "."), out highscore);
         GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
                 "DialogTestPractice/Panel_UI/Buttons/TestButton/contentunlocked/percentage")
                 .GetComponent<Text>().text = Mathf.RoundToInt(highscore).ToString() + "%";
