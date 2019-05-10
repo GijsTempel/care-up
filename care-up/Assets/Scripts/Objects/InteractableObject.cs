@@ -9,6 +9,7 @@ public class InteractableObject : MonoBehaviour {
 
     public string description;
     public string nameArticle;
+    bool hasHighlight = false;
 
     public bool muplipleMesh = false;
     public Vector3 descriptionOffset;
@@ -127,61 +128,74 @@ public class InteractableObject : MonoBehaviour {
     /// </summary>
     protected virtual void Update()
     {
-        if (cameraMode.CurrentMode == CameraMode.Mode.Free && !player.away && !player.robotUIopened)
+        if (cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
-            bool selectedIsInteractable = (controls.SelectedObject != null && controls.CanInteract &&
-                controls.SelectedObject.GetComponent<InteractableObject>() != null);
-
-            PickableObject pickableObject = null;
-            if (controls.SelectedObject != null)
+            if (!player.away && !player.robotUIopened)
             {
-                pickableObject = controls.SelectedObject.GetComponent<PickableObject>();
-            }
+                bool selectedIsInteractable = (controls.SelectedObject != null && controls.CanInteract &&
+                    controls.SelectedObject.GetComponent<InteractableObject>() != null);
 
-            bool notSihlouette = (pickableObject == null || (pickableObject != null && pickableObject.sihlouette == false));
-            selectedIsInteractable &= notSihlouette;
-
-            if ((controls.SelectedObject == gameObject && !cameraMode.animating) && notSihlouette)
-            {
-                if (controls.CanInteract)
+                PickableObject pickableObject = null;
+                if (controls.SelectedObject != null)
                 {
-                    if (!inventory.IsInHand(gameObject))
-                        gameUI__.AddHighlight(transform, "hl");
+                    pickableObject = controls.SelectedObject.GetComponent<PickableObject>();
+                }
 
-                    /*if (rend.material.shader == onMouseExitShader)
+                bool notSihlouette = (pickableObject == null || (pickableObject != null && pickableObject.sihlouette == false));
+                selectedIsInteractable &= notSihlouette;
+
+                if ((controls.SelectedObject == gameObject && !cameraMode.animating) && notSihlouette)
+                {
+                    if (controls.CanInteract)
                     {
-                        SetShaderTo(onMouseOverShader);
+                        if (!inventory.IsInHand(gameObject))
+                        {
+                            gameUI__.AddHighlight(transform, "hl");
+                            hasHighlight = true;
+                        }
+                        /*if (rend.material.shader == onMouseExitShader)
+                        {
+                            SetShaderTo(onMouseOverShader);
+                        }*/
+
+                        if (!itemDescription.activeSelf)
+                        {
+                            itemDescription.SetActive(true);
+                        }
+
+                        itemDescription.GetComponentInChildren<Text>().text = (description == "") ? name : description;
+                    }
+                    else if (!controls.CanInteract)// && rend.material.shader == onMouseOverShader)
+                    {
+                        //SetShaderTo(onMouseExitShader);
+                        gameUI__.RemoveHighlight("hl", transform.name);
+                        hasHighlight = false;
+
+                        itemDescription.SetActive(false);
+                    }
+                }
+                else
+                {
+                    gameUI__.RemoveHighlight("hl", transform.name);
+                    hasHighlight = false;
+                    /*if (rend.material.shader == onMouseOverShader)
+                    {
+                        SetShaderTo(onMouseExitShader);
                     }*/
 
-                    if (!itemDescription.activeSelf)
+                    if (!selectedIsInteractable)
                     {
-                        itemDescription.SetActive(true);
+                        itemDescription.SetActive(false);
                     }
-
-                    itemDescription.GetComponentInChildren<Text>().text = (description == "") ? name : description;
-                }
-                else if (!controls.CanInteract)// && rend.material.shader == onMouseOverShader)
-                {
-                    //SetShaderTo(onMouseExitShader);
-                    gameUI__.RemoveHighlight("hl", transform.name);
-
-                    itemDescription.SetActive(false);
-                }
-            }
-            else
-            {
-                gameUI__.RemoveHighlight("hl", transform.name);
-                /*if (rend.material.shader == onMouseOverShader)
-                {
-                    SetShaderTo(onMouseExitShader);
-                }*/
-
-                if (!selectedIsInteractable)
-                {
-                    itemDescription.SetActive(false);
                 }
             }
         }
+        else if (hasHighlight)
+        {
+            gameUI__.RemoveHighlight("hl", transform.name);
+            hasHighlight = false;
+        }
+
 
         if (itemDescription.activeSelf && !player.itemControls.gameObject.activeSelf)
         {
@@ -194,6 +208,7 @@ public class InteractableObject : MonoBehaviour {
         if (rend)
         {
             gameUI__.RemoveHighlight("hl", transform.name);
+            hasHighlight = false;
             itemDescription.SetActive(false);
         }
     }
@@ -311,6 +326,7 @@ public class InteractableObject : MonoBehaviour {
                 SetShaderTo(onMouseExitShader);
             
             gameUI__.RemoveHighlight("hl", transform.name);
+            hasHighlight = false;
         }
     }
 }
