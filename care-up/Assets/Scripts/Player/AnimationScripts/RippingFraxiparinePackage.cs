@@ -75,6 +75,50 @@ public class RippingFraxiparinePackage : AnimationCombine
         base.OnStateUpdate(animator, stateInfo, layerIndex);
     }
 
+
+
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        inv.ToggleControls(false);
+        mode.animating = false;
+        mode.animationEnded = true;
+
+        if (GameObject.FindObjectOfType<TutorialManager>() == null ||
+            GameObject.FindObjectOfType<Tutorial_UI>() != null ||
+            GameObject.FindObjectOfType<Tutorial_Theory>() != null)
+        {
+            RobotManager.SetUITriggerActive(true);
+        }
+
+
+        if (GameObject.Find(GhostObjectTarget) != null)
+        {
+            Transform targetObj = GameObject.Find(GhostObjectTarget).transform;
+            obj.GetComponent<PickableObject>().InstantiateGhostObject(targetObj.position, targetObj.rotation, 0);
+            bool isInList = false;
+            HandsInventory.GhostPosition CGP = new HandsInventory.GhostPosition();
+            CGP.position = targetObj.position;
+            CGP.rotation = targetObj.rotation.eulerAngles;
+            CGP.objectName = obj.name;
+            if (inv.customGhostPositions.Count > 0)
+            {
+                for (int i = 0; i < inv.customGhostPositions.Count; i++)
+                {
+                    if (inv.customGhostPositions[i].objectName == obj.name)
+                    {
+                        isInList = true;
+                        inv.customGhostPositions[i] = CGP;
+                    }
+                }
+            }
+            if (!isInList)
+            {
+                inv.customGhostPositions.Add(CGP);
+            }
+        }
+    }
+
+
     //OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     //{
