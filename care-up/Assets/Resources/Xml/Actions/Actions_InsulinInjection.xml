@@ -62,21 +62,13 @@
     expected="good"
     extra="Controleer de toedienlijst. Controleer de toedienlijst op soort, dosering en toedientijdstip "></action>
 
-  <action
-    points="3"
-    description="Vraag aan je collega om een dubbele controle."
-    fullDescription="Klik op de 'Terug naar overzicht' knop rechtsboven in het scherm om terug te gaan naar het overzicht. Klik daarna op de collega. Klik nogmaals op de collega om te praten. Klik op de optie 'Zou je mij kunnen helpen met de dubbele controle?'."
-    audioHint=""
-    index="4"
-    type="talk"
-    topic="DoubleCheck"
-    extra="Voer dubbele controle uit. Het verkeerd toedienen van medicijnen brengt risico’s met zich mee. Het risico op blijvend letsel bij verkeerde dosering of toediening verschilt, afhankelijk van het medicijn. Ook is de ene toedieningsweg risicovoller dan een andere. Dubbele controle van de medicatie is belangrijk voor de veiligheid, met name bij risicovolle medicatie. Laat ook je berekeningen die je hebt gemaakt checken."/>
+  
   <action
     points="2"
     description="Controleer of er voldoende insuline in de pen aanwezig is. Neem, zo nodig, een nieuwe insulinepen of plaats een nieuw insulinepatroon in de pen."
     fullDescription="Klik op de 'Terug naar overzicht' knop rechtsboven in het scherm om terug te gaan naar het overzicht. klik daarna op het werkveld. Klik tot slot op de insuline pen op deze op te pakken. Klik nogmaals op de insulinepen en klik op het vergrootglas icoon."
     audioHint="InsulinInjection/Step 3.1"
-    index="5"
+    index="4"
     type="examine"
     item="InsulinPen"
     expected="good"
@@ -86,7 +78,7 @@
     description="Meng troebele insuline door de pen voor gebruik minimaal 10x te zwenken, niet schudden."
     fullDescription="Klik op de Insulinepen en kies vervolgens de optie 'Gebruiken'."
     audioHint=""
-    index="6"
+    index="5"
     type="useOn"
     item="InsulinPen"
     target=""
@@ -97,7 +89,7 @@
     description="Verwijder de beschermlaag van de naaldverpakking."
     fullDescription="Klik op de BD autoshield duo naald 'verpakt' om deze op te pakken. Zorg dat je een vrije hand hebt en klik op het - icoon."
     audioHint="InsulinInjection/Step 4.1"
-    index="7"
+    index="6"
     type="combine"
     left="InsulinNeedlePackage"
     right=""
@@ -107,7 +99,7 @@
     description="Draai de naald met de naaldverpakking op de insulinepen."
     fullDescription="Zorg dat je de naald in je hand hebt. Pak de insulinepen op door erop te klikken. Klik vervolgens op de naald of insulinepen en klik op het + icoon. Klik tot slot op het voorwerp in de andere hand."
     audioHint="InsulinInjection/Step 4.2"
-    index="8"
+    index="7"
     type="combine"
     left="InsulinPen"
     right="InsulinOpenedNeedlePackage"
@@ -117,7 +109,7 @@
     description="Verwijder de naaldverpakking van de naald."
     fullDescription="Zorg voor een vrije hand. Klik op de insulinepen en klik op het - icoon. "
     audioHint="InsulinInjection/Step 4.3"
-    index="9"
+    index="8"
     type="combine"
     left="InsulinPenWithNeedlePackage"
     right=""
@@ -127,7 +119,7 @@
     description="Ontlucht de insulinepen voor gebruik, door 2 IE weg te spuiten, om na te gaan of de pen goed werkt."
     fullDescription="Zorg voor een vrije hand. Klik op de insulinepen en kies de optie 'Ontluchten)."
     audioHint="InsulinInjection/Step 5"
-    index="10"
+    index="9"
     type="useOn"
     item="InsulinPenWithNeedle"
     target=""
@@ -137,12 +129,22 @@
     points="3"
     description="Stel het juiste aantal eenheden insuline in. Draai de doseerdop totdat de gewenste dosering in het afleesvenster staat. (Zorg voor een vrije hand. Klik op de insulinepen en kies de optie 'Instellen')."
     audioHint="InsulinInjection/Step 6"
-    index="11"
+    index="10"
     type="useOn"
     item="InsulinPenWithNeedle"
     target=""
     buttonText="Instellen"
     extra="Stel het juiste aantal eenheden insuline in. Draai de doseerdop totdat de gewenste dosering in het afleesvenster staat. Draai de doseerknop terug tot het juiste aantal eenheden als je te veel aantal eenheden hebt ingesteld."></action>
+
+  <action
+    points="3"
+    description="Vraag aan je collega om een dubbele controle."
+    fullDescription="Klik op de 'Terug naar overzicht' knop rechtsboven in het scherm om terug te gaan naar het overzicht. Klik daarna op de collega. Klik nogmaals op de collega om te praten. Klik op de optie 'Zou je mij kunnen helpen met de dubbele controle?'."
+    audioHint=""
+    index="11"
+    type="talk"
+    topic="DoubleCheck"
+    extra="Voer dubbele controle uit. Het verkeerd toedienen van medicijnen brengt risico’s met zich mee. Het risico op blijvend letsel bij verkeerde dosering of toediening verschilt, afhankelijk van het medicijn. Ook is de ene toedieningsweg risicovoller dan een andere. Dubbele controle van de medicatie is belangrijk voor de veiligheid, met name bij risicovolle medicatie. Laat ook je berekeningen die je hebt gemaakt checken."/>
   <action
     points="1"
     description="Vraag de cliënt de injectieplaats te ontbloten en zich te ontspannen"
