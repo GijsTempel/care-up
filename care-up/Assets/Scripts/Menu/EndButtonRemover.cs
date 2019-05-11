@@ -18,6 +18,9 @@ public class EndButtonRemover : MonoBehaviour {
     [SerializeField]
     private GameObject SendScorePanel;
 
+    [SerializeField]
+    private GameObject CertificatePanel;
+
     public void ButtonClick () {
         goToMenuButton.SetActive (false);
     }
@@ -60,13 +63,30 @@ public class EndButtonRemover : MonoBehaviour {
         ScorePanel.GetComponent<Animator>().SetBool("pop", false);
         ScorePanel.SetActive(false);
 
-        SendScorePanel.SetActive(true);
-        SendScorePanel.GetComponent<Animator>().SetBool("pop", true);
+        CertificatePanel.SetActive(true);
+        CertificatePanel.GetComponent<Animator>().SetBool("pop", true);
     }
     public void OnBackToScoreButton()
     {
         ScorePanel.GetComponent<Animator>().SetBool("pop", true);
         ScorePanel.SetActive(true);
+
+        CertificatePanel.SetActive(false);
+        CertificatePanel.GetComponent<Animator>().SetBool("pop", false);
+    }
+    public void OnSendScoreButton ()
+    {
+        CertificatePanel.GetComponent<Animator>().SetBool("pop", false);
+        CertificatePanel.SetActive(false);
+
+        SendScorePanel.SetActive(true);
+        SendScorePanel.GetComponent<Animator>().SetBool("pop", true);
+    }
+
+    public void OnBackToCertificate()
+    {
+        CertificatePanel.SetActive(true);
+        CertificatePanel.GetComponent<Animator>().SetBool("pop", true);
 
         SendScorePanel.SetActive(false);
         SendScorePanel.GetComponent<Animator>().SetBool("pop", false);
