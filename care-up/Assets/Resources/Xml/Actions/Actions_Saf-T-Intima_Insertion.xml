@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ActionList>
   <action
-    points="1"
-    description="Begroet de cliënt."
-    fullDescription="Begroet de cliënt door op hem te klikken. Daarna klik je nogmaals op de cliënt om een gesprek aan te gaan. Klik vervolgens op de juiste optie."
-    index="0"
-    type="talk"
-    topic="Hello"
-    extra="Ondanks dat het begroeten niet in de werkwijze is vermeld, is het wel netjes om contact te leggen met de cliënt."
-    optional="" />
+      index="0"
+      points="1"
+      description="Begroet de cliënt"
+      type="talk"
+      topic="Hello"
+      extra="Het begroeten van de client en je voorstellen is niet in de werkwijze is vermeld. Het is wel netjes en logisch om contact te leggen met de cliënt."
+      optional=""
+></action>
 
-  <action
-    comment="(1)Apply handhygiene"
-    points="3"
-    description="Pas handhygiëne toe."
-    fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp."
-    index="0"
-    type="use"
-    value="HandCleaner"
-    extra="Pas handhygiëne toe. Handhygiëne is het allerbelangrijkste als het gaat om voorkomen van besmetting met ziektekiemen. Dit betekent je handen reinigen op de juiste manier en op de juiste momenten. Begin een handeling altijd met handhygiëne."/>
-
+<action
+      comment="1. Apply hand hygiene"
+      index="0"
+      points="3"
+      description="Pas handhygiëne toe"
+      type="use"
+      value="HandCleaner"
+      extra="Handhygiëne is het meest belangrijk om besmetting met ziektekiemen te voorkomen. Reinig je handen altijd op de juiste manier en op het juiste moment. Begin een handeling altijd met handhygiëne."
+      messageTitle="Handhygiëne"
+      messageContent="Handhygiëne is het meest belangrijk om besmetting met ziektekiemen te voorkomen. Reinig je handen altijd op de juiste manier en op het juiste moment. Begin een handeling altijd met handhygiëne."
+></action>
+  
   <action
     comment="(2)Create a clean workfield"
     points="1"
-    description="Maak een schoon werkveld en zet de benodigdheden binnen handbereik."
-    fullDescription="Klik op het werkveld om deze schoon te maken."
+    description="Maak een schoon werkveld en zet de benodigdheden binnen handbereik"
     index="1"
     type="use"
     value="WorkField"
@@ -49,8 +50,7 @@
   <action
       comment="(3)Open package of fixationplaster"
       points="1"
-      description="Leg de infuuspleister klaar in een geopende verpakking."
-      fullDescription="Pak de infuuspleister. Swipe vervolgens omhoog of gebruik het optiemenu en klik op het - icoon."
+      description="Leg de infuuspleister klaar in een geopende verpakking"
       index="2"
       type="combine"
       left="BandAidPackage"
@@ -60,25 +60,25 @@
   <action
       comment="(4)Open package of insuflonneedle"
       points="1"
-      description="Leg de Saf-T-Intima klaar in een geopende verpakking."
-      fullDescription="Pak de verpakte Saf-T-Intima. Swipe vervolgens omhoog of gebruik het optiemenu en klik op het - icoon."
+      description="Leg de Saf-T-Intima klaar in een geopende verpakking"
       index="2"
       type="combine"
       left="insulfonPackage"
       right=""
-      extra="Leg de Saf-T-Intima klaar in een geopende verpakking."/>
+      extra="Leg de Saf-T-Intima klaar in een geopende verpakking"
+      blockUnlock="opened package"
+      />
 
   <action
       comment="(4)Open package of OmniflushSyringeBag"
       points="1"
-      description="Leg de spuit Omniflush NaCl 0,9% klaar in een geopende verpakking."
-      fullDescription="Pak de verpakte Saf-T-Intima. Swipe vervolgens omhoog of gebruik het optiemenu en klik op het - icoon."
+      description="Leg de spuit Omniflush NaCl 0,9% klaar in een geopende verpakking"
       index="2"
       type="combine"
       left="OmniflushSyringeBag"
       right=""
-      extra="Leg de spuit Omniflush NaCl 0,9% klaar in een geopende verpakking."
-      messageTitle="Voorverpakte Omniflush NaCl 0,9% niet aanwezig."
+      extra="Leg de spuit Omniflush NaCl 0,9% klaar in een geopende verpakking"
+      messageTitle="Voorverpakte Omniflush NaCl 0,9% niet aanwezig"
       messageContent="Wanneer er geen Omniflush NaCl 0,9% aanwezig is. Maak je een spuit met NaCl 0,9% uit een ampul klaar, ontlucht je de spuit en leg de spuit terug in de geopende verpakking. "/>
 
   <action
@@ -127,7 +127,11 @@
     index="5"
     type="use"
     value="gloveBox"
-    extra="Pas handhygiëne toe. Handhygiëne is het allerbelangrijkste als het gaat om voorkomen van besmetting met ziektekiemen. Dit betekent je handen reinigen op de juiste manier en op de juiste momenten. Begin een handeling altijd met handhygiëne."/>
+    extra="Pas handhygiëne toe. Handhygiëne is het allerbelangrijkste als het gaat om voorkomen van besmetting met ziektekiemen. Dit betekent je handen reinigen op de juiste manier en op de juiste momenten. Begin een handeling altijd met handhygiëne."
+    blockRequired="opened package"
+    blockTitle="Deze handeling is nog niet mogelijk"
+    blockMessage="Zorg ervoor dat het materiaal klaar is voor gebruik door de verpakkingen te openen."
+/>
 
   <action
     comment="Remove cap from refillpunt."

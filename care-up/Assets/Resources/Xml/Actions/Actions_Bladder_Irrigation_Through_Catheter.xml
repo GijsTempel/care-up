@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ActionList>
-<action
-    index="0"
-    points="1"
-    description="Begroet de cliënt"
-    type="talk"
-    topic="Hello"
-    extra="Het begroeten van de cliënt en je voorstellen is niet in de werkwijze is vermeld. Het is wel netjes en logisch om contact te leggen met de cliënt."
-    optional=""
+  <action
+      index="0"
+      points="1"
+      description="Begroet de cliënt"
+      type="talk"
+      topic="Hello"
+      extra="Het begroeten van de client en je voorstellen is niet in de werkwijze is vermeld. Het is wel netjes en logisch om contact te leggen met de cliënt."
+      optional=""
 ></action>
 
 <action
@@ -17,7 +17,7 @@
       description="Pas handhygiëne toe"
       type="use"
       value="HandCleaner"
-      extra="Handhygiëne is het meest belangrijk om besmetting met ziektekiemen te voorkomen. Reinig je handen altijd op de juiste manier en op het juiste moment. Begin een handeling altijd met handhygiëne."
+      extra="Pas handhygiëne toe"
       messageTitle="Handhygiëne"
       messageContent="Handhygiëne is het meest belangrijk om besmetting met ziektekiemen te voorkomen. Reinig je handen altijd op de juiste manier en op het juiste moment. Begin een handeling altijd met handhygiëne."
 ></action>
@@ -29,7 +29,7 @@
       description="Maak een schoon werkveld en zet de benodigdheden binnen bereik"
       type="use"
       value="WorkField"
-      extra="Maak een schoon werkveld"
+      extra="Maak een schoon werkveld en zet de benodigdheden binnen bereik"
       messageTitle="Benodigdheden"
       messageContent="
       - toedienlijst
@@ -90,6 +90,7 @@
     left="BladderSpoolBagPacked"
     right=""
     extra="Open de verpakking van het spoelzakje"
+    blockUnlock="opened spoolbag"
 ></action>
 
 <action
@@ -99,7 +100,7 @@
     type="examine"
     item="BladderSpoolBag"
     expected="good"
-    extra="Controleer of de klem van het spoelzakje dicht is"
+    extra="Controleer of de klem van het spoelzakje dicht is"   
 ></action>
 
 <action
@@ -112,6 +113,9 @@
     topic="LayOnBed"
     extra="Vraag de cliënt het onderlichaam te ontbloten en op de rug te gaan liggen"
     blockUnlock="patient lay down"
+    blockRequired="opened spoolbag"
+    blockTitle="Deze handeling is nog niet mogelijk"
+    blockMessage="Zorg ervoor dat het spoelzakje klaar is voor gebruik."
 ></action>
 
 <action
@@ -148,7 +152,9 @@
       type="use"
       value="gloveBox"
       extra="Trek handschoenen aan"
-      quiz="2"
+      blockRequired="patient lay down"
+      blockTitle="Deze handeling is nog niet mogelijk"
+      blockMessage="Treft de juiste voorbereidingen en zorg ervoor dat de cliënt klaar is."
       messageTitle="Gebruik handschoenen"
       messageContent="Gebruik handschoenen eenmalig en bij steeds dezelfde cliënt. Vermijd tijdens het dragen van handschoenen contact met deurknopen, telefoon, apparatuur, toetsenborden, enzovoort. Trek ze na gebruik direct uit. Bij het uittrekken van de handschoenen kunnen je handen besmet zijn geraakt. Was of desinfecteer daarom je handen altijd na het uittrekken van de handschoenen."
 ></action>
@@ -269,12 +275,13 @@
       points="3"
       description="Pas handhygiëne toe"
       type="use"
-      quiz="2.0"
+      quiz="4"
       value="HandCleaner"
       extra="Handhygiëne is het meest belangrijk om besmetting met ziektekiemen te voorkomen. Reinig je handen altijd op de juiste manier en op het juiste moment. Begin een handeling altijd met handhygiëne."
       messageTitle="Handhygiëne"
       messageContent="Handhygiëne is het meest belangrijk om besmetting met ziektekiemen te voorkomen. Reinig je handen altijd op de juiste manier en op het juiste moment. Begin een handeling altijd met handhygiëne."
-></action>
+  
+      ></action>
 
 <action
     points="1"
