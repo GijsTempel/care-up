@@ -128,6 +128,8 @@ public class PlayerPrefsManager : MonoBehaviour
 
         postProcessingEnabled = PlayerPrefs.GetInt("PostProcessing") == 1;
         Debug.Log("PostProcessing is set to saved value: " + postProcessingEnabled);
+
+        PlayerPrefsManager.__openCertificate("Alex Testing Careup", "Insulin Injection", "75");
     }
 
     public float Volume
@@ -715,11 +717,10 @@ public class PlayerPrefsManager : MonoBehaviour
     /// <param name="secondName"></param>
     /// <param name="scene"></param>
     /// <param name="score"></param>
-    static void __openCertificate(string firstName, string secondName, string scene, string score)
+    static void __openCertificate(string name, string scene, string score)
     {
         int keyValue = 192378; // salt
-        keyValue += __sumString(firstName);
-        keyValue += __sumString(secondName);
+        keyValue += __sumString(name);
         keyValue += __sumString(scene);
         keyValue += __sumString(score) * 521; // salt
 
@@ -735,8 +736,7 @@ public class PlayerPrefsManager : MonoBehaviour
         hexKey = __trashFillString(hexKey);
 
         string link = "https://leren.careup.online/certificate.php?";
-        link += "first=" + firstName;
-        link += "&second=" + secondName;
+        link += "name=" + name;
         link += "&scene=" + scene;
         link += "&score=" + score;
         link += "&date=" + date;
