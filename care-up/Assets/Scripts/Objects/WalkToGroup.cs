@@ -10,8 +10,8 @@ public class WalkToGroup : MonoBehaviour
     
     public Vector3 robotPosition;
     public Vector3 robotRotation;
-  
 
+    bool lastHighlightState = false;
     private GameObject text;
     public GameObject cone;
     public bool ButtonHovered = false;
@@ -54,6 +54,14 @@ public class WalkToGroup : MonoBehaviour
 
     public void HighlightGroup(bool value)
     {
+        if (SystemInfo.deviceType == DeviceType.Handheld)
+        {
+            text.SetActive(player.away);
+            cone.SetActive(false);
+            print("ffffffffffffffffffff");
+            return;
+        }
+     
         Camera cam = null;
         foreach(Camera c in GameObject.FindObjectsOfType<Camera>())
         {
@@ -64,8 +72,6 @@ public class WalkToGroup : MonoBehaviour
             }
         }
         if (cam == null)
-            return;
-        if (SystemInfo.deviceType == DeviceType.Handheld)
             return;
         text.SetActive(value);
         if (cone != null)
@@ -169,6 +175,7 @@ public class WalkToGroup : MonoBehaviour
     {
         if (player.away)
         {
+            bool value = false;
             if (cameraMode.CurrentMode == CameraMode.Mode.Free)
             {
                 if (controls.SelectedObject == gameObject && !cameraMode.animating || ButtonHovered/*&& (player.away || player.freeLook)*/)
@@ -176,13 +183,17 @@ public class WalkToGroup : MonoBehaviour
                     if (gameLogic.GetComponent<TutorialManager>() != null)
                         if (gameLogic.GetComponent<TutorialManager>().TutorialEnding)
                             return;
-                    HighlightGroup(true);
+                    value = true;
                 }
                 else
                 {
-                    HighlightGroup(false);
+                    value = false;
                 }
             }
+            if (lastHighlightState != value)
+                HighlightGroup(value);
+            lastHighlightState = value;
         }
+
     }
 }
