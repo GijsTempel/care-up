@@ -126,6 +126,10 @@ public class EndScoreManager : MonoBehaviour {
                 "ContentHolder/CertificateBTN").GetComponent<Button>();
             openCertificateBtn.onClick.AddListener(OpenCertificateBtn);
 
+            // fullname pop up function set up
+            GameObject.Find("Interactable Objects/Canvas/NamePopUp/BackToRegisterButton")
+                .GetComponent<Button>().onClick.AddListener(SaveFullPlayerNameBtn);
+
         }
         if (actualScene)
         {
@@ -220,7 +224,25 @@ public class EndScoreManager : MonoBehaviour {
 
     public void OpenCertificateBtn()
     {
-        PlayerPrefsManager.__openCertificate(manager.fullPlayerName, manager.currentSceneVisualName);
+        if (manager.fullPlayerName != "")
+        {
+            PlayerPrefsManager.__openCertificate(manager.fullPlayerName, manager.currentSceneVisualName);
+        }
+        else
+        {
+            // open name pop up instead
+            GameObject.Find("Interactable Objects/Canvas/NamePopUp").SetActive(true);
+        }
+    }
+
+    public void SaveFullPlayerNameBtn()
+    {
+        manager.fullPlayerName = GameObject.Find("Interactable Objects/Canvas/NamePopUp/" +
+            "FullnameHolder/FullName/Text").GetComponent<Text>().text;
+
+        PlayerPrefsManager.SetFullName(manager.fullPlayerName);
+
+        GameObject.Find("Interactable Objects/Canvas/NamePopUp").SetActive(false);
     }
 
 }
