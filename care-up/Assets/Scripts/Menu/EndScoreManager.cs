@@ -116,6 +116,16 @@ public class EndScoreManager : MonoBehaviour {
             if (flag == true) {
                 achievements.UpdateKeys ("FirstPassedExam", 1);
             }
+
+            // certificate set scene name
+            GameObject.Find("Interactable Objects/Canvas/CertificatePanel/Top/Scenetitle")
+                .GetComponent<Text>().text = manager.currentSceneVisualName;
+
+            // certificate set btn function
+            Button openCertificateBtn = GameObject.Find("Interactable Objects/Canvas/CertificatePanel/" +
+                "ContentHolder/CertificateBTN").GetComponent<Button>();
+            openCertificateBtn.onClick.AddListener(OpenCertificateBtn);
+
         }
         if (actualScene)
         {
@@ -206,6 +216,11 @@ public class EndScoreManager : MonoBehaviour {
         } else {
             bl_SceneLoaderUtils.GetLoader.LoadLevel ("EndScore_Test");
         }
+    }
+
+    public void OpenCertificateBtn()
+    {
+        PlayerPrefsManager.__openCertificate(manager.fullPlayerName, manager.currentSceneVisualName);
     }
 
 }
