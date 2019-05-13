@@ -59,7 +59,9 @@ public class PlayerPrefsManager : MonoBehaviour
 
     private static string practiceScene = "";
     public static int practicePlays = 0;
-    
+
+    public string fullPlayerName = "";
+
     public string ActivatedScenes
     {
         get
@@ -99,6 +101,8 @@ public class PlayerPrefsManager : MonoBehaviour
         if (s.name == "MainMenu")
         {
             GameObject.Find("UMenuProManager/MenuCanvas/Opties/Panel_UI/PostProcessingToggle").GetComponent<Toggle>().isOn = postProcessingEnabled;
+
+            PlayerPrefsManager.GetFullName();
         }
     }
 
@@ -769,5 +773,43 @@ public class PlayerPrefsManager : MonoBehaviour
         }
 
         return res;
+    }
+
+    public static void GetFullName()
+    {
+        WUData.FetchField("FullName", "AccountStats", GetFullName, -1);
+    }
+
+    static void GetFullName(CML response)
+    {
+        PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
+        manager.fullPlayerName = response[1].String("FullName");
+    }
+    
+    public static void SetFullName(string fullName)
+    {
+        GameObject.FindObjectOfType<PlayerPrefsManager>().fullPlayerName = fullName;
+        WUData.FetchField("FullName", "AccountStats", SetFullName, -1, SetFullName_Error);
+    }
+
+    static void SetFullName(CML response)
+    {
+        PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
+
+        CMLData data = new CMLData();
+        data.Set("FullName", manager.fullPlayerName);
+        WUData.UpdateCategory("AccountStats", data);
+    }
+
+    static void SetFullName_Error(CMLData response)
+    {
+        if ((response["message"] == "WPServer error: Empty response. No data found"))
+        {
+            PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
+
+            CMLData data = new CMLData();
+            data.Set("FullName", manager.fullPlayerName);
+            WUData.UpdateCategory("AccountStats", data);
+        }
     }
 }
