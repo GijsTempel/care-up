@@ -22,13 +22,15 @@ public class RobotUIMessageTab : RobotUITabs
     {
         Info,
         Warning,
-        Error
+        Error,
+        Block
     }
 
     protected override void Start()
     {
         gameUI = GameObject.FindObjectOfType<GameUI>();
         errorIcon = Resources.Load<Sprite>("Sprites/txt_field_ic_error");
+
         warningIcon = Resources.Load<Sprite>("Sprites/exclamation_b");
         infoIcon = Resources.Load<Sprite>("Sprites/question_t");
 
@@ -56,15 +58,12 @@ public class RobotUIMessageTab : RobotUITabs
         }
 
         //--------------------------------------------------------
-        if (icon == Icon.Error)
+        if (icon == Icon.Block )
         {
-            print(title + "  ___ " + content);
             gameUI.ShowBlockMessage(title, content);
         }
 
         //--------------------------------------------------------
-
-
 
         GameObject button = Instantiate(buttonPrefab, _parent);
 
@@ -85,7 +84,8 @@ public class RobotUIMessageTab : RobotUITabs
                 i = warningIcon;
                 break;
             case Icon.Error:
-				GameObject.FindObjectOfType<GameUI>().ButtonBlink(true);
+            case Icon.Block:
+                GameObject.FindObjectOfType<GameUI>().ButtonBlink(true);
                 i = errorIcon;
                 break;
         }
