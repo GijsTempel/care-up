@@ -151,7 +151,6 @@ public class ItemControlsUI : MonoBehaviour {
 
         if (PlayerAnimationManager.IsLongAnimation())
             return;
-
         initedObject = iObject;
 
         if (initedObject != null && initedObject.GetComponent<InteractableObject>() != null)

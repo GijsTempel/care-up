@@ -36,7 +36,7 @@ public class PlayerAnimationManager : MonoBehaviour
     private static PlayerScript playerScript;
 
     private static AnimationSequence animationSequence;
-
+    public static float animTimeout = 0;
 
     public static bool IsLongAnimation()
     {
@@ -54,7 +54,20 @@ public class PlayerAnimationManager : MonoBehaviour
                     animationController.GetNextAnimatorStateInfo(i).length < 0.2f)
                     isLognAnim = true;
             }
+            if (animationController.GetCurrentAnimatorStateInfo(i).IsName("Armature|021_pickUpRight_L_Lib"))
+            {
+                isLognAnim = true;
+            }
+            if (animationController.GetCurrentAnimatorStateInfo(i).IsName("Armature|020_pickUpLeft_L_Lib"))
+            {
+                isLognAnim = true;
+            }
         }
+
+        if (isLognAnim)
+            animTimeout = 0.15f;
+        if (animTimeout > 0)
+            return true;
         return isLognAnim;
     }
 
@@ -102,6 +115,9 @@ public class PlayerAnimationManager : MonoBehaviour
 
     void Update()
     {
+        if (animTimeout > 0)
+            animTimeout -= Time.deltaTime;
+
         leftModifier02 = propL.localPosition.y;
         rightModifier02 = propR.localPosition.y;
 
