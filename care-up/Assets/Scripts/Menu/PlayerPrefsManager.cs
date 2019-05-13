@@ -571,11 +571,11 @@ public class PlayerPrefsManager : MonoBehaviour
         if (currentVersion != latestVersion)
         {
             // player can download new version
-            GameObject.Find("UMenuProManager/MenuCanvas/VersionUpdatePanel").SetActive(true);
+            //GameObject.Find("UMenuProManager/MenuCanvas/VersionUpdatePanel").SetActive(true);
         }
         else
         {
-            GameObject.Find("UMenuProManager/MenuCanvas/VersionUpdatePanel").SetActive(false);
+            //GameObject.Find("UMenuProManager/MenuCanvas/VersionUpdatePanel").SetActive(false);
         }
     }
 
