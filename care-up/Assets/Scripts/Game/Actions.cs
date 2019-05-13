@@ -11,7 +11,6 @@ namespace CareUp.Actions
     {
         public bool matched = false;
         public string shortDescr;
-        public string descr;
         public string audioHint;
         public string extraDescr;
         public int pointValue;
@@ -55,14 +54,13 @@ namespace CareUp.Actions
         /// <param name="index">Index of action (see xml)</param>
         /// <param name="descr">Sentence from xml, describing action</param>
         /// <param name="audio">Name of audiofile, that will be played when hint used</param>
-        public Action(ActionManager.ActionType t, int index, string sdescr, string fdescr, string audio, 
+        public Action(ActionManager.ActionType t, int index, string sdescr, string audio, 
             string extra, int points, bool notNeeded, float quizTime, string title, string content, 
             string blockReq, string blockUnl, string blockL, string blockTitl, string blockMsg)
         {
             type = t;
             subindex = index;
             shortDescr = sdescr;
-            descr = fdescr;
             audioHint = audio;
             extraDescr = extra;
             pointValue = points;
@@ -98,11 +96,11 @@ namespace CareUp.Actions
 
         public string decombineText;
 
-        public CombineAction(string left, string right, int index, string sdescr, string fdescr, string audio, 
+        public CombineAction(string left, string right, int index, string sdescr, string audio, 
             string extra, int points, bool notNeeded, float quizTime, string title, string content, 
             string blockReq, string blockUnl, string blockL, string blockTitl, string blockMsg, 
             string decombineBtnText)
-            : base(ActionManager.ActionType.ObjectCombine, index, sdescr, fdescr, audio, extra, points, 
+            : base(ActionManager.ActionType.ObjectCombine, index, sdescr, audio, extra, points, 
                   notNeeded, quizTime, title, content,blockReq, blockUnl, blockL, blockTitl, blockMsg)
         {
             leftInput = left;
@@ -152,10 +150,10 @@ namespace CareUp.Actions
 
         public string buttonText;
 
-        public UseAction(string use, int index, string sdescr, string fdescr, string audio, string extra, 
+        public UseAction(string use, int index, string sdescr, string audio, string extra, 
             string button, int points, bool notNeeded, float quizTime, string title, string content, 
             string blockReq, string blockUnl, string blockL, string blockTitl, string blockMsg)
-            : base(ActionManager.ActionType.ObjectUse, index, sdescr, fdescr, audio, extra, points, notNeeded, 
+            : base(ActionManager.ActionType.ObjectUse, index, sdescr, audio, extra, points, notNeeded, 
                   quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg)
         {
             useInput = use;
@@ -195,10 +193,10 @@ namespace CareUp.Actions
         private string topicInput;
         private string person = "Patient"; // TODO
 
-        public TalkAction(string topic, int index, string sdescr, string fdescr, string audio, string extra, 
+        public TalkAction(string topic, int index, string sdescr, string audio, string extra, 
             int points, bool notNeeded, float quizTime, string title, string content, string blockReq, 
             string blockUnl, string blockL, string blockTitl, string blockMsg)
-            : base(ActionManager.ActionType.PersonTalk, index, sdescr, fdescr, audio, extra, points, notNeeded,
+            : base(ActionManager.ActionType.PersonTalk, index, sdescr, audio, extra, points, notNeeded,
                   quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg)
         {
             topicInput = topic;
@@ -240,10 +238,10 @@ namespace CareUp.Actions
         
         public string buttonText;
 
-        public UseOnAction(string i, string t, int index, string sdescr, string fdescr, string audio, 
+        public UseOnAction(string i, string t, int index, string sdescr, string audio, 
             string extra, string button, int points, bool notNeeded, float quizTime, string title, 
             string content, string blockReq, string blockUnl, string blockL, string blockTitl, string blockMsg)
-            : base(ActionManager.ActionType.ObjectUseOn, index, sdescr, fdescr, audio, extra, points, notNeeded, 
+            : base(ActionManager.ActionType.ObjectUseOn, index, sdescr, audio, extra, points, notNeeded, 
                   quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg)
         {
             item = i;
@@ -290,10 +288,10 @@ namespace CareUp.Actions
         private string item;
         private string expected;
 
-        public ExamineAction(string i, string exp, int index, string sdescr, string fdescr, string audio, 
+        public ExamineAction(string i, string exp, int index, string sdescr, string audio, 
             string extra, int points, bool notNeeded, float quizTime, string title, string content, 
             string blockReq, string blockUnl, string blockL, string blockTitl, string blockMsg)
-            : base(ActionManager.ActionType.ObjectExamine, index, sdescr, fdescr, audio, extra, points, 
+            : base(ActionManager.ActionType.ObjectExamine, index, sdescr, audio, extra, points, 
                   notNeeded, quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg)
         {
             item = i;
@@ -332,10 +330,10 @@ namespace CareUp.Actions
     {
         private string item;
 
-        public PickUpAction(string i, int index, string sdescr, string fdescr, string audio, string extra, 
+        public PickUpAction(string i, int index, string sdescr, string audio, string extra, 
             int points, bool notNeeded, float quizTime, string title, string content, string blockReq, 
             string blockUnl, string blockL, string blockTitl, string blockMsg)
-            : base(ActionManager.ActionType.PickUp, index, sdescr, fdescr, audio, extra, points, notNeeded, 
+            : base(ActionManager.ActionType.PickUp, index, sdescr, audio, extra, points, notNeeded, 
                   quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg)
         {
             item = i;
@@ -365,10 +363,10 @@ namespace CareUp.Actions
     {
         private string stepName;
 
-        public SequenceStepAction(string name, int index, string sdescr, string fdescr, string audio,
+        public SequenceStepAction(string name, int index, string sdescr, string audio,
             string extra, int points, bool notNeeded, float quizTime, string title, string content,
             string blockReq, string blockUnl, string blockL, string blockTitl, string blockMsg)
-            : base(ActionManager.ActionType.SequenceStep, index, sdescr, fdescr, audio, extra, points,
+            : base(ActionManager.ActionType.SequenceStep, index, sdescr, audio, extra, points,
                   notNeeded, quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg)
         {
             stepName = name;
@@ -396,10 +394,10 @@ namespace CareUp.Actions
         private string objectName;
         private string dropPositionID;
 
-        public ObjectDropAction(string name, string posId, int index, string sdescr, string fdescr, 
+        public ObjectDropAction(string name, string posId, int index, string sdescr, 
             string audio, string extra, int points, bool notNeeded, float quizTime, string title, 
             string content, string blockReq, string blockUnl, string blockL, string blockTitl, string blockMsg)
-            : base(ActionManager.ActionType.ObjectDrop, index, sdescr, fdescr, audio, extra, points, 
+            : base(ActionManager.ActionType.ObjectDrop, index, sdescr, audio, extra, points, 
                   notNeeded, quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg)
         {
             objectName = name;
@@ -427,10 +425,10 @@ namespace CareUp.Actions
     {
         private string positionInput;
 
-        public MovementAction(string position, int index, string sdescr, string fdescr,
+        public MovementAction(string position, int index, string sdescr,
             string audio, string extra, int points, bool notNeeded, float quizTime, string title,
             string content, string blockReq, string blockUnl, string blockL, string blockTitl, string blockMsg)
-            : base(ActionManager.ActionType.Movement, index, sdescr, fdescr, audio, extra, points,
+            : base(ActionManager.ActionType.Movement, index, sdescr, audio, extra, points,
                   notNeeded, quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg)
         {
             positionInput = position;

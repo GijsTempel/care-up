@@ -152,8 +152,8 @@ public class Cheat_CurrentAction : MonoBehaviour
 
         if (!set)
         {
-            if (extraText != null)
-                extraText.text = actionManager.CurrentExtraDescription;
+            //if (extraText != null)
+            //    extraText.text = actionManager.CurrentExtraDescription;
             set = true;
         }
 
@@ -171,7 +171,7 @@ public class Cheat_CurrentAction : MonoBehaviour
                 gameUI.SetHintPanelAlpha(0.0f);
                 textObjectBiggerDevHint.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
                 extraText.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
-                extraText.text = actionManager.CurrentExtraDescription;
+                //extraText.text = actionManager.CurrentExtraDescription;
                 timer = animationTime;
                 direction = -1;
             }

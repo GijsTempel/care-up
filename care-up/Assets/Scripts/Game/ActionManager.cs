@@ -638,37 +638,7 @@ public class ActionManager : MonoBehaviour
             return actionsDescription;
         }
     }
-
-    /// <summary>
-    /// Extra description ( for extended hints )
-    /// Heavy function, use only once, never on update
-    /// </summary>
-    public string CurrentExtraDescription
-    {
-        get
-        {
-            string result = "";
-
-            if (manager != null && !manager.practiceMode && currentAction != null)
-            {
-                result = currentAction.descr;
-            }
-            else
-            {
-                List<Action> sublist = actionList.Where(action =>
-                    action.SubIndex == currentActionIndex &&
-                    action.matched == false).ToList();
-
-                foreach (Action a in sublist)
-                {
-                    result += " - " + a.descr + "\n";
-                }
-            }
-
-            return result;
-        }
-    }
-
+    
     /// <summary>
     /// Name of the file of audioHint of current action.
     /// </summary>
@@ -944,28 +914,7 @@ public class ActionManager : MonoBehaviour
             {
                 audio = action.Attributes["audioHint"].Value;
             }
-
-            string fDescr = "";
-            if (action.Attributes["fullDescription"] != null)
-            {
-                fDescr = action.Attributes["fullDescription"].Value;
-            }
-            else
-            {
-                string[] splits = descr.Split('(', ')');
-                if (splits.Length >= 2)
-                {
-                    descr = splits[0];
-                    fDescr = splits[1];
-                }
-                else
-                {
-                    Debug.LogError("Description in xml file \"" + actionListName + "\" is set wrong. \n" +
-                        "\'fullDescription\' field is not set and cannot split \'description\' properly. \n" +
-                        "Index: " + index + ". Descr: " + descr);
-                }
-            }
-
+            
             string extra = "";
             if (action.Attributes["extra"] != null)
             {
@@ -1059,58 +1008,58 @@ public class ActionManager : MonoBehaviour
                 case "combine":
                     string left = action.Attributes["left"].Value;
                     string right = action.Attributes["right"].Value;
-                    actionList.Add(new CombineAction(left, right, index, descr, fDescr, audio, extra,
+                    actionList.Add(new CombineAction(left, right, index, descr, audio, extra,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
                         blockUnlock, blockLock, blockTitle, blockMsg, decombineText));
                     break;
                 case "use":
                     string use = action.Attributes["value"].Value;
-                    actionList.Add(new UseAction(use, index, descr, fDescr, audio, extra, buttonText,
+                    actionList.Add(new UseAction(use, index, descr, audio, extra, buttonText,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
                         blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
                 case "talk":
                     string topic = action.Attributes["topic"].Value;
-                    actionList.Add(new TalkAction(topic, index, descr, fDescr, audio, extra, pointsValue,
+                    actionList.Add(new TalkAction(topic, index, descr, audio, extra, pointsValue,
                         notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock,
                         blockLock, blockTitle, blockMsg));
                     break;
                 case "useOn":
                     string useItem = action.Attributes["item"].Value;
                     string target = action.Attributes["target"].Value;
-                    actionList.Add(new UseOnAction(useItem, target, index, descr, fDescr, audio, extra,
+                    actionList.Add(new UseOnAction(useItem, target, index, descr, audio, extra,
                         buttonText, pointsValue, notNeeded, quizTime, messageTitle, messageContent,
                         blockRequire, blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
                 case "examine":
                     string exItem = action.Attributes["item"].Value;
                     string expected = action.Attributes["expected"].Value;
-                    actionList.Add(new ExamineAction(exItem, expected, index, descr, fDescr, audio, extra,
+                    actionList.Add(new ExamineAction(exItem, expected, index, descr, audio, extra,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
                         blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
                 case "pickUp":
                     string itemPicked = action.Attributes["item"].Value;
-                    actionList.Add(new PickUpAction(itemPicked, index, descr, fDescr, audio, extra,
+                    actionList.Add(new PickUpAction(itemPicked, index, descr, audio, extra,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
                         blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
                 case "sequenceStep":
                     string stepName = action.Attributes["value"].Value;
-                    actionList.Add(new SequenceStepAction(stepName, index, descr, fDescr, audio, extra,
+                    actionList.Add(new SequenceStepAction(stepName, index, descr, audio, extra,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
                         blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
                 case "drop":
                     string dropItem = action.Attributes["item"].Value;
                     string dropID = (action.Attributes["posID"] != null) ? action.Attributes["posID"].Value : "0";
-                    actionList.Add(new ObjectDropAction(dropItem, dropID, index, descr, fDescr, audio, extra,
+                    actionList.Add(new ObjectDropAction(dropItem, dropID, index, descr, audio, extra,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
                         blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
                 case "movement":
                     string movement = action.Attributes["value"].Value;
-                    actionList.Add(new MovementAction(movement, index, descr, fDescr, audio, extra,
+                    actionList.Add(new MovementAction(movement, index, descr, audio, extra,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
                         blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
