@@ -121,14 +121,14 @@ public class GameUI : MonoBehaviour
         BlockPopUp.GetComponent<Animator>().SetTrigger("fold");
     }
 
-    public void UseOnNoTarget()
+    public void UseOnNoTarget(bool leftHand = true)
     {
         if (tutorialUseOn != null && !tutorialUseOn.ventAllowed)
         {
             return;
         }
 
-        if (!handsInventory.LeftHandEmpty())
+        if (leftHand  && !handsInventory.LeftHandEmpty())
         {
             if (actionManager.CompareUseOnInfo(handsInventory.leftHandObject.name, ""))
             {
@@ -144,7 +144,7 @@ public class GameUI : MonoBehaviour
                 return;
             }
         }
-        if (!handsInventory.RightHandEmpty())
+        if (!leftHand && !handsInventory.RightHandEmpty())
         {
             if (actionManager.CompareUseOnInfo(handsInventory.rightHandObject.name, ""))
             {
