@@ -29,6 +29,7 @@ public class GameUI : MonoBehaviour
     PlayerPrefsManager prefs;
     public string debugSS = "";
     ObjectsIDsController objectsIDsController;
+    bool practiceMode = true;
 
     public bool DropLeftBlink = false;
     public bool DropRightBlink = false;
@@ -304,6 +305,8 @@ public class GameUI : MonoBehaviour
     {
         objectsIDsController = GameObject.FindObjectOfType<ObjectsIDsController>();
         prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
+        if (prefs != null)
+            practiceMode = prefs.practiceMode;
         DetailedHintPanel = GameObject.Find("DetailedHintPanel");
         useOnNTtext = noTargetButton.transform.GetChild(0).GetComponent<Text>().text;
         ps = GameObject.FindObjectOfType<PlayerScript>();
@@ -714,6 +717,8 @@ public class GameUI : MonoBehaviour
                     if (REmpty)
                     {
                         bool show_decomb_left = actionManager.CompareCombineObjects(handsInventory.leftHandObject.name, "");
+                        if (!practiceMode)
+                            show_decomb_left = true;
                         decombineButton.SetActive(show_decomb_left && !showNoTarget);
                         decombineButton.GetComponent<Animator>().SetTrigger("BlinkOn");
                         decombineButton.transform.GetChild(0).GetComponent<Text>().text =
@@ -746,6 +751,8 @@ public class GameUI : MonoBehaviour
                     if (LEmpty)
                     {
                         bool show_decomb_right = actionManager.CompareCombineObjects(handsInventory.rightHandObject.name, "");
+                        if (!practiceMode)
+                            show_decomb_right = true;
                         decombineButton_right.SetActive(show_decomb_right && !showNoTarget_right);
                         decombineButton_right.transform.GetChild(0).GetComponent<Text>().text =
                         (actionManager.CompareCombineObjects("", handsInventory.rightHandObject.name)) ?

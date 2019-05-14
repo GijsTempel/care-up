@@ -1174,10 +1174,10 @@ public class ActionManager : MonoBehaviour
     /// </summary>
     /// <param name="leftHand">Name of the object in left hand.</param>
     /// <param name="rightHand">Name of the object in right hand.</param>
-    public void OnCombineAction(string leftHand, string rightHand)
+    public void OnCombineAction(string leftHand, string rightHand, bool notWrongAction = false)
     {
         string[] info = { leftHand, rightHand };
-        bool occured = Check(info, ActionType.ObjectCombine);
+        bool occured = Check(info, ActionType.ObjectCombine, notWrongAction);
         UpdatePoints(occured ? 1 : -1);
 
         Debug.Log("Combine " + leftHand + " and " + rightHand + " with result " + occured);
@@ -1338,7 +1338,7 @@ public class ActionManager : MonoBehaviour
     /// <param name="info">Info passed from Handling functions.</param>
     /// <param name="type">Type of the action</param>
     /// <returns>True if action expected and correct. False otherwise.</returns>
-    public bool Check(string[] info, ActionType type)
+    public bool Check(string[] info, ActionType type, bool notWtongAction = false)
     {
         bool matched = false;
 
@@ -1489,7 +1489,9 @@ public class ActionManager : MonoBehaviour
                 }
             }
 
-            ActionManager.WrongAction(type != ActionType.SequenceStep);
+            //--------------------------------------------------
+            if (!notWtongAction)
+                ActionManager.WrongAction(type != ActionType.SequenceStep);
 
             penalized = true;
         }
