@@ -151,7 +151,7 @@ public class ActionManager : MonoBehaviour
         gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
         gameUI.DropLeftBlink = false;
         gameUI.DropRightBlink = false;
-
+        gameUI.reqPlaces.Clear();
         bool leftIncorrect = true;
         bool rightIncorrect = true;
         bool noObjectActions = true;
@@ -547,7 +547,10 @@ public class ActionManager : MonoBehaviour
 
             string sss = "";
             foreach (string s in placesReqList)
+            {
                 sss += s + " | ";
+                gameUI.reqPlaces.Add(s);
+            }
 
             //gameUI.debugSS = anyCorrectPlace.ToString() + " " + sss;
             //if (!playerScript.away)

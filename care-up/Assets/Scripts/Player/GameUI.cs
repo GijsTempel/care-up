@@ -32,6 +32,7 @@ public class GameUI : MonoBehaviour
 
     public bool DropLeftBlink = false;
     public bool DropRightBlink = false;
+    public List<string> reqPlaces = new List<string>();
 
     GameObject DetailedHintPanel;
 
@@ -644,6 +645,7 @@ public class GameUI : MonoBehaviour
                 ActionManager.UpdateRequirements();
 
                 UpdateHelpHighlight();
+                UpdateWalkToGtoupUI(true);
             }
         }
 
@@ -839,6 +841,10 @@ public class GameUI : MonoBehaviour
             {
                 LeftSideButton.gameObject.SetActive(false);
                 RightSideButton.gameObject.SetActive(false);
+                foreach (WalkToGroupButton b in GameObject.FindObjectsOfType<WalkToGroupButton>())
+                {
+                    b.UpdateHint();
+                }
             }
         }
         updateButtonsBlink();

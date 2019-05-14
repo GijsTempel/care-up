@@ -15,7 +15,8 @@ public class WalkToGroupButton : MonoBehaviour {
     public GameObject bg_h;
     [HideInInspector]
     public GameObject _icon;
-
+    GameObject finger = null;
+    GameUI gameUI;
     public bool SideButton = false;
 
     void OnMouseOver()
@@ -26,6 +27,12 @@ public class WalkToGroupButton : MonoBehaviour {
     
     void Start()
     {
+        gameUI = GameObject.FindObjectOfType<GameUI>();
+        if (!SideButton)
+        {
+            finger = transform.Find("f").gameObject;
+            finger.SetActive(false);
+        }
         ButtonColor = GetComponent<Image>().color;
         if (transform.Find("blur"))
         {
@@ -43,6 +50,25 @@ public class WalkToGroupButton : MonoBehaviour {
         }
     }
 
+
+    public void UpdateHint()
+    {
+        if (SideButton)
+            return;
+        if (gameUI == null)
+            return;
+        if (linkedWalkToGroup == null)
+            return;
+        finger.SetActive(false);
+        foreach (string s in gameUI.reqPlaces)
+        {
+            if (s == linkedWalkToGroup.name)
+                finger.SetActive(true);
+        }
+    }
+
+
+    
     public void setWalkToGroup(WalkToGroup wtg)
     {
         linkedWalkToGroup = wtg;
