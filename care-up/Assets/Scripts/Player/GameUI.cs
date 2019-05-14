@@ -32,6 +32,7 @@ public class GameUI : MonoBehaviour
 
     public bool DropLeftBlink = false;
     public bool DropRightBlink = false;
+    public List<string> reqPlaces = new List<string>();
 
     GameObject DetailedHintPanel;
 
@@ -120,14 +121,14 @@ public class GameUI : MonoBehaviour
         BlockPopUp.GetComponent<Animator>().SetTrigger("fold");
     }
 
-    public void UseOnNoTarget()
+    public void UseOnNoTarget(bool leftHand = true)
     {
         if (tutorialUseOn != null && !tutorialUseOn.ventAllowed)
         {
             return;
         }
 
-        if (!handsInventory.LeftHandEmpty())
+        if (leftHand  && !handsInventory.LeftHandEmpty())
         {
             if (actionManager.CompareUseOnInfo(handsInventory.leftHandObject.name, ""))
             {
@@ -143,7 +144,7 @@ public class GameUI : MonoBehaviour
                 return;
             }
         }
-        if (!handsInventory.RightHandEmpty())
+        if (!leftHand && !handsInventory.RightHandEmpty())
         {
             if (actionManager.CompareUseOnInfo(handsInventory.rightHandObject.name, ""))
             {
@@ -644,6 +645,7 @@ public class GameUI : MonoBehaviour
                 ActionManager.UpdateRequirements();
 
                 UpdateHelpHighlight();
+                UpdateWalkToGtoupUI(true);
             }
         }
 
@@ -839,6 +841,10 @@ public class GameUI : MonoBehaviour
             {
                 LeftSideButton.gameObject.SetActive(false);
                 RightSideButton.gameObject.SetActive(false);
+                foreach (WalkToGroupButton b in GameObject.FindObjectsOfType<WalkToGroupButton>())
+                {
+                    b.UpdateHint();
+                }
             }
         }
         updateButtonsBlink();
