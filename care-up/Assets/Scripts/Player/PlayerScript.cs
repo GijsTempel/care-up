@@ -701,12 +701,12 @@ public class PlayerScript : MonoBehaviour
     {
         // dont trigger quiz if a testing mode is on
 #if UNITY_EDITOR
-        if (GameObject.FindObjectOfType<PlayerPrefsManager>() != null)
-            if (GameObject.FindObjectOfType<PlayerPrefsManager>().testingMode)
-                return;
-        if (GameObject.FindObjectOfType<ObjectsIDsController>() != null)
-            if (GameObject.FindObjectOfType<ObjectsIDsController>().testingMode)
-                return;
+        //if (GameObject.FindObjectOfType<PlayerPrefsManager>() != null)
+        //    if (GameObject.FindObjectOfType<PlayerPrefsManager>().testingMode)
+        //        return;
+        //if (GameObject.FindObjectOfType<ObjectsIDsController>() != null)
+            //if (GameObject.FindObjectOfType<ObjectsIDsController>().testingMode)
+                //return;
 #endif
         // just dont trigger quiz if it's a tutorial for all cases
         if (GameObject.FindObjectOfType<TutorialManager>() != null)
