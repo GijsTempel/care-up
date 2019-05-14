@@ -1489,6 +1489,7 @@ public class ActionManager : MonoBehaviour
                 }
             }
 
+            //--------------------------------------------------
             ActionManager.WrongAction(type != ActionType.SequenceStep);
 
             penalized = true;

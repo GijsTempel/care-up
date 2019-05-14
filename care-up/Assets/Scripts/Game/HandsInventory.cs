@@ -34,6 +34,7 @@ public class HandsInventory : MonoBehaviour {
     public float distanceFromCamera = 1.0f;
     public bool dropPenalty = true;
 
+    bool practiceMode = true;
 
 	ObjectsIDsController ObjectsID_Controller;
 
@@ -82,7 +83,7 @@ public class HandsInventory : MonoBehaviour {
     private CameraMode cameraMode;
 
     private ActionManager actionManager;
-    //private PlayerPrefsManager prefsManager;
+    private PlayerPrefsManager prefs;
 
     //private TutorialManager tutorial;
 
@@ -100,6 +101,10 @@ public class HandsInventory : MonoBehaviour {
     void Start()
     {
         tutorialUseOn = GameObject.FindObjectOfType<Tutorial_UseOn> ();
+        prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
+
+        if (prefs != null)
+            practiceMode = prefs.practiceMode;
 
         ObjectsID_Controller = GameObject.Find("GameLogic").GetComponent<ObjectsIDsController>();
 
@@ -920,15 +925,19 @@ public class HandsInventory : MonoBehaviour {
 
         string leftName = leftHandObject ? leftHandObject.name : "";
         string rightName = rightHandObject ? rightHandObject.name : "";
-        
+
         bool combineAllowed = actionManager.CompareCombineObjects(leftName, rightName);
         //bool practice = (GameObject.FindObjectOfType<PlayerPrefsManager>() != null ? GameObject.FindObjectOfType<PlayerPrefsManager>().practiceMode : true);
         //combineAllowed = combineAllowed || practice;
 
         bool combined = combinationManager.Combine(leftName, rightName, out leftCombineResult, out rightCombineResult);
-        
-		// combine performed
-		bool alloweCombine = (combined && combineAllowed);
+        bool allowMultiple = false;
+        if (!practiceMode && combined)
+            allowMultiple = combinationManager.CombineMultiple(leftName, rightName);
+
+
+        // combine performed
+        bool alloweCombine = (combined && (combineAllowed ));
 
         if (alloweCombine) HandleCombineQuizTriggers(leftName, rightName);
 
