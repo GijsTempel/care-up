@@ -124,7 +124,9 @@ Of en hoe controle plaatsvindt van deze voorbehouden handelingen, is een afspraa
     index="6"
     type="talk"
     topic="ShowBellyForInsulin"
-    extra="Vraag de cliënt de injectieplaats te ontbloten en te ontspannen zodat je makkelijk bij de injectieplaats kunt."></action>
+    extra="Vraag de cliënt de injectieplaats te ontbloten en te ontspannen zodat je makkelijk bij de injectieplaats kunt."
+    blockUnlock="patient show spot"
+    ></action>
 
   <action
     points="1"
@@ -137,7 +139,12 @@ Of en hoe controle plaatsvindt van deze voorbehouden handelingen, is een afspraa
     target=""
     buttonText="Start injecteren"
     secondPlace="PatientPos"
-    extra="Start met het toedienen van de injectie. Alles is klaar voor gebruik en je kunt starten met injecteren."></action>
+    extra="Start met het toedienen van de injectie. Alles is klaar voor gebruik en je kunt starten met injecteren."
+    blockRequired="patient show spot"
+    blockTitle="Deze handeling is nog niet mogelijk"
+    blockMessage="Treft de juiste voorbereidingen en vraag de cliënt de injectieplaats te ontbloten."
+
+    ></action>
 
   <action
     points="1"

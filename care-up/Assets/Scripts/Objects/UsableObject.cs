@@ -60,6 +60,8 @@ public class UsableObject : InteractableObject {
             // unique object, not usable, but picking performed instead
             if (PrefabToAppear != "")
             {
+                if (!(handsInventory.LeftHandEmpty() || handsInventory.RightHandEmpty()))
+                    return;
                 TutorialManager tutorial = GameObject.Find("GameLogic").GetComponent<TutorialManager>();
                 if (tutorial == null || (tutorial != null &&
                     (PrefabToAppear == tutorial.itemToPick || PrefabToAppear == tutorial.itemToPick2)))

@@ -64,7 +64,7 @@ public class PlayerAnimationManager : MonoBehaviour
             }
         }
 
-        if (isLognAnim)
+        if (isLognAnim && animTimeout < 0.03f)
             animTimeout = 0.15f;
         if (animTimeout > 0)
             return true;

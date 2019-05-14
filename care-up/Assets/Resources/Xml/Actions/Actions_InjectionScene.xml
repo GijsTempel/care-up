@@ -226,7 +226,9 @@
     index="16"
     type="talk"
     topic="RollUpSleeves"
-    extra="Vraag de cliënt om zijn mouw omhoog te doen en te ontspannen zodat je makkelijk bij de injectieplaats kunt."></action>
+    extra="Vraag de cliënt om zijn mouw omhoog te doen en te ontspannen zodat je makkelijk bij de injectieplaats kunt."
+    blockUnlock="patient show spot"
+    ></action>
 
   <action
     points="1"
@@ -240,7 +242,11 @@
     secondPlace="PatientPos"
     target=""
     buttonText="Start injecteren"
-    extra="Start met het toedienen van de injectie. Alles is klaar voor gebruik en je kunt dus starten met injecteren."></action>
+    extra="Start met het toedienen van de injectie. Alles is klaar voor gebruik en je kunt dus starten met injecteren."
+    blockRequired="patient show spot"
+    blockTitle="Deze handeling is nog niet mogelijk"
+    blockMessage="Treft de juiste voorbereidingen en vraag de cliënt de injectieplaats te ontbloten."
+></action>
 
   <action
     points="1"

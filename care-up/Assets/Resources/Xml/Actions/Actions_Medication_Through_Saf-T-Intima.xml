@@ -50,7 +50,7 @@
     description="Controleer het medicijn."
     fullDescription="Klik op het medicijn om deze op te pakken. Klik hierna nogmaals op het medicijn en klik op het vergrootglas icoon."
     audioHint="Injection/H3-2"
-		index="2"
+	index="2"
     type="examine"
     item="OmniflushSyringeBag2"
     expected="good"
@@ -62,7 +62,7 @@
     description="Controleer cliëntgegevens."
     fullDescription="Open de tablet door op het tablet icoon te drukken. Klik op de App 'Gegevens'. Kies vervolgens voor de cliëntgegevens."
     audioHint="Injection/H3-2"
-		index="2"
+    index="2"
     type="examine"
     item="PatientRecords"
     expected="good"
@@ -74,7 +74,7 @@
     description="Controleer de toedienlijst."
     fullDescription="Open de tablet door op het tablet icoon te drukken. Klik op de App 'Gegevens'. Kies vervolgens voor de toedienlijst."
     audioHint="InjectionSubcutaneous/Step 5"
-		index="2"
+	index="2"
     type="examine"
     item="PrescriptionForm"
     expected="good"
@@ -149,11 +149,13 @@
     index="7"
     type="talk"
     topic="show injection spot"
-    extra="Vraag de cliënt de toedieningsplaats te ontbloten of maak de toedieningsplaats bereikbaar. "></action>
+    extra="Vraag de cliënt de toedieningsplaats te ontbloten of maak de toedieningsplaats bereikbaar."
+    blockUnlock="show spot"
+></action>
 
 
   <action
-   comment="Leg de onderlegger onder de plaats van de subcutane canule. "
+   comment="Leg de onderlegger onder de plaats van de subcutane canule. ------ start sequence"
    points="2"
    description="Leg de onderlegger onder de subcutane canule. "
    fullDescription="Pak de onderlegger van het werkveld. Beweeg naar de cliënt. Klik vervolgens op de onderlegger in je hand. Klik op het + icoon en klik daarna op de cliënt."
@@ -162,7 +164,11 @@
    item="cloth_02_folded"
    target=""
    buttonText="Onderlegger plaatsen"
-   extra="Leg de onderlegger onder de subcutane canule. "></action>
+   extra="Leg de onderlegger onder de subcutane canule. "
+   blockRequired="show spot"
+   blockTitle="Deze handeling is nog niet mogelijk"
+   blockContent="Treft de juiste voorbereidingen en vraag de cliënt de toedieningsplaats te ontbloten"
+></action>
 
  <action
    points="3"

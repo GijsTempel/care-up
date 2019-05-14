@@ -1454,7 +1454,7 @@ public class ActionManager : MonoBehaviour
                 }
 
                 RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
-                messageCenter.NewMessage(title, message, RobotUIMessageTab.Icon.Error);
+                messageCenter.NewMessage(title, message, RobotUIMessageTab.Icon.Block);
             }
         }
 
@@ -1478,7 +1478,11 @@ public class ActionManager : MonoBehaviour
                 if (sublist.Count > 0)
                 {
                     RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
-                    messageCenter.NewMessage("Verkeerde handeling!", sublist[0].extraDescr, RobotUIMessageTab.Icon.Error);
+                    if (type == ActionType.SequenceStep)
+                        messageCenter.NewMessage("Verkeerde handeling!", sublist[0].extraDescr, RobotUIMessageTab.Icon.Error);
+                    else
+                        messageCenter.NewMessage("Verkeerde handeling!", sublist[0].extraDescr, RobotUIMessageTab.Icon.Block);
+
                 }
             }
 

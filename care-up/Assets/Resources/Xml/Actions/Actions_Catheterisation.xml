@@ -17,7 +17,7 @@
     description="Pas handhygiëne toe"
     type="use"
     value="HandCleaner"
-    extra="Pas handhygiëne toe"
+    extra="Handhygiëne is het meest belangrijk om besmetting met ziektekiemen te voorkomen. Reinig je handen altijd op de juiste manier en op het juiste moment. Begin een handeling altijd met handhygiëne."
     messageTitle="Handhygiëne"
     messageContent="Handhygiëne is het meest belangrijk om besmetting met ziektekiemen te voorkomen. Reinig je handen altijd op de juiste manier en op het juiste moment. Begin een handeling altijd met handhygiëne."
 ></action>
@@ -37,12 +37,15 @@
 <action
     points="1"
     description="Open de katheterset"
+    fullDescription="Klik op de katheterset om deze open te maken."
     index="2"
     type="use"
     value="catheterisation"
     extra="Maak een steriel werkveld met steriele doek. Raak het steriele vlak tijdens het openvouwen van de steriele doek niet aan. Open de katheterset."
     messageTitle="Katheterset"
-    messageContent="Het gebruik van een katheterset verdient aanbeveling. Hierin zitten alle benodigdheden voor het inbrengen van een katheter. Het is echter niet aangetoond dat het werken met een katheterset een meerwaarde heeft boven het verzamelen van de materialen afzonderlijk. Gazen voor het reinigen van de urethraopening hoeven niet steriel te zijn, wel schoon. Ze komen immers niet in aanraking met een steriel gebied (meatus)."
+    messageContent="Het gebruik van een katheterset verdient aanbeveling. Hierin zitten alle benodigdheden voor het inbrengen van een katheter. Het is echter niet aangetoond dat het werken met een katheterset een meerwaarde heeft boven het verzamelen van de materialen afzonderlijk. 
+
+Gazen voor het reinigen van de urethraopening hoeven niet steriel te zijn, wel schoon. Ze komen immers niet in aanraking met een steriel gebied (meatus)."
 ></action>
 
 <action
@@ -80,6 +83,7 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
     type="talk"
     topic="LayOnBed"
     extra="Vraag de cliënt het onderlichaam te ontbloten en op de rug te gaan liggen met de benen gespreid en de knieën opgetrokken"
+    fullDescription="Beweeg naar de cliënt. Klik vervolgens op de cliënt om een dialoog te starten. Kies vervolgens voor de juiste optie."
     blockUnlock="patient lay down"
     messageTitle="Privacy van de cliënt"
     messageContent="Denk tijdens het zorg verlenen altijd aan de privacy van de cliënt. Zorg ervoor dat de cliënt zich veilig en geborgen voelt door bijvoorbeeld de gordijnen dicht te trekken."
@@ -161,8 +165,8 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
 
 Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskatheterisatie"
     blockRequired="patient lay down"
-    blockTitle="Handeling niet mogelijk."
-    blockMessage="Zorg ervoor dat de cliënt klaar is voor blaaskatheterisatie."
+    blockTitle="Handeling nog niet mogelijk."
+    blockMessage="Communiceer met de cliënt en zorg ervoor dat de cliënt klaar is voor blaaskatheterisatie"
 ></action>
 
 <action
@@ -203,11 +207,11 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
 
 <action
       points="3"
-      description="Neem een nieuwe en schone uitgeknepen wattenbol en reinig de meatus"
+      description="Neem een nieuwe en schone uitgeknepen wattenbol, knijp deze uit en reinig de meatus"
       index="16"
       type="sequenceStep"
       value="clean meatus"
-      extra="Neem een nieuwe en schone uitgeknepen wattenbol en reinig de meatus"
+      extra="Neem een nieuwe en schone uitgeknepen wattenbol, knijp deze uit en reinig de meatus"
 ></action>
   
   <action
@@ -216,7 +220,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
     index="17"
     type="sequenceStep"
     value="discard gauzes"
-    extra="Gooi de gebruikte wattenbollen in de afvalbakje"
+    extra="Gooi de gebruikte wattenbollen in de afvalbakje."
 ></action>
   
   <action
@@ -241,11 +245,11 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
   
 <action
     points="1"
-    description="Trek de handschoenen uit en gooi ze in het afvalbakje"
+    description="Trek de handschoenen uit en gooi ze in het afvalbakje."
     index="20"
     type="sequenceStep"
     value="take off gloves"
-    extra="Trek de handschoenen uit en gooi ze in het afvalbakje"
+    extra="Trek de handschoenen uit en gooi ze in het afvalbakje."
 ></action>
 
   <action
@@ -253,6 +257,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
     index="21"
     points="3"
     description="Pas handhygiëne toe"
+    fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp."
     type="use"
     value="HandCleaner"
     extra="Pas handhygiëne toe"
@@ -283,11 +288,12 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
     extra="Open de buitenverpakking van de katheter en laat de katheter in de binnen verpakking op het steriele werkveld vallen, zonder de binnenverpakking aan te raken"
 ></action>
 
-<action
+    <action
     comment="29. Apply hand hygiene."
     index="24"
     points="3"
-    description="Pas handhygiëne toe"
+    description="Pas handhygiëne toe."
+    fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp."
     type="use"
     value="HandCleaner"
     extra="Pas handhygiëne toe"
@@ -318,6 +324,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
     right=""
     extra="Open de binnenverpakking van de katheter. De katheter blijft in binnenverpakking zitten"
 ></action>
+
 
 <action
     comment="24. With the dominant hand, grasp the tube of the urine collection bag just behind the connection point and attach it to the catheter. Continue to hold the hose."
@@ -392,8 +399,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
     index="34"
     value="slide catheter"
     description="Schuif de katheter op tot er urine verschijnt en schuif de katheter daarna nog 2 cm verder op"
-    points="3"
-    type="sequenceStep"
+    points="3" type="sequenceStep"
     extra="Schuif de katheter op tot er urine verschijnt en schuif de katheter daarna nog 2 cm verder op"
     messageTitle="Voorzichtig inbrengen"
     messageContent="Een katheter moet voorzichtig worden ingebracht. Forceer niet, omdat er een ‘fausse route’ kan ontstaan, waarbij de katheter zich door de wand van de urethra boort."
@@ -469,6 +475,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
     points="1"
     type="sequenceStep"
     extra="Trek de steriele handschoenen uit"
+    fullDescription="Kies de juiste optie."
     blockUnlock="pull off gloves"
 ></action>
 
@@ -493,7 +500,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
     item="fixator_folded"
     target=""
     buttonText="Fixeer de katheter"
-    extra="Fixeer de katheter op het bovenbeen met een strook fixatiemateriaal. Zorg dat de katheter en de afvoerslang nergens kunnen knikken"
+    extra="Fixeer de katheter op het bovenbeen met een strook fixatiemateriaal. Zorg dat de katheter en de afvoerslang nergens kunnen knikken."
     secondPlace="PatientPos"
     blockUnlock="fixate catheter"
     blockRequired="pull off gloves"
