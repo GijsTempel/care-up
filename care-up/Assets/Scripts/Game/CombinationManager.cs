@@ -81,15 +81,11 @@ public class CombinationManager : MonoBehaviour {
             }
         }
 
-        actionManager.OnCombineAction(leftInput, rightInput);
-
         return found;
     }
 
     public bool CombineMultiple(string leftInput, string rightInput)
     {
-        bool found = false;
-
         foreach (Combination c in combinationList)
         {
             if (leftInput == c.leftInput && rightInput == c.rightInput && c.allowMultiple)
@@ -97,10 +93,7 @@ public class CombinationManager : MonoBehaviour {
             if (leftInput == c.rightInput && rightInput == c.leftInput && c.allowMultiple)
                 return true;
         }
-
-        actionManager.OnCombineAction(leftInput, rightInput);
-
-        return found;
+        return false;
     }
 
 }
