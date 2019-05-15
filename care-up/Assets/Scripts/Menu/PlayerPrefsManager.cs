@@ -741,8 +741,9 @@ public class PlayerPrefsManager : MonoBehaviour
         link += "&scene=" + scene;
         link += "&date=" + date;
         link += "&misc=" + hexKey;
-        
-        Application.OpenURL(link);
+
+        Debug.LogWarning("OPENING LINK " + link);
+        Application.OpenURL(link.Replace(" ", "%20"));
     }
 
     static int __sumString(string str)
