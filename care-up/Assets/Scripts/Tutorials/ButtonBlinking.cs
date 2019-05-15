@@ -74,6 +74,11 @@ public class ButtonBlinking : MonoBehaviour
             if (gameUI.paperAndPenButtonblink && !(gameUI.recordsButtonBlink || gameUI.prescriptionButtonBlink))
                 toBlink = true;
         }
+        else if (buttonType == GameUI.ItemControlButtonType.MessageTabBack)
+        {
+            if (gameUI.paperAndPenButtonblink || gameUI.recordsButtonBlink || gameUI.prescriptionButtonBlink)
+                toBlink = true;
+        }
         else if (buttonType == GameUI.ItemControlButtonType.Close)
         {
             if (!gameUI.recordsButtonBlink && !gameUI.prescriptionButtonBlink && !gameUI.paperAndPenButtonblink &&
