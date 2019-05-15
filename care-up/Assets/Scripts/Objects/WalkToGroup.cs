@@ -58,7 +58,6 @@ public class WalkToGroup : MonoBehaviour
         {
             text.SetActive(player.away);
             cone.SetActive(false);
-            print("ffffffffffffffffffff");
             return;
         }
      
