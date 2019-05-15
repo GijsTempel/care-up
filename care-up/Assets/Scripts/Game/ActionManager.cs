@@ -224,7 +224,7 @@ public class ActionManager : MonoBehaviour
 
             if (iPad)
             {
-                objectsData.Add(new StepData(false, $"- Klik op het tablet icoon.", i));
+                objectsData.Add(new StepData(false, $"- Klik op het informatie icoon.", i));
 
                 if(a.leftHandRequirement == "PatientRecords")
                 {
