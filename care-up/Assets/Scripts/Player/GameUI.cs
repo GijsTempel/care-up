@@ -99,6 +99,7 @@ public class GameUI : MonoBehaviour
         GeneralBack,
         RecordsBack,
         PrescriptionBack,
+        MessageTabBack,
         Close
     }
 
