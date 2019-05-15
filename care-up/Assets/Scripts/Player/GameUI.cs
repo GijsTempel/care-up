@@ -95,7 +95,11 @@ public class GameUI : MonoBehaviour
         Prescription,
         Ipad,
         General,
-        PaperAndPen
+        PaperAndPen,
+        GeneralBack,
+        RecordsBack,
+        PrescriptionBack,
+        Close
     }
 
     public void UseOn()

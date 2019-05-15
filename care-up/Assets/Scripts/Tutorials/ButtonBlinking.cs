@@ -59,6 +59,26 @@ public class ButtonBlinking : MonoBehaviour
             if (gameUI.paperAndPenButtonblink)
                 toBlink = true;
         }
+        else if (buttonType == GameUI.ItemControlButtonType.RecordsBack)
+        {
+            if (!gameUI.recordsButtonBlink && (gameUI.prescriptionButtonBlink || gameUI.paperAndPenButtonblink))
+                toBlink = true;
+        }
+        else if (buttonType == GameUI.ItemControlButtonType.PrescriptionBack)
+        {
+            if (!gameUI.prescriptionButtonBlink && (gameUI.paperAndPenButtonblink || gameUI.recordsButtonBlink))
+                toBlink = true;
+        }
+        else if (buttonType == GameUI.ItemControlButtonType.GeneralBack)
+        {
+            if (gameUI.paperAndPenButtonblink && !(gameUI.recordsButtonBlink || gameUI.prescriptionButtonBlink))
+                toBlink = true;
+        }
+        else if (buttonType == GameUI.ItemControlButtonType.Close)
+        {
+            if (!gameUI.recordsButtonBlink && !gameUI.prescriptionButtonBlink && !gameUI.paperAndPenButtonblink)
+                toBlink = true;
+        }
 
         if (toBlink)
         {
@@ -71,7 +91,7 @@ public class ButtonBlinking : MonoBehaviour
         {
             if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Blink"))
             {
-                GetComponent<Animator>().ResetTrigger("BlinkStop");
+                GetComponent<Animator>().SetTrigger("BlinkStop");
             }
         }
     }   
