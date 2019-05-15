@@ -20,6 +20,9 @@ public class ActionManager : MonoBehaviour
     public int actionsCount = 0;
     public static bool practiceMode = true;
 
+    [HideInInspector]
+    public static bool personClicked = false;
+
     // list of types of actions
     public enum ActionType
     {
@@ -188,8 +191,11 @@ public class ActionManager : MonoBehaviour
                     anyCorrectPlace = true;
 
                 if (a.Type == ActionType.PersonTalk && dialog)
-                {
-                    objectsData.Add(new StepData(false, $"- Klik op {placeName}.", i));
+                {                   
+                    if(personClicked)                    
+                        objectsData.Add(new StepData(false, $"- Kies wat je gaat doen.", i));
+                    else
+                        objectsData.Add(new StepData(false, $"- Klik op {placeName}.", i));
                 }
             }
 
@@ -208,7 +214,10 @@ public class ActionManager : MonoBehaviour
 
                 if (a.Type == ActionType.PersonTalk && dialog)
                 {
-                    objectsData.Add(new StepData(false, $"- Klik op {placeName}.", i));
+                    if (personClicked)
+                        objectsData.Add(new StepData(false, $"- Kies wat je gaat doen.", i));
+                    else
+                        objectsData.Add(new StepData(false, $"- Klik op {placeName}.", i));
                 }
             }          
 
@@ -552,15 +561,6 @@ public class ActionManager : MonoBehaviour
                 gameUI.reqPlaces.Add(s);
             }
 
-            //gameUI.debugSS = anyCorrectPlace.ToString() + " " + sss;
-            //if (!playerScript.away)
-            //    gameUI.debugSS = gameUI.FindDirection("WorkFieldPos", playerScript.currentWalkPosition, 0).ToString();
-            //else
-            //gameUI.debugSS = "";
-
-            //FindDirection(string neededWalkToGroup, WalkToGroup startWalkToGtoup, int direction)
-
-
             if ((!anyCorrectPlace || uncomplitedSecondPlace != "") && !playerScript.away && placesReqList.Count > 0)
             {
                 WalkToGroup currentWTG = playerScript.currentWalkPosition;
@@ -589,6 +589,8 @@ public class ActionManager : MonoBehaviour
             gameUI.DropRightBlink = false;
             gameUI.DropLeftBlink = false;
         }
+
+        personClicked = false;
 
         GameObject.FindObjectOfType<GameUI>().UpdateHintPanel(stepsList);
 

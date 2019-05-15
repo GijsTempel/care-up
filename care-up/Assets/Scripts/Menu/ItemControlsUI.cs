@@ -422,6 +422,10 @@ public class ItemControlsUI : MonoBehaviour {
 
     public void Talk()
     {
+        ActionManager.personClicked = true;
+        ActionManager.BuildRequirements();
+        ActionManager.UpdateRequirements();
+
         if (cameraMode.CurrentMode == CameraMode.Mode.ItemControlsUI)
         {
             if (initedObject != null)
