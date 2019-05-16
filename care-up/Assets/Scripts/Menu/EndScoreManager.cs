@@ -74,6 +74,18 @@ public class EndScoreManager : MonoBehaviour {
             //update practice score & stars, update UI accordingly
             GameObject.FindObjectOfType<PlayerPrefsManager>().UpdatePracticeHighscore(points, score);
 
+            Transform stepParent = GameObject.Find("Interactable Objects/Canvas/PracticeStepsScreen/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
+
+            for (int i = 0; i < steps.Count; ++i)
+            {
+                GameObject step = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/ProtocolPracticeSteps"), stepParent);
+                step.transform.Find("Text").GetComponent<Text>().text = steps[i];
+
+                Sprite correctSprite = Resources.Load<Sprite>("Sprites/item_select_check");
+                if(correctStepIndexes.Contains(i))
+                    step.transform.Find("ToggleNo").GetComponent<Image>().sprite = correctSprite;
+            }
+
         } else if (SceneManager.GetActiveScene ().name == "EndScore_Test") {
             Transform stepParent = GameObject.Find ("Interactable Objects/Canvas/StepScreen/ObservationForm/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
 
