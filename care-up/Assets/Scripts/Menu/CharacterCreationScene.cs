@@ -182,8 +182,8 @@ public class CharacterCreationScene : MonoBehaviour
         UpdateActiveObjects();
 
         // updating gender buttons
-        maleBtn.color = (gender == CharGender.Female) ? Color.white : Color.green;
-        femaleBtn.color = (gender == CharGender.Female) ? Color.green : Color.white;
+        //maleBtn.color = (gender == CharGender.Female) ? Color.white : Color.green;
+        //femaleBtn.color = (gender == CharGender.Female) ? Color.green : Color.white;
     }
 
     public void PreviousGender()
@@ -357,16 +357,16 @@ public class CharacterCreationScene : MonoBehaviour
     {
         SetCurrent(CharGender.Male, 0, 0, -1);
 
-        maleBtn.color = Color.green;
-        femaleBtn.color = Color.white;
+        //maleBtn.color = Color.green;
+        //femaleBtn.color = Color.white;
     }
 
     public void FemaleBtn()
     {
         SetCurrent(CharGender.Female, 0, 0, -1);
 
-        maleBtn.color = Color.white;
-        femaleBtn.color = Color.green;
+        //maleBtn.color = Color.white;
+        //femaleBtn.color = Color.green;
     }
 
     public void Save()
