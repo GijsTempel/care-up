@@ -126,7 +126,8 @@
     left="Cloth2"
     right="Alcohol2"
     extra="Overgiet een gaasje met desinfectans. De desinfectans wordt aangebracht op een gaasje. Het is eveneens mogelijk om gebruik te maken van alcohol swabs. Alcohol 70% heeft een totaal spectrum en werkt slechts tijdelijk. Omdat bij het inbrengen van een infuus de desinfectie langer moet aanhouden, wordt gedesinfecteerd met alcohol 70% bewaard in opgelost chloorhexidine 0,5%."
-   ></action>
+    blockUnlock="desinfect cloth"
+    ></action>
 
 
   <action
@@ -149,7 +150,10 @@
     type="talk"
     topic="show injection spot"
     extra="Vraag de cliënt de toedieningsplaats te ontbloten of maak de toedieningsplaats bereikbaar."
-    blockUnlock="show spot"
+   blockRequired="desinfect cloth"
+   blockTitle="Deze handeling is nog niet mogelijk"
+   blockMessage="Treft de juiste voorbereidingen. Zorg voor een gedesinfecteerd gaasje."
+    blockUnlock="patient spot"
 ></action>
 
   <action
@@ -162,9 +166,9 @@
    target=""
    buttonText="Onderlegger plaatsen"
    extra="Leg de onderlegger onder de subcutane canule. "
-   blockRequired="show spot"
+   blockRequired="patient spot"
    blockTitle="Deze handeling is nog niet mogelijk"
-   blockContent="Treft de juiste voorbereidingen en vraag de cliënt de toedieningsplaats te ontbloten"
+   blockMessage="Treft de juiste voorbereidingen en vraag de cliënt om de injectieplaats te ontbloten."
  ></action>
 
  <action
