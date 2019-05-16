@@ -34,6 +34,9 @@ public class GameUI : MonoBehaviour
     public bool DropLeftBlink = false;
     public bool DropRightBlink = false;
     public List<string> reqPlaces = new List<string>();
+    List<ActionManager.StepData> Current_SubTasks;
+    float current_UpdateHintDelay = 0f;
+    bool toDelayUpdateHint = false;
 
     GameObject DetailedHintPanel;
 
@@ -657,6 +660,21 @@ public class GameUI : MonoBehaviour
             }
         }
 
+        if (toDelayUpdateHint)
+        {
+            if (current_UpdateHintDelay > 0)
+            {
+                current_UpdateHintDelay -= Time.deltaTime;
+
+            }
+            else
+            {
+                toDelayUpdateHint = false;
+                UpdateHintPanel(null);
+            }
+
+        }
+
         //Don't show object control panel if animation is playing
         //if animation is longer than 0.2 (is not hold animation)
         bool animationUiBlock = true;
@@ -904,8 +922,24 @@ public class GameUI : MonoBehaviour
         }
     }
 
-    public void UpdateHintPanel(List<ActionManager.StepData> subTasks)
+    public void UpdateHintPanel(List<ActionManager.StepData> subTasks, float UpdateHintDelay = 0f)
     {
+        if (subTasks == null)
+            subTasks = Current_SubTasks;
+        else
+        {
+            //Current_SubTasks.Clear();
+            Current_SubTasks = subTasks;
+        }
+        if (UpdateHintDelay > 0)
+        {
+            current_UpdateHintDelay = UpdateHintDelay;
+            toDelayUpdateHint = true;
+            return;
+        }
+        if (current_UpdateHintDelay > 0)
+            return;
+
         ClearHintPanel();
         Text hintText;
         Text subTaskText;
