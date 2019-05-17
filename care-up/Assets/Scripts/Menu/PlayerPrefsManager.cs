@@ -570,15 +570,20 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         string currentVersion = Application.version;
         string latestVersion = response[1].String("LatestVersion");
+        string[] cvSplit = currentVersion.Split('.');
+        string[] lvSplit = currentVersion.Split('.');
 
-        if (currentVersion != latestVersion)
+        int currentVersionNum = int.Parse(cvSplit[0]) * 1000 + int.Parse(cvSplit[1]) * 100 + int.Parse(cvSplit[2]) * 10;
+        int latestVersionNum = int.Parse(lvSplit[0]) * 1000 + int.Parse(lvSplit[1]) * 100 + int.Parse(lvSplit[2]) * 10;
+        //print("______Current: " + currentVersionNum.ToString() + " __latest: " + latestVersionNum.ToString());
+        if (currentVersionNum < latestVersionNum)
         {
             // player can download new version
-            //GameObject.Find("UMenuProManager/MenuCanvas/VersionUpdatePanel").SetActive(true);
+            GameObject.Find("UMenuProManager/MenuCanvas/VersionUpdatePanel").SetActive(true);
         }
         else
         {
-            //GameObject.Find("UMenuProManager/MenuCanvas/VersionUpdatePanel").SetActive(false);
+            GameObject.Find("UMenuProManager/MenuCanvas/VersionUpdatePanel").SetActive(false);
         }
     }
 
