@@ -351,7 +351,7 @@ namespace MBS
             if (GameObject.FindObjectOfType<AchievementsLoader>() != null)
             {
                 GameObject.FindObjectOfType<AchievementsLoader>().loadingIcon.SetActive(true);
-                GameObject.FindObjectOfType<AchievementsLoader>().title.GetComponent<Animator>().SetTrigger("start");
+                
             }
 
             WUAchieve.FetchEverything(GenerateEntries);

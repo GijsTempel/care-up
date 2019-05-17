@@ -131,7 +131,7 @@ public class ActionManager : MonoBehaviour
     }
 
     // Will be refactored
-    public static void UpdateRequirements()
+    public static void UpdateRequirements(float showDelay = 0f)
     {
         if (!practiceMode)
             return;
@@ -592,7 +592,7 @@ public class ActionManager : MonoBehaviour
 
         personClicked = false;
 
-        GameObject.FindObjectOfType<GameUI>().UpdateHintPanel(stepsList);
+        GameObject.FindObjectOfType<GameUI>().UpdateHintPanel(stepsList, showDelay);
 
         if (leftIncorrect && !inventory.LeftHandEmpty() && !noObjectActions)
             gameUI.DropLeftBlink = true;
@@ -1700,7 +1700,7 @@ public class ActionManager : MonoBehaviour
         ActionManager.PlayAddPointSound();
 
         ActionManager.BuildRequirements();
-        ActionManager.UpdateRequirements();
+        ActionManager.UpdateRequirements(1.5f);
     }
 
     public static void BuildRequirements()

@@ -388,8 +388,11 @@ public class PlayerPrefsManager : MonoBehaviour
     }
 
     static void GetTestHighscore(CML response)
-    {        
-		float highscore = response[1].Float(currentTestScene);
+    {
+        string highscoreString = response[1].String(currentTestScene);
+        float highscore = 0;
+        float.TryParse(highscoreString.Replace(",", "."), out highscore);
+
         if (highscore < currentTestScore)
         {
             CMLData data = new CMLData();            
@@ -689,6 +692,9 @@ public class PlayerPrefsManager : MonoBehaviour
         currentTestScene = FormatSceneName(scene);
 
         WUData.FetchField(currentTestScene, "TestHighscores", FetchTestHighscore, -1, FetchTestHighscore_Error);
+        GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
+                "DialogTestPractice/Panel_UI/Buttons/TestButton/contentunlocked/percentage")
+                .GetComponent<Text>().text = "";
     }
 
     static void FetchTestHighscore(CML response)
