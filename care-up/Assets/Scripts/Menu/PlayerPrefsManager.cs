@@ -585,6 +585,11 @@ public class PlayerPrefsManager : MonoBehaviour
         {
             GameObject.Find("UMenuProManager/MenuCanvas/VersionUpdatePanel").SetActive(false);
         }
+
+        GameObject.Find("UMenuProManager/MenuCanvas/VersionUpdatePanel/Panel_Version_UI" +
+            "/NewVersionButtonGreenAndroid").SetActive(Application.platform == RuntimePlatform.Android);
+        GameObject.Find("UMenuProManager/MenuCanvas/VersionUpdatePanel/Panel_Version_UI" +
+            "/NewVersionButtonGreenApple").SetActive(Application.platform == RuntimePlatform.IPhonePlayer);
     }
 
     static void GetLatestVersionError(CMLData response)
