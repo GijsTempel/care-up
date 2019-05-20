@@ -239,10 +239,10 @@ public class PersonObject : InteractableObject
             {
                 if (controls.CanInteract)
                 {
-                    if (rend.material.shader == onMouseExitShader)
-                    {
-                        SetShaderTo(onMouseOverShader);
-                    }
+                    //if (rend.material.shader == onMouseExitShader)
+                    //{
+                    //    SetShaderTo(onMouseOverShader);
+                    //}
 
                     if (!itemDescription.activeSelf)
                     {
@@ -251,7 +251,7 @@ public class PersonObject : InteractableObject
 
                     itemDescription.GetComponentInChildren<Text>().text = (description == "") ? name : description;
                 }
-                else if (!controls.CanInteract && rend.material.shader == onMouseOverShader)
+                else if (!controls.CanInteract /*&& rend.material.shader == onMouseOverShader*/)
                 {
                     SetShaderTo(onMouseExitShader);
                     itemDescription.SetActive(false);
@@ -259,10 +259,10 @@ public class PersonObject : InteractableObject
             }
             else
             {
-                if (rend.material.shader == onMouseOverShader)
-                {
-                    SetShaderTo(onMouseExitShader);
-                }
+                //if (rend.material.shader == onMouseOverShader)
+                //{
+                //    SetShaderTo(onMouseExitShader);
+                //}
 
                 if (!selectedIsInteractable)
                 {
@@ -271,7 +271,7 @@ public class PersonObject : InteractableObject
             }
         }
 
-        if (cameraMode.animating && rend.material.shader == onMouseOverShader)
+        if (cameraMode.animating/* && rend.material.shader == onMouseOverShader*/)
         {
             SetShaderTo(onMouseExitShader);
             itemDescription.SetActive(false);
