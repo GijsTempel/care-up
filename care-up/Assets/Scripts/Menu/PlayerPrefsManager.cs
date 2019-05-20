@@ -78,7 +78,7 @@ public class PlayerPrefsManager : MonoBehaviour
         transform.position =
         GameObject.FindObjectOfType<AudioListener>().transform.position;
 
-        if (!(s.name == "Launch me 1" ||
+        if (!(s.name == "LoginMenu" ||
               s.name == "MainMenu" ||
               s.name == "SceneSelection" ||
               s.name == "Scenes_Character_Customisation"))
@@ -103,6 +103,55 @@ public class PlayerPrefsManager : MonoBehaviour
             GameObject.Find("UMenuProManager/MenuCanvas/Opties/Panel_UI/OptionsGrid/PostProcessingToggle").GetComponent<Toggle>().isOn = postProcessingEnabled;
 
             PlayerPrefsManager.GetFullName();
+        }
+
+        // handle platform-dependant objects (deleting unnecesarry)
+        if (s.name == "MainMenu")
+        {
+            if (Application.platform != RuntimePlatform.IPhonePlayer)
+            {
+                Destroy(GameObject.Find("UMenuProManager/MenuCanvas/VersionUpdatePanel/Panel_Version_UI" +
+                "/NewVersionButtonGreenApple"));
+                
+                Destroy(GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/WUSerialScreen" +
+                "/RegisterArea/Buttons/MoreInfo_Apple"));
+                Destroy(GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/WUSerialScreen" +
+                "/RegisterArea/Buttons/Purchase_Apple"));
+            }
+
+            if (Application.platform != RuntimePlatform.Android)
+            {
+                Destroy(GameObject.Find("UMenuProManager/MenuCanvas/VersionUpdatePanel/Panel_Version_UI" +
+                "/NewVersionButtonGreenAndroid"));
+            }
+            
+            if (Application.platform != RuntimePlatform.WindowsPlayer)
+            {
+                Destroy(GameObject.Find("UMenuProManager/MenuCanvas/VersionUpdatePanel/Panel_Version_UI" +
+                "/NewVersionButtonGreenWindows"));
+            }
+
+            if ((Application.platform != RuntimePlatform.Android) &&
+                (Application.platform != RuntimePlatform.WindowsPlayer))
+            {
+                Destroy(GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/WUSerialScreen" +
+                "/RegisterArea/Buttons/PurchaseButton_AndroidWeb"));
+            }
+        }
+
+        if (s.name == "LoginMenu")
+        {
+            if ((Application.platform != RuntimePlatform.Android) &&
+                (Application.platform != RuntimePlatform.WindowsPlayer))
+            {
+                Destroy(GameObject.Find("Canvas/WULoginPrefab/WUSerialScreen/RegisterArea/Purchase_Android_WebGL"));
+            }
+
+            if (Application.platform != RuntimePlatform.IPhonePlayer)
+            {
+                Destroy(GameObject.Find("Canvas/WULoginPrefab/WUSerialScreen/RegisterArea/MoreInfo_Apple"));
+                Destroy(GameObject.Find("Canvas/WULoginPrefab/WUSerialScreen/RegisterArea/Purchase_Apple"));
+            }
         }
     }
 
@@ -132,6 +181,9 @@ public class PlayerPrefsManager : MonoBehaviour
 
         postProcessingEnabled = PlayerPrefs.GetInt("PostProcessing") == 1;
         Debug.Log("PostProcessing is set to saved value: " + postProcessingEnabled);
+
+        // OnLoaded doesnt launch on initial scene? so force it in start function separately
+        OnLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
     }
 
     public float Volume
@@ -585,11 +637,6 @@ public class PlayerPrefsManager : MonoBehaviour
         {
             GameObject.Find("UMenuProManager/MenuCanvas/VersionUpdatePanel").SetActive(false);
         }
-
-        GameObject.Find("UMenuProManager/MenuCanvas/VersionUpdatePanel/Panel_Version_UI" +
-            "/NewVersionButtonGreenAndroid").SetActive(Application.platform == RuntimePlatform.Android);
-        GameObject.Find("UMenuProManager/MenuCanvas/VersionUpdatePanel/Panel_Version_UI" +
-            "/NewVersionButtonGreenApple").SetActive(Application.platform == RuntimePlatform.IPhonePlayer);
     }
 
     static void GetLatestVersionError(CMLData response)
