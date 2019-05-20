@@ -5,13 +5,21 @@ using UnityEngine;
 public class MoveToPoint : MonoBehaviour {
 
     public float speed = 1.0f;
+    public float delay = 0f;
     public List<GameObject> KyePoints;
     int NextPointIndex = 0;
     public bool toWalk = false;
     public string EndTriggerObjName = "";
     public List<string> EndTriggers;
+    public string StartTrigger = "walk";
+    public string StopTrigger = "stopwalk";
+    public Animator personToMove;
+   // public Animator playerToMove;
+   // public string Trigger1ForPlayer;
+   // public string Trigger2ForPlayer;
+    bool currentwalk = false;
 
-  
+
     public void SetEndTriggers(string ETObjName, List<string> ETriggers)
     {
         EndTriggerObjName = ETObjName;
@@ -49,17 +57,37 @@ public class MoveToPoint : MonoBehaviour {
         toWalk = true;
         //if (NextPointIndex < KyePoints.Count)
         //    transform.LookAt(KyePoints[NextPointIndex].transform.position);
+       // playerToMove =  GameObject.FindObjectOfType<PlayerAnimationManager>().GetComponent<Animator>();
+        personToMove.SetTrigger(StartTrigger);
+       // playerToMove.SetTrigger(Trigger1ForPlayer);
+       // playerToMove.SetTrigger(Trigger2ForPlayer);
     }
 
     // Update is called once per frame
     void Update ()
     {
-        if (toWalk)
+        if(delay >0 && toWalk)
         {
+            delay -= Time.deltaTime;
+        }
+        if (toWalk && delay < 0)
+        {
+           
+
             GameObject nextPoint = null;
             if (NextPointIndex < KyePoints.Count)
                 nextPoint = KyePoints[NextPointIndex];
-           
+
+            if (currentwalk != toWalk) 
+            {
+                
+                StartWalking();
+                currentwalk = toWalk;
+                return;
+
+            }
+          
+
             float step = speed * Time.deltaTime;
 
             if (nextPoint != null)
@@ -74,7 +102,7 @@ public class MoveToPoint : MonoBehaviour {
                     angleTarget = nextPoint.transform.rotation;
                 }
 
-
+               
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, angleTarget, speed * 2f);
 
                 if (Vector3.Distance(transform.position, nextPoint.transform.position) < 0.001f)
@@ -91,6 +119,9 @@ public class MoveToPoint : MonoBehaviour {
                         //if ((NextPointIndex - 1) < KyePoints.Count)
                         //    transform.rotation = KyePoints[NextPointIndex - 1].transform.rotation;
                         toWalk = false;
+
+                        personToMove.SetTrigger(StopTrigger);
+                        
                         if (GameObject.Find(EndTriggerObjName) && EndTriggers.Count > 0)
                         {
                             if (GameObject.Find(EndTriggerObjName).GetComponent<Animator>() != null)

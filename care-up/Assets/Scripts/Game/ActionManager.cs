@@ -1,19 +1,16 @@
 ﻿using System.Xml;
 using System.Linq;
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using CareUp.Actions;
-using UnityStandardAssets.Characters.FirstPerson;
 
 /// <summary>
 /// GameLogic script. Everything about actions is managed by this script.
 /// </summary>
 public class ActionManager : MonoBehaviour
 {
-
     // tutorial variables - do not affect gameplay
     [HideInInspector]
     public bool tutorial_hintUsed = false;
@@ -21,6 +18,11 @@ public class ActionManager : MonoBehaviour
     private Text pointsText;
     private Text percentageText;
     public int actionsCount = 0;
+    public static bool practiceMode = true;
+
+    [HideInInspector]
+    public static bool personClicked = false;
+
     // list of types of actions
     public enum ActionType
     {
@@ -38,7 +40,6 @@ public class ActionManager : MonoBehaviour
     // name of the xml file with actions
     public string actionListName;
 
-
     // actual list of actions
     public List<Action> actionList = new List<Action>();
 
@@ -50,7 +51,7 @@ public class ActionManager : MonoBehaviour
 
     private int totalPoints = 0;         // max points of scene
     private int points = 0;              // current points
-    private int currentActionIndex = 0;  // index of current action
+    public int currentActionIndex = 0;  // index of current action
     private Action currentAction;        // current action instance
     private int currentPointAward = 1;
     private bool penalized = false;
@@ -59,10 +60,9 @@ public class ActionManager : MonoBehaviour
     private List<GameObject> particleHints;
     private bool menuScene;
     private bool uiSet = false;
-
     PlayerPrefsManager manager;
     HandsInventory inventory;
-
+    static PlayerScript playerScript;
 
     private List<string> unlockedBlocks = new List<string>();
 
@@ -130,14 +130,488 @@ public class ActionManager : MonoBehaviour
         set { currentActionIndex = value; }
     }
 
+    // Will be refactored
+    public static void UpdateRequirements(float showDelay = 0f)
+    {
+        if (!practiceMode)
+            return;
+
+        if (playerScript == null)
+            playerScript = GameObject.FindObjectOfType<PlayerScript>();
+
+        ActionManager manager = GameObject.FindObjectOfType<ActionManager>();
+        GameUI gameUI = GameObject.FindObjectOfType<GameUI>();
+
+        List<Action> sublist = manager.actionList.Where(action =>
+               action.SubIndex == manager.currentActionIndex &&
+               action.matched == false).ToList();
+
+        List<StepData> stepsList = new List<StepData>();
+
+        HandsInventory inventory = GameObject.FindObjectOfType<HandsInventory>();
+        int i = 0;
+        bool foundComplitedAction = false;
+        gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
+        gameUI.DropLeftBlink = false;
+        gameUI.DropRightBlink = false;
+        gameUI.reqPlaces.Clear();
+        bool leftIncorrect = true;
+        bool rightIncorrect = true;
+        bool noObjectActions = true;
+        bool anyCorrectPlace = false;
+        List<string> placesReqList = new List<string>();
+        string uncomplitedSecondPlace = "";
+        gameUI.recordsButtonBlink = false;
+        gameUI.prescriptionButtonBlink = false;
+        foreach (Action a in sublist)
+        {
+            StepData placeData = null;
+            StepData secondPlaceData = null;
+            bool correctObjectsInHands = true;
+            List<StepData> objectsData = new List<StepData>();
+
+            bool dialog = false;
+
+            if (a.placeRequirement == "PatientPos" || a.placeRequirement == "DoctorPos" || a.secondPlaceRequirement == "PatientPos" || a.secondPlaceRequirement == "DoctorPos")
+                dialog = true;
+
+            if (!string.IsNullOrEmpty(a.placeRequirement))
+            {
+                string placeName = a.placeRequirement;
+
+                if (GameObject.Find(a.placeRequirement).GetComponent<WalkToGroup>().description != "")
+                    placeName = GameObject.Find(a.placeRequirement).GetComponent<WalkToGroup>().description;
+
+                bool completed = false;
+                if (playerScript.currentWalkPosition != null)
+                    completed = playerScript.currentWalkPosition.name == a.placeRequirement;
+
+                placeData = new StepData(completed, $"- Ga naar {placeName}.", i);
+                if (completed)
+                    anyCorrectPlace = true;
+
+                if (a.Type == ActionType.PersonTalk && dialog)
+                {                   
+                    if(personClicked)                    
+                        objectsData.Add(new StepData(false, $"- Kies wat je gaat doen.", i));
+                    else
+                        objectsData.Add(new StepData(false, $"- Klik op {placeName}.", i));
+                }
+            }
+
+            if (!string.IsNullOrEmpty(a.secondPlaceRequirement))
+            {
+                string placeName = a.secondPlaceRequirement;
+
+                if (GameObject.Find(a.secondPlaceRequirement).GetComponent<WalkToGroup>().description != "")
+                    placeName = GameObject.Find(a.secondPlaceRequirement).GetComponent<WalkToGroup>().description;
+
+                bool completed = false;
+                if (playerScript.currentWalkPosition != null)
+                    completed = playerScript.currentWalkPosition.name == a.secondPlaceRequirement;
+
+                secondPlaceData = new StepData(completed, $"- Ga naar {placeName}.", i);
+
+                if (a.Type == ActionType.PersonTalk && dialog)
+                {
+                    if (personClicked)
+                        objectsData.Add(new StepData(false, $"- Kies wat je gaat doen.", i));
+                    else
+                        objectsData.Add(new StepData(false, $"- Klik op {placeName}.", i));
+                }
+            }          
+
+            string[] actionHand = { a.leftHandRequirement, a.rightHandRequirement };
+            GameObject leftR = null;
+            GameObject rightR = null;
+            string article = null;
+            string currentLeftObject = null;
+            string currentRightObject = null;
+            bool objectCombinationCheck = false;
+
+            bool iPad = a.leftHandRequirement == "PatientRecords" || a.leftHandRequirement == "PrescriptionForm" || a.leftHandRequirement == "PaperAndPen";
+
+            if (iPad)
+            {
+                objectsData.Add(new StepData(false, $"- Klik op het informatie icoon.", i));
+
+                if(a.leftHandRequirement == "PatientRecords")
+                {
+                    gameUI.recordsButtonBlink = true;
+                }
+                else if (a.leftHandRequirement == "PrescriptionForm")
+                {
+                    gameUI.prescriptionButtonBlink = true;
+                }
+                else if (a.leftHandRequirement == "PaperAndPen")
+                {
+                    gameUI.paperAndPenButtonblink = true;
+                }
+            }
+            else
+            {
+                foreach (string hand in actionHand)
+                {
+                    bool foundDescr = false;
+
+                    if (!string.IsNullOrEmpty(hand))
+                    {
+                        string handValue = hand;
+                        bool found = false;
+
+                        if (GameObject.Find(hand) != null)
+                        {
+                            if (GameObject.Find(hand).GetComponent<InteractableObject>() != null)
+                            {
+                                if (GameObject.Find(hand).GetComponent<InteractableObject>().description != "")
+                                {
+                                    handValue = GameObject.Find(hand).GetComponent<InteractableObject>().description;
+                                    article = GameObject.Find(hand).GetComponent<InteractableObject>().nameArticle;
+                                    found = true;
+                                    foundDescr = true;
+                                }
+                            }
+                        }
+                        if (GameObject.FindObjectOfType<ExtraObjectOptions>() != null && !found)
+                        {
+                            foreach (ExtraObjectOptions extraObject in GameObject.FindObjectsOfType<ExtraObjectOptions>())
+                            {
+                                string desc = extraObject.HasNeeded(hand);                                
+                                if (desc != "")
+                                {
+                                    article = extraObject.HasNeededArticle(hand);
+                                    handValue = desc;
+                                    found = true;
+                                    foundDescr = true;
+
+                                }
+                            }
+                        }
+
+                        if (GameObject.FindObjectOfType<WorkField>() != null && !found)
+                        {
+                            foreach (WorkField w in GameObject.FindObjectsOfType<WorkField>())
+                            {
+                                foreach (GameObject obj in w.objects)
+                                {
+                                    if (obj != null)
+                                    {
+                                        if (obj.name == hand)
+                                        {
+                                            article = obj.GetComponent<InteractableObject>().nameArticle;
+                                            handValue = obj.GetComponent<InteractableObject>().description;
+                                            foundDescr = true;
+                                            found = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                                if (found)
+                                    break;
+                            }
+                        }
+                        if (GameObject.FindObjectsOfType<CatheterPack>() != null && !found)
+                        {
+                            foreach (CatheterPack w in GameObject.FindObjectsOfType<CatheterPack>())
+                            {
+                                foreach (GameObject obj in w.objects)
+                                {
+                                    if (obj != null)
+                                    {
+                                        if (obj.name == hand)
+                                        {
+                                            handValue = obj.GetComponent<InteractableObject>().description;
+                                            article = obj.GetComponent<InteractableObject>().nameArticle;
+                                            foundDescr = true;
+                                            found = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                                if (found)
+                                    break;
+                            }
+                        }
+
+                        bool completed = false;
+
+                        if (!inventory.LeftHandEmpty())
+                        {
+                            currentLeftObject = System.Char.ToLowerInvariant(inventory.leftHandObject.description[0]) + inventory.leftHandObject.description.Substring(1);
+
+                            if (inventory.leftHandObject.name == hand)
+                            {
+                                leftIncorrect = false;
+                                completed = true;
+                                leftR = inventory.leftHandObject.gameObject;
+                            }
+                        }
+
+                        if (!inventory.RightHandEmpty())
+                        {
+                            currentRightObject = System.Char.ToLowerInvariant(inventory.rightHandObject.description[0]) + inventory.rightHandObject.description.Substring(1);
+
+                            if (inventory.rightHandObject.name == hand)
+                            {
+                                rightIncorrect = false;
+                                completed = true;
+                                rightR = inventory.rightHandObject.gameObject;
+                            }
+                        }
+#if UNITY_EDITOR
+                        if (!foundDescr)
+                        {
+                            if (GameObject.FindObjectOfType<NeededObjectsLister>() != null)
+                            {
+                                if (!GameObject.FindObjectOfType<NeededObjectsLister>().addNeeded(hand))
+                                    print("______Add to extra______   " + hand);
+                            }
+                        }
+#endif
+                        
+                        handValue = System.Char.ToLowerInvariant(handValue[0]) + handValue.Substring(1);
+
+                        string keyWords = null;
+
+                        if (leftR != null && rightR != null)
+                        {
+                            objectCombinationCheck = ((leftR.name == a.leftHandRequirement) && (rightR.name == a.rightHandRequirement)) || ((rightR.name == a.leftHandRequirement) && (leftR.name == a.rightHandRequirement));
+                        }
+
+                        if (objectCombinationCheck && a.Type == ActionType.ObjectCombine)
+                        {
+                            objectsData.Add(new StepData(false, "- Klik op de 'Combineer' knop.", i));
+                            if (!foundComplitedAction)
+                            {
+                                foundComplitedAction = true;
+                                gameUI.buttonToBlink = GameUI.ItemControlButtonType.Combine;
+                            }
+                        }
+
+                        else if (leftR != null)
+                        {
+                            if (manager.CompareUseOnInfo(inventory.leftHandObject.name, ""))
+                            {
+                                keyWords = manager.CurrentButtonText(inventory.leftHandObject.name);
+
+                                objectsData.Add(new StepData(false, $"- Klik op de '{keyWords}' knop.", i));
+                                if (!foundComplitedAction)
+                                {
+                                    foundComplitedAction = true;
+                                    gameUI.buttonToBlink = GameUI.ItemControlButtonType.NoTargetLeft;
+                                }
+                            }
+                            else if (a.Type == ActionType.ObjectDrop && a.leftHandRequirement == inventory.leftHandObject.name)
+                            {
+                                if (!foundComplitedAction)
+                                {
+                                    foundComplitedAction = true;
+                                    gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
+                                }
+                                if (secondPlaceData != null)
+                                {
+                                    if (secondPlaceData.completed)
+                                    {
+                                        gameUI.DropLeftBlink = true;
+                                        
+                                        objectsData.Add(new StepData(false, $"- Leg {article} {handValue} neer.", i));
+                                    }
+                                }
+                                else
+                                    objectsData.Add(new StepData(false, $"- Leg {article} {handValue} neer.", i));
+                            }
+                            else if (a.Type == ActionType.ObjectExamine && inventory.leftHandObject.name == a.leftHandRequirement)
+                            {
+                                objectsData.Add(new StepData(false, $"- Klik op de 'Controleren' knop.", i));
+                                if (!foundComplitedAction)
+                                {
+                                    foundComplitedAction = true;
+                                    gameUI.buttonToBlink = GameUI.ItemControlButtonType.ZoomLeft;
+                                }
+                            }
+
+                            else if (!string.IsNullOrEmpty(manager.CurrentDecombineButtonText(inventory.leftHandObject.name)))
+                            {
+                                keyWords = manager.CurrentDecombineButtonText(inventory.leftHandObject.name);
+                                objectsData.Add(new StepData(false, $"- Klik op de '{manager.CurrentDecombineButtonText(inventory.leftHandObject.name)}' knop.", i));
+                                if (!foundComplitedAction)
+                                {
+                                    foundComplitedAction = true;
+                                    gameUI.buttonToBlink = GameUI.ItemControlButtonType.DecombineLeft;
+                                }
+                            }
+                            else if (!foundComplitedAction)
+                                gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
+                        }
+
+                        else if (rightR != null)
+                        {
+                            if (manager.CompareUseOnInfo(inventory.rightHandObject.name, ""))
+                            {
+                                keyWords = manager.CurrentButtonText(inventory.rightHandObject.name);
+
+                                objectsData.Add(new StepData(false, $"- Klik op de '{keyWords}' knop.", i));
+                                if (!foundComplitedAction)
+                                {
+                                    foundComplitedAction = true;
+                                    gameUI.buttonToBlink = GameUI.ItemControlButtonType.NoTargetRight;
+                                }
+                            }
+                            else if (a.Type == ActionType.ObjectDrop)
+                            {
+                                if (!foundComplitedAction)
+                                {
+                                    foundComplitedAction = true;
+                                    gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
+                                }
+                                if (secondPlaceData != null)
+                                {
+                                    if (secondPlaceData.completed)
+                                    {
+                                        gameUI.DropRightBlink = true;
+                                        objectsData.Add(new StepData(false, $"- Leg {article} {handValue} neer.", i));
+                                    }
+                                }
+                                else
+                                    objectsData.Add(new StepData(false, $"- Leg {article} {handValue} neer.", i));
+                            }
+                            else if (a.Type == ActionType.ObjectExamine && inventory.rightHandObject.name == a.leftHandRequirement)
+                            {
+                                objectsData.Add(new StepData(false, $"- Klik op de 'Controleren' knop.", i));
+                                if (!foundComplitedAction)
+                                {
+                                    foundComplitedAction = true;
+                                    gameUI.buttonToBlink = GameUI.ItemControlButtonType.ZoomRight;
+                                }
+                            }
+                            else if (a.Type == ActionType.PersonTalk)
+                            {
+                                if (!foundComplitedAction)
+                                {
+                                    gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
+                                }
+                            }
+                            else if (!string.IsNullOrEmpty(manager.CurrentDecombineButtonText(inventory.RightHandObject.name)))
+                            {
+                                keyWords = manager.CurrentDecombineButtonText(inventory.rightHandObject.name);
+                                objectsData.Add(new StepData(false, $"- Klik op de '{manager.CurrentDecombineButtonText(inventory.rightHandObject.name)}' knop.", i));
+                                if (!foundComplitedAction)
+                                {
+                                    foundComplitedAction = true;
+                                    gameUI.buttonToBlink = GameUI.ItemControlButtonType.DecombineRight;
+                                }
+                            }
+                            else
+                                gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
+                        }
+                        else if (!foundComplitedAction)
+                            gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
+
+
+                        if (!completed)
+                            correctObjectsInHands = false;
+
+                        keyWords = "- Pak";
+
+                        if (a.Type == ActionType.ObjectUse)
+                        {
+                            keyWords = "- Klik op";
+                        }                       
+
+                        objectsData.Add(new StepData(completed, $"{keyWords} {article} {handValue}.", i));
+                    }
+                }
+            }
+            if (placeData != null)
+            {
+                if (secondPlaceData != null && correctObjectsInHands)
+                {
+                    stepsList.Add(secondPlaceData);
+                    //placesReqList.Add(a.secondPlaceRequirement);
+                    if (!secondPlaceData.completed)
+                        uncomplitedSecondPlace = a.secondPlaceRequirement;
+                }
+                else
+                {
+                    stepsList.Add(placeData);
+                    placesReqList.Add(a.placeRequirement);
+                }
+            }
+
+            foreach (StepData sd in objectsData)
+            {
+                stepsList.Add(sd);
+            }
+
+            if (objectsData.Count > 0)
+                noObjectActions = false;
+
+            gameUI.moveButtonToBlink = GameUI.ItemControlButtonType.None;
+
+            if (uncomplitedSecondPlace != "")
+            {
+                placesReqList.Clear();
+                placesReqList.Add(uncomplitedSecondPlace);
+            }
+
+            string sss = "";
+            foreach (string s in placesReqList)
+            {
+                sss += s + " | ";
+                gameUI.reqPlaces.Add(s);
+            }
+
+            if ((!anyCorrectPlace || uncomplitedSecondPlace != "") && !playerScript.away && placesReqList.Count > 0)
+            {
+                WalkToGroup currentWTG = playerScript.currentWalkPosition;
+
+                foreach (string s in placesReqList)
+                {
+                    int dir = gameUI.FindDirection(s, playerScript.currentWalkPosition, 0);
+                    if (dir == -1)
+                    {
+                        gameUI.moveButtonToBlink = GameUI.ItemControlButtonType.MoveLeft;
+                        break;
+                    }
+                    else if (dir == 1)
+                    {
+                        gameUI.moveButtonToBlink = GameUI.ItemControlButtonType.MoveRight;
+                        break;
+                    }
+                }
+            }
+
+            i++;
+        }
+        if (gameUI.moveButtonToBlink != GameUI.ItemControlButtonType.None)
+        {
+            gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
+            gameUI.DropRightBlink = false;
+            gameUI.DropLeftBlink = false;
+        }
+
+        personClicked = false;
+
+        GameObject.FindObjectOfType<GameUI>().UpdateHintPanel(stepsList, showDelay);
+
+        if (leftIncorrect && !inventory.LeftHandEmpty() && !noObjectActions)
+            gameUI.DropLeftBlink = true;
+        if (rightIncorrect && !inventory.RightHandEmpty() && !noObjectActions)
+            gameUI.DropRightBlink = true;
+        GameObject.FindObjectOfType<GameUI>().UpdateHintPanel(stepsList);
+
+        gameUI.updateButtonsBlink();
+    }
+
     /// <summary>
     /// Description of the current action.
     /// Heavy function, use only once, never on update
     /// </summary>
-    public string CurrentDescription
+    public List<string> CurrentDescription
     {
         get
         {
+            List<string> actionsDescription = new List<string>();
             string result = "";
             bool Ua = false;
 
@@ -151,7 +625,6 @@ public class ActionManager : MonoBehaviour
                 result = currentAction.shortDescr;
                 if (Ua && currentAction.commentUA != "")
                     result = currentAction.commentUA;
-
             }
             else
             {
@@ -162,46 +635,15 @@ public class ActionManager : MonoBehaviour
                 foreach (Action a in sublist)
                 {
                     if (!Ua || a.commentUA == "")
-                        result += " - " + a.shortDescr + "\n";
+                        actionsDescription.Add(a.shortDescr);
                     if (Ua)
-                        result += " - " + a.commentUA + "\n";
+                        actionsDescription.Add(a.commentUA);
                 }
             }
-
-            return result;
+            return actionsDescription;
         }
     }
-
-    /// <summary>
-    /// Extra description ( for extended hints )
-    /// Heavy function, use only once, never on update
-    /// </summary>
-    public string CurrentExtraDescription
-    {
-        get
-        {
-            string result = "";
-
-            if (manager != null && !manager.practiceMode && currentAction != null)
-            {
-                result = currentAction.descr;
-            }
-            else
-            {
-                List<Action> sublist = actionList.Where(action =>
-                    action.SubIndex == currentActionIndex &&
-                    action.matched == false).ToList();
-
-                foreach (Action a in sublist)
-                {
-                    result += " - " + a.descr + "\n";
-                }
-            }
-
-            return result;
-        }
-    }
-
+    
     /// <summary>
     /// Name of the file of audioHint of current action.
     /// </summary>
@@ -453,6 +895,19 @@ public class ActionManager : MonoBehaviour
                 comment = action.Attributes["comment"].Value;
             }
 
+            string secondPlace = "";
+            if (action.Attributes["secondPlace"] != null)
+            {
+                secondPlace = action.Attributes["secondPlace"].Value;
+            }
+
+            string place = "";
+            if (action.Attributes["place"] != null)
+            {
+                place = action.Attributes["place"].Value;
+            }
+
+
             string commentUA = "";
             if (action.Attributes["commentUA"] != null)
             {
@@ -464,28 +919,7 @@ public class ActionManager : MonoBehaviour
             {
                 audio = action.Attributes["audioHint"].Value;
             }
-
-            string fDescr = "";
-            if (action.Attributes["fullDescription"] != null)
-            {
-                fDescr = action.Attributes["fullDescription"].Value;
-            }
-            else
-            {
-                string[] splits = descr.Split('(', ')');
-                if (splits.Length >= 2)
-                {
-                    descr = splits[0];
-                    fDescr = splits[1];
-                }
-                else
-                {
-                    Debug.LogError("Description in xml file \"" + actionListName + "\" is set wrong. \n" +
-                        "\'fullDescription\' field is not set and cannot split \'description\' properly. \n" +
-                        "Index: " + index + ". Descr: " + descr);
-                }
-            }
-
+            
             string extra = "";
             if (action.Attributes["extra"] != null)
             {
@@ -568,7 +1002,7 @@ public class ActionManager : MonoBehaviour
                 blockMsg = action.Attributes["blockMessage"].Value;
             }
 
-            string decombineText = "Scheiden";
+            string decombineText = "Openen";
             if (action.Attributes["decombineText"] != null)
             {
                 decombineText = action.Attributes["decombineText"].Value;
@@ -579,58 +1013,58 @@ public class ActionManager : MonoBehaviour
                 case "combine":
                     string left = action.Attributes["left"].Value;
                     string right = action.Attributes["right"].Value;
-                    actionList.Add(new CombineAction(left, right, index, descr, fDescr, audio, extra,
+                    actionList.Add(new CombineAction(left, right, index, descr, audio, extra,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
                         blockUnlock, blockLock, blockTitle, blockMsg, decombineText));
                     break;
                 case "use":
                     string use = action.Attributes["value"].Value;
-                    actionList.Add(new UseAction(use, index, descr, fDescr, audio, extra, buttonText,
+                    actionList.Add(new UseAction(use, index, descr, audio, extra, buttonText,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
                         blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
                 case "talk":
                     string topic = action.Attributes["topic"].Value;
-                    actionList.Add(new TalkAction(topic, index, descr, fDescr, audio, extra, pointsValue,
+                    actionList.Add(new TalkAction(topic, index, descr, audio, extra, pointsValue,
                         notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock,
                         blockLock, blockTitle, blockMsg));
                     break;
                 case "useOn":
                     string useItem = action.Attributes["item"].Value;
                     string target = action.Attributes["target"].Value;
-                    actionList.Add(new UseOnAction(useItem, target, index, descr, fDescr, audio, extra,
+                    actionList.Add(new UseOnAction(useItem, target, index, descr, audio, extra,
                         buttonText, pointsValue, notNeeded, quizTime, messageTitle, messageContent,
                         blockRequire, blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
                 case "examine":
                     string exItem = action.Attributes["item"].Value;
                     string expected = action.Attributes["expected"].Value;
-                    actionList.Add(new ExamineAction(exItem, expected, index, descr, fDescr, audio, extra,
+                    actionList.Add(new ExamineAction(exItem, expected, index, descr, audio, extra,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
                         blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
                 case "pickUp":
                     string itemPicked = action.Attributes["item"].Value;
-                    actionList.Add(new PickUpAction(itemPicked, index, descr, fDescr, audio, extra,
+                    actionList.Add(new PickUpAction(itemPicked, index, descr, audio, extra,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
                         blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
                 case "sequenceStep":
                     string stepName = action.Attributes["value"].Value;
-                    actionList.Add(new SequenceStepAction(stepName, index, descr, fDescr, audio, extra,
+                    actionList.Add(new SequenceStepAction(stepName, index, descr, audio, extra,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
                         blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
                 case "drop":
                     string dropItem = action.Attributes["item"].Value;
                     string dropID = (action.Attributes["posID"] != null) ? action.Attributes["posID"].Value : "0";
-                    actionList.Add(new ObjectDropAction(dropItem, dropID, index, descr, fDescr, audio, extra,
+                    actionList.Add(new ObjectDropAction(dropItem, dropID, index, descr, audio, extra,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
                         blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
                 case "movement":
                     string movement = action.Attributes["value"].Value;
-                    actionList.Add(new MovementAction(movement, index, descr, fDescr, audio, extra,
+                    actionList.Add(new MovementAction(movement, index, descr, audio, extra,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
                         blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
@@ -640,6 +1074,10 @@ public class ActionManager : MonoBehaviour
             }
             actionList[actionList.Count - 1].comment = comment;
             actionList[actionList.Count - 1].commentUA = commentUA;
+            actionList[actionList.Count - 1].secondPlaceRequirement = secondPlace;
+            actionList[actionList.Count - 1].placeRequirement = place;
+
+
 
         }
         actionList.Last<Action>().sceneDoneTrigger = true;
@@ -738,10 +1176,10 @@ public class ActionManager : MonoBehaviour
     /// </summary>
     /// <param name="leftHand">Name of the object in left hand.</param>
     /// <param name="rightHand">Name of the object in right hand.</param>
-    public void OnCombineAction(string leftHand, string rightHand)
+    public void OnCombineAction(string leftHand, string rightHand, bool notWrongAction = false)
     {
         string[] info = { leftHand, rightHand };
-        bool occured = Check(info, ActionType.ObjectCombine);
+        bool occured = Check(info, ActionType.ObjectCombine, notWrongAction);
         UpdatePoints(occured ? 1 : -1);
 
         Debug.Log("Combine " + leftHand + " and " + rightHand + " with result " + occured);
@@ -834,6 +1272,9 @@ public class ActionManager : MonoBehaviour
 
         if (!CheckScenarioCompleted() && occured)
             ActionManager.CorrectAction();
+
+        ActionManager.BuildRequirements();
+        ActionManager.UpdateRequirements();
     }
 
     public void OnSequenceStepAction(string stepName)
@@ -872,6 +1313,24 @@ public class ActionManager : MonoBehaviour
 
         if (!CheckScenarioCompleted() && occured)
             ActionManager.CorrectAction();
+
+        UpdateRequirements();
+    }
+
+    public class StepData
+    {
+        public bool completed;
+        public string requirement;
+        public int subindex = 0;
+        public string actionType;
+        public bool disabled = false;
+
+        public StepData(bool completedValue, string requirementValue, int index)
+        {
+            completed = completedValue;
+            requirement = requirementValue;
+            subindex = index;
+        }
     }
 
     /// <summary>
@@ -881,7 +1340,7 @@ public class ActionManager : MonoBehaviour
     /// <param name="info">Info passed from Handling functions.</param>
     /// <param name="type">Type of the action</param>
     /// <returns>True if action expected and correct. False otherwise.</returns>
-    public bool Check(string[] info, ActionType type)
+    public bool Check(string[] info, ActionType type, bool notWtongAction = false)
     {
         bool matched = false;
 
@@ -1000,7 +1459,7 @@ public class ActionManager : MonoBehaviour
                 }
 
                 RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
-                messageCenter.NewMessage(title, message, RobotUIMessageTab.Icon.Error);
+                messageCenter.NewMessage(title, message, RobotUIMessageTab.Icon.Block);
             }
         }
 
@@ -1024,11 +1483,17 @@ public class ActionManager : MonoBehaviour
                 if (sublist.Count > 0)
                 {
                     RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
-                    messageCenter.NewMessage("Verkeerde handeling!", sublist[0].extraDescr, RobotUIMessageTab.Icon.Error);
+                    if (type == ActionType.SequenceStep)
+                        messageCenter.NewMessage("Verkeerde handeling!", sublist[0].extraDescr, RobotUIMessageTab.Icon.Error);
+                    else
+                        messageCenter.NewMessage("Verkeerde handeling!", sublist[0].extraDescr, RobotUIMessageTab.Icon.Block);
+
                 }
             }
 
-            ActionManager.WrongAction(type != ActionType.SequenceStep);
+            //--------------------------------------------------
+            if (!notWtongAction)
+                ActionManager.WrongAction(type != ActionType.SequenceStep);
 
             penalized = true;
         }
@@ -1179,7 +1644,7 @@ public class ActionManager : MonoBehaviour
     {
         Transform gameOver = GameObject.Find("UI").transform.Find("GameOver");
         gameOver.gameObject.SetActive(true);
-            
+
         if (GameObject.Find("GameLogic") != null)
         {
             controls.keyPreferences.ToggleLock();
@@ -1189,7 +1654,7 @@ public class ActionManager : MonoBehaviour
         PlayerScript player = GameObject.Find("Player").GetComponent<PlayerScript>();
         Crosshair crosshair = GameObject.Find("Player").GetComponent<Crosshair>();
         Animator animator = player.transform.GetChild(0).GetChild(0).GetComponent<Animator>();
-        
+
         player.enabled = false;
         crosshair.enabled = false;
 
@@ -1235,10 +1700,14 @@ public class ActionManager : MonoBehaviour
         ActionManager.PlayAddPointSound();
 
         ActionManager.BuildRequirements();
+        ActionManager.UpdateRequirements(1.5f);
     }
 
     public static void BuildRequirements()
     {
+        if (!practiceMode)
+            return;
+
         ActionManager am = GameObject.FindObjectOfType<ActionManager>();
         List<Action> sublist = am.actionList.Where(action =>
                action.SubIndex == am.currentActionIndex &&
@@ -1255,29 +1724,41 @@ public class ActionManager : MonoBehaviour
                     foreach (PersonObject po in GameObject.FindObjectsOfType<PersonObject>())
                     {
                         if (po.hasTopic(a._topic))
-                            a.placeRequirement = ActionManager.FindNearest(po.name, "");
+                        {
+                            a.placeRequirement = ActionManager.FindNearest(new string[] { po.name });
+                        }
                     }
-                    //a.placeRequirement = ActionManager.FindNearest(ObjectNames[0], "");
                     break;
                 case ActionType.ObjectCombine:
                     a.leftHandRequirement = ObjectNames[0];
                     a.rightHandRequirement = ObjectNames[1];
-                    a.placeRequirement = ActionManager.FindNearest(ObjectNames[0], ObjectNames[1]);
+                    if (a.placeRequirement == "")
+                        a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0], ObjectNames[1] });
                     break;
                 case ActionType.ObjectUseOn:
                     a.leftHandRequirement = ObjectNames[0];
-                    a.placeRequirement = ActionManager.FindNearest(ObjectNames[0],"");
+                    if (a.placeRequirement == "")
+                        a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
                     break;
                 case ActionType.ObjectExamine:
                     a.leftHandRequirement = ObjectNames[0];
-                    a.placeRequirement = ActionManager.FindNearest(ObjectNames[0], "");
+                    if (a.placeRequirement == "")
+                        a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
                     break;
                 case ActionType.PickUp:
                     a.leftHandRequirement = ObjectNames[0];
-                    a.placeRequirement = ActionManager.FindNearest(ObjectNames[0], "");
+                    if (a.placeRequirement == "")
+                        a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
                     break;
                 case ActionType.ObjectDrop:
                     a.leftHandRequirement = ObjectNames[0];
+                    if (a.placeRequirement == "")
+                        a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
+                    break;
+                case ActionType.ObjectUse:
+                    a.leftHandRequirement = ObjectNames[0];
+                    if (a.placeRequirement == "")
+                        a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
                     break;
             }
         }
@@ -1285,49 +1766,113 @@ public class ActionManager : MonoBehaviour
             GameObject.FindObjectOfType<ActionsPanel>().UpdatePanel();
     }
 
-    public static string FindNearest(string leftObjName, string rightObjName)
+    public static List<GameObject> FindAnchers(string[] objectNames)
     {
-        GameObject leftObj = GameObject.Find(leftObjName);
-        GameObject rightObj = GameObject.Find(rightObjName);
-        if (leftObj == null && rightObj == null)
-            return "";
+        List<GameObject> anchors = new List<GameObject>();
+        WorkField workField = GameObject.FindObjectOfType<WorkField>();
+        CatheterPack catheterPack = GameObject.FindObjectOfType<CatheterPack>();
 
-        List<WalkToGroup> walkToGroups = new List<WalkToGroup>();
-        foreach (WalkToGroup wToGroup in GameObject.FindObjectsOfType<WalkToGroup>())
-            walkToGroups.Add(wToGroup);
-
-        WalkToGroup nearestLeft = walkToGroups[0];
-        WalkToGroup nearestRight = walkToGroups[0];
-        if (leftObj == null)
-            nearestLeft = null;
-        if (rightObj == null)
-            nearestRight = null;
-
-        for (int i = 1; i < walkToGroups.Count; i++)
+        foreach (string o in objectNames)
         {
-            if (nearestLeft != null)
-            { 
-                float nearestDistanceLeft = Vector3.Distance(nearestLeft.transform.position, leftObj.transform.position);
-                if (Vector3.Distance(walkToGroups[i].transform.position, leftObj.transform.position) < nearestDistanceLeft)
-                    nearestLeft = walkToGroups[i];
-            }
-            if (nearestRight != null)
+            bool found = false;
+            foreach (ExtraObjectOptions e in GameObject.FindObjectsOfType<ExtraObjectOptions>())
             {
-                float nearestDistanceRight = Vector3.Distance(nearestRight.transform.position, rightObj.transform.position);
-                if (Vector3.Distance(walkToGroups[i].transform.position, rightObj.transform.position) < nearestDistanceRight)
-                    nearestRight = walkToGroups[i];
+                if (e.HasNeeded(o) != "")
+                {
+                    anchors.Add(e.gameObject);
+                    found = true;
+                    break;
+                }
+            }
+
+            if (found)
+                continue;
+
+            if (workField != null)
+            {
+                foreach (GameObject workFieldObject in workField.objects)
+                {
+                    if (workFieldObject != null)
+                    {
+                        if (workFieldObject.name == o)
+                        {
+                            anchors.Add(workField.gameObject);
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (found)
+                continue;
+
+            if (catheterPack != null)
+            {
+                foreach (GameObject catObject in catheterPack.objects)
+                {
+                    if (catObject != null)
+                    {
+                        if (catObject.name == o)
+                        {
+                            anchors.Add(workField.gameObject);
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (found)
+                continue;
+            if (GameObject.Find(o) != null)
+            {
+                anchors.Add(GameObject.Find(o));
             }
         }
-        if ((nearestLeft != null && nearestRight != null) && (nearestLeft != nearestRight))
-            return "";
-        if (nearestLeft != null)
-            return nearestLeft.name;
-        if (nearestRight != null)
-            return nearestRight.name;
+        return anchors;
+    }
+
+    public static WalkToGroup NearestWalkToGroup(GameObject obj)
+    {
+        WalkToGroup nearest = GameObject.FindObjectOfType<WalkToGroup>();
+        float nearestDist = Vector3.Distance(nearest.transform.position, obj.transform.position);
+        foreach (WalkToGroup w in GameObject.FindObjectsOfType<WalkToGroup>())
+        {
+            float dist = Vector3.Distance(w.transform.position, obj.transform.position);
+            if (dist < nearestDist)
+            {
+                nearestDist = dist;
+                nearest = w;
+            }
+        }
+        return nearest;
+    }
+
+    public static string FindNearest(string[] objectNames)
+    {
+        List<WalkToGroup> nearestGroups = new List<WalkToGroup>();
+        List<GameObject> anchors = ActionManager.FindAnchers(objectNames);
+        if (anchors != null)
+        {
+            foreach (GameObject a in anchors)
+            {
+                nearestGroups.Add(ActionManager.NearestWalkToGroup(a));
+            }
+        }
+
+        if (nearestGroups.Count > 0)
+        {
+            WalkToGroup ng = nearestGroups[0];
+            foreach (WalkToGroup w in nearestGroups)
+            {
+                if (ng != w)
+                    return "";
+            }
+
+            return ng.name;
+        }
 
         return "";
     }
-
 
     public void UpdatePoints(int value)
     {

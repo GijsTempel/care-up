@@ -1724,25 +1724,25 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: S UseLeft BloodGlucoseMeter
+  - m_Name: S UseLeft
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: UseLeft BloodGlucoseMeter
+  - m_Name: UseLeft
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: S UseRight BloodGlucoseMeter
+  - m_Name: S UseRight
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: UseRight BloodGlucoseMeter
+  - m_Name: UseRight
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -2152,6 +2152,21 @@ MonoBehaviour:
   audioFrame: 0
   positionObjectName: 
   volume: 1
+--- !u!114 &114138920461146232
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0b960189e3c63e4bbf73b5119c0281e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionFrame: 1
+  trigger: force_idle
+  ObjectName: PatientEmpty
+  atTheEnd: 0
 --- !u!114 &114147721982915666
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2350,6 +2365,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SequenceName: 
+  TuggleFromCinematic: 1
   keyFrames: 05000000610100009a010000570200005d02000089020000
 --- !u!114 &114238600058322352
 MonoBehaviour:
@@ -2575,22 +2591,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combineFrame: 100
---- !u!114 &114321542721599974
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ControlObjectName: BloodGlucoseMeter
-  showFrame: 140
-  ObjNames:
-  - Canvas1
-  toShow: 1
 --- !u!114 &114325967471301024
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2632,6 +2632,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SequenceName: 
+  TuggleFromCinematic: 1
   keyFrames: 05000000610100009a010000570200005d0200008902000075030000eb04000014050000
   takeSyringeFrame: 311
   swapHandsFrame: 1265
@@ -2792,6 +2793,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combineFrame: 100
+--- !u!114 &114392266737674054
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2474b796d60c904b833c33c03191d77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeOutValue: 0.5
 --- !u!114 &114393661269035456
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -2959,6 +2972,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SequenceName: AnimSeq_Measuring_Blood_Glucose
+  TuggleFromCinematic: 1
   keyFrames: 5a000000f000000058020000b6030000780500009a0600000c080000d40800007e090000460a0000
 --- !u!114 &114433692293803568
 MonoBehaviour:
@@ -3187,6 +3201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SequenceName: 
+  TuggleFromCinematic: 1
   keyFrames: 05000000610100009a010000570200005d0200008902000075030000eb040000
   takeSyringeFrame: 311
   swapHandsFrame: 1265
@@ -3365,6 +3380,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SequenceName: 
+  TuggleFromCinematic: 1
   keyFrames: 05000000610100009a010000570200005d0200008902000075030000eb040000
   takeSyringeFrame: 311
   swapHandsFrame: 1265
@@ -3416,10 +3432,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SequenceName: 
+  TuggleFromCinematic: 1
   keyFrames: 05000000610100009a010000570200005d0200008902000075030000eb040000
   dropClothFrame: 268
   takeSyringeFrame: 311
   swapHandsFrame: 1265
+--- !u!114 &114614101565065680
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2474b796d60c904b833c33c03191d77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeOutValue: 0.5
 --- !u!114 &114616590000424252
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3472,6 +3501,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SequenceName: 
+  TuggleFromCinematic: 1
   keyFrames: 05000000610100009a010000570200005d0200008902000075030000eb04000014050000
   takeSyringeFrame: 311
   swapHandsFrame: 1265
@@ -3515,6 +3545,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combineFrame: 100
+--- !u!114 &114653842055983186
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a83eec246112d7b48807a22fed46c3e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeOutValue: 0.5
 --- !u!114 &114660195043158362
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -3559,17 +3601,6 @@ MonoBehaviour:
   audioFrame: 0
   positionObjectName: 
   volume: 1
---- !u!114 &114667840023190084
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9b29f5ba63bb4aa5b477b8007d77187, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114672454502011634
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3641,6 +3672,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SequenceName: 
+  TuggleFromCinematic: 1
   keyFrames: 05000000610100009a010000570200005d0200008902000075030000eb040000
   dropClothFrame: 268
   takeSyringeFrame: 311
@@ -3688,6 +3720,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SequenceName: 
+  TuggleFromCinematic: 1
   keyFrames: 05000000610100009a010000570200005d02000089020000
 --- !u!114 &114699032165616630
 MonoBehaviour:
@@ -3833,6 +3866,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SequenceName: 
+  TuggleFromCinematic: 1
   keyFrames: 05000000610100009a010000570200005d0200008902000075030000eb04000014050000
   takeSyringeFrame: 311
   swapHandsFrame: 1265
@@ -4351,6 +4385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SequenceName: 
+  TuggleFromCinematic: 1
   keyFrames: 05000000610100009a010000570200005d02000089020000
 --- !u!114 &114915552969357588
 MonoBehaviour:
@@ -4533,6 +4568,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SequenceName: 
+  TuggleFromCinematic: 1
   keyFrames: 05000000610100009a010000570200005d0200008902000075030000eb040000
   takeSyringeFrame: 311
   swapHandsFrame: 1265
@@ -4576,6 +4612,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SequenceName: 
+  TuggleFromCinematic: 1
   keyFrames: 05000000610100009a010000570200005d0200008902000075030000eb040000
   dropClothFrame: 268
   takeSyringeFrame: 311
@@ -5287,30 +5324,6 @@ AnimatorStateTransition:
   m_TransitionOffset: 0
   m_ExitTime: 0.75
   m_HasExitTime: 1
-  m_HasFixedDuration: 1
-  m_InterruptionSource: 0
-  m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
---- !u!1101 &1101060430691440406
-AnimatorStateTransition:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: 
-  m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: S UseLeft BloodGlucoseMeter
-    m_EventTreshold: 0
-  m_DstStateMachine: {fileID: 0}
-  m_DstState: {fileID: 1102337518378776928}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 0
-  serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.75
-  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -7913,27 +7926,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!1101 &1101322896278839180
-AnimatorStateTransition:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: 
-  m_Conditions: []
-  m_DstStateMachine: {fileID: 1107153178216169846}
-  m_DstState: {fileID: 0}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 0
-  serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.94
-  m_HasExitTime: 1
-  m_HasFixedDuration: 1
-  m_InterruptionSource: 0
-  m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
 --- !u!1101 &1101327944717782528
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -8927,6 +8919,27 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!1101 &1101423907558799942
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 1102433558647559888}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.9949495
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1101 &1101431669784424214
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -9298,8 +9311,11 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: turnon_left
+    m_ConditionEvent: UseLeft
     m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: leftID
+    m_EventTreshold: 13600
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102273811696927454}
   m_Solo: 0
@@ -12032,27 +12048,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!1101 &1101720193251614220
-AnimatorStateTransition:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: 
-  m_Conditions: []
-  m_DstStateMachine: {fileID: 0}
-  m_DstState: {fileID: 1102433558647559888}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 0
-  serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.9949495
-  m_HasExitTime: 1
-  m_HasFixedDuration: 1
-  m_InterruptionSource: 0
-  m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
 --- !u!1101 &1101721087771644586
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -14307,8 +14302,11 @@ AnimatorStateTransition:
   m_PrefabInternal: {fileID: 0}
   m_Name: 
   m_Conditions:
+  - m_ConditionMode: 6
+    m_ConditionEvent: rightID
+    m_EventTreshold: 13600
   - m_ConditionMode: 1
-    m_ConditionEvent: turnon_right
+    m_ConditionEvent: UseRight
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102220979220727798}
@@ -14319,7 +14317,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -15038,7 +15036,7 @@ AnimatorState:
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
-  - {fileID: 1101720193251614220}
+  - {fileID: 1101423907558799942}
   m_StateMachineBehaviours:
   - {fileID: 114395617824508418}
   - {fileID: 114712234104204164}
@@ -15067,6 +15065,7 @@ AnimatorState:
   - {fileID: 114442343438116032}
   - {fileID: 114825064695081848}
   - {fileID: 114431809041723348}
+  - {fileID: 114138920461146232}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -15521,6 +15520,7 @@ AnimatorState:
   - {fileID: 1101509717616081888}
   m_StateMachineBehaviours:
   - {fileID: 114050964347955846}
+  - {fileID: 114653842055983186}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -16494,34 +16494,6 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400004, guid: 004f1a79a9fb8284a9a642782a3cb315, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &1102337518378776928
-AnimatorState:
-  serializedVersion: 5
-  m_ObjectHideFlags: 3
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: 4038-GlucoseMeterTurnOn_Left
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: 1101322896278839180}
-  m_StateMachineBehaviours:
-  - {fileID: 114667840023190084}
-  - {fileID: 114321542721599974}
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400026, guid: 004f1a79a9fb8284a9a642782a3cb315, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -19547,23 +19519,23 @@ AnimatorStateMachine:
     m_Position: {x: -1608, y: -780, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102730264039495940}
-    m_Position: {x: -1356, y: -840, z: 0}
+    m_Position: {x: -1392, y: -936, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102433558647559888}
     m_Position: {x: -1608, y: -696, z: 0}
   m_ChildStateMachines:
   - serializedVersion: 1
     m_StateMachine: {fileID: 1107007893727009562}
-    m_Position: {x: -1104, y: -468, z: 0}
+    m_Position: {x: -1128, y: -372, z: 0}
   - serializedVersion: 1
     m_StateMachine: {fileID: 1107385945565493220}
-    m_Position: {x: -1104, y: -516, z: 0}
+    m_Position: {x: -1128, y: -420, z: 0}
   - serializedVersion: 1
     m_StateMachine: {fileID: 1107064988248704410}
-    m_Position: {x: -1104, y: -420, z: 0}
+    m_Position: {x: -1128, y: -324, z: 0}
   - serializedVersion: 1
     m_StateMachine: {fileID: 1107755135143997244}
-    m_Position: {x: -1212, y: -480, z: 0}
+    m_Position: {x: -1596, y: -456, z: 0}
   m_AnyStateTransitions:
   - {fileID: 1101031816591250712}
   - {fileID: 1101729841173439184}
@@ -19816,7 +19788,6 @@ AnimatorStateMachine:
   - {fileID: 1101844368496557064}
   - {fileID: 1101497484006739574}
   - {fileID: 1101521295196171542}
-  - {fileID: 1101060430691440406}
   m_EntryTransitions:
   - {fileID: 1109076692166714208}
   - {fileID: 1109034834601521450}
@@ -20857,9 +20828,6 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 1102040587921868970}
     m_Position: {x: 396, y: 372, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 1102337518378776928}
-    m_Position: {x: 396, y: 444, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

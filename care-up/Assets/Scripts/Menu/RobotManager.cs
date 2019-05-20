@@ -34,7 +34,7 @@ public class RobotManager : MonoBehaviour {
     void Start ()
     {
         instance = this;
-		//Game_UI = GameObject.FindObjectOfType<GameUI>().gameObject;
+        //Game_UI = GameObject.FindObjectOfType<GameUI>().gameObject;
 
         Transform face = transform.Find("robotArm").Find("main").Find("face");
         eyeL = face.Find("mEye").Find("eye.L");
@@ -112,6 +112,7 @@ public class RobotManager : MonoBehaviour {
 	public static void SetUITriggerActive(bool value)
     {
         UI_trigger.SetActive(value);
+        GameObject.FindObjectOfType<GameUI>().UpdateWalkToGtoupUI(value);
     }
 
 	public static void SetNotification(int n)
@@ -119,7 +120,7 @@ public class RobotManager : MonoBehaviour {
 		if (n > notificationCount)
 		{
             if (UI_trigger.GetComponent<Animator>() != null && UI_trigger.GetComponent<Animator>().isActiveAndEnabled)
-                UI_trigger.GetComponent<Animator>().SetTrigger("BlinkStart");
+                UI_trigger.GetComponent<Animator>().SetTrigger("BlinkWithoutHint");
             UIElementsState[0] = true;
 		}
 

@@ -2,6 +2,106 @@
 
 public class ButtonBlinking : MonoBehaviour
 {
+    public GameUI.ItemControlButtonType buttonType;
+    PlayerPrefsManager prefs;
+
+    GameUI gameUI;
+
+    public void Start()
+    {
+        gameUI = GameObject.FindObjectOfType<GameUI>();
+        prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
+    }
+
+    public void OnEnable()
+    {
+        prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
+
+        UpdateButtonState();
+    }
+
+    public void UpdateButtonState()
+    {
+        if (prefs != null)
+            if (!prefs.practiceMode)
+                return;
+        GetComponent<Animator>().ResetTrigger("BlinkStart");
+        GetComponent<Animator>().ResetTrigger("BlinkStop");
+        GetComponent<Animator>().ResetTrigger("BlinkOnes");
+
+        if (gameUI == null)
+            gameUI = GameObject.FindObjectOfType<GameUI>();
+
+        bool toBlink = false;
+
+        if (buttonType == GameUI.ItemControlButtonType.Ipad)
+        {
+            if (gameUI.prescriptionButtonBlink || gameUI.recordsButtonBlink || gameUI.paperAndPenButtonblink)
+                toBlink = true;
+        }
+        else if (buttonType == GameUI.ItemControlButtonType.Records)
+        {
+            if (gameUI.recordsButtonBlink)
+                toBlink = true;
+        }
+        else if (buttonType == GameUI.ItemControlButtonType.Prescription)
+        {
+            if (gameUI.prescriptionButtonBlink)
+                toBlink = true;
+        }
+        else if (buttonType == GameUI.ItemControlButtonType.General)
+        {
+            if (gameUI.prescriptionButtonBlink || gameUI.recordsButtonBlink)
+                toBlink = true;
+        }
+        else if (buttonType == GameUI.ItemControlButtonType.PaperAndPen)
+        {
+            if (gameUI.paperAndPenButtonblink)
+                toBlink = true;
+        }
+        else if (buttonType == GameUI.ItemControlButtonType.RecordsBack)
+        {
+            if (!gameUI.recordsButtonBlink && (gameUI.prescriptionButtonBlink || gameUI.paperAndPenButtonblink))
+                toBlink = true;
+        }
+        else if (buttonType == GameUI.ItemControlButtonType.PrescriptionBack)
+        {
+            if (!gameUI.prescriptionButtonBlink && (gameUI.paperAndPenButtonblink || gameUI.recordsButtonBlink))
+                toBlink = true;
+        }
+        else if (buttonType == GameUI.ItemControlButtonType.GeneralBack)
+        {
+            if (gameUI.paperAndPenButtonblink && !(gameUI.recordsButtonBlink || gameUI.prescriptionButtonBlink))
+                toBlink = true;
+        }
+        else if (buttonType == GameUI.ItemControlButtonType.MessageTabBack)
+        {
+            if (gameUI.paperAndPenButtonblink || gameUI.recordsButtonBlink || gameUI.prescriptionButtonBlink)
+                toBlink = true;
+        }
+        else if (buttonType == GameUI.ItemControlButtonType.Close)
+        {
+            if (!gameUI.recordsButtonBlink && !gameUI.prescriptionButtonBlink && !gameUI.paperAndPenButtonblink &&
+                GameObject.Find("QuizDynamicCanvas") == null)
+                toBlink = true;
+        }
+
+        if (toBlink)
+        {
+            if (!GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Blink"))
+            {
+                GetComponent<Animator>().SetTrigger("BlinkStart");
+            }
+        }
+        else
+        {
+            if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Blink"))
+            {
+                GetComponent<Animator>().SetTrigger("BlinkStop");
+            }
+        }
+    }   
+
     public void StartBlinking()
     {
         GetComponent<Animator>().SetTrigger("BlinkStart");

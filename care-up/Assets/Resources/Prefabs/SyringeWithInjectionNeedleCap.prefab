@@ -31,6 +31,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1090601723575992
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4265180138012934}
+  - component: {fileID: 114630386172506134}
+  m_Layer: 0
+  m_Name: hl
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1424438080982320
 GameObject:
   m_ObjectHideFlags: 0
@@ -126,9 +142,23 @@ Transform:
   m_Children:
   - {fileID: 4323999925113862}
   - {fileID: 4462123200238278}
+  - {fileID: 4265180138012934}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: -90}
+--- !u!4 &4265180138012934
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1090601723575992}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.41342, y: 1.4838899, z: 0.42769}
+  m_Children: []
+  m_Father: {fileID: 4000012333305106}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4323999925113862
 Transform:
   m_ObjectHideFlags: 1
@@ -434,6 +464,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.1, y: 0.27, z: 0.1}
   m_Center: {x: 0.000000003259629, y: -0.02, z: -0.000000014901161}
+--- !u!114 &114630386172506134
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1090601723575992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c34eecdde24d47db816fe0faca03a6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hl_type: 2
 --- !u!114 &114842199415760888
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -446,11 +488,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectID: 0
-  description: Spuit + injectienaald + beschermdop
+  description: spuit met injectienaald
+  nameArticle: de
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
   tutorial_usedOn: 0
+  depoistNeedle: 0
   leftControlBone: {fileID: 0}
   rightControlBone: {fileID: 0}
   holdAnimationID: 4

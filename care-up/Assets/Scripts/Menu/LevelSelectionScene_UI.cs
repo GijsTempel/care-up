@@ -36,10 +36,6 @@ public class LevelSelectionScene_UI : MonoBehaviour
             variations.Add(v);
             v.gameObject.SetActive(false);
         }
-
-        // we dont have a list of activated scenes anymore i guess
-        //GameObject.Find("UMenuProManager/MenuCanvas/Home/BannerArea/RegisterProtocols/News/Text")
-        //    .GetComponent<Text>().text = GameObject.FindObjectOfType<PlayerPrefsManager>().ActivatedScenes;
     }
 
     /// <summary>

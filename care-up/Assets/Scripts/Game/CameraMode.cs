@@ -27,7 +27,7 @@ public class CameraMode : MonoBehaviour
     float camRotTime;
     float camMovementSpeed = 1f;
     float camMoveBackAt = float.PositiveInfinity;
-    bool robotUIFlag = false;
+    public bool robotUIFlag = false;
     //bool backFromObjectPreview = false; never used?
 
     public float minZoom = 0.5f;
@@ -47,7 +47,7 @@ public class CameraMode : MonoBehaviour
     [HideInInspector]
     public bool cinematicToggle = false;
     private int cinematicDirection = 1;
-    private float cinematicLerp = 0.0f;
+    public float cinematicLerp = 0.0f;
     private Vector3 cinematicPos;
     private Quaternion cinematicRot;
     private Vector3 cinematicTargetPos;
@@ -58,6 +58,7 @@ public class CameraMode : MonoBehaviour
     private bool soloCamera;
     private bool closingEyes = false;
     private bool closeEyesTriggered = false;
+    public bool moveBackFromExam = false;
 
     //private Quaternion camPosition; never used
 
@@ -96,6 +97,7 @@ public class CameraMode : MonoBehaviour
     {
         if (Time.time > camMoveBackAt)
         {
+            moveBackFromExam = true;
             startTime = Time.time;
             camRotTo = camRotFrom;
             if (!playerScript.away)
@@ -112,14 +114,23 @@ public class CameraMode : MonoBehaviour
         if (camViewObject)
         {
             robotUIFlag = false;
-            if (GameObject.FindObjectOfType<TutorialManager>() == null ||
-                GameObject.FindObjectOfType<Tutorial_UI>() != null ||
-                GameObject.FindObjectOfType<Tutorial_Theory>() != null)
-            {
-                RobotManager.SetUITriggerActive(false);
-            }
+            //if (GameObject.FindObjectOfType<TutorialManager>() == null ||
+            //    GameObject.FindObjectOfType<Tutorial_UI>() != null ||
+            //    GameObject.FindObjectOfType<Tutorial_Theory>() != null)
+            //{
+            //    RobotManager.SetUITriggerActive(false);
+            //}
 
+
+            //if (!playerScript.away)
+            //{
+            //    WalkToGroup group = playerScript.currentWalkPosition;
+            //    camRotTo = Quaternion.Euler(group.Rotation.x, 0.0f, 0.0f);
+            //    Debug.Log("______________" + group.name);
+            //}
             camRotTime = (Time.time - startTime) / camMovementSpeed;
+            if (!playerScript.away && moveBackFromExam)
+                camRotTo = Quaternion.Euler(playerScript.currentWalkPosition.Rotation.x, 0.0f, 0.0f);
             Camera.main.transform.localRotation = Quaternion.Lerp(camRotFrom, camRotTo, camRotTime);
             if (camRotTime > camMovementSpeed)
             {
@@ -132,6 +143,7 @@ public class CameraMode : MonoBehaviour
                 {
                     RobotManager.SetUITriggerActive(true);
                 }
+                moveBackFromExam = false;
             }
             return;
         }
@@ -153,7 +165,7 @@ public class CameraMode : MonoBehaviour
 
         // handle object preview, close/pick,zoom
         if (currentMode == Mode.ObjectPreview && !selectedObject.animationExamine)
-        {
+        {     
             if (controls.keyPreferences.closeObjectView.Pressed())
             {
                 ToggleCameraMode(Mode.Free);
@@ -288,6 +300,7 @@ public class CameraMode : MonoBehaviour
 
         if (currentMode == Mode.ObjectPreview && mode == Mode.Free)
         {
+
             camMoveBackAt = Time.time + 0.5f;
 
             TogglePlayerScript(true);
@@ -296,8 +309,8 @@ public class CameraMode : MonoBehaviour
             blur.enabled = false;
 
             GameObject.Find("ObjectViewButtons").SetActive(false);
-            playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
-            gameUI.allowObjectControlUI = !playerScript.away;
+            //gameUI.allowObjectControlUI = !playerScript.away;
+            gameUI.UpdateWalkToGtoupUI(!playerScript.away);
             //playerScript.joystickObject.SetActive(!playerScript.robotUIopened);
 
             if ((GameObject.FindObjectOfType<TutorialManager>() == null ||
@@ -336,9 +349,6 @@ public class CameraMode : MonoBehaviour
             camViewObject = true;
             //Camera.main.transform.localRotation = Quaternion.Euler(8.0f, 0.0f, 0.0f);
 
-
-            playerScript.MoveBackButtonObject.SetActive(false);
-            gameUI.allowObjectControlUI = false;
             //playerScript.joystickObject.SetActive(false);
             RobotManager.SetUITriggerActive(false);
 
@@ -348,8 +358,6 @@ public class CameraMode : MonoBehaviour
         else if (mode == Mode.SelectionDialogue)
         {
             TogglePlayerScript(false);
-            playerScript.MoveBackButtonObject.SetActive(false);
-            gameUI.allowObjectControlUI = false;
 
             //playerScript.joystickObject.SetActive(false);
             RobotManager.SetUITriggerActive(false);
@@ -358,8 +366,6 @@ public class CameraMode : MonoBehaviour
         else if (currentMode == Mode.SelectionDialogue)
         {
             TogglePlayerScript(true);
-            playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
-            gameUI.allowObjectControlUI = !playerScript.away;
 
             //playerScript.joystickObject.SetActive(!playerScript.robotUIopened);
             if (GameObject.FindObjectOfType<TutorialManager>() == null ||
@@ -377,8 +383,6 @@ public class CameraMode : MonoBehaviour
             confirmUI.transform.rotation = Camera.main.transform.rotation;
             confirmUI.SetActive(true);
 
-            playerScript.MoveBackButtonObject.SetActive(false);
-            gameUI.allowObjectControlUI = false;
 
             //playerScript.joystickObject.SetActive(false);
             RobotManager.SetUITriggerActive(false);
@@ -388,8 +392,6 @@ public class CameraMode : MonoBehaviour
             TogglePlayerScript(true);
             confirmUI.SetActive(false);
 
-            playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
-            gameUI.allowObjectControlUI = !playerScript.away;
 
             //playerScript.joystickObject.SetActive(!playerScript.robotUIopened);
             if (GameObject.FindObjectOfType<TutorialManager>() == null ||
@@ -407,8 +409,6 @@ public class CameraMode : MonoBehaviour
 
             //camPosition = Camera.main.transform.localRotation; never used
 
-            playerScript.MoveBackButtonObject.SetActive(false);
-            gameUI.allowObjectControlUI = false;
 
             //playerScript.joystickObject.SetActive(false);
             RobotManager.SetUITriggerActive(false);
@@ -427,20 +427,12 @@ public class CameraMode : MonoBehaviour
             playerScript.mouseLook.clampHorisontalRotation = false;
             playerScript.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
 
-            if ((GameObject.FindObjectOfType<TutorialManager>() != null &&
-                !GameObject.FindObjectOfType<TutorialManager>().finished) ||
-                GameObject.FindObjectOfType<TutorialManager>() == null)
-            {
-                playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
-                gameUI.allowObjectControlUI = !playerScript.away;
-                //playerScript.joystickObject.SetActive(!playerScript.robotUIopened && !PlayerScript.actionsLocked);
-            }
-
+  
             if (GameObject.FindObjectOfType<TutorialManager>() == null ||
                 GameObject.FindObjectOfType<Tutorial_UI>() != null ||
                 GameObject.FindObjectOfType<Tutorial_Theory>() != null)
             {
-                RobotManager.SetUITriggerActive(true);
+                 RobotManager.SetUITriggerActive(!playerScript.robotUIopened);
             }
             dontMoveCamera = false;
         }
@@ -496,6 +488,7 @@ public class CameraMode : MonoBehaviour
             if (animationEnded || cinematicDirection == 1)
                 cinematicControl.Find("Arms").transform.rotation =
                     Quaternion.Lerp(cinematicRot, cinematicTargetRot, cinematicLerp);
+            //GameObject.FindObjectOfType<GameUI>().UpdateWalkToGtoupUI(true);
         }
 
         //if (!dontMoveCamera)
@@ -508,8 +501,11 @@ public class CameraMode : MonoBehaviour
                 PlayerAnimationManager.ToggleAnimationSpeed();
 
             // open eyes i assume
-            PlayerAnimationManager.SetTrigger("open_eyes");
-            closeEyesTriggered = false;
+            if (closingEyes)
+            {
+                PlayerAnimationManager.SetTrigger("open_eyes");
+                closeEyesTriggered = false;
+            }
         }
         else if (cinematicDirection == -1 && cinematicLerp == 0.0f)
         {
@@ -518,7 +514,10 @@ public class CameraMode : MonoBehaviour
             animationEnded = false;
 
             // open eyes i assume
-            PlayerAnimationManager.SetTrigger("open_eyes");
+            if (closingEyes)
+            {
+                PlayerAnimationManager.SetTrigger("open_eyes");
+            }
         }
     }
 
@@ -546,8 +545,6 @@ public class CameraMode : MonoBehaviour
                 animationEnded = false;
                 soloCamera = false;
 
-                playerScript.MoveBackButtonObject.SetActive(!playerScript.away);
-                gameUI.allowObjectControlUI = !playerScript.away;
 
                 if (GameObject.FindObjectOfType<TutorialManager>() == null ||
                     GameObject.FindObjectOfType<Tutorial_UI>() != null ||
@@ -568,8 +565,6 @@ public class CameraMode : MonoBehaviour
             cinematicLerp = 0.0f;
             cinematicDirection = 1;
 
-            playerScript.MoveBackButtonObject.SetActive(false);
-            gameUI.allowObjectControlUI = false;
             RobotManager.SetUITriggerActive(false);
         }
 
@@ -622,5 +617,6 @@ public class CameraMode : MonoBehaviour
         float distance = Vector3.Distance(cinematicPos, cinematicTargetPos);
         closingEyes = distance > 1.8f; // set distance breakpoint here
         closeEyesTriggered = false;
+        animationEnded = false;
     }
 }

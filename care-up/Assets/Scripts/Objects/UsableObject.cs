@@ -1,7 +1,12 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
+public struct NameAndDescription
+{
+    public string name;
+    public string Description;
+}
 /// <summary>
 /// Static object that can be used
 /// </summary>
@@ -12,11 +17,15 @@ public class UsableObject : InteractableObject {
     public bool tutorial_used = false;
     public bool handsCleaned = false;
     public string PrefabToAppear = "";
+    public List<NameAndDescription> objectsToCreate;
     protected static HandsInventory handsInventory;
 
+    GameUI gameUI;
+    public bool UseWithObjectsInHands = false;
     protected override void Start()
     {
         base.Start();
+        gameUI = GameObject.FindObjectOfType<GameUI>();
 
         if (handsInventory == null)
         {
@@ -25,13 +34,34 @@ public class UsableObject : InteractableObject {
         }
     }
 
+    public string WillCreateObject(string str)
+    {
+        if (objectsToCreate == null)
+            return "";
+        foreach(NameAndDescription nd in objectsToCreate)
+        {
+            if (nd.name == str)
+            {
+                string result = str;
+                if (nd.Description != "")
+                    result = nd.Description;
+                return result;
+            }
+        }
+        return ""; 
+    }
+
     public virtual void Use()
     {
+        //if (PlayerAnimationManager.IsLongAnimation())
+        //    return;
         if (!ViewModeActive())
         {
             // unique object, not usable, but picking performed instead
             if (PrefabToAppear != "")
             {
+                if (!(handsInventory.LeftHandEmpty() || handsInventory.RightHandEmpty()))
+                    return;
                 TutorialManager tutorial = GameObject.Find("GameLogic").GetComponent<TutorialManager>();
                 if (tutorial == null || (tutorial != null &&
                     (PrefabToAppear == tutorial.itemToPick || PrefabToAppear == tutorial.itemToPick2)))
@@ -53,6 +83,7 @@ public class UsableObject : InteractableObject {
 #endif
             if (actionManager.CompareUseObject(name) || cheat)
             {
+                
                 switch (name)
                 {
                     case "HandCleaner":
@@ -87,7 +118,7 @@ public class UsableObject : InteractableObject {
             }
 
             actionManager.OnUseAction(gameObject.name);
-
+            gameUI.UpdateHelpHighlight();
             Reset();
         }
     }

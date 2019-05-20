@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 
 /// <summary>
@@ -7,11 +6,14 @@ using UnityEngine.UI;
 /// </summary>
 public class InteractableObject : MonoBehaviour {
 	public int ObjectID = 0;
-    //HandsInventory handsInventory;
 
     public string description;
+    public string nameArticle;
+    bool hasHighlight = false;
+
     public bool muplipleMesh = false;
     public Vector3 descriptionOffset;
+    GameUI gameUI__;
 
     protected Renderer rend;
     protected Shader onMouseOverShader;
@@ -47,6 +49,7 @@ public class InteractableObject : MonoBehaviour {
     protected virtual void Start()
     {
         //handsInventory = GameObject.FindObjectOfType<HandsInventory>();
+        gameUI__ = GameObject.FindObjectOfType<GameUI>();
         rend = GetComponent<Renderer>();
 
         if (onMouseOverShaderSihlouette == null)
@@ -125,62 +128,74 @@ public class InteractableObject : MonoBehaviour {
     /// </summary>
     protected virtual void Update()
     {
-        if (cameraMode.CurrentMode == CameraMode.Mode.Free && !player.away && !player.robotUIopened)
+        if (cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
-            bool selectedIsInteractable = (controls.SelectedObject != null && controls.CanInteract &&
-                controls.SelectedObject.GetComponent<InteractableObject>() != null);
-
-            PickableObject pickableObject = null;
-            if (controls.SelectedObject != null)
+            if (!player.away && !player.robotUIopened)
             {
-                pickableObject = controls.SelectedObject.GetComponent<PickableObject>();
-            }
+                bool selectedIsInteractable = (controls.SelectedObject != null && controls.CanInteract &&
+                    controls.SelectedObject.GetComponent<InteractableObject>() != null);
 
-            bool notSihlouette = (pickableObject == null || (pickableObject != null && pickableObject.sihlouette == false));
-            selectedIsInteractable &= notSihlouette;
-
-            if ((controls.SelectedObject == gameObject && !cameraMode.animating) && notSihlouette)
-            {
-                if (controls.CanInteract)
+                PickableObject pickableObject = null;
+                if (controls.SelectedObject != null)
                 {
-                    if (rend.material.shader == onMouseExitShader)
-                    {
-                        SetShaderTo(onMouseOverShader);
+                    pickableObject = controls.SelectedObject.GetComponent<PickableObject>();
+                }
 
+                bool notSihlouette = (pickableObject == null || (pickableObject != null && pickableObject.sihlouette == false));
+                selectedIsInteractable &= notSihlouette;
+
+                if ((controls.SelectedObject == gameObject && !cameraMode.animating) && notSihlouette)
+                {
+                    if (controls.CanInteract)
+                    {
                         if (!inventory.IsInHand(gameObject))
-                            inventory.AddHighlight(transform, "hl");
-                    }
+                        {
+                            gameUI__.AddHighlight(transform, "hl");
+                            hasHighlight = true;
+                        }
+                        /*if (rend.material.shader == onMouseExitShader)
+                        {
+                            SetShaderTo(onMouseOverShader);
+                        }*/
 
-                    if (!itemDescription.activeSelf)
+                        if (!itemDescription.activeSelf)
+                        {
+                            itemDescription.SetActive(true);
+                        }
+
+                        itemDescription.GetComponentInChildren<Text>().text = (description == "") ? name : description;
+                    }
+                    else if (!controls.CanInteract)// && rend.material.shader == onMouseOverShader)
                     {
-                        itemDescription.SetActive(true);
+                        //SetShaderTo(onMouseExitShader);
+                        gameUI__.RemoveHighlight("hl", transform.name);
+                        hasHighlight = false;
+
+                        itemDescription.SetActive(false);
                     }
-
-                    itemDescription.GetComponentInChildren<Text>().text = (description == "") ? name : description;
                 }
-                else if (!controls.CanInteract && rend.material.shader == onMouseOverShader)
+                else
                 {
-                    SetShaderTo(onMouseExitShader);
-                    inventory.RemoveHighlight("hl", transform.name);
+                    gameUI__.RemoveHighlight("hl", transform.name);
+                    hasHighlight = false;
+                    /*if (rend.material.shader == onMouseOverShader)
+                    {
+                        SetShaderTo(onMouseExitShader);
+                    }*/
 
-                    itemDescription.SetActive(false);
-                }
-            }
-            else
-            {
-                if (rend.material.shader == onMouseOverShader)
-                {
-                    inventory.RemoveHighlight("hl", transform.name);
-
-                    SetShaderTo(onMouseExitShader);
-                }
-
-                if (!selectedIsInteractable)
-                {
-                    itemDescription.SetActive(false);
+                    if (!selectedIsInteractable)
+                    {
+                        itemDescription.SetActive(false);
+                    }
                 }
             }
         }
+        else if (hasHighlight)
+        {
+            gameUI__.RemoveHighlight("hl", transform.name);
+            hasHighlight = false;
+        }
+
 
         if (itemDescription.activeSelf && !player.itemControls.gameObject.activeSelf)
         {
@@ -192,8 +207,8 @@ public class InteractableObject : MonoBehaviour {
     {
         if (rend)
         {
-            SetShaderTo(onMouseExitShader);
-            inventory.RemoveHighlight("hl", transform.name);
+            gameUI__.RemoveHighlight("hl", transform.name);
+            hasHighlight = false;
             itemDescription.SetActive(false);
         }
     }
@@ -309,7 +324,9 @@ public class InteractableObject : MonoBehaviour {
         {
             if (rend.material.shader == onMouseOverShader)
                 SetShaderTo(onMouseExitShader);
-                inventory.RemoveHighlight("hl", transform.name);
+            
+            gameUI__.RemoveHighlight("hl", transform.name);
+            hasHighlight = false;
         }
     }
 }

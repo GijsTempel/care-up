@@ -74,18 +74,19 @@ public class InsulinPen : PickableObjectWithInfo {
         if (actionManager.CompareUseOnInfo("InsulinPenWithNeedle", "") && noTarget
             && name == "InsulinPenWithNeedle")
         {
-            if (inventory.LeftHandEmpty())
+            if (inventory.rightHandObject.name == name)
             {
+                print("fffffffffffffff");
                 PlayerAnimationManager.PlayAnimation("UseRight " + name);
                 actionManager.OnUseOnAction(name, "");
-                name = "VentedInsulinPenWithNeedle";
+                //name = "VentedInsulinPenWithNeedle";
                 return true;
             }
-            else if (inventory.RightHandEmpty())
+            else if (inventory.leftHandObject.name == name)
             {
                 PlayerAnimationManager.PlayAnimation("UseLeft " + name);
                 actionManager.OnUseOnAction(name, "");
-                name = "VentedInsulinPenWithNeedle";
+                //name = "VentedInsulinPenWithNeedle";
                 return true;
             }
             else
@@ -101,14 +102,14 @@ public class InsulinPen : PickableObjectWithInfo {
             {
                 PlayerAnimationManager.PlayAnimation("UseRight " + name);
                 actionManager.OnUseOnAction(name, "");
-                name = "InsulinPenWithNeedle";
+                //name = "InsulinPenWithNeedle";
                 return true;
             }
             else if (inventory.RightHandEmpty())
             {
                 PlayerAnimationManager.PlayAnimation("UseLeft " + name);
                 actionManager.OnUseOnAction(name, "");
-                name = "InsulinPenWithNeedle";
+                //name = "InsulinPenWithNeedle";
                 return true;
             }
             else
@@ -120,13 +121,13 @@ public class InsulinPen : PickableObjectWithInfo {
         else if (actionManager.CompareUseOnInfo("InsulinPen", "") && noTarget
             && name == "InsulinPen")
         {
-            if (inventory.LeftHandEmpty())
+            if (inventory.rightHandObject.name == name)
             {
                 PlayerAnimationManager.PlayAnimation("UseRight " + name);
                 actionManager.OnUseOnAction(name, "");
                 return true;
             }
-            else if (inventory.RightHandEmpty())
+            else if (inventory.leftHandObject.name == name)
             {
                 PlayerAnimationManager.PlayAnimation("UseLeft " + name);
                 actionManager.OnUseOnAction(name, "");

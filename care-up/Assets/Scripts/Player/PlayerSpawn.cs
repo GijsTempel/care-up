@@ -66,21 +66,6 @@ public class PlayerSpawn : MonoBehaviour {
             robotPosition, Quaternion.Euler(robotRotation));
         robot.name = "robot";
 
-        RobotUITabInfo infotab = GameObject.FindObjectOfType<RobotUITabInfo>();
-        RobotUIInfoButton[] buttons = infotab.transform.Find("InfoDynamicCanvas").Find("ItemList").GetComponentsInChildren<RobotUIInfoButton>();
-
-        foreach (RobotUIInfoButton b in buttons)
-        {
-            b.gameObject.SetActive(false);
-        }
-
-        for (int i = 0; i < infoList.Count && i < buttons.Length; ++i)
-        {
-            buttons[i].gameObject.SetActive(true);
-            buttons[i].GetComponentInChildren<Text>().text = infoList[i].buttonName;
-            buttons[i].Set(infoList[i].prefabName);
-        }
-
         if (quizName != "")
         {
             GameObject.FindObjectOfType<QuizTab>().Init(quizName);

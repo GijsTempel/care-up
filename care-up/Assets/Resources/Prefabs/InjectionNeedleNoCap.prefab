@@ -48,6 +48,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!1 &1263223566925142
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4493216359778834}
+  - component: {fileID: 114058895531595800}
+  m_Layer: 0
+  m_Name: hl
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1668000349701762
 GameObject:
   m_ObjectHideFlags: 0
@@ -93,6 +109,7 @@ Transform:
   - {fileID: 4752713948561702}
   - {fileID: 4506946471060206}
   - {fileID: 4078375338173016}
+  - {fileID: 4493216359778834}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: -90, z: 0}
@@ -108,6 +125,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4000013541140194}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4493216359778834
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1263223566925142}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.0879, z: 0}
+  m_LocalScale: {x: 0.3488354, y: 0.61838114, z: 0.26204717}
+  m_Children: []
+  m_Father: {fileID: 4000013541140194}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4506946471060206
 Transform:
@@ -288,11 +318,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectID: 0
-  description: Injectienaald
+  description: injectienaald
+  nameArticle: de
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
   tutorial_usedOn: 0
+  depoistNeedle: 0
   leftControlBone: {fileID: 0}
   rightControlBone: {fileID: 0}
   holdAnimationID: 3
@@ -303,6 +335,18 @@ MonoBehaviour:
   prefabInHands: 
   prefabOutOfHands: 
   destroyOnDrop: 0
+--- !u!114 &114058895531595800
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1263223566925142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c34eecdde24d47db816fe0faca03a6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hl_type: 2
 --- !u!136 &136947470871349248
 CapsuleCollider:
   m_ObjectHideFlags: 1

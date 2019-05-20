@@ -322,6 +322,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1894139971497558
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4267124024866892}
+  - component: {fileID: 114874154907791584}
+  m_Layer: 0
+  m_Name: hl
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1928944942085268
 GameObject:
   m_ObjectHideFlags: 1
@@ -377,6 +393,19 @@ Transform:
   - {fileID: 4747546066203220}
   m_Father: {fileID: 4668620234219258}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4267124024866892
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1894139971497558}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.067, y: -0.013, z: 0.073}
+  m_LocalScale: {x: 2.7673943, y: 1.9091178, z: 3.2760336}
+  m_Children: []
+  m_Father: {fileID: 4494910080071140}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4293137260564418
 Transform:
@@ -447,6 +476,7 @@ Transform:
   - {fileID: 4716638893132118}
   - {fileID: 4963949165534462}
   - {fileID: 4847174514098528}
+  - {fileID: 4267124024866892}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -826,6 +856,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  neededObjects: []
 --- !u!114 &114835079732738642
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -838,13 +869,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectID: 0
-  description: Gootsteen
+  description: gootsteen
+  nameArticle: de
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
   tutorial_used: 0
   handsCleaned: 0
   PrefabToAppear: 
+--- !u!114 &114874154907791584
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1894139971497558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c34eecdde24d47db816fe0faca03a6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hl_type: 2
 --- !u!137 &137882199242400886
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
