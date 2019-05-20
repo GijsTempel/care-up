@@ -85,8 +85,8 @@ public class WorkField : UsableObject {
     {
         base.Update();
 
-        if (rend.material.shader == onMouseOverShader
-            && !actionManager.CompareUseObject("WorkField"))
+        if (/*rend.material.shader == onMouseOverShader && */
+            !actionManager.CompareUseObject("WorkField"))
         {
             SetShaderTo(onMouseExitShader);
             itemDescription.SetActive(false);
