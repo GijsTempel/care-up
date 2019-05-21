@@ -731,22 +731,22 @@ public class GameUI : MonoBehaviour
                     DropLeftButton.SetActive(true);
                     if (handsInventory.leftHandObject.GetComponent<ExaminableObject>() != null)
                         showZoomLeft = true;
-                    if (actionManager.CompareUseOnInfo(handsInventory.leftHandObject.name, ""))
+                    if (actionManager.CompareUseOnInfo(handsInventory.leftHandObject.name, "", ""))
                     {
                         showNoTarget = true;
                         noTargetButton.transform.GetChild(0).GetComponent<Text>().text =
-                            actionManager.CurrentButtonText(handsInventory.leftHandObject.name);
+                            actionManager.CurrentButtonText(handsInventory.leftHandObject.name, true);
                     }
                     if (REmpty)
                     {
-                        bool show_decomb_left = actionManager.CompareCombineObjects(handsInventory.leftHandObject.name, "");
+                        bool show_decomb_left = actionManager.CompareCombineObjects(handsInventory.leftHandObject.name, "",  true);
                         if (!practiceMode)
                             show_decomb_left = true;
                         decombineButton.SetActive(show_decomb_left && !showNoTarget);
                         decombineButton.GetComponent<Animator>().SetTrigger("BlinkOn");
                         decombineButton.transform.GetChild(0).GetComponent<Text>().text =
-                        (actionManager.CompareCombineObjects(handsInventory.leftHandObject.name, "")) ?
-                            actionManager.CurrentDecombineButtonText(handsInventory.leftHandObject.name)
+                        (actionManager.CompareCombineObjects(handsInventory.leftHandObject.name, "", true)) ?
+                            actionManager.CurrentDecombineButtonText(handsInventory.leftHandObject.name, true)
                             : "Openen";
                     }
                     else
@@ -765,21 +765,21 @@ public class GameUI : MonoBehaviour
 
                     if (handsInventory.rightHandObject.GetComponent<ExaminableObject>() != null)
                         showZoomRight = true;
-                    if (actionManager.CompareUseOnInfo(handsInventory.rightHandObject.name, ""))
+                    if (actionManager.CompareUseOnInfo(handsInventory.rightHandObject.name, "", ""))
                     {
                         showNoTarget_right = true;
                         noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text =
-                           actionManager.CurrentButtonText(handsInventory.rightHandObject.name);
+                           actionManager.CurrentButtonText(handsInventory.rightHandObject.name, true);
                     }
                     if (LEmpty)
                     {
-                        bool show_decomb_right = actionManager.CompareCombineObjects(handsInventory.rightHandObject.name, "");
+                        bool show_decomb_right = actionManager.CompareCombineObjects(handsInventory.rightHandObject.name, "", true);
                         if (!practiceMode)
                             show_decomb_right = true;
                         decombineButton_right.SetActive(show_decomb_right && !showNoTarget_right);
                         decombineButton_right.transform.GetChild(0).GetComponent<Text>().text =
-                        (actionManager.CompareCombineObjects("", handsInventory.rightHandObject.name)) ?
-                            actionManager.CurrentDecombineButtonText(handsInventory.rightHandObject.name)
+                        (actionManager.CompareCombineObjects("", handsInventory.rightHandObject.name, true)) ?
+                            actionManager.CurrentDecombineButtonText(handsInventory.rightHandObject.name, true)
                             : "Openen";
                     }
                     else
