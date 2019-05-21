@@ -137,8 +137,9 @@ public class GameUI : MonoBehaviour
             return;
         }
 
-        if (leftHand  && !handsInventory.LeftHandEmpty())
+        if (leftHand && !handsInventory.LeftHandEmpty())
         {
+
             if (actionManager.CompareUseOnInfo(handsInventory.leftHandObject.name, ""))
             {
                 if (handsInventory.LeftHandObject.GetComponent<PickableObject>().Use(true, true))
@@ -152,6 +153,10 @@ public class GameUI : MonoBehaviour
                 }
                 return;
             }
+            else
+                actionManager.OnUseOnAction(handsInventory.leftHandObject.name, "");
+
+
         }
         if (!leftHand && !handsInventory.RightHandEmpty())
         {
@@ -167,6 +172,10 @@ public class GameUI : MonoBehaviour
                     handsInventory.RightHandObject.GetComponent<PickableObject>().tutorial_usedOn = true;
                 }
             }
+            else
+                actionManager.OnUseOnAction(handsInventory.rightHandObject.name, "");
+
+
         }
     }
 
@@ -731,7 +740,7 @@ public class GameUI : MonoBehaviour
                     DropLeftButton.SetActive(true);
                     if (handsInventory.leftHandObject.GetComponent<ExaminableObject>() != null)
                         showZoomLeft = true;
-                    if (actionManager.CompareUseOnInfo(handsInventory.leftHandObject.name, "", ""))
+                    if (actionManager.CompareUseOnInfo(handsInventory.leftHandObject.name, "", "", true))
                     {
                         showNoTarget = true;
                         noTargetButton.transform.GetChild(0).GetComponent<Text>().text =
@@ -739,7 +748,7 @@ public class GameUI : MonoBehaviour
                     }
                     if (REmpty)
                     {
-                        bool show_decomb_left = actionManager.CompareCombineObjects(handsInventory.leftHandObject.name, "",  true);
+                        bool show_decomb_left = actionManager.CompareCombineObjects(handsInventory.leftHandObject.name, "", true);
                         if (!practiceMode)
                             show_decomb_left = true;
                         decombineButton.SetActive(show_decomb_left && !showNoTarget);
@@ -765,7 +774,7 @@ public class GameUI : MonoBehaviour
 
                     if (handsInventory.rightHandObject.GetComponent<ExaminableObject>() != null)
                         showZoomRight = true;
-                    if (actionManager.CompareUseOnInfo(handsInventory.rightHandObject.name, "", ""))
+                    if (actionManager.CompareUseOnInfo(handsInventory.rightHandObject.name, "", "", true))
                     {
                         showNoTarget_right = true;
                         noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text =
