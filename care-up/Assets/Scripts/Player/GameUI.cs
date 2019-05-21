@@ -731,7 +731,7 @@ public class GameUI : MonoBehaviour
                     DropLeftButton.SetActive(true);
                     if (handsInventory.leftHandObject.GetComponent<ExaminableObject>() != null)
                         showZoomLeft = true;
-                    if (actionManager.CompareUseOnInfo(handsInventory.leftHandObject.name, "", "", true))
+                    if (actionManager.CompareUseOnInfo(handsInventory.leftHandObject.name, "", ""))
                     {
                         showNoTarget = true;
                         noTargetButton.transform.GetChild(0).GetComponent<Text>().text =
@@ -765,7 +765,7 @@ public class GameUI : MonoBehaviour
 
                     if (handsInventory.rightHandObject.GetComponent<ExaminableObject>() != null)
                         showZoomRight = true;
-                    if (actionManager.CompareUseOnInfo(handsInventory.rightHandObject.name, "", "", true))
+                    if (actionManager.CompareUseOnInfo(handsInventory.rightHandObject.name, "", ""))
                     {
                         showNoTarget_right = true;
                         noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text =
