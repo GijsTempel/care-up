@@ -71,6 +71,11 @@ public class PlayerAnimationManager : MonoBehaviour
         return isLognAnim;
     }
 
+    public static bool EyesAreClosed()
+    {
+        return animationController.GetCurrentAnimatorStateInfo(2).IsName("closed");
+    }
+
     void Start()
     {
         
