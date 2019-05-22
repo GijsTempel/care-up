@@ -933,6 +933,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -1259,6 +1260,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -1387,7 +1389,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorial_hintUsed: 0
+  actionsCount: 0
   actionListName: Actions_Gastric_Feeding_Tube
+  currentActionIndex: 0
 --- !u!114 &251147194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1449,6 +1453,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f6c60efe1b820478392239be6dd432, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camViewObject: 0
+  robotUIFlag: 0
   minZoom: 0.5
   maxZoom: 1.75
   currentMode: 0
@@ -1457,6 +1463,8 @@ MonoBehaviour:
   animating: 0
   animationEnded: 0
   cinematicToggle: 0
+  cinematicLerp: 0
+  moveBackFromExam: 0
   dontMoveCamera: 0
 --- !u!4 &251147197
 Transform:
@@ -1484,6 +1492,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cheat: 0
   buildActionList: 0
+  Ua: 0
+  testingMode: 0
   hidenObjects:
   - {fileID: 1193409567}
   - {fileID: 0}
@@ -2448,6 +2458,13 @@ MonoBehaviour:
   rotation: {x: 37, y: 93, z: 0}
   robotPosition: {x: 0, y: 0, z: 0}
   robotRotation: {x: 0, y: 0, z: 0}
+  cone: {fileID: 0}
+  ButtonHovered: 0
+  description: 
+  LeftWalkToGroup: {fileID: 0}
+  RightWalkToGroup: {fileID: 0}
+  interactionDistance: -1
+  WalkToGroupType: 0
 --- !u!65 &459153946
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2535,6 +2552,13 @@ MonoBehaviour:
   rotation: {x: 11, y: 45, z: 0}
   robotPosition: {x: 0, y: 0, z: 0}
   robotRotation: {x: 0, y: 0, z: 0}
+  cone: {fileID: 0}
+  ButtonHovered: 0
+  description: 
+  LeftWalkToGroup: {fileID: 0}
+  RightWalkToGroup: {fileID: 0}
+  interactionDistance: -1
+  WalkToGroupType: 0
 --- !u!65 &460098980
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4225,6 +4249,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: "Cli\xEBnt"
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -4234,6 +4259,7 @@ MonoBehaviour:
   dialogueXmls:
   - Greeting
   - Dialog_Gastric_Feeding_Tube
+  - Dialog_Gastric_Feeding_Tube_Instruction
   playerPosition: {x: 0, y: 0, z: 0}
   playerRotation: {x: 0, y: 0, z: 0}
   playerPositionTarget: {fileID: 0}
@@ -4832,6 +4858,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -5845,6 +5872,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -6507,6 +6535,13 @@ MonoBehaviour:
   rotation: {x: 23, y: 100.5, z: 0}
   robotPosition: {x: 0, y: 0, z: 0}
   robotRotation: {x: 0, y: 0, z: 0}
+  cone: {fileID: 0}
+  ButtonHovered: 0
+  description: 
+  LeftWalkToGroup: {fileID: 0}
+  RightWalkToGroup: {fileID: 0}
+  interactionDistance: -1
+  WalkToGroupType: 0
 --- !u!65 &1158525737
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6856,6 +6891,7 @@ MonoBehaviour:
   hidenObjects:
   - {fileID: 849153437}
   - {fileID: 2070562740}
+  neededObjects: []
 --- !u!1001 &1230840444
 Prefab:
   m_ObjectHideFlags: 0
@@ -7422,6 +7458,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -8202,6 +8239,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: Stoppen
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -8455,6 +8493,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -9386,6 +9425,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -9938,6 +9978,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -10660,6 +10701,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -11627,6 +11669,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -12580,6 +12623,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: "Cli\xEBnt"
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -12606,6 +12650,7 @@ MonoBehaviour:
   TrashBin: 
   hidenObjects:
   - {fileID: 327960901}
+  neededObjects: []
 --- !u!82 &2085113771
 AudioSource:
   m_ObjectHideFlags: 0
@@ -12904,6 +12949,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -12932,6 +12978,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -12960,6 +13007,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -12988,6 +13036,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -13016,6 +13065,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -13056,6 +13106,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -13084,6 +13135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -13112,6 +13164,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -13140,6 +13193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -13156,6 +13210,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectID: 0
   description: 
+  nameArticle: 
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
