@@ -42,6 +42,7 @@ public class GameUI : MonoBehaviour
 
     public List<string> activeHighlighted = new List<string>();
 
+    public GameObject IPad;
     public GameObject ItemControlPanel;
     public GameObject combineButton;
     public GameObject decombineButton;
@@ -179,7 +180,7 @@ public class GameUI : MonoBehaviour
             return;
 
         RobotManager.UIElementsState[0] = false;
-        Player.GetComponent<PlayerScript>().OpenRobotUI();
+        //Player.GetComponent<PlayerScript>().OpenRobotUI();        
     }
 
     public void ToggleUsingOnMode()
