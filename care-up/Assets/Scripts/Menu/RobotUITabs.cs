@@ -1,12 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 public class RobotUITabs : MonoBehaviour
 {
-
     protected static List<RobotUITabs> tabs = new List<RobotUITabs>();
     protected static Transform icons;
 

@@ -478,58 +478,61 @@ public class PlayerScript : MonoBehaviour
             return;
         }
 
-        if (!handsInv.Empty())
-        {
-            if (handsInv.LeftHandObject != null)
-            {
-                robotSavedLeft = handsInv.LeftHandObject;
+        //if (!handsInv.Empty())
+        //{
+        //    if (handsInv.LeftHandObject != null)
+        //    {
+        //        robotSavedLeft = handsInv.LeftHandObject;
 
-                bool leftAlt = false;
-                string leftObjName = "";
-                if (robotSavedLeft.GetComponent<PickableObject>().prefabOutOfHands != "")
-                {
-                    leftAlt = true;
-                    leftObjName = robotSavedLeft.GetComponent<PickableObject>().prefabOutOfHands;
-                }
+        //        bool leftAlt = false;
+        //        string leftObjName = "";
+        //        if (robotSavedLeft.GetComponent<PickableObject>().prefabOutOfHands != "")
+        //        {
+        //            leftAlt = true;
+        //            leftObjName = robotSavedLeft.GetComponent<PickableObject>().prefabOutOfHands;
+        //        }
 
-                handsInv.DropLeftObject();
+        //        handsInv.DropLeftObject();
 
-                if (leftAlt)
-                {
-                    robotSavedLeft = GameObject.Find(leftObjName);
-                }
-            }
-            else
-            {
-                robotSavedLeft = null;
-            }
+        //        if (leftAlt)
+        //        {
+        //            robotSavedLeft = GameObject.Find(leftObjName);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        robotSavedLeft = null;
+        //    }
 
-            if (handsInv.rightHandObject != null)
-            {
-                robotSavedRight = handsInv.RightHandObject;
+        //    if (handsInv.rightHandObject != null)
+        //    {
+        //        robotSavedRight = handsInv.RightHandObject;
 
-                bool rightAlt = false;
-                string rightObjName = "";
-                if (robotSavedRight.GetComponent<PickableObject>().prefabOutOfHands != "")
-                {
-                    rightAlt = true;
-                    rightObjName = robotSavedRight.GetComponent<PickableObject>().prefabOutOfHands;
-                }
+        //        bool rightAlt = false;
+        //        string rightObjName = "";
+        //        if (robotSavedRight.GetComponent<PickableObject>().prefabOutOfHands != "")
+        //        {
+        //            rightAlt = true;
+        //            rightObjName = robotSavedRight.GetComponent<PickableObject>().prefabOutOfHands;
+        //        }
 
-                handsInv.DropRightObject();
+        //        handsInv.DropRightObject();
 
-                if (rightAlt)
-                {
-                    robotSavedRight = GameObject.Find(rightObjName);
-                }
-            }
-        }
-        else
-        {
-            robotSavedLeft = robotSavedRight = null;
-        }
+        //        if (rightAlt)
+        //        {
+        //            robotSavedRight = GameObject.Find(rightObjName);
+        //        }
+        //    }
+        //}
+        //else
+        //{
+        //    robotSavedLeft = robotSavedRight = null;
+        //}
 
-        PlayerAnimationManager.PlayAnimation("IpadCloseUp");
+        //PlayerAnimationManager.PlayAnimation("IpadCloseUp");
+
+        GameObject.FindObjectOfType<GameUI>().IPad.SetActive(true);
+ 
         robotUIopened = true;
 
         if (devHintUI != null)
@@ -556,18 +559,9 @@ public class PlayerScript : MonoBehaviour
             extraPanel = GameObject.Find("Extra");
         }
 
-        if (extraPanel != null)
-        {
-            extraPanelActiveForIpad = extraPanel.activeSelf;
-            extraPanel.SetActive(false);
-        }
-        else
-        {
-            Debug.LogWarning("Did not find hints extra panel.");
-        }
-
         RobotManager.SetUITriggerActive(false);
-        Camera.main.transform.localRotation = Quaternion.Euler(8.0f, 0.0f, 0.0f);
+
+        //Camera.main.transform.localRotation = Quaternion.Euler(8.0f, 0.0f, 0.0f);
 
         // no switching to message tab anymore :<
         /*if (RobotManager.NotificationNumber > 0)
@@ -595,6 +589,8 @@ public class PlayerScript : MonoBehaviour
 
     public void CloseRobotUI()
     {
+        print(" CloseRobotUI()");
+
         if ((tutorial_UI != null && tutorial_UI.expectedRobotUIstate == true) ||
             (tutorial_theory != null && tutorial_theory.expectedRobotUIstate == true))
         {
@@ -607,7 +603,12 @@ public class PlayerScript : MonoBehaviour
             GameObject.FindObjectOfType<QuizTab>().OnContinueButton();
         }
 
-        PlayerAnimationManager.PlayAnimation("IPadFarAway");
+        GameObject.FindObjectOfType<GameUI>().allowObjectControlUI = false;
+
+        GameObject.FindObjectOfType<GameUI>().IPad.SetActive(false);
+
+        //  PlayerAnimationManager.PlayAnimation("IPadFarAway");
+
         robotUIopened = false;
 
         if (GameObject.FindObjectOfType<TutorialManager>() == null

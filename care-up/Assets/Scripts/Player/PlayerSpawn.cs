@@ -1,11 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Xml;
 //using UnityEditor.Animations;
 
-public class PlayerSpawn : MonoBehaviour {
+public class PlayerSpawn : MonoBehaviour
+{
     public int sceneID = 0;
     public string quizName;
     public GameObject playerPrefab;
@@ -27,11 +27,11 @@ public class PlayerSpawn : MonoBehaviour {
 
     void Awake()
     {
-		if (GameObject.FindObjectOfType(typeof(GameUI)) == null)
-		{
-			GameObject UIPrefab = Instantiate(Resources.Load("Prefabs/UI/UI") as GameObject);
+        if (GameObject.FindObjectOfType(typeof(GameUI)) == null)
+        {
+            GameObject UIPrefab = Instantiate(Resources.Load("Prefabs/UI/UI") as GameObject);
             UIPrefab.name = "UI";
-	    }      
+        }
 
         GameObject player = Instantiate(playerPrefab,
             transform.position, transform.rotation);
@@ -43,7 +43,8 @@ public class PlayerSpawn : MonoBehaviour {
                 player.GetComponentInChildren<Animator>().runtimeAnimatorController = GetComponent<Animator>().runtimeAnimatorController;
             }
         }
-        if (player.GetComponentInChildren<Animator>().runtimeAnimatorController == null) {
+        if (player.GetComponentInChildren<Animator>().runtimeAnimatorController == null)
+        {
             player.GetComponentInChildren<Animator>().runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Animations/PlayerAnimationController");
         }
         player.GetComponentInChildren<Animator>().SetInteger("sceneID", sceneID);
@@ -57,12 +58,17 @@ public class PlayerSpawn : MonoBehaviour {
             transform.position, transform.rotation);
         itemDescription.name = "ItemDescription";
 
-        GameObject iPad = Instantiate(Resources.Load("Prefabs/ipad") as GameObject,
-            transform.position + new Vector3(0, -100f, 0), transform.rotation);
+        GameObject iPad = Instantiate(Resources.Load("Prefabs/UI/IPad") as GameObject,
+          transform.position, transform.rotation);
         iPad.name = "ipad";
         IpadLoadXmlInfo(iPad.transform);
 
-        GameObject robot = Instantiate(Resources.Load("Prefabs/robot") as GameObject, 
+        //GameObject iPad = Instantiate(Resources.Load("Prefabs/ipad") as GameObject,
+        //    transform.position + new Vector3(0, -100f, 0), transform.rotation);
+        //iPad.name = "ipad";
+        //IpadLoadXmlInfo(iPad.transform);
+
+        GameObject robot = Instantiate(Resources.Load("Prefabs/robot") as GameObject,
             robotPosition, Quaternion.Euler(robotRotation));
         robot.name = "robot";
 
@@ -75,7 +81,7 @@ public class PlayerSpawn : MonoBehaviour {
             Debug.LogWarning("Quiz file name is blank.");
         }
 
-        iPad.transform.GetChild(0).GetChild(0).GetChild(0).Find("CloseBtn").GetComponent<Button>().onClick.AddListener(
+        iPad.transform.GetChild(0).GetChild(0).Find("CloseBtn").GetComponent<Button>().onClick.AddListener(
             player.GetComponent<PlayerScript>().CloseRobotUI);
 
         GameObject.FindObjectOfType<GameTimer>().SetTextObject(
@@ -93,7 +99,8 @@ public class PlayerSpawn : MonoBehaviour {
 
     public void IpadLoadXmlInfo(Transform ipad)
     {
-        Transform robotUI = ipad.Find("UI (1)/RobotUI");
+        //Transform robotUI = ipad.Find("UI (1)/RobotUI");
+        Transform robotUI = ipad.Find("RobotUI");
 
         if (prescriptionXml != "")
         {
@@ -104,7 +111,7 @@ public class PlayerSpawn : MonoBehaviour {
             xmlFile.LoadXml(textAsset.text);
 
             XmlNodeList nodes = xmlFile.FirstChild.NextSibling.ChildNodes;
-            
+
             foreach (XmlNode node in nodes)
             {
                 prescriptionPanel.Find(node.Name).GetComponent<Text>().text =

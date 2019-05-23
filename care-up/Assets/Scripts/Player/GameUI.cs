@@ -180,8 +180,15 @@ public class GameUI : MonoBehaviour
             return;
 
         RobotManager.UIElementsState[0] = false;
-        //Player.GetComponent<PlayerScript>().OpenRobotUI();        
+
+      
+        Player.GetComponent<PlayerScript>().OpenRobotUI();        
     }
+
+    //public void CloseRobot()
+    //{     
+    //    Player.GetComponent<PlayerScript>().CloseRobotUI();
+    //}
 
     public void ToggleUsingOnMode()
     {
