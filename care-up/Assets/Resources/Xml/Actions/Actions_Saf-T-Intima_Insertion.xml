@@ -82,6 +82,9 @@
       extra="Leg de spuit Omniflush NaCl 0,9% klaar in een geopende verpakking"
       messageTitle="Voorverpakte Omniflush NaCl 0,9% niet aanwezig"
       messageContent="Wanneer er geen Omniflush NaCl 0,9% aanwezig is. Maak je een spuit met NaCl 0,9% uit een ampul klaar, ontlucht je de spuit en leg de spuit terug in de geopende verpakking."
+      blockRequired="WorkField"
+      blockTitle="Deze handeling is nog niet mogelijk"
+      blockMessage="Zorg ervoor dat de handeling eerst correct is uitgevoerd."
      />
 
   <action
@@ -210,6 +213,9 @@
    type="sequenceStep"
    value="throw away syringe"
    extra="Gooi de spuit in de afvalbak."
+   blockRequired="Workfield"
+   blockTitle="Deze handeling is nog niet mogelijk"
+   blockMessage="Zorg ervoor dat de handeling eerst correct is uitgevoerd."
   />
 
   <action
@@ -378,6 +384,7 @@
    type="sequenceStep"
    value="take off gloves"
    extra="Trek de handschoenen uit."
+   blockUnlock="WorkField"
   />
 
   <action
