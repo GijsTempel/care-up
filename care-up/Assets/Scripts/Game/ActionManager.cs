@@ -118,7 +118,27 @@ public class ActionManager : MonoBehaviour
             int cur = actionList.IndexOf(currentAction);
             int tot = actionList.Count;
 
-            return 100.0f * cur / tot;
+            float percent = 0f;
+
+            if (GameObject.FindObjectOfType<EndScoreManager>() != null)
+            {
+                if (correctStepIndexes != null && GameObject.FindObjectOfType<EndScoreManager>().quizQuestionsTexts != null
+                    && GameObject.FindObjectOfType<EndScoreManager>().quizWrongIndexes != null && StepsList != null)
+                {
+                    percent = 100f * (correctStepIndexes.Count +
+                        (GameObject.FindObjectOfType<EndScoreManager>().quizQuestionsTexts.Count - GameObject.FindObjectOfType<EndScoreManager>().quizWrongIndexes.Count))
+                        / (StepsList.Count + GameObject.FindObjectOfType<EndScoreManager>().quizQuestionsTexts.Count);
+                }
+            }
+            else
+            {
+                percent = 100.0f * cur / tot;
+            }
+
+            if (percent < 0)
+                percent = 0;          
+
+            return percent;
         }
     }
 
