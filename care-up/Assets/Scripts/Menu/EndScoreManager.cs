@@ -93,6 +93,9 @@ public class EndScoreManager : MonoBehaviour {
                 (correctStepIndexes.Count + (quizQuestionsTexts.Count - quizWrongIndexes.Count))
                 / (steps.Count + quizQuestionsTexts.Count);
 
+            if (percent < 0f)
+                percent = 0f;
+
             GameObject.Find ("Interactable Objects/Canvas/ScoreScreen/Score_percentage/ScoreText")
                 .GetComponent<Text> ().text = Mathf.FloorToInt (percent * 100f).ToString () + "%";
 
