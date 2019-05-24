@@ -598,6 +598,8 @@ public class PlayerScript : MonoBehaviour
             return;
         }
 
+        RobotManager.SetUITriggerActive(true);
+
         QuizTab quizTab = GameObject.FindObjectOfType<QuizTab>();
         if (quizTab != null && quizTab.continueBtn)
         {
