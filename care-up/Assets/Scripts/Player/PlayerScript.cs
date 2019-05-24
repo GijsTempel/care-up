@@ -43,7 +43,7 @@ public class PlayerScript : MonoBehaviour
     private List<WalkToGroup> groups;
     public WalkToGroup currentWalkPosition;
 
-    private ActionManager actionManager;
+    private ActionManager actionManager = null;
 
     RobotManager robot;
     private Vector3 savedRobotPos;
@@ -146,7 +146,7 @@ public class PlayerScript : MonoBehaviour
         usingOnCancelButton = GameObject.Find("CancelUseOnButton").gameObject;
         usingOnText.SetActive(false);
 
-        quiz = GameObject.FindObjectOfType<QuizTab>();
+        quiz = gameUI.quiz_tab;
 
         EventTrigger.Entry event1 = new EventTrigger.Entry();
         event1.eventID = EventTriggerType.PointerEnter;
@@ -170,8 +170,8 @@ public class PlayerScript : MonoBehaviour
         robotUI.GetComponent<EventTrigger>().triggers.Add(event1);
         robotUI.GetComponent<EventTrigger>().triggers.Add(event2);
 
-        if (GameObject.Find("DevHint") != null)
-            devHintUI = GameObject.Find("DevHint").gameObject;
+        if (GameObject.Find("DetailedHintPanel") != null)
+            devHintUI = GameObject.Find("DetailedHintPanel").gameObject;
         if (GameObject.Find("BiggerDevHint") != null)
             biggerDevHintUI = GameObject.Find("BiggerDevHint").gameObject;
 
@@ -531,14 +531,17 @@ public class PlayerScript : MonoBehaviour
 
         //PlayerAnimationManager.PlayAnimation("IpadCloseUp");
 
+
+
         GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<CanvasGroup>().alpha = 1f;
         GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<CanvasGroup>().blocksRaycasts = true;
 
-        robotUIopened = true;
+        robotUIopened = true;        
 
         if (devHintUI != null)
         {
             devHintActiveForIpad = devHintUI.activeSelf;
+           // GameObject.FindObjectOfType<GameUI>().SetHintPanelAlpha(0f);
             devHintUI.SetActive(false);
         }
 
@@ -621,6 +624,7 @@ public class PlayerScript : MonoBehaviour
             if (devHintUI != null)
             {
                 devHintUI.SetActive(devHintActiveForIpad);
+                //gameUI.SetHintPanelAlpha(1.0f);
             }
 
             if (biggerDevHintUI != null)

@@ -30,7 +30,7 @@ public class GameUI : MonoBehaviour
     public string debugSS = "";
     ObjectsIDsController objectsIDsController;
     bool practiceMode = true;
-
+    public QuizTab quiz_tab;
     public bool DropLeftBlink = false;
     public bool DropRightBlink = false;
     public List<string> reqPlaces = new List<string>();
@@ -962,7 +962,6 @@ public class GameUI : MonoBehaviour
 
             for (int y = 0; y < subTasks.Count; y++)
             {
-
                 if (subTasks[y].subindex == i)
                 {
                     if (Resources.Load<GameObject>("Prefabs/UI/SubtaskHints") != null)
