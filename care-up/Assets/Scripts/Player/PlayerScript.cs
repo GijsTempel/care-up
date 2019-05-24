@@ -531,8 +531,9 @@ public class PlayerScript : MonoBehaviour
 
         //PlayerAnimationManager.PlayAnimation("IpadCloseUp");
 
-        GameObject.FindObjectOfType<GameUI>().IPad.SetActive(true);
- 
+        GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<CanvasGroup>().alpha = 1f;
+        GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<CanvasGroup>().blocksRaycasts = true;
+
         robotUIopened = true;
 
         if (devHintUI != null)
@@ -603,9 +604,10 @@ public class PlayerScript : MonoBehaviour
             GameObject.FindObjectOfType<QuizTab>().OnContinueButton();
         }
 
-        GameObject.FindObjectOfType<GameUI>().allowObjectControlUI = false;
+        GameObject.FindObjectOfType<GameUI>().allowObjectControlUI = false;       
 
-        GameObject.FindObjectOfType<GameUI>().IPad.SetActive(false);
+        GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<CanvasGroup>().alpha = 0f;
+        GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<CanvasGroup>().blocksRaycasts = false;
 
         //  PlayerAnimationManager.PlayAnimation("IPadFarAway");
 
