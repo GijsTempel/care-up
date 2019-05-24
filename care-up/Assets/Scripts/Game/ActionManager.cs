@@ -117,7 +117,28 @@ public class ActionManager : MonoBehaviour
         {
             int cur = actionList.IndexOf(currentAction);
             int tot = actionList.Count;
-            return 100.0f * cur / tot;
+
+            float percent = 0f;
+
+            if (GameObject.FindObjectOfType<EndScoreManager>() != null)
+            {
+                if (correctStepIndexes != null && GameObject.FindObjectOfType<EndScoreManager>().quizQuestionsTexts != null
+                    && GameObject.FindObjectOfType<EndScoreManager>().quizWrongIndexes != null && StepsList != null)
+                {
+                    percent = 100f * (correctStepIndexes.Count +
+                        (GameObject.FindObjectOfType<EndScoreManager>().quizQuestionsTexts.Count - GameObject.FindObjectOfType<EndScoreManager>().quizWrongIndexes.Count))
+                        / (StepsList.Count + GameObject.FindObjectOfType<EndScoreManager>().quizQuestionsTexts.Count);
+                }
+            }
+            else
+            {
+                percent = 100.0f * cur / tot;
+            }
+
+            if (percent < 0)
+                percent = 0;          
+
+            return percent;
         }
     }
 
@@ -191,8 +212,8 @@ public class ActionManager : MonoBehaviour
                     anyCorrectPlace = true;
 
                 if (a.Type == ActionType.PersonTalk && dialog)
-                {                   
-                    if(personClicked)                    
+                {
+                    if (personClicked)
                         objectsData.Add(new StepData(false, $"- Kies wat je gaat doen.", i));
                     else
                         objectsData.Add(new StepData(false, $"- Klik op {placeName}.", i));
@@ -219,7 +240,7 @@ public class ActionManager : MonoBehaviour
                     else
                         objectsData.Add(new StepData(false, $"- Klik op {placeName}.", i));
                 }
-            }          
+            }
 
             string[] actionHand = { a.leftHandRequirement, a.rightHandRequirement };
             GameObject leftR = null;
@@ -235,7 +256,7 @@ public class ActionManager : MonoBehaviour
             {
                 objectsData.Add(new StepData(false, $"- Klik op het informatie icoon.", i));
 
-                if(a.leftHandRequirement == "PatientRecords")
+                if (a.leftHandRequirement == "PatientRecords")
                 {
                     gameUI.recordsButtonBlink = true;
                 }
@@ -276,7 +297,7 @@ public class ActionManager : MonoBehaviour
                         {
                             foreach (ExtraObjectOptions extraObject in GameObject.FindObjectsOfType<ExtraObjectOptions>())
                             {
-                                string desc = extraObject.HasNeeded(hand);                                
+                                string desc = extraObject.HasNeeded(hand);
                                 if (desc != "")
                                 {
                                     article = extraObject.HasNeededArticle(hand);
@@ -368,7 +389,7 @@ public class ActionManager : MonoBehaviour
                             }
                         }
 #endif
-                        
+
                         handValue = System.Char.ToLowerInvariant(handValue[0]) + handValue.Substring(1);
 
                         string keyWords = null;
@@ -413,7 +434,7 @@ public class ActionManager : MonoBehaviour
                                     if (secondPlaceData.completed)
                                     {
                                         gameUI.DropLeftBlink = true;
-                                        
+
                                         objectsData.Add(new StepData(false, $"- Leg {article} {handValue} neer.", i));
                                     }
                                 }
@@ -516,7 +537,7 @@ public class ActionManager : MonoBehaviour
                         if (a.Type == ActionType.ObjectUse)
                         {
                             keyWords = "- Klik op";
-                        }                       
+                        }
 
                         objectsData.Add(new StepData(completed, $"{keyWords} {article} {handValue}.", i));
                     }
@@ -643,7 +664,7 @@ public class ActionManager : MonoBehaviour
             return actionsDescription;
         }
     }
-    
+
     /// <summary>
     /// Name of the file of audioHint of current action.
     /// </summary>
@@ -653,16 +674,20 @@ public class ActionManager : MonoBehaviour
     }
 
     // new comparison looks for all actions of type withing current index
-    public bool CompareUseObject(string name)
+    public bool CompareUseObject(string name, bool skipBlocks = false)
     {
         bool result = false;
 
         List<Action> sublist = actionList.Where(action =>
                 action.SubIndex == currentActionIndex &&
                 action.matched == false).ToList();
-        sublist = sublist.Where(action =>
-            action.blockRequired == "" ||
-            unlockedBlocks.Contains(action.blockRequired)).ToList();
+
+        if (!skipBlocks)
+        {
+            sublist = sublist.Where(action =>
+                action.blockRequired == "" ||
+                unlockedBlocks.Contains(action.blockRequired)).ToList();
+        }
 
         foreach (Action a in sublist)
         {
@@ -676,16 +701,21 @@ public class ActionManager : MonoBehaviour
         return result;
     }
 
-    public bool CompareCombineObjects(string left, string right)
+    public bool CompareCombineObjects(string left, string right, bool skipBlocks = false)
     {
         bool result = false;
 
         List<Action> sublist = actionList.Where(action =>
                 action.SubIndex == currentActionIndex &&
                 action.matched == false).ToList();
-        sublist = sublist.Where(action =>
-            action.blockRequired == "" ||
-            unlockedBlocks.Contains(action.blockRequired)).ToList();
+
+        if (!skipBlocks)
+        {
+            sublist = sublist.Where(action =>
+                action.blockRequired == "" ||
+                unlockedBlocks.Contains(action.blockRequired)).ToList();
+        }
+
         foreach (Action a in sublist)
         {
             if (a.Type == ActionType.ObjectCombine)
@@ -701,7 +731,7 @@ public class ActionManager : MonoBehaviour
         return result;
     }
 
-    public bool CompareUseOnInfo(string item, string target, string callerName = "")
+    public bool CompareUseOnInfo(string item, string target, string callerName = "", bool skipBlocks = false)
     {
         bool result = false;
 
@@ -711,9 +741,14 @@ public class ActionManager : MonoBehaviour
         List<Action> sublist = actionList.Where(action =>
                 action.SubIndex == currentActionIndex &&
                 action.matched == false).ToList();
-        sublist = sublist.Where(action =>
-            action.blockRequired == "" ||
-            unlockedBlocks.Contains(action.blockRequired)).ToList();
+
+        if (!skipBlocks)
+        {
+            sublist = sublist.Where(action =>
+                action.blockRequired == "" ||
+                unlockedBlocks.Contains(action.blockRequired)).ToList();
+        }
+
         foreach (Action a in sublist)
         {
             if (a.Type == ActionType.ObjectUseOn)
@@ -728,16 +763,21 @@ public class ActionManager : MonoBehaviour
         return result;
     }
 
-    public bool CompareTopic(string t)
+    public bool CompareTopic(string t, bool skipBlocks = false)
     {
         bool result = false;
 
         List<Action> sublist = actionList.Where(action =>
                 action.SubIndex == currentActionIndex &&
                 action.matched == false).ToList();
-        sublist = sublist.Where(action =>
-            action.blockRequired == "" ||
-            unlockedBlocks.Contains(action.blockRequired)).ToList();
+
+        if (!skipBlocks)
+        {
+            sublist = sublist.Where(action =>
+                action.blockRequired == "" ||
+                unlockedBlocks.Contains(action.blockRequired)).ToList();
+        }
+
         foreach (Action a in sublist)
         {
             if (a.Type == ActionType.PersonTalk)
@@ -750,14 +790,18 @@ public class ActionManager : MonoBehaviour
         return result;
     }
 
-    public string CurrentButtonText(string itemName)
+    public string CurrentButtonText(string itemName, bool skipBlocks = false)
     {
         List<Action> sublist = actionList.Where(action =>
                action.SubIndex == currentActionIndex &&
                action.matched == false).ToList();
-        sublist = sublist.Where(action =>
-            action.blockRequired == "" ||
-            unlockedBlocks.Contains(action.blockRequired)).ToList();
+
+        if (!skipBlocks)
+        {
+            sublist = sublist.Where(action =>
+                action.blockRequired == "" ||
+                unlockedBlocks.Contains(action.blockRequired)).ToList();
+        }
 
         foreach (Action a in sublist)
         {
@@ -784,14 +828,18 @@ public class ActionManager : MonoBehaviour
         return "";
     }
 
-    public string CurrentDecombineButtonText(string itemName)
+    public string CurrentDecombineButtonText(string itemName, bool skipBlocks = false)
     {
         List<Action> sublist = actionList.Where(action =>
                action.SubIndex == currentActionIndex &&
                action.matched == false).ToList();
-        sublist = sublist.Where(action =>
-            action.blockRequired == "" ||
-            unlockedBlocks.Contains(action.blockRequired)).ToList();
+
+        if (!skipBlocks)
+        {
+            sublist = sublist.Where(action =>
+                action.blockRequired == "" ||
+                unlockedBlocks.Contains(action.blockRequired)).ToList();
+        }
 
         foreach (Action a in sublist)
         {
@@ -919,7 +967,7 @@ public class ActionManager : MonoBehaviour
             {
                 audio = action.Attributes["audioHint"].Value;
             }
-            
+
             string extra = "";
             if (action.Attributes["extra"] != null)
             {
@@ -1154,7 +1202,8 @@ public class ActionManager : MonoBehaviour
 
             if (percentageText.gameObject.activeSelf)
             {
-                percentageText.text = Mathf.RoundToInt(PercentageDone).ToString() + "%";
+                if (actionList.IndexOf(currentAction) >= 0)
+                    percentageText.text = Mathf.RoundToInt(PercentageDone).ToString() + "%";
             }
         }
     }

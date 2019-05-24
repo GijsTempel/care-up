@@ -16,10 +16,10 @@ public class InteractableObject : MonoBehaviour {
     GameUI gameUI__;
 
     protected Renderer rend;
-    protected Shader onMouseOverShader;
+   // protected Shader onMouseOverShader;
 
-    static private Shader onMouseOverShaderSihlouette;
-    static private Shader onMouseOverShadeOutline;
+   // static private Shader onMouseOverShaderSihlouette;
+   // static private Shader onMouseOverShadeOutline;
     static protected Shader onMouseExitShader;
     static protected Shader ghostShader;
 
@@ -52,17 +52,17 @@ public class InteractableObject : MonoBehaviour {
         gameUI__ = GameObject.FindObjectOfType<GameUI>();
         rend = GetComponent<Renderer>();
 
-        if (onMouseOverShaderSihlouette == null)
-        {
-            onMouseOverShaderSihlouette = Shader.Find("Outlined/Diffuse");
-        }
+        //if (onMouseOverShaderSihlouette == null)
+        //{
+        //    onMouseOverShaderSihlouette = Shader.Find("Outlined/Diffuse");
+        //}
 
-        if (onMouseOverShadeOutline == null)
-        {
-            onMouseOverShadeOutline = Shader.Find("Outlined/Diffuse");
-        }
+        //if (onMouseOverShadeOutline == null)
+        //{
+        //    onMouseOverShadeOutline = Shader.Find("Outlined/Diffuse");
+        //}
 
-        onMouseOverShader = (muplipleMesh) ? onMouseOverShadeOutline : onMouseOverShaderSihlouette;
+       // onMouseOverShader = (muplipleMesh) ? onMouseOverShadeOutline : onMouseOverShaderSihlouette;
 
         if (onMouseExitShader == null)
         {
@@ -315,15 +315,15 @@ public class InteractableObject : MonoBehaviour {
             rend = GetComponent<Renderer>();
         }
 
-        if (value)
+        if (value == false)
         {
-            if (rend.material.shader == onMouseExitShader)
-                SetShaderTo(onMouseOverShader);
-        }
-        else
-        {
-            if (rend.material.shader == onMouseOverShader)
-                SetShaderTo(onMouseExitShader);
+            //if (rend.material.shader == onMouseExitShader)
+            //    SetShaderTo(onMouseOverShader);
+        //}
+        //else
+        //{
+            //if (rend.material.shader == onMouseOverShader)
+            //    SetShaderTo(onMouseExitShader);
             
             gameUI__.RemoveHighlight("hl", transform.name);
             hasHighlight = false;

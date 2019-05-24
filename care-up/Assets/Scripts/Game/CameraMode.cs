@@ -616,6 +616,9 @@ public class CameraMode : MonoBehaviour
         // in order to know if need to close eyes
         float distance = Vector3.Distance(cinematicPos, cinematicTargetPos);
         closingEyes = distance > 1.8f; // set distance breakpoint here
+        if (PlayerAnimationManager.EyesAreClosed())
+            closingEyes = false;
+
         closeEyesTriggered = false;
         animationEnded = false;
     }
