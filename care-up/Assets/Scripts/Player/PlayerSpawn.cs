@@ -27,9 +27,10 @@ public class PlayerSpawn : MonoBehaviour
 
     void Awake()
     {
+        GameObject UIPrefab = null;
         if (GameObject.FindObjectOfType(typeof(GameUI)) == null)
         {
-            GameObject UIPrefab = Instantiate(Resources.Load("Prefabs/UI/UI") as GameObject);
+            UIPrefab = Instantiate(Resources.Load("Prefabs/UI/UI") as GameObject);
             UIPrefab.name = "UI";
         }
 
@@ -58,9 +59,11 @@ public class PlayerSpawn : MonoBehaviour
             transform.position, transform.rotation);
         itemDescription.name = "ItemDescription";
 
-        GameObject iPad = Instantiate(Resources.Load("Prefabs/UI/IPad") as GameObject,
-          transform.position, transform.rotation);
-        iPad.name = "ipad";
+        GameObject iPad = UIPrefab.transform.Find("IPad").gameObject;
+
+        //GameObject iPad = Instantiate(Resources.Load("Prefabs/UI/IPad") as GameObject,
+        //  transform.position, transform.rotation);
+        //iPad.name = "ipad";
         IpadLoadXmlInfo(iPad.transform);
 
         //GameObject iPad = Instantiate(Resources.Load("Prefabs/ipad") as GameObject,
