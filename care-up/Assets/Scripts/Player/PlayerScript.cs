@@ -532,6 +532,13 @@ public class PlayerScript : MonoBehaviour
         //PlayerAnimationManager.PlayAnimation("IpadCloseUp");
 
 
+        //  GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<Animator>().SetTrigger("pop");
+
+
+
+
+        GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<Animator>().enabled = true;
+        GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<Animator>().SetTrigger("start");
 
         GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<CanvasGroup>().alpha = 1f;
         GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<CanvasGroup>().blocksRaycasts = true;
@@ -593,14 +600,12 @@ public class PlayerScript : MonoBehaviour
 
     public void CloseRobotUI()
     {
-        print(" CloseRobotUI()");
-
         if ((tutorial_UI != null && tutorial_UI.expectedRobotUIstate == true) ||
             (tutorial_theory != null && tutorial_theory.expectedRobotUIstate == true))
         {
             return;
         }
-
+        GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<Animator>().enabled = false;
         RobotManager.SetUITriggerActive(true);
 
         QuizTab quizTab = GameObject.FindObjectOfType<QuizTab>();

@@ -344,6 +344,8 @@ public class GameUI : MonoBehaviour
         DropRightButton.SetActive(false);
         DropLeftButton.SetActive(false);
 
+        IPad.GetComponent<Animator>().enabled = false;
+
         ActionManager.practiceMode = true;
         if (prefs != null)
         {
