@@ -31,7 +31,7 @@ public class PlayerScript : MonoBehaviour
     public Camera cam;
     public MouseLook mouseLook = new MouseLook();
     public bool freeLook = false;
-
+    GameUI gameUI;
     PlayerPrefsManager prefs;
     Controls controls;
     HandsInventory handsInv;
@@ -54,7 +54,6 @@ public class PlayerScript : MonoBehaviour
     private float fadeTimer = 0.0f;
     Texture fadeTex;
 
-    Button moveBackButton;
     public ItemControlsUI itemControls;
 
     public bool usingOnMode = false;
@@ -84,7 +83,6 @@ public class PlayerScript : MonoBehaviour
     Tutorial_UI tutorial_UI;
     Tutorial_Theory tutorial_theory;
 
-    bool moveBackBtnActiveForIpad = false;
     bool devHintActiveForIpad = false;
     bool biggerDevHintActiveForIpad = false;
 
@@ -94,14 +92,9 @@ public class PlayerScript : MonoBehaviour
     bool extraPanelActiveForIpad = false;
 
     public static bool actionsLocked = false;
-
+    float defaultInteractionDistance = -1;
     [HideInInspector]
     public GameObject joystickObject;
-
-    public GameObject MoveBackButtonObject
-    {
-        get { return moveBackButton.gameObject; }
-    }
 
     public bool UIHover
     {
@@ -117,7 +110,7 @@ public class PlayerScript : MonoBehaviour
     {
         instance = this;
         actionsLocked = false;
-
+        gameUI = GameObject.FindObjectOfType<GameUI>();
 
         if (GameObject.Find("GameLogic") != null)
         {
@@ -139,9 +132,6 @@ public class PlayerScript : MonoBehaviour
             GameObject.FindObjectsOfType<WalkToGroup>());
 
         fadeTex = Resources.Load<Texture>("Sprites/Black");
-
-        moveBackButton = GameObject.Find("MoveBackButton").GetComponent<Button>();
-        moveBackButton.gameObject.SetActive(false);
 
         extraButton = GameObject.Find("ExtraButton");
         extraPanel = GameObject.Find("Extra");
@@ -288,7 +278,7 @@ public class PlayerScript : MonoBehaviour
         }*/
 
         if (!freeLook && !robotUIopened &&
-            ((Input.touchCount < 1 && controls.MouseClicked()) || 
+            ((Input.touchCount < 1 && controls.MouseClicked()) ||
             (Input.touchCount > 0 && Controls.MouseReleased())))
         {
             if (!away && controls.SelectedObject != null
@@ -319,7 +309,7 @@ public class PlayerScript : MonoBehaviour
             {
                 // catch falling touch here
                 if (controls.SelectedObject != null &&
-                    controls.SelectedObject.GetComponent<WalkToGroup>())
+                    controls.SelectedObject.GetComponent<WalkToGroup>() && away)
                 {
                     WalkToGroup(controls.SelectedObject.GetComponent<WalkToGroup>());
                 }
@@ -332,7 +322,7 @@ public class PlayerScript : MonoBehaviour
         else if (Controls.MouseReleased())// && freeLook)
         {
             if (rotated < 3.0f && controls.SelectedObject != null &&
-                controls.SelectedObject.GetComponent<WalkToGroup>())
+                controls.SelectedObject.GetComponent<WalkToGroup>() && away)
             {
                 WalkToGroup(controls.SelectedObject.GetComponent<WalkToGroup>());
             }
@@ -343,8 +333,6 @@ public class PlayerScript : MonoBehaviour
                 //FreeLookButton();
             }
         }
-
-        moveBackButton.GetComponent<Button>().interactable = !tutorial_movementLock;
     }
 
     public void ToggleUsingOnMode(bool value)
@@ -410,6 +398,18 @@ public class PlayerScript : MonoBehaviour
         }
 
         actionManager.OnMovementAction(currentWalkPosition.name);
+        gameUI.UpdateWalkToGtoupUI(true);
+
+        if (defaultInteractionDistance <= 0f)
+        {
+            defaultInteractionDistance = controls.interactionDistance;
+        }
+        if (group.interactionDistance > 0)
+            controls.interactionDistance = group.interactionDistance;
+        else
+            controls.interactionDistance = defaultInteractionDistance;
+
+
     }
 
     private void ToggleAway(bool _away = false)
@@ -422,7 +422,6 @@ public class PlayerScript : MonoBehaviour
             g.enabled = away;
             g.GetComponent<Collider>().enabled = away;
         }
-        moveBackButton.gameObject.SetActive(!away);
 
         itemControls.Close();
 
@@ -462,26 +461,14 @@ public class PlayerScript : MonoBehaviour
             }
         }
     }
-
-    public void MoveBackButton()
-    {
-        ToggleAway(true);
-        transform.position = savedPos;
-        if (prefs == null || (prefs != null && !prefs.VR))
-        {
-            transform.rotation = Quaternion.Euler(0.0f, savedRot.eulerAngles.y, 0.0f);
-            Camera.main.transform.localRotation = Quaternion.Euler(savedRot.eulerAngles.x, 0.0f, 0.0f);
-            mouseLook.SaveRot(transform, Camera.main.transform);
-        }
-        currentWalkPosition = null;
-
-        robot.transform.position = savedRobotPos;
-        robot.transform.rotation = savedRobotRot;
-
-    }
-
     public void OpenRobotUI()
     {
+        //if (cameraMode.camViewObject)
+        //    return;
+
+        //if (PlayerAnimationManager.IsLongAnimation())
+        //    return;
+
         if (robotUIopened)
             return;
 
@@ -561,6 +548,7 @@ public class PlayerScript : MonoBehaviour
         {
             extraBtnActiveForIpad = extraButton.activeSelf;
             extraButton.SetActive(false);
+            gameUI.UpdateWalkToGtoupUI(false);
         }
 
         if (extraPanel == null)
@@ -589,8 +577,6 @@ public class PlayerScript : MonoBehaviour
 
         tutorial_robotUI_opened = true;
 
-        moveBackBtnActiveForIpad = MoveBackButtonObject.activeSelf;
-        MoveBackButtonObject.SetActive(false);
         GameObject.FindObjectOfType<GameUI>().allowObjectControlUI = false;
 
         if (robotUINotOpenedYet)
@@ -640,6 +626,8 @@ public class PlayerScript : MonoBehaviour
             if (extraButton != null)
             {
                 extraButton.SetActive(extraBtnActiveForIpad);
+                gameUI.UpdateWalkToGtoupUI(extraBtnActiveForIpad);
+
             }
 
             if (extraPanel != null)
@@ -650,7 +638,6 @@ public class PlayerScript : MonoBehaviour
 
         tutorial_robotUI_closed = true;
 
-        MoveBackButtonObject.SetActive(moveBackBtnActiveForIpad);
         GameObject.FindObjectOfType<GameUI>().allowObjectControlUI = true;
 
         if (joystickObject != null)
@@ -714,12 +701,12 @@ public class PlayerScript : MonoBehaviour
     {
         // dont trigger quiz if a testing mode is on
 #if UNITY_EDITOR
-        if (GameObject.FindObjectOfType<PlayerPrefsManager>() != null)
-            if (GameObject.FindObjectOfType<PlayerPrefsManager>().testingMode)
-                return;
-        if (GameObject.FindObjectOfType<ObjectsIDsController>() != null)
-            if (GameObject.FindObjectOfType<ObjectsIDsController>().testingMode)
-                return;
+        //if (GameObject.FindObjectOfType<PlayerPrefsManager>() != null)
+        //    if (GameObject.FindObjectOfType<PlayerPrefsManager>().testingMode)
+        //        return;
+        //if (GameObject.FindObjectOfType<ObjectsIDsController>() != null)
+            //if (GameObject.FindObjectOfType<ObjectsIDsController>().testingMode)
+                //return;
 #endif
         // just dont trigger quiz if it's a tutorial for all cases
         if (GameObject.FindObjectOfType<TutorialManager>() != null)

@@ -36,6 +36,40 @@ public class PlayerAnimationManager : MonoBehaviour
     private static PlayerScript playerScript;
 
     private static AnimationSequence animationSequence;
+    public static float animTimeout = 0;
+
+    public static bool IsLongAnimation()
+    {
+        bool isLognAnim = false;
+        for (int i = 0; i < 3; i++)
+        {
+            if (animationController.GetCurrentAnimatorStateInfo(i).length > 0.2f && animationController.GetCurrentAnimatorStateInfo(i).normalizedTime < 1f)
+                isLognAnim = true;
+            if (animationController.GetNextAnimatorStateInfo(i).length > 0.2f && animationController.GetAnimatorTransitionInfo(i).normalizedTime < 0.01)
+                isLognAnim = true;
+            if (i < 2)
+            {
+                if (animationController.GetCurrentAnimatorStateInfo(i).length > 0.2f &&
+                    animationController.GetAnimatorTransitionInfo(i).normalizedTime < 0.01 &&
+                    animationController.GetNextAnimatorStateInfo(i).length < 0.2f)
+                    isLognAnim = true;
+            }
+            if (animationController.GetCurrentAnimatorStateInfo(i).IsName("Armature|021_pickUpRight_L_Lib"))
+            {
+                isLognAnim = true;
+            }
+            if (animationController.GetCurrentAnimatorStateInfo(i).IsName("Armature|020_pickUpLeft_L_Lib"))
+            {
+                isLognAnim = true;
+            }
+        }
+
+        if (isLognAnim && animTimeout < 0.03f)
+            animTimeout = 0.15f;
+        if (animTimeout > 0)
+            return true;
+        return isLognAnim;
+    }
 
     void Start()
     {
@@ -81,6 +115,9 @@ public class PlayerAnimationManager : MonoBehaviour
 
     void Update()
     {
+        if (animTimeout > 0)
+            animTimeout -= Time.deltaTime;
+
         leftModifier02 = propL.localPosition.y;
         rightModifier02 = propR.localPosition.y;
 

@@ -2,8 +2,7 @@
 <ActionList>
   <action
     points="1"
-    description="Begroet de cliënt."
-    fullDescription="Begroet de cliënt door op hem te klikken. Daarna klik je nogmaals op de cliënt om een gesprek aan te gaan. Klik vervolgens op de juiste optie."
+    description="Begroet de cliënt"
     index="0"
     type="talk"
     topic="Hello"
@@ -14,32 +13,34 @@
   ></action>
 
   <action
-    points="3"
-    description="Pas handhygiëne toe."
-    fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp om deze te gebruiken."
+    comment="1. Apply hand hygiene"
     index="0"
+    points="3"
+    description="Pas handhygiëne toe"
     type="use"
     value="HandCleaner"
+    extra="Pas handhygiëne toe"
     messageTitle="Handhygiëne"
-    messageContent="Handhygiëne is het allerbelangrijkste als het gaat om voorkomen van besmetting met ziektekiemen. Dit betekent je handen reinigen op de juiste manier en op de juiste momenten. Begin een handeling altijd met handhygiëne."
-   ></action>
+    messageContent="Handhygiëne is het meest belangrijk om besmetting met ziektekiemen te voorkomen. Reinig je handen altijd op de juiste manier en op het juiste moment. Begin een handeling altijd met handhygiëne."
+  ></action>
   
   <action
     points="1"
-    description="Maak een schoon werkveld door op het werkveld te klikken."
-    fullDescription="Klik op het werkveld om deze schoon te maken."
+    description="Maak een schoon werkveld en zet de benodigdheden binnen handbereik"
     index="1"
     type="use"
     value="WorkField"
-    extra="Maak een schoon werkveld."    
-    messageTitle="Hygiënisch werken door op het werkveld te klikken."
-    messageContent="Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen."
+    extra="Maak een schoon werkveld en zet de benodigdheden binnen handbereik."
+    messageTitle="Benodigdheden"
+    messageContent="
+    - Toedienlijst
+    - Medicijn (spray of tablet)
+    - Afvalbak"
   ></action>
 
     <action
     points="1"
-    description="Neem een medicijn zakje van de Baxterrol."
-    fullDescription="Klik op de baxterrol om een medicijn zakje af te scheuren."
+    description="Neem een medicijn zakje van de Baxterrol"
     index="2"
     type="use"
     value="BaxterRoll"
@@ -48,8 +49,7 @@
 
   <action
     points="2"
-    description="Controleer het medicijn."
-    fullDescription="Klik op het medicijn zakje in je hand om het optie menu te openen. Klik vervolgens op het vergrootglas icoon."
+    description="Controleer het medicijn"
     index="3"
     type="examine"
     item="MedicineBag"
@@ -58,128 +58,140 @@
     messageTitle="Dubbele controle van medicijnen."
     messageContent="Dubbele controle is nodig bij die medicijnen die naar het oordeel van de apotheker een onacceptabel risico vormen bij verkeerde dosering. Bij medicijnen op rol is de apotheker degene die de eerste controle uitvoert, en voert de zorgmedewerker de tweede controle uit. Bepaalde medicijnen die los geleverd worden, moeten bij toediening dubbel gecontroleerd en afgetekend worden met paraaf op de toedieningslijst.
     Ga altijd met de apotheker na of de medicijnen door de apotheker in een medicijnrol kunnen worden aangeboden. Hiermee voorkom je dat er een dubbele controle op de werkvloer / bij de cliënt plaats moet vinden.
-     " ></action>
+    
+    Wíe de dubbele controle mag uitvoeren, is beleid van de organisatie. Op basis van de afspraken in de organisatie spreekt de zorgmedewerker af per cliënt wie in die situatie de dubbele controle doet en legt dit vast" 
+  ></action>
   
   <action
     points="2"
-    description="Controleer cliëntgegevens."
-    fullDescription="Open de tablet door op het tablet icoon te drukken. Klik op de App 'Gegevens'. Kies vervolgens voor de cliëntgegevens."
+    description="Controleer cliëntgegevens"
     index="4"
     type="examine"
     item="PatientRecords"
     expected="good"
-    extra="Controleer de cliëntgegevens. Het is belangrijk dat je de juiste persoon voor je hebt."></action>
+    extra="Controleer de cliëntgegevens. Het is belangrijk dat je de juiste persoon voor je hebt."
+  ></action>
 
   <action
     points="2"
-    description="Controleer de toedienlijst."
-    fullDescription="Open de tablet door op het tablet icoon te drukken. Klik op de App 'Gegevens'. Kies vervolgens voor de toedienlijst."
+    description="Controleer de toedienlijst"
     audioHint="InjectionSubcutaneous/Step 5"
     index="4"
     type="examine"
     item="PrescriptionForm"
     expected="good"
-    extra="Controleer de toedienlijst. Controleer de toedienlijst op soort, dosering en toedientijdstip "></action>
+    extra="Controleer de toedienlijst. Controleer de toedienlijst op soort, dosering en toedientijdstip "
+  ></action>
 
   <action
     comment="Open MedicineBag"
     points="1"
-    description="Maak het medicijn gereed voor toediening door het medicijn zakje te openen."
-    fullDescription="Open het medicijn zakje door omhoog te swipen of door op het medicijn zakje te klikken en vervolgens op het - icoon te klikken."
+    description="Maak het medicijn gereed voor toediening door het medicijn zakje te openen"
     index="5"
     type="combine"
     left="MedicineBag"
     right=""
-    extra="Maak het medicijn gereed voor toediening door het medicijn zakje te openen."></action>
-
-  <action
-    comment="Asking patient not to directly swallow memdicine"
-    points="1"
-    description="Instrueer de cliënt de medicijnen niet door te slikken."
-    fullDescription="Instrueer de cliënt door op hem te klikken. Daarna klik je nogmaals op de cliënt om een gesprek aan te gaan. Klik vervolgens op de juiste optie."
-    index="6"
-    type="talk"
-    topic="NoSwallow"
-    extra="Instrueer de cliënt de medicijnen niet door te slikken."></action>
+    extra="Maak het medicijn gereed voor toediening door het medicijn zakje te openen."
+  ></action>
 
   <action
     comment="Asking patient to sit up straight"
     points="1"
-    description="Vraag de cliënt te gaan zitten."
-    fullDescription="Vraag de cliënt door op hem te klikken. Daarna klik je nogmaals op de cliënt om een gesprek aan te gaan. Klik vervolgens op de juiste optie."
-    index="7"
+    description="Vraag de cliënt te gaan zitten"
+    index="6"
     type="talk"
     topic="Sitstraight"
-    extra="Vraag de cliënt te gaan zitten."></action>
+    extra="Vraag de cliënt te gaan zitten."
+    blockUnlock="patient sit"
+  ></action>
+
+  <action
+    comment="Asking patient not to directly swallow memdicine"
+    points="1"
+    description="Instrueer de cliënt de medicijnen niet door te slikken"
+    index="7"
+    type="talk"
+    topic="NoSwallow"
+    extra="Instrueer de cliënt de medicijnen niet door te slikken."
+  ></action>
 
   <action
     comment="Start sequence by using the pill on the patient"
     index="8"
     points="1"
-    description="Neem het medicijn in de hand en geef het aan de cliënt."
-    fullDescription="Ga naar de cliënt. Klik op het medicijn in je hand. Klik op het + icoon. Klik vervolgens op de client. "
+    description="Neem het medicijn in de hand en geef het aan de cliënt"
     type="useOn"
     item="TabletRound1"
+    secondPlace="PatientPos"
     target=""
     buttonText="Medicijn toedienen"
     extra="Neem het medicijn in de hand en geef het aan de cliënt."
-   ></action>
+    blockRequired="patient sit"
+    blockTitle="Handeling nog niet mogelijk"
+    blockmessage="Vraag de cliënt eerst om rechtop te gaan zitten."
+  ></action>
 
 
   <action
     comment="Patient opens mouth and bring the tip of the tongue against the palate"
     index="9"
     value="open mouth"
-    description="Vraag de cliënt de punt van de tong tegen het verhemelte te brengen."
+    description="Vraag de cliënt de punt van de tong tegen het verhemelte te brengen"
     points="2"
     type="sequenceStep"
     extra="Vraag de cliënt de punt van de tong tegen het verhemelte te brengen."
-    fullDescription="Kies de juiste optie."></action>
+  ></action>
 
   <action
     comment="Player places the pill under the tongue of the patient"
     index="10"
     value="place pill under tongue"
-    description="Leg het medicijn onder de tong van de cliënt."
+    description="Leg het medicijn onder de tong van de cliënt"
     points="2"
     type="sequenceStep"
     extra="Leg het medicijn onder de tong van de cliënt."
-    fullDescription="Kies de juiste optie."></action>
+  ></action>
+  
   <action
     comment="Client closes his mouth to swallow pill"
     index="11"
     value="close mouth"
-    description="Vraag de cliënt onmiddellijk de mond dicht te doen."
+    description="Vraag de cliënt onmiddellijk de mond dicht te doen"
     points="2"
     type="sequenceStep"
     extra="Vraag de cliënt onmiddellijk de mond dicht te doen."
-    fullDescription="Kies de juiste optie."></action>
+  ></action>
 
   <action
-    points="1"
-    description="Ruim de materialen op door op de tafel te klikken."
-    fullDescription="Leg de spuit terug op het werkveld door op het silhoutte te klikken. Klik vervolgens op het werkveld om deze schoon te maken."
-    audioHint="Injection/EAS3-2"
-    index="12"
-    type="use"
-    value="WorkField"
-    extra=" Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen."></action>
+     points="1"
+     description="Ruim de materialen op door met lege handen op het werkveld te klikken"
+     index="12"
+     type="use"
+     value="WorkField"
+     extra="Ruim de materialen op door met lege handen op het werkveld te klikken"
+     messegeTitle="Materialen opruimen"
+     MessegeContent="Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen"
+></action>
+  
   <action
-    points="2"
-    description="Pas handhygiëne toe."
-    fullDescription="Klik op de hygiënepomp om deze te gebruiken.)"
-    audioHint="Injection/EAS5-2"
+    comment="1. Apply hand hygiene"
     index="13"
+    points="3"
+    description="Pas handhygiëne toe"
     type="use"
     value="HandCleaner"
-    extra="Handhygiëne is het allerbelangrijkste als het gaat om voorkomen van besmetting met ziektekiemen. Dit betekent je handen reinigen op de juiste manier en op de juiste momenten. Sluit handelingen af met handhygiëne."></action>
+    extra="Pas handhygiëne toe"
+    messageTitle="Handhygiëne"
+    messageContent="Handhygiëne is het meest belangrijk om besmetting met ziektekiemen te voorkomen. Reinig je handen altijd op de juiste manier en op het juiste moment. Begin een handeling altijd met handhygiëne."
+  ></action>
+  
   <action
     points="3"
-    description="Teken toedienlijst af."
-    fullDescription="Open de tablet door op het tablet icoon te drukken. Klik op de App 'Gegevens'. Kies vervolgens voor de toedienlijst. Klik tot slot op het afteken icoon.)"
-    audioHint="Injection/EAS4-2"
+    description="Teken toedienlijst af of noteer tijdstip, soort medicijn, concentratie, hoeveelheid, wijze van toediening en noteer bevindingen."
     index="14"
     type="use"
     value="PaperAndPen"
-    extra="Teken toedienlijst af of noteer tijdstip, soort medicijn, concentratie, hoeveelheid, wijze van toediening en noteer bevindingen."></action>
+    extra="Teken toedienlijst af of noteer tijdstip, soort medicijn, concentratie, hoeveelheid, wijze van toediening en noteer bevindingen."
+  ></action>
+  
 </ActionList>

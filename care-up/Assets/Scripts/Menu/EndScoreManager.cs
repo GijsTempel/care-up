@@ -53,23 +53,30 @@ public class EndScoreManager : MonoBehaviour {
         bool actualScene = false; // for later lines
         if (SceneManager.GetActiveScene ().name == "EndScore") {
             Transform uiFolder = GameObject.Find ("Canvas").transform;
-            Transform secondScreen = GameObject.Find ("StepScreen").transform;
 
             //uiFolder.Find("Left").Find("Score").GetComponent<Text>().text = "Score: " + score;
             uiFolder.Find ("ScoreScreen").Find ("Points").GetComponent<Text> ().text = "Punten: " + points;
             uiFolder.Find ("ScoreScreen").Find ("Time").GetComponent<Text> ().text = string.Format ("Tijd: {0}:{1:00}", (int)time / 60, (int)time % 60);
 
             //uiFolder.GetChild(1).FindChild("Steps").GetComponent<Text>().text = wrongSteps;
-
-            Transform layoutGroup = secondScreen.Find ("Right").Find ("WrongstepScroll").Find ("WrongstepViewport").Find ("LayoutGroup");
-            EndScoreWrongStepDescr[] stepObjects = layoutGroup.GetComponentsInChildren<EndScoreWrongStepDescr> ();
-
-            for (int i = 0; i < steps.Count && i < stepObjects.Length; ++i) {
-                stepObjects[i].GetComponent<Text> ().text = steps[i];
-                stepObjects[i].text = stepsDescr[i];
-                stepObjects[i].wrong = wrongStepIndexes.Contains (i);
-            }
+            
             actualScene = true;
+
+            //update practice score & stars, update UI accordingly
+            GameObject.FindObjectOfType<PlayerPrefsManager>().UpdatePracticeHighscore(points, score);
+
+            Transform stepParent = GameObject.Find("Interactable Objects/Canvas/PracticeStepsScreen/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
+
+            for (int i = 0; i < steps.Count; ++i)
+            {
+                GameObject step = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/ProtocolPracticeSteps"), stepParent);
+                step.transform.Find("Text").GetComponent<Text>().text = steps[i];
+
+                Sprite correctSprite = Resources.Load<Sprite>("Sprites/item_select_check");
+                if(correctStepIndexes.Contains(i))
+                    step.transform.Find("ToggleNo").GetComponent<Image>().sprite = correctSprite;
+            }
+
         } else if (SceneManager.GetActiveScene ().name == "EndScore_Test") {
             Transform stepParent = GameObject.Find ("Interactable Objects/Canvas/StepScreen/ObservationForm/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
 
@@ -112,6 +119,20 @@ public class EndScoreManager : MonoBehaviour {
             if (flag == true) {
                 achievements.UpdateKeys ("FirstPassedExam", 1);
             }
+
+            // certificate set scene name
+            GameObject.Find("Interactable Objects/Canvas/CertificatePanel/Top/Scenetitle")
+                .GetComponent<Text>().text = manager.currentSceneVisualName;
+
+            // certificate set btn function
+            Button openCertificateBtn = GameObject.Find("Interactable Objects/Canvas/CertificatePanel/" +
+                "ContentHolder/CertificateBTN").GetComponent<Button>();
+            openCertificateBtn.onClick.AddListener(OpenCertificateBtn);
+
+            // fullname pop up function set up
+            GameObject.Find("Interactable Objects/Canvas/NamePopUp/BackToRegisterButton")
+                .GetComponent<Button>().onClick.AddListener(SaveFullPlayerNameBtn);
+
         }
         if (actualScene)
         {
@@ -202,6 +223,29 @@ public class EndScoreManager : MonoBehaviour {
         } else {
             bl_SceneLoaderUtils.GetLoader.LoadLevel ("EndScore_Test");
         }
+    }
+
+    public void OpenCertificateBtn()
+    {
+        if (manager.fullPlayerName != "")
+        {
+            PlayerPrefsManager.__openCertificate(manager.fullPlayerName, manager.currentSceneVisualName);
+        }
+        else
+        {
+            // open name pop up instead
+            GameObject.Find("Interactable Objects/Canvas/NamePopUp").SetActive(true);
+        }
+    }
+
+    public void SaveFullPlayerNameBtn()
+    {
+        manager.fullPlayerName = GameObject.Find("Interactable Objects/Canvas/NamePopUp/" +
+            "FullnameHolder/FullName/Text").GetComponent<Text>().text;
+
+        PlayerPrefsManager.SetFullName(manager.fullPlayerName);
+
+        GameObject.Find("Interactable Objects/Canvas/NamePopUp").SetActive(false);
     }
 
 }

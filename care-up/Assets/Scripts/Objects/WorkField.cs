@@ -9,13 +9,15 @@ public class WorkField : UsableObject {
     private bool toggle = false;
 
     public bool tableCleaned = false;
+    GameUI _gameUI;
 
     public bool cleaningLocked = true;
 
     protected override void Start()
     {
         base.Start();
-
+        _gameUI = GameObject.FindObjectOfType<GameUI>();
+       
         toggleTime = 0;
         toggle = false;
 
@@ -57,6 +59,8 @@ public class WorkField : UsableObject {
             controls.ResetObject();
             Reset();
         }
+        _gameUI.UpdateHelpHighlight();
+
     }
 
     public void ToggleObjects()

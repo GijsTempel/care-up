@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using CareUp.Actions;
+using System.Linq;
 
 /// <summary>
 /// Handles things in hands.
@@ -32,6 +34,7 @@ public class HandsInventory : MonoBehaviour {
     public float distanceFromCamera = 1.0f;
     public bool dropPenalty = true;
 
+    bool practiceMode = true;
 
 	ObjectsIDsController ObjectsID_Controller;
 
@@ -80,35 +83,9 @@ public class HandsInventory : MonoBehaviour {
     private CameraMode cameraMode;
 
     private ActionManager actionManager;
-    //private PlayerPrefsManager prefsManager;
+    private PlayerPrefsManager prefs;
 
     //private TutorialManager tutorial;
-
-
-    public GameObject AddHighlight(Transform target, string prefix, HighlightObject.type hl_type = HighlightObject.type.Ball, float LifeTime = float.PositiveInfinity)
-    {
-        string hl_name = prefix + "_" + target.name;
-        if (GameObject.Find(hl_name) != null || target.GetComponent<WorkField>() != null)
-            return null;
-        GameObject hl_obj = Instantiate(Resources.Load<GameObject>("Prefabs\\HighlightObject"), target.position, new Quaternion()) as GameObject;
-
-        HighlightObject hl = hl_obj.GetComponent<HighlightObject>();
-        hl.name = hl_name;
-        hl.setType(hl_type);
-        hl.setTarget(target);
-        hl.setTimer(LifeTime);
-        return hl_obj;
-    }
-
-    public void RemoveHighlight(string prefix, string _name)
-    {
-        string hl_name = prefix + "_" + _name;
-        if (GameObject.Find(hl_name) != null)
-        {
-            if (GameObject.Find(hl_name).GetComponent<HighlightObject>())
-                GameObject.Find(hl_name).GetComponent<HighlightObject>().Destroy();
-        }
-    }
 
 
     public GameObject LeftHandObject
@@ -124,6 +101,10 @@ public class HandsInventory : MonoBehaviour {
     void Start()
     {
         tutorialUseOn = GameObject.FindObjectOfType<Tutorial_UseOn> ();
+        prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
+
+        if (prefs != null)
+            practiceMode = prefs.practiceMode;
 
         ObjectsID_Controller = GameObject.Find("GameLogic").GetComponent<ObjectsIDsController>();
 
@@ -283,6 +264,8 @@ public class HandsInventory : MonoBehaviour {
             RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
             messageCenter.NewMessage("Je hebt je handen vol!", message, RobotUIMessageTab.Icon.Warning);
         }
+
+        ActionManager.UpdateRequirements();
 
         return picked;
     }
@@ -575,6 +558,8 @@ public class HandsInventory : MonoBehaviour {
             PlayerAnimationManager.SetHandItem(false, null);
             
         }
+
+        ActionManager.UpdateRequirements();
     }
 
     public void DropLeftObject()
@@ -587,6 +572,7 @@ public class HandsInventory : MonoBehaviour {
             leftHandObject = null;
             leftHold = false;
             PlayerAnimationManager.SetHandItem(true, null);
+            ActionManager.UpdateRequirements();
         }
     }
 
@@ -600,6 +586,7 @@ public class HandsInventory : MonoBehaviour {
             rightHandObject = null;
             rightHold = false;
             PlayerAnimationManager.SetHandItem(false, null);
+            ActionManager.UpdateRequirements();
         }
     }
 
@@ -938,15 +925,22 @@ public class HandsInventory : MonoBehaviour {
 
         string leftName = leftHandObject ? leftHandObject.name : "";
         string rightName = rightHandObject ? rightHandObject.name : "";
-        
+
         bool combineAllowed = actionManager.CompareCombineObjects(leftName, rightName);
         //bool practice = (GameObject.FindObjectOfType<PlayerPrefsManager>() != null ? GameObject.FindObjectOfType<PlayerPrefsManager>().practiceMode : true);
         //combineAllowed = combineAllowed || practice;
 
         bool combined = combinationManager.Combine(leftName, rightName, out leftCombineResult, out rightCombineResult);
-        
-		// combine performed
-		bool alloweCombine = (combined && combineAllowed);
+
+        bool allowMultiple = false;
+        if (!practiceMode && combined)
+            allowMultiple = combinationManager.CombineMultiple(leftName, rightName);
+
+
+        // combine performed
+        bool alloweCombine = (combined && (combineAllowed || allowMultiple));
+
+        actionManager.OnCombineAction(leftName, rightName, allowMultiple);
 
         if (alloweCombine) HandleCombineQuizTriggers(leftName, rightName);
 
@@ -1039,7 +1033,7 @@ public class HandsInventory : MonoBehaviour {
             leftHandObject = null;
             leftHold = false;
             PlayerAnimationManager.SetHandItem(true, null);
-
+            ActionManager.UpdateRequirements();
         }
     }
 
@@ -1072,6 +1066,7 @@ public class HandsInventory : MonoBehaviour {
             rightHandObject = null;
             rightHold = false;
             PlayerAnimationManager.SetHandItem(false, null);
+            ActionManager.UpdateRequirements();
         }
     }
 

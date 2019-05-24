@@ -31,6 +31,7 @@ public class QuizTab : RobotUITabs {
     private Button continueButton;
   
     public bool continueBtn = false;
+    PlayerPrefsManager pref;
 
     EndScoreManager endScoreManager;
 
@@ -190,6 +191,14 @@ public class QuizTab : RobotUITabs {
 
     public void WrongAnswer(string description)
     {
+#if UNITY_EDITOR
+        if (GameObject.FindObjectOfType<PlayerPrefsManager>() != null)
+            if (GameObject.FindObjectOfType<PlayerPrefsManager>().testingMode)
+            {
+                CorrectAnswer(description);
+                return;
+            }
+#endif
         descriptionText.text = description;
         GameObject.Find("GameLogic").GetComponent<ActionManager>().ActivatePenalty();
         ActionManager.WrongAction();

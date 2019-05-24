@@ -16,13 +16,63 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
 
             WULogin.onLoggedIn += AddNumberOfLogins;
 
-            WULogin.onLoggedIn += CheckForSerials;
+            WULogin.onLoggedIn += GetCharacterCreationCompletionWU;
             WULogin.onLoggedOut += LoadStartScene;
             done = true;
         }
     }
- 
-    void CheckForSerials(CML ignore)
+
+    // this check goes first
+    // then check for tutorial
+    // then check for serial/subscription/plays number
+    public void GetCharacterCreationCompletionWU(CML ignore)
+    {
+        WUData.FetchField("CharacterCreated", "AccountStats", GetCharacterCreationCompletion,
+            -1, GetCharacterCreationCompletion_Error);
+    }
+
+    void GetCharacterCreationCompletion(CML response)
+    {
+        WULogin.characterCreated = response[1].Bool("CharacterCreated");
+        Debug.Log("Character created = " + WULogin.characterCreated);
+
+        // if it is indeed true, we need to get the info for later use
+        if (WULogin.characterCreated)
+        {
+            CharacterInfo.GetCharacterCharacteristicsWU();
+            
+            CheckForSerials();
+        }
+        else
+        {
+            // update plays anyways
+            CheckPlaysNumberWithoutLoadingScenes();
+
+            // if not - we're loading scene
+            bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Character_Customisation");
+        }
+    }
+
+    static void GetCharacterCreationCompletion_Error(CMLData response)
+    {
+        if ((response["message"] == "WPServer error: Empty response. No data found"))
+        {
+            // no response means no field means not created yet
+            WULogin.characterCreated = false;
+
+            CMLData data = new CMLData();
+            data.Set("CharacterCreated", "false");
+            WUData.UpdateCategory("AccountStats", data);
+
+            // update plays anyways
+            CheckPlaysNumberWithoutLoadingScenes();
+
+            // loading scene
+            bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Character_Customisation");
+        }
+    }
+
+    void CheckForSerials()
     {
 #if WUSKU
         // serial is required for non-android version, so we check if has serial
@@ -39,7 +89,6 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
             {
                 // we're here only if player has no subscription at all
                 // still allow to play for a bit, for the first few plays
-                Debug.Log("PlaysNumber::Query server started.");
                 WUData.FetchField("Plays_Number", "AccountStats", GetPlaysNumber, -1, ErrorHandle);
             }
         }
@@ -48,6 +97,23 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
             AllowDenyLoadMainMenu(true);
         }
         #endif
+    }
+
+    static void CheckPlaysNumberWithoutLoadingScenes()
+    {
+        WUData.FetchField("Plays_Number", "AccountStats", GetPlaysNoLoad, -1, ErrorHandleNoLoad);
+    }
+
+    static void GetPlaysNoLoad(CML response)
+    {
+        PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
+        manager.plays = response[1].Int("Plays_Number");
+    }
+
+    static void ErrorHandleNoLoad(CMLData response)
+    {
+        if (response["message"] == "WPServer error: Empty response. No data found")
+            GameObject.FindObjectOfType<PlayerPrefsManager>().plays = 0;
     }
 
     void GetPlaysNumber(CML response)

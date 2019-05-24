@@ -48,6 +48,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1284577356081132
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4622806017868422}
+  - component: {fileID: 114057963321812906}
+  m_Layer: 0
+  m_Name: hl
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1352560407969100
 GameObject:
   m_ObjectHideFlags: 1
@@ -118,12 +134,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1127050310755802}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 9.2955, y: 1.104, z: 11.7614}
+  m_LocalRotation: {x: 0.70710677, y: -0.0000010586134, z: -0.0000034357345, w: 0.7071069}
+  m_LocalPosition: {x: -4.1349983, y: 1.1033272, z: 1.6020002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4011409608876600}
   - {fileID: 4128303745362372}
+  - {fileID: 4622806017868422}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
@@ -141,6 +158,19 @@ Transform:
   - {fileID: 4921329642274852}
   m_Father: {fileID: 4122139361216594}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4622806017868422
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1284577356081132}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.003, y: -0.026, z: -0.008}
+  m_LocalScale: {x: 0.46782336, y: 1.5194441, z: 0.3219359}
+  m_Children: []
+  m_Father: {fileID: 4122139361216594}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4782642114733170
 Transform:
@@ -406,6 +436,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.06388296, y: 0.26460236, z: 0.032338224}
   m_Center: {x: 0.000000011175871, y: -0.028540388, z: -0.014298179}
+--- !u!114 &114057963321812906
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1284577356081132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c34eecdde24d47db816fe0faca03a6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hl_type: 2
 --- !u!114 &114198876628776258
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -418,11 +460,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectID: 3500
-  description: Spuit met steriel water - verpakt
+  description: spuit met steriel water
+  nameArticle: de
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
   tutorial_usedOn: 0
+  depoistNeedle: 0
   leftControlBone: {fileID: 0}
   rightControlBone: {fileID: 0}
   holdAnimationID: 350

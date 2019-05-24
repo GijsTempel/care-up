@@ -62,7 +62,7 @@ public class MainMenu : MonoBehaviour {
 			
             GameObject.FindObjectOfType<PlayerPrefsManager>().FetchLatestVersion();
 
-            GameObject.Find("UMenuProManager/MenuCanvas/Account/Account_Panel_UI/InfoHolder/Account_Username")
+            GameObject.Find("UMenuProManager/MenuCanvas/Account/Account_Panel_UI/Account_Username")
                 .GetComponent<Text>().text = MBS.WULogin.display_name;
         }
     }
@@ -200,7 +200,14 @@ public class MainMenu : MonoBehaviour {
     public void OnRetryButtonClick()
     {
         PlayerPrefsManager.AddOneToPlaysNumber();
+
         EndScoreManager manager = loadingScreen.GetComponent<EndScoreManager>();
+
+        if (prefs.practiceMode)
+        {
+            PlayerPrefsManager.AddOneToPracticePlays(prefs.currentSceneVisualName);
+        }
+
         bl_SceneLoaderUtils.GetLoader.LoadLevel(manager.completedSceneName, manager.completedSceneBundle);
     }
 

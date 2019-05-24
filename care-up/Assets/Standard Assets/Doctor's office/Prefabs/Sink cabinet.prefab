@@ -255,6 +255,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!1 &1367806140313330
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4584362107006760}
+  - component: {fileID: 114636716809415526}
+  m_Layer: 0
+  m_Name: hl
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1383191855900652
 GameObject:
   m_ObjectHideFlags: 1
@@ -530,6 +546,7 @@ Transform:
   - {fileID: 4799477078880930}
   - {fileID: 4131907924160762}
   - {fileID: 4289489130560378}
+  - {fileID: 4584362107006760}
   m_Father: {fileID: 451562}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -676,6 +693,19 @@ Transform:
   - {fileID: 4317738121282366}
   m_Father: {fileID: 4289489130560378}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4584362107006760
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1367806140313330}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4263516496955260}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4606305549552930
 Transform:
@@ -1101,6 +1131,18 @@ MonoBehaviour:
   follow_left: 1
   isActive: 0
   followHoldingHand: 1
+--- !u!114 &114636716809415526
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1367806140313330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c34eecdde24d47db816fe0faca03a6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hl_type: 4
 --- !u!114 &114644129231424936
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1135,6 +1177,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  neededObjects: []
 --- !u!137 &137134396020395648
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

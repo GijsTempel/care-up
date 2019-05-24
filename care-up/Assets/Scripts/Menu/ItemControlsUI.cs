@@ -149,6 +149,8 @@ public class ItemControlsUI : MonoBehaviour {
             player = GameObject.FindObjectOfType<PlayerScript>();
         }
 
+        if (PlayerAnimationManager.IsLongAnimation())
+            return;
         initedObject = iObject;
 
         if (initedObject != null && initedObject.GetComponent<InteractableObject>() != null)
@@ -317,7 +319,7 @@ public class ItemControlsUI : MonoBehaviour {
             if (cameraMode.CurrentMode == CameraMode.Mode.ItemControlsUI)
             {
                 // specific case for "catheterisation" it doesnt need hands empty
-                if (handsInventory.Empty() || initedObject.name == "catheterisation")
+                if ((handsInventory.Empty() || initedObject.name == "catheterisation") || initedObject.GetComponent<UsableObject>().UseWithObjectsInHands)
                 {
                     initedObject.GetComponent<UsableObject>().Use();
                 }
@@ -420,6 +422,10 @@ public class ItemControlsUI : MonoBehaviour {
 
     public void Talk()
     {
+        ActionManager.personClicked = true;
+        ActionManager.BuildRequirements();
+        ActionManager.UpdateRequirements();
+
         if (cameraMode.CurrentMode == CameraMode.Mode.ItemControlsUI)
         {
             if (initedObject != null)

@@ -11,23 +11,23 @@ public class WalkToGroupButton : MonoBehaviour {
     //button components
     [HideInInspector]
     public GameObject blur;
-    [HideInInspector]
     public GameObject bg;
-    [HideInInspector]
     public GameObject bg_h;
     [HideInInspector]
     public GameObject _icon;
-
+    GameObject finger = null;
+    GameUI gameUI;
     public bool SideButton = false;
 
-    void OnMouseOver()
-    {
-        //If your mouse hovers over the GameObject with the script attached, output this message
-        Debug.Log("Mouse is over GameObject.  " + name);
-    }
-    
+  
     void Start()
     {
+        gameUI = GameObject.FindObjectOfType<GameUI>();
+        if (!SideButton)
+        {
+            finger = transform.Find("f").gameObject;
+            finger.SetActive(false);
+        }
         ButtonColor = GetComponent<Image>().color;
         if (transform.Find("blur"))
         {
@@ -35,7 +35,7 @@ public class WalkToGroupButton : MonoBehaviour {
             Color b2 = ButtonColor;
             b2.a = 0.4f;
             blur.GetComponent<Image>().color = b2;
-            blur.SetActive(false);
+            //blur.SetActive(false);
             bg = transform.Find("bg").gameObject;
             bg_h = transform.Find("bg_h").gameObject;
             bg_h.SetActive(false);
@@ -45,6 +45,25 @@ public class WalkToGroupButton : MonoBehaviour {
         }
     }
 
+
+    public void UpdateHint()
+    {
+        if (SideButton)
+            return;
+        if (gameUI == null)
+            return;
+        if (linkedWalkToGroup == null)
+            return;
+        finger.SetActive(false);
+        foreach (string s in gameUI.reqPlaces)
+        {
+            if (s == linkedWalkToGroup.name)
+                finger.SetActive(true);
+        }
+    }
+
+
+    
     public void setWalkToGroup(WalkToGroup wtg)
     {
         linkedWalkToGroup = wtg;
@@ -97,7 +116,7 @@ public class WalkToGroupButton : MonoBehaviour {
         mouse_over = value;
         if (blur != null)
         {
-            blur.SetActive(value);
+            //blur.SetActive(value);
             if (value)
             {
                 if (!SideButton)
@@ -139,7 +158,9 @@ public class WalkToGroupButton : MonoBehaviour {
     }
 
     public void MoveToGroup()
-    {       
+    {
+        if (PlayerAnimationManager.IsLongAnimation())
+            return;
         if (linkedWalkToGroup != null)
         {
             GameObject.FindObjectOfType<PlayerScript>().WalkToGroup(linkedWalkToGroup);

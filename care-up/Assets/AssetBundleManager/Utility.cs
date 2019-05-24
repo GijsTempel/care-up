@@ -17,8 +17,8 @@ namespace AssetBundles
 			return GetPlatformForAssetBundles(Application.platform);
 	#endif
 		}
-	
-	#if UNITY_EDITOR
+
+#if UNITY_EDITOR
 		private static string GetPlatformForAssetBundles(BuildTarget target)
 		{
 			switch(target)
@@ -34,15 +34,17 @@ namespace AssetBundles
 				return "StandaloneWindows";
 			case BuildTarget.StandaloneOSX:
 				return "OSX";
+            case BuildTarget.WSAPlayer:
+                    return "WSA";
 				// Add more build targets for your own.
 				// If you add more targets, don't forget to add the same platforms to GetPlatformForAssetBundles(RuntimePlatform) function.
 			default:
 				return null;
 			}
 		}
-	#endif
-	
-		private static string GetPlatformForAssetBundles(RuntimePlatform platform)
+#endif
+
+        private static string GetPlatformForAssetBundles(RuntimePlatform platform)
 		{
 			switch(platform)
 			{
@@ -56,9 +58,13 @@ namespace AssetBundles
 				return "StandaloneWindows";
 			case RuntimePlatform.OSXPlayer:
 				return "OSX";
-				// Add more build targets for your own.
-				// If you add more targets, don't forget to add the same platforms to GetPlatformForAssetBundles(RuntimePlatform) function.
-			default:
+                case RuntimePlatform.WSAPlayerARM:
+                case RuntimePlatform.WSAPlayerX64:
+                case RuntimePlatform.WSAPlayerX86:
+                    return "WSA";
+                // Add more build targets for your own.
+                // If you add more targets, don't forget to add the same platforms to GetPlatformForAssetBundles(RuntimePlatform) function.
+                default:
 				return null;
 			}
 		}

@@ -48,6 +48,7 @@ public class ActionStepButton : MonoBehaviour
                     {
                         ss += s + "  ";
                     }
+                    ss += " sp: " + action.secondPlaceRequirement;
                     main_text.text = ss;
                 }
                 else if (lastMode == ActionsPanel.Mode.Comment)

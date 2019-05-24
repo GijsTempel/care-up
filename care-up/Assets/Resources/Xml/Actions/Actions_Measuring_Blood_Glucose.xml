@@ -1,135 +1,247 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ActionList points="22">
   <action
-    points="1"
-    description="Begroet de cliënt."
-    fullDescription="Begroet de cliënt door op hem te klikken. Daarna klik je nogmaals op de cliënt om een gesprek aan te gaan. Klik vervolgens op de juiste optie."
-    index="0"
-    type="talk"
-    topic="Hello"
-    extra="Ondanks dat het begroeten niet in de werkwijze is vermeld, is het wel netjes om contact te leggen met de cliënt."
-    optional=""/>
+      index="0"
+      points="1"
+      description="Begroet de cliënt"
+      type="talk"
+      topic="Hello"
+      extra="Het begroeten van de client en je voorstellen is niet in de werkwijze is vermeld. Het is wel netjes en logisch om contact te leggen met de cliënt."
+      optional=""
+></action>
 
   <action
-    comment="(1)Apply handhygiene"
-    points="3"
-    description="Pas handhygiëne toe."
-    fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp."
-    index="0"
-    type="use"
-    value="HandCleaner"
-    extra="Pas handhygiëne toe. Handhygiëne is het allerbelangrijkste als het gaat om voorkomen van besmetting met ziektekiemen. Dit betekent je handen reinigen op de juiste manier en op de juiste momenten. Begin een handeling altijd met handhygiëne."/>
+      comment="1. Apply hand hygiene"
+      index="0"
+      points="3"
+      description="Pas handhygiëne toe"
+      type="use"
+      value="HandCleaner"
+      extra="Pas handhygiëne toe"
+      messageTitle="Handhygiëne"
+      messageContent="Handhygiëne is het meest belangrijk om besmetting met ziektekiemen te voorkomen. Reinig je handen altijd op de juiste manier en op het juiste moment. Begin een handeling altijd met handhygiëne."
+></action>
 
   <action
     points="1"
-    description="Maak een schoon werkveld door op het werkveld te klikken."
-    fullDescription="Klik op het werkveld om deze schoon te maken."
+    description="Maak een schoon werkveld en zet de benodigdheden binnen handbereik"
     index="1"
     type="use"
     value="WorkField"
-    extra="Maak een schoon werkveld."
-    messageTitle="Hygiënisch werken door op het werkveld te klikken."
-    messageContent="Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen."></action>
+    extra="Maak een schoon werkveld en zet de benodigdheden binnen handbereik."
+    messageTitle="Benodigdheden"
+    messageContent="
+    - Zeep en schone handdoek voor de cliënt
+    - Prikpen of vingerprikker + gebruiksinstructie
+    - Lancet (bij prikpen of herbruikbare vingerprikker)
+    - Teststrip
+    - Bloedglucosemeter + gebruiksinstructie
+    - Handschoenen
+    - 2 gaasjes
+    - Naaldenbeker
+    - Afvalbak
+    "></action>
 
-  <action comment="(3)Ask client to wash his hand with soap." points="3" description="Laat de cliënt de handen wassen" fullDescription="" index="2" type="talk" topic="WashHands" extra="" messageTitle="" messageContent=""></action>
+  <action 
+    comment="(3)Ask client to wash his hand with soap." 
+    points="3" 
+    description="Laat je cliënt zijn of haar handen wassen met warm water en zeep. Droog daarna de handen goed af" 
+    index="2" 
+    type="talk" 
+    topic="WashHands" 
+    extra="Laat je cliënt zijn of haar handen wassen met warm water en zeep. Droog daarna de handen goed af. " messageTitle="" messageContent=""></action>
 
   <action
     comment="Step 4: Check expiration date of the teststrips."
     points="3"
-    description="Controleer de vervaldatum en de periode van houdbaarheid van de teststrips."
-    fullDescription="Controleer de vervaldatum en de periode van houdbaarheid van de teststrips. Noteer de datum van openen op de verpakking als je een nieuwe koker opent."
+    description="Controleer de vervaldatum en de houdbaarheidsdatum van de teststrips"
     index="3"
     type="examine"
     item="TeststripsPackage"
     expected="good"
-    extra="Controleer de vervaldatum en de periode van houdbaarheid van de teststrips. Noteer de datum van openen op de verpakking als je een nieuwe koker opent."
-    messageTitle=""
-    messageContent=""></action>
+    extra="Controleer de vervaldatum en de houdbaarheidsdatum van de teststrips."
+    messageTitle="Nieuwe koker openen."
+    messageContent="Open je een nieuwe koker? Noteer dan altijd de datum van openen."
+  ></action>
 
   <action
     comment="Step 4: Remove cap from the lancet."
     points="3"
-    description="Verwijder het dopje van de lancet."
-    fullDescription="Verwijder het dopje van de lancet zodat je het kan gaan gebruiken."
+    description="Maak de prikpen of vingerprikker klaar voor gebruik door het beschermdopje te verwijderen. Stel de laagst mogelijke prikdiepte in"
     index="4"
     type="combine"
     left="Scarifier"
     right=""
-    extra="Verwijder het dopje van de lancet zodat je het kan gaan gebruiken."/>
+    extra="Maak de prikpen of vingerprikker klaar voor gebruik. Stel de laagst mogelijke prikdiepte in."/>
 
-  <action points="2" description="Turn on Glucose meter." fullDescription="" audioHint="" index="5" type="useOn" item="BloodGlucoseMeter" target="" extra="" buttonText="Turn on glucose meter" messageTitle="" messegeContent=""></action>
+  <action 
+    points="2" 
+    description="Zet de bloedglucosemeter aan"  
+    index="5" 
+    type="useOn" 
+    item="BloodGlucoseMeter" 
+    target="" 
+    extra="" 
+    buttonText="Aanzetten" 
+    messageTitle="Automatisch inschakelen." 
+    messegeContent="De meeste meters gaan bij het plaatsen van de teststrip vanzelf aan. Zet de bloedglucose meter aan volgens de gebruiksaanwijzing wanneer dit niet het geval is. "></action>
 
   <action
     comment="Step 5: Take test strip from pack."
     points="3"
-    description="Take test strip from pack."
-    fullDescription=""
+    description="Pak een teststrip uit de koker"
     index="6"
     type="combine"
     left="TeststripsPackage"
     right=""
-    extra="Verwijder het dopje van de lancet zodat je het kan gaan gebruiken."/>
+    extra="Pak een teststrip uit de koker."/>
 
   <action
     comment="Step 7: Place teststrip in the blood glucose meter"
     points="3"
-    description="Plaats de lancet op de prik pen."
-    fullDescription="Plaats de lancet op de prik pen zodat het klaar is voor gebruik."
+    description="Plaats de teststrip in de bloedglucosemeter en/of maak de strip gebruiksklaar volgens de gebruiksinstructie"
     index="7"
     type="combine"
     left="BloodGlucoseMeter"
     right="Teststrip"
-    extra="Plaats de lancet op de prik pen zodat het klaar is voor gebruik."/>
+    extra="Plaats de teststrip in de bloedglucosemeter en/of maak de strip gebruiksklaar volgens de gebruiksinstructie."
+    blockUnlock="prepare meter"
+   />
 
-  <action comment="8. Put on gloves." points="3" description="Trek handschoenen aan." fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp." index="8" type="use" value="gloveBox" extra=""></action>
+  <action 
+    comment="Put on gloves." 
+    points="3" 
+    description="Trek handschoenen aan"  
+    index="8" 
+    type="use" 
+    value="gloveBox" 
+    extra="Trek handschoenen aan."
+    blockRequired="prepare meter"
+    blockTitle="Deze handeling is nog niet mogelijk"
+    blockMessage="Maak eerst de bloedglucosemeter klaar voor gebruik. Zet de meter aan en plaats een teststrip."
+  ></action>
 
-  <action points="1" description="" index="9" type="sequenceStep" value="place finger" extra="" fullDescription=""></action>
+  <action 
+    points="1" 
+    description="Plaats de prikpen of vingerprikker aan de zijkant van de vingertop. Stuw hierbij de vinger niet" 
+    index="9" 
+    type="sequenceStep" 
+    value="place finger" 
+    extra="Plaats de prikpen of vingerprikker aan de zijkant van de vingertop. Stuw hierbij de vinger niet. " 
+  ></action>
 
-  <action points="1" description="" index="10" type="sequenceStep" value="puncture" extra="" fullDescription=""></action>
+  <action 
+    points="1" 
+    description="Prik in de vinger. Stuw ook hierbij de vinger niet" 
+    index="10" 
+    type="sequenceStep" 
+    value="puncture" 
+    extra="Prik in de vinger. Stuw ook hierbij de vinger niet." 
+  ></action>
 
-  <action points="1" description="" index="11" type="sequenceStep" value="whipe blood" extra="" fullDescription=""></action>
+  <action 
+    points="1" 
+    description="Veeg de eerste bloeddruppel weg met een gaasje" 
+    index="11" 
+    type="sequenceStep" 
+    value="whipe blood" 
+    extra="Veeg de eerste bloeddruppel weg met een gaasje."
+  ></action>
 
-  <action points="1" description="" index="12" type="sequenceStep" value="fill in teststrip" extra="" fullDescription=""></action>
+  <action 
+    points="1" 
+    description="Vul het testveld van de teststrip met een bloeddruppel. Zorg ervoor dat de bloeddruppel het hele testveld bedekt. Smeer het bloed niet uit" 
+    index="12" 
+    type="sequenceStep" 
+    value="fill in teststrip" 
+    extra="Vul het testveld van de teststrip met een bloeddruppel. Zorg ervoor dat de bloeddruppel het hele testveld bedekt. Smeer het bloed niet uit." 
+  ></action>
 
-  <action points="1" description="" index="13" type="sequenceStep" value="apply gauze" extra="" fullDescription=""></action>
+  <action 
+    points="1" 
+    description="Breng een gaasje aan voor de opvang van eventuele bloeddruppels. Masseer de huid niet" 
+    index="13" 
+    type="sequenceStep" 
+    value="apply gauze" 
+    extra="Breng een gaasje aan voor de opvang van eventuele bloeddruppels. Masseer de huid niet."
+  ></action>
 
-  <action points="1" description="" index="14" type="sequenceStep" value="read values" extra="" fullDescription=""></action>
+  <action 
+    points="1" 
+    description="Lees en noteer de bloedglucosewaarde af van de bloedglucosemeter" 
+    index="14" 
+    type="sequenceStep" 
+    value="read values" 
+    extra="Lees en noteer de bloedglucosewaarde af van de bloedglucosemeter."
+   ></action>
 
-  <action points="1" description="" index="15" type="sequenceStep" value="remove strip" extra="" fullDescription=""></action>
+  <action 
+    points="1" 
+    description="Verwijder de teststrip uit de bloedglucosemeters volgens de gebruiksaanwijzing. Gooi deze vervolgens in de afvalbak" 
+    index="15" 
+    type="sequenceStep" 
+    value="remove strip" 
+    extra="Verwijder de teststrip uit de bloedglucosemeters volgens de gebruiksaanwijzing. Gooi deze vervolgens in de afvalbak." 
+  ></action>
 
-  <action points="1" description="" index="16" type="sequenceStep" value="turn off" extra="" fullDescription=""></action>
+  <action 
+    points="1" 
+    description="Schakel de bloedglucosemeter handmatig uit. Let op; Sommige meters schakelen automatisch uit" 
+    index="16" 
+    type="sequenceStep" 
+    value="turn off" 
+    extra="Schakel de bloedglucosemeter handmatig uit. Let op; Sommige meters schakelen automatisch uit. " 
+  ></action>
 
-  <action points="1" description="" index="17" type="sequenceStep" value="throw finger pin" extra="" fullDescription=""></action>
+  <action 
+    points="1" 
+    description="Gooi de vingerprikker voor eenmalig gebruik geheel in de naaldenbeker"
+    index="17" 
+    type="sequenceStep" 
+    value="throw finger pin" 
+    extra="Gooi de vingerprikker voor eenmalig gebruik geheel in de naaldenbeker." 
+  ></action>
 
-  <action points="1" description="" index="18" type="sequenceStep" value="pull of gloves" extra="" fullDescription=""></action>
+  <action 
+    points="1" 
+    description="Trek de handschoenen uit" 
+    index="18" 
+    type="sequenceStep" 
+    value="pull of gloves" 
+    extra="Trek de handschoenen uit." 
+  ></action>
 
   <action
-    points="2"
-    description="Pas handhygiëne toe."
-    fullDescription="Klik op de hygiënepomp om deze te gebruiken.)"
-    audioHint="Injection/EAS5-2"
+    comment="1. Apply hand hygiene"
     index="19"
+    points="3"
+    description="Pas handhygiëne toe"
     type="use"
     value="HandCleaner"
-    extra="Handhygiëne is het allerbelangrijkste als het gaat om voorkomen van besmetting met ziektekiemen. Dit betekent je handen reinigen op de juiste manier en op de juiste momenten. Sluit handelingen af met handhygiëne."></action>
-
-<action
-  points="1"
-  description="Ruim de materialen op door met lege handen op het werkveld te klikken."
-  fullDescription="Klik op het werkveld om deze schoon te maken."
-  index="20"
-  type="use"
-  value="WorkField"
-  extra=" Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen."></action>
+    extra="Pas handhygiëne toe"
+    messageTitle="Handhygiëne"
+    messageContent="Handhygiëne is het meest belangrijk om besmetting met ziektekiemen te voorkomen. Reinig je handen altijd op de juiste manier en op het juiste moment. Begin een handeling altijd met handhygiëne."
+   ></action>
 
   <action
+     points="1"
+     description="Ruim de materialen op door met lege handen op het werkveld te klikken"
+     index="20"
+     type="use"
+     value="WorkField"
+     extra="Ruim de materialen op door met lege handen op het werkveld te klikken"
+     messegeTitle="Materialen opruimen"
+     MessegeContent="Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen"
+></action>
+  
+  <action
     points="3"
-    description="Teken toedienlijst af."
-    fullDescription="Open de tablet door op het tablet icoon te drukken. Klik op de App 'Gegevens'. Kies vervolgens voor de toedienlijst. Klik tot slot op het afteken icoon.)"
+    description="Noteer de handeling, de gemeten waarde, de prikstand van de prikpen of vingerprikker. Noteer ook eventuele andere bevindingen"
     audioHint="Injection/EAS4-2"
     index="21"
     type="use"
     value="PaperAndPen"
-    extra="Teken toedienlijst af of noteer tijdstip, soort medicijn, concentratie, hoeveelheid, wijze van toediening en noteer bevindingen."></action>
+    extra="Noteer de handeling, de gemeten waarde, de prikstand van de prikpen of vingerprikker. Noteer ook eventuele andere bevindingen."
+   ></action>
 
 </ActionList>

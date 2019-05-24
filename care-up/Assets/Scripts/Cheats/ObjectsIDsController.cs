@@ -21,10 +21,12 @@ public class ObjectsIDsController : MonoBehaviour
     private List<ObjectsIDs> objectsIDsList = new List<ObjectsIDs>();
     public List<GameObject> hidenObjects;
 
+
     private void Start()
     {
         GetObjectsIDsInfo();
     }
+
 
     public void GetObjectsIDsInfo()
     {

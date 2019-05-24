@@ -62,6 +62,7 @@ public class UMP_Manager : MonoBehaviour {
 
             for (int i = 0; i < Windows.Count; i++)
             {
+            if (Windows[i] != null)
                 Windows[i].SetActive(false);
             }           
         
