@@ -203,6 +203,8 @@ public class RobotUITabs : MonoBehaviour
         {
             FindObjectOfType<ActionManager>().OnUseAction("PaperAndPen");
         }
+
+        GameObject.FindObjectOfType<PlayerScript>().CloseRobotUI();
     }
 
     protected void BackBtnToGeneral()
