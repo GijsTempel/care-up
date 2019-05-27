@@ -358,7 +358,8 @@ public class ActionManager : MonoBehaviour
 
                         if (!inventory.LeftHandEmpty())
                         {
-                            currentLeftObject = System.Char.ToLowerInvariant(inventory.leftHandObject.description[0]) + inventory.leftHandObject.description.Substring(1);
+                            if (!string.IsNullOrEmpty(inventory.leftHandObject.description))
+                                currentLeftObject = System.Char.ToLowerInvariant(inventory.leftHandObject.description[0]) + inventory.leftHandObject.description.Substring(1);
 
                             if (inventory.leftHandObject.name == hand)
                             {
@@ -370,7 +371,8 @@ public class ActionManager : MonoBehaviour
 
                         if (!inventory.RightHandEmpty())
                         {
-                            currentRightObject = System.Char.ToLowerInvariant(inventory.rightHandObject.description[0]) + inventory.rightHandObject.description.Substring(1);
+                            if (!string.IsNullOrEmpty(inventory.rightHandObject.description))
+                                currentRightObject = System.Char.ToLowerInvariant(inventory.rightHandObject.description[0]) + inventory.rightHandObject.description.Substring(1);
 
                             if (inventory.rightHandObject.name == hand)
                             {
