@@ -37,6 +37,7 @@ public class GameUI : MonoBehaviour
     List<ActionManager.StepData> Current_SubTasks;
     float current_UpdateHintDelay = 0f;
     bool toDelayUpdateHint = false;
+    GameObject gameLogic;
 
     GameObject DetailedHintPanel;
 
@@ -119,6 +120,13 @@ public class GameUI : MonoBehaviour
 
     public void ShowBlockMessage(string Title, string Message)
     {
+        if (objectsIDsController != null)
+        {
+            if (objectsIDsController.cheat)
+                return;
+        }
+
+
         if (Message == "")
             return;
         BlockTitle.text = Title;
@@ -138,8 +146,9 @@ public class GameUI : MonoBehaviour
             return;
         }
 
-        if (leftHand  && !handsInventory.LeftHandEmpty())
+        if (leftHand && !handsInventory.LeftHandEmpty())
         {
+
             if (actionManager.CompareUseOnInfo(handsInventory.leftHandObject.name, ""))
             {
                 if (handsInventory.LeftHandObject.GetComponent<PickableObject>().Use(true, true))
@@ -153,6 +162,10 @@ public class GameUI : MonoBehaviour
                 }
                 return;
             }
+            else
+                actionManager.OnUseOnAction(handsInventory.leftHandObject.name, "");
+
+
         }
         if (!leftHand && !handsInventory.RightHandEmpty())
         {
@@ -168,6 +181,10 @@ public class GameUI : MonoBehaviour
                     handsInventory.RightHandObject.GetComponent<PickableObject>().tutorial_usedOn = true;
                 }
             }
+            else
+                actionManager.OnUseOnAction(handsInventory.rightHandObject.name, "");
+
+
         }
     }
 
@@ -319,6 +336,7 @@ public class GameUI : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        gameLogic = GameObject.Find("GameLogic");
         objectsIDsController = GameObject.FindObjectOfType<ObjectsIDsController>();
         prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
         if (prefs != null)
@@ -741,7 +759,7 @@ public class GameUI : MonoBehaviour
                     DropLeftButton.SetActive(true);
                     if (handsInventory.leftHandObject.GetComponent<ExaminableObject>() != null)
                         showZoomLeft = true;
-                    if (actionManager.CompareUseOnInfo(handsInventory.leftHandObject.name, "", ""))
+                    if (actionManager.CompareUseOnInfo(handsInventory.leftHandObject.name, "", "", true))
                     {
                         showNoTarget = true;
                         noTargetButton.transform.GetChild(0).GetComponent<Text>().text =
@@ -749,9 +767,17 @@ public class GameUI : MonoBehaviour
                     }
                     if (REmpty)
                     {
-                        bool show_decomb_left = actionManager.CompareCombineObjects(handsInventory.leftHandObject.name, "",  true);
+                        bool show_decomb_left = actionManager.CompareCombineObjects(handsInventory.leftHandObject.name, "", true);
+
                         if (!practiceMode)
                             show_decomb_left = true;
+
+                        if (objectsIDsController != null)
+                        {
+                            if (objectsIDsController.cheat)
+                                show_decomb_left = true;
+                        }
+
                         decombineButton.SetActive(show_decomb_left && !showNoTarget);
                         decombineButton.GetComponent<Animator>().SetTrigger("BlinkOn");
                         decombineButton.transform.GetChild(0).GetComponent<Text>().text =
@@ -775,7 +801,7 @@ public class GameUI : MonoBehaviour
 
                     if (handsInventory.rightHandObject.GetComponent<ExaminableObject>() != null)
                         showZoomRight = true;
-                    if (actionManager.CompareUseOnInfo(handsInventory.rightHandObject.name, "", ""))
+                    if (actionManager.CompareUseOnInfo(handsInventory.rightHandObject.name, "", "", true))
                     {
                         showNoTarget_right = true;
                         noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text =
@@ -786,6 +812,11 @@ public class GameUI : MonoBehaviour
                         bool show_decomb_right = actionManager.CompareCombineObjects(handsInventory.rightHandObject.name, "", true);
                         if (!practiceMode)
                             show_decomb_right = true;
+                        if (objectsIDsController != null)
+                        {
+                            if (objectsIDsController.cheat)
+                                show_decomb_right = true;
+                        }
                         decombineButton_right.SetActive(show_decomb_right && !showNoTarget_right);
                         decombineButton_right.transform.GetChild(0).GetComponent<Text>().text =
                         (actionManager.CompareCombineObjects("", handsInventory.rightHandObject.name, true)) ?

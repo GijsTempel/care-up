@@ -72,13 +72,13 @@ public class UMP_SceneOptions : MonoBehaviour {
         switch (CurrentBW)
         {
             case 0:
-                QualitySettings.blendWeights = BlendWeights.OneBone;
+                QualitySettings.skinWeights = SkinWeights.OneBone;
                 break;
             case 1:
-                QualitySettings.blendWeights = BlendWeights.TwoBones;
+                QualitySettings.skinWeights = SkinWeights.TwoBones;
                 break;
             case 2:
-                QualitySettings.blendWeights = BlendWeights.FourBones;
+                QualitySettings.skinWeights = SkinWeights.FourBones;
                 break;
         }
     }
