@@ -19,7 +19,7 @@ public class ActionManager : MonoBehaviour
     private Text percentageText;
     public int actionsCount = 0;
     public static bool practiceMode = true;
-
+    LocalizationManager localizationManager = new LocalizationManager();
     [HideInInspector]
     public static bool personClicked = false;
 
@@ -916,6 +916,16 @@ public class ActionManager : MonoBehaviour
     void Awake()
     {
         manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
+        bool hasLocal = false;
+        if (manager != null)
+        {
+            if (manager.GetComponent<LocalizationManager>() != null)
+                localizationManager = manager.GetComponent<LocalizationManager>();
+            else
+                hasLocal = true;
+        }
+        if (!hasLocal)
+            localizationManager.LoadLocalizedText(Application.streamingAssetsPath + "/textData.json");
 
         string sceneName = SceneManager.GetActiveScene().name;
         menuScene = sceneName == "Menu" || sceneName == "SceneSelection" || sceneName == "EndScore";
@@ -936,9 +946,8 @@ public class ActionManager : MonoBehaviour
             int index;
             int.TryParse(action.Attributes["index"].Value, out index);
             string type = action.Attributes["type"].Value;
-            string descr = action.Attributes["description"].Value;
-
-
+            string descr = localizationManager.GetValueIfKey(action.Attributes["description"].Value);
+  
             string comment = "";
             if (action.Attributes["comment"] != null)
             {
