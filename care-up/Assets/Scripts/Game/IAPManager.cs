@@ -27,7 +27,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
 
             UnityPurchasing.Initialize(this, builder);
 #else
-        Debug.Log("Not an iOS. Destroying IAP.");
+        //Debug.Log("Not an iOS. Destroying IAP.");
         Destroy(this);
         return;
 #endif

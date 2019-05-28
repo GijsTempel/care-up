@@ -167,7 +167,8 @@ namespace MBS
 
         void ShowHowmanyIAmTracking()
         {
-            Debug.Log($"Tracking achievements: {(null == tracked ? 0 : tracked.Count)}");
+            // not relevant when not needed
+            //Debug.Log($"Tracking achievements: {(null == tracked ? 0 : tracked.Count)}");
         }
 
         public void UpdateKeys(string name, int qty)

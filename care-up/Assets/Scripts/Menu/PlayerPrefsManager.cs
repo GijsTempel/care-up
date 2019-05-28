@@ -172,10 +172,10 @@ public class PlayerPrefsManager : MonoBehaviour {
         SceneManager.sceneLoaded += OnLoaded;
 
         AudioListener.volume = Volume;
-        Debug.Log ("Volume is set to saved value: " + Volume);
+        //Debug.Log ("Volume is set to saved value: " + Volume);
 
         postProcessingEnabled = PlayerPrefs.GetInt ("PostProcessing") == 1;
-        Debug.Log ("PostProcessing is set to saved value: " + postProcessingEnabled);
+        //Debug.Log ("PostProcessing is set to saved value: " + postProcessingEnabled);
 
         // OnLoaded doesnt launch on initial scene? so force it in start function separately
         OnLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
@@ -561,7 +561,7 @@ public class PlayerPrefsManager : MonoBehaviour {
 
         int currentVersionNum = int.Parse (cvSplit[0]) * 1000 + int.Parse (cvSplit[1]) * 100 + int.Parse (cvSplit[2]) * 10;
         int latestVersionNum = int.Parse (lvSplit[0]) * 1000 + int.Parse (lvSplit[1]) * 100 + int.Parse (lvSplit[2]) * 10;
-        print ("______Current: " + currentVersionNum.ToString () + " __latest: " + latestVersionNum.ToString ());
+        //print ("______Current: " + currentVersionNum.ToString () + " __latest: " + latestVersionNum.ToString ());
         if (currentVersionNum < latestVersionNum) {
             // player can download new version
             GameObject.Find ("UMenuProManager/MenuCanvas/VersionUpdatePanel").SetActive (true);

@@ -34,7 +34,7 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
     void GetCharacterCreationCompletion(CML response)
     {
         WULogin.characterCreated = response[1].Bool("CharacterCreated");
-        Debug.Log("Character created = " + WULogin.characterCreated);
+        //Debug.Log("Character created = " + WULogin.characterCreated);
 
         // if it is indeed true, we need to get the info for later use
         if (WULogin.characterCreated)
@@ -144,25 +144,25 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
     {
         if (allow)
         {
-            Debug.Log("PlaysNumber::Player subscription state: " + !noSub);
+            //Debug.Log("PlaysNumber::Player subscription state: " + !noSub);
             GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed = !noSub;
         }
 
         if (allow)
         {
-            Debug.Log("PlaysNumber::Player was allowed to load main menu scene.");
+            //Debug.Log("PlaysNumber::Player was allowed to load main menu scene.");
             bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
         }
         else
         {
-            Debug.Log("PlaysNumber::Player was NOT allowed to load main menu scene.");
+            //Debug.Log("PlaysNumber::Player was NOT allowed to load main menu scene.");
             StatusMessage.Message = "Je hebt geen actief product";
         }
     }
 
     void LoadStartScene(CML response)
     {
-        Debug.Log("Uitloggen is gelukt. Je keert nu terug naar het login scherm.");
+        //Debug.Log("Uitloggen is gelukt. Je keert nu terug naar het login scherm.");
         bl_SceneLoaderUtils.GetLoader.LoadLevel("LoginMenu");
     }
 

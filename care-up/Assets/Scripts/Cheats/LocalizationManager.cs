@@ -47,7 +47,7 @@ public class LocalizationManager : MonoBehaviour {
             string expansion = nameSplit[nameSplit.Length - 1];
             if (expansion == "json")
             {
-                print(file);
+                // print(file);
                 LoadLocalizedText(file.ToString());
             }
         }
