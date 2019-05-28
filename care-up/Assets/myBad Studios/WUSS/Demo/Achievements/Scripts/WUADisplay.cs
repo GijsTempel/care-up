@@ -81,7 +81,7 @@ namespace MBS
 
             if (currentScene.name == "LoginMenu" && destroyPrefab == true)
             {
-                Debug.Log("hi");
+                // Debug.Log("hi"); hello, plz unnecesarry debug messages shoudnt be pushed
                 Destroy(transform.parent.gameObject);
                 destroyPrefab = false;
             }

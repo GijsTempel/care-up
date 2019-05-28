@@ -75,7 +75,8 @@ public class PlayerPrefsManager : MonoBehaviour {
         return localizationManager;
     }
 
-    private void OnLoaded (Scene s, LoadSceneMode m) {
+    private void OnLoaded (Scene s, LoadSceneMode m)
+    {
         transform.position =
             GameObject.FindObjectOfType<AudioListener> ().transform.position;
 
@@ -161,13 +162,15 @@ public class PlayerPrefsManager : MonoBehaviour {
             instance = this;
             DontDestroyOnLoad (gameObject);
         }
-        SceneManager.sceneLoaded += OnLoaded;
+
         localizationManager = new LocalizationManager ();
         localizationManager.LoadAllDictionaries();
     }
 
-    void Start () {
-        
+    void Start ()
+    {
+        SceneManager.sceneLoaded += OnLoaded;
+
         AudioListener.volume = Volume;
         Debug.Log ("Volume is set to saved value: " + Volume);
 
