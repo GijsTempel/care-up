@@ -177,7 +177,7 @@ namespace MBS
         static public void RegisterAccount( CMLData fields ) => WPServer.ContactServer( WULActions.SubmitRegistration, filepath, LOGINConstant, fields, onRegistered, onRegistrationFailed );
         static public void ResetPassword( CMLData fields ) => WPServer.ContactServer( WULActions.PasswordReset, filepath, LOGINConstant, fields, onReset, onResetFailed );
         static public void ChangePassword( CMLData fields ) => WPServer.ContactServer( WULActions.PasswordChange, filepath, LOGINConstant, fields, onPasswordChanged, onPasswordChangeFail );
-        static public void LogOut() => WPServer.ContactServer( WULActions.Logout, filepath, LOGINConstant, null, __onLogOutSuccess, onLogoutFailed );
+        static public void LogOut() => WPServer.ContactServer( WULActions.DoLogin, filepath, LOGINConstant, null, __onLogOutSuccess, onLogoutFailed );
         static public void FetchPersonalInfo() => WPServer.ContactServer( WULActions.FetchAccountDetails, filepath, LOGINConstant, null, onAccountInfoReceived, onAccountInfoFetchFailed );
         static public void FetchAvailableGameInfo() => WPServer.ContactServer( WULActions.FetchAvailableGameInfo, filepath, LOGINConstant, null, __onGameListFetched, __onGameListFetchFailed );
 
