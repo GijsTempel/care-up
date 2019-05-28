@@ -62,8 +62,21 @@ public class WalkToGroupButton : MonoBehaviour {
         }
     }
 
+    void setColor(Color col)
+    {
+        ColorBlock colors = GetComponent<Button>().colors;
+   
+        colors.normalColor = col;
+        colors.pressedColor = col;
+        colors.selectedColor = col;
+        colors.highlightedColor = col;
 
-    
+        GetComponent<Button>().colors = colors;
+        if(blur != null)
+            blur.GetComponent<Image>().color = col;
+    }
+
+
     public void setWalkToGroup(WalkToGroup wtg)
     {
         linkedWalkToGroup = wtg;
@@ -76,27 +89,19 @@ public class WalkToGroupButton : MonoBehaviour {
             {
                 case WalkToGroup.GroupType.WorkField:
                     _icon.GetComponent<Image>().sprite = Resources.Load("Sprites/WalkGroup_Icons/MoveWorkfield" , typeof(Sprite)) as Sprite;
-                    GetComponent<Image>().color = gameUI.WTGButtons["WorkField"].GetComponent<Image>().color;
-                    if (blur != null) 
-                        blur.GetComponent<Image>().color = gameUI.WTGButtons["WorkField"].GetComponent<Image>().color;
+                    setColor(gameUI.WTGButtons["WorkField"].GetComponent<Image>().color);
                     break;
                 case WalkToGroup.GroupType.Doctor:
                     _icon.GetComponent<Image>().sprite = Resources.Load("Sprites/WalkGroup_Icons/MoveCollegue", typeof(Sprite)) as Sprite;
-                    GetComponent<Image>().color = gameUI.WTGButtons["Doctor"].GetComponent<Image>().color;
-                    if (blur != null)
-                        blur.GetComponent<Image>().color = gameUI.WTGButtons["Doctor"].GetComponent<Image>().color;
+                    setColor(gameUI.WTGButtons["Doctor"].GetComponent<Image>().color);
                     break;
                 case WalkToGroup.GroupType.Patient:
                     _icon.GetComponent<Image>().sprite = Resources.Load("Sprites/WalkGroup_Icons/Movepatient", typeof(Sprite)) as Sprite;
-                    GetComponent<Image>().color = gameUI.WTGButtons["Patient"].GetComponent<Image>().color;
-                    if (blur != null)
-                        blur.GetComponent<Image>().color = gameUI.WTGButtons["Patient"].GetComponent<Image>().color;
+                    setColor(gameUI.WTGButtons["Patient"].GetComponent<Image>().color);
                     break;
                 case WalkToGroup.GroupType.Sink:
                     _icon.GetComponent<Image>().sprite = Resources.Load("Sprites/WalkGroup_Icons/MoveSink", typeof(Sprite)) as Sprite;
-                    GetComponent<Image>().color = gameUI.WTGButtons["Sink"].GetComponent<Image>().color;
-                    if (blur != null)
-                        blur.GetComponent<Image>().color = gameUI.WTGButtons["Sink"].GetComponent<Image>().color;
+                    setColor(gameUI.WTGButtons["Sink"].GetComponent<Image>().color);
                     break;
             }
         }
