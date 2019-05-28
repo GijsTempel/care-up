@@ -19,7 +19,7 @@ public class ActionManager : MonoBehaviour
     private Text percentageText;
     public int actionsCount = 0;
     public static bool practiceMode = true;
-    LocalizationManager localizationManager = new LocalizationManager();
+    LocalizationManager localizationManager;
     [HideInInspector]
     public static bool personClicked = false;
 
@@ -916,16 +916,12 @@ public class ActionManager : MonoBehaviour
     void Awake()
     {
         manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
-        bool hasLocal = false;
         if (manager != null)
-        {
-            if (manager.GetComponent<LocalizationManager>() != null)
-                localizationManager = manager.GetComponent<LocalizationManager>();
-            else
-                hasLocal = true;
-        }
-        if (!hasLocal)
+            localizationManager = manager.GetLocalization();
+        if (localizationManager == null){
+            localizationManager = new LocalizationManager();
             localizationManager.LoadLocalizedText(Application.streamingAssetsPath + "/textData.json");
+        }
 
         string sceneName = SceneManager.GetActiveScene().name;
         menuScene = sceneName == "Menu" || sceneName == "SceneSelection" || sceneName == "EndScore";
@@ -982,13 +978,13 @@ public class ActionManager : MonoBehaviour
             string extra = "";
             if (action.Attributes["extra"] != null)
             {
-                extra = action.Attributes["extra"].Value;
+                extra = localizationManager.GetValueIfKey(action.Attributes["extra"].Value);
             }
 
             string buttonText = "";
             if (action.Attributes["buttonText"] != null)
             {
-                buttonText = action.Attributes["buttonText"].Value;
+                buttonText = localizationManager.GetValueIfKey(action.Attributes["buttonText"].Value);
             }
             else
             {
@@ -1022,13 +1018,13 @@ public class ActionManager : MonoBehaviour
             string messageTitle = "";
             if (action.Attributes["messageTitle"] != null)
             {
-                messageTitle = action.Attributes["messageTitle"].Value;
+                messageTitle = localizationManager.GetValueIfKey(action.Attributes["messageTitle"].Value);
             }
 
             string messageContent = "";
             if (action.Attributes["messageContent"] != null)
             {
-                messageContent = action.Attributes["messageContent"].Value;
+                messageContent = localizationManager.GetValueIfKey(action.Attributes["messageContent"].Value);
             }
 
             string blockUnlock = "";
@@ -1053,18 +1049,18 @@ public class ActionManager : MonoBehaviour
             string blockMsg = "";
             if (action.Attributes["blockTitle"] != null)
             {
-                blockTitle = action.Attributes["blockTitle"].Value;
+                blockTitle = localizationManager.GetValueIfKey(action.Attributes["blockTitle"].Value);
             }
 
             if (action.Attributes["blockMessage"] != null)
             {
-                blockMsg = action.Attributes["blockMessage"].Value;
+                blockMsg = localizationManager.GetValueIfKey(action.Attributes["blockMessage"].Value);
             }
 
             string decombineText = "Openen";
             if (action.Attributes["decombineText"] != null)
             {
-                decombineText = action.Attributes["decombineText"].Value;
+                decombineText = localizationManager.GetValueIfKey(action.Attributes["decombineText"].Value);
             }
 
             switch (type)
