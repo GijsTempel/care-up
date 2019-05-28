@@ -35,7 +35,29 @@ public class LocalizationManager : MonoBehaviour {
         isReady = true;
     }
 
+
+    public void LoadAllDictionaries()
+    {
+        //localizationManager.LoadLocalizedText(Application.dataPath + "/Dictionaries/TextData.json");
+        string path = Application.dataPath + "/Dictionaries";
+        DirectoryInfo info = new DirectoryInfo(path);
+        FileInfo[] fileInfo = info.GetFiles();
+        foreach (FileInfo file in fileInfo) {
+            string[] nameSplit = file.ToString().Split('.');
+            string expansion = nameSplit[nameSplit.Length - 1];
+            if (expansion == "json")
+            {
+                print(file);
+                LoadLocalizedText(file.ToString());
+            }
+        }
+    }
+
     public string GetValueIfKey (string key) {
+        if (key == null)
+            return "";
+        if (key.Length == 0)
+            return "";
         string result = key;
         bool debugMode = false;
         if (gameLogic != null){
