@@ -141,10 +141,14 @@ public class PlayerPrefsManager : MonoBehaviour
 
         if (s.name == "LoginMenu")
         {
-            if ((Application.platform != RuntimePlatform.Android) &&
-                (Application.platform != RuntimePlatform.WindowsPlayer))
+            if (Application.platform != RuntimePlatform.Android)
             {
                 Destroy(GameObject.Find("Canvas/WULoginPrefab/WUSerialScreen/RegisterArea/Purchase_Android_WebGL"));
+            }
+
+            if (Application.platform != RuntimePlatform.WindowsPlayer)
+            {
+                Destroy(GameObject.Find("Canvas/WULoginPrefab/WUSerialScreen/RegisterArea/Purchase_UWP"));
             }
 
             if (Application.platform != RuntimePlatform.IPhonePlayer)
@@ -184,6 +188,8 @@ public class PlayerPrefsManager : MonoBehaviour
 
         // OnLoaded doesnt launch on initial scene? so force it in start function separately
         OnLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
+
+        Debug.Log("Current RuntimePlatform is: " + Application.platform);
     }
 
     public float Volume

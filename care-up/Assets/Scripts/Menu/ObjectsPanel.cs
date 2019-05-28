@@ -27,8 +27,8 @@ public class ObjectsPanel : MonoBehaviour {
         float maxDist = (GameObject.FindObjectOfType<Controls>().interactionDistance + 0.2f) * 6f;
         foreach (PickableObject p in GameObject.FindObjectsOfType<PickableObject>())
         {
-            if (p.name == "ipad")
-                continue;
+            //if (p.name == "ipad")
+            //    continue;
             if (p == inventory.leftHandObject || p == inventory.rightHandObject)
                 continue;
             float dist = Vector3.Distance(p.transform.position, ps.transform.position);
