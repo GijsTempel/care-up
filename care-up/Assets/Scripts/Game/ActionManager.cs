@@ -915,12 +915,13 @@ public class ActionManager : MonoBehaviour
     /// </summary>
     void Awake()
     {
+        print(Application.dataPath );
         manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
         if (manager != null)
             localizationManager = manager.GetLocalization();
         if (localizationManager == null){
             localizationManager = new LocalizationManager();
-            localizationManager.LoadLocalizedText(Application.streamingAssetsPath + "/textData.json");
+            localizationManager.LoadLocalizedText(Application.dataPath + "/Dictionaries/TextData.json");
         }
 
         string sceneName = SceneManager.GetActiveScene().name;

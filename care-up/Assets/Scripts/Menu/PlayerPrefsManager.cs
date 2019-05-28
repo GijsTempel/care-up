@@ -156,7 +156,7 @@ public class PlayerPrefsManager : MonoBehaviour {
         }
         SceneManager.sceneLoaded += OnLoaded;
         localizationManager = new LocalizationManager ();
-        localizationManager.LoadLocalizedText (Application.streamingAssetsPath + "/textData.json");
+        localizationManager.LoadLocalizedText(Application.dataPath + "/Dictionaries/TextData.json");
     }
 
     void Start () {
