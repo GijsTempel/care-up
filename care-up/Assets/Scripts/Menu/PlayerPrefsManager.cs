@@ -23,7 +23,7 @@ public class PlayerPrefsManager : MonoBehaviour {
     private LocalizationManager localizationManager; // = new LocalizationManager();
     public bool VR = true;
     public bool practiceMode = true;
-
+    public bool TextDebug = false;
     // store value here after getting from server
     public bool tutorialCompleted;
 

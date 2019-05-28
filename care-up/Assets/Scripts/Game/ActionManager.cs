@@ -11,6 +11,7 @@ using CareUp.Actions;
 /// </summary>
 public class ActionManager : MonoBehaviour
 {
+    public bool TextDebug = false;
     // tutorial variables - do not affect gameplay
     [HideInInspector]
     public bool tutorial_hintUsed = false;
@@ -160,11 +161,11 @@ public class ActionManager : MonoBehaviour
         if (playerScript == null)
             playerScript = GameObject.FindObjectOfType<PlayerScript>();
 
-        ActionManager manager = GameObject.FindObjectOfType<ActionManager>();
+        ActionManager actManager = GameObject.FindObjectOfType<ActionManager>();
         GameUI gameUI = GameObject.FindObjectOfType<GameUI>();
 
-        List<Action> sublist = manager.actionList.Where(action =>
-               action.SubIndex == manager.currentActionIndex &&
+        List<Action> sublist = actManager.actionList.Where(action =>
+               action.SubIndex == actManager.currentActionIndex &&
                action.matched == false).ToList();
 
         List<StepData> stepsList = new List<StepData>();
@@ -413,9 +414,9 @@ public class ActionManager : MonoBehaviour
 
                         else if (leftR != null)
                         {
-                            if (manager.CompareUseOnInfo(inventory.leftHandObject.name, ""))
+                            if (actManager.CompareUseOnInfo(inventory.leftHandObject.name, ""))
                             {
-                                keyWords = manager.CurrentButtonText(inventory.leftHandObject.name);
+                                keyWords = actManager.CurrentButtonText(inventory.leftHandObject.name);
 
                                 objectsData.Add(new StepData(false, $"- Klik op de '{keyWords}' knop.", i));
                                 if (!foundComplitedAction)
@@ -453,10 +454,10 @@ public class ActionManager : MonoBehaviour
                                 }
                             }
 
-                            else if (!string.IsNullOrEmpty(manager.CurrentDecombineButtonText(inventory.leftHandObject.name)))
+                            else if (!string.IsNullOrEmpty(actManager.CurrentDecombineButtonText(inventory.leftHandObject.name)))
                             {
-                                keyWords = manager.CurrentDecombineButtonText(inventory.leftHandObject.name);
-                                objectsData.Add(new StepData(false, $"- Klik op de '{manager.CurrentDecombineButtonText(inventory.leftHandObject.name)}' knop.", i));
+                                keyWords = actManager.CurrentDecombineButtonText(inventory.leftHandObject.name);
+                                objectsData.Add(new StepData(false, $"- Klik op de '{actManager.CurrentDecombineButtonText(inventory.leftHandObject.name)}' knop.", i));
                                 if (!foundComplitedAction)
                                 {
                                     foundComplitedAction = true;
@@ -469,9 +470,9 @@ public class ActionManager : MonoBehaviour
 
                         else if (rightR != null)
                         {
-                            if (manager.CompareUseOnInfo(inventory.rightHandObject.name, ""))
+                            if (actManager.CompareUseOnInfo(inventory.rightHandObject.name, ""))
                             {
-                                keyWords = manager.CurrentButtonText(inventory.rightHandObject.name);
+                                keyWords = actManager.CurrentButtonText(inventory.rightHandObject.name);
 
                                 objectsData.Add(new StepData(false, $"- Klik op de '{keyWords}' knop.", i));
                                 if (!foundComplitedAction)
@@ -514,10 +515,10 @@ public class ActionManager : MonoBehaviour
                                     gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
                                 }
                             }
-                            else if (!string.IsNullOrEmpty(manager.CurrentDecombineButtonText(inventory.RightHandObject.name)))
+                            else if (!string.IsNullOrEmpty(actManager.CurrentDecombineButtonText(inventory.RightHandObject.name)))
                             {
-                                keyWords = manager.CurrentDecombineButtonText(inventory.rightHandObject.name);
-                                objectsData.Add(new StepData(false, $"- Klik op de '{manager.CurrentDecombineButtonText(inventory.rightHandObject.name)}' knop.", i));
+                                keyWords = actManager.CurrentDecombineButtonText(inventory.rightHandObject.name);
+                                objectsData.Add(new StepData(false, $"- Klik op de '{actManager.CurrentDecombineButtonText(inventory.rightHandObject.name)}' knop.", i));
                                 if (!foundComplitedAction)
                                 {
                                     foundComplitedAction = true;
@@ -915,10 +916,11 @@ public class ActionManager : MonoBehaviour
     /// </summary>
     void Awake()
     {
-        print(Application.dataPath );
         manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
-        if (manager != null)
+        if (manager != null){
+            TextDebug = manager.TextDebug;
             localizationManager = manager.GetLocalization();
+        }
         if (localizationManager == null){
             localizationManager = new LocalizationManager();
             localizationManager.LoadLocalizedText(Application.dataPath + "/Dictionaries/TextData.json");

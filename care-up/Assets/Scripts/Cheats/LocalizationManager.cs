@@ -7,7 +7,7 @@ using UnityEngine;
 public class LocalizationManager : MonoBehaviour {
 
     public static LocalizationManager instance;
-
+    GameObject gameLogic;
     private Dictionary<string, string> localizedText;
     private bool isReady = false;
     private string missingTextString = "Text not found";
@@ -15,6 +15,7 @@ public class LocalizationManager : MonoBehaviour {
     // Use this for initialization
 
     public void LoadLocalizedText (string fileName) {
+        gameLogic = GameObject.Find("GameLogic");
         if (localizedText == null)
             localizedText = new Dictionary<string, string> ();
         string filePath = Path.Combine (Application.streamingAssetsPath, fileName);
@@ -35,12 +36,22 @@ public class LocalizationManager : MonoBehaviour {
     }
 
     public string GetValueIfKey (string key) {
+        string result = key;
+        bool debugMode = false;
+        if (gameLogic != null){
+            debugMode = gameLogic.GetComponent<ActionManager>().TextDebug;
+        }
+
         if (key[0] == '[') {
             string value = GetLocalizedValue (key.Substring (1, key.Length - 2));
-            if (value != null)
-                return value;
+            if (value != null){
+                result = value;
+                if (Application.isEditor && debugMode){
+                    result = key + value;
+                }
+            }
         }
-        return key;
+        return result;
     }
 
     public string GetLocalizedValue (string key) {
