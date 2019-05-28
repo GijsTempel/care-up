@@ -151,7 +151,8 @@ namespace AssetBundles
 			}
 			else
 			{
-				AssetBundleManager.SetSourceAssetBundleURL(url);
+                url += Application.version + "/";
+                AssetBundleManager.SetSourceAssetBundleURL(url);
 			}
 		}
 		

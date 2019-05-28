@@ -118,7 +118,27 @@ public class ActionManager : MonoBehaviour
             int cur = actionList.IndexOf(currentAction);
             int tot = actionList.Count;
 
-            return 100.0f * cur / tot;
+            float percent = 0f;
+
+            if (GameObject.FindObjectOfType<EndScoreManager>() != null)
+            {
+                if (correctStepIndexes != null && GameObject.FindObjectOfType<EndScoreManager>().quizQuestionsTexts != null
+                    && GameObject.FindObjectOfType<EndScoreManager>().quizWrongIndexes != null && StepsList != null)
+                {
+                    percent = 100f * (correctStepIndexes.Count +
+                        (GameObject.FindObjectOfType<EndScoreManager>().quizQuestionsTexts.Count - GameObject.FindObjectOfType<EndScoreManager>().quizWrongIndexes.Count))
+                        / (StepsList.Count + GameObject.FindObjectOfType<EndScoreManager>().quizQuestionsTexts.Count);
+                }
+            }
+            else
+            {
+                percent = 100.0f * cur / tot;
+            }
+
+            if (percent < 0)
+                percent = 0;          
+
+            return percent;
         }
     }
 
@@ -338,7 +358,8 @@ public class ActionManager : MonoBehaviour
 
                         if (!inventory.LeftHandEmpty())
                         {
-                            currentLeftObject = System.Char.ToLowerInvariant(inventory.leftHandObject.description[0]) + inventory.leftHandObject.description.Substring(1);
+                            if (!string.IsNullOrEmpty(inventory.leftHandObject.description))
+                                currentLeftObject = System.Char.ToLowerInvariant(inventory.leftHandObject.description[0]) + inventory.leftHandObject.description.Substring(1);
 
                             if (inventory.leftHandObject.name == hand)
                             {
@@ -350,7 +371,8 @@ public class ActionManager : MonoBehaviour
 
                         if (!inventory.RightHandEmpty())
                         {
-                            currentRightObject = System.Char.ToLowerInvariant(inventory.rightHandObject.description[0]) + inventory.rightHandObject.description.Substring(1);
+                            if (!string.IsNullOrEmpty(inventory.rightHandObject.description))
+                                currentRightObject = System.Char.ToLowerInvariant(inventory.rightHandObject.description[0]) + inventory.rightHandObject.description.Substring(1);
 
                             if (inventory.rightHandObject.name == hand)
                             {
@@ -654,16 +676,20 @@ public class ActionManager : MonoBehaviour
     }
 
     // new comparison looks for all actions of type withing current index
-    public bool CompareUseObject(string name)
+    public bool CompareUseObject(string name, bool skipBlocks = false)
     {
         bool result = false;
 
         List<Action> sublist = actionList.Where(action =>
                 action.SubIndex == currentActionIndex &&
                 action.matched == false).ToList();
-        sublist = sublist.Where(action =>
-            action.blockRequired == "" ||
-            unlockedBlocks.Contains(action.blockRequired)).ToList();
+
+        if (!skipBlocks)
+        {
+            sublist = sublist.Where(action =>
+                action.blockRequired == "" ||
+                unlockedBlocks.Contains(action.blockRequired)).ToList();
+        }
 
         foreach (Action a in sublist)
         {
@@ -677,16 +703,21 @@ public class ActionManager : MonoBehaviour
         return result;
     }
 
-    public bool CompareCombineObjects(string left, string right)
+    public bool CompareCombineObjects(string left, string right, bool skipBlocks = false)
     {
         bool result = false;
 
         List<Action> sublist = actionList.Where(action =>
                 action.SubIndex == currentActionIndex &&
                 action.matched == false).ToList();
-        sublist = sublist.Where(action =>
-            action.blockRequired == "" ||
-            unlockedBlocks.Contains(action.blockRequired)).ToList();
+
+        if (!skipBlocks)
+        {
+            sublist = sublist.Where(action =>
+                action.blockRequired == "" ||
+                unlockedBlocks.Contains(action.blockRequired)).ToList();
+        }
+
         foreach (Action a in sublist)
         {
             if (a.Type == ActionType.ObjectCombine)
@@ -702,7 +733,7 @@ public class ActionManager : MonoBehaviour
         return result;
     }
 
-    public bool CompareUseOnInfo(string item, string target, string callerName = "")
+    public bool CompareUseOnInfo(string item, string target, string callerName = "", bool skipBlocks = false)
     {
         bool result = false;
 
@@ -712,9 +743,14 @@ public class ActionManager : MonoBehaviour
         List<Action> sublist = actionList.Where(action =>
                 action.SubIndex == currentActionIndex &&
                 action.matched == false).ToList();
-        sublist = sublist.Where(action =>
-            action.blockRequired == "" ||
-            unlockedBlocks.Contains(action.blockRequired)).ToList();
+
+        if (!skipBlocks)
+        {
+            sublist = sublist.Where(action =>
+                action.blockRequired == "" ||
+                unlockedBlocks.Contains(action.blockRequired)).ToList();
+        }
+
         foreach (Action a in sublist)
         {
             if (a.Type == ActionType.ObjectUseOn)
@@ -729,16 +765,21 @@ public class ActionManager : MonoBehaviour
         return result;
     }
 
-    public bool CompareTopic(string t)
+    public bool CompareTopic(string t, bool skipBlocks = false)
     {
         bool result = false;
 
         List<Action> sublist = actionList.Where(action =>
                 action.SubIndex == currentActionIndex &&
                 action.matched == false).ToList();
-        sublist = sublist.Where(action =>
-            action.blockRequired == "" ||
-            unlockedBlocks.Contains(action.blockRequired)).ToList();
+
+        if (!skipBlocks)
+        {
+            sublist = sublist.Where(action =>
+                action.blockRequired == "" ||
+                unlockedBlocks.Contains(action.blockRequired)).ToList();
+        }
+
         foreach (Action a in sublist)
         {
             if (a.Type == ActionType.PersonTalk)
@@ -751,14 +792,18 @@ public class ActionManager : MonoBehaviour
         return result;
     }
 
-    public string CurrentButtonText(string itemName)
+    public string CurrentButtonText(string itemName, bool skipBlocks = false)
     {
         List<Action> sublist = actionList.Where(action =>
                action.SubIndex == currentActionIndex &&
                action.matched == false).ToList();
-        sublist = sublist.Where(action =>
-            action.blockRequired == "" ||
-            unlockedBlocks.Contains(action.blockRequired)).ToList();
+
+        if (!skipBlocks)
+        {
+            sublist = sublist.Where(action =>
+                action.blockRequired == "" ||
+                unlockedBlocks.Contains(action.blockRequired)).ToList();
+        }
 
         foreach (Action a in sublist)
         {
@@ -785,14 +830,18 @@ public class ActionManager : MonoBehaviour
         return "";
     }
 
-    public string CurrentDecombineButtonText(string itemName)
+    public string CurrentDecombineButtonText(string itemName, bool skipBlocks = false)
     {
         List<Action> sublist = actionList.Where(action =>
                action.SubIndex == currentActionIndex &&
                action.matched == false).ToList();
-        sublist = sublist.Where(action =>
-            action.blockRequired == "" ||
-            unlockedBlocks.Contains(action.blockRequired)).ToList();
+
+        if (!skipBlocks)
+        {
+            sublist = sublist.Where(action =>
+                action.blockRequired == "" ||
+                unlockedBlocks.Contains(action.blockRequired)).ToList();
+        }
 
         foreach (Action a in sublist)
         {
