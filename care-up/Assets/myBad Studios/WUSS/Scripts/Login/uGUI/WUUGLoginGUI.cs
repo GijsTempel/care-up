@@ -287,9 +287,10 @@ namespace MBS
             //setup all the actions that will take place when buttons are clicked
             SetupResponders();
 
+            // fuck this
             //if "Remember me" was selected during the last login, try to log in automatically...
-            if ( attempt_auto_login && !WULogin.logged_in )
-                WULogin.AttemptAutoLogin();
+            //if ( attempt_auto_login && !WULogin.logged_in )
+            //    WULogin.AttemptAutoLogin();
         }
 
         void SetupResponders()
