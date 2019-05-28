@@ -923,7 +923,7 @@ public class ActionManager : MonoBehaviour
         }
         if (localizationManager == null){
             localizationManager = new LocalizationManager();
-            localizationManager.LoadLocalizedText(Application.dataPath + "/Dictionaries/TextData.json");
+            localizationManager.LoadAllDictionaries();
         }
 
         string sceneName = SceneManager.GetActiveScene().name;
