@@ -828,6 +828,9 @@ public class PlayerPrefsManager : MonoBehaviour {
              // Escape button logic for main menu scene
             else if (GameObject.Find("UMenuProManager") != null)
             {
+                GameObject accauntAchievementWindow = manager.Windows[7];
+                GameObject accauntScoresWindow = manager.Windows[8];
+
                 if (GameObject.Find("Dialogs/DialogTestPractice") != null)
                 {
                     GameObject.Find("DialogTestPractice/Panel_UI").transform.GetChild(2)?.GetComponent<Button>().onClick.Invoke();
@@ -838,10 +841,17 @@ public class PlayerPrefsManager : MonoBehaviour {
                     GameObject.Find("InfoBar").transform.GetChild(0)?.GetComponent<Button>().onClick.Invoke();
                 }
 
-                //else if (manager.Windows[7].activeSelf || manager.Windows[8].activeSelf) // Account_Achievements and Accaunt_Scores
-                //{
-                //    manager.ChangeWindow(6);
-                //}
+                else if (accauntAchievementWindow.activeSelf) 
+                {
+                    accauntAchievementWindow.transform.GetChild(0)?.GetComponent<Button>().onClick.Invoke();
+                    accauntAchievementWindow.transform.GetChild(0)?.GetComponent<UMP_ButtonGroup>().OnSelect();
+                }
+
+                else if (accauntScoresWindow.activeSelf) 
+                {
+                    accauntScoresWindow.transform.GetChild(1)?.GetComponent<Button>().onClick.Invoke();
+                    accauntScoresWindow.transform.GetChild(1)?.GetComponent<UMP_ButtonGroup>().OnSelect();
+                }
 
                 else if (manager.Windows[3].activeSelf)
                 {
