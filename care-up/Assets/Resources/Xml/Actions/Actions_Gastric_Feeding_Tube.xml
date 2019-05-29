@@ -32,16 +32,6 @@
     messageTitle="Benodigdheden"
     messageContent=""/>
 
-  <action
-    comment="Place tube in water"
-    points="1"
-    description="Place tube in water"
-    index="1"
-    type="useOn"
-    item="MedicalTubeInHand"
-    target=""
-    buttonText="Place in water"
-    extra="Neem de sonde uit de verpakking"/>
 
   <action
     points="2"
@@ -77,6 +67,17 @@
     extra=""/>
 
   <action
+    comment="(3)Open syringe"
+    points="1"
+    description="Open syringe"
+    fullDescription=""
+    index="2"
+    type="combine"
+    left="Syringe50ml_packed"
+    right=""
+    extra=""/>
+
+  <action
     comment="Ask the client to take a half sitting position."
     points="2"
     description="Vraag de cliënt een halfzittende houding aan te nemen."
@@ -106,6 +107,17 @@
     item="MedicalTube"
     target=""
     buttonText="Take the probe"
+    extra="Neem de sonde uit de verpakking"/>
+
+  <action
+    comment="Place tube in water"
+    points="1"
+    description="Place tube in water"
+    index="6"
+    type="useOn"
+    item="MedicalTubeInHand"
+    target=""
+    buttonText="Place in water"
     extra="Neem de sonde uit de verpakking"/>
 
 </ActionList>
