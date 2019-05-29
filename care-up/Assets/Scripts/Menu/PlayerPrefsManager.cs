@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Net;
 using System.Net.Mail;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
-using System.Text.RegularExpressions;
-using LoginProAsset;
 using MBS;
 using PaperPlaneTools;
 using UnityEngine;
@@ -60,6 +56,10 @@ public class PlayerPrefsManager : MonoBehaviour {
     private static string practiceScene = "";
     public static int practicePlays = 0;
 
+    private UMP_Manager manager;
+    private MainMenu mainMenu;
+    private Scene currentScene;
+
     public string fullPlayerName = "";
 
     public string ActivatedScenes {
@@ -71,6 +71,11 @@ public class PlayerPrefsManager : MonoBehaviour {
         }
     }
 
+    public void Update()
+    {
+        SetEscapeButtonLogic();
+    }
+
     public LocalizationManager GetLocalization () {
         return localizationManager;
     }
@@ -79,6 +84,8 @@ public class PlayerPrefsManager : MonoBehaviour {
     {
         transform.position =
             GameObject.FindObjectOfType<AudioListener> ().transform.position;
+
+        currentScene = s;
 
         if (!(s.name == "LoginMenu" ||
                 s.name == "MainMenu" ||
@@ -181,6 +188,8 @@ public class PlayerPrefsManager : MonoBehaviour {
         OnLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
 
         Debug.Log("Current RuntimePlatform is: " + Application.platform);
+
+        manager = GameObject.FindObjectOfType<UMP_Manager>();
     }
 
     public float Volume {
@@ -774,6 +783,109 @@ public class PlayerPrefsManager : MonoBehaviour {
             CMLData data = new CMLData ();
             data.Set ("FullName", manager.fullPlayerName);
             WUData.UpdateCategory ("AccountStats", data);
+        }
+    }
+
+   private void SetEscapeButtonLogic()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Debug.Log("Escape button pressed");
+
+            manager = GameObject.FindObjectOfType<UMP_Manager>();
+
+            // Escape button logic for login scene
+            if (GameObject.Find("WULoginPrefab") != null)
+            {
+                mainMenu = GameObject.FindObjectOfType<MainMenu>();
+
+                if (GameObject.Find("LoginRegisterWindow") != null)
+                {
+                    mainMenu?.OnQuitButtonClick();
+                }
+
+                else if (GameObject.Find("RegisterWindow") != null)
+                {
+                    GameObject.Find("LoginRegisterArea/RegisterArea")?.transform.GetChild(0)?.GetComponent<Button>().onClick.Invoke();
+                }
+
+                else if (GameObject.Find("TermsAndConditionScreen") != null && GameObject.Find("Terms_Condition_Screen") == null && GameObject.Find("Voorwaarden_Screen") == null)
+                {
+                    GameObject.Find("TermsAndConditionScreen/RegisterArea")?.transform.GetChild(3)?.GetComponent<Button>().onClick.Invoke();
+                }
+
+                else if (GameObject.Find("LoginWindow") != null)
+                {
+                    GameObject.Find("LoginRegisterArea/LoginArea")?.transform.GetChild(6)?.GetComponent<Button>().onClick.Invoke();
+                }
+
+                else if (GameObject.Find("PassResetScreen") != null)
+                {
+                    GameObject.Find("PassResetArea")?.transform.GetChild(2)?.GetComponent<Button>().onClick.Invoke();
+                }
+            }
+
+             // Escape button logic for main menu scene
+            else if (GameObject.Find("UMenuProManager") != null)
+            {
+                if (GameObject.Find("Dialogs/DialogTestPractice") != null)
+                {
+                    GameObject.Find("DialogTestPractice/Panel_UI").transform.GetChild(2)?.GetComponent<Button>().onClick.Invoke();
+                }
+
+                else if (GameObject.Find("InfoBar") != null)
+                {
+                    GameObject.Find("InfoBar").transform.GetChild(0)?.GetComponent<Button>().onClick.Invoke();
+                }
+
+                //else if (manager.Windows[7].activeSelf || manager.Windows[8].activeSelf) // Account_Achievements and Accaunt_Scores
+                //{
+                //    manager.ChangeWindow(6);
+                //}
+
+                else if (manager.Windows[3].activeSelf)
+                {
+                    manager.QuitApp();
+                }
+
+                else
+                {
+                    for (int i = 0; i < 6; i++)
+                    {
+                        if (manager.Windows[i].activeSelf)
+                        {
+                            GameObject quitWindowButton = GameObject.Find("Menu/slot (4)");
+
+                            if(quitWindowButton != null)
+                            {
+                                quitWindowButton.GetComponent<Button>().onClick.Invoke();
+                                quitWindowButton.GetComponent<Button>().GetComponent<UMP_ButtonGroup>().OnSelect();
+                            }
+
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // Escape button logic for protocol scenes
+            else
+            {
+                if (GameObject.Find("UI/CloseBtn") != null)
+                {
+                    GameObject.Find("UI/CloseBtn").transform?.GetComponent<Button>().onClick.Invoke();
+                }
+
+                else if (GameObject.Find("UI/CloseDialog/Panel_UI") != null)
+                {
+                    GameObject.Find("UI/CloseDialog/Panel_UI").transform.GetChild(2)?.GetComponent<Button>().onClick.Invoke();
+                }
+
+                else if (currentScene.name == "Scenes_Character_Customisation" && WULogin.characterCreated)
+                {
+                    bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
+                }             
+            }
         }
     }
 }
