@@ -344,11 +344,11 @@ namespace MBS
             WULogin.onLoginFailed += On_Login_Fail;
             WULogin.on_Login_Success = true;
             CMLData data = new CMLData ();
-            if (Application.platform == RuntimePlatform.LinuxEditor)
-            {
-                fields.login_username.text = "test";
-                fields.login_password.text = "123";
-            }
+            // if (Application.platform == RuntimePlatform.LinuxEditor)
+            // {
+            //     fields.login_username.text = "test";
+            //     fields.login_password.text = "123";
+            // }
             data.Set ("username", fields.login_username.text.Trim ());
             data.Set ("password", fields.login_password.text.Trim ());
             WULogin.AttemptToLogin (data);
