@@ -81,7 +81,8 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
             // we're here either because this is mobile version or player has no serial
             // so let's check if player has purchased android/applestore subscription
             IAPManager manager = GameObject.FindObjectOfType<IAPManager>();
-            if (manager != null && manager.SubscriptionPurchased())
+            // if (manager != null && manager.SubscriptionPurchased())
+            if (manager != null)
             {
                 AllowDenyLoadMainMenu(true);
             }
@@ -142,6 +143,7 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
 
     void AllowDenyLoadMainMenu(bool allow, bool noSub = false)
     {
+        allow = true;
         if (allow)
         {
             //Debug.Log("PlaysNumber::Player subscription state: " + !noSub);

@@ -22,6 +22,7 @@ public class LevelButton : MonoBehaviour {
     private static Transform leaderboard;
     private static Transform scores;
     private static Transform names;
+    public bool demoLock = true;
 
     // saving info
     public struct Info
@@ -64,7 +65,7 @@ public class LevelButton : MonoBehaviour {
 
     public void OnLevelButtonClick()
     {
-        if (buy)
+        if (buy || demoLock)
         {
             // show dialogue now instead
             GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(5);

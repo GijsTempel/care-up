@@ -346,8 +346,8 @@ namespace MBS
             CMLData data = new CMLData ();
             if (Application.platform == RuntimePlatform.LinuxEditor)
             {
-                fields.login_username.text = "test";
-                fields.login_password.text = "123";
+                fields.login_username.text = "vita";
+                fields.login_password.text = "1122334455";
             }
             data.Set ("username", fields.login_username.text.Trim ());
             data.Set ("password", fields.login_password.text.Trim ());

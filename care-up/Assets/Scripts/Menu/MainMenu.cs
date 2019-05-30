@@ -287,7 +287,7 @@ public class MainMenu : MonoBehaviour {
     {
         // we're here only if we got data
         int plays = response[1].Int("Plays_Number");
-        bool result = plays < 5 ? true : false;
+        bool result = plays < 1 ? true : false;
         AllowDenyContinue(result);
     }
 

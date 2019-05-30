@@ -42,7 +42,7 @@ public class PlayerPrefsManager : MonoBehaviour
     public bool testingMode = false;
 
     // save info about subscription
-    [HideInInspector]
+    // [HideInInspector]
     public bool subscribed = false;
     [HideInInspector]
     public int plays = 0;

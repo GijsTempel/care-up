@@ -79,14 +79,16 @@ public class LevelSelectionScene_UI : MonoBehaviour
         TextAsset textAsset;
 
         PlayerPrefsManager pp = GameObject.FindObjectOfType<PlayerPrefsManager>();
-        if (pp != null && pp.demoVersion)
-        {
-            textAsset = (TextAsset)Resources.Load("Xml/Scenes_Demo");
-        }
-        else
-        {
-            textAsset = (TextAsset)Resources.Load("Xml/Scenes");
-        }
+        // if (pp != null && pp.demoVersion)
+        // {
+        //     textAsset = (TextAsset)Resources.Load("Xml/Scenes_Demo");
+        // }
+        // else
+        // {
+        //     textAsset = (TextAsset)Resources.Load("Xml/Scenes");
+        // }
+
+        textAsset = (TextAsset)Resources.Load("Xml/Scenes");
 
         XmlDocument xmlFile = new XmlDocument();
         xmlFile.LoadXml(textAsset.text);
@@ -95,12 +97,15 @@ public class LevelSelectionScene_UI : MonoBehaviour
         // leaderboard stuff
         bool firstScene = true;
         LeaderBoardSceneButton.buttons.Clear();
+// FindObjectOfType<PlayerPrefsManager>().demoVersion
 
         foreach (XmlNode xmlSceneNode in xmlSceneList)
         {
             // bool activated = PlayerPrefs.GetInt(xmlSceneNode.Attributes["id"].Value + " activated") == 1;
             bool activated = true;
             bool hidden = xmlSceneNode.Attributes["hidden"] != null;
+            bool demoLock = !(xmlSceneNode.Attributes["demo"] != null);
+
             if ((!activated && hidden) || hidden)
             {
                 // not activated and hidden scene should not even create a panel, so just end up here
@@ -113,7 +118,22 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 GameObject.Find("UMenuProManager/MenuCanvas/Play/ProtocolList/ProtocolsHolder/Protocols/content").transform);
             sceneUnitObject.name = "SceneSelectionUnit"; // i dont like that 'clone' word at the end, ugh
             LevelButton sceneUnit = sceneUnitObject.GetComponent<LevelButton>();
-
+            if (pp.subscribed)
+            {
+                sceneUnitObject.transform.Find("lock").gameObject.SetActive(false);
+                sceneUnit.demoLock = false;
+            }
+            else {
+                if (!demoLock)
+                {
+                    sceneUnitObject.transform.Find("lock").gameObject.SetActive(false);
+                    sceneUnit.demoLock = false;
+                }
+                else
+                {
+                    sceneUnit.demoLock = true;
+                }
+            }
             if (!activated && !hidden)
             {
                 // but if scene is not activated and NOT hidden either
