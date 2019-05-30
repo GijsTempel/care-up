@@ -12,7 +12,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
 
     private IAppleExtensions m_AppleExtensions;
 
-    Dictionary<string, string> introductory_info_dict;
+    Dictionary<string, string> introductory_info_dict = null;
 
     private void Start()
     {

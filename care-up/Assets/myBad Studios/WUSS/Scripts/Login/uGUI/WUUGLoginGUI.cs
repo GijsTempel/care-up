@@ -63,17 +63,17 @@ namespace MBS
             serial_number;
         }
 
-        [SerializeField] private Image LoginUsernameField;
-        [SerializeField] private Image LoginPasswordField;
+        [SerializeField] private Image LoginUsernameField = default(Image);
+        [SerializeField] private Image LoginPasswordField = default(Image);
 
-        [SerializeField] private Image RegUsernameField;
-        [SerializeField] private Image RegEmailField;
-        [SerializeField] private Image RegPasswordField;
-        [SerializeField] private Image RegRepeatPasswordField;
+        [SerializeField] private Image RegUsernameField = default(Image);
+        [SerializeField] private Image RegEmailField = default(Image);
+        [SerializeField] private Image RegPasswordField = default(Image);
+        [SerializeField] private Image RegRepeatPasswordField = default(Image);
 
-        [SerializeField] private Text ErrorText;
-        [SerializeField] private Text ErrorLoginText;
-        [SerializeField] private Text SuccesText;
+        [SerializeField] private Text ErrorText = default(Text);
+        [SerializeField] private Text ErrorLoginText = default(Text);
+        [SerializeField] private Text SuccesText = default(Text);
 
 
         private bool remove_text = false;
@@ -205,9 +205,9 @@ namespace MBS
         }
 
         [Header("GUI Prefab")]
-        [SerializeField] WUInputFields fields;
-        [SerializeField] WUPanels panels;
-        [SerializeField] Toggle auto_login_toggle;
+        [SerializeField] WUInputFields fields = default(WUInputFields);
+        [SerializeField] WUPanels panels = default(WUPanels);
+        [SerializeField] Toggle auto_login_toggle = default(Toggle);
 #if WUS
         [Header("Leaderboards")]
         [SerializeField] bool fetch_scores_on_showing_panel = true;
@@ -216,7 +216,7 @@ namespace MBS
 #if WUSKU
         [Header("Optional")]
         [SerializeField]
-        string product_url;
+        string product_url = "";
 #endif
 
         public bool attempt_auto_login { get { return auto_login_toggle.isOn; } set { auto_login_toggle.isOn = value; } }

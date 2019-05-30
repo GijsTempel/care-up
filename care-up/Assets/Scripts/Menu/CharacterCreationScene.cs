@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class CharacterCreationScene : MonoBehaviour
 {
@@ -36,8 +37,14 @@ public class CharacterCreationScene : MonoBehaviour
     private Image maleBtn;
     private Image femaleBtn;
 
-    private void OnLevelWasLoaded(int level)
+    private void Start()
     {
+        SceneManager.sceneLoaded += OnLoaded;
+    }
+
+    private void OnLoaded(Scene a, LoadSceneMode b)
+    {
+
         femaleChar = GameObject.Find("Female_Citizens_customizable");
         maleChar = GameObject.Find("Male_Citizens_customizable");
 
@@ -371,9 +378,9 @@ public class CharacterCreationScene : MonoBehaviour
 
     public void Save()
     {
-        CharacterInfo.currentCharacter.SetCharacterCharacteristicsWU(
+        CharacterInfo.SetCharacterCharacteristicsWU(
             ((gender == CharGender.Female) ? "Female" : "Male"),
-            headType, bodyType, glassesType);
+            headType, bodyType, glassesType); 
 
         CharacterInfo info = GameObject.FindObjectOfType<CharacterInfo>();
         info.sex = (gender == CharGender.Female) ? "Female" : "Male";
@@ -391,24 +398,26 @@ public class CharacterCreationScene : MonoBehaviour
 
         Initialize();
 
-        switch (CharacterInfo.currentCharacter.sex)
+        CharacterInfo currentCharacter = GameObject.FindObjectOfType<CharacterInfo>();
+
+        switch (currentCharacter.sex)
         {
             case "Female":
                 {
                     maleChar.SetActive(false);
                     foreach (Transform h in femaleHeads)
                     {
-                        h.gameObject.SetActive(femaleHeads.IndexOf(h) == CharacterInfo.currentCharacter.headType);
+                        h.gameObject.SetActive(femaleHeads.IndexOf(h) == currentCharacter.headType);
                     }
 
                     foreach (Transform h in femaleBodies)
                     {
-                        h.gameObject.SetActive(femaleBodies.IndexOf(h) == CharacterInfo.currentCharacter.bodyType);
+                        h.gameObject.SetActive(femaleBodies.IndexOf(h) == currentCharacter.bodyType);
                     }
 
                     foreach (Transform h in femaleGlasses)
                     {
-                        h.gameObject.SetActive(femaleGlasses.IndexOf(h) == CharacterInfo.currentCharacter.glassesType);
+                        h.gameObject.SetActive(femaleGlasses.IndexOf(h) == currentCharacter.glassesType);
                     }
 
                     break;
@@ -418,17 +427,17 @@ public class CharacterCreationScene : MonoBehaviour
                     femaleChar.SetActive(false);
                     foreach (Transform h in maleHeads)
                     {
-                        h.gameObject.SetActive(maleHeads.IndexOf(h) == CharacterInfo.currentCharacter.headType);
+                        h.gameObject.SetActive(maleHeads.IndexOf(h) == currentCharacter.headType);
                     }
 
                     foreach (Transform h in maleBodies)
                     {
-                        h.gameObject.SetActive(maleBodies.IndexOf(h) == CharacterInfo.currentCharacter.bodyType);
+                        h.gameObject.SetActive(maleBodies.IndexOf(h) == currentCharacter.bodyType);
                     }
 
                     foreach (Transform h in maleGlasses)
                     {
-                        h.gameObject.SetActive(maleGlasses.IndexOf(h) == CharacterInfo.currentCharacter.glassesType);
+                        h.gameObject.SetActive(maleGlasses.IndexOf(h) == currentCharacter.glassesType);
                     }
 
                     break;

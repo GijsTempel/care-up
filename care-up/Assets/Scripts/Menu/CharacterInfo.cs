@@ -9,29 +9,33 @@ public class CharacterInfo : MonoBehaviour
     public int glassesType;
 
     //indicates that the current character state has been checked
-    static bool currentStateChecked = false;
+    // commented out for now, not used
+    //static bool currentStateChecked = false;
+     
+    // cant c-tor MonoBehaviour
+    //public static CharacterInfo currentCharacter = new CharacterInfo();
 
-    public static CharacterInfo currentCharacter = new CharacterInfo();
-
-    public void SetCharacterCharacteristicsWU(string sexType, int head, int body, int glasses)
+    public static void SetCharacterCharacteristicsWU(string sexType, int head, int body, int glasses)
     {
-        sex = sexType;
-        headType = head;
-        bodyType = body;
-        glassesType = glasses;
+        CharacterInfo currentCharacter = GameObject.FindObjectOfType<CharacterInfo>();
+
+        currentCharacter.sex = sexType;
+        currentCharacter.headType = head;
+        currentCharacter.bodyType = body;
+        currentCharacter.glassesType = glasses;
 
         CMLData data = new CMLData();
 
-        if (!string.IsNullOrEmpty(sex))
-            data.Set("CharacterSex", sex);
-        data.Set("CharacterHeadType", headType.ToString());
-        data.Set("CharacterBodyType", bodyType.ToString());
-        data.Set("CharacterGlassesType", glassesType.ToString());
+        if (!string.IsNullOrEmpty(currentCharacter.sex))
+            data.Set("CharacterSex", currentCharacter.sex);
+        data.Set("CharacterHeadType", currentCharacter.headType.ToString());
+        data.Set("CharacterBodyType", currentCharacter.bodyType.ToString());
+        data.Set("CharacterGlassesType", currentCharacter.glassesType.ToString());
 
         WUData.UpdateCategory("AccountStats", data);
-        currentStateChecked = false;
+        //currentStateChecked = false;
 
-        SetCharacterCreationCompleted();
+        currentCharacter.SetCharacterCreationCompleted();
     }
 
     static public void GetCharacterCharacteristicsWU()
@@ -41,6 +45,8 @@ public class CharacterInfo : MonoBehaviour
 
     static void GetCharacterCharacteristics(CML response)
     {
+        CharacterInfo currentCharacter = GameObject.FindObjectOfType<CharacterInfo>();
+
         for (int i = 0; i < response.Elements[1].Keys.Length; ++i)
         {
             switch (response.Elements[1].Keys[i])
@@ -66,7 +72,7 @@ public class CharacterInfo : MonoBehaviour
             }
         }
 
-        currentStateChecked = true;
+        //currentStateChecked = true;
 
         CharacterInfo info = GameObject.FindObjectOfType<CharacterInfo>();
         info.sex = currentCharacter.sex;
@@ -83,6 +89,7 @@ public class CharacterInfo : MonoBehaviour
 
     static void GetCharacterSex(CML response)
     {
+        CharacterInfo currentCharacter = GameObject.FindObjectOfType<CharacterInfo>();
         currentCharacter.sex = response[1].String("CharacterSex");
         print(currentCharacter.sex);
     }
@@ -95,6 +102,7 @@ public class CharacterInfo : MonoBehaviour
 
     static void GetCharacterHeadType(CML response)
     {
+        CharacterInfo currentCharacter = GameObject.FindObjectOfType<CharacterInfo>();
         currentCharacter.headType = response[1].Int("CharacterHeadType");
     }
 
@@ -106,6 +114,7 @@ public class CharacterInfo : MonoBehaviour
 
     static void GetCharacterBodyType(CML response)
     {
+        CharacterInfo currentCharacter = GameObject.FindObjectOfType<CharacterInfo>();
         currentCharacter.bodyType = response[1].Int("CharacterBodyType");
     }
 
@@ -117,6 +126,7 @@ public class CharacterInfo : MonoBehaviour
 
     static void GetCharacterGlassesType(CML response)
     {
+        CharacterInfo currentCharacter = GameObject.FindObjectOfType<CharacterInfo>();
         currentCharacter.glassesType = response[1].Int("CharacterGlassesType");
     }
 

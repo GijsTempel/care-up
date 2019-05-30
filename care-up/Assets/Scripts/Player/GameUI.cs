@@ -18,7 +18,7 @@ public class GameUI : MonoBehaviour
     public WalkToGroupButton LeftSideButton;
     public WalkToGroupButton RightSideButton;
     public Dictionary<string, WalkToGroupButton> WTGButtons;
-    WalkToGroup prevWalkToGroup = null;
+    //WalkToGroup prevWalkToGroup = null;
     private Tutorial_Combining tutorialCombine;
     private Tutorial_UseOn tutorialUseOn;
     private HandsInventory handsInventory;

@@ -3,7 +3,7 @@
 public class EmailSendingConfirmation : MonoBehaviour
 {
     [SerializeField]
-    private GameObject popUpObject;  
+    private GameObject popUpObject = null;  
 
     public void Confirmation()
     {

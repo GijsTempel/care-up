@@ -16,7 +16,7 @@ public class LevelButton : MonoBehaviour {
     public bool testDisabled;
     public bool validated;
 
-    private static Transform sceneInfoPanel;
+    private static Transform sceneInfoPanel = default(Transform);
     private static PlayerPrefsManager manager;
 
     private static Transform leaderboard;

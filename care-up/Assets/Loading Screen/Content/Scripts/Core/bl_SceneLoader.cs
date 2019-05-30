@@ -47,7 +47,7 @@ public class bl_SceneLoader : MonoBehaviour
     [SerializeField]private Image FilledImage = null;
     [SerializeField]private Slider LoadBarSlider = null;
     [SerializeField]private GameObject ContinueUI = null;
-    [SerializeField]private GameObject RootUI;
+    [SerializeField]private GameObject RootUI = null;
     [SerializeField]private GameObject FlashImage = null;
     [SerializeField]private GameObject SkipKeyText = null;
     [SerializeField]private RectTransform LoadingCircle = null;

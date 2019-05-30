@@ -10,7 +10,7 @@ public class LocalizationManager : MonoBehaviour {
     GameObject gameLogic;
     private Dictionary<string, string> localizedText;
     private bool isReady = false;
-    private string missingTextString = "Text not found";
+    //private string missingTextString = "Text not found";
 
     // Use this for initialization
 

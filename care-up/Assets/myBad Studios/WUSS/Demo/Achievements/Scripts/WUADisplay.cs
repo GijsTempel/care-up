@@ -7,8 +7,8 @@ namespace MBS
 {
     public class WUADisplay : MonoBehaviour
     {
-        [SerializeField] RectTransform content_area;
-        [SerializeField] WUAView view_prefab;
+        [SerializeField] RectTransform content_area = default(RectTransform);
+        [SerializeField] WUAView view_prefab = default(WUAView);
         [SerializeField] bool destroy_contents_on_load = true;
         [SerializeField] private Button achievementButton;
         //private bool spawnContent = false;

@@ -5,8 +5,8 @@ namespace MBS
 {
     public class WUUTabGroup : MonoBehaviour
     {
-        [SerializeField] GameObject[] tabs;
-        [SerializeField] Button[] tab_buttons;
+        [SerializeField] GameObject[] tabs = null;
+        [SerializeField] Button[] tab_buttons = null;
 
         public void SelectTab( int index )
         {
