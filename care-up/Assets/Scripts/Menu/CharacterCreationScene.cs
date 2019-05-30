@@ -36,15 +36,9 @@ public class CharacterCreationScene : MonoBehaviour
 
     private Image maleBtn;
     private Image femaleBtn;
-
+    
     private void Start()
     {
-        SceneManager.sceneLoaded += OnLoaded;
-    }
-
-    private void OnLoaded(Scene a, LoadSceneMode b)
-    {
-
         femaleChar = GameObject.Find("Female_Citizens_customizable");
         maleChar = GameObject.Find("Male_Citizens_customizable");
 
