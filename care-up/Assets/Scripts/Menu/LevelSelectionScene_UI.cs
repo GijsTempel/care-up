@@ -118,19 +118,21 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 GameObject.Find("UMenuProManager/MenuCanvas/Play/ProtocolList/ProtocolsHolder/Protocols/content").transform);
             sceneUnitObject.name = "SceneSelectionUnit"; // i dont like that 'clone' word at the end, ugh
             LevelButton sceneUnit = sceneUnitObject.GetComponent<LevelButton>();
+            bool locked = false;
             if (pp.subscribed)
             {
-                sceneUnitObject.transform.Find("lock").gameObject.SetActive(false);
                 sceneUnit.demoLock = false;
             }
             else {
                 if (!demoLock)
                 {
-                    sceneUnitObject.transform.Find("lock").gameObject.SetActive(false);
+                    sceneUnit.GetComponent<Image>().sprite = Resources.Load("Sprites/small_button_bg_down_g", typeof(Sprite)) as Sprite;
                     sceneUnit.demoLock = false;
                 }
                 else
                 {
+                    locked = true;
+                    sceneUnit.GetComponent<Image>().sprite = Resources.Load("Sprites/small_button_bg_inactive", typeof(Sprite)) as Sprite;
                     sceneUnit.demoLock = true;
                 }
             }
@@ -185,7 +187,6 @@ public class LevelSelectionScene_UI : MonoBehaviour
                     {
                         // set the image as main if this is 1st variation
                         sceneUnit.image = sceneUnit.variations[i].image;
-                        sceneUnit.transform.Find("LevelPreview").GetComponent<Image>().sprite = sceneUnit.image;
 
                         sceneUnit.validated = sceneUnit.variations[i].validated;
                         sceneUnit.transform.Find("Validation").GetComponent<Text>().text =
@@ -242,6 +243,10 @@ public class LevelSelectionScene_UI : MonoBehaviour
             LeaderBoardSceneButton buttonInfo = button.GetComponent<LeaderBoardSceneButton>();
             button.transform.Find("Text").GetComponent<Text>().text = sceneUnit.displayName;
             button.transform.Find("LevelPreview").GetComponent<Image>().sprite = sceneUnit.image;  
+
+            if (locked)
+                sceneUnit.transform.Find("LevelPreview").GetComponent<Image>().sprite = 
+                    Resources.Load("Sprites/btn_icon_lock", typeof(Sprite)) as Sprite;
 
             buttonInfo.sceneName = sceneUnit.sceneName;
             buttonInfo.multiple = sceneUnit.multiple;
