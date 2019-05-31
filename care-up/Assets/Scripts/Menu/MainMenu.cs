@@ -29,18 +29,18 @@ public class MainMenu : MonoBehaviour {
 
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
-            Text text = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/DialogTestPractice/Panel_UI/FreeDemoPlayCounter")
-                .GetComponent<Text>();
+            // Text text = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/DialogTestPractice/Panel_UI/FreeDemoPlayCounter")
+            //     .GetComponent<Text>();
 
-            if (!prefs.subscribed)
-            {
-                WUData.FetchField("Plays_Number", "AccountStats", GetPlaysNumber, -1, ErrorHandle);
-                text.text = "Je kunt nog " + (5 - prefs.plays) + " handelingen proberen.";
-            }
-            else
-            {
-                text.text = "";
-            }
+            // if (!prefs.subscribed)
+            // {
+            //     WUData.FetchField("Plays_Number", "AccountStats", GetPlaysNumber, -1, ErrorHandle);
+            //     text.text = "Je kunt nog " + (5 - prefs.plays) + " handelingen proberen.";
+            // }
+            // else
+            // {
+            //     text.text = "";
+            // }
 
             //handle updates panel
             bool updatesSeen = PlayerPrefs.GetInt("_updatesSeen") == 1;
@@ -305,7 +305,7 @@ public class MainMenu : MonoBehaviour {
             // show pop up!
             //StatusMessage.Message = "Je hebt geen actief product";
             // or something more like
-            GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(5);
+            // GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(5);
         }
     }
 }
