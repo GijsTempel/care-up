@@ -4,7 +4,7 @@ using System.IO;
 using SimpleJSON;
 using UnityEngine;
 
-public class LocalizationManager : MonoBehaviour {
+public class LocalizationManager {
 
     public static LocalizationManager instance;
     GameObject gameLogic;
