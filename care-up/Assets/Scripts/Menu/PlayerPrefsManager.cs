@@ -62,6 +62,10 @@ public class PlayerPrefsManager : MonoBehaviour
     private MainMenu mainMenu;
     private Scene currentScene;
 
+    private bool timeOut;
+    private float timeLeft = 0f;
+    private bool startTimer = false;
+
     public string fullPlayerName = "";
 
     public string ActivatedScenes
@@ -896,13 +900,27 @@ public class PlayerPrefsManager : MonoBehaviour
             data.Set("FullName", manager.fullPlayerName);
             WUData.UpdateCategory("AccountStats", data);
         }
-    }
+    }  
 
     private void SetEscapeButtonLogic()
     {
+        if (startTimer)
+        {
+            timeLeft -= Time.deltaTime;
+            timeOut = timeLeft > 0f ? true : false;                         
+        }
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Debug.Log("Escape button pressed");
+
+            if (timeOut == false)
+            {
+                print("Are you sure you want to leave?");
+                timeLeft = 3.0f;
+                startTimer = true;
+                return;
+            }
 
             manager = GameObject.FindObjectOfType<UMP_Manager>();
 
@@ -1008,6 +1026,8 @@ public class PlayerPrefsManager : MonoBehaviour
                     bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
                 }
             }
+
+            startTimer = false;
         }
     }
 }
