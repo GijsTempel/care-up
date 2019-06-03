@@ -108,8 +108,6 @@ public class PlayerPrefsManager : MonoBehaviour
         if (s.name == "MainMenu")
         {
             GameObject.Find("UMenuProManager/MenuCanvas/Opties/Panel_UI/OptionsGrid/PostProcessingToggle").GetComponent<Toggle>().isOn = postProcessingEnabled;
-
-            PlayerPrefsManager.GetFullName();
         }
 
         // handle platform-dependant objects (deleting unnecesarry)
@@ -452,49 +450,6 @@ public class PlayerPrefsManager : MonoBehaviour
         DatabaseManager.UpdateField("PracticePlays", practiceScene, (plays + 1).ToString());
     }
     
-    public void FetchTestHighScores()
-    {
-        WUData.FetchCategory("TestHighscores", GetAllHighScores);
-    }
-
-    static void GetAllHighScores(CML response)
-    {
-        //print(response.ToString());
-        for (int i = 0; i < response.Elements[1].Keys.Length; ++i)
-        {
-            switch (response.Elements[1].Keys[i])
-            {
-                // we skip these keys cuz they hold no useful info about scenes
-                case "id":
-                case "category":
-                case "woocommerce-login-nonce":
-                case "_wpnonce":
-                    continue;
-                default:
-                    // here we get actual scenes and values
-                    string sceneName = response.Elements[1].Keys[i].Replace("_", " ");
-
-                    float fPercent = 0.0f;
-                    float.TryParse(response.Elements[1].Values[i], out fPercent);
-                    int percent = Mathf.FloorToInt(fPercent);
-
-                    bool passed = percent > 70;
-
-                    if (percent <= 0 || percent > 100)
-                        continue; // don't show 0 percent scores as they are not completed even once
-
-                    GameObject layoutGroup = GameObject.Find("UMenuProManager/MenuCanvas/Account_Scores/Account_Panel_UI/ScoresHolder/Scores/LayoutGroup");
-                    GameObject scoreObject = Instantiate(Resources.Load<GameObject>("Prefabs/UI/TestHighscore"), layoutGroup.transform);
-                    scoreObject.transform.Find("SceneName").GetComponent<Text>().text = sceneName;
-                    scoreObject.transform.Find("Percent").GetComponent<Text>().text = percent.ToString() + "%";
-                    scoreObject.transform.Find("Passed").GetComponent<Text>().text =
-                        (passed ? "Voldoende" : "Onvoldoende");
-
-                    break;
-            }
-        }
-    }
-
     public void SetTutorialCompletedWU()
     {
         tutorialCompleted = true;
@@ -502,11 +457,6 @@ public class PlayerPrefsManager : MonoBehaviour
         CMLData data = new CMLData();
         data.Set("TutorialCompleted", "true");
         WUData.UpdateCategory("AccountStats", data);
-    }
-
-    public void GetTutorialCompletedWU()
-    {
-        WUData.FetchField("TutorialCompleted", "AccountStats", GetTutorialCompleted, -1, GetTutorialCompleted_Error);
     }
 
     static void GetTutorialCompleted(CML response)
@@ -644,43 +594,12 @@ public class PlayerPrefsManager : MonoBehaviour
         return res;
     }
 
-    public static void GetFullName()
-    {
-        WUData.FetchField("FullName", "AccountStats", GetFullName, -1);
-    }
-
-    static void GetFullName(CML response)
-    {
-        PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
-        manager.fullPlayerName = response[1].String("FullName");
-    }
-
     public static void SetFullName(string fullName)
     {
         GameObject.FindObjectOfType<PlayerPrefsManager>().fullPlayerName = fullName;
-        WUData.FetchField("FullName", "AccountStats", SetFullName, -1, SetFullName_Error);
+        DatabaseManager.UpdateField("AccountStats", "FullName", fullName);
     }
-
-    static void SetFullName(CML response)
-    {
-        PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
-
-        CMLData data = new CMLData();
-        data.Set("FullName", manager.fullPlayerName);
-        WUData.UpdateCategory("AccountStats", data);
-    }
-
-    static void SetFullName_Error(CMLData response)
-    {
-        if ((response["message"] == "WPServer error: Empty response. No data found"))
-        {
-            PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
-
-            CMLData data = new CMLData();
-            data.Set("FullName", manager.fullPlayerName);
-            WUData.UpdateCategory("AccountStats", data);
-        }
-    }
+    
 
     private void SetEscapeButtonLogic()
     {

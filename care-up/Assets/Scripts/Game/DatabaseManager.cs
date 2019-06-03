@@ -59,6 +59,10 @@ public class DatabaseManager : MonoBehaviour {
         int.TryParse(FetchField("AccountStats", "CharacterBodyType"), out CharacterInfo.bodyType);
         int.TryParse(FetchField("AccountStats", "CharacterGlassesType"), out CharacterInfo.glassesType);
 
+        // set player irl full name
+        GameObject.FindObjectOfType<PlayerPrefsManager>().fullPlayerName =
+            FetchField("AccountStats", "FullName");
+
         // check if character created, load proper scene
         // load scene at the end of this function
         if ( FetchField("AccountStats", "CharacterCreated") == "true" )
@@ -164,6 +168,21 @@ public class DatabaseManager : MonoBehaviour {
         }
 
         return "";
+    }
+
+    public static string[][] FetchCategory(string category)
+    {
+        Category cat = database.Find(x => x.name == category);
+
+        string[][] data = new string[cat.fields.Keys.Count][];
+
+        int i = 0;
+        foreach (string key in cat.fields.Keys)
+        {
+            data[i++] = new string[] { key, cat.fields[key] };
+        }
+
+        return data;
     }
 
     public static void UpdateField(string category, string fieldName, string newValue)

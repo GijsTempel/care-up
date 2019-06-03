@@ -58,8 +58,30 @@ public class MainMenu : MonoBehaviour {
                 UpdatesPanel.SetActive(false);
             }
 
-            GameObject.FindObjectOfType<PlayerPrefsManager>().FetchTestHighScores();
-			
+            // set up highscores something?
+            string[][] highScores = DatabaseManager.FetchCategory("TestHighscores");
+            foreach(string[] score in highScores)
+            {
+                string sceneName = score[0].Replace("_", " ");
+
+                float fPercent = 0.0f;
+                float.TryParse(score[1].Replace(",","."), out fPercent);
+                int percent = Mathf.FloorToInt(fPercent);
+
+                bool passed = percent > 70;
+
+                if (percent <= 0 || percent > 100)
+                    continue; // don't show 0 percent scores as they are not completed even once
+
+                GameObject layoutGroup = GameObject.Find("UMenuProManager/MenuCanvas/Account_Scores/Account_Panel_UI/ScoresHolder/Scores/LayoutGroup");
+                GameObject scoreObject = Instantiate(Resources.Load<GameObject>("Prefabs/UI/TestHighscore"), layoutGroup.transform);
+                scoreObject.transform.Find("SceneName").GetComponent<Text>().text = sceneName;
+                scoreObject.transform.Find("Percent").GetComponent<Text>().text = percent.ToString() + "%";
+                scoreObject.transform.Find("Passed").GetComponent<Text>().text =
+                    (passed ? "Voldoende" : "Onvoldoende");
+            }
+
+            // shared field, will keep it outside DatabaseManager
             GameObject.FindObjectOfType<PlayerPrefsManager>().FetchLatestVersion();
 
             GameObject.Find("UMenuProManager/MenuCanvas/Account/Account_Panel_UI/Account_Username")
