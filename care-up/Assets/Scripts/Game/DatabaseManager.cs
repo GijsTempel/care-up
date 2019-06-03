@@ -45,9 +45,9 @@ public class DatabaseManager : MonoBehaviour {
         int.TryParse(FetchField("AccountStats", "Login_Number"), out loginNumber);
         UpdateField("AccountStats", "Login_Number", (loginNumber + 1).ToString());
 
-        // set up plays number (not sure if needed anymore)
+        // set up plays number
         string plays = FetchField("AccountStats", "Plays_Number");
-        int.TryParse(plays, out GameObject.FindObjectOfType<PlayerPrefsManager>().plays);
+        int.TryParse(plays, out PlayerPrefsManager.plays);
 
         // set sub status
         GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed = 

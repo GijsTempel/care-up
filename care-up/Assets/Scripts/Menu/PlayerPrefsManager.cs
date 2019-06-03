@@ -46,18 +46,11 @@ public class PlayerPrefsManager : MonoBehaviour
     // [HideInInspector]
     public bool subscribed = false;
     [HideInInspector]
-    public int plays = 0;
-
-    // used for storing scene name for test hightscore loading
-    private static string currentTestScene = "";
-    public static float currentTestScore = 0;
-
+    public static int plays = 0;
+    
     public static int currentPracticeScore = 0;
     public static int currentPracticeStars = 0;
-
-    private static string practiceScene = "";
-    public static int practicePlays = 0;
-
+    
     private UMP_Manager manager;
     private MainMenu mainMenu;
     private Scene currentScene;
@@ -385,34 +378,12 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public static void AddOneToPlaysNumber()
     {
-        WUData.FetchField("Plays_Number", "AccountStats", GetPlaysNumber, -1, GetPlaysNumber_Error);
-    }
-
-    static void GetPlaysNumber(CML response)
-    {
-        PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
-        manager.plays = response[1].Int("Plays_Number") + 1;
-
         RateBox.Instance.IncrementCustomCounter();
         RateBox.Instance.Show();
+        
+        PlayerPrefsManager.plays += 1;
 
-        // update +1
-        CMLData data = new CMLData();
-        data.Set("Plays_Number", manager.plays.ToString());
-        WUData.UpdateCategory("AccountStats", data);
-    }
-
-    static void GetPlaysNumber_Error(CMLData response)
-    {
-        if ((response["message"] == "WPServer error: Empty response. No data found"))
-        {
-            // empty response, need to create field with 1 play
-            PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
-            manager.plays = 1;
-            CMLData data = new CMLData();
-            data.Set("Plays_Number", "1");
-            WUData.UpdateCategory("AccountStats", data);
-        }
+        DatabaseManager.UpdateField("AccountStats", "Plays_Number", PlayerPrefsManager.plays.ToString());
     }
 
     public static void __sendMail(string topic, string message)
@@ -459,112 +430,28 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public void UpdateTestHighscore(float score)
     {
-        currentTestScore = score * 100;
-        currentTestScene = FormatSceneName(currentSceneVisualName);
-
-        WUData.FetchField(currentTestScene, "TestHighscores", GetTestHighscore, -1, GetTestHighscore_Error);
-    }
-
-    static void GetTestHighscore(CML response)
-    {
-        string highscoreString = response[1].String(currentTestScene);
+        float currentTestScore = score * 100.0f;
+        string currentTestScene = FormatSceneName(currentSceneVisualName);
+        
+        string highscoreStr = DatabaseManager.FetchField("TestHighscores", currentTestScene);
         float highscore = 0;
-        float.TryParse(highscoreString.Replace(",", "."), out highscore);
+        float.TryParse(highscoreStr.Replace(",", "."), out highscore);
 
         if (highscore < currentTestScore)
         {
-            CMLData data = new CMLData();
-            data.Set(currentTestScene, currentTestScore.ToString());
-            WUData.UpdateCategory("TestHighscores", data);
-        }
-    }
-
-    static void GetTestHighscore_Error(CMLData response)
-    {
-        if ((response["message"] == "WPServer error: Empty response. No data found"))
-        {
-            CMLData data = new CMLData();
-            data.Set(currentTestScene, currentTestScore.ToString());
-            WUData.UpdateCategory("TestHighscores", data);
+            DatabaseManager.UpdateField("TestHighscores", currentTestScene, currentTestScore.ToString());
         }
     }
 
     public static void AddOneToPracticePlays(string scene)
     {
-        // pretty sure it is safe to use this variable again
-        practiceScene = FormatSceneName(scene);
-
-        WUData.FetchField(practiceScene, "PracticePlays", GetPracticePlays, -1, GetPracticePlays_Error);
+        string practiceScene = FormatSceneName(scene);
+        
+        int plays;
+        int.TryParse(DatabaseManager.FetchField("PracticePlays", practiceScene), out plays);
+        DatabaseManager.UpdateField("PracticePlays", practiceScene, (plays + 1).ToString());
     }
-
-    static void GetPracticePlays(CML response)
-    {
-        int plays = response[1].Int(practiceScene);
-
-        CMLData data = new CMLData();
-        data.Set(practiceScene, (plays + 1).ToString());
-        WUData.UpdateCategory("PracticePlays", data);
-    }
-
-    static void GetPracticePlays_Error(CMLData response)
-    {
-        if ((response["message"] == "WPServer error: Empty response. No data found"))
-        {
-            // if no data found when we're adding +1, create data with 1
-            CMLData data = new CMLData();
-            data.Set(practiceScene, "1");
-            WUData.UpdateCategory("PracticePlays", data);
-        }
-    }
-
-    public void FetchPracticePlays(string scene)
-    {
-        practiceScene = FormatSceneName(scene);
-
-        WUData.FetchField(practiceScene, "PracticePlays", FetchPracticePlays_success, -1, FetchPracticePlays_Error);
-    }
-
-    static void FetchPracticePlays_success(CML response)
-    {
-        if (GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" + "DialogTestPractice/Panel_UI/Buttons/TestButton") != null)
-        {
-            Button testBtn = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-                "DialogTestPractice/Panel_UI/Buttons/TestButton").GetComponent<Button>();
-
-            int plays = response[1].Int(practiceScene);
-            testBtn.interactable = plays >= 3;
-
-            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-                    "DialogTestPractice/Panel_UI/Buttons/TestButton/contentlocked/practiceamount")
-                .GetComponent<Text>().text = (3 - plays).ToString() + " keer";
-
-            if (testBtn.interactable)
-            {
-                GameObject.FindObjectOfType<PlayerPrefsManager>().FetchTestHighscore(practiceScene);
-            }
-
-            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-                "DialogTestPractice/Panel_UI/Buttons/TestButton/contentunlocked").SetActive(testBtn.interactable);
-            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-                "DialogTestPractice/Panel_UI/Buttons/TestButton/contentlocked").SetActive(!testBtn.interactable);
-        }
-    }
-
-    static void FetchPracticePlays_Error(CMLData response)
-    {
-        if ((response["message"] == "WPServer error: Empty response. No data found"))
-        {
-            // no data == 0 plays
-            practicePlays = 0;
-            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-                "DialogTestPractice/Panel_UI/Buttons/TestButton").GetComponent<Button>().interactable = false;
-
-            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-                    "DialogTestPractice/Panel_UI/Buttons/TestButton/contentlocked/practiceamount")
-                .GetComponent<Text>().text = "3 keer";
-        }
-    }
-
+    
     public void FetchTestHighScores()
     {
         WUData.FetchCategory("TestHighscores", GetAllHighScores);
@@ -672,7 +559,7 @@ public class PlayerPrefsManager : MonoBehaviour
         }
     }
 
-    static string FormatSceneName(string sceneName)
+    public static string FormatSceneName(string sceneName)
     {
         string res = sceneName.Replace(" ", "_");
         res = res.Replace(".", "");
@@ -681,124 +568,21 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public void UpdatePracticeHighscore(int score, int stars)
     {
-        currentPracticeScore = score;
-        currentPracticeStars = stars;
-        practiceScene = FormatSceneName(currentSceneVisualName);
-
-        WUData.FetchCategory("PracticeHighscores", GetPracticetHighscore, -1, GetPracticeHighscore_Error);
-    }
-
-    static void GetPracticetHighscore(CML response)
-    {
-        int highscore = response[1].Int("score_" + practiceScene);
-        if (highscore < currentPracticeScore)
+        string practiceScene = FormatSceneName(currentSceneVisualName);
+        
+        int highscore;
+        int.TryParse(DatabaseManager.FetchField("PracticeHighscores", "score_" + practiceScene), out highscore);
+        if (highscore < score)
         {
-            CMLData data = new CMLData();
-            data.Set("score_" + practiceScene, currentPracticeScore.ToString());
-            data.Set("stars_" + practiceScene, currentPracticeStars.ToString());
-            WUData.UpdateCategory("PracticeHighscores", data);
+            string[][] data = new string[][]
+            {
+                new string[] { "score_" + practiceScene, score.ToString() },
+                new string[] { "stars_" + practiceScene, stars.ToString() }
+            };
+            DatabaseManager.UpdateCategory("PracticeHighscores", data);
         }
     }
-
-    static void GetPracticeHighscore_Error(CMLData response)
-    {
-        if ((response["message"] == "WPServer error: Empty response. No data found"))
-        {
-            CMLData data = new CMLData();
-            data.Set("score_" + practiceScene, currentPracticeScore.ToString());
-            data.Set("stars_" + practiceScene, currentPracticeStars.ToString());
-            WUData.UpdateCategory("PracticeHighscores", data);
-        }
-    }
-
-    public void FetchPracticeHighscore(string scene)
-    {
-        practiceScene = FormatSceneName(scene);
-
-        WUData.FetchCategory("PracticeHighscores", FetchPracticeHighscore, -1, FetchPracticeHighscore_Error);
-    }
-
-    static void FetchPracticeHighscore(CML response)
-    {
-        int highscore = response[1].Int("score_" + practiceScene);
-        int stars = response[1].Int("stars_" + practiceScene);
-
-        GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-            "DialogTestPractice/Panel_UI/Buttons/PracticeButton/content/score").
-        GetComponent<Text>().text = highscore.ToString();
-
-        Sprite grey = Resources.Load<Sprite>("Sprites/Stars/star 1");
-        Sprite gold = Resources.Load<Sprite>("Sprites/Stars/star_128x128px");
-
-        GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-                "DialogTestPractice/Panel_UI/Buttons/PracticeButton/content/Stars/Star1")
-            .GetComponent<Image>().sprite = (stars >= 1.0f) ? gold : grey;
-
-        GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-                "DialogTestPractice/Panel_UI/Buttons/PracticeButton/content/Stars/Star2")
-            .GetComponent<Image>().sprite = (stars >= 2.0f) ? gold : grey;
-
-        GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-                "DialogTestPractice/Panel_UI/Buttons/PracticeButton/content/Stars/Star3")
-            .GetComponent<Image>().sprite = (stars >= 3.0f) ? gold : grey;
-    }
-
-    static void FetchPracticeHighscore_Error(CMLData response)
-    {
-        if ((response["message"] == "WPServer error: Empty response. No data found"))
-        {
-            CMLData data = new CMLData();
-            data.Set("score_" + practiceScene, currentPracticeScore.ToString());
-            data.Set("stars_" + practiceScene, currentPracticeStars.ToString());
-            WUData.UpdateCategory("PracticeHighscores", data);
-
-            Sprite grey = Resources.Load<Sprite>("Sprites/Stars/star 1");
-
-            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-                "DialogTestPractice/Panel_UI/Buttons/PracticeButton/content/score").
-            GetComponent<Text>().text = "0";
-            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-                    "DialogTestPractice/Panel_UI/Buttons/PracticeButton/content/Stars/Star1")
-                .GetComponent<Image>().sprite = grey;
-            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-                    "DialogTestPractice/Panel_UI/Buttons/PracticeButton/content/Stars/Star2")
-                .GetComponent<Image>().sprite = grey;
-            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-                    "DialogTestPractice/Panel_UI/Buttons/PracticeButton/content/Stars/Star3")
-                .GetComponent<Image>().sprite = grey;
-        }
-    }
-
-    public void FetchTestHighscore(string scene)
-    {
-        currentTestScene = FormatSceneName(scene);
-
-        WUData.FetchField(currentTestScene, "TestHighscores", FetchTestHighscore, -1, FetchTestHighscore_Error);
-        GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-                "DialogTestPractice/Panel_UI/Buttons/TestButton/contentunlocked/percentage")
-            .GetComponent<Text>().text = "";
-    }
-
-    static void FetchTestHighscore(CML response)
-    {
-        string highscoreString = response[1].String(currentTestScene);
-        float highscore = 0;
-        float.TryParse(highscoreString.Replace(",", "."), out highscore);
-        GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-                "DialogTestPractice/Panel_UI/Buttons/TestButton/contentunlocked/percentage")
-            .GetComponent<Text>().text = Mathf.RoundToInt(highscore).ToString() + "%";
-    }
-
-    static void FetchTestHighscore_Error(CMLData response)
-    {
-        if ((response["message"] == "WPServer error: Empty response. No data found"))
-        {
-            CMLData data = new CMLData();
-            data.Set(currentTestScene, currentTestScore.ToString());
-            WUData.UpdateCategory("TestHighscores", data);
-        }
-    }
-
+    
     /// <summary>
     /// Generates and opens link for certificate generation.
     /// Mirrors the safety measures of database script to generate safety key, included in the link.
