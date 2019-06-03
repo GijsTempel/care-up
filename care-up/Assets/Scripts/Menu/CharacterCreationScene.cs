@@ -26,19 +26,15 @@ public class CharacterCreationScene : MonoBehaviour
     private List<Transform> maleBodies = new List<Transform>();
     private List<Transform> maleGlasses = new List<Transform>();
     private List<Transform> femaleGlasses = new List<Transform>();
-
-    /*
-    private Text genderLabel;
-    private Text headLabel;
-    private Text bodyLabel;
-    private Text glassesLabel;
-    */
-
+    
     private Image maleBtn;
     private Image femaleBtn;
     
     private void Start()
     {
+        if (SceneManager.GetActiveScene().name == "MainMenu")
+            return;
+
         femaleChar = GameObject.Find("Female_Citizens_customizable");
         maleChar = GameObject.Find("Male_Citizens_customizable");
 
@@ -86,22 +82,6 @@ public class CharacterCreationScene : MonoBehaviour
         femaleHeads.RemoveRange(femaleHeads.Count - 3, 3);
         maleGlasses = maleHeads.GetRange(maleHeads.Count - 3, 3);
         maleHeads.RemoveRange(maleHeads.Count - 3, 3);
-
-        /* set up labels/buttons
-        genderLabel = GameObject.Find("Canvas/CharacterPanel/Panel/Gender/Label").GetComponent<Text>();
-        headLabel = GameObject.Find("Canvas/CharacterPanel/Panel/Head/Label").GetComponent<Text>();
-        bodyLabel = GameObject.Find("Canvas/CharacterPanel/Panel/Body/Label").GetComponent<Text>();
-        glassesLabel = GameObject.Find("Canvas/CharacterPanel/Panel/Glasses/Label").GetComponent<Text>();
-        */
-    }
-    void UpdateLabels()
-    {
-        /*
-        genderLabel.text = (gender == CharGender.Male) ? "Male" : "Female";
-        headLabel.text = "Head #" + (headType+1); // first type is 0
-        bodyLabel.text = "Body #" + (bodyType+1); // which is weird for non-programmers :D
-        glassesLabel.text = (glassesType >= 0) ? "Glasses #" + (glassesType + 1) : "None";
-        */
     }
 
     void UpdateMaleHeads()
@@ -177,8 +157,7 @@ public class CharacterCreationScene : MonoBehaviour
         headType = head;
         bodyType = body;
         glassesType = glasses;
-
-        UpdateLabels();
+        
         UpdateActiveObjects();
 
         // updating gender buttons
@@ -203,7 +182,6 @@ public class CharacterCreationScene : MonoBehaviour
         headType = 0;
 
         UpdateActiveObjects();
-        UpdateLabels();
     }
 
     public void NextGender()
@@ -236,8 +214,6 @@ public class CharacterCreationScene : MonoBehaviour
         {
             UpdateMaleHeads();
         }
-
-        UpdateLabels();
     }
 
     public void NextHead()
@@ -259,7 +235,6 @@ public class CharacterCreationScene : MonoBehaviour
             }
             UpdateMaleHeads();
         }
-        UpdateLabels();
     }
 
     public void PreviousBody()
@@ -285,8 +260,6 @@ public class CharacterCreationScene : MonoBehaviour
         {
             UpdateMaleBodies();
         }
-
-        UpdateLabels();
     }
 
     public void NextBody()
@@ -308,7 +281,6 @@ public class CharacterCreationScene : MonoBehaviour
             }
             UpdateMaleBodies();
         }
-        UpdateLabels();
     }
 
     public void PreviousGlasses()
@@ -328,8 +300,6 @@ public class CharacterCreationScene : MonoBehaviour
         {
             UpdateMaleGlasses();
         }
-
-        UpdateLabels();
     }
 
     public void NextGlasses()
@@ -349,8 +319,6 @@ public class CharacterCreationScene : MonoBehaviour
         {
             UpdateMaleGlasses();
         }
-
-        UpdateLabels();
     }
 
     public void MaleBtn()
