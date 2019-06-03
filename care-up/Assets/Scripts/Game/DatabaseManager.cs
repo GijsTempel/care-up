@@ -36,6 +36,11 @@ public class DatabaseManager : MonoBehaviour {
         WUData.FetchUserGameInfo(WULogin.UID, FetchEverything_success);
     }
 
+    public static void Clean()
+    {
+        database.Clear();
+    }
+
     private static void PostInit()
     {
         // increment logins number

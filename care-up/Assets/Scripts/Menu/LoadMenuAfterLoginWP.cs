@@ -12,6 +12,7 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
         if (!done)
         {
             WULogin.onLoggedIn += InitDatabase;
+            WULogin.onLoggedOut += CleanDatabase;
             WULogin.onLoggedOut += LoadStartScene;
             done = true;
         }
@@ -20,6 +21,11 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
     public void InitDatabase(CML ignore)
     {
         DatabaseManager.Init();
+    }
+
+    public void CleanDatabase(CML ignore)
+    {
+        DatabaseManager.Clean();
     }
     
     void LoadStartScene(CML response)
