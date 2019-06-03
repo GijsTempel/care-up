@@ -63,7 +63,7 @@ public class EndScoreManager : MonoBehaviour {
             actualScene = true;
 
             //update practice score & stars, update UI accordingly
-            GameObject.FindObjectOfType<PlayerPrefsManager>().UpdatePracticeHighscore(points, score);
+            manager.UpdatePracticeHighscore(points, score);
 
             Transform stepParent = GameObject.Find("Interactable Objects/Canvas/PracticeStepsScreen/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
 
@@ -117,7 +117,7 @@ public class EndScoreManager : MonoBehaviour {
             GameObject.Find("Interactable Objects/Canvas/Send_Score/Top/Scenetitle").GetComponent<Text>().text = manager.currentSceneVisualName;
 
             // update test highscore
-            GameObject.FindObjectOfType<PlayerPrefsManager>().UpdateTestHighscore(percent);
+            manager.UpdateTestHighscore(percent);
 
             if (flag == true) {
                 achievements.UpdateKeys ("FirstPassedExam", 1);
@@ -169,11 +169,11 @@ public class EndScoreManager : MonoBehaviour {
                 achievements.UpdateKeys ("within5", 1);
             }
 
-            if (manager.plays == 1) {
+            if (PlayerPrefsManager.plays == 1) {
                 achievements.UpdateKeys ("FinishedProtocol", 1);
-            }else if (manager.plays == 3) {
+            }else if (PlayerPrefsManager.plays == 3) {
                 achievements.UpdateKeys ("FinishedProtocol", 2);
-            } else if (manager.plays == 5) {
+            } else if (PlayerPrefsManager.plays == 5) {
                 achievements.UpdateKeys ("FinishedProtocol", 2);
             }
 

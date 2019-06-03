@@ -14,8 +14,8 @@ public class LoadCharacterScene : MonoBehaviour
     public void LoadCharacter()
     {
         characters.SetActive(true);
-        CharacterCreationScene character = new CharacterCreationScene();
-        character.ShowCharacter(maleCharacter, femaleCharacter);
+        GameObject.FindObjectOfType<CharacterCreationScene>()
+            .ShowCharacter(maleCharacter, femaleCharacter);
     }
 
     public void Update()
