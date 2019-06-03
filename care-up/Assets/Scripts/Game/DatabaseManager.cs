@@ -38,8 +38,6 @@ public class DatabaseManager : MonoBehaviour {
 
     private static void PostInit()
     {
-        PrintDatabase();
-
         // increment logins number
         int loginNumber;
         int.TryParse(FetchField("AccountStats", "Login_Number"), out loginNumber);
@@ -81,14 +79,13 @@ public class DatabaseManager : MonoBehaviour {
     {
         for (int i = 0; i < response.Elements.Count; ++i)
         {
-            // data types: DATA, _CATEGORY_, _GAME_
+            // possible data types: DATA, _CATEGORY_, _GAME_
             if (response.Elements[i].data_type != "_CATEGORY_")
             {
                 continue;
             }
 
             // we're here if data type is category
-
             string categoryName = "";
 
             for (int j = 0; j < response.Elements[i].Keys.Length; ++j)
@@ -97,8 +94,8 @@ public class DatabaseManager : MonoBehaviour {
                 {
                     // skip trash info
                     case "id":
-                    case "woocommerce-login-nonce":
                     case "_wpnonce":
+                    case "woocommerce-login-nonce":
                     case "woocommerce-reset-password-nonce":
                         break;
                     case "category":
@@ -137,6 +134,7 @@ public class DatabaseManager : MonoBehaviour {
         {
             // no category found, gotta init one
             Category newCat = new Category(category);
+            newCat.fields.Add(fieldName, fieldValue);
             database.Add(newCat);
         }
     }
