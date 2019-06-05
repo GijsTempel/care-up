@@ -121,14 +121,54 @@
     extra="Neem de sonde uit de verpakking"/>
 
   <action
-    comment="Place tube in water"
+  comment="Measure the probe at the client from the point of the nose to the earlobe until the end of the breastbone (NEX.)"
+  points="1"
+  description="Meet bij de cliënt met de sonde de afstand vanaf de punt van de neus naar de oorlel tot aan uiteinde borstbeen (NEX)"
+  index="7"
+  type="sequenceStep"
+  value="nosetoear"
+  extra="Meet bij de cliënt met de sonde de afstand vanaf de punt van de neus naar de oorlel tot aan uiteinde borstbeen (NEX)."/>
+
+
+  <action
+   comment="Add 10 cm to that."
+   points="1"
+   description="Tel hier 10 cm bij op"
+   index="8"
+   type="sequenceStep"
+   value="add 10 cm"
+   extra="Tel hier 10 cm bij op."/>
+
+  <action
+    comment="Mark the probe on the measured lenght. ---End Sequence"
     points="1"
-    description="Place tube in water"
-    index="7"
+    description="Markeer de sonde op de afgemeten lengte"
+    index="9"
+    type="sequenceStep"
+    value="mark the probe"
+    extra="Markeer de sonde op de afgemeten lengte."/>
+
+  <action
+    comment="Make the probe wet under a tap or to immerse it under water in a bowl."
+    points="1"
+    description="Maak de sonde nat onder de kraan of door hem in de kom met water te dompelen"
+    index="10"
     type="useOn"
     item="MedicalTubeInHand"
     target=""
-    buttonText="Place in water"
+    buttonText="Plaats de sonde in het water"
     extra="Neem de sonde uit de verpakking"/>
+  
+  <action
+    comment="Put the pad on the chest of the client."
+    points="2"
+    description="Leg de onderlegger onder de subcutane canule. "
+    fullDescription="Pak de onderlegger van het werkveld. Beweeg naar de cliënt. Klik vervolgens op de onderlegger in je hand. Klik op het + icoon en klik daarna op de cliënt."
+    index="11"
+    type="useOn"
+    item="cloth_02_folded"
+    target=""
+    buttontext="Leg de onderlegger"
+    extra="Leg de onderlegger onder de subcutane canule. "></action>
 
 </ActionList>

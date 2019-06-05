@@ -33,7 +33,7 @@ public class DropFromHandOnFrame : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-
+        Debug.Log("________" + " Update");
         if (animator.speed != 0)
         {
             if (PlayerAnimationManager.CompareFrames(frame, prevFrame, dropLeftFrame))
