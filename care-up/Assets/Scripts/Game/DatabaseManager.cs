@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using MBS;
 
-public class DatabaseManager : MonoBehaviour {
+public class DatabaseManager : MonoBehaviour
+{
+    private static string sessionKey = "";
 
     public class Category
     {
@@ -78,6 +80,11 @@ public class DatabaseManager : MonoBehaviour {
             WULogin.characterCreated = false;
             bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Character_Customisation");
         }
+
+        // 1 session restriction, checking once a minute
+        sessionKey = PlayerPrefsManager.RandomString(16);
+        UpdateField("AccountStats", "SessionKey", sessionKey);
+        instance.StartCoroutine(CheckSession(60.0f));
     }
 
     private static void FetchEverything_success(CML response)
@@ -208,5 +215,24 @@ public class DatabaseManager : MonoBehaviour {
             data.Set(field[0], field[1]);    
         }
         WUData.UpdateUserCategory(WULogin.UID, category, data);
+    }
+
+    private static IEnumerator CheckSession(float refreshTime)
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(refreshTime);
+            WUData.FetchUserField(WULogin.UID, "SessionKey", "AccountStats", OnSessionCheckResponse);
+        }
+    }
+
+    private static void OnSessionCheckResponse(CML response)
+    {
+        string dbSessionKey = response[1].String("SessionKey");
+        if (sessionKey != dbSessionKey)
+        {
+            Debug.LogWarning("Different session detected, logging out.");
+            WULogin.LogOut();
+        }
     }
 }

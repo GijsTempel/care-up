@@ -11,6 +11,7 @@ using UnityEngine.PostProcessing;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using System.Linq;
 
 /// <summary>
 /// Handles quick access to saved data.
@@ -54,11 +55,7 @@ public class PlayerPrefsManager : MonoBehaviour
     private UMP_Manager manager;
     private MainMenu mainMenu;
     private Scene currentScene;
-
-    private bool timeOut;
-    private float timeLeft = 0f;
-    private bool startTimer = false;
-
+    
     public string fullPlayerName = "";
 
     public string ActivatedScenes
@@ -200,8 +197,6 @@ public class PlayerPrefsManager : MonoBehaviour
 
         // OnLoaded doesnt launch on initial scene? so force it in start function separately
         OnLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
-
-        Debug.Log("Current RuntimePlatform is: " + Application.platform);
 
         manager = GameObject.FindObjectOfType<UMP_Manager>();
     }
@@ -587,7 +582,7 @@ public class PlayerPrefsManager : MonoBehaviour
         string res = "";
 
         string allowedChars = "ghijkmnopqrstuvwxyzGHJKLMNOPQRSTUVWXYZ";
-        System.Random random = new System.Random();
+        System.Random random = new System.Random((int)DateTime.Now.Ticks);
 
         for (int i = 0; i < str.Length; ++i)
         {
@@ -740,5 +735,13 @@ public class PlayerPrefsManager : MonoBehaviour
 
             //startTimer = false;
         }
+    }
+
+    public static string RandomString(int length)
+    {
+        System.Random random = new System.Random((int)DateTime.Now.Ticks);
+        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        return new string(Enumerable.Repeat(chars, length)
+          .Select(s => s[random.Next(s.Length)]).ToArray());
     }
 }
