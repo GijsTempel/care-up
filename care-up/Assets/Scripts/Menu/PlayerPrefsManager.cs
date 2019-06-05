@@ -615,23 +615,23 @@ public class PlayerPrefsManager : MonoBehaviour
 
     private void SetEscapeButtonLogic()
     {
-        if (startTimer)
-        {
-            timeLeft -= Time.deltaTime;
-            timeOut = timeLeft > 0f ? true : false;                         
-        }
+        //if (startTimer)
+        //{
+        //    timeLeft -= Time.deltaTime;
+        //    timeOut = timeLeft > 0f ? true : false;                         
+        //}
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Debug.Log("Escape button pressed");
 
-            if (timeOut == false)
-            {
-                print("Are you sure you want to leave?");
-                timeLeft = 3.0f;
-                startTimer = true;
-                return;
-            }
+            //if (timeOut == false)
+            //{
+            //    print("Are you sure you want to leave?");
+            //    timeLeft = 3.0f;
+            //    startTimer = true;
+            //    return;
+            //}
 
             manager = GameObject.FindObjectOfType<UMP_Manager>();
 
@@ -738,7 +738,7 @@ public class PlayerPrefsManager : MonoBehaviour
                 }
             }
 
-            startTimer = false;
+            //startTimer = false;
         }
     }
 }
