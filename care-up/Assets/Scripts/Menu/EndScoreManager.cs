@@ -116,7 +116,7 @@ public class EndScoreManager : MonoBehaviour {
 
             GameObject.Find("Interactable Objects/Canvas/Send_Score/Top/Scenetitle").GetComponent<Text>().text = manager.currentSceneVisualName;
 
-            // update test highscore
+            // update test highscore + save certificate date
             manager.UpdateTestHighscore(percent);
 
             if (flag == true) {

@@ -62,6 +62,10 @@ public class MainMenu : MonoBehaviour {
             string[][] highScores = DatabaseManager.FetchCategory("TestHighscores");
             foreach(string[] score in highScores)
             {
+                // fetch date before formatting scene name back
+                string date = DatabaseManager.FetchField("CertificateDates", score[0]);
+                date = (date == "") ? "27052019" : date;
+
                 string sceneName = score[0].Replace("_", " ");
 
                 float fPercent = 0.0f;
@@ -83,7 +87,7 @@ public class MainMenu : MonoBehaviour {
 
                 scoreObject.transform.Find("Button").GetComponent<Button>().interactable = passed;
                 scoreObject.transform.Find("Button").GetComponent<Button>().onClick.AddListener
-                    (delegate { PlayerPrefsManager.__openCertificate(prefs.fullPlayerName, sceneName); });
+                    (delegate { PlayerPrefsManager.__openCertificate(prefs.fullPlayerName, sceneName, date); });
             }
 
             // shared field, will keep it outside DatabaseManager

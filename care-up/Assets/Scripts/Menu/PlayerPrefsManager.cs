@@ -425,6 +425,11 @@ public class PlayerPrefsManager : MonoBehaviour
         Application.OpenURL("mailto:" + "info@careup.nl" + "?subject=" + topic + "&body=" + message);
     }
 
+    /// <summary>
+    /// Updates % highscore on database if new one is higher then old one.
+    /// Also saves certificate date if there was no such previously.
+    /// </summary>
+    /// <param name="score"></param>
     public void UpdateTestHighscore(float score)
     {
         float currentTestScore = score * 100.0f;
@@ -437,6 +442,14 @@ public class PlayerPrefsManager : MonoBehaviour
         if (highscore < currentTestScore)
         {
             DatabaseManager.UpdateField("TestHighscores", currentTestScene, currentTestScore.ToString());
+        }
+
+        // save certificate date here too
+        string date = DatabaseManager.FetchField("CertificateDates", currentTestScene);
+        if (date == "")
+        {
+            date = GetTodaysDateFormatted();
+            DatabaseManager.UpdateField("CertificateDates", currentTestScene, date);
         }
     }
 
@@ -548,12 +561,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
         if (date == "")
         {
-            string day = DateTime.Now.Day.ToString();
-            if (day.Length == 1) day = "0" + day;
-            string month = DateTime.Now.Month.ToString();
-            if (month.Length == 1) month = "0" + month;
-
-            date = day + month + DateTime.Now.Year.ToString();
+            date = GetTodaysDateFormatted();
         }
         keyValue += __sumString(date) * 13;
 
@@ -568,6 +576,18 @@ public class PlayerPrefsManager : MonoBehaviour
 
         Debug.LogWarning("OPENING LINK " + link);
         Application.OpenURL(link.Replace(" ", "%20"));
+    }
+
+    public static string GetTodaysDateFormatted()
+    {
+        string day = DateTime.Now.Day.ToString();
+        if (day.Length == 1) day = "0" + day;
+        string month = DateTime.Now.Month.ToString();
+        if (month.Length == 1) month = "0" + month;
+
+        string date = day + month + DateTime.Now.Year.ToString();
+
+        return date;
     }
 
     static int __sumString(string str)
