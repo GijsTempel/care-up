@@ -110,9 +110,9 @@ public class EndScoreManager : MonoBehaviour {
             actualScene = true;
             
             // show/hide buttons
-            bool flag = (percent > 0.7f && manager.subscribed && manager.validatedScene);
+            bool flag = (percent > 0.7f && manager.subscribed);
             GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Buttons/NextButton").SetActive(flag);
-            GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Buttons/Back to main menu").SetActive(!flag);
+            GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Buttons/Back to main menu").SetActive(!(flag && manager.validatedScene));
 
             GameObject.Find("Interactable Objects/Canvas/Send_Score/Top/Scenetitle").GetComponent<Text>().text = manager.currentSceneVisualName;
 
@@ -135,6 +135,14 @@ public class EndScoreManager : MonoBehaviour {
             // fullname pop up function set up
             GameObject.Find("Interactable Objects/Canvas/NamePopUp/BackToRegisterButton")
                 .GetComponent<Button>().onClick.AddListener(SaveFullPlayerNameBtn);
+
+            if (!flag || !manager.validatedScene)
+            {
+                GameObject.Find("Interactable Objects/Canvas/CertificatePanel/" + 
+                    "ContentHolder/Description (1)").SetActive(false);
+                GameObject.Find("Interactable Objects/Canvas/CertificatePanel/" +
+                    "ContentHolder/ScoreSendBTN").SetActive(false);
+            }
 
         }
         if (actualScene)
