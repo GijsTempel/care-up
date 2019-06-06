@@ -540,18 +540,21 @@ public class PlayerPrefsManager : MonoBehaviour
     /// <param name="secondName"></param>
     /// <param name="scene"></param>
     /// <param name="score"></param>
-    public static void __openCertificate(string name, string scene)
+    public static void __openCertificate(string name, string scene, string date = "")
     {
         int keyValue = 192378; // salt
         keyValue += __sumString(name);
         keyValue += __sumString(scene);
 
-        string day = DateTime.Now.Day.ToString();
-        if (day.Length == 1) day = "0" + day;
-        string month = DateTime.Now.Month.ToString();
-        if (month.Length == 1) month = "0" + month;
+        if (date == "")
+        {
+            string day = DateTime.Now.Day.ToString();
+            if (day.Length == 1) day = "0" + day;
+            string month = DateTime.Now.Month.ToString();
+            if (month.Length == 1) month = "0" + month;
 
-        string date = day + month + DateTime.Now.Year.ToString();
+            date = day + month + DateTime.Now.Year.ToString();
+        }
         keyValue += __sumString(date) * 13;
 
         string hexKey = Convert.ToString(keyValue, 16);

@@ -76,9 +76,14 @@ public class MainMenu : MonoBehaviour {
                 GameObject layoutGroup = GameObject.Find("UMenuProManager/MenuCanvas/Account_Scores/Account_Panel_UI/ScoresHolder/Scores/LayoutGroup");
                 GameObject scoreObject = Instantiate(Resources.Load<GameObject>("Prefabs/UI/TestHighscore"), layoutGroup.transform);
                 scoreObject.transform.Find("SceneName").GetComponent<Text>().text = sceneName;
+
                 scoreObject.transform.Find("Percent").GetComponent<Text>().text = percent.ToString() + "%";
-                scoreObject.transform.Find("Passed").GetComponent<Text>().text =
-                    (passed ? "Voldoende" : "Onvoldoende");
+                scoreObject.transform.Find("Percent").GetComponent<Text>().color =
+                    (passed ? Color.green : Color.red);
+
+                scoreObject.transform.Find("Button").GetComponent<Button>().interactable = passed;
+                scoreObject.transform.Find("Button").GetComponent<Button>().onClick.AddListener
+                    (delegate { PlayerPrefsManager.__openCertificate(prefs.fullPlayerName, sceneName); });
             }
 
             // shared field, will keep it outside DatabaseManager
