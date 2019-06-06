@@ -135,6 +135,8 @@ public class PlayerPrefsManager : MonoBehaviour
             {
                 Destroy(GameObject.Find("UMenuProManager/MenuCanvas/VersionUpdatePanel/Panel_Version_UI" +
                     "/NewVersionButtonGreenWindows"));
+                Destroy(GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/WUSerialScreen" +
+                    "/RegisterArea/Buttons/PurchaseButton_UWP"));
             }
 
             if ((Application.platform != RuntimePlatform.Android) &&
