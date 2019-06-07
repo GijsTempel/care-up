@@ -17,7 +17,8 @@ public class CharacterInfo : MonoBehaviour
 
         string[][] data = new string[][]
         {
-            new string[] { "CharacterSex" , CharacterInfo.sex },
+            new string[] { "CharacterCreated", "true" },
+            new string[] { "CharacterSex", CharacterInfo.sex },
             new string[] { "CharacterHeadType", CharacterInfo.headType.ToString() },
             new string[] { "CharacterBodyType", CharacterInfo.bodyType.ToString() },
             new string[] { "CharacterGlassesType", CharacterInfo.glassesType.ToString() },
