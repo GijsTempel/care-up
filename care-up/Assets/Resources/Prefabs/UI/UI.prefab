@@ -5297,7 +5297,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114556111838322484}
   m_HandleRect: {fileID: 224614645923541416}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -10998,6 +10998,7 @@ GameObject:
   - component: {fileID: 114270697698592618}
   - component: {fileID: 114637037020403484}
   - component: {fileID: 114997426765045690}
+  - component: {fileID: 5457377420468289094}
   m_Layer: 5
   m_Name: Button_Green
   m_TagString: Untagged
@@ -11098,6 +11099,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 5457377420468289094}
+        m_MethodName: TriggerEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114637037020403484
@@ -11159,6 +11171,36 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &5457377420468289094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326621613268630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -745406591, guid: 220224b43fc464c28bc0e8de8f54a432, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Trigger:
+    m_IsTriggerExpanded: 1
+    m_Type: 1
+    m_LifecycleEvent: 0
+    m_ApplyRules: 0
+    m_Rules:
+      m_Rules: []
+    m_TriggerBool: 0
+    m_InitTime: 5
+    m_RepeatTime: 5
+    m_Repetitions: 0
+    repetitionCount: 0
+  m_EventPayload:
+    m_IsEventExpanded: 1
+    m_StandardEventType: CustomEvent
+    m_Parameters:
+      m_Parameters: []
+    m_Name: Button Press Done Protocol
 --- !u!1 &1328591001804616
 GameObject:
   m_ObjectHideFlags: 0
@@ -12587,7 +12629,6 @@ MonoBehaviour:
   extraText: {fileID: 0}
   hintPanelText: {fileID: 0}
   hintPanel: {fileID: 1786630834483006}
-  ipadTrigger: {fileID: 0}
   tutorial_extraOpened: 0
   tutorial_extraClosed: 0
   tutorial_devHintOpened: 0
@@ -29769,7 +29810,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 224180842715563482}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99989957
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
