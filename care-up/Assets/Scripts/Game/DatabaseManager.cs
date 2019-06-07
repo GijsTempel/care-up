@@ -53,8 +53,7 @@ public class DatabaseManager : MonoBehaviour {
         int.TryParse(plays, out PlayerPrefsManager.plays);
 
         // set sub status
-        GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed = 
-            WULogin.HasSerial || (WULogin.RequireSerialForLogin == false);
+        GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed = WULogin.HasSerial;
 
         // set character info
         CharacterInfo.sex = FetchField("AccountStats", "CharacterSex");
