@@ -7,8 +7,8 @@ namespace MBS
 {
     public class WUADisplay : MonoBehaviour
     {
-        [SerializeField] RectTransform content_area;
-        [SerializeField] WUAView view_prefab;
+        [SerializeField] RectTransform content_area = default(RectTransform);
+        [SerializeField] WUAView view_prefab = default(WUAView);
         [SerializeField] bool destroy_contents_on_load = true;
         [SerializeField] private Button achievementButton;
         //private bool spawnContent = false;
@@ -81,7 +81,7 @@ namespace MBS
 
             if (currentScene.name == "LoginMenu" && destroyPrefab == true)
             {
-                Debug.Log("hi");
+                // Debug.Log("hi"); hello, plz unnecesarry debug messages shoudnt be pushed
                 Destroy(transform.parent.gameObject);
                 destroyPrefab = false;
             }
@@ -167,7 +167,8 @@ namespace MBS
 
         void ShowHowmanyIAmTracking()
         {
-            Debug.Log($"Tracking achievements: {(null == tracked ? 0 : tracked.Count)}");
+            // not relevant when not needed
+            //Debug.Log($"Tracking achievements: {(null == tracked ? 0 : tracked.Count)}");
         }
 
         public void UpdateKeys(string name, int qty)
@@ -274,15 +275,15 @@ namespace MBS
                 {
                     GameObject.Find("AchieveTitle").GetComponent<Text>().text = "Training gehaald";
                 }
-                else if (name == "FinishedProtocol" && manager.plays == 5)
+                else if (name == "FinishedProtocol" && PlayerPrefsManager.plays == 5)
                 {
                     GameObject.Find("AchieveTitle").GetComponent<Text>().text = "5 handelingen afgerond";
                 }
-                else if (name == "FinishedProtocol" && manager.plays == 3)
+                else if (name == "FinishedProtocol" && PlayerPrefsManager.plays == 3)
                 {
                     GameObject.Find("AchieveTitle").GetComponent<Text>().text = "3 handelingen afgerond";
                 }
-                else if (name == "FinishedProtocol" && manager.plays == 1)
+                else if (name == "FinishedProtocol" && PlayerPrefsManager.plays == 1)
                 {
                     GameObject.Find("AchieveTitle").GetComponent<Text>().text = "Afronden van de eerste handeling";
                 }

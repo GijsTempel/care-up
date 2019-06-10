@@ -10,7 +10,7 @@ public class HighlightObject : MonoBehaviour {
     public List<GameObject> BallElements;
     public List<GameObject> QubeElements;
     public List<GameObject> ArrowElements;
-    bool gold = false;
+    //bool gold = false;
     GameUI gameUI;
     public GameObject audioEffect;
     public GameObject hand_hl;

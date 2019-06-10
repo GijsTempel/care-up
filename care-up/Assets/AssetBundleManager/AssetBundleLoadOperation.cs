@@ -44,14 +44,16 @@ namespace AssetBundles
 				Debug.LogError("There is no scene with name \"" + levelName + "\" in " + assetBundleName);
 				return;
 			}
-			
-			if (isAdditive)
+
+#pragma warning disable
+            if (isAdditive)
 				m_Operation = UnityEditor.EditorApplication.LoadLevelAdditiveAsyncInPlayMode(levelPaths[0]);
 			else
 				m_Operation = UnityEditor.EditorApplication.LoadLevelAsyncInPlayMode(levelPaths[0]);
 		}
-		
-		public override bool Update ()
+#pragma warning restore
+
+        public override bool Update ()
 		{
 			return false;
 		}

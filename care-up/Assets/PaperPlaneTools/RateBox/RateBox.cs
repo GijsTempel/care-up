@@ -83,13 +83,15 @@
 		public static string GetStoreUrl(string iTunesAppId, string googlePlayMarketAppBundleId) 
 		{
 			string url = "";
+#pragma warning disable
 #if (UNITY_IPHONE || UNITY_EDITOR)
-				url = String.Format("https://itunes.apple.com/app/id{0}?action=write-review",  WWW.EscapeURL(iTunesAppId));
+            url = String.Format("https://itunes.apple.com/app/id{0}?action=write-review",  WWW.EscapeURL(iTunesAppId));
 #endif
 #if UNITY_ANDROID
 				url = String.Format("https://play.google.com/store/apps/details?id={0}",  WWW.EscapeURL(googlePlayMarketAppBundleId));
 #endif
-			return url;
+#pragma warning restore
+            return url;
 		}
 
 		/// <summary>

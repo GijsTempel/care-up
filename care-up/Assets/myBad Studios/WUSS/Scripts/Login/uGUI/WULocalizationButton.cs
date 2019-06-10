@@ -4,8 +4,8 @@ using UnityEngine.UI;
 public class WULocalizationButton : MonoBehaviour {
 
     [SerializeField] int ID;
-    [SerializeField] Image graphic;
-    [SerializeField] Image blocker;
+    [SerializeField] Image graphic = default(Image);
+    [SerializeField] Image blocker = default(Image);
 
     public void SetId( int to, Sprite avatar)
     {

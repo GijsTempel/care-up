@@ -181,7 +181,9 @@ namespace MBS {
             Sprite sprite = Resources.Load<Sprite>( filename );
             if ( null == sprite )
             {
+#pragma warning disable
                 WWW w = new WWW( url );
+#pragma warning restore
                 yield return w;
                 if ( string.IsNullOrEmpty( w.error ) )
                 {

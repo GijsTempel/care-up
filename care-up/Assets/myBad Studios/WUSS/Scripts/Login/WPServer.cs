@@ -56,7 +56,7 @@ namespace MBS
 
         static public Action<WPServerState> OnServerStateChange;
 
-        [SerializeField] eWussServerContactType post_method;
+        [SerializeField] eWussServerContactType post_method = default(eWussServerContactType);
         [SerializeField, HideInInspector, WPGameId] int game_id = 1;
         [SerializeField] bool use_online_url = true;
         [SerializeField]

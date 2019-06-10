@@ -7,19 +7,19 @@ public class EndButtonRemover : MonoBehaviour {
     public GameObject goToMenuButton;
 
     [SerializeField]
-    private GameObject ScorePanel;
+    private GameObject ScorePanel = null;
 
     [SerializeField]
-    private GameObject StepPanel;
+    private GameObject StepPanel = null;
 
     [SerializeField]
-    private GameObject QuizPanel;
+    private GameObject QuizPanel = null;
 
     [SerializeField]
-    private GameObject SendScorePanel;
+    private GameObject SendScorePanel = null;
 
     [SerializeField]
-    private GameObject CertificatePanel;
+    private GameObject CertificatePanel = null;
 
     public void ButtonClick () {
         goToMenuButton.SetActive (false);

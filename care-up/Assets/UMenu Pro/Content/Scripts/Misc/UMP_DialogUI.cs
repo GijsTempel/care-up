@@ -6,8 +6,8 @@ public class UMP_DialogUI : MonoBehaviour
     [Header("Settings")]
     public string AnimationParamenter = "show";
     [Header("References")]
-    [SerializeField]private Text mText;
-    [SerializeField]private Animator m_Animator;
+    [SerializeField]private Text mText = default(Text);
+    [SerializeField]private Animator m_Animator = default(Animator);
 
     /// <summary>
     /// 
