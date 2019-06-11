@@ -180,6 +180,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
                     info.image = Resources.Load<Sprite>("Sprites/ScenePreview/" + variation.Attributes["image"].Value);
                     info.validated = variation.Attributes["validated"] != null ?
                          variation.Attributes["validated"].Value == "true" : false;
+                    info.totalPoints = variation.Attributes["totalPoints"].Value;
 
                     sceneUnit.variations.Add(info);
 
@@ -188,9 +189,11 @@ public class LevelSelectionScene_UI : MonoBehaviour
                         // set the image as main if this is 1st variation
                         sceneUnit.image = sceneUnit.variations[i].image;
 
-                        sceneUnit.validated = sceneUnit.variations[i].validated;
+                        sceneUnit.validated = sceneUnit.variations[i].validated;                      
                         sceneUnit.transform.Find("Validation").GetComponent<Text>().text =
                             sceneUnit.validated ? "Geaccrediteerd" : "";
+
+                        sceneUnit.totalPoints = sceneUnit.variations[i].totalPoints;
 
                         // also make 1st option 'selected'
                         sceneUnit.sceneName = sceneUnit.variations[i].sceneName;
@@ -234,6 +237,11 @@ public class LevelSelectionScene_UI : MonoBehaviour
                     sceneUnit.validated = xmlSceneNode.Attributes["validated"].Value == "true";
                     sceneUnit.transform.Find("Validation").GetComponent<Text>().text =
                         sceneUnit.validated ? "Geaccrediteerd" : "";
+                }
+                
+                if (xmlSceneNode.Attributes["totalPoints"] != null)
+                {
+                    sceneUnit.totalPoints = xmlSceneNode.Attributes["totalPoints"].Value;
                 }
             }
 
