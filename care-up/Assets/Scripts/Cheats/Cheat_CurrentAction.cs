@@ -16,8 +16,8 @@ public class Cheat_CurrentAction : MonoBehaviour
     GameUI gameUI;
     [SerializeField] private Text hintPanelText;
 
-    [SerializeField] private GameObject hintPanel;
-    [SerializeField] private GameObject ipadTrigger;
+    [SerializeField] private GameObject hintPanel = null;
+    //[SerializeField] private GameObject ipadTrigger = null;
 
     // never used
     //private bool biggerDevHintActive = false;
@@ -27,7 +27,7 @@ public class Cheat_CurrentAction : MonoBehaviour
 
     private int direction;
     private float timer;
-    Button extraButton;
+    Button extraButton = default(Button);
 
     private ActionManager actionManager;
     private Animator controller;

@@ -23,7 +23,7 @@ namespace MBS
         static public bool characterCreated = false;
 
         //static private int FirstLogin = 1;
-        static private int SecondLogin = 2;
+        //static private int SecondLogin = 2;
 
         #region RESPONSE DELEGATES
         static public Action<CML>

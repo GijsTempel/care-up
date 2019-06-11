@@ -44,21 +44,10 @@
     ></action>
 
   <action
-    points="1"
-    description="Verwijder de beschermdop van de insulinepen"
-    audioHint="InsulinInjection/Step 3.3"
-    index="2"
-    type="combine"
-    left="InsulinPenWithCap"
-    right=""
-    extra="Verwijder de beschermdop van de insulinepen zodat je later de naald op de insulinepen kunt draaien."
-  ></action>
-
-  <action
     points="2"
     description="Controleer de cliëntgegevens"
     audioHint="Injection/H3-2"
-    index="3"
+    index="2"
     type="examine"
     item="PatientRecords"
     expected="good"
@@ -69,11 +58,22 @@
     points="2"
     description="Controleer de toedienlijst"
     audioHint="InjectionSubcutaneous/Step 5"
-    index="3"
+    index="2"
     type="examine"
     item="PrescriptionForm"
     expected="good"
     extra="Controleer de toedienlijst. Controleer de toedienlijst op soort, dosering en toedientijdstip "
+  ></action>
+
+  <action
+    points="1"
+    description="Verwijder de beschermdop van de insulinepen"
+    audioHint="InsulinInjection/Step 3.3"
+    index="3"
+    type="combine"
+    left="InsulinPenWithCap"
+    right=""
+    extra="Verwijder de beschermdop van de insulinepen zodat je later de naald op de insulinepen kunt draaien."
   ></action>
   
   <action

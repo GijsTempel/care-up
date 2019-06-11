@@ -11,6 +11,7 @@ using CareUp.Actions;
 /// </summary>
 public class ActionManager : MonoBehaviour
 {
+    public bool TextDebug = false;
     // tutorial variables - do not affect gameplay
     [HideInInspector]
     public bool tutorial_hintUsed = false;
@@ -19,7 +20,7 @@ public class ActionManager : MonoBehaviour
     private Text percentageText;
     public int actionsCount = 0;
     public static bool practiceMode = true;
-
+    LocalizationManager localizationManager;
     [HideInInspector]
     public static bool personClicked = false;
 
@@ -160,11 +161,11 @@ public class ActionManager : MonoBehaviour
         if (playerScript == null)
             playerScript = GameObject.FindObjectOfType<PlayerScript>();
 
-        ActionManager manager = GameObject.FindObjectOfType<ActionManager>();
+        ActionManager actManager = GameObject.FindObjectOfType<ActionManager>();
         GameUI gameUI = GameObject.FindObjectOfType<GameUI>();
 
-        List<Action> sublist = manager.actionList.Where(action =>
-               action.SubIndex == manager.currentActionIndex &&
+        List<Action> sublist = actManager.actionList.Where(action =>
+               action.SubIndex == actManager.currentActionIndex &&
                action.matched == false).ToList();
 
         List<StepData> stepsList = new List<StepData>();
@@ -358,7 +359,8 @@ public class ActionManager : MonoBehaviour
 
                         if (!inventory.LeftHandEmpty())
                         {
-                            currentLeftObject = System.Char.ToLowerInvariant(inventory.leftHandObject.description[0]) + inventory.leftHandObject.description.Substring(1);
+                            if (!string.IsNullOrEmpty(inventory.leftHandObject.description))
+                                currentLeftObject = System.Char.ToLowerInvariant(inventory.leftHandObject.description[0]) + inventory.leftHandObject.description.Substring(1);
 
                             if (inventory.leftHandObject.name == hand)
                             {
@@ -370,7 +372,8 @@ public class ActionManager : MonoBehaviour
 
                         if (!inventory.RightHandEmpty())
                         {
-                            currentRightObject = System.Char.ToLowerInvariant(inventory.rightHandObject.description[0]) + inventory.rightHandObject.description.Substring(1);
+                            if (!string.IsNullOrEmpty(inventory.rightHandObject.description))
+                                currentRightObject = System.Char.ToLowerInvariant(inventory.rightHandObject.description[0]) + inventory.rightHandObject.description.Substring(1);
 
                             if (inventory.rightHandObject.name == hand)
                             {
@@ -415,9 +418,9 @@ public class ActionManager : MonoBehaviour
 
                         else if (leftR != null)
                         {
-                            if (manager.CompareUseOnInfo(inventory.leftHandObject.name, ""))
+                            if (actManager.CompareUseOnInfo(inventory.leftHandObject.name, ""))
                             {
-                                keyWords = manager.CurrentButtonText(inventory.leftHandObject.name);
+                                keyWords = actManager.CurrentButtonText(inventory.leftHandObject.name);
 
                                 objectsData.Add(new StepData(false, $"- Klik op de '{keyWords}' knop.", i));
                                 if (!foundComplitedAction)
@@ -455,10 +458,10 @@ public class ActionManager : MonoBehaviour
                                 }
                             }
 
-                            else if (!string.IsNullOrEmpty(manager.CurrentDecombineButtonText(inventory.leftHandObject.name)))
+                            else if (!string.IsNullOrEmpty(actManager.CurrentDecombineButtonText(inventory.leftHandObject.name)))
                             {
-                                keyWords = manager.CurrentDecombineButtonText(inventory.leftHandObject.name);
-                                objectsData.Add(new StepData(false, $"- Klik op de '{manager.CurrentDecombineButtonText(inventory.leftHandObject.name)}' knop.", i));
+                                keyWords = actManager.CurrentDecombineButtonText(inventory.leftHandObject.name);
+                                objectsData.Add(new StepData(false, $"- Klik op de '{actManager.CurrentDecombineButtonText(inventory.leftHandObject.name)}' knop.", i));
                                 if (!foundComplitedAction)
                                 {
                                     foundComplitedAction = true;
@@ -471,9 +474,9 @@ public class ActionManager : MonoBehaviour
 
                         else if (rightR != null)
                         {
-                            if (manager.CompareUseOnInfo(inventory.rightHandObject.name, ""))
+                            if (actManager.CompareUseOnInfo(inventory.rightHandObject.name, ""))
                             {
-                                keyWords = manager.CurrentButtonText(inventory.rightHandObject.name);
+                                keyWords = actManager.CurrentButtonText(inventory.rightHandObject.name);
 
                                 objectsData.Add(new StepData(false, $"- Klik op de '{keyWords}' knop.", i));
                                 if (!foundComplitedAction)
@@ -516,10 +519,10 @@ public class ActionManager : MonoBehaviour
                                     gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
                                 }
                             }
-                            else if (!string.IsNullOrEmpty(manager.CurrentDecombineButtonText(inventory.RightHandObject.name)))
+                            else if (!string.IsNullOrEmpty(actManager.CurrentDecombineButtonText(inventory.RightHandObject.name)))
                             {
-                                keyWords = manager.CurrentDecombineButtonText(inventory.rightHandObject.name);
-                                objectsData.Add(new StepData(false, $"- Klik op de '{manager.CurrentDecombineButtonText(inventory.rightHandObject.name)}' knop.", i));
+                                keyWords = actManager.CurrentDecombineButtonText(inventory.rightHandObject.name);
+                                objectsData.Add(new StepData(false, $"- Klik op de '{actManager.CurrentDecombineButtonText(inventory.rightHandObject.name)}' knop.", i));
                                 if (!foundComplitedAction)
                                 {
                                     foundComplitedAction = true;
@@ -918,6 +921,14 @@ public class ActionManager : MonoBehaviour
     void Awake()
     {
         manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
+        if (manager != null){
+            TextDebug = manager.TextDebug;
+            localizationManager = manager.GetLocalization();
+        }
+        if (localizationManager == null){
+            localizationManager = new LocalizationManager();
+            localizationManager.LoadAllDictionaries();
+        }
 
         string sceneName = SceneManager.GetActiveScene().name;
         menuScene = sceneName == "Menu" || sceneName == "SceneSelection" || sceneName == "EndScore";
@@ -938,9 +949,8 @@ public class ActionManager : MonoBehaviour
             int index;
             int.TryParse(action.Attributes["index"].Value, out index);
             string type = action.Attributes["type"].Value;
-            string descr = action.Attributes["description"].Value;
-
-
+            string descr = localizationManager.GetValueIfKey(action.Attributes["description"].Value);
+  
             string comment = "";
             if (action.Attributes["comment"] != null)
             {
@@ -975,13 +985,13 @@ public class ActionManager : MonoBehaviour
             string extra = "";
             if (action.Attributes["extra"] != null)
             {
-                extra = action.Attributes["extra"].Value;
+                extra = localizationManager.GetValueIfKey(action.Attributes["extra"].Value);
             }
 
             string buttonText = "";
             if (action.Attributes["buttonText"] != null)
             {
-                buttonText = action.Attributes["buttonText"].Value;
+                buttonText = localizationManager.GetValueIfKey(action.Attributes["buttonText"].Value);
             }
             else
             {
@@ -1015,13 +1025,13 @@ public class ActionManager : MonoBehaviour
             string messageTitle = "";
             if (action.Attributes["messageTitle"] != null)
             {
-                messageTitle = action.Attributes["messageTitle"].Value;
+                messageTitle = localizationManager.GetValueIfKey(action.Attributes["messageTitle"].Value);
             }
 
             string messageContent = "";
             if (action.Attributes["messageContent"] != null)
             {
-                messageContent = action.Attributes["messageContent"].Value;
+                messageContent = localizationManager.GetValueIfKey(action.Attributes["messageContent"].Value);
             }
 
             string blockUnlock = "";
@@ -1046,18 +1056,18 @@ public class ActionManager : MonoBehaviour
             string blockMsg = "";
             if (action.Attributes["blockTitle"] != null)
             {
-                blockTitle = action.Attributes["blockTitle"].Value;
+                blockTitle = localizationManager.GetValueIfKey(action.Attributes["blockTitle"].Value);
             }
 
             if (action.Attributes["blockMessage"] != null)
             {
-                blockMsg = action.Attributes["blockMessage"].Value;
+                blockMsg = localizationManager.GetValueIfKey(action.Attributes["blockMessage"].Value);
             }
 
             string decombineText = "Openen";
             if (action.Attributes["decombineText"] != null)
             {
-                decombineText = action.Attributes["decombineText"].Value;
+                decombineText = localizationManager.GetValueIfKey(action.Attributes["decombineText"].Value);
             }
 
             switch (type)

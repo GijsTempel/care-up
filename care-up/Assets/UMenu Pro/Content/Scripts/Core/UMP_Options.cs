@@ -151,16 +151,16 @@ public class UMP_Options : MonoBehaviour
         switch (CurrentBW)
         {
             case 0:
-                QualitySettings.blendWeights = BlendWeights.OneBone;
-                blendWeightsText.text = BlendWeights.OneBone.ToString();
+                QualitySettings.skinWeights = SkinWeights.OneBone;
+                blendWeightsText.text = SkinWeights.OneBone.ToString();
                 break;
             case 1:
-                QualitySettings.blendWeights = BlendWeights.TwoBones;
-                blendWeightsText.text = BlendWeights.TwoBones.ToString();
+                QualitySettings.skinWeights = SkinWeights.TwoBones;
+                blendWeightsText.text = SkinWeights.TwoBones.ToString();
                 break;
             case 2:
-                QualitySettings.blendWeights = BlendWeights.FourBones;
-                blendWeightsText.text = BlendWeights.FourBones.ToString();
+                QualitySettings.skinWeights = SkinWeights.FourBones;
+                blendWeightsText.text = SkinWeights.FourBones.ToString();
                 break;
         }
     }

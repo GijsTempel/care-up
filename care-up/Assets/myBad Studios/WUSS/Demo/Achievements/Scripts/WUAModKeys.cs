@@ -39,7 +39,9 @@ public class WUAModKeys : MonoBehaviour {
 
     IEnumerator SpawnButton( string url, int aid)
     {
+#pragma warning disable 
         WWW w = new WWW( url );
+#pragma warning restore
         Sprite img = null;
         yield return w;
         if ( string.IsNullOrEmpty( w.error ) )

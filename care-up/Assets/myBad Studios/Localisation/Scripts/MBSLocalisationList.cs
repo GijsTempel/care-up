@@ -9,7 +9,7 @@ namespace MBS
         [Serializable]
         public class MBSLocalSection
         {
-            [SerializeField] MBSLocalisationBase[] localisations;
+            [SerializeField] MBSLocalisationBase[] localisations = null;
             int selected;
             public int Selected => selected;
             public MBSLocalisationBase [] Localisations => localisations;
@@ -50,7 +50,7 @@ namespace MBS
 
         [SerializeField] bool dont_destroy = true;
 
-        [SerializeField] MBSLocalSection login;
+        [SerializeField] MBSLocalSection login = default(MBSLocalSection);
         static public MBSLocalSection Login => Instance.login;
         static public WULLocalisation LoginLocal => Instance.login.Localisation<WULLocalisation>();
         static public MBSLocalisationBase [] AllLogin => Instance.login.Localisations;

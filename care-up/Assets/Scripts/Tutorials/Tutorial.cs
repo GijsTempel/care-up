@@ -81,7 +81,7 @@ public class Tutorial : TutorialManager {
     private GameObject wfPos;
     private GameObject docPos;
     private GameObject cliëntPos;
-    [SerializeField]private GameObject robotUI;
+    [SerializeField]private GameObject robotUI = null;
 
     private UsableObject handCleaner;
     private WorkField workfield;

@@ -16,12 +16,13 @@ public class LevelButton : MonoBehaviour {
     public bool testDisabled;
     public bool validated;
 
-    private static Transform sceneInfoPanel;
+    private static Transform sceneInfoPanel = default(Transform);
     private static PlayerPrefsManager manager;
 
     private static Transform leaderboard;
     private static Transform scores;
     private static Transform names;
+    public bool demoLock = true;
 
     // saving info
     public struct Info
@@ -64,7 +65,7 @@ public class LevelButton : MonoBehaviour {
 
     public void OnLevelButtonClick()
     {
-        if (buy)
+        if (buy || demoLock)
         {
             // show dialogue now instead
             GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(5);
@@ -131,10 +132,57 @@ public class LevelButton : MonoBehaviour {
 
             // now we can fetch practice plays number in order to know whethere to hide or show test button
             // making test button inactive from the beginning before fetching
+            Button testBtn = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
+            "DialogTestPractice/Panel_UI/Buttons/TestButton").GetComponent<Button>();
+
+            string formattedSceneName = PlayerPrefsManager.FormatSceneName(manager.currentSceneVisualName);
+         
+            int practicePlays;
+            int.TryParse(DatabaseManager.FetchField("PracticePlays", formattedSceneName), out practicePlays);
+
+            testBtn.interactable = practicePlays >= 3;
+
             GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-            "DialogTestPractice/Panel_UI/Buttons/TestButton").GetComponent<Button>().interactable = false;
-            manager.FetchPracticePlays(manager.currentSceneVisualName);
-            manager.FetchPracticeHighscore(manager.currentSceneVisualName);
+                    "DialogTestPractice/Panel_UI/Buttons/TestButton/contentlocked/practiceamount")
+                .GetComponent<Text>().text = (3 - practicePlays).ToString() + " keer";
+
+            if (testBtn.interactable)
+            {
+                float testHighscore;
+                float.TryParse(DatabaseManager.FetchField("TestHighscores",
+                    formattedSceneName).Replace(",", "."), out testHighscore);
+                GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
+                    "DialogTestPractice/Panel_UI/Buttons/TestButton/contentunlocked/percentage")
+                    .GetComponent<Text>().text = Mathf.RoundToInt(testHighscore).ToString() + "%";
+            }
+
+            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
+                "DialogTestPractice/Panel_UI/Buttons/TestButton/contentunlocked").SetActive(testBtn.interactable);
+            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
+                "DialogTestPractice/Panel_UI/Buttons/TestButton/contentlocked").SetActive(!testBtn.interactable);
+            
+            int practiceHighscore, practiceStars;
+            int.TryParse(DatabaseManager.FetchField("PracticeHighscores", "score_" + formattedSceneName), out practiceHighscore);
+            int.TryParse(DatabaseManager.FetchField("PracticeHighscores", "stars_" + formattedSceneName), out practiceStars);
+
+            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
+                "DialogTestPractice/Panel_UI/Buttons/PracticeButton/content/score").
+            GetComponent<Text>().text = practiceHighscore.ToString();
+
+            Sprite grey = Resources.Load<Sprite>("Sprites/Stars/star 1");
+            Sprite gold = Resources.Load<Sprite>("Sprites/Stars/star_128x128px");
+
+            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
+                    "DialogTestPractice/Panel_UI/Buttons/PracticeButton/content/Stars/Star1")
+                .GetComponent<Image>().sprite = (practiceStars >= 1.0f) ? gold : grey;
+
+            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
+                    "DialogTestPractice/Panel_UI/Buttons/PracticeButton/content/Stars/Star2")
+                .GetComponent<Image>().sprite = (practiceStars >= 2.0f) ? gold : grey;
+
+            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
+                    "DialogTestPractice/Panel_UI/Buttons/PracticeButton/content/Stars/Star3")
+                .GetComponent<Image>().sprite = (practiceStars >= 3.0f) ? gold : grey;
         }
     }
 

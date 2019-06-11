@@ -16,9 +16,9 @@ namespace MBS {
         string requirements //a comma delimited array of requirement strings in the format: TYPE NAME QTY
         */
 
-        [SerializeField] Image icon;
-        [SerializeField] new Text name;
-        [SerializeField] Text description;
+        [SerializeField] Image icon = default(Image);
+        [SerializeField] new Text name = default(Text);
+        [SerializeField] Text description = default(Text);
 
         Sprite
             LockedImg,
@@ -61,7 +61,9 @@ namespace MBS {
 
         IEnumerator FetchImageOnline(string url, bool locked_sprite)
         {
+#pragma warning disable
             WWW w = new WWW( url );
+#pragma warning restore
             yield return w;
             if ( string.IsNullOrEmpty( w.error ) )
             {
