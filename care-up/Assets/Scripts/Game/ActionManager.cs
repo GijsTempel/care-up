@@ -392,9 +392,13 @@ public class ActionManager : MonoBehaviour
                             }
                         }
 #endif
-
-                        handValue = System.Char.ToLowerInvariant(handValue[0]) + handValue.Substring(1);
-
+                        if (handValue != null)
+                        {
+                            if (handValue != "")
+                            {
+                                handValue = System.Char.ToLowerInvariant(handValue[0]) + handValue.Substring(1);
+                            }
+                        }
                         string keyWords = null;
 
                         if (leftR != null && rightR != null)

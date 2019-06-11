@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ActionList>
+  <action
+    points="1"
+    description="Begroet de cliënt."
+    fullDescription="Begroet de cliënt door op hem te klikken. Daarna klik je nogmaals op de cliënt om een gesprek aan te gaan. Klik vervolgens op de juiste optie."
+    index="0"
+    type="talk"
+    topic="Hello"
+    extra="Ondanks dat het begroeten niet in de werkwijze is vermeld, is het wel netjes om contact te leggen met de cliënt."
+    optional=""/>
+
+  <action
+    comment="(1)Apply handhygiene"
+    points="3"
+    description="Pas handhygiëne toe."
+    fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp."
+    index="0"
+    type="use"
+    value="HandCleaner"
+    extra="Pas handhygiëne toe. Handhygiëne is het allerbelangrijkste als het gaat om voorkomen van besmetting met ziektekiemen. Dit betekent je handen reinigen op de juiste manier en op de juiste momenten. Begin een handeling altijd met handhygiëne."/>
+
+  <action
+    comment="(2)Create a clean workfield"
+    points="1"
+    description="Maak een schoon werkveld en zet de benodigdheden binnen handbereik."
+    fullDescription="Klik op het werkveld om deze schoon te maken."
+    index="1"
+    type="use"
+    value="WorkField"
+    extra="Maak een schoon werkveld. "
+    messageTitle="Benodigdheden"
+    messageContent=""/>
+
+
+  <action
+    points="2"
+    description="Controleer cliëntgegevens."
+    fullDescription="Open de tablet door op het tablet icoon te drukken. Klik op de App 'Gegevens'. Kies vervolgens voor de cliëntgegevens."
+    audioHint="Injection/H3-2"
+    index="2"
+    type="examine"
+    item="PatientRecords"
+    expected="good"
+    extra="Controleer de cliëntgegevens. Het is belangrijk dat je de juiste persoon voor je hebt."></action>
+
+  <action
+    points="3"
+    description="Controleer de toedienlijst."
+    fullDescription="Open de tablet door op het tablet icoon te drukken. Klik op de App 'Gegevens'. Kies vervolgens voor de toedienlijst."
+    audioHint="InjectionSubcutaneous/Step 5"
+    index="2"
+    type="examine"
+    item="PrescriptionForm"
+    expected="good"
+    extra="Controleer de toedienlijst. Controleer de toedienlijst op soort, dosering en toedientijdstip "></action>
+
+  <action
+    comment="(3)Open tube package"
+    points="1"
+    description="Open tube package"
+    fullDescription=""
+    index="2"
+    type="combine"
+    left="MedicalTube"
+    right=""
+    extra=""/>
+
+  <action
+    comment="Take test strip from package"
+    points="1"
+    description="Take test strip from package"
+    fullDescription=""
+    index="2"
+    type="combine"
+    left="pH_TestStripPackage"
+    right=""
+    extra=""/>
+
+  <action
+    comment="(3)Open syringe"
+    points="1"
+    description="Open syringe"
+    fullDescription=""
+    index="3"
+    type="combine"
+    left="Syringe50ml_packed"
+    right=""
+    extra=""/>
+
+  <action
+    comment="Ask the client to take a half sitting position."
+    points="2"
+    description="Vraag de cliënt een halfzittende houding aan te nemen."
+    fullDescription="Klik op de cliënt en kies de juiste optie."
+    index="4"
+    type="talk"
+    topic="SitInBed"
+    extra="Vraag de cliënt een halfzittende houding aan te nemen."></action>
+
+  <action
+    comment="Make a signal with the client when the inserting needs to stop."
+    points="1"
+    description=" Maak met de cliënt een afspraak over een signaal wanneer inbrengen moet stoppen."
+    index="5"
+    type="talk"
+    left=""
+    right=""
+    topic="InstructSign"
+    extra=" Maak met de cliënt een afspraak over een signaal wanneer inbrengen moet stoppen"/>
+
+  <action
+    comment="Take the probe out of the package. ---Start Seqeunce"
+    points="1"
+    description="Neem de sonde uit de verpakking."
+    index="6"
+    type="useOn"
+    item="MedicalTube"
+    target=""
+    buttonText="Take the probe"
+    extra="Neem de sonde uit de verpakking"/>
+
+  <action
+  comment="Measure the probe at the client from the point of the nose to the earlobe until the end of the breastbone (NEX.)"
+  points="1"
+  description="Meet bij de cliënt met de sonde de afstand vanaf de punt van de neus naar de oorlel tot aan uiteinde borstbeen (NEX)"
+  index="7"
+  type="sequenceStep"
+  value="nosetoear"
+  extra="Meet bij de cliënt met de sonde de afstand vanaf de punt van de neus naar de oorlel tot aan uiteinde borstbeen (NEX)."/>
+
+
+  <action
+   comment="Add 10 cm to that."
+   points="1"
+   description="Tel hier 10 cm bij op"
+   index="8"
+   type="sequenceStep"
+   value="add 10 cm"
+   extra="Tel hier 10 cm bij op."/>
+
+  <action
+    comment="Mark the probe on the measured lenght. ---End Sequence"
+    points="1"
+    description="Markeer de sonde op de afgemeten lengte"
+    index="9"
+    type="sequenceStep"
+    value="mark the probe"
+    extra="Markeer de sonde op de afgemeten lengte."/>
+
+  <action
+    comment="Make the probe wet under a tap or to immerse it under water in a bowl."
+    points="1"
+    description="Maak de sonde nat onder de kraan of door hem in de kom met water te dompelen"
+    index="10"
+    type="useOn"
+    item="MedicalTubeInHand"
+    target=""
+    buttonText="Plaats de sonde in het water"
+    extra="Neem de sonde uit de verpakking"/>
+  
+  <action
+    comment="Put the pad on the chest of the client."
+    points="2"
+    description="Leg de onderlegger onder de subcutane canule. "
+    fullDescription="Pak de onderlegger van het werkveld. Beweeg naar de cliënt. Klik vervolgens op de onderlegger in je hand. Klik op het + icoon en klik daarna op de cliënt."
+    index="11"
+    type="useOn"
+    item="cloth_02_folded"
+    target=""
+    buttontext="Leg de onderlegger"
+    extra="Leg de onderlegger onder de subcutane canule. "></action>
+
+  <action
+    comment="Put on gloves. ---Start Sequence"
+    points="1"
+    description="Trek handschoenen aan"
+    index="12"
+    type="use"
+    value="gloveBox"
+    extra="Trek handschoenen aan"
+    messageTitle=""
+    messageContent=""
+></action>
+
+</ActionList>
