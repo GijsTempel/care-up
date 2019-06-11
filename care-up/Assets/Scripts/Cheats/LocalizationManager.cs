@@ -5,6 +5,9 @@ using SimpleJSON;
 using UnityEngine;
 
 public class LocalizationManager {
+    string[] dicts = new string[] {
+        "TextData"
+    };
 
     public static LocalizationManager instance;
     GameObject gameLogic;
@@ -18,38 +21,22 @@ public class LocalizationManager {
         gameLogic = GameObject.Find("GameLogic");
         if (localizedText == null)
             localizedText = new Dictionary<string, string> ();
-        string filePath = Path.Combine (Application.streamingAssetsPath, fileName);
-
-        if (File.Exists (filePath)) {
-            string jsonString = File.ReadAllText (filePath);
-            JSONNode data = JSON.Parse (jsonString);
-            foreach (string key in data.Keys) {
-                if (!localizedText.ContainsKey (key))
-                    localizedText.Add (key, data[key]);
-            }
-
-        } else {
-            Debug.LogError ("Cannot find file!");
+        TextAsset _data = (TextAsset)Resources.Load("Dictionaries/" + fileName);
+        string jsonString = _data.text;
+        JSONNode data = JSON.Parse (jsonString);
+        foreach (string key in data.Keys) {
+            if (!localizedText.ContainsKey (key))
+                localizedText.Add (key, data[key]);
         }
 
         isReady = true;
     }
 
-
     public void LoadAllDictionaries()
     {
-        //localizationManager.LoadLocalizedText(Application.dataPath + "/Dictionaries/TextData.json");
-        string path = Application.dataPath + "/Dictionaries";
-        DirectoryInfo info = new DirectoryInfo(path);
-        FileInfo[] fileInfo = info.GetFiles();
-        foreach (FileInfo file in fileInfo) {
-            string[] nameSplit = file.ToString().Split('.');
-            string expansion = nameSplit[nameSplit.Length - 1];
-            if (expansion == "json")
-            {
-                // print(file);
-                LoadLocalizedText(file.ToString());
-            }
+        //Resources.Load("Dictionaries/");
+        foreach (string fileName in dicts) {
+            LoadLocalizedText(fileName);
         }
     }
 
@@ -85,7 +72,6 @@ public class LocalizationManager {
             }
         }
         return null;
-
     }
 
     public bool GetIsReady () {
