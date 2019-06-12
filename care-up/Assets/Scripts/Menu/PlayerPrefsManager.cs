@@ -660,12 +660,7 @@ public class PlayerPrefsManager : MonoBehaviour
             {
                 mainMenu = GameObject.FindObjectOfType<MainMenu>();
 
-                if (GameObject.Find("LoginRegisterWindow") != null)
-                {
-                    mainMenu?.OnQuitButtonClick();
-                }
-
-                else if (GameObject.Find("RegisterWindow") != null)
+                if (GameObject.Find("RegisterWindow") != null)
                 {
                     GameObject.Find("LoginRegisterArea/RegisterArea")?.transform.GetChild(0)?.GetComponent<Button>().onClick.Invoke();
                 }
@@ -716,7 +711,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
                 else if (manager.Windows[3].activeSelf)
                 {
-                    manager.QuitApp();
+                    return;
                 }
 
                 else
