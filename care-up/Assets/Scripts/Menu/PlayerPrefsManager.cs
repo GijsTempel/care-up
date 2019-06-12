@@ -742,11 +742,6 @@ public class PlayerPrefsManager : MonoBehaviour
                     GameObject.Find("UI/CloseBtn").transform?.GetComponent<Button>().onClick.Invoke();
                 }
 
-                else if (GameObject.Find("UI/CloseDialog/Panel_UI") != null)
-                {
-                    GameObject.Find("UI/CloseDialog/Panel_UI").transform.GetChild(2)?.GetComponent<Button>().onClick.Invoke();
-                }
-
                 else if (currentScene.name == "Scenes_Character_Customisation" && WULogin.characterCreated)
                 {
                     bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
