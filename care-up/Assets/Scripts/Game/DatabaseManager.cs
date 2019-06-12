@@ -35,7 +35,7 @@ public class DatabaseManager : MonoBehaviour
     public static void Init()
     {
         // querry all player info here?
-        WUData.FetchUserGameInfo(WULogin.UID, FetchEverything_success);
+        WUData.FetchUserGameInfo(WULogin.UID, FetchEverything_success, -1, PostInit);
     }
 
     public static void Clean()
@@ -43,7 +43,7 @@ public class DatabaseManager : MonoBehaviour
         database.Clear();
     }
 
-    private static void PostInit()
+    private static void PostInit(CMLData ignore = null)
     {
         // increment logins number
         int loginNumber;
