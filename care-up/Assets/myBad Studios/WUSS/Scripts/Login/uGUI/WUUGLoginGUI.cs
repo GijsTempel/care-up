@@ -32,6 +32,7 @@ namespace MBS
             error_login_pop_up,
             registration_pop_up,
             custom_1,
+            SessionTimeOutPanel,
             start_menu;
         }
 
@@ -701,6 +702,7 @@ namespace MBS
         public void ShowVoorwaarden_Screen () => panels.voorwaarden_screen.SetActive(true);
         public void RemoveTerms_condition_Screen () => panels.terms_condition_screen.SetActive(false);
         public void RemoveVoorwaarden_Screen () => panels.voorwaarden_screen.SetActive(false);
+        public void RemoveSession_Screen() => panels.SessionTimeOutPanel.SetActive(false);
         public void ShowLocalizationScreen()
         {
             DisplayScreen( panels.localization_screen );
