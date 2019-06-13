@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using MBS;
+using UnityEngine.SceneManagement;
 
 public class DatabaseManager : MonoBehaviour
 {
     private static string sessionKey = "";
+    private static bool sessionTimeOut = false;
 
     public class Category
     {
@@ -19,6 +21,16 @@ public class DatabaseManager : MonoBehaviour
     private static DatabaseManager instance;
     private static List<Category> database = new List<Category>();
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.LogWarning("Different session detected, logging out.");
+            sessionTimeOut = true;
+            WULogin.LogOut();
+        }
+    }
+
     private void Awake()
     {
         if (instance)
@@ -29,6 +41,15 @@ public class DatabaseManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+        }
+
+        if (SceneManager.GetActiveScene().name == "LoginMenu")
+        {
+            if (sessionTimeOut)
+            {
+                GameObject.Find("Canvas/WULoginPrefab/SessionTimeOutPanel").SetActive(true);
+                sessionTimeOut = false;
+            }
         }
     }
 
@@ -231,6 +252,7 @@ public class DatabaseManager : MonoBehaviour
         if (sessionKey != dbSessionKey)
         {
             Debug.LogWarning("Different session detected, logging out.");
+            sessionTimeOut = true;
             WULogin.LogOut();
         }
     }
