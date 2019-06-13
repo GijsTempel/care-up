@@ -78,7 +78,6 @@ public class InsulinPen : PickableObjectWithInfo {
             {
                 if (inventory.rightHandObject.name == name)
                 {
-                    print("fffffffffffffff");
                     PlayerAnimationManager.PlayAnimation("UseRight " + name);
                     actionManager.OnUseOnAction(name, "");
                     //name = "VentedInsulinPenWithNeedle";
