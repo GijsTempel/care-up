@@ -415,9 +415,9 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public static string MyEscapeURL(string url)
     {
-        //return WWW.EscapeURL(url).Replace("+", "%20");
-        // let's try using new thingy
-        return UnityWebRequest.EscapeURL(url).Replace("+", "%20");
+#pragma warning disable
+        return WWW.EscapeURL(url).Replace("+", "%20");
+#pragma warning restore
     }
 
     public static void __sendMailApp(string topic, string message)
