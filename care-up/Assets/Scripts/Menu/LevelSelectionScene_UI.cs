@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using System;
 using System.Linq;
 
+
 /// <summary>
 /// Handles Scene selection module
 /// </summary>
@@ -16,13 +17,14 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
     // leaderboard stuff
     public ScoreLine[] _Scores;
+    public GameObject scoreLines;
 
     public List<Transform> variations;
 
     private void Awake()
     {
         Transform leaderPanel = GameObject.Find("UMenuProManager/MenuCanvas/Leaderboard/InfoBar").transform;
-        _Scores = GameObject.Find("scoreLines").GetComponentsInChildren<ScoreLine>();
+        _Scores = scoreLines.GetComponentsInChildren<ScoreLine>();
 
         for (int i = 0; i < _Scores.Length; i++)
         {
@@ -77,14 +79,16 @@ public class LevelSelectionScene_UI : MonoBehaviour
         TextAsset textAsset;
 
         PlayerPrefsManager pp = GameObject.FindObjectOfType<PlayerPrefsManager>();
-        if (pp != null && pp.demoVersion)
-        {
-            textAsset = (TextAsset)Resources.Load("Xml/Scenes_Demo");
-        }
-        else
-        {
-            textAsset = (TextAsset)Resources.Load("Xml/Scenes");
-        }
+        // if (pp != null && pp.demoVersion)
+        // {
+        //     textAsset = (TextAsset)Resources.Load("Xml/Scenes_Demo");
+        // }
+        // else
+        // {
+        //     textAsset = (TextAsset)Resources.Load("Xml/Scenes");
+        // }
+
+        textAsset = (TextAsset)Resources.Load("Xml/Scenes");
 
         XmlDocument xmlFile = new XmlDocument();
         xmlFile.LoadXml(textAsset.text);
@@ -93,12 +97,15 @@ public class LevelSelectionScene_UI : MonoBehaviour
         // leaderboard stuff
         bool firstScene = true;
         LeaderBoardSceneButton.buttons.Clear();
+// FindObjectOfType<PlayerPrefsManager>().demoVersion
 
         foreach (XmlNode xmlSceneNode in xmlSceneList)
         {
             // bool activated = PlayerPrefs.GetInt(xmlSceneNode.Attributes["id"].Value + " activated") == 1;
             bool activated = true;
             bool hidden = xmlSceneNode.Attributes["hidden"] != null;
+            bool demoLock = !(xmlSceneNode.Attributes["demo"] != null);
+
             if ((!activated && hidden) || hidden)
             {
                 // not activated and hidden scene should not even create a panel, so just end up here
@@ -111,7 +118,24 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 GameObject.Find("UMenuProManager/MenuCanvas/Play/ProtocolList/ProtocolsHolder/Protocols/content").transform);
             sceneUnitObject.name = "SceneSelectionUnit"; // i dont like that 'clone' word at the end, ugh
             LevelButton sceneUnit = sceneUnitObject.GetComponent<LevelButton>();
-
+            bool locked = false;
+            if (pp.subscribed)
+            {
+                sceneUnit.demoLock = false;
+            }
+            else {
+                if (!demoLock)
+                {
+                    sceneUnit.GetComponent<Image>().sprite = Resources.Load("Sprites/small_button_bg_down_g", typeof(Sprite)) as Sprite;
+                    sceneUnit.demoLock = false;
+                }
+                else
+                {
+                    locked = true;
+                    sceneUnit.GetComponent<Image>().sprite = Resources.Load("Sprites/small_button_bg_inactive", typeof(Sprite)) as Sprite;
+                    sceneUnit.demoLock = true;
+                }
+            }
             if (!activated && !hidden)
             {
                 // but if scene is not activated and NOT hidden either
@@ -156,6 +180,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
                     info.image = Resources.Load<Sprite>("Sprites/ScenePreview/" + variation.Attributes["image"].Value);
                     info.validated = variation.Attributes["validated"] != null ?
                          variation.Attributes["validated"].Value == "true" : false;
+                    info.totalPoints = variation.Attributes["totalPoints"].Value;
 
                     sceneUnit.variations.Add(info);
 
@@ -163,11 +188,12 @@ public class LevelSelectionScene_UI : MonoBehaviour
                     {
                         // set the image as main if this is 1st variation
                         sceneUnit.image = sceneUnit.variations[i].image;
-                        sceneUnit.transform.Find("LevelPreview").GetComponent<Image>().sprite = sceneUnit.image;
 
-                        sceneUnit.validated = sceneUnit.variations[i].validated;
+                        sceneUnit.validated = sceneUnit.variations[i].validated;                      
                         sceneUnit.transform.Find("Validation").GetComponent<Text>().text =
                             sceneUnit.validated ? "Geaccrediteerd" : "";
+
+                        sceneUnit.totalPoints = sceneUnit.variations[i].totalPoints;
 
                         // also make 1st option 'selected'
                         sceneUnit.sceneName = sceneUnit.variations[i].sceneName;
@@ -212,6 +238,11 @@ public class LevelSelectionScene_UI : MonoBehaviour
                     sceneUnit.transform.Find("Validation").GetComponent<Text>().text =
                         sceneUnit.validated ? "Geaccrediteerd" : "";
                 }
+                
+                if (xmlSceneNode.Attributes["totalPoints"] != null)
+                {
+                    sceneUnit.totalPoints = xmlSceneNode.Attributes["totalPoints"].Value;
+                }
             }
 
             // leaderboard stuff
@@ -220,6 +251,10 @@ public class LevelSelectionScene_UI : MonoBehaviour
             LeaderBoardSceneButton buttonInfo = button.GetComponent<LeaderBoardSceneButton>();
             button.transform.Find("Text").GetComponent<Text>().text = sceneUnit.displayName;
             button.transform.Find("LevelPreview").GetComponent<Image>().sprite = sceneUnit.image;  
+
+            if (locked)
+                sceneUnit.transform.Find("LevelPreview").GetComponent<Image>().sprite = 
+                    Resources.Load("Sprites/btn_icon_lock", typeof(Sprite)) as Sprite;
 
             buttonInfo.sceneName = sceneUnit.sceneName;
             buttonInfo.multiple = sceneUnit.multiple;

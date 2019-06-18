@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class LevelSelectionScene_UI_Option : MonoBehaviour {
@@ -35,5 +33,5 @@ public class LevelSelectionScene_UI_Option : MonoBehaviour {
             GetComponent<Image>().color = selectedColor;
             selected = true;
         }
-    }
+    }    
 }

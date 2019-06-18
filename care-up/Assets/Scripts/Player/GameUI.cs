@@ -18,7 +18,7 @@ public class GameUI : MonoBehaviour
     public WalkToGroupButton LeftSideButton;
     public WalkToGroupButton RightSideButton;
     public Dictionary<string, WalkToGroupButton> WTGButtons;
-    WalkToGroup prevWalkToGroup = null;
+    //WalkToGroup prevWalkToGroup = null;
     private Tutorial_Combining tutorialCombine;
     private Tutorial_UseOn tutorialUseOn;
     private HandsInventory handsInventory;
@@ -30,7 +30,7 @@ public class GameUI : MonoBehaviour
     public string debugSS = "";
     ObjectsIDsController objectsIDsController;
     bool practiceMode = true;
-
+    public QuizTab quiz_tab;
     public bool DropLeftBlink = false;
     public bool DropRightBlink = false;
     public List<string> reqPlaces = new List<string>();
@@ -43,6 +43,7 @@ public class GameUI : MonoBehaviour
 
     public List<string> activeHighlighted = new List<string>();
 
+    public GameObject IPad;
     public GameObject ItemControlPanel;
     public GameObject combineButton;
     public GameObject decombineButton;
@@ -196,8 +197,15 @@ public class GameUI : MonoBehaviour
             return;
 
         RobotManager.UIElementsState[0] = false;
-        Player.GetComponent<PlayerScript>().OpenRobotUI();
+
+      
+        Player.GetComponent<PlayerScript>().OpenRobotUI();        
     }
+
+    //public void CloseRobot()
+    //{     
+    //    Player.GetComponent<PlayerScript>().CloseRobotUI();
+    //}
 
     public void ToggleUsingOnMode()
     {
@@ -353,6 +361,8 @@ public class GameUI : MonoBehaviour
         noTargetButton_right.SetActive(false);
         DropRightButton.SetActive(false);
         DropLeftButton.SetActive(false);
+
+        IPad.GetComponent<Animator>().enabled = false;
 
         ActionManager.practiceMode = true;
         if (prefs != null)
@@ -572,7 +582,7 @@ public class GameUI : MonoBehaviour
                 GUI.Label(new Rect(30, 0, 100, 100), "Cheat enabled");
         }
         //debugSS = PlayerAnimationManager.animTimeout.ToString();
-        GUI.Label(new Rect(20, 0, 1000, 100), debugSS);
+        GUI.Label(new Rect(0, 30, 1000, 100), debugSS);
 #endif
     }
 
@@ -985,7 +995,6 @@ public class GameUI : MonoBehaviour
 
             for (int y = 0; y < subTasks.Count; y++)
             {
-
                 if (subTasks[y].subindex == i)
                 {
                     if (Resources.Load<GameObject>("Prefabs/UI/SubtaskHints") != null)

@@ -31,6 +31,12 @@ public class InsulfonInsertationPatient : PersonObject {
                     PlayerAnimator.SetTrigger("S BlanketEmpty");
                     PlayerAnimator.SetTrigger("TakeOffBlanket");
                     break;
+
+                case "SitInBed":
+                    PlayerAnimator.SetTrigger("StartSittingInBedAnimation");
+                    PlayerAnimator.SetTrigger("S StartSittingInBedAnimation");
+                    break;
+
                 default:
                     break;
             }

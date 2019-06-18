@@ -32,6 +32,7 @@ namespace MBS
             error_login_pop_up,
             registration_pop_up,
             custom_1,
+            SessionTimeOutPanel,
             start_menu;
         }
 
@@ -63,17 +64,17 @@ namespace MBS
             serial_number;
         }
 
-        [SerializeField] private Image LoginUsernameField;
-        [SerializeField] private Image LoginPasswordField;
+        [SerializeField] private Image LoginUsernameField = default(Image);
+        [SerializeField] private Image LoginPasswordField = default(Image);
 
-        [SerializeField] private Image RegUsernameField;
-        [SerializeField] private Image RegEmailField;
-        [SerializeField] private Image RegPasswordField;
-        [SerializeField] private Image RegRepeatPasswordField;
+        [SerializeField] private Image RegUsernameField = default(Image);
+        [SerializeField] private Image RegEmailField = default(Image);
+        [SerializeField] private Image RegPasswordField = default(Image);
+        [SerializeField] private Image RegRepeatPasswordField = default(Image);
 
-        [SerializeField] private Text ErrorText;
-        [SerializeField] private Text ErrorLoginText;
-        [SerializeField] private Text SuccesText;
+        [SerializeField] private Text ErrorText = default(Text);
+        [SerializeField] private Text ErrorLoginText = default(Text);
+        [SerializeField] private Text SuccesText = default(Text);
 
 
         private bool remove_text = false;
@@ -205,9 +206,9 @@ namespace MBS
         }
 
         [Header("GUI Prefab")]
-        [SerializeField] WUInputFields fields;
-        [SerializeField] WUPanels panels;
-        [SerializeField] Toggle auto_login_toggle;
+        [SerializeField] WUInputFields fields = default(WUInputFields);
+        [SerializeField] WUPanels panels = default(WUPanels);
+        [SerializeField] Toggle auto_login_toggle = default(Toggle);
 #if WUS
         [Header("Leaderboards")]
         [SerializeField] bool fetch_scores_on_showing_panel = true;
@@ -216,7 +217,7 @@ namespace MBS
 #if WUSKU
         [Header("Optional")]
         [SerializeField]
-        string product_url;
+        string product_url = "";
 #endif
 
         public bool attempt_auto_login { get { return auto_login_toggle.isOn; } set { auto_login_toggle.isOn = value; } }
@@ -287,6 +288,7 @@ namespace MBS
             //setup all the actions that will take place when buttons are clicked
             SetupResponders();
 
+            // fuck this
             //if "Remember me" was selected during the last login, try to log in automatically...
             if ( attempt_auto_login && !WULogin.logged_in )
                 WULogin.AttemptAutoLogin();
@@ -343,6 +345,11 @@ namespace MBS
             WULogin.onLoginFailed += On_Login_Fail;
             WULogin.on_Login_Success = true;
             CMLData data = new CMLData ();
+            if (Application.platform == RuntimePlatform.LinuxEditor)
+            {
+                fields.login_username.text = "vita";
+                fields.login_password.text = "1122334455";
+            }
             data.Set ("username", fields.login_username.text.Trim ());
             data.Set ("password", fields.login_password.text.Trim ());
             WULogin.AttemptToLogin (data);
@@ -695,6 +702,7 @@ namespace MBS
         public void ShowVoorwaarden_Screen () => panels.voorwaarden_screen.SetActive(true);
         public void RemoveTerms_condition_Screen () => panels.terms_condition_screen.SetActive(false);
         public void RemoveVoorwaarden_Screen () => panels.voorwaarden_screen.SetActive(false);
+        public void RemoveSession_Screen() => panels.SessionTimeOutPanel.SetActive(false);
         public void ShowLocalizationScreen()
         {
             DisplayScreen( panels.localization_screen );

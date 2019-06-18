@@ -46,8 +46,10 @@ namespace MBS {
 		{
 			icon.color = new Color(1f,1f,1f,0f);
             string URL = $"http://www.gravatar.com/avatar/{gravatar}?r={age_rating}&s={avatar_size}&d={avatartype.ToString().ToLower()}";
-			WWW w = new WWW(URL);
-			yield return w;
+#pragma warning disable
+            WWW w = new WWW(URL);
+#pragma warning restore
+            yield return w;
 			if (w.error == null)
 			{
                 int display_size = hard_cap_display_size < avatar_size ? hard_cap_display_size : avatar_size;

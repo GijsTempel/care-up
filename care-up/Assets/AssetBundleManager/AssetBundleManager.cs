@@ -50,8 +50,10 @@ namespace AssetBundles
 	#endif
 	
 		static Dictionary<string, LoadedAssetBundle> m_LoadedAssetBundles = new Dictionary<string, LoadedAssetBundle> ();
-		static Dictionary<string, WWW> m_DownloadingWWWs = new Dictionary<string, WWW> ();
-		static Dictionary<string, string> m_DownloadingErrors = new Dictionary<string, string> ();
+#pragma warning disable
+        static Dictionary<string, WWW> m_DownloadingWWWs = new Dictionary<string, WWW> ();
+#pragma warning restore
+        static Dictionary<string, string> m_DownloadingErrors = new Dictionary<string, string> ();
 		static List<AssetBundleLoadOperation> m_InProgressOperations = new List<AssetBundleLoadOperation> ();
 		static Dictionary<string, string[]> m_Dependencies = new Dictionary<string, string[]> ();
 	
@@ -151,7 +153,8 @@ namespace AssetBundles
 			}
 			else
 			{
-				AssetBundleManager.SetSourceAssetBundleURL(url);
+                url += Application.version + "/";
+                AssetBundleManager.SetSourceAssetBundleURL(url);
 			}
 		}
 		
@@ -307,17 +310,17 @@ namespace AssetBundles
 			// But in the real case, users can call LoadAssetAsync()/LoadLevelAsync() several times then wait them to be finished which might have duplicate WWWs.
 			if (m_DownloadingWWWs.ContainsKey(assetBundleName) )
 				return true;
-	
-			WWW download = null;
+#pragma warning disable
+            WWW download = null;
 			string url = m_BaseDownloadingURL + assetBundleName;
 		
 			// For manifest assetbundle, always download it as we don't have hash for it.
 			if (isLoadingAssetBundleManifest)
 				download = new WWW(url);
 			else
-				download = WWW.LoadFromCacheOrDownload(url, m_AssetBundleManifest.GetAssetBundleHash(assetBundleName), 0); 
-	
-			m_DownloadingWWWs.Add(assetBundleName, download);
+				download = WWW.LoadFromCacheOrDownload(url, m_AssetBundleManifest.GetAssetBundleHash(assetBundleName), 0);
+#pragma warning restore
+            m_DownloadingWWWs.Add(assetBundleName, download);
 	
 			return false;
 		}
@@ -399,10 +402,11 @@ namespace AssetBundles
 			var keysToRemove = new List<string>();
 			foreach (var keyValue in m_DownloadingWWWs)
 			{
-				WWW download = keyValue.Value;
-	
-				// If downloading fails.
-				if (download.error != null)
+#pragma warning disable
+                WWW download = keyValue.Value;
+#pragma warning restore
+                // If downloading fails.
+                if (download.error != null)
 				{
 					m_DownloadingErrors.Add(keyValue.Key, string.Format("Failed downloading bundle {0} from {1}: {2}", keyValue.Key, download.url, download.error));
 					keysToRemove.Add(keyValue.Key);
@@ -429,8 +433,10 @@ namespace AssetBundles
 			// Remove the finished WWWs.
 			foreach( var key in keysToRemove)
 			{
-				WWW download = m_DownloadingWWWs[key];
-				m_DownloadingWWWs.Remove(key);
+#pragma warning disable
+                WWW download = m_DownloadingWWWs[key];
+#pragma warning restore
+                m_DownloadingWWWs.Remove(key);
 				download.Dispose();
 			}
 	

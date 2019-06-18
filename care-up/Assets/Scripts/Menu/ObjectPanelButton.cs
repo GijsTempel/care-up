@@ -35,7 +35,8 @@ public class ObjectPanelButton : MonoBehaviour {
         {
             if (obj.GetComponent<PickableObject>() != null)
             {
-                bool picked = false;
+                // never used
+                //bool picked = false;
                 HandsInventory inventory = GameObject.FindObjectOfType<HandsInventory>();
                 PickableObject pk = obj.GetComponent<PickableObject>();
                 if (pk == inventory.leftHandObject || pk == inventory.rightHandObject)

@@ -74,20 +74,25 @@ public class InsulinPen : PickableObjectWithInfo {
         if (actionManager.CompareUseOnInfo("InsulinPenWithNeedle", "") && noTarget
             && name == "InsulinPenWithNeedle")
         {
-            if (inventory.rightHandObject.name == name)
+            if (!inventory.RightHandEmpty())
             {
-                print("fffffffffffffff");
-                PlayerAnimationManager.PlayAnimation("UseRight " + name);
-                actionManager.OnUseOnAction(name, "");
-                //name = "VentedInsulinPenWithNeedle";
-                return true;
+                if (inventory.rightHandObject.name == name)
+                {
+                    PlayerAnimationManager.PlayAnimation("UseRight " + name);
+                    actionManager.OnUseOnAction(name, "");
+                    //name = "VentedInsulinPenWithNeedle";
+                    return true;
+                }
             }
-            else if (inventory.leftHandObject.name == name)
+            else if (!inventory.LeftHandEmpty())
             {
-                PlayerAnimationManager.PlayAnimation("UseLeft " + name);
-                actionManager.OnUseOnAction(name, "");
-                //name = "VentedInsulinPenWithNeedle";
-                return true;
+            if (inventory.leftHandObject.name == name)
+                {
+                    PlayerAnimationManager.PlayAnimation("UseLeft " + name);
+                    actionManager.OnUseOnAction(name, "");
+                    //name = "VentedInsulinPenWithNeedle";
+                    return true;
+                }
             }
             else
             {

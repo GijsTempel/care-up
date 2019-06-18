@@ -29,18 +29,18 @@ public class MainMenu : MonoBehaviour {
 
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
-            Text text = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/DialogTestPractice/Panel_UI/FreeDemoPlayCounter")
-                .GetComponent<Text>();
+            // Text text = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/DialogTestPractice/Panel_UI/FreeDemoPlayCounter")
+            //     .GetComponent<Text>();
 
-            if (!prefs.subscribed)
-            {
-                WUData.FetchField("Plays_Number", "AccountStats", GetPlaysNumber, -1, ErrorHandle);
-                text.text = "Je kunt nog " + (5 - prefs.plays) + " handelingen proberen.";
-            }
-            else
-            {
-                text.text = "";
-            }
+            // if (!prefs.subscribed)
+            // {
+            //     WUData.FetchField("Plays_Number", "AccountStats", GetPlaysNumber, -1, ErrorHandle);
+            //     text.text = "Je kunt nog " + (5 - prefs.plays) + " handelingen proberen.";
+            // }
+            // else
+            // {
+            //     text.text = "";
+            // }
 
             //handle updates panel
             bool updatesSeen = PlayerPrefs.GetInt("_updatesSeen") == 1;
@@ -58,8 +58,39 @@ public class MainMenu : MonoBehaviour {
                 UpdatesPanel.SetActive(false);
             }
 
-            GameObject.FindObjectOfType<PlayerPrefsManager>().FetchTestHighScores();
-			
+            // set up highscores something?
+            string[][] highScores = DatabaseManager.FetchCategory("TestHighscores");
+            foreach(string[] score in highScores)
+            {
+                // fetch date before formatting scene name back
+                string date = DatabaseManager.FetchField("CertificateDates", score[0]);
+                date = (date == "") ? "27052019" : date;
+
+                string sceneName = score[0].Replace("_", " ");
+
+                float fPercent = 0.0f;
+                float.TryParse(score[1].Replace(",","."), out fPercent);
+                int percent = Mathf.FloorToInt(fPercent);
+
+                bool passed = percent > 70;
+
+                if (percent <= 0 || percent > 100)
+                    continue; // don't show 0 percent scores as they are not completed even once
+
+                GameObject layoutGroup = GameObject.Find("UMenuProManager/MenuCanvas/Account_Scores/Account_Panel_UI/ScoresHolder/Scores/LayoutGroup");
+                GameObject scoreObject = Instantiate(Resources.Load<GameObject>("Prefabs/UI/TestHighscore"), layoutGroup.transform);
+                scoreObject.transform.Find("SceneName").GetComponent<Text>().text = sceneName;
+
+                scoreObject.transform.Find("Percent").GetComponent<Text>().text = percent.ToString() + "%";
+                scoreObject.transform.Find("Percent").GetComponent<Text>().color =
+                    (passed ? Color.green : Color.red);
+
+                scoreObject.transform.Find("Button").GetComponent<Button>().interactable = passed;
+                scoreObject.transform.Find("Button").GetComponent<Button>().onClick.AddListener
+                    (delegate { PlayerPrefsManager.__openCertificate(prefs.fullPlayerName, sceneName, date); });
+            }
+
+            // shared field, will keep it outside DatabaseManager
             GameObject.FindObjectOfType<PlayerPrefsManager>().FetchLatestVersion();
 
             GameObject.Find("UMenuProManager/MenuCanvas/Account/Account_Panel_UI/Account_Username")
@@ -287,7 +318,7 @@ public class MainMenu : MonoBehaviour {
     {
         // we're here only if we got data
         int plays = response[1].Int("Plays_Number");
-        bool result = plays < 5 ? true : false;
+        bool result = plays < 1 ? true : false;
         AllowDenyContinue(result);
     }
 
@@ -305,7 +336,7 @@ public class MainMenu : MonoBehaviour {
             // show pop up!
             //StatusMessage.Message = "Je hebt geen actief product";
             // or something more like
-            GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(5);
+            // GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(5);
         }
     }
 }
