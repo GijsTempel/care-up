@@ -225,6 +225,6 @@ public class LevelButton : MonoBehaviour
     public void SetPointsAmount()
     {
         Text points = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/DialogTestPractice/Panel_UI/PointsAmount").transform.GetChild(0).GetComponent<Text>();
-        points.text = validated ? "Te behalen accreditatie punten: " + totalPoints : "";
+        points.text = validated ? "Te behalen accreditatiepunten: " + totalPoints : "";
     }
 }
