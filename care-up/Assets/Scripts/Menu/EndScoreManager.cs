@@ -119,12 +119,13 @@ public class EndScoreManager : MonoBehaviour {
             // update test highscore + save certificate date
             manager.UpdateTestHighscore(percent);
 
-            if (percent > 0.7f)
+            if (flag)
             {
                 PlayerPrefsManager.__sendCertificateToUserMail(manager.currentSceneVisualName);
 
-                achievements.UpdateKeys ("FirstPassedExam", 1);
+                achievements.UpdateKeys("FirstPassedExam", 1);
             }
+            
 
             // certificate set scene name
             GameObject.Find("Interactable Objects/Canvas/CertificatePanel/Top/Scenetitle")
