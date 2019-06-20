@@ -87,7 +87,7 @@ public class MainMenu : MonoBehaviour {
 
                 scoreObject.transform.Find("Button").GetComponent<Button>().interactable = passed;
                 scoreObject.transform.Find("Button").GetComponent<Button>().onClick.AddListener
-                    (delegate { PlayerPrefsManager.__openCertificate(prefs.fullPlayerName, sceneName, date); });
+                    (delegate { PlayerPrefsManager.__openCertificate(sceneName, date); });
             }
 
             // shared field, will keep it outside DatabaseManager

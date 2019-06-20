@@ -119,7 +119,10 @@ public class EndScoreManager : MonoBehaviour {
             // update test highscore + save certificate date
             manager.UpdateTestHighscore(percent);
 
-            if (flag == true) {
+            if (percent > 0.7f)
+            {
+                PlayerPrefsManager.__sendCertificateToUserMail(manager.currentSceneVisualName);
+
                 achievements.UpdateKeys ("FirstPassedExam", 1);
             }
 
@@ -240,7 +243,7 @@ public class EndScoreManager : MonoBehaviour {
     {
         if (manager.fullPlayerName != "")
         {
-            PlayerPrefsManager.__openCertificate(manager.fullPlayerName, manager.currentSceneVisualName);
+            PlayerPrefsManager.__openCertificate(manager.currentSceneVisualName);
         }
         else
         {

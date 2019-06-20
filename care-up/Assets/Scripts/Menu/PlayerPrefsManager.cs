@@ -547,16 +547,12 @@ public class PlayerPrefsManager : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Generates and opens link for certificate generation.
-    /// Mirrors the safety measures of database script to generate safety key, included in the link.
-    /// </summary>
-    /// <param name="firstName"></param>
-    /// <param name="secondName"></param>
-    /// <param name="scene"></param>
-    /// <param name="score"></param>
-    public static void __openCertificate(string name, string scene, string date = "")
+    public static string __getCertificateLinkParams(string scene, string date = "", bool mail = false)
     {
+        PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
+        string name = manager.fullPlayerName;
+        string email = WULogin.email;
+
         int keyValue = 192378; // salt
         keyValue += __sumString(name);
         keyValue += __sumString(scene);
@@ -570,14 +566,44 @@ public class PlayerPrefsManager : MonoBehaviour
         string hexKey = Convert.ToString(keyValue, 16);
         hexKey = __trashFillString(hexKey);
 
-        string link = "https://leren.careup.online/certificate.php?";
+        string link = "?";
         link += "name=" + name;
         link += "&scene=" + scene;
         link += "&date=" + date;
         link += "&misc=" + hexKey;
+        if (mail)
+        {
+            link += "&mail=" + email;
+        }
+
+        return link;
+    }
+
+    /// <summary>
+    /// Generates and opens link for certificate generation.
+    /// Mirrors the safety measures of database script to generate safety key, included in the link.
+    /// </summary>
+    /// <param name="firstName"></param>
+    /// <param name="secondName"></param>
+    /// <param name="scene"></param>
+    /// <param name="score"></param>
+    public static void __openCertificate(string scene, string date = "")
+    {
+        string link = "https://leren.careup.online/certificate.php";
+        link += PlayerPrefsManager.__getCertificateLinkParams(scene, date);
 
         Debug.LogWarning("OPENING LINK " + link);
         Application.OpenURL(link.Replace(" ", "%20"));
+    }
+
+    public static void __sendCertificateToUserMail(string scene, string date = "")
+    {
+        string link = "https://leren.careup.online/Certificate_sendMail.php";
+        link += PlayerPrefsManager.__getCertificateLinkParams(scene, date, true);
+        
+        Debug.LogWarning("Sending email with certificate to user.");
+        UnityWebRequest unityWebRequest = new UnityWebRequest(link);
+        unityWebRequest.SendWebRequest();
     }
 
     public static string GetTodaysDateFormatted()
