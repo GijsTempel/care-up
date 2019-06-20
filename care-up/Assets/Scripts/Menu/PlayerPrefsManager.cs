@@ -185,6 +185,10 @@ public class PlayerPrefsManager : MonoBehaviour
 
         localizationManager = new LocalizationManager();
         localizationManager.LoadAllDictionaries();
+
+        // uncomment this, fill with correct info and start game
+        // p.s. dont forget to comment this again and not push instead :)
+        //PlayerPrefsManager.__dev__customCertificate("playerFullName", "sceneName", "06202019");
     }
 
     void Start()
@@ -447,12 +451,8 @@ public class PlayerPrefsManager : MonoBehaviour
         }
 
         // save certificate date here too
-        string date = DatabaseManager.FetchField("CertificateDates", currentTestScene);
-        if (date == "")
-        {
-            date = GetTodaysDateFormatted();
-            DatabaseManager.UpdateField("CertificateDates", currentTestScene, date);
-        }
+        string date = GetTodaysDateFormatted();
+        DatabaseManager.UpdateField("CertificateDates", currentTestScene, date);
     }
 
     public static void AddOneToPracticePlays(string scene)
@@ -545,6 +545,31 @@ public class PlayerPrefsManager : MonoBehaviour
             };
             DatabaseManager.UpdateCategory("PracticeHighscores", data);
         }
+    }
+
+    public static void __dev__customCertificate(string playerFullName, string sceneName, string date)
+    {
+        int keyValue = 192378; // salt
+        keyValue += __sumString(playerFullName);
+        keyValue += __sumString(sceneName);
+
+        if (date == "")
+        {
+            date = GetTodaysDateFormatted();
+        }
+        keyValue += __sumString(date) * 13;
+
+        string hexKey = Convert.ToString(keyValue, 16);
+        hexKey = __trashFillString(hexKey);
+
+        string link = "https://leren.careup.online/certificate.php";
+        link += "name=" + playerFullName;
+        link += "&scene=" + sceneName;
+        link += "&date=" + date;
+        link += "&misc=" + hexKey;
+
+        Debug.LogWarning("OPENING LINK " + link);
+        Application.OpenURL(link.Replace(" ", "%20"));
     }
     
     public static string __getCertificateLinkParams(string scene, string date = "", bool mail = false)
