@@ -124,8 +124,14 @@ public class EndScoreManager : MonoBehaviour {
                 PlayerPrefsManager.__sendCertificateToUserMail(manager.currentSceneVisualName);
 
                 achievements.UpdateKeys("FirstPassedExam", 1);
+
+                GameObject.Find("Interactable Objects/Canvas/CertificatePopOp").SetActive(true);
             }
             
+            if (flag && manager.validatedScene)
+            {
+                EndScoreSendMailResults();
+            }
 
             // certificate set scene name
             GameObject.Find("Interactable Objects/Canvas/CertificatePanel/Top/Scenetitle")
@@ -263,5 +269,22 @@ public class EndScoreManager : MonoBehaviour {
         GameObject.Find("Interactable Objects/Canvas/NamePopUp").SetActive(false);
     }
 
+    // copied from EndScoreSendMailResults.cs
+    public void EndScoreSendMailResults()
+    {
+        string topic = "Care Up accreditatie aanvraag";
+        string content = "Completed scene: " + manager.currentSceneVisualName + "\n";
+        content += "Username: " + MBS.WULogin.username + "\n";
+        content += "E-mail: " + MBS.WULogin.email + "\n";
+        
+        content += "Big- of registratienummer:" + manager.bigNumber + "\n";
+        float percent = GameObject.FindObjectOfType<EndScoreManager>().percent;
+        content += "Percentage: " + Mathf.FloorToInt(percent * 100f).ToString() + "%\n";
+
+        achievements.UpdateKeys("StudyPoints", 1);
+
+        PlayerPrefsManager.__sendMail(topic, content);
+        Debug.Log("E-mail verzonden");
+    }
 }
 

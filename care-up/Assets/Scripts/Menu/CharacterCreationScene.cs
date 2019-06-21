@@ -29,6 +29,9 @@ public class CharacterCreationScene : MonoBehaviour
     
     private Image maleBtn;
     private Image femaleBtn;
+
+    public GameObject inputNameField;
+    public GameObject inputBIGfield;
     
     private void Start()
     {
@@ -55,6 +58,9 @@ public class CharacterCreationScene : MonoBehaviour
         {
             SetCurrent(CharGender.Female, 0, 0, -1);
         }
+
+        inputNameField.GetComponent<InputField>().text = manager.fullPlayerName;
+        inputBIGfield.GetComponent<InputField>().text = DatabaseManager.FetchField("AccountStats", "BIG_number");
     }
 
     public void Initialize()
@@ -339,11 +345,35 @@ public class CharacterCreationScene : MonoBehaviour
 
     public void Save()
     {
-        CharacterInfo.SetCharacterCharacteristicsWU(
-            ((gender == CharGender.Female) ? "Female" : "Male"),
-            headType, bodyType, glassesType);
-        
-        bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
+        bool check = true;
+
+        // check if name is filled
+        if (inputNameField.GetComponent<InputField>().text == "")
+        {
+            inputNameField.GetComponent<Image>().color = Color.red;
+            check = false;
+        } 
+
+        // check if BIG number is filled
+        if (inputBIGfield.GetComponent<InputField>().text == "")
+        {
+            inputBIGfield.GetComponent<Image>().color = Color.red;
+            check = false;
+        }
+
+        if (check)
+        { 
+            CharacterInfo.SetCharacterCharacteristicsWU(
+                ((gender == CharGender.Female) ? "Female" : "Male"),
+                headType, bodyType, glassesType);
+
+            // save full name
+            PlayerPrefsManager.SetFullName(inputNameField.GetComponent<InputField>().text);
+            // save big number
+            PlayerPrefsManager.SetBIGNumber(inputBIGfield.GetComponent<InputField>().text);
+
+            bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
+        }
     }
     
     public void ShowCharacter(GameObject male, GameObject female)
@@ -396,5 +426,15 @@ public class CharacterCreationScene : MonoBehaviour
                     break;
                 }
         }
+    }
+
+    public void FullNameFieldCleanColor()
+    {
+        inputNameField.GetComponent<Image>().color = Color.white;
+    }
+
+    public void BIGFieldCleanColor()
+    {
+        inputBIGfield.GetComponent<Image>().color = Color.white;
     }
 }

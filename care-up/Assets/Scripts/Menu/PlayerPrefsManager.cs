@@ -57,6 +57,7 @@ public class PlayerPrefsManager : MonoBehaviour
     private Scene currentScene;
     
     public string fullPlayerName = "";
+    public string bigNumber = "";
 
     public string ActivatedScenes
     {
@@ -673,6 +674,12 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         GameObject.FindObjectOfType<PlayerPrefsManager>().fullPlayerName = fullName;
         DatabaseManager.UpdateField("AccountStats", "FullName", fullName);
+    }
+
+    public static void SetBIGNumber(string number)
+    {
+        GameObject.FindObjectOfType<PlayerPrefsManager>().bigNumber = number;
+        DatabaseManager.UpdateField("AccountStats", "BIG_number", number);
     }
 
     static void SetFullName(CML response)

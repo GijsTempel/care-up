@@ -20,17 +20,7 @@ public class DatabaseManager : MonoBehaviour
 
     private static DatabaseManager instance;
     private static List<Category> database = new List<Category>();
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Debug.LogWarning("Different session detected, logging out.");
-            sessionTimeOut = true;
-            WULogin.LogOut();
-        }
-    }
-
+    
     private void Awake()
     {
         if (instance)
@@ -88,9 +78,15 @@ public class DatabaseManager : MonoBehaviour
         GameObject.FindObjectOfType<PlayerPrefsManager>().fullPlayerName =
             FetchField("AccountStats", "FullName");
 
+        // set player BIG number
+        GameObject.FindObjectOfType<PlayerPrefsManager>().bigNumber =
+            FetchField("AccountStats", "BIG_number");
+
         // check if character created, load proper scene
         // load scene at the end of this function
-        if ( FetchField("AccountStats", "CharacterCreated") == "true" )
+        if ( FetchField("AccountStats", "CharacterCreated") == "true" &&
+             FetchField("AccountStats", "FullName") != "" &&
+             FetchField("AccountStats", "BIG_number") != "")
         {
             WULogin.characterCreated = true;
             bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
