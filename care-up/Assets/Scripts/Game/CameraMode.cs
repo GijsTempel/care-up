@@ -28,6 +28,7 @@ public class CameraMode : MonoBehaviour
     float camMovementSpeed = 1f;
     float camMoveBackAt = float.PositiveInfinity;
     public bool robotUIFlag = false;
+    public bool AllowOpenEyes = true;
     //bool backFromObjectPreview = false; never used?
 
     public float minZoom = 0.5f;
@@ -478,7 +479,8 @@ public class CameraMode : MonoBehaviour
             if (closeEyesTriggered == false)
             {
                 closeEyesTriggered = true;
-                PlayerAnimationManager.SetTrigger("close_eyes");
+                if (AllowOpenEyes)
+                    PlayerAnimationManager.SetTrigger("close_eyes");
             }
         }
         else
@@ -503,7 +505,8 @@ public class CameraMode : MonoBehaviour
             // open eyes i assume
             if (closingEyes)
             {
-                PlayerAnimationManager.SetTrigger("open_eyes");
+                if (AllowOpenEyes)
+                    PlayerAnimationManager.SetTrigger("open_eyes");
                 closeEyesTriggered = false;
             }
         }
@@ -516,7 +519,8 @@ public class CameraMode : MonoBehaviour
             // open eyes i assume
             if (closingEyes)
             {
-                PlayerAnimationManager.SetTrigger("open_eyes");
+                if (AllowOpenEyes)
+                    PlayerAnimationManager.SetTrigger("open_eyes");
             }
         }
     }
