@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using System.Text.RegularExpressions;
 
 public class CharacterCreationScene : MonoBehaviour
 {
@@ -436,5 +437,7 @@ public class CharacterCreationScene : MonoBehaviour
     public void BIGFieldCleanColor()
     {
         inputBIGfield.GetComponent<Image>().color = Color.white;
+        inputBIGfield.GetComponent<InputField>().text =
+            Regex.Replace(inputBIGfield.GetComponent<InputField>().text, "[^.0-9]", "");
     }
 }
