@@ -8,7 +8,8 @@ using System.Collections.Generic;
 /// <summary>
 /// Handles EndScore scene.
 /// </summary>
-public class EndScoreManager : MonoBehaviour {
+public class EndScoreManager : MonoBehaviour
+{
 
     private int points;
     private int score;
@@ -28,8 +29,8 @@ public class EndScoreManager : MonoBehaviour {
 
     private MBS.WUADisplay achievements;
 
-    public List<string> quizQuestionsTexts = new List<string> ();
-    public List<int> quizWrongIndexes = new List<int> ();
+    public List<string> quizQuestionsTexts = new List<string>();
+    public List<int> quizWrongIndexes = new List<int>();
 
     private ActionManager actionManager;    //points, steps
     private GameTimer gameTimer; // time
@@ -37,29 +38,32 @@ public class EndScoreManager : MonoBehaviour {
     private Sprite halfStar;
     private Sprite fullStar;
 
-    void Start () {
+    void Start()
+    {
         SceneManager.sceneLoaded += OnLoaded;
 
-        manager = GameObject.Find ("Preferences").GetComponent<PlayerPrefsManager> ();
-        achievements = GameObject.Find ("AchievementsDisplayPrefab").GetComponent<MBS.WUADisplay> ();
+        manager = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
+        achievements = GameObject.Find("AchievementsDisplayPrefab").GetComponent<MBS.WUADisplay>();
 
-        fullStar = Resources.Load<Sprite> ("Sprites/Stars/star");
+        fullStar = Resources.Load<Sprite>("Sprites/Stars/star");
     }
 
     /// <summary>
     /// Sets object variables in scene after loading.
     /// </summary>
-    private void OnLoaded (Scene s, LoadSceneMode m) {
+    private void OnLoaded(Scene s, LoadSceneMode m)
+    {
         bool actualScene = false; // for later lines
-        if (SceneManager.GetActiveScene ().name == "EndScore") {
-            Transform uiFolder = GameObject.Find ("Canvas").transform;
+        if (SceneManager.GetActiveScene().name == "EndScore")
+        {
+            Transform uiFolder = GameObject.Find("Canvas").transform;
 
             //uiFolder.Find("Left").Find("Score").GetComponent<Text>().text = "Score: " + score;
-            uiFolder.Find ("ScoreScreen").Find ("Points").GetComponent<Text> ().text = "Punten: " + points;
-            uiFolder.Find ("ScoreScreen").Find ("Time").GetComponent<Text> ().text = string.Format ("Tijd: {0}:{1:00}", (int)time / 60, (int)time % 60);
+            uiFolder.Find("ScoreScreen").Find("Points").GetComponent<Text>().text = "Punten: " + points;
+            uiFolder.Find("ScoreScreen").Find("Time").GetComponent<Text>().text = string.Format("Tijd: {0}:{1:00}", (int)time / 60, (int)time % 60);
 
             //uiFolder.GetChild(1).FindChild("Steps").GetComponent<Text>().text = wrongSteps;
-            
+
             actualScene = true;
 
             //update practice score & stars, update UI accordingly
@@ -73,20 +77,23 @@ public class EndScoreManager : MonoBehaviour {
                 step.transform.Find("Text").GetComponent<Text>().text = steps[i];
 
                 Sprite correctSprite = Resources.Load<Sprite>("Sprites/item_select_check");
-                if(correctStepIndexes.Contains(i))
+                if (correctStepIndexes.Contains(i))
                     step.transform.Find("ToggleNo").GetComponent<Image>().sprite = correctSprite;
             }
 
-        } else if (SceneManager.GetActiveScene ().name == "EndScore_Test") {
-            Transform stepParent = GameObject.Find ("Interactable Objects/Canvas/StepScreen/ObservationForm/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
+        }
+        else if (SceneManager.GetActiveScene().name == "EndScore_Test")
+        {
+            Transform stepParent = GameObject.Find("Interactable Objects/Canvas/StepScreen/ObservationForm/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
 
-            for (int i = 0; i < steps.Count; ++i) {
-                GameObject step = GameObject.Instantiate (Resources.Load<GameObject> ("Prefabs/ProtocolEvaluationStep"), stepParent);
-                step.transform.Find ("Text").GetComponent<Text> ().text = steps[i];
+            for (int i = 0; i < steps.Count; ++i)
+            {
+                GameObject step = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/ProtocolEvaluationStep"), stepParent);
+                step.transform.Find("Text").GetComponent<Text>().text = steps[i];
 
-                bool correct = correctStepIndexes.Contains (i);
-                step.transform.Find ("ToggleYes").GetComponent<Toggle> ().isOn = correct;
-                step.transform.Find ("ToggleNo").GetComponent<Toggle> ().isOn = !correct;
+                bool correct = correctStepIndexes.Contains(i);
+                step.transform.Find("ToggleYes").GetComponent<Toggle>().isOn = correct;
+                step.transform.Find("ToggleNo").GetComponent<Toggle>().isOn = !correct;
             }
 
             percent = 1.0f *
@@ -96,19 +103,19 @@ public class EndScoreManager : MonoBehaviour {
             if (percent < 0f)
                 percent = 0f;
 
-            GameObject.Find ("Interactable Objects/Canvas/ScoreScreen/Score_percentage/ScoreText")
-                .GetComponent<Text> ().text = Mathf.FloorToInt (percent * 100f).ToString () + "%";
+            GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Score_percentage/ScoreText")
+                .GetComponent<Text>().text = Mathf.FloorToInt(percent * 100f).ToString() + "%";
 
-            GameObject.Find ("Interactable Objects/Canvas/ScoreScreen/Score_result/ResultText")
-                .GetComponent<Text> ().text = (percent < 0.7f) ? "Onvoldoende" : "Voldoende";
+            GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Score_result/ResultText")
+                .GetComponent<Text>().text = (percent < 0.7f) ? "Onvoldoende" : "Voldoende";
 
-            GameObject.Find ("Interactable Objects/Canvas/ScoreScreen/Points")
-                .GetComponent<Text> ().text = "Punten: " + points;
-            GameObject.Find ("Interactable Objects/Canvas/ScoreScreen/Time")
-                .GetComponent<Text> ().text = string.Format ("Tijd: {0}:{1:00}", (int)time / 60, (int)time % 60);
+            GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Points")
+                .GetComponent<Text>().text = "Punten: " + points;
+            GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Time")
+                .GetComponent<Text>().text = string.Format("Tijd: {0}:{1:00}", (int)time / 60, (int)time % 60);
 
             actualScene = true;
-            
+
             // show/hide buttons
             bool flag = (percent > 0.7f && manager.subscribed);
             GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Buttons/NextButton").SetActive(flag);
@@ -127,7 +134,7 @@ public class EndScoreManager : MonoBehaviour {
 
                 GameObject.Find("Interactable Objects/Canvas/CertificatePopOp").SetActive(true);
             }
-            
+
             if (flag && manager.validatedScene)
             {
                 EndScoreSendMailResults();
@@ -148,7 +155,7 @@ public class EndScoreManager : MonoBehaviour {
 
             if (!flag || !manager.validatedScene)
             {
-                GameObject.Find("Interactable Objects/Canvas/CertificatePanel/" + 
+                GameObject.Find("Interactable Objects/Canvas/CertificatePanel/" +
                     "ContentHolder/Description (1)").SetActive(false);
                 GameObject.Find("Interactable Objects/Canvas/CertificatePanel/" +
                     "ContentHolder/ScoreSendBTN").SetActive(false);
@@ -157,7 +164,10 @@ public class EndScoreManager : MonoBehaviour {
         }
         if (actualScene)
         {
+            SetBasicText();
+
             Transform quizParent = GameObject.Find("Interactable Objects/Canvas/Questionscreen/QuizForm/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
+
 
             for (int i = 0; i < quizQuestionsTexts.Count; ++i)
             {
@@ -168,38 +178,49 @@ public class EndScoreManager : MonoBehaviour {
                 step.transform.Find("ToggleYes").GetComponent<Toggle>().isOn = !wrong;
                 step.transform.Find("ToggleNo").GetComponent<Toggle>().isOn = wrong;
             }
-            
-            if (score >= 1.0f) {
-                GameObject.Find ("Interactable Objects/Canvas/ScoreScreen/Stars/Star1").GetComponent<Image> ().sprite = fullStar;
+
+            if (score >= 1.0f)
+            {
+                GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Stars/Star1").GetComponent<Image>().sprite = fullStar;
             }
 
-            if (score >= 2.0f) {
-                GameObject.Find ("Interactable Objects/Canvas/ScoreScreen/Stars/Star2").GetComponent<Image> ().sprite = fullStar;
+            if (score >= 2.0f)
+            {
+                GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Stars/Star2").GetComponent<Image>().sprite = fullStar;
             }
 
-            if (score >= 3.0f) {
-                GameObject.Find ("Interactable Objects/Canvas/ScoreScreen/Stars/Star3").GetComponent<Image> ().sprite = fullStar;
+            if (score >= 3.0f)
+            {
+                GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Stars/Star3").GetComponent<Image>().sprite = fullStar;
             }
 
-            if (time >= 900.0f) {
-                achievements.UpdateKeys ("MoreThan15", 1);
-            }else if (time <= 300.0f) {
-                achievements.UpdateKeys ("within5", 1);
+            if (time >= 900.0f)
+            {
+                achievements.UpdateKeys("MoreThan15", 1);
+            }
+            else if (time <= 300.0f)
+            {
+                achievements.UpdateKeys("within5", 1);
             }
 
-            if (PlayerPrefsManager.plays == 1) {
-                achievements.UpdateKeys ("FinishedProtocol", 1);
-            }else if (PlayerPrefsManager.plays == 3) {
-                achievements.UpdateKeys ("FinishedProtocol", 2);
-            } else if (PlayerPrefsManager.plays == 5) {
-                achievements.UpdateKeys ("FinishedProtocol", 2);
+            if (PlayerPrefsManager.plays == 1)
+            {
+                achievements.UpdateKeys("FinishedProtocol", 1);
+            }
+            else if (PlayerPrefsManager.plays == 3)
+            {
+                achievements.UpdateKeys("FinishedProtocol", 2);
+            }
+            else if (PlayerPrefsManager.plays == 5)
+            {
+                achievements.UpdateKeys("FinishedProtocol", 2);
             }
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
-            GameObject.Find ("Preferences").GetComponent<PlayerPrefsManager> ().SetSceneCompletionData (
-                completedSceneName, points, Mathf.RoundToInt (time));
+            GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().SetSceneCompletionData(
+                completedSceneName, points, Mathf.RoundToInt(time));
         }
         else
         {
@@ -208,41 +229,63 @@ public class EndScoreManager : MonoBehaviour {
         }
     }
 
+    public void SetBasicText()
+    {
+        if (quizQuestionsTexts.Count == 0)
+        {
+            Transform quizForm = GameObject.Find("Interactable Objects/Canvas/Questionscreen/QuizForm").transform;
+
+            for (int i = 1; i < 5; i++)
+            {
+                if (i == 4)
+                {
+                    quizForm.GetChild(i).gameObject.SetActive(true);
+                    break;
+                }
+                quizForm.GetChild(i).gameObject.SetActive(false);
+            }
+        }
+    }
+
     /// <summary>
     /// Gets necesarry variables and loads EndScore scene.
     /// </summary>
-    public void LoadEndScoreScene () {
-        actionManager = GameObject.Find ("GameLogic").GetComponent<ActionManager> ();
-        if (actionManager == null) Debug.LogError ("No action manager found.");
+    public void LoadEndScoreScene()
+    {
+        actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
+        if (actionManager == null) Debug.LogError("No action manager found.");
 
-        gameTimer = GameObject.Find ("GameLogic").GetComponent<GameTimer> ();
-        if (gameTimer == null) Debug.LogError ("No timer found");
+        gameTimer = GameObject.Find("GameLogic").GetComponent<GameTimer>();
+        if (gameTimer == null) Debug.LogError("No timer found");
 
         time = gameTimer.CurrentTime;
 
         points = actionManager.Points;
-        score = Mathf.FloorToInt (3.0f * points / actionManager.TotalPoints);
+        score = Mathf.FloorToInt(3.0f * points / actionManager.TotalPoints);
 
-        Debug.Log ("Current points: " + points);
-        Debug.Log ("Total available points: " + actionManager.TotalPoints);
-        Debug.Log ("Calculated stars (3 * points/total): " + score);
+        Debug.Log("Current points: " + points);
+        Debug.Log("Total available points: " + actionManager.TotalPoints);
+        Debug.Log("Calculated stars (3 * points/total): " + score);
 
         int multiplier = (time < 300.0f ? 3 : (time < 600.0f ? 2 : 1));
         points *= multiplier;
-        Debug.Log ("Multiplied final score: " + points);
+        Debug.Log("Multiplied final score: " + points);
 
-        completedSceneName = SceneManager.GetActiveScene ().name;
+        completedSceneName = SceneManager.GetActiveScene().name;
 
         steps = actionManager.StepsList;
         stepsDescr = actionManager.StepsDescriptionList;
         wrongStepIndexes = actionManager.WrongStepIndexes;
         correctStepIndexes = actionManager.CorrectStepIndexes;
 
-        PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager> ();
-        if (manager != null && manager.practiceMode) {
-            bl_SceneLoaderUtils.GetLoader.LoadLevel ("EndScore");
-        } else {
-            bl_SceneLoaderUtils.GetLoader.LoadLevel ("EndScore_Test");
+        PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
+        if (manager != null && manager.practiceMode)
+        {
+            bl_SceneLoaderUtils.GetLoader.LoadLevel("EndScore");
+        }
+        else
+        {
+            bl_SceneLoaderUtils.GetLoader.LoadLevel("EndScore_Test");
         }
     }
 
@@ -276,7 +319,7 @@ public class EndScoreManager : MonoBehaviour {
         string content = "Completed scene: " + manager.currentSceneVisualName + "\n";
         content += "Username: " + MBS.WULogin.username + "\n";
         content += "E-mail: " + MBS.WULogin.email + "\n";
-        
+
         content += "Big- of registratienummer:" + manager.bigNumber + "\n";
         float percent = GameObject.FindObjectOfType<EndScoreManager>().percent;
         content += "Percentage: " + Mathf.FloorToInt(percent * 100f).ToString() + "%\n";
