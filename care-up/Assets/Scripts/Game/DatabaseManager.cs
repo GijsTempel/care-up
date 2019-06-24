@@ -86,7 +86,8 @@ public class DatabaseManager : MonoBehaviour
         // load scene at the end of this function
         if ( FetchField("AccountStats", "CharacterCreated") == "true" &&
              FetchField("AccountStats", "FullName") != "" &&
-             FetchField("AccountStats", "BIG_number") != "")
+             (FetchField("AccountStats", "CharSceneV2") == "true" ||
+             FetchField("AccountStats", "BIG_number") != ""))
         {
             WULogin.characterCreated = true;
             bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
