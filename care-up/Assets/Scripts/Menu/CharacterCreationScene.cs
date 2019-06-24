@@ -356,11 +356,11 @@ public class CharacterCreationScene : MonoBehaviour
         } 
 
         // check if BIG number is filled
-        if (inputBIGfield.GetComponent<InputField>().text == "")
+        /*if (inputBIGfield.GetComponent<InputField>().text == "")
         {
             inputBIGfield.GetComponent<Image>().color = Color.red;
             check = false;
-        }
+        }*/
 
         if (check)
         { 
@@ -372,6 +372,9 @@ public class CharacterCreationScene : MonoBehaviour
             PlayerPrefsManager.SetFullName(inputNameField.GetComponent<InputField>().text);
             // save big number
             PlayerPrefsManager.SetBIGNumber(inputBIGfield.GetComponent<InputField>().text);
+
+            // set new character scene to be seen and saved info
+            DatabaseManager.UpdateField("AccountStats", "CharSceneV2", "true");
 
             bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
         }
