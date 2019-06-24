@@ -44,6 +44,8 @@ public class IAPManager : MonoBehaviour, IStoreListener
 #if UNITY_IOS
             m_AppleExtensions = extensions.GetExtension<IAppleExtensions>();
             introductory_info_dict = m_AppleExtensions.GetIntroductoryPriceDictionary();
+            GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed = SubscriptionPurchased();
+            Debug.Log("IAPManager::OnInitialied; subscribed = " + SubscriptionPurchased());
 #endif
     }
 
@@ -90,13 +92,10 @@ public class IAPManager : MonoBehaviour, IStoreListener
                 string intro_json = (introductory_info_dict == null || !introductory_info_dict.ContainsKey(sub.definition.storeSpecificId)) ? null : introductory_info_dict[sub.definition.storeSpecificId];
                 SubscriptionManager p = new SubscriptionManager(sub, intro_json);
                 SubscriptionInfo info = p.getSubscriptionInfo();
-                Debug.Log("IAPManager::SubscriptionPurchased(CareUp_Lidmaatschap) == " +
-                    (info.isSubscribed() == Result.True));
                 return info.isSubscribed() == Result.True;
             }
         }
-
-        Debug.Log("IAPManager::SubscriptionPurchased(CareUp_Lidmaatschap) == false");
+        
         return false;
     }
 
