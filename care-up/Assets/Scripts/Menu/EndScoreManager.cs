@@ -118,8 +118,6 @@ public class EndScoreManager : MonoBehaviour
 
             // show/hide buttons
             bool flag = (percent > 0.7f && manager.subscribed);
-            GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Buttons/NextButton").SetActive(flag);
-            GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Buttons/Back to main menu").SetActive(!(flag && manager.validatedScene));
 
             GameObject.Find("Interactable Objects/Canvas/Send_Score/Top/Scenetitle").GetComponent<Text>().text = manager.currentSceneVisualName;
 
@@ -132,7 +130,7 @@ public class EndScoreManager : MonoBehaviour
 
                 achievements.UpdateKeys("FirstPassedExam", 1);
 
-                GameObject.Find("Interactable Objects/Canvas/CertificatePopOp").SetActive(true);
+                //GameObject.Find("Interactable Objects/Canvas/CertificatePopOp").SetActive(true);
             }
 
             if (flag && manager.validatedScene)
