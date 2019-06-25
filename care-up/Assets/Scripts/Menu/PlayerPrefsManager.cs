@@ -12,6 +12,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using System.Linq;
+using System.Collections;
 
 /// <summary>
 /// Handles quick access to saved data.
@@ -628,8 +629,19 @@ public class PlayerPrefsManager : MonoBehaviour
         link += PlayerPrefsManager.__getCertificateLinkParams(scene, date, true);
         
         Debug.LogWarning("Sending email with certificate to user.");
+        PlayerPrefsManager.instance.StartCoroutine(__handleMailPDFRequest(link));
+        Debug.Log(link);
+    }
+
+    static public IEnumerator __handleMailPDFRequest(string link)
+    {
         UnityWebRequest unityWebRequest = new UnityWebRequest(link);
-        unityWebRequest.SendWebRequest();
+        yield return unityWebRequest.SendWebRequest();
+
+        if (unityWebRequest.isDone)
+        {
+            Debug.Log(unityWebRequest.downloadHandler.text);
+        }
     }
 
     public static string GetTodaysDateFormatted()

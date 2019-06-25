@@ -66,10 +66,8 @@ public class DatabaseManager : MonoBehaviour
         int.TryParse(plays, out PlayerPrefsManager.plays);
 
         // set sub status, for iPhone it's being set in IAPManager
-        if (Application.platform != RuntimePlatform.IPhonePlayer)
-        {
-            GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed = WULogin.HasSerial;
-        }
+        GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed =
+            GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed || WULogin.HasSerial;
 
         // set character info
         CharacterInfo.sex = FetchField("AccountStats", "CharacterSex");
