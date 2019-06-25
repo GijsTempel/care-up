@@ -681,16 +681,7 @@ public class PlayerPrefsManager : MonoBehaviour
         GameObject.FindObjectOfType<PlayerPrefsManager>().bigNumber = number;
         DatabaseManager.UpdateField("AccountStats", "BIG_number", number);
     }
-
-    static void SetFullName(CML response)
-    {
-        PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
-
-        CMLData data = new CMLData();
-        data.Set("FullName", manager.fullPlayerName);
-        WUData.UpdateCategory("AccountStats", data);
-    }
-
+    
     private void SetEscapeButtonLogic()
     {
         //if (startTimer)
