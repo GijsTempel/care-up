@@ -24,15 +24,16 @@ public class PickUpObjectAtFrame : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         //Debug.Log(frame);
-        if (PlayerAnimationManager.CompareFrames(frame, prevFrame, pickFrame))
-        {
-            obj = GameObject.Find(objectName);
-            inventory.ForcePickItem(obj, hand, true);
-            PlayerAnimationManager.SetHandItem(hand == PlayerAnimationManager.Hand.Left, obj);
-        }
-
         if (animator.speed != 0)
         {
+            if (PlayerAnimationManager.CompareFrames(frame, prevFrame, pickFrame))
+            {
+                obj = GameObject.Find(objectName);
+                inventory.ForcePickItem(obj, hand, true);
+                PlayerAnimationManager.SetHandItem(hand == PlayerAnimationManager.Hand.Left, obj);
+            }
+
+  
             prevFrame = frame;
             frame += Time.deltaTime;
         }
