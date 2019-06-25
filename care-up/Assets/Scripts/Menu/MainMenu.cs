@@ -93,8 +93,16 @@ public class MainMenu : MonoBehaviour {
             // shared field, will keep it outside DatabaseManager
             GameObject.FindObjectOfType<PlayerPrefsManager>().FetchLatestVersion();
 
-            GameObject.Find("UMenuProManager/MenuCanvas/Account/Account_Panel_UI/Account_Username")
+            GameObject.Find("UMenuProManager/MenuCanvas/Account/Account_Panel_UI/UserInfoHolder/NameHolder/Account_Username")
                 .GetComponent<Text>().text = MBS.WULogin.display_name;
+
+            string bigNumber = DatabaseManager.FetchField("AccountStats", "BIG_number");
+
+            if(!string.IsNullOrEmpty(bigNumber))
+            {
+                GameObject.Find("UMenuProManager/MenuCanvas/Account/Account_Panel_UI/UserInfoHolder/BigNumberHolder/BigNumber")
+               .GetComponent<Text>().text = bigNumber;
+            }           
         }
     }
 
