@@ -629,19 +629,8 @@ public class PlayerPrefsManager : MonoBehaviour
         link += PlayerPrefsManager.__getCertificateLinkParams(scene, date, true);
         
         Debug.LogWarning("Sending email with certificate to user.");
-        PlayerPrefsManager.instance.StartCoroutine(__handleMailPDFRequest(link));
-        Debug.Log(link);
-    }
-
-    static public IEnumerator __handleMailPDFRequest(string link)
-    {
         UnityWebRequest unityWebRequest = new UnityWebRequest(link);
-        yield return unityWebRequest.SendWebRequest();
-
-        if (unityWebRequest.isDone)
-        {
-            Debug.Log(unityWebRequest.downloadHandler.text);
-        }
+        unityWebRequest.SendWebRequest();
     }
 
     public static string GetTodaysDateFormatted()
