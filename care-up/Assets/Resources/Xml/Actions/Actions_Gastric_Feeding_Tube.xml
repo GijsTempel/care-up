@@ -96,7 +96,10 @@
     left=""
     right=""
     topic="InstructSign"
-    extra=" Maak met de cliënt een afspraak over een signaal wanneer inbrengen moet stoppen"/>
+    extra=" Maak met de cliënt een afspraak over een signaal wanneer inbrengen moet stoppen"
+    blockUnlock="clientReadyForMeasuring"
+    />
+  
 
   <action
     comment="Take the probe out of the package. ---Start Seqeunce"
@@ -107,7 +110,9 @@
     item="MedicalTube"
     target=""
     buttonText="Meet in te brengen lengte"
-    extra="Neem de sonde uit de verpakking"/>
+    extra="Neem de sonde uit de verpakking"
+     blockRequired="clientReadyForMeasuring"
+    />
 
   <action
   comment="Measure the probe at the client from the point of the nose to the earlobe until the end of the breastbone (NEX.)"
