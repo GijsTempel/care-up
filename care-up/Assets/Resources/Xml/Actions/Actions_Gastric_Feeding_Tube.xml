@@ -85,6 +85,7 @@
     index="4"
     type="talk"
     topic="SitInBed"
+    blockUnlock="clienInHalfSitPos"
     extra="Vraag de cliënt een halfzittende houding aan te nemen."></action>
 
   <action
@@ -97,7 +98,7 @@
     right=""
     topic="InstructSign"
     extra=" Maak met de cliënt een afspraak over een signaal wanneer inbrengen moet stoppen"
-    blockUnlock="clientReadyForMeasuring"
+    blockUnlock="clienReadyForMeasuring"
     />
   
 
@@ -107,11 +108,12 @@
     description="Neem de neusmaagsonde uit de verpakking"
     index="6"
     type="useOn"
-    item="MedicalTube"
+    item="MedicalTube_Opened"
     target=""
+    blockRequired="clienReadyForMeasuring"
     buttonText="Meet in te brengen lengte"
     extra="Neem de sonde uit de verpakking"
-    blockRequired="clientReadyForMeasuring"
+    
     />
 
   <action
@@ -163,6 +165,8 @@
     item="cloth_02_folded"
     target=""
     buttonText="Onderlegger plaatsen"
+    blockRequired="clienInHalfSitPos"
+    blockUnlock="clienReadyForProcedure"
     extra="Leg de onderlegger op de borst van de cliënt. "></action>
 
   <action
@@ -174,6 +178,7 @@
     value="gloveBox"
     extra="Trek handschoenen aan"
     messageTitle=""
+    blockRequired="clienReadyForProcedure"
     messageContent=""
 ></action>
   
