@@ -281,6 +281,23 @@ MonoBehaviour:
   audioFileName: Sound_Effects/Opening_Plastic_Package
   audioFrame: 88
   volume: 0.7
+--- !u!114 &-7047762413215621245
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1d577ba52e334ef39dfa878ef5c62b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addFrame: 140
+  objectName: MedicalTube_Opened
+  hand: 0
+  GhostObjectTarget: _ghostMedicalTubeOpened
+  destroyOnDrop: 0
 --- !u!114 &-7016809223714163126
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -590,6 +607,20 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-4888309631939765339
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftHand: 0
+  dropFrame: 140
 --- !u!114 &-4757600522832829768
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -606,6 +637,23 @@ MonoBehaviour:
   objectName: GlassOfWater
   hand: 1
   GhostObjectTarget: 
+  destroyOnDrop: 0
+--- !u!114 &-4661145090156971237
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1d577ba52e334ef39dfa878ef5c62b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addFrame: 140
+  objectName: MedicalTube_Opened
+  hand: 1
+  GhostObjectTarget: _ghostMedicalTubeOpened
   destroyOnDrop: 0
 --- !u!114 &-3806510728054831625
 MonoBehaviour:
@@ -3165,7 +3213,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
   m_Name: 
@@ -4322,7 +4370,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
   m_Name: 
@@ -5362,7 +5410,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
   m_Name: 
@@ -5543,7 +5591,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
   m_Name: 
@@ -7285,7 +7333,7 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 6
     m_ConditionEvent: leftID
-    m_EventTreshold: 14000
+    m_EventTreshold: 14001
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102961760668558742}
   m_Solo: 0
@@ -8104,7 +8152,7 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 6
     m_ConditionEvent: rightID
-    m_EventTreshold: 14000
+    m_EventTreshold: 14001
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102990413207268474}
   m_Solo: 0
@@ -9094,7 +9142,7 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 6
     m_ConditionEvent: rightID
-    m_EventTreshold: 14000
+    m_EventTreshold: 14001
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102393250251704402}
   m_Solo: 0
@@ -16772,7 +16820,7 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 6
     m_ConditionEvent: leftID
-    m_EventTreshold: 14000
+    m_EventTreshold: 14001
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102961961021414468}
   m_Solo: 0
@@ -19205,6 +19253,8 @@ AnimatorState:
   - {fileID: 114502553639563988}
   - {fileID: 114865490809828384}
   - {fileID: -2612187170171840827}
+  - {fileID: 2478387502962249444}
+  - {fileID: -4661145090156971237}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -21943,6 +21993,8 @@ AnimatorState:
   - {fileID: 114104062359854920}
   - {fileID: 114816962881429888}
   - {fileID: -7016809223714163126}
+  - {fileID: -4888309631939765339}
+  - {fileID: -7047762413215621245}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -25519,6 +25571,20 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &2478387502962249444
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftHand: 1
+  dropFrame: 140
 --- !u!114 &2624636480294321869
 MonoBehaviour:
   m_ObjectHideFlags: 1
