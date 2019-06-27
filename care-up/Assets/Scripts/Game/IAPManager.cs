@@ -17,6 +17,8 @@ public class IAPManager : MonoBehaviour, IStoreListener
     private void Start()
     {
 #if UNITY_IOS
+        if (Application.platform == RuntimePlatform.IPhonePlayer)
+        {
             var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
             builder.AddProduct("CareUp_Lidmaatschap", ProductType.Subscription, new IDs
             {
@@ -27,9 +29,8 @@ public class IAPManager : MonoBehaviour, IStoreListener
 
             UnityPurchasing.Initialize(this, builder);
 #else
-        //Debug.Log("Not an iOS. Destroying IAP.");
-        Destroy(this);
-        return;
+            Destroy(this);
+            return;
 #endif
     }
 
@@ -44,7 +45,8 @@ public class IAPManager : MonoBehaviour, IStoreListener
 #if UNITY_IOS
             m_AppleExtensions = extensions.GetExtension<IAppleExtensions>();
             introductory_info_dict = m_AppleExtensions.GetIntroductoryPriceDictionary();
-            GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed = SubscriptionPurchased();
+            GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed = 
+                GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed || SubscriptionPurchased();
             Debug.Log("IAPManager::OnInitialied; subscribed = " + SubscriptionPurchased());
 #endif
     }

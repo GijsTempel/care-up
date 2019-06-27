@@ -3,7 +3,7 @@
   <action
     points="1"
     description="Begroet de cliënt"
-    fullDescription="Begroet de cliënt door op hem te klikken. Daarna klik je nogmaals op de cliënt om een gesprek aan te gaan. Klik vervolgens op de juiste optie"
+    fullDescription="Begroet de cliënt door op hem te klikken. Daarna klik je nogmaals op de cliënt om een gesprek aan te gaan. Klik vervolgens op de juiste optie."
     index="0"
     type="talk"
     topic="Hello"
@@ -45,20 +45,9 @@
     extra="Controleer de cliëntgegevens. Het is belangrijk dat je de juiste persoon voor je hebt."></action>
 
   <action
-    points="3"
-    description="Controleer de toedienlijst"
-    fullDescription="Open de tablet door op het tablet icoon te drukken. Klik op de App 'Gegevens'. Kies vervolgens voor de toedienlijst."
-    audioHint="InjectionSubcutaneous/Step 5"
-    index="2"
-    type="examine"
-    item="PrescriptionForm"
-    expected="good"
-    extra="Controleer de toedienlijst. Controleer de toedienlijst op soort, dosering en toedientijdstip "></action>
-
-  <action
     comment="(3)Open tube package"
     points="1"
-    description="Neem de sonde uit de verpakking"
+    description="Open de neusmaagsonde verpakking"
     fullDescription=""
     index="2"
     type="combine"
@@ -80,7 +69,7 @@
   <action
     comment="(3)Open syringe"
     points="1"
-    description="Open syringe"
+    description="Open de 50ml spuit"
     fullDescription=""
     index="3"
     type="combine"
@@ -96,29 +85,36 @@
     index="4"
     type="talk"
     topic="SitInBed"
+    blockUnlock="clienInHalfSitPos"
     extra="Vraag de cliënt een halfzittende houding aan te nemen."></action>
 
   <action
     comment="Make a signal with the client when the inserting needs to stop."
     points="1"
-    description=" Maak met de cliënt een afspraak over een signaal wanneer inbrengen moet stoppen"
+    description="Maak met de cliënt een afspraak over een signaal wanneer inbrengen moet stoppen"
     index="5"
     type="talk"
     left=""
     right=""
     topic="InstructSign"
-    extra=" Maak met de cliënt een afspraak over een signaal wanneer inbrengen moet stoppen"/>
+    extra=" Maak met de cliënt een afspraak over een signaal wanneer inbrengen moet stoppen"
+    blockUnlock="clienReadyForMeasuring"
+    />
+  
 
   <action
     comment="Take the probe out of the package. ---Start Seqeunce"
     points="1"
-    description="Neem de sonde uit de verpakking"
+    description="Neem de neusmaagsonde uit de verpakking"
     index="6"
     type="useOn"
-    item="MedicalTube"
+    item="MedicalTube_Opened"
     target=""
-    buttonText="Bepaal in te brengen lengte"
-    extra="Neem de sonde uit de verpakking"/>
+    blockRequired="clienReadyForMeasuring"
+    buttonText="Meet in te brengen lengte"
+    extra="Neem de sonde uit de verpakking"
+    
+    />
 
   <action
   comment="Measure the probe at the client from the point of the nose to the earlobe until the end of the breastbone (NEX.)"
@@ -168,8 +164,10 @@
     type="useOn"
     item="cloth_02_folded"
     target=""
-    buttontext="plaats onderlegger"
-    extra="Leg de onderlegger onder de subcutane canule. "></action>
+    buttonText="Onderlegger plaatsen"
+    blockRequired="clienInHalfSitPos"
+    blockUnlock="clienReadyForProcedure"
+    extra="Leg de onderlegger op de borst van de cliënt. "></action>
 
   <action
     comment="Put on gloves. ---Start Sequence"
@@ -180,7 +178,272 @@
     value="gloveBox"
     extra="Trek handschoenen aan"
     messageTitle=""
+    blockRequired="clienReadyForProcedure"
     messageContent=""
 ></action>
+  
+  <action
+    comment="Inspect the nose."
+    points="1"
+    description="Inspecteer de neus van de cliënt en vraag de cliënt zo nodig de neus te snuiten"
+    index="13"
+    type="sequenceStep"
+    value="inspectnose"
+    extra="Inspecteer de neus van de cliënt en vraag de cliënt zo nodig de neus te snuiten."/>
+
+
+  <action
+    comment="Ask the client to tilt his head a bit to front."
+    points="1"
+    description="Vraag de cliënt het hoofd iets naar voren te buigen (het strotklepje sluit de luchtpijp af)"
+    index="14"
+    type="sequenceStep"
+    value="headtofront"
+    extra="Vraag de cliënt het hoofd iets naar voren te buigen (het strotklepje sluit de luchtpijp af)."/>
+
+  <action
+    comment="Shift the probe slowly via the nasal floor until the pharynx."
+    points="1"
+    description="Schuif de sonde (met afsluitdopje of evt. voerdraad) langzaam via de neusbodem tot in de keelholte"
+    index="15"
+    type="sequenceStep"
+    value="shiftprobe"
+    extra="Schuif de sonde (met afsluitdopje of evt. voerdraad) langzaam via de neusbodem tot in de keelholte."/>
+
+  <action
+    comment="Ask the client to swallow maybe with a glass of water."
+    points="1"
+    description="Vraag de cliënt te slikken, eventueel met behulp van een slokje water"
+    index="16"
+    type="sequenceStep"
+    value="askdrink"
+    extra="Vraag de cliënt te slikken, eventueel met behulp van een slokje water."/>
+
+  <action
+    comment="Shift the probe until the marked lenght while the client swallows a few times"
+    points="1"
+    description="Schuif de sonde op tot de gemarkeerde lengte terwijl de cliënt een paar maal slikt"
+    index="17"
+    type="sequenceStep"
+    value="shftomark"
+    extra="Schuif de sonde op tot de gemarkeerde lengte terwijl de cliënt een paar maal slikt."/>
+
+
+  <action
+    comment="Fixate the probe temporarily with a piece of bandaid."
+    points="1"
+    description="Fixeer de sonde tijdelijk met een stukje pleister"
+    index="18"
+    type="sequenceStep"
+    value="fixprobe"
+    extra="Fixeer de sonde tijdelijk met een stukje pleister."/>
+
+  <action
+    comment="Remove the guide wire or the sealing cap of the probe and put the cap on the workfield."
+    points="1"
+    description="Verwijder de voerdraad of het afsluitdopje van de sonde en leg het dopje op het werkveld"
+    index="19"
+    type="sequenceStep"
+    value="removecap"
+    extra="Verwijder de voerdraad of het afsluitdopje van de sonde en leg het dopje op het werkveld."/>
+
+  <action
+    comment=" Suck 5-10 ml of air into the 50 ml syringe en place the syringe on the probe."
+    points="1"
+    description="Zuig in de 50ml spuit 5-10 ml lucht en plaats de spuit op de sonde"
+    index="20"
+    type="sequenceStep"
+    value="airinto"
+    extra="Zuig in de 50ml spuit 5-10 ml lucht en plaats de spuit op de sonde."/>
+
+  <action
+    comment="Squirt the air throught the probe."
+    points="1"
+    description="Spuit de lucht door de sonde. De sonde komt nu los van de maagwand te liggen"
+    index="21"
+   type="sequenceStep"
+    value="airtoprobe"
+    extra="Spuit de lucht door de sonde. De sonde komt nu los van de maagwand te liggen."/>
+
+  <action
+    comment="Suck with the syringe carefully gastric juice up"
+    points="1"
+    description="Zuig met de spuit voorzichtig maagsap op"
+    index="22"
+    type="sequenceStep"
+    value="takegasjuice"
+    extra="Zuig met de spuit voorzichtig maagsap op."/>
+
+  <action
+    comment="Clamp the probe"
+    points="1"
+    description="Klem de sonde af"
+    index="23"
+    type="sequenceStep"
+    value="closeprobe"
+    extra=" Klem de sonde af."/>
+
+  <action
+    comment="Judge the gastric juice"
+    points="1"
+    description="Beoordeel het maagsap"
+    index="24"
+    type="sequenceStep"
+    value="judgejuice"
+    extra="Beoordeel het maagsap."/>
+
+  <action
+    comment="Determine the pH value with the help of the pH indicator. At a pH value lower than or equal to 5.5, the probe is in the stomach."
+    points="1"
+    description="Bepaal de pH-waarde met behulp van de pH-indicator. Bij pH-waarde lager dan of gelijk aan 5.5 ligt de sonde in de maag"
+    index="25"
+    type="sequenceStep"
+    value="comparejuice"
+    extra="Bepaal de pH-waarde met behulp van de pH-indicator. Bij pH-waarde lager dan of gelijk aan 5.5 ligt de sonde in de maag."/>
+  
+   <action
+    comment="Rinse the 50 ml syringe clean with lukewarm water."
+    points="1"
+    description="Spoel de 50ml spuit schoon met lauwwarm water"
+    index="26"
+    type="sequenceStep"
+    value="Rinse_syringe"
+    extra="Spoel de 50 ml-spuit schoon met lauwwarm water."/>
+
+  <action
+    comment="Fill the syringe with 20 ml water."
+    points="1"
+    description="Vul de spuit met 20 ml water"
+    index="27"
+    type="sequenceStep"
+    value="Fill_syringe"
+    extra="Vul de spuit met 20 ml water."/>
+
+  <action
+   comment="Place the syringe on the probe."
+   points="1"
+   description="Plaats de spuit op de sonde"
+   index="28"
+   type="sequenceStep"
+   value="placesyringeinprobe"
+   extra="Plaats de spuit op de sonde."/>
+
+  <action
+    comment="Squirt the water through the probe."
+    points="1"
+    description="Spuit het water door de sonde"
+    index="29"
+    type="sequenceStep"
+    value="Squirt_the_water"
+    extra="Spuit het water door de sonde."/>
+
+  <action
+    comment="Clamp the probe en remove the syringe."
+    points="1"
+    description="Klem de sonde af en verwijder de spuit"
+    index="30"
+    type="sequenceStep"
+    value="Clamptheprobe"
+    extra="Klem de sonde af en verwijder de spuit."/>
+
+  <action
+    comment="Close of the probe with a sealing cap."
+    points="1"
+    description="Sluit de sonde af met het afsluitdopje"
+    index="31"
+    type="sequenceStep"
+    value="Close_of_the_probe"
+    extra="Sluit de sonde af met het afsluitdopje."/>
+
+  <action
+    comment="For a probe without graduation, apply a definitive marker with a water-resistant marker."
+    points="1"
+    description="Breng, bij een sonde zonder maatverdeling, een definitief markeringsteken aan met watervaste stift"
+    index="32"
+    type="sequenceStep"
+    value="usemarker2"
+    extra="Breng, bij een sonde zonder maatverdeling, een definitief markeringsteken aan met watervaste stift."/>
+
+  <action
+    comment="Clean the nose and fixate the probe with a bandaid."
+    points="1"
+    description=" Maak de neus schoon en fixeer de sonde met (neusfixatie)pleister"
+    index="33"
+    type="sequenceStep"
+    value="Clean_the_nose"
+    extra="Maak de neus schoon en fixeer de sonde met (neusfixatie)pleister."/>
+
+  <action
+    comment="Check the probe if its fixated good when swalowing or when the client is turning."
+    points="1"
+    description="Ga na of de sonde goed gefixeerd is bij slikken of draaibewegingen"
+    index="34"
+    type="sequenceStep"
+    value="Check_the_probe_sw"
+    extra="Ga na of de sonde goed gefixeerd is bij slikken of draaibewegingen."/>
+
+  <action
+    comment="Check if the bandaid is fixating the bandaid good."
+    points="1"
+    description="Controleer of de pleister de sonde goed fixeert"
+    index="35"
+    type="sequenceStep"
+    value="Check_the_plaster"
+    extra="Controleer of de pleister de sonde goed fixeert."/>
+
+  <action
+    comment="Lead the probe behind the ear."
+    points="1"
+    description="Leid de sonde achter het oor langs"
+    index="36"
+    type="sequenceStep"
+    value="ProbeBehEar"
+    extra="Leid de sonde achter het oor langs."/>
+
+  <action
+    comment="If desired, attach the probe to the clothing at a lower position so that the probe can move with head movements."
+    points="1"
+    description="Bevestig, wanneer gewenst, de sonde op een lagere positie aan de kleding, zodanig dat de sonde kan meebewegen met hoofdbewegingen"
+    index="37"
+    type="sequenceStep"
+    value="attachproe"
+    extra="Bevestig, wanneer gewenst, de sonde op een lagere positie aan de kleding, zodanig dat de sonde kan meebewegen met hoofdbewegingen."/>
+
+  <action
+    comment="Take off gloves."
+    points="1"
+    description="Trek de handschoenen uit"
+    index="38"
+    type="sequenceStep"
+    value="Trek_de_handschoenen_uit"
+    extra="Trek de handschoenen uit."/>
+
+  <action
+    comment="Create a clean workfield"
+    points="1"
+    description="Ruim de materialen op door op het werkveld te klikken"
+    index="39"
+    type="use"
+    value="WorkField"
+    extra="Maak een schoon werkveld. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen."/>
+
+  <action
+    comment="Apply hand hygiene."
+    points="1"
+    description="Pas handhygiëne toe."
+    fullDescription=""
+    index="40"
+    type="use"
+    value="HandCleaner"
+    extra=""/>
+
+  <action
+    comment="Write down the size and length of the inserted probe, pH determination, date of inserting the probe and any findings on the ipad."
+    index="41"
+    points="1"
+    description="Noteer de handeling, maat en lengte van de ingebrachte sonde, pH-bepaling, datum inbrengen sonde en eventuele bevindingen"
+    type="use"
+    value="PaperAndPen"
+    extra="Noteer de handeling, maat en lengte van de ingebrachte sonde, pH-bepaling, datum inbrengen sonde en eventuele bevindingen. "></action>
 
 </ActionList>

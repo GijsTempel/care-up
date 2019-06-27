@@ -93,8 +93,22 @@ public class MainMenu : MonoBehaviour {
             // shared field, will keep it outside DatabaseManager
             GameObject.FindObjectOfType<PlayerPrefsManager>().FetchLatestVersion();
 
-            GameObject.Find("UMenuProManager/MenuCanvas/Account/Account_Panel_UI/Account_Username")
-                .GetComponent<Text>().text = MBS.WULogin.display_name;
+            GameObject.Find("UMenuProManager/MenuCanvas/Account/Top (1)/UserName").GetComponent<Text>().text = MBS.WULogin.display_name;
+
+            string bigNumber = GameObject.FindObjectOfType<PlayerPrefsManager>().bigNumber;
+            string fullName = GameObject.FindObjectOfType<PlayerPrefsManager>().fullPlayerName;
+
+            if (!string.IsNullOrEmpty(fullName))
+            {
+                GameObject.Find("UMenuProManager/MenuCanvas/Account/Account_Panel_UI/UserInfoHolder/NameHolder/Account_Username")
+               .GetComponent<Text>().text = fullName;
+            }
+
+            if (!string.IsNullOrEmpty(bigNumber))
+            {
+                GameObject.Find("UMenuProManager/MenuCanvas/Account/Account_Panel_UI/UserInfoHolder/BigNumberHolder/BigNumber")
+               .GetComponent<Text>().text = bigNumber;
+            }           
         }
     }
 
@@ -312,31 +326,5 @@ public class MainMenu : MonoBehaviour {
         string sceneName = "Tutorial_Full";
         string bundleName = "tutorial_full";
         bl_SceneLoaderUtils.GetLoader.LoadLevel (sceneName, bundleName);
-    }
-
-    void GetPlaysNumber(CML response)
-    {
-        // we're here only if we got data
-        int plays = response[1].Int("Plays_Number");
-        bool result = plays < 1 ? true : false;
-        AllowDenyContinue(result);
-    }
-
-    void ErrorHandle(CMLData response)
-    {
-        // we're here if we got error or no data which should be equal to 0 plays
-        AllowDenyContinue((response["message"] == "WPServer error: Empty response. No data found"));
-    }
-
-    void AllowDenyContinue(bool allow)
-    {
-        allow |= FindObjectOfType<PlayerPrefsManager>().demoVersion;
-        if (!allow)
-        {
-            // show pop up!
-            //StatusMessage.Message = "Je hebt geen actief product";
-            // or something more like
-            // GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(5);
-        }
     }
 }

@@ -38,6 +38,8 @@ public class EndScoreManager : MonoBehaviour
     private Sprite halfStar;
     private Sprite fullStar;
 
+    private bool emailsSent = false;
+
     void Start()
     {
         SceneManager.sceneLoaded += OnLoaded;
@@ -130,13 +132,16 @@ public class EndScoreManager : MonoBehaviour
 
                 achievements.UpdateKeys("FirstPassedExam", 1);
 
-                //GameObject.Find("Interactable Objects/Canvas/CertificatePopOp").SetActive(true);
+                if (manager.validatedScene)
+                {
+                    EndScoreSendMailResults();
+                }
             }
 
-            if (flag && manager.validatedScene)
-            {
-                EndScoreSendMailResults();
-            }
+            emailsSent = flag && manager.validatedScene;
+
+            GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Buttons/Back to main menu")
+                .GetComponent<Button>().onClick.AddListener(ConditionalHomeButton);
 
             // certificate set scene name
             GameObject.Find("Interactable Objects/Canvas/CertificatePanel/Top/Scenetitle")
@@ -326,6 +331,22 @@ public class EndScoreManager : MonoBehaviour
 
         PlayerPrefsManager.__sendMail(topic, content);
         Debug.Log("E-mail verzonden");
+    }
+
+    /// <summary>
+    /// if email was sent - opens panel
+    /// if email was not sent - loads main menu
+    /// </summary>
+    public void ConditionalHomeButton()
+    {
+        if (emailsSent)
+        {
+            GameObject.Find("Interactable Objects/Canvas/CertificatePopOp").SetActive(true);
+        }
+        else
+        {
+            bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
+        }
     }
 }
 
