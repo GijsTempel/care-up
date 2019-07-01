@@ -31,6 +31,10 @@ public class QuizTab : RobotUITabs {
     private Button continueButton;
   
     public bool continueBtn = false;
+
+    [HideInInspector]
+    public bool quiz = false;
+
     PlayerPrefsManager pref;
 
     EndScoreManager endScoreManager;
@@ -115,6 +119,8 @@ public class QuizTab : RobotUITabs {
 
     public void NextQuizQuestion()
     {
+        quiz = true;
+        print("NextQuizQuestion");
         if (currentStep >= questionList.Count)
             return;
 
@@ -219,6 +225,7 @@ public void OnContinueButton()
 
         // disable quiz icon
         icons.Find("QuizTab").gameObject.SetActive(false);
+        quiz = false;
         // close tab
         BackButton();
         // close UI 

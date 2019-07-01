@@ -40,7 +40,7 @@ public class SearchBar : MonoBehaviour
                 {
                     string sceneName = null;
 
-                    if (GameObject.FindObjectOfType<LeaderBoard>().lead.activeSelf == true)
+                    if (GameObject.FindObjectOfType<LeaderBoard>().lead.activeSelf)
                         sceneName = scene.transform.Find("Text").GetComponent<Text>().text.Replace(" ", "");
                     else
                         sceneName = scene.GetComponent<LevelButton>().displayName.Replace(" ", "");

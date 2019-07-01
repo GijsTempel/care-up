@@ -137,7 +137,7 @@ public class ActionManager : MonoBehaviour
             }
 
             if (percent < 0)
-                percent = 0;          
+                percent = 0;
 
             return percent;
         }
@@ -921,11 +921,13 @@ public class ActionManager : MonoBehaviour
     void Awake()
     {
         manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
-        if (manager != null){
+        if (manager != null)
+        {
             TextDebug = manager.TextDebug;
             localizationManager = manager.GetLocalization();
         }
-        if (localizationManager == null){
+        if (localizationManager == null)
+        {
             localizationManager = new LocalizationManager();
             localizationManager.LoadAllDictionaries();
         }
@@ -950,7 +952,7 @@ public class ActionManager : MonoBehaviour
             int.TryParse(action.Attributes["index"].Value, out index);
             string type = action.Attributes["type"].Value;
             string descr = localizationManager.GetValueIfKey(action.Attributes["description"].Value);
-  
+
             string comment = "";
             if (action.Attributes["comment"] != null)
             {
@@ -1396,6 +1398,11 @@ public class ActionManager : MonoBehaviour
         }
     }
 
+    public string message = null;
+    public string messageTitle = null;
+    public bool showTheory = false;
+
+   
     /// <summary>
     /// Checks if triggered action is correct ( expected to be done in action list ).
     /// Plays WrongAction sound from Narrator if wrong.
@@ -1456,6 +1463,10 @@ public class ActionManager : MonoBehaviour
                     {
                         GameObject.FindObjectOfType<RobotUIMessageTab>().NewMessage(
                             action.messageTitle, action.messageContent, RobotUIMessageTab.Icon.Info);
+
+                        showTheory = true;
+                        message = action.messageContent;
+                        messageTitle = action.messageTitle;                       
                     }
 
                     if (type == ActionType.SequenceStep && penalized)

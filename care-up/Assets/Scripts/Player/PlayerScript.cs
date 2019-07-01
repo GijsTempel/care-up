@@ -461,7 +461,7 @@ public class PlayerScript : MonoBehaviour
     }
 
     public void OpenRobotUI()
-    {     
+    {
         if (robotUIopened)
             return;
 
@@ -479,7 +479,7 @@ public class PlayerScript : MonoBehaviour
         IPad.GetComponent<CanvasGroup>().alpha = 1f;
         IPad.GetComponent<CanvasGroup>().blocksRaycasts = true;
 
-        robotUIopened = true;        
+        robotUIopened = true;
 
         if (devHintUI != null)
         {
@@ -505,7 +505,7 @@ public class PlayerScript : MonoBehaviour
             extraPanel = GameObject.Find("Extra");
         }
 
-        RobotManager.SetUITriggerActive(false);     
+        RobotManager.SetUITriggerActive(false);
 
         tutorial_robotUI_opened = true;
 
@@ -527,24 +527,37 @@ public class PlayerScript : MonoBehaviour
 
     public void CloseRobotUI()
     {
+        if (GameObject.Find("IPad/RobotUI/TheoryTab") != null && (GameObject.FindObjectOfType<QuizTab>() != null))
+        {
+            if (GameObject.FindObjectOfType<QuizTab>().quiz && GameObject.Find("IPad/RobotUI/TheoryTab").gameObject.activeSelf)
+            {
+                GameObject.Find("IPad/RobotUI/TheoryTab")?.gameObject.SetActive(false);
+                return;
+            }
+        }
+            
         if ((tutorial_UI != null && tutorial_UI.expectedRobotUIstate == true) ||
             (tutorial_theory != null && tutorial_theory.expectedRobotUIstate == true))
         {
             return;
         }
+
         GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<Animator>().enabled = false;
         RobotManager.SetUITriggerActive(true);
 
         QuizTab quizTab = GameObject.FindObjectOfType<QuizTab>();
+
         if (quizTab != null && quizTab.continueBtn)
         {
             GameObject.FindObjectOfType<QuizTab>().OnContinueButton();
         }
 
-        GameObject.FindObjectOfType<GameUI>().allowObjectControlUI = false;       
+        GameObject.FindObjectOfType<GameUI>().allowObjectControlUI = false;
 
         GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<CanvasGroup>().alpha = 0f;
         GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<CanvasGroup>().blocksRaycasts = false;
+
+        GameObject.Find("IPad/RobotUI/TheoryTab")?.gameObject.SetActive(false);
 
         robotUIopened = false;
 
@@ -643,8 +656,8 @@ public class PlayerScript : MonoBehaviour
         //    if (GameObject.FindObjectOfType<PlayerPrefsManager>().testingMode)
         //        return;
         //if (GameObject.FindObjectOfType<ObjectsIDsController>() != null)
-            //if (GameObject.FindObjectOfType<ObjectsIDsController>().testingMode)
-                //return;
+        //if (GameObject.FindObjectOfType<ObjectsIDsController>().testingMode)
+        //return;
 #endif
         // just dont trigger quiz if it's a tutorial for all cases
         if (GameObject.FindObjectOfType<TutorialManager>() != null)

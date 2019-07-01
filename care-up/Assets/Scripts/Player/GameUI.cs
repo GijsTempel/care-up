@@ -53,6 +53,7 @@ public class GameUI : MonoBehaviour
     public bool prescriptionButtonBlink;
     public bool recordsButtonBlink;
     public bool paperAndPenButtonblink;
+    public GameObject theoryPanel;
 
     public GameObject noTargetButton;
     public GameObject noTargetButton_right;
@@ -74,6 +75,9 @@ public class GameUI : MonoBehaviour
     float cooldownTime = 0;
     float lastCooldownTime = 0;
     int currentActionsCount = 0;
+
+    private bool startTimer = false;
+    private float targetTime = 0.7f;
 
     bool currentItemControlPanelState = false;
     int currentLeft;
@@ -198,12 +202,12 @@ public class GameUI : MonoBehaviour
 
         RobotManager.UIElementsState[0] = false;
 
-      
-        Player.GetComponent<PlayerScript>().OpenRobotUI();        
+
+        Player.GetComponent<PlayerScript>().OpenRobotUI();
     }
 
     //public void CloseRobot()
-    //{     
+    //{
     //    Player.GetComponent<PlayerScript>().CloseRobotUI();
     //}
 
@@ -333,6 +337,12 @@ public class GameUI : MonoBehaviour
         }
     }
 
+    public void HideTheoryTab()
+    {
+        GameObject.Find("IPad/RobotUI/TheoryTab/Continue").gameObject.GetComponent<Button>().onClick.AddListener(
+             () => GameObject.FindObjectOfType<PlayerScript>().CloseRobotUI());
+    }
+
     // Use this for initialization
     void Start()
     {
@@ -361,6 +371,8 @@ public class GameUI : MonoBehaviour
         noTargetButton_right.SetActive(false);
         DropRightButton.SetActive(false);
         DropLeftButton.SetActive(false);
+
+        HideTheoryTab();
 
         IPad.GetComponent<Animator>().enabled = false;
 
@@ -670,7 +682,33 @@ public class GameUI : MonoBehaviour
         return 0;
     }
 
-    // Update is called once per frame
+    public void ShowTheory()
+    {
+        if (actionManager.showTheory)
+        {
+            print("ShowTheory");
+            startTimer = true;
+        }
+
+        if (startTimer)
+        {
+            targetTime -= Time.deltaTime;
+        }
+
+        if (targetTime <= 0.0f)
+        {
+            GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
+            GameObject.FindObjectOfType<GameUI>().theoryPanel.SetActive(true);
+            GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Title").GetComponent<Text>().text = actionManager.messageTitle;
+            GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Message").GetComponent<Text>().text = actionManager.message;
+
+            startTimer = false;
+            targetTime = 0.7f;
+        }
+
+        actionManager.showTheory = false;
+    }
+
     void Update()
     {
         if (!timeOutEnded)
@@ -706,6 +744,7 @@ public class GameUI : MonoBehaviour
         //Don't show object control panel if animation is playing
         //if animation is longer than 0.2 (is not hold animation)
         bool animationUiBlock = true;
+
         if (allowObjectControlUI)
         {
             animationUiBlock = !PlayerAnimationManager.IsLongAnimation();
@@ -714,9 +753,11 @@ public class GameUI : MonoBehaviour
         //to show object control panel if no animation block and action block
         bool showItemControlPanel = allowObjectControlUI && animationUiBlock;
 
+
         //if some object was added or removed to hands
         if (showItemControlPanel)
         {
+            ShowTheory();
             int lHash = 0;
             if (handsInventory.leftHandObject != null)
                 lHash = handsInventory.leftHandObject.gameObject.GetHashCode();
