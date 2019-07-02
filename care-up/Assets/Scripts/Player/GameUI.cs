@@ -684,7 +684,7 @@ public class GameUI : MonoBehaviour
 
     public void ShowTheory()
     {
-        if (actionManager.showTheory)
+        if (actionManager.ShowTheory)
         {
             print("ShowTheory");
             startTimer = true;
@@ -699,14 +699,14 @@ public class GameUI : MonoBehaviour
         {
             GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
             GameObject.FindObjectOfType<GameUI>().theoryPanel.SetActive(true);
-            GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Title").GetComponent<Text>().text = actionManager.messageTitle;
-            GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Message").GetComponent<Text>().text = actionManager.message;
+            GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Title").GetComponent<Text>().text = actionManager.MessageTitle;
+            GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Message").GetComponent<Text>().text = actionManager.Message;
 
             startTimer = false;
             targetTime = 0.7f;
         }
 
-        actionManager.showTheory = false;
+        actionManager.ShowTheory = false;
     }
 
     void Update()
