@@ -1530,8 +1530,8 @@ public class ActionManager : MonoBehaviour
                 }
                 else
                 {
-                    title = "Step is blocked";
-                    message = "Looks like this stepped cannot be performed YET. You need to do something before it.";
+                    title = "Stap is niet mogelijk";
+                    message = "Je kunt deze stap nog niet doen, het kan zijn dat je een stap vergeten bent.";
                 }
 
                 RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
