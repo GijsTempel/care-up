@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Purchasing;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class IAPManager : MonoBehaviour, IStoreListener
 {
@@ -66,6 +67,16 @@ public class IAPManager : MonoBehaviour, IStoreListener
     /// </summary>
     public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs e)
     {
+        #if UNITY_IOS
+            Debug.Log("Purchase processed.");
+            GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed = 
+                GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed || SubscriptionPurchased();
+            
+            if (SceneManager.GetActiveScene().name == "MainMenu")
+            {
+                GameObject.FindObjectOfType<LevelSelectionScene_UI>().ReinitializeUI();
+            }
+        #endif
         return PurchaseProcessingResult.Complete;
     }
 
