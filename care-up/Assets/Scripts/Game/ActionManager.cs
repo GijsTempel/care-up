@@ -65,6 +65,10 @@ public class ActionManager : MonoBehaviour
     HandsInventory inventory;
     static PlayerScript playerScript;
 
+    public string Message { get; set; } = null;
+    public string MessageTitle { get; set; } = null;
+    public bool ShowTheory { get; set; } = false;
+
     private List<string> unlockedBlocks = new List<string>();
 
     public List<Action> ActionList
@@ -1398,11 +1402,6 @@ public class ActionManager : MonoBehaviour
         }
     }
 
-    public string message = null;
-    public string messageTitle = null;
-    public bool showTheory = false;
-
-   
     /// <summary>
     /// Checks if triggered action is correct ( expected to be done in action list ).
     /// Plays WrongAction sound from Narrator if wrong.
@@ -1464,9 +1463,12 @@ public class ActionManager : MonoBehaviour
                         GameObject.FindObjectOfType<RobotUIMessageTab>().NewMessage(
                             action.messageTitle, action.messageContent, RobotUIMessageTab.Icon.Info);
 
-                        showTheory = true;
-                        message = action.messageContent;
-                        messageTitle = action.messageTitle;                       
+                        if (practiceMode)
+                        {
+                            ShowTheory = true;
+                            Message = action.messageContent;
+                            MessageTitle = action.messageTitle;
+                        }
                     }
 
                     if (type == ActionType.SequenceStep && penalized)
