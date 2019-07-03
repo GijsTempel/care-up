@@ -69,6 +69,10 @@ public class ActionManager : MonoBehaviour
     public string MessageTitle { get; set; } = null;
     public bool ShowTheory { get; set; } = false;
 
+
+    private List<Action> incompletedActions;
+    private List<Action> unlockedIncompletedActions;
+
     private List<string> unlockedBlocks = new List<string>();
 
     public List<Action> ActionList
@@ -156,6 +160,38 @@ public class ActionManager : MonoBehaviour
         set { currentActionIndex = value; }
     }
 
+    /// <summary>
+    /// A list with not completed actions of current action index only
+    /// </summary>
+    public List<Action> IncompletedActions
+    {
+        get
+        {
+            incompletedActions = actionList.Where(action => action.SubIndex == currentActionIndex && action.matched == false).ToList();
+            return incompletedActions;
+        }
+        set
+        {
+            incompletedActions = value;
+        }
+    }
+
+    /// <summary>
+    /// A list with not completed actions of current action index only, that are not blocked by other steps
+    /// </summary>
+    public List<Action> UnlockedIncompletedActions
+    {
+        get
+        {
+            unlockedIncompletedActions = IncompletedActions.Where(action => action.blockRequired == "" || unlockedBlocks.Contains(action.blockRequired)).ToList();
+            return unlockedIncompletedActions;
+        }
+        set
+        {
+            unlockedIncompletedActions = value;
+        }
+    }
+
     // Will be refactored
     public static void UpdateRequirements(float showDelay = 0f)
     {
@@ -167,10 +203,6 @@ public class ActionManager : MonoBehaviour
 
         ActionManager actManager = GameObject.FindObjectOfType<ActionManager>();
         GameUI gameUI = GameObject.FindObjectOfType<GameUI>();
-
-        List<Action> sublist = actManager.actionList.Where(action =>
-               action.SubIndex == actManager.currentActionIndex &&
-               action.matched == false).ToList();
 
         List<StepData> stepsList = new List<StepData>();
 
@@ -189,7 +221,7 @@ public class ActionManager : MonoBehaviour
         string uncomplitedSecondPlace = "";
         gameUI.recordsButtonBlink = false;
         gameUI.prescriptionButtonBlink = false;
-        foreach (Action a in sublist)
+        foreach (Action a in actManager.IncompletedActions)
         {
             StepData placeData = null;
             StepData secondPlaceData = null;
@@ -660,11 +692,7 @@ public class ActionManager : MonoBehaviour
             }
             else
             {
-                List<Action> sublist = actionList.Where(action =>
-                    action.SubIndex == currentActionIndex &&
-                    action.matched == false).ToList();
-
-                foreach (Action a in sublist)
+                foreach (Action a in IncompletedActions)
                 {
                     if (!Ua || a.commentUA == "")
                         actionsDescription.Add(a.shortDescr);
@@ -687,20 +715,11 @@ public class ActionManager : MonoBehaviour
     // new comparison looks for all actions of type withing current index
     public bool CompareUseObject(string name, bool skipBlocks = false)
     {
-        bool result = false;
+        bool result = false;       
 
-        List<Action> sublist = actionList.Where(action =>
-                action.SubIndex == currentActionIndex &&
-                action.matched == false).ToList();
-
-        if (!skipBlocks)
-        {
-            sublist = sublist.Where(action =>
-                action.blockRequired == "" ||
-                unlockedBlocks.Contains(action.blockRequired)).ToList();
-        }
-
-        foreach (Action a in sublist)
+        List<Action> list = !skipBlocks ? UnlockedIncompletedActions : IncompletedActions;
+      
+        foreach (Action a in list)
         {
             if (a.Type == ActionType.ObjectUse)
             {
@@ -716,18 +735,9 @@ public class ActionManager : MonoBehaviour
     {
         bool result = false;
 
-        List<Action> sublist = actionList.Where(action =>
-                action.SubIndex == currentActionIndex &&
-                action.matched == false).ToList();
+        List<Action> list = !skipBlocks ? UnlockedIncompletedActions : IncompletedActions;
 
-        if (!skipBlocks)
-        {
-            sublist = sublist.Where(action =>
-                action.blockRequired == "" ||
-                unlockedBlocks.Contains(action.blockRequired)).ToList();
-        }
-
-        foreach (Action a in sublist)
+        foreach (Action a in list)
         {
             if (a.Type == ActionType.ObjectCombine)
             {
@@ -749,18 +759,9 @@ public class ActionManager : MonoBehaviour
         if (callerName != "" && callerName != item)
             return result;
 
-        List<Action> sublist = actionList.Where(action =>
-                action.SubIndex == currentActionIndex &&
-                action.matched == false).ToList();
+        List<Action> list = !skipBlocks ? UnlockedIncompletedActions : IncompletedActions;
 
-        if (!skipBlocks)
-        {
-            sublist = sublist.Where(action =>
-                action.blockRequired == "" ||
-                unlockedBlocks.Contains(action.blockRequired)).ToList();
-        }
-
-        foreach (Action a in sublist)
+        foreach (Action a in list)
         {
             if (a.Type == ActionType.ObjectUseOn)
             {
@@ -778,18 +779,9 @@ public class ActionManager : MonoBehaviour
     {
         bool result = false;
 
-        List<Action> sublist = actionList.Where(action =>
-                action.SubIndex == currentActionIndex &&
-                action.matched == false).ToList();
+        List<Action> list = !skipBlocks ? UnlockedIncompletedActions : IncompletedActions;
 
-        if (!skipBlocks)
-        {
-            sublist = sublist.Where(action =>
-                action.blockRequired == "" ||
-                unlockedBlocks.Contains(action.blockRequired)).ToList();
-        }
-
-        foreach (Action a in sublist)
+        foreach (Action a in list)
         {
             if (a.Type == ActionType.PersonTalk)
             {
@@ -803,18 +795,9 @@ public class ActionManager : MonoBehaviour
 
     public string CurrentButtonText(string itemName, bool skipBlocks = false)
     {
-        List<Action> sublist = actionList.Where(action =>
-               action.SubIndex == currentActionIndex &&
-               action.matched == false).ToList();
+        List<Action> list = !skipBlocks ? UnlockedIncompletedActions : IncompletedActions;
 
-        if (!skipBlocks)
-        {
-            sublist = sublist.Where(action =>
-                action.blockRequired == "" ||
-                unlockedBlocks.Contains(action.blockRequired)).ToList();
-        }
-
-        foreach (Action a in sublist)
+        foreach (Action a in list)
         {
             if (a.Type == ActionType.ObjectUse)
             {
@@ -841,18 +824,9 @@ public class ActionManager : MonoBehaviour
 
     public string CurrentDecombineButtonText(string itemName, bool skipBlocks = false)
     {
-        List<Action> sublist = actionList.Where(action =>
-               action.SubIndex == currentActionIndex &&
-               action.matched == false).ToList();
+        List<Action> list = !skipBlocks ? UnlockedIncompletedActions : IncompletedActions;
 
-        if (!skipBlocks)
-        {
-            sublist = sublist.Where(action =>
-                action.blockRequired == "" ||
-                unlockedBlocks.Contains(action.blockRequired)).ToList();
-        }
-
-        foreach (Action a in sublist)
+        foreach (Action a in list)
         {
             if (a.Type == ActionType.ObjectCombine)
             {
@@ -874,13 +848,7 @@ public class ActionManager : MonoBehaviour
     {
         bool result = false;
 
-        List<Action> sublist = actionList.Where(action =>
-                action.SubIndex == currentActionIndex &&
-                action.matched == false).ToList();
-        sublist = sublist.Where(action =>
-            action.blockRequired == "" ||
-            unlockedBlocks.Contains(action.blockRequired)).ToList();
-        foreach (Action a in sublist)
+        foreach (Action a in UnlockedIncompletedActions)
         {
             if (a.Type == ActionType.ObjectDrop)
             {
@@ -898,14 +866,7 @@ public class ActionManager : MonoBehaviour
     {
         bool result = false;
 
-        List<Action> sublist = actionList.Where(action =>
-                action.SubIndex == currentActionIndex &&
-                action.matched == false).ToList();
-        sublist = sublist.Where(action =>
-            action.blockRequired == "" ||
-            unlockedBlocks.Contains(action.blockRequired)).ToList();
-
-        foreach (Action a in sublist)
+        foreach (Action a in UnlockedIncompletedActions)
         {
             if (a.Type == ActionType.Movement)
             {
@@ -1411,25 +1372,14 @@ public class ActionManager : MonoBehaviour
     /// <returns>True if action expected and correct. False otherwise.</returns>
     public bool Check(string[] info, ActionType type, bool notWtongAction = false)
     {
-        bool matched = false;
+        bool matched = false;       
 
-        // make a selection from all actions list
-        // create a sublist with not completed actions of current action index only
-        List<Action> sublist = actionList.Where(action =>
-            action.SubIndex == currentActionIndex &&
-            action.matched == false).ToList();
-
-        // make sublist even smaller, leaving only actions that are not blocked by other steps
-        sublist = sublist.Where(action =>
-            action.blockRequired == "" ||
-            unlockedBlocks.Contains(action.blockRequired)).ToList();
-
-        int subcategoryLength = sublist.Count;
+        int subcategoryLength = IncompletedActions.Count;
 
         // make a list from sublist with actions of performed action type only
-        List<Action> subtypelist = sublist.Where(action => action.Type == type).ToList();
+        List<Action> subtypelist = IncompletedActions.Where(action => action.Type == type).ToList();
 
-        if (sublist.Count != 0)
+        if (IncompletedActions.Count != 0)
         {
             foreach (Action action in subtypelist)
             {
@@ -1493,21 +1443,15 @@ public class ActionManager : MonoBehaviour
             GameObject.FindObjectOfType<GameUI>().ButtonBlink(false);
         }
         else if (manager != null && !manager.practiceMode) // test mode error, check for blocks
-        {
-            // action not matched this check, so list didnt change
-            // so we can perform same selection as before
-            List<Action> sublistWithoutBlocks = actionList.Where(action =>
-                action.SubIndex == currentActionIndex &&
-                action.matched == false && action.Type == type).ToList();
-
+        {      
             // make a flag that will become true if there is a step that is blocked
             // and could actually be performed if there would be no block
             bool foundBlockedStep = false;
             Action foundAction = null;
 
-            if (sublistWithoutBlocks.Count != 0)
+            if (IncompletedActions.Count != 0)
             {
-                foreach (Action action in sublistWithoutBlocks)
+                foreach (Action action in IncompletedActions)
                 {
                     if (action.Compare(info))
                     {
@@ -1522,6 +1466,7 @@ public class ActionManager : MonoBehaviour
             if (foundBlockedStep)
             {
                 string title, message;
+
                 // found action will be assigned if foundBlockedStep == true
                 if (foundAction.blockTitle != "" && foundAction.blockMessage != "")
                 {
@@ -1547,7 +1492,8 @@ public class ActionManager : MonoBehaviour
         if (!matched && type != ActionType.ObjectExamine && type != ActionType.PickUp && type != ActionType.ObjectDrop && type != ActionType.Movement)
         {
             int index = actionList.IndexOf(currentAction);
-            if (sublist.Count > 0 && !wrongStepIndexes.Contains(index))
+
+            if (IncompletedActions.Count > 0 && !wrongStepIndexes.Contains(index))
             {
                 wrongStepIndexes.Add(index);
             }
@@ -1556,18 +1502,16 @@ public class ActionManager : MonoBehaviour
 
             if (practice)
             {
-                if (sublist.Count > 0)
+                if (IncompletedActions.Count > 0)
                 {
                     RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
                     if (type == ActionType.SequenceStep)
-                        messageCenter.NewMessage("Verkeerde handeling!", sublist[0].extraDescr, RobotUIMessageTab.Icon.Error);
+                        messageCenter.NewMessage("Verkeerde handeling!", IncompletedActions[0].extraDescr, RobotUIMessageTab.Icon.Error);
                     else
-                        messageCenter.NewMessage("Verkeerde handeling!", sublist[0].extraDescr, RobotUIMessageTab.Icon.Block);
-
+                        messageCenter.NewMessage("Verkeerde handeling!", IncompletedActions[0].extraDescr, RobotUIMessageTab.Icon.Block);
                 }
             }
 
-            //--------------------------------------------------
             if (!notWtongAction)
                 ActionManager.WrongAction(type != ActionType.SequenceStep);
 
@@ -1576,27 +1520,25 @@ public class ActionManager : MonoBehaviour
         else
         {
             currentPointAward = currentAction.pointValue;
-            List<Action> actionsLeft = actionList.Where(action =>
-                action.SubIndex == currentActionIndex &&
-                action.matched == false).ToList();
 
-            currentAction = actionsLeft.Count > 0 ? actionsLeft.First() : null;
+            currentAction = IncompletedActions.Count > 0 ? IncompletedActions.First() : null;
 
             if ((manager == null || manager.practiceMode) && type != ActionType.Movement)
             {
                 //now we have not mandatory actions, let's skip them and add to mistakes
-                List<Action> skippableActions = actionsLeft.Where(action => action.notMandatory == true).ToList();
-                if (actionsLeft.Count == skippableActions.Count) // all of them are skippable
+                List<Action> skippableActions = IncompletedActions.Where(action => action.notMandatory == true).ToList();
+
+                if (IncompletedActions.Count == skippableActions.Count) // all of them are skippable
                 {
                     wrongStepIndexes.Add(actionList.IndexOf(currentAction));
                     currentActionIndex += 1;
 
                     // get next actions with new index
-                    actionsLeft = actionList.Where(action =>
+                    IncompletedActions = actionList.Where(action =>
                         action.SubIndex == currentActionIndex &&
                         action.matched == false).ToList();
 
-                    currentAction = actionsLeft.Count > 0 ? actionsLeft.First() : null;
+                    currentAction = IncompletedActions.Count > 0 ? IncompletedActions.First() : null;
                 }
             }
         }
@@ -1785,11 +1727,8 @@ public class ActionManager : MonoBehaviour
             return;
 
         ActionManager am = GameObject.FindObjectOfType<ActionManager>();
-        List<Action> sublist = am.actionList.Where(action =>
-               action.SubIndex == am.currentActionIndex &&
-               action.matched == false).ToList();
 
-        foreach (Action a in sublist)
+        foreach (Action a in am.IncompletedActions)
         {
             string[] ObjectNames = new string[0];
             a.ObjectNames(out ObjectNames);

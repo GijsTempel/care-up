@@ -487,11 +487,7 @@ public class GameUI : MonoBehaviour
         if (!handsInventory.RightHandEmpty())
             RemoveHighlight(prefix, handsInventory.rightHandObject.name);
 
-        List<Action> sublist = actionManager.actionList.Where(action =>
-           action.SubIndex == actionManager.currentActionIndex &&
-           action.matched == false).ToList();
-
-        foreach (Action a in sublist)
+        foreach (Action a in actionManager.IncompletedActions)
         {
             string[] ObjectNames = new string[0];
             a.ObjectNames(out ObjectNames);
