@@ -32,15 +32,15 @@
       extra="Maak een schoon werkveld en zet de benodigdheden binnen bereik."
       messageTitle="Je het volgende nodig hebt?"
       messageContent="
-      - Toedienlijst
-      - Voorgeschreven steriele spoelzak(jes) met spoelvloeistof op lichaamstemperatuur
-      - Onderlegger
-      - Opvangbak
-      - Niet-steriele handschoenen (bij passief spoelen: 2 paar)
-      - Urineopvangzak
-      - Zo nodig gaasje voor desinfectie aansluitpunt urineopvangzak
-      - Zo nodig desinfectans, alcohol 70% voor desinfectie aansluitpunt urineopvangzak 
-      - Afvalbak"
+- Toedienlijst
+- Voorgeschreven steriele spoelzak(jes) met spoelvloeistof op lichaamstemperatuur
+- Onderlegger
+- Opvangbak
+- Niet-steriele handschoenen (bij passief spoelen: 2 paar)
+- Urineopvangzak
+- Zo nodig gaasje voor desinfectie aansluitpunt urineopvangzak
+- Zo nodig desinfectans, alcohol 70% voor desinfectie aansluitpunt urineopvangzak 
+- Afvalbak"
 ></action>
 
 <action
@@ -75,7 +75,7 @@
     expected="good"
     extra="Controleer de toedienlijst op soort, dosering en toedientijdstip"
     messageTitle="Je op het volgende moet letten tijdens vergelijken?"
-    messageContent="Vergelijk het spoelzakje met de toedieningslijst.
+    messageContent="
       - soort
       - dosering
       - toedieningstijdstip"
@@ -91,8 +91,8 @@
     right=""
     extra="Open de verpakking van het spoelzakje"
     blockUnlock="opened spoolbag"
-    messegeTitle="Steriel spoelzakje"
-    messageContent="Omdat een spoelzakje steriel is, hoeft het aansluitpunt ervan niet gedesinfecteerd te worden.Als het aansluitpunt van het spoelzakje in aanraking komt met de omgeving, moet het aansluitpunt worden gedesinfecteerd met alcohol 70%."
+    messageTitle="Lichaamstemperatuur"
+    messageContent="Breng de spoelvloeistof op lichaamstemperatuur in om spasmen van de blaas zoveel mogelijk te voorkomen. Haal de spoelvloeistof tijdig uit de koelkast en verwarm de spoelvloeistof indien nodig, door de verpakte zak in lauwwarm water te dompelen."
 ></action>
 
 <action
@@ -118,6 +118,9 @@
     blockRequired="opened spoolbag"
     blockTitle="Deze handeling is nog niet mogelijk"
     blockMessage="Zorg ervoor dat het spoelzakje klaar is voor gebruik."
+    messageTitle="Privacy van de cliënt"
+    messageContent="Denk tijdens het zorg verlenen altijd aan de privacy van de cliënt. Zorg ervoor dat de cliënt zich veilig en geborgen voelt door bijvoorbeeld de gordijnen dicht te trekken."
+
 ></action>
 
 <action
@@ -169,6 +172,8 @@
     type="sequenceStep"
     value="clamp katheter"
     extra="Klem de katheter af."
+    messageTitle="Katheter afklemmen"
+    messageContent="Klem de katheter liever niet af met een kocher. Knijp de katheter dicht bij het aansluitpunt voor de urineopvangzak of maak een knik. Mocht een kocher wel nodig zijn, zorg dan dat je het ballonvulkanaal niet afklemt."
 ></action>
 
   <action
@@ -179,7 +184,9 @@
     type="sequenceStep"
     value="remove urinebag"
     extra="Ontkoppel de urineopvangzak en voer deze af. Doe dit volgens de binnen de instelling geldende regels"
-></action>
+    messageTitle="Ontkoppelen Urineopvangzak"
+    messageContent="Zorg dat een open verbinding met de blaas zo kort mogelijk duurt, in verband met infectiegevaar. Voorkom dat het aansluitpunt van de urineopvangzak in aanraking komt met de omgeving. Als dat wel gebeurt, moet het aansluitpunt worden gedesinfecteerd met alcohol 70%."
+>"</action>
 
 <action
     comment="Attach the bladder spool bag to the catheter."
@@ -189,7 +196,9 @@
     type="sequenceStep"
     value="attach bladder spool bag"
     extra="Sluit het spoelzakje aan op de katheter"
-></action>
+    messageTitle="Steriel spoelzakje"
+    messageContent="Omdat een spoelzakje steriel is, hoeft het aansluitpunt ervan niet gedesinfecteerd te worden. Als het aansluitpunt van het spoelzakje in aanraking komt met de omgeving, moet het aansluitpunt worden gedesinfecteerd met alcohol 70%."
+>"</action>
 
 <action
     comment="Open the clamp of the bladder spool bag"
@@ -208,7 +217,7 @@
     index="13"
     type="sequenceStep"
     value="hold bladder spool bag"
-    extra="Houd het spoelzakje boven het niveau van de blaas en laat de spoelvloeistof inlopen. Knijp licht in het spoelzakje wanneer de vloeistof niet vanzelf inloopt"
+    extra="Houd het spoelzakje boven het niveau van de blaas en laat de spoelvloeistof inlopen. Knijp licht in het spoelzakje wanneer de vloeistof niet vanzelf inloopt."
 ></action>
 
 <action
@@ -218,7 +227,18 @@
     index="14"
     type="sequenceStep"
     value="fluid back"
-    extra="Laat de vloeistof teruglopen in het spoelzakje nadat de voorgeschreven tijd is verstreken"
+    extra="Laat de vloeistof teruglopen in het spoelzakje nadat de voorgeschreven tijd is verstreken."
+    messageTitle="Voorgeschreven tijd"
+    messageContent="
+Direct:
+Laat de spoelvloeistof direct teruglopen in het spoelzakje.
+    
+Na afgesproken tijd:
+1. Sluit de klem van het spoelzakje en laat de vloeistof gedurende de voorgeschreven tijd in de blaas zitten.
+2. Trek handschoenen uit.
+3.Pas handhygiëne toe.
+4. Na voorgeschreven tijd: pas handhygiëne toe en trek handschoenen aan.
+5.Open de klem van het spoelzakje en laat de vloeistof teruglopen in het spoelzakje."
 ></action>
 
 <action
@@ -229,6 +249,8 @@
     type="sequenceStep"
     value="close clamp"
     extra="Sluit de klem van het spoelzakje"
+    messageTitle="Herhalingen"
+    messageContent="Herhaal, wanneer voorgeschreven, de voorgaande stappen met een nieuw spoelzakje. Als het systeem twee spoelzakjes bevat, kan de aansluit stap worden overgeslagen."
 ></action>
 
  <action
