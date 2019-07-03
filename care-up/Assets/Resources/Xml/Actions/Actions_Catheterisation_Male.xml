@@ -28,7 +28,7 @@
     type="use"
     value="WorkField"
     extra="Maak een schoon werkveld en zet de benodigdheden binnen handbereik."
-    messageTitle="Benodigdheden"
+    messageTitle="Je het volgende nodig hebt?"
     messageContent="
     - Voorgeschreven steriele katheter
     - Voorgeschreven steriele spuit met glijmiddel
@@ -47,6 +47,8 @@
     - Ophangrekje, fixatiemateriaal
     - Zo nodig penisklem
     - Afvalbak
+    
+    Zorg voor een extra katheter, urineopvangzak en materialen voor het inbrengen, voor het geval het inbrengen mislukt.
  "></action>
 
   <action
@@ -178,11 +180,29 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
     value="clean sides gloss penis"
     extra="Neem een nieuwe en schone uitgeknepen wattenbol en reinig de rand van de glanspenis"></action>
 
-  <action points="2" description="Neem een nieuwe en schone uitgeknepen wattenbol en reinig de glanspenis" index="14" type="sequenceStep" value="clean gloss penis" extra="Neem een nieuwe en schone uitgeknepen wattenbol en reinig de glanspenis"></action>
+  <action 
+    points="2" 
+    description="Neem een nieuwe en schone uitgeknepen wattenbol en reinig de glanspenis" 
+    index="14" 
+    type="sequenceStep" 
+    value="clean gloss penis" 
+    extra="Neem een nieuwe en schone uitgeknepen wattenbol en reinig de glanspenis"></action>
 
-  <action points="2" description="Neem een nieuwe en schone uitgeknepen wattenbol en reinig de meatus" index="15" type="sequenceStep" value="clean meatus" extra="Neem een nieuwe en schone uitgeknepen wattenbol en reinig de meatus"></action>
+  <action 
+    points="2" 
+    description="Neem een nieuwe en schone uitgeknepen wattenbol en reinig de meatus" 
+    index="15" 
+    type="sequenceStep" 
+    value="clean meatus" 
+    extra="Neem een nieuwe en schone uitgeknepen wattenbol en reinig de meatus"></action>
 
-  <action points="1" description="Plaats een wattenbol onder de penis en leg de penis hier op" index="16" type="sequenceStep" value="lay sterile gauze" extra="Plaats een wattenbol onder de penis en leg de penis hier op"></action>
+  <action 
+    points="1" 
+    description="Plaats een wattenbol onder de penis en leg de penis hier op" 
+    index="16" 
+    type="sequenceStep" 
+    value="lay sterile gauze" 
+    extra="Plaats een wattenbol onder de penis en leg de penis hier op"></action>
 
   <action
     points="3"
@@ -229,8 +249,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
     type="use"
     value="HandCleaner"
     extra="Pas handhygiëne toe"
-    messageTitle="Handhygiëne"
-    messageContent="Handhygiëne is het meest belangrijk om besmetting met ziektekiemen te voorkomen. Reinig je handen altijd op de juiste manier en op het juiste moment. Begin een handeling altijd met handhygiëne."></action>
+></action>
 
   <action
     comment="??"
@@ -240,7 +259,10 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
     type="combine"
     left="catheter_bag_packed"
     right=""
-    extra="Open de verpakking van de urineopvangzak. Laat de steriele urineopvangzak op het steriele werkveld vallen, raak de urineopvangzak niet aan. Gooi de verpakking in de afvalbak."></action>
+    extra="Open de verpakking van de urineopvangzak. Laat de steriele urineopvangzak op het steriele werkveld vallen, raak de urineopvangzak niet aan. Gooi de verpakking in de afvalbak."
+    messageTitle="Dubbelverpakte katheter"
+    messageContent="In deze geprotocolleerde werkinstructie wordt uitgegaan van een dubbelverpakte katheter."
+></action>
 
   <action
     comment="Open the outer package of the catheter a few centimeters, fold the ends. Leave the inner package in the outer package and hold the outer package with the non-dominant hand on the folded ends."
@@ -260,8 +282,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
     type="use"
     value="HandCleaner"
     extra="Pas handhygiëne toe"
-    messageTitle="Handhygiëne"
-    messageContent="Handhygiëne is het meest belangrijk om besmetting met ziektekiemen te voorkomen. Reinig je handen altijd op de juiste manier en op het juiste moment. Begin een handeling altijd met handhygiëne."></action>
+></action>
 
   <action
     comment="30. Put on sterile gloves."
@@ -273,7 +294,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
     extra="Trek de steriele handschoenen aan"
     quiz="2"
     messageTitle="Aantrekken steriele handschoenen"
-    messageContent="Het aantrekken van steriele handschoenen vereist enige handigheid. Voorkom tijdens het aantrekken dat de handschoenen besmet raken"></action>
+    messageContent="Het aantrekken van steriele handschoenen vereist enige handigheid. Voorkom tijdens het aantrekken dat de handschoenen besmet raken. In deze werkinstructie wordt de verblijfskatheter met steriele handschoenen ingebracht. Het gebruik van een steriele pincet of de binnenverpakking van de katheter is ook mogelijk."></action>
 
   <action
     comment="24. Remove the end of the inner package from the catheter so that the connection point for the urine collection bag is accessible. The catheter remains in the inner package."
@@ -432,8 +453,7 @@ De cliënt hoeft niet opnieuw te gaan liggen"></action>
     type="use"
     value="HandCleaner"
     extra="Pas handhygiëne toe"
-    messageTitle="Handhygiëne"
-    messageContent="Handhygiëne is het meest belangrijk om besmetting met ziektekiemen te voorkomen. Reinig je handen altijd op de juiste manier en op het juiste moment. Begin een handeling altijd met handhygiëne."></action>
+></action>
 
   <action
     points="1"
@@ -445,8 +465,8 @@ De cliënt hoeft niet opnieuw te gaan liggen"></action>
     blockRequired="catheter fixed"
     blockTitle="Deze handeling is nog niet mogelijk"
     blockMessage="Zorg ervoor dat de katheter is ingebracht bij de cliënt en bevestig de urineopvangzak aan het been of ophangrekje"
-    messegeTitle="Materialen opruimen"
-    MessegeContent="Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen"></action>
+    messageTitle="Materialen opruimen"
+    messageContent="Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen"></action>
 
   <action
     comment="last step"
