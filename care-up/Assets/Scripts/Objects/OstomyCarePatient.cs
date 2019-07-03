@@ -27,8 +27,9 @@ public class OstomyCarePatient : PersonObject {
             switch (topic)
             {
                 case "LayInHalfPosOnBed":
-                    animator.SetTrigger("sit_up_in_bed");
-                    //PlayerAnimator.SetTrigger("S ");
+                    //animator.SetTrigger("sit_up_in_bed");
+                    PlayerAnimator.SetTrigger("AllowPatientToLay");
+                    PlayerAnimator.SetTrigger("S AllowPatientToLay");
                     break;
                 default:
                     break;
