@@ -52,6 +52,7 @@ public class DatabaseManager : MonoBehaviour
     public static void Clean()
     {
         database.Clear();
+        instance.StopCoroutine(CheckSession(60.0f));
     }
 
     private static void PostInit(CMLData ignore = null)
