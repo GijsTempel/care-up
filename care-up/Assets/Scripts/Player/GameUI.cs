@@ -706,16 +706,17 @@ public class GameUI : MonoBehaviour
             targetTime -= Time.deltaTime;
         }
 
-        if (isSequence)
-        {
-            ShowIPad();
-        }
-        else if (targetTime <= 0.0f)
+        if (targetTime <= 0.0f)
         {
             ShowIPad();
             startTimer = false;
             targetTime = 0.7f;
         }
+        else if (isSequence && actionManager.ShowTheory)
+        {
+            ShowIPad();
+            actionManager.Message = null;
+        }    
 
         actionManager.ShowTheory = false;
     }
