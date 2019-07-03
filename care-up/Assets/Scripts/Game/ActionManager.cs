@@ -11,69 +11,55 @@ using CareUp.Actions;
 /// </summary>
 public class ActionManager : MonoBehaviour
 {
-    public bool TextDebug = false;
-    // tutorial variables - do not affect gameplay
-    [HideInInspector]
-    public bool tutorial_hintUsed = false;
-    private bool currentStepHintUsed = false;
-    private Text pointsText;
-    private Text percentageText;
-    public int actionsCount = 0;
     public static bool practiceMode = true;
-    LocalizationManager localizationManager;
-    [HideInInspector]
     public static bool personClicked = false;
 
-    // list of types of actions
-    public enum ActionType
-    {
-        ObjectCombine,
-        ObjectUse,
-        PersonTalk,
-        ObjectUseOn,
-        ObjectExamine,
-        PickUp,
-        SequenceStep,
-        ObjectDrop,
-        Movement,
-    };
+    [HideInInspector]
+    public bool tutorial_hintUsed = false;
+
+    public int actionsCount = 0;
+    public bool TextDebug = false;
+    public int currentActionIndex = 0;  // index of current action
 
     // name of the xml file with actions
     public string actionListName;
 
     // actual list of actions
-    public List<Action> actionList = new List<Action>();
+    public List<Action> actionList = new List<Action>();    
+  
+    private bool currentStepHintUsed = false;
+    private Text pointsText;
+    private Text percentageText;
+    private LocalizationManager localizationManager;
+
+    private Action currentAction;        // current action instance
+    private int currentPointAward = 1;
+    private bool penalized = false;
+
+    private int totalPoints = 0;         // max points of scene
+    private int points = 0;              // current points  
 
     // list of descriptions of steps, player got penalty on
     private List<string> stepsList = new List<string>();
     private List<string> stepsDescriptionList = new List<string>();
     private List<int> wrongStepIndexes = new List<int>();
-    private List<int> correctStepIndexes = new List<int>();
-
-    private int totalPoints = 0;         // max points of scene
-    private int points = 0;              // current points
-    public int currentActionIndex = 0;  // index of current action
-    private Action currentAction;        // current action instance
-    private int currentPointAward = 1;
-    private bool penalized = false;
+    private List<int> correctStepIndexes = new List<int>();  
 
     // GameObjects that show player next step when hint used
+    private static PlayerScript playerScript;
     private List<GameObject> particleHints;
     private bool menuScene;
     private bool uiSet = false;
-    PlayerPrefsManager manager;
-    HandsInventory inventory;
-    static PlayerScript playerScript;
+    private PlayerPrefsManager manager;
+    private HandsInventory inventory;
+
+    private List<Action> incompletedActions;
+    private List<Action> unlockedIncompletedActions;
+    private List<string> unlockedBlocks = new List<string>();
 
     public string Message { get; set; } = null;
     public string MessageTitle { get; set; } = null;
     public bool ShowTheory { get; set; } = false;
-
-
-    private List<Action> incompletedActions;
-    private List<Action> unlockedIncompletedActions;
-
-    private List<string> unlockedBlocks = new List<string>();
 
     public List<Action> ActionList
     {
@@ -192,6 +178,21 @@ public class ActionManager : MonoBehaviour
         }
     }
 
+    [HideInInspector]
+    // list of types of actions
+    public enum ActionType
+    {
+        ObjectCombine,
+        ObjectUse,
+        PersonTalk,
+        ObjectUseOn,
+        ObjectExamine,
+        PickUp,
+        SequenceStep,
+        ObjectDrop,
+        Movement,
+    };
+
     // Will be refactored
     public static void UpdateRequirements(float showDelay = 0f)
     {
@@ -207,6 +208,7 @@ public class ActionManager : MonoBehaviour
         List<StepData> stepsList = new List<StepData>();
 
         HandsInventory inventory = GameObject.FindObjectOfType<HandsInventory>();
+
         int i = 0;
         bool foundComplitedAction = false;
         gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
@@ -221,6 +223,7 @@ public class ActionManager : MonoBehaviour
         string uncomplitedSecondPlace = "";
         gameUI.recordsButtonBlink = false;
         gameUI.prescriptionButtonBlink = false;
+
         foreach (Action a in actManager.IncompletedActions)
         {
             StepData placeData = null;
@@ -715,10 +718,10 @@ public class ActionManager : MonoBehaviour
     // new comparison looks for all actions of type withing current index
     public bool CompareUseObject(string name, bool skipBlocks = false)
     {
-        bool result = false;       
+        bool result = false;
 
         List<Action> list = !skipBlocks ? UnlockedIncompletedActions : IncompletedActions;
-      
+
         foreach (Action a in list)
         {
             if (a.Type == ActionType.ObjectUse)
@@ -1372,7 +1375,7 @@ public class ActionManager : MonoBehaviour
     /// <returns>True if action expected and correct. False otherwise.</returns>
     public bool Check(string[] info, ActionType type, bool notWtongAction = false)
     {
-        bool matched = false;       
+        bool matched = false;
 
         int subcategoryLength = IncompletedActions.Count;
 
@@ -1443,7 +1446,7 @@ public class ActionManager : MonoBehaviour
             GameObject.FindObjectOfType<GameUI>().ButtonBlink(false);
         }
         else if (manager != null && !manager.practiceMode) // test mode error, check for blocks
-        {      
+        {
             // make a flag that will become true if there is a step that is blocked
             // and could actually be performed if there would be no block
             bool foundBlockedStep = false;
