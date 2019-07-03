@@ -543,7 +543,14 @@ public class PlayerScript : MonoBehaviour
         }
 
         GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<Animator>().enabled = false;
-        RobotManager.SetUITriggerActive(true);
+
+        if (GameObject.FindObjectOfType<CameraMode>() != null)
+        {
+            if (GameObject.FindObjectOfType<CameraMode>().currentMode != CameraMode.Mode.SelectionDialogue)
+            {
+                RobotManager.SetUITriggerActive(true);
+            }
+        }
 
         QuizTab quizTab = GameObject.FindObjectOfType<QuizTab>();
 

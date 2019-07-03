@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using CareUp.Actions;
 using System.Linq;
+
 public class GameUI : MonoBehaviour
 {
     GameObject Player;
@@ -682,11 +683,21 @@ public class GameUI : MonoBehaviour
         return 0;
     }
 
-    public void ShowTheory()
+    public void ShowTheory(bool isSequence = false)
     {
+        void ShowIPad()
+        {
+            if (!string.IsNullOrEmpty(actionManager.Message))
+            {
+                GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
+                GameObject.FindObjectOfType<GameUI>().theoryPanel.SetActive(true);
+                GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Title").GetComponent<Text>().text = actionManager.MessageTitle;
+                GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Message").GetComponent<Text>().text = actionManager.Message;
+            }
+        }
+
         if (actionManager.ShowTheory)
         {
-            print("ShowTheory");
             startTimer = true;
         }
 
@@ -697,14 +708,15 @@ public class GameUI : MonoBehaviour
 
         if (targetTime <= 0.0f)
         {
-            GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
-            GameObject.FindObjectOfType<GameUI>().theoryPanel.SetActive(true);
-            GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Title").GetComponent<Text>().text = actionManager.MessageTitle;
-            GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Message").GetComponent<Text>().text = actionManager.Message;
-
+            ShowIPad();
             startTimer = false;
             targetTime = 0.7f;
         }
+        else if (isSequence && actionManager.ShowTheory)
+        {
+            ShowIPad();
+            actionManager.Message = null;
+        }    
 
         actionManager.ShowTheory = false;
     }
@@ -752,7 +764,6 @@ public class GameUI : MonoBehaviour
 
         //to show object control panel if no animation block and action block
         bool showItemControlPanel = allowObjectControlUI && animationUiBlock;
-
 
         //if some object was added or removed to hands
         if (showItemControlPanel)
@@ -829,7 +840,6 @@ public class GameUI : MonoBehaviour
                     else
                     {
                         decombineButton.SetActive(false);
-
                     }
                 }
                 else
@@ -915,10 +925,10 @@ public class GameUI : MonoBehaviour
             currentAnimLock = false;
     }
 
+
     public void UpdateWalkToGtoupUI(bool value)
     {
         allowObjectControlUI = value;
-        //print("++++++++++++++++ " + cameraMode.currentMode.ToString());
         if (cameraMode != null)
             if (cameraMode.currentMode == CameraMode.Mode.ObjectPreview)
             {
