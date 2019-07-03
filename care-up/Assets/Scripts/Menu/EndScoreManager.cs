@@ -345,7 +345,7 @@ public class EndScoreManager : MonoBehaviour
             if (manager.validatedScene == false)
             {   // changing pop up text if scene is not validated
                 GameObject.Find("Interactable Objects/Canvas/CertificatePopOp/RegText").GetComponent<Text>().text
-                    = "Your custom text here";
+                    = "Neem snel een kijkje in je mailbox! Daar vind je je certificaat.";
             }
         }
 
