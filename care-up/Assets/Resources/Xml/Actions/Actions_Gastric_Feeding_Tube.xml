@@ -14,11 +14,13 @@
     comment="(1)Apply handhygiene"
     points="3"
     description="Pas handhygiëne toe"
-    fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp."
     index="0"
     type="use"
     value="HandCleaner"
-    extra="Pas handhygiëne toe. Handhygiëne is het allerbelangrijkste als het gaat om voorkomen van besmetting met ziektekiemen. Dit betekent je handen reinigen op de juiste manier en op de juiste momenten. Begin een handeling altijd met handhygiëne."/>
+    extra="Pas handhygiëne toe"
+    messageTitle="Handhygiëne"
+    messageContent="Handhygiëne is het meest belangrijk om besmetting met ziektekiemen te voorkomen. Reinig je handen altijd op de juiste manier en op het juiste moment. Begin een handeling altijd met handhygiëne."
+/>
 
   <action
     comment="(2)Create a clean workfield"
@@ -31,34 +33,38 @@
     extra="Maak een schoon werkveld. "
     messageTitle="Je het volgende nodig hebt?"
     messageContent="
-    - Toedienlijst
-    - Tissue
-    - Handschoenen
-    - Voorgeschreven steriele maagsonde (evt. met spuitkoppelstukje) + afsluitdopje
-    - Stukje pleister voor markering, zo nodig watervaste stift
-    - Kom met water (om de sonde nat te maken)
-    - Onderlegger
-    - Spuit 50 ml
-    - pH-indicator
-    - Hypoallergeen pleister of (neus)fixatiepleister
-    - Zo nodig steunpleister
-    - Schaar
-    - Glas handwarm kraanwater
-    - Veiligheidsspeld
-    - Afvalbak
-    - Meetlint"/>
+- Toedienlijst
+- Tissue
+- Handschoenen
+- Voorgeschreven steriele maagsonde (evt. met spuitkoppelstukje) + afsluitdopje
+- Stukje pleister voor markering, zo nodig watervaste stift
+- Kom met water (om de sonde nat te maken)
+- Onderlegger
+- Spuit 50 ml
+- pH-indicator
+- Hypoallergeen pleister of (neus)fixatiepleister
+- Zo nodig steunpleister
+- Schaar
+- Glas handwarm kraanwater
+ - Veiligheidsspeld
+- Afvalbak
+- Meetlint"/>
 
 
   <action
     points="2"
     description="Controleer cliëntgegevens"
-    fullDescription="Open de tablet door op het tablet icoon te drukken. Klik op de App 'Gegevens'. Kies vervolgens voor de cliëntgegevens."
-    audioHint="Injection/H3-2"
     index="2"
     type="examine"
     item="PatientRecords"
     expected="good"
-    extra="Controleer de cliëntgegevens. Het is belangrijk dat je de juiste persoon voor je hebt."></action>
+    extra="Controleer de cliëntgegevens. Het is belangrijk dat je de juiste persoon voor je hebt."
+    messageTitle="De client voorbereiden op het inbrengen"
+    messageContent="
+- Ga na of de cliënt bekend is met in- of uitwendige vergroeiingen, tumoren, letsel in keelholte, slokdarm of maag.
+- Vraag de cliënt vooraf neus te snuiten. Inspecteer neus en bepaal in welk neusgat de sonde wordt ingebracht.
+- Overleg met de cliënt of hij/zij het kunstgebit wil uitdoen, wanneer van toepassing."
+></action>
 
   <action
     comment="(3)Open tube package"
@@ -80,7 +86,13 @@
     type="combine"
     left="pH_TestStripPackage"
     right=""
-    extra="Pak een pH-indicator uit de verpakking."/>
+    extra="Pak een pH-indicator uit de verpakking."
+    messageTitle="pH-indicatoren"
+    messageContent="Gebruik een pH-indicator met een indeling tussen 2,0-9,0 met tussenstappen van minimaal 0,5.
+
+Raadpleeg voor gebruik altijd de gebruiksaanwijzing van de pH-indicator.
+
+"/>
 
   <action
     comment="(3)Open syringe"
@@ -135,7 +147,12 @@
   index="7"
   type="sequenceStep"
   value="nosetoear"
-  extra="Meet bij de cliënt met de maagsonde de afstand vanaf de punt van de neus naar de oorlel tot aan uiteinde borstbeen (NEX)."/>
+  extra="Meet bij de cliënt met de maagsonde de afstand vanaf de punt van de neus naar de oorlel tot aan uiteinde borstbeen (NEX)."
+  messageTitle="NEX+10-methode"
+  messageContent="Bepaal de lengte van de sonde door de NEX (= nose-earlobe-xyphoïd) +10-methode.
+Gebruik de afstand neus - oorlel - onderrand borstbeen (NEX: nose - earlobe - xyphoïd) plus 10 cm voor het bepalen van de lengte van de neus-maagsonde.
+Gebruik bij voorkeur een neus-maagsonde met centimeteraanduiding en markeer de benodigde lengte met een stukje pleister. Zo is gemakkelijk te zien of de neusmaagsonde is verschoven."
+ />
 
 
   <action
@@ -198,7 +215,13 @@
     index="13"
     type="sequenceStep"
     value="inspectnose"
-    extra="Inspecteer de neus van de cliënt en vraag de cliënt zo nodig de neus te snuiten."/>
+    extra="Inspecteer de neus van de cliënt en vraag de cliënt zo nodig de neus te snuiten."
+    messageTitle=""
+    messageContent="
+- Laat de cliënt de neus snuiten.
+- Laat de cliënt wisselend door het linker- en rechterneusgat uitademen om het neusgat met de beste doorgankelijkheid te selecteren.
+- Controleer de doorgankelijkheid van de neus eventueel ook met een lampje."
+/>
 
 
   <action
