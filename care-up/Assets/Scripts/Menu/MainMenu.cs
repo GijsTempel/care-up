@@ -60,34 +60,37 @@ public class MainMenu : MonoBehaviour {
 
             // set up highscores something?
             string[][] highScores = DatabaseManager.FetchCategory("TestHighscores");
-            foreach(string[] score in highScores)
+            if (highScores != null)
             {
-                // fetch date before formatting scene name back
-                string date = DatabaseManager.FetchField("CertificateDates", score[0]);
-                date = (date == "") ? "27052019" : date;
+                foreach (string[] score in highScores)
+                {
+                    // fetch date before formatting scene name back
+                    string date = DatabaseManager.FetchField("CertificateDates", score[0]);
+                    date = (date == "") ? "27052019" : date;
 
-                string sceneName = score[0].Replace("_", " ");
+                    string sceneName = score[0].Replace("_", " ");
 
-                float fPercent = 0.0f;
-                float.TryParse(score[1].Replace(",","."), out fPercent);
-                int percent = Mathf.FloorToInt(fPercent);
+                    float fPercent = 0.0f;
+                    float.TryParse(score[1].Replace(",", "."), out fPercent);
+                    int percent = Mathf.FloorToInt(fPercent);
 
-                bool passed = percent > 70;
+                    bool passed = percent > 70;
 
-                if (percent <= 0 || percent > 100)
-                    continue; // don't show 0 percent scores as they are not completed even once
+                    if (percent <= 0 || percent > 100)
+                        continue; // don't show 0 percent scores as they are not completed even once
 
-                GameObject layoutGroup = GameObject.Find("UMenuProManager/MenuCanvas/Account_Scores/Account_Panel_UI/ScoresHolder/Scores/LayoutGroup");
-                GameObject scoreObject = Instantiate(Resources.Load<GameObject>("Prefabs/UI/TestHighscore"), layoutGroup.transform);
-                scoreObject.transform.Find("SceneName").GetComponent<Text>().text = sceneName;
+                    GameObject layoutGroup = GameObject.Find("UMenuProManager/MenuCanvas/Account_Scores/Account_Panel_UI/ScoresHolder/Scores/LayoutGroup");
+                    GameObject scoreObject = Instantiate(Resources.Load<GameObject>("Prefabs/UI/TestHighscore"), layoutGroup.transform);
+                    scoreObject.transform.Find("SceneName").GetComponent<Text>().text = sceneName;
 
-                scoreObject.transform.Find("Percent").GetComponent<Text>().text = percent.ToString() + "%";
-                scoreObject.transform.Find("Percent").GetComponent<Text>().color =
-                    (passed ? Color.green : Color.red);
+                    scoreObject.transform.Find("Percent").GetComponent<Text>().text = percent.ToString() + "%";
+                    scoreObject.transform.Find("Percent").GetComponent<Text>().color =
+                        (passed ? Color.green : Color.red);
 
-                scoreObject.transform.Find("Button").GetComponent<Button>().interactable = passed;
-                scoreObject.transform.Find("Button").GetComponent<Button>().onClick.AddListener
-                    (delegate { PlayerPrefsManager.__openCertificate(sceneName, date); });
+                    scoreObject.transform.Find("Button").GetComponent<Button>().interactable = passed;
+                    scoreObject.transform.Find("Button").GetComponent<Button>().onClick.AddListener
+                        (delegate { PlayerPrefsManager.__openCertificate(sceneName, date); });
+                }
             }
 
             // shared field, will keep it outside DatabaseManager

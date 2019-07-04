@@ -201,17 +201,24 @@ public class DatabaseManager : MonoBehaviour
 
     public static string[][] FetchCategory(string category)
     {
-        Category cat = database.Find(x => x.name == category);
+        Category cat = database.Find(x => x.name == category + "blablabla");
 
-        string[][] data = new string[cat.fields.Keys.Count][];
-
-        int i = 0;
-        foreach (string key in cat.fields.Keys)
+        if (cat != null && cat.fields.Count > 0)
         {
-            data[i++] = new string[] { key, cat.fields[key] };
-        }
+            string[][] data = new string[cat.fields.Keys.Count][];
 
-        return data;
+            int i = 0;
+            foreach (string key in cat.fields.Keys)
+            {
+                data[i++] = new string[] { key, cat.fields[key] };
+            }
+
+            return data;
+        }
+        else
+        {
+            return null;
+        }
     }
 
     public static void UpdateField(string category, string fieldName, string newValue)
