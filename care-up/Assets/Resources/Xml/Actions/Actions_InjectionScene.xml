@@ -33,26 +33,27 @@
     type="use"
     value="WorkField"
     extra="Maak een schoon werkveld en zet de benodigdheden binnen handbereik."
-    messageTitle="Benodigdheden"
+    messageTitle="Je het volgende nodig hebt?"
     messageContent="
-    - Bijsluiter
-    - Toedieningslijst
-    - Spuit met injectienaald(Wanneer er geen injectiespuit met voorgeschreven medicijn aanwezig is)
-    - Afvalbak
-    - Naaldenbeker en naaldverwijderaar
-
+- Bijsluiter
+- Toedieningslijst
+- Spuit met injectienaald (Wanneer er geen injectiespuit met voorgeschreven medicijn aanwezig is)
+- Afvalbak
+- Naaldenbeker en naaldverwijderaar
+- Desinfectans: chloorhexidine 0.5% in alcohol 70%, als de huid gedesinfecteerd moet worden
     "></action>
 
   <action
     points="2"
     description="Controleer cliëntgegevens"
     commentUA="Перевірити медичні записи пацієнта"
-    audioHint="Injection/H3-2"
     index="2"
     type="examine"
     item="PatientRecords"
     expected="good"
-    extra="Controleer de cliëntgegevens. Het is belangrijk dat je de juiste persoon voor je hebt."
+    extra="Controleer de cliëntgegevens. Het is belangrijk dat je de juiste persoon voor je hebt. "
+    messageTitle="Controle cliëntgegevens."
+    messageContent="Controleer de naam en geboortedatum van cliënt"
    ></action>
 
   <action
@@ -64,8 +65,15 @@
     type="examine"
     item="SyringeWithInjectionNeedleCap"
     expected="good"
-    extra="Controleer het medicijn. Controleer altijd het medicijn op vervaldatum, toedienwijze, kleur en substantie om er zeker van te zijn dat je het juiste medicijn hebt. Vergelijk de informatie van het medicijn met die van de toedienlijst."
-   ></action>
+    extra=""
+    messageTitle="Controle medicijn"
+    messageContent="
+Controleer het medicijn op:
+- De uiterste houdbaarheidsdatum;
+- kleur en substantie
+- toedieningswijze
+- Beschadigingen op de spuit."
+></action>
 
   <action
     points="2"
@@ -77,7 +85,13 @@
     item="PrescriptionForm"
     expected="good"
     extra="Controleer de toedienlijst. Controleer de toedienlijst op soort, dosering en toedientijdstip."
-   ></action>
+    messageTitle="Controle toedienlijst"
+    messageContent="
+Vergelijk het medicijn met de toedieningslijst.
+- soort
+- dosering
+- toedieningstijdstip"
+></action>
 
   <action
     points="3"
@@ -87,8 +101,13 @@
     index="3"
     type="talk"
     topic="DoubleCheck"
-    extra="Voer een dubbele controle uit. Het verkeerd toedienen van medicijnen brengt risico’s met zich mee. Het risico op blijvend letsel bij verkeerde dosering of toediening verschilt, afhankelijk van het medicijn. Ook is de ene toedieningsweg risicovoller dan een andere. Dubbele controle van de medicatie is belangrijk voor de veiligheid, met name bij risicovolle medicatie. Laat ook je berekeningen die je hebt gemaakt checken."
-   />
+    extra="Vraag aan je collega of ze een dubbele controle wil doen"
+    messageTitle="Dubbele controle bij injecties en bij medicijntoediening via infuus"
+    messageContent="Het verkeerd toedienen van medicijnen brengt risico’s met zich mee. Het risico op blijvend letsel bij verkeerde dosering of toediening verschilt, afhankelijk van het medicijn. Ook is de ene toedieningsweg risicovoller dan een andere. Dubbele controle van de medicatie is belangrijk voor de veiligheid, met name bij risicovolle medicatie. Laat ook je berekeningen die je hebt gemaakt checken.
+    Het maken van oplossingen die worden toegediend via injectie of infuus is foutgevoelig. Daarnaast geeft deze manier van toedienen sneller resultaten, maar ook grotere problemen bij verkeerde toediening.
+    Het ontbreken van een dubbele controle bij deze handelingen wordt gezien als hoog-risico.
+    Of en hoe controle plaatsvindt van deze voorbehouden handelingen, is een afspraak die een zorgorganisatie maakt met haar zorgmedewerkers. Als de afspraak is om een tweede controle te doen en deze vast te leggen, dan wordt daarvoor een ander formulier gebruikt dan de toedieningslijst." 
+    />
 
   <action
     points="1"
@@ -100,6 +119,16 @@
     topic="RollUpSleeves"
     extra="Vraag de cliënt om zijn mouw omhoog te doen en te ontspannen zodat je makkelijk bij de injectieplaats kunt."
     blockUnlock="patient show spot"
+    messageTitle="Geschikte injectiegebieden"
+    messageContent="
+Geschikte injectiegebieden voor subcutane injecties zijn:
+
+- De boven- en buitenkant van het middelste deel van het bovenbeen (musculus lateralis, musculus rectus femoris)
+- De rug- en, bij voorkeur, buikkant van de bilspier (musculus glutaeus)
+- Het het bovenste deel van de bovenarm (musculus deltoïdeus).
+
+Desinfecteer de huid bij cliënten met verminderde weerstand.
+    "
    ></action>
 
   <action
@@ -132,7 +161,6 @@
   <action
     points="1"
     description="Neem de spuit in de injecterende hand en verwijder de naaldhuls"
-    audioHint="Injection/AS1-2"
     index="7"
     type="sequenceStep"
     value="take off cap"
@@ -142,11 +170,12 @@
   <action
     points="2"
     description="Span de huid met de duim en wijsvinger van uw vrije hand"
-    audioHint="Injection/AS2-2"
     index="8"
     type="sequenceStep"
     value="Hold skin"
-    extra="Neem de spier tussen duim en wijsvinger van de ene hand en trek de huid wat strakker. De spier als een dikke plooi tussen de duim en wijs- en middelvinger opnemen, voor een intramusculaire injectie wordt afgeraden (WHO). Deze techniek vergroot het risico op per ongeluk subcutaan injecteren. "
+    extra="Span de huid met de duim en wijsvinger van uw vrije hand."
+    messageTitle="Huid spannen"
+    messageContent="Neem de spier tussen duim en wijsvinger van de ene hand en trek de huid wat strakker. De spier als een dikke plooi tussen de duim en wijs- en middelvinger opnemen, voor een intramusculaire injectie wordt afgeraden (WHO). Deze techniek vergroot het risico op per ongeluk subcutaan injecteren. "
   ></action>
 
   <action
@@ -172,17 +201,17 @@
   <action
     points="1"
     description="Fixeer de spuit en naald met de niet injecterende hand om onverwachte bewegingen op te vangen"
-    audioHint="Injection/AS5-2"
     index="11"
     type="sequenceStep"
     value="Secure the needle"
-    extra="Bij een cliënt die onrustig is of plotselinge bewegingen maakt, is het van belang dat de injectienaald en de spuit goed gefixeerd worden tijdens de injectie. Houd de naald tussen duim en wijsvinger van de vrije hand op de plaats waar de naald op de spuit zit. Zorg dat de rest van deze hand stevig op de huid rust. Als de cliënt beweegt, beweegt de hand met daarin de naald en de spuit, mee. "
+    extra=" "
+    messageTitle="Fixeren van de spuit"
+    messageContent="Bij een cliënt die onrustig is of plotselinge bewegingen maakt, is het van belang dat de injectienaald en de spuit goed gefixeerd worden tijdens de injectie. Houd de naald tussen duim en wijsvinger van de vrije hand op de plaats waar de naald op de spuit zit. Zorg dat de rest van deze hand stevig op de huid rust. Als de cliënt beweegt, beweegt de hand met daarin de naald en de spuit, mee."
   ></action>
 
   <action
     points="2"
-    description="Spuit de vloeistof langzaam en regelmatig in"
-    audioHint="Injection/AS7-2"
+    description="Spuit de vloeistof langzaam en regelmatig in (ongeveer 10 sec/ml)"
     index="12"
     type="sequenceStep"
     value="Inject medicine slow and steady"
@@ -191,8 +220,7 @@
 
   <action
     points="1"
-    description="Trek de naald uit de huid. Houd een gaasje voor de opvang van een eventuele bloeddruppel gereed"
-    audioHint="Injection/AS8-2"
+    description="Trek na het injecteren de naald uit de huid. Hierbij kun je een gaasje gereed houden om een eventuele bloeddruppel op te vangen"
     index="13"
     type="sequenceStep"
     value="pull needle out of skin"
@@ -203,7 +231,6 @@
     points="1"
     description="Verwijder de naald van de spuit"
     commentUA="Зняти гоку зі шприця"
-    audioHint=""
     index="14"
     type="combine"
     left="SyringeWithInjectionNeedle"
@@ -215,7 +242,6 @@
     points="2"
     description="Doe de injectienaald in de naaldencontainer"
     commentUA="Помістити голку в контейнер"
-    audioHint="Injection/EAS2-2"
     index="15"
     type="useOn"
     item="InjectionNeedleNoCap"
@@ -243,8 +269,6 @@
     type="use"
     value="HandCleaner"
     extra="Pas handhygiëne toe"
-    messageTitle="Handhygiëne"
-    messageContent="Handhygiëne is het meest belangrijk om besmetting met ziektekiemen te voorkomen. Reinig je handen altijd op de juiste manier en op het juiste moment. Begin een handeling altijd met handhygiëne."
   ></action>
 
   <action
