@@ -275,7 +275,7 @@ namespace MBS
             {
                 foreach (CMLData ach in new_unlocks)
                 {
-                    WUAchieve.UnlockAchievement(ach.Int("aid"), _updateAchievements);
+                    WUAchieve.UnlockUserAchievement(WULogin.UID, ach.Int("aid"), _updateAchievements);
                     GameObject.Find("AchieveTitle").GetComponent<Text>().text = ach.String("name");
                     GameObject.Find("AchievementPop").GetComponent<Animator>().SetTrigger("pop");
                 }
