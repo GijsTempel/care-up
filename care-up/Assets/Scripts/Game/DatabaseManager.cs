@@ -201,7 +201,6 @@ public class DatabaseManager : MonoBehaviour
 
     public static string[][] FetchCategory(string category)
     {
-        Category cat = database.Find(x => x.name == category + "blablabla");
 
         if (cat != null && cat.fields.Count > 0)
         {
