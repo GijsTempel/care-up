@@ -55,6 +55,7 @@ public class DatabaseManager : MonoBehaviour
     {
         database.Clear();
         instance.StopCoroutine(sessionCheck);
+        GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed = false;
     }
 
     private static void PostInit(CMLData ignore = null)
