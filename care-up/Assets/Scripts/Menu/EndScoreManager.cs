@@ -206,18 +206,7 @@ public class EndScoreManager : MonoBehaviour
                 achievements.UpdateKeys("within5", 1);
             }
 
-            if (PlayerPrefsManager.plays == 1)
-            {
-                achievements.UpdateKeys("FinishedProtocol", 1);
-            }
-            else if (PlayerPrefsManager.plays == 3)
-            {
-                achievements.UpdateKeys("FinishedProtocol", 2);
-            }
-            else if (PlayerPrefsManager.plays == 5)
-            {
-                achievements.UpdateKeys("FinishedProtocol", 2);
-            }
+            achievements.UpdateKeys("FinishedProtocol", 1);
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
