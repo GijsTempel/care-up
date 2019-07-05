@@ -170,6 +170,8 @@ namespace MBS
             // ShowHowmanyIAmTracking();
 
             // only after this entire function we can unlock achievments, first login here
+            // actually will track wrong amount of logins but i dont care about number
+            // (because it will add 1 login every time achievements are opened too)
             UpdateKeys("FirstLoginAchiev", 1);
         }
         
