@@ -138,7 +138,7 @@ public class EndScoreManager : MonoBehaviour
                 }
             }
 
-            emailsSent = flag && manager.validatedScene;
+            emailsSent = flag;
 
             GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Buttons/Back to main menu")
                 .GetComponent<Button>().onClick.AddListener(ConditionalHomeButton);
@@ -342,7 +342,13 @@ public class EndScoreManager : MonoBehaviour
         if (emailsSent)
         {
             GameObject.Find("Interactable Objects/Canvas/CertificatePopOp").SetActive(true);
+            if (manager.validatedScene == false)
+            {   // changing pop up text if scene is not validated
+                GameObject.Find("Interactable Objects/Canvas/CertificatePopOp/RegText").GetComponent<Text>().text
+                    = "Your custom text here";
+            }
         }
+
         else
         {
             bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");

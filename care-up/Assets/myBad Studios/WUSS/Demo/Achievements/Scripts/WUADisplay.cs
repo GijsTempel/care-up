@@ -28,6 +28,8 @@ namespace MBS
 
         private bool clickFlag = false;
 
+        private List<int> unlockedAIDs = new List<int>();
+
         //we are going to store our tracking info offline so we can continue
         //tracking achievement award states between games. This has nothing to do with 
         //what is unlocked or not. That info comes from the server. This is you keeping
@@ -52,7 +54,7 @@ namespace MBS
             //wait until login was successful then download all keys
             //this is great during the demo but if you spawn your prefab(s) mid game
             //you might have to call it manually. Either way, see the FetchAwards function to see how
-            WULogin.onLoggedIn += FetchAwards;
+            WULogin.onLoggedIn += FetchStuuuuff;
             SceneManager.sceneLoaded += OnSceneLoaded;
 
             //load the achievement tracking info from our previous play session (if any)
@@ -61,7 +63,7 @@ namespace MBS
             if (Keys.Count == 0)
                 Keys.AddNode("keys");
             tracked = new List<CMLData>();
-
+            
             //do you want to destroy any existing loaded child prefabs when you load this prefab?
             //personal taste. If the prefab never gets destroyed then you can choose to keep all
             //loaded achievements in place and on displaying the prefab just do a quick call to check
@@ -75,7 +77,7 @@ namespace MBS
 
         void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            Debug.Log("OnSceneLoaded: " + scene.name);
+            //Debug.Log("OnSceneLoaded: " + scene.name);
 
             currentScene = SceneManager.GetActiveScene();
 
@@ -99,7 +101,6 @@ namespace MBS
                     achievePanel.SetActive(false);
                 }
 
-                UpdateKeys("FirstLoginAchiev", 1);
                 destroyPrefab = true;
             }
         }
@@ -107,7 +108,7 @@ namespace MBS
         void OnDestroy()
         {
 
-            WULogin.onLoggedIn -= FetchAwards;
+            WULogin.onLoggedIn -= FetchStuuuuff;
             SceneManager.sceneLoaded -= OnSceneLoaded;
         }
 
@@ -140,6 +141,10 @@ namespace MBS
             foreach (CMLData entry in entries)
             {
                 //if an entry has server side requirements AND hasn't been unlocked already, track it for auto unlocking
+                if (unlockedAIDs.Contains(entry.Int("aid")))
+                {
+                    entry.Set("unlocked", "true");
+                }
                 if (entry.String("requirements").Trim() != "" && !entry.Bool("unlocked"))
                     tracked.Add(entry);
                 WUAView view = Instantiate(view_prefab);
@@ -162,7 +167,27 @@ namespace MBS
                     GameObject.Find("Achievement_Panel_UI").GetComponent<Animator>().SetTrigger("start");
             }
 
-           // ShowHowmanyIAmTracking();
+            // ShowHowmanyIAmTracking();
+
+            // only after this entire function we can unlock achievments, first login here
+            UpdateKeys("FirstLoginAchiev", 1);
+        }
+        
+        void FetchStuuuuff(CML ignore)
+        {
+            WUAchieve.FetchUserUnlockedIDs(WULogin.UID, FetchUserUnlockedIDs_Success);
+        }
+
+        void FetchUserUnlockedIDs_Success(CML data)
+        {
+            unlockedAIDs.Clear();
+            string[] aIDs = data.Last.String("achievements").Split(',');
+            foreach(string id in aIDs)
+            {
+                unlockedAIDs.Add(int.Parse(id));
+            }
+
+            WUAchieve.FetchEverything(GenerateEntries);
         }
 
         void ShowHowmanyIAmTracking()
@@ -187,8 +212,7 @@ namespace MBS
         public void ScanUnlockedStatus(string name)
         {
             bool achieved = true;
-            List<int> new_unlocks = new List<int>();
-
+            List<CMLData> new_unlocks = new List<CMLData>();
             foreach (CMLData entry in tracked)
             {
                 //assuming that the test will pass makes it easier to determine when one of the series of requirements caused the entire test to fail
@@ -219,7 +243,7 @@ namespace MBS
 
                     //Get a numeric 3rd element
                     int qty = int.Parse(elements[2]);
-
+                    
                     //and see if the current test fails. By default we assume it passed so we only need to check if we are wrong
                     switch (elements[0])
                     {
@@ -242,55 +266,22 @@ namespace MBS
 
                 //if achieved is still true at this point then an achievement needs to be unlocked!
                 if (achieved)
-                    new_unlocks.Add(entry.Int("aid"));
+                    new_unlocks.Add(entry);
             }
 
             //see if we have any achievements to unlock.
             //Unlock them all and wait for the server feedback to come through before stopping to track it
             if (new_unlocks.Count > 0)
             {
-                foreach (int aid in new_unlocks)
-                    WUAchieve.UnlockAchievement(aid, _updateAchievements);
-                if (name == "FirstLoginAchiev")
+                foreach (CMLData ach in new_unlocks)
                 {
-                    GameObject.Find("AchieveTitle").GetComponent<Text>().text = "Eerste inlog";
+                    WUAchieve.UnlockUserAchievement(WULogin.UID, ach.Int("aid"), _updateAchievements);
+                    GameObject.Find("AchieveTitle").GetComponent<Text>().text = ach.String("name");
+                    GameObject.Find("AchievementPop").GetComponent<Animator>().SetTrigger("pop");
                 }
-                else if (name == "StudyPoints")
-                {
-                    GameObject.Find("AchieveTitle").GetComponent<Text>().text = "Pak die punten!";
-                }
-                else if (name == "FirstPassedExam")
-                {
-                    GameObject.Find("AchieveTitle").GetComponent<Text>().text = "Geslaagd!";
-                }
-                else if (name == "MoreThan15")
-                {
-                    GameObject.Find("AchieveTitle").GetComponent<Text>().text = "Neem de tijd";
-                }
-                else if (name == "within5")
-                {
-                    GameObject.Find("AchieveTitle").GetComponent<Text>().text = "Super snel!";
-                }
-                else if (name == "FinishedTutorial")
-                {
-                    GameObject.Find("AchieveTitle").GetComponent<Text>().text = "Training gehaald";
-                }
-                else if (name == "FinishedProtocol" && PlayerPrefsManager.plays == 5)
-                {
-                    GameObject.Find("AchieveTitle").GetComponent<Text>().text = "5 handelingen afgerond";
-                }
-                else if (name == "FinishedProtocol" && PlayerPrefsManager.plays == 3)
-                {
-                    GameObject.Find("AchieveTitle").GetComponent<Text>().text = "3 handelingen afgerond";
-                }
-                else if (name == "FinishedProtocol" && PlayerPrefsManager.plays == 1)
-                {
-                    GameObject.Find("AchieveTitle").GetComponent<Text>().text = "Afronden van de eerste handeling";
-                }
-                GameObject.Find("AchievementPop").GetComponent<Animator>().SetTrigger("pop");
             }
         }
-
+        
         void _updateAfterManualAwards(CML response)
         {
             List<CMLData> entries = all_awards.Children(0);
@@ -311,6 +302,7 @@ namespace MBS
 
         void _updateAchievements(CML response)
         {
+            Debug.Log("update achi response " + response.ToString());
             //get the complete list of awarded achievements 
             string[] unlocked = response[0].String("unlocked").Split(',');
             if (unlocked.Length == 0) return;
