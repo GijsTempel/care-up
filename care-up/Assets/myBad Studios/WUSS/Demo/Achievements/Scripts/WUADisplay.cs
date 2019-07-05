@@ -59,7 +59,7 @@ namespace MBS
 
             //load the achievement tracking info from our previous play session (if any)
             Keys = new CML();
-            Keys.Load("achievements");
+            //Keys.Load("achievements");
             if (Keys.Count == 0)
                 Keys.AddNode("keys");
             tracked = new List<CMLData>();
@@ -203,7 +203,7 @@ namespace MBS
             //Save the current tracking keys so we are up to date across game sessions
             _keys.Add(qty, name);
             //_keys.Remove (name);
-            Keys.Save("achievements");
+            //Keys.Save("achievements");
             //Debug.LogWarning( Keys.ToString() );
 
             //since the keys have been updated, let's see if anything is now unlocked
