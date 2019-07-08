@@ -268,7 +268,10 @@ namespace MBS
 
                 //if achieved is still true at this point then an achievement needs to be unlocked!
                 if (achieved)
+                {
                     new_unlocks.Add(entry);
+                    unlockedAIDs.Add(entry.Int("aid"));
+                }
             }
 
             //see if we have any achievements to unlock.
@@ -304,7 +307,6 @@ namespace MBS
 
         void _updateAchievements(CML response)
         {
-            Debug.Log("update achi response " + response.ToString());
             //get the complete list of awarded achievements 
             string[] unlocked = response[0].String("unlocked").Split(',');
             if (unlocked.Length == 0) return;
