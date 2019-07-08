@@ -406,7 +406,7 @@ public class PlayerPrefsManager : MonoBehaviour
             MailMessage mail = new MailMessage();
 
             mail.From = new MailAddress("info@careup.online");
-            mail.To.Add("info@careup.nl");
+            mail.To.Add("info@careup.online");
             mail.Subject = topic;
             mail.Body = message;
 
