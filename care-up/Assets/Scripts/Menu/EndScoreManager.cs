@@ -191,7 +191,22 @@ public class EndScoreManager : MonoBehaviour
                 achievements.UpdateKeys("within5", 1);
             }
 
-            achievements.UpdateKeys("FinishedProtocol", 1);
+            string scompleted = DatabaseManager.FetchField("AchievementData", "ProtocolsFinished");
+            int completed = scompleted != "" ? int.Parse(scompleted) + 1 : 1;
+            DatabaseManager.UpdateField("AchievementData", "ProtocolsFinished", completed.ToString());
+
+            if (completed >= 1)
+            { 
+                achievements.UpdateKeys("FinishedProtocol", 1);
+            }
+            if (completed >= 3)
+            {
+                achievements.UpdateKeys("Finished3Protocols", 1);
+            }
+            if (completed >= 5)
+            {
+                achievements.UpdateKeys("Finished5Protocols", 1);
+            }
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
