@@ -1380,7 +1380,7 @@ public class ActionManager : MonoBehaviour
         int subcategoryLength = IncompletedActions.Count;
 
         // make a list from sublist with actions of performed action type only
-        List<Action> subtypelist = IncompletedActions.Where(action => action.Type == type).ToList();
+        List<Action> subtypelist = UnlockedIncompletedActions.Where(action => action.Type == type).ToList();
 
         if (IncompletedActions.Count != 0)
         {
