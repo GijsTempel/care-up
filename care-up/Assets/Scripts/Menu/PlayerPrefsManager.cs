@@ -405,14 +405,14 @@ public class PlayerPrefsManager : MonoBehaviour
         {
             MailMessage mail = new MailMessage();
 
-            mail.From = new MailAddress("info@careup.nl");
+            mail.From = new MailAddress("info@careup.online");
             mail.To.Add("info@careup.nl");
             mail.Subject = topic;
             mail.Body = message;
 
-            SmtpClient smtpServer = new SmtpClient("smtp.strato.de");
+            SmtpClient smtpServer = new SmtpClient("smtp.office365.com");
             smtpServer.Port = 587;
-            smtpServer.Credentials = new System.Net.NetworkCredential("info@careup.nl", "TripleMotionMedia3") as ICredentialsByHost;
+            smtpServer.Credentials = new System.Net.NetworkCredential("info@careup.online", "TripleMM3") as ICredentialsByHost;
             smtpServer.EnableSsl = true;
 
             ServicePointManager.ServerCertificateValidationCallback =
