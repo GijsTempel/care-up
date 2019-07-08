@@ -43,7 +43,7 @@ public class ActionManager : MonoBehaviour
     private List<string> stepsList = new List<string>();
     private List<string> stepsDescriptionList = new List<string>();
     private List<int> wrongStepIndexes = new List<int>();
-    private List<int> correctStepIndexes = new List<int>();  
+    private List<int> correctStepIndexes = new List<int>();
 
     // GameObjects that show player next step when hint used
     private static PlayerScript playerScript;
@@ -147,7 +147,7 @@ public class ActionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// A list with not completed actions of current action index only
+    /// A list of not completed actions of current action index only
     /// </summary>
     public List<Action> IncompletedActions
     {
@@ -163,13 +163,15 @@ public class ActionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// A list with not completed actions of current action index only, that are not blocked by other steps
+    /// A list of not completed actions of current action index only, that are not blocked by other steps
     /// </summary>
     public List<Action> UnlockedIncompletedActions
     {
         get
         {
-            unlockedIncompletedActions = IncompletedActions.Where(action => action.blockRequired == "" || unlockedBlocks.Contains(action.blockRequired)).ToList();
+            unlockedIncompletedActions = IncompletedActions.Where(action =>
+            action.blockRequired.Count == 0 || unlockedBlocks.Intersect(action.blockRequired).Count() == action.blockRequired.Count()).ToList();
+
             return unlockedIncompletedActions;
         }
         set
@@ -939,7 +941,6 @@ public class ActionManager : MonoBehaviour
                 place = action.Attributes["place"].Value;
             }
 
-
             string commentUA = "";
             if (action.Attributes["commentUA"] != null)
             {
@@ -1004,22 +1005,38 @@ public class ActionManager : MonoBehaviour
                 messageContent = localizationManager.GetValueIfKey(action.Attributes["messageContent"].Value);
             }
 
-            string blockUnlock = "";
+            List<string> blockUnlock = new List<string>();
+            List<string> blockRequire = new List<string>();
+            List<string> blockLock = new List<string>();
+
             if (action.Attributes["blockUnlock"] != null)
             {
-                blockUnlock = action.Attributes["blockUnlock"].Value;
+                string[] sentence = action.Attributes["blockUnlock"].Value.Split(new string[] { ", ", "," }, System.StringSplitOptions.None);
+
+                foreach (string word in sentence)
+                {
+                    blockUnlock.Add(word);
+                }
             }
 
-            string blockRequire = "";
             if (action.Attributes["blockRequired"] != null)
             {
-                blockRequire = action.Attributes["blockRequired"].Value;
+                string[] sentence = action.Attributes["blockRequired"].Value.Split(new string[] { ", ", "," }, System.StringSplitOptions.None);
+
+                foreach (string word in sentence)
+                {
+                    blockRequire.Add(word);
+                }
             }
 
-            string blockLock = "";
             if (action.Attributes["blockLock"] != null)
             {
-                blockLock = action.Attributes["blockLock"].Value;
+                string[] sentence = action.Attributes["blockLock"].Value.Split(new string[] { ", ", "," }, System.StringSplitOptions.None);
+
+                foreach (string word in sentence)
+                {
+                    blockLock.Add(word);
+                }
             }
 
             string blockTitle = "";
@@ -1108,10 +1125,8 @@ public class ActionManager : MonoBehaviour
             actionList[actionList.Count - 1].commentUA = commentUA;
             actionList[actionList.Count - 1].secondPlaceRequirement = secondPlace;
             actionList[actionList.Count - 1].placeRequirement = place;
-
-
-
         }
+
         actionList.Last<Action>().sceneDoneTrigger = true;
 
         if (xmlFile.FirstChild.NextSibling.Attributes["points"] != null)
@@ -1378,7 +1393,7 @@ public class ActionManager : MonoBehaviour
         bool matched = false;
 
         int subcategoryLength = IncompletedActions.Count;
-
+      
         // make a list from sublist with actions of performed action type only
         List<Action> subtypelist = UnlockedIncompletedActions.Where(action => action.Type == type).ToList();
 
@@ -1396,14 +1411,22 @@ public class ActionManager : MonoBehaviour
                     //inserted checklist stuff
                     //RobotUITabChecklist.StrikeStep(index);
 
-                    if (action.blockUnlock != "")
+
+                    if (action.blockUnlock.Count() > 0)
                     {
-                        unlockedBlocks.Add(action.blockUnlock);
+                        foreach (string item in action.blockUnlock)
+                        {
+                            if (!unlockedBlocks.Contains(item))
+                                unlockedBlocks.Add(item);
+                        }
                     }
 
-                    if (action.blockLock != "")
+                    if (action.blockLock.Count > 0)
                     {
-                        unlockedBlocks.Remove(action.blockLock);
+                        foreach (string item in action.blockLock)
+                        {
+                            unlockedBlocks.Remove(item);
+                        }
                     }
 
                     if (action.quizTriggerTime >= 0.0f)

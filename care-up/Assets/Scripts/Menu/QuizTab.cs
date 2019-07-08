@@ -120,7 +120,6 @@ public class QuizTab : RobotUITabs {
     public void NextQuizQuestion()
     {
         quiz = true;
-        print("NextQuizQuestion");
         if (currentStep >= questionList.Count)
             return;
 
