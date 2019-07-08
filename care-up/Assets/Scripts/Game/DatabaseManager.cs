@@ -20,6 +20,8 @@ public class DatabaseManager : MonoBehaviour
 
     private static DatabaseManager instance;
     private static List<Category> database = new List<Category>();
+
+    private static Coroutine sessionCheck;
     
     private void Awake()
     {
@@ -52,7 +54,8 @@ public class DatabaseManager : MonoBehaviour
     public static void Clean()
     {
         database.Clear();
-        instance.StopCoroutine(CheckSession(60.0f));
+        instance.StopCoroutine(sessionCheck);
+        GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed = false;
     }
 
     private static void PostInit(CMLData ignore = null)
@@ -103,7 +106,7 @@ public class DatabaseManager : MonoBehaviour
         // 1 session restriction, checking once a minute
         sessionKey = PlayerPrefsManager.RandomString(16);
         UpdateField("AccountStats", "SessionKey", sessionKey);
-        instance.StartCoroutine(CheckSession(60.0f));
+        sessionCheck = instance.StartCoroutine(CheckSession(60.0f));
     }
 
     private static void FetchEverything_success(CML response)

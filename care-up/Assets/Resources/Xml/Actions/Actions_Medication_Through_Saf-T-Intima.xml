@@ -31,19 +31,19 @@
     type="use"
     value="WorkField"
     extra="Maak een schoon werkveld en zet de benodigdheden binnen handbereik."
-    messageTitle="Benodigdheden"
+    messageTitle="Je het volgende nodig hebt?"
     messageContent="
-    - 1 paar handschoenen
-    - Desinfectans, chloorhexidine 0,5% in alcohol 70%
-    - Gaasjes
-    - Luerlockspuit met medicijn
-    - Steriele luerlock 2 ml-spuit (Wanneer er geen voorgevulde Omniflush NaCl 0,9%  spuit aanwezig is.)
-    - Steriele opzuignaald (Wanneer er geen voorgevulde Omniflush NaCl 0,9%  spuit aanwezig is.)
-    - Ampul NaCl 0,9% (fysiologisch zout) (Wanneer er geen voorgevulde Omniflush NaCl 0,9%  spuit aanwezig is.)
-    - Onderlegger
-    - Naaldenbeker
-    - Afvalbak
-    - Medicijnsticker"
+- 1 paar handschoenen
+- Desinfectans, chloorhexidine 0,5% in alcohol 70%
+- Gaasjes
+- Luerlockspuit met medicijn
+- Steriele luerlock 2 ml-spuit (Wanneer er geen voorgevulde Omniflush NaCl 0,9%  spuit aanwezig is.)
+- Steriele opzuignaald (Wanneer er geen voorgevulde Omniflush NaCl 0,9%  spuit aanwezig is.)
+- Ampul NaCl 0,9% (fysiologisch zout) (Wanneer er geen voorgevulde Omniflush NaCl 0,9%  spuit aanwezig is.)
+- Onderlegger
+- Naaldenbeker
+- Afvalbak
+- Medicijnsticker"
   />
 
   <action
@@ -55,7 +55,9 @@
     item="OmniflushSyringeBag2"
     expected="good"
     extra="Controleer het medicijn. Controleer altijd het medicijn op vervaldatum, toedienwijze, kleur en substantie om er zeker van te zijn dat je het juiste medicijn hebt. Vergelijk de informatie van het medicijn met die van de toedienlijst."
-   ></action>
+    messageTitle="Kennis over het medicijn"
+    messageContent="Lees de bijsluiter van het medicijn. Stel je op de hoogte van de werking, concentratie, toedieningssnelheid en mogelijke bijwerkingen. Let op de werkingsduur."
+    ></action>
 
 
   <action
@@ -79,6 +81,8 @@
     item="PrescriptionForm"
     expected="good"
     extra="Controleer de toedienlijst. Controleer de toedienlijst op soort, dosering en toedientijdstip."
+    messageTitle="Stel je op de hoogte"
+    messageContent="De Saf-T-Intima is een veilige subcutane kunststof canule met verlengslang. Lees de gebruiksaanwijzing en stel je op de hoogte van de werking. Laat daarnaast de spuit met medicijn zoveel mogelijk door de apotheek bereiden en kant-en-klaar leveren."
    ></action>
 
   <action
@@ -178,6 +182,8 @@
    type="sequenceStep"
    value="desinfect connector"
    extra="Desinfecteer met een desinfectansgaasje de connector (naaldloos afsluitdopje). Laat het drogen."
+   messageTitle="No-touchmethode"
+   messageContent="Gebruik de no-touchmethode, voorkom dat de aansluitpunten van de gebruikte infuusmaterialen (infuuskatheter, infuusslang, lumina, afsluitdopje) contact maken met niet steriele huid of niet steriele materialen."
   />
 
  <action
@@ -187,6 +193,8 @@
    type="sequenceStep"
    value="rotate medicine"
    extra="Fixeer het aansluitpunt, van de canule met de verlengslang, met je ene hand. Draai met de andere hand de spuit met het medicijn op de connector (naadloos afsluitdopje)."
+   messageTitle="Vervangen afsluitdopje"
+   messageContent="Sluit de verlengslang van de subcutane canule zo nodig af met een connector (naaldloos afsluitdopje) of een steriel afsluitdopje. Vervang een steriel afsluitdopje, nadat het van de canule afgehaald is, steeds met een nieuw steriel afsluitdopje."
   />
 
  <action
@@ -214,6 +222,8 @@
    type="sequenceStep"
    value="rotate omniflush"
    extra="Pak de gevulde spuit met NaCl 0,9% en draai hem op de connector (naaldloos afsluitdopje)."
+   messageTitle="Spoelen subcutane infuuscanule"
+   messageContent="Spoel de verlengslang van de subcutane infuuscanule na toediening van het medicijn door met NaCl 0,9%. Gebruik voor het spoelen minimaal het volume van de verlengslang, 0,5 ml."
   />
 
  <action
@@ -223,6 +233,8 @@
    type="sequenceStep"
    value="inject omniflush"
    extra="Spuit NaCl 0,9% langzaam in."
+   messageTitle="Verschillende medicijnen toedienen"
+   messageContent="Bij het toedienen van verschillende medicijnen wordt er tussen de verschillende injecties doorgespoten met NaCl 0,9%. Ga met arts of apotheker na of dit nodig is. Houd de spuiten met het medicijn en NaCl 0,9% goed uit elkaar, plak een medicijnsticker op de spuiten."
   />
 
  <action
@@ -232,6 +244,8 @@
    type="sequenceStep"
    value="take off omniflush"
    extra="Verwijder de spuit en gooi hem in de afvalbak."
+   messageTitle="Verkeerde of niet toegediende injectie"
+   messageContent="Maak van een verkeerd toegediend en/of een niet gegeven injectie melding volgens de procedure van de organisatie."
   />
 
  <action
@@ -241,6 +255,8 @@
    type="sequenceStep"
    value="take off gloves"
    extra="Trek de handschoenen uit."
+   messageTitle="Controleren huid romdom insteekplaats"
+   messageContent="Inspecteer de huid rondom de insteekplaats dagelijks. Controleer op zwelling, roodheid, lekkage van vloeistof, bloeding, blauwe plekken of pijn. Gebruik transparante pleister om de huid om de insteekplaats goed te kunnen inspecteren."
   />
 
   <action
@@ -251,8 +267,6 @@
    type="use"
    value="HandCleaner"
    extra="Pas handhygiëne toe"
-   messageTitle="Handhygiëne"
-   messageContent="Handhygiëne is het meest belangrijk om besmetting met ziektekiemen te voorkomen. Reinig je handen altijd op de juiste manier en op het juiste moment. Begin een handeling altijd met handhygiëne."
    />
 
   <action

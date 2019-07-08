@@ -30,23 +30,26 @@
     type="use"
     value="WorkField"
     extra="Maak een schoon werkveld en zet de benodigdheden binnen handbereik."
-    messageTitle="Benodigdheden"
-    messageContent="- Voorgeschreven steriele katheter
-    - Voorgeschreven steriele spuit met glijmiddel
-    - Steriel water voor het vullen van de ballon of wat de fabrikant aanraadt, steriele spuit en steriele opzuignaald
-    - 2 onderleggers
-    - Gaasje
-    - Bakje met 5 gaasjes/wattenbollen
-    - Water uit flink stromende kraan (of steriel water)
-    - Steriele handschoenen
-    - Handschoenen
-    - Steriele doek
-    - Materiaal om genitaal gebied na katheterisatie te reinigen (vochtige washand, handdoek)
-    - Naaldenbeker
-    - Steriele urineopvangzak (met kraantje)
-    - Ophangrekje, fixatiemateriaal
-    - Steriel gaasje/wattenbol
-    - Afvalbak"
+    messageTitle="Je het volgende nodig hebt?"
+    messageContent="
+- Voorgeschreven steriele katheter
+- Voorgeschreven steriele spuit met glijmiddel
+- Steriel water voor het vullen van de ballon of wat de fabrikant aanraadt, steriele spuit en steriele opzuignaald
+- 2 onderleggers
+- Gaasje
+- Bakje met 5 gaasjes/wattenbollen
+- Water uit flink stromende kraan (of steriel water)
+- Steriele handschoenen
+- Handschoenen
+- Steriele doek
+- Materiaal om genitaal gebied na katheterisatie te reinigen (vochtige washand, handdoek)
+- Naaldenbeker
+- Steriele urineopvangzak (met kraantje)
+- Ophangrekje, fixatiemateriaal
+- Steriel gaasje/wattenbol
+- Afvalbak
+    
+Zorg voor een extra katheter, urineopvangzak en materialen voor het inbrengen, voor het geval het inbrengen mislukt."
 ></action>
 
 <action
@@ -276,8 +279,6 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
     type="use"
     value="HandCleaner"
     extra="Pas handhygiëne toe"
-    messageTitle="Handhygiëne"
-    messageContent="Handhygiëne is het meest belangrijk om besmetting met ziektekiemen te voorkomen. Reinig je handen altijd op de juiste manier en op het juiste moment. Begin een handeling altijd met handhygiëne."
 ></action>
 
 <action
@@ -289,7 +290,9 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
     left="catheter_bag_packed"
     right=""
     extra="Open de verpakking van de urineopvangzak. Laat de steriele urineopvangzak op het steriele werkveld vallen, raak de urineopvangzak niet aan. Gooi de verpakking in de afvalbak"
-></action>
+    messageTitle="Dubbelverpakte katheter"
+    messageContent="In deze geprotocolleerde werkinstructie wordt uitgegaan van een dubbelverpakte katheter."
+    ></action>
 
 <action
     comment="22. Open the outer package of the catheter a few centimeters, fold the ends. Leave the inner package in the outer package and hold the outer package with the non-dominant hand on the folded ends."
@@ -312,8 +315,6 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
     type="use"
     value="HandCleaner"
     extra="Pas handhygiëne toe"
-    messageTitle="Handhygiëne"
-    messageContent="Handhygiëne is het meest belangrijk om besmetting met ziektekiemen te voorkomen. Reinig je handen altijd op de juiste manier en op het juiste moment. Begin een handeling altijd met handhygiëne."
 ></action>
   
 <action
@@ -326,7 +327,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
     extra="Trek de steriele handschoenen aan"
     quiz="2"
     messageTitle="Aantrekken steriele handschoenen"
-    messageContent="Het aantrekken van steriele handschoenen vereist enige handigheid. Voorkom tijdens het aantrekken dat de handschoenen besmet raken"
+    messageContent="Het aantrekken van steriele handschoenen vereist enige handigheid. Voorkom tijdens het aantrekken dat de handschoenen besmet raken. In deze werkinstructie wordt de verblijfskatheter met steriele handschoenen ingebracht. Het gebruik van een steriele pincet of de binnenverpakking van de katheter is ook mogelijk."
 ></action>
 
 <action
@@ -353,6 +354,8 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
     blockRequired="patient lay down"
     blockTitle="Deze handeling is nog niet mogelijk"
     blockMessage="Communiceer met de cliënt en zorg ervoor dat de cliënt klaar is voor blaaskatheterisatie"
+    messageTitle="Desinfecteren aansluitpunt"
+    messageContent="Voorkom dat het aansluitpunt van de urineopvangzak in aanraking komt met de omgeving. Als dat wel gebeurt, moet het aansluitpunt worden gedesinfecteerd met alcohol 70%."
 ></action>
 
   <action
@@ -445,6 +448,8 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
     points="2"
     type="sequenceStep"
     extra="Plaats de spuit met voorgeschreven vloeistof op het katheterballonkanaal"
+    messageTitle="Spuit plaatsen op katheterballonkanaal"
+    messegaContent="Het inbrengen van de spuit in het ventiel van ballonvulkanaal enige krachtsinspanning kan vragen."
 ></action>
 
   <action
@@ -454,6 +459,8 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
     points="3"
     type="sequenceStep"
     extra="Spuit de voorgeschreven hoeveelheid vloeistof langzaam in de katheterballon"
+    messageTitle="Ballon vullen"
+    messageContent="Vul de ballon na inbrengen van de katheter met de hoeveelheid door de fabrikant voorgeschreven vloeistof, zoals op de katheter is aangegeven. Een te volle ballon geeft blaaskrampen, maar door te weinig vulling kan de katheter uit de blaas glijden."
 ></action>
 
 <action
@@ -593,8 +600,6 @@ De cliënt hoeft niet opnieuw te gaan liggen"
       type="use"
       value="HandCleaner"
       extra="Pas handhygiëne toe"
-      messageTitle="Handhygiëne"
-      messageContent="Handhygiëne is het meest belangrijk om besmetting met ziektekiemen te voorkomen. Reinig je handen altijd op de juiste manier en op het juiste moment. Begin een handeling altijd met handhygiëne."
 ></action>
   
 <action
@@ -607,8 +612,8 @@ De cliënt hoeft niet opnieuw te gaan liggen"
    blockRequired="catheter fixed"
    blockTitle="Deze handeling is nog niet mogelijk"
    blockMessage="Zorg ervoor dat de katheter is ingebracht bij de cliënt en bevestig de urineopvangzak aan het been of ophangrekje"
-   messegeTitle="Materialen opruimen"
-   MessegeContent="Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen."
+   messageTitle="Materialen opruimen"
+   messageContent="Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen."
 ></action>
   
 <action

@@ -121,8 +121,6 @@ public class EndScoreManager : MonoBehaviour
             // show/hide buttons
             bool flag = (percent > 0.7f && manager.subscribed);
 
-            GameObject.Find("Interactable Objects/Canvas/Send_Score/Top/Scenetitle").GetComponent<Text>().text = manager.currentSceneVisualName;
-
             // update test highscore + save certificate date
             manager.UpdateTestHighscore(percent);
 
@@ -142,19 +140,6 @@ public class EndScoreManager : MonoBehaviour
 
             GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Buttons/Back to main menu")
                 .GetComponent<Button>().onClick.AddListener(ConditionalHomeButton);
-
-            // certificate set scene name
-            GameObject.Find("Interactable Objects/Canvas/CertificatePanel/Top/Scenetitle")
-                .GetComponent<Text>().text = manager.currentSceneVisualName;
-
-            // certificate set btn function
-            Button openCertificateBtn = GameObject.Find("Interactable Objects/Canvas/CertificatePanel/" +
-                "ContentHolder/CertificateBTN").GetComponent<Button>();
-            openCertificateBtn.onClick.AddListener(OpenCertificateBtn);
-
-            // fullname pop up function set up
-            GameObject.Find("Interactable Objects/Canvas/NamePopUp/BackToRegisterButton")
-                .GetComponent<Button>().onClick.AddListener(SaveFullPlayerNameBtn);
 
             if (!flag || !manager.validatedScene)
             {
@@ -334,7 +319,7 @@ public class EndScoreManager : MonoBehaviour
             if (manager.validatedScene == false)
             {   // changing pop up text if scene is not validated
                 GameObject.Find("Interactable Objects/Canvas/CertificatePopOp/RegText").GetComponent<Text>().text
-                    = "Your custom text here";
+                    = "Neem snel een kijkje in je mailbox! Daar vind je je certificaat.";
             }
         }
 

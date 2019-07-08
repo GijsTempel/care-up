@@ -29,17 +29,17 @@
     type="use"
     value="WorkField"
     extra="Maak een schoon werkveld en zet de benodigdheden binnen handbereik."
-    messageTitle="Benodigdheden"
+    messageTitle="Je het volgende nodig hebt?"
     messageContent="
-    - Zeep en schone handdoek voor de cliënt
-    - Prikpen of vingerprikker + gebruiksinstructie
-    - Lancet (bij prikpen of herbruikbare vingerprikker)
-    - Teststrip
-    - Bloedglucosemeter + gebruiksinstructie
-    - Handschoenen
-    - 2 gaasjes
-    - Naaldenbeker
-    - Afvalbak
+- Zeep en schone handdoek voor de cliënt
+- Prikpen of vingerprikker + gebruiksinstructie
+- Lancet (bij prikpen of herbruikbare vingerprikker)
+- Teststrip
+- Bloedglucosemeter + gebruiksinstructie
+- Handschoenen
+- 2 gaasjes
+- Naaldenbeker
+- Afvalbak
     "></action>
 
   <action 
@@ -49,7 +49,7 @@
     index="2" 
     type="talk" 
     topic="WashHands" 
-    extra="Laat je cliënt zijn of haar handen wassen met warm water en zeep. Droog daarna de handen goed af. " messageTitle="" messageContent=""></action>
+    extra="Laat je cliënt zijn of haar handen wassen met warm water en zeep. Droog daarna de handen goed af. "></action>
 
   <action
     comment="Step 4: Check expiration date of the teststrips."
@@ -72,7 +72,11 @@
     type="combine"
     left="Scarifier"
     right=""
-    extra="Maak de prikpen of vingerprikker klaar voor gebruik. Stel de laagst mogelijke prikdiepte in."/>
+    extra="Maak de prikpen of vingerprikker klaar voor gebruik. Stel de laagst mogelijke prikdiepte in."
+    messageTitle="Prikpennen en vingerprikkers"
+    messageContent="Gebruik een veilige prikpen of vingerprikker. Plaats bij elke vingerprik een nieuw lancet (naaldje) als gebruik wordt gemaakt van een prikpen of herbruikbare vingerprikker. Vingerprikkers voor eenmalig gebruik zijn kant-en-klaar voor gebruik. De meeste prikpennen en vingerprikkers zijn instelbaar op prikdiepte. Stel de laagst mogelijke stand in."
+    />
+    
 
   <action 
     points="2" 
@@ -94,7 +98,10 @@
     type="combine"
     left="TeststripsPackage"
     right=""
-    extra="Pak een teststrip uit de koker."/>
+    extra="Pak een teststrip uit de koker."
+    messageTitle="testmateriaal"
+    messageContent="Gebruik het bij de bloedglucosemeter behorende testmateriaal (strips in koker of in schijf, cassette). Bewaar de teststrips in de oorspronkelijke verpakking. Codeer, indien nodig, de bloedglucosemeter volgens gebruiksinstructie wanneer een nieuwe verpakking met teststrips in gebruik wordt genomen."
+    />
 
   <action
     comment="Step 7: Place teststrip in the blood glucose meter"
@@ -127,7 +134,9 @@
     index="9" 
     type="sequenceStep" 
     value="place finger" 
-    extra="Plaats de prikpen of vingerprikker aan de zijkant van de vingertop. Stuw hierbij de vinger niet. " 
+    extra="Plaats de prikpen of vingerprikker aan de zijkant van de vingertop. Stuw hierbij de vinger niet."
+    messageTitle="Geschikte prik plaatsen"
+    messageContent="Geschikte plaatsen om te prikken zijn de zijkant van de top van de ring-, middelvinger of pink. Wissel de prikplaats af. Bij baby’s tot ongeveer 6 maanden oud is zijkant van de hiel een geschikte plek."
   ></action>
 
   <action 
@@ -146,6 +155,8 @@
     type="sequenceStep" 
     value="whipe blood" 
     extra="Veeg de eerste bloeddruppel weg met een gaasje."
+    messageTitle="wegvegen van eerste bloeddruppel"
+    messageContent="Als jij als zorgmedewerker de meting uitvoert, gebruik dan de tweede druppel bloed, om er zeker van te zijn dat de druppel niet verontreinigd is. Als de cliënt de meting uitvoert kan de eerste bloeddruppel gebruikt worden, op voorwaarde dat de cliënt de handen wast met bij voorkeur warm water en zeep en goed afdroogt. Dit protocol gaat ervan uit dat de zorgmedewerker de meting uitvoert."
   ></action>
 
   <action 
@@ -154,7 +165,7 @@
     index="12" 
     type="sequenceStep" 
     value="fill in teststrip" 
-    extra="Vul het testveld van de teststrip met een bloeddruppel. Zorg ervoor dat de bloeddruppel het hele testveld bedekt. Smeer het bloed niet uit." 
+    extra="Vul het testveld van de teststrip met een bloeddruppel. Zorg ervoor dat de bloeddruppel het hele testveld bedekt. Smeer het bloed niet uit."
   ></action>
 
   <action 
