@@ -59,7 +59,7 @@ namespace MBS
 
             //load the achievement tracking info from our previous play session (if any)
             Keys = new CML();
-            Keys.Load("achievements");
+            //Keys.Load("achievements");
             if (Keys.Count == 0)
                 Keys.AddNode("keys");
             tracked = new List<CMLData>();
@@ -170,6 +170,8 @@ namespace MBS
             // ShowHowmanyIAmTracking();
 
             // only after this entire function we can unlock achievments, first login here
+            // actually will track wrong amount of logins but i dont care about number
+            // (because it will add 1 login every time achievements are opened too)
             UpdateKeys("FirstLoginAchiev", 1);
         }
         
@@ -201,7 +203,7 @@ namespace MBS
             //Save the current tracking keys so we are up to date across game sessions
             _keys.Add(qty, name);
             //_keys.Remove (name);
-            Keys.Save("achievements");
+            //Keys.Save("achievements");
             //Debug.LogWarning( Keys.ToString() );
 
             //since the keys have been updated, let's see if anything is now unlocked
@@ -266,7 +268,10 @@ namespace MBS
 
                 //if achieved is still true at this point then an achievement needs to be unlocked!
                 if (achieved)
+                {
                     new_unlocks.Add(entry);
+                    unlockedAIDs.Add(entry.Int("aid"));
+                }
             }
 
             //see if we have any achievements to unlock.
@@ -302,7 +307,6 @@ namespace MBS
 
         void _updateAchievements(CML response)
         {
-            Debug.Log("update achi response " + response.ToString());
             //get the complete list of awarded achievements 
             string[] unlocked = response[0].String("unlocked").Split(',');
             if (unlocked.Length == 0) return;
