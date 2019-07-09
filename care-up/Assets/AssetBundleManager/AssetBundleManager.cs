@@ -76,6 +76,11 @@ namespace AssetBundles
 		{
 			fullDownloadSize = 0;
 			bundeSize = new Dictionary<string, long>();
+			if(GameObject.Find("TestSlider") != null)
+			{
+				GameObject.Find("TestSlider").GetComponent<Slider>().value = 0;
+				GameObject.Find("testLoadText").GetComponent<Text>().text = "";
+			}
 		}
 
 		// The base downloading url which is used to generate the full downloading url with the assetBundle names.
