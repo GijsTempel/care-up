@@ -208,6 +208,10 @@ public class bl_SceneLoader : MonoBehaviour
     /// </summary>
     void OnFinish()
     {
+        BundleLoader loader = GameObject.FindObjectOfType<BundleLoader>();
+        if (loader != null){
+            loader.ClearLoader();
+        }
         FinishLoad = true;
         if (FlashImage != null) { FlashImage.SetActive(true); }
         //Can skip when next level is loaded.
@@ -269,7 +273,6 @@ public class bl_SceneLoader : MonoBehaviour
 
     public void ActualLoadLevel(CML action)
     {
-        print("FFFFFFFFFFFFFFFFFFFFFFFFFF");
         if (isLoading)
         {
             Debug.Log("Already loading something!");
@@ -389,7 +392,6 @@ public class bl_SceneLoader : MonoBehaviour
 
         if (bundle != "")
         {
-            print("RRRRRRRRRRRRRRRRRR");
             BundleLoader loader = GameObject.FindObjectOfType<BundleLoader>();
             yield return StartCoroutine(loader.Load(level, bundle));
         }

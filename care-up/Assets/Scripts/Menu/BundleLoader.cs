@@ -21,6 +21,12 @@ public class BundleLoader : MonoBehaviour {
         yield return StartCoroutine(InitializeLevelAsync(sceneName, false));
     }
 
+
+    public void ClearLoader()
+    {
+        AssetBundleManager.ClearLoader();
+    }
+
     // Initialize the downloading url and AssetBundleManifest object.
     protected IEnumerator Initialize()
     {
