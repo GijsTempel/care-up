@@ -140,15 +140,6 @@ public class EndScoreManager : MonoBehaviour
 
             GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Buttons/Back to main menu")
                 .GetComponent<Button>().onClick.AddListener(ConditionalHomeButton);
-
-            if (!flag || !manager.validatedScene)
-            {
-                GameObject.Find("Interactable Objects/Canvas/CertificatePanel/" +
-                    "ContentHolder/Description (1)").SetActive(false);
-                GameObject.Find("Interactable Objects/Canvas/CertificatePanel/" +
-                    "ContentHolder/ScoreSendBTN").SetActive(false);
-            }
-
         }
         if (actualScene)
         {
@@ -194,7 +185,7 @@ public class EndScoreManager : MonoBehaviour
             string scompleted = DatabaseManager.FetchField("AchievementData", "ProtocolsFinished");
             int completed = scompleted != "" ? int.Parse(scompleted) + 1 : 1;
             DatabaseManager.UpdateField("AchievementData", "ProtocolsFinished", completed.ToString());
-
+            
             if (completed >= 1)
             { 
                 achievements.UpdateKeys("FinishedProtocol", 1);
