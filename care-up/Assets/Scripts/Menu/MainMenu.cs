@@ -89,7 +89,7 @@ public class MainMenu : MonoBehaviour {
 
                     scoreObject.transform.Find("Button").GetComponent<Button>().interactable = passed;
                     scoreObject.transform.Find("Button").GetComponent<Button>().onClick.AddListener
-                        (delegate { PlayerPrefsManager.__openCertificate(sceneName, date); });
+                        (delegate { ResendCertificate(sceneName, date); });
                 }
             }
 
@@ -112,6 +112,26 @@ public class MainMenu : MonoBehaviour {
                 GameObject.Find("UMenuProManager/MenuCanvas/Account/Account_Panel_UI/UserInfoHolder/BigNumberHolder/BigNumber")
                .GetComponent<Text>().text = bigNumber;
             }           
+        }
+    }
+
+    public void ResendCertificate(string scene, string date)
+    {
+        // check if can send
+        bool flag = true;
+
+        if (flag)
+        {
+            // send if so
+            PlayerPrefsManager.__sendCertificateToUserMail(scene, date);
+
+            // show pop up that it's sent
+            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/CertificatePopOp").SetActive(true);
+        }
+        else
+        {
+            // can't send, show different pop up
+
         }
     }
 
@@ -231,6 +251,12 @@ public class MainMenu : MonoBehaviour {
         canvas.transform.Find("BugReportUI").gameObject.SetActive(false);
 
     }
+
+    public void CloseUIBtn(GameObject ui)
+    {
+        ui.SetActive(false);
+    }
+
     public void OnUpdatestCloseButtonClick()
     {
         //turning of the updates panel when button is clicked
