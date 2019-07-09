@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.Networking;
 #if UNITY_EDITOR	
 using UnityEditor;
 #endif
@@ -39,20 +41,25 @@ namespace AssetBundles
 	{
 		public enum LogMode { All, JustErrors };
 		public enum LogType { Info, Warning, Error };
-	
-		static LogMode m_LogMode = LogMode.All;
+        private static AssetBundleManager instance;
+        static LogMode m_LogMode = LogMode.All;
 		static string m_BaseDownloadingURL = "";
 		static string[] m_ActiveVariants =  {  };
 		static AssetBundleManifest m_AssetBundleManifest = null;
-	#if UNITY_EDITOR	
-		static int m_SimulateAssetBundleInEditor = -1;
+
+
+
+#if UNITY_EDITOR
+        static int m_SimulateAssetBundleInEditor = -1;
 		const string kSimulateAssetBundles = "SimulateAssetBundles";
-	#endif
-	
+#endif
+        static long fullDownloadSize = 0;
 		static Dictionary<string, LoadedAssetBundle> m_LoadedAssetBundles = new Dictionary<string, LoadedAssetBundle> ();
 #pragma warning disable
         static Dictionary<string, WWW> m_DownloadingWWWs = new Dictionary<string, WWW> ();
 #pragma warning restore
+        static Dictionary<string, long> bundeSize = new Dictionary<string, long>();
+
         static Dictionary<string, string> m_DownloadingErrors = new Dictionary<string, string> ();
 		static List<AssetBundleLoadOperation> m_InProgressOperations = new List<AssetBundleLoadOperation> ();
 		static Dictionary<string, string[]> m_Dependencies = new Dictionary<string, string[]> ();
@@ -76,9 +83,13 @@ namespace AssetBundles
 			get { return m_ActiveVariants; }
 			set { m_ActiveVariants = value; }
 		}
-	
-		// AssetBundleManifest object which can be used to load the dependecies and check suitable assetBundle variants.
-		public static AssetBundleManifest AssetBundleManifestObject
+
+        public void Awake()
+        {
+            instance = this;
+        }
+        // AssetBundleManifest object which can be used to load the dependecies and check suitable assetBundle variants.
+        public static AssetBundleManifest AssetBundleManifestObject
 		{
 			set {m_AssetBundleManifest = value; }
 		}
@@ -97,6 +108,8 @@ namespace AssetBundles
 		{
 			get
 			{
+                Caching.CleanCache();
+                return false;
 				if (m_SimulateAssetBundleInEditor == -1)
 					m_SimulateAssetBundleInEditor = EditorPrefs.GetBool(kSimulateAssetBundles, true) ? 1 : 0;
 				
@@ -292,9 +305,39 @@ namespace AssetBundles
 				return assetBundleName;
 			}
 		}
-	
-		// Where we actuall call WWW to download the assetBundle.
-		static protected bool LoadAssetBundleInternal (string assetBundleName, bool isLoadingAssetBundleManifest)
+
+        static IEnumerator GetFileSize(string url, System.Action<long> resut)
+        {
+            UnityWebRequest uwr = UnityWebRequest.Head(url);
+            yield return uwr.SendWebRequest();
+            string size = uwr.GetResponseHeader("Content-Length");
+
+            if (uwr.isNetworkError || uwr.isHttpError)
+            {
+                Debug.Log("Error While Getting Length: " + uwr.error);
+                if (resut != null)
+                    resut(-1);
+            }
+            else
+            {
+                if (resut != null)
+                    resut(System.Convert.ToInt64(size));
+            }
+        }
+
+        private void Start()
+        {
+            string downloadURL = "https://leren.careup.online/AssetBundles/7.2.4/Android/a_injection";
+            StartCoroutine(GetFileSize(downloadURL,
+            (size) =>
+            {
+                Debug.Log("File Size: " + size);
+            }));
+        }
+
+
+        // Where we actuall call WWW to download the assetBundle.
+        static protected bool LoadAssetBundleInternal (string assetBundleName, bool isLoadingAssetBundleManifest)
 		{
 			// Already loaded.
 			LoadedAssetBundle bundle = null;
@@ -321,8 +364,18 @@ namespace AssetBundles
 				download = WWW.LoadFromCacheOrDownload(url, m_AssetBundleManifest.GetAssetBundleHash(assetBundleName), 0);
 #pragma warning restore
             m_DownloadingWWWs.Add(assetBundleName, download);
-	
-			return false;
+
+            string downloadURL = download.url;
+            instance.StartCoroutine(GetFileSize(downloadURL,
+            (size) =>
+            {
+                //Debug.Log("File Size: "  + assetBundleName  + " " + size);
+                bundeSize.Add(assetBundleName, size);
+                fullDownloadSize += size;
+                //Debug.Log(fullDownloadSize);
+            }));
+                       
+            return false;
 		}
 	
 		// Where we get all the dependencies and load them all.
@@ -400,9 +453,14 @@ namespace AssetBundles
 		{
 			// Collect all the finished WWWs.
 			var keysToRemove = new List<string>();
-			foreach (var keyValue in m_DownloadingWWWs)
+            int downloadCount = m_DownloadingWWWs.Count;
+            float nonProgress = 0f;
+            long leftToDownload = 0;
+            foreach (var keyValue in m_DownloadingWWWs)
 			{
+
 #pragma warning disable
+
                 WWW download = keyValue.Value;
 #pragma warning restore
                 // If downloading fails.
@@ -412,9 +470,15 @@ namespace AssetBundles
 					keysToRemove.Add(keyValue.Key);
 					continue;
 				}
-	
-				// If downloading succeeds.
-				if(download.isDone)
+                nonProgress += download.progress;
+
+                if (bundeSize.ContainsKey(keyValue.Key))
+                {
+                    leftToDownload += (long)(bundeSize[keyValue.Key] * (1.0 - download.progress));
+                }
+
+                // If downloading succeeds.
+                if (download.isDone)
 				{
 					AssetBundle bundle = download.assetBundle;
 					if (bundle == null)
@@ -429,7 +493,19 @@ namespace AssetBundles
 					keysToRemove.Add(keyValue.Key);
 				}
 			}
-	
+	        if(GameObject.Find("TestSlider") != null)
+            {
+                float progress = 1;
+                if (fullDownloadSize > 0)
+                {
+                    progress = (float)(fullDownloadSize - leftToDownload) / (float)fullDownloadSize;
+                    print((fullDownloadSize - leftToDownload).ToString() + " / " + fullDownloadSize.ToString() + "     " + progress.ToString());
+                }
+                GameObject.Find("TestSlider").GetComponent<Slider>().value = progress;
+                GameObject.Find("testLoadText").GetComponent<Text>().text = ((fullDownloadSize - leftToDownload) / 1000000).ToString() + "MB/" +
+                    (fullDownloadSize/1000000).ToString() + "MB";
+                //print(progress);
+            }
 			// Remove the finished WWWs.
 			foreach( var key in keysToRemove)
 			{

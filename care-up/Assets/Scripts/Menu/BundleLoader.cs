@@ -24,6 +24,7 @@ public class BundleLoader : MonoBehaviour {
     // Initialize the downloading url and AssetBundleManifest object.
     protected IEnumerator Initialize()
     {
+       
         #if DEVELOPMENT_BUILD || UNITY_EDITOR
         AssetBundleManager.SetDevelopmentAssetBundleServer();
 #else
@@ -63,5 +64,6 @@ public class BundleLoader : MonoBehaviour {
 
         // Calculate and display the elapsed time. // never used now
         //float elapsedTime = Time.realtimeSinceStartup - startTime;
+        //print(elapsedTime);
     }
 }
