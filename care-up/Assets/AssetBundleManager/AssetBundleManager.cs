@@ -364,17 +364,7 @@ namespace AssetBundles
 				download = WWW.LoadFromCacheOrDownload(url, m_AssetBundleManifest.GetAssetBundleHash(assetBundleName), 0);
 #pragma warning restore
             m_DownloadingWWWs.Add(assetBundleName, download);
-
-            string downloadURL = download.url;
-            instance.StartCoroutine(GetFileSize(downloadURL,
-            (size) =>
-            {
-                //Debug.Log("File Size: "  + assetBundleName  + " " + size);
-                bundeSize.Add(assetBundleName, size);
-                fullDownloadSize += size;
-                //Debug.Log(fullDownloadSize);
-            }));
-                       
+ 
             return false;
 		}
 	
@@ -394,9 +384,23 @@ namespace AssetBundles
 				
 			for (int i=0;i<dependencies.Length;i++)
 				dependencies[i] = RemapVariantName (dependencies[i]);
-				
-			// Record and load all dependencies.
-			m_Dependencies.Add(assetBundleName, dependencies);
+
+            // get full bundle size before starting loading files
+            foreach (string dependancy in dependencies)
+            {
+                string url = m_BaseDownloadingURL + dependancy;
+                instance.StartCoroutine(GetFileSize(url,
+                (size) =>
+                {
+                    //Debug.Log("File Size: "  + assetBundleName  + " " + size);
+                    bundeSize.Add(assetBundleName, size);
+                    fullDownloadSize += size;
+                    //Debug.Log(fullDownloadSize);
+                }));
+            }
+
+            // Record and load all dependencies.
+            m_Dependencies.Add(assetBundleName, dependencies);
 			for (int i=0;i<dependencies.Length;i++)
 				LoadAssetBundleInternal(dependencies[i], false);
 		}
