@@ -79,7 +79,7 @@ namespace AssetBundles
 			if(GameObject.Find("TestSlider") != null)
 			{
 				GameObject.Find("TestSlider").GetComponent<Slider>().value = 0;
-				GameObject.Find("testLoadText").GetComponent<Text>().text = "";
+				GameObject.Find("SceneNameText").GetComponent<Text>().text = "Laden...";
 			}
 		}
 
@@ -518,8 +518,16 @@ namespace AssetBundles
                     // print((fullDownloadSize - leftToDownload).ToString() + " / " + fullDownloadSize.ToString() + "     " + progress.ToString());
                 }
 				if (progress > lastProgressValue){
+					int progValue = (int)(progress * 100);
 					GameObject.Find("TestSlider").GetComponent<Slider>().value = progress;
-					GameObject.Find("testLoadText").GetComponent<Text>().text = ((int)(progress * 100)).ToString() + "%";
+					if (progValue > 0)
+					{
+						GameObject.Find("SceneNameText").GetComponent<Text>().text = "Laden... " + (progValue).ToString() + "%";
+					}
+					else
+					{
+						GameObject.Find("SceneNameText").GetComponent<Text>().text = "Laden... ";
+					}
 				}
 
 				lastProgressValue = progress;
