@@ -123,7 +123,7 @@ namespace AssetBundles
 			{
                 //Caching.CleanCache();
                 //return false;
-				if (m_SimulateAssetBundleInEditor == -1)
+                if (m_SimulateAssetBundleInEditor == -1)
 					m_SimulateAssetBundleInEditor = EditorPrefs.GetBool(kSimulateAssetBundles, true) ? 1 : 0;
 				
 				return m_SimulateAssetBundleInEditor != 0;
@@ -496,7 +496,7 @@ namespace AssetBundles
 					keysToRemove.Add(keyValue.Key);
 				}
 			}
-	        if(GameObject.Find("TestSlider") != null)
+	        if(GameObject.Find("testSlider") != null)
             {
                 float progress = 0;
                 if (fullDownloadSize > 0)
@@ -506,7 +506,7 @@ namespace AssetBundles
                     if (true)//progress > lastProgressValue)
                     {
 					    int progValue = (int)(progress * 100);
-					    GameObject.Find("TestSlider").GetComponent<Slider>().value = progress;
+					    GameObject.Find("testSlider").GetComponent<Slider>().value = progress;
                         
 
                         if (progValue > 0)
