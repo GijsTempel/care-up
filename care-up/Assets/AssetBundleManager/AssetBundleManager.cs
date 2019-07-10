@@ -121,8 +121,8 @@ namespace AssetBundles
 		{
 			get
 			{
-                Caching.CleanCache();
-                return false;
+                //Caching.CleanCache();
+                //return false;
 				if (m_SimulateAssetBundleInEditor == -1)
 					m_SimulateAssetBundleInEditor = EditorPrefs.GetBool(kSimulateAssetBundles, true) ? 1 : 0;
 				
@@ -338,17 +338,6 @@ namespace AssetBundles
             }
         }
 
-        private void Start()
-        {
-            string downloadURL = "https://leren.careup.online/AssetBundles/7.2.4/Android/a_injection";
-            StartCoroutine(GetFileSize(downloadURL,
-            (size) =>
-            {
-                Debug.Log("File Size: " + size);
-            }));
-        }
-
-
         // Where we actuall call WWW to download the assetBundle.
         static protected bool LoadAssetBundleInternal (string assetBundleName, bool isLoadingAssetBundleManifest)
 		{
@@ -406,10 +395,8 @@ namespace AssetBundles
                 instance.StartCoroutine(GetFileSize(url,
                 (size) =>
                 {
-                    //Debug.Log("File Size: "  + assetBundleName  + " " + size);
                     bundeSize.Add(dependancy, size);
                     fullDownloadSize += size;
-                    //Debug.Log(fullDownloadSize);
                 }));
             }
 
@@ -515,23 +502,31 @@ namespace AssetBundles
                 if (fullDownloadSize > 0)
                 {
                     progress = (float)(fullDownloadSize - leftToDownload) / (float)fullDownloadSize;
-                    // print((fullDownloadSize - leftToDownload).ToString() + " / " + fullDownloadSize.ToString() + "     " + progress.ToString());
-                }
-				if (progress > lastProgressValue){
-					int progValue = (int)(progress * 100);
-					GameObject.Find("TestSlider").GetComponent<Slider>().value = progress;
-					if (progValue > 0)
-					{
-						GameObject.Find("SceneNameText").GetComponent<Text>().text = "Laden... " + (progValue).ToString() + "%";
-					}
-					else
-					{
-						GameObject.Find("SceneNameText").GetComponent<Text>().text = "Laden... ";
-					}
-				}
+                    Text SceneNameText = GameObject.Find("SceneNameText").GetComponent<Text>();
+                    if (true)//progress > lastProgressValue)
+                    {
+					    int progValue = (int)(progress * 100);
+					    GameObject.Find("TestSlider").GetComponent<Slider>().value = progress;
+                        
 
-				lastProgressValue = progress;
-                //print(progress);
+                        if (progValue > 0)
+					    {
+                            if (progValue == 100)
+                            {
+                                if (m_DownloadingWWWs.Count == 0)
+                                    SceneNameText.text = "De handeling wordt voor je klaargezet...";
+                                else
+                                    SceneNameText.text = "Laden...";
+                            }
+                            else
+                                SceneNameText.text = "Laden... " + (progValue).ToString() + "%";
+					    }
+                        else
+                            SceneNameText.text = "Laden... ";
+                        lastProgressValue = progress;
+                    }
+                }
+                
             }
 			// Remove the finished WWWs.
 			foreach( var key in keysToRemove)
