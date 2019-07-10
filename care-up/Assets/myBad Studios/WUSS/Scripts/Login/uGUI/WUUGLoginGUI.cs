@@ -393,7 +393,6 @@ namespace MBS
         {
             if ( fields.register_email.text.Trim() == string.Empty || fields.register_password.text.Trim() == string.Empty || fields.register_username.text.Trim() == string.Empty )
             {
-
                 RegUsernameField = RegUsernameField.GetComponent<Image> ();
                 RegEmailField = RegEmailField.GetComponent<Image> ();
                 RegPasswordField = RegPasswordField.GetComponent<Image> ();
@@ -410,7 +409,6 @@ namespace MBS
             }
             if ( fields.register_verify.text.Trim() != fields.register_password.text.Trim() )
             {
-
                 RegUsernameField = RegUsernameField.GetComponent<Image> ();
                 RegEmailField = RegEmailField.GetComponent<Image> ();
                 RegPasswordField = RegPasswordField.GetComponent<Image> ();
@@ -430,7 +428,6 @@ namespace MBS
             }
             if ( !fields.register_email.text.Trim().IsValidEmailFormat() )
             {
-
                 RegUsernameField = RegUsernameField.GetComponent<Image> ();
                 RegEmailField = RegEmailField.GetComponent<Image> ();
                 RegPasswordField = RegPasswordField.GetComponent<Image> ();
@@ -695,7 +692,81 @@ namespace MBS
         public void ShowPasswordResetScreen() => DisplayScreen( panels.password_reset_screen );
         public void ShowPasswordChangeScreen() => DisplayScreen( panels.password_change_screen );
         public void ShowAccountDetailsScreen() => DisplayScreen( panels.personal_info_screen );
-        public void ShowTermsAndConditionScreen () => DisplayScreen (panels.termsandcondition_screen );
+        public void ShowTermsAndConditionScreen()
+        {
+            // email field
+            if (fields.register_email.text.Trim() == string.Empty)
+            {
+                RegEmailField = RegEmailField.GetComponent<Image>();
+                RegEmailField.color = new Color32(255, 0, 0, 150);
+                DisplayScreen(panels.error_pop_up);
+                ErrorText.text = "Je moet alle velden invullen";
+                return;
+            }
+            
+            // username field
+            if (fields.register_username.text.Trim() == string.Empty)
+            {
+                RegUsernameField = RegUsernameField.GetComponent<Image>();
+                RegUsernameField.color = new Color32(255, 0, 0, 150);
+                DisplayScreen(panels.error_pop_up);
+                ErrorText.text = "Je moet alle velden invullen";
+                return;
+            }
+
+            // password field
+            if (fields.register_password.text.Trim() == string.Empty)
+            {
+                RegPasswordField = RegPasswordField.GetComponent<Image>();
+                RegPasswordField.color = new Color32(255, 0, 0, 150);
+                DisplayScreen(panels.error_pop_up);
+                ErrorText.text = "Je moet alle velden invullen";
+                return;
+            }
+
+            // repeat password field
+            if (fields.register_verify.text.Trim() != fields.register_password.text.Trim())
+            {
+                RegUsernameField = RegUsernameField.GetComponent<Image>();
+                RegEmailField = RegEmailField.GetComponent<Image>();
+                RegPasswordField = RegPasswordField.GetComponent<Image>();
+                RegRepeatPasswordField = RegRepeatPasswordField.GetComponent<Image>();
+
+                RegUsernameField.color = new Color32(210, 210, 210, 150);
+                RegEmailField.color = new Color32(210, 210, 210, 150);
+                RegPasswordField.color = new Color32(210, 210, 210, 150);
+                RegRepeatPasswordField.color = new Color32(210, 210, 210, 150);
+
+                RegPasswordField.color = new Color32(255, 0, 0, 150);
+                RegRepeatPasswordField.color = new Color32(255, 0, 0, 150);
+
+                DisplayScreen(panels.error_pop_up);
+                ErrorText.text = "De wachtwoorden komen niet overeen.";
+                return;
+            }
+
+            // email format
+            if (!fields.register_email.text.Trim().IsValidEmailFormat())
+            {
+                RegUsernameField = RegUsernameField.GetComponent<Image>();
+                RegEmailField = RegEmailField.GetComponent<Image>();
+                RegPasswordField = RegPasswordField.GetComponent<Image>();
+                RegRepeatPasswordField = RegRepeatPasswordField.GetComponent<Image>();
+
+                RegUsernameField.color = new Color32(210, 210, 210, 150);
+                RegEmailField.color = new Color32(210, 210, 210, 150);
+                RegPasswordField.color = new Color32(210, 210, 210, 150);
+                RegRepeatPasswordField.color = new Color32(210, 210, 210, 150);
+
+                RegEmailField.color = new Color32(255, 0, 0, 150);
+
+                DisplayScreen(panels.error_pop_up);
+                ErrorText.text = "Het ingevulde e-mailadres in niet geldig.";
+                return;
+            }
+
+            DisplayScreen(panels.termsandcondition_screen);
+        }
         public void CloseHighScoresScreen() => DisplayScreen( panels.login_menu );
         public void ReturnFromSerialScreen () => LogOut ();
         public void ShowTerms_condition_Screen () => panels.terms_condition_screen.SetActive(true);
