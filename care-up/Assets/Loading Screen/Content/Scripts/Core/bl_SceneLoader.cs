@@ -208,6 +208,10 @@ public class bl_SceneLoader : MonoBehaviour
     /// </summary>
     void OnFinish()
     {
+        BundleLoader loader = GameObject.FindObjectOfType<BundleLoader>();
+        if (loader != null){
+            loader.ClearLoader();
+        }
         FinishLoad = true;
         if (FlashImage != null) { FlashImage.SetActive(true); }
         //Can skip when next level is loaded.
