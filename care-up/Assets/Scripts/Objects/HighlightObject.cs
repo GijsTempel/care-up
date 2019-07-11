@@ -40,7 +40,7 @@ public class HighlightObject : MonoBehaviour {
 
     public void setGold(bool value)
     {
-        //setMaterial("goldHint");
+        setMaterial("hGreen");
         isEyeCatcher = true;
         foreach (GameObject b in BallElements)
             if (b.name == "b1")
