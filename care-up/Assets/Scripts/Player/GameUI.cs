@@ -39,7 +39,7 @@ public class GameUI : MonoBehaviour
     float current_UpdateHintDelay = 0f;
     bool toDelayUpdateHint = false;
     GameObject gameLogic;
-
+    public GameObject TalkBubble;
     GameObject DetailedHintPanel;
 
     public List<string> activeHighlighted = new List<string>();
@@ -79,7 +79,7 @@ public class GameUI : MonoBehaviour
 
     private bool startTimer = false;
     private float targetTime = 0.7f;
-
+    public PersonObject PersonToTalk = null;
     bool currentItemControlPanelState = false;
     int currentLeft;
     int currentRight;
@@ -122,6 +122,13 @@ public class GameUI : MonoBehaviour
         }
     }
 
+
+    public void TalkButtonPressed()
+    {
+        if (PersonToTalk == null)
+            return;
+        PersonToTalk.CreateSelectionDialogue();
+    }
 
     public void ShowBlockMessage(string Title, string Message)
     {
@@ -721,6 +728,29 @@ public class GameUI : MonoBehaviour
         }    
 
         actionManager.ShowTheory = false;
+    }
+
+    public void PlaceTalkBubble(GameObject person)
+    {
+        
+        if (person == null)
+            return;
+        PersonObject personObject = person.GetComponent<PersonObject>();
+        if (personObject == null)
+            return;
+        if (personObject.TalkBubbleAnchor == null)
+            return;
+        WalkToGroup near = ActionManager.NearestWalkToGroup(person);
+        if (ps.away)
+            return;
+        if (ps.currentWalkPosition == near)
+        {
+            TalkBubble.SetActive(true);
+            TalkBubble.GetComponent<TutorialHintsN>().WorldObject = personObject.TalkBubbleAnchor;
+            TalkBubble.GetComponent<TutorialHintsN>().Update();
+            PersonToTalk = personObject;
+        }
+
     }
 
     void Update()
