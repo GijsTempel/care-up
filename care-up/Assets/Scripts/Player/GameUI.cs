@@ -507,7 +507,9 @@ public class GameUI : MonoBehaviour
                         continue;
                     HighlightObject h = AddHighlight(GameObject.Find(objectToUse).transform, prefix, hl_type, 2f + Random.Range(0f, 0.5f));
                     if (h != null)
+                    {
                         h.setGold(true);
+                    }
                     newHLObjects.Add(objectToUse);
                 }
                 else
@@ -526,7 +528,9 @@ public class GameUI : MonoBehaviour
                     {
                         HighlightObject h = AddHighlight(usableHL.transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f, 0.5f));
                         if (h != null)
+                        {
                             h.setGold(true);
+                        }
                         newHLObjects.Add(usableHL.name);
                     }
                     else
@@ -537,7 +541,9 @@ public class GameUI : MonoBehaviour
                             {
                                 HighlightObject h = AddHighlight(p.transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f, 0.5f));
                                 if (h != null)
+                                {
                                     h.setGold(true);
+                                }
                                 newHLObjects.Add(p.name);
                             }
                         }

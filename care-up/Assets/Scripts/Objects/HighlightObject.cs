@@ -12,7 +12,7 @@ public class HighlightObject : MonoBehaviour {
     public List<GameObject> ArrowElements;
     //bool gold = false;
     GameUI gameUI;
-    public bool isEyeCatcher = true;
+    public bool isEyeCatcher = false;
     public GameObject audioEffect;
     public GameObject hand_hl;
 
@@ -41,13 +41,14 @@ public class HighlightObject : MonoBehaviour {
     public void setGold(bool value)
     {
         //setMaterial("goldHint");
+        isEyeCatcher = true;
         foreach (GameObject b in BallElements)
             if (b.name == "b1")
                 b.SetActive(false);
         foreach (GameObject q in QubeElements)
             if (q.name == "q1")
                 q.SetActive(false);
-        transform.localScale = 1.2f * transform.localScale;
+        content.transform.localScale = 1.2f * content.transform.localScale;
     }
 
     public void setMaterial(string matName)
@@ -66,7 +67,7 @@ public class HighlightObject : MonoBehaviour {
         foreach (GameObject q in QubeElements)
             q.SetActive(currentType == HighlightObject.type.Qube);
         foreach (GameObject a in ArrowElements)
-            a.SetActive(true);//currentType == HighlightObject.type.Arrow || isEyeCatcher);
+            a.SetActive(isEyeCatcher);//currentType == HighlightObject.type.Arrow || isEyeCatcher);
         if (_type == HighlightObject.type.Hand)
         {
             content.transform.rotation = new Quaternion();
@@ -88,7 +89,6 @@ public class HighlightObject : MonoBehaviour {
     }
 
 
-
     public void setTarget(Transform t)
     {
         target = t;
@@ -102,7 +102,7 @@ public class HighlightObject : MonoBehaviour {
         {
             setType(hl_control.hl_type);
             transform.position = hl_control.transform.position;
-            if (currentType != HighlightObject.type.Arrow && currentType != HighlightObject.type.Hand)
+            if (currentType != HighlightObject.type.Hand)
             {   
                 content.transform.rotation = hl_control.transform.rotation;
                 content.transform.localScale = hl_control.transform.localScale;
@@ -144,11 +144,11 @@ public class HighlightObject : MonoBehaviour {
             }
             else
             {
-                content.SetActive(transform);
-                if(isEyeCatcher)
+                content.SetActive(true);
+
+                foreach (GameObject a in ArrowElements)
                 {
-                    foreach (GameObject a in ArrowElements)
-                        a.SetActive(transform);
+                    a.SetActive(isEyeCatcher && currentType != HighlightObject.type.Hand);
                 }
                 if (currentType != HighlightObject.type.none)
                     audioEffect.SetActive(true);
