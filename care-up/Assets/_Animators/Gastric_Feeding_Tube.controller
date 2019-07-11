@@ -1,33 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1102 &-9084364307942475584
-AnimatorState:
-  serializedVersion: 5
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: TakeOffGloves
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: 6295224413661273079}
-  m_StateMachineBehaviours:
-  - {fileID: 7933811631879134340}
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400010, guid: 0ee30d12fd30d864c950a064b93b2010, type: 3}
-  m_Tag: UI_On
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!114 &-8849104351649238679
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4226,22 +4198,6 @@ MonoBehaviour:
   audioFrame: 20
   positionObjectName: HandCleaner
   volume: 0.2
---- !u!114 &114461043318916398
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4b30a118a14541d2b62aa59ff91d6b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  next: 0
-  actionFrame: 3
-  ObjectName: m0_underwear
-  DialogueNum: 1
 --- !u!114 &114462347665365960
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -20460,7 +20416,6 @@ AnimatorState:
   - {fileID: 1101110150952449116}
   m_StateMachineBehaviours:
   - {fileID: 114842506452010480}
-  - {fileID: 114461043318916398}
   - {fileID: 114448980961842372}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -23368,9 +23323,6 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: -5102966949902978304}
     m_Position: {x: -2180, y: -730, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -9084364307942475584}
-    m_Position: {x: -1040, y: -640, z: 0}
   m_ChildStateMachines:
   - serializedVersion: 1
     m_StateMachine: {fileID: 1107007893727009562}
@@ -23405,7 +23357,6 @@ AnimatorStateMachine:
   - {fileID: 1101400428374441546}
   - {fileID: 1101217700742137694}
   - {fileID: 1101872312959274546}
-  - {fileID: 1241067278181077248}
   m_EntryTransitions:
   - {fileID: 1109936388866647054}
   - {fileID: 1109422650530841144}
@@ -25369,28 +25320,6 @@ AnimatorTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 1
---- !u!1101 &1241067278181077248
-AnimatorStateTransition:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_Conditions: []
-  m_DstStateMachine: {fileID: 0}
-  m_DstState: {fileID: -9084364307942475584}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 0
-  serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.75
-  m_HasExitTime: 0
-  m_HasFixedDuration: 1
-  m_InterruptionSource: 0
-  m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
 --- !u!1101 &1569768561530629788
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -25919,28 +25848,6 @@ MonoBehaviour:
   ObjNames:
   - MarkersCap.001
   toShow: 0
---- !u!1101 &6295224413661273079
-AnimatorStateTransition:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_Conditions: []
-  m_DstStateMachine: {fileID: 0}
-  m_DstState: {fileID: 0}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 1
-  serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.70000005
-  m_HasExitTime: 1
-  m_HasFixedDuration: 1
-  m_InterruptionSource: 0
-  m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
 --- !u!114 &6447129994610788594
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -26091,20 +25998,6 @@ MonoBehaviour:
   ObjNames:
   - GlassOfWaterinPatHand
   toShow: 1
---- !u!114 &7933811631879134340
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75d5649a1875edf478a49f715e29c332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  showFrame: 1
-  toPickup: 0
 --- !u!114 &7937908829822370177
 MonoBehaviour:
   m_ObjectHideFlags: 1
