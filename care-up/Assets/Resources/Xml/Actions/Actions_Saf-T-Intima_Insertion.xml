@@ -57,6 +57,7 @@
       left="BandAidPackage"
       right=""
       extra="Leg de fixatiepleister klaar in een geopende verpakking."
+      blockUnlock="block1"
      />
 
   <action
@@ -68,7 +69,7 @@
       left="insulfonPackage"
       right=""
       extra="Leg de Saf-T-Intima klaar in een geopende verpakking"
-      blockUnlock="opened package"
+      blockUnlock="block2"
       messageTitle="Stel je op de hoogte van de werking"
       messageContent="De Saf-T-Intima is een veilige kunststof canule die ook subcutaan ingebracht kan worden. Lees de gebruiksaanwijzing en stel je op de hoogte van de werking."
      />
@@ -82,6 +83,7 @@
       left="OmniflushSyringeBag"
       right=""
       extra="Leg de spuit Omniflush NaCl 0,9% klaar in een geopende verpakking"
+      blockUnlock="block3"
       messageTitle="Voorverpakte Omniflush NaCl 0,9% niet aanwezig"
       messageContent="Wanneer er geen Omniflush NaCl 0,9% aanwezig is. Maak je een spuit met NaCl 0,9% uit een ampul klaar, ontlucht je de spuit en leg de spuit terug in de geopende verpakking."
      />
@@ -95,6 +97,7 @@
     left="MicroClavePackage"
     right=""
     extra="Leg de naaldloze connector klaar in een geopende verpakking."
+    blockUnlock="block4"
    />
 
   <action
@@ -129,7 +132,7 @@
     type="use"
     value="gloveBox"
     extra="Pas handhygiëne toe. Handhygiëne is het allerbelangrijkste als het gaat om voorkomen van besmetting met ziektekiemen. Dit betekent je handen reinigen op de juiste manier en op de juiste momenten. Begin een handeling altijd met handhygiëne."
-    blockRequired="opened package"
+    blockRequired="block1,block2,block3,block4"
     blockTitle="Deze handeling is nog niet mogelijk"
     blockMessage="Zorg ervoor dat het materiaal klaar is voor gebruik door de verpakkingen te openen."
   />
