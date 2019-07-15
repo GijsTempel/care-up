@@ -1524,10 +1524,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4323999925113862, guid: 1c94a408d12a7d34aa0438d0a8d5578b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.025
-      objectReference: {fileID: 0}
     - target: {fileID: 65258225986405852, guid: 1c94a408d12a7d34aa0438d0a8d5578b,
         type: 3}
       propertyPath: m_Size.z
@@ -1547,6 +1543,10 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Center.z
       value: -0.021058716
+      objectReference: {fileID: 0}
+    - target: {fileID: 4323999925113862, guid: 1c94a408d12a7d34aa0438d0a8d5578b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.025
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c94a408d12a7d34aa0438d0a8d5578b, type: 3}
@@ -6830,6 +6830,14 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4481662160455666, guid: 04ef50acd91b5534f94bead71accf78d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4481662160455666, guid: 04ef50acd91b5534f94bead71accf78d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.88
+      objectReference: {fileID: 0}
     - target: {fileID: 23000011653276370, guid: 04ef50acd91b5534f94bead71accf78d,
         type: 3}
       propertyPath: m_ReflectionProbeUsage
@@ -6843,14 +6851,6 @@ PrefabInstance:
         type: 3}
       propertyPath: description
       value: Naaldenbeker
-      objectReference: {fileID: 0}
-    - target: {fileID: 4481662160455666, guid: 04ef50acd91b5534f94bead71accf78d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4481662160455666, guid: 04ef50acd91b5534f94bead71accf78d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.88
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04ef50acd91b5534f94bead71accf78d, type: 3}
@@ -7673,6 +7673,36 @@ Transform:
   - {fileID: 1185972390}
   m_Father: {fileID: 0}
   m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1253530681
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1253530682}
+  m_Layer: 0
+  m_Name: Patient_TB_ancher
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1253530682
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1253530681}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.118, y: 0.014, z: -0.004}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2078450680}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1257013894
 GameObject:
@@ -11512,6 +11542,7 @@ MonoBehaviour:
   dialogueXmls:
   - Greeting
   - InsulinPatient
+  TalkBubbleAnchor: {fileID: 1253530681}
   tutorial_greetingEnded: 0
   pulledUp: 0
 --- !u!82 &1779145060
@@ -12290,6 +12321,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: -135.196
       objectReference: {fileID: 0}
+    - target: {fileID: 114017726456870824, guid: 37620efdd9e41c444af49d4f4225f8eb,
+        type: 3}
+      propertyPath: KyePoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 525508210}
+    - target: {fileID: 114017726456870824, guid: 37620efdd9e41c444af49d4f4225f8eb,
+        type: 3}
+      propertyPath: KyePoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 285611923}
+    - target: {fileID: 114017726456870824, guid: 37620efdd9e41c444af49d4f4225f8eb,
+        type: 3}
+      propertyPath: KyePoints.Array.data[2]
+      value: 
+      objectReference: {fileID: 910832879}
+    - target: {fileID: 114017726456870824, guid: 37620efdd9e41c444af49d4f4225f8eb,
+        type: 3}
+      propertyPath: KyePoints.Array.data[3]
+      value: 
+      objectReference: {fileID: 338056244}
     - target: {fileID: 95009182766757784, guid: 37620efdd9e41c444af49d4f4225f8eb,
         type: 3}
       propertyPath: m_Controller
@@ -12324,26 +12375,6 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114017726456870824, guid: 37620efdd9e41c444af49d4f4225f8eb,
-        type: 3}
-      propertyPath: KyePoints.Array.data[0]
-      value: 
-      objectReference: {fileID: 525508210}
-    - target: {fileID: 114017726456870824, guid: 37620efdd9e41c444af49d4f4225f8eb,
-        type: 3}
-      propertyPath: KyePoints.Array.data[1]
-      value: 
-      objectReference: {fileID: 285611923}
-    - target: {fileID: 114017726456870824, guid: 37620efdd9e41c444af49d4f4225f8eb,
-        type: 3}
-      propertyPath: KyePoints.Array.data[2]
-      value: 
-      objectReference: {fileID: 910832879}
-    - target: {fileID: 114017726456870824, guid: 37620efdd9e41c444af49d4f4225f8eb,
-        type: 3}
-      propertyPath: KyePoints.Array.data[3]
-      value: 
-      objectReference: {fileID: 338056244}
     - target: {fileID: 4629408459963904, guid: 37620efdd9e41c444af49d4f4225f8eb, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -13738,6 +13769,7 @@ Transform:
   m_Children:
   - {fileID: 225068397}
   - {fileID: 498512023}
+  - {fileID: 1253530682}
   m_Father: {fileID: 615779642}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

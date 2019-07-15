@@ -1035,6 +1035,7 @@ GameObject:
   - component: {fileID: 251147190}
   - component: {fileID: 251147195}
   - component: {fileID: 251147198}
+  - component: {fileID: 251147199}
   m_Layer: 0
   m_Name: GameLogic
   m_TagString: Untagged
@@ -1232,6 +1233,22 @@ MonoBehaviour:
   hidenObjects:
   - {fileID: 213516748}
   - {fileID: 0}
+--- !u!114 &251147199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 251147189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 016714ad2258b594b87e7e81d0e3b497, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggers:
+  - UseRight
+  - S UseRight
+  - 3300 rightID
 --- !u!1001 &274701677
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2280,6 +2297,21 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 224576689183971624, guid: 0a9bca9bf7e384fc2a3f708b73a6a577,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224576689183971624, guid: 0a9bca9bf7e384fc2a3f708b73a6a577,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224576689183971624, guid: 0a9bca9bf7e384fc2a3f708b73a6a577,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 224268715766342320, guid: 0a9bca9bf7e384fc2a3f708b73a6a577,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -2301,21 +2333,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224124631034167902, guid: 0a9bca9bf7e384fc2a3f708b73a6a577,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224576689183971624, guid: 0a9bca9bf7e384fc2a3f708b73a6a577,
-        type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224576689183971624, guid: 0a9bca9bf7e384fc2a3f708b73a6a577,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224576689183971624, guid: 0a9bca9bf7e384fc2a3f708b73a6a577,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -7660,6 +7677,36 @@ Transform:
   m_Father: {fileID: 2097502488}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1957542003
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1957542004}
+  m_Layer: 0
+  m_Name: mo_underwear_TB_anchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1957542004
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957542003}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.205, y: -0, z: -0.005}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2085113802}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1962992556
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8376,6 +8423,7 @@ MonoBehaviour:
   dialogueXmls:
   - Greeting
   - Dialog_Giving_Medication_Through_Insuflon_Insertation
+  TalkBubbleAnchor: {fileID: 1957542003}
   playerPosition: {x: 0, y: 0, z: 0}
   playerRotation: {x: 0, y: 0, z: 0}
   playerPositionTarget: {fileID: 0}
@@ -8860,6 +8908,12 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5174862, y: 0.38786975, z: 0.70335627}
   m_Center: {x: -0.0000009536743, y: -0.044834882, z: 0.09038967}
+--- !u!4 &2085113802 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400188, guid: f29275f991940d2439bb6f21a43dbc8c,
+    type: 3}
+  m_PrefabInstance: {fileID: 2085113766}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2097502487
 GameObject:
   m_ObjectHideFlags: 0
