@@ -255,6 +255,15 @@ public class ActionManager : MonoBehaviour
 
                 if (a.Type == ActionType.PersonTalk && dialog)
                 {
+                    foreach (PersonObject po in GameObject.FindObjectsOfType<PersonObject>())
+                    {
+                        if (po.hasTopic(a._topic))
+                        {
+                            gameUI.PlaceTalkBubble(po.gameObject);
+                        }
+                    }
+
+                    //------------------------------------------------------------------------------
                     if (personClicked)
                         objectsData.Add(new StepData(false, $"- Kies wat je gaat doen.", i));
                     else
@@ -277,6 +286,13 @@ public class ActionManager : MonoBehaviour
 
                 if (a.Type == ActionType.PersonTalk && dialog)
                 {
+                    foreach (PersonObject po in GameObject.FindObjectsOfType<PersonObject>())
+                    {
+                        if (po.hasTopic(a._topic))
+                        {
+                            gameUI.PlaceTalkBubble(po.gameObject);
+                        }
+                    }
                     if (personClicked)
                         objectsData.Add(new StepData(false, $"- Kies wat je gaat doen.", i));
                     else
@@ -1751,9 +1767,10 @@ public class ActionManager : MonoBehaviour
     {
         if (!practiceMode)
             return;
-
+        GameUI gameUI = GameObject.FindObjectOfType<GameUI>();
         ActionManager am = GameObject.FindObjectOfType<ActionManager>();
-
+        gameUI.TalkBubble.SetActive(false);
+        gameUI.PersonToTalk = null;
         foreach (Action a in am.IncompletedActions)
         {
             string[] ObjectNames = new string[0];

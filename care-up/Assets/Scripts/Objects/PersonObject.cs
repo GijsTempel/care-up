@@ -28,10 +28,11 @@ public class PersonObject : InteractableObject
     private bool direction = true;
     private float inhaleCounter = 1.0f;
 
-
     protected AudioSource audioSource;
 
     protected bool lookAtCamera;
+
+    public GameObject TalkBubbleAnchor = null;
 
     protected override void Start()
     {
