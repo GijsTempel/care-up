@@ -41,14 +41,12 @@ public class PlayerAnimationManager : MonoBehaviour
 
     public static Quaternion GetSavedCameraOrientation()
     {
-        print("lllllllllll  " + SavedCameraOrientation.ToString());
         return SavedCameraOrientation;
     }
 
     public static void SetSavedCameraOrientation(Quaternion value)
     {
         SavedCameraOrientation = value;
-        print("ssssss  " + SavedCameraOrientation.ToString());
     }
 
     public static bool IsLongAnimation()
