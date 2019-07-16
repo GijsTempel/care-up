@@ -201,12 +201,16 @@ public class AnimationSequence  {
         }
     }
 
+
     /// <summary>
     /// Goes to next step of sequence. Handles creating/changing Dialogue.
     /// </summary>
     public void NextStep()
     {
+        GameObject.FindObjectOfType<GameUI>().ShowTheory(true);
+
         GameObject dialogueObject = GameObject.Find("SelectionDialogue");
+
         if (currentStep < steps.Count)
         {
             if (dialogueObject == null)

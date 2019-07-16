@@ -31,14 +31,15 @@
     type="use"
     value="WorkField"
     extra="Maak een schoon werkveld en zet de benodigdheden binnen handbereik."
-    messageTitle="Benodigdheden"
+    messageTitle="Je het volgende nodig hebt?"
     messageContent="
-    - Bijsluiter
-    - Toedieningslijst
-    - Voorgevulde fraxiparine spuit
-    - Afvalbak
-    - Naaldenbeker en naaldverwijderaar
-    "
+- Bijsluiter
+- Toedieningslijst
+- Injectiespuit met voorgeschreven medicijn
+- Afvalbak
+- Gaasje
+- Naaldenbeker en naaldverwijderaar
+- Desinfectans: chloorhexidine alcohol 70%, als de huid gedesinfecteerd moet worden"
     ></action>
 
   <action
@@ -62,11 +63,12 @@
     expected="good"
     extra="Controleer het medicijn (Fraxiparine spuit)."
     messageTitle="Controle medicijn"
-    messageContent="Controleer het medicijn op
-    - De uiterste houdbaarheidsdatum;
-    - kleur en substantie
-    - toedieningswijze
-    - Beschadigingen op de spuit."
+    messageContent="
+Controleer het medicijn op:
+- De uiterste houdbaarheidsdatum;
+- kleur en substantie
+- toedieningswijze
+- Beschadigingen op de spuit."
   ></action>
 
   <action
@@ -78,10 +80,11 @@
     expected="good"
     extra="Controleer de toedienlijst op soort, dosering en toedientijdstip. "
     messageTitle="Controle toedienlijst"
-    messageContent="Vergelijk het medicijn met de toedieningslijst.
-      - soort
-      - dosering
-      - toedieningstijdstip"
+    messageContent="
+Vergelijk het medicijn met de toedieningslijst.
+- soort
+- dosering
+- toedieningstijdstip"
   ></action>
 
   <action
@@ -129,6 +132,17 @@
     topic="ShowBellyForInsulin"
     extra="Vraag de cliënt de injectieplaats te ontbloten en te ontspannen zodat je makkelijk bij de injectieplaats kunt."
     blockUnlock="patient show spot"
+    messageTitle="Geschikte injectiegebieden"
+    messageContent="
+Geschikte injectiegebieden voor subcutane injecties zijn:
+
+- De boven/buitenkant van het bovenbeen (handbreedte boven de knie vrijlaten)
+- Het gebied naast en onder de navel (houd minimaal 2 cm afstand van de navel)
+- Billen (bovenste buitenste deel)
+- De boven/buitenkant van de bovenarm
+
+Desinfecteer de huid bij cliënten met verminderde weerstand.
+    "
   ></action>
 
   <action
@@ -153,7 +167,7 @@
     index="8"
     type="sequenceStep"
     value="Check"
-    extra="Controleer of de injectieplaats schoon en droog is om besmetting van ziektekiemen te voorkomen."
+    extra="Palpeer de injectieplaats en controleer of de injectieplaats schoon en droog is."
   ></action>
   
   <action
@@ -188,8 +202,7 @@
   
   <action
     points="1"
-    description="Spuit de vloeistof langzaam en regelmatig in"
-    audioHint="Injection/AS7-2"
+    description="Spuit de vloeistof langzaam en regelmatig in ongeveer 10 sec/ml)"
     index="12"
     type="sequenceStep"
     value="Inject medicine slow and steady"
@@ -198,8 +211,7 @@
   
   <action
     points="1"
-    description="Trek de naald uit de huid. Houd een gaasje voor de opvang van een eventuele bloeddruppel gereed. Masseer de huid niet!"
-    audioHint="Injection/AS8-2"
+    description="Trek na het injecteren de naald uit de huid. Hierbij kun je een gaasje gereed houden om een eventuele bloeddruppel op te vangen. Masseer de huid niet!"
     index="13"
     type="sequenceStep"
     value="Pull needle"
@@ -227,7 +239,7 @@
     item="Frexi"
     target=""
     buttonText="Spuit weggooien"
-    extra="Verwijder de opzuignaald en doe de naald in de naaldencontainer. Gebruik voor het injecteren spuiten en naalden voor eenmalig gebruik (dit worden ook wel eens disposables genoemd). Plaats een naald na gebruik nooit in de plastic beschermhuls terug. Werk met veilige opzuignaalden. Gebruik de inkepingen op de deksel om de naald en spuit te scheiden of gebruik een naaldverwijderaar."
+    extra="Doe de Fraxiparine spuit in zijn geheel in de naaldenbeker. Gebruik voor het injecteren spuiten en naalden voor eenmalig gebruik (dit worden ook wel eens disposables genoemd). Plaats een naald na gebruik nooit in de plastic beschermhuls terug. Werk met veilige opzuignaalden. Gebruik de inkepingen op de deksel om de naald en spuit te scheiden of gebruik een naaldverwijderaar."
   ></action>
 
   <action
@@ -249,9 +261,7 @@
     type="use"
     value="HandCleaner"
     extra="Pas handhygiëne toe"
-    messageTitle="Handhygiëne"
-    messageContent="Handhygiëne is het meest belangrijk om besmetting met ziektekiemen te voorkomen. Reinig je handen altijd op de juiste manier en op het juiste moment. Begin een handeling altijd met handhygiëne."
-  ></action>
+ ></action>
   
   <action
     points="2"
