@@ -13,6 +13,8 @@ public class MainMenu : MonoBehaviour {
 
     public GameObject UpdatesPanel;
 
+    private List<string> resendingLocks = new List<string>();
+
     private void Start()
     {
         if (GameObject.Find("Preferences") != null)
@@ -118,7 +120,7 @@ public class MainMenu : MonoBehaviour {
     public void ResendCertificate(string scene, string date)
     {
         // check if can send
-        bool flag = true;
+        bool flag = !resendingLocks.Contains(scene);
 
         if (flag)
         {
@@ -127,12 +129,27 @@ public class MainMenu : MonoBehaviour {
 
             // show pop up that it's sent
             GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/CertificatePopOp").SetActive(true);
+
+            // add lock
+            resendingLocks.Add(scene);
+
+            // set timer to unlock
+            StartCoroutine(UnlockResending(scene));
         }
         else
         {
             // can't send, show different pop up
-
+            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/CertificateBlockedPopOp").SetActive(true);
         }
+    }
+
+    IEnumerator UnlockResending(string scene)
+    {
+        // 5min cooldown
+        yield return new WaitForSeconds(300f);
+
+        resendingLocks.Remove(scene);
+        Debug.Log(scene + " scene certificate and be sent again.");
     }
 
     public void UpdateLatestVersionDev()
