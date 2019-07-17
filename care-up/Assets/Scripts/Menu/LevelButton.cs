@@ -1,9 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LevelButton : MonoBehaviour {
+public class LevelButton : MonoBehaviour
+{
 
     private static LoadingScreen loadingScreen;
 
@@ -15,6 +15,7 @@ public class LevelButton : MonoBehaviour {
     public Sprite image;
     public bool testDisabled;
     public bool validated;
+    public string totalPoints;
 
     private static Transform sceneInfoPanel = default(Transform);
     private static PlayerPrefsManager manager;
@@ -35,8 +36,9 @@ public class LevelButton : MonoBehaviour {
         public Sprite image;
         public bool testDisabled;
         public bool validated;
+        public string totalPoints;
     };
-    
+
     public List<Info> variations = new List<Info>();
 
     public bool buy = false;
@@ -136,7 +138,7 @@ public class LevelButton : MonoBehaviour {
             "DialogTestPractice/Panel_UI/Buttons/TestButton").GetComponent<Button>();
 
             string formattedSceneName = PlayerPrefsManager.FormatSceneName(manager.currentSceneVisualName);
-         
+
             int practicePlays;
             int.TryParse(DatabaseManager.FetchField("PracticePlays", formattedSceneName), out practicePlays);
 
@@ -160,7 +162,7 @@ public class LevelButton : MonoBehaviour {
                 "DialogTestPractice/Panel_UI/Buttons/TestButton/contentunlocked").SetActive(testBtn.interactable);
             GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
                 "DialogTestPractice/Panel_UI/Buttons/TestButton/contentlocked").SetActive(!testBtn.interactable);
-            
+
             int practiceHighscore, practiceStars;
             int.TryParse(DatabaseManager.FetchField("PracticeHighscores", "score_" + formattedSceneName), out practiceHighscore);
             int.TryParse(DatabaseManager.FetchField("PracticeHighscores", "stars_" + formattedSceneName), out practiceStars);
@@ -183,10 +185,12 @@ public class LevelButton : MonoBehaviour {
             GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
                     "DialogTestPractice/Panel_UI/Buttons/PracticeButton/content/Stars/Star3")
                 .GetComponent<Image>().sprite = (practiceStars >= 3.0f) ? gold : grey;
+
+            SetPointsAmount();
         }
     }
 
-    public void OnStartButtonClick() 
+    public void OnStartButtonClick()
     {
         PlayerPrefsManager.AddOneToPlaysNumber();
 
@@ -197,7 +201,7 @@ public class LevelButton : MonoBehaviour {
 
         bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
     }
-    
+
     public void GetSceneDatabaseInfo_Success(string[] info)
     {
         if (info.Length > 1)
@@ -216,5 +220,11 @@ public class LevelButton : MonoBehaviour {
     public void UpdateHighScore()
     {
         manager.GetSceneDatabaseInfo(sceneName, GetSceneDatabaseInfo_Success);
+    }
+
+    public void SetPointsAmount()
+    {
+        Text points = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/DialogTestPractice/Panel_UI/PointsAmount").transform.GetChild(0).GetComponent<Text>();
+        points.text = validated ? "Te behalen accreditatiepunten: " + totalPoints : "";
     }
 }

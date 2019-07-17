@@ -42,6 +42,7 @@ public class SetTriggerAtFrame : StateMachineBehaviour
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        
         if (animator.speed != 0)
         {
             if (!atTheEnd)

@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using MBS;
+using UnityEngine.SceneManagement;
 
 public class DatabaseManager : MonoBehaviour
 {
     private static string sessionKey = "";
+    private static bool sessionTimeOut = false;
 
     public class Category
     {
@@ -19,6 +21,8 @@ public class DatabaseManager : MonoBehaviour
     private static DatabaseManager instance;
     private static List<Category> database = new List<Category>();
 
+    private static Coroutine sessionCheck;
+    
     private void Awake()
     {
         if (instance)
@@ -30,20 +34,31 @@ public class DatabaseManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
+
+        if (SceneManager.GetActiveScene().name == "LoginMenu")
+        {
+            if (sessionTimeOut)
+            {
+                GameObject.Find("Canvas/WULoginPrefab/SessionTimeOutPanel").SetActive(true);
+                sessionTimeOut = false;
+            }
+        }
     }
 
     public static void Init()
     {
         // querry all player info here?
-        WUData.FetchUserGameInfo(WULogin.UID, FetchEverything_success);
+        WUData.FetchUserGameInfo(WULogin.UID, FetchEverything_success, -1, PostInit);
     }
 
     public static void Clean()
     {
         database.Clear();
+        instance.StopCoroutine(sessionCheck);
+        GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed = false;
     }
 
-    private static void PostInit()
+    private static void PostInit(CMLData ignore = null)
     {
         // increment logins number
         int loginNumber;
@@ -54,8 +69,9 @@ public class DatabaseManager : MonoBehaviour
         string plays = FetchField("AccountStats", "Plays_Number");
         int.TryParse(plays, out PlayerPrefsManager.plays);
 
-        // set sub status
-        GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed = WULogin.HasSerial;
+        // set sub status, for iPhone it's being set in IAPManager
+        GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed =
+            GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed || WULogin.HasSerial;
 
         // set character info
         CharacterInfo.sex = FetchField("AccountStats", "CharacterSex");
@@ -67,9 +83,16 @@ public class DatabaseManager : MonoBehaviour
         GameObject.FindObjectOfType<PlayerPrefsManager>().fullPlayerName =
             FetchField("AccountStats", "FullName");
 
+        // set player BIG number
+        GameObject.FindObjectOfType<PlayerPrefsManager>().bigNumber =
+            FetchField("AccountStats", "BIG_number");
+
         // check if character created, load proper scene
         // load scene at the end of this function
-        if ( FetchField("AccountStats", "CharacterCreated") == "true" )
+        if ( FetchField("AccountStats", "CharacterCreated") == "true" &&
+             FetchField("AccountStats", "FullName") != "" &&
+             (FetchField("AccountStats", "CharSceneV2") == "true" ||
+             FetchField("AccountStats", "BIG_number") != ""))
         {
             WULogin.characterCreated = true;
             bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
@@ -83,7 +106,7 @@ public class DatabaseManager : MonoBehaviour
         // 1 session restriction, checking once a minute
         sessionKey = PlayerPrefsManager.RandomString(16);
         UpdateField("AccountStats", "SessionKey", sessionKey);
-        instance.StartCoroutine(CheckSession(60.0f));
+        sessionCheck = instance.StartCoroutine(CheckSession(60.0f));
     }
 
     private static void FetchEverything_success(CML response)
@@ -183,15 +206,22 @@ public class DatabaseManager : MonoBehaviour
     {
         Category cat = database.Find(x => x.name == category);
 
-        string[][] data = new string[cat.fields.Keys.Count][];
-
-        int i = 0;
-        foreach (string key in cat.fields.Keys)
+        if (cat != null && cat.fields.Count > 0)
         {
-            data[i++] = new string[] { key, cat.fields[key] };
-        }
+            string[][] data = new string[cat.fields.Keys.Count][];
 
-        return data;
+            int i = 0;
+            foreach (string key in cat.fields.Keys)
+            {
+                data[i++] = new string[] { key, cat.fields[key] };
+            }
+
+            return data;
+        }
+        else
+        {
+            return null;
+        }
     }
 
     public static void UpdateField(string category, string fieldName, string newValue)
@@ -231,6 +261,7 @@ public class DatabaseManager : MonoBehaviour
         if (sessionKey != dbSessionKey)
         {
             Debug.LogWarning("Different session detected, logging out.");
+            sessionTimeOut = true;
             WULogin.LogOut();
         }
     }

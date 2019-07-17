@@ -9,6 +9,7 @@ public class AnimationPick : StateMachineBehaviour {
     private float frame;
     private float prevFrame;
     private HandsInventory inv;
+    bool isHolding = false;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
@@ -28,6 +29,7 @@ public class AnimationPick : StateMachineBehaviour {
         {
             if (PlayerAnimationManager.CompareFrames(frame, prevFrame, 50))
             {
+                isHolding = true;
                 inv.SetHold(hand);
             }
 
@@ -42,6 +44,9 @@ public class AnimationPick : StateMachineBehaviour {
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        if (!isHolding)
+            inv.SetHold(hand);
+
         inv.ToggleControls(false);
         PlayerScript.actionsLocked = false;
 

@@ -21,6 +21,7 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
     public void InitDatabase(CML ignore)
     {
         DatabaseManager.Init();
+        WULogin.justLoggedOff = false;
     }
 
     public void CleanDatabase(CML ignore)

@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using CareUp.Actions;
 using System.Linq;
+
 public class GameUI : MonoBehaviour
 {
     GameObject Player;
@@ -38,7 +39,7 @@ public class GameUI : MonoBehaviour
     float current_UpdateHintDelay = 0f;
     bool toDelayUpdateHint = false;
     GameObject gameLogic;
-
+    public GameObject TalkBubble;
     GameObject DetailedHintPanel;
 
     public List<string> activeHighlighted = new List<string>();
@@ -53,6 +54,7 @@ public class GameUI : MonoBehaviour
     public bool prescriptionButtonBlink;
     public bool recordsButtonBlink;
     public bool paperAndPenButtonblink;
+    public GameObject theoryPanel;
 
     public GameObject noTargetButton;
     public GameObject noTargetButton_right;
@@ -75,6 +77,9 @@ public class GameUI : MonoBehaviour
     float lastCooldownTime = 0;
     int currentActionsCount = 0;
 
+    private bool startTimer = false;
+    private float targetTime = 0.7f;
+    public PersonObject PersonToTalk = null;
     bool currentItemControlPanelState = false;
     int currentLeft;
     int currentRight;
@@ -117,6 +122,13 @@ public class GameUI : MonoBehaviour
         }
     }
 
+
+    public void TalkButtonPressed()
+    {
+        if (PersonToTalk == null)
+            return;
+        PersonToTalk.CreateSelectionDialogue();
+    }
 
     public void ShowBlockMessage(string Title, string Message)
     {
@@ -198,12 +210,12 @@ public class GameUI : MonoBehaviour
 
         RobotManager.UIElementsState[0] = false;
 
-      
-        Player.GetComponent<PlayerScript>().OpenRobotUI();        
+
+        Player.GetComponent<PlayerScript>().OpenRobotUI();
     }
 
     //public void CloseRobot()
-    //{     
+    //{
     //    Player.GetComponent<PlayerScript>().CloseRobotUI();
     //}
 
@@ -333,6 +345,12 @@ public class GameUI : MonoBehaviour
         }
     }
 
+    public void HideTheoryTab()
+    {
+        GameObject.Find("IPad/RobotUI/TheoryTab/Continue").gameObject.GetComponent<Button>().onClick.AddListener(
+             () => GameObject.FindObjectOfType<PlayerScript>().CloseRobotUI());
+    }
+
     // Use this for initialization
     void Start()
     {
@@ -361,6 +379,8 @@ public class GameUI : MonoBehaviour
         noTargetButton_right.SetActive(false);
         DropRightButton.SetActive(false);
         DropLeftButton.SetActive(false);
+
+        HideTheoryTab();
 
         IPad.GetComponent<Animator>().enabled = false;
 
@@ -474,11 +494,7 @@ public class GameUI : MonoBehaviour
         if (!handsInventory.RightHandEmpty())
             RemoveHighlight(prefix, handsInventory.rightHandObject.name);
 
-        List<Action> sublist = actionManager.actionList.Where(action =>
-           action.SubIndex == actionManager.currentActionIndex &&
-           action.matched == false).ToList();
-
-        foreach (Action a in sublist)
+        foreach (Action a in actionManager.IncompletedActions)
         {
             string[] ObjectNames = new string[0];
             a.ObjectNames(out ObjectNames);
@@ -498,7 +514,9 @@ public class GameUI : MonoBehaviour
                         continue;
                     HighlightObject h = AddHighlight(GameObject.Find(objectToUse).transform, prefix, hl_type, 2f + Random.Range(0f, 0.5f));
                     if (h != null)
+                    {
                         h.setGold(true);
+                    }
                     newHLObjects.Add(objectToUse);
                 }
                 else
@@ -517,7 +535,9 @@ public class GameUI : MonoBehaviour
                     {
                         HighlightObject h = AddHighlight(usableHL.transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f, 0.5f));
                         if (h != null)
+                        {
                             h.setGold(true);
+                        }
                         newHLObjects.Add(usableHL.name);
                     }
                     else
@@ -528,7 +548,9 @@ public class GameUI : MonoBehaviour
                             {
                                 HighlightObject h = AddHighlight(p.transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f, 0.5f));
                                 if (h != null)
+                                {
                                     h.setGold(true);
+                                }
                                 newHLObjects.Add(p.name);
                             }
                         }
@@ -582,7 +604,7 @@ public class GameUI : MonoBehaviour
                 GUI.Label(new Rect(30, 0, 100, 100), "Cheat enabled");
         }
         //debugSS = PlayerAnimationManager.animTimeout.ToString();
-        GUI.Label(new Rect(20, 0, 1000, 100), debugSS);
+        GUI.Label(new Rect(0, 30, 1000, 100), debugSS);
 #endif
     }
 
@@ -670,7 +692,67 @@ public class GameUI : MonoBehaviour
         return 0;
     }
 
-    // Update is called once per frame
+    public void ShowTheory(bool isSequence = false)
+    {
+        void ShowIPad()
+        {
+            if (!string.IsNullOrEmpty(actionManager.Message))
+            {
+                GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
+                GameObject.FindObjectOfType<GameUI>().theoryPanel.SetActive(true);
+                GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Title").GetComponent<Text>().text = actionManager.MessageTitle;
+                GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Message").GetComponent<Text>().text = actionManager.Message;
+            }
+        }
+
+        if (actionManager.ShowTheory)
+        {
+            startTimer = true;
+        }
+
+        if (startTimer)
+        {
+            targetTime -= Time.deltaTime;
+        }
+
+        if (targetTime <= 0.0f)
+        {
+            ShowIPad();
+            startTimer = false;
+            targetTime = 0.7f;
+        }
+        else if (isSequence && actionManager.ShowTheory)
+        {
+            ShowIPad();
+            actionManager.Message = null;
+        }    
+
+        actionManager.ShowTheory = false;
+    }
+
+    public void PlaceTalkBubble(GameObject person)
+    {
+        
+        if (person == null)
+            return;
+        PersonObject personObject = person.GetComponent<PersonObject>();
+        if (personObject == null)
+            return;
+        if (personObject.TalkBubbleAnchor == null)
+            return;
+        WalkToGroup near = ActionManager.NearestWalkToGroup(person);
+        if (ps.away)
+            return;
+        if (ps.currentWalkPosition == near)
+        {
+            TalkBubble.SetActive(true);
+            TalkBubble.GetComponent<TutorialHintsN>().WorldObject = personObject.TalkBubbleAnchor;
+            TalkBubble.GetComponent<TutorialHintsN>().Update();
+            PersonToTalk = personObject;
+        }
+
+    }
+
     void Update()
     {
         if (!timeOutEnded)
@@ -706,6 +788,7 @@ public class GameUI : MonoBehaviour
         //Don't show object control panel if animation is playing
         //if animation is longer than 0.2 (is not hold animation)
         bool animationUiBlock = true;
+
         if (allowObjectControlUI)
         {
             animationUiBlock = !PlayerAnimationManager.IsLongAnimation();
@@ -717,6 +800,7 @@ public class GameUI : MonoBehaviour
         //if some object was added or removed to hands
         if (showItemControlPanel)
         {
+            ShowTheory();
             int lHash = 0;
             if (handsInventory.leftHandObject != null)
                 lHash = handsInventory.leftHandObject.gameObject.GetHashCode();
@@ -788,7 +872,6 @@ public class GameUI : MonoBehaviour
                     else
                     {
                         decombineButton.SetActive(false);
-
                     }
                 }
                 else
@@ -874,10 +957,10 @@ public class GameUI : MonoBehaviour
             currentAnimLock = false;
     }
 
+
     public void UpdateWalkToGtoupUI(bool value)
     {
         allowObjectControlUI = value;
-        //print("++++++++++++++++ " + cameraMode.currentMode.ToString());
         if (cameraMode != null)
             if (cameraMode.currentMode == CameraMode.Mode.ObjectPreview)
             {

@@ -31,19 +31,14 @@
     type="use"
     value="WorkField"
     extra="Maak een schoon werkveld en zet de benodigdheden binnen handbereik."
-    messageTitle="Benodigdheden"
+    messageTitle="Je het volgende nodig hebt?"
     messageContent="
-    - Bijsluiter
-    - Toedieningslijst
-    - Spuit (Wanneer er geen injectiespuit met voorgeschreven medicijn aanwezig is)
-    - Injectienaald (Wanneer er geen injectiespuit met voorgeschreven medicijn aanwezig is)
-    - Opzuignaald (Wanneer er geen injectiespuit met voorgeschreven medicijn aanwezig is)
-    - Medicijn in flacon of ampul (Wanneer er geen injectiespuit met voorgeschreven medicijn aanwezig is)
-    - Oplosmiddel
-    - Gaasje
-    - Afvalbak
-    - Naaldenbeker en naaldverwijderaar
-    - Desinfectans: chloorhexidine 0.5% in alcohol 70%, als de huid gedesinfecteerd moet worden"
+- Bijsluiter
+- Toedieningslijst
+- Spuit met injectienaald (Wanneer er geen injectiespuit met voorgeschreven medicijn aanwezig is)
+- Afvalbak
+- Naaldenbeker en naaldverwijderaar
+- Desinfectans: chloorhexidine 0.5% in alcohol 70%, als de huid gedesinfecteerd moet worden"
   ></action>
 
   <action
@@ -54,19 +49,27 @@
     type="examine"
     item="PatientRecords"
     expected="good"
-    extra="Controleer cliëntgegevens Het is belangrijk dat je de juiste persoon voor je hebt. Controleer daarom altijd de cliëntgegevens voordat je begint met een handeling."
+    extra="Controleer de cliëntgegevens. Het is belangrijk dat je de juiste persoon voor je hebt. "
+    messageTitle="Controle cliëntgegevens."
+    messageContent="Controleer de naam en geboortedatum van cliënt"
   ></action>
   
   <action
     points="2"
-    description="Controleer het medicijn"
+    description="Controleer de spuit met medicijn"
     audioHint="Injection/H3-2"
     index="2"
     type="examine"
-    item="Medicine"
+    item="SyringeWithInjectionNeedleCap"
     expected="good"
-    extra="Controleer het medicijn. Controleer altijd het medicijn op vervaldatum, toedienwijze, kleur en substantie om er zeker van te zijn dat je het juiste medicijn hebt. Vergelijk de infromatie van het medicijn met die van de toedienlijst."
-  ></action>
+    extra="Controleer de spuit met medicijn"
+    messageTitle="Controle medicijn"
+    messageContent="
+Controleer het medicijn op:
+- De uiterste houdbaarheidsdatum;
+- kleur en substantie
+- Toedieningswijze
+- Beschadigingen op de spuit."></action>
   
   <action
     points="2"
@@ -76,7 +79,13 @@
     type="examine"
     item="PrescriptionForm"
     expected="good"
-    extra="Controleer de toedienlijst. Controleer de toedienlijst op soort, dosering en toedientijdstip."
+    extra="Controleer de toedienlijst"
+    messageTitle="Controle toedienlijst"
+    messageContent="
+Vergelijk het medicijn met de toedieningslijst.
+- Soort
+- Dosering
+- Toedieningstijdstip"
   ></action>
 
   <action
@@ -86,162 +95,41 @@
     index="3"
     type="talk"
     topic="DoubleCheck"
-    extra="Voer dubbele controle uit. Het verkeerd toedienen van medicijnen brengt risico’s met zich mee. Het risico op blijvend letsel bij verkeerde dosering of toediening verschilt, afhankelijk van het medicijn. Ook is de ene toedieningsweg risicovoller dan een andere. Dubbele controle van de medicatie is belangrijk voor de veiligheid, met name bij risicovolle medicatie. Laat ook je berekeningen die je hebt gemaakt checken."
-  />
-
-  <action
-    points="1"
-    description="Neem de opzuignaald uit de verpakking"
-    commentUA="Дістаньте голку для набирання з пакета"
-    audioHint="Injection/H4-2"
-    index="4"
-    type="combine"
-    left=""
-    right="AbsorptionNeedlePacked"
-    extra=""
-  ></action>
-
-  <action
-    points="1"
-    description="Neem de injectienaald uit de verpakking"
-    commentUA="Дістаньте голку для ін'єкції з пакета"
-    audioHint="Injection/H4-2"
-    index="5"
-    type="combine"
-    left=""
-    right="InjectionNeedlePacked"
-    extra=""
-  ></action>
-
-  <action
-    points="1"
-    description="Haal de spuit uit de verpakking"
-    commentUA="Дістаньте шприц з пакета"
-    audioHint="Injection/H4-2"
-    index="6"
-    type="combine"
-    left=""
-    right="syringe_packed"
-    extra="">
-  </action>
-
-  <action
-    points="1"
-    description="Overgiet een gaasje met alcohol"
-    audioHint="Injection/H4-2"
-    index="7"
-    type="combine"
-    left="Cloth"
-    right="Alcohol"
-    extra="Overgiet een gaasje met alcohol. De desinfectans wordt aangebracht op een gaasje. Het is eveneens mogelijk om gebruik te maken van alcohol swaps. Alcohol 70% heeft een totaal spectrum en werkt slechts tijdelijk. Omdat bij het inbrengen van een infuus de desinfectie langer moet aanhouden, wordt gedesinfecteerd met alcohol 70% bewaard in opgelost chloorhexidine 0,5%."
-  ></action>
-  
-  <action
-    points="3"
-    description="Desinfecteer de rubberen dop van het medicijn"
-    audioHint="Injection/H5-3"
-    index="8"
-    type="combine"
-    left="DesinfectionCloth"
-    right="Medicine"
-    extra="Desinfecteer de rubberen dop van het medicijn. De rubberen dopjes van de flesjes of penvullingen met insuline moeten ontsmet worden met alcohol. De kans bestaat namelijk dat ze met de vingers aangeraakt kunnen zijn/worden. Door aanraking wordt het dopje ‘besmet’ met huidflora van een ander. "
-  ></action>
-  
-  <action
-    points="1"
-    description="Plaats de opzuignaald op de spuit"
-    audioHint="Injection/H6-3"
-    index="9"
-    type="combine"
-    left="Syringe"
-    right="AbsorptionNeedle"
-    extra="Zet de opzuignaald op de spuit zodat je er later een vloeistof mee kunt absorberen. Niet alle medicijnen worden geleverd in een kant-en-klare spuit. Het medicijn moet dan nog worden opgezogen met een (opzuig)naald. Uit hygiënisch oogpunt is de WIP niet voor het gebruik van een opzuignaald én een injectienaald. Het overzetten van de naald is een extra risico op besmetting."
-  ></action>
-  
-  <action
-    points="1"
-    description="Verwijder de beschermhuls van de opzuignaald"
-    audioHint="Injection/H6-3"
-    index="10"
-    type="combine"
-    left="SyringeWithAbsorptionNeedleCap"
-    right=""
-    extra="De dop van de opzuignaald zit nog op de naald. Deze dien je te verwijderen om gebruik te maken van de spuit. Concentreer je tijdens het verwijderen van de dop om prikincidenten te voorkomen."
-  />
-
-  <action
-    points="3"
-    description="Zuig de voorgeschreven hoeveelheid medicatie op in de spuit"
-    audioHint="Injection/H7-2"
-    index="11"
-    type="combine"
-    left="SyringeWithAbsorptionNeedle"
-    right="Medicine"
-    extra="Zuig het medicijn op in de spuit. Zorg dat dit de juiste hoeveelheid is. De hoeveelheid bepaal je door een berekening te maken. Deze berekening laat je dubbel controleren. In het spel gaat de berekening automatisch en heb je de dubbele controle al uitgevoerd."
-  ></action>
-  
-  <action
-    points="2"
-    description="Ontlucht de spuit"
-    audioHint="Injection/H8-2"
-    index="12"
-    type="useOn"
-    item="SyringeWithAbsorptionNeedle"
-    target=""
-    buttonText="Ontluchten"
-    extra="Ontlucht de opzuignaald tot er een druppel vloeistof aan de punt van de opzuignaald zichtbaar wordt. Ontlucht, wanneer geen opzuignaald gebruikt wordt, de injectienaald niet. De hoeveelheid lucht die ingespoten wordt (= inhoud van de injectienaald) is verwaarloosbaar klein."
-  ></action>
-  
-  <action
-    points="1"
-    description="Verwijder de naald van de spuit"
-    audioHint=""
-    index="13"
-    type="combine"
-    left="SyringeWithAbsorptionNeedle"
-    right=""
-    extra="Klik het beschermkapje met een duimbeweging over de opzuignaald, verwijder de naald van de spuit (bij naald zonder veiligheidssysteem  met een naaldverwijderaar)."
-  />
-  
-  <action
-    points="2"
-    description="Doe de opzuignaald in de naaldcontainer"
-    audioHint="Injection/H10-2"
-    index="14"
-    type="useOn"
-    item="AbsorptionNeedleNoCap"
-    target=""
-    buttonText="Opzuignaald weggooien"
-    extra="Verwijder de opzuignaald en doe de naald in de naaldencontainer. Gebruik voor het injecteren spuiten en naalden voor eenmalig gebruik (dit worden ook wel eens disposables genoemd). Plaats een naald na gebruik nooit in de plastic beschermhuls terug. Werk met veilige opzuignaalden. Gebruik de inkepingen op de deksel om de naald en spuit te scheiden of gebruik een naaldverwijderaar."
-  ></action>
-  
-  <action
-    points="1"
-    description="Plaats de injectienaald op de spuit"
-    audioHint="Injection/H11-2"
-    index="15"
-    type="combine"
-    left="Syringe"
-    right="InjectionNeedle"
-    extra="Plaats de injectienaald op de spuit. Gebruik voor intramusculaire injecties een iets dikkere en langere naald, bijvoorbeeld: 0,8 x 38 - 40 mm (diameter x lengte)."
-  ></action>
+    extra="Vraag aan je collega of ze een dubbele controle wil doen"
+    messageTitle="Dubbele controle bij injecties en bij medicijntoediening via infuus"
+    messageContent="Het verkeerd toedienen van medicijnen brengt risico’s met zich mee. Het risico op blijvend letsel bij verkeerde dosering of toediening verschilt, afhankelijk van het medicijn. Ook is de ene toedieningsweg risicovoller dan een andere. Dubbele controle van de medicatie is belangrijk voor de veiligheid, met name bij risicovolle medicatie. Laat ook je berekeningen die je hebt gemaakt checken.
+    Het maken van oplossingen die worden toegediend via injectie of infuus is foutgevoelig. Daarnaast geeft deze manier van toedienen sneller resultaten, maar ook grotere problemen bij verkeerde toediening.
+    Het ontbreken van een dubbele controle bij deze handelingen wordt gezien als hoog-risico.
+    Of en hoe controle plaatsvindt van deze voorbehouden handelingen, is een afspraak die een zorgorganisatie maakt met haar zorgmedewerkers. Als de afspraak is om een tweede controle te doen en deze vast te leggen, dan wordt daarvoor een ander formulier gebruikt dan de toedieningslijst." 
+   />
 
   <action
     points="1"
     description="Vraag de cliënt om zijn shirt omhoog te doen"
     audioHint="Injection/H12-2"
-    index="16"
+    index="4"
     type="talk"
     topic="ShowBellyForInsulin"
     extra="Vraag de cliënt de injectieplaats te ontbloten en te ontspannen zodat je makkelijk bij de injectieplaats kunt."
     blockUnlock="patient show spot"
+    messageTitle="Geschikte injectiegebieden"
+    messageContent="
+Geschikte injectiegebieden voor subcutane injecties zijn:
+
+- Het gebied naast en onder de navel (ongeveer 2 cm rond de navel vrijlaten)
+- Boven/buitenkant het bovenbeen (handbreedte boven de knie vrijlaten)
+- Billen (bovenste buitenste deel)
+- Bovenarm (buitenste deel)
+
+Desinfecteer de huid bij cliënten met verminderde weerstand.
+    "
   ></action>
 
   <action
     points="1"
     description="Start injecteren"
     audioHint="Injection/H13-2"
-    index="17"
+    index="5"
     type="useOn"
     item="SyringeWithInjectionNeedleCap"
     target=""
@@ -257,7 +145,7 @@
     points="1"
     description="Palpeer de injectieplaats en controleer of de injectieplaats schoon en droog is"
     audioHint="Injection/AS1-2"
-    index="18"
+    index="6"
     type="sequenceStep"
     value="Check"
     extra="Controleer of de injectieplaats schoon en droog is om besmetting van ziektekiemen te voorkomen."
@@ -267,7 +155,7 @@
     points="1"
     description="Neem de spuit in de injecterende hand en verwijder de naaldhuls"
     audioHint="Injection/AS1-2"
-    index="19"
+    index="7"
     type="sequenceStep"
     value="Remove Cap"
     extra="De beschermdop zit nog op de naald. Deze dien je te verwijderen om gebruik te maken van de spuit. Concentreer je tijdens het verwijderen van de dop om prikincidenten te voorkomen."
@@ -277,17 +165,19 @@
     points="2"
     description="Pak met de vrije hand een brede huidplooi op"
     audioHint="Injection/AS1-2"
-    index="20"
+    index="8"
     type="sequenceStep"
     value="Grab crease"
-    extra="Pak met de vrije hand een brede huidplooi op. De helft van de opgepakte huidplooi is de dikte van het onderhuidse bindweefsel. Door de naald boven de huidplooi te houden, kan de dikte van de onderhuidse bindweefsellaag (de injectiediepte) afgemeten worden. De huidplooi wordt opgepakt met twee of drie vingers; bij het oppakken van een huidplooi met vijf vingers wordt vaak spierweefsel meegenomen en is de huidplooi te dik."
+    extra=""
+    messageTitle="Huidplooi vastpakken"
+    messageContent="Pak met de vrije hand een brede huidplooi op. De helft van de opgepakte huidplooi is de dikte van het onderhuidse bindweefsel. Door de naald boven de huidplooi te houden, kan de dikte van de onderhuidse bindweefsellaag (de injectiediepte) afgemeten worden. De huidplooi wordt opgepakt met twee of drie vingers; bij het oppakken van een huidplooi met vijf vingers wordt vaak spierweefsel meegenomen en is de huidplooi te dik."
   ></action>
   
   <action
     points="3"
     description="Steek de naald onder een hoek van 45° à 60°, halverwege tussen het hoogste en laagste punt van de huidplooi. (Klik op de juiste optie"
     audioHint="Injection/AS1-2"
-    index="21"
+    index="9"
     type="sequenceStep"
     value="Stick needle in arm"
     extra="De naald wordt onder een hoek van 45⁰ à 60⁰ halverwege tussen het hoogste en laagste punt van de huidplooi ingebracht. Door dit te doen, wordt de vloeistof ingespoten in het onderhuidse bindweefsel; de subcutis."
@@ -297,7 +187,7 @@
     points="1"
     description="Laat de huidplooi los"
     audioHint="Injection/AS1-2"
-    index="22"
+    index="10"
     type="sequenceStep"
     value="Release crease"
     extra="Laat de huidplooi los. Volgens protocollen wordt de huidplooi eerst losgelaten; vervolgens wordt de medicatie toegediend."
@@ -307,17 +197,19 @@
     points="1"
     description="Fixeer de spuit en naald met de niet injecterende hand om onverwachte bewegingen op te vangen"
     audioHint="Injection/AS5-2"
-    index="23"
+    index="11"
     type="sequenceStep"
     value="Fixate needle"
-    extra="Bij een cliënt die onrustig is of plotselinge bewegingen maakt, is het van belang dat de injectienaald en de spuit goed gefixeerd worden tijdens de injectie. Houd de naald tussen duim en wijsvinger van de vrije hand op de plaats waar de naald op de spuit zit. Zorg dat de rest van deze hand stevig op de huid rust. Als de cliënt beweegt, beweegt de hand met daarin de naald en de spuit, mee."
+    extra="Fixeer de spuit en naald met de niet injecterende hand om onverwachte bewegingen op te vangen."
+    messageTitle="Fixeren van de spuit"
+    messageContent="Bij een cliënt die onrustig is of plotselinge bewegingen maakt, is het van belang dat de injectienaald en de spuit goed gefixeerd worden tijdens de injectie. Houd de naald tussen duim en wijsvinger van de vrije hand op de plaats waar de naald op de spuit zit. Zorg dat de rest van deze hand stevig op de huid rust. Als de cliënt beweegt, beweegt de hand met daarin de naald en de spuit, mee."
   ></action>
   
   <action
     points="2"
-    description="Spuit de vloeistof langzaam en regelmatig in"
+    description="Spuit de vloeistof langzaam en regelmatig in (ongeveer 10 sec/ml)"
     audioHint="Injection/AS7-2"
-    index="24"
+    index="12"
     type="sequenceStep"
     value="Inject medicine slow and steady"
     extra="Spuit het medicijn langzaam in (ongeveer 10 sec/ml)."
@@ -327,7 +219,7 @@
     points="1"
     description="Trek de naald uit de huid (Houd een gaasje voor de opvang van een eventuele bloeddruppel gereed)"
     audioHint="Injection/AS8-2"
-    index="25"
+    index="13"
     type="sequenceStep"
     value="Pull needle"
     extra="Trek de naald uit de huid (houd een gaasje gereed voor de opvang van een eventuele bloeddruppel)."
@@ -337,7 +229,7 @@
     points="1"
     description="Verwijder de naald van de spuit"
     audioHint=""
-    index="26"
+    index="14"
     type="combine"
     left="SyringeWithInjectionNeedle"
     right=""
@@ -348,7 +240,7 @@
     points="2"
     description="Doe de injectienaald in de naaldencontainer"
     audioHint="Injection/EAS2-2"
-    index="27"
+    index="15"
     type="useOn"
     item="InjectionNeedleNoCap"
     target=""
@@ -359,7 +251,7 @@
   <action
      points="1"
      description="Ruim de materialen op door met lege handen op het werkveld te klikken"
-     index="28"
+     index="17"
      type="use"
      value="WorkField"
      extra="Ruim de materialen op door met lege handen op het werkveld te klikken"
@@ -369,21 +261,19 @@
   
   <action
     comment="1. Apply hand hygiene"
-    index="29"
+    index="18"
     points="3"
     description="Pas handhygiëne toe"
     type="use"
     value="HandCleaner"
     extra="Pas handhygiëne toe"
-    messageTitle="Handhygiëne"
-    messageContent="Handhygiëne is het meest belangrijk om besmetting met ziektekiemen te voorkomen. Reinig je handen altijd op de juiste manier en op het juiste moment. Begin een handeling altijd met handhygiëne."
   ></action>
   
   <action
     points="3"
     description="Teken de toedienlijst af of noteer het tijdstip, het soort medicijn, de concentratie, de hoeveelheid en de wijze van toediening. Noteer tot slot je bevindingen"
     audioHint="Injection/EAS4-2"
-    index="30"
+    index="19"
     type="use"
     value="PaperAndPen"
     extra="Teken de toedienlijst af of noteer het tijdstip, het soort medicijn, de concentratie, de hoeveelheid en de wijze van toediening. Noteer tot slot je bevindingen"

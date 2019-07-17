@@ -12,6 +12,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using System.Linq;
+using System.Collections;
+using SmartLookUnity;
 
 /// <summary>
 /// Handles quick access to saved data.
@@ -57,6 +59,7 @@ public class PlayerPrefsManager : MonoBehaviour
     private Scene currentScene;
     
     public string fullPlayerName = "";
+    public string bigNumber = "";
 
     public string ActivatedScenes
     {
@@ -185,6 +188,12 @@ public class PlayerPrefsManager : MonoBehaviour
 
         localizationManager = new LocalizationManager();
         localizationManager.LoadAllDictionaries();
+
+        // uncomment this, fill with correct info and start game
+        // p.s. dont forget to comment this again and not push instead :)
+        //PlayerPrefsManager.__dev__customCertificate("playerFullName", "sceneName", "06202019");
+
+        SmartLook.Init("22f3cf28278dbff71183ef8e0fa90c90048b850d");
     }
 
     void Start()
@@ -396,14 +405,14 @@ public class PlayerPrefsManager : MonoBehaviour
         {
             MailMessage mail = new MailMessage();
 
-            mail.From = new MailAddress("info@careup.nl");
-            mail.To.Add("info@careup.nl");
+            mail.From = new MailAddress("info@careup.online");
+            mail.To.Add("info@careup.online");
             mail.Subject = topic;
             mail.Body = message;
 
-            SmtpClient smtpServer = new SmtpClient("smtp.strato.de");
+            SmtpClient smtpServer = new SmtpClient("smtp.office365.com");
             smtpServer.Port = 587;
-            smtpServer.Credentials = new System.Net.NetworkCredential("info@careup.nl", "TripleMotionMedia3") as ICredentialsByHost;
+            smtpServer.Credentials = new System.Net.NetworkCredential("info@careup.online", "TripleMM3") as ICredentialsByHost;
             smtpServer.EnableSsl = true;
 
             ServicePointManager.ServerCertificateValidationCallback =
@@ -415,9 +424,9 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public static string MyEscapeURL(string url)
     {
-        //return WWW.EscapeURL(url).Replace("+", "%20");
-        // let's try using new thingy
-        return UnityWebRequest.EscapeURL(url).Replace("+", "%20");
+#pragma warning disable
+        return WWW.EscapeURL(url).Replace("+", "%20");
+#pragma warning restore
     }
 
     public static void __sendMailApp(string topic, string message)
@@ -447,12 +456,8 @@ public class PlayerPrefsManager : MonoBehaviour
         }
 
         // save certificate date here too
-        string date = DatabaseManager.FetchField("CertificateDates", currentTestScene);
-        if (date == "")
-        {
-            date = GetTodaysDateFormatted();
-            DatabaseManager.UpdateField("CertificateDates", currentTestScene, date);
-        }
+        string date = GetTodaysDateFormatted();
+        DatabaseManager.UpdateField("CertificateDates", currentTestScene, date);
     }
 
     public static void AddOneToPracticePlays(string scene)
@@ -546,17 +551,38 @@ public class PlayerPrefsManager : MonoBehaviour
             DatabaseManager.UpdateCategory("PracticeHighscores", data);
         }
     }
-    
-    /// <summary>
-    /// Generates and opens link for certificate generation.
-    /// Mirrors the safety measures of database script to generate safety key, included in the link.
-    /// </summary>
-    /// <param name="firstName"></param>
-    /// <param name="secondName"></param>
-    /// <param name="scene"></param>
-    /// <param name="score"></param>
-    public static void __openCertificate(string name, string scene, string date = "")
+
+    public static void __dev__customCertificate(string playerFullName, string sceneName, string date)
     {
+        int keyValue = 192378; // salt
+        keyValue += __sumString(playerFullName);
+        keyValue += __sumString(sceneName);
+
+        if (date == "")
+        {
+            date = GetTodaysDateFormatted();
+        }
+        keyValue += __sumString(date) * 13;
+
+        string hexKey = Convert.ToString(keyValue, 16);
+        hexKey = __trashFillString(hexKey);
+
+        string link = "https://leren.careup.online/certificate.php";
+        link += "name=" + playerFullName;
+        link += "&scene=" + sceneName;
+        link += "&date=" + date;
+        link += "&misc=" + hexKey;
+
+        Debug.LogWarning("OPENING LINK " + link);
+        Application.OpenURL(link.Replace(" ", "%20"));
+    }
+    
+    public static string __getCertificateLinkParams(string scene, string date = "", bool mail = false)
+    {
+        PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
+        string name = manager.fullPlayerName;
+        string email = WULogin.email;
+
         int keyValue = 192378; // salt
         keyValue += __sumString(name);
         keyValue += __sumString(scene);
@@ -570,14 +596,44 @@ public class PlayerPrefsManager : MonoBehaviour
         string hexKey = Convert.ToString(keyValue, 16);
         hexKey = __trashFillString(hexKey);
 
-        string link = "https://leren.careup.online/certificate.php?";
+        string link = "?";
         link += "name=" + name;
         link += "&scene=" + scene;
         link += "&date=" + date;
         link += "&misc=" + hexKey;
+        if (mail)
+        {
+            link += "&mail=" + email;
+        }
+
+        return link;
+    }
+
+    /// <summary>
+    /// Generates and opens link for certificate generation.
+    /// Mirrors the safety measures of database script to generate safety key, included in the link.
+    /// </summary>
+    /// <param name="firstName"></param>
+    /// <param name="secondName"></param>
+    /// <param name="scene"></param>
+    /// <param name="score"></param>
+    public static void __openCertificate(string scene, string date = "")
+    {
+        string link = "https://leren.careup.online/certificate.php";
+        link += PlayerPrefsManager.__getCertificateLinkParams(scene, date);
 
         Debug.LogWarning("OPENING LINK " + link);
         Application.OpenURL(link.Replace(" ", "%20"));
+    }
+
+    public static void __sendCertificateToUserMail(string scene, string date = "")
+    {
+        string link = "https://leren.careup.online/Certificate_sendMail.php";
+        link += PlayerPrefsManager.__getCertificateLinkParams(scene, date, true);
+        
+        Debug.LogWarning("Sending email with certificate to user.");
+        UnityWebRequest unityWebRequest = new UnityWebRequest(link);
+        unityWebRequest.SendWebRequest();
     }
 
     public static string GetTodaysDateFormatted()
@@ -624,15 +680,12 @@ public class PlayerPrefsManager : MonoBehaviour
         DatabaseManager.UpdateField("AccountStats", "FullName", fullName);
     }
 
-    static void SetFullName(CML response)
+    public static void SetBIGNumber(string number)
     {
-        PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
-
-        CMLData data = new CMLData();
-        data.Set("FullName", manager.fullPlayerName);
-        WUData.UpdateCategory("AccountStats", data);
+        GameObject.FindObjectOfType<PlayerPrefsManager>().bigNumber = number;
+        DatabaseManager.UpdateField("AccountStats", "BIG_number", number);
     }
-
+    
     private void SetEscapeButtonLogic()
     {
         //if (startTimer)
@@ -660,12 +713,7 @@ public class PlayerPrefsManager : MonoBehaviour
             {
                 mainMenu = GameObject.FindObjectOfType<MainMenu>();
 
-                if (GameObject.Find("LoginRegisterWindow") != null)
-                {
-                    mainMenu?.OnQuitButtonClick();
-                }
-
-                else if (GameObject.Find("RegisterWindow") != null)
+                if (GameObject.Find("RegisterWindow") != null)
                 {
                     GameObject.Find("LoginRegisterArea/RegisterArea")?.transform.GetChild(0)?.GetComponent<Button>().onClick.Invoke();
                 }
@@ -716,7 +764,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
                 else if (manager.Windows[3].activeSelf)
                 {
-                    manager.QuitApp();
+                    return;
                 }
 
                 else
@@ -745,11 +793,6 @@ public class PlayerPrefsManager : MonoBehaviour
                 if (GameObject.Find("UI/CloseBtn") != null)
                 {
                     GameObject.Find("UI/CloseBtn").transform?.GetComponent<Button>().onClick.Invoke();
-                }
-
-                else if (GameObject.Find("UI/CloseDialog/Panel_UI") != null)
-                {
-                    GameObject.Find("UI/CloseDialog/Panel_UI").transform.GetChild(2)?.GetComponent<Button>().onClick.Invoke();
                 }
 
                 else if (currentScene.name == "Scenes_Character_Customisation" && WULogin.characterCreated)

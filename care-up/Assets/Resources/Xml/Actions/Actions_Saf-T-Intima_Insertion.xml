@@ -31,21 +31,21 @@
     type="use"
     value="WorkField"
     extra="Maak een schoon werkveld en zet de benodigdheden binnen handbereik."
-    messageTitle="Benodigdheden"
+    messageTitle="Je het volgende nodig hebt?"
     messageContent="
-    - 1 paar handschoenen
-    - Desinfectans, chloorhexidine 0,5% in alcohol 70%
-    - Gaasjes
-    - Steriele Saf-T-Intima-infuuscanule
-    - Transparante infuuspleister
-    - Pleister
-    - Steriele luerlock 2 ml-spuit (Wanneer er geen voorgevulde Omniflush NaCl 0,9%  spuit aanwezig is.)
-    - Steriele opzuignaald (Wanneer er geen voorgevulde Omniflush NaCl 0,9%  spuit aanwezig is.)
-    - Ampul NaCl 0,9% (fysiologisch zout) (Wanneer er geen voorgevulde Omniflush NaCl 0,9%  spuit aanwezig is.)
-    - Connector (naadloos afsluitdopje) of steriel afsluitdopje
-    - Onderlegger
-    - Naaldenbeker
-    - Afvalbak"
+- 1 paar handschoenen
+- Desinfectans, chloorhexidine 0,5% in alcohol 70%
+- Gaasjes
+- Steriele Saf-T-Intima-infuuscanule
+- Transparante infuuspleister
+- Pleister
+- Steriele luerlock 2 ml-spuit (Wanneer er geen voorgevulde Omniflush NaCl 0,9%  spuit aanwezig is.)
+- Steriele opzuignaald (Wanneer er geen voorgevulde Omniflush NaCl 0,9%  spuit aanwezig is.)
+- Ampul NaCl 0,9% (fysiologisch zout) (Wanneer er geen voorgevulde Omniflush NaCl 0,9%  spuit aanwezig is.)
+- Connector (naadloos afsluitdopje) of steriel afsluitdopje
+- Onderlegger
+- Naaldenbeker
+- Afvalbak"
    />
 
   <action
@@ -57,6 +57,7 @@
       left="BandAidPackage"
       right=""
       extra="Leg de fixatiepleister klaar in een geopende verpakking."
+      blockUnlock="block1"
      />
 
   <action
@@ -68,7 +69,9 @@
       left="insulfonPackage"
       right=""
       extra="Leg de Saf-T-Intima klaar in een geopende verpakking"
-      blockUnlock="opened package"
+      blockUnlock="block2"
+      messageTitle="Stel je op de hoogte van de werking"
+      messageContent="De Saf-T-Intima is een veilige kunststof canule die ook subcutaan ingebracht kan worden. Lees de gebruiksaanwijzing en stel je op de hoogte van de werking."
      />
 
   <action
@@ -80,6 +83,7 @@
       left="OmniflushSyringeBag"
       right=""
       extra="Leg de spuit Omniflush NaCl 0,9% klaar in een geopende verpakking"
+      blockUnlock="block3"
       messageTitle="Voorverpakte Omniflush NaCl 0,9% niet aanwezig"
       messageContent="Wanneer er geen Omniflush NaCl 0,9% aanwezig is. Maak je een spuit met NaCl 0,9% uit een ampul klaar, ontlucht je de spuit en leg de spuit terug in de geopende verpakking."
      />
@@ -93,6 +97,7 @@
     left="MicroClavePackage"
     right=""
     extra="Leg de naaldloze connector klaar in een geopende verpakking."
+    blockUnlock="block4"
    />
 
   <action
@@ -103,7 +108,7 @@
     item="PatientRecords"
     expected="good"
     extra="Controleer de cliëntgegevens. Het is belangrijk dat je de juiste persoon voor je hebt."
-    messageTitle="Controle cliëntgegevens."
+    messageTitle="Controle cliëntgegevens"
     messageContent="Controleer de naam en geboortedatum van cliënt."
   ></action>
 
@@ -127,7 +132,7 @@
     type="use"
     value="gloveBox"
     extra="Pas handhygiëne toe. Handhygiëne is het allerbelangrijkste als het gaat om voorkomen van besmetting met ziektekiemen. Dit betekent je handen reinigen op de juiste manier en op de juiste momenten. Begin een handeling altijd met handhygiëne."
-    blockRequired="opened package"
+    blockRequired="block1,block2,block3,block4"
     blockTitle="Deze handeling is nog niet mogelijk"
     blockMessage="Zorg ervoor dat het materiaal klaar is voor gebruik door de verpakkingen te openen."
   />
@@ -140,6 +145,8 @@
     type="sequenceStep"
     value="remove cap"
     extra="Verwijder het dopje van het bijspuitpunt."
+    messageTitle="Saf-T-Intima versies"
+    messageContent="De Saf-T-Intima bestaat in een Y-versie met bijspuitpunt en een rechte versie zonder bijspuitpunt. Alleen de Saf-T-Intima Y-versie met bijspuitpunt kan ontlucht worden voor het inbrengen van de canule. Het volume van de slang is maximaal 0,5 ml. Houd er rekening mee dat bij de rechte versie het enige tijd duurt voordat de slang gevuld is en het medicijn het subcutane weefsel van de cliënt bereikt."
    />
 
   <action
@@ -150,6 +157,8 @@
     type="sequenceStep"
     value="place connector"
     extra="Plaats een naaldloze connector."
+    messageTitle="Ontluchten met NaC1 0,9%"
+    messageContent="In deze werkinstructie wordt uitgegaan van het ontluchten van de verlengslang en canule met NaCl 0,9% (fysiologisch zout). Wanneer direct een medicijn toegediend moet worden via een infuuspomp of cassette, ontlucht dan de verlengslang met het toe te dienen medicijn. Gebruik hiervoor de Saf-T-Intima Y-versie met bijspuitpunt."
    />
 
   <action
@@ -180,6 +189,8 @@
    type="sequenceStep"
    value="vent needle"
    extra="Spuit de NaCl 0,9% in de verlengslang tot er enkele druppels uit de opvoernaald van de subcutane canule komen. Laat de huls op de naald zitten."
+   messageTitle="Inbrengen subcutane canule"
+   messageContent="Breng een subcutane canule in, in bovenarm, onder het sleutelbeen, borstwand, bovenrug, buik en dijen. De huid moet intact zijn en er moet voldoende subcutaan weefsel aanwezig zijn."
   />
 
   <action
@@ -220,6 +231,8 @@
    type="sequenceStep"
    value="back in package"
    extra="Leg de subcutane canule met voernaald terug in de verpakking."
+   messageTitle="No-touchmethode"
+   messageContent="Gebruik de no-touchmethode, voorkom dat de aansluitpunten van de gebruikte infuusmaterialen (infuuskatheter, infuusslang, lumina, afsluitdopje) contact maken met niet steriele huid of niet steriele materialen."
   />
 
   <action
@@ -250,6 +263,7 @@
    blockRequired="show injection spot"
    blockTitle="Deze handeling is nog niet mogelijk."
    blockMessage="Vraag eerst de cliënt om de insteekplaats te ontbloten"
+   
   ></action>
   
 
@@ -358,6 +372,8 @@
    type="sequenceStep"
    value="close canule with cap"
    extra="Sluit de infuuscanule af met een connector (naaldloos afsluitdopje) of steriel afsluitdopje."
+   messageTitle="Afsluiten canule"
+   messageContent="Sluit de canule zo nodig af met een connector (naadloos afsluitdopje) of een steriel afsluitdopje. Vervang een steriel afsluitdopje nadat het van de canule afgehaald is steeds met een nieuw steriel afsluitdopje."
   />
 
   <action
@@ -368,6 +384,8 @@
    type="sequenceStep"
    value="fixate with bandaid"
    extra="Fixeer de Saf-T-Intima-canule met de transparante infuuspleister, de verlengslang eventueel met huidpleister."
+   messageTitle="Verwisselen subcutane infuuscanule"
+   messageContent="Verwissel de subcutane infuuscanule eens per 7 dagen, of eerder wanneer inspectie van de insteekplaats hier aanleiding toe geeft. Breng de canule volgens een roterend schema op een andere plaats in."
   />
 
   <action
@@ -379,6 +397,8 @@
    value="take off gloves"
    extra="Trek de handschoenen uit."
    blockUnlock="remove gloves"
+   messageTitle="Controleren huid rondom insteekplaats"
+   messageContent="Inspecteer de huid rondom de insteekplaats dagelijks. Controleer op zwelling, roodheid, lekkage van vloeistof, bloeding, blauwe plekken of pijn. Gebruik transparante pleister om de huid om de insteekplaats goed te kunnen inspecteren."
   />
 
   <action
@@ -388,8 +408,8 @@
      type="use"
      value="WorkField"
      extra="Ruim de materialen op door met lege handen op het werkveld te klikken"
-     messegeTitle="Materialen opruimen"
-     MessegeContent="Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen"
+     messageTitle="Materialen opruimen"
+     messageContent="Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen"
      blockRequired="remove gloves"
      blockTitle="Handeling is niet mogelijk"
      blockmessage="Zorg ervoor dat de Sat-T-Intima is ingebracht voordat je het materiaal opruimt."
@@ -403,8 +423,7 @@
    type="use"
    value="HandCleaner"
    extra="Pas handhygiëne toe"
-   messageTitle="Handhygiëne"
-   messageContent="Handhygiëne is het meest belangrijk om besmetting met ziektekiemen te voorkomen. Reinig je handen altijd op de juiste manier en op het juiste moment. Begin een handeling altijd met handhygiëne."/>
+   />
 
   <action
    comment="last step"
