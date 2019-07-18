@@ -264,7 +264,8 @@ public class AddClipToAnimator : MonoBehaviour {
 
         foreach (UnityEditor.Animations.ChildAnimatorState state in animationController.layers[0].stateMachine.states)
         {
-            writer.WriteLine('"' + "RightHand." + state.state.name + '"' + ",");
+            string[] aa = AssetDatabase.GetAssetPath(state.state.motion.GetInstanceID()).Split('/');
+            writer.WriteLine(aa[aa.Length - 1] + " __ " + '"' + "RightHand." + state.state.name + '"' + ",");
         }
 
         foreach (UnityEditor.Animations.ChildAnimatorStateMachine machine in animationController.layers[0].stateMachine.stateMachines)
@@ -276,9 +277,12 @@ public class AddClipToAnimator : MonoBehaviour {
 
     public void RecursPrintStates(UnityEditor.Animations.ChildAnimatorStateMachine chS, string prevAddr)
     {
+        
         foreach (UnityEditor.Animations.ChildAnimatorState state in chS.stateMachine.states)
         {
-            writer.WriteLine('"' + prevAddr + "." + chS.stateMachine.name + "." + state.state.name + '"' + ",");
+            
+            string[] aa = AssetDatabase.GetAssetPath(state.state.motion.GetInstanceID()).Split('/');
+            writer.WriteLine(aa[aa.Length - 1] + " __ " + '"' + prevAddr + "." + chS.stateMachine.name + "." + state.state.name + '"' + ",");
         }
         foreach (UnityEditor.Animations.ChildAnimatorStateMachine machine in chS.stateMachine.stateMachines)
         {

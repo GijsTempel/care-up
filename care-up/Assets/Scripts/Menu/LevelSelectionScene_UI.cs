@@ -66,7 +66,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
     }
 
 
-    public void OnSceneTabSwitch()
+    public void ReinitializeUI()
     {      
         ClearUI();
         UpdateSceneUI();           

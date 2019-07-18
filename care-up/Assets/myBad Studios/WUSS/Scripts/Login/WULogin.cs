@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System;
+using UnityEngine.Networking;
 
 namespace MBS
 {
@@ -196,6 +197,9 @@ namespace MBS
 
         static public void AttemptToLogin( CMLData fields )
         {
+            // WTF UNITY
+            UnityWebRequest.ClearCookieCache();
+
             WUCookie.ClearCookie();
             WUCookie.StoreCookie();
             fields.Set( "wul_fields", FieldsToFetch );

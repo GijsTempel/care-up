@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Purchasing;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class IAPManager : MonoBehaviour, IStoreListener
 {
@@ -16,7 +17,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
 
     private void Start()
     {
-#if UNITY_IOS
+        #if UNITY_IOS
             var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
             builder.AddProduct("CareUp_Lidmaatschap", ProductType.Subscription, new IDs
             {
@@ -26,11 +27,10 @@ public class IAPManager : MonoBehaviour, IStoreListener
             });
 
             UnityPurchasing.Initialize(this, builder);
-#else
-        //Debug.Log("Not an iOS. Destroying IAP.");
-        Destroy(this);
-        return;
-#endif
+        #else
+            Destroy(this);
+            return;
+        #endif
     }
 
     /// <summary>
@@ -41,10 +41,13 @@ public class IAPManager : MonoBehaviour, IStoreListener
         this.controller = controller;
         this.extensions = extensions;
 
-#if UNITY_IOS
+        #if UNITY_IOS
             m_AppleExtensions = extensions.GetExtension<IAppleExtensions>();
             introductory_info_dict = m_AppleExtensions.GetIntroductoryPriceDictionary();
-#endif
+            GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed = 
+                GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed || SubscriptionPurchased();
+            Debug.Log("IAPManager::OnInitialied; subscribed = " + SubscriptionPurchased());
+        #endif
     }
 
     /// <summary>
@@ -64,6 +67,16 @@ public class IAPManager : MonoBehaviour, IStoreListener
     /// </summary>
     public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs e)
     {
+        #if UNITY_IOS
+            Debug.Log("Purchase processed.");
+            GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed = 
+                GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed || SubscriptionPurchased();
+            
+            if (SceneManager.GetActiveScene().name == "MainMenu")
+            {
+                GameObject.FindObjectOfType<LevelSelectionScene_UI>().ReinitializeUI();
+            }
+        #endif
         return PurchaseProcessingResult.Complete;
     }
 
@@ -93,7 +106,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
                 return info.isSubscribed() == Result.True;
             }
         }
-
+        
         return false;
     }
 

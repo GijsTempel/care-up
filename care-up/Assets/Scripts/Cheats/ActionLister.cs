@@ -6,6 +6,7 @@ using System.IO;
 using UnityEngine.SceneManagement;
 #if (UNITY_EDITOR)
 using UnityEditor.Animations;
+
 #endif
 public class ActionLister : MonoBehaviour {
     List<string> actions;
@@ -245,19 +246,25 @@ public class ActionLister : MonoBehaviour {
         {
             for (int i = 0; i <= currentAnimator.layerCount - 1; i++)
             {
+                //print(currentAnimator.GetCurrentAnimatorClipInfo(i)[0].clip.name + " | " +
+                //    aa[aa.Length - 1]);
+                //    AssetDatabase.GetAssetPath(currentAnimator.GetCurrentAnimatorClipInfo(i)[0].clip.GetInstanceID()).Split("/"));
+
                 if (!actions.Contains(currentAnimator.GetCurrentAnimatorClipInfo(i)[0].clip.name))
                 {
                     string actionPath = "___ ";
-                    foreach (string a in allActions)
-                    {
-                        if (Animator.StringToHash(a) == currentAnimator.GetCurrentAnimatorStateInfo(0).fullPathHash)
-                        {
-                            print("______" + a);
-                            actionPath = a;
-                        }
-                    }
+                    //foreach (string a in allActions)
+                    //{
+                    //    if (Animator.StringToHash(a) == currentAnimator.GetCurrentAnimatorStateInfo(0).fullPathHash)
+                    //    {
+                    //        print("______" + a);
+                    //        actionPath = a;
+                    //    }
+                    //}
                     actions.Add(currentAnimator.GetCurrentAnimatorClipInfo(i)[0].clip.name);
-                    writer.WriteLine(currentAnimator.GetCurrentAnimatorClipInfo(i)[0].clip.name + "\n  ==>  " + actionPath + "\n");
+                    string[] aa = AssetDatabase.GetAssetPath(currentAnimator.GetCurrentAnimatorClipInfo(i)[0].clip.GetInstanceID()).Split('/');
+                    print("__ " + aa[aa.Length - 1] + " __ " + actionPath);
+                    writer.WriteLine(aa[aa.Length - 1] + " __ " + currentAnimator.GetCurrentAnimatorClipInfo(i)[0].clip.name + "\n  ==>  " + actionPath + "\n");
 
                 }
             }

@@ -12,6 +12,7 @@ public class HighlightObject : MonoBehaviour {
     public List<GameObject> ArrowElements;
     //bool gold = false;
     GameUI gameUI;
+    public bool isEyeCatcher = false;
     public GameObject audioEffect;
     public GameObject hand_hl;
 
@@ -27,8 +28,6 @@ public class HighlightObject : MonoBehaviour {
         player = GameObject.FindObjectOfType<PlayerScript>();
     }
 
-
-
     public enum type
     {
         NoChange,
@@ -41,14 +40,15 @@ public class HighlightObject : MonoBehaviour {
 
     public void setGold(bool value)
     {
-        setMaterial("goldHint");
+        setMaterial("hGreen");
+        isEyeCatcher = true;
         foreach (GameObject b in BallElements)
             if (b.name == "b1")
                 b.SetActive(false);
         foreach (GameObject q in QubeElements)
             if (q.name == "q1")
                 q.SetActive(false);
-        transform.localScale = 1.2f * transform.localScale;
+        content.transform.localScale = 1.2f * content.transform.localScale;
     }
 
     public void setMaterial(string matName)
@@ -67,11 +67,11 @@ public class HighlightObject : MonoBehaviour {
         foreach (GameObject q in QubeElements)
             q.SetActive(currentType == HighlightObject.type.Qube);
         foreach (GameObject a in ArrowElements)
-            a.SetActive(currentType == HighlightObject.type.Arrow);
-        if (_type == HighlightObject.type.Arrow || _type == HighlightObject.type.Hand)
+            a.SetActive(isEyeCatcher);//currentType == HighlightObject.type.Arrow || isEyeCatcher);
+        if (_type == HighlightObject.type.Hand)
         {
-            transform.rotation = new Quaternion();
-            transform.localScale = new Vector3(1,1,1);
+            content.transform.rotation = new Quaternion();
+            content.transform.localScale = new Vector3(1,1,1);
         }
         hand_hl.SetActive(currentType == HighlightObject.type.Hand);
     }
@@ -82,10 +82,11 @@ public class HighlightObject : MonoBehaviour {
         if(value > 0)
         {
             content.SetActive(false);
+            foreach (GameObject a in ArrowElements)
+                a.SetActive(false);
             startDelay = value;
         }
     }
-
 
 
     public void setTarget(Transform t)
@@ -101,10 +102,10 @@ public class HighlightObject : MonoBehaviour {
         {
             setType(hl_control.hl_type);
             transform.position = hl_control.transform.position;
-            if (currentType != HighlightObject.type.Arrow && currentType != HighlightObject.type.Hand)
+            if (currentType != HighlightObject.type.Hand)
             {   
-                transform.rotation = hl_control.transform.rotation;
-                transform.localScale = hl_control.transform.localScale;
+                content.transform.rotation = hl_control.transform.rotation;
+                content.transform.localScale = hl_control.transform.localScale;
             }
             
         }
@@ -143,7 +144,12 @@ public class HighlightObject : MonoBehaviour {
             }
             else
             {
-                content.SetActive(transform);
+                content.SetActive(true);
+
+                foreach (GameObject a in ArrowElements)
+                {
+                    a.SetActive(isEyeCatcher && currentType != HighlightObject.type.Hand);
+                }
                 if (currentType != HighlightObject.type.none)
                     audioEffect.SetActive(true);
             }
@@ -161,7 +167,7 @@ public class HighlightObject : MonoBehaviour {
             {
                 transform.position = hl_control.transform.position;
                 if (currentType != HighlightObject.type.Arrow)
-                    transform.rotation = hl_control.transform.rotation;
+                    content.transform.rotation = hl_control.transform.rotation;
 
             }
             else if (target.GetComponent<Collider>() != null)
@@ -173,7 +179,7 @@ public class HighlightObject : MonoBehaviour {
             {
                 transform.position = target.position;
                 if (currentType != HighlightObject.type.Arrow)
-                    transform.rotation = target.rotation;
+                    content.transform.rotation = target.rotation;
             }
         }
 	}

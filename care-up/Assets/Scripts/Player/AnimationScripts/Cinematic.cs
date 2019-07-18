@@ -21,12 +21,16 @@ public class Cinematic : StateMachineBehaviour
         }
         if (resetCamera)
         {
+            PlayerAnimationManager.SetSavedCameraOrientation(Camera.main.transform.localRotation);
             Camera.main.transform.localRotation = Quaternion.Euler(Vector3.zero);
         }
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        if (resetCamera)
+            Camera.main.transform.localRotation = PlayerAnimationManager.GetSavedCameraOrientation();
+
         mode.animationEnded = true;
      
     }

@@ -18,6 +18,7 @@ public class PlayerAnimationManager : MonoBehaviour
     public int rightModifier01 = 0;
     public float leftModifier02 = 0f;
     public float rightModifier02 = 0f;
+    public static Quaternion SavedCameraOrientation = new Quaternion();
     public Transform propL;
     Transform propR;
     float syncSpeed = 0.01f;
@@ -37,6 +38,16 @@ public class PlayerAnimationManager : MonoBehaviour
 
     private static AnimationSequence animationSequence;
     public static float animTimeout = 0;
+
+    public static Quaternion GetSavedCameraOrientation()
+    {
+        return SavedCameraOrientation;
+    }
+
+    public static void SetSavedCameraOrientation(Quaternion value)
+    {
+        SavedCameraOrientation = value;
+    }
 
     public static bool IsLongAnimation()
     {
