@@ -74,6 +74,7 @@
     index="2"
     type="combine"
     left="MedicalTube"
+    blockUnlock="block1"
     right=""
     extra="Open de verpakking van de steriele maagsonde."/>
 
@@ -87,6 +88,7 @@
     left="pH_TestStripPackage"
     right=""
     extra="Pak een pH-indicator uit de verpakking."
+    blockUnlock="block2"
     messageTitle="pH-indicatoren"
     messageContent="Gebruik een pH-indicator met een indeling tussen 2,0-9,0 met tussenstappen van minimaal 0,5.
 
@@ -102,6 +104,7 @@ Raadpleeg voor gebruik altijd de gebruiksaanwijzing van de pH-indicator.
     type="combine"
     left="Syringe50ml_packed"
     right=""
+    blockUnlock="block3"
     extra="Open de verpakking van de 50ml spuit"/>
 
   <action
@@ -111,6 +114,9 @@ Raadpleeg voor gebruik altijd de gebruiksaanwijzing van de pH-indicator.
     index="4"
     type="talk"
     topic="SitInBed"
+    blockRequired="block1,block2,block3"
+    blockTitle="Deze handeling is nog niet mogelijk"
+    blockMessage="Zorg ervoor dat het materiaal klaar is voor gebruik door de verpakkingen te openen."
     blockUnlock="clienInHalfSitPos"
     extra="Vraag de cliënt een halfzittende houding aan te nemen."></action>
 
@@ -125,6 +131,7 @@ Raadpleeg voor gebruik altijd de gebruiksaanwijzing van de pH-indicator.
     topic="InstructSign"
     extra=" Maak met de cliënt een afspraak over een signaal wanneer inbrengen moet stoppen."
     blockUnlock="clienReadyForMeasuring"
+  
     />
   
   <action
@@ -136,6 +143,8 @@ Raadpleeg voor gebruik altijd de gebruiksaanwijzing van de pH-indicator.
     item="MedicalTube_Opened"
     target=""
     blockRequired="clienReadyForMeasuring"
+    blockTitle="Signaal afspreken"
+    blockMessage="Stem eerst met de cliënt af wat voor signaal er gebruikt moet worden wanner het inbrengen moet stoppen."
     buttonText="Meet in te brengen lengte"
     extra="Neem de maagsonde uit de verpakking."
     />
@@ -472,7 +481,7 @@ Plak het midden van een stuk pleister aan de onderkant van de sonde vast op 2 cm
     type="sequenceStep"
     value="attachproe"
     extra="Bevestig, wanneer gewenst, demaag sonde op een lagere positie aan de kleding, zodanig dat de maagsonde kan meebewegen met hoofdbewegingen."/>
-
+  
   <action
     comment="Take off gloves."
     points="1"

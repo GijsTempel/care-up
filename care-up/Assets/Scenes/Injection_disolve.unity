@@ -3586,11 +3586,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db8d3866634654545a3471c2c8f27c71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TextDebug: 0
   tutorial_hintUsed: 0
   actionsCount: 0
-  actionListName: Actions_InjectionScene_disolve
+  TextDebug: 0
   currentActionIndex: 0
+  actionListName: Actions_InjectionScene_disolve
 --- !u!114 &509781866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7948,6 +7948,36 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77cacc86514d0e541ac2af31e5f6beee, type: 3}
+--- !u!1 &1149137097
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1149137098}
+  m_Layer: 0
+  m_Name: Player_TB_anchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1149137098
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1149137097}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.118, y: 0.014, z: -0.004}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1268949239}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1174163112
 GameObject:
   m_ObjectHideFlags: 0
@@ -8456,6 +8486,7 @@ Transform:
   m_Children:
   - {fileID: 410071999}
   - {fileID: 57065125}
+  - {fileID: 1149137098}
   m_Father: {fileID: 1790200297}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9183,6 +9214,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -91.229004
       objectReference: {fileID: 0}
+    - target: {fileID: 114000010846255532, guid: 0e0ce0cdb1934e2469d62ea966b45d9d,
+        type: 3}
+      propertyPath: description
+      value: Ampul met oplosmiddel
+      objectReference: {fileID: 0}
     - target: {fileID: 114000013331270568, guid: 0e0ce0cdb1934e2469d62ea966b45d9d,
         type: 3}
       propertyPath: examineRotation.x
@@ -9207,11 +9243,6 @@ PrefabInstance:
         type: 3}
       propertyPath: animationExamine
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114000010846255532, guid: 0e0ce0cdb1934e2469d62ea966b45d9d,
-        type: 3}
-      propertyPath: description
-      value: Ampul met oplosmiddel
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 65968926181028584, guid: 0e0ce0cdb1934e2469d62ea966b45d9d, type: 3}
@@ -10431,6 +10462,7 @@ MonoBehaviour:
   dialogueXmls:
   - Greeting
   - InjectionPatient
+  TalkBubbleAnchor: {fileID: 1149137097}
   tutorial_greetingEnded: 0
   pulledUp: 0
 --- !u!82 &1590272718
@@ -11736,16 +11768,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 65161353448980618, guid: 1fff355622d6dff479b84c4023dc9ecb,
-        type: 3}
-      propertyPath: m_Center.x
-      value: -0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 65161353448980618, guid: 1fff355622d6dff479b84c4023dc9ecb,
-        type: 3}
-      propertyPath: m_Size.x
-      value: 0.12
-      objectReference: {fileID: 0}
     - target: {fileID: 23000011647182554, guid: 1fff355622d6dff479b84c4023dc9ecb,
         type: 3}
       propertyPath: m_ReflectionProbeUsage
@@ -11770,6 +11792,16 @@ PrefabInstance:
         type: 3}
       propertyPath: muplipleMesh
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 65161353448980618, guid: 1fff355622d6dff479b84c4023dc9ecb,
+        type: 3}
+      propertyPath: m_Center.x
+      value: -0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 65161353448980618, guid: 1fff355622d6dff479b84c4023dc9ecb,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1fff355622d6dff479b84c4023dc9ecb, type: 3}

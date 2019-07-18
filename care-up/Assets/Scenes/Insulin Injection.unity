@@ -1634,6 +1634,36 @@ Transform:
   m_Father: {fileID: 1128251508}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &155751601
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 155751602}
+  m_Layer: 0
+  m_Name: Patient_TB_anchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &155751602
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 155751601}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.118, y: 0.014, z: -0.004}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2146350496}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &159064055
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2859,11 +2889,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db8d3866634654545a3471c2c8f27c71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TextDebug: 0
   tutorial_hintUsed: 0
   actionsCount: 0
-  actionListName: Actions_InsulinInjection
+  TextDebug: 0
   currentActionIndex: 0
+  actionListName: Actions_InsulinInjection
 --- !u!114 &402590247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2902,11 +2932,14 @@ MonoBehaviour:
   dropPenalty: 1
   customPositions:
   - objectName: 
-    position: {x: 9.404, y: 1.1143, z: 12.196}
+    position: {x: 9.404, y: 1.1143, z: 12.35}
     rotation: {x: 0, y: 0, z: 90}
   - objectName: InsulinNeedle
-    position: {x: 9.277, y: 1.113, z: 12}
+    position: {x: 9.277, y: 1.113, z: 12.347}
     rotation: {x: 0, y: 0, z: 0}
+  - objectName: InsulinPenCap
+    position: {x: 9.25, y: 1.113, z: 11.7}
+    rotation: {x: 0, y: 90, z: 0}
   customGhostPositions: []
   leftHandObject: {fileID: 0}
   rightHandObject: {fileID: 0}
@@ -3067,9 +3100,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1220133686}
     m_Modifications:
+    - target: {fileID: 1459596654828566, guid: 8e2b1c5e26dee0443a64cbbe1cb475bc, type: 3}
+      propertyPath: m_Name
+      value: InsulinPenWithCap
+      objectReference: {fileID: 0}
     - target: {fileID: 4853544864937212, guid: 8e2b1c5e26dee0443a64cbbe1cb475bc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.4712
+      value: 9.328
       objectReference: {fileID: 0}
     - target: {fileID: 4853544864937212, guid: 8e2b1c5e26dee0443a64cbbe1cb475bc, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3077,7 +3114,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4853544864937212, guid: 8e2b1c5e26dee0443a64cbbe1cb475bc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 12.067
+      value: 12.028
       objectReference: {fileID: 0}
     - target: {fileID: 4853544864937212, guid: 8e2b1c5e26dee0443a64cbbe1cb475bc, type: 3}
       propertyPath: m_LocalRotation.x
@@ -3098,6 +3135,18 @@ PrefabInstance:
     - target: {fileID: 4853544864937212, guid: 8e2b1c5e26dee0443a64cbbe1cb475bc, type: 3}
       propertyPath: m_RootOrder
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4853544864937212, guid: 8e2b1c5e26dee0443a64cbbe1cb475bc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4853544864937212, guid: 8e2b1c5e26dee0443a64cbbe1cb475bc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4853544864937212, guid: 8e2b1c5e26dee0443a64cbbe1cb475bc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e2b1c5e26dee0443a64cbbe1cb475bc, type: 3}
@@ -8235,6 +8284,7 @@ MonoBehaviour:
   dialogueXmls:
   - Greeting
   - InsulinPatient
+  TalkBubbleAnchor: {fileID: 155751601}
   tutorial_greetingEnded: 0
   pulledUp: 0
 --- !u!82 &1250914572
@@ -12266,16 +12316,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 65161353448980618, guid: 1fff355622d6dff479b84c4023dc9ecb,
-        type: 3}
-      propertyPath: m_Center.x
-      value: -0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 65161353448980618, guid: 1fff355622d6dff479b84c4023dc9ecb,
-        type: 3}
-      propertyPath: m_Size.x
-      value: 0.12
-      objectReference: {fileID: 0}
     - target: {fileID: 23000011647182554, guid: 1fff355622d6dff479b84c4023dc9ecb,
         type: 3}
       propertyPath: m_ReflectionProbeUsage
@@ -12300,6 +12340,16 @@ PrefabInstance:
         type: 3}
       propertyPath: muplipleMesh
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 65161353448980618, guid: 1fff355622d6dff479b84c4023dc9ecb,
+        type: 3}
+      propertyPath: m_Center.x
+      value: -0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 65161353448980618, guid: 1fff355622d6dff479b84c4023dc9ecb,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1fff355622d6dff479b84c4023dc9ecb, type: 3}
@@ -12569,9 +12619,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1220133686}
     m_Modifications:
+    - target: {fileID: 1848709177815846, guid: 75d0c341348a783429b4f8b2f79e57f5, type: 3}
+      propertyPath: m_Name
+      value: InsulinNeedlePackage
+      objectReference: {fileID: 0}
     - target: {fileID: 4784595800337344, guid: 75d0c341348a783429b4f8b2f79e57f5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.428
+      value: 9.289
       objectReference: {fileID: 0}
     - target: {fileID: 4784595800337344, guid: 75d0c341348a783429b4f8b2f79e57f5, type: 3}
       propertyPath: m_LocalPosition.y
@@ -12579,7 +12633,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4784595800337344, guid: 75d0c341348a783429b4f8b2f79e57f5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 12.295
+      value: 12.347
       objectReference: {fileID: 0}
     - target: {fileID: 4784595800337344, guid: 75d0c341348a783429b4f8b2f79e57f5, type: 3}
       propertyPath: m_LocalRotation.x
@@ -12600,6 +12654,18 @@ PrefabInstance:
     - target: {fileID: 4784595800337344, guid: 75d0c341348a783429b4f8b2f79e57f5, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4784595800337344, guid: 75d0c341348a783429b4f8b2f79e57f5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90.00001
+      objectReference: {fileID: 0}
+    - target: {fileID: 4784595800337344, guid: 75d0c341348a783429b4f8b2f79e57f5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4784595800337344, guid: 75d0c341348a783429b4f8b2f79e57f5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -88.66801
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75d0c341348a783429b4f8b2f79e57f5, type: 3}
@@ -14086,6 +14152,7 @@ Transform:
   m_Children:
   - {fileID: 610421445}
   - {fileID: 709880500}
+  - {fileID: 155751602}
   m_Father: {fileID: 592865868}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

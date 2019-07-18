@@ -74,6 +74,7 @@ Gazen voor het reinigen van de urethraopening hoeven niet steriel te zijn, wel s
     left="water_syringe_pack"
     right=""
     extra="Open de verpakking van de spuit met 10 ml steriel water. Laat de spuit in de verpakking"
+    blockUnlock="block1"
 ></action>
 
 <action
@@ -130,6 +131,7 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
     secondPlace="PatientPos"
     posID="2"
     extra="Zet het bakje met wattenbollen op de onderlegger"
+    blockUnlock="block2"
 ></action>
 
 <action
@@ -141,6 +143,7 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
     left="lube_syringe_pack"
     right=""
     extra="Open de verpakking van de spuit met glijmiddel. Laat de spuit nog in de verpakking"
+    blockUnlock="block3"
 ></action>
 
 <action
@@ -153,6 +156,7 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
     secondPlace="PatientPos"
     posID="2"
     extra="Leg het plastic afvalbakje op de onderlegger"
+    blockUnlock="block4"
 ></action>
 
 <action
@@ -164,6 +168,9 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
     value="gloveBox"
     extra="Trek handschoenen aan"
     quiz="2"
+    blockRequired="block1,block2,block3,block4"
+    blockTitle="Deze handeling is nog niet mogelijk"
+    blockMessage="Zorg ervoor dat de materialen op de juiste plek staan en de nodige verpakkingen geopent zijn."
     messageTitle="Gebruik handschoenen"
     messageContent="Gebruik handschoenen eenmalig en bij steeds dezelfde cliënt. Vermijd tijdens het dragen van handschoenen contact met deurknopen, telefoon, apparatuur, toetsenborden, enzovoort. Trek ze na gebruik direct uit. Bij het uittrekken van de handschoenen kunnen je handen besmet zijn geraakt. Was of desinfecteer daarom je handen altijd na het uittrekken van de handschoenen."
 ></action>
@@ -304,6 +311,9 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
     left="catheter"
     right=""
     extra="Open de buitenverpakking van de katheter en laat de katheter in de binnen verpakking op het steriele werkveld vallen, zonder de binnenverpakking aan te raken"
+    blockRequired="block1,block2,block3,block4"
+    blockTitle="Deze handeling is nog niet mogelijk"
+    blockMessage="Zorg ervoor dat de materialen op de juiste plek staan en de nodige verpakkingen geopent zijn."
 ></action>
 
     <action
