@@ -115,7 +115,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
             // if we're here, then we have real scene, that is not hidden
             // instantiating panel
             GameObject sceneUnitObject = Instantiate(Resources.Load<GameObject>("Prefabs/UI/SceneSelectionUnit"),
-                GameObject.Find("UMenuProManager/MenuCanvas/Play/ProtocolList/ProtocolsHolder/Protocols/content").transform);
+                GameObject.Find("UMenuProManager/MenuCanvas/Play/InfoHolder/ProtocolList/ProtocolsHolder/Protocols/content").transform);
             sceneUnitObject.name = "SceneSelectionUnit"; // i dont like that 'clone' word at the end, ugh
             LevelButton sceneUnit = sceneUnitObject.GetComponent<LevelButton>();
             bool locked = false;
