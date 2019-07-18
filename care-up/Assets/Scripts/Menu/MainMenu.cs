@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using MBS;
+using System.Linq;
 
 public class MainMenu : MonoBehaviour {
     
@@ -12,6 +13,22 @@ public class MainMenu : MonoBehaviour {
 	public string eMail="info@triplemotion.nl";
 
     public GameObject UpdatesPanel;
+
+    [System.Serializable]
+    public class ResendingLock
+    {
+        public string sceneName;
+        public int timeRemaining;
+
+        public ResendingLock(string name, int time)
+        {
+            sceneName = name;
+            timeRemaining = time;
+        }
+    };
+
+    [UnityEngine.SerializeField]
+    public List<ResendingLock> resendingLocks = new List<ResendingLock>();
 
     private void Start()
     {
@@ -60,34 +77,37 @@ public class MainMenu : MonoBehaviour {
 
             // set up highscores something?
             string[][] highScores = DatabaseManager.FetchCategory("TestHighscores");
-            foreach(string[] score in highScores)
+            if (highScores != null)
             {
-                // fetch date before formatting scene name back
-                string date = DatabaseManager.FetchField("CertificateDates", score[0]);
-                date = (date == "") ? "27052019" : date;
+                foreach (string[] score in highScores)
+                {
+                    // fetch date before formatting scene name back
+                    string date = DatabaseManager.FetchField("CertificateDates", score[0]);
+                    date = (date == "") ? "27052019" : date;
 
-                string sceneName = score[0].Replace("_", " ");
+                    string sceneName = score[0].Replace("_", " ");
 
-                float fPercent = 0.0f;
-                float.TryParse(score[1].Replace(",","."), out fPercent);
-                int percent = Mathf.FloorToInt(fPercent);
+                    float fPercent = 0.0f;
+                    float.TryParse(score[1].Replace(",", "."), out fPercent);
+                    int percent = Mathf.FloorToInt(fPercent);
 
-                bool passed = percent > 70;
+                    bool passed = percent > 70;
 
-                if (percent <= 0 || percent > 100)
-                    continue; // don't show 0 percent scores as they are not completed even once
+                    if (percent <= 0 || percent > 100)
+                        continue; // don't show 0 percent scores as they are not completed even once
 
-                GameObject layoutGroup = GameObject.Find("UMenuProManager/MenuCanvas/Account_Scores/Account_Panel_UI/ScoresHolder/Scores/LayoutGroup");
-                GameObject scoreObject = Instantiate(Resources.Load<GameObject>("Prefabs/UI/TestHighscore"), layoutGroup.transform);
-                scoreObject.transform.Find("SceneName").GetComponent<Text>().text = sceneName;
+                    GameObject layoutGroup = GameObject.Find("UMenuProManager/MenuCanvas/Account_Scores/Account_Panel_UI/ScoresHolder/Scores/LayoutGroup");
+                    GameObject scoreObject = Instantiate(Resources.Load<GameObject>("Prefabs/UI/TestHighscore"), layoutGroup.transform);
+                    scoreObject.transform.Find("SceneName").GetComponent<Text>().text = sceneName;
 
-                scoreObject.transform.Find("Percent").GetComponent<Text>().text = percent.ToString() + "%";
-                scoreObject.transform.Find("Percent").GetComponent<Text>().color =
-                    (passed ? Color.green : Color.red);
+                    scoreObject.transform.Find("Percent").GetComponent<Text>().text = percent.ToString() + "%";
+                    scoreObject.transform.Find("Percent").GetComponent<Text>().color =
+                        (passed ? Color.green : Color.red);
 
-                scoreObject.transform.Find("Button").GetComponent<Button>().interactable = passed;
-                scoreObject.transform.Find("Button").GetComponent<Button>().onClick.AddListener
-                    (delegate { PlayerPrefsManager.__openCertificate(sceneName, date); });
+                    scoreObject.transform.Find("Button").GetComponent<Button>().interactable = passed;
+                    scoreObject.transform.Find("Button").GetComponent<Button>().onClick.AddListener
+                        (delegate { ResendCertificate(sceneName, date); });
+                }
             }
 
             // shared field, will keep it outside DatabaseManager
@@ -110,6 +130,50 @@ public class MainMenu : MonoBehaviour {
                .GetComponent<Text>().text = bigNumber;
             }           
         }
+    }
+
+    public void ResendCertificate(string scene, string date)
+    {
+        // check if can send
+        bool flag = (resendingLocks.Where(x => x.sceneName == scene).Count() == 0);
+
+        if (flag)
+        {
+            // send if so
+            //PlayerPrefsManager.__sendCertificateToUserMail(scene, date);
+
+            // show pop up that it's sent
+            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/CertificatePopOp").SetActive(true);
+
+            // add lock, time in seconds
+            ResendingLock rLock = new ResendingLock(scene, 300);
+            resendingLocks.Add(rLock);
+
+            // set timer to unlock
+            StartCoroutine(UnlockResending(rLock));
+        }
+        else
+        {
+            // can't send, show different pop up
+            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/CertificateBlockedPopOp").SetActive(true);
+
+            // set up time
+            int timeLeft = resendingLocks.Where(x => x.sceneName == scene).First().timeRemaining;
+            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/CertificateBlockedPopOp/Remaining").
+                GetComponent<Text>().text = "Time remaining: " + (timeLeft / 60) + "m " + (timeLeft % 60) + "s";
+        }
+    }
+
+    IEnumerator UnlockResending(ResendingLock rLock)
+    {
+        while (rLock.timeRemaining > 0)
+        {
+            yield return new WaitForSeconds(1f);
+            --rLock.timeRemaining;
+        }
+
+        resendingLocks.Remove(rLock);
+        Debug.Log(rLock.sceneName + " scene certificate and be sent again.");
     }
 
     public void UpdateLatestVersionDev()
@@ -228,6 +292,12 @@ public class MainMenu : MonoBehaviour {
         canvas.transform.Find("BugReportUI").gameObject.SetActive(false);
 
     }
+
+    public void CloseUIBtn(GameObject ui)
+    {
+        ui.SetActive(false);
+    }
+
     public void OnUpdatestCloseButtonClick()
     {
         //turning of the updates panel when button is clicked

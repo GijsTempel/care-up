@@ -137,7 +137,7 @@ public class TutorialHintsN : MonoBehaviour
 		}
 	}
 
-    void Update()
+    public void Update()
     {
         Vector2 scr = new Vector2(Screen.width, Screen.height);
         if (res != scr)

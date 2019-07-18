@@ -29,8 +29,11 @@ public class PickUpObjectAtFrame : StateMachineBehaviour
             if (PlayerAnimationManager.CompareFrames(frame, prevFrame, pickFrame))
             {
                 obj = GameObject.Find(objectName);
-                inventory.ForcePickItem(obj, hand, true);
-                PlayerAnimationManager.SetHandItem(hand == PlayerAnimationManager.Hand.Left, obj);
+                if (obj != null)
+                {
+                    inventory.ForcePickItem(obj, hand, true);
+                    PlayerAnimationManager.SetHandItem(hand == PlayerAnimationManager.Hand.Left, obj);
+                }
             }
 
   

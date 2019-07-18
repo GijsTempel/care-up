@@ -13,6 +13,7 @@ using UnityEngine.UI;
 using UnityEngine.Networking;
 using System.Linq;
 using System.Collections;
+using SmartLookUnity;
 
 /// <summary>
 /// Handles quick access to saved data.
@@ -191,6 +192,8 @@ public class PlayerPrefsManager : MonoBehaviour
         // uncomment this, fill with correct info and start game
         // p.s. dont forget to comment this again and not push instead :)
         //PlayerPrefsManager.__dev__customCertificate("playerFullName", "sceneName", "06202019");
+
+        SmartLook.Init("22f3cf28278dbff71183ef8e0fa90c90048b850d");
     }
 
     void Start()
@@ -402,14 +405,14 @@ public class PlayerPrefsManager : MonoBehaviour
         {
             MailMessage mail = new MailMessage();
 
-            mail.From = new MailAddress("info@careup.nl");
-            mail.To.Add("info@careup.nl");
+            mail.From = new MailAddress("info@careup.online");
+            mail.To.Add("info@careup.online");
             mail.Subject = topic;
             mail.Body = message;
 
-            SmtpClient smtpServer = new SmtpClient("smtp.strato.de");
+            SmtpClient smtpServer = new SmtpClient("smtp.office365.com");
             smtpServer.Port = 587;
-            smtpServer.Credentials = new System.Net.NetworkCredential("info@careup.nl", "TripleMotionMedia3") as ICredentialsByHost;
+            smtpServer.Credentials = new System.Net.NetworkCredential("info@careup.online", "TripleMM3") as ICredentialsByHost;
             smtpServer.EnableSsl = true;
 
             ServicePointManager.ServerCertificateValidationCallback =

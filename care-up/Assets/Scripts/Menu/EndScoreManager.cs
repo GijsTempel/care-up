@@ -121,8 +121,6 @@ public class EndScoreManager : MonoBehaviour
             // show/hide buttons
             bool flag = (percent > 0.7f && manager.subscribed);
 
-            GameObject.Find("Interactable Objects/Canvas/Send_Score/Top/Scenetitle").GetComponent<Text>().text = manager.currentSceneVisualName;
-
             // update test highscore + save certificate date
             manager.UpdateTestHighscore(percent);
 
@@ -138,32 +136,10 @@ public class EndScoreManager : MonoBehaviour
                 }
             }
 
-            emailsSent = flag && manager.validatedScene;
+            emailsSent = flag;
 
             GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Buttons/Back to main menu")
                 .GetComponent<Button>().onClick.AddListener(ConditionalHomeButton);
-
-            // certificate set scene name
-            GameObject.Find("Interactable Objects/Canvas/CertificatePanel/Top/Scenetitle")
-                .GetComponent<Text>().text = manager.currentSceneVisualName;
-
-            // certificate set btn function
-            Button openCertificateBtn = GameObject.Find("Interactable Objects/Canvas/CertificatePanel/" +
-                "ContentHolder/CertificateBTN").GetComponent<Button>();
-            openCertificateBtn.onClick.AddListener(OpenCertificateBtn);
-
-            // fullname pop up function set up
-            GameObject.Find("Interactable Objects/Canvas/NamePopUp/BackToRegisterButton")
-                .GetComponent<Button>().onClick.AddListener(SaveFullPlayerNameBtn);
-
-            if (!flag || !manager.validatedScene)
-            {
-                GameObject.Find("Interactable Objects/Canvas/CertificatePanel/" +
-                    "ContentHolder/Description (1)").SetActive(false);
-                GameObject.Find("Interactable Objects/Canvas/CertificatePanel/" +
-                    "ContentHolder/ScoreSendBTN").SetActive(false);
-            }
-
         }
         if (actualScene)
         {
@@ -206,17 +182,21 @@ public class EndScoreManager : MonoBehaviour
                 achievements.UpdateKeys("within5", 1);
             }
 
-            if (PlayerPrefsManager.plays == 1)
-            {
+            string scompleted = DatabaseManager.FetchField("AchievementData", "ProtocolsFinished");
+            int completed = scompleted != "" ? int.Parse(scompleted) + 1 : 1;
+            DatabaseManager.UpdateField("AchievementData", "ProtocolsFinished", completed.ToString());
+            
+            if (completed >= 1)
+            { 
                 achievements.UpdateKeys("FinishedProtocol", 1);
             }
-            else if (PlayerPrefsManager.plays == 3)
+            if (completed >= 3)
             {
-                achievements.UpdateKeys("FinishedProtocol", 2);
+                achievements.UpdateKeys("Finished3Protocols", 1);
             }
-            else if (PlayerPrefsManager.plays == 5)
+            if (completed >= 5)
             {
-                achievements.UpdateKeys("FinishedProtocol", 2);
+                achievements.UpdateKeys("Finished5Protocols", 1);
             }
 
             Cursor.lockState = CursorLockMode.None;
@@ -342,7 +322,13 @@ public class EndScoreManager : MonoBehaviour
         if (emailsSent)
         {
             GameObject.Find("Interactable Objects/Canvas/CertificatePopOp").SetActive(true);
+            if (manager.validatedScene == false)
+            {   // changing pop up text if scene is not validated
+                GameObject.Find("Interactable Objects/Canvas/CertificatePopOp/RegText").GetComponent<Text>().text
+                    = "Neem snel een kijkje in je mailbox! Daar vind je je certificaat.";
+            }
         }
+
         else
         {
             bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");

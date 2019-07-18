@@ -17,7 +17,7 @@ namespace MBS {
         */
 
         [SerializeField] Image icon = default(Image);
-        [SerializeField] new Text name = default(Text);
+        [SerializeField] Text name = default(Text);
         [SerializeField] Text description = default(Text);
 
         Sprite
@@ -40,22 +40,27 @@ namespace MBS {
 
             //see if this sprite's image is found inside the project and if so, load that.
             //if not found locally, download it from the web
-            LockedImg = Resources.Load<Sprite>( ResourceFilename( Fields.String( "locked_url" ) ) );
-            UnlockedImg = Resources.Load<Sprite>( ResourceFilename( Fields.String( "unlocked_url" ) ) );
+            //LockedImg = Resources.Load<Sprite>( ResourceFilename( Fields.String( "locked_url" ) ) );
+            //UnlockedImg = Resources.Load<Sprite>( ResourceFilename( Fields.String( "unlocked_url" ) ) );
+
+            LockedImg = Resources.Load<Sprite>("Sprites/btn_icon_lock");
+            UnlockedImg = Resources.Load<Sprite>("Sprites/cup");
+
             DisplayRelevantVersion();
 
-            if (GameObject.Find("Account_Achievements"))
+            /*if (GameObject.Find("Account_Achievements"))
             {
                 if (null == LockedImg)
                     StartCoroutine(FetchImageOnline(Fields.String("locked_url"), true));
                 if (null == UnlockedImg)
                     StartCoroutine(FetchImageOnline(Fields.String("unlocked_url"), false));
-            }           
+            } */          
         }
 
         public void DisplayRelevantVersion()
         {
-            description.text = Unlocked ? Fields.String( "text" ) : Fields.String( "descr" );
+            //description.text = Unlocked ? Fields.String( "text" ) : Fields.String( "descr" );
+            description.text = Fields.String("text"); // just display text
             icon.sprite = Unlocked ? UnlockedImg : LockedImg;
         }
 

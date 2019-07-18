@@ -20,6 +20,8 @@ public class DatabaseManager : MonoBehaviour
 
     private static DatabaseManager instance;
     private static List<Category> database = new List<Category>();
+
+    private static Coroutine sessionCheck;
     
     private void Awake()
     {
@@ -52,6 +54,8 @@ public class DatabaseManager : MonoBehaviour
     public static void Clean()
     {
         database.Clear();
+        instance.StopCoroutine(sessionCheck);
+        GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed = false;
     }
 
     private static void PostInit(CMLData ignore = null)
@@ -102,7 +106,7 @@ public class DatabaseManager : MonoBehaviour
         // 1 session restriction, checking once a minute
         sessionKey = PlayerPrefsManager.RandomString(16);
         UpdateField("AccountStats", "SessionKey", sessionKey);
-        instance.StartCoroutine(CheckSession(60.0f));
+        sessionCheck = instance.StartCoroutine(CheckSession(60.0f));
     }
 
     private static void FetchEverything_success(CML response)
@@ -202,15 +206,22 @@ public class DatabaseManager : MonoBehaviour
     {
         Category cat = database.Find(x => x.name == category);
 
-        string[][] data = new string[cat.fields.Keys.Count][];
-
-        int i = 0;
-        foreach (string key in cat.fields.Keys)
+        if (cat != null && cat.fields.Count > 0)
         {
-            data[i++] = new string[] { key, cat.fields[key] };
-        }
+            string[][] data = new string[cat.fields.Keys.Count][];
 
-        return data;
+            int i = 0;
+            foreach (string key in cat.fields.Keys)
+            {
+                data[i++] = new string[] { key, cat.fields[key] };
+            }
+
+            return data;
+        }
+        else
+        {
+            return null;
+        }
     }
 
     public static void UpdateField(string category, string fieldName, string newValue)
