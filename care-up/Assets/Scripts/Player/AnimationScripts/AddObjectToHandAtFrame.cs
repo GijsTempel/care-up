@@ -34,45 +34,48 @@ public class AddObjectToHandAtFrame : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         //Debug.Log(frame);
-        if (PlayerAnimationManager.CompareFrames(frame, prevFrame, addFrame))
+        if (animator.speed != 0)
         {
-            obj = inventory.CreateObjectByName(objectName, Vector3.zero);
-            inventory.ForcePickItem(obj, hand);
-            PlayerAnimationManager.SetHandItem(hand == PlayerAnimationManager.Hand.Left, obj);
-
-            if (GhostObjectTarget != "" && obj != null)
+            if (PlayerAnimationManager.CompareFrames(frame, prevFrame, addFrame))
             {
-                if (GameObject.Find(GhostObjectTarget) != null)
-                {
-                    Transform targetObj = GameObject.Find(GhostObjectTarget).transform;
-                    obj.GetComponent<PickableObject>().InstantiateGhostObject(targetObj.position, targetObj.rotation, 0);
+                obj = inventory.CreateObjectByName(objectName, Vector3.zero);
+                inventory.ForcePickItem(obj, hand);
+                PlayerAnimationManager.SetHandItem(hand == PlayerAnimationManager.Hand.Left, obj);
 
-                    bool isInList = false;
-                    HandsInventory.GhostPosition CGP = new HandsInventory.GhostPosition();
-                    CGP.position = targetObj.position;
-                    CGP.rotation = targetObj.rotation.eulerAngles;
-                    CGP.objectName = objectName;
-                    obj.GetComponent<PickableObject>().SavePosition(CGP.position, targetObj.rotation, true);
-                    if (inventory.customGhostPositions.Count > 0)
+                if (GhostObjectTarget != "" && obj != null)
+                {
+                    if (GameObject.Find(GhostObjectTarget) != null)
                     {
-                        for (int i = 0; i < inventory.customGhostPositions.Count; i++)
+                        Transform targetObj = GameObject.Find(GhostObjectTarget).transform;
+                        obj.GetComponent<PickableObject>().InstantiateGhostObject(targetObj.position, targetObj.rotation, 0);
+
+                        bool isInList = false;
+                        HandsInventory.GhostPosition CGP = new HandsInventory.GhostPosition();
+                        CGP.position = targetObj.position;
+                        CGP.rotation = targetObj.rotation.eulerAngles;
+                        CGP.objectName = objectName;
+                        obj.GetComponent<PickableObject>().SavePosition(CGP.position, targetObj.rotation, true);
+                        if (inventory.customGhostPositions.Count > 0)
                         {
-                            if (inventory.customGhostPositions[i].objectName == objectName)
+                            for (int i = 0; i < inventory.customGhostPositions.Count; i++)
                             {
-                                isInList = true;
-                                inventory.customGhostPositions[i] = CGP;
+                                if (inventory.customGhostPositions[i].objectName == objectName)
+                                {
+                                    isInList = true;
+                                    inventory.customGhostPositions[i] = CGP;
+                                }
                             }
                         }
-                    }
-                    if (!isInList)
-                    {
-                        inventory.customGhostPositions.Add(CGP);
-                    }
+                        if (!isInList)
+                        {
+                            inventory.customGhostPositions.Add(CGP);
+                        }
 
-                    if (destroyOnDrop != AddObjectToHandAtFrame.DestroyStates.None)
-                    {
-                        bool dod = destroyOnDrop == AddObjectToHandAtFrame.DestroyStates.True;
-                        obj.GetComponent<PickableObject>().destroyOnDrop = dod;
+                        if (destroyOnDrop != AddObjectToHandAtFrame.DestroyStates.None)
+                        {
+                            bool dod = destroyOnDrop == AddObjectToHandAtFrame.DestroyStates.True;
+                            obj.GetComponent<PickableObject>().destroyOnDrop = dod;
+                        }
                     }
                 }
             }
