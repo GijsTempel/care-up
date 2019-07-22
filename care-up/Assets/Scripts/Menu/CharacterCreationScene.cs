@@ -18,8 +18,14 @@ public class CharacterCreationScene : MonoBehaviour
     public int bodyType;
     public int glassesType;
 
+    private GameObject AvatarObject;
+
     private GameObject maleChar;
     private GameObject femaleChar;
+
+    private GameObject maleFace;
+    private GameObject femaleFace;
+
     private List<Transform> maleHeads = new List<Transform>();
     private List<Transform> femaleHeads = new List<Transform>();
     private List<Transform> femaleBodies = new List<Transform>();
@@ -27,6 +33,7 @@ public class CharacterCreationScene : MonoBehaviour
     private List<Transform> maleGlasses = new List<Transform>();
     private List<Transform> femaleGlasses = new List<Transform>();
     
+
     private Image maleBtn;
     private Image femaleBtn;
 
@@ -38,8 +45,13 @@ public class CharacterCreationScene : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "MainMenu")
             return;
 
-        femaleChar = GameObject.Find("Female_Citizens_customizable");
-        maleChar = GameObject.Find("Male_Citizens_customizable");
+        AvatarObject = GameObject.Find("w_char");
+
+        femaleChar = AvatarObject.transform.Find("female").gameObject;
+        maleChar = AvatarObject.transform.Find("male").gameObject;
+
+        femaleFace = GameObject.Find("f_face");
+        maleFace = GameObject.Find("m_face");
 
         maleBtn = GameObject.Find("CharacterCustomization/Canvas/Image/InfoHolder/CharacterPanel/GenderButtonsHolder/MaleBtn").GetComponent<Image>();
         femaleBtn = GameObject.Find("CharacterCustomization/Canvas/Image/InfoHolder/CharacterPanel/GenderButtonsHolder/FemaleBtn").GetComponent<Image>();
@@ -66,28 +78,35 @@ public class CharacterCreationScene : MonoBehaviour
     public void Initialize()
     {
         // bodies
-        femaleChar.transform.GetComponentsInChildren<Transform>(true, femaleBodies);
-        maleChar.transform.GetComponentsInChildren<Transform>(true, maleBodies);
+        femaleChar.transform.Find("f_body").GetComponentsInChildren<Transform>(true, femaleBodies);
+        maleChar.transform.Find("m_body").GetComponentsInChildren<Transform>(true, maleBodies);
+
+        femaleBodies.RemoveAt(0);
+        maleBodies.RemoveAt(0);
 
         // filter bodies lists, leave only correct ones (thx unity3d)
-        femaleBodies = femaleBodies.Where(b => b.name.Contains("f_body_")).ToList();
-        maleBodies = maleBodies.Where(b => b.name.Contains("Body_")).ToList();
+        //femaleBodies = femaleBodies.Where(b => b.name.Contains("f_body_")).ToList();
+        //maleBodies = maleBodies.Where(b => b.name.Contains("Body_")).ToList();
 
         // heads
-        femaleChar.transform.Find("Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Neck/Bip001 Head/HEAD_CONTAINER")
-            .GetComponentsInChildren<Transform>(true, femaleHeads);
-        maleChar.transform.Find("Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Neck/Bip001 Head/HEAD_CONTAINER")
-            .GetComponentsInChildren<Transform>(true, maleHeads);
+        femaleChar.transform.Find("f_head").GetComponentsInChildren<Transform>(true, femaleHeads);
+        maleChar.transform.Find("m_head").GetComponentsInChildren<Transform>(true, maleHeads);
 
         // trim first ones cuz it's "HEAD_CONTAINER"
         femaleHeads.RemoveAt(0);
         maleHeads.RemoveAt(0);
 
         //trim three last ones cuz those are glasses
-        femaleGlasses = femaleHeads.GetRange(femaleHeads.Count - 3, 3);
-        femaleHeads.RemoveRange(femaleHeads.Count - 3, 3);
-        maleGlasses = maleHeads.GetRange(maleHeads.Count - 3, 3);
-        maleHeads.RemoveRange(maleHeads.Count - 3, 3);
+        femaleChar.transform.Find("f_glasses").GetComponentsInChildren<Transform>(true, femaleGlasses);
+        maleChar.transform.Find("m_glasses").GetComponentsInChildren<Transform>(true, maleGlasses);
+
+        femaleGlasses.RemoveAt(0);
+        maleGlasses.RemoveAt(0);
+
+        //femaleGlasses = femaleHeads.GetRange(femaleHeads.Count - 3, 3);
+        //femaleHeads.RemoveRange(femaleHeads.Count - 3, 3);
+        //maleGlasses = maleHeads.GetRange(maleHeads.Count - 3, 3);
+        //maleHeads.RemoveRange(maleHeads.Count - 3, 3);
     }
 
     void UpdateMaleHeads()
@@ -141,7 +160,9 @@ public class CharacterCreationScene : MonoBehaviour
     void UpdateActiveObjects()
     {
         maleChar.SetActive(gender == CharGender.Male);
+        maleFace.SetActive(gender == CharGender.Male);
         femaleChar.SetActive(gender == CharGender.Female);
+        femaleFace.SetActive(gender == CharGender.Female);
 
         UpdateMaleHeads();
         UpdateFemaleHeads();
