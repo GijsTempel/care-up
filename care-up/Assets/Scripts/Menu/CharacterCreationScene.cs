@@ -18,9 +18,9 @@ public class CharacterCreationScene : MonoBehaviour
     public int bodyType;
     public int glassesType;
 
-    private GameObject AvatarObject;
+    public GameObject AvatarObject;
 
-    private GameObject maleChar;
+    public  GameObject maleChar;
     private GameObject femaleChar;
 
     private GameObject maleFace;
@@ -45,17 +45,9 @@ public class CharacterCreationScene : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "MainMenu")
             return;
 
-        AvatarObject = GameObject.Find("w_char");
-
-        femaleChar = AvatarObject.transform.Find("female").gameObject;
-        maleChar = AvatarObject.transform.Find("male").gameObject;
-
-        femaleFace = GameObject.Find("f_face");
-        maleFace = GameObject.Find("m_face");
-
         maleBtn = GameObject.Find("CharacterCustomization/Canvas/Image/InfoHolder/CharacterPanel/GenderButtonsHolder/MaleBtn").GetComponent<Image>();
         femaleBtn = GameObject.Find("CharacterCustomization/Canvas/Image/InfoHolder/CharacterPanel/GenderButtonsHolder/FemaleBtn").GetComponent<Image>();
-
+        
         Initialize();
 
         // set up initial info
@@ -77,6 +69,14 @@ public class CharacterCreationScene : MonoBehaviour
 
     public void Initialize()
     {
+        AvatarObject = GameObject.Find("w_char");
+
+        femaleChar = AvatarObject.transform.Find("female").gameObject;
+        maleChar = AvatarObject.transform.Find("male").gameObject;
+
+        femaleFace = GameObject.Find("f_face");
+        maleFace = GameObject.Find("m_face");
+
         // bodies
         femaleChar.transform.Find("f_body").GetComponentsInChildren<Transform>(true, femaleBodies);
         maleChar.transform.Find("m_body").GetComponentsInChildren<Transform>(true, maleBodies);
@@ -400,11 +400,8 @@ public class CharacterCreationScene : MonoBehaviour
         }
     }
     
-    public void ShowCharacter(GameObject male, GameObject female)
-    {
-        femaleChar = female;
-        maleChar = male;
-
+    public void ShowCharacter()
+    {        
         Initialize();
         
         switch (CharacterInfo.sex)
@@ -412,6 +409,7 @@ public class CharacterCreationScene : MonoBehaviour
             case "Female":
                 {
                     maleChar.SetActive(false);
+                    maleFace.SetActive(false);
                     foreach (Transform h in femaleHeads)
                     {
                         h.gameObject.SetActive(femaleHeads.IndexOf(h) == CharacterInfo.headType);
@@ -432,6 +430,7 @@ public class CharacterCreationScene : MonoBehaviour
             case "Male":
                 {
                     femaleChar.SetActive(false);
+                    femaleFace.SetActive(false);
                     foreach (Transform h in maleHeads)
                     {
                         h.gameObject.SetActive(maleHeads.IndexOf(h) == CharacterInfo.headType);
