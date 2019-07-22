@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class LocalizationManager {
     string[] dicts = new string[] {
-        "TextData"
+        "TextData",
+        "Text_Ostomy_Care"
     };
 
     public static LocalizationManager instance;
