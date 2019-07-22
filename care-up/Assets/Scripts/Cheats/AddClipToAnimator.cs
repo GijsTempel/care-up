@@ -40,20 +40,36 @@ public class AddClipToAnimator : MonoBehaviour {
             triger_base = "Use";
         }
 
-        string sm = "Injection Scene";
+        string sm = "";
 		if (subMachine != "")
 			sm = subMachine;
         if (leftClip != null) 
         { 
             Motion LeftMotion = (Motion)leftClip as Motion;
-            AddActionToMachine(0, "Combine Animations/" + sm, LeftMotion, LeftObjectsID, RightbjectsID, triger_base);
-			AddActionToMachine(1, "Combine Animations/" + sm, LeftMotion, LeftObjectsID, RightbjectsID, "S " + triger_base);
+            if (subMachine != "")
+            {
+                AddActionToMachine(0, "Combine Animations/" + sm, LeftMotion, LeftObjectsID, RightbjectsID, triger_base);
+                AddActionToMachine(1, "Combine Animations/" + sm, LeftMotion, LeftObjectsID, RightbjectsID, "S " + triger_base);
+            }
+            else
+            {
+                AddActionToMachine(0, "", LeftMotion, LeftObjectsID, RightbjectsID, triger_base);
+                AddActionToMachine(1, "", LeftMotion, LeftObjectsID, RightbjectsID, "S " + triger_base);
+            }
 	    }
         if (rightClip != null)
         {
             Motion RightMotion = (Motion)rightClip as Motion;
-			AddActionToMachine(0, "Combine Animations/" + sm, RightMotion, RightbjectsID, LeftObjectsID, triger_base);
-			AddActionToMachine(1, "Combine Animations/" + sm, RightMotion, RightbjectsID, LeftObjectsID, "S " + triger_base);
+            if (subMachine != "")
+            {
+                AddActionToMachine(0, "Combine Animations/" + sm, RightMotion, RightbjectsID, LeftObjectsID, triger_base);
+                AddActionToMachine(1, "Combine Animations/" + sm, RightMotion, RightbjectsID, LeftObjectsID, "S " + triger_base);
+            }
+            else
+            {
+                AddActionToMachine(0, "", RightMotion, RightbjectsID, LeftObjectsID, triger_base);
+                AddActionToMachine(1, "", RightMotion, RightbjectsID, LeftObjectsID, "S " + triger_base);
+            }
         }
     }
 
@@ -187,7 +203,12 @@ public class AddClipToAnimator : MonoBehaviour {
 
     void AddActionToMachine(int layer, string machineName, Motion clip, int leftID, int rightID, string trigger)
     {
-        AnimatorStateMachine am = FindMachine(animationController.layers[layer].stateMachine, machineName);
+        AnimatorStateMachine am = animationController.layers[layer].stateMachine;
+        if (machineName != "")
+        {
+            am = FindMachine(animationController.layers[layer].stateMachine, machineName);
+        }
+        
         UnityEditor.Animations.AnimatorState lm;
         lm = am.AddState(clip.name);
         lm.motion = clip;
@@ -199,7 +220,10 @@ public class AddClipToAnimator : MonoBehaviour {
             bm.anyStateTransitions[l - 1].AddCondition(AnimatorConditionMode.Equals, leftID, "leftID");
         if (rightID != -1)
             bm.anyStateTransitions[l - 1].AddCondition(AnimatorConditionMode.Equals, rightID, "rightID");
-        lm.AddTransition(animationController.layers[layer].stateMachine);
+        if (machineName != "")
+            lm.AddTransition(animationController.layers[layer].stateMachine);
+        else
+            lm.AddExitTransition();
         lm.transitions[lm.transitions.Length - 1].hasExitTime = true;
     }
     

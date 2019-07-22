@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
@@ -42,8 +41,8 @@ public class CharacterCreationScene : MonoBehaviour
         femaleChar = GameObject.Find("Female_Citizens_customizable");
         maleChar = GameObject.Find("Male_Citizens_customizable");
 
-        maleBtn = GameObject.Find("Canvas/CharacterPanel/MaleBtn").GetComponent<Image>();
-        femaleBtn = GameObject.Find("Canvas/CharacterPanel/FemaleBtn").GetComponent<Image>();
+        maleBtn = GameObject.Find("CharacterCustomization/Canvas/Image/InfoHolder/CharacterPanel/GenderButtonsHolder/MaleBtn").GetComponent<Image>();
+        femaleBtn = GameObject.Find("CharacterCustomization/Canvas/Image/InfoHolder/CharacterPanel/GenderButtonsHolder/FemaleBtn").GetComponent<Image>();
 
         Initialize();
 
