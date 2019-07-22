@@ -82,7 +82,7 @@ public class LevelButton : MonoBehaviour
                 GameObject dialogue = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/Dialog 1");
 
                 // setting title i assume
-                dialogue.transform.Find("Panel_UI/Top/Title").GetComponent<Text>().text = displayName;
+                dialogue.transform.Find("Content/Panel_UI/Top/Title").GetComponent<Text>().text = displayName;
                 if (manager != null)
                 {
                     manager.currentSceneVisualName = displayName;
@@ -93,7 +93,7 @@ public class LevelButton : MonoBehaviour
                 for (int i = 0; i < variations.Count; ++i)
                 {
                     LevelSelectionScene_UI_Option option =
-                        dialogue.transform.Find("Buttons/Option_" + (i + 1)).GetComponent<LevelSelectionScene_UI_Option>();
+                        dialogue.transform.Find("Content/Buttons/Option_" + (i + 1)).GetComponent<LevelSelectionScene_UI_Option>();
                     option.bundleName = variations[i].bundleName;
                     option.sceneName = variations[i].sceneName;
                     option.transform.GetComponentInChildren<Text>().text = variations[i].displayName;

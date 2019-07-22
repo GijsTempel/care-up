@@ -1,19 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class ScoreLine : MonoBehaviour {
+public class ScoreLine : MonoBehaviour
+{
     public GameObject crown;
 
-    public void SetScoreLine(string _name, string _score, int i)
+    public void SetScoreLine(string name, string score, int i)
     {
-        transform.Find("name").GetComponent<Text>().text = _name;
+        transform.Find("name").GetComponent<Text>().text = name;
         //transform.Find("time/Text").GetComponent<Text>().text = "";
-        transform.Find("score/Text").GetComponent<Text>().text = _score;
+        transform.Find("score/Text").GetComponent<Text>().text = score;
+
         if (i < 3)
-            crown.SetActive(_name != "");
-
+            crown.SetActive(name != "");
     }
-
 }

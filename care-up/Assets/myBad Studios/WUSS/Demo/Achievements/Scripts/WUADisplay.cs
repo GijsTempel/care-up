@@ -159,7 +159,7 @@ namespace MBS
                 if (GameObject.FindObjectOfType<AchievementsLoader>() != null)
                 {
                     GameObject.FindObjectOfType<AchievementsLoader>().loadingIcon.SetActive(false);
-                    GameObject.FindObjectOfType<AchievementsLoader>().backButton.GetComponent<Button>().interactable = true;
+                    GameObject.FindObjectOfType<AchievementsLoader>().backButton.transform.GetChild(0).gameObject.GetComponent<Button>().interactable = true;
                     GameObject.FindObjectOfType<AchievementsLoader>().backButton.GetComponent<Animator>().SetTrigger("start");
                 }
 
