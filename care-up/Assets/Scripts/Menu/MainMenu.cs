@@ -126,7 +126,7 @@ public class MainMenu : MonoBehaviour {
 
             if (!string.IsNullOrEmpty(bigNumber))
             {
-                GameObject.Find("UMenuProManager/MenuCanvas/Account/Account_Panel_UI/UserInfoHolder/BigNumberHolder/BigNumber")
+                GameObject.Find("UMenuProManager/MenuCanvas/Account/InfoHolder/AccountPanelUI/UserInfoHolder/BigNumberHolder/BigNumber")
                .GetComponent<Text>().text = bigNumber;
             }           
         }
@@ -159,8 +159,8 @@ public class MainMenu : MonoBehaviour {
 
             // set up time
             int timeLeft = resendingLocks.Where(x => x.sceneName == scene).First().timeRemaining;
-            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/CertificateBlockedPopOp/Remaining").
-                GetComponent<Text>().text = "Time remaining: " + (timeLeft / 60) + "m " + (timeLeft % 60) + "s";
+            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/CertificateBlockedPopOp/Certificate/Remaining").
+                GetComponent<Text>().text = "Resterende tijd: " + (timeLeft / 60) + "m " + (timeLeft % 60) + "s";
         }
     }
 
