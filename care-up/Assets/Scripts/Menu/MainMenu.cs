@@ -126,7 +126,7 @@ public class MainMenu : MonoBehaviour {
 
             if (!string.IsNullOrEmpty(bigNumber))
             {
-                GameObject.Find("UMenuProManager/MenuCanvas/Account/Account_Panel_UI/UserInfoHolder/BigNumberHolder/BigNumber")
+                GameObject.Find("UMenuProManager/MenuCanvas/Account/InfoHolder/AccountPanelUI/UserInfoHolder/BigNumberHolder/BigNumber")
                .GetComponent<Text>().text = bigNumber;
             }           
         }
