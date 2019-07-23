@@ -18,7 +18,7 @@ public class LevelSelectionScene_UI_Option : MonoBehaviour {
         // turn on
         if (!selected)
         {
-            LevelButton levelButton = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/DialogTestPractice/Panel_UI/Buttons/Start").GetComponent<LevelButton>();
+            LevelButton levelButton = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/DialogTestPractice/Panel_UI/Buttons/Start")?.GetComponent<LevelButton>();
 
             levelButton.sceneName = sceneName;
             levelButton.bundleName = bundleName;
