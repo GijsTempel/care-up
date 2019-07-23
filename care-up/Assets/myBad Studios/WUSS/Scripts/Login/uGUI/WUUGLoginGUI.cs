@@ -4,8 +4,7 @@ using UnityEngine.UI;
 namespace MBS
 {
     public class WUUGLoginGUI : WUUGLoginLocalisation
-    {
-        
+    {       
 
         public enum eWULUGUIState { Inactive, Active }
 

@@ -113,20 +113,20 @@ public class MainMenu : MonoBehaviour {
             // shared field, will keep it outside DatabaseManager
             GameObject.FindObjectOfType<PlayerPrefsManager>().FetchLatestVersion();
 
-            GameObject.Find("UMenuProManager/MenuCanvas/Account/Top (1)/UserName").GetComponent<Text>().text = MBS.WULogin.display_name;
+            GameObject.Find("UMenuProManager/MenuCanvas/Account/Top/UserName").GetComponent<Text>().text = MBS.WULogin.display_name;
 
             string bigNumber = GameObject.FindObjectOfType<PlayerPrefsManager>().bigNumber;
             string fullName = GameObject.FindObjectOfType<PlayerPrefsManager>().fullPlayerName;
 
             if (!string.IsNullOrEmpty(fullName))
             {
-                GameObject.Find("UMenuProManager/MenuCanvas/Account/Account_Panel_UI/UserInfoHolder/NameHolder/Account_Username")
+                GameObject.Find("UMenuProManager/MenuCanvas/Account/InfoHolder/AccountPanelUI/UserInfoHolder/NameHolder/Account_Username")
                .GetComponent<Text>().text = fullName;
             }
 
             if (!string.IsNullOrEmpty(bigNumber))
             {
-                GameObject.Find("UMenuProManager/MenuCanvas/Account/Account_Panel_UI/UserInfoHolder/BigNumberHolder/BigNumber")
+                GameObject.Find("UMenuProManager/MenuCanvas/Account/InfoHolder/AccountPanelUI/UserInfoHolder/BigNumberHolder/BigNumber")
                .GetComponent<Text>().text = bigNumber;
             }           
         }
@@ -140,7 +140,7 @@ public class MainMenu : MonoBehaviour {
         if (flag)
         {
             // send if so
-            //PlayerPrefsManager.__sendCertificateToUserMail(scene, date);
+            PlayerPrefsManager.__sendCertificateToUserMail(scene, date);
 
             // show pop up that it's sent
             GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/CertificatePopOp").SetActive(true);
@@ -159,8 +159,8 @@ public class MainMenu : MonoBehaviour {
 
             // set up time
             int timeLeft = resendingLocks.Where(x => x.sceneName == scene).First().timeRemaining;
-            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/CertificateBlockedPopOp/Remaining").
-                GetComponent<Text>().text = "Time remaining: " + (timeLeft / 60) + "m " + (timeLeft % 60) + "s";
+            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/CertificateBlockedPopOp/Certificate/Remaining").
+                GetComponent<Text>().text = "Resterende tijd: " + (timeLeft / 60) + "m " + (timeLeft % 60) + "s";
         }
     }
 

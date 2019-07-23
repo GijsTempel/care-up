@@ -1,10 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Xml;
-using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine.UI;
-using System;
 using System.Linq;
 
 
@@ -247,7 +244,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
             // leaderboard stuff
             GameObject button = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/UI/LeaderBoardSceneButton"),
-                GameObject.Find("UMenuProManager/MenuCanvas/Leaderboard/LeftBar/Scroll View/Viewport/Content").transform);
+                GameObject.Find("UMenuProManager/MenuCanvas/Leaderboard/InfoHolder/ProtocolsHolder/Scroll View/Viewport/Content").transform);
             LeaderBoardSceneButton buttonInfo = button.GetComponent<LeaderBoardSceneButton>();
             button.transform.Find("Text").GetComponent<Text>().text = sceneUnit.displayName;
             button.transform.Find("LevelPreview").GetComponent<Image>().sprite = sceneUnit.image;  
@@ -323,6 +320,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
             GameObject.FindObjectOfType<UMP_Manager>().LeaderBoardSearchBar.gameObject.SetActive(false);
             GameObject.FindObjectOfType<LeaderBoard>().top.SetActive(false);
             GameObject.FindObjectOfType<LeaderBoard>().backButton.GetComponent<Button>().interactable = true;
+            GameObject.FindObjectOfType<LeaderBoard>().topDescription.SetActive(false);
             GameObject.FindObjectOfType<LeaderBoard>().infoBar.SetActive(true);
             GameObject.FindObjectOfType<LeaderBoard>().description.GetComponent<Text>().text = LeaderBoardSceneButton.Descripton;
             GameObject.FindObjectOfType<LeaderBoard>().leaderboard.SetActive(false);
