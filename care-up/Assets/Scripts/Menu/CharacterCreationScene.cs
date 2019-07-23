@@ -100,28 +100,26 @@ public class CharacterCreationScene : MonoBehaviour
             mouthObject = m_mouthObject;
         }
 
-        if(leftEyeObject != null && rightEyeObject != null && mouthObject != null)
-        {
-            float gridStep = leftEyeObject.gridStep;
-            float eyeTypeOffset = eyes * gridStep;
-            leftEyeObject.offset.x = eyeTypeOffset;
-            rightEyeObject.offset.x = eyeTypeOffset;
-            float mouthTypeOffset = mouth * gridStep;
-            mouthObject.offset.x = mouthTypeOffset;
-        }
+        float gridStep = 0.125f;
+        float eyeTypeOffset = eyes * gridStep;
+        leftEyeObject.offset.x = eyeTypeOffset;
+        rightEyeObject.offset.x = eyeTypeOffset;
+        float mouthTypeOffset = mouth * gridStep;
+        mouthObject.offset.x = mouthTypeOffset;
     }
 
     FaceData GetFaceDate()
     {
         FaceData faceData = new FaceData();
         List<FaceData> faceDataList = maleFaceData;
-       
         if (gender == CharGender.Female)
             faceDataList = femaleFaceData;
+        print(faceDataList.Count.ToString() + "________________");
         if(faceDataList.Count > headType)
         {
             faceData = faceDataList[headType];
         }
+        print(faceData.eyeType.ToString() + "   __ " + faceData.mouthType.ToString());
         return faceData;
     }
 
@@ -198,11 +196,13 @@ public class CharacterCreationScene : MonoBehaviour
 
     void UpdateMaleHeads()
     {
+        print("FFFFFFFFFFFFFFFF");
         foreach (Transform h in maleHeads)
         {
             h.gameObject.SetActive(maleHeads.IndexOf(h) == headType && gender == CharGender.Male);
         }
         FaceData faceData = GetFaceDate();
+        
         SetFace(true, faceData.eyeType, faceData.mouthType);
     }
 
