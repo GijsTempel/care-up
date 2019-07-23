@@ -42,7 +42,6 @@ public class CharacterCreationScene : MonoBehaviour
     private List<Transform> maleGlasses = new List<Transform>();
     private List<Transform> femaleGlasses = new List<Transform>();
     
-
     private Image maleBtn;
     private Image femaleBtn;
 
@@ -51,7 +50,7 @@ public class CharacterCreationScene : MonoBehaviour
     
     private void Start()
     {
-        ReadFaceDate();
+       
         if (SceneManager.GetActiveScene().name == "MainMenu")
             return;
 
@@ -131,7 +130,7 @@ public class CharacterCreationScene : MonoBehaviour
 
             string[] lineData = l.Split(',');
 
-            if (lineData.Length > 0)
+            if (lineData.Length > 1)
             {
                 int.TryParse(lineData[0], out f.eyeType);
                 int.TryParse(lineData[1], out f.mouthType);
@@ -144,10 +143,10 @@ public class CharacterCreationScene : MonoBehaviour
     public void Initialize()
     {
         AvatarObject = GameObject.Find("w_char");
-
         femaleChar = AvatarObject.transform.Find("female").gameObject;
         maleChar = AvatarObject.transform.Find("male").gameObject;
 
+        ReadFaceDate();
         femaleFace = GameObject.Find("f_face");
         maleFace = GameObject.Find("m_face");
 
@@ -481,49 +480,34 @@ public class CharacterCreationScene : MonoBehaviour
     public void ShowCharacter()
     {        
         Initialize();
-        
+        headType = CharacterInfo.headType;
+        bodyType = CharacterInfo.bodyType;
+        glassesType = CharacterInfo.glassesType;
+
         switch (CharacterInfo.sex)
         {
             case "Female":
                 {
+                    gender = CharGender.Female;
+
                     maleChar.SetActive(false);
                     maleFace.SetActive(false);
-                    foreach (Transform h in femaleHeads)
-                    {
-                        h.gameObject.SetActive(femaleHeads.IndexOf(h) == CharacterInfo.headType);
-                    }
-
-                    foreach (Transform h in femaleBodies)
-                    {
-                        h.gameObject.SetActive(femaleBodies.IndexOf(h) == CharacterInfo.bodyType);
-                    }
-
-                    foreach (Transform h in femaleGlasses)
-                    {
-                        h.gameObject.SetActive(femaleGlasses.IndexOf(h) == CharacterInfo.glassesType);
-                    }
+                    femaleFace.SetActive(true);
+                    UpdateFemaleHeads();
+                    UpdateFemaleBodies();
+                    UpdateFemaleGlasses();
 
                     break;
                 }
             case "Male":
                 {
+                    gender = CharGender.Male;
                     femaleChar.SetActive(false);
                     femaleFace.SetActive(false);
-                    foreach (Transform h in maleHeads)
-                    {
-                        h.gameObject.SetActive(maleHeads.IndexOf(h) == CharacterInfo.headType);
-                    }
-
-                    foreach (Transform h in maleBodies)
-                    {
-                        h.gameObject.SetActive(maleBodies.IndexOf(h) == CharacterInfo.bodyType);
-                    }
-
-                    foreach (Transform h in maleGlasses)
-                    {
-                        h.gameObject.SetActive(maleGlasses.IndexOf(h) == CharacterInfo.glassesType);
-                    }
-
+                    maleFace.SetActive(true);
+                    UpdateMaleHeads();
+                    UpdateMaleBodies();
+                    UpdateMaleGlasses();
                     break;
                 }
         }
