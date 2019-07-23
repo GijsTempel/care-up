@@ -34,6 +34,8 @@ public class GameUI : MonoBehaviour
     public QuizTab quiz_tab;
     public bool DropLeftBlink = false;
     public bool DropRightBlink = false;
+
+    GameObject MovementSideButtons;
     public List<string> reqPlaces = new List<string>();
     List<ActionManager.StepData> Current_SubTasks;
     float current_UpdateHintDelay = 0f;
@@ -76,6 +78,9 @@ public class GameUI : MonoBehaviour
     float cooldownTime = 0;
     float lastCooldownTime = 0;
     int currentActionsCount = 0;
+
+
+    
 
     private bool startTimer = false;
     private float targetTime = 0.7f;
@@ -356,6 +361,9 @@ public class GameUI : MonoBehaviour
     {
         gameLogic = GameObject.Find("GameLogic");
         objectsIDsController = GameObject.FindObjectOfType<ObjectsIDsController>();
+        MovementSideButtons = GameObject.Find("MovementSideButtons");
+
+
         prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
         if (prefs != null)
             practiceMode = prefs.practiceMode;
@@ -769,7 +777,7 @@ public class GameUI : MonoBehaviour
                 UpdateWalkToGtoupUI(true);
             }
         }
-
+        //UpdateWalkToGtoupUI(false);
         if (toDelayUpdateHint)
         {
             if (current_UpdateHintDelay > 0)
@@ -934,20 +942,25 @@ public class GameUI : MonoBehaviour
                 combineButton.SetActive(showCombin);
             }
 
-
             if (!currentItemControlPanelState && showItemControlPanel)
             {
-                cooldownTime = 0.4f;
+                cooldownTime = 1.0f;
             }
             lastCooldownTime = cooldownTime;
             if (cooldownTime > 0)
+            {
                 cooldownTime -= Time.deltaTime;
+            }
             currentItemControlPanelState = showItemControlPanel;
             if (cooldownTime > 0)
+            {
                 showItemControlPanel = false;
+
+            }
             if (PlayerScript.actionsLocked)
                 showItemControlPanel = false;
             ItemControlPanel.SetActive(showItemControlPanel);
+            MovementSideButtons.SetActive(showItemControlPanel);
 
             ICPCurrentState = ItemControlPanel.activeSelf;
         }
@@ -961,6 +974,14 @@ public class GameUI : MonoBehaviour
     public void UpdateWalkToGtoupUI(bool value)
     {
         allowObjectControlUI = value;
+        if (!value)
+            cooldownTime = 1.0f;
+        MovementSideButtons.SetActive(false);
+        if (!allowObjectControlUI && !LeftSideButton.gameObject.activeSelf && !RightSideButton.gameObject.activeSelf && 
+            !WalkToGroupPanel.activeSelf && !ItemControlPanel.activeSelf)
+        {
+            return;
+        }
         if (cameraMode != null)
             if (cameraMode.currentMode == CameraMode.Mode.ObjectPreview)
             {
