@@ -11,7 +11,8 @@ public class UVWarp : MonoBehaviour
         Z,
         mX,
         mY,
-        mZ
+        mZ,
+        None
     };
 
     public float gridStep = 0;
@@ -24,6 +25,8 @@ public class UVWarp : MonoBehaviour
     Vector3 lastToPos = new Vector3();
     public axis XAxis;
     public axis YAxis;
+    public int _type = 0;
+    int last_type = 0;
 
     void Start()
     {
@@ -37,7 +40,7 @@ public class UVWarp : MonoBehaviour
         //{
         //    print(_to.localPosition);
         //}
-        if (offset != lastOffset || lastToPos != _to.localPosition)
+        if (offset != lastOffset || lastToPos != _to.localPosition || last_type != _type)
         {
             Vector2 _shift = new Vector2();
 
@@ -93,7 +96,7 @@ public class UVWarp : MonoBehaviour
                 }
                 //print(_shift);
             }
-
+            _shift.x += _type * gridStep;
             Vector2[] new_uvs = new Vector2[uvs.Length];
             for (int i = 0; i < gameObject.GetComponent<MeshFilter>().mesh.uv.Length; i++)
             {
@@ -102,7 +105,7 @@ public class UVWarp : MonoBehaviour
             gameObject.GetComponent<MeshFilter>().mesh.uv = new_uvs;
         }
         lastOffset = offset;
-
+        last_type = _type;
         if (_to != null)
         {
             lastToPos = _to.localPosition;

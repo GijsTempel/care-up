@@ -13,6 +13,15 @@ public class CharacterCreationScene : MonoBehaviour
         Female
     };
 
+    public struct FaceData
+    {
+        public int eyeType;
+        public int mouthType;
+    };
+
+    List<FaceData> maleFaceData = new List<FaceData>();
+    List<FaceData> femaleFaceData = new List<FaceData>();
+
     public CharGender gender;
     public int headType;
     public int bodyType;
@@ -42,6 +51,7 @@ public class CharacterCreationScene : MonoBehaviour
     
     private void Start()
     {
+        ReadFaceDate();
         if (SceneManager.GetActiveScene().name == "MainMenu")
             return;
 
@@ -63,8 +73,72 @@ public class CharacterCreationScene : MonoBehaviour
             SetCurrent(CharGender.Female, 0, 0, -1);
         }
 
-        inputNameField.GetComponent<InputField>().text = manager.fullPlayerName;
-        inputBIGfield.GetComponent<InputField>().text = DatabaseManager.FetchField("AccountStats", "BIG_number");
+        if (manager != null)
+        {
+            if (inputNameField != null)
+                inputNameField.GetComponent<InputField>().text = manager.fullPlayerName;
+            if (inputBIGfield != null)
+                inputBIGfield.GetComponent<InputField>().text = DatabaseManager.FetchField("AccountStats", "BIG_number");
+        }
+    }
+
+    void SetFace(Transform container, int eyes, int mouth)
+    {
+        UVWarp leftEyeObject = container.Find("avatar_left_eye").GetComponent<UVWarp>();
+        UVWarp rightEyeObject = container.Find("avatar_right_eye").GetComponent<UVWarp>();
+        UVWarp mouthObject = container.Find("avatar_mouth").GetComponent<UVWarp>();
+        if(leftEyeObject != null && rightEyeObject != null && mouthObject != null)
+        {
+            float gridStep = leftEyeObject.gridStep;
+            float eyeTypeOffset = eyes * gridStep;
+            leftEyeObject.offset.x = eyeTypeOffset;
+            rightEyeObject.offset.x = eyeTypeOffset;
+            float mouthTypeOffset = mouth * gridStep;
+            mouthObject.offset.x = mouthTypeOffset;
+        }
+    }
+
+    FaceData GetFaceDate()
+    {
+        FaceData faceData = new FaceData();
+        List<FaceData> faceDataList = maleFaceData;
+       
+        if (gender == CharGender.Female)
+            faceDataList = femaleFaceData;
+        if(faceDataList.Count > headType)
+        {
+            faceData = faceDataList[headType];
+        }
+        return faceData;
+    }
+
+    void ReadFaceDate()
+    {
+        maleFaceData = ReadFaceDateFile("MaleFaces");
+        femaleFaceData = ReadFaceDateFile("FemaleFaces");
+    }
+
+    List<FaceData> ReadFaceDateFile(string fileName)
+    {
+        TextAsset maleData = (TextAsset)Resources.Load("XML/" + fileName);
+        string[] lines = maleData.text.Split("\n"[0]);
+        List<FaceData> faceDate = new List<FaceData>();
+        foreach (string l in lines)
+        {
+            FaceData f = new FaceData();
+            f.eyeType = 0;
+            f.mouthType = 0;
+
+            string[] lineData = l.Split(',');
+
+            if (lineData.Length > 0)
+            {
+                int.TryParse(lineData[0], out f.eyeType);
+                int.TryParse(lineData[1], out f.mouthType);
+            }
+            faceDate.Add(f);
+        }
+        return faceDate;
     }
 
     public void Initialize()
@@ -115,6 +189,8 @@ public class CharacterCreationScene : MonoBehaviour
         {
             h.gameObject.SetActive(maleHeads.IndexOf(h) == headType && gender == CharGender.Male);
         }
+        FaceData faceData = GetFaceDate();
+        SetFace(maleFace.transform, faceData.eyeType, faceData.mouthType);
     }
 
     void UpdateFemaleHeads()
@@ -123,6 +199,8 @@ public class CharacterCreationScene : MonoBehaviour
         {
             h.gameObject.SetActive(femaleHeads.IndexOf(h) == headType && gender == CharGender.Female);
         }
+        FaceData faceData = GetFaceDate();
+        SetFace(femaleFace.transform, faceData.eyeType, faceData.mouthType);
     }
 
     void UpdateMaleBodies()
