@@ -26,7 +26,6 @@ public class CharacterCreationScene : MonoBehaviour
     public int headType;
     public int bodyType;
     public int glassesType;
-
     public GameObject AvatarObject;
 
     public  GameObject maleChar;
@@ -47,7 +46,15 @@ public class CharacterCreationScene : MonoBehaviour
 
     public GameObject inputNameField;
     public GameObject inputBIGfield;
-    
+
+    public UVWarp m_leftEyeObject;
+    public UVWarp m_rightEyeObject;
+    public UVWarp m_mouthObject;
+
+    public UVWarp f_leftEyeObject;
+    public UVWarp f_rightEyeObject;
+    public UVWarp f_mouthObject;
+
     private void Start()
     {
        
@@ -81,11 +88,18 @@ public class CharacterCreationScene : MonoBehaviour
         }
     }
 
-    void SetFace(Transform container, int eyes, int mouth)
+    void SetFace(bool isMale, int eyes, int mouth)
     {
-        UVWarp leftEyeObject = container.Find("avatar_left_eye").GetComponent<UVWarp>();
-        UVWarp rightEyeObject = container.Find("avatar_right_eye").GetComponent<UVWarp>();
-        UVWarp mouthObject = container.Find("avatar_mouth").GetComponent<UVWarp>();
+        UVWarp leftEyeObject = f_leftEyeObject;
+        UVWarp rightEyeObject = f_rightEyeObject;
+        UVWarp mouthObject = f_mouthObject;
+        if(isMale)
+        {
+            leftEyeObject = m_leftEyeObject;
+            rightEyeObject = m_rightEyeObject;
+            mouthObject = m_mouthObject;
+        }
+
         if(leftEyeObject != null && rightEyeObject != null && mouthObject != null)
         {
             float gridStep = leftEyeObject.gridStep;
@@ -189,7 +203,7 @@ public class CharacterCreationScene : MonoBehaviour
             h.gameObject.SetActive(maleHeads.IndexOf(h) == headType && gender == CharGender.Male);
         }
         FaceData faceData = GetFaceDate();
-        SetFace(maleFace.transform, faceData.eyeType, faceData.mouthType);
+        SetFace(true, faceData.eyeType, faceData.mouthType);
     }
 
     void UpdateFemaleHeads()
@@ -199,7 +213,7 @@ public class CharacterCreationScene : MonoBehaviour
             h.gameObject.SetActive(femaleHeads.IndexOf(h) == headType && gender == CharGender.Female);
         }
         FaceData faceData = GetFaceDate();
-        SetFace(femaleFace.transform, faceData.eyeType, faceData.mouthType);
+        SetFace(false, faceData.eyeType, faceData.mouthType);
     }
 
     void UpdateMaleBodies()
@@ -490,8 +504,10 @@ public class CharacterCreationScene : MonoBehaviour
                 {
                     gender = CharGender.Female;
 
-                    maleChar.SetActive(false);
-                    maleFace.SetActive(false);
+                    if (maleChar != null)
+                        maleChar.SetActive(false);
+                    if (maleFace != null)
+                        maleFace.SetActive(false);
                     femaleFace.SetActive(true);
                     UpdateFemaleHeads();
                     UpdateFemaleBodies();
@@ -502,8 +518,10 @@ public class CharacterCreationScene : MonoBehaviour
             case "Male":
                 {
                     gender = CharGender.Male;
-                    femaleChar.SetActive(false);
-                    femaleFace.SetActive(false);
+                    if(femaleChar != null)
+                        femaleChar.SetActive(false);
+                    if(femaleFace != null)
+                        femaleFace.SetActive(false);
                     maleFace.SetActive(true);
                     UpdateMaleHeads();
                     UpdateMaleBodies();
