@@ -13,13 +13,27 @@ public class CharacterCreationScene : MonoBehaviour
         Female
     };
 
+    public struct FaceData
+    {
+        public int eyeType;
+        public int mouthType;
+    };
+
+    List<FaceData> maleFaceData = new List<FaceData>();
+    List<FaceData> femaleFaceData = new List<FaceData>();
+
     public CharGender gender;
     public int headType;
     public int bodyType;
     public int glassesType;
+    public GameObject AvatarObject;
 
-    private GameObject maleChar;
+    public  GameObject maleChar;
     private GameObject femaleChar;
+
+    private GameObject maleFace;
+    private GameObject femaleFace;
+
     private List<Transform> maleHeads = new List<Transform>();
     private List<Transform> femaleHeads = new List<Transform>();
     private List<Transform> femaleBodies = new List<Transform>();
@@ -32,18 +46,24 @@ public class CharacterCreationScene : MonoBehaviour
 
     public GameObject inputNameField;
     public GameObject inputBIGfield;
-    
+
+    public UVWarp m_leftEyeObject;
+    public UVWarp m_rightEyeObject;
+    public UVWarp m_mouthObject;
+
+    public UVWarp f_leftEyeObject;
+    public UVWarp f_rightEyeObject;
+    public UVWarp f_mouthObject;
+
     private void Start()
     {
+       
         if (SceneManager.GetActiveScene().name == "MainMenu")
             return;
 
-        femaleChar = GameObject.Find("Female_Citizens_customizable");
-        maleChar = GameObject.Find("Male_Citizens_customizable");
-
         maleBtn = GameObject.Find("CharacterCustomization/Canvas/Image/InfoHolder/CharacterPanel/GenderButtonsHolder/MaleBtn").GetComponent<Image>();
         femaleBtn = GameObject.Find("CharacterCustomization/Canvas/Image/InfoHolder/CharacterPanel/GenderButtonsHolder/FemaleBtn").GetComponent<Image>();
-
+        
         Initialize();
 
         // set up initial info
@@ -59,43 +79,131 @@ public class CharacterCreationScene : MonoBehaviour
             SetCurrent(CharGender.Female, 0, 0, -1);
         }
 
-        inputNameField.GetComponent<InputField>().text = manager.fullPlayerName;
-        inputBIGfield.GetComponent<InputField>().text = DatabaseManager.FetchField("AccountStats", "BIG_number");
+        if (manager != null)
+        {
+            if (inputNameField != null)
+                inputNameField.GetComponent<InputField>().text = manager.fullPlayerName;
+            if (inputBIGfield != null)
+                inputBIGfield.GetComponent<InputField>().text = DatabaseManager.FetchField("AccountStats", "BIG_number");
+        }
+    }
+
+    void SetFace(bool isMale, int eyes, int mouth)
+    {
+        UVWarp leftEyeObject = f_leftEyeObject;
+        UVWarp rightEyeObject = f_rightEyeObject;
+        UVWarp mouthObject = f_mouthObject;
+        if(isMale)
+        {
+            leftEyeObject = m_leftEyeObject;
+            rightEyeObject = m_rightEyeObject;
+            mouthObject = m_mouthObject;
+        }
+
+        float gridStep = 0.125f;
+        float eyeTypeOffset = eyes * gridStep;
+        leftEyeObject.offset.x = eyeTypeOffset;
+        rightEyeObject.offset.x = eyeTypeOffset;
+        float mouthTypeOffset = mouth * gridStep;
+        mouthObject.offset.x = mouthTypeOffset;
+    }
+
+    FaceData GetFaceDate()
+    {
+        FaceData faceData = new FaceData();
+        List<FaceData> faceDataList = maleFaceData;
+        if (gender == CharGender.Female)
+            faceDataList = femaleFaceData;
+        print(faceDataList.Count.ToString() + "________________");
+        if(faceDataList.Count > headType)
+        {
+            faceData = faceDataList[headType];
+        }
+        print(faceData.eyeType.ToString() + "   __ " + faceData.mouthType.ToString());
+        return faceData;
+    }
+
+    void ReadFaceDate()
+    {
+        maleFaceData = ReadFaceDateFile("MaleFaces");
+        femaleFaceData = ReadFaceDateFile("FemaleFaces");
+    }
+
+    List<FaceData> ReadFaceDateFile(string fileName)
+    {
+        TextAsset maleData = (TextAsset)Resources.Load("XML/" + fileName);
+        string[] lines = maleData.text.Split("\n"[0]);
+        List<FaceData> faceDate = new List<FaceData>();
+        foreach (string l in lines)
+        {
+            FaceData f = new FaceData();
+            f.eyeType = 0;
+            f.mouthType = 0;
+
+            string[] lineData = l.Split(',');
+
+            if (lineData.Length > 1)
+            {
+                int.TryParse(lineData[0], out f.eyeType);
+                int.TryParse(lineData[1], out f.mouthType);
+            }
+            faceDate.Add(f);
+        }
+        return faceDate;
     }
 
     public void Initialize()
     {
+        AvatarObject = GameObject.Find("w_char");
+        femaleChar = AvatarObject.transform.Find("female").gameObject;
+        maleChar = AvatarObject.transform.Find("male").gameObject;
+
+        ReadFaceDate();
+        femaleFace = GameObject.Find("f_face");
+        maleFace = GameObject.Find("m_face");
+
         // bodies
-        femaleChar.transform.GetComponentsInChildren<Transform>(true, femaleBodies);
-        maleChar.transform.GetComponentsInChildren<Transform>(true, maleBodies);
+        femaleChar.transform.Find("f_body").GetComponentsInChildren<Transform>(true, femaleBodies);
+        maleChar.transform.Find("m_body").GetComponentsInChildren<Transform>(true, maleBodies);
+
+        femaleBodies.RemoveAt(0);
+        maleBodies.RemoveAt(0);
 
         // filter bodies lists, leave only correct ones (thx unity3d)
-        femaleBodies = femaleBodies.Where(b => b.name.Contains("f_body_")).ToList();
-        maleBodies = maleBodies.Where(b => b.name.Contains("Body_")).ToList();
+        //femaleBodies = femaleBodies.Where(b => b.name.Contains("f_body_")).ToList();
+        //maleBodies = maleBodies.Where(b => b.name.Contains("Body_")).ToList();
 
         // heads
-        femaleChar.transform.Find("Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Neck/Bip001 Head/HEAD_CONTAINER")
-            .GetComponentsInChildren<Transform>(true, femaleHeads);
-        maleChar.transform.Find("Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Neck/Bip001 Head/HEAD_CONTAINER")
-            .GetComponentsInChildren<Transform>(true, maleHeads);
+        femaleChar.transform.Find("f_head").GetComponentsInChildren<Transform>(true, femaleHeads);
+        maleChar.transform.Find("m_head").GetComponentsInChildren<Transform>(true, maleHeads);
 
         // trim first ones cuz it's "HEAD_CONTAINER"
         femaleHeads.RemoveAt(0);
         maleHeads.RemoveAt(0);
 
         //trim three last ones cuz those are glasses
-        femaleGlasses = femaleHeads.GetRange(femaleHeads.Count - 3, 3);
-        femaleHeads.RemoveRange(femaleHeads.Count - 3, 3);
-        maleGlasses = maleHeads.GetRange(maleHeads.Count - 3, 3);
-        maleHeads.RemoveRange(maleHeads.Count - 3, 3);
+        femaleChar.transform.Find("f_glasses").GetComponentsInChildren<Transform>(true, femaleGlasses);
+        maleChar.transform.Find("m_glasses").GetComponentsInChildren<Transform>(true, maleGlasses);
+
+        femaleGlasses.RemoveAt(0);
+        maleGlasses.RemoveAt(0);
+
+        //femaleGlasses = femaleHeads.GetRange(femaleHeads.Count - 3, 3);
+        //femaleHeads.RemoveRange(femaleHeads.Count - 3, 3);
+        //maleGlasses = maleHeads.GetRange(maleHeads.Count - 3, 3);
+        //maleHeads.RemoveRange(maleHeads.Count - 3, 3);
     }
 
     void UpdateMaleHeads()
     {
+        print("FFFFFFFFFFFFFFFF");
         foreach (Transform h in maleHeads)
         {
             h.gameObject.SetActive(maleHeads.IndexOf(h) == headType && gender == CharGender.Male);
         }
+        FaceData faceData = GetFaceDate();
+        
+        SetFace(true, faceData.eyeType, faceData.mouthType);
     }
 
     void UpdateFemaleHeads()
@@ -104,6 +212,8 @@ public class CharacterCreationScene : MonoBehaviour
         {
             h.gameObject.SetActive(femaleHeads.IndexOf(h) == headType && gender == CharGender.Female);
         }
+        FaceData faceData = GetFaceDate();
+        SetFace(false, faceData.eyeType, faceData.mouthType);
     }
 
     void UpdateMaleBodies()
@@ -141,7 +251,9 @@ public class CharacterCreationScene : MonoBehaviour
     void UpdateActiveObjects()
     {
         maleChar.SetActive(gender == CharGender.Male);
+        maleFace.SetActive(gender == CharGender.Male);
         femaleChar.SetActive(gender == CharGender.Female);
+        femaleFace.SetActive(gender == CharGender.Female);
 
         UpdateMaleHeads();
         UpdateFemaleHeads();
@@ -379,53 +491,41 @@ public class CharacterCreationScene : MonoBehaviour
         }
     }
     
-    public void ShowCharacter(GameObject male, GameObject female)
-    {
-        femaleChar = female;
-        maleChar = male;
-
+    public void ShowCharacter()
+    {        
         Initialize();
-        
+        headType = CharacterInfo.headType;
+        bodyType = CharacterInfo.bodyType;
+        glassesType = CharacterInfo.glassesType;
+
         switch (CharacterInfo.sex)
         {
             case "Female":
                 {
-                    maleChar.SetActive(false);
-                    foreach (Transform h in femaleHeads)
-                    {
-                        h.gameObject.SetActive(femaleHeads.IndexOf(h) == CharacterInfo.headType);
-                    }
+                    gender = CharGender.Female;
 
-                    foreach (Transform h in femaleBodies)
-                    {
-                        h.gameObject.SetActive(femaleBodies.IndexOf(h) == CharacterInfo.bodyType);
-                    }
-
-                    foreach (Transform h in femaleGlasses)
-                    {
-                        h.gameObject.SetActive(femaleGlasses.IndexOf(h) == CharacterInfo.glassesType);
-                    }
+                    if (maleChar != null)
+                        maleChar.SetActive(false);
+                    if (maleFace != null)
+                        maleFace.SetActive(false);
+                    femaleFace.SetActive(true);
+                    UpdateFemaleHeads();
+                    UpdateFemaleBodies();
+                    UpdateFemaleGlasses();
 
                     break;
                 }
             case "Male":
                 {
-                    femaleChar.SetActive(false);
-                    foreach (Transform h in maleHeads)
-                    {
-                        h.gameObject.SetActive(maleHeads.IndexOf(h) == CharacterInfo.headType);
-                    }
-
-                    foreach (Transform h in maleBodies)
-                    {
-                        h.gameObject.SetActive(maleBodies.IndexOf(h) == CharacterInfo.bodyType);
-                    }
-
-                    foreach (Transform h in maleGlasses)
-                    {
-                        h.gameObject.SetActive(maleGlasses.IndexOf(h) == CharacterInfo.glassesType);
-                    }
-
+                    gender = CharGender.Male;
+                    if(femaleChar != null)
+                        femaleChar.SetActive(false);
+                    if(femaleFace != null)
+                        femaleFace.SetActive(false);
+                    maleFace.SetActive(true);
+                    UpdateMaleHeads();
+                    UpdateMaleBodies();
+                    UpdateMaleGlasses();
                     break;
                 }
         }
