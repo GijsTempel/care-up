@@ -79,7 +79,7 @@ public class EndScoreManager : MonoBehaviour
                     step.transform.Find("ToggleNo").GetComponent<Image>().sprite = correctSprite;
             }
 
-            Transform starsFolder = GameObject.Find("Interactable Objects/Canvas/ScoreScreen/ScoreInfo/TopBar/StarSprites/Stars/Stars").transform;
+            Transform starsFolder = GameObject.Find("Interactable Objects/Canvas/ScoreScreen/ScoreInfo/TopBar/Stars/Stars").transform;
 
             if (score >= 1.0f)
             {
