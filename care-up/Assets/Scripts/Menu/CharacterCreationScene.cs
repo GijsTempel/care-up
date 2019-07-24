@@ -114,12 +114,10 @@ public class CharacterCreationScene : MonoBehaviour
         List<FaceData> faceDataList = maleFaceData;
         if (gender == CharGender.Female)
             faceDataList = femaleFaceData;
-        print(faceDataList.Count.ToString() + "________________");
         if(faceDataList.Count > headType)
         {
             faceData = faceDataList[headType];
         }
-        print(faceData.eyeType.ToString() + "   __ " + faceData.mouthType.ToString());
         return faceData;
     }
 
@@ -196,7 +194,6 @@ public class CharacterCreationScene : MonoBehaviour
 
     void UpdateMaleHeads()
     {
-        print("FFFFFFFFFFFFFFFF");
         foreach (Transform h in maleHeads)
         {
             h.gameObject.SetActive(maleHeads.IndexOf(h) == headType && gender == CharGender.Male);
