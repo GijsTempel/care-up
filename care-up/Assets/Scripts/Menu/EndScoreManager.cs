@@ -119,17 +119,17 @@ public class EndScoreManager : MonoBehaviour
             if (percent < 0f)
                 percent = 0f;
 
-            GameObject.Find("Interactable Objects/Canvas/ScoreScreen/ScoreInfo/InfoHolder/InfoGroup/ResultInfoHolder/PercentageHolder/Value")
+            GameObject.Find("Interactable Objects/Canvas/ScoreScreen/ScoreInfo/ResultInfoHolder/Value")
                 .GetComponent<Text>().text = Mathf.FloorToInt(percent * 100f).ToString() + "%";
 
-            GameObject.Find("Interactable Objects/Canvas/ScoreScreen/ScoreInfo/InfoHolder/InfoGroup/ResultInfoHolder/ResultHolder/Result")
+            GameObject.Find("Interactable Objects/Canvas/ScoreScreen/ScoreInfo/ResultInfoHolder/Result")
                 .GetComponent<Text>().text = (percent < 0.7f) ? "Onvoldoende" : "Voldoende";
 
-            GameObject.Find("Interactable Objects/Canvas/ScoreScreen/ScoreInfo/InfoHolder/InfoGroup/Info/Points")
-                .GetComponent<Text>().text = "Punten: " + points;
+            //GameObject.Find("Interactable Objects/Canvas/ScoreScreen/ScoreInfo/InfoHolder/InfoGroup/Info/Points")
+            //    .GetComponent<Text>().text = "Punten: " + points;
 
-            GameObject.Find("Interactable Objects/Canvas/ScoreScreen/ScoreInfo/InfoHolder/InfoGroup/Info/Time")
-                .GetComponent<Text>().text = string.Format("Tijd: {0}:{1:00}", (int)time / 60, (int)time % 60);
+            //GameObject.Find("Interactable Objects/Canvas/ScoreScreen/ScoreInfo/InfoHolder/InfoGroup/Info/Time")
+            //    .GetComponent<Text>().text = string.Format("Tijd: {0}:{1:00}", (int)time / 60, (int)time % 60);
 
             actualScene = true;
 
