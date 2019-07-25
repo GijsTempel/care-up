@@ -113,54 +113,44 @@
     extra="Open de flacon"
   ></action>
 
-  <action
-    comment="Get medicine ready for use"
-    index="7"
-    points="1"
-    description="Maak medicijn klaar voor gebruik"
-    type="useOn"
-    item="MedicineBottle"
-    target=""
-    extra="Maak medicijn klaar voor gebruik"
-  ></action>
 
   <action
     comment="Hold opened flacon upside down"
-    index="8"
-    value=""
+    index="7"
+    value="FlaconUpsideDown"
     description="Houd de geopende flacon ondersteboven"
     points="2"
-    type=""
+    type="sequenceStep"
     extra="Houd de geopende flacon ondersteboven"
   ></action>
 
   <action
     comment="Place the opening of the syringe at the opening of the flacon"
-    index="9"
-    value=""
+    index="8"
+    value="SyringeToFlacon"
     description="Zet de opening van de spuit tegen de opening van de flacon"
     points="2"
-    type=""
+    type="sequenceStep"
     extra="Zet de opening van de spuit tegen de opening van de flacon"
   ></action>
 
   <action
     comment="Suck the needed amount of medicine out of the flacon"
-    index="10"
-    value=""
+    index="9"
+    value="SuckMedicine"
     description="Zuig de benodigde hoeveelheid medicijn op uit de flacon"
     points="2"
-    type=""
+    type="sequenceStep"
     extra="Zuig de benodigde hoeveelheid medicijn op uit de flacon"
   ></action>
 
   <action
     comment="Remove air from the syringe and check if the right amount is sucked up"
-    index="11"
-    value=""
+    index="10"
+    value="RemoveAir"
     description="Verwijder lucht uit het spuitje en check of de juiste hoeveelheid is opgezogen"
     points="2"
-    type=""
+    type="sequenceStep"
     extra="Verwijder lucht uit het spuitje en check of de juiste hoeveelheid is opgezogen"
     messageTitle="Hoeveelheid medicijn"
     messageContent="Zuig zo nodig meer medicijn op of verwijder overtollig medicijn"
@@ -168,17 +158,17 @@
 
   <action
     comment="Place the syringe back in the package"
-    index="12"
-    value=""
+    index="11"
+    value="PlaceSyringeBack"
     description="Leg het spuitje terug in de verpakking"
     points="2"
-    type=""
+    type="sequenceStep"
     extra="Leg het spuitje terug in de verpakking"
   ></action>
 
   <action
     comment="Ask the cliënt to open mouth if possible"
-    index="13"
+    index="12"
     value=""
     description="Vraag de client de mond te openen indien mogelijk"
     points="2"
@@ -188,7 +178,7 @@
 
   <action
     comment="Wipe with a gauze the cheeck pouch dry"
-    index="14"
+    index="13"
     value=""
     description="Veeg met een gaasje de wangzak droog"
     points="2"
@@ -200,7 +190,7 @@
 
   <action
     comment="Insert the syringe in the mouth of the cliënt and squirt the liquid in the cheeck pouch"
-    index="15"
+    index="14"
     value=""
     description="Steek het spuitje in de mond van de cliënt en spuit de vloeistof in de wangzak."
     points="2"
@@ -211,7 +201,7 @@
   <action
     points="1"
     description="Trek de handschoenen uit en gooi ze in het afvalbakje."
-    index="16"
+    index="15"
     type="sequenceStep"
     value="take off gloves"
     extra="Trek de handschoenen uit en gooi ze in het afvalbakje."
@@ -219,7 +209,7 @@
 
   <action
     comment="1. Apply hand hygiene"
-    index="117"
+    index="16"
     points="3"
     description="Pas handhygiëne toe"
     type="use"
@@ -232,7 +222,7 @@
   <action
     points="1"
     description="Ruim de materialen op door met lege handen op het werkveld te klikken"
-    index="18"
+    index="17"
     type="use"
     value="WorkField"
     extra="Ruim de materialen op door met lege handen op het werkveld te klikken"
@@ -243,7 +233,7 @@
   <action
     points="3"
     description="Teken de toedienlijst af of noteer het tijdstip, het soort medicijn, de concentratie, de hoeveelheid en de wijze van toediening. Noteer tot slot je bevindingen."
-    index="19"
+    index="18"
     type="use"
     value="PaperAndPen"
     extra="Teken de toedienlijst af en noteer tijdstip, soort medicijn, concentratie, hoeveelheid, wijze van toediening. Noteer tot slot je bevindingen."
