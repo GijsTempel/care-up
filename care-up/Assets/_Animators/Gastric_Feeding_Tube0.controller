@@ -143,6 +143,8 @@ AnimatorState:
   - {fileID: -7849058942199672018}
   - {fileID: -3185679818275201742}
   - {fileID: 4229097549469446349}
+  - {fileID: 1198113923301902638}
+  - {fileID: 5149943869916369450}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -1221,6 +1223,23 @@ MonoBehaviour:
   ObjNames:
   - OpenedPack.001
   toShow: 1
+--- !u!114 &-7025030894772588435
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1d577ba52e334ef39dfa878ef5c62b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addFrame: 0
+  objectName: 
+  hand: 0
+  GhostObjectTarget: 
+  destroyOnDrop: 0
 --- !u!1101 &-7022704826960109891
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -2053,7 +2072,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dropLeftFrame: 3450
-  dropRightFrame: 3450
+  dropRightFrame: -1
 --- !u!114 &-5443584222582644291
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -6202,6 +6221,23 @@ MonoBehaviour:
   ToFollowHoldingHand: 0
   NewAnimationName: medical_tube_first_sq
   ActionFrame: 1
+--- !u!114 &1198113923301902638
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1d577ba52e334ef39dfa878ef5c62b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addFrame: 2861
+  objectName: pH_TestStrip
+  hand: 0
+  GhostObjectTarget: 
+  destroyOnDrop: 0
 --- !u!1102 &1240754794300864288
 AnimatorState:
   serializedVersion: 5
@@ -8594,6 +8630,20 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &5149943869916369450
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftHand: 0
+  dropFrame: 3450
 --- !u!1101 &5169011436413882889
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -10656,7 +10706,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a4f7766142ffc1468fdda1d3e3f1781, type: 3}
   m_Name: 
