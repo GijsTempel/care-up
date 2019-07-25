@@ -104,13 +104,13 @@ public class EndScoreManager : MonoBehaviour
 
             for (int i = 0; i < steps.Count; ++i)
             {
-                GameObject step = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/ProtocolPracticeSteps"), stepParent);
+                GameObject step = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/ProtocolEvaluationStep"), stepParent);
                 step.transform.Find("Text").GetComponent<Text>().text = steps[i];
 
-                Sprite correctSprite = Resources.Load<Sprite>("Sprites/item_select_check");
-                if (correctStepIndexes.Contains(i))
-                    step.transform.Find("ToggleNo").GetComponent<Image>().sprite = correctSprite;
-            }
+                bool correct = correctStepIndexes.Contains(i);
+                step.transform.Find("ToggleYes").GetComponent<Toggle>().isOn = correct;
+                step.transform.Find("ToggleNo").GetComponent<Toggle>().isOn = !correct;
+            }          
 
             percent = 1.0f *
                 (correctStepIndexes.Count + (quizQuestionsTexts.Count - quizWrongIndexes.Count))
