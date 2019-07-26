@@ -37,6 +37,7 @@ public class EndScoreManager : MonoBehaviour
 
     private Sprite halfStar;
     private Sprite fullStar;
+    bool testSceneScore = false;
 
     private bool emailsSent = false;
 
@@ -61,8 +62,11 @@ public class EndScoreManager : MonoBehaviour
             Transform uiFolder = GameObject.Find("Canvas").transform;
 
             //uiFolder.Find("Left").Find("Score").GetComponent<Text>().text = "Score: " + score;
-            uiFolder.Find("ScoreScreen").Find("Points").GetComponent<Text>().text = "Punten: " + points;
-            uiFolder.Find("ScoreScreen").Find("Time").GetComponent<Text>().text = string.Format("Tijd: {0}:{1:00}", (int)time / 60, (int)time % 60);
+            uiFolder.Find("ScoreScreen/ScoreInfo/InfoHolder/Info/Points").GetComponent<Text>().text = "Punten: " + points;
+            uiFolder.Find("ScoreScreen/ScoreInfo/InfoHolder/Info/Time").GetComponent<Text>().text = string.Format("Tijd: {0}:{1:00}", (int)time / 60, (int)time % 60);
+
+            //uiFolder.Find("ScoreScreen").Find("Points").GetComponent<Text>().text = "Punten: " + points;
+            //uiFolder.Find("ScoreScreen").Find("Time").GetComponent<Text>().text = string.Format("Tijd: {0}:{1:00}", (int)time / 60, (int)time % 60);
 
             //uiFolder.GetChild(1).FindChild("Steps").GetComponent<Text>().text = wrongSteps;
 
@@ -71,7 +75,8 @@ public class EndScoreManager : MonoBehaviour
             //update practice score & stars, update UI accordingly
             manager.UpdatePracticeHighscore(points, score);
 
-            Transform stepParent = GameObject.Find("Interactable Objects/Canvas/PracticeStepsScreen/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
+            Transform stepParent = uiFolder.Find("PracticeStepsScreen/Image/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
+            //Transform stepParent = GameObject.Find("Interactable Objects/Canvas/PracticeStepsScreen/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
 
             for (int i = 0; i < steps.Count; ++i)
             {
@@ -159,22 +164,27 @@ public class EndScoreManager : MonoBehaviour
                 step.transform.Find("ToggleNo").GetComponent<Toggle>().isOn = wrong;
             }
 
-            if (score >= 1.0f)
+            if (SceneManager.GetActiveScene().name == "EndScore")
             {
-                GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Stars/Star1").GetComponent<Image>().sprite = fullStar;
+                Transform starsFolder = GameObject.Find("Interactable Objects/Canvas/ScoreScreen/ScoreInfo/TopBar/Stars/Stars").transform;
+                if (score >= 1.0f)
+                    starsFolder.transform.Find("Star1").GetComponent<Image>().sprite = fullStar;
+                if (score >= 2.0f)
+                    starsFolder.transform.Find("Star2").GetComponent<Image>().sprite = fullStar;
+                if (score >= 3.0f)
+                    starsFolder.transform.Find("Star2").GetComponent<Image>().sprite = fullStar;
+            }
+            else if (SceneManager.GetActiveScene().name == "EndScore_test")
+            {
+                if (score >= 1.0f)
+                    GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Stars/Star1").GetComponent<Image>().sprite = fullStar;
+                if (score >= 2.0f)
+                    GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Stars/Star2").GetComponent<Image>().sprite = fullStar;
+                if (score >= 3.0f)
+                    GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Stars/Star3").GetComponent<Image>().sprite = fullStar;
             }
 
-            if (score >= 2.0f)
-            {
-                GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Stars/Star2").GetComponent<Image>().sprite = fullStar;
-            }
-
-            if (score >= 3.0f)
-            {
-                GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Stars/Star3").GetComponent<Image>().sprite = fullStar;
-            }
-
-            if (time >= 900.0f)
+                if (time >= 900.0f)
             {
                 achievements.UpdateKeys("MoreThan15", 1);
             }
@@ -211,20 +221,15 @@ public class EndScoreManager : MonoBehaviour
 
     public void SetBasicText()
     {
+        Transform quizForm = GameObject.Find("Interactable Objects/Canvas/Questionscreen/Image/QuizForm").transform;
         if (quizQuestionsTexts.Count == 0)
-        {
-            Transform quizForm = GameObject.Find("Interactable Objects/Canvas/Questionscreen/Image/QuizForm").transform;
-
-            for (int i = 1; i < 5; i++)
-            {
-                if (i == 4)
-                {
-                    quizForm.GetChild(i).gameObject.SetActive(true);
-                    break;
-                }
-                quizForm.GetChild(i).gameObject.SetActive(false);
-            }
+        {         
+            quizForm.GetChild(2).gameObject.SetActive(false);
+            quizForm.GetChild(3).gameObject.SetActive(false);
+            //quizForm.GetChild(4).gameObject.SetActive(true);           
         }
+        else
+            quizForm.GetChild(4).gameObject.SetActive(false);
     }
 
     /// <summary>
