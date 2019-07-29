@@ -20,14 +20,17 @@ public class GameTutorialManager : MonoBehaviour
     private int index = 0;
 
     private Sprite[] tutorialImages;
-    private List<TutorialStep> tutorialSteps;  
+    private List<TutorialStep> tutorialSteps;
+
+    private void Awake()
+    {
+        LoadInfo();
+    }
 
     private void Start()
     {
-        Initialize();
-
-        LoadInfo();
-    }
+        Initialize();        
+    }   
 
     private void Initialize()
     {
