@@ -71,6 +71,7 @@ zo nodig:
     target=""
     buttonText="Huidplaat geven"
     extra="Breng het nieuwe systeem op kamertemperatuur door het tegen de huid van de cliënt te leggen (niet onder de oksel)"
+    quiz="5"
     ></action>
 
   <action
@@ -98,8 +99,6 @@ zo nodig:
    blockUnlock="HorClient"
    messageTitle="Lichamelijke verzorging"
    messageContent="Verwijder eventuele haargroei rondom de stoma met een schaartje of mesje. Scheer altijd van de stoma af. Werk hygiënisch om wondjes te voorkomen. Gebruik in geen geval ontharingscrème, vanwege kans op huidirritatie. Verzorg de huid na het scheren met een barrièrecrème."
-
-   
    ></action>
 
   <action
@@ -113,6 +112,8 @@ zo nodig:
   buttonText="Onderlegger plaatsen"
   extra="Leg een onderlegger rond het werkterrein"
   blockRequired="HorClient"
+  blockTitle="Houding cliënt"
+  blockMessage="Laat de cliënt eerst een comfortabele houding aannemen, zodat je makkelijk bij de stoma kunt en een onderlegger kunt plaatsen rond het werkterrein."
  ></action>
 
   <action
@@ -212,7 +213,7 @@ zo nodig:
    type="sequenceStep"
    value="CheckTheSkin"
    extra=""
-   messageTitle="Beschermingsmiddelen en opvul materiaal."
+   messageTitle="Beschermingsmiddelen en opvulmateriaal."
    messageContent="Breng zo nodig huidbeschermingsmiddelen en/of opvulmateriaal aan. Wanneer de niet goed aan huidplaat sluit op de huid vanwege huidplooien, vul je de huidplooien op met opvulmateriaal (ring, pasta, strip) op voorschrift van de stomaverpleegkundige."
    ></action>
 
@@ -244,7 +245,9 @@ zo nodig:
    type="sequenceStep"
    value="LayTheOpening"
    extra="Leg de opening van de huidplaat langs de onderkant van de stoma. Plak de huidplaat van beneden naar boven op de huid rondom de stoma. Houd ondertussen de huid rondom de stoma strak"
-   messageTitle="De huidplaat moet nauwkeurig aansluiten op de stoma. Houd 1 tot 2 mm vrij rond de stoma. Voor het meten van de juiste maat huidplaat is het belangrijk de huid goed strak te trekken. Dit doe je door je wijsvinger boven de stoma op de huid te leggen en de duim onder de stoma. Trek de huid strak door met de wijsvinger de huid naar boven te duwen en tegelijkertijd met de duim de huid naar beneden te duwen. Meet dan de stoma. Gebruik bij voorkeur een schaar met gebogen punt om de huidplaat op maat te knippen. Dit kan ook met behulp van een stomastans."
+   messageTitle="Juiste maat huidplaat"
+   messegaContent="De huidplaat moet nauwkeurig aansluiten op de stoma. Houd 1 tot 2 mm vrij rond de stoma. Voor het meten van de juiste maat huidplaat is het belangrijk de huid goed strak te trekken. Dit doe je door je wijsvinger boven de stoma op de huid te leggen en de duim onder de stoma. Trek de huid strak door met de wijsvinger de huid naar boven te duwen en tegelijkertijd met de duim de huid naar beneden te duwen. Meet dan de stoma. Gebruik bij voorkeur een schaar met gebogen punt om de huidplaat op maat te knippen. Dit kan ook met behulp van een stomastans."
+   
    ></action>
 
   <action
@@ -323,8 +326,6 @@ zo nodig:
       messegeTitle="Materialen opruimen"
       MessegeContent="Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen"
   />
-
-
 
   <action
     comment="Write down the size and length of the inserted probe, pH determination, date of inserting the probe and any findings on the ipad."

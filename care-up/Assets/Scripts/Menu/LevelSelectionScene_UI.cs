@@ -49,13 +49,13 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
     void ClearUI()
     {
-        Transform parent1 = GameObject.Find("UMenuProManager/MenuCanvas/Play/ProtocolList/ProtocolsHolder/Protocols/content").transform;
+        Transform parent1 = GameObject.Find("UMenuProManager/MenuCanvas/Play/InfoHolder/ProtocolList/ProtocolsHolder/Protocols/content").transform;
         for (int i = 0; i < parent1.childCount; ++i)
         {
             Destroy(parent1.GetChild(i).gameObject);
         }
 
-        Transform parent2 = GameObject.Find("UMenuProManager/MenuCanvas/Leaderboard/LeftBar/Scroll View/Viewport/Content").transform;
+        Transform parent2 = GameObject.Find("UMenuProManager/MenuCanvas/Leaderboard/InfoHolder/ProtocolsHolder/Scroll View/Viewport/Content").transform;
         for (int i = 0; i < parent1.childCount; ++i)
         {
             Destroy(parent2.GetChild(i).gameObject);

@@ -79,24 +79,6 @@
     extra="Open de verpakking van de steriele maagsonde."/>
 
   <action
-    comment="Take test strip from package"
-    points="1"
-    description="Pak een pH-indicator uit de verpakking"
-    fullDescription=""
-    index="2"
-    type="combine"
-    left="pH_TestStripPackage"
-    right=""
-    extra="Pak een pH-indicator uit de verpakking."
-    blockUnlock="block2"
-    messageTitle="pH-indicatoren"
-    messageContent="Gebruik een pH-indicator met een indeling tussen 2,0-9,0 met tussenstappen van minimaal 0,5.
-
-Raadpleeg voor gebruik altijd de gebruiksaanwijzing van de pH-indicator.
-
-"/>
-
-  <action
     comment="(3)Open syringe"
     points="1"
     description="Open de verpakking van de 50ml spuit"
@@ -104,7 +86,7 @@ Raadpleeg voor gebruik altijd de gebruiksaanwijzing van de pH-indicator.
     type="combine"
     left="Syringe50ml_packed"
     right=""
-    blockUnlock="block3"
+    blockUnlock="block2"
     extra="Open de verpakking van de 50ml spuit"/>
 
   <action
@@ -114,7 +96,7 @@ Raadpleeg voor gebruik altijd de gebruiksaanwijzing van de pH-indicator.
     index="4"
     type="talk"
     topic="SitInBed"
-    blockRequired="block1,block2,block3"
+    blockRequired="block1, block2"
     blockTitle="Deze handeling is nog niet mogelijk"
     blockMessage="Zorg ervoor dat het materiaal klaar is voor gebruik door de verpakkingen te openen."
     blockUnlock="clienInHalfSitPos"
