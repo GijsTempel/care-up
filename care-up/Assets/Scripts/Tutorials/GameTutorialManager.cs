@@ -6,10 +6,8 @@ using UnityEngine.UI;
 public class TutorialStep
 {
     public string Title { get; set; }
-
     public string Description { get; set; }
-
-    public object TutorialImage { get; set; }
+    public Sprite TutorialImage { get; set; }
 }
 
 public class GameTutorialManager : MonoBehaviour
@@ -18,67 +16,86 @@ public class GameTutorialManager : MonoBehaviour
     private Text description;
     private Image image;
     private GameObject previousButton;
-    private Button nextButton;
+    private GameObject nextButton;
+    private int index = 0;
 
-    private List<TutorialStep> tutorialSteps;
-    private object[] tutorialImages;
-    private int index;
+    private Sprite[] tutorialImages;
+    private List<TutorialStep> tutorialSteps;  
 
     private void Start()
-    {        
+    {
+        Initialize();
+
         LoadInfo();
+    }
+
+    private void Initialize()
+    {
+        title = GameObject.Find("TutorialCanvas/Canvas/Background/Title/Text").GetComponent<Text>();
+        description = GameObject.Find("TutorialCanvas/Canvas/Background/Description/Text").GetComponent<Text>();
+        image = GameObject.Find("TutorialCanvas/Canvas/Background/StepImage/Image").GetComponent<Image>();
+
+        previousButton = GameObject.Find("TutorialCanvas/Canvas/Background/NavigationButtons/PreviousStep");
+        nextButton = GameObject.Find("TutorialCanvas/Canvas/Background/NavigationButtons/NextStep");
+
+        previousButton.GetComponent<Button>().onClick.AddListener(PreviousStep);
+        nextButton.GetComponent<Button>().onClick.AddListener(NextStep);
     }
 
     private void LoadInfo()
     {
-        TextAsset textAsset = (TextAsset)Resources.Load("Xml/TutorialSteps");
+        tutorialSteps = new List<TutorialStep>();
+
+        TextAsset textAsset = (TextAsset)Resources.Load("Xml/GameTutorial");
         XmlDocument xmlFile = new XmlDocument();
 
         xmlFile.LoadXml(textAsset.text);
 
         XmlNodeList steps = xmlFile.FirstChild.NextSibling.ChildNodes;
 
-        tutorialImages = Resources.LoadAll("Resources/Sprites/TutorialImages");
+        tutorialImages = Resources.LoadAll<Sprite>("Sprites/TutorialImages");
 
         int i = 0;
 
         foreach (XmlNode step in steps)
         {
-            tutorialSteps.Add(new TutorialStep
+            if (i < tutorialImages.Length)
             {
-                Title = step.Attributes["title"].Value,
-                Description = step.Attributes["description"].Value,
-                TutorialImage = tutorialImages[i]
-            });
+                tutorialSteps.Add(new TutorialStep
+                {
+                    Title = step.Attributes["title"].Value,
+                    Description = step.Attributes["description"].Value,
+                    TutorialImage = tutorialImages[i]
+                });
 
-            i++;
+                i++;
+            }
         }
     }
-   
-    private void InitilizeObjects()
-    {
-        previousButton = transform.Find("TutorialCanvas/Canvas/Background/NavigationButtons/PreviousStep").gameObject;       
-    }
 
-    public void NextStep()
+    private void NextStep()
     {
         ++index;
 
-        if (index >= tutorialSteps.Count)
+        previousButton.SetActive(true);
+
+        if (index == tutorialSteps.Count - 1)
         {
-            index = 0;
+            nextButton.SetActive(false);
         }
 
         UpdateTutorialStep();
     }
 
-    public void PreviousStep()
+    private void PreviousStep()
     {
         --index;
 
-        if (index < 0)
+        nextButton.SetActive(true);
+
+        if (index == 0)
         {
-            index = tutorialSteps.Count - 1;
+            previousButton.SetActive(false);
         }
 
         UpdateTutorialStep();
@@ -88,6 +105,6 @@ public class GameTutorialManager : MonoBehaviour
     {
         title.text = tutorialSteps[index].Title;
         description.text = tutorialSteps[index].Description;
-        image = (Image)tutorialSteps[index].TutorialImage;
+        image.sprite = tutorialSteps[index].TutorialImage;
     }
 }

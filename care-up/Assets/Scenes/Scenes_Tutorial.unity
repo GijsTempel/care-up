@@ -279,7 +279,6 @@ GameObject:
   - component: {fileID: 204875253}
   - component: {fileID: 204875252}
   - component: {fileID: 204875251}
-  - component: {fileID: 204875250}
   - component: {fileID: 204875254}
   m_Layer: 0
   m_Name: EventSystem
@@ -288,32 +287,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &204875250
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 204875249}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ad23d1775b9f4c6f9e654a8c9959162, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gender: 0
-  headType: 0
-  bodyType: 0
-  glassesType: 0
-  AvatarObject: {fileID: 0}
-  maleChar: {fileID: 0}
-  inputNameField: {fileID: 0}
-  inputBIGfield: {fileID: 0}
-  m_leftEyeObject: {fileID: 0}
-  m_rightEyeObject: {fileID: 0}
-  m_mouthObject: {fileID: 0}
-  f_leftEyeObject: {fileID: 0}
-  f_rightEyeObject: {fileID: 0}
-  f_mouthObject: {fileID: 0}
 --- !u!114 &204875251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,7 +367,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &434843195
 RectTransform:
   m_ObjectHideFlags: 0
@@ -492,11 +465,11 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: 7494f99a025ef45b484b431cce6f2add,
+    m_HighlightedSprite: {fileID: 21300000, guid: 026902d912119482d86871f4fec5ecd4,
       type: 3}
-    m_PressedSprite: {fileID: 21300000, guid: 026902d912119482d86871f4fec5ecd4, type: 3}
-    m_SelectedSprite: {fileID: 21300000, guid: 7494f99a025ef45b484b431cce6f2add, type: 3}
-    m_DisabledSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 21300000, guid: 7494f99a025ef45b484b431cce6f2add, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: 026902d912119482d86871f4fec5ecd4, type: 3}
+    m_DisabledSprite: {fileID: 21300000, guid: 026902d912119482d86871f4fec5ecd4, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
@@ -508,17 +481,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 204875254}
-        m_MethodName: PreviousStep
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 898239801}
         m_MethodName: OnButtonClick
         m_Mode: 1
@@ -687,10 +649,10 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: 9eae8b08a06ef492fb4aea34f8ad6d2c,
+    m_HighlightedSprite: {fileID: 21300000, guid: b187ad1d0e57944c8bce4813110592b6,
       type: 3}
-    m_PressedSprite: {fileID: 21300000, guid: b187ad1d0e57944c8bce4813110592b6, type: 3}
-    m_SelectedSprite: {fileID: 21300000, guid: 9eae8b08a06ef492fb4aea34f8ad6d2c, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 9eae8b08a06ef492fb4aea34f8ad6d2c, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: b187ad1d0e57944c8bce4813110592b6, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -703,17 +665,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 204875254}
-        m_MethodName: NextStep
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 898239801}
         m_MethodName: OnButtonClick
         m_Mode: 1
@@ -798,7 +749,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -71.3}
+  m_AnchoredPosition: {x: 0, y: -71.29999}
   m_SizeDelta: {x: 0, y: -142.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &669012963
