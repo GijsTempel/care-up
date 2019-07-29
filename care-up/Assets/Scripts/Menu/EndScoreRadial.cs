@@ -52,7 +52,7 @@ public class EndScoreRadial : MonoBehaviour
                 string trigger = "dance";
                 if (score < 70)
                     trigger = "sad";
-                trigger += Random.Range(1, 3).ToString();
+                trigger += Random.Range(2, 3).ToString();
                 GameObject.Find("w_char").GetComponent<Animator>().SetTrigger(trigger);
 
             }
