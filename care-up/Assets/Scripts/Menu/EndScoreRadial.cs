@@ -49,7 +49,11 @@ public class EndScoreRadial : MonoBehaviour
                 animationFinished = true;
                 animator.SetTrigger("finished");
                 GameObject.FindObjectOfType<EndButtonRemover>().ShowResultInfoHolder();
-                GameObject.Find("w_char").GetComponent<Animator>().SetTrigger("dance1");
+                string trigger = "dance";
+                if (score < 70)
+                    trigger = "sad";
+                trigger += Random.Range(1, 3).ToString();
+                GameObject.Find("w_char").GetComponent<Animator>().SetTrigger(trigger);
 
             }
         }

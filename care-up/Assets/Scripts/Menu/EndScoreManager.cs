@@ -321,6 +321,7 @@ public class EndScoreManager : MonoBehaviour
     /// </summary>
     public void ConditionalHomeButton()
     {
+        print("DDDDDDDDDDDDDSSSSSSSSSSSSS" + emailsSent.ToString());
         if (emailsSent)
         {
             GameObject.Find("Interactable Objects/Canvas/CertificatePopOp").SetActive(true);
@@ -333,6 +334,7 @@ public class EndScoreManager : MonoBehaviour
 
         else
         {
+            print("aaaaaaaa" );
             bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
         }
     }
