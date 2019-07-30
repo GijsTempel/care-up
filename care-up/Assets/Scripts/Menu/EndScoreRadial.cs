@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class EndScoreRadial : MonoBehaviour
 {
+    public GameObject ovation;
+    public GameObject sadMusic;
+
     Text ScoreProgressNum;
     Image ScoreProgressImage;
     float animStartTime;
@@ -51,7 +54,12 @@ public class EndScoreRadial : MonoBehaviour
                 GameObject.FindObjectOfType<EndButtonRemover>().ShowResultInfoHolder();
                 string trigger = "dance";
                 if (score < 70)
+                {
                     trigger = "sad";
+                    sadMusic.SetActive(true);
+                }
+                else
+                    ovation.SetActive(true);
                 trigger += Random.Range(1, 3).ToString();
                 GameObject.Find("w_char").GetComponent<Animator>().SetTrigger(trigger);
                 GameObject.Find("ResultInfoHolder").GetComponent<CanvasGroup>().alpha = 1f;
