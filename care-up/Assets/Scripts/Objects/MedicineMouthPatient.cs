@@ -31,8 +31,8 @@ public class MedicineMouthPatient : PersonObject {
                     PlayerAnimator.SetTrigger("S Player_TakeOffBlanket");
                     break;
                 case "MouthOpen":
-                    PlayerAnimator.SetTrigger("StartCheekPouch_SQ2");
-                    PlayerAnimator.SetTrigger("S StartCheekPouch_SQ2");
+                    PlayerAnimator.SetTrigger("OpenMouth");
+                    PlayerAnimator.SetTrigger("S OpenMouth");
                     break;
                 default:
                     break;
