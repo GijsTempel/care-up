@@ -54,6 +54,7 @@ public class EndScoreRadial : MonoBehaviour
                     trigger = "sad";
                 trigger += Random.Range(1, 3).ToString();
                 GameObject.Find("w_char").GetComponent<Animator>().SetTrigger(trigger);
+                GameObject.Find("ResultInfoHolder").GetComponent<CanvasGroup>().alpha = 1f;
 
             }
         }

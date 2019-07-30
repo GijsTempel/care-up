@@ -1,5 +1,4 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -37,7 +36,6 @@ public class EndScoreManager : MonoBehaviour
 
     private Sprite halfStar;
     private Sprite fullStar;
-    bool testSceneScore = false;
 
     private bool emailsSent = false;
 
@@ -321,7 +319,7 @@ public class EndScoreManager : MonoBehaviour
     /// </summary>
     public void ConditionalHomeButton()
     {
-        print("DDDDDDDDDDDDDSSSSSSSSSSSSS" + emailsSent.ToString());
+        // print("DDDDDDDDDDDDDSSSSSSSSSSSSS" + emailsSent.ToString());
         if (emailsSent)
         {
             GameObject.Find("Interactable Objects/Canvas/CertificatePopOp").SetActive(true);
@@ -334,7 +332,7 @@ public class EndScoreManager : MonoBehaviour
 
         else
         {
-            print("aaaaaaaa" );
+            // print("aaaaaaaa" );
             bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
         }
     }
