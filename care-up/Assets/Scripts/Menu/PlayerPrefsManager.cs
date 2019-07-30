@@ -812,4 +812,17 @@ public class PlayerPrefsManager : MonoBehaviour
         return new string(Enumerable.Repeat(chars, length)
           .Select(s => s[random.Next(s.Length)]).ToArray());
     }
+
+    public static void OpenShareOnFBWebPage(string sceneName = "")
+    {
+        if (sceneName == "")
+            sceneName = GameObject.FindObjectOfType<PlayerPrefsManager>().currentSceneVisualName;
+
+        string link = "https://www.facebook.com/sharer/sharer.php";  // main link
+        link += "?u=https%3A%2F%2Fcareup.online";                         // u=link for link reference
+        link += "&quote=I just passed a test for ";                  // quote=text for text quote
+        link += sceneName + ". You can try it out yourself by going to https%3A%2F%2Fcareup.online";
+        
+        Application.OpenURL(link.Replace(" ", "%20"));
+    }
 }
