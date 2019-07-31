@@ -48,6 +48,7 @@ public class GameTutorialManager : MonoBehaviour
         title = GameObject.Find("TutorialCanvas/Canvas/Background/Title/Text").GetComponent<Text>();
         description = GameObject.Find("TutorialCanvas/Canvas/Background/Description/Text").GetComponent<Text>();
         image = GameObject.Find("TutorialCanvas/Canvas/Background/MiddleGroup/MiddleGroupHolder/StepImageContainer/Image/Mask/Image").GetComponent<Image>();
+        image.preserveAspect = true;
 
         previousButton = GameObject.Find("TutorialCanvas/Canvas/Background/MiddleGroup/MiddleGroupHolder/PreviousStep/Button");
         nextButton = GameObject.Find("TutorialCanvas/Canvas/Background/MiddleGroup/MiddleGroupHolder/NextStep/Button");
