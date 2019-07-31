@@ -460,24 +460,35 @@ public class PlayerPrefsManager : MonoBehaviour
         DatabaseManager.UpdateField("CertificateDates", currentTestScene, date);
     }
 
+    public static void AddOneToSceneInCategory(string scene, string category)
+    {
+        string sceneName = FormatSceneName(scene);
+
+        int plays;
+        int.TryParse(DatabaseManager.FetchField(category, sceneName), out plays);
+        DatabaseManager.UpdateField(category, sceneName, (plays + 1).ToString());
+    }
+
     public static void AddOneToPracticePlays(string scene)
     {
-        string practiceScene = FormatSceneName(scene);
-        
-        int plays;
-        int.TryParse(DatabaseManager.FetchField("PracticePlays", practiceScene), out plays);
-        DatabaseManager.UpdateField("PracticePlays", practiceScene, (plays + 1).ToString());
+        AddOneToSceneInCategory(scene, "PracticePlays");
     }
 
     public static void AddOneToTestPlays(string scene)
     {
-        string practiceScene = FormatSceneName(scene);
-
-        int plays;
-        int.TryParse(DatabaseManager.FetchField("TestPlays", practiceScene), out plays);
-        DatabaseManager.UpdateField("TestPlays", practiceScene, (plays + 1).ToString());
+        AddOneToSceneInCategory(scene, "TestPlays");
     }
 
+    public static void AddOneToTestSucceeds(string scene)
+    {
+        AddOneToSceneInCategory(scene, "TestSucceeds");
+    }
+
+    public static void AddOneToTestFails(string scene)
+    {
+        AddOneToSceneInCategory(scene, "TestFails");
+    }
+    
     public void SetTutorialCompletedWU()
     {
         tutorialCompleted = true;

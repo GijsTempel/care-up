@@ -141,6 +141,16 @@ public class EndScoreManager : MonoBehaviour
             GameObject.Find("Interactable Objects/Canvas/ScoreScreen/ScoreScreenButtons/BackToMainMenu")
                 .GetComponent<Button>().onClick.AddListener(ConditionalHomeButton);
 
+            // track amount of results per scene
+            if (percent < 0.7f)
+            {
+                PlayerPrefsManager.AddOneToTestFails(manager.currentSceneVisualName);
+            }
+            else
+            {
+                PlayerPrefsManager.AddOneToTestSucceeds(manager.currentSceneVisualName);
+            }
+
         }
         if (actualScene)
         {          
