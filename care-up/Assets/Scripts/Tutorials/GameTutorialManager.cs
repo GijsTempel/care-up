@@ -22,7 +22,6 @@ public class GameTutorialManager : MonoBehaviour
     private GameObject nextButton;
     private int index = 0;
 
-    private Sprite[] tutorialImages;
     private List<TutorialStep> tutorialSteps;
 
     private Vector2 firstPressPosition;
@@ -37,33 +36,15 @@ public class GameTutorialManager : MonoBehaviour
     private void Start()
     {
         Initialize();
-    }
-
-    private void MagnifierEffect()
-    {
-        Vector3 mPos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-        mPos.z = 0;
-        //magnifier.GetComponent<RectTransform>().localPosition = (mPos - new Vector3(0.5f,0.5f,0))* 1000;
-        mPos.y -= 1;
-        magnifier.GetComponent<RectTransform>().anchoredPosition = mPos * 1000;
-
-        mPos.x *= -1;
-        mPos.y *= -1;
-        Vector3 _mPos = magnifier.GetComponent<RectTransform>().anchoredPosition;
-        _mPos.x = (-_mPos.x) * 4;
-        _mPos.y = (1 - (_mPos.y * 4)) - 1892;
-        magnifImage.GetComponent<RectTransform>().anchoredPosition = _mPos;
-    }
+    }  
 
     private void Update()
     {
-       ManageSwipeGestures();
-        //MagnifierEffect();
+        ManageSwipeGestures();
     }
 
     private void Initialize()
     {
-        print("Initialize");
         title = GameObject.Find("TutorialCanvas/Canvas/Background/Title/Text").GetComponent<Text>();
         description = GameObject.Find("TutorialCanvas/Canvas/Background/Description/Text").GetComponent<Text>();
         image = GameObject.Find("TutorialCanvas/Canvas/Background/MiddleGroup/MiddleGroupHolder/StepImageContainer/Image/Mask/Image").GetComponent<Image>();
@@ -73,6 +54,8 @@ public class GameTutorialManager : MonoBehaviour
 
         previousButton.GetComponent<Button>().onClick.AddListener(PreviousStep);
         nextButton.GetComponent<Button>().onClick.AddListener(NextStep);
+
+        UpdateTutorialStep();
     }
 
     private void LoadInfo()
@@ -86,23 +69,14 @@ public class GameTutorialManager : MonoBehaviour
 
         XmlNodeList steps = xmlFile.FirstChild.NextSibling.ChildNodes;
 
-        tutorialImages = Resources.LoadAll<Sprite>("Sprites/TutorialImages");
-
-        int i = 0;
-
         foreach (XmlNode step in steps)
         {
-            if (i < tutorialImages.Length)
+            tutorialSteps.Add(new TutorialStep
             {
-                tutorialSteps.Add(new TutorialStep
-                {
-                    Title = step.Attributes["title"].Value,
-                    Description = step.Attributes["description"].Value,
-                    TutorialImage = tutorialImages[i]
-                });
-
-                i++;
-            }
+                Title = step.Attributes["title"].Value,
+                Description = step.Attributes["description"].Value,
+                TutorialImage = Resources.Load<Sprite>($"Sprites/TutorialImages/{step.Attributes["image"].Value}")
+            });
         }
     }
 
@@ -190,5 +164,21 @@ public class GameTutorialManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void MagnifierEffect()
+    {
+        Vector3 mPos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+        mPos.z = 0;
+        //magnifier.GetComponent<RectTransform>().localPosition = (mPos - new Vector3(0.5f,0.5f,0))* 1000;
+        mPos.y -= 1;
+        magnifier.GetComponent<RectTransform>().anchoredPosition = mPos * 1000;
+
+        mPos.x *= -1;
+        mPos.y *= -1;
+        Vector3 _mPos = magnifier.GetComponent<RectTransform>().anchoredPosition;
+        _mPos.x = (-_mPos.x) * 4;
+        _mPos.y = (1 - (_mPos.y * 4)) - 1892;
+        magnifImage.GetComponent<RectTransform>().anchoredPosition = _mPos;
     }
 }
