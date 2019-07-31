@@ -317,8 +317,15 @@ public class MainMenu : MonoBehaviour {
         PlayerPrefsManager.AddOneToPlaysNumber();
 
         EndScoreManager manager = loadingScreen.GetComponent<EndScoreManager>();
-        
-        PlayerPrefsManager.AddOneToPracticePlays(prefs.currentSceneVisualName);
+
+        if (prefs.practiceMode)
+        {
+            PlayerPrefsManager.AddOneToPracticePlays(prefs.currentSceneVisualName);
+        }
+        else
+        {
+            PlayerPrefsManager.AddOneToTestPlays(prefs.currentSceneVisualName);
+        }
 
         bl_SceneLoaderUtils.GetLoader.LoadLevel(manager.completedSceneName, manager.completedSceneBundle);
     }

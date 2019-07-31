@@ -468,7 +468,16 @@ public class PlayerPrefsManager : MonoBehaviour
         int.TryParse(DatabaseManager.FetchField("PracticePlays", practiceScene), out plays);
         DatabaseManager.UpdateField("PracticePlays", practiceScene, (plays + 1).ToString());
     }
-    
+
+    public static void AddOneToTestPlays(string scene)
+    {
+        string practiceScene = FormatSceneName(scene);
+
+        int plays;
+        int.TryParse(DatabaseManager.FetchField("TestPlays", practiceScene), out plays);
+        DatabaseManager.UpdateField("TestPlays", practiceScene, (plays + 1).ToString());
+    }
+
     public void SetTutorialCompletedWU()
     {
         tutorialCompleted = true;
