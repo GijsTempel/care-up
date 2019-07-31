@@ -49,7 +49,7 @@ public class GameTutorialManager : MonoBehaviour
         Rect i_rect = tutImage.GetComponent<RectTransform>().rect;
         Rect mi_rect = magnifierImage.GetComponent<RectTransform>().rect;
 
-        float _scale = ((i_rect.height/2)/300f);
+        float _scale = ((i_rect.height/2)/250f);
         magnifier.GetComponent<RectTransform>().localScale = new Vector3(_scale,_scale,1f);
         magnifier.GetComponent<RectTransform>().anchoredPosition = magnifierPos * new Vector2(i_rect.width, -i_rect.height);
         magnifierImage.GetComponent<RectTransform>().anchoredPosition = 
@@ -191,19 +191,4 @@ public class GameTutorialManager : MonoBehaviour
         }
     }
 
-    private void MagnifierEffect()
-    {
-        // Vector3 mPos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-        // mPos.z = 0;
-        // //magnifier.GetComponent<RectTransform>().localPosition = (mPos - new Vector3(0.5f,0.5f,0))* 1000;
-        // mPos.y -= 1;
-        // magnifier.GetComponent<RectTransform>().anchoredPosition = mPos * 1000;
-
-        // mPos.x *= -1;
-        // mPos.y *= -1;
-        // Vector3 _mPos = magnifier.GetComponent<RectTransform>().anchoredPosition;
-        // _mPos.x = (-_mPos.x) * 4;
-        // _mPos.y = (1 - (_mPos.y * 4)) - 1892;
-        // magnifImage.GetComponent<RectTransform>().anchoredPosition = _mPos;
-    }
 }
