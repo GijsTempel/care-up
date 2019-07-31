@@ -95,14 +95,14 @@ public class DatabaseManager : MonoBehaviour
              FetchField("AccountStats", "BIG_number") != ""))
         {
             WULogin.characterCreated = true;
-            if (FetchField("AccountStats", "TutorialCompleted") == "true")
-            {
+            //if (FetchField("AccountStats", "TutorialCompleted") == "true")
+            //{
                 bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
-            }
-            else
-            {
-                bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Tutorial", "Scenes");
-            }
+            //}
+            //else
+            //{
+            //    bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Tutorial", "Scenes");
+            //}
         }
         else
         {
