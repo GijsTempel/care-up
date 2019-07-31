@@ -1534,17 +1534,17 @@ public class ActionManager : MonoBehaviour
 
             bool practice = (manager != null) ? manager.practiceMode : true;
 
-            /*if (practice)
+            if (practice)
             {
                 if (IncompletedActions.Count > 0)
                 {
                     RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
                     if (type == ActionType.SequenceStep)
-                        messageCenter.NewMessage("Verkeerde handeling!", IncompletedActions[0].extraDescr, RobotUIMessageTab.Icon.Error);
+                        messageCenter.NewMessage("Verkeerde handeling!", IncompletedActions[0].shortDescr, RobotUIMessageTab.Icon.Error);
                     else
-                        messageCenter.NewMessage("Verkeerde handeling!", IncompletedActions[0].extraDescr, RobotUIMessageTab.Icon.Block);
+                        messageCenter.NewMessage("Verkeerde handeling!", IncompletedActions[0].shortDescr, RobotUIMessageTab.Icon.Block);
                 }
-            }*/
+            }
 
             if (!notWtongAction)
                 ActionManager.WrongAction(type != ActionType.SequenceStep);
