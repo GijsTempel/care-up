@@ -53,7 +53,6 @@ public class GameTutorialManager : MonoBehaviour
         _mPos.x = (-_mPos.x) * 4;
         _mPos.y = (1 - (_mPos.y * 4)) - 1892;
         magnifImage.GetComponent<RectTransform>().anchoredPosition = _mPos;
-
     }
 
     private void Update()
@@ -100,7 +99,6 @@ public class GameTutorialManager : MonoBehaviour
                     Title = step.Attributes["title"].Value,
                     Description = step.Attributes["description"].Value,
                     TutorialImage = tutorialImages[i]
-                    //TutorialImage = Resources.Load<Sprite>("Sprites/" + step.Attributes["image"].Value)
                 });
 
                 i++;
