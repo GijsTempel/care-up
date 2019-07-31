@@ -8,16 +8,20 @@ public class TutorialStep
     public string Title { get; set; }
     public string Description { get; set; }
     public Sprite TutorialImage { get; set; }
+    public float MagnifierX { get; set; }
+    public float MagnifierY { get; set; }
 }
 
 public class GameTutorialManager : MonoBehaviour
 {
     public GameObject magnifier;
-    public GameObject magnifImage;
+    public Image tutImage;
+    public GameObject magnifierImage;
+
+    public Vector2 magnifierPos;
 
     private Text title;
     private Text description;
-    private Image image;
     private GameObject previousButton;
     private GameObject nextButton;
     private int index = 0;
@@ -41,14 +45,21 @@ public class GameTutorialManager : MonoBehaviour
     private void Update()
     {
         ManageSwipeGestures();
+        Rect m_rect = magnifier.GetComponent<RectTransform>().rect;
+        Rect i_rect = tutImage.GetComponent<RectTransform>().rect;
+        Rect mi_rect = magnifierImage.GetComponent<RectTransform>().rect;
+
+        float _scale = ((i_rect.height/2)/300f);
+        magnifier.GetComponent<RectTransform>().localScale = new Vector3(_scale,_scale,1f);
+        magnifier.GetComponent<RectTransform>().anchoredPosition = magnifierPos * new Vector2(i_rect.width, -i_rect.height);
+        magnifierImage.GetComponent<RectTransform>().anchoredPosition = 
+        (magnifierPos - new Vector2(0.5f,0.5f)) * new Vector2(-mi_rect.width, mi_rect.height);
     }
 
     private void Initialize()
     {
         title = GameObject.Find("TutorialCanvas/Canvas/Background/Title/Text").GetComponent<Text>();
         description = GameObject.Find("TutorialCanvas/Canvas/Background/Description/Text").GetComponent<Text>();
-        image = GameObject.Find("TutorialCanvas/Canvas/Background/MiddleGroup/MiddleGroupHolder/StepImageContainer/Image/Mask/Image").GetComponent<Image>();
-        image.preserveAspect = true;
 
         previousButton = GameObject.Find("TutorialCanvas/Canvas/Background/MiddleGroup/MiddleGroupHolder/PreviousStep/Button");
         nextButton = GameObject.Find("TutorialCanvas/Canvas/Background/MiddleGroup/MiddleGroupHolder/NextStep/Button");
@@ -72,11 +83,21 @@ public class GameTutorialManager : MonoBehaviour
 
         foreach (XmlNode step in steps)
         {
+            float _x = 0f;
+            float _y = 0f;
+            if (step.Attributes["magnifier_x"] != null)
+                float.TryParse(step.Attributes["magnifier_x"].Value, out _x);
+
+            if (step.Attributes["magnifier_y"] != null)
+                float.TryParse(step.Attributes["magnifier_y"].Value, out _y);
+            
             tutorialSteps.Add(new TutorialStep
             {
                 Title = step.Attributes["title"].Value,
                 Description = step.Attributes["description"].Value,
-                TutorialImage = Resources.Load<Sprite>($"Sprites/TutorialImages/{step.Attributes["image"].Value}")
+                TutorialImage = Resources.Load<Sprite>($"Sprites/TutorialImages/{step.Attributes["image"].Value}"),
+                MagnifierX = _x,
+                MagnifierY = _y
             });
         }
     }
@@ -113,7 +134,10 @@ public class GameTutorialManager : MonoBehaviour
     {
         title.text = tutorialSteps[index].Title;
         description.text = tutorialSteps[index].Description;
-        image.sprite = tutorialSteps[index].TutorialImage;
+        tutImage.sprite = tutorialSteps[index].TutorialImage;
+        magnifierImage.GetComponent<Image>().sprite = tutorialSteps[index].TutorialImage;
+        magnifierPos = new Vector2(tutorialSteps[index].MagnifierX, tutorialSteps[index].MagnifierY);
+
     }
 
     private void ManageSwipeGestures()
@@ -169,17 +193,17 @@ public class GameTutorialManager : MonoBehaviour
 
     private void MagnifierEffect()
     {
-        Vector3 mPos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-        mPos.z = 0;
-        //magnifier.GetComponent<RectTransform>().localPosition = (mPos - new Vector3(0.5f,0.5f,0))* 1000;
-        mPos.y -= 1;
-        magnifier.GetComponent<RectTransform>().anchoredPosition = mPos * 1000;
+        // Vector3 mPos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+        // mPos.z = 0;
+        // //magnifier.GetComponent<RectTransform>().localPosition = (mPos - new Vector3(0.5f,0.5f,0))* 1000;
+        // mPos.y -= 1;
+        // magnifier.GetComponent<RectTransform>().anchoredPosition = mPos * 1000;
 
-        mPos.x *= -1;
-        mPos.y *= -1;
-        Vector3 _mPos = magnifier.GetComponent<RectTransform>().anchoredPosition;
-        _mPos.x = (-_mPos.x) * 4;
-        _mPos.y = (1 - (_mPos.y * 4)) - 1892;
-        magnifImage.GetComponent<RectTransform>().anchoredPosition = _mPos;
+        // mPos.x *= -1;
+        // mPos.y *= -1;
+        // Vector3 _mPos = magnifier.GetComponent<RectTransform>().anchoredPosition;
+        // _mPos.x = (-_mPos.x) * 4;
+        // _mPos.y = (1 - (_mPos.y * 4)) - 1892;
+        // magnifImage.GetComponent<RectTransform>().anchoredPosition = _mPos;
     }
 }
