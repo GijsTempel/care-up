@@ -41,7 +41,7 @@ public class ActionManager : MonoBehaviour
 
     // list of descriptions of steps, player got penalty on
     private List<string> stepsList = new List<string>();
-    private List<string> stepsDescriptionList = new List<string>();
+    //private List<string> stepsDescriptionList = new List<string>();
     private List<int> wrongStepIndexes = new List<int>();
     private List<int> correctStepIndexes = new List<int>();
 
@@ -74,10 +74,10 @@ public class ActionManager : MonoBehaviour
         get { return stepsList; }
     }
 
-    public List<string> StepsDescriptionList
+    /*public List<string> StepsDescriptionList
     {
         get { return stepsDescriptionList; }
-    }
+    }*/
 
     public List<int> WrongStepIndexes
     {

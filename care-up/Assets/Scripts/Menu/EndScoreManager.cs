@@ -22,7 +22,7 @@ public class EndScoreManager : MonoBehaviour
     public string completedSceneBundle;
 
     private List<string> steps;
-    private List<string> stepsDescr;
+    //private List<string> stepsDescr;
     private List<int> wrongStepIndexes;
     private List<int> correctStepIndexes;
 
@@ -251,7 +251,7 @@ public class EndScoreManager : MonoBehaviour
         completedSceneName = SceneManager.GetActiveScene().name;
 
         steps = actionManager.StepsList;
-        stepsDescr = actionManager.StepsDescriptionList;
+        //stepsDescr = actionManager.StepsDescriptionList;
         wrongStepIndexes = actionManager.WrongStepIndexes;
         correctStepIndexes = actionManager.CorrectStepIndexes;
 
