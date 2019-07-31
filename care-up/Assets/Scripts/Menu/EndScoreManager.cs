@@ -91,6 +91,8 @@ public class EndScoreManager : MonoBehaviour
         {
             Transform stepParent = GameObject.Find("Interactable Objects/Canvas/StepScreen/Image/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
 
+            SetBasicText();
+
             for (int i = 0; i < steps.Count; ++i)
             {
                 GameObject step = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/ProtocolEvaluationStep"), stepParent);
@@ -113,11 +115,6 @@ public class EndScoreManager : MonoBehaviour
 
             GameObject.Find("Interactable Objects/Canvas/ScoreScreen/ScoreInfo/ResultInfoHolder/Result")
                 .GetComponent<Text>().text = (percent < 0.7f) ? "Onvoldoende" : "Voldoende";
-
-            // GameObject.Find("Interactable Objects/Canvas/ScoreScreen/ScoreInfo/InfoHolder/InfoGroup/Info/Points")
-            //     .GetComponent<Text>().text = "Punten: " + points;
-            // GameObject.Find("Interactable Objects/Canvas/ScoreScreen/ScoreInfo/InfoHolder/InfoGroup/Info/Time")
-            //     .GetComponent<Text>().text = string.Format("Tijd: {0}:{1:00}", (int)time / 60, (int)time % 60);
 
             actualScene = true;
 
@@ -146,11 +143,8 @@ public class EndScoreManager : MonoBehaviour
 
         }
         if (actualScene)
-        {
-            SetBasicText();
-
+        {          
             Transform quizParent = GameObject.Find("Interactable Objects/Canvas/Questionscreen/Image/QuizForm/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
-
 
             for (int i = 0; i < quizQuestionsTexts.Count; ++i)
             {
@@ -224,7 +218,7 @@ public class EndScoreManager : MonoBehaviour
         {
             quizForm.GetChild(2).gameObject.SetActive(false);
             quizForm.GetChild(3).gameObject.SetActive(false);
-            //quizForm.GetChild(4).gameObject.SetActive(true);
+            quizForm.GetChild(4).gameObject.SetActive(true);
         }
         else
             quizForm.GetChild(4).gameObject.SetActive(false);
