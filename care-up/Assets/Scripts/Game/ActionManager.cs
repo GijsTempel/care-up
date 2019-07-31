@@ -27,7 +27,7 @@ public class ActionManager : MonoBehaviour
     // actual list of actions
     public List<Action> actionList = new List<Action>();    
   
-    private bool currentStepHintUsed = false;
+    //private bool currentStepHintUsed = false;
     private Text pointsText;
     private Text percentageText;
     private LocalizationManager localizationManager;
@@ -724,15 +724,7 @@ public class ActionManager : MonoBehaviour
             return actionsDescription;
         }
     }
-
-    /// <summary>
-    /// Name of the file of audioHint of current action.
-    /// </summary>
-    public string CurrentAudioHint
-    {
-        get { return currentAction.audioHint; }
-    }
-
+    
     // new comparison looks for all actions of type withing current index
     public bool CompareUseObject(string name, bool skipBlocks = false)
     {
@@ -963,7 +955,7 @@ public class ActionManager : MonoBehaviour
                 commentUA = action.Attributes["commentUA"].Value;
             }
 
-            string audio = "";
+            /*string audio = "";
             if (action.Attributes["audioHint"] != null)
             {
                 audio = action.Attributes["audioHint"].Value;
@@ -973,7 +965,7 @@ public class ActionManager : MonoBehaviour
             if (action.Attributes["extra"] != null)
             {
                 extra = localizationManager.GetValueIfKey(action.Attributes["extra"].Value);
-            }
+            }*/
 
             string buttonText = "";
             if (action.Attributes["buttonText"] != null)
@@ -1078,58 +1070,58 @@ public class ActionManager : MonoBehaviour
                 case "combine":
                     string left = action.Attributes["left"].Value;
                     string right = action.Attributes["right"].Value;
-                    actionList.Add(new CombineAction(left, right, index, descr, audio, extra,
+                    actionList.Add(new CombineAction(left, right, index, descr,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
                         blockUnlock, blockLock, blockTitle, blockMsg, decombineText));
                     break;
                 case "use":
                     string use = action.Attributes["value"].Value;
-                    actionList.Add(new UseAction(use, index, descr, audio, extra, buttonText,
+                    actionList.Add(new UseAction(use, index, descr, buttonText,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
                         blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
                 case "talk":
                     string topic = action.Attributes["topic"].Value;
-                    actionList.Add(new TalkAction(topic, index, descr, audio, extra, pointsValue,
+                    actionList.Add(new TalkAction(topic, index, descr, pointsValue,
                         notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock,
                         blockLock, blockTitle, blockMsg));
                     break;
                 case "useOn":
                     string useItem = action.Attributes["item"].Value;
                     string target = action.Attributes["target"].Value;
-                    actionList.Add(new UseOnAction(useItem, target, index, descr, audio, extra,
+                    actionList.Add(new UseOnAction(useItem, target, index, descr,
                         buttonText, pointsValue, notNeeded, quizTime, messageTitle, messageContent,
                         blockRequire, blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
                 case "examine":
                     string exItem = action.Attributes["item"].Value;
                     string expected = action.Attributes["expected"].Value;
-                    actionList.Add(new ExamineAction(exItem, expected, index, descr, audio, extra,
+                    actionList.Add(new ExamineAction(exItem, expected, index, descr,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
                         blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
                 case "pickUp":
                     string itemPicked = action.Attributes["item"].Value;
-                    actionList.Add(new PickUpAction(itemPicked, index, descr, audio, extra,
+                    actionList.Add(new PickUpAction(itemPicked, index, descr,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
                         blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
                 case "sequenceStep":
                     string stepName = action.Attributes["value"].Value;
-                    actionList.Add(new SequenceStepAction(stepName, index, descr, audio, extra,
+                    actionList.Add(new SequenceStepAction(stepName, index, descr,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
                         blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
                 case "drop":
                     string dropItem = action.Attributes["item"].Value;
                     string dropID = (action.Attributes["posID"] != null) ? action.Attributes["posID"].Value : "0";
-                    actionList.Add(new ObjectDropAction(dropItem, dropID, index, descr, audio, extra,
+                    actionList.Add(new ObjectDropAction(dropItem, dropID, index, descr,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
                         blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
                 case "movement":
                     string movement = action.Attributes["value"].Value;
-                    actionList.Add(new MovementAction(movement, index, descr, audio, extra,
+                    actionList.Add(new MovementAction(movement, index, descr,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
                         blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
@@ -1161,7 +1153,7 @@ public class ActionManager : MonoBehaviour
         foreach (Action a in actionList)
         {
             stepsList.Add(a.shortDescr);
-            stepsDescriptionList.Add(a.extraDescr);
+            //stepsDescriptionList.Add(a.extraDescr);
         }
 
         currentAction = actionList.First();
@@ -1173,7 +1165,7 @@ public class ActionManager : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (controls.keyPreferences.GetHintKey.Pressed())
+        /*if (controls.keyPreferences.GetHintKey.Pressed())
         {
             if (Narrator.PlayHintSound(CurrentAudioHint)) // if sound played
             {
@@ -1206,7 +1198,7 @@ public class ActionManager : MonoBehaviour
                     currentStepHintUsed = true;
                 }
             }
-        }
+        }*/
 
         if (!menuScene && uiSet)
         {
@@ -1481,7 +1473,7 @@ public class ActionManager : MonoBehaviour
 
         if (matched)
         {
-            currentStepHintUsed = false;
+            //currentStepHintUsed = false;
             GameObject.FindObjectOfType<GameUI>().ButtonBlink(false);
         }
         else if (manager != null && !manager.practiceMode) // test mode error, check for blocks
@@ -1542,7 +1534,7 @@ public class ActionManager : MonoBehaviour
 
             bool practice = (manager != null) ? manager.practiceMode : true;
 
-            if (practice)
+            /*if (practice)
             {
                 if (IncompletedActions.Count > 0)
                 {
@@ -1552,7 +1544,7 @@ public class ActionManager : MonoBehaviour
                     else
                         messageCenter.NewMessage("Verkeerde handeling!", IncompletedActions[0].extraDescr, RobotUIMessageTab.Icon.Block);
                 }
-            }
+            }*/
 
             if (!notWtongAction)
                 ActionManager.WrongAction(type != ActionType.SequenceStep);
