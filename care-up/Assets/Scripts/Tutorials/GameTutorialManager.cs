@@ -78,6 +78,7 @@ public class GameTutorialManager : MonoBehaviour
                     Title = step.Attributes["title"].Value,
                     Description = step.Attributes["description"].Value,
                     TutorialImage = tutorialImages[i]
+                    //TutorialImage = Resources.Load<Sprite>("Sprites/" + step.Attributes["image"].Value)
                 });
 
                 i++;
