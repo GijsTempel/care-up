@@ -42,7 +42,6 @@ public class GameTutorialManager : MonoBehaviour
     private void MagnifierEffect()
     {
         Vector3 mPos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-        print(mPos);
         mPos.z = 0;
         //magnifier.GetComponent<RectTransform>().localPosition = (mPos - new Vector3(0.5f,0.5f,0))* 1000;
         mPos.y -= 1;
@@ -59,18 +58,19 @@ public class GameTutorialManager : MonoBehaviour
 
     private void Update()
     {
-        ManageSwipeGestures();
-        MagnifierEffect();
+       ManageSwipeGestures();
+        //MagnifierEffect();
     }
 
     private void Initialize()
     {
+        print("Initialize");
         title = GameObject.Find("TutorialCanvas/Canvas/Background/Title/Text").GetComponent<Text>();
         description = GameObject.Find("TutorialCanvas/Canvas/Background/Description/Text").GetComponent<Text>();
-        // image = GameObject.Find("TutorialCanvas/Canvas/Background/StepImage/Image").GetComponent<Image>();
+        image = GameObject.Find("TutorialCanvas/Canvas/Background/MiddleGroup/MiddleGroupHolder/StepImageContainer/Image/Mask/Image").GetComponent<Image>();
 
-        previousButton = GameObject.Find("TutorialCanvas/Canvas/Background/NavigationButtons/PreviousStep");
-        nextButton = GameObject.Find("TutorialCanvas/Canvas/Background/NavigationButtons/NextStep");
+        previousButton = GameObject.Find("TutorialCanvas/Canvas/Background/MiddleGroup/MiddleGroupHolder/PreviousStep/Button");
+        nextButton = GameObject.Find("TutorialCanvas/Canvas/Background/MiddleGroup/MiddleGroupHolder/NextStep/Button");
 
         previousButton.GetComponent<Button>().onClick.AddListener(PreviousStep);
         nextButton.GetComponent<Button>().onClick.AddListener(NextStep);
@@ -140,7 +140,7 @@ public class GameTutorialManager : MonoBehaviour
     {
         title.text = tutorialSteps[index].Title;
         description.text = tutorialSteps[index].Description;
-        //image.sprite = tutorialSteps[index].TutorialImage;
+        image.sprite = tutorialSteps[index].TutorialImage;
     }
 
     private void ManageSwipeGestures()
