@@ -30,6 +30,10 @@ public class MedicineMouthPatient : PersonObject {
                     PlayerAnimator.SetTrigger("Player_TakeOffBlanket");
                     PlayerAnimator.SetTrigger("S Player_TakeOffBlanket");
                     break;
+                case "MouthOpen":
+                    PlayerAnimator.SetTrigger("OpenMouth");
+                    PlayerAnimator.SetTrigger("S OpenMouth");
+                    break;
                 default:
                     break;
             }

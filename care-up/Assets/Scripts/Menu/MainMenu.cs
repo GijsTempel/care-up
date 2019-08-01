@@ -322,6 +322,10 @@ public class MainMenu : MonoBehaviour {
         {
             PlayerPrefsManager.AddOneToPracticePlays(prefs.currentSceneVisualName);
         }
+        else
+        {
+            PlayerPrefsManager.AddOneToTestPlays(prefs.currentSceneVisualName);
+        }
 
         bl_SceneLoaderUtils.GetLoader.LoadLevel(manager.completedSceneName, manager.completedSceneBundle);
     }

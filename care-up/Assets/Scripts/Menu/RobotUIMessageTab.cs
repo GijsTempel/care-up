@@ -21,7 +21,8 @@ public class RobotUIMessageTab : RobotUITabs
         Info,
         Warning,
         Error,
-        Block
+        Block,
+        MWarning,
     }
 
     protected override void Start()
@@ -54,9 +55,8 @@ public class RobotUIMessageTab : RobotUITabs
             // ik, condition is dumb, but whatever
             return;
         }
-
         //--------------------------------------------------------
-        if (icon == Icon.Block )
+        if (icon == Icon.Block || icon == Icon.Warning )
         {
             gameUI.ShowBlockMessage(title, content);
         }
@@ -79,6 +79,9 @@ public class RobotUIMessageTab : RobotUITabs
                 i = infoIcon;
                 break;
             case Icon.Warning:
+                i = warningIcon;
+                break;
+            case Icon.MWarning:
                 i = warningIcon;
                 break;
             case Icon.Error:

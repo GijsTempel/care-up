@@ -460,13 +460,33 @@ public class PlayerPrefsManager : MonoBehaviour
         DatabaseManager.UpdateField("CertificateDates", currentTestScene, date);
     }
 
+    public static void AddOneToSceneInCategory(string scene, string category)
+    {
+        string sceneName = FormatSceneName(scene);
+
+        int plays;
+        int.TryParse(DatabaseManager.FetchField(category, sceneName), out plays);
+        DatabaseManager.UpdateField(category, sceneName, (plays + 1).ToString());
+    }
+
     public static void AddOneToPracticePlays(string scene)
     {
-        string practiceScene = FormatSceneName(scene);
-        
-        int plays;
-        int.TryParse(DatabaseManager.FetchField("PracticePlays", practiceScene), out plays);
-        DatabaseManager.UpdateField("PracticePlays", practiceScene, (plays + 1).ToString());
+        AddOneToSceneInCategory(scene, "PracticePlays");
+    }
+
+    public static void AddOneToTestPlays(string scene)
+    {
+        AddOneToSceneInCategory(scene, "TestPlays");
+    }
+
+    public static void AddOneToTestPassed(string scene)
+    {
+        AddOneToSceneInCategory(scene, "TestPassed");
+    }
+
+    public static void AddOneToTestFails(string scene)
+    {
+        AddOneToSceneInCategory(scene, "TestFails");
     }
     
     public void SetTutorialCompletedWU()
@@ -811,5 +831,18 @@ public class PlayerPrefsManager : MonoBehaviour
         const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         return new string(Enumerable.Repeat(chars, length)
           .Select(s => s[random.Next(s.Length)]).ToArray());
+    }
+
+    public static void OpenShareOnFBWebPage(string sceneName = "")
+    {
+        if (sceneName == "")
+            sceneName = GameObject.FindObjectOfType<PlayerPrefsManager>().currentSceneVisualName;
+
+        string link = "https://www.facebook.com/sharer/sharer.php";  // main link
+        link += "?u=https%3A%2F%2Fcareup.online";                         // u=link for link reference
+        link += "&quote=I just passed a test for ";                  // quote=text for text quote
+        link += sceneName + ". You can try it out yourself by going to https%3A%2F%2Fcareup.online";
+        
+        Application.OpenURL(link.Replace(" ", "%20"));
     }
 }

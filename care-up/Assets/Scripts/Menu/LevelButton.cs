@@ -198,6 +198,10 @@ public class LevelButton : MonoBehaviour
         {
             PlayerPrefsManager.AddOneToPracticePlays(manager.currentSceneVisualName);
         }
+        else
+        {
+            PlayerPrefsManager.AddOneToTestPlays(manager.currentSceneVisualName);
+        }
 
         bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
     }

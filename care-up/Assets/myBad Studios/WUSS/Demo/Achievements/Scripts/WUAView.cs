@@ -17,7 +17,7 @@ namespace MBS {
         */
 
         [SerializeField] Image icon = default(Image);
-        [SerializeField] Text name = default(Text);
+        [SerializeField] Text fname = default(Text);
         [SerializeField] Text description = default(Text);
 
         Sprite
@@ -36,7 +36,7 @@ namespace MBS {
 
             initialized = true;
             Fields.obj = this;
-            name.text = Fields.String("name");
+            fname.text = Fields.String("name");
 
             //see if this sprite's image is found inside the project and if so, load that.
             //if not found locally, download it from the web

@@ -515,7 +515,7 @@ public class PlayerScript : MonoBehaviour
         {
             string title = "Hygiënisch smartphone- en tabletgebruik";
             string message = "Telefoons en tablets bevatten erg veel micro-organismen. Bij het gebruik van een smartphone of tablet heeft handhygiëne de grootste prioriteit. Zowel voor als na het gebruiken van een mobiel communicatiemiddel moet je je handen goed reinigen. Je kunt het gebruik van een mobiel apparaat tijdens werkzaamheden zien als het beëindigen en opnieuw aangaan van handcontact met de cliënt. In CareUp is dit niet nodig omdat het de gebruikerservaring negatief beïnvloedt maar zorg in de praktijk dus voor goede hygiëne tijdens het gebruik van mobiele apparaten.";
-            GameObject.FindObjectOfType<RobotUIMessageTab>().NewMessage(title, message, RobotUIMessageTab.Icon.Warning);
+            GameObject.FindObjectOfType<RobotUIMessageTab>().NewMessage(title, message, RobotUIMessageTab.Icon.MWarning);
 
             robotUINotOpenedYet = false;
         }

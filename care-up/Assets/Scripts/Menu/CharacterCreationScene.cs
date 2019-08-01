@@ -59,10 +59,11 @@ public class CharacterCreationScene : MonoBehaviour
        
         if (SceneManager.GetActiveScene().name == "MainMenu")
             return;
-
-        maleBtn = GameObject.Find("CharacterCustomization/Canvas/Image/InfoHolder/CharacterPanel/GenderButtonsHolder/MaleBtn").GetComponent<Image>();
-        femaleBtn = GameObject.Find("CharacterCustomization/Canvas/Image/InfoHolder/CharacterPanel/GenderButtonsHolder/FemaleBtn").GetComponent<Image>();
-        
+        if (GameObject.Find("CharacterCustomization/Canvas/Image/InfoHolder/CharacterPanel/GenderButtonsHolder/MaleBtn") != null)
+        {
+            maleBtn = GameObject.Find("CharacterCustomization/Canvas/Image/InfoHolder/CharacterPanel/GenderButtonsHolder/MaleBtn").GetComponent<Image>();
+            femaleBtn = GameObject.Find("CharacterCustomization/Canvas/Image/InfoHolder/CharacterPanel/GenderButtonsHolder/FemaleBtn").GetComponent<Image>();
+        }
         Initialize();
 
         // set up initial info
@@ -483,7 +484,14 @@ public class CharacterCreationScene : MonoBehaviour
             // set new character scene to be seen and saved info
             DatabaseManager.UpdateField("AccountStats", "CharSceneV2", "true");
 
-            bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
+            if (DatabaseManager.FetchField("AccountStats", "TutorialCompleted") == "true")
+            {
+                bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
+            }
+            else
+            {
+                bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Tutorial", "Scenes");
+            }
         }
     }
     

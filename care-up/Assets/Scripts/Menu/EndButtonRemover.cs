@@ -2,8 +2,10 @@
 
 public class EndButtonRemover : MonoBehaviour {
 
+    int endScoreShown = 0;
     public GameObject goToMenuButton;
 
+    public GameObject ResultInfoHolder;
     [SerializeField]
     private GameObject ScorePanel = null;
 
@@ -32,11 +34,28 @@ public class EndButtonRemover : MonoBehaviour {
     }
     public void OnToScoreClick()
     {
+        
+        //GameObject.FindObjectOfType<EndscoreButtonManager>().
         QuizPanel.GetComponent<Animator>().SetBool("pop", false);
         QuizPanel.SetActive(false);
 
         ScorePanel.SetActive(true);
         ScorePanel.GetComponent<Animator>().SetBool("pop", true);
+        if (endScoreShown == 0)
+        {
+            float percent = GameObject.FindObjectOfType<EndScoreManager>().percent;
+            int value = Mathf.FloorToInt(percent * 100f);
+            EndScoreRadial endScoreRadial = GameObject.FindObjectOfType<EndScoreRadial>();
+            if (endScoreRadial != null)
+                GameObject.FindObjectOfType<EndScoreRadial>().StartAnimation(value);
+        }
+        endScoreShown++;
+    }
+    //----------------
+
+    public void ShowResultInfoHolder()
+    {
+        ResultInfoHolder.SetActive(true);
     }
 
 
