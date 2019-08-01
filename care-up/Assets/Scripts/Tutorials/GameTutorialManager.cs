@@ -19,6 +19,9 @@ public class GameTutorialManager : MonoBehaviour
     public GameObject magnifierImage;
 
     public Vector2 magnifierPos;
+    public Sprite currentDotSprite;
+    public Sprite dotSprite;
+    public GameObject DotPanel;
 
     private Text title;
     private Text description;
@@ -27,6 +30,8 @@ public class GameTutorialManager : MonoBehaviour
     private int index = 0;
 
     private List<TutorialStep> tutorialSteps;
+    private List<GameObject> dots = new List<GameObject>();
+
 
     private Vector2 firstPressPosition;
     private Vector2 secondPressPosition;
@@ -40,6 +45,7 @@ public class GameTutorialManager : MonoBehaviour
     private void Start()
     {
         Initialize();
+
     }  
 
     private void Update()
@@ -100,6 +106,15 @@ public class GameTutorialManager : MonoBehaviour
                 MagnifierY = _y
             });
         }
+
+        for(int i = 0; i < tutorialSteps.Count; i++)
+        {
+            print(i);
+            GameObject dot = Instantiate(Resources.Load<GameObject>("Prefabs/UI/dotTut"), DotPanel.transform) as GameObject;
+            dot.transform.parent = DotPanel.transform;
+            dots.Add(dot);
+        }
+        
     }
 
     private void NextStep()
@@ -137,6 +152,15 @@ public class GameTutorialManager : MonoBehaviour
         tutImage.sprite = tutorialSteps[index].TutorialImage;
         magnifierImage.GetComponent<Image>().sprite = tutorialSteps[index].TutorialImage;
         magnifierPos = new Vector2(tutorialSteps[index].MagnifierX, tutorialSteps[index].MagnifierY);
+        foreach(GameObject d in dots)
+        {
+            d.GetComponent<Image>().sprite = dotSprite;
+            d.GetComponent<Image>().color = new Color(1,1,1,0.2f);
+
+        }
+        dots[index].GetComponent<Image>().sprite = currentDotSprite;
+        dots[index].GetComponent<Image>().color = new Color(1,1,1,1f);
+
 
     }
 
