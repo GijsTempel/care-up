@@ -18,6 +18,8 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
     public List<Transform> variations;
 
+    private Sprite completedSceneIcon;
+
     private void Awake()
     {
         Transform leaderPanel = GameObject.Find("UMenuProManager/MenuCanvas/Leaderboard/InfoBar").transform;
@@ -43,6 +45,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
     void Start()
     {
         ppManager = GameObject.FindObjectOfType<PlayerPrefsManager>();
+        completedSceneIcon = Resources.Load<Sprite>("Sprites/check_circle_on");
 
         UpdateSceneUI();
     }
@@ -226,6 +229,16 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 if (xmlSceneNode.Attributes["image"] != null)
                 {
                     sceneUnit.image = Resources.Load<Sprite>("Sprites/ScenePreview/" + xmlSceneNode.Attributes["image"].Value);
+                    sceneUnit.transform.Find("LevelPreview").GetComponent<Image>().sprite = sceneUnit.image;
+                }
+
+                // override image if scene is completed
+                float fscore = 0.0f;
+                float.TryParse(DatabaseManager.FetchField("TestHighscores",
+                    PlayerPrefsManager.FormatSceneName(sceneUnit.displayName)).Replace(",", "."), out fscore);
+                if (Mathf.FloorToInt(fscore) >= 70)
+                {
+                    sceneUnit.image = completedSceneIcon;
                     sceneUnit.transform.Find("LevelPreview").GetComponent<Image>().sprite = sceneUnit.image;
                 }
 
