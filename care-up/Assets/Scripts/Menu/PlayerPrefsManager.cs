@@ -479,9 +479,9 @@ public class PlayerPrefsManager : MonoBehaviour
         AddOneToSceneInCategory(scene, "TestPlays");
     }
 
-    public static void AddOneToTestSucceeds(string scene)
+    public static void AddOneToTestPassed(string scene)
     {
-        AddOneToSceneInCategory(scene, "TestSucceeds");
+        AddOneToSceneInCategory(scene, "TestPassed");
     }
 
     public static void AddOneToTestFails(string scene)

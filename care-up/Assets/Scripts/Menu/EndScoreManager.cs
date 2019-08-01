@@ -148,7 +148,7 @@ public class EndScoreManager : MonoBehaviour
             }
             else
             {
-                PlayerPrefsManager.AddOneToTestSucceeds(manager.currentSceneVisualName);
+                PlayerPrefsManager.AddOneToTestPassed(manager.currentSceneVisualName);
             }
 
         }
