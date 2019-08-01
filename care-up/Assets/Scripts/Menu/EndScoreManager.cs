@@ -162,8 +162,8 @@ public class EndScoreManager : MonoBehaviour
                 step.transform.Find("Text").GetComponent<Text>().text = quizQuestionsTexts[i];
 
                 bool wrong = quizWrongIndexes.Contains(i);
-                step.transform.Find("ToggleYes").GetComponent<Toggle>().isOn = !wrong;
-                step.transform.Find("ToggleNo").GetComponent<Toggle>().isOn = wrong;
+                step.transform.Find("Toggles/ToggleYes").GetComponent<Toggle>().isOn = !wrong;
+                step.transform.Find("Toggles/ToggleNo").GetComponent<Toggle>().isOn = wrong;
             }
 
             if (SceneManager.GetActiveScene().name == "EndScore")
