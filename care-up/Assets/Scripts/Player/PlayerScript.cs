@@ -333,6 +333,11 @@ public class PlayerScript : MonoBehaviour
                 //FreeLookButton();
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            TriggerQuizQuestion();
+        }
     }
 
     public void ToggleUsingOnMode(bool value)

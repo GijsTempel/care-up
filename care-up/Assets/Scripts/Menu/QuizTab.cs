@@ -29,7 +29,9 @@ public class QuizTab : RobotUITabs {
 
     private Text descriptionText;
     private Button continueButton;
-  
+    private Button backToOptionsButton;
+    private Text answeredTitleText;
+
     public bool continueBtn = false;
 
     [HideInInspector]
@@ -87,10 +89,14 @@ public class QuizTab : RobotUITabs {
             questionList.Add(step);
         }
 
-        descriptionText = transform.GetChild(0).Find("Description").GetComponent<Text>();
-        continueButton = transform.GetChild(0).Find("Continue").GetComponent<Button>();
+        descriptionText = transform.GetChild(1).Find("Description").GetComponent<Text>();
+        continueButton = transform.GetChild(1).Find("Continue").GetComponent<Button>();
+        backToOptionsButton = transform.GetChild(1).Find("Back").GetComponent<Button>();
+        answeredTitleText = transform.GetChild(1).Find("QuestionText").GetComponent<Text>();
 
-        continueButton.gameObject.SetActive(continueBtn);
+        continueBtn = false;
+        continueButton.gameObject.SetActive(false);
+        backToOptionsButton.gameObject.SetActive(false);
         descriptionText.text = "";
     }
 
@@ -111,6 +117,12 @@ public class QuizTab : RobotUITabs {
             continueButton = transform.GetChild(1).Find("Continue").GetComponent<Button>();
         }
         continueButton.onClick.AddListener(OnContinueButton);
+
+        if (backToOptionsButton == null)
+        {
+            backToOptionsButton = transform.GetChild(1).Find("Continue").GetComponent<Button>();
+        }
+        backToOptionsButton.onClick.AddListener(OnBackToOptionsButton);
 
         tabTrigger.SetActive(false);
 
@@ -176,9 +188,14 @@ public class QuizTab : RobotUITabs {
 
     public void CorrectAnswer(string description)
     {
-        GameObject.Find("GameLogic").GetComponent<ActionManager>().UpdatePointsDirectly(questionList[currentStep][currentQuestionID].points);
+        transform.GetChild(0).gameObject.SetActive(false);
+        transform.GetChild(1).gameObject.SetActive(true);
+
+        GameObject.Find("GameLogic").GetComponent<ActionManager>().UpdatePointsDirectly(
+            questionList[currentStep][currentQuestionID].points);
         ActionManager.CorrectAction();
 
+        answeredTitleText.text = "Heel goed!";
         descriptionText.text = description;
 
         ++currentStep;
@@ -189,7 +206,8 @@ public class QuizTab : RobotUITabs {
         }
 
         continueBtn = true;
-        continueButton.gameObject.SetActive(continueBtn);
+        continueButton.gameObject.SetActive(true);
+        backToOptionsButton.gameObject.SetActive(false);
 
         GameObject.FindObjectOfType<RobotManager>().ToggleCloseBtn(true); // enable close btn
     }
@@ -204,10 +222,19 @@ public class QuizTab : RobotUITabs {
                 return;
             }
 #endif
-        descriptionText.text = description;
+        transform.GetChild(0).gameObject.SetActive(false);
+        transform.GetChild(1).gameObject.SetActive(true);
+
         GameObject.Find("GameLogic").GetComponent<ActionManager>().ActivatePenalty();
         ActionManager.WrongAction();
 
+        answeredTitleText.text = "Helaas, dit antwoord is niet goed";
+        descriptionText.text = description;
+
+        continueBtn = false;
+        continueButton.gameObject.SetActive(false);
+        backToOptionsButton.gameObject.SetActive(true);
+        
         if (endScoreManager != null)
         {
             endScoreManager.quizWrongIndexes.Add(currentStep);
@@ -218,9 +245,12 @@ public class QuizTab : RobotUITabs {
         }
     }
 
-public void OnContinueButton()
+    public void OnContinueButton()
     {
         Continue();
+        
+        transform.GetChild(0).gameObject.SetActive(true);
+        transform.GetChild(1).gameObject.SetActive(false);
 
         // disable quiz icon
         icons.Find("QuizTab").gameObject.SetActive(false);
@@ -236,8 +266,14 @@ public void OnContinueButton()
     public void Continue()
     {
         continueBtn = false;
-        continueButton.gameObject.SetActive(continueBtn);
+        continueButton.gameObject.SetActive(false);
         gameObject.SetActive(false);
+    }
+    
+    public void OnBackToOptionsButton()
+    {
+        transform.GetChild(0).gameObject.SetActive(true);
+        transform.GetChild(1).gameObject.SetActive(false);
     }
 
     protected override void SetTabActive(bool value)
