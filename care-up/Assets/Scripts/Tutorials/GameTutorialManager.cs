@@ -14,6 +14,7 @@ public class TutorialStep
 
 public class GameTutorialManager : MonoBehaviour
 {
+    public GameObject popUp;
     public GameObject magnifier;
     public Image tutImage;
     public GameObject magnifierImage;
@@ -45,7 +46,6 @@ public class GameTutorialManager : MonoBehaviour
     private void Start()
     {
         Initialize();
-
     }  
 
     private void Update()
@@ -63,7 +63,7 @@ public class GameTutorialManager : MonoBehaviour
     }
 
     private void Initialize()
-    {
+    {      
         title = GameObject.Find("TutorialCanvas/Canvas/Background/Title/Text").GetComponent<Text>();
         description = GameObject.Find("TutorialCanvas/Canvas/Background/Description/Text").GetComponent<Text>();
 
@@ -78,6 +78,11 @@ public class GameTutorialManager : MonoBehaviour
 
     private void LoadInfo()
     {
+        System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
+        customCulture.NumberFormat.NumberDecimalSeparator = ".";
+
+        System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
+
         tutorialSteps = new List<TutorialStep>();
 
         TextAsset textAsset = (TextAsset)Resources.Load("Xml/GameTutorial");
@@ -110,10 +115,9 @@ public class GameTutorialManager : MonoBehaviour
         for(int i = 0; i < tutorialSteps.Count; i++)
         {
             GameObject dot = Instantiate(Resources.Load<GameObject>("Prefabs/UI/dotTut"), DotPanel.transform) as GameObject;
-            dot.transform.parent = DotPanel.transform;
+            dot.transform.SetParent(DotPanel.transform);
             dots.Add(dot);
-        }
-        
+        }        
     }
 
     private void NextStep()
@@ -125,6 +129,8 @@ public class GameTutorialManager : MonoBehaviour
         if (index == tutorialSteps.Count - 1)
         {
             nextButton.SetActive(false);
+            GameObject.Find("TutorialCanvas/Canvas/Background").SetActive(false);
+            popUp.SetActive(true);
         }
 
         UpdateTutorialStep();
@@ -212,6 +218,11 @@ public class GameTutorialManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void LoadMainMenu()
+    {
+        bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
     }
 
 }
