@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
 using UnityEngine.SceneManagement;
 using System.Text.RegularExpressions;
 
@@ -491,7 +490,7 @@ public class CharacterCreationScene : MonoBehaviour
             }
             else
             {
-                bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Tutorial", "Scenes");
+                bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Tutorial");
             }
         }
     }
