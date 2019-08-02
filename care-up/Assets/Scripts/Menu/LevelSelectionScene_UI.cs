@@ -225,12 +225,12 @@ public class LevelSelectionScene_UI : MonoBehaviour
                     //  = scene.Attributes["description"].Value;
                 }
 
-                // setting image
+                /* setting image
                 if (xmlSceneNode.Attributes["image"] != null)
                 {
                     sceneUnit.image = Resources.Load<Sprite>("Sprites/ScenePreview/" + xmlSceneNode.Attributes["image"].Value);
                     sceneUnit.transform.Find("LevelPreview").GetComponent<Image>().sprite = sceneUnit.image;
-                }
+                } */
 
                 // override image if scene is completed
                 float fscore = 0.0f;
@@ -239,7 +239,12 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 if (Mathf.FloorToInt(fscore) >= 70)
                 {
                     sceneUnit.image = completedSceneIcon;
+                    sceneUnit.transform.Find("LevelPreview").gameObject.SetActive(true);
                     sceneUnit.transform.Find("LevelPreview").GetComponent<Image>().sprite = sceneUnit.image;
+                }
+                else
+                {
+                    sceneUnit.transform.Find("LevelPreview").gameObject.SetActive(false);
                 }
 
                 if (xmlSceneNode.Attributes["validated"] != null)
