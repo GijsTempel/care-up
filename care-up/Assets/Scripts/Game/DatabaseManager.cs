@@ -22,7 +22,7 @@ public class DatabaseManager : MonoBehaviour
     private static List<Category> database = new List<Category>();
 
     private static Coroutine sessionCheck;
-    
+
     private void Awake()
     {
         if (instance)
@@ -89,20 +89,23 @@ public class DatabaseManager : MonoBehaviour
 
         // check if character created, load proper scene
         // load scene at the end of this function
-        if ( FetchField("AccountStats", "CharacterCreated") == "true" &&
+        if (FetchField("AccountStats", "CharacterCreated") == "true" &&
              FetchField("AccountStats", "FullName") != "" &&
              (FetchField("AccountStats", "CharSceneV2") == "true" ||
              FetchField("AccountStats", "BIG_number") != ""))
         {
             WULogin.characterCreated = true;
-            //if (FetchField("AccountStats", "TutorialCompleted") == "true")
-            //{
+
+            //DatabaseManager.UpdateField("AccountStats", "TutorialCompleted", "false");
+
+            if (FetchField("AccountStats", "TutorialCompleted") == "true")
+            {
                 bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
-            //}
-            //else
-            //{
-            //    bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Tutorial", "Scenes");
-            //}
+            }
+            else
+            {
+                bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Tutorial");
+            }
         }
         else
         {
@@ -183,10 +186,10 @@ public class DatabaseManager : MonoBehaviour
     private static void PrintDatabase()
     {
         string output = "";
-        foreach(Category c in database)
+        foreach (Category c in database)
         {
             output += "Category: " + c.name + "\n";
-            foreach(string key in c.fields.Keys)
+            foreach (string key in c.fields.Keys)
             {
                 output += "    " + key + ": " + c.fields[key] + "\n";
             }
@@ -245,10 +248,10 @@ public class DatabaseManager : MonoBehaviour
     public static void UpdateCategory(string category, string[][] fields)
     {
         CMLData data = new CMLData();
-        foreach(string[] field in fields)
+        foreach (string[] field in fields)
         {
             PushField(category, field[0], field[1]);
-            data.Set(field[0], field[1]);    
+            data.Set(field[0], field[1]);
         }
         WUData.UpdateUserCategory(WULogin.UID, category, data);
     }
