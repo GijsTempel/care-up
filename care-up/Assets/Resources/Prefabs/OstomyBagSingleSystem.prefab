@@ -183,6 +183,8 @@ GameObject:
   - component: {fileID: 2517788780961799696}
   - component: {fileID: 2517788780961799703}
   - component: {fileID: 2517788780961799702}
+  - component: {fileID: 1432070078}
+  - component: {fileID: 1432070079}
   m_Layer: 0
   m_Name: OstomyBagSingleSystem
   m_TagString: Untagged
@@ -217,8 +219,8 @@ Animator:
   m_GameObject: {fileID: 5895518229744207645}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 2dfbbf8951fbbfc408aec5a342682b42, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 1
+  m_Controller: {fileID: 9100000, guid: 20648ef7553e10943ace33412e47f4e0, type: 2}
+  m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -292,8 +294,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectID: 0
-  description: 
-  nameArticle: 
+  description: stomazakje
+  nameArticle: het
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
@@ -301,7 +303,7 @@ MonoBehaviour:
   depoistNeedle: 0
   leftControlBone: {fileID: 0}
   rightControlBone: {fileID: 0}
-  holdAnimationID: 0
+  holdAnimationID: 91
   sihlouette: 0
   positionID: 0
   mainObject: {fileID: 0}
@@ -322,6 +324,41 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.23261741, y: 0.3188213, z: 0.018241674}
   m_Center: {x: 0, y: -0.03242787, z: 2.8570158e-13}
+--- !u!114 &1432070078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5895518229744207645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4c9b1c7c042e4794b2aca8df5be8730, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TrashBin: 
+  hidenObjects:
+  - {fileID: 5250339874281040092}
+  neededObjects: []
+--- !u!114 &1432070079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5895518229744207645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5c5940595a0d4168b8e07274cf9cc24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LieAnimName: 
+  HoldAnimName: 
+  HoldAnimValue: 0
+  LockHoldState: 1
+  follow_left: 1
+  isActive: 0
+  followHoldingHand: 0
 --- !u!1 &6526746997036984294
 GameObject:
   m_ObjectHideFlags: 0
