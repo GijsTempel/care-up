@@ -323,8 +323,12 @@ public class EndScoreManager : MonoBehaviour
     /// </summary>
     public void ConditionalHomeButton()
     {
-        // print("DDDDDDDDDDDDDSSSSSSSSSSSSS" + emailsSent.ToString());
-        if (emailsSent)
+        // special panel for demo
+        if (manager.demoVersion)
+        {
+            GameObject.Find("Interactable Objects/Canvas/CertificateDemoPopOp").SetActive(true);
+        }
+        else if (emailsSent) // if not demo and email sent, special panel
         {
             GameObject.Find("Interactable Objects/Canvas/CertificatePopOp").SetActive(true);
             if (manager.validatedScene == false)
@@ -333,10 +337,8 @@ public class EndScoreManager : MonoBehaviour
                     = "Neem snel een kijkje in je mailbox! Daar vind je je certificaat.";
             }
         }
-
-        else
+        else // if not demo and emails not sent just load menu
         {
-            // print("aaaaaaaa" );
             bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
         }
     }
