@@ -214,6 +214,12 @@ public class PlayerPrefsManager : MonoBehaviour
         OnLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
 
         manager = GameObject.FindObjectOfType<UMP_Manager>();
+
+        // force NumberDecimalSeparator to be "."
+        System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
+        customCulture.NumberFormat.NumberDecimalSeparator = ".";
+
+        System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
     }
 
     public float Volume
