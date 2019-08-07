@@ -318,10 +318,10 @@ AnimatorState:
   - {fileID: 6285118923903360719}
   - {fileID: -1820813797705899889}
   - {fileID: -3237912279907064536}
-  - {fileID: -873307040277380909}
-  - {fileID: -4188607138224189393}
   - {fileID: -2004525536439779450}
   - {fileID: 7296351846130376267}
+  - {fileID: 5707323691995499016}
+  - {fileID: 5573084609671985626}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -350,7 +350,8 @@ AnimatorState:
   m_Transitions:
   - {fileID: 5238643090231522876}
   m_StateMachineBehaviours:
-  - {fileID: 8643040119215143444}
+  - {fileID: -3188839264703710328}
+  - {fileID: 8661289718513352799}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -813,6 +814,7 @@ AnimatorState:
   - {fileID: 1216786620913589697}
   - {fileID: 6495756177923027924}
   - {fileID: 3594083089919941046}
+  - {fileID: 3923390804525703709}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -1592,22 +1594,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftHand: 0
   dropFrame: 44
---- !u!114 &-5258246423318363209
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 522f6b56c9a2b7d4d8b535cd9870c5c7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  angleFrame: 5
-  angle: {x: 0, y: 0, z: 0}
-  saveCameraOrientation: 0
-  restoreCameraOrientation: 1
 --- !u!1102 &-5228414159625288501
 AnimatorState:
   serializedVersion: 5
@@ -2065,7 +2051,7 @@ AnimatorState:
   m_TimeParameterActive: 0
   m_Motion: {fileID: -1462229070791468571, guid: 9bf7a8c61c8f86947a95f3857325c5d9,
     type: 3}
-  m_Tag: 
+  m_Tag: UI_On
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
@@ -2129,7 +2115,6 @@ AnimatorState:
   - {fileID: -8589221816829436028}
   - {fileID: -3804855188696120906}
   - {fileID: 2421249295321655817}
-  - {fileID: -5258246423318363209}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -2145,20 +2130,6 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!114 &-4188607138224189393
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftHand: 1
-  dropFrame: 10
 --- !u!114 &-4124849404330903770
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -2229,6 +2200,20 @@ MonoBehaviour:
   hand: 0
   GhostObjectTarget: 
   destroyOnDrop: 0
+--- !u!114 &-3958863302136510305
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b9c9f3106e5ff7449cd0b07126b8b77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropLeftFrame: -1
+  dropRightFrame: 0
 --- !u!114 &-3915266484197888814
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -2236,7 +2221,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 048a5ef94a6d86b4695f923fee66a91e, type: 3}
   m_Name: 
@@ -2611,6 +2596,20 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &-3188839264703710328
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b9c9f3106e5ff7449cd0b07126b8b77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropLeftFrame: -1
+  dropRightFrame: 0
 --- !u!1101 &-3156230309585878126
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -3073,6 +3072,7 @@ AnimatorState:
   - {fileID: -6164971801788881404}
   - {fileID: -3915266484197888814}
   - {fileID: -4585398502852600429}
+  - {fileID: -3958863302136510305}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -3474,22 +3474,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   angleFrame: 0
   angle: {x: 0, y: 0, z: 0}
-  saveCameraOrientation: 1
+  saveCameraOrientation: 0
   restoreCameraOrientation: 1
---- !u!114 &-873307040277380909
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftHand: 0
-  dropFrame: 10
 --- !u!1109 &-785473910180754034
 AnimatorTransition:
   m_ObjectHideFlags: 3
@@ -5709,6 +5695,20 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &3923390804525703709
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b9c9f3106e5ff7449cd0b07126b8b77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropLeftFrame: 0
+  dropRightFrame: -1
 --- !u!1102 &3983404206857363854
 AnimatorState:
   serializedVersion: 5
@@ -5899,7 +5899,7 @@ AnimatorState:
   m_TimeParameterActive: 0
   m_Motion: {fileID: -1990677730457139003, guid: 9bf7a8c61c8f86947a95f3857325c5d9,
     type: 3}
-  m_Tag: 
+  m_Tag: UI_On
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
@@ -6059,7 +6059,7 @@ AnimatorState:
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7482400856493909522, guid: 9bf7a8c61c8f86947a95f3857325c5d9,
     type: 3}
-  m_Tag: 
+  m_Tag: UI_On
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
@@ -6487,6 +6487,20 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &5573084609671985626
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftHand: 0
+  dropFrame: 10
 --- !u!114 &5594670185163198163
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -6519,6 +6533,20 @@ MonoBehaviour:
   ObjNames:
   - GauzeOnStoma2
   toShow: 0
+--- !u!114 &5707323691995499016
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b9c9f3106e5ff7449cd0b07126b8b77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropLeftFrame: 10
+  dropRightFrame: -1
 --- !u!1109 &5768592995046224130
 AnimatorTransition:
   m_ObjectHideFlags: 3
@@ -6746,7 +6774,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 048a5ef94a6d86b4695f923fee66a91e, type: 3}
   m_Name: 
@@ -7448,20 +7476,20 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!114 &8643040119215143444
+--- !u!114 &8661289718513352799
 MonoBehaviour:
-  m_ObjectHideFlags: 3
+  m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftHand: 0
-  dropFrame: 10
+  leftHand: 1
+  dropFrame: 0
 --- !u!114 &8708027076480058603
 MonoBehaviour:
   m_ObjectHideFlags: 3
