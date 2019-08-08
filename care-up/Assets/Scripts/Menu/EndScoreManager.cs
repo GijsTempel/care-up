@@ -324,7 +324,7 @@ public class EndScoreManager : MonoBehaviour
     public void ConditionalHomeButton()
     {
         // special panel for demo
-        if (manager.demoVersion)
+        if (!manager.subscribed)
         {
             GameObject.Find("Interactable Objects/Canvas/CertificateDemoPopOp").SetActive(true);
         }

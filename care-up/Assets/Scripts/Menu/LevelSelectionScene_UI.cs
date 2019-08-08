@@ -265,7 +265,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 GameObject.Find("UMenuProManager/MenuCanvas/Leaderboard/InfoHolder/ProtocolsHolder/Scroll View/Viewport/Content").transform);
             LeaderBoardSceneButton buttonInfo = button.GetComponent<LeaderBoardSceneButton>();
             button.transform.Find("Text").GetComponent<Text>().text = sceneUnit.displayName;
-            button.transform.Find("LevelPreview").GetComponent<Image>().sprite = sceneUnit.image;  
+            button.transform.Find("LevelPreview").gameObject.SetActive(false);
 
             if (locked)
                 sceneUnit.transform.Find("LevelPreview").GetComponent<Image>().sprite = 

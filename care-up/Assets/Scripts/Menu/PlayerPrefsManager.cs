@@ -115,6 +115,11 @@ public class PlayerPrefsManager : MonoBehaviour
         }
 
         // handle platform-dependant objects (deleting unnecesarry)
+        bool windows = (Application.platform == RuntimePlatform.WindowsPlayer);
+        windows |= (Application.platform == RuntimePlatform.WSAPlayerX86);
+        windows |= (Application.platform == RuntimePlatform.WSAPlayerX64);
+        windows |= (Application.platform == RuntimePlatform.WSAPlayerARM);
+
         if (s.name == "MainMenu")
         {
             if (Application.platform != RuntimePlatform.IPhonePlayer)
@@ -134,7 +139,7 @@ public class PlayerPrefsManager : MonoBehaviour
                     "/NewVersionButtonGreenAndroid"));
             }
 
-            if (Application.platform != RuntimePlatform.WindowsPlayer)
+            if (!windows)
             {
                 Destroy(GameObject.Find("UMenuProManager/MenuCanvas/VersionUpdatePanel/Panel_Version_UI" +
                     "/NewVersionButtonGreenWindows"));
@@ -142,8 +147,7 @@ public class PlayerPrefsManager : MonoBehaviour
                     "/RegisterArea/Buttons/PurchaseButton_UWP"));
             }
 
-            if ((Application.platform != RuntimePlatform.Android) &&
-                (Application.platform != RuntimePlatform.WindowsPlayer))
+            if ((Application.platform != RuntimePlatform.Android) && !windows)
             {
                 Destroy(GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/WUSerialScreen" +
                     "/RegisterArea/Buttons/PurchaseButton_AndroidWeb"));
@@ -157,7 +161,7 @@ public class PlayerPrefsManager : MonoBehaviour
                 Destroy(GameObject.Find("Canvas/WULoginPrefab/WUSerialScreen/RegisterArea/Purchase_Android_WebGL"));
             }
 
-            if (Application.platform != RuntimePlatform.WindowsPlayer)
+            if (!windows)
             {
                 Destroy(GameObject.Find("Canvas/WULoginPrefab/WUSerialScreen/RegisterArea/Purchase_UWP"));
             }
@@ -210,6 +214,12 @@ public class PlayerPrefsManager : MonoBehaviour
         OnLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
 
         manager = GameObject.FindObjectOfType<UMP_Manager>();
+
+        // force NumberDecimalSeparator to be "."
+        System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
+        customCulture.NumberFormat.NumberDecimalSeparator = ".";
+
+        System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
     }
 
     public float Volume
