@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System.Xml;
 using UnityEngine.UI;
 
-public class QuizTab : RobotUITabs {
-
+public class QuizTab : MonoBehaviour
+{
     public struct Question
     {
         public string text;
@@ -20,6 +19,11 @@ public class QuizTab : RobotUITabs {
         public string descr;
     }
 
+    public bool continueBtn = false;
+
+    [HideInInspector]
+    public bool quiz = false;
+
     private List<List<Question>> questionList = new List<List<Question>>();
     private int currentStep = 0;
     private int currentQuestionID = 0;
@@ -32,14 +36,8 @@ public class QuizTab : RobotUITabs {
     private Button backToOptionsButton;
     private Text answeredTitleText;
 
-    public bool continueBtn = false;
-
-    [HideInInspector]
-    public bool quiz = false;
-
-    PlayerPrefsManager pref;
-
-    EndScoreManager endScoreManager;
+    private PlayerPrefsManager pref;
+    private EndScoreManager endScoreManager;
 
     public void Init(string name)
     {
@@ -100,9 +98,9 @@ public class QuizTab : RobotUITabs {
         descriptionText.text = "";
     }
 
-    protected override void Start()
+    private void Start()
     {
-        base.Start();
+        //base.Start();
 
         PlayerScript.quiz = this;
         gameObject.SetActive(false);
@@ -116,15 +114,15 @@ public class QuizTab : RobotUITabs {
         {
             continueButton = transform.GetChild(1).Find("Continue").GetComponent<Button>();
         }
+
         continueButton.onClick.AddListener(OnContinueButton);
 
         if (backToOptionsButton == null)
         {
             backToOptionsButton = transform.GetChild(1).Find("Continue").GetComponent<Button>();
         }
-        backToOptionsButton.onClick.AddListener(OnBackToOptionsButton);
 
-        tabTrigger.SetActive(false);
+        backToOptionsButton.onClick.AddListener(OnBackToOptionsButton);
 
         endScoreManager = GameObject.FindObjectOfType<EndScoreManager>();
     }
@@ -140,11 +138,11 @@ public class QuizTab : RobotUITabs {
         // disable close button
         GameObject.FindObjectOfType<RobotManager>().ToggleCloseBtn(false);
         // enable quiz icon
-        icons.Find("QuizTab").gameObject.SetActive(true);
+
+        GameObject.FindObjectOfType<PatientInfoManager>().SetTabActive("QuizTab");
 
         gameObject.SetActive(true);
-        OnTabSwitch();
-
+      
         int currentQuestionID = Random.Range(0, questionList[currentStep].Count);
 
         Question current = questionList[currentStep][currentQuestionID];
@@ -209,7 +207,7 @@ public class QuizTab : RobotUITabs {
         continueButton.gameObject.SetActive(true);
         backToOptionsButton.gameObject.SetActive(false);
 
-        GameObject.FindObjectOfType<RobotManager>().ToggleCloseBtn(true); // enable close btn
+        //GameObject.FindObjectOfType<RobotManager>().ToggleCloseBtn(true); // enable close btn
     }
 
     public void WrongAnswer(string description)
@@ -234,7 +232,7 @@ public class QuizTab : RobotUITabs {
         continueBtn = false;
         continueButton.gameObject.SetActive(false);
         backToOptionsButton.gameObject.SetActive(true);
-        
+
         if (endScoreManager != null)
         {
             endScoreManager.quizWrongIndexes.Add(currentStep);
@@ -247,16 +245,19 @@ public class QuizTab : RobotUITabs {
 
     public void OnContinueButton()
     {
+        GameObject.FindObjectOfType<PatientInfoManager>().SetInteractability(true);
+        GameObject.FindObjectOfType<RobotManager>().ToggleCloseBtn(true);
+
         Continue();
-        
+
         transform.GetChild(0).gameObject.SetActive(true);
         transform.GetChild(1).gameObject.SetActive(false);
 
         // disable quiz icon
-        icons.Find("QuizTab").gameObject.SetActive(false);
+        //icons.Find("QuizTab").gameObject.SetActive(false);
         quiz = false;
         // close tab
-        BackButton();
+       // BackButton();
         // close UI 
         GameObject.FindObjectOfType<PlayerScript>().CloseRobotUI();
         // enable player if needed
@@ -269,34 +270,34 @@ public class QuizTab : RobotUITabs {
         continueButton.gameObject.SetActive(false);
         gameObject.SetActive(false);
     }
-    
+
     public void OnBackToOptionsButton()
     {
         transform.GetChild(0).gameObject.SetActive(true);
         transform.GetChild(1).gameObject.SetActive(false);
     }
 
-    protected override void SetTabActive(bool value)
-    {
-        base.SetTabActive(value);
+    //private  void SetTabActive(bool value)
+    //{
+    //    base.SetTabActive(value);
 
-        if (!value)
-        {
-            if (continueButton != null)
-            {
-                continueButton.gameObject.SetActive(continueBtn);
-            }
-            else
-            {
-                transform.GetChild(0).Find("Continue").gameObject.SetActive(continueBtn);
-            }
-        }
-        else
-        {
-            for (int i = 0; i < buttons.Count; i++)
-            {
-                buttons[i].gameObject.SetActive(buttonsActive[i]);
-            }
-        }
-    }
+    //    if (!value)
+    //    {
+    //        if (continueButton != null)
+    //        {
+    //            continueButton.gameObject.SetActive(continueBtn);
+    //        }
+    //        else
+    //        {
+    //            transform.GetChild(0).Find("Continue").gameObject.SetActive(continueBtn);
+    //        }
+    //    }
+    //    else
+    //    {
+    //        for (int i = 0; i < buttons.Count; i++)
+    //        {
+    //            buttons[i].gameObject.SetActive(buttonsActive[i]);
+    //        }
+    //    }
+    //}
 }

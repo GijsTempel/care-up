@@ -374,8 +374,10 @@ public class PickableObject : InteractableObject
     public void EmptyHandsWarning()
     {
         string message = "Je hebt geen vrije hand beschikbaar om de actie uit te voeren. Zorg voor een vrije hand door een object terug te leggen.";
-        RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
-        messageCenter.NewMessage("Actie kan niet worden uitgevoerd!", message, RobotUIMessageTab.Icon.Warning);
+        //RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
+        //messageCenter.NewMessage("Actie kan niet worden uitgevoerd!", message, RobotUIMessageTab.Icon.Warning);
+
+        GameObject.FindObjectOfType<GameUI>().ShowBlockMessage("Actie kan niet worden uitgevoerd!", message);
     }
 
     public void CreateGhostObject(bool trash = false)

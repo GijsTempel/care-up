@@ -93,7 +93,7 @@ public class RobotUIMessageTab : RobotUITabs
 
         button.GetComponent<RobotUIMessage>().NewMessage(title, content, i);
 
-        RobotManager.SetNotification(RobotManager.NotificationNumber + 1);
+       // RobotManager.SetNotification(RobotManager.NotificationNumber + 1);
 
         Narrator.PlaySound("Notification");
     }

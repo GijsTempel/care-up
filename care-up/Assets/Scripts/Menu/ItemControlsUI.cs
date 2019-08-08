@@ -329,8 +329,7 @@ public class ItemControlsUI : MonoBehaviour {
                     if (!(initedObject.name == "WorkField" && !actionManager.CompareUseObject("WorkField")))
                     {
                         string message = "Zorg ervoor dat alle materialen die je hebt gebruikt op het werkveld liggen. Maak je handen vrij door eventuele objecten terug te leggen op het werkveld.";
-                        RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
-                        messageCenter.NewMessage("Materialen terugleggen.", message, RobotUIMessageTab.Icon.Warning);
+                        GameObject.FindObjectOfType<GameUI>().ShowBlockMessage("Materialen terugleggen.", message);
                     }
                 }
             }
@@ -408,8 +407,10 @@ public class ItemControlsUI : MonoBehaviour {
                     else
                     {
                         string message = "Volg de tips links bovenin het scherm om verder te gaan.";
-                        RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
-                        messageCenter.NewMessage("Volg de tips!", message, RobotUIMessageTab.Icon.Warning);
+                        //RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
+                        //messageCenter.NewMessage("Volg de tips!", message, RobotUIMessageTab.Icon.Warning);
+
+                        GameObject.FindObjectOfType<GameUI>().ShowBlockMessage("Volg de tips!", message);
                     }
 
                     controls.ResetObject();
@@ -506,7 +507,6 @@ public class ItemControlsUI : MonoBehaviour {
 
     public void UseOnNoTarget()
     {
-
         if (tutorialUseOn != null && !tutorialUseOn.ventAllowed) {
             return;
         }

@@ -1,25 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
-public class RobotManager : MonoBehaviour {
-
+public class RobotManager : MonoBehaviour
+{
     public bool top = true;
-	//private GameObject Game_UI;
+    //private GameObject Game_UI;
     private GameObject UI_object;
     public static bool[] UIElementsState = { false, false };
-	//0 -- RobotUITrigger
-	//1 -- ExtraButton
-    
-    private static GameObject UI_trigger;
 
     private static Transform notification;
     private static int notificationCount = 0;
 
     private static RobotManager instance;
-    
+
     private static Transform eyeL;
     private static Transform eyeLA;
     private static Transform eyeR;
@@ -30,8 +22,8 @@ public class RobotManager : MonoBehaviour {
     private static Material eyeLMat;
     private static Material eyeRMat;
     private static Material mouthMat;
-    
-    void Start ()
+
+    void Start()
     {
         instance = this;
         //Game_UI = GameObject.FindObjectOfType<GameUI>().gameObject;
@@ -48,29 +40,29 @@ public class RobotManager : MonoBehaviour {
         eyeLMat = transform.Find("robot_eye.L").GetComponent<Renderer>().material;
         eyeRMat = transform.Find("robot_eye.R").GetComponent<Renderer>().material;
 
-        UI_object = GameObject.Find("RobotUI");
+        UI_object = GameObject.Find("PatientInfoTabs/Info");
 
-        UI_trigger = GameObject.Find("RobotUITrigger").gameObject;
-        UI_trigger.SetActive(true);
-        
-        notification = UI_trigger.transform.Find("Notification");
-        notification.gameObject.SetActive(false);
-        
-        if (GameObject.FindObjectOfType<TutorialManager>() != null &&
-            GameObject.FindObjectOfType<Tutorial_UI>() == null &&
-            GameObject.FindObjectOfType<Tutorial_Theory>() == null)
-        {
-            SetUITriggerActive(false);
-        }
+        // UI_trigger = GameObject.Find("RobotUITrigger").gameObject;
+        // UI_trigger.SetActive(true);
+
+        // notification = UI_trigger.transform.Find("Notification");
+        //  notification.gameObject.SetActive(false);
+
+        //if (GameObject.FindObjectOfType<TutorialManager>() != null &&
+        //    GameObject.FindObjectOfType<Tutorial_UI>() == null &&
+        //    GameObject.FindObjectOfType<Tutorial_Theory>() == null)
+        //{
+        //    SetUITriggerActive(false);
+        //}
 
         // reset counter
         notificationCount = 0;
     }
 
-    void Update ()
+    void Update()
     {
         UpdateFaceAnimations();
-	}
+    }
 
     public void TriggerUI(bool value)
     {
@@ -102,46 +94,45 @@ public class RobotManager : MonoBehaviour {
             (mouth.localPosition.x - mouthA.localPosition.x) * 2f,
             (mouth.localPosition.y - mouthA.localPosition.y) * 2f * 1.11900882674f
             );
-    } 
+    }
 
     public void ToggleCloseBtn(bool value)
     {
-        UI_object.transform.Find("TopBarUI/CloseBtn").gameObject.SetActive(value);
+        GameObject.Find("PatientInfoTabs").transform.Find("TopBarUI/CloseBtn").gameObject.SetActive(value);
     }
 
-	public static void SetUITriggerActive(bool value)
+    public static void SetUITriggerActive(bool value)
     {
-        UI_trigger.SetActive(value);
+        //UI_trigger.SetActive(value);
         GameObject.FindObjectOfType<GameUI>().UpdateWalkToGtoupUI(value);
     }
 
-	public static void SetNotification(int n)
-    {
-		if (n > notificationCount)
-		{
-            if (UI_trigger.GetComponent<Animator>() != null && UI_trigger.GetComponent<Animator>().isActiveAndEnabled)
-                UI_trigger.GetComponent<Animator>().SetTrigger("BlinkWithoutHint");
-            UIElementsState[0] = true;
-		}
+    //public static void SetNotification(int n)
+    //   {
+    //	if (n > notificationCount)
+    //	{
+    //           if (UI_trigger.GetComponent<Animator>() != null && UI_trigger.GetComponent<Animator>().isActiveAndEnabled)
+    //               UI_trigger.GetComponent<Animator>().SetTrigger("BlinkWithoutHint");
+    //           UIElementsState[0] = true;
+    //	}
 
-        notificationCount = n;
+    //       notificationCount = n;
 
-        if (n > 0)
-        {
-            notification.gameObject.SetActive(true);
-            notification.Find("Text").GetComponent<Text>().text = n.ToString();
-        }
-        else
-        {
-            notification.gameObject.SetActive(false);
-        }
+    //       if (n > 0)
+    //       {
+    //           notification.gameObject.SetActive(true);
+    //           notification.Find("Text").GetComponent<Text>().text = n.ToString();
+    //       }
+    //       else
+    //       {
+    //           notification.gameObject.SetActive(false);
+    //       }
 
-        RobotUIMessageTab.SetNotification(n);
-    }
+    //       RobotUIMessageTab.SetNotification(n);
+    //   }
 
-    public static int NotificationNumber
-    {
-        get { return notificationCount; }
-    }
+    //public static int NotificationNumber
+    //{
+    //    get { return notificationCount; }
+    //}
 }
-	 

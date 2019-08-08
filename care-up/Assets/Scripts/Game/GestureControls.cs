@@ -108,9 +108,9 @@ public class GestureControls : MonoBehaviour
                 if (handsInventory.LeftHandEmpty() || handsInventory.RightHandEmpty())
                 {
                     // if we're here we're missing one object it seems, make a warning maybe somewhere?
-                    string message = "Je hebt geen object om mee te combineren. Zorg dat je een object in beide handen hebt om ze met elkaar te combineren. ";
-                    RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
-                    messageCenter.NewMessage("Geen tweede object", message, RobotUIMessageTab.Icon.Warning);
+                    string message = "Je hebt geen object om mee te combineren. Zorg dat je een object in beide handen hebt om ze met elkaar te combineren.";        
+                    GameObject.FindObjectOfType<GameUI>().ShowBlockMessage("Geen tweede object", message);
+
                     player.itemControls.Close();
                     return;
                 }
@@ -122,8 +122,8 @@ public class GestureControls : MonoBehaviour
                 {
                     // here we have either both hands filled
                     string message = "Je kunt niet objecten scheiden/uit elkaar halen met beide handen vol. Leg een object terug om een hand vrij te maken.";
-                    RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
-                    messageCenter.NewMessage("Je hebt je handen vol.", message, RobotUIMessageTab.Icon.Warning);
+                    GameObject.FindObjectOfType<GameUI>().ShowBlockMessage("Je hebt je handen vol.", message);
+
                     player.itemControls.Close();
                     return;
                 }

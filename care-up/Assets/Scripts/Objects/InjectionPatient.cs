@@ -86,7 +86,8 @@ public class InjectionPatient : PersonObject {
     {
         string title = "Injectieplaats ontbloten";
         string message = "De cliënt heeft de injectieplaats al ontbloot. je kunt beginnen met injecteren door de injectie naald+ spuit + schermdop te begebruiken met de Cliënt.";
-        FindObjectOfType<RobotUIMessageTab>().NewMessage(title, message, RobotUIMessageTab.Icon.Warning);
+
+        GameObject.FindObjectOfType<GameUI>().ShowBlockMessage(title, message);
     }
 
     public void GreetDialogue()

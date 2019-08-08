@@ -261,8 +261,11 @@ public class HandsInventory : MonoBehaviour {
         else
         {
             string message = "Je hebt je handen vol. Leg objecten terug om je handen vrij te maken.";
-            RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
-            messageCenter.NewMessage("Je hebt je handen vol!", message, RobotUIMessageTab.Icon.Warning);
+
+            //RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
+            //messageCenter.NewMessage("Je hebt je handen vol!", message, RobotUIMessageTab.Icon.Warning);
+
+            GameObject.FindObjectOfType<GameUI>().ShowBlockMessage("Je hebt je handen vol!", message);
         }
 
         ActionManager.UpdateRequirements();

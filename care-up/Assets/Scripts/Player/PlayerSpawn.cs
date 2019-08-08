@@ -34,9 +34,9 @@ public class PlayerSpawn : MonoBehaviour
             UIPrefab.name = "UI";
         }
 
-        GameObject player = Instantiate(playerPrefab,
-            transform.position, transform.rotation);
+        GameObject player = Instantiate(playerPrefab, transform.position, transform.rotation);
         player.name = "Player";
+
         if (GetComponent<Animator>() != null)
         {
             if (GetComponent<Animator>().runtimeAnimatorController != null)
@@ -48,8 +48,8 @@ public class PlayerSpawn : MonoBehaviour
         {
             player.GetComponentInChildren<Animator>().runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Animations/PlayerAnimationController");
         }
-        player.GetComponentInChildren<Animator>().SetInteger("sceneID", sceneID);
 
+        player.GetComponentInChildren<Animator>().SetInteger("sceneID", sceneID);
 
         GameObject itemControls = Instantiate(Resources.Load("Prefabs/UI/ItemControls") as GameObject,
             transform.position, transform.rotation);
@@ -59,11 +59,12 @@ public class PlayerSpawn : MonoBehaviour
             transform.position, transform.rotation);
         itemDescription.name = "ItemDescription";
 
-        GameObject iPad = UIPrefab.transform.Find("IPad").gameObject;
+        GameObject iPad = UIPrefab.transform.Find("PatientInfoTabs").gameObject;
 
         //GameObject iPad = Instantiate(Resources.Load("Prefabs/UI/IPad") as GameObject,
         //  transform.position, transform.rotation);
         //iPad.name = "ipad";
+
         IpadLoadXmlInfo(iPad.transform);
 
         //GameObject iPad = Instantiate(Resources.Load("Prefabs/ipad") as GameObject,
@@ -84,11 +85,11 @@ public class PlayerSpawn : MonoBehaviour
             Debug.LogWarning("Quiz file name is blank.");
         }
 
-        iPad.transform.GetChild(0).GetChild(0).Find("CloseBtn").GetComponent<Button>().onClick.AddListener(
+        iPad.transform.GetChild(1).Find("CloseBtn").GetComponent<Button>().onClick.AddListener(
             player.GetComponent<PlayerScript>().CloseRobotUI);
 
         GameObject.FindObjectOfType<GameTimer>().SetTextObject(
-            GameObject.Find("RobotUI").transform.Find("TopBarUI").Find("GeneralDynamicCanvas")
+            GameObject.Find("PatientInfoTabs").transform.Find("TopBarUI").Find("GeneralDynamicCanvas")
             .Find("Timer").Find("Time").GetComponent<Text>());
 
         GameTimer.FindObjectOfType<ActionManager>().SetUIObjects(
@@ -103,7 +104,7 @@ public class PlayerSpawn : MonoBehaviour
     public void IpadLoadXmlInfo(Transform ipad)
     {
         //Transform robotUI = ipad.Find("UI (1)/RobotUI");
-        Transform robotUI = ipad.Find("RobotUI");
+        Transform robotUI = ipad.Find("Info");
 
         if (prescriptionXml != "")
         {
@@ -117,8 +118,9 @@ public class PlayerSpawn : MonoBehaviour
 
             foreach (XmlNode node in nodes)
             {
-                prescriptionPanel.Find(node.Name).GetComponent<Text>().text =
-                    node.Attributes["value"].Value;
+                if (prescriptionPanel.Find(node.Name) != null)
+                    prescriptionPanel.Find(node.Name).GetComponent<Text>().text =
+                        node.Attributes["value"].Value;
             }
         }
 
@@ -134,8 +136,9 @@ public class PlayerSpawn : MonoBehaviour
 
             foreach (XmlNode node in nodes)
             {
-                patientRecordsXmlPanel.Find(node.Name).GetComponent<Text>().text =
-                    node.Attributes["value"].Value;
+                if (patientRecordsXmlPanel.Find(node.Name) != null)
+                    patientRecordsXmlPanel.Find(node.Name).GetComponent<Text>().text =
+                        node.Attributes["value"].Value;
             }
         }
     }

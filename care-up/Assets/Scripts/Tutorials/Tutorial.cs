@@ -556,10 +556,7 @@ public class Tutorial : TutorialManager {
                     UItext.DOText ("Je hebt een bericht! Klik op ‘Berichten’ om het bericht te openen. ", 0.5f, true, ScrambleMode.All).SetEase (Ease.Linear);
                     hintsN.LockTo ("RobotUI", new Vector3 (849.00f, -244.00f, -34.70f));
                     hintsN.SetSize (452f, 164.8f);
-                    hintsN.SetIconPosition (1);
-                    GameObject.FindObjectOfType<RobotUIMessageTab> ().NewMessage ("Leren Spelen",
-                        "De inhoud van de berichten verschijnt in dit venster. Klik op het pijltje linksboven in je scherm om terug te gaan. ",
-                        RobotUIMessageTab.Icon.Info);
+                    hintsN.SetIconPosition (1);                 
                     RobotUITabs.tutorial_messageCenterOpened = false;
                     tabToOpen = "MessageCenter";
                 }

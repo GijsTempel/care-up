@@ -102,8 +102,6 @@ public class UsableObject : InteractableObject {
 
                             handsCleaned = true;
                             string message = "Zorg voor een zorgvuldige handhygiëne. Handhygiëne is in dit protocol versneld om de gebruikerservaring te verbeteren";
-                            RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
-                            messageCenter.NewMessage("Zorgvuldige handhygiëne", message, RobotUIMessageTab.Icon.Info);
                         }
                         break;
                     case "OldBandAid":

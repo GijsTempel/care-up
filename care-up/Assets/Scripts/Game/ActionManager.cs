@@ -25,8 +25,8 @@ public class ActionManager : MonoBehaviour
     public string actionListName;
 
     // actual list of actions
-    public List<Action> actionList = new List<Action>();    
-  
+    public List<Action> actionList = new List<Action>();
+
     //private bool currentStepHintUsed = false;
     private Text pointsText;
     private Text percentageText;
@@ -685,7 +685,7 @@ public class ActionManager : MonoBehaviour
             gameUI.DropRightBlink = true;
         GameObject.FindObjectOfType<GameUI>().UpdateHintPanel(stepsList);
 
-        gameUI.updateButtonsBlink();
+        gameUI.UpdateButtonsBlink();
     }
 
     /// <summary>
@@ -724,7 +724,7 @@ public class ActionManager : MonoBehaviour
             return actionsDescription;
         }
     }
-    
+
     // new comparison looks for all actions of type withing current index
     public bool CompareUseObject(string name, bool skipBlocks = false)
     {
@@ -1401,7 +1401,7 @@ public class ActionManager : MonoBehaviour
         bool matched = false;
 
         int subcategoryLength = IncompletedActions.Count;
-      
+
         // make a list from sublist with actions of performed action type only
         List<Action> subtypelist = UnlockedIncompletedActions.Where(action => action.Type == type).ToList();
 
@@ -1444,9 +1444,6 @@ public class ActionManager : MonoBehaviour
 
                     if (action.messageContent != "" || action.messageTitle != "")
                     {
-                        GameObject.FindObjectOfType<RobotUIMessageTab>().NewMessage(
-                            action.messageTitle, action.messageContent, RobotUIMessageTab.Icon.Info);
-
                         if (practiceMode)
                         {
                             ShowTheory = true;
@@ -1513,8 +1510,10 @@ public class ActionManager : MonoBehaviour
                     message = "Je kunt deze stap nog niet doen, het kan zijn dat je een stap vergeten bent.";
                 }
 
-                RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
-                messageCenter.NewMessage(title, message, RobotUIMessageTab.Icon.Block);
+                //RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
+                //messageCenter.NewMessage(title, message, RobotUIMessageTab.Icon.Block);
+
+                GameObject.FindObjectOfType<GameUI>().ShowBlockMessage(title, message);
             }
         }
 
@@ -1539,10 +1538,14 @@ public class ActionManager : MonoBehaviour
                 if (IncompletedActions.Count > 0)
                 {
                     RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
-                    if (type == ActionType.SequenceStep)
-                        messageCenter.NewMessage("Verkeerde handeling!", IncompletedActions[0].shortDescr, RobotUIMessageTab.Icon.Error);
-                    else
-                        messageCenter.NewMessage("Verkeerde handeling!", IncompletedActions[0].shortDescr, RobotUIMessageTab.Icon.Block);
+
+                    //if (type == ActionType.SequenceStep)
+                    //    messageCenter?.NewMessage("Verkeerde handeling!", IncompletedActions[0].shortDescr, RobotUIMessageTab.Icon.Error);
+                    //else
+                    //    messageCenter?.NewMessage("Verkeerde handeling!", IncompletedActions[0].shortDescr, RobotUIMessageTab.Icon.Block);
+
+                    if (type != ActionType.SequenceStep)
+                        GameObject.FindObjectOfType<GameUI>().ShowBlockMessage("Verkeerde handeling!", IncompletedActions[0].shortDescr);
                 }
             }
 

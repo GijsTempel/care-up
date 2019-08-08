@@ -165,10 +165,10 @@ public class PlayerScript : MonoBehaviour
         usingOnCancelButton.GetComponent<EventTrigger>().triggers.Add(event2);
         usingOnCancelButton.GetComponent<EventTrigger>().triggers.Add(event3);
 
-        GameObject robotUI = GameObject.Find("RobotUI");
-        robotUI.AddComponent<EventTrigger>();
-        robotUI.GetComponent<EventTrigger>().triggers.Add(event1);
-        robotUI.GetComponent<EventTrigger>().triggers.Add(event2);
+        //GameObject robotUI = GameObject.Find("RobotUI");
+        //robotUI.AddComponent<EventTrigger>();
+        //robotUI.GetComponent<EventTrigger>().triggers.Add(event1);
+        //robotUI.GetComponent<EventTrigger>().triggers.Add(event2);
 
         if (GameObject.Find("DetailedHintPanel") != null)
             devHintUI = GameObject.Find("DetailedHintPanel").gameObject;
@@ -518,9 +518,9 @@ public class PlayerScript : MonoBehaviour
 
         if (robotUINotOpenedYet)
         {
-            string title = "Hygiënisch smartphone- en tabletgebruik";
-            string message = "Telefoons en tablets bevatten erg veel micro-organismen. Bij het gebruik van een smartphone of tablet heeft handhygiëne de grootste prioriteit. Zowel voor als na het gebruiken van een mobiel communicatiemiddel moet je je handen goed reinigen. Je kunt het gebruik van een mobiel apparaat tijdens werkzaamheden zien als het beëindigen en opnieuw aangaan van handcontact met de cliënt. In CareUp is dit niet nodig omdat het de gebruikerservaring negatief beïnvloedt maar zorg in de praktijk dus voor goede hygiëne tijdens het gebruik van mobiele apparaten.";
-            GameObject.FindObjectOfType<RobotUIMessageTab>().NewMessage(title, message, RobotUIMessageTab.Icon.MWarning);
+            //string title = "Hygiënisch smartphone- en tabletgebruik";
+            //string message = "Telefoons en tablets bevatten erg veel micro-organismen. Bij het gebruik van een smartphone of tablet heeft handhygiëne de grootste prioriteit. Zowel voor als na het gebruiken van een mobiel communicatiemiddel moet je je handen goed reinigen. Je kunt het gebruik van een mobiel apparaat tijdens werkzaamheden zien als het beëindigen en opnieuw aangaan van handcontact met de cliënt. In CareUp is dit niet nodig omdat het de gebruikerservaring negatief beïnvloedt maar zorg in de praktijk dus voor goede hygiëne tijdens het gebruik van mobiele apparaten.";
+            //GameObject.FindObjectOfType<RobotUIMessageTab>().NewMessage(title, message, RobotUIMessageTab.Icon.MWarning);
 
             robotUINotOpenedYet = false;
         }
@@ -532,15 +532,17 @@ public class PlayerScript : MonoBehaviour
 
     public void CloseRobotUI()
     {
-        if (GameObject.Find("IPad/RobotUI/TheoryTab") != null && (GameObject.FindObjectOfType<QuizTab>() != null))
+        GameObject theoryTab = GameObject.Find("PatientInfoTabs/TheoryTab");
+
+        if (theoryTab != null && (GameObject.FindObjectOfType<QuizTab>() != null))
         {
-            if (GameObject.FindObjectOfType<QuizTab>().quiz && GameObject.Find("IPad/RobotUI/TheoryTab").gameObject.activeSelf)
+            if (GameObject.FindObjectOfType<QuizTab>().quiz && theoryTab.gameObject.activeSelf)
             {
-                GameObject.Find("IPad/RobotUI/TheoryTab")?.gameObject.SetActive(false);
+                theoryTab.gameObject.SetActive(false);
                 return;
             }
         }
-            
+
         if ((tutorial_UI != null && tutorial_UI.expectedRobotUIstate == true) ||
             (tutorial_theory != null && tutorial_theory.expectedRobotUIstate == true))
         {
@@ -569,7 +571,11 @@ public class PlayerScript : MonoBehaviour
         GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<CanvasGroup>().alpha = 0f;
         GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<CanvasGroup>().blocksRaycasts = false;
 
-        GameObject.Find("IPad/RobotUI/TheoryTab")?.gameObject.SetActive(false);
+        if (theoryTab != null)
+        {
+            theoryTab.GetComponent<CanvasGroup>().alpha = 0f;
+            theoryTab.GetComponent<CanvasGroup>().blocksRaycasts = false;
+        }
 
         robotUIopened = false;
 

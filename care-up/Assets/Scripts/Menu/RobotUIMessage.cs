@@ -40,7 +40,7 @@ public class RobotUIMessage : MonoBehaviour
         {
             messageNew = false;
             text.fontStyle = FontStyle.Normal;
-            RobotManager.SetNotification(RobotManager.NotificationNumber - 1);
+           // RobotManager.SetNotification(RobotManager.NotificationNumber - 1);
         }
 
         if (contentObject)
