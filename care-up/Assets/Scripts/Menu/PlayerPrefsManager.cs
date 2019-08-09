@@ -598,7 +598,7 @@ public class PlayerPrefsManager : MonoBehaviour
         hexKey = __trashFillString(hexKey);
 
         string link = "https://leren.careup.online/certificate.php";
-        link += "name=" + playerFullName;
+        link += "?name=" + playerFullName;
         link += "&scene=" + sceneName;
         link += "&date=" + date;
         link += "&misc=" + hexKey;
