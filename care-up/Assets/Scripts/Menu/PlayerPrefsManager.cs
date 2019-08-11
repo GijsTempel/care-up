@@ -857,10 +857,4 @@ public class PlayerPrefsManager : MonoBehaviour
         
         Application.OpenURL(link.Replace(" ", "%20"));
     }
-
-    private void OnGUI()
-    {
-        // just testing store, displaying info on the screen
-        GUI.Label(new Rect(50f, 50f, 200f, 50f), "Current currency: " + storeManager.Currency);
-    }
 }
