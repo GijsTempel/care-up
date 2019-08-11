@@ -27,7 +27,7 @@ public class StoreManager
 
         XmlDocument xmlFile = new XmlDocument();
         xmlFile.LoadXml(textAsset.text);
-        XmlNodeList xmlItemList = xmlFile.FirstChild.NextSibling.FirstChild.ChildNodes;
+        XmlNodeList xmlItemList = xmlFile.FirstChild.NextSibling.ChildNodes;
 
         foreach (XmlNode xmlSceneNode in xmlItemList)
         {
@@ -37,6 +37,7 @@ public class StoreManager
             bool purchased = DatabaseManager.FetchField("Store", index.ToString()) == "true";
 
             storeItems.Add(new StoreItem(index, price, purchased));
+            Debug.Log("Store item || index: " + index + " || price: " + price);
         }
 
         // get amount of currency saved

@@ -21,6 +21,8 @@ using SmartLookUnity;
 /// </summary>
 public class PlayerPrefsManager : MonoBehaviour
 {
+    public static StoreManager storeManager = new StoreManager();
+
     private LocalizationManager localizationManager; // = new LocalizationManager();
     public bool VR = true;
     public bool practiceMode = true;
@@ -854,5 +856,11 @@ public class PlayerPrefsManager : MonoBehaviour
         link += sceneName + ". You can try it out yourself by going to https%3A%2F%2Fcareup.online";
         
         Application.OpenURL(link.Replace(" ", "%20"));
+    }
+
+    private void OnGUI()
+    {
+        // just testing store, displaying info on the screen
+        GUI.Label(new Rect(50f, 50f, 200f, 50f), "Current currency: " + storeManager.Currency);
     }
 }

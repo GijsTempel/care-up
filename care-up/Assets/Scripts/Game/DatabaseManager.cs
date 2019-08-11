@@ -117,6 +117,9 @@ public class DatabaseManager : MonoBehaviour
         sessionKey = PlayerPrefsManager.RandomString(16);
         UpdateField("AccountStats", "SessionKey", sessionKey);
         sessionCheck = instance.StartCoroutine(CheckSession(60.0f));
+
+        // initialize store manager, cuz we just got info about current currency etc
+        PlayerPrefsManager.storeManager.Init();
     }
 
     private static void FetchEverything_success(CML response)
@@ -183,7 +186,7 @@ public class DatabaseManager : MonoBehaviour
         }
     }
 
-    private static void PrintDatabase()
+    public static void PrintDatabase()
     {
         string output = "";
         foreach (Category c in database)
@@ -194,8 +197,6 @@ public class DatabaseManager : MonoBehaviour
                 output += "    " + key + ": " + c.fields[key] + "\n";
             }
         }
-
-        Debug.Log(output);
     }
 
     public static string FetchField(string category, string fieldName)
