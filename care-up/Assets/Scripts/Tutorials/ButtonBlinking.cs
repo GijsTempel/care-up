@@ -14,7 +14,7 @@ public class ButtonBlinking : MonoBehaviour
     }
 
     public void OnEnable()
-    {
+    {       
         prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
 
         UpdateButtonState();
@@ -22,12 +22,13 @@ public class ButtonBlinking : MonoBehaviour
 
     public void UpdateButtonState()
     {
-        if (prefs != null)
-            if (!prefs.practiceMode)
-                return;
         GetComponent<Animator>().ResetTrigger("BlinkStart");
         GetComponent<Animator>().ResetTrigger("BlinkStop");
         GetComponent<Animator>().ResetTrigger("BlinkOnes");
+
+        if (prefs != null)
+            if (!prefs.practiceMode)
+                return;        
 
         if (gameUI == null)
             gameUI = GameObject.FindObjectOfType<GameUI>();
@@ -86,7 +87,7 @@ public class ButtonBlinking : MonoBehaviour
                 toBlink = true;
         }
 
-        if (toBlink)
+        if (toBlink && prefs.practiceMode)
         {
             if (!GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Blink"))
             {
@@ -100,7 +101,7 @@ public class ButtonBlinking : MonoBehaviour
                 GetComponent<Animator>().SetTrigger("BlinkStop");
             }
         }
-    }   
+    }
 
     public void StartBlinking()
     {
