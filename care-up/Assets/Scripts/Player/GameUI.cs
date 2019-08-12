@@ -219,7 +219,7 @@ public class GameUI : MonoBehaviour
     public void CloseButtonPressed(bool value)
     {
         closeDialog.SetActive(value);
-        closeButton.SetActive(!value);
+       // closeButton.SetActive(!value);
 
         if (value)
         {
