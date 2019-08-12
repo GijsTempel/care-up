@@ -149,6 +149,8 @@ public class GameUI : MonoBehaviour
     public void HideBlockMessage()
     {
         BlockPopUp.GetComponent<Animator>().SetTrigger("fold");
+        if (prefs.practiceMode)
+            DetailedHintPanel.SetActive(true);
     }
 
     public void UseOnNoTarget(bool leftHand = true)
