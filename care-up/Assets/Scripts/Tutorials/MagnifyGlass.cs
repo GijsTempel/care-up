@@ -3,7 +3,7 @@
 public class MagnifyGlass : MonoBehaviour
 {
     private Camera magnifyCamera;
-    private GameObject magnifyBorders;
+    private GameObject magnifyBorders = default(GameObject);
     private LineRenderer LeftBorder, RightBorder, TopBorder, BottomBorder; // Reference for lines of magnify glass borders
     private float MGOX, MG0Y; // Magnify Glass Origin X and Y position
     private float MGWidth = Screen.width / 5f, MGHeight = Screen.width / 5f; // Magnify glass width and height

@@ -32,14 +32,16 @@ namespace AppStoresSupport
 		private const string STEP_UPDATE_CLIENT = "update_client";
 		private const string STEP_UPDATE_CLIENT_SECRET = "update_client_secret";
 
-		struct ReqStruct {
+#pragma warning disable
+        struct ReqStruct {
 			public string currentStep;
 			public string targetStep;
 			public UnityWebRequest request;
 			public GeneralResponse resp;
-		}
+        };
+#pragma warning restore
 
-		private Queue<ReqStruct> requestQueue = new Queue<ReqStruct>();
+        private Queue<ReqStruct> requestQueue = new Queue<ReqStruct>();
 
         private class AppStoreStyles
         {
