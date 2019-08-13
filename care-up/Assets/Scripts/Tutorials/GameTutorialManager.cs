@@ -33,7 +33,6 @@ public class GameTutorialManager : MonoBehaviour
     private List<TutorialStep> tutorialSteps;
     private List<GameObject> dots = new List<GameObject>();
 
-
     private Vector2 firstPressPosition;
     private Vector2 secondPressPosition;
     private Vector2 currentSwipe;
@@ -126,11 +125,11 @@ public class GameTutorialManager : MonoBehaviour
 
         previousButton.SetActive(true);
 
-        if (index == tutorialSteps.Count - 1)
-        {
-            nextButton.SetActive(false);
+        if (index == tutorialSteps.Count)
+        {           
             GameObject.Find("TutorialCanvas/Canvas/Background").SetActive(false);
             popUp.SetActive(true);
+            return;
         }
 
         UpdateTutorialStep();
@@ -165,8 +164,6 @@ public class GameTutorialManager : MonoBehaviour
         }
         dots[index].GetComponent<Image>().sprite = currentDotSprite;
         dots[index].GetComponent<Image>().color = new Color(1,1,1,1f);
-
-
     }
 
     private void ManageSwipeGestures()
