@@ -186,7 +186,7 @@ public class EndScoreManager : MonoBehaviour
                     GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Stars/Star3").GetComponent<Image>().sprite = fullStar;
             }
 
-                if (time >= 900.0f)
+            if (time >= 900.0f)
             {
                 achievements.UpdateKeys("MoreThan15", 1);
             }
@@ -210,6 +210,18 @@ public class EndScoreManager : MonoBehaviour
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+
+            int counter = 0;
+            int.TryParse(DatabaseManager.FetchField("Store", "FinishedCounter"), out counter);
+
+            // add in-game currency once 3 finishes?
+            if (++counter >= 3)
+            {
+                counter = 0;
+                PlayerPrefsManager.storeManager.ModifyCurrencyBy(5);
+            }
+
+            DatabaseManager.UpdateField("Store", "FinishedCounter", counter.ToString());
 
             GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().SetSceneCompletionData(
                 completedSceneName, points, Mathf.RoundToInt(time));
