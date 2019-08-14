@@ -103,12 +103,12 @@ public class PlayerSpawn : MonoBehaviour
 
     public void IpadLoadXmlInfo(Transform ipad)
     {
-        //Transform robotUI = ipad.Find("UI (1)/RobotUI");
         Transform robotUI = ipad.Find("Info");
 
         if (prescriptionXml != "")
         {
             Transform prescriptionPanel = robotUI.Find("PrescriptionTab/Panel");
+            Transform secondPrescriptionPanel = robotUI.Find("PrescriptionTab/Panel (1)");
 
             TextAsset textAsset = (TextAsset)Resources.Load("Xml/IpadInfo/" + prescriptionXml);
             XmlDocument xmlFile = new XmlDocument();
@@ -120,6 +120,10 @@ public class PlayerSpawn : MonoBehaviour
             {
                 if (prescriptionPanel.Find(node.Name) != null)
                     prescriptionPanel.Find(node.Name).GetComponent<Text>().text =
+                        node.Attributes["value"].Value;
+
+                if (secondPrescriptionPanel.Find(node.Name) != null)
+                    secondPrescriptionPanel.Find(node.Name).GetComponent<Text>().text =
                         node.Attributes["value"].Value;
             }
         }
