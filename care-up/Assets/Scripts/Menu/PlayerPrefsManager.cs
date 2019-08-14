@@ -21,6 +21,8 @@ using SmartLookUnity;
 /// </summary>
 public class PlayerPrefsManager : MonoBehaviour
 {
+    public static StoreManager storeManager = new StoreManager();
+
     private LocalizationManager localizationManager; // = new LocalizationManager();
     public bool VR = true;
     public bool practiceMode = true;
