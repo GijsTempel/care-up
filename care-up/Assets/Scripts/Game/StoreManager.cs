@@ -7,10 +7,13 @@ public class StoreItem
 {
     public int index;
     public int price;
+    public string name;
+    public string category;
     public bool purchased;
 
     public StoreItem() { index = -1; price = 0; }
-    public StoreItem(int i, int p, bool s) { index = i; price = p; purchased = s; }
+    public StoreItem(int i, int p, string n, string c, bool s)
+        { index = i; price = p; name = n; category = c; purchased = s; }
 }
 
 public class StoreManager 
@@ -36,8 +39,10 @@ public class StoreManager
             int.TryParse(xmlSceneNode.Attributes["price"].Value, out price);
             bool purchased = DatabaseManager.FetchField("Store", index.ToString()) == "true";
 
-            storeItems.Add(new StoreItem(index, price, purchased));
-            Debug.Log("Store item || index: " + index + " || price: " + price);
+            string name = xmlSceneNode.Attributes["name"].Value;
+            string category = xmlSceneNode.Attributes["name"].Value;
+
+            storeItems.Add(new StoreItem(index, price, name, category, purchased));
         }
 
         // get amount of currency saved
@@ -69,5 +74,26 @@ public class StoreManager
     {
         StoreItem item = storeItems.Find(x => x.index == itemIndex);
         return (item.index != -1) ? item.purchased : false;
+    }
+    
+    List<StoreItem> GetStoreItemsByCategory(string categoryName)
+    {
+        return storeItems.FindAll(x => x.category == categoryName);
+    }
+
+    public List<List<StoreItem>> GetAllStoreItemsCategorized()
+    {
+        List<string> catNames = new List<string>();
+        foreach (StoreItem item in storeItems)
+        {
+            if (!catNames.Contains(item.category))
+                catNames.Add(item.category);
+        }
+
+        List<List<StoreItem>> result = new List<List<StoreItem>>();
+        foreach(string category in catNames)
+            result.Add(GetStoreItemsByCategory(category));
+
+        return result;
     }
 }
