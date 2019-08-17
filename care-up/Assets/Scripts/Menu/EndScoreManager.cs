@@ -9,7 +9,6 @@ using System.Collections.Generic;
 /// </summary>
 public class EndScoreManager : MonoBehaviour
 {
-
     private int points;
     private int score;
     private float time;
@@ -211,17 +210,26 @@ public class EndScoreManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
-            int counter = 0;
-            int.TryParse(DatabaseManager.FetchField("Store", "FinishedCounter"), out counter);
 
+            int counter = 0;
             // add in-game currency once 3 finishes?
+            int.TryParse(DatabaseManager.FetchField("Store", "FinishedCounter"), out counter);
             if (++counter >= 3)
             {
                 counter = 0;
                 PlayerPrefsManager.storeManager.ModifyCurrencyBy(5);
             }
-
             DatabaseManager.UpdateField("Store", "FinishedCounter", counter.ToString());
+
+            // add in-game store presents once 15 successful finishes?
+            int.TryParse(DatabaseManager.FetchField("Store", "SuccessCounter"), out counter);
+            if (percent >= 0.7) ++counter;
+            if (counter >= 15)
+            {
+                counter = 0;
+                PlayerPrefsManager.storeManager.ModifyPresentsBy(1);
+            }
+            DatabaseManager.UpdateField("Store", "SuccessCounter", counter.ToString());
 
             GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().SetSceneCompletionData(
                 completedSceneName, points, Mathf.RoundToInt(time));
