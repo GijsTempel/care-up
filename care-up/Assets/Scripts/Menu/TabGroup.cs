@@ -3,59 +3,82 @@ using UnityEngine;
 
 public class TabGroup : MonoBehaviour
 {
-    public List<TabButton> tabButtons;
+    [SerializeField]
+    private Sprite tabIdle;
 
-    public Sprite tabIdle;
-    public Sprite tabHover;
-    public Sprite tabActive;
-    public TabButton selectedTab;
-    public List<GameObject> objectsToSwap;
+    [SerializeField]
+    private Sprite tabHover;
+
+    [SerializeField]
+    private Sprite tabActive;
+
+    private TabButton selectedTab;
+
+    private List<GameObject> pages = new List<GameObject>();
+    private List<TabButton> tabs;
 
     public void Subscribe(TabButton button)
     {
-        if (tabButtons == null)
-            tabButtons = new List<TabButton>();
+        if (tabs == null)
+            tabs = new List<TabButton>();
 
-        tabButtons.Add(button);
+        tabs.Add(button);
     }
 
     public void OnTabEnter(TabButton button)
     {
         ResetTabs();
 
-        if (selectedTab != null || button != selectedTab)
+        if (button != selectedTab)
+        {
             button.background.sprite = tabHover;
+            button.background.rectTransform.localScale = new Vector3(1.01f, 1.01f, 1);
+        }
     }
 
-    public void OnTabExit(TabButton button)
-    {
-        ResetTabs();
-    }
+    public void OnTabExit(TabButton button) { }
 
     public void OnTabSelected(TabButton button)
     {
         selectedTab = button;
+
         ResetTabs();
+
         button.background.sprite = tabActive;
+        button.background.rectTransform.localScale = new Vector3(1.15f, 1.15f, 1f);
 
         int index = button.transform.GetSiblingIndex();
 
-        for (int i = 0; i < objectsToSwap.Count; i++)
+        for (int i = 0; i < pages.Count; i++)
         {
             if (i == index)
-                objectsToSwap[i].SetActive(true);
+                pages[i].SetActive(true);
             else
-                objectsToSwap[i].SetActive(false);
+                pages[i].SetActive(false);
         }
     }
 
     public void ResetTabs()
     {
-        foreach (TabButton button in tabButtons)
+        foreach (TabButton button in tabs)
         {
             if (selectedTab != null && button == selectedTab)
                 continue;
+
+            button.background.rectTransform.localScale = new Vector3(1, 1, 1);
             button.background.sprite = tabIdle;
         }
+    }
+
+    private void Start()
+    {      
+        GameObject pagesHolder = GameObject.Find("PagesContainer/PageHolder");
+
+        for (int i = 0; i < pagesHolder.transform.childCount - 1; i++)
+        {
+            pages.Add(pagesHolder.transform.GetChild(i).gameObject);
+        }
+
+        OnTabSelected(tabs[tabs.Count - 1]);
     }
 }
