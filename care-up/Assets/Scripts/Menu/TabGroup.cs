@@ -62,16 +62,19 @@ public class TabGroup : MonoBehaviour
     {
         foreach (TabButton button in tabs)
         {
-            if (selectedTab != null && button == selectedTab)
-                continue;
+            if (button != null)
+            {
+                if (button == selectedTab)
+                    continue;
 
-            button.background.rectTransform.localScale = new Vector3(1, 1, 1);
-            button.background.sprite = tabIdle;
+                button.background.rectTransform.localScale = new Vector3(1, 1, 1);
+                button.background.sprite = tabIdle;
+            }
         }
     }
 
     private void Start()
-    {      
+    {
         GameObject pagesHolder = GameObject.Find("PagesContainer/PageHolder");
 
         for (int i = 0; i < pagesHolder.transform.childCount - 1; i++)

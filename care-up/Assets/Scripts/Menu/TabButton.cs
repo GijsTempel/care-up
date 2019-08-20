@@ -42,9 +42,9 @@ public class TabButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandl
         }
     }
 
-    private void Start()
+    private void Awake()
     {
-        background = GetComponent<Image>();
         tabGroup.Subscribe(this);
-    }
+        background = GetComponent<Image>();
+    }    
 }

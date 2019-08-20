@@ -31,6 +31,7 @@ public class UMP_Manager : MonoBehaviour {
         InstanceLevels();
         GameObject.Find("Leaderboard").SetActive(false);
         GameObject.Find("Opties").SetActive(false);
+        GameObject.Find("Store").SetActive(false);
     }
     /// <summary>
     /// 
