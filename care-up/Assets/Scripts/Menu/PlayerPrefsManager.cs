@@ -132,13 +132,15 @@ public class PlayerPrefsManager : MonoBehaviour
                 Destroy(GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/WUSerialScreen" +
                     "/RegisterArea/Buttons/MoreInfo_Apple"));
                 Destroy(GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/WUSerialScreen" +
-                    "/RegisterArea/Buttons/Purchase_Apple"));
+                    "/RegisterArea/Buttons/Purchase_Apple")); 
             }
 
             if (Application.platform != RuntimePlatform.Android)
             {
                 Destroy(GameObject.Find("UMenuProManager/MenuCanvas/VersionUpdatePanel/Panel_Version_UI" +
                     "/NewVersionButtonGreenAndroid"));
+                Destroy(GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/WUSerialScreen" +
+                    "/RegisterArea/Buttons/PurchaseButton_GoogleIAP")); 
             }
 
             if (!windows)
