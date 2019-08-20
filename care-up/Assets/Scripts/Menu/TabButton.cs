@@ -4,12 +4,14 @@ using UnityEngine.EventSystems;
 using UnityEngine.Events;
 
 public class TabButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
-{
-    public TabGroup tabGroup;
+{  
+    [HideInInspector]
     public Image background;
 
     public UnityEvent onTabSelected;
     public UnityEvent onTabDeselected;
+
+    private TabGroup tabGroup;
 
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -44,6 +46,7 @@ public class TabButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandl
 
     private void Awake()
     {
+        tabGroup = transform.parent.gameObject.GetComponent<TabGroup>();
         tabGroup.Subscribe(this);
         background = GetComponent<Image>();
     }    

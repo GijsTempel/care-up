@@ -13,7 +13,6 @@ public class TabGroup : MonoBehaviour
     private Sprite tabActive;
 
     private TabButton selectedTab;
-
     private List<GameObject> pages = new List<GameObject>();
     private List<TabButton> tabs;
 
