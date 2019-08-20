@@ -87,20 +87,23 @@ public class ButtonBlinking : MonoBehaviour
                 toBlink = true;
         }
 
-        if (toBlink && prefs.practiceMode)
+        if(prefs != null)
         {
-            if (!GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Blink"))
+            if (toBlink && prefs.practiceMode)
             {
-                GetComponent<Animator>().SetTrigger("BlinkStart");
+                if (!GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Blink"))
+                {
+                    GetComponent<Animator>().SetTrigger("BlinkStart");
+                }
             }
-        }
-        else
-        {
-            if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Blink"))
+            else
             {
-                GetComponent<Animator>().SetTrigger("BlinkStop");
+                if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Blink"))
+                {
+                    GetComponent<Animator>().SetTrigger("BlinkStop");
+                }
             }
-        }
+        }      
     }
 
     public void StartBlinking()
