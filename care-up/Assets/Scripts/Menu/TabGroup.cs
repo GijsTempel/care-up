@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TabGroup : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class TabGroup : MonoBehaviour
     private TabButton selectedTab;
     private List<GameObject> pages = new List<GameObject>();
     private List<TabButton> tabs;
+
+    private bool gridModified = false;
+    private GameObject pagesHolder;
 
     public void Subscribe(TabButton button)
     {
@@ -72,9 +76,19 @@ public class TabGroup : MonoBehaviour
         }
     }
 
+    public void ChangeGridAxisValue()
+    {
+        if (!gridModified)
+        {
+            GridLayoutGroup gridLayoutGroup = pagesHolder.transform.GetChild(0).GetChild(0).GetComponent<GridLayoutGroup>();
+            gridLayoutGroup.startAxis = GridLayoutGroup.Axis.Vertical;
+            gridModified = true;
+        }
+    }
+
     private void Start()
     {
-        GameObject pagesHolder = GameObject.Find("PagesContainer/PageHolder");
+        pagesHolder = GameObject.Find("PagesContainer/PageHolder");
 
         for (int i = 0; i < pagesHolder.transform.childCount - 1; i++)
         {
@@ -82,5 +96,43 @@ public class TabGroup : MonoBehaviour
         }
 
         OnTabSelected(tabs[tabs.Count - 1]);
+    }
+
+    private void GetColumnAndRow(GridLayoutGroup glg, out int column, out int row)
+    {
+        column = 0;
+        row = 0;
+
+        if (glg.transform.childCount == 0)
+            return;
+
+        column = 1;
+        row = 1;
+
+        RectTransform firstChildObj = glg.transform.
+            GetChild(0).GetComponent<RectTransform>();
+
+        Vector2 firstChildPos = firstChildObj.anchoredPosition;
+        bool stopCountingRow = false;
+
+        print(glg.transform.childCount);
+
+        for (int i = 1; i < glg.transform.childCount; i++)
+        {
+            RectTransform currentChildObj = glg.transform.GetChild(i).GetComponent<RectTransform>();
+
+            Vector2 currentChildPos = currentChildObj.anchoredPosition;
+
+            if (firstChildPos.y == currentChildPos.y)
+            {
+                column++;
+                stopCountingRow = true;
+            }
+            else
+            {
+                if (!stopCountingRow)
+                    row++;
+            }
+        }
     }
 }
