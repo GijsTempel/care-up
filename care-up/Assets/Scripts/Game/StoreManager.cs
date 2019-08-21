@@ -42,7 +42,7 @@ public class StoreManager
             bool purchased = DatabaseManager.FetchField("Store", index.ToString()) == "true";
 
             string name = xmlSceneNode.Attributes["name"].Value;
-            string category = xmlSceneNode.Attributes["name"].Value;
+            string category = xmlSceneNode.Attributes["category"].Value;
 
             storeItems.Add(new StoreItem(index, price, name, category, purchased));
         }
@@ -103,7 +103,7 @@ public class StoreManager
         List<List<StoreItem>> result = new List<List<StoreItem>>();
         foreach(string category in catNames)
             result.Add(GetStoreItemsByCategory(category));
-
+        
         return result;
     }
 
