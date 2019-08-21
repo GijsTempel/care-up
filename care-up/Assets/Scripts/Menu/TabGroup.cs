@@ -96,19 +96,18 @@ public class TabGroup : MonoBehaviour
         GameObject tabPagePrefab = Resources.Load<GameObject>("Prefabs/StoreTabPage");
         GameObject productItem = Resources.Load<GameObject>("Prefabs/ProductPanel");
         Transform tabParent = GameObject.Find("StoreTabContainer").transform;
-
-        List<List<StoreItem>> storeItems = PlayerPrefsManager.storeManager.GetAllStoreItemsCategorized();
-        foreach(List<StoreItem> cat in storeItems)
+        
+        foreach(StoreCategory cat in PlayerPrefsManager.storeManager.StoreItems)
         {
             // setting tab button
             GameObject tab = Instantiate(tabBtnPrefab, tabParent);
-            // set visual name ?
-            // set icon ?
+            // set visual name ? something = cat.name
+            // set icon ? something = cat.icon
 
             // setting tab page
             GameObject page = Instantiate(tabPagePrefab, pagesHolder);
             Transform itemParent = page.transform.Find("content");
-            foreach(StoreItem item in cat)
+            foreach(StoreItem item in cat.items)
             {
                 GameObject i = Instantiate(productItem, itemParent);
                 // set name ?
