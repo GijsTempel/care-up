@@ -16,11 +16,24 @@ public class StoreItem
         { index = i; price = p; name = n; category = c; purchased = s; }
 }
 
+public class StoreCategory
+{
+    public List<StoreItem> items;
+    public string name;
+    public string icon;
+
+    public StoreCategory() { items = new List<StoreItem>(); name = icon = ""; }
+    public StoreCategory(List<StoreItem> list, string n, string i)
+        { items = new List<StoreItem>(list); name = n; icon = i; }
+}
+
 public class StoreManager 
 {
     private int currentCurrency = 0;
     private int currentPresents = 0;
-    private List<StoreItem> storeItems = new List<StoreItem>();
+    private List<StoreCategory> storeItems = new List<StoreCategory>();
+
+    public List<StoreCategory> StoreItems { get { return storeItems; } }
 
     public int Currency { get { return currentCurrency; } }
     public int Presents { get { return currentPresents; } }
@@ -32,19 +45,27 @@ public class StoreManager
 
         XmlDocument xmlFile = new XmlDocument();
         xmlFile.LoadXml(textAsset.text);
-        XmlNodeList xmlItemList = xmlFile.FirstChild.NextSibling.ChildNodes;
+        XmlNodeList xmlCatList = xmlFile.FirstChild.NextSibling.ChildNodes;
 
-        foreach (XmlNode xmlSceneNode in xmlItemList)
+        foreach (XmlNode xmlCatNode in xmlCatList)
         {
-            int index = -1, price = 1;
-            int.TryParse(xmlSceneNode.Attributes["index"].Value, out index);
-            int.TryParse(xmlSceneNode.Attributes["price"].Value, out price);
-            bool purchased = DatabaseManager.FetchField("Store", index.ToString()) == "true";
+            List<StoreItem> catItems = new List<StoreItem>();
+            foreach (XmlNode xmlSceneNode in xmlCatNode.ChildNodes)
+            {
+                int index = -1, price = 1;
+                int.TryParse(xmlSceneNode.Attributes["index"].Value, out index);
+                int.TryParse(xmlSceneNode.Attributes["price"].Value, out price);
+                bool purchased = DatabaseManager.FetchField("Store", index.ToString()) == "true";
 
-            string name = xmlSceneNode.Attributes["name"].Value;
-            string category = xmlSceneNode.Attributes["category"].Value;
+                string name = xmlSceneNode.Attributes["name"].Value;
+                string category = xmlSceneNode.Attributes["category"].Value;
 
-            storeItems.Add(new StoreItem(index, price, name, category, purchased));
+                catItems.Add(new StoreItem(index, price, name, category, purchased));
+            }
+
+            string catName = (xmlCatNode.Attributes["name"] != null) ? xmlCatNode.Attributes["name"].Value : "";
+            string catIcon = (xmlCatNode.Attributes["icon"] != null) ? xmlCatNode.Attributes["icon"].Value : "";
+            storeItems.Add(new StoreCategory(catItems, catName, catIcon));
         }
 
         // get amount of currency/presents saved
@@ -64,9 +85,22 @@ public class StoreManager
         DatabaseManager.UpdateField("Store", "Presents", currentPresents.ToString());
     }
 
+    public StoreItem FindItemByIndex(int index)
+    {
+        StoreItem result = new StoreItem();
+
+        foreach (StoreCategory cat in storeItems)
+        {
+            result = cat.items.Find(x => x.index == index);
+            if (result.index != -1) break;
+        }
+
+        return result;
+    }
+
     public bool Purchase(int itemIndex)
     {
-        StoreItem item = storeItems.Find(x => x.index == itemIndex);
+        StoreItem item = FindItemByIndex(itemIndex);
         if (item.index != -1 && currentCurrency >= item.price)
         {
             ModifyCurrencyBy(-item.price);
@@ -82,35 +116,27 @@ public class StoreManager
 
     public bool GetPurchasedState(int itemIndex)
     {
-        StoreItem item = storeItems.Find(x => x.index == itemIndex);
+        StoreItem item = FindItemByIndex(itemIndex);
         return (item.index != -1) ? item.purchased : false;
     }
     
-    List<StoreItem> GetStoreItemsByCategory(string categoryName)
+    public List<StoreItem> GetStoreItemsByCategoryName(string categoryName)
     {
-        return storeItems.FindAll(x => x.category == categoryName);
-    }
-
-    public List<List<StoreItem>> GetAllStoreItemsCategorized()
-    {
-        List<string> catNames = new List<string>();
-        foreach (StoreItem item in storeItems)
-        {
-            if (!catNames.Contains(item.category))
-                catNames.Add(item.category);
-        }
-
-        List<List<StoreItem>> result = new List<List<StoreItem>>();
-        foreach(string category in catNames)
-            result.Add(GetStoreItemsByCategory(category));
-        
-        return result;
+        StoreCategory category = storeItems.Find(x => x.name == categoryName);
+        return (category.name != "") ? category.items : null;
     }
 
     // random present usage?
     public StoreItem GetRandomStoreItem(bool notPurchased = true, bool weighedByPrice = true)
     {
-        List<StoreItem> items = new List<StoreItem>(storeItems);
+        List<StoreItem> items = new List<StoreItem>();
+        foreach (StoreCategory cat in storeItems)
+        {
+            foreach (StoreItem item in cat.items)
+            {
+                items.Add(item);
+            }
+        }
 
         items.RemoveAll(x => x.price == 0);
 
@@ -142,8 +168,8 @@ public class StoreManager
 
             items.RemoveAll(x => x.price != prices[result-1]);
         }
-
-        return items[Random.Range(0, items.Count - 1)];
+        
+        return (items.Count > 0) ? items[Random.Range(0, items.Count - 1)] : null;
     }
 
     /// <summary>
@@ -152,16 +178,17 @@ public class StoreManager
     /// <returns>Recieved item is returned</returns>
     public StoreItem UnpackPresent()
     {
-        if (storeItems.FindAll(x => x.purchased == false).Count == 0)
-            return null;
-
         if (currentPresents == 0)
             return null;
 
         ModifyPresentsBy(-1);
         StoreItem item = GetRandomStoreItem();
-        item.purchased = true;
-        DatabaseManager.UpdateField("Store", item.index.ToString(), "true");
+
+        if (item != null)
+        {
+            item.purchased = true;
+            DatabaseManager.UpdateField("Store", item.index.ToString(), "true");
+        }
 
         return item;
     }
