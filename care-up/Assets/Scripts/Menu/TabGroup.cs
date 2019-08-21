@@ -18,7 +18,7 @@ public class TabGroup : MonoBehaviour
     private List<TabButton> tabs;
 
     private bool gridModified = false;
-    private GameObject pagesHolder;
+    private GameObject pagesContainer;
 
     public void Subscribe(TabButton button)
     {
@@ -80,7 +80,7 @@ public class TabGroup : MonoBehaviour
     {
         if (!gridModified)
         {
-            GridLayoutGroup gridLayoutGroup = pagesHolder.transform.GetChild(0).GetChild(0).GetComponent<GridLayoutGroup>();
+            GridLayoutGroup gridLayoutGroup = pagesContainer.transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<GridLayoutGroup>();
             gridLayoutGroup.startAxis = GridLayoutGroup.Axis.Vertical;
             gridModified = true;
         }
@@ -88,8 +88,8 @@ public class TabGroup : MonoBehaviour
 
     private void Start()
     {
-        pagesHolder = GameObject.Find("PagesContainer/PageHolder");
-        
+        pagesContainer = GameObject.Find("PageContainer");
+
         GameObject tabBtnPrefab = Resources.Load<GameObject>("Prefabs/StoreTab");
         GameObject tabPagePrefab = Resources.Load<GameObject>("Prefabs/StoreTabPage");
         GameObject productItem = Resources.Load<GameObject>("Prefabs/ProductPanel");
@@ -104,7 +104,7 @@ public class TabGroup : MonoBehaviour
             // set icon ?
 
             // setting tab page
-            GameObject page = Instantiate(tabPagePrefab, pagesHolder.transform);
+            GameObject page = Instantiate(tabPagePrefab, pagesContainer.transform);
             Transform itemParent = page.transform.Find("content");
             foreach(StoreItem item in cat)
             {
@@ -115,9 +115,9 @@ public class TabGroup : MonoBehaviour
             }
         }
         
-        for (int i = 1; i < pagesHolder.transform.childCount; i++)
+        for (int i = 1; i < pagesContainer.transform.childCount; i++)
         {
-            pages.Add(pagesHolder.transform.GetChild(i).gameObject);
+            pages.Add(pagesContainer.transform.GetChild(i).gameObject);
         }
 
         OnTabSelected(tabs[0]);
@@ -139,8 +139,6 @@ public class TabGroup : MonoBehaviour
 
         Vector2 firstChildPos = firstChildObj.anchoredPosition;
         bool stopCountingRow = false;
-
-        print(glg.transform.childCount);
 
         for (int i = 1; i < glg.transform.childCount; i++)
         {
