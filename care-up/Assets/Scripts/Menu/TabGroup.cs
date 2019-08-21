@@ -18,7 +18,7 @@ public class TabGroup : MonoBehaviour
     private List<TabButton> tabs;
 
     private bool gridModified = false;
-    private GameObject pagesHolder;
+    private GameObject pagesContainer;
 
     public void Subscribe(TabButton button)
     {
@@ -80,7 +80,7 @@ public class TabGroup : MonoBehaviour
     {
         if (!gridModified)
         {
-            GridLayoutGroup gridLayoutGroup = pagesHolder.transform.GetChild(0).GetChild(0).GetComponent<GridLayoutGroup>();
+            GridLayoutGroup gridLayoutGroup = pagesContainer.transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<GridLayoutGroup>();
             gridLayoutGroup.startAxis = GridLayoutGroup.Axis.Vertical;
             gridModified = true;
         }
@@ -88,11 +88,11 @@ public class TabGroup : MonoBehaviour
 
     private void Start()
     {
-        pagesHolder = GameObject.Find("PagesContainer/PageHolder");
+        pagesContainer = GameObject.Find("PageContainer");
 
-        for (int i = 0; i < pagesHolder.transform.childCount - 1; i++)
+        for (int i = 1; i < pagesContainer.transform.childCount; i++)
         {
-            pages.Add(pagesHolder.transform.GetChild(i).gameObject);
+            pages.Add(pagesContainer.transform.GetChild(i).gameObject);
         }
 
         OnTabSelected(tabs[tabs.Count - 1]);
@@ -114,8 +114,6 @@ public class TabGroup : MonoBehaviour
 
         Vector2 firstChildPos = firstChildObj.anchoredPosition;
         bool stopCountingRow = false;
-
-        print(glg.transform.childCount);
 
         for (int i = 1; i < glg.transform.childCount; i++)
         {
