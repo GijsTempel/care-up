@@ -12,20 +12,5 @@ public class LoadCharacterScene : MonoBehaviour
         //characters.SetActive(true);
         GameObject.FindObjectOfType<CharacterCreationScene>()
             .ShowCharacter();
-    }
-
-    public void Update()
-    {
-        //if(characters != null)
-        //{
-        //    if (GameObject.Find("LoaderRoot") != null || (GameObject.Find("Account") == false && characters.activeSelf))
-        //    {
-        //        characters.SetActive(false);
-        //    }
-        //    else if (GameObject.Find("Account") && characters.activeSelf == false)
-        //    {
-        //        characters.SetActive(true);
-        //    }
-        //}        
-    }
+    }    
 }
