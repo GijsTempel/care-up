@@ -16,8 +16,6 @@ public class TabGroup : MonoBehaviour
     private TabButton selectedTab;
     private List<GameObject> pages = new List<GameObject>();
     private List<TabButton> tabs;
-
-    private bool gridModified = false;
     private GameObject pagesContainer;
 
     public void Subscribe(TabButton button)
@@ -87,7 +85,6 @@ public class TabGroup : MonoBehaviour
         
         foreach(StoreCategory cat in PlayerPrefsManager.storeManager.StoreItems)
         {
-            gridModified = false;
             // setting tab button
             GameObject tab = Instantiate(tabBtnPrefab, tabParent);
             // set visual name ? something = cat.name
