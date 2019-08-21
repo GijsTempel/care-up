@@ -76,39 +76,40 @@ public class TabGroup : MonoBehaviour
         }
     }
 
-    public void ChangeGridAxisValue()
-    {
-        if (!gridModified)
-        {
-            GridLayoutGroup gridLayoutGroup = pagesContainer.transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<GridLayoutGroup>();
-            gridLayoutGroup.startAxis = GridLayoutGroup.Axis.Vertical;
-            gridModified = true;
-        }
-    }
-
     private void Start()
     {
         pagesContainer = GameObject.Find("PageContainer");
 
-        Transform pagesHolder = GameObject.Find("PageContainer/PageHolder").transform;
-
         GameObject tabBtnPrefab = Resources.Load<GameObject>("Prefabs/StoreTab");
-        GameObject tabPagePrefab = Resources.Load<GameObject>("Prefabs/StoreTabPage");
+        GameObject tabPagePrefab = Resources.Load<GameObject>("Prefabs/PageHolder");
         GameObject productItem = Resources.Load<GameObject>("Prefabs/ProductPanel");
         Transform tabParent = GameObject.Find("StoreTabContainer").transform;
 
         List<List<StoreItem>> storeItems = PlayerPrefsManager.storeManager.GetAllStoreItemsCategorized();
-        foreach(List<StoreItem> cat in storeItems)
+        foreach (List<StoreItem> cat in storeItems)
         {
+            gridModified = false;
             // setting tab button
             GameObject tab = Instantiate(tabBtnPrefab, tabParent);
             // set visual name ?
             // set icon ?
 
             // setting tab page
-            GameObject page = Instantiate(tabPagePrefab, pagesHolder);
-            Transform itemParent = page.transform.Find("content");
-            foreach(StoreItem item in cat)
+            GameObject page = Instantiate(tabPagePrefab, pagesContainer.transform);
+
+            Transform itemParent = page.transform.Find("StoreTabPage/content");
+
+            page.transform.Find("Scrollbar").GetComponent<Scrollbar>().onValueChanged.AddListener((changeAxis) =>
+            {
+                GridLayoutGroup gridLayoutGroup = itemParent.GetComponent<GridLayoutGroup>();
+
+                if (gridLayoutGroup != null)
+                {
+                    gridLayoutGroup.startAxis = GridLayoutGroup.Axis.Vertical;
+                }
+            });
+
+            foreach (StoreItem item in cat)
             {
                 GameObject i = Instantiate(productItem, itemParent);
                 // set name ?
@@ -116,10 +117,10 @@ public class TabGroup : MonoBehaviour
                 i.transform.Find("Checkmark").gameObject.SetActive(item.purchased);
             }
         }
-        
-        for (int i = 1; i < pagesHolder.childCount; i++)
+
+        for (int i = 1; i < pagesContainer.transform.childCount; i++)
         {
-            pages.Add(pagesHolder.GetChild(i).gameObject);
+            pages.Add(pagesContainer.transform.GetChild(i).gameObject);
         }
 
         OnTabSelected(tabs[0]);
