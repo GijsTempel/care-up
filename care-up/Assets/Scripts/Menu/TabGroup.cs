@@ -5,13 +5,13 @@ using UnityEngine.UI;
 public class TabGroup : MonoBehaviour
 {
     [SerializeField]
-    private Sprite tabIdle;
+    private Sprite tabIdle = default(Sprite);
 
     [SerializeField]
-    private Sprite tabHover;
+    private Sprite tabHover = default(Sprite);
 
     [SerializeField]
-    private Sprite tabActive;
+    private Sprite tabActive = default(Sprite);
 
     private TabButton selectedTab;
     private List<GameObject> pages = new List<GameObject>();
@@ -90,12 +90,37 @@ public class TabGroup : MonoBehaviour
     {
         pagesContainer = GameObject.Find("PageContainer");
 
+        GameObject tabBtnPrefab = Resources.Load<GameObject>("Prefabs/StoreTab");
+        GameObject tabPagePrefab = Resources.Load<GameObject>("Prefabs/StoreTabPage");
+        GameObject productItem = Resources.Load<GameObject>("Prefabs/ProductPanel");
+        Transform tabParent = GameObject.Find("StoreTabContainer").transform;
+
+        List<List<StoreItem>> storeItems = PlayerPrefsManager.storeManager.GetAllStoreItemsCategorized();
+        foreach(List<StoreItem> cat in storeItems)
+        {
+            // setting tab button
+            GameObject tab = Instantiate(tabBtnPrefab, tabParent);
+            // set visual name ?
+            // set icon ?
+
+            // setting tab page
+            GameObject page = Instantiate(tabPagePrefab, pagesContainer.transform);
+            Transform itemParent = page.transform.Find("content");
+            foreach(StoreItem item in cat)
+            {
+                GameObject i = Instantiate(productItem, itemParent);
+                // set name ?
+                // set price ?
+                i.transform.Find("Checkmark").gameObject.SetActive(item.purchased);
+            }
+        }
+        
         for (int i = 1; i < pagesContainer.transform.childCount; i++)
         {
             pages.Add(pagesContainer.transform.GetChild(i).gameObject);
         }
 
-        OnTabSelected(tabs[tabs.Count - 1]);
+        OnTabSelected(tabs[0]);
     }
 
     private void GetColumnAndRow(GridLayoutGroup glg, out int column, out int row)

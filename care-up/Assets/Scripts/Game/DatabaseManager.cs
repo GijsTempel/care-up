@@ -86,6 +86,9 @@ public class DatabaseManager : MonoBehaviour
         // set player BIG number
         GameObject.FindObjectOfType<PlayerPrefsManager>().bigNumber =
             FetchField("AccountStats", "BIG_number");
+        
+        // initialize store manager, cuz we just got info about current currency etc
+        PlayerPrefsManager.storeManager.Init();
 
         // check if character created, load proper scene
         // load scene at the end of this function
@@ -117,9 +120,6 @@ public class DatabaseManager : MonoBehaviour
         sessionKey = PlayerPrefsManager.RandomString(16);
         UpdateField("AccountStats", "SessionKey", sessionKey);
         sessionCheck = instance.StartCoroutine(CheckSession(60.0f));
-
-        // initialize store manager, cuz we just got info about current currency etc
-        PlayerPrefsManager.storeManager.Init();
     }
 
     private static void FetchEverything_success(CML response)
