@@ -90,6 +90,8 @@ public class TabGroup : MonoBehaviour
     {
         pagesContainer = GameObject.Find("PageContainer");
 
+        Transform pagesHolder = GameObject.Find("PageContainer/PageHolder").transform;
+
         GameObject tabBtnPrefab = Resources.Load<GameObject>("Prefabs/StoreTab");
         GameObject tabPagePrefab = Resources.Load<GameObject>("Prefabs/StoreTabPage");
         GameObject productItem = Resources.Load<GameObject>("Prefabs/ProductPanel");
@@ -104,20 +106,20 @@ public class TabGroup : MonoBehaviour
             // set icon ?
 
             // setting tab page
-            GameObject page = Instantiate(tabPagePrefab, pagesContainer.transform);
+            GameObject page = Instantiate(tabPagePrefab, pagesHolder);
             Transform itemParent = page.transform.Find("content");
             foreach(StoreItem item in cat)
             {
                 GameObject i = Instantiate(productItem, itemParent);
                 // set name ?
-                // set price ?
+                i.transform.Find("Price/Cost").GetComponent<Text>().text = item.price.ToString();
                 i.transform.Find("Checkmark").gameObject.SetActive(item.purchased);
             }
         }
         
-        for (int i = 1; i < pagesContainer.transform.childCount; i++)
+        for (int i = 1; i < pagesHolder.childCount; i++)
         {
-            pages.Add(pagesContainer.transform.GetChild(i).gameObject);
+            pages.Add(pagesHolder.GetChild(i).gameObject);
         }
 
         OnTabSelected(tabs[0]);
