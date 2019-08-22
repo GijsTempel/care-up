@@ -76,8 +76,6 @@ public class TabGroup : MonoBehaviour
 
     private void Start()
     {
-        GameObject.FindObjectOfType<LoadCharacterScene>().LoadCharacter();
-
         pagesContainer = GameObject.Find("PageContainer");
 
         GameObject tabBtnPrefab = Resources.Load<GameObject>("Prefabs/StoreTab");
