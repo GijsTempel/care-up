@@ -92,7 +92,7 @@ public class StoreManager
         foreach (StoreCategory cat in storeItems)
         {
             result = cat.items.Find(x => x.index == index);
-            if (result.index != -1) break;
+            if (result != null && result.index != -1) break;
         }
 
         return result;
