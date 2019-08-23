@@ -83,13 +83,15 @@ public class TabGroup : MonoBehaviour
         GameObject productItem = Resources.Load<GameObject>("Prefabs/ProductPanel");
         Transform tabParent = GameObject.Find("StoreTabContainer").transform;
         
-        foreach(StoreCategory cat in PlayerPrefsManager.storeManager.StoreItems)
+        foreach (StoreCategory cat in PlayerPrefsManager.storeManager.StoreItems)
         {
             // setting tab button
             GameObject tab = Instantiate(tabBtnPrefab, tabParent);
-            // set visual name ? something = cat.name
-            // set icon ? something = cat.icon
-
+            tab.transform.Find("Name").GetComponent<Text>().text = cat.name;
+            if (cat.icon != "")
+                tab.transform.Find("Icon").GetComponent<Image>().sprite =
+                    Resources.Load<Sprite>("Sprites/" + cat.icon);
+               
             GameObject page = Instantiate(tabPagePrefab, pagesContainer.transform);
 
             Transform itemParent = page.transform.Find("StoreTabPage/content");
@@ -107,9 +109,10 @@ public class TabGroup : MonoBehaviour
             foreach(StoreItem item in cat.items)
             {
                 GameObject i = Instantiate(productItem, itemParent);
-                // set name ?
+                i.transform.Find("Price/Name").GetComponent<Text>().text = item.name;
                 i.transform.Find("Price/Cost").GetComponent<Text>().text = item.price.ToString();
                 i.transform.Find("Checkmark").gameObject.SetActive(item.purchased);
+                i.GetComponent<Button>().onClick.AddListener(() => PurchaseButtonClick(i, item.index));
             }
         }
 
@@ -119,6 +122,27 @@ public class TabGroup : MonoBehaviour
         }
 
         OnTabSelected(tabs[0]);
+    }
+
+    void PurchaseButtonClick(GameObject btnRef, int itemIndex)
+    {
+        if (PlayerPrefsManager.storeManager.Purchase(itemIndex))
+        {
+            btnRef.transform.Find("Checkmark").gameObject.SetActive(true);
+            GameObject.Find("NumbersStackPanel/CurrencyPanel/Panel/Text").GetComponent<Text>().text =
+                PlayerPrefsManager.storeManager.Currency.ToString();
+        }
+    }
+
+    private void OnGUI()
+    {
+        if (Input.GetKey(KeyCode.Space))
+        {
+            if (GUI.Button(new Rect(50, 50, 200, 50), "print"))
+            {
+                DatabaseManager.PrintDatabase();
+            }
+        }
     }
 
     private void GetColumnAndRow(GridLayoutGroup glg, out int column, out int row)

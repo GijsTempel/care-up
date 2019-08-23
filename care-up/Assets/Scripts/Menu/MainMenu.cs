@@ -401,4 +401,11 @@ public class MainMenu : MonoBehaviour {
         string bundleName = "tutorial_full";
         bl_SceneLoaderUtils.GetLoader.LoadLevel (sceneName, bundleName);
     }
+
+    public void AddCurrencyTempBtn()
+    {
+        PlayerPrefsManager.storeManager.ModifyCurrencyBy(Random.Range(1, 5));
+        GameObject.Find("NumbersStackPanel/CurrencyPanel/Panel/Text").GetComponent<Text>().text
+            = PlayerPrefsManager.storeManager.Currency.ToString();
+    }
 }
