@@ -87,8 +87,9 @@ public class TabGroup : MonoBehaviour
         {
             // setting tab button
             GameObject tab = Instantiate(tabBtnPrefab, tabParent);
+
+            tab.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>($"Sprites/{cat.icon}");
             // set visual name ? something = cat.name
-            // set icon ? something = cat.icon
 
             GameObject page = Instantiate(tabPagePrefab, pagesContainer.transform);
 
@@ -103,6 +104,7 @@ public class TabGroup : MonoBehaviour
                     gridLayoutGroup.startAxis = GridLayoutGroup.Axis.Vertical;
                 }
             });     
+            
             
             foreach(StoreItem item in cat.items)
             {
