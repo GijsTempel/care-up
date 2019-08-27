@@ -55,7 +55,7 @@ public class StoreManager
                 int index = -1, price = 1;
                 int.TryParse(xmlSceneNode.Attributes["index"].Value, out index);
                 int.TryParse(xmlSceneNode.Attributes["price"].Value, out price);
-                bool purchased = DatabaseManager.FetchField("Store", index.ToString()) == "true";
+                bool purchased = DatabaseManager.FetchField("Store", "StoreItem_" + index.ToString()) == "true";
 
                 string name = xmlSceneNode.Attributes["name"].Value;
                 string category = xmlSceneNode.Attributes["category"].Value;
@@ -92,7 +92,7 @@ public class StoreManager
         foreach (StoreCategory cat in storeItems)
         {
             result = cat.items.Find(x => x.index == index);
-            if (result.index != -1) break;
+            if (result != null && result.index != -1) break;
         }
 
         return result;
@@ -105,7 +105,7 @@ public class StoreManager
         {
             ModifyCurrencyBy(-item.price);
             item.purchased = true;
-            DatabaseManager.UpdateField("Store", itemIndex.ToString(), "true");
+            DatabaseManager.UpdateField("Store", "StoreItem_" + itemIndex.ToString(), "true");
             return true;
         }
         else
@@ -187,7 +187,7 @@ public class StoreManager
         if (item != null)
         {
             item.purchased = true;
-            DatabaseManager.UpdateField("Store", item.index.ToString(), "true");
+            DatabaseManager.UpdateField("Store", "StoreItem_" + item.index.ToString(), "true");
         }
 
         return item;
