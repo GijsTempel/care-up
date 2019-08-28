@@ -5,18 +5,12 @@ using UnityEngine.UI;
 public class TabGroup : MonoBehaviour
 {
     [SerializeField]
-    private Sprite tabIdle = default(Sprite);
-
-    [SerializeField]
-    private Sprite tabHover = default(Sprite);
-
-    [SerializeField]
-    private Sprite tabActive = default(Sprite);
+    private Sprite tabIdle, tabActive, topTabIdle, topTabActive = default(Sprite);
 
     private TabButton selectedTab;
+    private GameObject pagesContainer;
     private List<GameObject> pages = new List<GameObject>();
     private List<TabButton> tabs;
-    private GameObject pagesContainer;
 
     public void Subscribe(TabButton button)
     {
@@ -32,7 +26,6 @@ public class TabGroup : MonoBehaviour
 
         if (button != selectedTab)
         {
-            button.background.sprite = tabHover;
             button.background.rectTransform.localScale = new Vector3(1.01f, 1.01f, 1);
         }
     }
@@ -45,8 +38,14 @@ public class TabGroup : MonoBehaviour
 
         ResetTabs();
 
-        button.background.sprite = tabActive;
-        button.background.rectTransform.localScale = new Vector3(1.15f, 1.15f, 1f);
+        if (button == tabs[0])
+        {
+            ModifyTab(button, topTabActive, new Vector3(1.15f, 1.15f, 1f));
+        }
+        else
+        {
+            ModifyTab(button, tabActive, new Vector3(1.15f, 1.15f, 1f));
+        }
 
         int index = button.transform.GetSiblingIndex();
 
@@ -68,10 +67,22 @@ public class TabGroup : MonoBehaviour
                 if (button == selectedTab)
                     continue;
 
-                button.background.rectTransform.localScale = new Vector3(1, 1, 1);
-                button.background.sprite = tabIdle;
+                if (button == tabs[0])
+                {
+                    ModifyTab(button, topTabIdle, new Vector3(1, 1, 1));
+                }
+                else
+                {
+                    ModifyTab(button, tabIdle, new Vector3(1, 1, 1));
+                }
             }
         }
+    }
+
+    private void ModifyTab(TabButton button, Sprite sprite, Vector3 vector3)
+    {
+        button.background.rectTransform.localScale = vector3;
+        button.background.sprite = sprite;
     }
 
     private void Start()
@@ -82,8 +93,8 @@ public class TabGroup : MonoBehaviour
         GameObject tabPagePrefab = Resources.Load<GameObject>("Prefabs/PageHolder");
         GameObject productItem = Resources.Load<GameObject>("Prefabs/ProductPanel");
         Transform tabParent = GameObject.Find("StoreTabContainer").transform;
-        
-        foreach(StoreCategory cat in PlayerPrefsManager.storeManager.StoreItems)
+
+        foreach (StoreCategory cat in PlayerPrefsManager.storeManager.StoreItems)
         {
             // setting tab button
             GameObject tab = Instantiate(tabBtnPrefab, tabParent);
@@ -103,10 +114,10 @@ public class TabGroup : MonoBehaviour
                 {
                     gridLayoutGroup.startAxis = GridLayoutGroup.Axis.Vertical;
                 }
-            });     
-            
-            
-            foreach(StoreItem item in cat.items)
+            });
+
+
+            foreach (StoreItem item in cat.items)
             {
                 GameObject i = Instantiate(productItem, itemParent);
                 // set name ?
