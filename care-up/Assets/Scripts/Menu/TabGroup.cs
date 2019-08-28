@@ -26,6 +26,7 @@ public class TabGroup : MonoBehaviour
 
         if (button != selectedTab)
         {
+            button.GetComponent<CanvasGroup>().alpha = 0.8f;
             button.background.rectTransform.localScale = new Vector3(1.01f, 1.01f, 1);
         }
     }
@@ -64,6 +65,8 @@ public class TabGroup : MonoBehaviour
         {
             if (button != null)
             {
+                button.GetComponent<CanvasGroup>().alpha = 1f;
+
                 if (button == selectedTab)
                     continue;
 
