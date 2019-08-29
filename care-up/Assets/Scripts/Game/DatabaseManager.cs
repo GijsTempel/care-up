@@ -98,7 +98,7 @@ public class DatabaseManager : MonoBehaviour
 
             //DatabaseManager.UpdateField("AccountStats", "TutorialCompleted", "false");
 
-            if (false)//FetchField("AccountStats", "TutorialCompleted") == "true")
+            if (FetchField("AccountStats", "TutorialCompleted") == "true")
             {
                 bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
             }
