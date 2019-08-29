@@ -484,13 +484,15 @@ public class CharacterCreationScene : MonoBehaviour
             // set new character scene to be seen and saved info
             DatabaseManager.UpdateField("AccountStats", "CharSceneV2", "true");
 
-            if (DatabaseManager.FetchField("AccountStats", "TutorialCompleted") == "true")
+            if (false)//DatabaseManager.FetchField("AccountStats", "TutorialCompleted") == "true")
             {
                 bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
             }
             else
             {
-                bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Tutorial");
+                bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Tutorial", "scenes_tutorial");
+
+                // bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Tutorial");
             }
         }
     }

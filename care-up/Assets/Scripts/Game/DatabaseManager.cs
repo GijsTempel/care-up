@@ -98,13 +98,14 @@ public class DatabaseManager : MonoBehaviour
 
             //DatabaseManager.UpdateField("AccountStats", "TutorialCompleted", "false");
 
-            if (FetchField("AccountStats", "TutorialCompleted") == "true")
+            if (false)//FetchField("AccountStats", "TutorialCompleted") == "true")
             {
                 bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
             }
             else
             {
-                bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Tutorial");
+                bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Tutorial", "scenes_tutorial");
+                // bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Tutorial");
             }
         }
         else
