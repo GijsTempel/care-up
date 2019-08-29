@@ -121,6 +121,7 @@ namespace AssetBundles
 		{
 			get
 			{
+				// return false;
                 //Caching.CleanCache();
                 //return false;
                 if (m_SimulateAssetBundleInEditor == -1)
@@ -159,7 +160,13 @@ namespace AssetBundles
 		
 		public static void SetSourceAssetBundleURL(string absolutePath)
 		{
-			BaseDownloadingURL = absolutePath + Utility.GetPlatformName() + "/";
+			string PlatformName = Utility.GetPlatformName();
+			#if UNITY_STANDALONE_LINUX
+				PlatformName = "Linux";
+			#endif
+				
+			Debug.Log("DDDDDDDDDDDDDD   " + PlatformName);
+			BaseDownloadingURL = absolutePath + PlatformName + "/";
 		}
 	
 		public static void SetDevelopmentAssetBundleServer()
@@ -218,7 +225,11 @@ namespace AssetBundles
 	
 		static public AssetBundleLoadManifestOperation Initialize ()
 		{
-			return Initialize(Utility.GetPlatformName());
+			string PlatformName = Utility.GetPlatformName();
+			#if UNITY_STANDALONE_LINUX
+				PlatformName = "Linux";
+			#endif
+			return Initialize(PlatformName);
 		}
 			
 	
