@@ -87,7 +87,7 @@ namespace AssetBundles
 			foreach(string k in m_LoadedAssetBundles.Keys)
 			{
 				print("-------" + k);
-				if (k == "insulin_prefabs")
+				if (k == "prefabs")
 				{
 					foreach(string a in m_LoadedAssetBundles[k].m_AssetBundle.GetAllAssetNames())
 					{

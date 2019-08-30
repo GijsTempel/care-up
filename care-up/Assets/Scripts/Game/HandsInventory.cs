@@ -410,7 +410,7 @@ public class HandsInventory : MonoBehaviour {
     /// <returns>Object created.</returns>
     public GameObject CreateObjectByName(string name, Vector3 position)
     {
-        print("_CREATE!!! " + name);
+        print("__CreateObjectByName! " + name);
 
         GameObject newObject = null;
         string FullPath = "assets/resources/prefabs/" + name.ToLower() + ".prefab";
@@ -454,8 +454,20 @@ public class HandsInventory : MonoBehaviour {
 
     public void CreateAnimationObject(string name, bool hand)
     {
-        animationObject = Instantiate(Resources.Load<GameObject>("Prefabs\\" + name),
-                            Vector3.zero, Quaternion.identity) as GameObject;
+        print("__CreateAnimationObject! " + name);
+
+        string FullPath = "assets/resources/prefabs/" + name.ToLower() + ".prefab";
+        Object bundleObject = AssetBundleManager.GetObjectFromLoaded(FullPath);
+        if (bundleObject != null)
+        {
+            animationObject = Instantiate(bundleObject,
+                    Vector3.zero, Quaternion.identity) as GameObject;
+        }
+        else
+        {
+            animationObject = Instantiate(Resources.Load<GameObject>("Prefabs\\" + name),
+                    Vector3.zero, Quaternion.identity) as GameObject;
+        }
 
         if (animationObject.GetComponent<Rigidbody>() != null)
         {

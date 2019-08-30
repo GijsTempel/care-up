@@ -457,7 +457,11 @@ public class GameUI : MonoBehaviour
         string hl_name = prefix + "_" + target.name;
         if (GameObject.Find(hl_name) != null)
             return null;
-        GameObject hl_obj = Instantiate(Resources.Load<GameObject>("Prefabs\\HighlightObject"), target.position, new Quaternion()) as GameObject;
+        //------------
+
+        // assets/resources/necessaryprefabs
+
+        GameObject hl_obj = Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/HighlightObject"), target.position, new Quaternion()) as GameObject;
 
         HighlightObject hl = hl_obj.GetComponent<HighlightObject>();
         hl.name = hl_name;
