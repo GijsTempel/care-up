@@ -113,7 +113,7 @@ public class GameTutorialManager : MonoBehaviour
 
         for(int i = 0; i < tutorialSteps.Count; i++)
         {
-            GameObject dot = Instantiate(Resources.Load<GameObject>("Prefabs/UI/dotTut"), DotPanel.transform) as GameObject;
+            GameObject dot = Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/UI/dotTut"), DotPanel.transform) as GameObject;
             dot.transform.SetParent(DotPanel.transform);
             dots.Add(dot);
         }        

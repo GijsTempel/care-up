@@ -65,12 +65,55 @@ namespace AssetBundles
 		static List<AssetBundleLoadOperation> m_InProgressOperations = new List<AssetBundleLoadOperation> ();
 		static Dictionary<string, string[]> m_Dependencies = new Dictionary<string, string[]> ();
 	
+
+
+		static List<string> bundlesBlackList = new List<string>(new string[] 
+		{ 
+			"models"
+		});
+	
+
 		public static LogMode logMode
 		{
 			get { return m_LogMode; }
 			set { m_LogMode = value; }
 		}
+
+
 	
+		public static void PrintLoadedBundles()
+		{
+			print("-------");
+			foreach(string k in m_LoadedAssetBundles.Keys)
+			{
+				print("-------" + k);
+				if (k == "insulin_prefabs")
+				{
+					foreach(string a in m_LoadedAssetBundles[k].m_AssetBundle.GetAllAssetNames())
+					{
+					
+						print("- " + a + "  " + m_LoadedAssetBundles[k].m_AssetBundle.LoadAsset(a).GetType().ToString());
+						// Instantiate(m_LoadedAssetBundles[k].m_AssetBundle.LoadAsset(a));
+					}
+				}
+			}
+		}
+
+		public static Object GetObjectFromLoaded(string ObjectName)
+		{
+			string fullName = ObjectName;//"assets/resources/prefabs/" + ObjectName.ToLower() + ".prefab";
+			// print(fullName);
+			foreach(string k in m_LoadedAssetBundles.Keys)
+			{
+				if (m_LoadedAssetBundles[k].m_AssetBundle.Contains(fullName))
+				{	
+					print("00000000  " + fullName + " " + k);
+
+					return m_LoadedAssetBundles[k].m_AssetBundle.LoadAsset(fullName);
+				}
+			}
+			return null;
+		}
 
 		public static void ClearLoader()
 		{
@@ -99,6 +142,7 @@ namespace AssetBundles
 
         public void Awake()
         {
+			// Caching.ClearCache();
             instance = this;
         }
         // AssetBundleManifest object which can be used to load the dependecies and check suitable assetBundle variants.
@@ -107,6 +151,8 @@ namespace AssetBundles
 			set {m_AssetBundleManifest = value; }
 		}
 	
+	
+
 		private static void Log(LogType logType, string text)
 		{
 			if (logType == LogType.Error)
@@ -121,6 +167,7 @@ namespace AssetBundles
 		{
 			get
 			{
+				return false;
 				// return false;
                 //Caching.CleanCache();
                 //return false;
@@ -451,6 +498,7 @@ namespace AssetBundles
 	
 		static protected void UnloadAssetBundleInternal(string assetBundleName)
 		{
+			print(assetBundleName);
 			string error;
 			LoadedAssetBundle bundle = GetLoadedAssetBundle(assetBundleName, out error);
 			if (bundle == null)

@@ -3,6 +3,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using CareUp.Actions;
 using System.Linq;
+using AssetBundles;
+
+
+
 
 public class GameUI : MonoBehaviour
 {
@@ -114,6 +118,12 @@ public class GameUI : MonoBehaviour
         PrescriptionBack,
         MessageTabBack,
         Close
+    }
+
+
+    public void TestOutput()
+    {
+        AssetBundleManager.PrintLoadedBundles();
     }
 
     public void UseOn()
@@ -1074,7 +1084,7 @@ public class GameUI : MonoBehaviour
         {
             GameObject currentHintPanel = null;
 
-            currentHintPanel = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/UI/HintPanel"), DetailedHintPanel.transform.Find("HintContainer").transform);
+            currentHintPanel = Instantiate<GameObject>(Resources.Load<GameObject>("NecessaryPrefabs/UI/HintPanel"), DetailedHintPanel.transform.Find("HintContainer").transform);
             hintText = currentHintPanel.transform.Find("Text").gameObject.GetComponent<Text>();
             hintText.text = actionManager.CurrentDescription[i];
 
@@ -1082,11 +1092,11 @@ public class GameUI : MonoBehaviour
             {
                 if (subTasks[y].subindex == i)
                 {
-                    if (Resources.Load<GameObject>("Prefabs/UI/SubtaskHints") != null)
+                    if (Resources.Load<GameObject>("NecessaryPrefabs/UI/SubtaskHints") != null)
                     {
                         if (!subTasks[y].completed)
                         {
-                            GameObject subtaskPanel = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/UI/SubtaskHints"), currentHintPanel.transform);
+                            GameObject subtaskPanel = Instantiate<GameObject>(Resources.Load<GameObject>("NecessaryPrefabs/UI/SubtaskHints"), currentHintPanel.transform);
                             subTaskText = subtaskPanel.transform.Find("Text").GetComponent<Text>();
                             subTaskText.text = subTasks[y].requirement;
                         }

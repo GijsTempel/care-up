@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using CareUp.Actions;
 using System.Linq;
+using AssetBundles;
 
 /// <summary>
 /// Handles things in hands.
@@ -409,8 +410,20 @@ public class HandsInventory : MonoBehaviour {
     /// <returns>Object created.</returns>
     public GameObject CreateObjectByName(string name, Vector3 position)
     {
-        GameObject newObject = Instantiate(Resources.Load<GameObject>("Prefabs\\" + name),
+        print("_CREATE!!! " + name);
+
+        GameObject newObject = null;
+        string FullPath = "assets/resources/prefabs/" + name.ToLower() + ".prefab";
+        Object bundleObject = AssetBundleManager.GetObjectFromLoaded(FullPath);
+        if (bundleObject != null)
+        {
+            newObject = Instantiate(bundleObject, position, Quaternion.identity) as GameObject;
+        }
+        else
+        {
+        newObject = Instantiate(Resources.Load<GameObject>("Prefabs\\" + name),
                             position, Quaternion.identity) as GameObject;
+        }
 
         newObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         newObject.GetComponent<Rigidbody>().useGravity = false;

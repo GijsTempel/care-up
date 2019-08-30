@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using AssetBundles;
 
 /// <summary>
 /// Object that can be picked in hand
@@ -429,8 +430,20 @@ public class PickableObject : InteractableObject
 
     public void InstantiateGhostObject(Vector3 pos, Quaternion rot, int posID = 0)
     {
-        GameObject ghost = Instantiate(Resources.Load<GameObject>("Prefabs/" + this.name),
-            pos, rot);
+        print("_CREATE Ghost!!! ");
+
+        GameObject ghost = null;
+        string FullPath = "assets/resources/prefabs/" + this.name.ToLower() + ".prefab";
+        UnityEngine.Object bundleObject = AssetBundleManager.GetObjectFromLoaded(FullPath);
+        if (bundleObject != null)
+        {
+             ghost = Instantiate(bundleObject, pos, rot) as GameObject;
+        }
+        else
+        {
+            ghost = Instantiate(Resources.Load<GameObject>("Prefabs/" + this.name),
+                pos, rot);
+        }
         ghost.layer = 9; // no collisions
         ghost.GetComponent<PickableObject>().mainObject = this;
         PickableObject ghostObject = ghost.GetComponent<PickableObject>();
