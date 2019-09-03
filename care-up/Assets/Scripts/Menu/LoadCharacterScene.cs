@@ -2,6 +2,9 @@
 
 public class LoadCharacterScene : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject characters;
+
     public void LoadScene()
     {
         bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Character_Customisation");
@@ -9,7 +12,7 @@ public class LoadCharacterScene : MonoBehaviour
 
     public void LoadCharacter()
     {
-        //characters.SetActive(true);
+        characters.SetActive(true);
         GameObject.FindObjectOfType<CharacterCreationScene>()
             .ShowCharacter();
     }    

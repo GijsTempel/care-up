@@ -27,8 +27,6 @@ public class CharacterPanelManager : MonoBehaviour
             gameObject.SetActive(true);
         }
 
-        //GameObject.Find("w_char").SetActive(false);
-
         SetCharacters(characters);
         previousButton?.GetComponent<Button>().onClick.AddListener(PreviousStep);
         nextButton?.GetComponent<Button>().onClick.AddListener(NextStep);
