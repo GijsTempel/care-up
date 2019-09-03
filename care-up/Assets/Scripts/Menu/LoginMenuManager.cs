@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class LoginMenuManager : MonoBehaviour {
 
@@ -22,6 +19,4 @@ public class LoginMenuManager : MonoBehaviour {
             CurrentMenu.IsOpen = true;
         }
     }
-
-
 }

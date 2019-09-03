@@ -1,5 +1,4 @@
-﻿using MBS;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CharacterInfo : MonoBehaviour
 {

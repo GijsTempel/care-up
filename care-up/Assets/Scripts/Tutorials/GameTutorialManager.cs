@@ -222,5 +222,4 @@ public class GameTutorialManager : MonoBehaviour
         DatabaseManager.UpdateField("AccountStats", "TutorialCompleted", "true");
         bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
     }
-
 }

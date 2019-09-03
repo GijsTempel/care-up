@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System.Xml;
 
@@ -13,7 +12,7 @@ public class StoreItem
 
     public StoreItem() { index = -1; price = 0; }
     public StoreItem(int i, int p, string n, string c, bool s)
-        { index = i; price = p; name = n; category = c; purchased = s; }
+    { index = i; price = p; name = n; category = c; purchased = s; }
 }
 
 public class StoreCategory
@@ -24,10 +23,33 @@ public class StoreCategory
 
     public StoreCategory() { items = new List<StoreItem>(); name = icon = ""; }
     public StoreCategory(List<StoreItem> list, string n, string i)
-        { items = new List<StoreItem>(list); name = n; icon = i; }
+    { items = new List<StoreItem>(list); name = n; icon = i; }
 }
 
-public class StoreManager 
+public class CharacterItem
+{
+    public int index;
+    public int price;
+    public string gender;
+    public int glassesType;
+    public int bodyType;
+    public int headType;
+    public bool purchased;
+
+    public CharacterItem() { index = -1; price = 0; }
+    public CharacterItem(int indexValue, int priceValue, string genderValue, int glassesTypeValue, int bodyTypeValue, int headTypeValue, bool purchasedValue)
+    {
+        index = indexValue;
+        price = priceValue;
+        gender = genderValue;
+        glassesType = glassesTypeValue;
+        bodyType = bodyTypeValue;
+        headType = headTypeValue;
+        purchased = purchasedValue;
+    }
+}
+
+public class StoreManager
 {
     private int currentCurrency = 0;
     private int currentPresents = 0;
@@ -35,10 +57,12 @@ public class StoreManager
 
     public List<StoreCategory> StoreItems { get { return storeItems; } }
 
+    public List<CharacterItem> CharacterItems { get; } = new List<CharacterItem>();
+
     public int Currency { get { return currentCurrency; } }
     public int Presents { get { return currentPresents; } }
 
-    public void Init(string storeXml = "Store")
+    public void Init(string storeXml = "Store", string characterStoreXml = "CharacterStore")
     {
         // load up all items from xml into the list
         TextAsset textAsset = (TextAsset)Resources.Load("Xml/" + storeXml);
@@ -68,10 +92,32 @@ public class StoreManager
             storeItems.Add(new StoreCategory(catItems, catName, catIcon));
         }
 
+        textAsset = (TextAsset)Resources.Load("Xml/" + characterStoreXml);
+        xmlFile.LoadXml(textAsset.text);
+
+        XmlNodeList xmlCharacterList = xmlFile.FirstChild.NextSibling.ChildNodes;
+
+        foreach (XmlNode xmlSceneNode in xmlCharacterList)
+        {
+            int index = -1, price = 1; 
+
+            int.TryParse(xmlSceneNode.Attributes["index"].Value, out index);
+            int.TryParse(xmlSceneNode.Attributes["price"].Value, out price);
+
+            string gender = xmlSceneNode.Attributes["gender"].Value;
+            int.TryParse(xmlSceneNode.Attributes["glassesType"].Value, out int glassesType);
+            int.TryParse(xmlSceneNode.Attributes["bodyType"].Value, out int bodyType);
+            int.TryParse(xmlSceneNode.Attributes["headType"].Value, out int headType);
+
+            bool purchased = DatabaseManager.FetchField("Store", "CharacterItem_" + index.ToString()) == "true";
+
+            CharacterItems.Add(new CharacterItem(index, price, gender, glassesType, bodyType, headType, purchased));
+        }
+
         // get amount of currency/presents saved
         int.TryParse(DatabaseManager.FetchField("Store", "Currency"), out currentCurrency);
         int.TryParse(DatabaseManager.FetchField("Store", "Presents"), out currentPresents);
-    }
+    }  
 
     public void ModifyCurrencyBy(int amount)
     {
@@ -119,7 +165,7 @@ public class StoreManager
         StoreItem item = FindItemByIndex(itemIndex);
         return (item.index != -1) ? item.purchased : false;
     }
-    
+
     public List<StoreItem> GetStoreItemsByCategoryName(string categoryName)
     {
         StoreCategory category = storeItems.Find(x => x.name == categoryName);
@@ -162,13 +208,14 @@ public class StoreManager
                 priceSum += 1.0f / i;
             float r = Random.Range(0.0f, priceSum);
             int result = 0;
-            do {
+            do
+            {
                 r -= 1.0f / prices[result++];
             } while (r > 0);
 
-            items.RemoveAll(x => x.price != prices[result-1]);
+            items.RemoveAll(x => x.price != prices[result - 1]);
         }
-        
+
         return (items.Count > 0) ? items[Random.Range(0, items.Count - 1)] : null;
     }
 

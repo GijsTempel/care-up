@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class StoreViewModel : MonoBehaviour
 {
     private Text currencyText;
-    private Text presentNumberText;
+    private Text presentNumberText;  
 
     void Start()
     {
@@ -15,5 +15,5 @@ public class StoreViewModel : MonoBehaviour
 
         currencyText.text = PlayerPrefsManager.storeManager.Currency.ToString();
         presentNumberText.text = PlayerPrefsManager.storeManager.Presents.ToString();
-    }   
+    }
 }

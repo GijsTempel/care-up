@@ -55,8 +55,7 @@ public class CharacterCreationScene : MonoBehaviour
     public UVWarp f_mouthObject;
 
     private void Start()
-    {
-       
+    {       
         if (SceneManager.GetActiveScene().name == "MainMenu")
             return;
         if (GameObject.Find("CharacterCustomization/Canvas/Image/InfoHolder/CharacterPanel/GenderButtonsHolder/MaleBtn") != null)
@@ -64,7 +63,7 @@ public class CharacterCreationScene : MonoBehaviour
             maleBtn = GameObject.Find("CharacterCustomization/Canvas/Image/InfoHolder/CharacterPanel/GenderButtonsHolder/MaleBtn").GetComponent<Image>();
             femaleBtn = GameObject.Find("CharacterCustomization/Canvas/Image/InfoHolder/CharacterPanel/GenderButtonsHolder/FemaleBtn").GetComponent<Image>();
         }
-        Initialize();
+        Initialize(GameObject.Find("w_char"));
 
         // set up initial info
         PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
@@ -150,15 +149,15 @@ public class CharacterCreationScene : MonoBehaviour
         return faceDate;
     }
 
-    public void Initialize()
+    public void Initialize(GameObject gameObject)
     {
-        AvatarObject = GameObject.Find("w_char");
+        AvatarObject = gameObject; 
         femaleChar = AvatarObject.transform.Find("female").gameObject;
         maleChar = AvatarObject.transform.Find("male").gameObject;
 
         ReadFaceDate();
-        femaleFace = GameObject.Find("f_face");
-        maleFace = GameObject.Find("m_face");
+        femaleFace = AvatarObject.transform.Find("Bone/Pelvis/Spine/Neck/Head/HEAD_CONTAINER/face/f_face").gameObject;
+        maleFace = AvatarObject.transform.Find("Bone/Pelvis/Spine/Neck/Head/HEAD_CONTAINER/face/m_face").gameObject;
 
         // bodies
         femaleChar.transform.Find("f_body").GetComponentsInChildren<Transform>(true, femaleBodies);
@@ -190,6 +189,11 @@ public class CharacterCreationScene : MonoBehaviour
         //femaleHeads.RemoveRange(femaleHeads.Count - 3, 3);
         //maleGlasses = maleHeads.GetRange(maleHeads.Count - 3, 3);
         //maleHeads.RemoveRange(maleHeads.Count - 3, 3);
+    }
+
+    public void SetCharacterForStore(GameObject gameObject, string gender, int head, int body, int glasses)
+    {
+        Initialize(gameObject);
     }
 
     void UpdateMaleHeads()
@@ -266,7 +270,7 @@ public class CharacterCreationScene : MonoBehaviour
     /// Currently no check for out of bounds, plz care
     /// </summary>
     /// <param name="glasses">-1 for None</param>
-    void SetCurrent(CharGender g, int head, int body, int glasses)
+    public void SetCurrent(CharGender g, int head, int body, int glasses)
     {
         gender = g;
         headType = head;
@@ -497,7 +501,7 @@ public class CharacterCreationScene : MonoBehaviour
     
     public void ShowCharacter()
     {        
-        Initialize();
+        Initialize(GameObject.Find("w_char"));
         headType = CharacterInfo.headType;
         bodyType = CharacterInfo.bodyType;
         glassesType = CharacterInfo.glassesType;
