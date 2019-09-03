@@ -90,7 +90,7 @@ public class QuizTab : MonoBehaviour
         descriptionText = transform.GetChild(1).Find("Description").GetComponent<Text>();
         continueButton = transform.GetChild(1).Find("Continue").GetComponent<Button>();
         backToOptionsButton = transform.GetChild(1).Find("Back").GetComponent<Button>();
-        answeredTitleText = transform.GetChild(1).Find("QuestionText").GetComponent<Text>();
+        answeredTitleText = transform.GetChild(1).Find("AnswerTitle").GetComponent<Text>();
 
         continueBtn = false;
         continueButton.gameObject.SetActive(false);
