@@ -431,13 +431,16 @@ public class PickableObject : InteractableObject
     public void InstantiateGhostObject(Vector3 pos, Quaternion rot, int posID = 0)
     {
         print("_CREATE Ghost!!! ");
+        bool from_bundle = false;
 
         GameObject ghost = null;
         string FullPath = "assets/resources/prefabs/" + this.name.ToLower() + ".prefab";
         UnityEngine.Object bundleObject = AssetBundleManager.GetObjectFromLoaded(FullPath);
         if (bundleObject != null)
         {
-             ghost = Instantiate(bundleObject, pos, rot) as GameObject;
+            ghost = Instantiate(bundleObject, pos, rot) as GameObject;
+            from_bundle = true;
+
         }
         else
         {
@@ -453,6 +456,10 @@ public class PickableObject : InteractableObject
         ghostObject.GetComponent<Rigidbody>().useGravity = false;
         ghostObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         ghostObject.name = this.name;
+        ghostObject.assetSource = InteractableObject.AssetSource.Resources;
+        if (from_bundle)
+            ghostObject.assetSource = InteractableObject.AssetSource.Bundle;
+
         this.ghostObjects.Add(ghostObject);
     }
 

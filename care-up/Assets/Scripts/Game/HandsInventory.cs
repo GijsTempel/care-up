@@ -402,6 +402,7 @@ public class HandsInventory : MonoBehaviour {
         UpdateHoldAnimation();
     }
 
+
     /// <summary>
     /// After combining a new object can appear on the scene.
     /// </summary>
@@ -412,25 +413,34 @@ public class HandsInventory : MonoBehaviour {
     {
         print("__CreateObjectByName! " + name);
 
+        bool from_bundle = false;
         GameObject newObject = null;
         string FullPath = "assets/resources/prefabs/" + name.ToLower() + ".prefab";
         Object bundleObject = AssetBundleManager.GetObjectFromLoaded(FullPath);
         if (bundleObject != null)
         {
             newObject = Instantiate(bundleObject, position, Quaternion.identity) as GameObject;
+            from_bundle = true;
         }
         else
         {
-        newObject = Instantiate(Resources.Load<GameObject>("Prefabs\\" + name),
-                            position, Quaternion.identity) as GameObject;
+            newObject = Instantiate(Resources.Load<GameObject>("Prefabs\\" + name),
+                                position, Quaternion.identity) as GameObject;
+            from_bundle = false;
         }
-
-        newObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-        newObject.GetComponent<Rigidbody>().useGravity = false;
-        newObject.GetComponent<Rigidbody>().isKinematic = false;
-        newObject.transform.parent = interactableObjects.transform;
-        newObject.name = name;
-
+        if (newObject != null)
+        {
+            newObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            newObject.GetComponent<Rigidbody>().useGravity = false;
+            newObject.GetComponent<Rigidbody>().isKinematic = false;
+            newObject.transform.parent = interactableObjects.transform;
+            newObject.name = name;
+            newObject.GetComponent<InteractableObject>().assetSource = InteractableObject.AssetSource.Resources;
+            if (from_bundle)
+                newObject.GetComponent<InteractableObject>().assetSource = InteractableObject.AssetSource.Bundle;
+        }
+        else
+            print("!!!!!!! Object not available " + name);
         GameObject wf = GameObject.Find("WorkField");
         if (wf != null)
         {
@@ -455,38 +465,49 @@ public class HandsInventory : MonoBehaviour {
     public void CreateAnimationObject(string name, bool hand)
     {
         print("__CreateAnimationObject! " + name);
-
+        bool from_bundle = false;
         string FullPath = "assets/resources/prefabs/" + name.ToLower() + ".prefab";
         Object bundleObject = AssetBundleManager.GetObjectFromLoaded(FullPath);
         if (bundleObject != null)
         {
             animationObject = Instantiate(bundleObject,
                     Vector3.zero, Quaternion.identity) as GameObject;
+            from_bundle = true;
         }
         else
         {
             animationObject = Instantiate(Resources.Load<GameObject>("Prefabs\\" + name),
                     Vector3.zero, Quaternion.identity) as GameObject;
+            from_bundle = false;
         }
 
-        if (animationObject.GetComponent<Rigidbody>() != null)
+        if (animationObject != null)
         {
-            animationObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-            animationObject.GetComponent<Rigidbody>().useGravity = false;
-        }
 
-        if (animationObject.GetComponent<Collider>() != null)
-        {
-            animationObject.GetComponent<Collider>().enabled = false;
-        }
+            if (animationObject.GetComponent<Rigidbody>() != null)
+            {
+                animationObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                animationObject.GetComponent<Rigidbody>().useGravity = false;
+            }
 
-        animationObject.name = name;
+            if (animationObject.GetComponent<Collider>() != null)
+            {
+                animationObject.GetComponent<Collider>().enabled = false;
+            }
+
+            animationObject.name = name;
         
-        animationObject.transform.parent = hand ? leftToolHolder : rightToolHolder;
-        animationObject.transform.localPosition = Vector3.zero;
-        animationObject.transform.localRotation = Quaternion.identity;
+            animationObject.transform.parent = hand ? leftToolHolder : rightToolHolder;
+            animationObject.transform.localPosition = Vector3.zero;
+            animationObject.transform.localRotation = Quaternion.identity;
 
-        animationObject.GetComponent<PickableObject>().Pick();
+            animationObject.GetComponent<PickableObject>().Pick();
+            animationObject.GetComponent<InteractableObject>().assetSource = InteractableObject.AssetSource.Resources;
+            if (from_bundle)
+                animationObject.GetComponent<InteractableObject>().assetSource = InteractableObject.AssetSource.Bundle;
+        }
+        else
+            print("!!!!!!! Object not available " + name);
     }
 
     public void DeleteAnimationObject()

@@ -394,10 +394,11 @@ public class GameUI : MonoBehaviour
             ActionManager.practiceMode = prefs.practiceMode;
         }
 
-#if !UNITY_EDITOR
+#if !(UNITY_EDITOR || DEVELOPMENT_BUILD)
         if(GameObject.Find("ActionsPanel") != null)
             GameObject.Find("ActionsPanel").SetActive(false);
 #endif
+
         WalkToGroupPanel = GameObject.Find("MovementButtons");
         Player = GameObject.Find("Player");
         closeButton = transform.Find("CloseBtn").gameObject;
@@ -450,7 +451,14 @@ public class GameUI : MonoBehaviour
         }
         UpdateWalkToGroupButtons();
         UpdateWalkToGtoupUI(true);
+
+        foreach(InteractableObject o in Resources.FindObjectsOfTypeAll<InteractableObject>())
+        {
+            o.assetSource = InteractableObject.AssetSource.Included;
+        }
     }
+
+
 
     public HighlightObject AddHighlight(Transform target, string prefix, HighlightObject.type hl_type = HighlightObject.type.NoChange, float startDelay = 0, float LifeTime = float.PositiveInfinity)
     {
