@@ -34,7 +34,7 @@ public class IconGenerator : MonoBehaviour {
 
     GameObject[] prefabs;
 
-	void Start ()
+	public void Start ()
 	{
         if (allPrefabs)
         {
@@ -77,6 +77,11 @@ public class IconGenerator : MonoBehaviour {
             GameObject targetObj = target.obj;
 
 			rawIcon = AssetPreview.GetAssetPreview (targetObj);
+            if (rawIcon == null)
+            {
+                print("_no raw_ " + targetObj.name);
+
+            }
 			icon = rawIcon as Texture2D;
 
             //if (overlayIcons.Count != 0)
@@ -93,7 +98,7 @@ public class IconGenerator : MonoBehaviour {
             //continue;
             if (icon == null)
             {
-                print("_____________" + targetObj.name);
+                // print("_____________" + targetObj.name);
                 continue;
             }
             byte[] bytes = icon.EncodeToPNG ();

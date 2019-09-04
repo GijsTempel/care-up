@@ -55,7 +55,7 @@ namespace AssetBundles
 #endif
         static long fullDownloadSize = 0;
 		float lastProgressValue = 0f;
-		static Dictionary<string, LoadedAssetBundle> m_LoadedAssetBundles = new Dictionary<string, LoadedAssetBundle> ();
+		public static Dictionary<string, LoadedAssetBundle> m_LoadedAssetBundles = new Dictionary<string, LoadedAssetBundle> ();
 #pragma warning disable
         static Dictionary<string, WWW> m_DownloadingWWWs = new Dictionary<string, WWW> ();
 #pragma warning restore
