@@ -76,10 +76,12 @@ public class AssetDebugPanel : MonoBehaviour
                 assetStat.transform.Find("Text").GetComponent<Text>().color = textColor;
 
                 Image ico = assetStat.transform.Find("Image").GetComponent<Image>();
-
+                Sprite x = Resources.Load("Sprites/Prefab_Icons/x", typeof(Sprite)) as Sprite;
                 Sprite l = Resources.Load("Sprites/Prefab_Icons/" + o.name, typeof(Sprite)) as Sprite;
                 if (l != null)
                     ico.sprite = l;
+                else
+                    ico.sprite = x;
 
             }
         }
@@ -114,10 +116,12 @@ public class AssetDebugPanel : MonoBehaviour
                         assetStat.transform.Find("Text").GetComponent<Text>().text = t;
 
                         Image ico = assetStat.transform.Find("Image").GetComponent<Image>();
-
+                        Sprite x = Resources.Load("Sprites/Prefab_Icons/x", typeof(Sprite)) as Sprite;
                         Sprite l = Resources.Load("Sprites/Prefab_Icons/" + t, typeof(Sprite)) as Sprite;
                         if (l != null)
                             ico.sprite = l;
+                        else
+                            ico.sprite = x;
                     }
                 }
 			}
