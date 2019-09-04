@@ -440,7 +440,6 @@ public class PickableObject : InteractableObject
         {
             ghost = Instantiate(bundleObject, pos, rot) as GameObject;
             from_bundle = true;
-
         }
         else
         {

@@ -411,8 +411,6 @@ public class HandsInventory : MonoBehaviour {
     /// <returns>Object created.</returns>
     public GameObject CreateObjectByName(string name, Vector3 position)
     {
-        print("__CreateObjectByName! " + name);
-
         bool from_bundle = false;
         GameObject newObject = null;
         string FullPath = "assets/resources/prefabs/" + name.ToLower() + ".prefab";
@@ -426,7 +424,6 @@ public class HandsInventory : MonoBehaviour {
         {
             newObject = Instantiate(Resources.Load<GameObject>("Prefabs\\" + name),
                                 position, Quaternion.identity) as GameObject;
-            from_bundle = false;
         }
         if (newObject != null)
         {
@@ -446,14 +443,36 @@ public class HandsInventory : MonoBehaviour {
         {
             wf.GetComponent<WorkField>().objects.Add(newObject);
         }
+
+        RefrashAssetDict();
+
         return newObject;
     }
 
+
     public GameObject CreateStaticObjectByName(string name, Vector3 position, Quaternion rotation)
     {
-        GameObject newObject = Instantiate(Resources.Load<GameObject>("Prefabs\\" + name),
+        bool from_bundle = false;
+        GameObject newObject = null;
+        string FullPath = "assets/resources/prefabs/" + name.ToLower() + ".prefab";
+        Object bundleObject = AssetBundleManager.GetObjectFromLoaded(FullPath);
+        if (bundleObject != null)
+        {
+            newObject = Instantiate(bundleObject, position, rotation) as GameObject;
+            from_bundle = true;
+        }
+        else
+        {
+            newObject = Instantiate(Resources.Load<GameObject>("Prefabs\\" + name),
                             position, rotation) as GameObject;
+        }
+
         newObject.name = name;
+        if (from_bundle)
+            newObject.GetComponent<InteractableObject>().assetSource = InteractableObject.AssetSource.Bundle;
+        
+        RefrashAssetDict();
+        
         return newObject;
     }
     
@@ -464,7 +483,6 @@ public class HandsInventory : MonoBehaviour {
 
     public void CreateAnimationObject(string name, bool hand)
     {
-        print("__CreateAnimationObject! " + name);
         bool from_bundle = false;
         string FullPath = "assets/resources/prefabs/" + name.ToLower() + ".prefab";
         Object bundleObject = AssetBundleManager.GetObjectFromLoaded(FullPath);
@@ -508,6 +526,8 @@ public class HandsInventory : MonoBehaviour {
         }
         else
             print("!!!!!!! Object not available " + name);
+
+        RefrashAssetDict();
     }
 
     public void DeleteAnimationObject()
@@ -518,8 +538,20 @@ public class HandsInventory : MonoBehaviour {
 
     public void CreateAnimationObject2(string name, bool hand)
     {
-        animationObject2 = Instantiate(Resources.Load<GameObject>("Prefabs\\" + name),
-                            Vector3.zero, Quaternion.identity) as GameObject;
+        bool from_bundle = false;
+        string FullPath = "assets/resources/prefabs/" + name.ToLower() + ".prefab";
+        Object bundleObject = AssetBundleManager.GetObjectFromLoaded(FullPath);
+        if (bundleObject != null)
+        {
+            animationObject2 = Instantiate(bundleObject,
+                Vector3.zero, Quaternion.identity) as GameObject;
+            from_bundle = true;
+        }
+        else
+        {
+            animationObject2 = Instantiate(Resources.Load<GameObject>("Prefabs\\" + name),
+                Vector3.zero, Quaternion.identity) as GameObject;
+        }
                        
         animationObject2.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         animationObject2.GetComponent<Rigidbody>().useGravity = false;
@@ -531,7 +563,22 @@ public class HandsInventory : MonoBehaviour {
         animationObject2.transform.localRotation = Quaternion.identity;
                        
         animationObject2.GetComponent<PickableObject>().Pick();
+        if (from_bundle)
+                animationObject2.GetComponent<InteractableObject>().assetSource = InteractableObject.AssetSource.Bundle;
+        
+
+        RefrashAssetDict();
     }
+
+    void RefrashAssetDict()
+    {
+#if (UNITY_EDITOR || DEVELOPMENT_BUILD)
+        AssetDebugPanel adp = GameObject.FindObjectOfType<AssetDebugPanel>();
+        if(adp != null)
+            adp.RefrashAssetDict();
+#endif 
+    }
+    
 
     public void DeleteAnimationObject2()
     {

@@ -1815,8 +1815,12 @@ public class ActionManager : MonoBehaviour
                     break;
             }
         }
+        
+#if (UNITY_EDITOR || DEVELOPMENT_BUILD)
         if (GameObject.FindObjectOfType<ActionsPanel>() != null)
             GameObject.FindObjectOfType<ActionsPanel>().UpdatePanel();
+#endif
+
     }
 
     public static List<GameObject> FindAnchers(string[] objectNames)

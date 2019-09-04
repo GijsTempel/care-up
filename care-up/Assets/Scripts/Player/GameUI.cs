@@ -397,6 +397,9 @@ public class GameUI : MonoBehaviour
 #if !(UNITY_EDITOR || DEVELOPMENT_BUILD)
         if(GameObject.Find("ActionsPanel") != null)
             GameObject.Find("ActionsPanel").SetActive(false);
+        if(GameObject.Find("AssetDebugPanel") != null)
+            GameObject.Find("AssetDebugPanel").SetActive(false);
+            
 #endif
 
         WalkToGroupPanel = GameObject.Find("MovementButtons");

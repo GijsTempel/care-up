@@ -5,8 +5,16 @@ using UnityEngine.UI;
 using AssetBundles;
 
 
+
 public class AssetDebugPanel : MonoBehaviour
 {
+    struct AssetDebugData
+    {
+        public string name;
+        public InteractableObject.AssetSource source;
+    }
+    Dictionary<string, AssetDebugData> AssetDict = new Dictionary<string, AssetDebugData>();
+
     bool slideState = false;
     public GameObject ObjectList;
     public GameObject PrefabList;
@@ -36,6 +44,37 @@ public class AssetDebugPanel : MonoBehaviour
             PrefabList.SetActive(true);
     }
 
+    public void CopyToClipboard()
+    {
+        var textEditor = new TextEditor();
+        string str = "";
+        foreach(string s in AssetDict.Keys)
+        {
+            str += ((int)(AssetDict[s].source)).ToString() + ",";
+            str += AssetDict[s].source.ToString() + ",";
+            str += AssetDict[s].name;
+            str += "\n";
+        }
+        textEditor.text = str;
+        textEditor.SelectAll();
+        textEditor.Copy();
+    }
+
+    public void RefrashAssetDict()
+    {
+        foreach (InteractableObject o in Resources.FindObjectsOfTypeAll<InteractableObject>())
+        {
+            string _key = o.assetSource.ToString() + "_" + o.name;
+            if (!AssetDict.ContainsKey(_key))
+            {
+                AssetDebugData assetDebugData = new AssetDebugData();
+                assetDebugData.name = o.name;
+                assetDebugData.source = o.assetSource;
+                AssetDict.Add(_key, assetDebugData);
+            }
+        }
+    }
+
     public void UpdateListOfObjects()
     {
         if (activeTab == 0)
@@ -45,12 +84,14 @@ public class AssetDebugPanel : MonoBehaviour
             {
                 GameObject.Destroy(child.gameObject);
             }
-            foreach (InteractableObject o in Resources.FindObjectsOfTypeAll<InteractableObject>())
+            RefrashAssetDict();
+            foreach(string o_key in AssetDict.Keys)
             {
+                AssetDebugData o = AssetDict[o_key];
                 GameObject assetStat = GameObject.Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/UI/AssetStat"), content);
                 string ASLabel = "";
                 Color textColor = Color.white;
-                switch (o.assetSource)
+                switch (o.source)
                 {
                     case InteractableObject.AssetSource.None:
                         ASLabel = "N";
