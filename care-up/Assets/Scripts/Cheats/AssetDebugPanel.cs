@@ -44,16 +44,27 @@ public class AssetDebugPanel : MonoBehaviour
             PrefabList.SetActive(true);
     }
 
-    public void CopyToClipboard()
+    public void CopyToClipboard(bool only_unique = false)
     {
+        List<string> unique_names = new List<string>();
+
         var textEditor = new TextEditor();
         string str = "";
         foreach(string s in AssetDict.Keys)
         {
-            str += ((int)(AssetDict[s].source)).ToString() + ",";
-            str += AssetDict[s].source.ToString() + ",";
-            str += AssetDict[s].name;
-            str += "\n";
+            if (!only_unique)
+            {
+                str += ((int)(AssetDict[s].source)).ToString() + ",";
+                str += AssetDict[s].source.ToString() + ",";
+                str += AssetDict[s].name;
+                str += "\n";
+            }
+            else if (!unique_names.Contains(AssetDict[s].name))
+            {
+                unique_names.Add(AssetDict[s].name);
+                str += AssetDict[s].name;
+                str += "\n";
+            }
         }
         textEditor.text = str;
         textEditor.SelectAll();
