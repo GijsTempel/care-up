@@ -7,6 +7,9 @@ public class StoreViewModel : MonoBehaviour
     private Text presentNumberText;
 
     [SerializeField]
+    private GameObject mainCharacter;
+
+    [SerializeField]
     private Button goToCharacterStoreButton;
 
     void Start()
@@ -19,6 +22,6 @@ public class StoreViewModel : MonoBehaviour
         currencyText.text = PlayerPrefsManager.storeManager.Currency.ToString();
         presentNumberText.text = PlayerPrefsManager.storeManager.Presents.ToString();
 
-        goToCharacterStoreButton.onClick.AddListener(() => GameObject.Find("w_char").SetActive(false));
+        goToCharacterStoreButton.onClick.AddListener(() => mainCharacter?.SetActive(false));
     }
 }
