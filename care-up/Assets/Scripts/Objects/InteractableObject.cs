@@ -6,6 +6,7 @@ using UnityEngine.UI;
 /// </summary>
 public class InteractableObject : MonoBehaviour {
 
+    public string PrefabName = "";
     public enum AssetSource
     {
         None,
@@ -24,7 +25,6 @@ public class InteractableObject : MonoBehaviour {
     public AssetSource assetSource;
 
     GameUI gameUI__;
-
     protected Renderer rend;
    // protected Shader onMouseOverShader;
 

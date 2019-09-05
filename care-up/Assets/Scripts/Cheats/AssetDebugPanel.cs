@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using AssetBundles;
+using System.IO;
 
 
 
@@ -23,6 +24,50 @@ public class AssetDebugPanel : MonoBehaviour
     void Start()
     {
         SwitchTab(0);
+        
+    }
+
+    public void CopyPrefabChecklist()
+    {
+        List<string> _list = readTextFile("Resources/DebugPrefabs.txt");
+        string str = "";
+        List<string> unique_names = new List<string>();
+        foreach(string s in AssetDict.Keys)
+        {
+            if (!unique_names.Contains(AssetDict[s].name))
+            {
+                unique_names.Add(AssetDict[s].name);
+            }
+        }
+        foreach (string l in _list)
+        {
+            str += l;
+            if (unique_names.Contains(l))
+            {
+                str += ",**";
+            }
+            str += "\n"; 
+            var textEditor = new TextEditor();
+            textEditor.text = str;
+            textEditor.SelectAll();
+            textEditor.Copy();
+        }
+
+    }
+
+
+    List<string> readTextFile(string file_path)
+    {
+        List<string> lines = new List<string>();
+        StreamReader inp_stm = new StreamReader(Application.dataPath + "/" + file_path);
+
+        while(!inp_stm.EndOfStream)
+        {
+            string line = inp_stm.ReadLine( );
+            lines.Add(line.Replace("\r", "").Replace("\n", ""));
+        }
+        inp_stm.Close( );  
+        return lines;
     }
 
     // Update is called once per frame
@@ -75,11 +120,15 @@ public class AssetDebugPanel : MonoBehaviour
     {
         foreach (InteractableObject o in Resources.FindObjectsOfTypeAll<InteractableObject>())
         {
-            string _key = o.assetSource.ToString() + "_" + o.name;
+            string p_name = o.name;
+            if (o.PrefabName != "")
+                p_name = o.PrefabName;
+
+            string _key = o.assetSource.ToString() + "_" + p_name;
             if (!AssetDict.ContainsKey(_key))
             {
                 AssetDebugData assetDebugData = new AssetDebugData();
-                assetDebugData.name = o.name;
+                assetDebugData.name = p_name;
                 assetDebugData.source = o.assetSource;
                 AssetDict.Add(_key, assetDebugData);
             }

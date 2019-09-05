@@ -11,7 +11,7 @@ public class IconGenerator : MonoBehaviour {
 
     // I should really develop a custom inspector for the next release ;)
     // Also, would you like to have custom overlays for every target?
-
+    List<string> _prefabs = new List<string>();
     [Header("Prefabs")]
     public bool allPrefabs = false;
     [Tooltip("IconGenerator will generate icons from these prefabs / objects")]
@@ -40,8 +40,10 @@ public class IconGenerator : MonoBehaviour {
         {
             targets.Clear();
             prefabs = Resources.LoadAll<GameObject>("Prefabs");
+            string all_prefabs = "";
             foreach (GameObject o in prefabs)
             {
+                all_prefabs += o.name + "\n";
                 //if (o.GetComponent<PickableObject>() != null)
                 //{
                     Target t = new Target();
@@ -49,6 +51,10 @@ public class IconGenerator : MonoBehaviour {
                     targets.Add(t);
                 //}
             }
+            var textEditor = new TextEditor();
+            textEditor.text = all_prefabs;
+            textEditor.SelectAll();
+            textEditor.Copy();
         }
         GetOverlayTextures();
 		int targetCount = 0;

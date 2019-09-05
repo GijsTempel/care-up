@@ -1,5 +1,24 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &8939283441253776834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1094194368077178054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5c5940595a0d4168b8e07274cf9cc24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LieAnimName: 
+  HoldAnimName: 
+  HoldAnimValue: 0
+  LockHoldState: 1
+  follow_left: 1
+  isActive: 0
+  followHoldingHand: 0
 --- !u!1 &8939283440539770682
 GameObject:
   m_ObjectHideFlags: 0
@@ -100,11 +119,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9683ce8fd2daab5488955af11cfc9707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PrefabName: SyringeContainer
   ObjectID: 0
   description: '-'
   nameArticle: '-'
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
+  assetSource: 0
   transparencyFix: 0
   tutorial_usedOn: 0
   depoistNeedle: 0
@@ -131,25 +152,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.044685945, y: 0.04290384, z: 0.15110916}
   m_Center: {x: 0, y: 0, z: -0.025259495}
---- !u!114 &8939283441253776834
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1094194368077178054}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5c5940595a0d4168b8e07274cf9cc24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LieAnimName: 
-  HoldAnimName: 
-  HoldAnimValue: 0
-  LockHoldState: 1
-  follow_left: 1
-  isActive: 0
-  followHoldingHand: 0
 --- !u!1001 &8939283441253776847
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -162,11 +164,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: syringe_rigged
       objectReference: {fileID: 0}
-    - target: {fileID: -6057140222963153312, guid: d13f8a059c0c9b040b96e1085ced2b42,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 0f8e3167731bc954a9e61812bf2317b5, type: 2}
     - target: {fileID: -4216859302048453862, guid: d13f8a059c0c9b040b96e1085ced2b42,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -222,6 +219,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -45
       objectReference: {fileID: 0}
+    - target: {fileID: -6057140222963153312, guid: d13f8a059c0c9b040b96e1085ced2b42,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 0f8e3167731bc954a9e61812bf2317b5, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d13f8a059c0c9b040b96e1085ced2b42, type: 3}
 --- !u!1 &1094194368077178054 stripped
