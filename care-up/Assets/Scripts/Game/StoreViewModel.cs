@@ -22,6 +22,11 @@ public class StoreViewModel : MonoBehaviour
         currencyText.text = PlayerPrefsManager.storeManager.Currency.ToString();
         presentNumberText.text = PlayerPrefsManager.storeManager.Presents.ToString();
 
-        goToCharacterStoreButton.onClick.AddListener(() => mainCharacter?.SetActive(false));
+        ChangeCharacterState(false);
+    }
+
+    public void ChangeCharacterState(bool state)
+    {
+        goToCharacterStoreButton.onClick.AddListener(() => mainCharacter?.SetActive(state));
     }
 }

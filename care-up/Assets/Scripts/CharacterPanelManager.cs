@@ -8,7 +8,7 @@ public class CharacterPanelManager : MonoBehaviour
     private List<GameObject> characters;
 
     [SerializeField]
-    private GameObject previousButton, nextButton;
+    private GameObject previousButton, nextButton, buyButton, adjustButton;
 
     private CharacterCreationScene characterCreation;
     private CharacterCreationScene.CharGender gender;
@@ -30,6 +30,8 @@ public class CharacterPanelManager : MonoBehaviour
         SetCharacters(characters);
         previousButton?.GetComponent<Button>().onClick.AddListener(PreviousStep);
         nextButton?.GetComponent<Button>().onClick.AddListener(NextStep);
+
+        buyButton?.GetComponent<Button>().onClick.AddListener(BuyCharacter);
     }
 
     private void NextStep()
@@ -49,12 +51,26 @@ public class CharacterPanelManager : MonoBehaviour
         foreach (GameObject item in items)
         {
             characterCreation.Initialize(item);
-            SetCurrentItem(ref index);
+
+            (bool purchased, int price) = SetCurrentItem(ref index);
+
+            item.transform.parent.Find("Checkmark").gameObject.SetActive(price > 120); //temporary
+
+            if (item.transform.parent.name == "CenterGuy")
+            {
+                buyButton.transform.GetChild(0).GetComponent<Text>().text = price.ToString();
+
+                if (price > 120)
+                    adjustButton.SetActive(true);
+                else
+                    adjustButton.SetActive(false);
+            }
+
             index++;
         }
     }
 
-    private void SetCurrentItem(ref int index)
+    private (bool purchased, int price) SetCurrentItem(ref int index)
     {
         if (index < 0)
             index = parameters.Count - 1;
@@ -62,10 +78,32 @@ public class CharacterPanelManager : MonoBehaviour
         else if (index >= parameters.Count)
             index = 0;
 
-        print(index);
-
         gender = parameters[index].gender == "Female" ? CharacterCreationScene.CharGender.Female : CharacterCreationScene.CharGender.Male;
         characterCreation.SetCurrent(gender, parameters[index].headType, parameters[index].bodyType, parameters[index].glassesType);
-    }   
+
+        return (parameters[index].purchased, parameters[index].price);
+    }
+
+    private void BuyCharacter()
+    {
+        for (int i = 0; i < characters.Count; i++)
+        {
+            if (i == 1)
+            {
+                characters[i].transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+                characters[i].GetComponent<Animator>().SetTrigger("dance1");
+                adjustButton.SetActive(true);
+            }
+            else
+                characters[i].transform.parent.gameObject.SetActive(false);
+        }
+    }
+
+    // To do:
+
+    // Save to database on adjustbutton click
+    // Set guys active when animation ends
+    // Set guys local scale to normal
+    //
 }
 
