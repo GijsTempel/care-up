@@ -10,6 +10,9 @@ public class CharacterPanelManager : MonoBehaviour
     [SerializeField]
     private GameObject previousButton, nextButton, buyButton, adjustButton;
 
+    [SerializeField]
+    private Text currencyText;
+
     private CharacterCreationScene characterCreation;
     private CharacterCreationScene.CharGender gender;
 
@@ -19,6 +22,8 @@ public class CharacterPanelManager : MonoBehaviour
 
     private void Start()
     {
+        currencyText.text = PlayerPrefsManager.storeManager.Currency.ToString();
+
         if (characterCreation == null)
             characterCreation = GameObject.FindObjectOfType<CharacterCreationScene>();
 
@@ -99,11 +104,21 @@ public class CharacterPanelManager : MonoBehaviour
         }
     }
 
-    // To do:
+    float timeLeft = 300.0f;
 
-    // Save to database on adjustbutton click
-    // Set guys active when animation ends
-    // Set guys local scale to normal
-    //
+    void Update()
+    {
+        timeLeft -= Time.deltaTime;
+        if (timeLeft < 0)
+        {
+            //normalize
+        }
+        // To do:
+
+        // Save to database on adjustbutton click
+        // Set guys active when animation ends
+        // Set guys local scale to normal
+        //
+    }
 }
 

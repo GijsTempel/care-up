@@ -17,10 +17,10 @@ public class StoreViewModel : MonoBehaviour
         GameObject.FindObjectOfType<LoadCharacterScene>().LoadCharacter();
 
         currencyText = GameObject.Find("NumbersStackPanel/CurrencyPanel/Panel/Text").GetComponent<Text>();
-        presentNumberText = GameObject.Find("NumbersStackPanel/PresentPanel/Panel/Text").GetComponent<Text>();
+       // presentNumberText = GameObject.Find("NumbersStackPanel/PresentPanel/Panel/Text").GetComponent<Text>();
 
         currencyText.text = PlayerPrefsManager.storeManager.Currency.ToString();
-        presentNumberText.text = PlayerPrefsManager.storeManager.Presents.ToString();
+       // presentNumberText.text = PlayerPrefsManager.storeManager.Presents.ToString();
 
         ChangeCharacterState(false);
     }

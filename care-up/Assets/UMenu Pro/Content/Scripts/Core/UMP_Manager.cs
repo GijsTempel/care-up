@@ -32,6 +32,7 @@ public class UMP_Manager : MonoBehaviour {
         GameObject.Find("Leaderboard").SetActive(false);
         GameObject.Find("Opties").SetActive(false);
         GameObject.Find("Store").SetActive(false);
+        GameObject.Find("AdjustCharacter").SetActive(false);        
     }
     /// <summary>
     /// 
