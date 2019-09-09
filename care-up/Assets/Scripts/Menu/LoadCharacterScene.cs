@@ -15,5 +15,11 @@ public class LoadCharacterScene : MonoBehaviour
         characters.SetActive(true);
         GameObject.FindObjectOfType<CharacterCreationScene>()
             .ShowCharacter();
-    }    
+    }
+
+    public void HideCharacter()
+    {
+        if (characters.activeSelf)
+            characters.SetActive(false);
+    }
 }

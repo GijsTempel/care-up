@@ -70,7 +70,7 @@ public class UMP_LevelInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public void OnPointerEnter(PointerEventData eventData)
     {
         EventMouse(true);
-        sounds.OnButtonHover();
+        sounds?.OnButtonHover();
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -80,6 +80,6 @@ public class UMP_LevelInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        sounds.OnButtonClick();
+        sounds?.OnButtonClick();
     }
 }
