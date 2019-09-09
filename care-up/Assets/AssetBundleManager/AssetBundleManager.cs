@@ -165,10 +165,8 @@ namespace AssetBundles
 		{
 			get
 			{
-				return false;
-				// return false;
+				//return false;
                 //Caching.CleanCache();
-                //return false;
                 if (m_SimulateAssetBundleInEditor == -1)
 					m_SimulateAssetBundleInEditor = EditorPrefs.GetBool(kSimulateAssetBundles, true) ? 1 : 0;
 				
