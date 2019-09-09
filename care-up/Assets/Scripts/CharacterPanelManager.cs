@@ -63,6 +63,7 @@ public class CharacterPanelManager : MonoBehaviour
 
             if (item.transform.parent.name == "CenterGuy")
             {
+                item.transform.localScale = new Vector3(1f, 1f, 1f);
                 buyButton.transform.GetChild(0).GetComponent<Text>().text = price.ToString();
 
                 if (price > 120)
@@ -99,26 +100,9 @@ public class CharacterPanelManager : MonoBehaviour
                 characters[i].GetComponent<Animator>().SetTrigger("dance1");
                 adjustButton.SetActive(true);
             }
-            else
-                characters[i].transform.parent.gameObject.SetActive(false);
+            //else
+            //    characters[i].transform.parent.gameObject.SetActive(false);
         }
-    }
-
-    float timeLeft = 300.0f;
-
-    void Update()
-    {
-        timeLeft -= Time.deltaTime;
-        if (timeLeft < 0)
-        {
-            //normalize
-        }
-        // To do:
-
-        // Save to database on adjustbutton click
-        // Set guys active when animation ends
-        // Set guys local scale to normal
-        //
-    }
+    }  
 }
 
