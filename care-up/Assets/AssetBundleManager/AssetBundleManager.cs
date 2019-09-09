@@ -79,8 +79,6 @@ namespace AssetBundles
 			set { m_LogMode = value; }
 		}
 
-
-	
 		public static void PrintLoadedBundles()
 		{
 			print("-------");
@@ -107,7 +105,7 @@ namespace AssetBundles
 			{
 				if (m_LoadedAssetBundles[k].m_AssetBundle.Contains(fullName))
 				{	
-					print("00000000  " + fullName + " " + k);
+					// print("00000000  " + fullName + " " + k);
 
 					return m_LoadedAssetBundles[k].m_AssetBundle.LoadAsset(fullName);
 				}
@@ -212,7 +210,7 @@ namespace AssetBundles
 				PlatformName = "Linux";
 			#endif
 				
-			Debug.Log("DDDDDDDDDDDDDD   " + PlatformName);
+			// Debug.Log("DDDDDDDDDDDDDD   " + PlatformName);
 			BaseDownloadingURL = absolutePath + PlatformName + "/";
 		}
 	
@@ -498,7 +496,7 @@ namespace AssetBundles
 	
 		static protected void UnloadAssetBundleInternal(string assetBundleName)
 		{
-			print(assetBundleName);
+			// print(assetBundleName);
 			string error;
 			LoadedAssetBundle bundle = GetLoadedAssetBundle(assetBundleName, out error);
 			if (bundle == null)

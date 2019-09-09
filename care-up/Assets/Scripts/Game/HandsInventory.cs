@@ -402,7 +402,14 @@ public class HandsInventory : MonoBehaviour {
         UpdateHoldAnimation();
     }
 
+    Object FindFromBundles(string _name)
+    {
+        string FullPath = "assets/resources/prefabs/" + _name.ToLower() + ".prefab";
+        Object bundleObject = AssetBundleManager.GetObjectFromLoaded(FullPath);
+        return bundleObject;
+    }
 
+    
     /// <summary>
     /// After combining a new object can appear on the scene.
     /// </summary>
@@ -411,20 +418,12 @@ public class HandsInventory : MonoBehaviour {
     /// <returns>Object created.</returns>
     public GameObject CreateObjectByName(string name, Vector3 position)
     {
-        bool from_bundle = false;
-        GameObject newObject = null;
-        string FullPath = "assets/resources/prefabs/" + name.ToLower() + ".prefab";
-        Object bundleObject = AssetBundleManager.GetObjectFromLoaded(FullPath);
-        if (bundleObject != null)
-        {
-            newObject = Instantiate(bundleObject, position, Quaternion.identity) as GameObject;
-            from_bundle = true;
-        }
-        else
-        {
-            newObject = Instantiate(Resources.Load<GameObject>("Prefabs\\" + name),
-                                position, Quaternion.identity) as GameObject;
-        }
+        Object bundleObject = FindFromBundles(name);
+        bool from_bundle = bundleObject != null;
+        if (bundleObject == null)
+            bundleObject = Resources.Load<GameObject>("Prefabs\\" + name);
+
+        GameObject newObject = Instantiate(bundleObject, position, Quaternion.identity) as GameObject;
         if (newObject != null)
         {
             newObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
@@ -452,21 +451,12 @@ public class HandsInventory : MonoBehaviour {
 
     public GameObject CreateStaticObjectByName(string name, Vector3 position, Quaternion rotation)
     {
-        bool from_bundle = false;
-        GameObject newObject = null;
-        string FullPath = "assets/resources/prefabs/" + name.ToLower() + ".prefab";
-        Object bundleObject = AssetBundleManager.GetObjectFromLoaded(FullPath);
-        if (bundleObject != null)
-        {
-            newObject = Instantiate(bundleObject, position, rotation) as GameObject;
-            from_bundle = true;
-        }
-        else
-        {
-            newObject = Instantiate(Resources.Load<GameObject>("Prefabs\\" + name),
-                            position, rotation) as GameObject;
-        }
 
+        Object bundleObject = FindFromBundles(name);
+        bool from_bundle = bundleObject != null;
+        if (bundleObject == null)
+            bundleObject = Resources.Load<GameObject>("Prefabs\\" + name);
+        GameObject newObject = Instantiate(bundleObject, position, rotation) as GameObject;
         newObject.name = name;
         if (from_bundle)
             newObject.GetComponent<InteractableObject>().assetSource = InteractableObject.AssetSource.Bundle;
@@ -483,21 +473,12 @@ public class HandsInventory : MonoBehaviour {
 
     public void CreateAnimationObject(string name, bool hand)
     {
-        bool from_bundle = false;
-        string FullPath = "assets/resources/prefabs/" + name.ToLower() + ".prefab";
-        Object bundleObject = AssetBundleManager.GetObjectFromLoaded(FullPath);
-        if (bundleObject != null)
-        {
-            animationObject = Instantiate(bundleObject,
-                    Vector3.zero, Quaternion.identity) as GameObject;
-            from_bundle = true;
-        }
-        else
-        {
-            animationObject = Instantiate(Resources.Load<GameObject>("Prefabs\\" + name),
-                    Vector3.zero, Quaternion.identity) as GameObject;
-            from_bundle = false;
-        }
+        Object bundleObject = FindFromBundles(name);
+        bool from_bundle = bundleObject != null;
+        if (bundleObject == null)
+            bundleObject = Resources.Load<GameObject>("Prefabs\\" + name);
+
+        GameObject animationObject = Instantiate(bundleObject, Vector3.zero, Quaternion.identity) as GameObject;
 
         if (animationObject != null)
         {
@@ -538,20 +519,12 @@ public class HandsInventory : MonoBehaviour {
 
     public void CreateAnimationObject2(string name, bool hand)
     {
-        bool from_bundle = false;
-        string FullPath = "assets/resources/prefabs/" + name.ToLower() + ".prefab";
-        Object bundleObject = AssetBundleManager.GetObjectFromLoaded(FullPath);
-        if (bundleObject != null)
-        {
-            animationObject2 = Instantiate(bundleObject,
-                Vector3.zero, Quaternion.identity) as GameObject;
-            from_bundle = true;
-        }
-        else
-        {
-            animationObject2 = Instantiate(Resources.Load<GameObject>("Prefabs\\" + name),
-                Vector3.zero, Quaternion.identity) as GameObject;
-        }
+        Object bundleObject = FindFromBundles(name);
+        bool from_bundle = bundleObject != null;
+        if (bundleObject == null)
+            bundleObject = Resources.Load<GameObject>("Prefabs\\" + name);
+
+        GameObject animationObject2 = Instantiate(bundleObject, Vector3.zero, Quaternion.identity) as GameObject;
                        
         animationObject2.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         animationObject2.GetComponent<Rigidbody>().useGravity = false;
