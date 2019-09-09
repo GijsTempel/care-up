@@ -140,7 +140,7 @@ namespace AssetBundles
 
         public void Awake()
         {
-			// Caching.ClearCache();
+            //Caching.ClearCache();
             instance = this;
         }
         // AssetBundleManifest object which can be used to load the dependecies and check suitable assetBundle variants.
