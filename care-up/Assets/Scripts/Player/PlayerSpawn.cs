@@ -30,7 +30,7 @@ public class PlayerSpawn : MonoBehaviour
         GameObject UIPrefab = null;
         if (GameObject.FindObjectOfType(typeof(GameUI)) == null)
         {
-            UIPrefab = Instantiate(Resources.Load("NecessaryPrefabs/UI/UI_debug") as GameObject);
+            // UIPrefab = Instantiate(Resources.Load("NecessaryPrefabs/UI/UI_debug") as GameObject);
             UIPrefab = Instantiate(Resources.Load("NecessaryPrefabs/UI/UI") as GameObject);
             UIPrefab.name = "UI";
         }
