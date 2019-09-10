@@ -189,12 +189,7 @@ public class CharacterCreationScene : MonoBehaviour
         //femaleHeads.RemoveRange(femaleHeads.Count - 3, 3);
         //maleGlasses = maleHeads.GetRange(maleHeads.Count - 3, 3);
         //maleHeads.RemoveRange(maleHeads.Count - 3, 3);
-    }
-
-    public void SetCharacterForStore(GameObject gameObject, string gender, int head, int body, int glasses)
-    {
-        Initialize(gameObject);
-    }
+    }  
 
     void UpdateMaleHeads()
     {

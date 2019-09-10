@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,13 +17,20 @@ public class CharacterPanelManager : MonoBehaviour
     private CharacterCreationScene characterCreation;
     private CharacterCreationScene.CharGender gender;
 
-    private List<CharacterItem> parameters = PlayerPrefsManager.storeManager.CharacterItems;
+    private static StoreManager storeManager = PlayerPrefsManager.storeManager;
+    private List<CharacterItem> parameters = storeManager.CharacterItems;
 
     private int index = 0;
+    private int storeitemIndex;
+    private GameObject mainCharacter;
 
     private void Start()
     {
-        currencyText.text = PlayerPrefsManager.storeManager.Currency.ToString();
+        mainCharacter = characters[1];
+
+        StartCoroutine(SetAnimation());
+
+        currencyText.text = storeManager.Currency.ToString();
 
         if (characterCreation == null)
             characterCreation = GameObject.FindObjectOfType<CharacterCreationScene>();
@@ -39,6 +47,31 @@ public class CharacterPanelManager : MonoBehaviour
         buyButton?.GetComponent<Button>().onClick.AddListener(BuyCharacter);
     }
 
+    private void SetCharacters(List<GameObject> items)
+    {
+        foreach (GameObject item in items)
+        {
+            characterCreation.Initialize(item);
+
+            (bool purchased, int price) = SetCurrentItem(ref index);
+
+            item.transform.parent.Find("Checkmark").gameObject.SetActive(parameters[index].purchased);
+
+            if (item.transform.parent.name == "CenterGuy")
+            {
+                storeitemIndex = index;
+                buyButton.transform.GetChild(0).GetComponent<Text>().text = price.ToString();
+
+                if (parameters[index].purchased)
+                    adjustButton.SetActive(true);
+                else
+                    adjustButton.SetActive(false);
+            }
+
+            index++;
+        }
+    }
+
     private void NextStep()
     {
         index -= 2;
@@ -49,31 +82,6 @@ public class CharacterPanelManager : MonoBehaviour
     {
         index -= 4;
         SetCharacters(characters);
-    }
-
-    public void SetCharacters(List<GameObject> items)
-    {
-        foreach (GameObject item in items)
-        {
-            characterCreation.Initialize(item);
-
-            (bool purchased, int price) = SetCurrentItem(ref index);
-
-            item.transform.parent.Find("Checkmark").gameObject.SetActive(price > 120); //temporary
-
-            if (item.transform.parent.name == "CenterGuy")
-            {
-                item.transform.localScale = new Vector3(1f, 1f, 1f);
-                buyButton.transform.GetChild(0).GetComponent<Text>().text = price.ToString();
-
-                if (price > 120)
-                    adjustButton.SetActive(true);
-                else
-                    adjustButton.SetActive(false);
-            }
-
-            index++;
-        }
     }
 
     private (bool purchased, int price) SetCurrentItem(ref int index)
@@ -92,17 +100,51 @@ public class CharacterPanelManager : MonoBehaviour
 
     private void BuyCharacter()
     {
-        for (int i = 0; i < characters.Count; i++)
+        if (storeManager.PurchaseCharacter(storeitemIndex))
         {
-            if (i == 1)
-            {
-                characters[i].transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
-                characters[i].GetComponent<Animator>().SetTrigger("dance1");
-                adjustButton.SetActive(true);
-            }
-            //else
-            //    characters[i].transform.parent.gameObject.SetActive(false);
+            mainCharacter.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+            mainCharacter.GetComponent<Animator>().SetTrigger("dance1");
+            adjustButton.SetActive(true);
+            StartCoroutine(ResetScale());
+            currencyText.text = storeManager.Currency.ToString();
         }
-    }  
+        else
+        {
+            PurchaseFail();
+        }
+    }
+
+    private IEnumerator SetAnimation()
+    {
+        yield return new WaitForSeconds(0.6f);
+        SetAnimationTrigger(0, "idle1");
+
+        yield return new WaitForSeconds(1);
+        SetAnimationTrigger(2, "idle1");
+    }
+
+    private IEnumerator ResetScale()
+    {
+        yield return new WaitForSeconds(4f);
+        mainCharacter.transform.localScale = new Vector3(1f, 1f, 1f);
+    }
+
+    private void SetAnimationTrigger(int index, string name)
+    {
+        characters[index].GetComponent<Animator>().SetTrigger(name);
+    }
+
+    private void PurchaseFail()
+    {
+        SetAnimationTrigger(1, "sad1");
+        StartCoroutine(PopUp());
+    }
+
+    private IEnumerator PopUp()
+    {
+        yield return new WaitForSeconds(2f);
+        GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(8);
+        SetAnimationTrigger(1, "idle1");
+    }
 }
 

@@ -160,6 +160,23 @@ public class StoreManager
         }
     }
 
+    public bool PurchaseCharacter(int itemIndex)
+    {
+        CharacterItem item = CharacterItems.Find(x => x.index == itemIndex);
+
+        if (item.index != -1 && currentCurrency >= item.price)
+        {
+            ModifyCurrencyBy(-item.price);
+            item.purchased = true;
+            DatabaseManager.UpdateField("Store", "CharacterItem_" + itemIndex.ToString(), "true");
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public bool GetPurchasedState(int itemIndex)
     {
         StoreItem item = FindItemByIndex(itemIndex);
