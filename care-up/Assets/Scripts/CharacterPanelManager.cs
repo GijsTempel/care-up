@@ -25,8 +25,35 @@ public class CharacterPanelManager : MonoBehaviour
     private GameObject mainCharacter;
     private SimpleGestureController gestureController = new SimpleGestureController();
 
+    private UMP_Manager uMP_Manager;
+    private LoadCharacterScene loadCharacter;
+
+    public void NextStep()
+    {
+        index -= 2;
+        SetCharacters(characters);
+    }
+
+    public void PreviousStep()
+    {
+        index -= 4;
+        SetCharacters(characters);
+    }
+
+    public void Adjust()
+    {
+        if (storeManager.PurchaseCharacter(storeitemIndex))
+        {
+            uMP_Manager.ChangeWindow(9);
+            loadCharacter.LoadCharacter();
+        }
+    }
+
     private void Start()
     {
+        uMP_Manager = GameObject.FindObjectOfType<UMP_Manager>();
+        loadCharacter = GameObject.FindObjectOfType<LoadCharacterScene>();
+
         mainCharacter = characters[1];
 
         StartCoroutine(SetAnimation());
@@ -44,6 +71,11 @@ public class CharacterPanelManager : MonoBehaviour
         SetCharacters(characters);
 
         buyButton?.GetComponent<Button>().onClick.AddListener(BuyCharacter);
+    }
+
+    private void Update()
+    {
+        gestureController.ManageSwipeGestures(NextStep, PreviousStep);
     }
 
     private void SetCharacters(List<GameObject> items)
@@ -69,19 +101,7 @@ public class CharacterPanelManager : MonoBehaviour
 
             index++;
         }
-    }
-
-    public void NextStep()
-    {
-        index -= 2;
-        SetCharacters(characters);
-    }
-
-    public void PreviousStep()
-    {
-        index -= 4;
-        SetCharacters(characters);
-    }
+    }   
 
     private (bool purchased, int price) SetCurrentItem(ref int index)
     {
@@ -95,7 +115,7 @@ public class CharacterPanelManager : MonoBehaviour
         characterCreation.SetCurrent(gender, parameters[index].headType, parameters[index].bodyType, parameters[index].glassesType);
 
         return (parameters[index].purchased, parameters[index].price);
-    }
+    }    
 
     private void BuyCharacter()
     {
@@ -144,10 +164,5 @@ public class CharacterPanelManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(8);
         SetAnimationTrigger(1, "idle1");
-    }
-
-    private void Update()
-    {
-        gestureController.ManageSwipeGestures(NextStep, PreviousStep);
-    }
+    }   
 }
