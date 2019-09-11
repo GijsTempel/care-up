@@ -23,6 +23,7 @@ public class CharacterPanelManager : MonoBehaviour
     private int index = 0;
     private int storeitemIndex;
     private GameObject mainCharacter;
+    private SimpleGestureController gestureController = new SimpleGestureController();
 
     private void Start()
     {
@@ -41,8 +42,6 @@ public class CharacterPanelManager : MonoBehaviour
         }
 
         SetCharacters(characters);
-        previousButton?.GetComponent<Button>().onClick.AddListener(PreviousStep);
-        nextButton?.GetComponent<Button>().onClick.AddListener(NextStep);
 
         buyButton?.GetComponent<Button>().onClick.AddListener(BuyCharacter);
     }
@@ -72,13 +71,13 @@ public class CharacterPanelManager : MonoBehaviour
         }
     }
 
-    private void NextStep()
+    public void NextStep()
     {
         index -= 2;
         SetCharacters(characters);
     }
 
-    private void PreviousStep()
+    public void PreviousStep()
     {
         index -= 4;
         SetCharacters(characters);
@@ -125,7 +124,7 @@ public class CharacterPanelManager : MonoBehaviour
 
     private IEnumerator ResetScale()
     {
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(5.5f);
         mainCharacter.transform.localScale = new Vector3(1f, 1f, 1f);
     }
 
@@ -146,5 +145,9 @@ public class CharacterPanelManager : MonoBehaviour
         GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(8);
         SetAnimationTrigger(1, "idle1");
     }
-}
 
+    private void Update()
+    {
+        gestureController.ManageSwipeGestures(NextStep, PreviousStep);
+    }
+}
