@@ -101,7 +101,18 @@ public class CharacterPanelManager : MonoBehaviour
 
             index++;
         }
-    }   
+    }
+
+    public void SetDefaultCharacters(List<GameObject> items)
+    {
+        for (int i = 0; i < items.Count; i++)
+        {
+            characterCreation.Initialize(items[i]);
+
+            gender = parameters[i].gender == "Female" ? CharacterCreationScene.CharGender.Female : CharacterCreationScene.CharGender.Male;
+            characterCreation.SetCurrent(gender, parameters[i].headType, parameters[i].bodyType, parameters[i].glassesType);
+        }
+    }
 
     private (bool purchased, int price) SetCurrentItem(ref int index)
     {
@@ -115,7 +126,7 @@ public class CharacterPanelManager : MonoBehaviour
         characterCreation.SetCurrent(gender, parameters[index].headType, parameters[index].bodyType, parameters[index].glassesType);
 
         return (parameters[index].purchased, parameters[index].price);
-    }    
+    }
 
     private void BuyCharacter()
     {
@@ -164,5 +175,5 @@ public class CharacterPanelManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(8);
         SetAnimationTrigger(1, "idle1");
-    }   
+    }
 }
