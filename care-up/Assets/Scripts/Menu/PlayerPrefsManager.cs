@@ -228,10 +228,10 @@ public class PlayerPrefsManager : MonoBehaviour
         set { PlayerPrefs.SetFloat("Volume", value); }
     }
 
-    public float ScroopPosition
+    public float LevelScrollPosition
     {
-        get { return PlayerPrefs.HasKey("ScroopPosition") ? PlayerPrefs.GetFloat("ScroopPosition") : 0f; }
-        set { PlayerPrefs.SetFloat("ScroopPosition", value); }
+        get { return PlayerPrefs.HasKey("LevelScrollPosition") ? PlayerPrefs.GetFloat("LevelScrollPosition") : 1f; }
+        set { PlayerPrefs.SetFloat("LevelScrollPosition", value); }
     }
 
     public void SetSceneActivated(string sceneName, bool value)
