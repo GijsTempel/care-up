@@ -6,13 +6,16 @@ using UnityEngine.UI;
 public class CharacterPanelManager : MonoBehaviour
 {
     [SerializeField]
-    private List<GameObject> characters;
+    private List<GameObject> characters = default(List<GameObject>);
+
+    [SerializeField]   // commented out never used
+    private GameObject //previousButton = default(GameObject),
+                       //nextButton = default(GameObject),
+                       buyButton = default(GameObject),
+                       adjustButton = default(GameObject);
 
     [SerializeField]
-    private GameObject previousButton, nextButton, buyButton, adjustButton;
-
-    [SerializeField]
-    private Text currencyText;
+    private Text currencyText = default(Text);
 
     private CharacterCreationScene characterCreation;
     private CharacterCreationScene.CharGender gender;

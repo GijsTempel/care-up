@@ -5,7 +5,10 @@ using UnityEngine.UI;
 public class TabGroup : MonoBehaviour
 {
     [SerializeField]
-    private Sprite tabIdle, tabActive, topTabIdle, topTabActive = default(Sprite);
+    private Sprite tabIdle = default(Sprite),
+                   tabActive = default(Sprite),
+                   topTabIdle = default(Sprite), 
+                   topTabActive = default(Sprite);
 
     private TabButton selectedTab;
     private GameObject pagesContainer;
