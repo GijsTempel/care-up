@@ -3,14 +3,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Text.RegularExpressions;
+using CareUpAvatar;
 
 public class CharacterCreationScene : MonoBehaviour
 {
-    public enum CharGender
-    {
-        Male,
-        Female
-    };
 
     public struct FaceData
     {
@@ -21,7 +17,7 @@ public class CharacterCreationScene : MonoBehaviour
     List<FaceData> maleFaceData = new List<FaceData>();
     List<FaceData> femaleFaceData = new List<FaceData>();
 
-    public CharGender gender;
+    public PlayerAvatarData.Gender gender;
     public int headType;
     public int bodyType;
     public int glassesType;
@@ -70,12 +66,12 @@ public class CharacterCreationScene : MonoBehaviour
         if (manager != null && CharacterInfo.sex != "")
         {
             SetCurrent(
-                CharacterInfo.sex == "Female" ? CharGender.Female : CharGender.Male,
+                CharacterInfo.sex == "Female" ? PlayerAvatarData.Gender.Female : PlayerAvatarData.Gender.Male,
                 CharacterInfo.headType, CharacterInfo.bodyType, CharacterInfo.glassesType);
         }
         else
         {
-            SetCurrent(CharGender.Female, 0, 0, -1);
+            SetCurrent(PlayerAvatarData.Gender.Female, 0, 0, -1);
         }
 
         if (manager != null)
@@ -111,7 +107,7 @@ public class CharacterCreationScene : MonoBehaviour
     {
         FaceData faceData = new FaceData();
         List<FaceData> faceDataList = maleFaceData;
-        if (gender == CharGender.Female)
+        if (gender == PlayerAvatarData.Gender.Female)
             faceDataList = femaleFaceData;
         if(faceDataList.Count > headType)
         {
@@ -195,7 +191,7 @@ public class CharacterCreationScene : MonoBehaviour
     {
         foreach (Transform h in maleHeads)
         {
-            h.gameObject.SetActive(maleHeads.IndexOf(h) == headType && gender == CharGender.Male);
+            h.gameObject.SetActive(maleHeads.IndexOf(h) == headType && gender == PlayerAvatarData.Gender.Male);
         }
         FaceData faceData = GetFaceDate();
         
@@ -206,7 +202,7 @@ public class CharacterCreationScene : MonoBehaviour
     {
         foreach (Transform h in femaleHeads)
         {
-            h.gameObject.SetActive(femaleHeads.IndexOf(h) == headType && gender == CharGender.Female);
+            h.gameObject.SetActive(femaleHeads.IndexOf(h) == headType && gender == PlayerAvatarData.Gender.Female);
         }
         FaceData faceData = GetFaceDate();
         SetFace(false, faceData.eyeType, faceData.mouthType);
@@ -216,7 +212,7 @@ public class CharacterCreationScene : MonoBehaviour
     {
         foreach (Transform b in maleBodies)
         {
-            b.gameObject.SetActive(maleBodies.IndexOf(b) == bodyType && gender == CharGender.Male);
+            b.gameObject.SetActive(maleBodies.IndexOf(b) == bodyType && gender == PlayerAvatarData.Gender.Male);
         }
     }
 
@@ -224,7 +220,7 @@ public class CharacterCreationScene : MonoBehaviour
     {
         foreach (Transform b in femaleBodies)
         {
-            b.gameObject.SetActive(femaleBodies.IndexOf(b) == bodyType && gender == CharGender.Female);
+            b.gameObject.SetActive(femaleBodies.IndexOf(b) == bodyType && gender == PlayerAvatarData.Gender.Female);
         }
     }
 
@@ -232,7 +228,7 @@ public class CharacterCreationScene : MonoBehaviour
     {
         foreach (Transform g in maleGlasses)
         {
-            g.gameObject.SetActive(maleGlasses.IndexOf(g) == glassesType && gender == CharGender.Male);
+            g.gameObject.SetActive(maleGlasses.IndexOf(g) == glassesType && gender == PlayerAvatarData.Gender.Male);
         }
     }
 
@@ -240,16 +236,16 @@ public class CharacterCreationScene : MonoBehaviour
     {
         foreach (Transform g in femaleGlasses)
         {
-            g.gameObject.SetActive(femaleGlasses.IndexOf(g) == glassesType && gender == CharGender.Female);
+            g.gameObject.SetActive(femaleGlasses.IndexOf(g) == glassesType && gender == PlayerAvatarData.Gender.Female);
         }
     }
 
     void UpdateActiveObjects()
     {
-        maleChar.SetActive(gender == CharGender.Male);
-        maleFace.SetActive(gender == CharGender.Male);
-        femaleChar.SetActive(gender == CharGender.Female);
-        femaleFace.SetActive(gender == CharGender.Female);
+        maleChar.SetActive(gender == PlayerAvatarData.Gender.Male);
+        maleFace.SetActive(gender == PlayerAvatarData.Gender.Male);
+        femaleChar.SetActive(gender == PlayerAvatarData.Gender.Female);
+        femaleFace.SetActive(gender == PlayerAvatarData.Gender.Female);
 
         UpdateMaleHeads();
         UpdateFemaleHeads();
@@ -265,7 +261,7 @@ public class CharacterCreationScene : MonoBehaviour
     /// Currently no check for out of bounds, plz care
     /// </summary>
     /// <param name="glasses">-1 for None</param>
-    public void SetCurrent(CharGender g, int head, int body, int glasses)
+    public void SetCurrent(PlayerAvatarData.Gender g, int head, int body, int glasses)
     {
         gender = g;
         headType = head;
@@ -282,13 +278,13 @@ public class CharacterCreationScene : MonoBehaviour
     public void PreviousGender()
     {
         // using "if" for now in case i'll add saving last body+head of different gender instead of just resetting
-        if (gender == CharGender.Female)
+        if (gender == PlayerAvatarData.Gender.Female)
         {
-            gender = CharGender.Male;
+            gender = PlayerAvatarData.Gender.Male;
         }
         else
         {
-            gender = CharGender.Female;
+            gender = PlayerAvatarData.Gender.Female;
         }
 
         // but for now we're just resetting
@@ -310,7 +306,7 @@ public class CharacterCreationScene : MonoBehaviour
         --headType; // -1
         if (headType < 0)
         {
-            if (gender == CharGender.Female)
+            if (gender == PlayerAvatarData.Gender.Female)
             {
                 headType = femaleHeads.Count - 1;
             }
@@ -320,7 +316,7 @@ public class CharacterCreationScene : MonoBehaviour
             }
         }
 
-        if (gender == CharGender.Female)
+        if (gender == PlayerAvatarData.Gender.Female)
         {
             UpdateFemaleHeads();
         }
@@ -333,7 +329,7 @@ public class CharacterCreationScene : MonoBehaviour
     public void NextHead()
     {
         ++headType;
-        if (gender == CharGender.Female)
+        if (gender == PlayerAvatarData.Gender.Female)
         {
             if (headType >= femaleHeads.Count)
             {
@@ -356,7 +352,7 @@ public class CharacterCreationScene : MonoBehaviour
         --bodyType;
         if (bodyType < 0)
         {
-            if (gender == CharGender.Female)
+            if (gender == PlayerAvatarData.Gender.Female)
             {
                 bodyType = femaleBodies.Count - 1;
             }
@@ -366,7 +362,7 @@ public class CharacterCreationScene : MonoBehaviour
             }
         }
 
-        if (gender == CharGender.Female)
+        if (gender == PlayerAvatarData.Gender.Female)
         {
             UpdateFemaleBodies();
         }
@@ -379,7 +375,7 @@ public class CharacterCreationScene : MonoBehaviour
     public void NextBody()
     {
         ++bodyType;
-        if (gender == CharGender.Female)
+        if (gender == PlayerAvatarData.Gender.Female)
         {
             if (bodyType >= femaleBodies.Count)
             {
@@ -406,7 +402,7 @@ public class CharacterCreationScene : MonoBehaviour
             glassesType = 2; // 2 is index of #3, 0 is index of #1
         }
 
-        if (gender == CharGender.Female)
+        if (gender == PlayerAvatarData.Gender.Female)
         {
             UpdateFemaleGlasses();
         }
@@ -425,7 +421,7 @@ public class CharacterCreationScene : MonoBehaviour
             glassesType = -1;
         }
 
-        if (gender == CharGender.Female)
+        if (gender == PlayerAvatarData.Gender.Female)
         {
             UpdateFemaleGlasses();
         }
@@ -437,7 +433,7 @@ public class CharacterCreationScene : MonoBehaviour
 
     public void MaleBtn()
     {
-        SetCurrent(CharGender.Male, 0, 0, -1);
+        SetCurrent(PlayerAvatarData.Gender.Male, 0, 0, -1);
 
         //maleBtn.color = Color.green;
         //femaleBtn.color = Color.white;
@@ -445,7 +441,7 @@ public class CharacterCreationScene : MonoBehaviour
 
     public void FemaleBtn()
     {
-        SetCurrent(CharGender.Female, 0, 0, -1);
+        SetCurrent(PlayerAvatarData.Gender.Female, 0, 0, -1);
 
         //maleBtn.color = Color.white;
         //femaleBtn.color = Color.green;
@@ -472,7 +468,7 @@ public class CharacterCreationScene : MonoBehaviour
         if (check)
         { 
             CharacterInfo.SetCharacterCharacteristicsWU(
-                ((gender == CharGender.Female) ? "Female" : "Male"),
+                ((gender == PlayerAvatarData.Gender.Female) ? "Female" : "Male"),
                 headType, bodyType, glassesType);
 
             // save full name
@@ -505,7 +501,7 @@ public class CharacterCreationScene : MonoBehaviour
         {
             case "Female":
                 {
-                    gender = CharGender.Female;
+                    gender = PlayerAvatarData.Gender.Female;
 
                     if (maleChar != null)
                         maleChar.SetActive(false);
@@ -520,7 +516,7 @@ public class CharacterCreationScene : MonoBehaviour
                 }
             case "Male":
                 {
-                    gender = CharGender.Male;
+                    gender = PlayerAvatarData.Gender.Male;
                     if(femaleChar != null)
                         femaleChar.SetActive(false);
                     if(femaleFace != null)

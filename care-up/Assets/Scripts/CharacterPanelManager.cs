@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using CareUpAvatar;
 
 public class CharacterPanelManager : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class CharacterPanelManager : MonoBehaviour
     private Text currencyText = default(Text);
 
     private CharacterCreationScene characterCreation;
-    private CharacterCreationScene.CharGender gender;
+    private PlayerAvatarData.Gender gender;
 
     private static StoreManager storeManager = PlayerPrefsManager.storeManager;
     private List<CharacterItem> parameters = storeManager.CharacterItems;
@@ -125,7 +126,7 @@ public class CharacterPanelManager : MonoBehaviour
         else if (index >= parameters.Count)
             index = 0;
 
-        gender = parameters[index].gender == "Female" ? CharacterCreationScene.CharGender.Female : CharacterCreationScene.CharGender.Male;
+        gender = parameters[index].gender == "Female" ? PlayerAvatarData.Gender.Female : PlayerAvatarData.Gender.Male;
         characterCreation.SetCurrent(gender, parameters[index].headType, parameters[index].bodyType, parameters[index].glassesType);
 
         return (parameters[index].purchased, parameters[index].price);

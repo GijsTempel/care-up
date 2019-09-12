@@ -1,45 +1,85 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Xml;
+using CareUpAvatar;
 
 public class CharacterCarousel : MonoBehaviour
 {
-    public List<TextMesh> Labels;
     public List<GameObject> Platforms;
+    List<PlayerAvatar> Avatars = new List<PlayerAvatar>();
+    List<PlayerAvatarData> avatarsData = new List<PlayerAvatarData>();
 
-    string[] ll = {"A","B","C","D","E","F","G"};
     int behindMarker = 3;
     public float turnAngle = 0;
-    bool turnTrigger = false;
     int turnDir = 0;
     int nextTurnDir = 0;
     int currentChar = 1;
 
     void Start()
     {
-        int cc = currentChar - 1;
-        foreach(TextMesh t in Labels)
+        foreach (GameObject p in Platforms)
         {
-            t.text = GetLabel(cc);
+            Avatars.Add(p.transform.Find("PlayerAvatar").GetComponent<PlayerAvatar>());
+        }
+
+        string characterStoreXml = "CharacterStore";
+        TextAsset textAsset = (TextAsset)Resources.Load("Xml/" + characterStoreXml);
+        XmlDocument xmlFile = new XmlDocument();
+        xmlFile.LoadXml(textAsset.text);
+
+        XmlNodeList xmlCharacterList = xmlFile.FirstChild.NextSibling.ChildNodes;
+
+        foreach (XmlNode xmlSceneNode in xmlCharacterList)
+        {
+            PlayerAvatarData ava = new PlayerAvatarData();
+
+            ava.gender = PlayerAvatarData.Gender.Male;
+            string gender = xmlSceneNode.Attributes["gender"].Value;
+            if (gender == "Female")
+                ava.gender = PlayerAvatarData.Gender.Female;
+
+            int.TryParse(xmlSceneNode.Attributes["glassesType"].Value, out int glassesType);
+            ava.glassesType = glassesType;
+            int.TryParse(xmlSceneNode.Attributes["bodyType"].Value, out int bodyType);
+            ava.bodyType = bodyType;
+            int.TryParse(xmlSceneNode.Attributes["headType"].Value, out int headType);
+            ava.headType = headType;
+            int.TryParse(xmlSceneNode.Attributes["mouth"].Value, out int mouthType);
+            ava.mouthType = mouthType;
+            int.TryParse(xmlSceneNode.Attributes["eye"].Value, out int eyeType);
+            ava.eyeType = eyeType;
+
+            avatarsData.Add(ava);
+        }
+
+        int cc = currentChar - 1;
+        foreach (PlayerAvatar a in Avatars)
+        {
+            PlayerAvatarData d = GetAvaData(cc);
+            if (d != null)
+            {
+                a.avatarData = GetAvaData(cc);
+                a.UpdateCharacter();
+            }
             cc++;
         }
     }
 
-    string GetLabel(int num)
+    PlayerAvatarData GetAvaData(int n)
     {
-        if (num >= 0 && num < (ll.Length))
+        if (n >= 0 && n < (avatarsData.Count))
         {
-            return ll[num];
+            return avatarsData[n];
         }
-        return "";
+        return null;
     }
 
     public void Turn(int dir)
     {   int nextChar = currentChar + dir;
-        if (nextChar >= 0 && nextChar < ll.Length-1)
+        if (nextChar >= 0 && nextChar < avatarsData.Count)
             nextTurnDir = dir;
     }
-
 
     void Update()
     {
@@ -49,11 +89,18 @@ public class CharacterCarousel : MonoBehaviour
             nextTurnDir = 0;
 
             currentChar += turnDir;
-            string label = GetLabel(currentChar + 2);
+            PlayerAvatarData d = GetAvaData(currentChar + 1);
             if (turnDir < 0)
-                label = GetLabel(currentChar - 1);
-            Labels[behindMarker].text = label;
-            Platforms[behindMarker].SetActive(label != "");
+            {
+                d = GetAvaData(currentChar - 1);
+            }
+            if (d != null)
+            {
+                Avatars[behindMarker].avatarData = d;
+                Avatars[behindMarker].UpdateCharacter();
+            }
+
+            Platforms[behindMarker].SetActive(d != null);
 
             behindMarker += turnDir;
             if (behindMarker > 3)
