@@ -3,7 +3,7 @@
 public class LoadCharacterScene : MonoBehaviour
 {
     [SerializeField]
-    private GameObject characters;
+    private GameObject characters = default(GameObject);
 
     public void LoadScene()
     {
