@@ -5,17 +5,19 @@ using UnityEngine;
 public class CharacterCarousel : MonoBehaviour
 {
     public List<TextMesh> Labels;
+    public List<GameObject> Platforms;
+
     string[] ll = {"A","B","C","D","E","F","G"};
     int behindMarker = 3;
     public float turnAngle = 0;
     bool turnTrigger = false;
     int turnDir = 0;
     int nextTurnDir = 0;
-    public int currentChar = 0;
+    int currentChar = 1;
 
     void Start()
     {
-        int cc = currentChar;
+        int cc = currentChar - 1;
         foreach(TextMesh t in Labels)
         {
             t.text = GetLabel(cc);
@@ -33,8 +35,9 @@ public class CharacterCarousel : MonoBehaviour
     }
 
     public void Turn(int dir)
-    {
-        nextTurnDir = dir;
+    {   int nextChar = currentChar + dir;
+        if (nextChar >= 0 && nextChar < ll.Length-1)
+            nextTurnDir = dir;
     }
 
 
@@ -46,21 +49,17 @@ public class CharacterCarousel : MonoBehaviour
             nextTurnDir = 0;
 
             currentChar += turnDir;
-            if (turnDir > 0)
-            {
-                Labels[behindMarker].text = GetLabel(currentChar + 2);
-            }
-            else
-            {
-                Labels[behindMarker].text = GetLabel(currentChar - 2);
-                
-            }
+            string label = GetLabel(currentChar + 2);
+            if (turnDir < 0)
+                label = GetLabel(currentChar - 1);
+            Labels[behindMarker].text = label;
+            Platforms[behindMarker].SetActive(label != "");
+
             behindMarker += turnDir;
             if (behindMarker > 3)
                 behindMarker = 0;
             else if (behindMarker < 0)
                 behindMarker = 3;
-            print(behindMarker);
     
         }
         if (turnDir != 0)
