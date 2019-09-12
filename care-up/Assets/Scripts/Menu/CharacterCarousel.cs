@@ -76,7 +76,7 @@ public class CharacterCarousel : MonoBehaviour
             }
             else
             {
-                rot.y += turnDir * 5f;
+                rot.y += turnDir * 300f * Time.deltaTime;
             }
             transform.rotation = Quaternion.Euler(rot.x, rot.y, rot.z);
         }
