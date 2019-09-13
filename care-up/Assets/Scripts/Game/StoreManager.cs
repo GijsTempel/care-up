@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using System.Xml;
+using CareUpAvatar;
 
 public class StoreItem
 {
@@ -30,27 +31,23 @@ public class CharacterItem
 {
     public int index;
     public int price;
-    public string gender;
-    public int glassesType;
-    public int bodyType;
-    public int headType;
     public bool purchased;
 
+    public PlayerAvatarData playerAvatar;
+
     public CharacterItem() { index = -1; price = 0; }
-    public CharacterItem(int indexValue, int priceValue, string genderValue, int glassesTypeValue, int bodyTypeValue, int headTypeValue, bool purchasedValue)
+    public CharacterItem(int indexValue, int priceValue, bool purchasedValue, PlayerAvatarData playerAvatarValue)
     {
         index = indexValue;
         price = priceValue;
-        gender = genderValue;
-        glassesType = glassesTypeValue;
-        bodyType = bodyTypeValue;
-        headType = headTypeValue;
         purchased = purchasedValue;
+        playerAvatar = playerAvatarValue;
     }
 }
 
 public class StoreManager
 {
+    public List<PlayerAvatarData> avatarsData = new List<PlayerAvatarData>();
     private int currentCurrency = 0;
     private int currentPresents = 0;
     private List<StoreCategory> storeItems = new List<StoreCategory>();
@@ -99,7 +96,7 @@ public class StoreManager
 
         foreach (XmlNode xmlSceneNode in xmlCharacterList)
         {
-            int index = -1, price = 1; 
+            int index = -1, price = 1;
 
             int.TryParse(xmlSceneNode.Attributes["index"].Value, out index);
             int.TryParse(xmlSceneNode.Attributes["price"].Value, out price);
@@ -108,16 +105,20 @@ public class StoreManager
             int.TryParse(xmlSceneNode.Attributes["glassesType"].Value, out int glassesType);
             int.TryParse(xmlSceneNode.Attributes["bodyType"].Value, out int bodyType);
             int.TryParse(xmlSceneNode.Attributes["headType"].Value, out int headType);
+            int.TryParse(xmlSceneNode.Attributes["mouth"].Value, out int mouthType);
+            int.TryParse(xmlSceneNode.Attributes["eye"].Value, out int eyeType);
 
             bool purchased = DatabaseManager.FetchField("Store", "CharacterItem_" + index.ToString()) == "true";
 
-            CharacterItems.Add(new CharacterItem(index, price, gender, glassesType, bodyType, headType, purchased));
+            Gender characterGender = (gender == "Female") ? Gender.Female : Gender.Male;
+            PlayerAvatarData playerAvatar = new PlayerAvatarData(characterGender, headType, bodyType, glassesType, mouthType, eyeType);
+            CharacterItems.Add(new CharacterItem(index, price, purchased, playerAvatar));          
         }
 
         // get amount of currency/presents saved
         int.TryParse(DatabaseManager.FetchField("Store", "Currency"), out currentCurrency);
         int.TryParse(DatabaseManager.FetchField("Store", "Presents"), out currentPresents);
-    }  
+    }
 
     public void ModifyCurrencyBy(int amount)
     {

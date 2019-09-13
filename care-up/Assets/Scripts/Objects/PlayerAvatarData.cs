@@ -1,22 +1,22 @@
 ﻿namespace CareUpAvatar
 {
+    public enum Actions
+    {
+        Idle,
+        Dance,
+        Sad,
+        Happy,
+        Posing
+    };
+
+    public enum Gender
+    {
+        Male,
+        Female
+    };
+
     public class PlayerAvatarData
     {
-        public enum Gender
-        {
-            Male,
-            Female
-        };
-
-        public enum Actions
-        {
-            Idle,
-            Dance,
-            Sad,
-            Happy,
-            Posing
-        };
-
         public Gender gender = new Gender();
         public int headType;
         public int bodyType;
@@ -42,6 +42,4 @@
             glassesType = 0;
         }
     }
-     
-
 }

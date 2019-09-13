@@ -1,11 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using CareUpAvatar;
 
 public class PlayerAvatar : MonoBehaviour
 {
+    public UVWarp m_leftEyeObject;
+    public UVWarp m_rightEyeObject;
+    public UVWarp m_mouthObject;
+    public UVWarp f_leftEyeObject;
+    public UVWarp f_rightEyeObject;
+    public UVWarp f_mouthObject;
+
     public PlayerAvatarData avatarData = new PlayerAvatarData();
+
+    private GameObject maleChar;
+    private GameObject femaleChar;
+
+    private GameObject maleFace;
+    private GameObject femaleFace;
 
     private List<Transform> maleHeads = new List<Transform>();
     private List<Transform> femaleHeads = new List<Transform>();
@@ -14,20 +26,7 @@ public class PlayerAvatar : MonoBehaviour
     private List<Transform> maleGlasses = new List<Transform>();
     private List<Transform> femaleGlasses = new List<Transform>();
 
-    private GameObject maleChar;
-    private GameObject femaleChar;
-
-    private GameObject maleFace;
-    private GameObject femaleFace;
-
-    public UVWarp m_leftEyeObject;
-    public UVWarp m_rightEyeObject;
-    public UVWarp m_mouthObject;
-    public UVWarp f_leftEyeObject;
-    public UVWarp f_rightEyeObject;
-    public UVWarp f_mouthObject;
-
-    PlayerAvatarData.Actions currentAction = PlayerAvatarData.Actions.Idle;
+    Actions currentAction = Actions.Idle;
 
     private void Awake()
     {
@@ -55,47 +54,40 @@ public class PlayerAvatar : MonoBehaviour
         //trim three last ones cuz those are glasses
         femaleChar.transform.Find("f_glasses").GetComponentsInChildren<Transform>(true, femaleGlasses);
         maleChar.transform.Find("m_glasses").GetComponentsInChildren<Transform>(true, maleGlasses);
-            }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         femaleGlasses.RemoveAt(0);
         maleGlasses.RemoveAt(0);
 
-
-        avatarData.gender = PlayerAvatarData.Gender.Female;
+        avatarData.gender = Gender.Female;
         avatarData.headType = 4;
         avatarData.glassesType = 0;
         avatarData.bodyType = 7;
         UpdateCharacter();
-
     }
 
-    public void SetAnimationAction(PlayerAvatarData.Actions action, bool force = false)
+    public void SetAnimationAction(Actions action, bool force = false)
     {
         if (action != currentAction || force)
         {
             Animator anim = GetComponent<Animator>();
             switch (action)
             {
-                case PlayerAvatarData.Actions.Idle:
-                    anim.SetTrigger("idle" + Random.Range(1,3).ToString());
+                case Actions.Idle:
+                    anim.SetTrigger("idle" + Random.Range(1, 3).ToString());
                     break;
-                case PlayerAvatarData.Actions.Dance:
-                    anim.SetTrigger("dance" + Random.Range(1,3).ToString());
+                case Actions.Dance:
+                    anim.SetTrigger("dance" + Random.Range(1, 3).ToString());
                     break;
-                case PlayerAvatarData.Actions.Sad:
-                    anim.SetTrigger("sad" + Random.Range(1,3).ToString());
+                case Actions.Sad:
+                    anim.SetTrigger("sad" + Random.Range(1, 3).ToString());
                     break;
             }
             currentAction = action;
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     void SetFace(bool isMale, int eyes, int mouth)
@@ -103,6 +95,7 @@ public class PlayerAvatar : MonoBehaviour
         UVWarp leftEyeObject = f_leftEyeObject;
         UVWarp rightEyeObject = f_rightEyeObject;
         UVWarp mouthObject = f_mouthObject;
+
         if (isMale)
         {
             leftEyeObject = m_leftEyeObject;
@@ -122,7 +115,7 @@ public class PlayerAvatar : MonoBehaviour
     {
         foreach (Transform h in maleHeads)
         {
-            h.gameObject.SetActive(maleHeads.IndexOf(h) == avatarData.headType && avatarData.gender == PlayerAvatarData.Gender.Male);
+            h.gameObject.SetActive(maleHeads.IndexOf(h) == avatarData.headType && avatarData.gender == Gender.Male);
         }
         SetFace(true, avatarData.eyeType, avatarData.mouthType);
     }
@@ -131,15 +124,16 @@ public class PlayerAvatar : MonoBehaviour
     {
         foreach (Transform h in femaleHeads)
         {
-            h.gameObject.SetActive(femaleHeads.IndexOf(h) == avatarData.headType && avatarData.gender == PlayerAvatarData.Gender.Female);
+            h.gameObject.SetActive(femaleHeads.IndexOf(h) == avatarData.headType && avatarData.gender == Gender.Female);
         }
         SetFace(true, avatarData.eyeType, avatarData.mouthType);
     }
+
     void UpdateMaleBodies()
     {
         foreach (Transform b in maleBodies)
         {
-            b.gameObject.SetActive(maleBodies.IndexOf(b) == avatarData.bodyType && avatarData.gender == PlayerAvatarData.Gender.Male);
+            b.gameObject.SetActive(maleBodies.IndexOf(b) == avatarData.bodyType && avatarData.gender == Gender.Male);
         }
     }
 
@@ -147,7 +141,7 @@ public class PlayerAvatar : MonoBehaviour
     {
         foreach (Transform b in femaleBodies)
         {
-            b.gameObject.SetActive(femaleBodies.IndexOf(b) == avatarData.bodyType && avatarData.gender == PlayerAvatarData.Gender.Female);
+            b.gameObject.SetActive(femaleBodies.IndexOf(b) == avatarData.bodyType && avatarData.gender == Gender.Female);
         }
     }
 
@@ -155,7 +149,7 @@ public class PlayerAvatar : MonoBehaviour
     {
         foreach (Transform g in maleGlasses)
         {
-            g.gameObject.SetActive(maleGlasses.IndexOf(g) == avatarData.glassesType && avatarData.gender == PlayerAvatarData.Gender.Male);
+            g.gameObject.SetActive(maleGlasses.IndexOf(g) == avatarData.glassesType && avatarData.gender == Gender.Male);
         }
     }
 
@@ -163,16 +157,16 @@ public class PlayerAvatar : MonoBehaviour
     {
         foreach (Transform g in femaleGlasses)
         {
-            g.gameObject.SetActive(femaleGlasses.IndexOf(g) == avatarData.glassesType && avatarData.gender == PlayerAvatarData.Gender.Female);
+            g.gameObject.SetActive(femaleGlasses.IndexOf(g) == avatarData.glassesType && avatarData.gender == Gender.Female);
         }
     }
 
     public void UpdateCharacter()
     {
-        maleChar.SetActive(avatarData.gender == PlayerAvatarData.Gender.Male);
-        maleFace.SetActive(avatarData.gender == PlayerAvatarData.Gender.Male);
-        femaleChar.SetActive(avatarData.gender == PlayerAvatarData.Gender.Female);
-        femaleFace.SetActive(avatarData.gender == PlayerAvatarData.Gender.Female);
+        maleChar.SetActive(avatarData.gender == Gender.Male);
+        maleFace.SetActive(avatarData.gender == Gender.Male);
+        femaleChar.SetActive(avatarData.gender == Gender.Female);
+        femaleFace.SetActive(avatarData.gender == Gender.Female);
 
         UpdateMaleHeads();
         UpdateFemaleHeads();
@@ -182,8 +176,5 @@ public class PlayerAvatar : MonoBehaviour
 
         UpdateMaleGlasses();
         UpdateFemaleGlasses();
-
-        //UpdateMaleFace();
-        //UpdateFemaleFace();
     }
 }
