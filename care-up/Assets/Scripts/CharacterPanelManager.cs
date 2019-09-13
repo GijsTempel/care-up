@@ -113,7 +113,7 @@ public class CharacterPanelManager : MonoBehaviour
         {
             characterCreation.Initialize(items[i]);
 
-            gender = parameters[i].gender == "Female" ? CharacterCreationScene.CharGender.Female : CharacterCreationScene.CharGender.Male;
+            gender = parameters[i].gender == "Female" ? PlayerAvatarData.Gender.Female : PlayerAvatarData.Gender.Male;
             characterCreation.SetCurrent(gender, parameters[i].headType, parameters[i].bodyType, parameters[i].glassesType);
         }
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using CareUpAvatar;
 
 public class CharacterSelectionManager : MonoBehaviour
 {
@@ -34,9 +35,9 @@ public class CharacterSelectionManager : MonoBehaviour
 
         if (check)
         {
-            CharacterInfo.SetCharacterCharacteristicsWU(
-                ((gender == CharGender.Female) ? "Female" : "Male"),
-                headType, bodyType, glassesType);
+            // CharacterInfo.SetCharacterCharacteristicsWU(
+            //     ((gender == CharGender.Female) ? "Female" : "Male"),
+            //     headType, bodyType, glassesType);
 
             // save full name
             PlayerPrefsManager.SetFullName(inputNameField.GetComponent<InputField>().text);
