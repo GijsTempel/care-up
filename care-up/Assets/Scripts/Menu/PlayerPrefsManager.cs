@@ -147,7 +147,7 @@ public class PlayerPrefsManager : MonoBehaviour
                     "/RegisterArea/Buttons/PurchaseButton_UWP"));
             }
 
-            if ((Application.platform != RuntimePlatform.Android) && !windows)
+            if ((Application.platform != RuntimePlatform.Android))
             {
                 Destroy(GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/WUSerialScreen" +
                     "/RegisterArea/Buttons/PurchaseButton_AndroidWeb"));
