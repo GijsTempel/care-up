@@ -36,7 +36,6 @@ public class CharacterCarousel : MonoBehaviour
         int currentMarker = behindMarker - 2;
         if (currentMarker < 0)
             currentMarker = 4 + currentMarker;
-        print(behindMarker.ToString() + "  " + currentMarker);
         return currentMarker;
     }
 

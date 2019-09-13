@@ -119,7 +119,6 @@ public class StoreManager
         // get amount of currency/presents saved
         int.TryParse(DatabaseManager.FetchField("Store", "Currency"), out currentCurrency);
         int.TryParse(DatabaseManager.FetchField("Store", "Presents"), out currentPresents);
-        Debug.Log("Data is loaded");
     }
 
     public void ModifyCurrencyBy(int amount)
