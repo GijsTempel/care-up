@@ -24,7 +24,7 @@ public class RobotUITabInfo : RobotUITabs
     {
         // never used?
         //GameObject FullScreenPDF_UI = 
-        Instantiate(Resources.Load("Prefabs/PDFFullScreen"));
+        Instantiate(Resources.Load("PDFFullScreen/PDFFullScreen"));
         //as GameObject;
 
         tutorial_fullscreen = true;

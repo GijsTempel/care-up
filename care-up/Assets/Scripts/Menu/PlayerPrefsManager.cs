@@ -147,7 +147,7 @@ public class PlayerPrefsManager : MonoBehaviour
                     "/RegisterArea/Buttons/PurchaseButton_UWP"));
             }
 
-            if ((Application.platform != RuntimePlatform.Android) && !windows)
+            if ((Application.platform != RuntimePlatform.Android))
             {
                 Destroy(GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/WUSerialScreen" +
                     "/RegisterArea/Buttons/PurchaseButton_AndroidWeb"));
@@ -226,6 +226,12 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         get { return PlayerPrefs.HasKey("Volume") ? PlayerPrefs.GetFloat("Volume") : 1.0f; }
         set { PlayerPrefs.SetFloat("Volume", value); }
+    }
+
+    public float LevelScrollPosition
+    {
+        get { return PlayerPrefs.HasKey("LevelScrollPosition") ? PlayerPrefs.GetFloat("LevelScrollPosition") : 1f; }
+        set { PlayerPrefs.SetFloat("LevelScrollPosition", value); }
     }
 
     public void SetSceneActivated(string sceneName, bool value)

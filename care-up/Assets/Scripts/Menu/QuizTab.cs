@@ -87,10 +87,10 @@ public class QuizTab : MonoBehaviour
             questionList.Add(step);
         }
 
-        descriptionText = transform.GetChild(1).Find("Description").GetComponent<Text>();
+        descriptionText = transform.GetChild(1).Find("ScrollViewDescription/Viewport/Content/Description").GetComponent<Text>();
         continueButton = transform.GetChild(1).Find("Continue").GetComponent<Button>();
         backToOptionsButton = transform.GetChild(1).Find("Back").GetComponent<Button>();
-        answeredTitleText = transform.GetChild(1).Find("QuestionText").GetComponent<Text>();
+        answeredTitleText = transform.GetChild(1).Find("AnswerTitle").GetComponent<Text>();
 
         continueBtn = false;
         continueButton.gameObject.SetActive(false);
@@ -142,7 +142,7 @@ public class QuizTab : MonoBehaviour
         GameObject.FindObjectOfType<PatientInfoManager>().SetTabActive("QuizTab");
 
         gameObject.SetActive(true);
-      
+
         int currentQuestionID = Random.Range(0, questionList[currentStep].Count);
 
         Question current = questionList[currentStep][currentQuestionID];
@@ -188,6 +188,8 @@ public class QuizTab : MonoBehaviour
     {
         transform.GetChild(0).gameObject.SetActive(false);
         transform.GetChild(1).gameObject.SetActive(true);
+        transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().interactable = true;
+        transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
 
         GameObject.Find("GameLogic").GetComponent<ActionManager>().UpdatePointsDirectly(
             questionList[currentStep][currentQuestionID].points);
@@ -210,6 +212,19 @@ public class QuizTab : MonoBehaviour
         //GameObject.FindObjectOfType<RobotManager>().ToggleCloseBtn(true); // enable close btn
     }
 
+    private void ChangeButtonPosition()
+    {
+        if (transform.GetChild(1).Find("ScrollViewDescription/Scrollbar Vertical") != null)
+        {
+            Vector3 pos = transform.position;
+            pos.y =- 100;
+            pos.x =+ 70;
+
+            backToOptionsButton.transform.position = pos;
+            continueButton.transform.position = pos;
+        }
+    }
+
     public void WrongAnswer(string description)
     {
 #if UNITY_EDITOR
@@ -220,8 +235,11 @@ public class QuizTab : MonoBehaviour
                 return;
             }
 #endif
+
         transform.GetChild(0).gameObject.SetActive(false);
         transform.GetChild(1).gameObject.SetActive(true);
+        transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().interactable = true;
+        transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
 
         GameObject.Find("GameLogic").GetComponent<ActionManager>().ActivatePenalty();
         ActionManager.WrongAction();
@@ -247,6 +265,8 @@ public class QuizTab : MonoBehaviour
     {
         GameObject.FindObjectOfType<PatientInfoManager>().SetInteractability(true);
         GameObject.FindObjectOfType<RobotManager>().ToggleCloseBtn(true);
+        transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().interactable = false;
+        transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().blocksRaycasts = false;
 
         Continue();
 
@@ -257,7 +277,7 @@ public class QuizTab : MonoBehaviour
         //icons.Find("QuizTab").gameObject.SetActive(false);
         quiz = false;
         // close tab
-       // BackButton();
+        // BackButton();
         // close UI 
         GameObject.FindObjectOfType<PlayerScript>().CloseRobotUI();
         // enable player if needed
@@ -274,6 +294,8 @@ public class QuizTab : MonoBehaviour
     public void OnBackToOptionsButton()
     {
         transform.GetChild(0).gameObject.SetActive(true);
+        transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().interactable = true;
+        transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
         transform.GetChild(1).gameObject.SetActive(false);
     }
 

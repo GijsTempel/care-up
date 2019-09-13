@@ -98,7 +98,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
         bool firstScene = true;
         LeaderBoardSceneButton.buttons.Clear();
 // FindObjectOfType<PlayerPrefsManager>().demoVersion
-
+        Transform protocolsTransorm = GameObject.Find("UMenuProManager/MenuCanvas/Play/InfoHolder/ProtocolList/ProtocolsHolder/Protocols/content").transform;
         foreach (XmlNode xmlSceneNode in xmlSceneList)
         {
             // bool activated = PlayerPrefs.GetInt(xmlSceneNode.Attributes["id"].Value + " activated") == 1;
@@ -114,8 +114,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
             // if we're here, then we have real scene, that is not hidden
             // instantiating panel
-            GameObject sceneUnitObject = Instantiate(Resources.Load<GameObject>("Prefabs/UI/SceneSelectionUnit"),
-                GameObject.Find("UMenuProManager/MenuCanvas/Play/InfoHolder/ProtocolList/ProtocolsHolder/Protocols/content").transform);
+            GameObject sceneUnitObject = Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/UI/SceneSelectionUnit"), protocolsTransorm);
             sceneUnitObject.name = "SceneSelectionUnit"; // i dont like that 'clone' word at the end, ugh
             LevelButton sceneUnit = sceneUnitObject.GetComponent<LevelButton>();
             bool locked = false;
@@ -261,7 +260,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
             }
 
             // leaderboard stuff
-            GameObject button = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/UI/LeaderBoardSceneButton"),
+            GameObject button = Instantiate<GameObject>(Resources.Load<GameObject>("NecessaryPrefabs/UI/LeaderBoardSceneButton"),
                 GameObject.Find("UMenuProManager/MenuCanvas/Leaderboard/InfoHolder/ProtocolsHolder/Scroll View/Viewport/Content").transform);
             LeaderBoardSceneButton buttonInfo = button.GetComponent<LeaderBoardSceneButton>();
             button.transform.Find("Text").GetComponent<Text>().text = sceneUnit.displayName;
@@ -294,7 +293,19 @@ public class LevelSelectionScene_UI : MonoBehaviour
             sceneUnit.testDisabled = (xmlSceneNode.Attributes["test"] != null
                 && xmlSceneNode.Attributes["test"].Value == "disabled");
         }
+        ScrollRect levelScroll =  GameObject.Find("UMenuProManager/MenuCanvas/Play/InfoHolder/ProtocolList/ProtocolsHolder").GetComponent<ScrollRect>();
+        
+        levelScroll.verticalNormalizedPosition = ppManager.LevelScrollPosition;
     }
+
+
+    public void LevelScrollChanged()
+    {
+        ScrollRect levelScroll =  GameObject.Find("UMenuProManager/MenuCanvas/Play/InfoHolder/ProtocolList/ProtocolsHolder").GetComponent<ScrollRect>();
+       
+        ppManager.LevelScrollPosition = levelScroll.verticalNormalizedPosition;
+    }
+
     public void UpdateLeaderBoard(string sceneName)
     {
         //Debug.Log("UpdateLeaderBoard:::" + sceneName);

@@ -23,23 +23,31 @@ public class MuteSoundButton : MonoBehaviour {
 
     public void ToggleMuteButton()
     {
-        if (AudioListener.volume != 0.0f)
+        PlayerPrefsManager manager = FindObjectOfType<PlayerPrefsManager>();
+        if (manager != null)
         {
-            AudioListener.volume = 0.0f;
-            selfImage.sprite = muted;
-        }
-        else
-        {
-            PlayerPrefsManager manager = FindObjectOfType<PlayerPrefsManager>();
-            if (manager != null)
+            if (manager.Volume > 0f)
             {
-                AudioListener.volume = manager.Volume;
-                selfImage.sprite = normal;
+                manager.Volume = 0f;
+                selfImage.sprite = muted;
             }
             else
             {
-                Debug.LogWarning("Cannot unmute without Preferences. Start from the first scene.");
-				AudioListener.volume = 1f;
+                manager.Volume = 1f;
+                selfImage.sprite = normal;
+            }
+            AudioListener.volume = manager.Volume;
+        }
+        else
+        {
+            if (AudioListener.volume > 0.0f)
+            {
+                AudioListener.volume = 0.0f;
+                selfImage.sprite = muted;
+            }
+            else
+            {
+                AudioListener.volume = 1f;
                 selfImage.sprite = normal;
             }
         }

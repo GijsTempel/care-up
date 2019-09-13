@@ -97,7 +97,7 @@ public class MainMenu : MonoBehaviour {
                         continue; // don't show 0 percent scores as they are not completed even once
 
                     GameObject layoutGroup = GameObject.Find("UMenuProManager/MenuCanvas/Account_Scores/Account_Panel_UI/ScoresHolder/Scores/LayoutGroup");
-                    GameObject scoreObject = Instantiate(Resources.Load<GameObject>("Prefabs/UI/TestHighscore"), layoutGroup.transform);
+                    GameObject scoreObject = Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/UI/TestHighscore"), layoutGroup.transform);
                     scoreObject.transform.Find("SceneName").GetComponent<Text>().text = sceneName;
 
                     scoreObject.transform.Find("Percent").GetComponent<Text>().text = percent.ToString() + "%";

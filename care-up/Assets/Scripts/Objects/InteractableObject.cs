@@ -5,7 +5,16 @@ using UnityEngine.UI;
 /// General abstract class for objects.
 /// </summary>
 public class InteractableObject : MonoBehaviour {
-	public int ObjectID = 0;
+
+    public string PrefabName = "";
+    public enum AssetSource
+    {
+        None,
+        Included,
+        Resources,
+        Bundle
+    };
+    public int ObjectID = 0;
 
     public string description;
     public string nameArticle;
@@ -13,8 +22,9 @@ public class InteractableObject : MonoBehaviour {
 
     public bool muplipleMesh = false;
     public Vector3 descriptionOffset;
-    GameUI gameUI__;
+    public AssetSource assetSource;
 
+    GameUI gameUI__;
     protected Renderer rend;
    // protected Shader onMouseOverShader;
 

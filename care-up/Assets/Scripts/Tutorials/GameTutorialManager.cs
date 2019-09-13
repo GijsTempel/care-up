@@ -37,6 +37,7 @@ public class GameTutorialManager : MonoBehaviour
     private Vector2 secondPressPosition;
     private Vector2 currentSwipe;
 
+    public GameObject ImageHolder;
     private void Awake()
     {
         LoadInfo();
@@ -100,12 +101,11 @@ public class GameTutorialManager : MonoBehaviour
 
             if (step.Attributes["magnifier_y"] != null)
                 float.TryParse(step.Attributes["magnifier_y"].Value, out _y);
-            
             tutorialSteps.Add(new TutorialStep
             {
                 Title = step.Attributes["title"].Value,
                 Description = step.Attributes["description"].Value,
-                TutorialImage = Resources.Load<Sprite>($"Sprites/TutorialImages/{step.Attributes["image"].Value}"),
+                TutorialImage = ImageHolder.transform.Find(step.Attributes["image"].Value).GetComponent<Image>().sprite, //Resources.Load<Sprite>($"Sprites/TutorialImages/{step.Attributes["image"].Value}"),
                 MagnifierX = _x,
                 MagnifierY = _y
             });
@@ -113,7 +113,7 @@ public class GameTutorialManager : MonoBehaviour
 
         for(int i = 0; i < tutorialSteps.Count; i++)
         {
-            GameObject dot = Instantiate(Resources.Load<GameObject>("Prefabs/UI/dotTut"), DotPanel.transform) as GameObject;
+            GameObject dot = Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/UI/dotTut"), DotPanel.transform) as GameObject;
             dot.transform.SetParent(DotPanel.transform);
             dots.Add(dot);
         }        

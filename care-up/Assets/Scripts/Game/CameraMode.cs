@@ -91,7 +91,7 @@ public class CameraMode : MonoBehaviour
         blur = Camera.main.GetComponent<UnityStandardAssets.ImageEffects.BlurOptimized>();
         if (blur == null) Debug.Log("No Blur Attached to main camera.");
 
-        confirmUI = (GameObject)Instantiate(Resources.Load("Prefabs/UI/ConfirmUI"), Vector3.zero, Quaternion.identity);
+        confirmUI = (GameObject)Instantiate(Resources.Load("NecessaryPrefabs/UI/ConfirmUI"), Vector3.zero, Quaternion.identity);
         confirmUI.SetActive(false);
     }
     void Update()

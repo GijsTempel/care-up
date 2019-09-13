@@ -30,7 +30,8 @@ public class PlayerSpawn : MonoBehaviour
         GameObject UIPrefab = null;
         if (GameObject.FindObjectOfType(typeof(GameUI)) == null)
         {
-            UIPrefab = Instantiate(Resources.Load("Prefabs/UI/UI") as GameObject);
+            // UIPrefab = Instantiate(Resources.Load("NecessaryPrefabs/UI/UI_debug") as GameObject);
+            UIPrefab = Instantiate(Resources.Load("NecessaryPrefabs/UI/UI") as GameObject);
             UIPrefab.name = "UI";
         }
 
@@ -51,11 +52,11 @@ public class PlayerSpawn : MonoBehaviour
 
         player.GetComponentInChildren<Animator>().SetInteger("sceneID", sceneID);
 
-        GameObject itemControls = Instantiate(Resources.Load("Prefabs/UI/ItemControls") as GameObject,
+        GameObject itemControls = Instantiate(Resources.Load("NecessaryPrefabs/UI/ItemControls") as GameObject,
             transform.position, transform.rotation);
         itemControls.name = "ItemControls";
 
-        GameObject itemDescription = Instantiate(Resources.Load("Prefabs/UI/ItemDescription") as GameObject,
+        GameObject itemDescription = Instantiate(Resources.Load("NecessaryPrefabs/UI/ItemDescription") as GameObject,
             transform.position, transform.rotation);
         itemDescription.name = "ItemDescription";
 
@@ -72,7 +73,7 @@ public class PlayerSpawn : MonoBehaviour
         //iPad.name = "ipad";
         //IpadLoadXmlInfo(iPad.transform);
 
-        GameObject robot = Instantiate(Resources.Load("Prefabs/robot") as GameObject,
+        GameObject robot = Instantiate(Resources.Load("NecessaryPrefabs/robot") as GameObject,
             robotPosition, Quaternion.Euler(robotRotation));
         robot.name = "robot";
 
