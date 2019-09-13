@@ -16,6 +16,22 @@ public class CharacterCarousel : MonoBehaviour
     int nextTurnDir = 0;
     int currentChar = 1;
 
+    public void Initialize()
+    {
+        int cc = currentChar - 1;
+        foreach (PlayerAvatar a in Avatars)
+        {
+            PlayerAvatarData d = GetAvaData(cc);
+            if (d != null)
+            {
+                a.avatarData = GetAvaData(cc);
+                a.UpdateCharacter();
+            }
+            a.SetAnimationAction(PlayerAvatarData.Actions.Idle, true);
+            cc++;
+        }
+    }
+
     void Start()
     {
         foreach (GameObject p in Platforms)
@@ -52,18 +68,7 @@ public class CharacterCarousel : MonoBehaviour
 
             avatarsData.Add(ava);
         }
-
-        int cc = currentChar - 1;
-        foreach (PlayerAvatar a in Avatars)
-        {
-            PlayerAvatarData d = GetAvaData(cc);
-            if (d != null)
-            {
-                a.avatarData = GetAvaData(cc);
-                a.UpdateCharacter();
-            }
-            cc++;
-        }
+        Initialize();
     }
 
     PlayerAvatarData GetAvaData(int n)
@@ -107,6 +112,11 @@ public class CharacterCarousel : MonoBehaviour
                 behindMarker = 0;
             else if (behindMarker < 0)
                 behindMarker = 3;
+            
+            foreach(PlayerAvatar a in Avatars)
+            {
+                a.SetAnimationAction(PlayerAvatarData.Actions.Idle);
+            }
     
         }
         if (turnDir != 0)
@@ -120,6 +130,14 @@ public class CharacterCarousel : MonoBehaviour
                 rot.y = nextAngle;
                 turnDir = 0;
                 turnAngle = nextAngle;
+                if (nextTurnDir == 0)
+                {
+                    int currentMarker = behindMarker - 2;
+                    if (currentMarker < 0)
+                        currentMarker = 4 + currentMarker;
+                    print(currentMarker);
+                    Avatars[currentMarker].SetAnimationAction(PlayerAvatarData.Actions.Dance);
+                }
             }
             else
             {

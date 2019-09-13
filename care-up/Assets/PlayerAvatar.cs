@@ -27,6 +27,8 @@ public class PlayerAvatar : MonoBehaviour
     public UVWarp f_rightEyeObject;
     public UVWarp f_mouthObject;
 
+    PlayerAvatarData.Actions currentAction = PlayerAvatarData.Actions.Idle;
+
     private void Awake()
     {
         femaleChar = transform.Find("female").gameObject;
@@ -67,6 +69,27 @@ public class PlayerAvatar : MonoBehaviour
         avatarData.bodyType = 7;
         UpdateCharacter();
 
+    }
+
+    public void SetAnimationAction(PlayerAvatarData.Actions action, bool force = false)
+    {
+        if (action != currentAction || force)
+        {
+            Animator anim = GetComponent<Animator>();
+            switch (action)
+            {
+                case PlayerAvatarData.Actions.Idle:
+                    anim.SetTrigger("idle" + Random.Range(1,3).ToString());
+                    break;
+                case PlayerAvatarData.Actions.Dance:
+                    anim.SetTrigger("dance" + Random.Range(1,3).ToString());
+                    break;
+                case PlayerAvatarData.Actions.Sad:
+                    anim.SetTrigger("sad" + Random.Range(1,3).ToString());
+                    break;
+            }
+            currentAction = action;
+        }
     }
 
     // Update is called once per frame

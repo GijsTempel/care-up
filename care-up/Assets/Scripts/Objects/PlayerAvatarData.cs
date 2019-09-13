@@ -8,6 +8,15 @@
             Female
         };
 
+        public enum Actions
+        {
+            Idle,
+            Dance,
+            Sad,
+            Happy,
+            Posing
+        };
+
         public Gender gender = new Gender();
         public int headType;
         public int bodyType;
