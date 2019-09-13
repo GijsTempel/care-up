@@ -112,12 +112,14 @@ public class StoreManager
 
             Gender characterGender = (gender == "Female") ? Gender.Female : Gender.Male;
             PlayerAvatarData playerAvatar = new PlayerAvatarData(characterGender, headType, bodyType, glassesType, mouthType, eyeType);
+            avatarsData.Add(playerAvatar);
             CharacterItems.Add(new CharacterItem(index, price, purchased, playerAvatar));          
         }
 
         // get amount of currency/presents saved
         int.TryParse(DatabaseManager.FetchField("Store", "Currency"), out currentCurrency);
         int.TryParse(DatabaseManager.FetchField("Store", "Presents"), out currentPresents);
+        Debug.Log("Data is loaded");
     }
 
     public void ModifyCurrencyBy(int amount)

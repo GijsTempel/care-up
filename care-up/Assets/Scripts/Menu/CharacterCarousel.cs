@@ -23,7 +23,7 @@ public class CharacterCarousel : MonoBehaviour
             PlayerAvatarData d = GetAvatarData(cc);
             if (d != null)
             {
-                a.avatarData = GetAvatarData(cc);
+                a.avatarData = d;
                 a.UpdateCharacter();
             }
             a.SetAnimationAction(Actions.Idle, true);
@@ -36,6 +36,7 @@ public class CharacterCarousel : MonoBehaviour
         int currentMarker = behindMarker - 2;
         if (currentMarker < 0)
             currentMarker = 4 + currentMarker;
+        print(behindMarker.ToString() + "  " + currentMarker);
         return currentMarker;
     }
 
@@ -46,36 +47,7 @@ public class CharacterCarousel : MonoBehaviour
             avatars.Add(p.transform.Find("PlayerAvatar").GetComponent<PlayerAvatar>());
         }
 
-        //string characterStoreXml = "CharacterStore";
-        //TextAsset textAsset = (TextAsset)Resources.Load("Xml/" + characterStoreXml);
-        //XmlDocument xmlFile = new XmlDocument();
-        //xmlFile.LoadXml(textAsset.text);
-
-        //XmlNodeList xmlCharacterList = xmlFile.FirstChild.NextSibling.ChildNodes;
-
-        //foreach (XmlNode xmlSceneNode in xmlCharacterList)
-        //{
-        //    PlayerAvatarData ava = new PlayerAvatarData();
-
-        //    ava.gender = PlayerAvatarData.Gender.Male;
-        //    string gender = xmlSceneNode.Attributes["gender"].Value;
-        //    if (gender == "Female")
-        //        ava.gender = PlayerAvatarData.Gender.Female;
-
-        //    int.TryParse(xmlSceneNode.Attributes["glassesType"].Value, out int glassesType);
-        //    ava.glassesType = glassesType;
-        //    int.TryParse(xmlSceneNode.Attributes["bodyType"].Value, out int bodyType);
-        //    ava.bodyType = bodyType;
-        //    int.TryParse(xmlSceneNode.Attributes["headType"].Value, out int headType);
-        //    ava.headType = headType;
-        //    int.TryParse(xmlSceneNode.Attributes["mouth"].Value, out int mouthType);
-        //    ava.mouthType = mouthType;
-        //    int.TryParse(xmlSceneNode.Attributes["eye"].Value, out int eyeType);
-        //    ava.eyeType = eyeType;
-
-        //    avatarsData.Add(ava);
-        //}
-        Initialize();
+        Invoke("Initialize", 0.01f);
     }
 
     PlayerAvatarData GetAvatarData(int n)
