@@ -32,6 +32,14 @@ public class CharacterCarousel : MonoBehaviour
         }
     }
 
+    public int GetCurrentMarker()
+    {
+        int currentMarker = behindMarker - 2;
+        if (currentMarker < 0)
+            currentMarker = 4 + currentMarker;
+        return currentMarker;
+    }
+
     void Start()
     {
         foreach (GameObject p in Platforms)
@@ -132,10 +140,7 @@ public class CharacterCarousel : MonoBehaviour
                 turnAngle = nextAngle;
                 if (nextTurnDir == 0)
                 {
-                    int currentMarker = behindMarker - 2;
-                    if (currentMarker < 0)
-                        currentMarker = 4 + currentMarker;
-                    print(currentMarker);
+                    int currentMarker = GetCurrentMarker();
                     Avatars[currentMarker].SetAnimationAction(PlayerAvatarData.Actions.Dance);
                 }
             }
