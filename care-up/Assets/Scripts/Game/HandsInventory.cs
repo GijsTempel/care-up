@@ -478,7 +478,7 @@ public class HandsInventory : MonoBehaviour {
         if (bundleObject == null)
             bundleObject = Resources.Load<GameObject>("Prefabs\\" + name);
 
-        GameObject animationObject = Instantiate(bundleObject, Vector3.zero, Quaternion.identity) as GameObject;
+        animationObject = Instantiate(bundleObject, Vector3.zero, Quaternion.identity) as GameObject;
 
         if (animationObject != null)
         {
