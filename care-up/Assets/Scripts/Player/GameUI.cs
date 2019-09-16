@@ -616,15 +616,21 @@ public class GameUI : MonoBehaviour
 
     void OnGUI()
     {
-#if UNITY_EDITOR
-        GUI.Label(new Rect(0, 0, 100, 100), ((int)(1.0f / Time.smoothDeltaTime)).ToString());
+#if UNITY_EDITOR || DEVELOPMENT_BUILD 
+        GUIStyle style = new GUIStyle();
+        style.normal.textColor = new Color(1f, 0f, 0f);
+        style.fontSize = 30;
+        
+
+        GUI.Label(new Rect(0, 0, 100, 100), ((int)(1.0f / Time.smoothDeltaTime)).ToString(), style);
         if (objectsIDsController != null)
         {
             if (objectsIDsController.cheat)
-                GUI.Label(new Rect(30, 0, 100, 100), "Cheat enabled");
+                GUI.Label(new Rect(30, 0, 100, 100), "Cheat enabled", style);
         }
-        //debugSS = PlayerAnimationManager.animTimeout.ToString();
-        GUI.Label(new Rect(0, 30, 1000, 100), debugSS);
+    
+    //debugSS = PlayerAnimationManager.animTimeout.ToString();
+    GUI.Label(new Rect(0, 30, 1000, 100), debugSS, style);
 #endif
     }
 
