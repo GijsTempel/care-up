@@ -7,7 +7,6 @@ public class CharacterCarousel : MonoBehaviour
     public List<GameObject> platforms;
     List<PlayerAvatar> avatars = new List<PlayerAvatar>();
 
-    //List<PlayerAvatarData> avatarsData = new List<PlayerAvatarData>();
     public float turnAngle = 0;
 
     private int behindMarker = 3;
@@ -51,16 +50,16 @@ public class CharacterCarousel : MonoBehaviour
 
     PlayerAvatarData GetAvatarData(int n)
     {
-        if (n >= 0 && n < (PlayerPrefsManager.storeManager.avatarsData.Count))
+        if (n >= 0 && n < (PlayerPrefsManager.storeManager.CharacterItems.Count))
         {
-            return PlayerPrefsManager.storeManager.avatarsData[n];
+            return PlayerPrefsManager.storeManager.CharacterItems[n].playerAvatar;
         }
         return null;
     }
 
     public void Turn(int dir)
     {   int nextChar = currentChar + dir;
-        if (nextChar >= 0 && nextChar < PlayerPrefsManager.storeManager.avatarsData.Count)
+        if (nextChar >= 0 && nextChar < PlayerPrefsManager.storeManager.CharacterItems.Count)
             nextTurnDir = dir;
     }
 

@@ -47,7 +47,6 @@ public class CharacterItem
 
 public class StoreManager
 {
-    public List<PlayerAvatarData> avatarsData = new List<PlayerAvatarData>();
     private int currentCurrency = 0;
     private int currentPresents = 0;
     private List<StoreCategory> storeItems = new List<StoreCategory>();
@@ -112,7 +111,6 @@ public class StoreManager
 
             Gender characterGender = (gender == "Female") ? Gender.Female : Gender.Male;
             PlayerAvatarData playerAvatar = new PlayerAvatarData(characterGender, headType, bodyType, glassesType, mouthType, eyeType);
-            avatarsData.Add(playerAvatar);
             CharacterItems.Add(new CharacterItem(index, price, purchased, playerAvatar));          
         }
 
