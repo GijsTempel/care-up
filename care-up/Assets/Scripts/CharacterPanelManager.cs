@@ -1,112 +1,118 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using CareUpAvatar;
 
 public class CharacterPanelManager : MonoBehaviour
 {
     [SerializeField]
-    private List<GameObject> characters = default(List<GameObject>);
-
-    [SerializeField]   // commented out never used
-    private GameObject //previousButton = default(GameObject),
-                       //nextButton = default(GameObject),
-                       buyButton = default(GameObject),
+    private GameObject buyButton = default(GameObject),
                        adjustButton = default(GameObject);
 
     [SerializeField]
     private Text currencyText = default(Text);
-
-    private CharacterCreationScene characterCreation;
-    private Gender gender;
+    private List<GameObject> checkMarks = new List<GameObject>();
 
     private static StoreManager storeManager = PlayerPrefsManager.storeManager;
-    private List<CharacterItem> parameters = storeManager.CharacterItems;
-
-    private int index = 0;
-    private int storeitemIndex;
-    //private GameObject mainCharacter;
     private SimpleGestureController gestureController = new SimpleGestureController();
-
     private UMP_Manager uMP_Manager;
     private LoadCharacterScene loadCharacter;
-    private CharacterCarousel characterCarousel;
+    private CharacterСarrousel сarrousel;
 
-    //public void NextStep()
-    //{
-    //    index -= 2;
-    //    SetCharacters(characters);
-    //}
-
-    //public void PreviousStep()
-    //{
-    //    index -= 4;
-    //    SetCharacters(characters);
-    //}
+    public List<GameObject> platforms;
 
     public void Adjust()
     {
-        if (storeManager.PurchaseCharacter(storeitemIndex))
-        {
-            uMP_Manager.ChangeWindow(9);
-            loadCharacter.LoadCharacter();
-        }
+        uMP_Manager.ChangeWindow(9);
+        loadCharacter.LoadCharacter();
+    }
+
+    public void Scroll(int dir)
+    {
+        int nextChar = CharacterСarrousel.CurrentCharacter + dir;
+        if (nextChar >= 0 && nextChar < storeManager.CharacterItems.Count)
+            CharacterСarrousel.nextTurnDir = dir;
+    }
+
+    public void SetStoreInfo(int platformIndex, int characterIndex)
+    {
+        checkMarks[platformIndex].SetActive(storeManager.CharacterItems[characterIndex].purchased);
+
+        buyButton.transform.GetChild(0).GetComponent<Text>().text = storeManager.CharacterItems[characterIndex].price.ToString();
+
+        if (storeManager.CharacterItems[characterIndex].purchased)
+            adjustButton.SetActive(true);
+        else
+            adjustButton.SetActive(false);
     }
 
     private void Start()
     {
-        uMP_Manager = GameObject.FindObjectOfType<UMP_Manager>();
-        loadCharacter = GameObject.FindObjectOfType<LoadCharacterScene>();
-        characterCarousel = GameObject.FindObjectOfType<CharacterCarousel>();
-
-        //mainCharacter = characters[1];
-
-        //StartCoroutine(SetAnimation());
-
-        currencyText.text = storeManager.Currency.ToString();
-
-        characterCreation = GameObject.FindObjectOfType<CharacterCreationScene>();
-
-        //foreach (GameObject gameObject in characters)
-        //{
-        //    gameObject.SetActive(true);
-        //}
-
-        //SetCharacters(characters);
-
-        buyButton?.GetComponent<Button>().onClick.AddListener(BuyCharacter);
+        Initialize();
     }
 
     private void Update()
     {
-        //gestureController.ManageSwipeGestures(NextStep, PreviousStep);
+        gestureController.ManageSwipeGestures(() => Scroll(1), () => Scroll(-1));
     }
 
-    private void SetCharacters(List<GameObject> items)
+    private void Initialize()
     {
-        foreach (GameObject item in items)
+        uMP_Manager = GameObject.FindObjectOfType<UMP_Manager>();
+        loadCharacter = GameObject.FindObjectOfType<LoadCharacterScene>();
+
+        сarrousel = GameObject.FindObjectOfType<CharacterСarrousel>();
+
+        currencyText.text = storeManager.Currency.ToString();
+        buyButton?.GetComponent<Button>().onClick.AddListener(BuyCharacter);
+
+        foreach (GameObject platform in platforms)
         {
-            characterCreation.Initialize(item);
-
-           // (bool purchased, int price) = SetCurrentItem(ref index);
-
-            item.transform.parent.Find("Checkmark").gameObject.SetActive(parameters[index].purchased);
-
-            if (item.transform.parent.name == "CenterGuy")
-            {
-                storeitemIndex = index;
-               // buyButton.transform.GetChild(0).GetComponent<Text>().text = price.ToString();
-
-                if (parameters[index].purchased)
-                    adjustButton.SetActive(true);
-                else
-                    adjustButton.SetActive(false);
-            }
-
-            index++;
+            checkMarks.Add(platform.transform.Find("checkMark").gameObject);
         }
     }
+
+    private void BuyCharacter()
+    {
+        if (storeManager.PurchaseCharacter(CharacterСarrousel.CurrentCharacter))
+        {
+            adjustButton.SetActive(true);
+            currencyText.text = storeManager.Currency.ToString();
+        }
+        else
+        {
+            PurchaseFail();
+        }
+    }
+
+    private void PurchaseFail()
+    {
+        uMP_Manager.ShowDialog(8);
+    }
+
+    //private void SetCharacters(List<GameObject> items)
+    //{
+    //    foreach (GameObject item in items)
+    //    {
+    //        characterCreation.Initialize(item);
+
+    //        (bool purchased, int price) = SetCurrentItem(ref index);
+
+    //        item.transform.parent.Find("Checkmark").gameObject.SetActive(parameters[index].purchased);
+
+    //        if (item.transform.parent.name == "CenterGuy")
+    //        {
+    //            storeitemIndex = index;
+    //            // buyButton.transform.GetChild(0).GetComponent<Text>().text = price.ToString();
+
+    //            if (parameters[index].purchased)
+    //                adjustButton.SetActive(true);
+    //            else
+    //                adjustButton.SetActive(false);
+    //        }
+
+    //        index++;
+    //    }
+    //}
 
     //public void SetDefaultCharacters(List<GameObject> items)
     //{
@@ -133,22 +139,6 @@ public class CharacterPanelManager : MonoBehaviour
     //    return (parameters[index].purchased, parameters[index].price);
     //}
 
-    private void BuyCharacter()
-    {
-        if (storeManager.PurchaseCharacter(storeitemIndex))
-        {
-            //mainCharacter.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
-            //mainCharacter.GetComponent<Animator>().SetTrigger("dance1");
-            adjustButton.SetActive(true);
-            //StartCoroutine(ResetScale());
-            currencyText.text = storeManager.Currency.ToString();
-        }
-        else
-        {
-            PurchaseFail();
-        }
-    }
-
     //private IEnumerator SetAnimation()
     //{
     //    yield return new WaitForSeconds(0.6f);
@@ -164,21 +154,8 @@ public class CharacterPanelManager : MonoBehaviour
     //    mainCharacter.transform.localScale = new Vector3(1f, 1f, 1f);
     //}
 
-    private void SetAnimationTrigger(int index, string name)
-    {
-        characters[index].GetComponent<Animator>().SetTrigger(name);
-    }
-
-    private void PurchaseFail()
-    {
-        SetAnimationTrigger(1, "sad1");
-        StartCoroutine(PopUp());
-    }
-
-    private IEnumerator PopUp()
-    {
-        yield return new WaitForSeconds(2f);
-        GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(8);
-        SetAnimationTrigger(1, "idle1");
-    }
+    //private void SetAnimationTrigger(int index, string name)
+    //{
+    //    characters[index].GetComponent<Animator>().SetTrigger(name);
+    //}
 }
