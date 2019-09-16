@@ -31,6 +31,7 @@ public class CharacterPanelManager : MonoBehaviour
         int nextChar = CharacterСarrousel.CurrentCharacter + dir;
         if (nextChar >= 0 && nextChar < storeManager.CharacterItems.Count)
             CharacterСarrousel.nextTurnDir = dir;
+        enabled = true;
     }
 
     public void SetStoreInfo(int platformIndex, int characterIndex)

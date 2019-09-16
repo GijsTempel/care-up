@@ -27,6 +27,7 @@ public class UVWarp : MonoBehaviour
     public axis YAxis;
     public int _type = 0;
     int last_type = 0;
+    public Vector2 _shift;
 
     void Start()
     {
@@ -42,7 +43,7 @@ public class UVWarp : MonoBehaviour
         //}
         if (offset != lastOffset || lastToPos != _to.localPosition || last_type != _type)
         {
-            Vector2 _shift = new Vector2();
+            _shift = new Vector2();
 
             if (_to != null)
             {

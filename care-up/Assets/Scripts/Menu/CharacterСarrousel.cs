@@ -26,7 +26,7 @@ public class CharacterСarrousel : MonoBehaviour
                 avatar.UpdateCharacter();
             }
             avatar.SetAnimationAction(Actions.Idle, true);
-            current++;
+            current++;            
         }
     }
 
@@ -61,6 +61,8 @@ public class CharacterСarrousel : MonoBehaviour
 
     private void Update()
     {
+        if (turnDir == 0 && nextTurnDir == 0)
+            enabled = false;
         if (turnDir == 0 && nextTurnDir != 0)
         {
             turnDir = nextTurnDir;
@@ -90,7 +92,7 @@ public class CharacterСarrousel : MonoBehaviour
 
             foreach (PlayerAvatar a in avatars)
             {
-                a.SetAnimationAction(Actions.Idle);
+                a.SetAnimationAction(Actions.Idle,false);
             }
         }
         if (turnDir != 0)
@@ -107,7 +109,7 @@ public class CharacterСarrousel : MonoBehaviour
                 if (nextTurnDir == 0)
                 {
                     int currentMarker = GetCurrentMarker();
-                    avatars[currentMarker].SetAnimationAction(Actions.Dance);
+                    avatars[currentMarker].SetAnimationAction(Actions.Posing);
                 }
             }
             else
