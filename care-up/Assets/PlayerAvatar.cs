@@ -27,6 +27,7 @@ public class PlayerAvatar : MonoBehaviour
     private List<Transform> femaleGlasses = new List<Transform>();
 
     Actions currentAction = Actions.Idle;
+    Actions nextAction;
 
     private void Awake()
     {
@@ -67,26 +68,51 @@ public class PlayerAvatar : MonoBehaviour
         avatarData.glassesType = 0;
         avatarData.bodyType = 7;
         UpdateCharacter();
+
+        Animator anim = GetComponent<Animator>();
+        anim.Play(anim.GetCurrentAnimatorStateInfo(0).fullPathHash,0, Random.Range(0f,1f));
     }
 
-    public void SetAnimationAction(Actions action, bool force = false)
+    public void JumpToNextAnimation()
     {
-        if (action != currentAction || force)
+        SetAnimationAction(nextAction, true, true);
+    }
+    //public void ShiftAnimation(float f)
+    //{
+    //    Animator anim = GetComponent<Animator>();
+    //    anim.CrossFade(anim.GetCurrentAnimatorStateInfo(0).fullPathHash, f);
+    //}
+
+    public void SetAnimationAction(Actions action, bool force = false, bool immed = true)
+    {
+        if (!immed)
         {
-            Animator anim = GetComponent<Animator>();
-            switch (action)
+            float randTimeout = Random.RandomRange(0.1f, 2f);
+            nextAction = action;
+            Invoke("JumpToNextAnimation", randTimeout);
+        }
+        else
+        {
+            if (action != currentAction || force)
             {
-                case Actions.Idle:
-                    anim.SetTrigger("idle" + Random.Range(1, 3).ToString());
-                    break;
-                case Actions.Dance:
-                    anim.SetTrigger("dance" + Random.Range(1, 3).ToString());
-                    break;
-                case Actions.Sad:
-                    anim.SetTrigger("sad" + Random.Range(1, 3).ToString());
-                    break;
+                Animator anim = GetComponent<Animator>();
+                switch (action)
+                {
+                    case Actions.Idle:
+                        anim.SetTrigger("idle" + Random.Range(1, 3).ToString());
+                        break;
+                    case Actions.Dance:
+                        anim.SetTrigger("dance" + Random.Range(1, 3).ToString());
+                        break;
+                    case Actions.Sad:
+                        anim.SetTrigger("sad" + Random.Range(1, 3).ToString());
+                        break;
+                    case Actions.Posing:
+                        anim.SetTrigger("posing" + Random.Range(1, 3).ToString());
+                        break;
+                }
+                currentAction = action;
             }
-            currentAction = action;
         }
     }
 
