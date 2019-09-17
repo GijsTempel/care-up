@@ -111,7 +111,7 @@ public class StoreManager
 
             Gender characterGender = (gender == "Female") ? Gender.Female : Gender.Male;
             PlayerAvatarData playerAvatar = new PlayerAvatarData(characterGender, headType, bodyType, glassesType, mouthType, eyeType);
-            CharacterItems.Add(new CharacterItem(index, price, purchased, playerAvatar));          
+            CharacterItems.Add(new CharacterItem(index, price, purchased, playerAvatar));
         }
 
         // get amount of currency/presents saved
@@ -144,6 +144,13 @@ public class StoreManager
         return result;
     }
 
+    public CharacterItem FindCharacterByIndex(int index)
+    {
+        CharacterItem result = new CharacterItem();
+        result = CharacterItems.Find(x => x.index == index);
+        return result;
+    }
+
     public bool Purchase(int itemIndex)
     {
         StoreItem item = FindItemByIndex(itemIndex);
@@ -164,17 +171,17 @@ public class StoreManager
     {
         CharacterItem item = CharacterItems.Find(x => x.index == itemIndex);
 
-        if (item.index != -1 && currentCurrency >= item.price)
+        if (item != null)
         {
-            ModifyCurrencyBy(-item.price);
-            item.purchased = true;
-            DatabaseManager.UpdateField("Store", "CharacterItem_" + itemIndex.ToString(), "true");
-            return true;
+            if (item.index != -1 && currentCurrency >= item.price)
+            {
+                ModifyCurrencyBy(-item.price);
+                item.purchased = true;
+                DatabaseManager.UpdateField("Store", "CharacterItem_" + itemIndex.ToString(), "true");
+                return true;
+            }
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     public bool GetPurchasedState(int itemIndex)

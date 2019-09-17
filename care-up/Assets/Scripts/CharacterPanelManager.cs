@@ -26,24 +26,13 @@ public class CharacterPanelManager : MonoBehaviour
         loadCharacter.LoadCharacter();
     }
 
-    public void Scroll(int dir)
-    {
-        int nextChar = CharacterСarrousel.CurrentCharacter + dir;
-        if (nextChar >= 0 && nextChar < storeManager.CharacterItems.Count)
-            CharacterСarrousel.nextTurnDir = dir;
-        enabled = true;
-    }
-
     public void SetStoreInfo(int platformIndex, int characterIndex)
     {
-        checkMarks[platformIndex].SetActive(storeManager.CharacterItems[characterIndex].purchased);
-
-        buyButton.transform.GetChild(0).GetComponent<Text>().text = storeManager.CharacterItems[characterIndex].price.ToString();
-
-        if (storeManager.CharacterItems[characterIndex].purchased)
-            adjustButton.SetActive(true);
-        else
-            adjustButton.SetActive(false);
+        bool purchased = storeManager.CharacterItems[characterIndex].purchased;
+        string price = storeManager.CharacterItems[characterIndex].price.ToString();
+        checkMarks[platformIndex].SetActive(false);
+        adjustButton.SetActive(purchased);
+        buyButton.transform.GetChild(0).GetComponent<Text>().text = price;
     }
 
     private void Start()
@@ -53,7 +42,8 @@ public class CharacterPanelManager : MonoBehaviour
 
     private void Update()
     {
-        gestureController.ManageSwipeGestures(() => Scroll(1), () => Scroll(-1));
+        if (сarrousel != null)
+            gestureController.ManageSwipeGestures(() => сarrousel.Scroll(1), () => сarrousel.Scroll(-1));
     }
 
     private void Initialize()

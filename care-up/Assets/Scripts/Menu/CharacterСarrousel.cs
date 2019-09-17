@@ -11,7 +11,7 @@ public class CharacterСarrousel : MonoBehaviour
     private CharacterPanelManager panelManager;
     private float turnAngle = 0;
     private int behindMarker = 3;
-    private int turnDir = 0;  
+    private int turnDir = 0;
     private List<PlayerAvatar> avatars = new List<PlayerAvatar>();
 
     public void Initialize()
@@ -24,10 +24,19 @@ public class CharacterСarrousel : MonoBehaviour
             {
                 avatar.avatarData = playerAvatarData;
                 avatar.UpdateCharacter();
+                panelManager.SetStoreInfo(behindMarker, current);
             }
             avatar.SetAnimationAction(Actions.Idle, true);
-            current++;            
+            current++;
         }
+    }
+
+    public void Scroll(int dir)
+    {
+        int nextChar = CurrentCharacter + dir;
+        if (nextChar >= 0 && nextChar < PlayerPrefsManager.storeManager.CharacterItems.Count)
+            nextTurnDir = dir;
+        enabled = true;
     }
 
     public int GetCurrentMarker()
@@ -42,22 +51,19 @@ public class CharacterСarrousel : MonoBehaviour
     {
         panelManager = GameObject.FindObjectOfType<CharacterPanelManager>();
 
-        foreach (GameObject p in panelManager.platforms)
+        foreach (GameObject platform in panelManager.platforms)
         {
-            avatars.Add(p.transform.Find("PlayerAvatar").GetComponent<PlayerAvatar>());
+            avatars.Add(platform.transform.Find("PlayerAvatar").GetComponent<PlayerAvatar>());
         }
 
         Invoke("Initialize", 0.01f);
     }
 
-    private PlayerAvatarData GetAvatarData(int n)
+    private PlayerAvatarData GetAvatarData(int index)
     {
-        if (n >= 0 && n < PlayerPrefsManager.storeManager.CharacterItems.Count)
-        {
-            return PlayerPrefsManager.storeManager.CharacterItems[n].playerAvatar;
-        }
-        return null;
-    }   
+        panelManager.SetStoreInfo(behindMarker, index);
+        return PlayerPrefsManager.storeManager.CharacterItems[index].playerAvatar;
+    }
 
     private void Update()
     {
@@ -67,18 +73,19 @@ public class CharacterСarrousel : MonoBehaviour
         {
             turnDir = nextTurnDir;
             nextTurnDir = 0;
-
             CurrentCharacter += turnDir;
-            PlayerAvatarData playerAvatar = GetAvatarData(CurrentCharacter + 1);
+            int index = CurrentCharacter + 1;
+
+            PlayerAvatarData playerAvatar = GetAvatarData(index);
             if (turnDir < 0)
             {
-                playerAvatar = GetAvatarData(CurrentCharacter - 1);
+                index = CurrentCharacter - 1;
+                playerAvatar = GetAvatarData(index);
             }
             if (playerAvatar != null)
             {
                 avatars[behindMarker].avatarData = playerAvatar;
                 avatars[behindMarker].UpdateCharacter();
-                panelManager.SetStoreInfo(behindMarker, CurrentCharacter);
             }
 
             panelManager.platforms[behindMarker].SetActive(playerAvatar != null);
@@ -92,7 +99,7 @@ public class CharacterСarrousel : MonoBehaviour
 
             foreach (PlayerAvatar a in avatars)
             {
-                a.SetAnimationAction(Actions.Idle,false);
+                a.SetAnimationAction(Actions.Idle, false);
             }
         }
         if (turnDir != 0)
@@ -118,5 +125,5 @@ public class CharacterСarrousel : MonoBehaviour
             }
             transform.rotation = Quaternion.Euler(rot.x, rot.y, rot.z);
         }
-    }     
+    }
 }

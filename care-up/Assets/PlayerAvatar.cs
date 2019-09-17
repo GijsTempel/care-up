@@ -87,7 +87,7 @@ public class PlayerAvatar : MonoBehaviour
     {
         if (!immed)
         {
-            float randTimeout = Random.RandomRange(0.1f, 2f);
+            float randTimeout = Random.Range(0.1f, 2f);
             nextAction = action;
             Invoke("JumpToNextAnimation", randTimeout);
         }
