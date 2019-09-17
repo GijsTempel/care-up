@@ -78,7 +78,7 @@ public class EndScoreManager : MonoBehaviour
 
             for (int i = 0; i < steps.Count; ++i)
             {
-                GameObject step = GameObject.Instantiate(Resources.Load<GameObject>("ProtocolPracticeSteps/ProtocolPracticeSteps"), stepParent);
+                GameObject step = GameObject.Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/ProtocolPracticeSteps"), stepParent);
                 step.transform.Find("Text").GetComponent<Text>().text = steps[i];
 
                 Sprite correctSprite = Resources.Load<Sprite>("Sprites/item_select_check");
@@ -95,7 +95,7 @@ public class EndScoreManager : MonoBehaviour
 
             for (int i = 0; i < steps.Count; ++i)
             {
-                GameObject step = GameObject.Instantiate(Resources.Load<GameObject>("ProtocolEvaluationStep/ProtocolEvaluationStep"), stepParent);
+                GameObject step = GameObject.Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/ProtocolEvaluationStep"), stepParent);
                 step.transform.Find("Text").GetComponent<Text>().text = steps[i];
 
                 bool correct = correctStepIndexes.Contains(i);
