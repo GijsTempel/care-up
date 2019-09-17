@@ -23,7 +23,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
             builder.AddProduct("CareUp_Lidmaatschap", ProductType.Subscription, new IDs
             {
                 {"CareUp_Lidmaatschap", AppleAppStore.Name},
-                {"CareUp_Lidmaatschap", GooglePlay.Name},
+                {"careup_lidmaatschap", GooglePlay.Name},
                 {"CareUp_Lidmaatschap", MacAppStore.Name}
             });
 
