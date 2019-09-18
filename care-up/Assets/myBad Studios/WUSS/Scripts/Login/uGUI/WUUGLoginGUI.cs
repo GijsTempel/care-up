@@ -688,7 +688,10 @@ namespace MBS
         public void ShowLoginScreen() => DisplayScreen( panels.login_screen );
         public void ShowRegisterScreen() => DisplayScreen( panels.register_screen );
         public void ShowPostLoginScreen() => DisplayScreen( panels.post_login_menu_screen );
-        public void ShowPasswordResetScreen() => DisplayScreen( panels.password_reset_screen );
+        public void ShowPasswordResetScreen() //=> DisplayScreen( panels.password_reset_screen );
+        {
+            Application.OpenURL("https://careup.online/culogin/?action=lostpassword&error=expiredkey");
+        }
         public void ShowPasswordChangeScreen() => DisplayScreen( panels.password_change_screen );
         public void ShowAccountDetailsScreen() => DisplayScreen( panels.personal_info_screen );
         public void ShowTermsAndConditionScreen()
