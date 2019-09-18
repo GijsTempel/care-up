@@ -16,11 +16,14 @@ public class ExtraObjectOptions : MonoBehaviour
     {
         foreach (GameObject obj in neededObjects)
         {
-            if (obj.GetComponent<InteractableObject>() != null)
+            if(obj != null)
             {
-                neededObjectsData.Add(obj.name, obj.GetComponent<InteractableObject>().description);
-                neededObjectsArticle.Add(obj.name, obj.GetComponent<InteractableObject>().nameArticle);
+                if (obj.GetComponent<InteractableObject>() != null)
+                {
+                    neededObjectsData.Add(obj.name, obj.GetComponent<InteractableObject>().description);
+                    neededObjectsArticle.Add(obj.name, obj.GetComponent<InteractableObject>().nameArticle);
 
+                }
             }
         }       
     }
