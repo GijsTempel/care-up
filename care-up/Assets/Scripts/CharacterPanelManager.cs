@@ -10,7 +10,6 @@ public class CharacterPanelManager : MonoBehaviour
 
     [SerializeField]
     private Text currencyText = default(Text);
-    private List<GameObject> checkMarks = new List<GameObject>();
 
     private static StoreManager storeManager = PlayerPrefsManager.storeManager;
     private SimpleGestureController gestureController = new SimpleGestureController();
@@ -18,7 +17,6 @@ public class CharacterPanelManager : MonoBehaviour
     private LoadCharacterScene loadCharacter;
     private CharacterСarrousel сarrousel;
 
-    public List<GameObject> platforms;
 
     public void Adjust()
     {
@@ -26,11 +24,10 @@ public class CharacterPanelManager : MonoBehaviour
         loadCharacter.LoadCharacter();
     }
 
-    public void SetStoreInfo(int platformIndex, int characterIndex)
+    public void SetStoreInfo(int characterIndex)
     {
         bool purchased = storeManager.CharacterItems[characterIndex].purchased;
         string price = storeManager.CharacterItems[characterIndex].price.ToString();
-        checkMarks[platformIndex].SetActive(false);
         adjustButton.SetActive(purchased);
         buyButton.transform.GetChild(0).GetComponent<Text>().text = price;
     }
@@ -56,10 +53,7 @@ public class CharacterPanelManager : MonoBehaviour
         currencyText.text = storeManager.Currency.ToString();
         buyButton?.GetComponent<Button>().onClick.AddListener(BuyCharacter);
 
-        foreach (GameObject platform in platforms)
-        {
-            checkMarks.Add(platform.transform.Find("checkMark").gameObject);
-        }
+
     }
 
     private void BuyCharacter()

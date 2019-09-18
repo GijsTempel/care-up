@@ -13,6 +13,8 @@ public class CharacterСarrousel : MonoBehaviour
     private int behindMarker = 3;
     private int turnDir = 0;
     private List<PlayerAvatar> avatars = new List<PlayerAvatar>();
+    public List<GameObject> platforms;
+    private List<GameObject> checkMarks = new List<GameObject>();
 
     public void Initialize()
     {
@@ -24,11 +26,16 @@ public class CharacterСarrousel : MonoBehaviour
             {
                 avatar.avatarData = playerAvatarData;
                 avatar.UpdateCharacter();
-                panelManager.SetStoreInfo(behindMarker, current);
+
+                bool purchased = PlayerPrefsManager.storeManager.CharacterItems[current].purchased;
+                checkMarks[current].SetActive(purchased);
+
+                //panelManager.SetStoreInfo(behindMarker, current);
             }
             avatar.SetAnimationAction(Actions.Idle, true);
             current++;
         }
+        panelManager.SetStoreInfo(CurrentCharacter);
     }
 
     public void Scroll(int dir)
@@ -51,7 +58,11 @@ public class CharacterСarrousel : MonoBehaviour
     {
         panelManager = GameObject.FindObjectOfType<CharacterPanelManager>();
 
-        foreach (GameObject platform in panelManager.platforms)
+        foreach (GameObject platform in platforms)
+        {
+            checkMarks.Add(platform.transform.Find("checkMark").gameObject);
+        }
+        foreach (GameObject platform in platforms)
         {
             avatars.Add(platform.transform.Find("PlayerAvatar").GetComponent<PlayerAvatar>());
         }
@@ -61,8 +72,12 @@ public class CharacterСarrousel : MonoBehaviour
 
     private PlayerAvatarData GetAvatarData(int index)
     {
-        panelManager.SetStoreInfo(behindMarker, index);
-        return PlayerPrefsManager.storeManager.CharacterItems[index].playerAvatar;
+        if (index >= 0 && index < (PlayerPrefsManager.storeManager.CharacterItems.Count))
+        {
+            //panelManager.SetStoreInfo(behindMarker, index);
+            return PlayerPrefsManager.storeManager.CharacterItems[index].playerAvatar;
+        }
+        return null;
     }
 
     private void Update()
@@ -86,9 +101,11 @@ public class CharacterСarrousel : MonoBehaviour
             {
                 avatars[behindMarker].avatarData = playerAvatar;
                 avatars[behindMarker].UpdateCharacter();
+                bool purchased = PlayerPrefsManager.storeManager.CharacterItems[index].purchased;
+                checkMarks[behindMarker].SetActive(purchased);
             }
-
-            panelManager.platforms[behindMarker].SetActive(playerAvatar != null);
+            panelManager.SetStoreInfo(CurrentCharacter);
+            platforms[behindMarker].SetActive(playerAvatar != null);
 
             behindMarker += turnDir;
 
