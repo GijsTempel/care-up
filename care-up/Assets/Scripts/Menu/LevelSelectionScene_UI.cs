@@ -10,6 +10,7 @@ using System.Linq;
 /// </summary>
 public class LevelSelectionScene_UI : MonoBehaviour
 {
+    public string debugSS;
     private PlayerPrefsManager ppManager;
 
     // leaderboard stuff
@@ -65,6 +66,15 @@ public class LevelSelectionScene_UI : MonoBehaviour
         }
     }
 
+    void OnGUI()
+    {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD 
+        GUIStyle style = new GUIStyle();
+        style.normal.textColor = new Color(0.3f, 1f, 0.3f);
+        style.fontSize = 20;
+        GUI.Label(new Rect(30, 10, 1000, 100), debugSS, style);
+#endif
+    }
 
     public void ReinitializeUI()
     {      
