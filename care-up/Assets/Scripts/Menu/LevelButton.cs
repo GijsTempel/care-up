@@ -65,6 +65,21 @@ public class LevelButton : MonoBehaviour
         }
     }
 
+    public void OnHover()
+    {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD 
+        GameObject.FindObjectOfType<LevelSelectionScene_UI>().debugSS = sceneName;
+#endif
+    }
+
+
+    public void OnExit()
+    {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD 
+        GameObject.FindObjectOfType<LevelSelectionScene_UI>().debugSS = "";
+#endif
+    }
+
     public void OnLevelButtonClick()
     {
         if (buy || demoLock)
