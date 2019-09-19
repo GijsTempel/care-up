@@ -107,7 +107,8 @@ public class DatabaseManager : MonoBehaviour
             }
             else
             {
-                bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Tutorial");
+                bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Tutorial", "scenes_tutorial");
+                // bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Tutorial");
             }
         }
         else

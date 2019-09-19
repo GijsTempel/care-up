@@ -35,6 +35,7 @@ public class GameTutorialManager : MonoBehaviour
 
     private SimpleGestureController gestureController = new SimpleGestureController();
 
+    public GameObject ImageHolder;
     private void Awake()
     {
         LoadInfo();
@@ -104,7 +105,7 @@ public class GameTutorialManager : MonoBehaviour
             {
                 Title = step.Attributes["title"].Value,
                 Description = step.Attributes["description"].Value,
-                TutorialImage = Resources.Load<Sprite>($"Sprites/TutorialImages/{step.Attributes["image"].Value}"),
+                TutorialImage = ImageHolder.transform.Find(step.Attributes["image"].Value).GetComponent<Image>().sprite, //Resources.Load<Sprite>($"Sprites/TutorialImages/{step.Attributes["image"].Value}"),
                 MagnifierX = _x,
                 MagnifierY = _y
             });
@@ -112,7 +113,7 @@ public class GameTutorialManager : MonoBehaviour
 
         for (int i = 0; i < tutorialSteps.Count; i++)
         {
-            GameObject dot = Instantiate(Resources.Load<GameObject>("Prefabs/UI/dotTut"), DotPanel.transform) as GameObject;
+            GameObject dot = Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/UI/dotTut"), DotPanel.transform) as GameObject;
             dot.transform.SetParent(DotPanel.transform);
             dots.Add(dot);
         }
@@ -170,7 +171,7 @@ public class GameTutorialManager : MonoBehaviour
         DatabaseManager.UpdateField("AccountStats", "TutorialCompleted", "true");
         bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
     }
-  
+
     private void CheckPreviousButton()
     {
         if (previousButton.activeInHierarchy)

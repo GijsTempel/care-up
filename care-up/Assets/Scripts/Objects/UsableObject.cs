@@ -10,8 +10,13 @@ public struct NameAndDescription
 /// <summary>
 /// Static object that can be used
 /// </summary>
+/// 
+
+
+
 [RequireComponent(typeof(Renderer))]
 public class UsableObject : InteractableObject {
+
 
     [HideInInspector]
     public bool tutorial_used = false;
@@ -19,6 +24,7 @@ public class UsableObject : InteractableObject {
     public string PrefabToAppear = "";
     public List<NameAndDescription> objectsToCreate;
     protected static HandsInventory handsInventory;
+
 
     GameUI gameUI;
     public bool UseWithObjectsInHands = false;

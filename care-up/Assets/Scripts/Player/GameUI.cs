@@ -3,6 +3,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using CareUp.Actions;
 using System.Linq;
+using AssetBundles;
+
+
+
 
 public class GameUI : MonoBehaviour
 {
@@ -114,6 +118,12 @@ public class GameUI : MonoBehaviour
         PrescriptionBack,
         MessageTabBack,
         Close
+    }
+
+
+    public void TestOutput()
+    {
+        AssetBundleManager.PrintLoadedBundles();
     }
 
     public void UseOn()
@@ -384,10 +394,14 @@ public class GameUI : MonoBehaviour
             ActionManager.practiceMode = prefs.practiceMode;
         }
 
-#if !UNITY_EDITOR
+#if !(UNITY_EDITOR || DEVELOPMENT_BUILD)
         if(GameObject.Find("ActionsPanel") != null)
             GameObject.Find("ActionsPanel").SetActive(false);
+        if(GameObject.Find("AssetDebugPanel") != null)
+            GameObject.Find("AssetDebugPanel").SetActive(false);
+            
 #endif
+
         WalkToGroupPanel = GameObject.Find("MovementButtons");
         Player = GameObject.Find("Player");
         closeButton = transform.Find("CloseBtn").gameObject;
@@ -440,14 +454,25 @@ public class GameUI : MonoBehaviour
         }
         UpdateWalkToGroupButtons();
         UpdateWalkToGtoupUI(true);
+
+        foreach(InteractableObject o in Resources.FindObjectsOfTypeAll<InteractableObject>())
+        {
+            o.assetSource = InteractableObject.AssetSource.Included;
+        }
     }
+
+
 
     public HighlightObject AddHighlight(Transform target, string prefix, HighlightObject.type hl_type = HighlightObject.type.NoChange, float startDelay = 0, float LifeTime = float.PositiveInfinity)
     {
         string hl_name = prefix + "_" + target.name;
         if (GameObject.Find(hl_name) != null)
             return null;
-        GameObject hl_obj = Instantiate(Resources.Load<GameObject>("Prefabs\\HighlightObject"), target.position, new Quaternion()) as GameObject;
+        //------------
+
+        // assets/resources/necessaryprefabs
+
+        GameObject hl_obj = Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/HighlightObject"), target.position, new Quaternion()) as GameObject;
 
         HighlightObject hl = hl_obj.GetComponent<HighlightObject>();
         hl.name = hl_name;
@@ -591,15 +616,21 @@ public class GameUI : MonoBehaviour
 
     void OnGUI()
     {
-#if UNITY_EDITOR
-        GUI.Label(new Rect(0, 0, 100, 100), ((int)(1.0f / Time.smoothDeltaTime)).ToString());
+#if UNITY_EDITOR || DEVELOPMENT_BUILD 
+        GUIStyle style = new GUIStyle();
+        style.normal.textColor = new Color(1f, 0f, 0f);
+        style.fontSize = 30;
+        
+
+        GUI.Label(new Rect(0, 0, 100, 100), ((int)(1.0f / Time.smoothDeltaTime)).ToString(), style);
         if (objectsIDsController != null)
         {
             if (objectsIDsController.cheat)
-                GUI.Label(new Rect(30, 0, 100, 100), "Cheat enabled");
+                GUI.Label(new Rect(30, 0, 100, 100), "Cheat enabled", style);
         }
-        //debugSS = PlayerAnimationManager.animTimeout.ToString();
-        GUI.Label(new Rect(0, 30, 1000, 100), debugSS);
+    
+    //debugSS = PlayerAnimationManager.animTimeout.ToString();
+    GUI.Label(new Rect(0, 30, 1000, 100), debugSS, style);
 #endif
     }
 
@@ -1074,7 +1105,7 @@ public class GameUI : MonoBehaviour
         {
             GameObject currentHintPanel = null;
 
-            currentHintPanel = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/UI/HintPanel"), DetailedHintPanel.transform.Find("HintContainer").transform);
+            currentHintPanel = Instantiate<GameObject>(Resources.Load<GameObject>("NecessaryPrefabs/UI/HintPanel"), DetailedHintPanel.transform.Find("HintContainer").transform);
             hintText = currentHintPanel.transform.Find("Text").gameObject.GetComponent<Text>();
             hintText.text = actionManager.CurrentDescription[i];
 
@@ -1082,11 +1113,11 @@ public class GameUI : MonoBehaviour
             {
                 if (subTasks[y].subindex == i)
                 {
-                    if (Resources.Load<GameObject>("Prefabs/UI/SubtaskHints") != null)
+                    if (Resources.Load<GameObject>("NecessaryPrefabs/UI/SubtaskHints") != null)
                     {
                         if (!subTasks[y].completed)
                         {
-                            GameObject subtaskPanel = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/UI/SubtaskHints"), currentHintPanel.transform);
+                            GameObject subtaskPanel = Instantiate<GameObject>(Resources.Load<GameObject>("NecessaryPrefabs/UI/SubtaskHints"), currentHintPanel.transform);
                             subTaskText = subtaskPanel.transform.Find("Text").GetComponent<Text>();
                             subTaskText.text = subTasks[y].requirement;
                         }
