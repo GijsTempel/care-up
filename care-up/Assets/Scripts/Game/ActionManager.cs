@@ -1217,7 +1217,7 @@ public class ActionManager : MonoBehaviour
 
     public void CreateParticleHint(Transform obj)
     {
-        GameObject particles = Instantiate(Resources.Load<GameObject>("Prefabs/ParticleHint"),
+        GameObject particles = Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/ParticleHint"),
             obj.position, Quaternion.Euler(-90f, 0f, 0f), obj);
         particles.transform.localScale = new Vector3(
             particles.transform.localScale.x / particles.transform.lossyScale.x,
@@ -1815,8 +1815,12 @@ public class ActionManager : MonoBehaviour
                     break;
             }
         }
+        
+#if (UNITY_EDITOR || DEVELOPMENT_BUILD)
         if (GameObject.FindObjectOfType<ActionsPanel>() != null)
             GameObject.FindObjectOfType<ActionsPanel>().UpdatePanel();
+#endif
+
     }
 
     public static List<GameObject> FindAnchers(string[] objectNames)

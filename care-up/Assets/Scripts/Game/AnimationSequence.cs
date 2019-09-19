@@ -215,7 +215,7 @@ public class AnimationSequence  {
         {
             if (dialogueObject == null)
             {
-                dialogueObject = Object.Instantiate(Resources.Load<GameObject>("Prefabs/UI/SelectionDialogue"),
+                dialogueObject = Object.Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/UI/SelectionDialogue"),
                         GameObject.Find("OverlayCamera").transform) as GameObject;
                 dialogueObject.name = "SelectionDialogue";
             }

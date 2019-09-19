@@ -52,14 +52,14 @@ public class PlayerPrefsManager : MonoBehaviour
     public bool subscribed = false;
     [HideInInspector]
     public static int plays = 0;
-    
+
     public static int currentPracticeScore = 0;
     public static int currentPracticeStars = 0;
-    
+
     private UMP_Manager manager;
     private MainMenu mainMenu;
     private Scene currentScene;
-    
+
     public string fullPlayerName = "";
     public string bigNumber = "";
 
@@ -132,7 +132,7 @@ public class PlayerPrefsManager : MonoBehaviour
                 Destroy(GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/WUSerialScreen" +
                     "/RegisterArea/Buttons/MoreInfo_Apple"));
                 Destroy(GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/WUSerialScreen" +
-                    "/RegisterArea/Buttons/Purchase_Apple")); 
+                    "/RegisterArea/Buttons/Purchase_Apple"));
             }
 
             if (Application.platform != RuntimePlatform.Android)
@@ -140,7 +140,7 @@ public class PlayerPrefsManager : MonoBehaviour
                 Destroy(GameObject.Find("UMenuProManager/MenuCanvas/VersionUpdatePanel/Panel_Version_UI" +
                     "/NewVersionButtonGreenAndroid"));
                 Destroy(GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/WUSerialScreen" +
-                    "/RegisterArea/Buttons/PurchaseButton_GoogleIAP")); 
+                    "/RegisterArea/Buttons/PurchaseButton_GoogleIAP"));
             }
 
             if (!windows)
@@ -151,7 +151,7 @@ public class PlayerPrefsManager : MonoBehaviour
                     "/RegisterArea/Buttons/PurchaseButton_UWP"));
             }
 
-            if ((Application.platform != RuntimePlatform.Android) && !windows)
+            if ((Application.platform != RuntimePlatform.Android))
             {
                 Destroy(GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/WUSerialScreen" +
                     "/RegisterArea/Buttons/PurchaseButton_AndroidWeb"));
@@ -236,6 +236,12 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         get { return PlayerPrefs.HasKey("ScroopPosition") ? PlayerPrefs.GetFloat("ScroopPosition") : 0f; }
         set { PlayerPrefs.SetFloat("ScroopPosition", value); }
+    }
+
+    public float LevelScrollPosition
+    {
+        get { return PlayerPrefs.HasKey("LevelScrollPosition") ? PlayerPrefs.GetFloat("LevelScrollPosition") : 1f; }
+        set { PlayerPrefs.SetFloat("LevelScrollPosition", value); }
     }
 
     public void SetSceneActivated(string sceneName, bool value)
@@ -352,7 +358,7 @@ public class PlayerPrefsManager : MonoBehaviour
                 tutorialCompleted = false; // store for current session
             }
 
-            PlayerPrefs.DeleteKey("TutorialCompleted"); // delete 
+            PlayerPrefs.DeleteKey("TutorialCompleted"); // delete
         }
         else // when info is deleted from PC
         {
@@ -408,7 +414,7 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         RateBox.Instance.IncrementCustomCounter();
         RateBox.Instance.Show();
-        
+
         PlayerPrefsManager.plays += 1;
 
         DatabaseManager.UpdateField("AccountStats", "Plays_Number", PlayerPrefsManager.plays.ToString());
@@ -465,7 +471,7 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         float currentTestScore = score * 100.0f;
         string currentTestScene = FormatSceneName(currentSceneVisualName);
-        
+
         string highscoreStr = DatabaseManager.FetchField("TestHighscores", currentTestScene);
         float highscore = 0;
         float.TryParse(highscoreStr.Replace(",", "."), out highscore);
@@ -508,7 +514,7 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         AddOneToSceneInCategory(scene, "TestFails");
     }
-    
+
     public void SetTutorialCompletedWU()
     {
         tutorialCompleted = true;
@@ -578,7 +584,7 @@ public class PlayerPrefsManager : MonoBehaviour
     public void UpdatePracticeHighscore(int score, int stars)
     {
         string practiceScene = FormatSceneName(currentSceneVisualName);
-        
+
         int highscore;
         int.TryParse(DatabaseManager.FetchField("PracticeHighscores", "score_" + practiceScene), out highscore);
         if (highscore < score)
@@ -616,7 +622,7 @@ public class PlayerPrefsManager : MonoBehaviour
         Debug.LogWarning("OPENING LINK " + link);
         Application.OpenURL(link.Replace(" ", "%20"));
     }
-    
+
     public static string __getCertificateLinkParams(string scene, string date = "", bool mail = false)
     {
         PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
@@ -670,7 +676,7 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         string link = "https://leren.careup.online/Certificate_sendMail.php";
         link += PlayerPrefsManager.__getCertificateLinkParams(scene, date, true);
-        
+
         Debug.LogWarning("Sending email with certificate to user.");
         UnityWebRequest unityWebRequest = new UnityWebRequest(link);
         unityWebRequest.SendWebRequest();
@@ -725,13 +731,13 @@ public class PlayerPrefsManager : MonoBehaviour
         GameObject.FindObjectOfType<PlayerPrefsManager>().bigNumber = number;
         DatabaseManager.UpdateField("AccountStats", "BIG_number", number);
     }
-    
+
     private void SetEscapeButtonLogic()
     {
         //if (startTimer)
         //{
         //    timeLeft -= Time.deltaTime;
-        //    timeOut = timeLeft > 0f ? true : false;                         
+        //    timeOut = timeLeft > 0f ? true : false;
         //}
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -862,7 +868,7 @@ public class PlayerPrefsManager : MonoBehaviour
         link += "?u=https%3A%2F%2Fcareup.online";                         // u=link for link reference
         link += "&quote=I just passed a test for ";                  // quote=text for text quote
         link += sceneName + ". You can try it out yourself by going to https%3A%2F%2Fcareup.online";
-        
+
         Application.OpenURL(link.Replace(" ", "%20"));
     }
 }

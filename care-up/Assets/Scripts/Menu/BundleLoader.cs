@@ -14,7 +14,6 @@ public class BundleLoader : MonoBehaviour {
     {
         sceneAssetBundle = bundle;
         sceneName = scene;
-
         yield return StartCoroutine(Initialize());
 
         // Load level.

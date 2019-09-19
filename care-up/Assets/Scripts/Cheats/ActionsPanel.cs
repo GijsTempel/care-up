@@ -63,6 +63,7 @@ public class ActionsPanel : MonoBehaviour {
     {
         slide(!slideState);
     }
+
     public void buildActionsList()
     {
         Transform content = transform.Find("ActionsList/Viewport/Content").transform;
@@ -70,8 +71,9 @@ public class ActionsPanel : MonoBehaviour {
         {
             foreach (Action a in am.actionList)
             {
-                GameObject ActionStep = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/UI/ActionStepButton"), content);
+                GameObject ActionStep = GameObject.Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/UI/ActionStepButton"), content);
                 ActionStep.GetComponent<ActionStepButton>().setAction(a);
+              
             }
         }
     }
