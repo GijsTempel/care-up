@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using CareUpAvatar;
 
 public class LoadCharacterScene : MonoBehaviour
 {
@@ -12,14 +13,18 @@ public class LoadCharacterScene : MonoBehaviour
 
     public void LoadCharacter()
     {
-        characters.SetActive(true);
-        GameObject.FindObjectOfType<CharacterCreationScene>()
-            .ShowCharacter();
+        PlayerAvatar mainAvatar = GameObject.Find("MainPlayerAvatar").GetComponent<PlayerAvatar>();
+        Gender gender = CharacterInfo.sex == "Female" ? Gender.Female : Gender.Male;
+        PlayerAvatarData _data = new PlayerAvatarData(gender, CharacterInfo.headType, 
+                CharacterInfo.bodyType, CharacterInfo.glassesType);
+
+        mainAvatar.avatarData = _data;
+        mainAvatar.UpdateCharacter();
     }
 
     public void HideCharacter()
     {
-        if (characters.activeSelf)
-            characters.SetActive(false);
+        // if (characters.activeSelf)
+        //     characters.SetActive(false);
     }
 }

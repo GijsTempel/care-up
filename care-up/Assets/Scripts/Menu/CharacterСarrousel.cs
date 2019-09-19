@@ -4,14 +4,14 @@ using CareUpAvatar;
 
 public class CharacterСarrousel : MonoBehaviour
 {
+    int nextTurnDir = 0;
+    int turnDir = 0;
     [HideInInspector]
-    public static int nextTurnDir = 0;
     public static int CurrentCharacter { get; set; } = 1;
 
     private CharacterPanelManager panelManager;
     private float turnAngle = 0;
     private int behindMarker = 3;
-    private int turnDir = 0;
     private List<PlayerAvatar> avatars = new List<PlayerAvatar>();
     public List<GameObject> platforms;
     private List<GameObject> checkMarks = new List<GameObject>();
@@ -43,7 +43,7 @@ public class CharacterСarrousel : MonoBehaviour
         int nextChar = CurrentCharacter + dir;
         if (nextChar >= 0 && nextChar < PlayerPrefsManager.storeManager.CharacterItems.Count)
             nextTurnDir = dir;
-        enabled = true;
+        // enabled = true;
     }
 
     public int GetCurrentMarker()
@@ -82,8 +82,8 @@ public class CharacterСarrousel : MonoBehaviour
 
     private void Update()
     {
-        if (turnDir == 0 && nextTurnDir == 0)
-            enabled = false;
+        // if (turnDir == 0 && nextTurnDir == 0)
+        //     enabled = false;
         if (turnDir == 0 && nextTurnDir != 0)
         {
             turnDir = nextTurnDir;

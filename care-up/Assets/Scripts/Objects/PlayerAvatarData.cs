@@ -24,7 +24,7 @@
         public int mouthType;
         public int eyeType;
 
-        public PlayerAvatarData(Gender _gender, int _headType, int _bodyType, int _glassesType, int _mouthType, int _eyeType)
+        public PlayerAvatarData(Gender _gender, int _headType, int _bodyType, int _glassesType, int _mouthType = 0, int _eyeType = 0)
         {
             gender = _gender;
             headType = _headType;

@@ -37,11 +37,11 @@ public class CharacterPanelManager : MonoBehaviour
         Initialize();
     }
 
-    private void Update()
-    {
-        if (сarrousel != null)
-            gestureController.ManageSwipeGestures(() => сarrousel.Scroll(1), () => сarrousel.Scroll(-1));
-    }
+    // private void Update()
+    // {
+    //     if (сarrousel != null)
+    //         gestureController.ManageSwipeGestures(() => сarrousel.Scroll(1), () => сarrousel.Scroll(-1));
+    // }
 
     private void Initialize()
     {
