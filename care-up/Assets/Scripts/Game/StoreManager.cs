@@ -186,7 +186,7 @@ public class StoreManager
 
         if (item != null)
         {
-            Debug.Log(item.index.ToString() + " " + item.price);
+            Debug.Log(itemIndex.ToString() + " " + item.price.ToString());
             if (item.index != -1 && currentCurrency >= item.price)
             {
                 ModifyCurrencyBy(-item.price);
