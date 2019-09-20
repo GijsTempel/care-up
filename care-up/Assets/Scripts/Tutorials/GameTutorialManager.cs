@@ -101,6 +101,7 @@ public class GameTutorialManager : MonoBehaviour
 
             if (step.Attributes["magnifier_y"] != null)
                 float.TryParse(step.Attributes["magnifier_y"].Value, out _y);
+
             tutorialSteps.Add(new TutorialStep
             {
                 Title = step.Attributes["title"].Value,
