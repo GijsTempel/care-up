@@ -58,6 +58,17 @@ public class StoreManager
     public int Currency { get { return currentCurrency; } }
     public int Presents { get { return currentPresents; } }
 
+
+    public int GetItemIndex(int num)
+    {
+        if(num >=0 && num < CharacterItems.Count)
+        {
+            int result = CharacterItems[num].index;
+            return result;
+        }
+        return -1;
+    }
+
     public void Init(string storeXml = "Store", string characterStoreXml = "CharacterStore")
     {
         // load up all items from xml into the list
@@ -169,12 +180,13 @@ public class StoreManager
 
     public bool PurchaseCharacter(int itemIndex)
     {
-        CharacterItem item = CharacterItems.Find(x => x.index == itemIndex);
+        if (itemIndex < 0)
+            return false;
+        CharacterItem item = CharacterItems.Find(x => x.index == (itemIndex));
 
         if (item != null)
         {
             Debug.Log(itemIndex.ToString() + " " + item.price.ToString());
-            //Debug.Log(currentCurrency.ToString() + " " + item.price);
             if (item.index != -1 && currentCurrency >= item.price)
             {
                 ModifyCurrencyBy(-item.price);

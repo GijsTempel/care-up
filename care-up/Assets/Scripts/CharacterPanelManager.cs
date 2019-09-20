@@ -58,7 +58,7 @@ public class CharacterPanelManager : MonoBehaviour
 
     private void BuyCharacter()
     {
-        if (storeManager.PurchaseCharacter(CharacterСarrousel.CurrentCharacter))
+        if (storeManager.PurchaseCharacter(storeManager.GetItemIndex(CharacterСarrousel.CurrentCharacter)))
         {
             adjustButton.SetActive(true);
             currencyText.text = storeManager.Currency.ToString();
