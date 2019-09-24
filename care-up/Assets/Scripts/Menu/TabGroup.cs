@@ -152,9 +152,15 @@ public class TabGroup : MonoBehaviour
     {
         if (item.purchased)
         {
-            // checkmark for selected icon
+            // deactivate other nearby checkmarks
+            foreach (Transform child in obj.transform.parent)
+                child.Find("Checkmark").gameObject.SetActive(false);
+
+            // enable mark for selected item
             obj.transform.Find("Checkmark").gameObject.SetActive(true);
+
             // do smth after selecting?
+            // like wear the piece of clothing?
         }
         else
         {
