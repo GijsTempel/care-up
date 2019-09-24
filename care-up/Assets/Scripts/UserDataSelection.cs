@@ -17,7 +17,7 @@ public class UserDataSelection : MonoBehaviour
     private List<GameObject> avatarsButtons = default;
 
     [SerializeField]
-    private List<PlayerAvatar> avatars;
+    private List<PlayerAvatar> avatars = default;
 
     private void InitializeAvatars()
     {
