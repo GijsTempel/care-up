@@ -131,7 +131,12 @@ public class TabGroup : MonoBehaviour
                 GameObject i = Instantiate(productItem, itemParent);
                 // set name ?
                 i.transform.Find("Price/Cost").GetComponent<Text>().text = item.price.ToString();
-                i.transform.Find("Checkmark").gameObject.SetActive(item.purchased);
+                i.transform.Find("Price").gameObject.SetActive(!item.purchased); // hide the price if item is purchased
+                i.GetComponent<Button>().onClick.AddListener(() => PurchaseItemBtn(i, item));
+
+                i.transform.Find("Checkmark").gameObject.SetActive(false); // checkmark for selected icon
+
+                // set up icon?
             }
         }
 
@@ -141,5 +146,24 @@ public class TabGroup : MonoBehaviour
         }
 
         OnTabSelected(tabs[0]);
-    }   
+    }
+
+    public void PurchaseItemBtn(GameObject obj, StoreItem item)
+    {
+        if (item.purchased)
+        {
+            // checkmark for selected icon
+            obj.transform.Find("Checkmark").gameObject.SetActive(true);
+            // do smth after selecting?
+        }
+        else
+        {
+            // pop up instead of straight up purchase?
+            PlayerPrefsManager.storeManager.Purchase(item.index);
+            // update ui
+            obj.transform.Find("Price").gameObject.SetActive(false);
+            GameObject.Find("AdjustCharacter/NumbersStackPanel/CurrencyPanel/Panel/Text").GetComponent<Text>().text
+                = PlayerPrefsManager.storeManager.Currency.ToString();
+        }
+    }
 }

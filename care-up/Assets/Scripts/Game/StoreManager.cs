@@ -88,6 +88,7 @@ public class StoreManager
                 int.TryParse(xmlSceneNode.Attributes["price"].Value, out price);
                 bool purchased = DatabaseManager.FetchField("Store", "StoreItem_" + index.ToString()) == "true";
 
+
                 string name = xmlSceneNode.Attributes["name"].Value;
                 string category = xmlSceneNode.Attributes["category"].Value;
 
