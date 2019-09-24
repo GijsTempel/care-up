@@ -16,10 +16,9 @@ public class CharacterPanelManager : MonoBehaviour
     private UMP_Manager uMP_Manager;
     private LoadCharacterScene loadCharacter;
     private CharacterСarrousel сarrousel;
-    GameObject BuyBtnCoinIcon;
-    GameObject BuyBtnFreeText;
-    Text BuyBtnText;
-
+    public GameObject BuyBtnCoinIcon;
+    public GameObject BuyBtnFreeText;
+    public Text BuyBtnText;
 
 
     public void Adjust()
@@ -51,9 +50,6 @@ public class CharacterPanelManager : MonoBehaviour
 
     private void Start()
     {
-        BuyBtnCoinIcon = buyButton.transform.Find("Coin").gameObject;
-        BuyBtnFreeText = buyButton.transform.Find("Free").gameObject;
-        BuyBtnText = buyButton.transform.Find("Text").GetComponent<Text>();
         Initialize();
     }
 

@@ -9,7 +9,7 @@ public class CharacterСarrousel : MonoBehaviour
     [HideInInspector]
     public static int CurrentCharacter { get; set; } = 1;
 
-    private CharacterPanelManager panelManager;
+    public CharacterPanelManager panelManager;
     private float turnAngle = 0;
     private int behindMarker = 3;
     private List<PlayerAvatar> avatars = new List<PlayerAvatar>();
@@ -56,8 +56,6 @@ public class CharacterСarrousel : MonoBehaviour
 
     private void Start()
     {
-        panelManager = GameObject.FindObjectOfType<CharacterPanelManager>();
-
         foreach (GameObject platform in platforms)
         {
             checkMarks.Add(platform.transform.Find("checkMark").gameObject);

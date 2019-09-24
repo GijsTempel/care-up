@@ -8,6 +8,7 @@ public class UMP_Manager : MonoBehaviour {
 
     [Header("Level Manager")]
     public List<LevelInfo> Levels = new List<LevelInfo>();
+    
 
     public InputField SceneSearchBar;
     public InputField LeaderBoardSearchBar;
@@ -15,11 +16,13 @@ public class UMP_Manager : MonoBehaviour {
     [Header("Settings")]
     public string PlayButtonName = "QUICKPLAY >";
 
+
     [Header("References")]
     public List<GameObject> Windows = new List<GameObject>();
     public List<UMP_DialogUI> Dialogs = new List<UMP_DialogUI>();
     public GameObject LevelPrefab;
     public Transform LevelPanel;
+
 
     private int CurrentWindow = -1;
     private PlayerPrefsManager manager;
