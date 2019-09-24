@@ -165,11 +165,13 @@ public class TabGroup : MonoBehaviour
         else
         {
             // pop up instead of straight up purchase?
-            PlayerPrefsManager.storeManager.Purchase(item.index);
-            // update ui
-            obj.transform.Find("Price").gameObject.SetActive(false);
-            GameObject.Find("AdjustCharacter/NumbersStackPanel/CurrencyPanel/Panel/Text").GetComponent<Text>().text
-                = PlayerPrefsManager.storeManager.Currency.ToString();
+            if (PlayerPrefsManager.storeManager.Purchase(item.index))
+            {
+                // update ui
+                obj.transform.Find("Price").gameObject.SetActive(false);
+                GameObject.Find("AdjustCharacter/NumbersStackPanel/CurrencyPanel/Panel/Text").GetComponent<Text>().text
+                    = PlayerPrefsManager.storeManager.Currency.ToString();
+            }
         }
     }
 }
