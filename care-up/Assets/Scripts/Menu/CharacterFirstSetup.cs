@@ -2,19 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using CareUpAvatar;
 
 
 public class CharacterFirstSetup : MonoBehaviour
 {
-    public Text BigNumberHolder;
-    public Text FullName;
+    public InputField BigNumberHolder;
+    public InputField FullName;
     int currentTab = 0;
     public List<GameObject> tabs;
+    public Button NextButton;
+    PlayerPrefsManager pref;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        pref = GameObject.FindObjectOfType<PlayerPrefsManager>();
+        if (pref != null)
+        {
+            if (!pref.firstStart)
+            {
+                NextButton.transform.Find("Text").GetComponent<Text>().text = "Opslaan";
+                FullName.text = pref.fullPlayerName;
+                BigNumberHolder.text = pref.bigNumber;
+            }
+        }
     }
 
     bool CheckFirstTab()
@@ -37,25 +49,51 @@ public class CharacterFirstSetup : MonoBehaviour
     public void SetTab(int tab)
     {
         bool check = true;
+        
+
         if (currentTab == 0)
         {
             check = CheckFirstTab();
         }
 
-        if (check && tab >= 0 && tab < tabs.Count)
+        if (check)
         {
-            foreach(GameObject t in tabs)
+            if (pref != null)
             {
-                t.SetActive(false);
+                if (!pref.firstStart && currentTab == 0)
+                {
+                    tab = -1;
+                }
             }
-            tabs[tab].SetActive(true);
-            currentTab = tab;
+            if (tab >= 0 && tab < tabs.Count)
+            {
+                foreach (GameObject t in tabs)
+                {
+                    t.SetActive(false);
+                }
+                tabs[tab].SetActive(true);
+                currentTab = tab;
+            }
+            else
+            {
+                // save full name
+                PlayerPrefsManager.SetFullName(FullName.text);
+                // save big number
+                PlayerPrefsManager.SetBIGNumber(BigNumberHolder.text);
+
+                // set new character scene to be seen and saved info
+                DatabaseManager.UpdateField("AccountStats", "CharSceneV2", "true");
+
+                if (DatabaseManager.FetchField("AccountStats", "TutorialCompleted") == "true")
+                {
+                    bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
+                }
+                else
+                {
+                    bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Tutorial", "scenes_tutorial");
+                }
+            }
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

@@ -8,6 +8,7 @@ public class LoadCharacterScene : MonoBehaviour
 
     public void LoadScene()
     {
+        GameObject.FindObjectOfType<PlayerPrefsManager>().firstStart = false;
         bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Character_Customisation");
     }
 
@@ -22,9 +23,5 @@ public class LoadCharacterScene : MonoBehaviour
         mainAvatar.UpdateCharacter();
     }
 
-    public void HideCharacter()
-    {
-        // if (characters.activeSelf)
-        //     characters.SetActive(false);
-    }
+
 }
