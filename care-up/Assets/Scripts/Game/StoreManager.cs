@@ -71,6 +71,9 @@ public class StoreManager
 
     public void Init(string storeXml = "Store", string characterStoreXml = "CharacterStore")
     {
+        bool _dev__DropAllPurchases = false; // change this to true once to clear all purchases
+        bool _dev__AddCurrency = false; // change this to true once to get 100 currency
+
         // load up all items from xml into the list
         TextAsset textAsset = (TextAsset)Resources.Load("Xml/" + storeXml);
 
@@ -88,6 +91,11 @@ public class StoreManager
                 int.TryParse(xmlSceneNode.Attributes["price"].Value, out price);
                 bool purchased = DatabaseManager.FetchField("Store", "StoreItem_" + index.ToString()) == "true";
 
+                if (_dev__DropAllPurchases)
+                {
+                    purchased = false;
+                    DatabaseManager.UpdateField("Store", "StoreItem_" + index.ToString(), "false");
+                }
 
                 string name = xmlSceneNode.Attributes["name"].Value;
                 string category = xmlSceneNode.Attributes["category"].Value;
@@ -121,6 +129,12 @@ public class StoreManager
 
             bool purchased = DatabaseManager.FetchField("Store", "CharacterItem_" + index.ToString()) == "true";
 
+            if (_dev__DropAllPurchases)
+            {
+                purchased = false;
+                DatabaseManager.UpdateField("Store", "CharacterItem_" + index.ToString(), "false");
+            }
+
             Gender characterGender = (gender == "Female") ? Gender.Female : Gender.Male;
             PlayerAvatarData playerAvatar = new PlayerAvatarData(characterGender, headType, bodyType, glassesType, mouthType, eyeType);
             CharacterItems.Add(new CharacterItem(index, price, purchased, playerAvatar));
@@ -129,6 +143,8 @@ public class StoreManager
         // get amount of currency/presents saved
         int.TryParse(DatabaseManager.FetchField("Store", "Currency"), out currentCurrency);
         int.TryParse(DatabaseManager.FetchField("Store", "Presents"), out currentPresents);
+
+        if (_dev__AddCurrency) ModifyCurrencyBy(100);
     }
 
     public void ModifyCurrencyBy(int amount)
