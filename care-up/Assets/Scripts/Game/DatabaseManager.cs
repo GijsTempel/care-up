@@ -92,11 +92,10 @@ public class DatabaseManager : MonoBehaviour
 
         // check if character created, load proper scene
         // load scene at the end of this function
-        if (false)
-            /*FetchField("AccountStats", "CharacterCreated") == "true" &&
+        if (FetchField("AccountStats", "CharacterCreated") == "true" &&
              FetchField("AccountStats", "FullName") != "" &&
              (FetchField("AccountStats", "CharSceneV2") == "true" ||
-             FetchField("AccountStats", "BIG_number") != ""))*/
+             FetchField("AccountStats", "BIG_number") != ""))
         {
             WULogin.characterCreated = true;
 
