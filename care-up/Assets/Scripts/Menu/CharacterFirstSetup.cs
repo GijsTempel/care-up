@@ -12,6 +12,9 @@ public class CharacterFirstSetup : MonoBehaviour
     int currentTab = 0;
     public List<GameObject> tabs;
     public Button NextButton;
+    public PlayerAvatar Avatar;
+    int currentChar = 0;
+
     PlayerPrefsManager pref;
     
     // Start is called before the first frame update
@@ -26,6 +29,25 @@ public class CharacterFirstSetup : MonoBehaviour
                 FullName.text = pref.fullPlayerName;
                 BigNumberHolder.text = pref.bigNumber;
             }
+            else
+            {
+                Invoke("Initialize", 0.01f);
+            }
+        }
+    }
+
+    void Initialize()
+    {
+        SetCharacter(0);
+    }
+
+    public void SetCharacter(int n)
+    {
+        if (pref != null)
+        {
+            Avatar.avatarData = PlayerPrefsManager.storeManager.CharacterItems[n].playerAvatar;
+            Avatar.UpdateCharacter();
+            currentChar = n;
         }
     }
 
@@ -80,7 +102,10 @@ public class CharacterFirstSetup : MonoBehaviour
                 PlayerPrefsManager.SetFullName(FullName.text);
                 // save big number
                 PlayerPrefsManager.SetBIGNumber(BigNumberHolder.text);
-
+                if (pref.firstStart)
+                {
+                    CharacterInfo.SetCharacterCharacteristicsWU(PlayerPrefsManager.storeManager.CharacterItems[currentChar].playerAvatar);
+                }
                 // set new character scene to be seen and saved info
                 DatabaseManager.UpdateField("AccountStats", "CharSceneV2", "true");
 
