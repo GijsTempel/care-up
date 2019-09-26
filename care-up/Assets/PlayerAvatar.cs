@@ -10,6 +10,8 @@ public class PlayerAvatar : MonoBehaviour
     public UVWarp f_leftEyeObject;
     public UVWarp f_rightEyeObject;
     public UVWarp f_mouthObject;
+    public Transform headAnchor;
+    public GameObject CurrentHeat;
 
     public PlayerAvatarData avatarData = new PlayerAvatarData();
 
@@ -28,6 +30,24 @@ public class PlayerAvatar : MonoBehaviour
 
     Actions currentAction = Actions.Idle;
     Actions nextAction;
+
+    public void LoadNewHeat(string heatName)
+    {
+        if (CurrentHeat != null)
+        {
+            Destroy(CurrentHeat);
+            CurrentHeat = null;
+        }
+        Object heatPrefab = Resources.Load<GameObject>("Prefabs/Shop_Items/" + heatName);
+        if (heatPrefab != null)
+        {
+            GameObject newHeat = Instantiate(heatPrefab, headAnchor, true) as GameObject;
+            newHeat.transform.position = headAnchor.position;
+            newHeat.transform.rotation = headAnchor.rotation;
+            newHeat.transform.localScale = headAnchor.localScale;
+        }
+
+    }
 
     private void Awake()
     {
@@ -73,6 +93,7 @@ public class PlayerAvatar : MonoBehaviour
 
         Animator anim = GetComponent<Animator>();
         anim.Play(anim.GetCurrentAnimatorStateInfo(0).fullPathHash,0, Random.Range(0f,1f));
+        //LoadNewHeat("ball");
     }
 
     public void JumpToNextAnimation()
