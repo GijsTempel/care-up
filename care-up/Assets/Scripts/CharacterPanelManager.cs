@@ -16,6 +16,9 @@ public class CharacterPanelManager : MonoBehaviour
     private UMP_Manager uMP_Manager;
     private LoadCharacterScene loadCharacter;
     private CharacterСarrousel сarrousel;
+    public GameObject BuyBtnCoinIcon;
+    public GameObject BuyBtnFreeText;
+    public Text BuyBtnText;
 
 
     public void Adjust()
@@ -27,9 +30,22 @@ public class CharacterPanelManager : MonoBehaviour
     public void SetStoreInfo(int characterIndex)
     {
         bool purchased = storeManager.CharacterItems[characterIndex].purchased;
-        string price = storeManager.CharacterItems[characterIndex].price.ToString();
+        int p = storeManager.CharacterItems[characterIndex].price;
+        string price = p.ToString();
+        if (p == 0)
+        {
+            price = "";
+            BuyBtnCoinIcon.SetActive(false);
+            BuyBtnFreeText.SetActive(true);
+        }
+        else
+        {
+            BuyBtnCoinIcon.SetActive(true);
+            BuyBtnFreeText.SetActive(false);
+        }
+
         adjustButton.SetActive(purchased);
-        buyButton.transform.GetChild(0).GetComponent<Text>().text = price;
+        BuyBtnText.GetComponent<Text>().text = price;
     }
 
     private void Start()

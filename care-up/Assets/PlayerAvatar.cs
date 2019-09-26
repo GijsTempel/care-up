@@ -67,6 +67,8 @@ public class PlayerAvatar : MonoBehaviour
         avatarData.headType = 4;
         avatarData.glassesType = 0;
         avatarData.bodyType = 7;
+        avatarData.eyeType = 4;
+
         UpdateCharacter();
 
         Animator anim = GetComponent<Animator>();
@@ -152,7 +154,7 @@ public class PlayerAvatar : MonoBehaviour
         {
             h.gameObject.SetActive(femaleHeads.IndexOf(h) == avatarData.headType && avatarData.gender == Gender.Female);
         }
-        SetFace(true, avatarData.eyeType, avatarData.mouthType);
+        SetFace(false, avatarData.eyeType, avatarData.mouthType);
     }
 
     void UpdateMaleBodies()
