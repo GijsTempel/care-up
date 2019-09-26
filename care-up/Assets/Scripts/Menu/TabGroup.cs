@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using CareUpAvatar;
 
 public class TabGroup : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class TabGroup : MonoBehaviour
     public GameObject BuyBtn;
     Text BuyBtnText;
     GameObject BuyBtnCoin;
+    PlayerAvatar mainAvatar;
 
     private GameObject selectedItemBtn = null;
     private StoreItem selectedItem = null;
@@ -108,6 +110,7 @@ public class TabGroup : MonoBehaviour
 
     private void Start()
     {
+        mainAvatar = GameObject.Find("MainPlayerAvatar").GetComponent<PlayerAvatar>();
         BuyBtnText = BuyBtn.transform.Find("Text").GetComponent<Text>();
         BuyBtnCoin = BuyBtn.transform.Find("Coin").gameObject;
         BuyBtnText.gameObject.SetActive(false);
@@ -191,6 +194,7 @@ public class TabGroup : MonoBehaviour
                 BuyBtnCoin.SetActive(false);
             }
             BuyBtnText.text = price;
+            mainAvatar.LoadNewHeat(item.name);
         }
         else
         {
