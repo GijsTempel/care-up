@@ -47,7 +47,6 @@ public class PlayerAvatar : MonoBehaviour
             newHeat.transform.localScale = headAnchor.localScale;
             CurrentHeat = newHeat;
         }
-
     }
 
     private void Awake()
@@ -226,5 +225,6 @@ public class PlayerAvatar : MonoBehaviour
 
         UpdateMaleGlasses();
         UpdateFemaleGlasses();
+        LoadNewHeat(avatarData.heat);
     }
 }

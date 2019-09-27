@@ -10,12 +10,15 @@ public class ProductButton : MonoBehaviour
     public GameObject price;
     public Text cost;
     public GameObject checkmark;
+    public GameObject dressOn;
+
     public Image icon;
     public StoreItem item;
     TabGroup tabGroup;
     // Start is called before the first frame update
     void Start()
     {
+        dressOn.SetActive(false);
     }
     
     public void Select(bool toSelect)
@@ -45,8 +48,6 @@ public class ProductButton : MonoBehaviour
         tabGroup = tg;
     }
 
-
-
     public void SetPrice(int _price)
     {
         cost.text = _price.ToString();
@@ -58,9 +59,9 @@ public class ProductButton : MonoBehaviour
         checkmark.SetActive(isPurchased);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetDressOn(bool isDressedOn)
     {
-        
+        dressOn.SetActive(isDressedOn);
     }
+
 }
