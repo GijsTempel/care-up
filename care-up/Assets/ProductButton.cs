@@ -1,0 +1,66 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+
+public class ProductButton : MonoBehaviour
+{
+    public Text _name;
+    public GameObject price;
+    public Text cost;
+    public GameObject checkmark;
+    public Image icon;
+    public StoreItem item;
+    TabGroup tabGroup;
+    // Start is called before the first frame update
+    void Start()
+    {
+    }
+    
+    public void Select(bool toSelect)
+    {
+        if (toSelect)
+        {
+            GetComponent<Image>().color = Color.yellow;
+        }
+        else
+        {
+            GetComponent<Image>().color = Color.white;
+        }
+    }
+
+    public void ButtonClicked()
+    {
+        tabGroup.SelectItem(this);
+
+    }
+
+    public void Initialize(StoreItem _item, TabGroup tg)
+    {
+        item = _item;
+        _name.text = item.name;
+        SetPrice(item.price);
+        SetPurchased(item.purchased);
+        tabGroup = tg;
+    }
+
+
+
+    public void SetPrice(int _price)
+    {
+        cost.text = _price.ToString();
+    }
+
+    public void SetPurchased(bool isPurchased)
+    {
+        price.SetActive(!isPurchased);
+        checkmark.SetActive(isPurchased);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}

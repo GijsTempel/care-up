@@ -16,12 +16,19 @@ public class TabGroup : MonoBehaviour
     private List<GameObject> pages = new List<GameObject>();
     private List<TabButton> tabs;
     public GameObject BuyBtn;
+    public GameObject ConfirmPanel;
     Text BuyBtnText;
     GameObject BuyBtnCoin;
     PlayerAvatar mainAvatar;
 
-    private GameObject selectedItemBtn = null;
-    private StoreItem selectedItem = null;
+    private ProductButton selectedItemBtn = null;
+
+
+
+    public void ShowConfirmPanel(bool toShow)
+    {
+        ConfirmPanel.SetActive(toShow);
+    }
 
     public void Subscribe(TabButton button)
     {
@@ -29,15 +36,6 @@ public class TabGroup : MonoBehaviour
             tabs = new List<TabButton>();
 
         tabs.Add(button);
-    }
-
-    public void BuySelected()
-    {
-        if (selectedItemBtn != null && selectedItem != null)
-        {
-            PurchaseItemBtn(selectedItemBtn, selectedItem);
-            SelectItem(null, null);
-        }
     }
 
     public void OnTabEnter(TabButton button)
@@ -113,7 +111,7 @@ public class TabGroup : MonoBehaviour
         mainAvatar = GameObject.Find("MainPlayerAvatar").GetComponent<PlayerAvatar>();
         BuyBtnText = BuyBtn.transform.Find("Text").GetComponent<Text>();
         BuyBtnCoin = BuyBtn.transform.Find("Coin").gameObject;
-        BuyBtnText.gameObject.SetActive(false);
+        
         BuyBtnCoin.SetActive(false);
 
         pagesContainer = GameObject.Find("PageContainer");
@@ -148,21 +146,12 @@ public class TabGroup : MonoBehaviour
                 }
             });
 
-
             foreach (StoreItem item in cat.items)
             {
                 GameObject i = Instantiate(productItem, itemParent);
                 // set name ?
-                i.transform.Find("Price/Cost").GetComponent<Text>().text = item.price.ToString();
-                i.transform.Find("Price").gameObject.SetActive(!item.purchased); // hide the price if item is purchased
-                i.transform.Find("name").GetComponent<Text>().text = item.name; 
-                i.GetComponent<Button>().onClick.AddListener(() => SelectItem(i, item));
-                //i.GetComponent<Button>().onClick.AddListener(() => PurchaseItemBtn(i, item));
-
-
-                i.transform.Find("Checkmark").gameObject.SetActive(false); // checkmark for selected icon
-
-                // set up icon?
+                ProductButton btn = i.GetComponent<ProductButton>();
+                btn.Initialize(item, this);
             }
         }
 
@@ -172,61 +161,78 @@ public class TabGroup : MonoBehaviour
         }
 
         OnTabSelected(tabs[0]);
+        UpdatePurchesBtn();
     }
 
-    public void SelectItem(GameObject obj, StoreItem item)
+    public void SelectItem(ProductButton btn)
     {
         if (selectedItemBtn != null)
         {
-            selectedItemBtn.GetComponent<Image>().color = Color.white;
+            selectedItemBtn.Select(false);
         }
-        if (obj != null && item != null)
+        if (btn != null)
         {
-            selectedItemBtn = obj;
-            selectedItem = item;
-            selectedItemBtn.GetComponent<Image>().color = Color.yellow;
-            BuyBtnText.gameObject.SetActive(true);
-            string price = item.price.ToString();
+            selectedItemBtn = btn;
+            selectedItemBtn.Select(true);
             BuyBtnCoin.SetActive(true);
-            if (item.purchased)
-            {
-                price = "";
-                BuyBtnCoin.SetActive(false);
-            }
-            BuyBtnText.text = price;
-            mainAvatar.LoadNewHeat(item.name);
+
+
+            mainAvatar.LoadNewHeat(btn.item.name);
         }
         else
         {
-            BuyBtnCoin.SetActive(false);
-            BuyBtnText.text = "";
+        }
+        UpdatePurchesBtn();
+    }
+
+    public void UpdatePurchesBtn()
+    {
+        if (selectedItemBtn != null)
+        {
+            if (!selectedItemBtn.item.purchased)
+            {
+                BuyBtnText.text = selectedItemBtn.item.price.ToString();
+                BuyBtnCoin.SetActive(true);
+                BuyBtn.SetActive(true);
+            }
+            else
+            {
+                BuyBtnText.text = "Put on";
+                BuyBtnCoin.SetActive(false);
+                BuyBtn.SetActive(true);
+            }
+        }
+        else
+        {
+            BuyBtn.SetActive(false);
         }
     }
 
-    public void PurchaseItemBtn(GameObject obj, StoreItem item)
+    public void PurchesBtnClicked()
     {
-        if (item.purchased)
+        if (selectedItemBtn != null)
         {
-            // deactivate other nearby checkmarks
-            foreach (Transform child in obj.transform.parent)
-                child.Find("Checkmark").gameObject.SetActive(false);
-
-            // enable mark for selected item
-            obj.transform.Find("Checkmark").gameObject.SetActive(true);
-
-            // do smth after selecting?
-            // like wear the piece of clothing?
+            if (!selectedItemBtn.item.purchased)
+                ShowConfirmPanel(true);
         }
-        else
+        UpdatePurchesBtn();
+    }
+
+    public void PurchaseSelectedItem()
+    {
+        StoreItem item = selectedItemBtn.item;
+        if (!item.purchased)
         {
-            // pop up instead of straight up purchase?
             if (PlayerPrefsManager.storeManager.Purchase(item.index))
             {
-                // update ui
-                obj.transform.Find("Price").gameObject.SetActive(false);
+                selectedItemBtn.SetPurchased(true);
                 GameObject.Find("AdjustCharacter/NumbersStackPanel/CurrencyPanel/Panel/Text").GetComponent<Text>().text
                     = PlayerPrefsManager.storeManager.Currency.ToString();
+
             }
         }
+        ShowConfirmPanel(false);
+        UpdatePurchesBtn();
+
     }
 }
