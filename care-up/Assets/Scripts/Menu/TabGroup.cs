@@ -18,8 +18,12 @@ public class TabGroup : MonoBehaviour
     public GameObject BuyBtn;
     public GameObject ConfirmPanel;
     Text BuyBtnText;
+    GameObject BuyBtnPutOnText;
+
     GameObject BuyBtnCoin;
     PlayerAvatar mainAvatar;
+    Sprite BuyBtnSprite;
+    public Sprite PutOnBtnSprite;
 
     private ProductButton selectedItemBtn = null;
 
@@ -110,7 +114,9 @@ public class TabGroup : MonoBehaviour
     {
         mainAvatar = GameObject.Find("MainPlayerAvatar").GetComponent<PlayerAvatar>();
         BuyBtnText = BuyBtn.transform.Find("Text").GetComponent<Text>();
+        BuyBtnPutOnText = BuyBtn.transform.Find("PutOn").gameObject;
         BuyBtnCoin = BuyBtn.transform.Find("Coin").gameObject;
+        BuyBtnSprite = BuyBtn.GetComponent<Image>().sprite;
         
         BuyBtnCoin.SetActive(false);
 
@@ -176,8 +182,14 @@ public class TabGroup : MonoBehaviour
             selectedItemBtn.Select(true);
             BuyBtnCoin.SetActive(true);
 
-
-            mainAvatar.LoadNewHeat(btn.item.name);
+            if (btn.item.category == "heat")
+            {
+                mainAvatar.LoadNewHeat(btn.item.name);
+            }
+            else
+            {
+                mainAvatar.LoadNewHeat("");
+            }
         }
         else
         {
@@ -194,12 +206,16 @@ public class TabGroup : MonoBehaviour
                 BuyBtnText.text = selectedItemBtn.item.price.ToString();
                 BuyBtnCoin.SetActive(true);
                 BuyBtn.SetActive(true);
+                BuyBtn.GetComponent<Image>().sprite = BuyBtnSprite;
+                BuyBtnPutOnText.SetActive(false);
             }
             else
             {
-                BuyBtnText.text = "Put on";
+                BuyBtnText.text = "";
+                BuyBtnPutOnText.SetActive(true);
                 BuyBtnCoin.SetActive(false);
                 BuyBtn.SetActive(true);
+                BuyBtn.GetComponent<Image>().sprite = PutOnBtnSprite;
             }
         }
         else
