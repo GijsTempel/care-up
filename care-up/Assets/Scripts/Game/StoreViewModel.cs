@@ -23,3 +23,4 @@ public class StoreViewModel : MonoBehaviour
        // presentNumberText.text = PlayerPrefsManager.storeManager.Presents.ToString();
     }
 }
+  

@@ -45,6 +45,7 @@ public class PlayerAvatar : MonoBehaviour
             newHeat.transform.position = headAnchor.position;
             newHeat.transform.rotation = headAnchor.rotation;
             newHeat.transform.localScale = headAnchor.localScale;
+            CurrentHeat = newHeat;
         }
 
     }

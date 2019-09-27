@@ -71,7 +71,7 @@ public class StoreManager
 
     public void Init(string storeXml = "Store", string characterStoreXml = "CharacterStore")
     {
-        bool _dev__DropAllPurchases = true; // change this to true once to clear all purchases
+        bool _dev__DropAllPurchases = false; // change this to true once to clear all purchases
         bool _dev__AddCurrency = false; // change this to true once to get 100 currency
 
         // load up all items from xml into the list
