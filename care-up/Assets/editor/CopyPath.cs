@@ -1,5 +1,5 @@
 ﻿using UnityEditor;
-
+using System.Collections.Generic;
 public static class CopyPathMenuItem
 {
     [MenuItem("GameObject/2D Object/Copy Path")]
@@ -11,19 +11,18 @@ public static class CopyPathMenuItem
         {
             return;
         }
-
-        var path = go.name;
-
+        var path = "/" + go.name;
+            
         while (go.transform.parent != null)
         {
             go = go.transform.parent.gameObject;
-            path = string.Format("/{0}/{1}", go.name, path);
+            //names.Add(go.name.Substring(1, go.name.Length - 1));
+            path = string.Format("/{0}{1}", go.name.Substring(0, go.name.Length-1), path);
         }
-
         EditorGUIUtility.systemCopyBuffer = path;
     }
 
-    [MenuItem("GameObject/2D Object/Copy Path", true)]
+[MenuItem("GameObject/2D Object/Copy Path", true)]
     private static bool CopyPathValidation()
     {
         // We can only copy the path in case 1 object is selected
