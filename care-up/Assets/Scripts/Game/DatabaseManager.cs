@@ -78,6 +78,8 @@ public class DatabaseManager : MonoBehaviour
         int.TryParse(FetchField("AccountStats", "CharacterHeadType"), out CharacterInfo.headType);
         int.TryParse(FetchField("AccountStats", "CharacterBodyType"), out CharacterInfo.bodyType);
         int.TryParse(FetchField("AccountStats", "CharacterGlassesType"), out CharacterInfo.glassesType);
+        CharacterInfo.heat = FetchField("AccountStats", "CharacterHeat");
+        print(CharacterInfo.heat);
 
         // set player irl full name
         GameObject.FindObjectOfType<PlayerPrefsManager>().fullPlayerName =

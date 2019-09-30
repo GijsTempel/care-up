@@ -180,6 +180,13 @@ public class StoreManager
         return result;
     }
 
+    public bool SetHeat(string heat)
+    {
+        DatabaseManager.UpdateField("AccountStats", "CharacterHeat", heat);
+        CharacterInfo.heat = heat;
+        return true;
+    }
+
     public bool Purchase(int itemIndex)
     {
         StoreItem item = FindItemByIndex(itemIndex);
