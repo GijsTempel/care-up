@@ -104,7 +104,7 @@ public class CharacterFirstSetup : MonoBehaviour
                 PlayerPrefsManager.SetBIGNumber(BigNumberHolder.text);
                 if (pref.firstStart)
                 {
-                    CharacterInfo.SetCharacterCharacteristicsWU(PlayerPrefsManager.storeManager.CharacterItems[currentChar].playerAvatar);
+                    CharacterInfo.SetCharacterCharacteristicsWU(PlayerPrefsManager.storeManager.CharacterItems[currentChar]);
                 }
                 // set new character scene to be seen and saved info
                 DatabaseManager.UpdateField("AccountStats", "CharSceneV2", "true");
