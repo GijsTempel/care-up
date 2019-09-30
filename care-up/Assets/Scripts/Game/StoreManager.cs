@@ -29,6 +29,7 @@ public class StoreCategory
 
 public class CharacterItem
 {
+    public bool isMain;
     public int index;
     public int price;
     public bool purchased;
@@ -36,8 +37,9 @@ public class CharacterItem
     public PlayerAvatarData playerAvatar;
 
     public CharacterItem() { index = -1; price = 0; }
-    public CharacterItem(int indexValue, int priceValue, bool purchasedValue, PlayerAvatarData playerAvatarValue)
+    public CharacterItem(bool isMainValue, int indexValue, int priceValue, bool purchasedValue, PlayerAvatarData playerAvatarValue)
     {
+        isMain = isMainValue;
         index = indexValue;
         price = priceValue;
         purchased = purchasedValue;
@@ -61,7 +63,7 @@ public class StoreManager
 
     public int GetItemIndex(int num)
     {
-        if(num >=0 && num < CharacterItems.Count)
+        if (num >= 0 && num < CharacterItems.Count)
         {
             int result = CharacterItems[num].index;
             return result;
@@ -71,8 +73,8 @@ public class StoreManager
 
     public void Init(string storeXml = "Store", string characterStoreXml = "CharacterStore")
     {
-        bool _dev__DropAllPurchases = true; // change this to true once to clear all purchases
-        bool _dev__AddCurrency = false; // change this to true once to get 100 currency
+        bool devDropAllPurchases = true; // change this to true once to clear all purchases
+        bool devAddCurrency = false; // change this to true once to get 100 currency
 
         // load up all items from xml into the list
         TextAsset textAsset = (TextAsset)Resources.Load("Xml/" + storeXml);
@@ -93,7 +95,7 @@ public class StoreManager
                 int.TryParse(xmlSceneNode.Attributes["price"].Value, out price);
                 bool purchased = DatabaseManager.FetchField("Store", "StoreItem_" + index.ToString()) == "true";
 
-                if (_dev__DropAllPurchases)
+                if (devDropAllPurchases)
                 {
                     purchased = false;
                     DatabaseManager.UpdateField("Store", "StoreItem_" + index.ToString(), "false");
@@ -130,7 +132,7 @@ public class StoreManager
 
             bool purchased = DatabaseManager.FetchField("Store", "CharacterItem_" + index.ToString()) == "true";
 
-            if (_dev__DropAllPurchases)
+            if (devDropAllPurchases)
             {
                 purchased = false;
                 DatabaseManager.UpdateField("Store", "CharacterItem_" + index.ToString(), "false");
@@ -145,7 +147,7 @@ public class StoreManager
         int.TryParse(DatabaseManager.FetchField("Store", "Currency"), out currentCurrency);
         int.TryParse(DatabaseManager.FetchField("Store", "Presents"), out currentPresents);
 
-        if (_dev__AddCurrency) ModifyCurrencyBy(100);
+        if (devAddCurrency) ModifyCurrencyBy(100);
     }
 
     public void ModifyCurrencyBy(int amount)

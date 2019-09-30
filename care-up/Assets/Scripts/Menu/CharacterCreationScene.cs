@@ -467,7 +467,7 @@ public class CharacterCreationScene : MonoBehaviour
 
         if (check)
         { 
-            CharacterInfo.SetCharacterCharacteristicsWU(
+            CharacterInfo.SetCharacterCharacteristicsWU( 
                 ((gender == Gender.Female) ? "Female" : "Male"),
                 headType, bodyType, glassesType);
 
