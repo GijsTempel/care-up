@@ -120,13 +120,13 @@ public class MainMenu : MonoBehaviour {
 
             if (!string.IsNullOrEmpty(fullName))
             {
-                GameObject.Find("UMenuProManager/MenuCanvas/Account/InfoHolder/AccountPanelUI/NameHolder/AchievementHolder/UserName/Account_Username")
+                GameObject.Find("UMenuProManager/MenuCanvas/Account/InfoHolder/AccountPanelUI/NameHolder/InfoPanel/InfoHolder/UserName/Account_Username")
                .GetComponent<Text>().text = fullName;
             }
 
             if (!string.IsNullOrEmpty(bigNumber))
             {
-                GameObject.Find("UMenuProManager/MenuCanvas/Account/InfoHolder/AccountPanelUI/NameHolder/AchievementHolder/UserNumber/BigNumber")
+                GameObject.Find("UMenuProManager/MenuCanvas/Account/InfoHolder/AccountPanelUI/NameHolder/InfoPanel/InfoHolder/UserNumber/BigNumber")
                .GetComponent<Text>().text = bigNumber;
             }           
         }
