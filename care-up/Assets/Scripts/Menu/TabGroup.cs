@@ -185,6 +185,7 @@ public class TabGroup : MonoBehaviour
             if (btn.item.category == "heat")
             {
                 mainAvatar.LoadNewHeat(btn.item.name);
+                PlayerPrefsManager.storeManager.SetHeat(btn.item.name);
             }
             else
             {

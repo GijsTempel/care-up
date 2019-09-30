@@ -7,6 +7,7 @@ public class CharacterInfo : MonoBehaviour
     public static int headType;
     public static int bodyType;
     public static int glassesType;
+    public static string heat;
 
     public static void SetCharacterCharacteristicsWU(PlayerAvatarData data)
     {
@@ -31,6 +32,7 @@ public class CharacterInfo : MonoBehaviour
             new string[] { "CharacterHeadType", CharacterInfo.headType.ToString() },
             new string[] { "CharacterBodyType", CharacterInfo.bodyType.ToString() },
             new string[] { "CharacterGlassesType", CharacterInfo.glassesType.ToString() },
+            new string[] { "CharacterHeat", CharacterInfo.heat },
         };
         DatabaseManager.UpdateCategory("AccountStats", data);
     }
