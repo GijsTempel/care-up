@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class CharacterPanelManager : MonoBehaviour
@@ -19,16 +18,38 @@ public class CharacterPanelManager : MonoBehaviour
     public GameObject BuyBtnCoinIcon;
     public GameObject BuyBtnFreeText;
     public Text BuyBtnText;
+    public GameObject ConfirmationPanel;
+    public int CurrentPrice;
 
+    [SerializeField]
+    private UIParticleSystem currencyParticles = default(UIParticleSystem);
 
+    public void BuyButtonPressed()
+    {
+        if (CurrentPrice == 0)
+        {
+            BuyCharacter();
+        }
+        else
+        {
+            ShowConfirmationPanel(true);
+        }
+    }
     public void Adjust()
     {
         uMP_Manager.ChangeWindow(9);
         loadCharacter.LoadCharacter();
     }
 
+
+    public void ShowConfirmationPanel(bool value)
+    {
+        ConfirmationPanel.SetActive(value);
+    }
+
     public void SetStoreInfo(int characterIndex)
     {
+        CurrentPrice = storeManager.CharacterItems[characterIndex].price;
         bool purchased = storeManager.CharacterItems[characterIndex].purchased;
         int p = storeManager.CharacterItems[characterIndex].price;
         string price = p.ToString();
@@ -67,17 +88,17 @@ public class CharacterPanelManager : MonoBehaviour
         сarrousel = GameObject.FindObjectOfType<CharacterСarrousel>();
 
         currencyText.text = storeManager.Currency.ToString();
-        buyButton?.GetComponent<Button>().onClick.AddListener(BuyCharacter);
-
-
+        
+        //buyButton?.GetComponent<Button>().onClick.AddListener(BuyCharacter);
     }
 
-    private void BuyCharacter()
+    public void BuyCharacter()
     {
         if (storeManager.PurchaseCharacter(storeManager.GetItemIndex(CharacterСarrousel.CurrentCharacter)))
         {
             adjustButton.SetActive(true);
             currencyText.text = storeManager.Currency.ToString();
+            currencyParticles.Play();
         }
         else
         {

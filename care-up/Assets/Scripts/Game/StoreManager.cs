@@ -37,7 +37,7 @@ public class CharacterItem
     public PlayerAvatarData playerAvatar;
 
     public CharacterItem() { index = -1; price = 0; }
-    public CharacterItem(bool isMainValue, int indexValue, int priceValue, bool purchasedValue, PlayerAvatarData playerAvatarValue)
+    public CharacterItem(int indexValue, int priceValue, bool purchasedValue, PlayerAvatarData playerAvatarValue, bool isMainValue = false)
     {
         isMain = isMainValue;
         index = indexValue;
@@ -74,7 +74,7 @@ public class StoreManager
     public void Init(string storeXml = "Store", string characterStoreXml = "CharacterStore")
     {
         bool devDropAllPurchases = true; // change this to true once to clear all purchases
-        bool devAddCurrency = false; // change this to true once to get 100 currency
+        bool devAddCurrency = true; // change this to true once to get 100 currency
 
         // load up all items from xml into the list
         TextAsset textAsset = (TextAsset)Resources.Load("Xml/" + storeXml);
@@ -182,12 +182,12 @@ public class StoreManager
         return result;
     }
 
-    public bool SetHeat(string heat)
-    {
-        DatabaseManager.UpdateField("AccountStats", "CharacterHeat", heat);
-        CharacterInfo.heat = heat;
-        return true;
-    }
+    //public bool SetHeat(string heat)
+    //{
+    //    DatabaseManager.UpdateField("AccountStats", "CharacterHeat", heat);
+    //    CharacterInfo.heat = heat;
+    //    return true;
+    //}
 
     public bool Purchase(int itemIndex)
     {
@@ -218,12 +218,18 @@ public class StoreManager
             {
                 ModifyCurrencyBy(-item.price);
                 item.purchased = true;
-                DatabaseManager.UpdateField("Store", "CharacterItem_" + itemIndex.ToString(), "true");
+                item.isMain = true;
+                DatabaseManager.UpdateField("Store", "CharacterItem_" + itemIndex.ToString(), "true"); // temporarily
+
+                CharacterInfo.SetCharacterCharacteristicsWU(item);
+
                 return true;
             }
         }
         return false;
     }
+
+    public void Fitting(int itemIndex) { }
 
     public bool GetPurchasedState(int itemIndex)
     {

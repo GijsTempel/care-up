@@ -1,37 +1,36 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using CareUpAvatar;
 
 public class TabGroup : MonoBehaviour
 {
     [SerializeField]
-    private Sprite tabIdle = default(Sprite),
-                   tabActive = default(Sprite),
-                   topTabIdle = default(Sprite), 
-                   topTabActive = default(Sprite);
+    private Sprite tabIdle = default,
+                   tabActive = default,
+                   topTabIdle = default,
+                   topTabActive = default,
+                   buyBtnSprite = default,
+                   putOnBtnSprite = default;
+
+    [SerializeField]
+    private GameObject buyBtn = default,
+                       confirmPanel = default;
+
+    private GameObject pagesContainer = default,
+                       buyBtnPutOnText = default,
+                       buyBtnCoin = default;
+
+    private Text buyBtnText = default;
 
     private TabButton selectedTab;
-    private GameObject pagesContainer;
-    private List<GameObject> pages = new List<GameObject>();
-    private List<TabButton> tabs;
-    public GameObject BuyBtn;
-    public GameObject ConfirmPanel;
-    Text BuyBtnText;
-    GameObject BuyBtnPutOnText;
-
-    GameObject BuyBtnCoin;
-    PlayerAvatar mainAvatar;
-    Sprite BuyBtnSprite;
-    public Sprite PutOnBtnSprite;
-
     private ProductButton selectedItemBtn = null;
-
-
+    private PlayerAvatar mainAvatar;
+    private List<TabButton> tabs;
+    private List<GameObject> pages = new List<GameObject>();
 
     public void ShowConfirmPanel(bool toShow)
     {
-        ConfirmPanel.SetActive(toShow);
+        confirmPanel.SetActive(toShow);
     }
 
     public void Subscribe(TabButton button)
@@ -104,6 +103,92 @@ public class TabGroup : MonoBehaviour
         }
     }
 
+    public void SelectItem(ProductButton btn)
+    {
+        if (selectedItemBtn != null)
+        {
+            selectedItemBtn.Select(false);
+        }
+        if (btn != null)
+        {
+            selectedItemBtn = btn;
+            selectedItemBtn.Select(true);
+            buyBtnCoin.SetActive(true);
+
+            if (btn.item.category == "heat")
+            {
+                mainAvatar.LoadNewHeat(btn.item.name);
+                // PlayerPrefsManager.storeManager.SetHeat(btn.item.name);
+            }
+            else
+            {
+                mainAvatar.LoadNewHeat("");
+            }
+        }
+
+        UpdatePurchesBtn();
+    }
+
+    public void UpdatePurchesBtn()
+    {
+        if (selectedItemBtn != null)
+        {
+            if (!selectedItemBtn.item.purchased)
+            {
+                buyBtnText.text = selectedItemBtn.item.price.ToString();
+                buyBtnCoin.SetActive(true);
+                buyBtn.SetActive(true);
+                buyBtn.GetComponent<Image>().sprite = buyBtnSprite;
+                buyBtnPutOnText.SetActive(false);
+            }
+            else
+            {
+                buyBtnText.text = "";
+                buyBtnPutOnText.SetActive(true);
+                buyBtnCoin.SetActive(false);
+                buyBtn.SetActive(true);
+                buyBtn.GetComponent<Image>().sprite = putOnBtnSprite;
+            }
+        }
+        else
+        {
+            buyBtn.SetActive(false);
+        }
+    }
+
+    public void PurchesBtnClicked()
+    {
+        if (selectedItemBtn != null)
+        {
+            if (!selectedItemBtn.item.purchased)
+                ShowConfirmPanel(true);
+        }
+        UpdatePurchesBtn();
+    }
+
+    public void PurchaseSelectedItem()
+    {
+        StoreItem item = selectedItemBtn.item;
+        if (!item.purchased)
+        {
+            if (PlayerPrefsManager.storeManager.Purchase(item.index))
+            {
+
+                selectedItemBtn.SetPurchased(true);
+                GameObject.Find("AdjustCharacter/NumbersStackPanel/CurrencyPanel/Panel/Text").GetComponent<Text>().text
+                    = PlayerPrefsManager.storeManager.Currency.ToString();
+
+            }
+        }
+        ShowConfirmPanel(false);
+        UpdatePurchesBtn();
+    }
+
+    public void UpdateCharacter(StoreItem item)
+    {
+
+    }
+
     private void ModifyTab(TabButton button, Sprite sprite, Vector3 vector3)
     {
         button.background.rectTransform.localScale = vector3;
@@ -113,13 +198,12 @@ public class TabGroup : MonoBehaviour
     private void Start()
     {
         mainAvatar = GameObject.Find("MainPlayerAvatar").GetComponent<PlayerAvatar>();
-        BuyBtnText = BuyBtn.transform.Find("Text").GetComponent<Text>();
-        BuyBtnPutOnText = BuyBtn.transform.Find("PutOn").gameObject;
-        BuyBtnCoin = BuyBtn.transform.Find("Coin").gameObject;
-        BuyBtnSprite = BuyBtn.GetComponent<Image>().sprite;
-        
-        BuyBtnCoin.SetActive(false);
+        buyBtnText = buyBtn.transform.Find("Text").GetComponent<Text>();
+        buyBtnPutOnText = buyBtn.transform.Find("PutOn").gameObject;
+        buyBtnCoin = buyBtn.transform.Find("Coin").gameObject;
+        buyBtnSprite = buyBtn.GetComponent<Image>().sprite;
 
+        buyBtnCoin.SetActive(false);
         pagesContainer = GameObject.Find("PageContainer");
 
         GameObject tabBtnPrefab = Resources.Load<GameObject>("Prefabs/StoreTab");
@@ -128,7 +212,7 @@ public class TabGroup : MonoBehaviour
         Transform tabParent = GameObject.Find("StoreTabContainer").transform;
 
         foreach (StoreCategory cat in PlayerPrefsManager.storeManager.StoreItems)
-        {          
+        {
             // setting tab button
             GameObject tab = Instantiate(tabBtnPrefab, tabParent);
 
@@ -142,7 +226,7 @@ public class TabGroup : MonoBehaviour
             bool axisChanged = false;
 
             page.transform.Find("Scrollbar").GetComponent<Scrollbar>().onValueChanged.AddListener((changeAis) =>
-            {              
+            {
                 GridLayoutGroup gridLayoutGroup = itemParent.GetComponent<GridLayoutGroup>();
 
                 if (gridLayoutGroup != null && !axisChanged)
@@ -168,88 +252,5 @@ public class TabGroup : MonoBehaviour
 
         OnTabSelected(tabs[0]);
         UpdatePurchesBtn();
-    }
-
-    public void SelectItem(ProductButton btn)
-    {
-        if (selectedItemBtn != null)
-        {
-            selectedItemBtn.Select(false);
-        }
-        if (btn != null)
-        {
-            selectedItemBtn = btn;
-            selectedItemBtn.Select(true);
-            BuyBtnCoin.SetActive(true);
-
-            if (btn.item.category == "heat")
-            {
-                mainAvatar.LoadNewHeat(btn.item.name);
-                PlayerPrefsManager.storeManager.SetHeat(btn.item.name);
-            }
-            else
-            {
-                mainAvatar.LoadNewHeat("");
-            }
-        }
-        else
-        {
-        }
-        UpdatePurchesBtn();
-    }
-
-    public void UpdatePurchesBtn()
-    {
-        if (selectedItemBtn != null)
-        {
-            if (!selectedItemBtn.item.purchased)
-            {
-                BuyBtnText.text = selectedItemBtn.item.price.ToString();
-                BuyBtnCoin.SetActive(true);
-                BuyBtn.SetActive(true);
-                BuyBtn.GetComponent<Image>().sprite = BuyBtnSprite;
-                BuyBtnPutOnText.SetActive(false);
-            }
-            else
-            {
-                BuyBtnText.text = "";
-                BuyBtnPutOnText.SetActive(true);
-                BuyBtnCoin.SetActive(false);
-                BuyBtn.SetActive(true);
-                BuyBtn.GetComponent<Image>().sprite = PutOnBtnSprite;
-            }
-        }
-        else
-        {
-            BuyBtn.SetActive(false);
-        }
-    }
-
-    public void PurchesBtnClicked()
-    {
-        if (selectedItemBtn != null)
-        {
-            if (!selectedItemBtn.item.purchased)
-                ShowConfirmPanel(true);
-        }
-        UpdatePurchesBtn();
-    }
-
-    public void PurchaseSelectedItem()
-    {
-        StoreItem item = selectedItemBtn.item;
-        if (!item.purchased)
-        {
-            if (PlayerPrefsManager.storeManager.Purchase(item.index))
-            {
-                selectedItemBtn.SetPurchased(true);
-                GameObject.Find("AdjustCharacter/NumbersStackPanel/CurrencyPanel/Panel/Text").GetComponent<Text>().text
-                    = PlayerPrefsManager.storeManager.Currency.ToString();
-
-            }
-        }
-        ShowConfirmPanel(false);
-        UpdatePurchesBtn();
-
     }
 }
