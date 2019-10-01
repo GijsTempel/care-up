@@ -19,12 +19,18 @@ public class CharacterPanelManager : MonoBehaviour
     public GameObject BuyBtnCoinIcon;
     public GameObject BuyBtnFreeText;
     public Text BuyBtnText;
-
+    public GameObject ConfirmationPanel;
 
     public void Adjust()
     {
         uMP_Manager.ChangeWindow(9);
         loadCharacter.LoadCharacter();
+    }
+
+
+    public void ShowConfirmationPanel(bool value)
+    {
+        ConfirmationPanel.SetActive(value);
     }
 
     public void SetStoreInfo(int characterIndex)
@@ -67,12 +73,11 @@ public class CharacterPanelManager : MonoBehaviour
         сarrousel = GameObject.FindObjectOfType<CharacterСarrousel>();
 
         currencyText.text = storeManager.Currency.ToString();
-        buyButton?.GetComponent<Button>().onClick.AddListener(BuyCharacter);
-
+        //buyButton?.GetComponent<Button>().onClick.AddListener(BuyCharacter);
 
     }
 
-    private void BuyCharacter()
+    public void BuyCharacter()
     {
         if (storeManager.PurchaseCharacter(storeManager.GetItemIndex(CharacterСarrousel.CurrentCharacter)))
         {
