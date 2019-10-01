@@ -5,26 +5,28 @@ using UnityEngine.UI;
 public class TabGroup : MonoBehaviour
 {
     [SerializeField]
-    private Sprite tabIdle = default(Sprite),
-                   tabActive = default(Sprite),
-                   topTabIdle = default(Sprite),
-                   topTabActive = default(Sprite);
+    private Sprite tabIdle = default,
+                   tabActive = default,
+                   topTabIdle = default,
+                   topTabActive = default,
+                   buyBtnSprite = default,
+                   putOnBtnSprite = default;
 
-    private TabButton selectedTab = default(TabButton);
-    private GameObject pagesContainer;
-    private List<GameObject> pages = new List<GameObject>();
-    private List<TabButton> tabs;
-    public GameObject buyBtn;
-    public GameObject confirmPanel;
-    Text buyBtnText;
-    GameObject buyBtnPutOnText;
+    [SerializeField]
+    private GameObject buyBtn = default,
+                       confirmPanel = default;
 
-    GameObject buyBtnCoin;
-    PlayerAvatar mainAvatar;
-    Sprite buyBtnSprite;
-    public Sprite putOnBtnSprite;
+    private GameObject pagesContainer = default,
+                       buyBtnPutOnText = default,
+                       buyBtnCoin = default;
 
+    private Text buyBtnText = default;
+
+    private TabButton selectedTab;
     private ProductButton selectedItemBtn = null;
+    private PlayerAvatar mainAvatar;
+    private List<TabButton> tabs;
+    private List<GameObject> pages = new List<GameObject>();
 
     public void ShowConfirmPanel(bool toShow)
     {
@@ -99,71 +101,6 @@ public class TabGroup : MonoBehaviour
                 }
             }
         }
-    }
-
-    private void ModifyTab(TabButton button, Sprite sprite, Vector3 vector3)
-    {
-        button.background.rectTransform.localScale = vector3;
-        button.background.sprite = sprite;
-    }
-
-    private void Start()
-    {
-        mainAvatar = GameObject.Find("MainPlayerAvatar").GetComponent<PlayerAvatar>();
-        buyBtnText = buyBtn.transform.Find("Text").GetComponent<Text>();
-        buyBtnPutOnText = buyBtn.transform.Find("PutOn").gameObject;
-        buyBtnCoin = buyBtn.transform.Find("Coin").gameObject;
-        buyBtnSprite = buyBtn.GetComponent<Image>().sprite;
-
-        buyBtnCoin.SetActive(false);
-        pagesContainer = GameObject.Find("PageContainer");
-
-        GameObject tabBtnPrefab = Resources.Load<GameObject>("Prefabs/StoreTab");
-        GameObject tabPagePrefab = Resources.Load<GameObject>("Prefabs/PageHolder");
-        GameObject productItem = Resources.Load<GameObject>("Prefabs/ProductPanel");
-        Transform tabParent = GameObject.Find("StoreTabContainer").transform;
-
-        foreach (StoreCategory cat in PlayerPrefsManager.storeManager.StoreItems)
-        {
-            // setting tab button
-            GameObject tab = Instantiate(tabBtnPrefab, tabParent);
-
-            tab.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>($"Sprites/{cat.icon}");
-            // set visual name ? something = cat.name
-
-            GameObject page = Instantiate(tabPagePrefab, pagesContainer.transform);
-
-            Transform itemParent = page.transform.Find("StoreTabPage/content");
-
-            bool axisChanged = false;
-
-            page.transform.Find("Scrollbar").GetComponent<Scrollbar>().onValueChanged.AddListener((changeAis) =>
-            {
-                GridLayoutGroup gridLayoutGroup = itemParent.GetComponent<GridLayoutGroup>();
-
-                if (gridLayoutGroup != null && !axisChanged)
-                {
-                    gridLayoutGroup.startAxis = GridLayoutGroup.Axis.Vertical;
-                    axisChanged = true;
-                }
-            });
-
-            foreach (StoreItem item in cat.items)
-            {
-                GameObject i = Instantiate(productItem, itemParent);
-                // set name ?
-                ProductButton btn = i.GetComponent<ProductButton>();
-                btn.Initialize(item, this);
-            }
-        }
-
-        for (int i = 1; i < pagesContainer.transform.childCount; i++)
-        {
-            pages.Add(pagesContainer.transform.GetChild(i).gameObject);
-        }
-
-        OnTabSelected(tabs[0]);
-        UpdatePurchesBtn();
     }
 
     public void SelectItem(ProductButton btn)
@@ -250,5 +187,70 @@ public class TabGroup : MonoBehaviour
     public void UpdateCharacter(StoreItem item)
     {
 
+    }
+
+    private void ModifyTab(TabButton button, Sprite sprite, Vector3 vector3)
+    {
+        button.background.rectTransform.localScale = vector3;
+        button.background.sprite = sprite;
+    }
+
+    private void Start()
+    {
+        mainAvatar = GameObject.Find("MainPlayerAvatar").GetComponent<PlayerAvatar>();
+        buyBtnText = buyBtn.transform.Find("Text").GetComponent<Text>();
+        buyBtnPutOnText = buyBtn.transform.Find("PutOn").gameObject;
+        buyBtnCoin = buyBtn.transform.Find("Coin").gameObject;
+        buyBtnSprite = buyBtn.GetComponent<Image>().sprite;
+
+        buyBtnCoin.SetActive(false);
+        pagesContainer = GameObject.Find("PageContainer");
+
+        GameObject tabBtnPrefab = Resources.Load<GameObject>("Prefabs/StoreTab");
+        GameObject tabPagePrefab = Resources.Load<GameObject>("Prefabs/PageHolder");
+        GameObject productItem = Resources.Load<GameObject>("Prefabs/ProductPanel");
+        Transform tabParent = GameObject.Find("StoreTabContainer").transform;
+
+        foreach (StoreCategory cat in PlayerPrefsManager.storeManager.StoreItems)
+        {
+            // setting tab button
+            GameObject tab = Instantiate(tabBtnPrefab, tabParent);
+
+            tab.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>($"Sprites/{cat.icon}");
+            // set visual name ? something = cat.name
+
+            GameObject page = Instantiate(tabPagePrefab, pagesContainer.transform);
+
+            Transform itemParent = page.transform.Find("StoreTabPage/content");
+
+            bool axisChanged = false;
+
+            page.transform.Find("Scrollbar").GetComponent<Scrollbar>().onValueChanged.AddListener((changeAis) =>
+            {
+                GridLayoutGroup gridLayoutGroup = itemParent.GetComponent<GridLayoutGroup>();
+
+                if (gridLayoutGroup != null && !axisChanged)
+                {
+                    gridLayoutGroup.startAxis = GridLayoutGroup.Axis.Vertical;
+                    axisChanged = true;
+                }
+            });
+
+            foreach (StoreItem item in cat.items)
+            {
+                GameObject i = Instantiate(productItem, itemParent);
+                // set name ?
+                ProductButton btn = i.GetComponent<ProductButton>();
+                btn.Initialize(item, this);
+            }
+        }
+
+        for (int i = 1; i < pagesContainer.transform.childCount; i++)
+        {
+            pages.Add(pagesContainer.transform.GetChild(i).gameObject);
+        }
+
+        OnTabSelected(tabs[0]);
+        UpdatePurchesBtn();
     }
 }
