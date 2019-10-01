@@ -20,6 +20,20 @@ public class CharacterPanelManager : MonoBehaviour
     public GameObject BuyBtnFreeText;
     public Text BuyBtnText;
     public GameObject ConfirmationPanel;
+    public int CurrentPrice;
+
+    public void BuyButtonPressed()
+    {
+        if (CurrentPrice == 0)
+        {
+            BuyCharacter();
+        }
+        else
+        {
+            ShowConfirmationPanel(true);
+        }
+
+    }
 
     public void Adjust()
     {
@@ -35,6 +49,7 @@ public class CharacterPanelManager : MonoBehaviour
 
     public void SetStoreInfo(int characterIndex)
     {
+        CurrentPrice = storeManager.CharacterItems[characterIndex].price;
         bool purchased = storeManager.CharacterItems[characterIndex].purchased;
         int p = storeManager.CharacterItems[characterIndex].price;
         string price = p.ToString();
