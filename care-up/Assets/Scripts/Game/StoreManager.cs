@@ -182,12 +182,12 @@ public class StoreManager
         return result;
     }
 
-    public bool SetHeat(string heat)
-    {
-        DatabaseManager.UpdateField("AccountStats", "CharacterHeat", heat);
-        CharacterInfo.heat = heat;
-        return true;
-    }
+    //public bool SetHeat(string heat)
+    //{
+    //    DatabaseManager.UpdateField("AccountStats", "CharacterHeat", heat);
+    //    CharacterInfo.heat = heat;
+    //    return true;
+    //}
 
     public bool Purchase(int itemIndex)
     {
@@ -218,12 +218,18 @@ public class StoreManager
             {
                 ModifyCurrencyBy(-item.price);
                 item.purchased = true;
-                DatabaseManager.UpdateField("Store", "CharacterItem_" + itemIndex.ToString(), "true");
+                item.isMain = true;
+                DatabaseManager.UpdateField("Store", "CharacterItem_" + itemIndex.ToString(), "true"); // temporarily
+
+                CharacterInfo.SetCharacterCharacteristicsWU(item);
+
                 return true;
             }
         }
         return false;
     }
+
+    public void Fitting(int itemIndex) { }
 
     public bool GetPurchasedState(int itemIndex)
     {

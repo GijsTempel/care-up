@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class CharacterPanelManager : MonoBehaviour
@@ -22,6 +21,7 @@ public class CharacterPanelManager : MonoBehaviour
     public GameObject ConfirmationPanel;
     public int CurrentPrice;
 
+
     public void BuyButtonPressed()
     {
         if (CurrentPrice == 0)
@@ -32,9 +32,7 @@ public class CharacterPanelManager : MonoBehaviour
         {
             ShowConfirmationPanel(true);
         }
-
     }
-
     public void Adjust()
     {
         uMP_Manager.ChangeWindow(9);
@@ -89,7 +87,6 @@ public class CharacterPanelManager : MonoBehaviour
 
         currencyText.text = storeManager.Currency.ToString();
         //buyButton?.GetComponent<Button>().onClick.AddListener(BuyCharacter);
-
     }
 
     public void BuyCharacter()

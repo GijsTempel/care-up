@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using CareUpAvatar;
 
 
 public class CharacterFirstSetup : MonoBehaviour
@@ -70,8 +68,7 @@ public class CharacterFirstSetup : MonoBehaviour
 
     public void SetTab(int tab)
     {
-        bool check = true;
-        
+        bool check = true;        
 
         if (currentTab == 0)
         {
@@ -120,5 +117,4 @@ public class CharacterFirstSetup : MonoBehaviour
             }
         }
     }
-
 }
