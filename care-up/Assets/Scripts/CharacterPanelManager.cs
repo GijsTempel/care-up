@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class CharacterPanelManager : MonoBehaviour
@@ -19,7 +18,6 @@ public class CharacterPanelManager : MonoBehaviour
     public GameObject BuyBtnCoinIcon;
     public GameObject BuyBtnFreeText;
     public Text BuyBtnText;
-
 
     public void Adjust()
     {
@@ -68,8 +66,6 @@ public class CharacterPanelManager : MonoBehaviour
 
         currencyText.text = storeManager.Currency.ToString();
         buyButton?.GetComponent<Button>().onClick.AddListener(BuyCharacter);
-
-
     }
 
     private void BuyCharacter()

@@ -4,20 +4,22 @@ using CareUpAvatar;
 
 public class CharacterСarrousel : MonoBehaviour
 {
-    int nextTurnDir = 0;
-    int turnDir = 0;
     [HideInInspector]
     public static int CurrentCharacter { get; set; } = 1;
-
     public CharacterPanelManager panelManager;
+    public List<GameObject> platforms;
+
     private float turnAngle = 0;
     private int behindMarker = 3;
+    private int nextTurnDir = 0;
+    private int turnDir = 0;
+    private int targetTurnPosition = -1;
+    private float defaultTurnSpeed = 90f;
+
+    private PlayerPrefsManager pref;
+   
     private List<PlayerAvatar> avatars = new List<PlayerAvatar>();
-    public List<GameObject> platforms;
     private List<GameObject> checkMarks = new List<GameObject>();
-    PlayerPrefsManager pref;
-    int TargetTurnPosition = -1;
-    float defaultTurnSpeed = 90f;
 
     public void Initialize()
     {
@@ -39,6 +41,7 @@ public class CharacterСarrousel : MonoBehaviour
             current++;
         }
         panelManager.SetStoreInfo(CurrentCharacter);
+
         if (pref != null)
         {
             TurnToPosition(pref.CarouselPosition);
@@ -50,7 +53,7 @@ public class CharacterСarrousel : MonoBehaviour
         int nextChar = CurrentCharacter + dir;
         if (nextChar >= 0 && nextChar < PlayerPrefsManager.storeManager.CharacterItems.Count)
             nextTurnDir = dir;
-        TargetTurnPosition = -1;
+        targetTurnPosition = -1;
 
         // enabled = true;
     }
@@ -90,7 +93,7 @@ public class CharacterСarrousel : MonoBehaviour
 
     public void TurnToPosition(int value)
     {
-        TargetTurnPosition = value;
+        targetTurnPosition = value;
     }
 
     private void Update()
@@ -102,15 +105,15 @@ public class CharacterСarrousel : MonoBehaviour
             print(randTurn.ToString() + " " + CurrentCharacter);
             TurnToPosition(randTurn);
         }
-        if (TargetTurnPosition != -1)
+        if (targetTurnPosition != -1)
         {
-            if (TargetTurnPosition == CurrentCharacter)
-                TargetTurnPosition = -1;
+            if (targetTurnPosition == CurrentCharacter)
+                targetTurnPosition = -1;
             else
             {
-                if (TargetTurnPosition < CurrentCharacter)
+                if (targetTurnPosition < CurrentCharacter)
                     nextTurnDir = -1;
-                else if (TargetTurnPosition > CurrentCharacter)
+                else if (targetTurnPosition > CurrentCharacter)
                     nextTurnDir = 1;
                 //turnSpeed = defaultTurnSpeed * 2;
             }
@@ -156,7 +159,7 @@ public class CharacterСarrousel : MonoBehaviour
             float nextAngle = (turnAngle + (turnSpeed * turnDir)) % 360;
             if (nextAngle < 0)
                 nextAngle = 360 + nextAngle;
-            if (Mathf.Abs(rot.y - nextAngle) < (turnSpeed/6))
+            if (Mathf.Abs(rot.y - nextAngle) < (turnSpeed / 6))
             {
                 rot.y = nextAngle;
                 turnDir = 0;
