@@ -21,6 +21,8 @@ public class CharacterPanelManager : MonoBehaviour
     public GameObject ConfirmationPanel;
     public int CurrentPrice;
 
+    [SerializeField]
+    private UIParticleSystem currencyParticles = default(UIParticleSystem);
 
     public void BuyButtonPressed()
     {
@@ -86,6 +88,7 @@ public class CharacterPanelManager : MonoBehaviour
         сarrousel = GameObject.FindObjectOfType<CharacterСarrousel>();
 
         currencyText.text = storeManager.Currency.ToString();
+        
         //buyButton?.GetComponent<Button>().onClick.AddListener(BuyCharacter);
     }
 
@@ -95,6 +98,7 @@ public class CharacterPanelManager : MonoBehaviour
         {
             adjustButton.SetActive(true);
             currencyText.text = storeManager.Currency.ToString();
+            currencyParticles.Play();
         }
         else
         {
