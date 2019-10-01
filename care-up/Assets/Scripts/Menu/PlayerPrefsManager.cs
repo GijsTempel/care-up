@@ -232,6 +232,12 @@ public class PlayerPrefsManager : MonoBehaviour
         set { PlayerPrefs.SetFloat("Volume", value); }
     }
 
+    public int CarouselPosition
+    {
+        get { return PlayerPrefs.HasKey("CarouselPosition") ? PlayerPrefs.GetInt("CarouselPosition") : 1; }
+        set { PlayerPrefs.SetInt("CarouselPosition", value); }
+    }
+
     public float ScroopPosition
     {
         get { return PlayerPrefs.HasKey("ScroopPosition") ? PlayerPrefs.GetFloat("ScroopPosition") : 0f; }
