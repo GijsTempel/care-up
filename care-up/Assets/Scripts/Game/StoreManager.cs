@@ -37,7 +37,7 @@ public class CharacterItem
     public PlayerAvatarData playerAvatar;
 
     public CharacterItem() { index = -1; price = 0; }
-    public CharacterItem(bool isMainValue, int indexValue, int priceValue, bool purchasedValue, PlayerAvatarData playerAvatarValue)
+    public CharacterItem(int indexValue, int priceValue, bool purchasedValue, PlayerAvatarData playerAvatarValue, bool isMainValue = false)
     {
         isMain = isMainValue;
         index = indexValue;
