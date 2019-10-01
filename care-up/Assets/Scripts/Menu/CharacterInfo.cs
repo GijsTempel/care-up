@@ -40,17 +40,16 @@ public class CharacterInfo : MonoBehaviour
 
         string[][] data = new string[][]
         {
-            new string[] { "CharacterMain", CharacterInfo.isMain.ToString() },
-            new string[] { "CharacterIndex", CharacterInfo.index.ToString() },
-            new string[] { "CharacterPrice", CharacterInfo.price.ToString() },
-            new string[] { "CharacterPurchased", CharacterInfo.purchased.ToString() },
-            new string[] { "CharacterCreated", "true" },
-            new string[] { "CharacterSex", CharacterInfo.sex },
-            new string[] { "CharacterHeadType", CharacterInfo.headType.ToString() },
-            new string[] { "CharacterBodyType", CharacterInfo.bodyType.ToString() },
-            new string[] { "CharacterBodyType", CharacterInfo.bodyType.ToString() },
-            new string[] { "CharacterGlassesType", CharacterInfo.glassesType.ToString() },
-            new string[] { "CharacterHeat", CharacterInfo.heat },
+            new string[] { "Main", CharacterInfo.isMain.ToString() },
+            new string[] { "Index", CharacterInfo.index.ToString() },
+            new string[] { "Price", CharacterInfo.price.ToString() },
+            new string[] { "Purchased", CharacterInfo.purchased.ToString() },
+            new string[] { "Created", "true" },
+            new string[] { "Sex", CharacterInfo.sex },
+            new string[] { "HeadType", CharacterInfo.headType.ToString() },
+            new string[] { "BodyType", CharacterInfo.bodyType.ToString() },
+            new string[] { "GlassesType", CharacterInfo.glassesType.ToString() },
+            new string[] { "Heat", CharacterInfo.heat },
         };
         DatabaseManager.UpdateCategory("CharacterItem_" + index.ToString(), data);
     }
