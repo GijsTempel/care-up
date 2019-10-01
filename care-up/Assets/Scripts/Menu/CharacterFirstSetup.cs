@@ -68,8 +68,7 @@ public class CharacterFirstSetup : MonoBehaviour
 
     public void SetTab(int tab)
     {
-        bool check = true;
-        
+        bool check = true;        
 
         if (currentTab == 0)
         {

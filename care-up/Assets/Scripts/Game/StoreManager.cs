@@ -229,6 +229,8 @@ public class StoreManager
         return false;
     }
 
+    public void Fitting(int itemIndex) { }
+
     public bool GetPurchasedState(int itemIndex)
     {
         StoreItem item = FindItemByIndex(itemIndex);
