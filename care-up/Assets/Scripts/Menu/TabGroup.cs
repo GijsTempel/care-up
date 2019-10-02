@@ -118,10 +118,10 @@ public class TabGroup : MonoBehaviour
             selectedItemBtn.Select(true);
             buyBtnCoin.SetActive(true);
 
-            if (btn.item.category == "heat")
+            if (btn.item.category == "Heat")
             {
                 mainAvatar.LoadNewHeat(btn.item.name);
-                // PlayerPrefsManager.storeManager.SetHeat(btn.item.name);
+                //PlayerPrefsManager.storeManager.SetHeat(btn.item.name);
             }
             else
             {
