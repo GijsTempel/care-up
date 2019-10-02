@@ -103,6 +103,14 @@ public class UIParticleSystem : MonoBehaviour {
             Play();
     }
 
+    private void OnEnable()
+    {
+        foreach (Image i in ParticlePool)
+        {
+            i.gameObject.SetActive(false);
+        }
+    }
+
     private void Init()
     {
         ParticlePoolPointer = 0;
@@ -122,7 +130,6 @@ public class UIParticleSystem : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        IsPlaying = true;
     }
 
     public void Play()
