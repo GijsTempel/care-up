@@ -94,11 +94,20 @@ public class CharacterPanelManager : MonoBehaviour
 
     public void BuyCharacter()
     {
-        if (storeManager.PurchaseCharacter(storeManager.GetItemIndex(CharacterСarrousel.CurrentCharacter)))
+        int characterIndex = CharacterСarrousel.CurrentCharacter;
+        if (storeManager.PurchaseCharacter(storeManager.GetItemIndex(characterIndex)))
         {
             adjustButton.SetActive(true);
             currencyText.text = storeManager.Currency.ToString();
-            currencyParticles.Play();
+            if (storeManager.CharacterItems[characterIndex].price > 0)
+            {
+                currencyParticles.Play();
+                GameObject.Find("cashRegisterEffect").GetComponent<AudioSource>().Play();
+            }
+            else
+            {
+                GameObject.Find("swoopEffect").GetComponent<AudioSource>().Play();
+            }
         }
         else
         {

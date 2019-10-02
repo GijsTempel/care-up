@@ -20,6 +20,9 @@ public class TabGroup : MonoBehaviour
                        buyBtnPutOnText = default,
                        buyBtnCoin = default;
 
+    [SerializeField]
+    private UIParticleSystem currencyParticles = default(UIParticleSystem);
+
     private Text buyBtnText = default;
 
     private TabButton selectedTab;
@@ -177,7 +180,15 @@ public class TabGroup : MonoBehaviour
                 selectedItemBtn.SetPurchased(true);
                 GameObject.Find("AdjustCharacter/NumbersStackPanel/CurrencyPanel/Panel/Text").GetComponent<Text>().text
                     = PlayerPrefsManager.storeManager.Currency.ToString();
-
+                if (item.price > 0)
+                {
+                    GameObject.Find("cashRegisterEffect").GetComponent<AudioSource>().Play();
+                    currencyParticles.Play();
+                }
+                else
+                {
+                    GameObject.Find("swoopEffect").GetComponent<AudioSource>().Play();
+                }
             }
         }
         ShowConfirmPanel(false);
