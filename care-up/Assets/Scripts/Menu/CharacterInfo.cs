@@ -13,6 +13,8 @@ public class CharacterInfo : MonoBehaviour
     public static int glassesType;
     public static string heat;
 
+    private static string[][] data;
+
     public static void SetCharacterCharacteristicsWU(CharacterItem data)
     {
         bool isMain = data.isMain;
@@ -23,26 +25,24 @@ public class CharacterInfo : MonoBehaviour
         int headType = data.playerAvatar.headType;
         int bodyType = data.playerAvatar.bodyType;
         int glassesType = data.playerAvatar.glassesType;
+        string heat = data.playerAvatar.heat;
 
-        SetCharacterCharacteristicsWU(sex, headType, bodyType, glassesType, index, price, purchased, isMain);
+        SetCharacterCharacteristicsWU(sex, headType, bodyType, glassesType, heat, index, price, purchased, isMain);
     }
 
-    public static void SetCharacterCharacteristicsWU(string sexType, int head, int body, int glasses, int index = 0, int price = 0, bool purchased = false, bool isMain = false)
+    public static void SetCharacterCharacteristicsWU(string sexType, int head, int body, int glasses, string heat = "", int index = 0, int price = 0, bool purchased = false, bool isMain = false)
     {
         CharacterInfo.isMain = isMain;
         CharacterInfo.index = index;
         CharacterInfo.price = price;
         CharacterInfo.purchased = purchased;
         CharacterInfo.sex = sexType;
-
-        CharacterInfo.purchased = purchased;
-        CharacterInfo.sex = sexType;
-
         CharacterInfo.headType = head;
         CharacterInfo.bodyType = body;
         CharacterInfo.glassesType = glasses;
+        CharacterInfo.heat = heat;
 
-        string[][] data = new string[][]
+        data = new string[][]
         {
             new string[] { "Main", CharacterInfo.isMain.ToString() },
             new string[] { "Index", CharacterInfo.index.ToString() },
@@ -56,5 +56,16 @@ public class CharacterInfo : MonoBehaviour
             new string[] { "Heat", CharacterInfo.heat },
         };
         DatabaseManager.UpdateCategory("CharacterItem_" + index.ToString(), data);
+    }
+
+    public void UpdateCharacter(StoreItem item)
+    {
+        for (int i = 0; i < data.Length; i++)
+        {
+            if (data[i][0] == item.category)
+            {
+                DatabaseManager.UpdateField("CharacterItem_" + index.ToString(), data[i][0], item.index.ToString());
+            }
+        }
     }
 }
