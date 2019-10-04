@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
-
 
 public class ProductButton : MonoBehaviour
 {
@@ -15,7 +12,7 @@ public class ProductButton : MonoBehaviour
     public Image icon;
     public StoreItem item;
     TabGroup tabGroup;
-    // Start is called before the first frame update
+
     void Start()
     {
         dressOn.SetActive(false);
@@ -36,7 +33,6 @@ public class ProductButton : MonoBehaviour
     public void ButtonClicked()
     {
         tabGroup.SelectItem(this);
-
     }
 
     public void Initialize(StoreItem _item, TabGroup tg)
@@ -63,5 +59,4 @@ public class ProductButton : MonoBehaviour
     {
         dressOn.SetActive(isDressedOn);
     }
-
 }

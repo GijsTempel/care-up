@@ -34,6 +34,10 @@ public class CharacterInfo : MonoBehaviour
         CharacterInfo.price = price;
         CharacterInfo.purchased = purchased;
         CharacterInfo.sex = sexType;
+
+        CharacterInfo.purchased = purchased;
+        CharacterInfo.sex = sexType;
+
         CharacterInfo.headType = head;
         CharacterInfo.bodyType = body;
         CharacterInfo.glassesType = glasses;
@@ -46,9 +50,9 @@ public class CharacterInfo : MonoBehaviour
             new string[] { "Purchased", CharacterInfo.purchased.ToString() },
             new string[] { "Created", "true" },
             new string[] { "Sex", CharacterInfo.sex },
-            new string[] { "HeadType", CharacterInfo.headType.ToString() },
-            new string[] { "BodyType", CharacterInfo.bodyType.ToString() },
-            new string[] { "GlassesType", CharacterInfo.glassesType.ToString() },
+            new string[] { "Head", CharacterInfo.headType.ToString() },
+            new string[] { "Body", CharacterInfo.bodyType.ToString() },
+            new string[] { "Glasses", CharacterInfo.glassesType.ToString() },
             new string[] { "Heat", CharacterInfo.heat },
         };
         DatabaseManager.UpdateCategory("CharacterItem_" + index.ToString(), data);

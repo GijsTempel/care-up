@@ -193,12 +193,7 @@ public class TabGroup : MonoBehaviour
         }
         ShowConfirmPanel(false);
         UpdatePurchesBtn();
-    }
-
-    public void UpdateCharacter(StoreItem item)
-    {
-
-    }
+    } 
 
     private void ModifyTab(TabButton button, Sprite sprite, Vector3 vector3)
     {

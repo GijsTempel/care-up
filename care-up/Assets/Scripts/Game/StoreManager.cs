@@ -60,7 +60,6 @@ public class StoreManager
     public int Currency { get { return currentCurrency; } }
     public int Presents { get { return currentPresents; } }
 
-
     public int GetItemIndex(int num)
     {
         if (num >= 0 && num < CharacterItems.Count)
