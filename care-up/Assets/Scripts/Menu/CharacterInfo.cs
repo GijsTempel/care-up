@@ -3,7 +3,6 @@ using CareUpAvatar;
 
 public class CharacterInfo : MonoBehaviour
 {
-    public static bool isMain;
     public static int index;
     public static bool purchased;
     public static int price;
@@ -17,7 +16,6 @@ public class CharacterInfo : MonoBehaviour
 
     public static void SetCharacterCharacteristicsWU(CharacterItem data)
     {
-        bool isMain = data.isMain;
         int index = data.index;
         int price = data.price;
         bool purchased = data.purchased;
@@ -27,12 +25,11 @@ public class CharacterInfo : MonoBehaviour
         int glassesType = data.playerAvatar.glassesType;
         string heat = data.playerAvatar.heat;
 
-        SetCharacterCharacteristicsWU(sex, headType, bodyType, glassesType, heat, index, price, purchased, isMain);
+        SetCharacterCharacteristicsWU(sex, headType, bodyType, glassesType, heat, index, price, purchased);
     }
 
-    public static void SetCharacterCharacteristicsWU(string sexType, int head, int body, int glasses, string heat = "", int index = 0, int price = 0, bool purchased = false, bool isMain = false)
+    public static void SetCharacterCharacteristicsWU(string sexType, int head, int body, int glasses, string heat = "", int index = 0, int price = 0, bool purchased = false)
     {
-        CharacterInfo.isMain = isMain;
         CharacterInfo.index = index;
         CharacterInfo.price = price;
         CharacterInfo.purchased = purchased;
@@ -44,7 +41,6 @@ public class CharacterInfo : MonoBehaviour
 
         data = new string[][]
         {
-            new string[] { "Main", CharacterInfo.isMain.ToString() },
             new string[] { "Index", CharacterInfo.index.ToString() },
             new string[] { "Price", CharacterInfo.price.ToString() },
             new string[] { "Purchased", CharacterInfo.purchased.ToString() },

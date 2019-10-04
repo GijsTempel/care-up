@@ -29,7 +29,6 @@ public class StoreCategory
 
 public class CharacterItem
 {
-    public bool isMain;
     public int index;
     public int price;
     public bool purchased;
@@ -37,9 +36,8 @@ public class CharacterItem
     public PlayerAvatarData playerAvatar;
 
     public CharacterItem() { index = -1; price = 0; }
-    public CharacterItem(int indexValue, int priceValue, bool purchasedValue, PlayerAvatarData playerAvatarValue, bool isMainValue = false)
+    public CharacterItem(int indexValue, int priceValue, bool purchasedValue, PlayerAvatarData playerAvatarValue)
     {
-        isMain = isMainValue;
         index = indexValue;
         price = priceValue;
         purchased = purchasedValue;
@@ -217,7 +215,6 @@ public class StoreManager
             {
                 ModifyCurrencyBy(-item.price);
                 item.purchased = true;
-                item.isMain = true;
                 DatabaseManager.UpdateField("Store", "CharacterItem_" + itemIndex.ToString(), "true"); // temporarily
 
                 CharacterInfo.SetCharacterCharacteristicsWU(item);

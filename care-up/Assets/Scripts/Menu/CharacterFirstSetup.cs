@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-
 public class CharacterFirstSetup : MonoBehaviour
 {
     public InputField BigNumberHolder;
