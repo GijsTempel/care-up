@@ -54,14 +54,18 @@ public class CharacterInfo : MonoBehaviour
         DatabaseManager.UpdateCategory("CharacterItem_" + index.ToString(), data);
     }
 
-    public void UpdateCharacter(StoreItem item)
+    public static void UpdateCharacter(StoreItem item)
     {
-        for (int i = 0; i < data.Length; i++)
+        switch (item.category)
         {
-            if (data[i][0] == item.category)
-            {
-                DatabaseManager.UpdateField("CharacterItem_" + index.ToString(), data[i][0], item.index.ToString());
-            }
+            case "Heat":
+                CharacterInfo.heat = item.name;
+                DatabaseManager.UpdateField("CharacterItem_" + index.ToString(), "Heat", CharacterInfo.heat);
+                break;
+            case "Glasses":
+                CharacterInfo.glassesType = item.index;
+                DatabaseManager.UpdateField("CharacterItem_" + index.ToString(), "Glasses", CharacterInfo.glassesType.ToString());
+                break;
         }
     }
 }
