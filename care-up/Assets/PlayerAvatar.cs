@@ -33,6 +33,7 @@ public class PlayerAvatar : MonoBehaviour
 
     public void LoadNewHeat(string heatName)
     {
+        print(heatName);
         if (CurrentHeat != null)
         {
             Destroy(CurrentHeat);

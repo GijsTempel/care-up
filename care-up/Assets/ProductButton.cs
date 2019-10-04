@@ -42,6 +42,11 @@ public class ProductButton : MonoBehaviour
         SetPrice(item.price);
         SetPurchased(item.purchased);
         tabGroup = tg;
+        Sprite sprite = Resources.Load("Sprites/StoreItemPreview/" + item.category + "_" + item.name, typeof(Sprite)) as Sprite;
+        if (sprite != null)
+        {
+            icon.sprite = sprite;
+        }
     }
 
     public void SetPrice(int _price)
