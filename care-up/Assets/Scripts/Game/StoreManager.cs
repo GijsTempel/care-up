@@ -126,6 +126,7 @@ public class StoreManager
             int.TryParse(xmlSceneNode.Attributes["headType"].Value, out int headType);
             int.TryParse(xmlSceneNode.Attributes["mouth"].Value, out int mouthType);
             int.TryParse(xmlSceneNode.Attributes["eye"].Value, out int eyeType);
+            string heatType = "";
 
             bool purchased = DatabaseManager.FetchField("Store", "CharacterItem_" + index.ToString()) == "true";
 
@@ -136,7 +137,36 @@ public class StoreManager
             }
 
             Gender characterGender = (gender == "Female") ? Gender.Female : Gender.Male;
-            PlayerAvatarData playerAvatar = new PlayerAvatarData(characterGender, headType, bodyType, glassesType, mouthType, eyeType);
+
+            string[][] charactersCategory = DatabaseManager.FetchCategory("CharacterItem_" + index.ToString());
+
+            if (charactersCategory != null)
+            {
+                foreach (string[] field in charactersCategory)
+                {
+                    switch (field[0])
+                    {
+                        case "Index":
+                            int.TryParse(field[1], out index); break;
+                        case "Price":
+                            int.TryParse(field[1], out price); break;
+                        case "Purchased":
+                            bool.TryParse(field[1], out purchased); break;
+                        case "Sex":
+                            gender = field[1]; break;
+                        case "Head":
+                            int.TryParse(field[1], out headType); break;
+                        case "Body":
+                            int.TryParse(field[1], out bodyType); break;
+                        case "Glasses":
+                            int.TryParse(field[1], out glassesType); break;
+                        case "Heat":
+                            heatType = field[1]; break;
+                    }
+                }
+            }
+
+            PlayerAvatarData playerAvatar = new PlayerAvatarData(characterGender, headType, bodyType, glassesType, heatType, mouthType, eyeType);
             CharacterItems.Add(new CharacterItem(index, price, purchased, playerAvatar));
         }
 
