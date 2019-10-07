@@ -120,6 +120,7 @@ public class TabGroup : MonoBehaviour
 
             if (btn.item.category == "Heat")
             {
+                GameObject.FindObjectOfType<LoadCharacterScene>().LoadCharacter();
                 mainAvatar.LoadNewHeat(btn.item.name);
                 CharacterInfo.UpdateCharacter(btn.item);
                 //PlayerPrefsManager.storeManager.SetHeat(btn.item.name);
@@ -173,6 +174,9 @@ public class TabGroup : MonoBehaviour
     public void PurchaseSelectedItem()
     {
         StoreItem item = selectedItemBtn.item;
+        CharacterInfo.UpdateCharacter(item);
+        GameObject.FindObjectOfType<LoadCharacterScene>().LoadCharacter();
+
         if (!item.purchased)
         {
             if (PlayerPrefsManager.storeManager.Purchase(item.index))

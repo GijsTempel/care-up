@@ -66,6 +66,7 @@ public class CharacterInfo : MonoBehaviour
             case "Heat":
                 CharacterInfo.heat = item.name;
                 DatabaseManager.UpdateField("CharacterItem_" + index.ToString(), "Heat", CharacterInfo.heat);
+                DatabaseManager.UpdateField("AccountStats", "Heat", CharacterInfo.heat);
                 break;
             case "Glasses":
                 CharacterInfo.glassesType = item.index;
