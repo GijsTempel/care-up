@@ -74,11 +74,11 @@ public class DatabaseManager : MonoBehaviour
             GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed || WULogin.HasSerial;
 
         // set character info
-        CharacterInfo.sex = FetchField("AccountStats", "CharacterSex");
-        int.TryParse(FetchField("AccountStats", "CharacterHeadType"), out CharacterInfo.headType);
-        int.TryParse(FetchField("AccountStats", "CharacterBodyType"), out CharacterInfo.bodyType);
-        int.TryParse(FetchField("AccountStats", "CharacterGlassesType"), out CharacterInfo.glassesType);
-        CharacterInfo.heat = FetchField("AccountStats", "CharacterHeat");
+        CharacterInfo.sex = FetchField("AccountStats", "Sex");
+        int.TryParse(FetchField("AccountStats", "Head"), out CharacterInfo.headType);
+        int.TryParse(FetchField("AccountStats", "Body"), out CharacterInfo.bodyType);
+        int.TryParse(FetchField("AccountStats", "Glasses"), out CharacterInfo.glassesType);
+        CharacterInfo.heat = FetchField("AccountStats", "Heat");
 
         // set player irl full name
         GameObject.FindObjectOfType<PlayerPrefsManager>().fullPlayerName =

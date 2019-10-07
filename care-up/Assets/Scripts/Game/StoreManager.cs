@@ -70,8 +70,8 @@ public class StoreManager
 
     public void Init(string storeXml = "Store", string characterStoreXml = "CharacterStore")
     {
-        bool devDropAllPurchases = true; // change this to true once to clear all purchases
-        bool devAddCurrency = true; // change this to true once to get 100 currency
+        bool devDropAllPurchases = false; // change this to true once to clear all purchases
+        bool devAddCurrency = false; // change this to true once to get 100 currency
 
         // load up all items from xml into the list
         TextAsset textAsset = (TextAsset)Resources.Load("Xml/" + storeXml);
@@ -200,6 +200,12 @@ public class StoreManager
         {
             return false;
         }
+    }
+
+    public void AdjustCharacter(int itemIndex)
+    {
+        CharacterItem item = CharacterItems.Find(x => x.index == (itemIndex));
+        CharacterInfo.SetCharacterCharacteristicsWU(item);
     }
 
     public bool PurchaseCharacter(int itemIndex)

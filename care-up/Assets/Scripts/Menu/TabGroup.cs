@@ -177,7 +177,6 @@ public class TabGroup : MonoBehaviour
         {
             if (PlayerPrefsManager.storeManager.Purchase(item.index))
             {
-
                 selectedItemBtn.SetPurchased(true);
                 GameObject.Find("AdjustCharacter/NumbersStackPanel/CurrencyPanel/Panel/Text").GetComponent<Text>().text
                     = PlayerPrefsManager.storeManager.Currency.ToString();

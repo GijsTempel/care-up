@@ -38,6 +38,7 @@ public class CharacterPanelManager : MonoBehaviour
     public void Adjust()
     {
         uMP_Manager.ChangeWindow(9);
+        AdjustCharacter();
         loadCharacter.LoadCharacter();
     }
 
@@ -83,6 +84,12 @@ public class CharacterPanelManager : MonoBehaviour
         currencyText.text = storeManager.Currency.ToString();
         
         //buyButton?.GetComponent<Button>().onClick.AddListener(BuyCharacter);
+    }
+
+    public void AdjustCharacter()
+    {
+        int characterIndex = CharacterСarrousel.CurrentCharacter;
+        storeManager.AdjustCharacter(storeManager.GetItemIndex(characterIndex));
     }
 
     public void BuyCharacter()

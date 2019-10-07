@@ -48,7 +48,7 @@ public class CharacterInfo : MonoBehaviour
                 new string[] { "Index", CharacterInfo.index.ToString() },
                 new string[] { "Price", CharacterInfo.price.ToString() },
                 new string[] { "Purchased", CharacterInfo.purchased.ToString() },
-                new string[] { "Created", "true" },
+                new string[] { "CharacterCreated", "true" },
                 new string[] { "Sex", CharacterInfo.sex },
                 new string[] { "Head", CharacterInfo.headType.ToString() },
                 new string[] { "Body", CharacterInfo.bodyType.ToString() },
@@ -56,6 +56,7 @@ public class CharacterInfo : MonoBehaviour
                 new string[] { "Heat", CharacterInfo.heat },
         };
         DatabaseManager.UpdateCategory("CharacterItem_" + index.ToString(), data);
+        DatabaseManager.UpdateCategory("AccountStats", data);
     }
 
     public static void UpdateCharacter(StoreItem item)
