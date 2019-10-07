@@ -23,7 +23,11 @@ public class CharacterInfo : MonoBehaviour
         int headType = data.playerAvatar.headType;
         int bodyType = data.playerAvatar.bodyType;
         int glassesType = data.playerAvatar.glassesType;
-        string heat = data.playerAvatar.heat;
+        string heat;
+        if (data.playerAvatar.heat != null)
+            heat = data.playerAvatar.heat;
+        else
+            heat = "";
 
         SetCharacterCharacteristicsWU(sex, headType, bodyType, glassesType, heat, index, price, purchased);
     }
@@ -41,15 +45,15 @@ public class CharacterInfo : MonoBehaviour
 
         data = new string[][]
         {
-            new string[] { "Index", CharacterInfo.index.ToString() },
-            new string[] { "Price", CharacterInfo.price.ToString() },
-            new string[] { "Purchased", CharacterInfo.purchased.ToString() },
-            new string[] { "Created", "true" },
-            new string[] { "Sex", CharacterInfo.sex },
-            new string[] { "Head", CharacterInfo.headType.ToString() },
-            new string[] { "Body", CharacterInfo.bodyType.ToString() },
-            new string[] { "Glasses", CharacterInfo.glassesType.ToString() },
-            new string[] { "Heat", CharacterInfo.heat },
+                new string[] { "Index", CharacterInfo.index.ToString() },
+                new string[] { "Price", CharacterInfo.price.ToString() },
+                new string[] { "Purchased", CharacterInfo.purchased.ToString() },
+                new string[] { "Created", "true" },
+                new string[] { "Sex", CharacterInfo.sex },
+                new string[] { "Head", CharacterInfo.headType.ToString() },
+                new string[] { "Body", CharacterInfo.bodyType.ToString() },
+                new string[] { "Glasses", CharacterInfo.glassesType.ToString() },
+                new string[] { "Heat", CharacterInfo.heat },
         };
         DatabaseManager.UpdateCategory("CharacterItem_" + index.ToString(), data);
     }
