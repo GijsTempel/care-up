@@ -94,6 +94,7 @@ public class GameUI : MonoBehaviour
     PlayerScript ps;
     bool ICPCurrentState = false;
     public bool allowObjectControlUI = true;
+    public GameObject PatientInfoPanel;
     public enum ItemControlButtonType
     {
         None,
@@ -356,6 +357,7 @@ public class GameUI : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        PatientInfoPanel = GameObject.Find("PatientInfo");
         gameLogic = GameObject.Find("GameLogic");
         objectsIDsController = GameObject.FindObjectOfType<ObjectsIDsController>();
         MovementSideButtons = GameObject.Find("MovementSideButtons");
@@ -380,6 +382,7 @@ public class GameUI : MonoBehaviour
         decombineButton_right.SetActive(false);
         noTargetButton.SetActive(false);
         ItemControlPanel.SetActive(false);
+        //PatientInfoPanel.SetActive(false);
         noTargetButton_right.SetActive(false);
         DropRightButton.SetActive(false);
         DropLeftButton.SetActive(false);
@@ -972,6 +975,7 @@ public class GameUI : MonoBehaviour
             if (PlayerScript.actionsLocked)
                 showItemControlPanel = false;
             ItemControlPanel.SetActive(showItemControlPanel);
+            PatientInfoPanel.SetActive(showItemControlPanel);
             MovementSideButtons.SetActive(showItemControlPanel);
 
             ICPCurrentState = ItemControlPanel.activeSelf;
@@ -1005,6 +1009,7 @@ public class GameUI : MonoBehaviour
             RightSideButton.gameObject.SetActive(false);
             WalkToGroupPanel.SetActive(false);
             ItemControlPanel.SetActive(false);
+            PatientInfoPanel.SetActive(false);
         }
         else
         {
