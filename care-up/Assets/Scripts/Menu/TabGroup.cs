@@ -123,6 +123,7 @@ public class TabGroup : MonoBehaviour
                 GameObject.FindObjectOfType<LoadCharacterScene>().LoadCharacter();
                 mainAvatar.LoadNewHeat(btn.item.name);
                 CharacterInfo.UpdateCharacter(btn.item);
+                GameObject.FindObjectOfType<CharacterСarrousel>().UpdateSelected();
                 //PlayerPrefsManager.storeManager.SetHeat(btn.item.name);
             }
             else

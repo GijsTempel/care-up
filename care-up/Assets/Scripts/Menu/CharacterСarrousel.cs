@@ -4,7 +4,6 @@ using CareUpAvatar;
 
 public class CharacterСarrousel : MonoBehaviour
 {
-    [HideInInspector]
     public static int CurrentCharacter { get; set; } = 1;
     public CharacterPanelManager panelManager;
     public List<GameObject> platforms;
@@ -16,10 +15,15 @@ public class CharacterСarrousel : MonoBehaviour
     private int targetTurnPosition = -1;
     private float defaultTurnSpeed = 90f;
 
+    static int current;
+
     private PlayerPrefsManager pref;
-   
+
     private List<PlayerAvatar> avatars = new List<PlayerAvatar>();
     private List<GameObject> checkMarks = new List<GameObject>();
+
+    public void UpdateSelected() { }
+   
 
     public void Initialize()
     {
