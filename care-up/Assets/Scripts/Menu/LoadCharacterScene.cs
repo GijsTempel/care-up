@@ -18,7 +18,7 @@ public class LoadCharacterScene : MonoBehaviour
         Gender gender = CharacterInfo.sex == "Female" ? Gender.Female : Gender.Male;
         PlayerAvatarData _data = new PlayerAvatarData(gender, CharacterInfo.headType, 
                 CharacterInfo.bodyType, CharacterInfo.glassesType);
-        _data.heat = CharacterInfo.heat;
+        _data.hat = CharacterInfo.hat;
 
         mainAvatar.avatarData = _data;
         mainAvatar.UpdateCharacter();

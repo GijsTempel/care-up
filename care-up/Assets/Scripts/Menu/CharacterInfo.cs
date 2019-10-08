@@ -10,7 +10,7 @@ public class CharacterInfo : MonoBehaviour
     public static int headType;
     public static int bodyType;
     public static int glassesType;
-    public static string heat;
+    public static string hat;
 
     private static string[][] data;
 
@@ -23,16 +23,16 @@ public class CharacterInfo : MonoBehaviour
         int headType = data.playerAvatar.headType;
         int bodyType = data.playerAvatar.bodyType;
         int glassesType = data.playerAvatar.glassesType;
-        string heat;
-        if (data.playerAvatar.heat != null)
-            heat = data.playerAvatar.heat;
+        string hat;
+        if (data.playerAvatar.hat != null)
+            hat = data.playerAvatar.hat;
         else
-            heat = "";
+            hat = "";
 
-        SetCharacterCharacteristicsWU(sex, headType, bodyType, glassesType, heat, index, price, purchased);
+        SetCharacterCharacteristicsWU(sex, headType, bodyType, glassesType, hat, index, price, purchased);
     }
 
-    public static void SetCharacterCharacteristicsWU(string sexType, int head, int body, int glasses, string heat = "", int index = 0, int price = 0, bool purchased = false)
+    public static void SetCharacterCharacteristicsWU(string sexType, int head, int body, int glasses, string hat = "", int index = 0, int price = 0, bool purchased = false)
     {
         CharacterInfo.index = index;
         CharacterInfo.price = price;
@@ -41,7 +41,7 @@ public class CharacterInfo : MonoBehaviour
         CharacterInfo.headType = head;
         CharacterInfo.bodyType = body;
         CharacterInfo.glassesType = glasses;
-        CharacterInfo.heat = heat;
+        CharacterInfo.hat = hat;
 
         data = new string[][]
         {
@@ -53,7 +53,7 @@ public class CharacterInfo : MonoBehaviour
                 new string[] { "Head", CharacterInfo.headType.ToString() },
                 new string[] { "Body", CharacterInfo.bodyType.ToString() },
                 new string[] { "Glasses", CharacterInfo.glassesType.ToString() },
-                new string[] { "Heat", CharacterInfo.heat },
+                new string[] { "Hat", CharacterInfo.hat },
         };
         DatabaseManager.UpdateCategory("CharacterItem_" + index.ToString(), data);
         DatabaseManager.UpdateCategory("AccountStats", data);
@@ -63,10 +63,10 @@ public class CharacterInfo : MonoBehaviour
     {
         switch (item.category)
         {
-            case "Heat":
-                CharacterInfo.heat = item.name;
-                DatabaseManager.UpdateField("CharacterItem_" + index.ToString(), "Heat", CharacterInfo.heat);
-                DatabaseManager.UpdateField("AccountStats", "Heat", CharacterInfo.heat);
+            case "Hat":
+                CharacterInfo.hat = item.name;
+                DatabaseManager.UpdateField("CharacterItem_" + index.ToString(), "Hat", CharacterInfo.hat);
+                DatabaseManager.UpdateField("AccountStats", "Hat", CharacterInfo.hat);
                 break;
             case "Glasses":
                 CharacterInfo.glassesType = item.index;

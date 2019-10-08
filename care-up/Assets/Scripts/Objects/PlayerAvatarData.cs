@@ -23,9 +23,9 @@
         public int glassesType;
         public int mouthType;
         public int eyeType;
-        public string heat;
+        public string hat;
 
-        public PlayerAvatarData(Gender _gender, int _headType, int _bodyType, int _glassesType, string _heatType = "", int _mouthType = 0, int _eyeType = 0)
+        public PlayerAvatarData(Gender _gender, int _headType, int _bodyType, int _glassesType, string _hatType = "", int _mouthType = 0, int _eyeType = 0)
         {
             gender = _gender;
             headType = _headType;
@@ -33,7 +33,7 @@
             glassesType = _glassesType;
             mouthType = _mouthType;
             eyeType = _eyeType;
-            heat = _heatType;
+            hat = _hatType;
         }
 
         public PlayerAvatarData()
@@ -42,7 +42,7 @@
             headType = 0;
             bodyType = 0;
             glassesType = 0;
-            heat = "";
+            hat = "";
         }
     }
 }

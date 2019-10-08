@@ -10,8 +10,8 @@ public class PlayerAvatar : MonoBehaviour
     public UVWarp f_leftEyeObject;
     public UVWarp f_rightEyeObject;
     public UVWarp f_mouthObject;
-    public Transform headAnchor;
-    public GameObject CurrentHeat;
+    public Transform hadAnchor;
+    public GameObject CurrentHat;
 
     public PlayerAvatarData avatarData = new PlayerAvatarData();
 
@@ -21,8 +21,8 @@ public class PlayerAvatar : MonoBehaviour
     private GameObject maleFace;
     private GameObject femaleFace;
 
-    private List<Transform> maleHeads = new List<Transform>();
-    private List<Transform> femaleHeads = new List<Transform>();
+    private List<Transform> maleHads = new List<Transform>();
+    private List<Transform> femaleHads = new List<Transform>();
     private List<Transform> femaleBodies = new List<Transform>();
     private List<Transform> maleBodies = new List<Transform>();
     private List<Transform> maleGlasses = new List<Transform>();
@@ -31,22 +31,21 @@ public class PlayerAvatar : MonoBehaviour
     Actions currentAction = Actions.Idle;
     Actions nextAction;
 
-    public void LoadNewHeat(string heatName)
+    public void LoadNewHat(string hatName)
     {
-        //print(heatName);
-        if (CurrentHeat != null)
+        if (CurrentHat != null)
         {
-            Destroy(CurrentHeat);
-            CurrentHeat = null;
+            Destroy(CurrentHat);
+            CurrentHat = null;
         }
-        Object heatPrefab = Resources.Load<GameObject>("Prefabs/Shop_Items/" + heatName);
-        if (heatPrefab != null)
+        Object hatPrefab = Resources.Load<GameObject>("Prefabs/Shop_Items/" + hatName);
+        if (hatPrefab != null)
         {
-            GameObject newHeat = Instantiate(heatPrefab, headAnchor, true) as GameObject;
-            newHeat.transform.position = headAnchor.position;
-            newHeat.transform.rotation = headAnchor.rotation;
-            newHeat.transform.localScale = headAnchor.localScale;
-            CurrentHeat = newHeat;
+            GameObject newHat = Instantiate(hatPrefab, hadAnchor, true) as GameObject;
+            newHat.transform.position = hadAnchor.position;
+            newHat.transform.rotation = hadAnchor.rotation;
+            newHat.transform.localScale = hadAnchor.localScale;
+            CurrentHat = newHat;
         }
     }
 
@@ -66,12 +65,12 @@ public class PlayerAvatar : MonoBehaviour
         maleBodies.RemoveAt(0);
 
         // heads
-        femaleChar.transform.Find("f_head").GetComponentsInChildren<Transform>(true, femaleHeads);
-        maleChar.transform.Find("m_head").GetComponentsInChildren<Transform>(true, maleHeads);
+        femaleChar.transform.Find("f_head").GetComponentsInChildren<Transform>(true, femaleHads);
+        maleChar.transform.Find("m_head").GetComponentsInChildren<Transform>(true, maleHads);
 
         // trim first ones cuz it's "HEAD_CONTAINER"
-        femaleHeads.RemoveAt(0);
-        maleHeads.RemoveAt(0);
+        femaleHads.RemoveAt(0);
+        maleHads.RemoveAt(0);
 
         //trim three last ones cuz those are glasses
         femaleChar.transform.Find("f_glasses").GetComponentsInChildren<Transform>(true, femaleGlasses);
@@ -94,7 +93,6 @@ public class PlayerAvatar : MonoBehaviour
 
         Animator anim = GetComponent<Animator>();
         anim.Play(anim.GetCurrentAnimatorStateInfo(0).fullPathHash,0, Random.Range(0f,1f));
-        //LoadNewHeat("ball");
     }
 
     public void JumpToNextAnimation()
@@ -163,18 +161,18 @@ public class PlayerAvatar : MonoBehaviour
 
     void UpdateMaleHeads()
     {
-        foreach (Transform h in maleHeads)
+        foreach (Transform h in maleHads)
         {
-            h.gameObject.SetActive(maleHeads.IndexOf(h) == avatarData.headType && avatarData.gender == Gender.Male);
+            h.gameObject.SetActive(maleHads.IndexOf(h) == avatarData.headType && avatarData.gender == Gender.Male);
         }
         SetFace(true, avatarData.eyeType, avatarData.mouthType);
     }
 
     void UpdateFemaleHeads()
     {
-        foreach (Transform h in femaleHeads)
+        foreach (Transform h in femaleHads)
         {
-            h.gameObject.SetActive(femaleHeads.IndexOf(h) == avatarData.headType && avatarData.gender == Gender.Female);
+            h.gameObject.SetActive(femaleHads.IndexOf(h) == avatarData.headType && avatarData.gender == Gender.Female);
         }
         SetFace(false, avatarData.eyeType, avatarData.mouthType);
     }
@@ -226,6 +224,6 @@ public class PlayerAvatar : MonoBehaviour
 
         UpdateMaleGlasses();
         UpdateFemaleGlasses();
-        LoadNewHeat(avatarData.heat);
+        LoadNewHat(avatarData.hat);
     }
 }

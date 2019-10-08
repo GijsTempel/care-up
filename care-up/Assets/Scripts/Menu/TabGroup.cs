@@ -118,17 +118,17 @@ public class TabGroup : MonoBehaviour
             selectedItemBtn.Select(true);
             buyBtnCoin.SetActive(true);
 
-            if (btn.item.category == "Heat")
+            if (btn.item.category == "Hat")
             {
                 GameObject.FindObjectOfType<LoadCharacterScene>().LoadCharacter();
-                mainAvatar.LoadNewHeat(btn.item.name);
+                mainAvatar.LoadNewHat(btn.item.name);
                 CharacterInfo.UpdateCharacter(btn.item);
                 GameObject.FindObjectOfType<CharacterСarrousel>().UpdateSelected();
                 //PlayerPrefsManager.storeManager.SetHeat(btn.item.name);
             }
             else
             {
-                mainAvatar.LoadNewHeat("");
+                mainAvatar.LoadNewHat("");
             }
         }
 

@@ -126,7 +126,7 @@ public class StoreManager
             int.TryParse(xmlSceneNode.Attributes["headType"].Value, out int headType);
             int.TryParse(xmlSceneNode.Attributes["mouth"].Value, out int mouthType);
             int.TryParse(xmlSceneNode.Attributes["eye"].Value, out int eyeType);
-            string heatType = "";
+            string hatType = "";
 
             bool purchased = DatabaseManager.FetchField("Store", "CharacterItem_" + index.ToString()) == "true";
 
@@ -160,13 +160,13 @@ public class StoreManager
                             int.TryParse(field[1], out bodyType); break;
                         case "Glasses":
                             int.TryParse(field[1], out glassesType); break;
-                        case "Heat":
-                            heatType = field[1]; break;
+                        case "Hat":
+                            hatType = field[1]; break;
                     }
                 }
             }
 
-            PlayerAvatarData playerAvatar = new PlayerAvatarData(characterGender, headType, bodyType, glassesType, heatType, mouthType, eyeType);
+            PlayerAvatarData playerAvatar = new PlayerAvatarData(characterGender, headType, bodyType, glassesType, hatType, mouthType, eyeType);
             CharacterItems.Add(new CharacterItem(index, price, purchased, playerAvatar));
         }
 
