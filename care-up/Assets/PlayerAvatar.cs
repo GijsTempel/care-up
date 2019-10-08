@@ -38,7 +38,7 @@ public class PlayerAvatar : MonoBehaviour
             Destroy(CurrentHat);
             CurrentHat = null;
         }
-        Object hatPrefab = Resources.Load<GameObject>("Prefabs/Shop_Items/" + hatName);
+        Object hatPrefab = Resources.Load<GameObject>("NecessaryPrefabs/Shop_Items/" + hatName);
         if (hatPrefab != null)
         {
             GameObject newHat = Instantiate(hatPrefab, hadAnchor, true) as GameObject;
