@@ -51,6 +51,17 @@ public class PlayerAvatar : MonoBehaviour
         return maxBody;
     }
 
+    public int GetMaxGlassesNum()
+    {
+        int maxGlasses = maleGlasses.Count - 1;
+        if (avatarData.gender == Gender.Female)
+        {
+            maxGlasses = femaleGlasses.Count - 1;
+        }
+        return maxGlasses;
+    }
+
+
     public void LoadNewHat(string hatName)
     {
         if (CurrentHat != null)
