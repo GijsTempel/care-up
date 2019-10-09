@@ -31,6 +31,26 @@ public class PlayerAvatar : MonoBehaviour
     Actions currentAction = Actions.Idle;
     Actions nextAction;
 
+    public int GetMaxHeadNum()
+    {
+        int maxHead = maleHads.Count - 1;
+        if (avatarData.gender == Gender.Female)
+        {
+            maxHead = femaleHads.Count - 1;
+        }
+        return maxHead;
+    }
+
+    public int GetMaxBodyNum()
+    {
+        int maxBody = maleBodies.Count - 1;
+        if (avatarData.gender == Gender.Female)
+        {
+            maxBody = femaleBodies.Count - 1;
+        }
+        return maxBody;
+    }
+
     public void LoadNewHat(string hatName)
     {
         if (CurrentHat != null)
