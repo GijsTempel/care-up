@@ -22,8 +22,10 @@ public class CharacterСarrousel : MonoBehaviour
     private List<PlayerAvatar> avatars = new List<PlayerAvatar>();
     private List<GameObject> checkMarks = new List<GameObject>();
 
-    public void UpdateSelected() { }
-   
+    public void UpdateSelected()
+    {
+        GameObject.FindObjectOfType<LoadCharacterScene>().LoadCharacter(avatars[GetCurrentMarker()]);
+    }
 
     public void Initialize()
     {

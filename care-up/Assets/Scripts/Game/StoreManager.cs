@@ -175,7 +175,7 @@ public class StoreManager
         int.TryParse(DatabaseManager.FetchField("Store", "Presents"), out currentPresents);
 
         if (devAddCurrency) ModifyCurrencyBy(100);
-    }
+    } 
 
     public void ModifyCurrencyBy(int amount)
     {
@@ -235,7 +235,8 @@ public class StoreManager
     public void AdjustCharacter(int itemIndex)
     {
         CharacterItem item = CharacterItems.Find(x => x.index == (itemIndex));
-        CharacterInfo.SetCharacterCharacteristicsWU(item);
+        if (itemIndex != CharacterInfo.index)
+            CharacterInfo.SetCharacterCharacteristicsWU(item);
     }
 
     public bool PurchaseCharacter(int itemIndex)

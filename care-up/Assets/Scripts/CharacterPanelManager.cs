@@ -51,9 +51,8 @@ public class CharacterPanelManager : MonoBehaviour
     {
         CurrentPrice = storeManager.CharacterItems[characterIndex].price;
         bool purchased = storeManager.CharacterItems[characterIndex].purchased;
-        int p = storeManager.CharacterItems[characterIndex].price;
-        string price = p.ToString();
-        if (p == 0)
+        string price = CurrentPrice.ToString();
+        if (CurrentPrice == 0)
         {
             price = "";
             BuyBtnCoinIcon.SetActive(false);

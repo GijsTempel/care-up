@@ -64,13 +64,34 @@ public class CharacterInfo : MonoBehaviour
         switch (item.category)
         {
             case "Hat":
+
                 CharacterInfo.hat = item.name;
                 DatabaseManager.UpdateField("CharacterItem_" + index.ToString(), "Hat", CharacterInfo.hat);
                 DatabaseManager.UpdateField("AccountStats", "Hat", CharacterInfo.hat);
+
+                foreach (CharacterItem characterItem in PlayerPrefsManager.storeManager.CharacterItems)
+                {
+                    if (characterItem.index == index)
+                    {
+                        characterItem.playerAvatar.hat = CharacterInfo.hat;
+                        break;
+                    }
+                }
+
                 break;
+
             case "Glasses":
                 CharacterInfo.glassesType = item.index;
                 DatabaseManager.UpdateField("CharacterItem_" + index.ToString(), "Glasses", CharacterInfo.glassesType.ToString());
+
+                foreach (CharacterItem characterItem in PlayerPrefsManager.storeManager.CharacterItems)
+                {
+                    if (characterItem.index == index)
+                    {
+                        characterItem.playerAvatar.glassesType = CharacterInfo.glassesType;
+                        break;
+                    }
+                }
                 break;
         }
     }

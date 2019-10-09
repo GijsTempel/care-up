@@ -3,9 +3,6 @@ using CareUpAvatar;
 
 public class LoadCharacterScene : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject characters = default(GameObject);
-
     public void LoadScene()
     {
         GameObject.FindObjectOfType<PlayerPrefsManager>().firstStart = false;
@@ -15,12 +12,26 @@ public class LoadCharacterScene : MonoBehaviour
     public void LoadCharacter()
     {
         PlayerAvatar mainAvatar = GameObject.Find("MainPlayerAvatar").GetComponent<PlayerAvatar>();
-        Gender gender = CharacterInfo.sex == "Female" ? Gender.Female : Gender.Male;
-        PlayerAvatarData _data = new PlayerAvatarData(gender, CharacterInfo.headType, 
-                CharacterInfo.bodyType, CharacterInfo.glassesType);
-        _data.hat = CharacterInfo.hat;
 
-        mainAvatar.avatarData = _data;
+        mainAvatar.avatarData = GetCurrentData();
         mainAvatar.UpdateCharacter();
+    }
+
+    public void LoadCharacter(PlayerAvatar avatar)
+    {
+        avatar.avatarData = GetCurrentData();
+        avatar.UpdateCharacter();
+    }
+
+
+    public PlayerAvatarData GetCurrentData()
+    {
+        Gender gender = CharacterInfo.sex == "Female" ? Gender.Female : Gender.Male;
+
+        PlayerAvatarData data = new PlayerAvatarData(gender, CharacterInfo.headType,
+               CharacterInfo.bodyType, CharacterInfo.glassesType);
+        data.hat = CharacterInfo.hat;
+
+        return data;
     }
 }
