@@ -12,6 +12,9 @@ public class PlayerAvatar : MonoBehaviour
     public UVWarp f_mouthObject;
     public Transform hadAnchor;
     public GameObject CurrentHat;
+    Vector3 HatPositionOffset = new Vector3();
+    Quaternion HatRotationOffset = new Quaternion();
+    float HatScale = 1f;
 
     public PlayerAvatarData avatarData = new PlayerAvatarData();
 
@@ -51,6 +54,24 @@ public class PlayerAvatar : MonoBehaviour
         return maxBody;
     }
 
+    public void SetHatOffset(Vector3 pos, Quaternion rot, float scl)
+    {
+        HatPositionOffset = pos;
+        HatRotationOffset = rot;
+        HatScale = scl;
+        UpdateHatOffset();
+    }
+
+    private void UpdateHatOffset()
+    {
+        if (CurrentHat != null)
+        {
+            CurrentHat.transform.localPosition = HatPositionOffset;
+            CurrentHat.transform.localRotation = HatRotationOffset;
+            CurrentHat.transform.localScale = new Vector3(HatScale, HatScale, HatScale);
+        }
+    }
+
     public int GetMaxGlassesNum()
     {
         int maxGlasses = maleGlasses.Count - 1;
@@ -76,6 +97,12 @@ public class PlayerAvatar : MonoBehaviour
             newHat.transform.position = hadAnchor.position;
             newHat.transform.rotation = hadAnchor.rotation;
             newHat.transform.localScale = hadAnchor.localScale;
+
+            newHat.transform.localPosition = HatPositionOffset;
+            newHat.transform.localRotation = HatRotationOffset;
+            newHat.transform.localScale = new Vector3(HatScale, HatScale, HatScale);
+
+
             CurrentHat = newHat;
         }
     }

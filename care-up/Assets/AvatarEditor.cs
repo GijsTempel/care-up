@@ -4,7 +4,6 @@ using UnityEngine;
 using CareUpAvatar;
 using UnityEngine.UI;
 
-
 public class AvatarEditor : MonoBehaviour
 {
     public enum Selections
@@ -18,6 +17,17 @@ public class AvatarEditor : MonoBehaviour
     public InputField GenderInput;
     public InputField GlassesInput;
     public InputField HatInput;
+    Scrollbar posOffset_x;
+    Scrollbar posOffset_y;
+    Scrollbar posOffset_z;
+    Scrollbar rotOffset_x;
+    Scrollbar rotOffset_y;
+    Scrollbar rotOffset_z;
+    Scrollbar sclOffset;
+
+    Scrollbar camRotScrool;
+
+    public Transform camPivot;
 
     Selections currentSelection = new Selections();
     List<string> Hats = new List<string>
@@ -38,12 +48,73 @@ public class AvatarEditor : MonoBehaviour
 
     Gender currentGender = Gender.Female;
 
+    public void HatOffsetChanged()
+    {
+        float px = (posOffset_x.value - 0.5f) * 2f;
+        float py = (posOffset_y.value - 0.5f) * 2f;
+        float pz = (posOffset_z.value - 0.5f) * 2f;
+
+        float rx = (rotOffset_x.value - 0.5f) * 2f * 180f;
+        float ry = (rotOffset_y.value - 0.5f) * 2f * 180f;
+        float rz = (rotOffset_z.value - 0.5f) * 2f * 180f;
+        float s = sclOffset.value * 2f;
+        Vector3 pos = new Vector3(px, py, pz);
+        Quaternion rot = Quaternion.Euler(rx, ry, rz);
+        MainAvatar.SetHatOffset(pos, rot, s);
+    }
+
+    public void CameraControllerChanged()
+    {
+        float y_rot = (camRotScrool.value - 0.5f) * 2f * 180f;
+        Vector3 currentCamRot = camPivot.eulerAngles;
+        currentCamRot.y = y_rot;
+        camPivot.localRotation = Quaternion.Euler(currentCamRot.x, y_rot, currentCamRot.z);
+    }
+
+    public void ResetHatOffsetValue(int value)
+    {
+        switch (value)
+        {
+            case 0:
+                posOffset_x.value = 0.5f;
+                break;
+            case 1:
+                posOffset_y.value = 0.5f;
+                break;
+            case 2:
+                posOffset_z.value = 0.5f;
+                break;
+            case 3:
+                rotOffset_x.value = 0.5f;
+                break;
+            case 4:
+                rotOffset_y.value = 0.5f;
+                break;
+            case 5:
+                rotOffset_z.value = 0.5f;
+                break;
+            case 6:
+                sclOffset.value = 0.5f;
+                break;
+
+        }
+        HatOffsetChanged();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         SelectorContent = Selector.transform.Find("Scroll View/Viewport/Content");
-        print(SelectorContent.name);
-        Invoke("Initialize", 0.1f);
+        posOffset_x = Tabs[0].transform.Find("PositionOffset/x/Scrollbar").GetComponent<Scrollbar>();
+        posOffset_y = Tabs[0].transform.Find("PositionOffset/y/Scrollbar").GetComponent<Scrollbar>();
+        posOffset_z = Tabs[0].transform.Find("PositionOffset/z/Scrollbar").GetComponent<Scrollbar>();
+        rotOffset_x = Tabs[0].transform.Find("RotationOffset/x/Scrollbar").GetComponent<Scrollbar>();
+        rotOffset_y = Tabs[0].transform.Find("RotationOffset/y/Scrollbar").GetComponent<Scrollbar>();
+        rotOffset_z = Tabs[0].transform.Find("RotationOffset/z/Scrollbar").GetComponent<Scrollbar>();
+        sclOffset   = Tabs[0].transform.Find("ScaleOffset/x/Scrollbar").GetComponent<Scrollbar>();
+        camRotScrool = transform.Find("Canvas/GameObject/AvatarView/Scrollbar").GetComponent<Scrollbar>();
+
+        Invoke("Initialize", 0.01f);
     }
 
     public void BuildHatSelector()

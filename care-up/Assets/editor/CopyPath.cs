@@ -17,7 +17,7 @@ public static class CopyPathMenuItem
         {
             go = go.transform.parent.gameObject;
             //names.Add(go.name.Substring(1, go.name.Length - 1));
-            path = string.Format("/{0}{1}", go.name.Substring(0, go.name.Length-1), path);
+            path = string.Format("/{0}{1}", go.name.Substring(0, go.name.Length), path);
         }
         EditorGUIUtility.systemCopyBuffer = path;
     }
