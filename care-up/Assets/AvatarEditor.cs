@@ -63,6 +63,11 @@ public class AvatarEditor : MonoBehaviour
         MainAvatar.SetHatOffset(pos, rot, s);
     }
 
+    public void SetAvatarAction(int act)
+    {
+        MainAvatar.SetAnimationAction((Actions)act, true);
+    }
+
     public void CameraControllerChanged()
     {
         float y_rot = (camRotScrool.value - 0.5f) * 2f * 180f;
