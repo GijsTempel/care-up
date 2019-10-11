@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using CareUpAvatar;
 using UnityEngine.UI;
+using System.IO;
+
 
 public class AvatarEditor : MonoBehaviour
 {
@@ -31,7 +33,7 @@ public class AvatarEditor : MonoBehaviour
 
     Selections currentSelection = new Selections();
     List<string> Hats = new List<string>
-            { "None", "ball", "cowboy_hat", "cube", "cyl", "winter_hat" };
+            { "None" };
 
     public GameObject Tools;
     public GameObject Selector;
@@ -109,6 +111,23 @@ public class AvatarEditor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        foreach (string file in System.IO.Directory.GetFiles("Assets\\Resources\\NecessaryPrefabs\\Shop_Items")) 
+        {
+            
+            string[] _path = file.Split('\\');
+
+            string item_name = (_path[_path.Length-1]);
+            string[] DSV = item_name.Split('.');
+
+            if (DSV[DSV.Length - 1] == "prefab")
+            {
+                item_name = item_name.Split('.')[0];
+                if (item_name.Split('_')[0] == "hat")
+                {
+                    Hats.Add(item_name);
+                }
+            }
+        }
         SelectorContent = Selector.transform.Find("Scroll View/Viewport/Content");
         posOffset_x = Tabs[0].transform.Find("PositionOffset/x/Scrollbar").GetComponent<Scrollbar>();
         posOffset_y = Tabs[0].transform.Find("PositionOffset/y/Scrollbar").GetComponent<Scrollbar>();
@@ -134,10 +153,14 @@ public class AvatarEditor : MonoBehaviour
             _Button.transform.Find("Text").GetComponent<Text>().text = h;
             _Button.GetComponent<Button>().onClick.AddListener(() => SelectElement(h));
             string category = "hat";
-            Sprite sprite = Resources.Load("Sprites/StoreItemPreview/" + category + "_" + h, typeof(Sprite)) as Sprite;
+            Sprite sprite = Resources.Load("Sprites/StoreItemPreview/" + h, typeof(Sprite)) as Sprite;
             if (sprite != null)
             {
                 _Button.transform.Find("Image").GetComponent<Image>().sprite = sprite;
+            }
+            else
+            {
+                _Button.transform.Find("Image").GetComponent<Image>().color = new Color(0, 0, 0, 0);
             }
         }
         ShowSelector(true);
