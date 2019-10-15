@@ -23,6 +23,7 @@ public class PlayerPrefsManager : MonoBehaviour
 {
     public static StoreManager storeManager = new StoreManager();
 
+    public HatsPositioningDB hatsPositioning = new HatsPositioningDB();
     private LocalizationManager localizationManager; // = new LocalizationManager();
     public bool VR = true;
     public bool practiceMode = true;
@@ -196,6 +197,8 @@ public class PlayerPrefsManager : MonoBehaviour
 
         localizationManager = new LocalizationManager();
         localizationManager.LoadAllDictionaries();
+
+        hatsPositioning.Init();
 
         // uncomment this, fill with correct info and start game
         // p.s. dont forget to comment this again and not push instead :)
