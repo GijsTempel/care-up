@@ -75,6 +75,7 @@ public class CharacterСarrousel : MonoBehaviour
     private void Start()
     {
         pref = GameObject.FindObjectOfType<PlayerPrefsManager>();
+        checkMarks.Clear();
         foreach (GameObject platform in platforms)
         {
             checkMarks.Add(platform.transform.Find("checkMark").gameObject);
@@ -84,7 +85,7 @@ public class CharacterСarrousel : MonoBehaviour
             avatars.Add(platform.transform.Find("PlayerAvatar").GetComponent<PlayerAvatar>());
         }
 
-        Invoke("Initialize", 0.01f);
+        Invoke("Initialize", 0.03f);
     }
 
     private PlayerAvatarData GetAvatarData(int index)
