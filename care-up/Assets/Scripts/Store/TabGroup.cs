@@ -18,7 +18,12 @@ public class TabGroup : MonoBehaviour
 
     private GameObject pagesContainer = default,
                        buyBtnPutOnText = default,
-                       buyBtnCoin = default;
+                       buyBtnCoin = default,
+                       tabBtnPrefab = default,
+                       tabPagePrefab = default,
+                       productItem = default;
+
+    private Transform tabParent = default;
 
     [SerializeField]
     private UIParticleSystem currencyParticles = default(UIParticleSystem);
@@ -30,6 +35,34 @@ public class TabGroup : MonoBehaviour
     private PlayerAvatar mainAvatar;
     private List<TabButton> tabs;
     private List<GameObject> pages = new List<GameObject>();
+
+    private void Start()
+    {
+        InitializeElements();
+        buyBtnCoin.SetActive(false);
+        InitializeTabPanel();
+    }
+
+    private void ModifyTab(TabButton button, Sprite sprite, Vector3 vector3)
+    {
+        button.background.rectTransform.localScale = vector3;
+        button.background.sprite = sprite;
+    }  
+
+    private void InitializeElements()
+    {
+        mainAvatar = GameObject.Find("MainPlayerAvatar").GetComponent<PlayerAvatar>();
+        buyBtnText = buyBtn.transform.Find("Text").GetComponent<Text>();
+        buyBtnPutOnText = buyBtn.transform.Find("PutOn").gameObject;
+        buyBtnCoin = buyBtn.transform.Find("Coin").gameObject;
+        buyBtnSprite = buyBtn.GetComponent<Image>().sprite;
+        pagesContainer = GameObject.Find("PageContainer");
+
+        tabBtnPrefab = Resources.Load<GameObject>("Prefabs/StoreTab");
+        tabPagePrefab = Resources.Load<GameObject>("Prefabs/PageHolder");
+        productItem = Resources.Load<GameObject>("Prefabs/ProductPanel");
+        tabParent = GameObject.Find("StoreTabContainer").transform;
+    }
 
     public void ShowConfirmPanel(bool toShow)
     {
@@ -124,7 +157,6 @@ public class TabGroup : MonoBehaviour
                 mainAvatar.LoadNewHat(btn.item.name);
                 CharacterInfo.UpdateCharacter(btn.item);
                 GameObject.FindObjectOfType<CharacterСarrousel>().UpdateSelected();
-                //PlayerPrefsManager.storeManager.SetHeat(btn.item.name);
             }
             else
             {
@@ -198,30 +230,10 @@ public class TabGroup : MonoBehaviour
         }
         ShowConfirmPanel(false);
         UpdatePurchesBtn();
-    } 
-
-    private void ModifyTab(TabButton button, Sprite sprite, Vector3 vector3)
-    {
-        button.background.rectTransform.localScale = vector3;
-        button.background.sprite = sprite;
     }
 
-    private void Start()
+    public void InitializeTabPanel()
     {
-        mainAvatar = GameObject.Find("MainPlayerAvatar").GetComponent<PlayerAvatar>();
-        buyBtnText = buyBtn.transform.Find("Text").GetComponent<Text>();
-        buyBtnPutOnText = buyBtn.transform.Find("PutOn").gameObject;
-        buyBtnCoin = buyBtn.transform.Find("Coin").gameObject;
-        buyBtnSprite = buyBtn.GetComponent<Image>().sprite;
-
-        buyBtnCoin.SetActive(false);
-        pagesContainer = GameObject.Find("PageContainer");
-
-        GameObject tabBtnPrefab = Resources.Load<GameObject>("Prefabs/StoreTab");
-        GameObject tabPagePrefab = Resources.Load<GameObject>("Prefabs/PageHolder");
-        GameObject productItem = Resources.Load<GameObject>("Prefabs/ProductPanel");
-        Transform tabParent = GameObject.Find("StoreTabContainer").transform;
-
         foreach (StoreCategory cat in PlayerPrefsManager.storeManager.StoreItems)
         {
             // setting tab button
