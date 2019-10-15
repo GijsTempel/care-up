@@ -175,7 +175,7 @@ public class StoreManager
         int.TryParse(DatabaseManager.FetchField("Store", "Presents"), out currentPresents);
 
         if (devAddCurrency) ModifyCurrencyBy(100);
-    } 
+    }
 
     public void ModifyCurrencyBy(int amount)
     {
