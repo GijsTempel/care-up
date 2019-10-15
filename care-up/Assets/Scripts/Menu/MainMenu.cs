@@ -30,6 +30,18 @@ public class MainMenu : MonoBehaviour {
     [UnityEngine.SerializeField]
     public List<ResendingLock> resendingLocks = new List<ResendingLock>();
 
+
+#if UNITY_EDITOR
+    private void Update()
+    {
+
+        if (Input.GetKeyDown(KeyCode.F4))
+        {
+            bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Character_Editor");
+        }
+    }
+
+    #endif
     private void Start()
     {
         if (GameObject.Find("Preferences") != null)

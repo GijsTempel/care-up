@@ -65,6 +65,11 @@ public class AvatarEditor : MonoBehaviour
         MainAvatar.SetHatOffset(pos, rot, s);
     }
 
+    public void GoToMainMenu()
+    {
+        bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
+    }
+
     public void SetAvatarAction(int act)
     {
         MainAvatar.SetAnimationAction((Actions)act, true);

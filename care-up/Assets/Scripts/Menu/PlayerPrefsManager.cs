@@ -99,10 +99,11 @@ public class PlayerPrefsManager : MonoBehaviour
         {
             // game scenes
             GetComponent<AudioSource>().Stop();
-            if (Camera.main.GetComponent<PostProcessingBehaviour>() != null)
-            {
-                Camera.main.GetComponent<PostProcessingBehaviour>().enabled = postProcessingEnabled;
-            }
+            if(Camera.main != null)
+                if (Camera.main.GetComponent<PostProcessingBehaviour>() != null)
+                {
+                    Camera.main.GetComponent<PostProcessingBehaviour>().enabled = postProcessingEnabled;
+                }
         }
 
         if (s.name == "EndScore" ||
