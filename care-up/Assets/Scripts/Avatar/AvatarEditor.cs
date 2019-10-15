@@ -13,6 +13,7 @@ public class AvatarEditor : MonoBehaviour
         Hats,
     };
 
+    PlayerPrefsManager pref;
     public PlayerAvatar MainAvatar;
     public InputField HeadInput;
     public InputField BodyInput;
@@ -116,6 +117,8 @@ public class AvatarEditor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        pref = GameObject.FindObjectOfType<PlayerPrefsManager>();
+
         foreach (string file in System.IO.Directory.GetFiles("Assets\\Resources\\NecessaryPrefabs\\Shop_Items")) 
         {
             
@@ -192,6 +195,11 @@ public class AvatarEditor : MonoBehaviour
             {
                 MainAvatar.avatarData.hat = element;
                 HatInput.text = element;
+                HatsPositioningDB.HatInfo hatInfo = pref.hatsPositioning.GetHatInfo(MainAvatar.avatarData.headType, MainAvatar.avatarData.hat);
+                if(hatInfo != null)
+                {
+                    print(hatInfo.position);
+                }
             }
             MainAvatar.UpdateCharacter();
         }

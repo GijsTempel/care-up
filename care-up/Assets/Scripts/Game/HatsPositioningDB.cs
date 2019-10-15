@@ -47,6 +47,7 @@ public class HatsPositioningDB
         {
             List<HatInfo> hatItems = new List<HatInfo>();
             string headIndex = (xmlCatNode.Attributes["index"] != null) ? xmlCatNode.Attributes["index"].Value : "";
+            Debug.Log(headIndex);
             int index = 0;
             int.TryParse(headIndex, out index);
 

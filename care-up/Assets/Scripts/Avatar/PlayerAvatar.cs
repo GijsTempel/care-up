@@ -93,14 +93,22 @@ public class PlayerAvatar : MonoBehaviour
         Object hatPrefab = Resources.Load<GameObject>("NecessaryPrefabs/Shop_Items/" + hatName);
         if (hatPrefab != null)
         {
+            PlayerPrefsManager pref = GameObject.FindObjectOfType<PlayerPrefsManager>();
             GameObject newHat = Instantiate(hatPrefab, hadAnchor, true) as GameObject;
             newHat.transform.position = hadAnchor.position;
             newHat.transform.rotation = hadAnchor.rotation;
             newHat.transform.localScale = hadAnchor.localScale;
 
+            HatsPositioningDB.HatInfo hatInfo = pref.hatsPositioning.GetHatInfo(avatarData.headType, avatarData.hat);
+            print(hatInfo.position);
+            HatPositionOffset = hatInfo.position;
+            HatRotationOffset = Quaternion.Euler(hatInfo.rotation);
+            HatScale = hatInfo.scale;
+
             newHat.transform.localPosition = HatPositionOffset;
             newHat.transform.localRotation = HatRotationOffset;
             newHat.transform.localScale = new Vector3(HatScale, HatScale, HatScale);
+
 
 
             CurrentHat = newHat;
