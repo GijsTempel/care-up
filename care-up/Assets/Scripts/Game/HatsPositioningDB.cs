@@ -113,23 +113,79 @@ public class HatsPositioningDB
 
     public static void PrintDatabase()
     {
-        string output = "";
+        string output = "Hats positioning DB output: \n";
         foreach (HeadCategory c in database)
         {
             output += "Category: " + c.headIndex + "\n";
             foreach (HatInfo hat in c.hats)
             {
-                output += "    " + hat.name + "\n";
-                output += "    " + hat.position + "\n";
-                output += "    " + hat.rotation + "\n";
-                output += "    " + hat.scale + "\n\n";
+                output += "    Name: " + hat.name;
+                output += ". Scale: " + hat.scale + "\n";
+                output += "    Pos: " + hat.position + "\n";
+                output += "    Rot: " + hat.rotation + "\n";
             }
         }
         Debug.Log(output);
     }
 
-    public void SaveInfoToXml()
+    public void SaveInfoToXml(string filename = "HatsInfo.xml")
     {
+        XmlDocument doc = new XmlDocument();
+        XmlNode docNode = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
+        doc.AppendChild(docNode);
 
+        XmlNode root = doc.CreateElement("HatsData");
+        doc.AppendChild(root);
+
+        foreach(HeadCategory cat in database)
+        {
+            XmlNode headNode = doc.CreateElement("Head");
+            root.AppendChild(headNode);
+
+            XmlAttribute headIndex = doc.CreateAttribute("index");
+            headIndex.Value = cat.headIndex.ToString();
+            headNode.Attributes.Append(headIndex);
+
+            foreach(HatInfo hat in cat.hats)
+            {
+                XmlNode hatNode = doc.CreateElement("Hat");
+                headNode.AppendChild(hatNode);
+
+                XmlAttribute hatName = doc.CreateAttribute("name");
+                hatName.Value = hat.name;
+                hatNode.Attributes.Append(hatName);
+                
+                XmlAttribute posX = doc.CreateAttribute("x_pos");
+                posX.Value = hat.position.x.ToString();
+                hatNode.Attributes.Append(posX);
+
+                XmlAttribute posY = doc.CreateAttribute("y_pos");
+                posY.Value = hat.position.y.ToString();
+                hatNode.Attributes.Append(posY);
+
+                XmlAttribute posZ = doc.CreateAttribute("z_pos");
+                posZ.Value = hat.position.z.ToString();
+                hatNode.Attributes.Append(posZ);
+
+                XmlAttribute rotX = doc.CreateAttribute("x_rot");
+                rotX.Value = hat.rotation.x.ToString();
+                hatNode.Attributes.Append(rotX);
+
+                XmlAttribute rotY = doc.CreateAttribute("y_rot");
+                rotY.Value = hat.rotation.y.ToString();
+                hatNode.Attributes.Append(rotY);
+
+                XmlAttribute rotZ = doc.CreateAttribute("z_rot");
+                rotZ.Value = hat.rotation.z.ToString();
+                hatNode.Attributes.Append(rotZ);
+
+                XmlAttribute scale = doc.CreateAttribute("scale");
+                scale.Value = hat.scale.ToString();
+                hatNode.Attributes.Append(scale);
+            }
+        }
+
+        doc.Save(Application.dataPath + "/Resources/Xml/" + filename);
+        Debug.Log("Hats positioning xml saved.");
     }
 }
