@@ -13,7 +13,7 @@ public class HatsPositioningDB
         public Vector3 rotation;
         public float scale;
 
-        public HatInfo() { headIndex = 0; name = ""; position = rotation = Vector3.zero; scale = 0; }
+        public HatInfo() { headIndex = 0; name = ""; position = rotation = Vector3.zero; scale = 1; }
         public HatInfo(int index, string n, Vector3 pos, Vector3 rot, float sscale)
         {
             headIndex = index;
@@ -47,7 +47,7 @@ public class HatsPositioningDB
         {
             List<HatInfo> hatItems = new List<HatInfo>();
             string headIndex = (xmlCatNode.Attributes["index"] != null) ? xmlCatNode.Attributes["index"].Value : "";
-            Debug.Log(headIndex);
+            //Debug.Log(headIndex);
             int index = 0;
             int.TryParse(headIndex, out index);
 

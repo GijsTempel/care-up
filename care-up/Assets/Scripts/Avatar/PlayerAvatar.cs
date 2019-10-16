@@ -100,10 +100,13 @@ public class PlayerAvatar : MonoBehaviour
             newHat.transform.localScale = hadAnchor.localScale;
 
             HatsPositioningDB.HatInfo hatInfo = pref.hatsPositioning.GetHatInfo(avatarData.headType, avatarData.hat);
-            print(hatInfo.position);
-            HatPositionOffset = hatInfo.position;
-            HatRotationOffset = Quaternion.Euler(hatInfo.rotation);
-            HatScale = hatInfo.scale;
+            if (hatInfo != null)
+            {
+                print(hatInfo.position);
+                HatPositionOffset = hatInfo.position;
+                HatRotationOffset = Quaternion.Euler(hatInfo.rotation);
+                HatScale = hatInfo.scale;
+            }
 
             newHat.transform.localPosition = HatPositionOffset;
             newHat.transform.localRotation = HatRotationOffset;

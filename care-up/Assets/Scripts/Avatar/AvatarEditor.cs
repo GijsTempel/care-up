@@ -114,6 +114,22 @@ public class AvatarEditor : MonoBehaviour
         HatOffsetChanged();
     }
 
+    public void ApplyCurentHead()
+    {
+        print("ApplyCurentHead");
+    }
+
+    public void ApplyAllHeads()
+    {
+        print("ApplyAllHeads");
+
+    }
+
+    public void SaveAllHats()
+    {
+        print("SaveAllHats");
+
+    }
     // Start is called before the first frame update
     void Start()
     {
