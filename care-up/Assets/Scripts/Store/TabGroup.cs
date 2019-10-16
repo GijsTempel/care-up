@@ -39,39 +39,7 @@ public class TabGroup : MonoBehaviour
     private ProductButton selectedItemBtn = null;
     private PlayerAvatar mainAvatar;
     private List<TabButton> tabs;
-    private List<GameObject> pages = new List<GameObject>();
-
-    private void Start()
-    {
-        InitializeElements();
-        buyBtnCoin.SetActive(false);
-
-        InitializeTabPanel();
-
-        purchased.GetComponent<Button>().onClick.AddListener(() => FilterProducts(FilterParam.Purchased));
-        onSale.GetComponent<Button>().onClick.AddListener(() => FilterProducts(FilterParam.OnSale));
-    }
-
-    private void ModifyTab(TabButton button, Sprite sprite, Vector3 vector3)
-    {
-        button.background.rectTransform.localScale = vector3;
-        button.background.sprite = sprite;
-    }
-
-    private void InitializeElements()
-    {
-        mainAvatar = GameObject.Find("MainPlayerAvatar").GetComponent<PlayerAvatar>();
-        buyBtnText = buyBtn.transform.Find("Text").GetComponent<Text>();
-        buyBtnPutOnText = buyBtn.transform.Find("PutOn").gameObject;
-        buyBtnCoin = buyBtn.transform.Find("Coin").gameObject;
-        buyBtnSprite = buyBtn.GetComponent<Image>().sprite;
-        pagesContainer = GameObject.Find("PageContainer");
-
-        tabBtnPrefab = Resources.Load<GameObject>("Prefabs/StoreTab");
-        tabPagePrefab = Resources.Load<GameObject>("Prefabs/PageHolder");
-        productItem = Resources.Load<GameObject>("Prefabs/ProductPanel");
-        tabParent = GameObject.Find("StoreTabContainer").transform;
-    }
+    private List<GameObject> pages = new List<GameObject>();  
 
     public void ShowConfirmPanel(bool toShow)
     {
@@ -245,17 +213,19 @@ public class TabGroup : MonoBehaviour
     {
         Filtering filtering = new Filtering();
 
-        foreach (StoreCategory category in PlayerPrefsManager.storeManager.StoreItems)
+        for (int i = 0; i < pages.Count; i++)
         {
-            foreach (Transform child in itemParent.transform)
+            itemParent = pages[i].transform.Find("StoreTabPage/content");
+
+            foreach (Transform child in itemParent)
             {
                 GameObject.Destroy(child.gameObject);
             }
-        }
 
-        foreach (StoreItem item in filtering.Filter(filter))
-        {
-            InstantiateProduct(item);
+            foreach (StoreItem item in filtering.Filter(filter)[i].items)
+            {
+                InstantiateProduct(item);
+            }
         }
 
         UpdatePurchesBtn();
@@ -283,6 +253,17 @@ public class TabGroup : MonoBehaviour
         UpdatePurchesBtn();
     }
 
+    private void Start()
+    {
+        InitializeElements();
+        buyBtnCoin.SetActive(false);
+
+        InitializeTabPanel();
+
+        purchased.GetComponent<Button>().onClick.AddListener(() => FilterProducts(FilterParam.Purchased));
+        onSale.GetComponent<Button>().onClick.AddListener(() => FilterProducts(FilterParam.OnSale));
+    }
+
     private void InitializePrefabs(StoreCategory storeCategory)
     {
         // setting tab button
@@ -299,6 +280,27 @@ public class TabGroup : MonoBehaviour
 
         ProductButton btn = i.GetComponent<ProductButton>();
         btn.Initialize(item, this);
+    }  
+
+    private void ModifyTab(TabButton button, Sprite sprite, Vector3 vector3)
+    {
+        button.background.rectTransform.localScale = vector3;
+        button.background.sprite = sprite;
+    }
+
+    private void InitializeElements()
+    {
+        mainAvatar = GameObject.Find("MainPlayerAvatar").GetComponent<PlayerAvatar>();
+        buyBtnText = buyBtn.transform.Find("Text").GetComponent<Text>();
+        buyBtnPutOnText = buyBtn.transform.Find("PutOn").gameObject;
+        buyBtnCoin = buyBtn.transform.Find("Coin").gameObject;
+        buyBtnSprite = buyBtn.GetComponent<Image>().sprite;
+        pagesContainer = GameObject.Find("PageContainer");
+
+        tabBtnPrefab = Resources.Load<GameObject>("Prefabs/StoreTab");
+        tabPagePrefab = Resources.Load<GameObject>("Prefabs/PageHolder");
+        productItem = Resources.Load<GameObject>("Prefabs/ProductPanel");
+        tabParent = GameObject.Find("StoreTabContainer").transform;
     }
 
     private void ChangeAxis()

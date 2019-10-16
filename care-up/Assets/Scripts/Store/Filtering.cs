@@ -8,7 +8,7 @@ public enum FilterParam
     OnSale
 }
 
-public class Filtering : MonoBehaviour
+public class Filtering 
 {
     private TabGroup tabGroup;
 
@@ -24,12 +24,15 @@ public class Filtering : MonoBehaviour
 
     private void ShowFree() { }
 
-    public List<StoreItem> Filter(FilterParam filter)
+    public List<StoreCategory> Filter(FilterParam filter)
     {
+        List<StoreCategory> storeCategory = new List<StoreCategory>();
         List<StoreItem> storeItems = new List<StoreItem>();
 
         foreach (StoreCategory category in PlayerPrefsManager.storeManager.StoreItems)
         {
+            storeItems = new List<StoreItem>();
+
             foreach (StoreItem item in category.items)
             {
                 switch (filter)
@@ -53,8 +56,8 @@ public class Filtering : MonoBehaviour
                         break;
                 }
             }
+            storeCategory.Add(new StoreCategory(storeItems, category.name, category.icon));
         }
-
-        return storeItems;
+        return storeCategory;
     }
 }
