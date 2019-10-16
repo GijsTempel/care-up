@@ -16,6 +16,8 @@ public class PlayerAvatar : MonoBehaviour
     Quaternion HatRotationOffset = new Quaternion();
     float HatScale = 1f;
 
+
+
     public PlayerAvatarData avatarData = new PlayerAvatarData();
 
     private GameObject maleChar;
@@ -34,10 +36,22 @@ public class PlayerAvatar : MonoBehaviour
     Actions currentAction = Actions.Idle;
     Actions nextAction;
 
-    public int GetMaxHeadNum()
+    public HatsPositioningDB.HatInfo GetHatOffsetInfo()
+    {
+        if (avatarData.hat == "")
+            return null;
+        HatsPositioningDB.HatInfo info = new HatsPositioningDB.HatInfo();
+        info.name = avatarData.hat;
+        info.position = HatPositionOffset;
+        info.rotation = HatRotationOffset.eulerAngles;
+        info.scale = HatScale;
+        return info;
+    }
+
+    public int GetMaxHeadNum(Gender g)
     {
         int maxHead = maleHads.Count - 1;
-        if (avatarData.gender == Gender.Female)
+        if (g == Gender.Female)
         {
             maxHead = femaleHads.Count - 1;
         }
@@ -90,6 +104,7 @@ public class PlayerAvatar : MonoBehaviour
             Destroy(CurrentHat);
             CurrentHat = null;
         }
+        avatarData.hat = hatName;
         Object hatPrefab = Resources.Load<GameObject>("NecessaryPrefabs/Shop_Items/" + hatName);
         if (hatPrefab != null)
         {
@@ -99,22 +114,20 @@ public class PlayerAvatar : MonoBehaviour
             newHat.transform.rotation = hadAnchor.rotation;
             newHat.transform.localScale = hadAnchor.localScale;
 
-            HatsPositioningDB.HatInfo hatInfo = pref.hatsPositioning.GetHatInfo(avatarData.headType, avatarData.hat);
+            HatPositionOffset = new Vector3();
+            HatRotationOffset = new Quaternion();           
+            HatScale = 1f;
+            HatsPositioningDB.HatInfo hatInfo = pref.hatsPositioning.GetHatInfo(avatarData.GetHatOffsetIndex(), avatarData.hat);
             if (hatInfo != null)
             {
-                print(hatInfo.position);
                 HatPositionOffset = hatInfo.position;
                 HatRotationOffset = Quaternion.Euler(hatInfo.rotation);
                 HatScale = hatInfo.scale;
             }
-
-            newHat.transform.localPosition = HatPositionOffset;
-            newHat.transform.localRotation = HatRotationOffset;
-            newHat.transform.localScale = new Vector3(HatScale, HatScale, HatScale);
-
-
-
+          
             CurrentHat = newHat;
+
+            UpdateHatOffset();
         }
     }
 

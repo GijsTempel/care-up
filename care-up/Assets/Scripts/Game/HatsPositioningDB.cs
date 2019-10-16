@@ -89,12 +89,12 @@ public class HatsPositioningDB
         else return new HatInfo();
     }
 
-    public void UpdateHatInfo(int headIndex, string hatName, HatInfo info)
+    public void UpdateHatInfo(int headIndex, HatInfo info)
     {
         HeadCategory cat = database.Find(x => x.headIndex == headIndex);
         if (cat != default(HeadCategory))
         {
-            HatInfo found = cat.hats.Find(x => x.name == hatName);
+            HatInfo found = cat.hats.Find(x => x.name == info.name);
             if(found != default(HatInfo))
             {
                 cat.hats[cat.hats.IndexOf(found)] = info;

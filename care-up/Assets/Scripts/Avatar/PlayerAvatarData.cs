@@ -36,6 +36,14 @@
             hat = _hatType;
         }
 
+
+        public int GetHatOffsetIndex()
+        {
+            int headIndex = headType;
+            if (gender == Gender.Female)
+                headIndex += 1000000;
+            return headIndex;
+        }
         public PlayerAvatarData()
         {
             gender = Gender.Male;
