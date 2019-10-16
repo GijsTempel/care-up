@@ -22,7 +22,7 @@ public class CharacterPanelManager : MonoBehaviour
     public int CurrentPrice;
 
     [SerializeField]
-    private UIParticleSystem currencyParticles = default(UIParticleSystem);
+    private UIParticleSystem currencyParticles = default;
 
     public void BuyButtonPressed()
     {
@@ -40,6 +40,7 @@ public class CharacterPanelManager : MonoBehaviour
         uMP_Manager.ChangeWindow(9);
         AdjustCharacter();
         loadCharacter.LoadCharacter();
+        GameObject.FindObjectOfType<TabGroup>().RenewPanel();
     }
 
     public void ShowConfirmationPanel(bool value)
@@ -77,11 +78,8 @@ public class CharacterPanelManager : MonoBehaviour
     {
         uMP_Manager = GameObject.FindObjectOfType<UMP_Manager>();
         loadCharacter = GameObject.FindObjectOfType<LoadCharacterScene>();
-
         сarrousel = GameObject.FindObjectOfType<CharacterСarrousel>();
-
         currencyText.text = storeManager.Currency.ToString();
-        
         //buyButton?.GetComponent<Button>().onClick.AddListener(BuyCharacter);
     }
 
