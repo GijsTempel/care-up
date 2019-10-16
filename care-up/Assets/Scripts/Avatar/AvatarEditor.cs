@@ -20,6 +20,12 @@ public class AvatarEditor : MonoBehaviour
     public InputField GenderInput;
     public InputField GlassesInput;
     public InputField HatInput;
+
+    public InputField IndexField;
+    public InputField PriceField;
+    public InputField ItemXMLInput;
+
+
     Scrollbar posOffset_x;
     Scrollbar posOffset_y;
     Scrollbar posOffset_z;
@@ -53,6 +59,32 @@ public class AvatarEditor : MonoBehaviour
 
     Gender currentGender = Gender.Female;
 
+
+    public void UpdateItemXML()
+    {
+        string output = "";
+        if (PriceField.text != "" && IndexField.text != "")
+        {
+            string g = MainAvatar.avatarData.gender.ToString();
+            string h = MainAvatar.avatarData.headType.ToString();
+            string b = MainAvatar.avatarData.bodyType.ToString();
+            string gl = MainAvatar.avatarData.glassesType.ToString();
+            string m = MainAvatar.avatarData.mouthType.ToString();
+            string e = MainAvatar.avatarData.eyeType.ToString();
+
+            output = "<item index = \"" + IndexField.text + 
+                "\"  price = \"" + PriceField.text + 
+                "\" gender = \"" + g + 
+                "\" headType = \"" + h +"" +
+                "\" bodyType = \"" + b + 
+                "\" glassesType = \"" + gl + 
+                "\" mouth = \"" + m +
+                "\" eye = \"" + e +
+                "\" />";
+        }
+        ItemXMLInput.text = output;
+    }
+
     public void HatOffsetChanged()
     {
         if (!hatOffsetLock)
@@ -72,6 +104,7 @@ public class AvatarEditor : MonoBehaviour
 
             MainAvatar.SetHatOffset(HatOffsetPos, Quaternion.Euler(HatOffsetRot), HatOffsetScale);
         }
+        UpdateItemXML();
     }
 
     public void GoToMainMenu()
@@ -323,6 +356,7 @@ public class AvatarEditor : MonoBehaviour
         MainAvatar.UpdateCharacter();
         GenderInput.text = currentGender.ToString();
         UpdateHatOffsetControl();
+        UpdateItemXML();
     }
 
     public void ChangeHead(int value)
@@ -337,6 +371,8 @@ public class AvatarEditor : MonoBehaviour
         MainAvatar.avatarData.headType = currentHead;
         MainAvatar.UpdateCharacter();
         UpdateHatOffsetControl();
+        UpdateItemXML();
+
     }
 
     public void ChangeGlasses(int value)
@@ -350,6 +386,7 @@ public class AvatarEditor : MonoBehaviour
         GlassesInput.text = currentGlasses.ToString();
         MainAvatar.avatarData.glassesType = currentGlasses;
         MainAvatar.UpdateCharacter();
+        UpdateItemXML(); 
     }
 
 
@@ -357,6 +394,7 @@ public class AvatarEditor : MonoBehaviour
     {
         currentHead = int.Parse(HeadInput.text);
         ChangeHead(0);
+        UpdateItemXML();
     }
 
     public void GlassesInputChanged()
@@ -376,6 +414,7 @@ public class AvatarEditor : MonoBehaviour
         BodyInput.text = currentBody.ToString();
         MainAvatar.avatarData.bodyType = currentBody;
         MainAvatar.UpdateCharacter();
+        UpdateItemXML();
     }
 
 
@@ -383,18 +422,21 @@ public class AvatarEditor : MonoBehaviour
     {
         MainAvatar.avatarData.eyeType = value;
         MainAvatar.UpdateCharacter();
+        UpdateItemXML();
     }
 
     public void SetMouth(int value)
     {
         MainAvatar.avatarData.mouthType = value;
         MainAvatar.UpdateCharacter();
+        UpdateItemXML();
     }
 
     public void BodyInputChanged()
     {
         currentBody = int.Parse(BodyInput.text);
         ChangeBody(0);
+        UpdateItemXML();
     }
 
     // Update is called once per frame
