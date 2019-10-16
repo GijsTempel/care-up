@@ -15,8 +15,9 @@ public class TabGroup : MonoBehaviour
     [SerializeField]
     private GameObject buyBtn = default,
                        confirmPanel = default,
-                       purchased = default,
-                       onSale = default;
+                       purchasedBtn = default,
+                       renewBtn = default,
+                       onSaleBtn = default;
 
     private GameObject pagesContainer = default,
                        buyBtnPutOnText = default,
@@ -231,6 +232,26 @@ public class TabGroup : MonoBehaviour
         UpdatePurchesBtn();
     }
 
+    public void RenewPanel()
+    {
+        for (int i = 0; i < pages.Count; i++)
+        {
+            itemParent = pages[i].transform.Find("StoreTabPage/content");
+
+            foreach (Transform child in itemParent)
+            {
+                GameObject.Destroy(child.gameObject);
+            }
+
+            foreach (StoreItem item in PlayerPrefsManager.storeManager.StoreItems[i].items)
+            {
+                InstantiateProduct(item);
+            }
+        }
+
+        UpdatePurchesBtn();
+    }
+
     public void InitializeTabPanel()
     {
         foreach (StoreCategory category in PlayerPrefsManager.storeManager.StoreItems)
@@ -260,8 +281,9 @@ public class TabGroup : MonoBehaviour
 
         InitializeTabPanel();
 
-        purchased.GetComponent<Button>().onClick.AddListener(() => FilterProducts(FilterParam.Purchased));
-        onSale.GetComponent<Button>().onClick.AddListener(() => FilterProducts(FilterParam.OnSale));
+        purchasedBtn.GetComponent<Button>().onClick.AddListener(() => FilterProducts(FilterParam.Purchased));
+        onSaleBtn.GetComponent<Button>().onClick.AddListener(() => FilterProducts(FilterParam.OnSale));
+        renewBtn.GetComponent<Button>().onClick.AddListener(RenewPanel);
     }
 
     private void InitializePrefabs(StoreCategory storeCategory)
