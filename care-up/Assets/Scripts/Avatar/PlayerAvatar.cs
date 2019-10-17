@@ -20,7 +20,7 @@ public class PlayerAvatar : MonoBehaviour
     Quaternion HatRotationOffset = new Quaternion();
     float HatScale = 1f;
 
-    int maxGlasses = 4;
+    int maxGlasses = 7;
 
     public PlayerAvatarData avatarData = new PlayerAvatarData();
 
@@ -175,15 +175,15 @@ public class PlayerAvatar : MonoBehaviour
         maleHads.RemoveAt(0);
 
         //trim three last ones cuz those are glasses
-        femaleChar.transform.Find("f_glasses").GetComponentsInChildren<Transform>(true, femaleGlasses);
-        maleChar.transform.Find("m_glasses").GetComponentsInChildren<Transform>(true, maleGlasses);
+        //femaleChar.transform.Find("f_glasses").GetComponentsInChildren<Transform>(true, femaleGlasses);
+        //maleChar.transform.Find("m_glasses").GetComponentsInChildren<Transform>(true, maleGlasses);
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        femaleGlasses.RemoveAt(0);
-        maleGlasses.RemoveAt(0);
+        //femaleGlasses.RemoveAt(0);
+        //maleGlasses.RemoveAt(0);
 
         avatarData.gender = Gender.Female;
         avatarData.headType = 4;
