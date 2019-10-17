@@ -24,7 +24,7 @@ public class AvatarEditor : MonoBehaviour
     public InputField IndexField;
     public InputField PriceField;
     public InputField ItemXMLInput;
-
+    public Toggle HatExclusion;
 
     Scrollbar posOffset_x;
     Scrollbar posOffset_y;
@@ -59,6 +59,10 @@ public class AvatarEditor : MonoBehaviour
 
     Gender currentGender = Gender.Female;
 
+    public void HatExclusionChanged()
+    {
+
+    }
 
     public void UpdateItemXML()
     {

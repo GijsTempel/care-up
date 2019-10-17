@@ -10,13 +10,17 @@ public class PlayerAvatar : MonoBehaviour
     public UVWarp f_leftEyeObject;
     public UVWarp f_rightEyeObject;
     public UVWarp f_mouthObject;
-    public Transform hadAnchor;
+    public Transform hatAnchor;
+    public Transform glassesAnchor;
+
     public GameObject CurrentHat;
+    public GameObject CurrentGlasses;
+
     Vector3 HatPositionOffset = new Vector3();
     Quaternion HatRotationOffset = new Quaternion();
     float HatScale = 1f;
 
-
+    int maxGlasses = 4;
 
     public PlayerAvatarData avatarData = new PlayerAvatarData();
 
@@ -88,14 +92,30 @@ public class PlayerAvatar : MonoBehaviour
 
     public int GetMaxGlassesNum()
     {
-        int maxGlasses = maleGlasses.Count - 1;
-        if (avatarData.gender == Gender.Female)
-        {
-            maxGlasses = femaleGlasses.Count - 1;
-        }
         return maxGlasses;
     }
 
+    public bool LoadNewGlasses(int gIndex)
+    {
+        if (CurrentGlasses != null)
+        {
+            Destroy(CurrentGlasses);
+            CurrentGlasses = null;
+        }
+
+        Object glassesPrefab = Resources.Load<GameObject>("NecessaryPrefabs/Shop_Items/gl_" + gIndex.ToString());
+        if (glassesPrefab != null)
+        {
+            GameObject newGlasses = Instantiate(glassesPrefab, glassesAnchor, true) as GameObject;
+            newGlasses.transform.position = glassesAnchor.position;
+            newGlasses.transform.rotation = glassesAnchor.rotation;
+            newGlasses.transform.localScale = glassesAnchor.localScale;
+
+            CurrentGlasses = newGlasses;
+            return true;
+        }
+        return false;
+    }
 
     public void LoadNewHat(string hatName)
     {
@@ -109,10 +129,10 @@ public class PlayerAvatar : MonoBehaviour
         if (hatPrefab != null)
         {
             PlayerPrefsManager pref = GameObject.FindObjectOfType<PlayerPrefsManager>();
-            GameObject newHat = Instantiate(hatPrefab, hadAnchor, true) as GameObject;
-            newHat.transform.position = hadAnchor.position;
-            newHat.transform.rotation = hadAnchor.rotation;
-            newHat.transform.localScale = hadAnchor.localScale;
+            GameObject newHat = Instantiate(hatPrefab, hatAnchor, true) as GameObject;
+            newHat.transform.position = hatAnchor.position;
+            newHat.transform.rotation = hatAnchor.rotation;
+            newHat.transform.localScale = hatAnchor.localScale;
 
             HatPositionOffset = new Vector3();
             HatRotationOffset = new Quaternion();           
@@ -275,20 +295,14 @@ public class PlayerAvatar : MonoBehaviour
         }
     }
 
-    void UpdateMaleGlasses()
+    void UpdateGlasses()
     {
-        foreach (Transform g in maleGlasses)
-        {
-            g.gameObject.SetActive(maleGlasses.IndexOf(g) == avatarData.glassesType && avatarData.gender == Gender.Male);
-        }
-    }
+        LoadNewGlasses(avatarData.glassesType);
 
-    void UpdateFemaleGlasses()
-    {
-        foreach (Transform g in femaleGlasses)
-        {
-            g.gameObject.SetActive(femaleGlasses.IndexOf(g) == avatarData.glassesType && avatarData.gender == Gender.Female);
-        }
+        //foreach (Transform g in maleGlasses)
+        //{
+        //    g.gameObject.SetActive(maleGlasses.IndexOf(g) == avatarData.glassesType && avatarData.gender == Gender.Male);
+        //}
     }
 
     public void UpdateCharacter()
@@ -304,8 +318,7 @@ public class PlayerAvatar : MonoBehaviour
         UpdateMaleBodies();
         UpdateFemaleBodies();
 
-        UpdateMaleGlasses();
-        UpdateFemaleGlasses();
+        UpdateGlasses();
         LoadNewHat(avatarData.hat);
     }
 }
