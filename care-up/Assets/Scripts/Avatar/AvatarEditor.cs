@@ -243,10 +243,18 @@ public class AvatarEditor : MonoBehaviour
     {
         pref = GameObject.FindObjectOfType<PlayerPrefsManager>();
 
-        foreach (string file in System.IO.Directory.GetFiles("Assets\\Resources\\NecessaryPrefabs\\Shop_Items")) 
+        string itemPrefabPath = "Assets/Resources/NecessaryPrefabs/Shop_Items";
+        char splitSimbol = '/';
+
+#if UNITY_EDITOR_WIN
+        itemPrefabPath = "Assets\\Resources\\NecessaryPrefabs\\Shop_Items";
+        splitSimbol = '\\';
+#endif
+        
+        foreach (string file in System.IO.Directory.GetFiles(itemPrefabPath)) 
         {
             
-            string[] _path = file.Split('\\');
+            string[] _path = file.Split(splitSimbol);
 
             string item_name = (_path[_path.Length-1]);
             string[] DSV = item_name.Split('.');
