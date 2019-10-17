@@ -85,7 +85,7 @@ public class CharacterСarrousel : MonoBehaviour
             avatars.Add(platform.transform.Find("PlayerAvatar").GetComponent<PlayerAvatar>());
         }
 
-        Invoke("Initialize", 0.03f);
+        Invoke("Initialize", 0.1f);
     }
 
     private PlayerAvatarData GetAvatarData(int index)

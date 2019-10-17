@@ -131,14 +131,18 @@ public class TabGroup : MonoBehaviour
 
             if (btn.item.category == "Hat")
             {
-                GameObject.FindObjectOfType<LoadCharacterScene>().LoadCharacter();
+                //GameObject.FindObjectOfType<LoadCharacterScene>().LoadCharacter();
                 mainAvatar.LoadNewHat(btn.item.name);
                 CharacterInfo.UpdateCharacter(btn.item);
                 GameObject.FindObjectOfType<CharacterСarrousel>().UpdateSelected();
             }
-            else
+            else if(btn.item.category == "Glasses")
             {
-                mainAvatar.LoadNewHat("");
+                mainAvatar.LoadNewGlasses(btn.item.index);
+                CharacterInfo.UpdateCharacter(btn.item);
+                GameObject.FindObjectOfType<CharacterСarrousel>().UpdateSelected();
+
+                //mainAvatar.LoadNewHat("");
             }
         }
 
