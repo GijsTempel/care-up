@@ -16,6 +16,7 @@ public class ProductButton : MonoBehaviour
     void Start()
     {
         dressOn.SetActive(false);
+        _name.gameObject.SetActive(false);
     }
     
     public void Select(bool toSelect)
@@ -40,9 +41,15 @@ public class ProductButton : MonoBehaviour
         item = _item;
         _name.text = item.name;
         SetPrice(item.price);
+
         SetPurchased(item.purchased);
         tabGroup = tg;
         Sprite sprite = Resources.Load("Sprites/StoreItemPreview/" + item.name, typeof(Sprite)) as Sprite;
+        if (item.name == "x")
+        {
+            checkmark.SetActive(false);
+            sprite = Resources.Load("Sprites/StoreItemPreview/x", typeof(Sprite)) as Sprite;
+        }
         if (sprite != null)
         {
             icon.sprite = sprite;
