@@ -109,7 +109,7 @@ public class AvatarEditor : MonoBehaviour
             HatOffsetRot = new Vector3(rx, ry, rz);
             HatOffsetScale = s;
 
-            MainAvatar.SetHatOffset(HatOffsetPos, Quaternion.Euler(HatOffsetRot), HatOffsetScale);
+            MainAvatar.SetHatOffset(HatOffsetPos, HatOffsetRot, HatOffsetScale);
         }
         UpdateItemXML();
     }
@@ -143,9 +143,8 @@ public class AvatarEditor : MonoBehaviour
             HatOffsetScale = info.scale;
             posOffset_x.value = HatOffsetPos.x / 2 + 0.5f;
             posOffset_y.value = HatOffsetPos.y / 2 + 0.5f;
-            posOffset_y.value = HatOffsetPos.y / 2 + 0.5f;
-
-            rotOffset_x.value = HatOffsetRot.y / 360f + 0.5f;
+            posOffset_z.value = HatOffsetPos.z / 2 + 0.5f;
+            rotOffset_x.value = HatOffsetRot.x / 360f + 0.5f;
             rotOffset_y.value = HatOffsetRot.y / 360f + 0.5f;
             rotOffset_z.value = HatOffsetRot.z / 360f + 0.5f;
             sclOffset.value = HatOffsetScale / 2;
@@ -164,10 +163,8 @@ public class AvatarEditor : MonoBehaviour
 
     public void PasteHatOffsetValues()
     {
-        hatOffsetLock = true;
-        MainAvatar.SetHatOffset(HatOffsetCopy.position, Quaternion.Euler(HatOffsetCopy.rotation), HatOffsetCopy.scale);
+        MainAvatar.SetHatOffset(HatOffsetCopy.position, HatOffsetCopy.rotation, HatOffsetCopy.scale);
         UpdateHatOffsetControl();
-        hatOffsetLock = false;
     }
 
     public void ResetHatOffsetValue(int value)
@@ -359,7 +356,6 @@ public class AvatarEditor : MonoBehaviour
 
  public void SelectElement(int element)
     {
-        print(element);
         ShowSelector(false);
         if (currentSelection == Selections.Glasses)
         {
@@ -372,7 +368,6 @@ public class AvatarEditor : MonoBehaviour
 
     public void SelectElement(string element)
     {
-        print(element);
         ShowSelector(false);
         if (currentSelection == Selections.Hats)
         {

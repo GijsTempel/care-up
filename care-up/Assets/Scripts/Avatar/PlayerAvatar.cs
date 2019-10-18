@@ -17,7 +17,7 @@ public class PlayerAvatar : MonoBehaviour
     public GameObject CurrentGlasses;
 
     Vector3 HatPositionOffset = new Vector3();
-    Quaternion HatRotationOffset = new Quaternion();
+    Vector3 HatRotationOffset = new Vector3();
     float HatScale = 1f;
 
     int maxGlasses = 7;
@@ -47,7 +47,7 @@ public class PlayerAvatar : MonoBehaviour
         HatsPositioningDB.HatInfo info = new HatsPositioningDB.HatInfo();
         info.name = avatarData.hat;
         info.position = HatPositionOffset;
-        info.rotation = HatRotationOffset.eulerAngles;
+        info.rotation = HatRotationOffset;
         info.scale = HatScale;
         return info;
     }
@@ -72,7 +72,7 @@ public class PlayerAvatar : MonoBehaviour
         return maxBody;
     }
 
-    public void SetHatOffset(Vector3 pos, Quaternion rot, float scl)
+    public void SetHatOffset(Vector3 pos, Vector3 rot, float scl)
     {
         HatPositionOffset = pos;
         HatRotationOffset = rot;
@@ -85,7 +85,7 @@ public class PlayerAvatar : MonoBehaviour
         if (CurrentHat != null)
         {
             CurrentHat.transform.localPosition = HatPositionOffset;
-            CurrentHat.transform.localRotation = HatRotationOffset;
+            CurrentHat.transform.localRotation = Quaternion.Euler(HatRotationOffset);
             CurrentHat.transform.localScale = new Vector3(HatScale, HatScale, HatScale);
         }
     }
@@ -135,7 +135,7 @@ public class PlayerAvatar : MonoBehaviour
             newHat.transform.localScale = hatAnchor.localScale;
 
             HatPositionOffset = new Vector3();
-            HatRotationOffset = new Quaternion();           
+            HatRotationOffset = new Vector3();           
             HatScale = 1f;
             if (pref != null)
             {
@@ -143,7 +143,7 @@ public class PlayerAvatar : MonoBehaviour
                 if (hatInfo != null)
                 {
                     HatPositionOffset = hatInfo.position;
-                    HatRotationOffset = Quaternion.Euler(hatInfo.rotation);
+                    HatRotationOffset = hatInfo.rotation;
                     HatScale = hatInfo.scale;
                 }
             }
