@@ -112,6 +112,7 @@ public class PlayerAvatar : MonoBehaviour
             newGlasses.transform.localScale = glassesAnchor.localScale;
 
             CurrentGlasses = newGlasses;
+            avatarData.glassesType = gIndex;
             return true;
         }
         return false;
