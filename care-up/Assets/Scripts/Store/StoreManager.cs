@@ -84,11 +84,14 @@ public class StoreManager
         {
             List<StoreItem> catItems = new List<StoreItem>();
             string catName = (xmlCatNode.Attributes["name"] != null) ? xmlCatNode.Attributes["name"].Value : "";
-            StoreItem xItem = new StoreItem();
-            xItem.name = "x";
-            xItem.purchased = true;
-            xItem.category = catName;
-            catItems.Add(xItem);
+            if (catName != "Body")
+            {
+                StoreItem xItem = new StoreItem();
+                xItem.name = "x";
+                xItem.purchased = true;
+                xItem.category = catName;
+                catItems.Add(xItem);
+            }
 
             foreach (XmlNode xmlSceneNode in xmlCatNode.ChildNodes)
             {

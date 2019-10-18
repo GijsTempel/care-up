@@ -31,7 +31,7 @@ public class LoadCharacterScene : MonoBehaviour
         PlayerAvatarData data = new PlayerAvatarData(gender, CharacterInfo.headType,
                CharacterInfo.bodyType, CharacterInfo.glassesType);
         data.hat = CharacterInfo.hat;
-
+        
         return data;
     }
 }
