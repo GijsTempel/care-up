@@ -234,7 +234,7 @@ public class GameUI : MonoBehaviour
 
         if (value)
         {
-            ps.robotUIopened = true;
+            //ps.robotUIopened = true;
         }
         else
         {
