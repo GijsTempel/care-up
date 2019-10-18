@@ -73,7 +73,7 @@ public class StoreManager
     public void Init(string storeXml = "Store", string characterStoreXml = "CharacterStore")
     {
         bool devDropAllPurchases = true; // change this to true once to clear all purchases
-        bool devAddCurrency = true; // change this to true once to get 100 currency
+        bool devAddCurrency = false; // change this to true once to get 100 currency
 
         // load up all items from xml into the list
         TextAsset textAsset = (TextAsset)Resources.Load("Xml/" + storeXml);
@@ -86,14 +86,14 @@ public class StoreManager
         {
             List<StoreItem> catItems = new List<StoreItem>();
             string catName = (xmlCatNode.Attributes["name"] != null) ? xmlCatNode.Attributes["name"].Value : "";
-            if (catName != "Body")
-            {
-                StoreItem xItem = new StoreItem();
-                xItem.name = "x";
-                xItem.purchased = true;
-                xItem.category = catName;
-                catItems.Add(xItem);
-            }
+            // if (catName != "Body")
+            // {
+            //     StoreItem xItem = new StoreItem();
+            //     xItem.name = "x";
+            //     xItem.purchased = true;
+            //     xItem.category = catName;
+            //     catItems.Add(xItem);
+            // }
 
             foreach (XmlNode xmlSceneNode in xmlCatNode.ChildNodes)
             {
@@ -262,7 +262,6 @@ public class StoreManager
 
         if (item != null)
         {
-            Debug.Log(itemIndex.ToString() + " " + item.price.ToString());
             if (item.index != -1 && currentCurrency >= item.price)
             {
                 ModifyCurrencyBy(-item.price);

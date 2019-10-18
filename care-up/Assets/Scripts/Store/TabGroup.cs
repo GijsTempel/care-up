@@ -41,6 +41,8 @@ public class TabGroup : MonoBehaviour
     private PlayerAvatar mainAvatar;
     private List<TabButton> tabs;
     private List<GameObject> pages = new List<GameObject>();  
+    CharacterСarousel carousel;
+    PlayerPrefsManager pref;
 
     public void ShowConfirmPanel(bool toShow)
     {
@@ -133,26 +135,18 @@ public class TabGroup : MonoBehaviour
             {
                 //GameObject.FindObjectOfType<LoadCharacterScene>().LoadCharacter();
                 mainAvatar.LoadNewHat(btn.item.name);
-                CharacterInfo.UpdateCharacter(btn.item);
-                GameObject.FindObjectOfType<CharacterСarrousel>().UpdateSelected(mainAvatar.avatarData);
             }
             else if(btn.item.category == "Glasses")
             {
                 mainAvatar.LoadNewGlasses(btn.item.index);
-                CharacterInfo.UpdateCharacter(btn.item);
-                GameObject.FindObjectOfType<CharacterСarrousel>().UpdateSelected(mainAvatar.avatarData);
-
-                //mainAvatar.LoadNewHat("");
             }
             else if (btn.item.category == "Body")
             {
                 mainAvatar.avatarData.bodyType = btn.item.index;
-                mainAvatar.UpdateCharacter();
-                CharacterInfo.UpdateCharacter(btn.item);
-                GameObject.FindObjectOfType<CharacterСarrousel>().UpdateSelected(mainAvatar.avatarData);
-
-                //mainAvatar.LoadNewHat("");
             }
+            mainAvatar.UpdateCharacter();
+            CharacterInfo.UpdateCharacter(btn.item);
+            carousel.UpdateSelected(mainAvatar.avatarData);
         }
 
         UpdatePurchesBtn();
@@ -223,59 +217,18 @@ public class TabGroup : MonoBehaviour
         UpdatePurchesBtn();
     }
 
-    public void FilterProducts(FilterParam filter)
-    {
-        Filtering filtering = new Filtering();
-
-        for (int i = 0; i < pages.Count; i++)
-        {
-            itemParent = pages[i].transform.Find("StoreTabPage/content");
-
-            foreach (Transform child in itemParent)
-            {
-                GameObject.Destroy(child.gameObject);
-            }
-
-            foreach (StoreItem item in filtering.Filter(filter)[i].items)
-            {
-                InstantiateProduct(item);
-            }
-        }
-
-        UpdatePurchesBtn();
-    }
-
-    public void RenewPanel()
-    {
-        for (int i = 0; i < pages.Count; i++)
-        {
-            itemParent = pages[i].transform.Find("StoreTabPage/content");
-
-            foreach (Transform child in itemParent)
-            {
-                GameObject.Destroy(child.gameObject);
-            }
-
-            foreach (StoreItem item in PlayerPrefsManager.storeManager.StoreItems[i].items)
-            {
-                InstantiateProduct(item);
-            }
-        }
-
-        UpdatePurchesBtn();
-    }
-
     public void InitializeTabPanel()
     {
+        print("InitializeTabPanel");
         foreach (StoreCategory category in PlayerPrefsManager.storeManager.StoreItems)
         {
             InitializePrefabs(category);
             ChangeAxis();
 
-            foreach (StoreItem item in category.items)
-            {
-                InstantiateProduct(item);
-            }
+            // foreach (StoreItem item in category.items)
+            // {
+            //     InstantiateProduct(item);
+            // }
         }
 
         for (int i = 1; i < pagesContainer.transform.childCount; i++)
@@ -284,19 +237,85 @@ public class TabGroup : MonoBehaviour
         }
 
         OnTabSelected(tabs[0]);
+        DisplayItemsInStore();
         UpdatePurchesBtn();
+    }
+
+//------------------------------------------------
+    public void DisplayItemsInStore()
+    {
+        print("DisplayItemsInStore");
+        // pref.CarouselPosition
+        CharacterItem currentCharacter = null;
+        if (pref != null)
+        {
+            if(PlayerPrefsManager.storeManager.CharacterItems.Count >= pref.CarouselPosition)
+                currentCharacter = PlayerPrefsManager.storeManager.CharacterItems[pref.CarouselPosition];
+        }
+        for (int i = 0; i < pages.Count; i++)
+        {
+            
+            itemParent = pages[i].transform.Find("StoreTabPage/content");
+
+            foreach (Transform child in itemParent)
+            {
+                GameObject.Destroy(child.gameObject);
+            }
+
+            StoreItem baseItem = null;
+            if (currentCharacter != null)
+            {
+                if (i == 0)
+                {
+                    StoreItem xItem = new StoreItem(0,0,"x", "Hat", true);
+                    InstantiateProduct(xItem);
+                    if (currentCharacter.defaultAvatarData.hat != "")
+                        baseItem = new StoreItem(0,0,currentCharacter.defaultAvatarData.hat, "Hat", true);
+                }
+                else if (i == 1)
+                {
+                    StoreItem xItem = new StoreItem(0,0,"x", "Glasses", true);
+                    InstantiateProduct(xItem);
+                    if (currentCharacter.defaultAvatarData.glassesType != -1)
+                    {
+                        int gl = currentCharacter.defaultAvatarData.glassesType;
+                        baseItem = new StoreItem(gl,0,"gl_" + gl.ToString(), "Glasses", true);
+                    }
+                }
+                else if (i == 2)
+                {
+                    int _body = currentCharacter.defaultAvatarData.bodyType;
+                    baseItem = new StoreItem(_body,0,"body_" + _body.ToString(), "Body", true);
+                }
+            }
+            if (baseItem != null)
+            {
+                InstantiateProduct(baseItem);
+            }
+            foreach (StoreItem item in PlayerPrefsManager.storeManager.StoreItems[i].items)
+            {
+                if (baseItem != null)
+                {
+                    if (baseItem.name == item.name)
+                        continue;
+                }
+                InstantiateProduct(item);
+            }
+        }
     }
 
     private void Start()
     {
+        carousel = GameObject.FindObjectOfType<CharacterСarousel>();
+        pref = GameObject.FindObjectOfType<PlayerPrefsManager>();
         InitializeElements();
         buyBtnCoin.SetActive(false);
 
         InitializeTabPanel();
 
-        purchasedBtn.GetComponent<Button>().onClick.AddListener(() => FilterProducts(FilterParam.Purchased));
-        onSaleBtn.GetComponent<Button>().onClick.AddListener(() => FilterProducts(FilterParam.OnSale));
-        renewBtn.GetComponent<Button>().onClick.AddListener(RenewPanel);
+        // purchasedBtn.GetComponent<Button>().onClick.AddListener(() => FilterProducts(FilterParam.Purchased));
+        // onSaleBtn.GetComponent<Button>().onClick.AddListener(() => FilterProducts(FilterParam.OnSale));
+        // renewBtn.GetComponent<Button>().onClick.AddListener(RenewPanel);
     }
 
     private void InitializePrefabs(StoreCategory storeCategory)
@@ -312,7 +331,6 @@ public class TabGroup : MonoBehaviour
     private void InstantiateProduct(StoreItem item)
     {
         GameObject i = Instantiate(productItem, itemParent);
-
         ProductButton btn = i.GetComponent<ProductButton>();
         btn.Initialize(item, this);
     }  

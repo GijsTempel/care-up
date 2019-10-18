@@ -2,7 +2,7 @@
 using UnityEngine;
 using CareUpAvatar;
 
-public class CharacterСarrousel : MonoBehaviour
+public class CharacterСarousel : MonoBehaviour
 {
     public static int CurrentCharacter { get; set; } = 1;
     public CharacterPanelManager panelManager;
@@ -109,12 +109,6 @@ public class CharacterСarrousel : MonoBehaviour
     private void Update()
     {
         float turnSpeed = defaultTurnSpeed;
-        if (Input.GetKeyDown("space"))
-        {
-            int randTurn = Random.Range(0, PlayerPrefsManager.storeManager.CharacterItems.Count);
-            print(randTurn.ToString() + " " + CurrentCharacter);
-            TurnToPosition(randTurn);
-        }
         if (targetTurnPosition != -1)
         {
             if (targetTurnPosition == CurrentCharacter)

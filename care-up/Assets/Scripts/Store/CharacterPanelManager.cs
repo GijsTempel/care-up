@@ -14,7 +14,7 @@ public class CharacterPanelManager : MonoBehaviour
     private SimpleGestureController gestureController = new SimpleGestureController();
     private UMP_Manager uMP_Manager;
     private LoadCharacterScene loadCharacter;
-    private CharacterСarrousel сarrousel;
+    private CharacterСarousel сarrousel;
     public GameObject BuyBtnCoinIcon;
     public GameObject BuyBtnFreeText;
     public Text BuyBtnText;
@@ -37,10 +37,11 @@ public class CharacterPanelManager : MonoBehaviour
     }
     public void Adjust()
     {
+        print("Adjust");
         uMP_Manager.ChangeWindow(9);
         AdjustCharacter();
         loadCharacter.LoadCharacter();
-        GameObject.FindObjectOfType<TabGroup>().RenewPanel();
+        GameObject.FindObjectOfType<TabGroup>().DisplayItemsInStore();
     }
 
     public void ShowConfirmationPanel(bool value)
@@ -78,20 +79,20 @@ public class CharacterPanelManager : MonoBehaviour
     {
         uMP_Manager = GameObject.FindObjectOfType<UMP_Manager>();
         loadCharacter = GameObject.FindObjectOfType<LoadCharacterScene>();
-        сarrousel = GameObject.FindObjectOfType<CharacterСarrousel>();
+        сarrousel = GameObject.FindObjectOfType<CharacterСarousel>();
         currencyText.text = storeManager.Currency.ToString();
         //buyButton?.GetComponent<Button>().onClick.AddListener(BuyCharacter);
     }
 
     public void AdjustCharacter()
     {
-        int characterIndex = CharacterСarrousel.CurrentCharacter;
+        int characterIndex = CharacterСarousel.CurrentCharacter;
         storeManager.AdjustCharacter(storeManager.GetItemIndex(characterIndex));
     }
 
     public void BuyCharacter()
     {
-        int characterIndex = CharacterСarrousel.CurrentCharacter;
+        int characterIndex = CharacterСarousel.CurrentCharacter;
         if (storeManager.PurchaseCharacter(storeManager.GetItemIndex(characterIndex)))
         {
             adjustButton.SetActive(true);
