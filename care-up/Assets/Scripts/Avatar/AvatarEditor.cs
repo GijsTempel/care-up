@@ -80,14 +80,16 @@ public class AvatarEditor : MonoBehaviour
             string gl = MainAvatar.avatarData.glassesType.ToString();
             string m = MainAvatar.avatarData.mouthType.ToString();
             string e = MainAvatar.avatarData.eyeType.ToString();
-
+            string hatLine = "\" hatType=\"" + ht;
+            if (MainAvatar.avatarData.hat == "")
+                hatLine = "";
             output = "<item index=\"" + IndexField.text + 
                 "\"  price=\"" + PriceField.text + 
                 "\" gender=\"" + g + 
                 "\" headType=\"" + h +"" +
                 "\" bodyType=\"" + b + 
                 "\" glassesType=\"" + gl +
-                "\" hatType=\"" + ht +
+                hatLine +
                 "\" mouth=\"" + m +
                 "\" eye=\"" + e +
                 "\" />";
@@ -392,6 +394,7 @@ public class AvatarEditor : MonoBehaviour
             currentGlasses = element;
             MainAvatar.UpdateCharacter();
         }
+        UpdateItemXML();
     }
 
     public void SelectElement(string element)
@@ -445,9 +448,10 @@ public class AvatarEditor : MonoBehaviour
                 pref.hatsPositioning.SaveInfoToXml();
                 ChangeHead(0);
                 UpdateHatOffsetControl();
-                UpdateItemXML();
+                
             }
         }
+        UpdateItemXML();
     }
 
     public void SetTab(int value)
