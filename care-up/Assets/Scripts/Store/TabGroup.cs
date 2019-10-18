@@ -133,7 +133,6 @@ public class TabGroup : MonoBehaviour
 
             if (btn.item.category == "Hat")
             {
-                //GameObject.FindObjectOfType<LoadCharacterScene>().LoadCharacter();
                 mainAvatar.LoadNewHat(btn.item.name);
             }
             else if(btn.item.category == "Glasses")
@@ -219,7 +218,6 @@ public class TabGroup : MonoBehaviour
 
     public void InitializeTabPanel()
     {
-        print("InitializeTabPanel");
         foreach (StoreCategory category in PlayerPrefsManager.storeManager.StoreItems)
         {
             InitializePrefabs(category);
@@ -244,8 +242,6 @@ public class TabGroup : MonoBehaviour
 //------------------------------------------------
     public void DisplayItemsInStore()
     {
-        print("DisplayItemsInStore");
-        // pref.CarouselPosition
         CharacterItem currentCharacter = null;
         if (pref != null)
         {
@@ -254,7 +250,6 @@ public class TabGroup : MonoBehaviour
         }
         for (int i = 0; i < pages.Count; i++)
         {
-            
             itemParent = pages[i].transform.Find("StoreTabPage/content");
 
             foreach (Transform child in itemParent)
@@ -274,8 +269,8 @@ public class TabGroup : MonoBehaviour
                 }
                 else if (i == 1)
                 {
-                    StoreItem xItem = new StoreItem(0,0,"x", "Glasses", true);
-                    InstantiateProduct(xItem);
+                    StoreItem xxItem = new StoreItem(-500,0,"x", "Glasses", true);
+                    InstantiateProduct(xxItem);
                     if (currentCharacter.defaultAvatarData.glassesType != -1)
                     {
                         int gl = currentCharacter.defaultAvatarData.glassesType;

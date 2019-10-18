@@ -102,7 +102,7 @@ public class PlayerAvatar : MonoBehaviour
             Destroy(CurrentGlasses);
             CurrentGlasses = null;
         }
-
+        avatarData.glassesType = gIndex;
         Object glassesPrefab = Resources.Load<GameObject>("NecessaryPrefabs/Shop_Items/gl_" + gIndex.ToString());
         if (glassesPrefab != null)
         {
@@ -112,7 +112,6 @@ public class PlayerAvatar : MonoBehaviour
             newGlasses.transform.localScale = glassesAnchor.localScale;
 
             CurrentGlasses = newGlasses;
-            avatarData.glassesType = gIndex;
             return true;
         }
         return false;
@@ -148,9 +147,7 @@ public class PlayerAvatar : MonoBehaviour
                     HatScale = hatInfo.scale;
                 }
             }
-          
             CurrentHat = newHat;
-
             UpdateHatOffset();
         }
     }

@@ -37,7 +37,6 @@ public class CharacterPanelManager : MonoBehaviour
     }
     public void Adjust()
     {
-        print("Adjust");
         uMP_Manager.ChangeWindow(9);
         AdjustCharacter();
         loadCharacter.LoadCharacter();
