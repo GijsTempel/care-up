@@ -11,6 +11,7 @@ public class AvatarEditor : MonoBehaviour
     {
         Hats,
         Glasses,
+        OffsetData,
     };
     bool hatOffsetLock = false;
 
@@ -247,8 +248,8 @@ public class AvatarEditor : MonoBehaviour
                 info.scale = HatOffsetScale;
                 pref.hatsPositioning.UpdateHatInfo(i+1000000, info);
             }
+            pref.hatsPositioning.SaveInfoToXml();
         }
-        pref.hatsPositioning.SaveInfoToXml();
     }
 
     public void SaveAllHats()
@@ -296,6 +297,31 @@ public class AvatarEditor : MonoBehaviour
         camRotScrool = transform.Find("Canvas/GameObject/AvatarView/Scrollbar").GetComponent<Scrollbar>();
 
         Invoke("Initialize", 0.01f);
+    }
+
+    public void BuildCopyFromSetSelector()
+    {
+        currentSelection = Selections.OffsetData;
+        foreach (Transform child in SelectorContent)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+        foreach (string h in Hats)
+        {
+            GameObject _Button = GameObject.Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/UI/SelectorButton"), SelectorContent);
+            _Button.transform.Find("Text").GetComponent<Text>().text = h;
+            _Button.GetComponent<Button>().onClick.AddListener(() => SelectElement(h));
+            Sprite sprite = Resources.Load("Sprites/StoreItemPreview/" + h, typeof(Sprite)) as Sprite;
+            if (sprite != null)
+            {
+                _Button.transform.Find("Image").GetComponent<Image>().sprite = sprite;
+            }
+            else
+            {
+                _Button.transform.Find("Image").GetComponent<Image>().color = new Color(0, 0, 0, 0);
+            }
+        }
+        ShowSelector(true);
     }
 
     public void BuildGlassesSelector()
@@ -384,13 +410,41 @@ public class AvatarEditor : MonoBehaviour
             MainAvatar.UpdateCharacter();
             UpdateHatOffsetControl();
         }
-        else if (currentSelection == Selections.Glasses)
+        else if (currentSelection == Selections.OffsetData)
         {
-            
-            int i = int.Parse(element);
-            MainAvatar.avatarData.glassesType = i;
-            HatInput.text = element;
-            MainAvatar.UpdateCharacter();
+            if (pref != null && MainAvatar.avatarData.hat != "")
+            {
+                for (int i = 0; i < MainAvatar.GetMaxHeadNum(Gender.Male); i++)
+                {
+                    HatsPositioningDB.HatInfo fromInfo = pref.hatsPositioning.GetHatInfo(i, element);
+                    if (fromInfo != null)
+                    {
+                        HatsPositioningDB.HatInfo toInfo = new HatsPositioningDB.HatInfo();
+                        toInfo.name = MainAvatar.avatarData.hat;
+                        toInfo.position = fromInfo.position;
+                        toInfo.rotation = fromInfo.rotation;
+                        toInfo.scale = fromInfo.scale;
+                        pref.hatsPositioning.UpdateHatInfo(i, toInfo);
+                    }
+                }
+                for (int i = 0; i < MainAvatar.GetMaxHeadNum(Gender.Female); i++)
+                {
+                    HatsPositioningDB.HatInfo fromInfo = pref.hatsPositioning.GetHatInfo(i + 1000000, element);
+                    if (fromInfo != null)
+                    {
+                        HatsPositioningDB.HatInfo info = new HatsPositioningDB.HatInfo();
+                        info.name = MainAvatar.avatarData.hat;
+                        info.position = fromInfo.position;
+                        info.rotation = fromInfo.rotation;
+                        info.scale = fromInfo.scale;
+                        pref.hatsPositioning.UpdateHatInfo(i + 1000000, info);
+                    }
+                }
+                pref.hatsPositioning.SaveInfoToXml();
+                ChangeHead(0);
+                UpdateHatOffsetControl();
+                UpdateItemXML();
+            }
         }
     }
 
