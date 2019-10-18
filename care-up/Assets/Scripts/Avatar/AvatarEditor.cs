@@ -10,6 +10,7 @@ public class AvatarEditor : MonoBehaviour
     public enum Selections
     {
         Hats,
+        Glasses,
     };
     bool hatOffsetLock = false;
 
@@ -35,6 +36,8 @@ public class AvatarEditor : MonoBehaviour
     Scrollbar sclOffset;
     Scrollbar camRotScrool;
     public Transform camPivot;
+
+    HatsPositioningDB.HatInfo HatOffsetCopy = new HatsPositioningDB.HatInfo();
 
     Vector3 HatOffsetPos = new Vector3();
     Vector3 HatOffsetRot = new Vector3();
@@ -151,6 +154,19 @@ public class AvatarEditor : MonoBehaviour
         {
             ResetHatOffsetValue(-1);
         }
+        hatOffsetLock = false;
+    }
+
+    public void CopyHatOffsetValues()
+    {
+        HatOffsetCopy = MainAvatar.GetHatOffsetInfo();
+    }
+
+    public void PasteHatOffsetValues()
+    {
+        hatOffsetLock = true;
+        MainAvatar.SetHatOffset(HatOffsetCopy.position, Quaternion.Euler(HatOffsetCopy.rotation), HatOffsetCopy.scale);
+        UpdateHatOffsetControl();
         hatOffsetLock = false;
     }
 
@@ -285,6 +301,32 @@ public class AvatarEditor : MonoBehaviour
         Invoke("Initialize", 0.01f);
     }
 
+    public void BuildGlassesSelector()
+    {
+        currentSelection = Selections.Glasses;
+        foreach (Transform child in SelectorContent) {
+            GameObject.Destroy(child.gameObject);
+        }
+
+        for(int i = -1; i <= MainAvatar.GetMaxGlassesNum(); i++)
+        {
+            GameObject __Button = GameObject.Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/UI/SelectorButton"), SelectorContent);
+            __Button.transform.Find("Text").GetComponent<Text>().text = i.ToString();
+            int a = i;
+            __Button.GetComponent<Button>().onClick.AddListener(() => SelectElement(a));
+            Sprite sprite = Resources.Load("Sprites/StoreItemPreview/gl_" + i.ToString(), typeof(Sprite)) as Sprite;
+            if (sprite != null)
+            {
+                __Button.transform.Find("Image").GetComponent<Image>().sprite = sprite;
+            }
+            else
+            {
+                __Button.transform.Find("Image").GetComponent<Image>().color = new Color(0, 0, 0, 0);
+            }
+        }
+        ShowSelector(true);
+    }
+
     public void BuildHatSelector()
     {
         currentSelection = Selections.Hats;
@@ -296,7 +338,6 @@ public class AvatarEditor : MonoBehaviour
             GameObject _Button = GameObject.Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/UI/SelectorButton"), SelectorContent);
             _Button.transform.Find("Text").GetComponent<Text>().text = h;
             _Button.GetComponent<Button>().onClick.AddListener(() => SelectElement(h));
-            string category = "hat";
             Sprite sprite = Resources.Load("Sprites/StoreItemPreview/" + h, typeof(Sprite)) as Sprite;
             if (sprite != null)
             {
@@ -316,8 +357,22 @@ public class AvatarEditor : MonoBehaviour
         Selector.SetActive(value);
     }
 
+ public void SelectElement(int element)
+    {
+        print(element);
+        ShowSelector(false);
+        if (currentSelection == Selections.Glasses)
+        {
+            MainAvatar.avatarData.glassesType = element;
+            GlassesInput.text = element.ToString();
+            currentGlasses = element;
+            MainAvatar.UpdateCharacter();
+        }
+    }
+
     public void SelectElement(string element)
     {
+        print(element);
         ShowSelector(false);
         if (currentSelection == Selections.Hats)
         {
@@ -333,6 +388,14 @@ public class AvatarEditor : MonoBehaviour
             }
             MainAvatar.UpdateCharacter();
             UpdateHatOffsetControl();
+        }
+        else if (currentSelection == Selections.Glasses)
+        {
+            
+            int i = int.Parse(element);
+            MainAvatar.avatarData.glassesType = i;
+            HatInput.text = element;
+            MainAvatar.UpdateCharacter();
         }
     }
 

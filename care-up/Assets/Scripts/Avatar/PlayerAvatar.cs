@@ -137,12 +137,15 @@ public class PlayerAvatar : MonoBehaviour
             HatPositionOffset = new Vector3();
             HatRotationOffset = new Quaternion();           
             HatScale = 1f;
-            HatsPositioningDB.HatInfo hatInfo = pref.hatsPositioning.GetHatInfo(avatarData.GetHatOffsetIndex(), avatarData.hat);
-            if (hatInfo != null)
+            if (pref != null)
             {
-                HatPositionOffset = hatInfo.position;
-                HatRotationOffset = Quaternion.Euler(hatInfo.rotation);
-                HatScale = hatInfo.scale;
+                HatsPositioningDB.HatInfo hatInfo = pref.hatsPositioning.GetHatInfo(avatarData.GetHatOffsetIndex(), avatarData.hat);
+                if (hatInfo != null)
+                {
+                    HatPositionOffset = hatInfo.position;
+                    HatRotationOffset = Quaternion.Euler(hatInfo.rotation);
+                    HatScale = hatInfo.scale;
+                }
             }
           
             CurrentHat = newHat;
