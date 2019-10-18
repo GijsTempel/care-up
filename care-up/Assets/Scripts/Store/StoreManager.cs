@@ -131,6 +131,8 @@ public class StoreManager
             int.TryParse(xmlSceneNode.Attributes["mouth"].Value, out int mouthType);
             int.TryParse(xmlSceneNode.Attributes["eye"].Value, out int eyeType);
             string hatType = "";
+            if (xmlSceneNode.Attributes["hatType"] != null)
+                hatType = xmlSceneNode.Attributes["hatType"].Value;
 
             bool purchased = DatabaseManager.FetchField("Store", "CharacterItem_" + index.ToString()) == "true";
 

@@ -76,18 +76,20 @@ public class AvatarEditor : MonoBehaviour
             string g = MainAvatar.avatarData.gender.ToString();
             string h = MainAvatar.avatarData.headType.ToString();
             string b = MainAvatar.avatarData.bodyType.ToString();
+            string ht = MainAvatar.avatarData.hat;
             string gl = MainAvatar.avatarData.glassesType.ToString();
             string m = MainAvatar.avatarData.mouthType.ToString();
             string e = MainAvatar.avatarData.eyeType.ToString();
 
-            output = "<item index = \"" + IndexField.text + 
-                "\"  price = \"" + PriceField.text + 
-                "\" gender = \"" + g + 
-                "\" headType = \"" + h +"" +
-                "\" bodyType = \"" + b + 
-                "\" glassesType = \"" + gl + 
-                "\" mouth = \"" + m +
-                "\" eye = \"" + e +
+            output = "<item index=\"" + IndexField.text + 
+                "\"  price=\"" + PriceField.text + 
+                "\" gender=\"" + g + 
+                "\" headType=\"" + h +"" +
+                "\" bodyType=\"" + b + 
+                "\" glassesType=\"" + gl +
+                "\" hatType=\"" + ht +
+                "\" mouth=\"" + m +
+                "\" eye=\"" + e +
                 "\" />";
         }
         ItemXMLInput.text = output;
