@@ -288,7 +288,6 @@ public class TabGroup : MonoBehaviour
                 InstantiateProduct(baseItem);
             }
             int avIndex = mainAvatar.avatarData.GetHatOffsetIndex();
-            print(avIndex);
             foreach (StoreItem item in PlayerPrefsManager.storeManager.StoreItems[i].items)
             {
                 if (i == 0)
