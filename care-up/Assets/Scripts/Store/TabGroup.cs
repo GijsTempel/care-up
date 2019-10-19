@@ -287,8 +287,17 @@ public class TabGroup : MonoBehaviour
             {
                 InstantiateProduct(baseItem);
             }
+            int avIndex = mainAvatar.avatarData.GetHatOffsetIndex();
+            print(avIndex);
             foreach (StoreItem item in PlayerPrefsManager.storeManager.StoreItems[i].items)
             {
+                if (i == 0)
+                {
+                    HatsPositioningDB.HatInfo info = pref.hatsPositioning.GetHatInfo(avIndex, item.name);
+                    if (info != null)
+                        if (info.excluded)
+                            continue;
+                }
                 if (baseItem != null)
                 {
                     if (baseItem.name == item.name)

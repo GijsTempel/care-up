@@ -16,9 +16,7 @@ public class PlayerAvatar : MonoBehaviour
     public GameObject CurrentHat;
     public GameObject CurrentGlasses;
 
-    Vector3 HatPositionOffset = new Vector3();
-    Vector3 HatRotationOffset = new Vector3();
-    float HatScale = 1f;
+    HatsPositioningDB.HatInfo hatOffsetInfo = new HatsPositioningDB.HatInfo();
 
     int maxGlasses = 7;
 
@@ -40,16 +38,25 @@ public class PlayerAvatar : MonoBehaviour
     Actions currentAction = Actions.Idle;
     Actions nextAction;
 
+    public void SetHatExclusion()
+    {
+        if (avatarData.hat != "")
+        {
+            hatOffsetInfo.excluded = true;
+        }
+    }
+
     public HatsPositioningDB.HatInfo GetHatOffsetInfo()
     {
         if (avatarData.hat == "")
             return null;
-        HatsPositioningDB.HatInfo info = new HatsPositioningDB.HatInfo();
-        info.name = avatarData.hat;
-        info.position = HatPositionOffset;
-        info.rotation = HatRotationOffset;
-        info.scale = HatScale;
-        return info;
+        return hatOffsetInfo;
+        // HatsPositioningDB.HatInfo info = new HatsPositioningDB.HatInfo();
+        // info.name = avatarData.hat;
+        // info.position = HatPositionOffset;
+        // info.rotation = HatRotationOffset;
+        // info.scale = HatScale;
+        // return info;
     }
 
     public int GetMaxHeadNum(Gender g)
@@ -74,9 +81,9 @@ public class PlayerAvatar : MonoBehaviour
 
     public void SetHatOffset(Vector3 pos, Vector3 rot, float scl)
     {
-        HatPositionOffset = pos;
-        HatRotationOffset = rot;
-        HatScale = scl;
+        hatOffsetInfo.position = pos;
+        hatOffsetInfo.rotation = rot;
+        hatOffsetInfo.scale = scl;
         UpdateHatOffset();
     }
 
@@ -84,9 +91,10 @@ public class PlayerAvatar : MonoBehaviour
     {
         if (CurrentHat != null)
         {
-            CurrentHat.transform.localPosition = HatPositionOffset;
-            CurrentHat.transform.localRotation = Quaternion.Euler(HatRotationOffset);
-            CurrentHat.transform.localScale = new Vector3(HatScale, HatScale, HatScale);
+            CurrentHat.transform.localPosition = hatOffsetInfo.position;
+            CurrentHat.transform.localRotation = Quaternion.Euler(hatOffsetInfo.rotation);
+            float s = hatOffsetInfo.scale;
+            CurrentHat.transform.localScale = new Vector3(s, s, s);
         }
     }
 
@@ -134,18 +142,15 @@ public class PlayerAvatar : MonoBehaviour
             newHat.transform.rotation = hatAnchor.rotation;
             newHat.transform.localScale = hatAnchor.localScale;
 
-            HatPositionOffset = new Vector3();
-            HatRotationOffset = new Vector3();           
-            HatScale = 1f;
+            hatOffsetInfo.position = new Vector3();
+            hatOffsetInfo.rotation = new Vector3();           
+            hatOffsetInfo.scale = 1f;
+            hatOffsetInfo.excluded = false;
             if (pref != null)
             {
                 HatsPositioningDB.HatInfo hatInfo = pref.hatsPositioning.GetHatInfo(avatarData.GetHatOffsetIndex(), avatarData.hat);
                 if (hatInfo != null)
-                {
-                    HatPositionOffset = hatInfo.position;
-                    HatRotationOffset = hatInfo.rotation;
-                    HatScale = hatInfo.scale;
-                }
+                    hatOffsetInfo = hatInfo;
             }
             CurrentHat = newHat;
             UpdateHatOffset();

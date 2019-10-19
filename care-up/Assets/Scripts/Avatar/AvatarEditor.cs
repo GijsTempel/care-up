@@ -153,6 +153,7 @@ public class AvatarEditor : MonoBehaviour
             rotOffset_y.value = HatOffsetRot.y / 360f + 0.5f;
             rotOffset_z.value = HatOffsetRot.z / 360f + 0.5f;
             sclOffset.value = HatOffsetScale / 2;
+            HatExclusion.isOn = info.excluded;
         }
         else
         {
@@ -224,10 +225,19 @@ public class AvatarEditor : MonoBehaviour
             info.position = HatOffsetPos;
             info.rotation = HatOffsetRot;
             info.scale = HatOffsetScale;
+            info.excluded = HatExclusion.isOn;
 
             pref.hatsPositioning.UpdateHatInfo(MainAvatar.avatarData.GetHatOffsetIndex(), info);
             pref.hatsPositioning.SaveInfoToXml();
         }
+    }
+
+
+    int GetHeadIndex(int i, Gender g)
+    {
+        if (g == Gender.Female)
+            return i + 1000000;
+        return i;
     }
 
     public void ApplyAllHeads()
@@ -250,7 +260,7 @@ public class AvatarEditor : MonoBehaviour
                 info.position = HatOffsetPos;
                 info.rotation = HatOffsetRot;
                 info.scale = HatOffsetScale;
-                pref.hatsPositioning.UpdateHatInfo(i+1000000, info);
+                pref.hatsPositioning.UpdateHatInfo(GetHeadIndex(i,Gender.Female), info);
             }
             pref.hatsPositioning.SaveInfoToXml();
         }
@@ -434,7 +444,7 @@ public class AvatarEditor : MonoBehaviour
                 }
                 for (int i = 0; i < MainAvatar.GetMaxHeadNum(Gender.Female); i++)
                 {
-                    HatsPositioningDB.HatInfo fromInfo = pref.hatsPositioning.GetHatInfo(i + 1000000, element);
+                    HatsPositioningDB.HatInfo fromInfo = pref.hatsPositioning.GetHatInfo(GetHeadIndex(i, Gender.Female), element);
                     if (fromInfo != null)
                     {
                         HatsPositioningDB.HatInfo info = new HatsPositioningDB.HatInfo();
@@ -442,7 +452,7 @@ public class AvatarEditor : MonoBehaviour
                         info.position = fromInfo.position;
                         info.rotation = fromInfo.rotation;
                         info.scale = fromInfo.scale;
-                        pref.hatsPositioning.UpdateHatInfo(i + 1000000, info);
+                        pref.hatsPositioning.UpdateHatInfo(GetHeadIndex(i, Gender.Female), info);
                     }
                 }
                 pref.hatsPositioning.SaveInfoToXml();
@@ -491,6 +501,7 @@ public class AvatarEditor : MonoBehaviour
 
     public void ChangeHead(int value)
     {
+        // print(info.excluded);
         int nextHead = currentHead + value;
         if (nextHead < 0)
             nextHead = 0;

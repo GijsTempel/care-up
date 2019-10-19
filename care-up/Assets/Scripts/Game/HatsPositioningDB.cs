@@ -12,15 +12,17 @@ public class HatsPositioningDB
         public Vector3 position;
         public Vector3 rotation;
         public float scale;
+        public bool excluded;
 
-        public HatInfo() { headIndex = 0; name = ""; position = rotation = Vector3.zero; scale = 1; }
-        public HatInfo(int index, string n, Vector3 pos, Vector3 rot, float sscale)
+        public HatInfo() { headIndex = 0; name = ""; position = rotation = Vector3.zero; scale = 1; excluded = false;}
+        public HatInfo(int index, string n, Vector3 pos, Vector3 rot, float sscale, bool excl)
         {
             headIndex = index;
             name = n;
             position = pos;
             rotation = rot;
             scale = sscale;
+            excluded = excl;
         }
     };
 
@@ -53,6 +55,7 @@ public class HatsPositioningDB
 
             foreach (XmlNode xmlHatNode in xmlCatNode.ChildNodes)
             {
+                bool excl=false;
                 float posX, posY, posZ, rotX, rotY, rotZ, scale;
                 float.TryParse(xmlHatNode.Attributes["x_pos"].Value, out posX);
                 float.TryParse(xmlHatNode.Attributes["y_pos"].Value, out posY);
@@ -61,11 +64,13 @@ public class HatsPositioningDB
                 float.TryParse(xmlHatNode.Attributes["y_rot"].Value, out rotY);
                 float.TryParse(xmlHatNode.Attributes["z_rot"].Value, out rotZ);
                 float.TryParse(xmlHatNode.Attributes["scale"].Value, out scale);
-
                 string name = xmlHatNode.Attributes["name"].Value;
+                if(xmlHatNode.Attributes["excluded"] != null){
+                    bool.TryParse(xmlHatNode.Attributes["excluded"].Value, out excl);
+                }
 
                 hatItems.Add(new HatInfo(index, name, new Vector3(posX, posY, posZ),
-                    new Vector3(rotX, rotY, rotZ), scale));
+                    new Vector3(rotX, rotY, rotZ), scale, excl));
             }
             
             database.Add(new HeadCategory(index, hatItems));
@@ -183,9 +188,15 @@ public class HatsPositioningDB
                 XmlAttribute scale = doc.CreateAttribute("scale");
                 scale.Value = hat.scale.ToString();
                 hatNode.Attributes.Append(scale);
+
+                if(hat.excluded)
+                {
+                     XmlAttribute excluded = doc.CreateAttribute("excluded");
+                    excluded.Value = hat.excluded.ToString();
+                    hatNode.Attributes.Append(excluded);
+                }
             }
         }
-
         doc.Save(Application.dataPath + "/Resources/Xml/" + filename);
         Debug.Log("Hats positioning xml saved.");
     }
