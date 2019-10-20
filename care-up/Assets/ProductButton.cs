@@ -17,7 +17,7 @@ public class ProductButton : MonoBehaviour
     void Start()
     {
         originalColor = GetComponent<Image>().color;
-        dressOn.SetActive(false);
+        // dressOn.SetActive(false);
         _name.gameObject.SetActive(false);
     }
     
@@ -65,6 +65,7 @@ public class ProductButton : MonoBehaviour
 
     public void SetPurchased(bool isPurchased)
     {
+        item.purchased = isPurchased;
         price.SetActive(!isPurchased);
         checkmark.SetActive(isPurchased);
     }

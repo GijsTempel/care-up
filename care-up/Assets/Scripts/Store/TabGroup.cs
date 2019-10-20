@@ -37,6 +37,11 @@ public class TabGroup : MonoBehaviour
     private Text buyBtnText = default;
 
     private TabButton selectedTab;
+    int selectedTabIndex = 0;
+
+    private List<ProductButton> DressedButtons = new List<ProductButton>();
+    private List<ProductButton> SelectedButtons = new List<ProductButton>();
+
     private ProductButton selectedItemBtn = null;
     private PlayerAvatar mainAvatar;
     private List<TabButton> tabs;
@@ -55,6 +60,11 @@ public class TabGroup : MonoBehaviour
             tabs = new List<TabButton>();
 
         tabs.Add(button);
+    }
+
+    void OnDisable()
+    {
+        print("DDDDDDDDDDDDDD");
     }
 
     public void OnTabEnter(TabButton button)
@@ -86,7 +96,7 @@ public class TabGroup : MonoBehaviour
         }
 
         int index = button.transform.GetSiblingIndex();
-
+        selectedTabIndex = index;
         for (int i = 0; i < pages.Count; i++)
         {
             if (i == index)
@@ -119,6 +129,20 @@ public class TabGroup : MonoBehaviour
         }
     }
 
+    void Dress()
+    {
+        if (selectedItemBtn != null)
+        {
+            if (selectedItemBtn.item.purchased)
+            {
+                if (DressedButtons[selectedTabIndex] != null)
+                    DressedButtons[selectedTabIndex].SetDressOn(false);
+                DressedButtons[selectedTabIndex] = selectedItemBtn;
+                DressedButtons[selectedTabIndex].SetDressOn(true);
+            }
+        }
+    }
+
     public void SelectItem(ProductButton btn)
     {
         if (selectedItemBtn != null)
@@ -128,6 +152,8 @@ public class TabGroup : MonoBehaviour
         if (btn != null)
         {
             selectedItemBtn = btn;
+            Dress();
+
             selectedItemBtn.Select(true);
             buyBtnCoin.SetActive(true);
 
@@ -141,6 +167,7 @@ public class TabGroup : MonoBehaviour
             }
             else if (btn.item.category == "Body")
             {
+                CharacterInfo.bodyType = btn.item.index;
                 mainAvatar.avatarData.bodyType = btn.item.index;
             }
             mainAvatar.UpdateCharacter();
@@ -165,11 +192,12 @@ public class TabGroup : MonoBehaviour
             }
             else
             {
-                buyBtnText.text = "";
-                buyBtnPutOnText.SetActive(true);
-                buyBtnCoin.SetActive(false);
-                buyBtn.SetActive(true);
-                buyBtn.GetComponent<Image>().sprite = putOnBtnSprite;
+                buyBtn.SetActive(false);
+                // buyBtnText.text = "";
+                // buyBtnPutOnText.SetActive(true);
+                // buyBtnCoin.SetActive(false);
+                // buyBtn.SetActive(true);
+                // buyBtn.GetComponent<Image>().sprite = putOnBtnSprite;
             }
         }
         else
@@ -214,6 +242,7 @@ public class TabGroup : MonoBehaviour
         }
         ShowConfirmPanel(false);
         UpdatePurchesBtn();
+        Dress();
     }
 
     public void InitializeTabPanel()
@@ -222,11 +251,8 @@ public class TabGroup : MonoBehaviour
         {
             InitializePrefabs(category);
             ChangeAxis();
-
-            // foreach (StoreItem item in category.items)
-            // {
-            //     InstantiateProduct(item);
-            // }
+            DressedButtons.Add(null);
+            // SelectedButtons.Add(new ProductButton());
         }
 
         for (int i = 1; i < pagesContainer.transform.childCount; i++)
@@ -260,32 +286,62 @@ public class TabGroup : MonoBehaviour
             StoreItem baseItem = null;
             if (currentCharacter != null)
             {
+                //Hats------------------------
                 if (i == 0)
                 {
                     StoreItem xItem = new StoreItem(0,0,"x", "Hat", true);
-                    InstantiateProduct(xItem);
+                    ProductButton xBtn = InstantiateProduct(xItem);
+                    if (currentCharacter.playerAvatar.hat == "")
+                    {
+                        DressedButtons[0] = xBtn;
+                        xBtn.SetDressOn(true);
+                    }
                     if (currentCharacter.defaultAvatarData.hat != "")
+                    {
                         baseItem = new StoreItem(0,0,currentCharacter.defaultAvatarData.hat, "Hat", true);
+                        ProductButton baseHatBtn = InstantiateProduct(baseItem);
+                        if (currentCharacter.playerAvatar.hat == currentCharacter.defaultAvatarData.hat)
+                        {
+                            DressedButtons[0] = baseHatBtn;
+                            baseHatBtn.SetDressOn(true);
+                        }
+                    }
                 }
+                //Glasses------------------------
                 else if (i == 1)
                 {
                     StoreItem xxItem = new StoreItem(-500,0,"x", "Glasses", true);
-                    InstantiateProduct(xxItem);
+                    ProductButton xxBtn = InstantiateProduct(xxItem);
+                    if (mainAvatar.avatarData.glassesType == -1)
+                    {
+                        DressedButtons[1] = xxBtn;
+                        xxBtn.SetDressOn(true);
+                    }
                     if (currentCharacter.defaultAvatarData.glassesType != -1)
                     {
                         int gl = currentCharacter.defaultAvatarData.glassesType;
                         baseItem = new StoreItem(gl,0,"gl_" + gl.ToString(), "Glasses", true);
+                        ProductButton baseGlassesBtn = InstantiateProduct(baseItem);
+                        if (currentCharacter.playerAvatar.glassesType == currentCharacter.defaultAvatarData.glassesType)
+                        {
+                            DressedButtons[1] = baseGlassesBtn;
+                            baseGlassesBtn.SetDressOn(true);
+                        }
                     }
                 }
+                //Bodies------------------------
                 else if (i == 2)
                 {
                     int _body = currentCharacter.defaultAvatarData.bodyType;
                     baseItem = new StoreItem(_body,0,"body_" + _body.ToString(), "Body", true);
+                    ProductButton baseBodyBtn = InstantiateProduct(baseItem);
+                    if (currentCharacter.playerAvatar.bodyType == currentCharacter.defaultAvatarData.bodyType)
+                    {
+                        DressedButtons[2] = baseBodyBtn;
+                        baseBodyBtn.SetDressOn(true);
+                    }
                 }
-            }
-            if (baseItem != null)
-            {
-                InstantiateProduct(baseItem);
+
             }
             int avIndex = mainAvatar.avatarData.GetHatOffsetIndex();
             foreach (StoreItem item in PlayerPrefsManager.storeManager.StoreItems[i].items)
@@ -302,7 +358,22 @@ public class TabGroup : MonoBehaviour
                     if (baseItem.name == item.name)
                         continue;
                 }
-                InstantiateProduct(item);
+                ProductButton btn = InstantiateProduct(item);
+                if(i == 0 && currentCharacter.playerAvatar.hat == item.name)
+                {
+                    DressedButtons[0] = btn;
+                    btn.SetDressOn(true);
+                }
+                else if (i == 1 && currentCharacter.playerAvatar.glassesType == item.index)
+                {
+                    DressedButtons[1] = btn;
+                    btn.SetDressOn(true);
+                }
+                else if (i == 2 && currentCharacter.playerAvatar.bodyType == item.index)
+                {
+                    DressedButtons[2] = btn;
+                    btn.SetDressOn(true);
+                }
             }
         }
     }
@@ -331,11 +402,12 @@ public class TabGroup : MonoBehaviour
         itemParent = page.transform.Find("StoreTabPage/content");
     }
 
-    private void InstantiateProduct(StoreItem item)
+    private ProductButton InstantiateProduct(StoreItem item)
     {
         GameObject i = Instantiate(productItem, itemParent);
         ProductButton btn = i.GetComponent<ProductButton>();
         btn.Initialize(item, this);
+        return btn;
     }  
 
     private void ModifyTab(TabButton button, Sprite sprite, Vector3 vector3)

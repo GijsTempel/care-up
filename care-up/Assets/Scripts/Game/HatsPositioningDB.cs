@@ -125,10 +125,11 @@ public class HatsPositioningDB
             output += "Category: " + c.headIndex + "\n";
             foreach (HatInfo hat in c.hats)
             {
-                output += "    Name: " + hat.name;
+                output += "    __Name: " + hat.name;
                 output += ". Scale: " + hat.scale + "\n";
                 output += "    Pos: " + hat.position + "\n";
                 output += "    Rot: " + hat.rotation + "\n";
+                output += "    Exc: " + hat.excluded + "\n";
             }
         }
         Debug.Log(output);
