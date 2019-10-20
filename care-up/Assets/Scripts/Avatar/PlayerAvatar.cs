@@ -50,13 +50,14 @@ public class PlayerAvatar : MonoBehaviour
     {
         if (avatarData.hat == "")
             return null;
-        return hatOffsetInfo;
-        // HatsPositioningDB.HatInfo info = new HatsPositioningDB.HatInfo();
-        // info.name = avatarData.hat;
-        // info.position = HatPositionOffset;
-        // info.rotation = HatRotationOffset;
-        // info.scale = HatScale;
-        // return info;
+        
+        HatsPositioningDB.HatInfo info = new HatsPositioningDB.HatInfo();
+        info.name = avatarData.hat;
+        info.position = hatOffsetInfo.position;
+        info.rotation = hatOffsetInfo.rotation;
+        info.scale = hatOffsetInfo.scale;
+        info.excluded = hatOffsetInfo.excluded;
+        return info;
     }
 
     public int GetMaxHeadNum(Gender g)
@@ -150,7 +151,12 @@ public class PlayerAvatar : MonoBehaviour
             {
                 HatsPositioningDB.HatInfo hatInfo = pref.hatsPositioning.GetHatInfo(avatarData.GetHatOffsetIndex(), avatarData.hat);
                 if (hatInfo != null)
-                    hatOffsetInfo = hatInfo;
+                {
+                    hatOffsetInfo.position = hatInfo.position;
+                    hatOffsetInfo.rotation = hatInfo.rotation;
+                    hatOffsetInfo.scale = hatInfo.scale;
+                    hatOffsetInfo.excluded = hatInfo.excluded;
+                }
             }
             CurrentHat = newHat;
             UpdateHatOffset();

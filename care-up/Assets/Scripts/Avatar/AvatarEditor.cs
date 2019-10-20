@@ -244,7 +244,7 @@ public class AvatarEditor : MonoBehaviour
     {
         if (pref != null && MainAvatar.avatarData.hat != "")
         {
-            for (int i = 0; i < MainAvatar.GetMaxHeadNum(Gender.Male); i++)
+            for (int i = 0; i <= MainAvatar.GetMaxHeadNum(Gender.Male); i++)
             {
                 HatsPositioningDB.HatInfo info = new HatsPositioningDB.HatInfo();
                 info.name = MainAvatar.avatarData.hat;
@@ -253,7 +253,7 @@ public class AvatarEditor : MonoBehaviour
                 info.scale = HatOffsetScale;
                 pref.hatsPositioning.UpdateHatInfo(i, info);
             }
-            for (int i = 0; i < MainAvatar.GetMaxHeadNum(Gender.Female); i++)
+            for (int i = 0; i <= MainAvatar.GetMaxHeadNum(Gender.Female); i++)
             {
                 HatsPositioningDB.HatInfo info = new HatsPositioningDB.HatInfo();
                 info.name = MainAvatar.avatarData.hat;
