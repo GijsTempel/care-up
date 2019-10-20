@@ -85,13 +85,13 @@ public class CharacterPanelManager : MonoBehaviour
 
     public void AdjustCharacter()
     {
-        int characterIndex = CharacterСarousel.CurrentCharacter;
+        int characterIndex = сarrousel.CurrentCharacter;
         storeManager.AdjustCharacter(storeManager.GetItemIndex(characterIndex));
     }
 
     public void BuyCharacter()
     {
-        int characterIndex = CharacterСarousel.CurrentCharacter;
+        int characterIndex = сarrousel.CurrentCharacter;
         if (storeManager.PurchaseCharacter(storeManager.GetItemIndex(characterIndex)))
         {
             adjustButton.SetActive(true);

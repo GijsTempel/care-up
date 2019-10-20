@@ -4,7 +4,7 @@ using CareUpAvatar;
 
 public class CharacterСarousel : MonoBehaviour
 {
-    public static int CurrentCharacter { get; set; } = 1;
+    public int CurrentCharacter = 1;
     public CharacterPanelManager panelManager;
     public List<GameObject> platforms;
 
@@ -19,8 +19,8 @@ public class CharacterСarousel : MonoBehaviour
 
     private PlayerPrefsManager pref;
 
-    private List<PlayerAvatar> avatars = new List<PlayerAvatar>();
-    private List<GameObject> checkMarks = new List<GameObject>();
+    public List<PlayerAvatar> avatars = new List<PlayerAvatar>();
+    public List<GameObject> checkMarks = new List<GameObject>();
 
     public void UpdateSelected(PlayerAvatarData aData)
     {
@@ -40,10 +40,8 @@ public class CharacterСarousel : MonoBehaviour
             {
                 avatar.avatarData = playerAvatarData;
                 avatar.UpdateCharacter();
-
                 bool purchased = PlayerPrefsManager.storeManager.CharacterItems[current].purchased;
                 checkMarks[current].SetActive(purchased);
-
                 //panelManager.SetStoreInfo(behindMarker, current);
             }
             avatar.SetAnimationAction(Actions.Idle, true);
@@ -78,15 +76,15 @@ public class CharacterСarousel : MonoBehaviour
     private void Start()
     {
         pref = GameObject.FindObjectOfType<PlayerPrefsManager>();
-        checkMarks.Clear();
-        foreach (GameObject platform in platforms)
-        {
-            checkMarks.Add(platform.transform.Find("checkMark").gameObject);
-        }
-        foreach (GameObject platform in platforms)
-        {
-            avatars.Add(platform.transform.Find("PlayerAvatar").GetComponent<PlayerAvatar>());
-        }
+        // checkMarks.Clear();
+        // foreach (GameObject platform in platforms)
+        // {
+        //     checkMarks.Add(platform.transform.Find("checkMark").gameObject);
+        // }
+        // foreach (GameObject platform in platforms)
+        // {
+        //     avatars.Add(platform.transform.Find("PlayerAvatar").GetComponent<PlayerAvatar>());
+        // }
 
         Invoke("Initialize", 0.1f);
     }

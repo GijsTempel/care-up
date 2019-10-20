@@ -62,11 +62,6 @@ public class TabGroup : MonoBehaviour
         tabs.Add(button);
     }
 
-    void OnDisable()
-    {
-        print("DDDDDDDDDDDDDD");
-    }
-
     public void OnTabEnter(TabButton button)
     {
         ResetTabs();
@@ -153,7 +148,6 @@ public class TabGroup : MonoBehaviour
         {
             selectedItemBtn = btn;
             Dress();
-
             selectedItemBtn.Select(true);
             buyBtnCoin.SetActive(true);
 
@@ -167,12 +161,16 @@ public class TabGroup : MonoBehaviour
             }
             else if (btn.item.category == "Body")
             {
-                CharacterInfo.bodyType = btn.item.index;
+                if (btn.item.purchased)
+                    CharacterInfo.bodyType = btn.item.index;
                 mainAvatar.avatarData.bodyType = btn.item.index;
+                mainAvatar.UpdateCharacter();
             }
-            mainAvatar.UpdateCharacter();
-            CharacterInfo.UpdateCharacter(btn.item);
-            carousel.UpdateSelected(mainAvatar.avatarData);
+            if (btn.item.purchased)
+            {
+                CharacterInfo.UpdateCharacter(btn.item);
+                carousel.UpdateSelected(mainAvatar.avatarData);
+            }
         }
 
         UpdatePurchesBtn();
@@ -193,11 +191,6 @@ public class TabGroup : MonoBehaviour
             else
             {
                 buyBtn.SetActive(false);
-                // buyBtnText.text = "";
-                // buyBtnPutOnText.SetActive(true);
-                // buyBtnCoin.SetActive(false);
-                // buyBtn.SetActive(true);
-                // buyBtn.GetComponent<Image>().sprite = putOnBtnSprite;
             }
         }
         else
@@ -238,11 +231,18 @@ public class TabGroup : MonoBehaviour
                 {
                     GameObject.Find("swoopEffect").GetComponent<AudioSource>().Play();
                 }
+                if (selectedTabIndex == 2)
+                {
+                    CharacterInfo.bodyType = selectedItemBtn.item.index;
+                    mainAvatar.avatarData.bodyType = selectedItemBtn.item.index;
+                    mainAvatar.UpdateCharacter();
+                }
             }
         }
         ShowConfirmPanel(false);
         UpdatePurchesBtn();
         Dress();
+        carousel.UpdateSelected(mainAvatar.avatarData);
     }
 
     public void InitializeTabPanel()
