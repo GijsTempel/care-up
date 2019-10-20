@@ -12,9 +12,11 @@ public class ProductButton : MonoBehaviour
     public Image icon;
     public StoreItem item;
     TabGroup tabGroup;
+    Color originalColor = new Color();
 
     void Start()
     {
+        originalColor = GetComponent<Image>().color;
         dressOn.SetActive(false);
         _name.gameObject.SetActive(false);
     }
@@ -27,7 +29,7 @@ public class ProductButton : MonoBehaviour
         }
         else
         {
-            GetComponent<Image>().color = Color.white;
+            GetComponent<Image>().color = originalColor;
         }
     }
 
