@@ -250,7 +250,7 @@ public class TabGroup : MonoBehaviour
         foreach (StoreCategory category in PlayerPrefsManager.storeManager.StoreItems)
         {
             InitializePrefabs(category);
-            ChangeAxis();
+           // ChangeAxis();
             DressedButtons.Add(null);
             // SelectedButtons.Add(new ProductButton());
         }
@@ -399,8 +399,6 @@ public class TabGroup : MonoBehaviour
                     btn.SetDressOn(true);
                 }
             }
-
-            ChangeAxis();
         }
     }
 
