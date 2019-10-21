@@ -68,6 +68,12 @@ public class AvatarEditor : MonoBehaviour
 
     }
 
+    private string AdjustBodyTypeIndex(string gender, int body)
+    {
+        int bodyType = gender == "Female" ? body + 1000000 : body;
+        return bodyType.ToString();
+    }
+
     public void UpdateItemXML()
     {
         string output = "";
@@ -75,7 +81,7 @@ public class AvatarEditor : MonoBehaviour
         {
             string g = MainAvatar.avatarData.gender.ToString();
             string h = MainAvatar.avatarData.headType.ToString();
-            string b = MainAvatar.avatarData.bodyType.ToString();
+            string b = AdjustBodyTypeIndex(g, MainAvatar.avatarData.bodyType);
             string ht = MainAvatar.avatarData.hat;
             string gl = MainAvatar.avatarData.glassesType.ToString();
             string m = MainAvatar.avatarData.mouthType.ToString();
@@ -83,11 +89,11 @@ public class AvatarEditor : MonoBehaviour
             string hatLine = "\" hatType=\"" + ht;
             if (MainAvatar.avatarData.hat == "")
                 hatLine = "";
-            output = "<item index=\"" + IndexField.text + 
-                "\"  price=\"" + PriceField.text + 
-                "\" gender=\"" + g + 
-                "\" headType=\"" + h +"" +
-                "\" bodyType=\"" + b + 
+            output = "<item index=\"" + IndexField.text +
+                "\"  price=\"" + PriceField.text +
+                "\" gender=\"" + g +
+                "\" headType=\"" + h + "" +
+                "\" bodyType=\"" + b +
                 "\" glassesType=\"" + gl +
                 hatLine +
                 "\" mouth=\"" + m +
@@ -260,7 +266,7 @@ public class AvatarEditor : MonoBehaviour
                 info.position = HatOffsetPos;
                 info.rotation = HatOffsetRot;
                 info.scale = HatOffsetScale;
-                pref.hatsPositioning.UpdateHatInfo(GetHeadIndex(i,Gender.Female), info);
+                pref.hatsPositioning.UpdateHatInfo(GetHeadIndex(i, Gender.Female), info);
             }
             pref.hatsPositioning.SaveInfoToXml();
         }
@@ -268,7 +274,7 @@ public class AvatarEditor : MonoBehaviour
 
     public void SaveAllHats()
     {
-        
+
     }
     // Start is called before the first frame update
     void Start()
@@ -282,13 +288,13 @@ public class AvatarEditor : MonoBehaviour
         itemPrefabPath = "Assets\\Resources\\NecessaryPrefabs\\Shop_Items";
         splitSimbol = '\\';
 #endif
-        
-        foreach (string file in System.IO.Directory.GetFiles(itemPrefabPath)) 
+
+        foreach (string file in System.IO.Directory.GetFiles(itemPrefabPath))
         {
-            
+
             string[] _path = file.Split(splitSimbol);
 
-            string item_name = (_path[_path.Length-1]);
+            string item_name = (_path[_path.Length - 1]);
             string[] DSV = item_name.Split('.');
 
             if (DSV[DSV.Length - 1] == "prefab")
@@ -307,7 +313,7 @@ public class AvatarEditor : MonoBehaviour
         rotOffset_x = Tabs[0].transform.Find("RotationOffset/x/Scrollbar").GetComponent<Scrollbar>();
         rotOffset_y = Tabs[0].transform.Find("RotationOffset/y/Scrollbar").GetComponent<Scrollbar>();
         rotOffset_z = Tabs[0].transform.Find("RotationOffset/z/Scrollbar").GetComponent<Scrollbar>();
-        sclOffset   = Tabs[0].transform.Find("ScaleOffset/x/Scrollbar").GetComponent<Scrollbar>();
+        sclOffset = Tabs[0].transform.Find("ScaleOffset/x/Scrollbar").GetComponent<Scrollbar>();
         camRotScrool = transform.Find("Canvas/GameObject/AvatarView/Scrollbar").GetComponent<Scrollbar>();
 
         Invoke("Initialize", 0.01f);
@@ -341,11 +347,12 @@ public class AvatarEditor : MonoBehaviour
     public void BuildGlassesSelector()
     {
         currentSelection = Selections.Glasses;
-        foreach (Transform child in SelectorContent) {
+        foreach (Transform child in SelectorContent)
+        {
             GameObject.Destroy(child.gameObject);
         }
 
-        for(int i = -1; i <= MainAvatar.GetMaxGlassesNum(); i++)
+        for (int i = -1; i <= MainAvatar.GetMaxGlassesNum(); i++)
         {
             GameObject __Button = GameObject.Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/UI/SelectorButton"), SelectorContent);
             __Button.transform.Find("Text").GetComponent<Text>().text = i.ToString();
@@ -367,7 +374,8 @@ public class AvatarEditor : MonoBehaviour
     public void BuildHatSelector()
     {
         currentSelection = Selections.Hats;
-        foreach (Transform child in SelectorContent) {
+        foreach (Transform child in SelectorContent)
+        {
             GameObject.Destroy(child.gameObject);
         }
         foreach (string h in Hats)
@@ -394,7 +402,7 @@ public class AvatarEditor : MonoBehaviour
         Selector.SetActive(value);
     }
 
- public void SelectElement(int element)
+    public void SelectElement(int element)
     {
         ShowSelector(false);
         if (currentSelection == Selections.Glasses)
@@ -412,7 +420,7 @@ public class AvatarEditor : MonoBehaviour
         ShowSelector(false);
         if (currentSelection == Selections.Hats)
         {
-            if(element == "None")
+            if (element == "None")
             {
                 MainAvatar.avatarData.hat = "";
                 HatInput.text = "";
@@ -458,7 +466,7 @@ public class AvatarEditor : MonoBehaviour
                 pref.hatsPositioning.SaveInfoToXml();
                 ChangeHead(0);
                 UpdateHatOffsetControl();
-                
+
             }
         }
         UpdateItemXML();
@@ -466,7 +474,7 @@ public class AvatarEditor : MonoBehaviour
 
     public void SetTab(int value)
     {
-        foreach(GameObject t in Tabs)
+        foreach (GameObject t in Tabs)
             t.SetActive(false);
         Tabs[value].SetActive(true);
         foreach (Button b in TabsButtons)
@@ -527,7 +535,7 @@ public class AvatarEditor : MonoBehaviour
         GlassesInput.text = currentGlasses.ToString();
         MainAvatar.avatarData.glassesType = currentGlasses;
         MainAvatar.UpdateCharacter();
-        UpdateItemXML(); 
+        UpdateItemXML();
     }
 
 
@@ -583,6 +591,6 @@ public class AvatarEditor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
