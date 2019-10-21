@@ -13,7 +13,7 @@
     {
         Male,
         Female
-    };
+    };   
 
     public class PlayerAvatarData
     {
