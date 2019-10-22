@@ -301,9 +301,12 @@ public class PlayerAvatar : MonoBehaviour
 
     void UpdateFemaleBodies()
     {
+        int bIndex = avatarData.bodyType;
+        if (bIndex >= 1000000)
+            bIndex -= 1000000;
         foreach (Transform b in femaleBodies)
         {
-            b.gameObject.SetActive(femaleBodies.IndexOf(b) == avatarData.bodyType && avatarData.gender == Gender.Female);
+            b.gameObject.SetActive(femaleBodies.IndexOf(b) == bIndex && avatarData.gender == Gender.Female);
         }
     }
 
