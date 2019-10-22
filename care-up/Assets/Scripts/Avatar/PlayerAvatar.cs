@@ -302,7 +302,7 @@ public class PlayerAvatar : MonoBehaviour
     void UpdateFemaleBodies()
     {
         int bIndex = avatarData.bodyType;
-        if (bIndex > 1000000)
+        if (bIndex >= 1000000)
             bIndex -= 1000000;
         foreach (Transform b in femaleBodies)
         {
