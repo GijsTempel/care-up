@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Xml;
+using System.Globalization;
 
 public class HatsPositioningDB
 {
@@ -56,14 +57,16 @@ public class HatsPositioningDB
             foreach (XmlNode xmlHatNode in xmlCatNode.ChildNodes)
             {
                 bool excl=false;
-                float posX, posY, posZ, rotX, rotY, rotZ, scale;
+                float posX, posY, posZ, rotX, rotY, rotZ, scale = 0;
                 float.TryParse(xmlHatNode.Attributes["x_pos"].Value, out posX);
                 float.TryParse(xmlHatNode.Attributes["y_pos"].Value, out posY);
                 float.TryParse(xmlHatNode.Attributes["z_pos"].Value, out posZ);
                 float.TryParse(xmlHatNode.Attributes["x_rot"].Value, out rotX);
                 float.TryParse(xmlHatNode.Attributes["y_rot"].Value, out rotY);
                 float.TryParse(xmlHatNode.Attributes["z_rot"].Value, out rotZ);
-                float.TryParse(xmlHatNode.Attributes["scale"].Value, out scale);
+                if (xmlHatNode.Attributes["scale"] != null)
+                    scale = float.Parse(xmlHatNode.Attributes["scale"].Value, CultureInfo.InvariantCulture);
+
                 string name = xmlHatNode.Attributes["name"].Value;
                 if(xmlHatNode.Attributes["excluded"] != null){
                     bool.TryParse(xmlHatNode.Attributes["excluded"].Value, out excl);
