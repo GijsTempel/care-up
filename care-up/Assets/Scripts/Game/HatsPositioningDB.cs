@@ -58,14 +58,13 @@ public class HatsPositioningDB
             {
                 bool excl=false;
                 float posX, posY, posZ, rotX, rotY, rotZ, scale = 0;
-                float.TryParse(xmlHatNode.Attributes["x_pos"].Value, out posX);
-                float.TryParse(xmlHatNode.Attributes["y_pos"].Value, out posY);
-                float.TryParse(xmlHatNode.Attributes["z_pos"].Value, out posZ);
-                float.TryParse(xmlHatNode.Attributes["x_rot"].Value, out rotX);
-                float.TryParse(xmlHatNode.Attributes["y_rot"].Value, out rotY);
-                float.TryParse(xmlHatNode.Attributes["z_rot"].Value, out rotZ);
-                if (xmlHatNode.Attributes["scale"] != null)
-                    scale = float.Parse(xmlHatNode.Attributes["scale"].Value, CultureInfo.InvariantCulture);
+                float.TryParse(xmlHatNode.Attributes["x_pos"].Value, NumberStyles.Any, CultureInfo.InvariantCulture, out posX);
+                float.TryParse(xmlHatNode.Attributes["y_pos"].Value, NumberStyles.Any, CultureInfo.InvariantCulture, out posY);
+                float.TryParse(xmlHatNode.Attributes["z_pos"].Value, NumberStyles.Any, CultureInfo.InvariantCulture, out posZ);
+                float.TryParse(xmlHatNode.Attributes["x_rot"].Value, NumberStyles.Any, CultureInfo.InvariantCulture, out rotX);
+                float.TryParse(xmlHatNode.Attributes["y_rot"].Value, NumberStyles.Any, CultureInfo.InvariantCulture, out rotY);
+                float.TryParse(xmlHatNode.Attributes["z_rot"].Value, NumberStyles.Any, CultureInfo.InvariantCulture, out rotZ);
+                float.TryParse(xmlHatNode.Attributes["scale"].Value, NumberStyles.Any, CultureInfo.InvariantCulture, out scale);
 
                 string name = xmlHatNode.Attributes["name"].Value;
                 if(xmlHatNode.Attributes["excluded"] != null){
