@@ -89,6 +89,11 @@ public class CharacterСarousel : MonoBehaviour
         Invoke("Initialize", 0.1f);
     }
 
+    public void SetAnimation()
+    {
+        avatars[GetCurrentMarker()].SetAnimationAction(Actions.Dance);
+    }
+
     private PlayerAvatarData GetAvatarData(int index)
     {
         if (index >= 0 && index < (PlayerPrefsManager.storeManager.CharacterItems.Count))

@@ -94,6 +94,7 @@ public class CharacterPanelManager : MonoBehaviour
         int characterIndex = сarrousel.CurrentCharacter;
         if (storeManager.PurchaseCharacter(storeManager.GetItemIndex(characterIndex)))
         {
+            сarrousel.SetAnimation();
             adjustButton.SetActive(true);
             currencyText.text = storeManager.Currency.ToString();
             if (storeManager.CharacterItems[characterIndex].price > 0)

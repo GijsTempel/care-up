@@ -217,6 +217,8 @@ public class TabGroup : MonoBehaviour
         {
             if (PlayerPrefsManager.storeManager.Purchase(item.index))
             {
+                mainAvatar.SetAnimationAction(CareUpAvatar.Actions.Dance, true);
+
                 selectedItemBtn.SetPurchased(true);
                 GameObject.Find("AdjustCharacter/NumbersStackPanel/CurrencyPanel/Panel/Text").GetComponent<Text>().text
                     = PlayerPrefsManager.storeManager.Currency.ToString();
@@ -248,9 +250,7 @@ public class TabGroup : MonoBehaviour
         foreach (StoreCategory category in PlayerPrefsManager.storeManager.StoreItems)
         {
             InitializePrefabs(category);
-           // ChangeAxis();
             DressedButtons.Add(null);
-            // SelectedButtons.Add(new ProductButton());
         }
 
         for (int i = 1; i < pagesContainer.transform.childCount; i++)
@@ -263,7 +263,6 @@ public class TabGroup : MonoBehaviour
         UpdatePurchesBtn();
     }
 
-    //------------------------------------------------
     public void DisplayItemsInStore()
     {
         CharacterItem currentCharacter = null;
@@ -450,21 +449,5 @@ public class TabGroup : MonoBehaviour
         tabPagePrefab = Resources.Load<GameObject>("Prefabs/PageHolder");
         productItem = Resources.Load<GameObject>("Prefabs/ProductPanel");
         tabParent = GameObject.Find("StoreTabContainer").transform;
-    }
-
-    private void ChangeAxis()
-    {
-        bool axisChanged = false;
-
-        page.transform.Find("Scrollbar").GetComponent<Scrollbar>().onValueChanged.AddListener((changeAxis) =>
-        {
-            GridLayoutGroup gridLayoutGroup = itemParent.GetComponent<GridLayoutGroup>();
-
-            if (gridLayoutGroup != null && !axisChanged)
-            {
-                gridLayoutGroup.startAxis = GridLayoutGroup.Axis.Vertical;
-                axisChanged = true;
-            }
-        });
     }
 }
