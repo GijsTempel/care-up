@@ -98,6 +98,7 @@ public class ActionManager : MonoBehaviour
         set { points = value; }
     }
 
+    
     /// <summary>
     /// Total max points player can get on the scene.
     /// </summary>

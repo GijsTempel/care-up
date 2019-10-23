@@ -5,9 +5,6 @@ using CareUp.Actions;
 using System.Linq;
 using AssetBundles;
 
-
-
-
 public class GameUI : MonoBehaviour
 {
     GameObject Player;
@@ -239,6 +236,12 @@ public class GameUI : MonoBehaviour
         {
             ps.robotUIopened = false;
         }
+    }
+
+    public void ShowCurrencyPanel()
+    {
+        print(actionManager.Points);
+        CloseGame();
     }
 
     public void CloseGame()
