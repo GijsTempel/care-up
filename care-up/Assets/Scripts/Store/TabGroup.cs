@@ -20,7 +20,6 @@ public class TabGroup : MonoBehaviour
                        onSaleBtn = default;
 
     private GameObject pagesContainer = default,
-                       buyBtnPutOnText = default,
                        buyBtnCoin = default,
                        tabBtnPrefab = default,
                        tabPagePrefab = default,
@@ -186,7 +185,6 @@ public class TabGroup : MonoBehaviour
                 buyBtnCoin.SetActive(true);
                 buyBtn.SetActive(true);
                 buyBtn.GetComponent<Image>().sprite = buyBtnSprite;
-                buyBtnPutOnText.SetActive(false);
             }
             else
             {
@@ -444,7 +442,6 @@ public class TabGroup : MonoBehaviour
     {
         mainAvatar = GameObject.Find("MainPlayerAvatar").GetComponent<PlayerAvatar>();
         buyBtnText = buyBtn.transform.Find("Text").GetComponent<Text>();
-        buyBtnPutOnText = buyBtn.transform.Find("PutOn").gameObject;
         buyBtnCoin = buyBtn.transform.Find("Coin").gameObject;
         buyBtnSprite = buyBtn.GetComponent<Image>().sprite;
         pagesContainer = GameObject.Find("PageContainer");
