@@ -152,7 +152,7 @@ public class EndScoreManager : MonoBehaviour
 
         }
         if (actualScene)
-        {          
+        {
             Transform quizParent = GameObject.Find("Interactable Objects/Canvas/Questionscreen/Image/QuizForm/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
 
             for (int i = 0; i < quizQuestionsTexts.Count; ++i)
@@ -259,6 +259,8 @@ public class EndScoreManager : MonoBehaviour
     /// </summary>
     public void LoadEndScoreScene()
     {
+        StoreViewModel.SavedCoins = ActionManager.Points;
+
         actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
         if (actionManager == null) Debug.LogError("No action manager found.");
 

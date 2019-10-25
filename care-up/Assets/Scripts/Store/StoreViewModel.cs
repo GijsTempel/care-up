@@ -6,6 +6,8 @@ public class StoreViewModel : MonoBehaviour
     private Text currencyText;
     private Text presentNumberText;
 
+    public static int SavedCoins { get; set; }
+
     [SerializeField]
     private Button goToCharacterStoreButton;
 
@@ -13,13 +15,16 @@ public class StoreViewModel : MonoBehaviour
     {
         currencyText = GameObject.Find("NumbersStackPanel/CurrencyPanel/Panel/Text").GetComponent<Text>();
         currencyText.text = PlayerPrefsManager.storeManager.Currency.ToString();
-    }  
+    }
 
     public static void ShowRewardDialogue(Text panelText)
     {
-        if (ActionManager.Points > 0)
+        if (SavedCoins <= 0)
+            SavedCoins = ActionManager.Points;
+
+        if (SavedCoins > 0)
         {
-            int rewardCoins = RoundToBigger(ActionManager.Points);
+            int rewardCoins = RoundToBigger(SavedCoins);
 
             PlayerPrefsManager.storeManager.ModifyCurrencyBy(rewardCoins);
 
@@ -27,9 +32,8 @@ public class StoreViewModel : MonoBehaviour
             {
                 panelText.text = "+" + rewardCoins.ToString();
                 GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(9);
+                SavedCoins = ActionManager.Points = 0;
             }
-
-            ActionManager.Points = 0;
         }
     }
 
@@ -39,4 +43,3 @@ public class StoreViewModel : MonoBehaviour
         return value;
     }
 }
-  
