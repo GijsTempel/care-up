@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Xml;
 using CareUpAvatar;
+using UnityEngine.UI;
 
 public class StoreItem
 {
@@ -142,7 +143,7 @@ public class StoreManager
             PlayerAvatarData playerAvatar = new PlayerAvatarData(characterGender, headType, bodyType, glassesType, hatType, mouthType, eyeType);
             // CharacterItem CharacterItem(index, price, purchased, playerAvatar)
             CharacterItem characterItem = new CharacterItem(index, price, purchased, playerAvatar);
-            if(!devDropAllPurchases)
+            if (!devDropAllPurchases)
             {
                 string[][] charactersCategory = DatabaseManager.FetchCategory("CharacterItem_" + index.ToString());
                 if (charactersCategory != null)
@@ -347,5 +348,5 @@ public class StoreManager
         }
 
         return item;
-    }
+    }   
 }

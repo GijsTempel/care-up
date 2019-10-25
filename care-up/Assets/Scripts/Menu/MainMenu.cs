@@ -5,12 +5,17 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using MBS;
 using System.Linq;
+using System;
 
-public class MainMenu : MonoBehaviour {
-    
+public class MainMenu : MonoBehaviour
+{
+
     private LoadingScreen loadingScreen;
     private PlayerPrefsManager prefs;
-	public string eMail="info@triplemotion.nl";
+    public string eMail = "info@triplemotion.nl";
+
+    [SerializeField]
+    private Text reward = default;
 
     public GameObject UpdatesPanel;
 
@@ -34,16 +39,18 @@ public class MainMenu : MonoBehaviour {
 #if UNITY_EDITOR
     private void Update()
     {
-
         if (Input.GetKeyDown(KeyCode.F4))
         {
             bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Character_Editor");
         }
     }
 
-    #endif
+#endif  
+
     private void Start()
     {
+        StoreViewModel.ShowRewardDialogue(reward);
+
         if (GameObject.Find("Preferences") != null)
         {
             loadingScreen = GameObject.Find("Preferences").GetComponent<LoadingScreen>();
@@ -140,7 +147,7 @@ public class MainMenu : MonoBehaviour {
             {
                 GameObject.Find("UMenuProManager/MenuCanvas/Account/InfoHolder/AccountPanelUI/NameHolder/InfoPanel/InfoHolder/UserNumber/BigNumber")
                .GetComponent<Text>().text = bigNumber;
-            }           
+            }
         }
     }
 
@@ -208,7 +215,7 @@ public class MainMenu : MonoBehaviour {
 
             canvas.transform.Find("MainMenu").gameObject.SetActive(false);
             //canvas.transform.Find("Logo").gameObject.SetActive(false);
-           // canvas.transform.Find("OptionsBtn").gameObject.SetActive(false);
+            // canvas.transform.Find("OptionsBtn").gameObject.SetActive(false);
 
             canvas.transform.Find("TutorialPopUp").gameObject.SetActive(true);
         }
@@ -227,11 +234,11 @@ public class MainMenu : MonoBehaviour {
 
     public void OnQuitButtonClick()
     {
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
-        #else
+#else
         Application.Quit();
-        #endif
+#endif
     }
 
     public void OnMainMenuButtonClick()
@@ -249,7 +256,7 @@ public class MainMenu : MonoBehaviour {
         GameObject canvas = GameObject.Find("Canvas");
 
         //canvas.transform.Find("MainMenu").gameObject.SetActive(false);
-		canvas.transform.Find("MainMenu").gameObject.SetActive(false);
+        canvas.transform.Find("MainMenu").gameObject.SetActive(false);
         //canvas.transform.Find("OptionsBtn").gameObject.SetActive(false);
         canvas.transform.Find("Opties").gameObject.SetActive(true);
     }
@@ -259,7 +266,7 @@ public class MainMenu : MonoBehaviour {
         GameObject canvas = GameObject.Find("Canvas");
 
         //canvas.transform.Find("MainMenu").gameObject.SetActive(true);
-		canvas.transform.Find("MainMenu").gameObject.SetActive(true);
+        canvas.transform.Find("MainMenu").gameObject.SetActive(true);
         //canvas.transform.Find("OptionsBtn").gameObject.SetActive(true);
         canvas.transform.Find("Opties").gameObject.SetActive(false);
     }
@@ -269,8 +276,8 @@ public class MainMenu : MonoBehaviour {
         GameObject canvas = GameObject.Find("Canvas");
 
         //canvas.transform.Find("MainMenu").gameObject.SetActive(false);
-		canvas.transform.Find("MainMenu").gameObject.SetActive(false);
-       // canvas.transform.Find("OptionsBtn").gameObject.SetActive(false);
+        canvas.transform.Find("MainMenu").gameObject.SetActive(false);
+        // canvas.transform.Find("OptionsBtn").gameObject.SetActive(false);
         canvas.transform.Find("ControlsUI").gameObject.SetActive(true);
     }
 
@@ -279,7 +286,7 @@ public class MainMenu : MonoBehaviour {
         GameObject canvas = GameObject.Find("Canvas");
 
         //canvas.transform.Find("MainMenu").gameObject.SetActive(true);
-		canvas.transform.Find("MainMenu").gameObject.SetActive(true);
+        canvas.transform.Find("MainMenu").gameObject.SetActive(true);
         //canvas.transform.Find("OptionsBtn").gameObject.SetActive(true);
         canvas.transform.Find("ControlsUI").gameObject.SetActive(false);
     }
@@ -289,7 +296,7 @@ public class MainMenu : MonoBehaviour {
         GameObject canvas = GameObject.Find("Canvas");
 
         //canvas.transform.Find("MainMenu").gameObject.SetActive(false);
-		canvas.transform.Find("MainMenu").gameObject.SetActive(false);
+        canvas.transform.Find("MainMenu").gameObject.SetActive(false);
         //canvas.transform.Find("OptionsBtn").gameObject.SetActive(false);
         canvas.transform.Find("BugReportUI").gameObject.SetActive(true);
     }
@@ -299,7 +306,7 @@ public class MainMenu : MonoBehaviour {
         GameObject canvas = GameObject.Find("Canvas");
 
         //canvas.transform.Find("MainMenu").gameObject.SetActive(true);
-		canvas.transform.Find("MainMenu").gameObject.SetActive(true);
+        canvas.transform.Find("MainMenu").gameObject.SetActive(true);
         //canvas.transform.Find("OptionsBtn").gameObject.SetActive(true);
         canvas.transform.Find("BugReportUI").gameObject.SetActive(false);
 
@@ -317,10 +324,10 @@ public class MainMenu : MonoBehaviour {
     }
 
     public void OnSendEmail()
-	{
-		System.Diagnostics.Process.Start (("mailto:" + eMail + "?subject=" + "Fout melding Care-Up."
-		+ "&body="
-		));
+    {
+        System.Diagnostics.Process.Start(("mailto:" + eMail + "?subject=" + "Fout melding Care-Up."
+        + "&body="
+        ));
         GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set("Uw mailprogramma wordt geopend.");
     }
 
@@ -408,9 +415,10 @@ public class MainMenu : MonoBehaviour {
         bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
     }
 
-    public void OnTutorialButtonClick_Full () {
+    public void OnTutorialButtonClick_Full()
+    {
         string sceneName = "Tutorial_Full";
         string bundleName = "tutorial_full";
-        bl_SceneLoaderUtils.GetLoader.LoadLevel (sceneName, bundleName);
+        bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using CareUp.Actions;
 using System.Linq;
 using AssetBundles;
+using UnityEngine.SceneManagement;
 
 public class GameUI : MonoBehaviour
 {
@@ -226,7 +227,7 @@ public class GameUI : MonoBehaviour
     public void CloseButtonPressed(bool value)
     {
         closeDialog.SetActive(value);
-       // closeButton.SetActive(!value);
+        // closeButton.SetActive(!value);
 
         if (value)
         {
@@ -236,12 +237,6 @@ public class GameUI : MonoBehaviour
         {
             ps.robotUIopened = false;
         }
-    }
-
-    public void ShowCurrencyPanel()
-    {
-        print(actionManager.Points);
-        CloseGame();
     }
 
     public void CloseGame()
@@ -458,7 +453,7 @@ public class GameUI : MonoBehaviour
         UpdateWalkToGroupButtons();
         UpdateWalkToGtoupUI(true);
 
-        foreach(InteractableObject o in Resources.FindObjectsOfTypeAll<InteractableObject>())
+        foreach (InteractableObject o in Resources.FindObjectsOfTypeAll<InteractableObject>())
         {
             o.assetSource = InteractableObject.AssetSource.Included;
         }
@@ -623,7 +618,7 @@ public class GameUI : MonoBehaviour
         GUIStyle style = new GUIStyle();
         style.normal.textColor = new Color(1f, 0f, 0f);
         style.fontSize = 30;
-        
+
 
         GUI.Label(new Rect(0, 0, 100, 100), ((int)(1.0f / Time.smoothDeltaTime)).ToString(), style);
         if (objectsIDsController != null)
@@ -631,9 +626,9 @@ public class GameUI : MonoBehaviour
             if (objectsIDsController.cheat)
                 GUI.Label(new Rect(30, 0, 100, 100), "Cheat enabled", style);
         }
-    
-    //debugSS = PlayerAnimationManager.animTimeout.ToString();
-    GUI.Label(new Rect(0, 30, 1000, 100), debugSS, style);
+
+        //debugSS = PlayerAnimationManager.animTimeout.ToString();
+        GUI.Label(new Rect(0, 30, 1000, 100), debugSS, style);
 #endif
     }
 

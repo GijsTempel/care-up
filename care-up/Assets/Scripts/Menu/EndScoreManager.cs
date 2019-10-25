@@ -267,7 +267,7 @@ public class EndScoreManager : MonoBehaviour
 
         time = gameTimer.CurrentTime;
 
-        points = actionManager.Points;
+        points = ActionManager.Points;
         score = Mathf.FloorToInt(3.0f * points / actionManager.TotalPoints);
 
         Debug.Log("Current points: " + points);

@@ -37,7 +37,7 @@ public class ActionManager : MonoBehaviour
     private bool penalized = false;
 
     private int totalPoints = 0;         // max points of scene
-    private int points = 0;              // current points  
+    private static int points = 0;              // current points  
 
     // list of descriptions of steps, player got penalty on
     private List<string> stepsList = new List<string>();
@@ -92,7 +92,7 @@ public class ActionManager : MonoBehaviour
     /// <summary>
     /// Current points during runtime.
     /// </summary>
-    public int Points
+    public static int Points
     {
         get { return points; }
         set { points = value; }
@@ -1970,5 +1970,5 @@ public class ActionManager : MonoBehaviour
 
         pointsText = points;
         percentageText = percentage;
-    }
+    }    
 }
