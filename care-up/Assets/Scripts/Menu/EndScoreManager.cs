@@ -20,6 +20,8 @@ public class EndScoreManager : MonoBehaviour
     public string completedSceneName;
     public string completedSceneBundle;
 
+    public Text reward;
+
     private List<string> steps;
     //private List<string> stepsDescr;
     private List<int> wrongStepIndexes;

@@ -17,24 +17,35 @@ public class StoreViewModel : MonoBehaviour
         currencyText.text = PlayerPrefsManager.storeManager.Currency.ToString();
     }
 
-    public static void ShowRewardDialogue(Text panelText)
+    public static bool ShowRewardDialogue(Text panelText, GameObject popUp = null)
     {
         if (SavedCoins <= 0)
             SavedCoins = ActionManager.Points;
 
         if (SavedCoins > 0)
         {
-            int rewardCoins = RoundToBigger(SavedCoins);
-
-            PlayerPrefsManager.storeManager.ModifyCurrencyBy(rewardCoins);
-
             if (panelText != null)
             {
+                int rewardCoins = RoundToBigger(SavedCoins);
                 panelText.text = "+" + rewardCoins.ToString();
-                GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(9);
+                PlayerPrefsManager.storeManager.ModifyCurrencyBy(rewardCoins);
+
+                UMP_Manager manager = GameObject.FindObjectOfType<UMP_Manager>();
+
+                if (popUp != null)
+                {
+                    popUp.SetActive(true);
+                }
+                else if (manager != null)
+                {
+                    manager.ShowDialog(9);
+                }
                 SavedCoins = ActionManager.Points = 0;
+
+                return true;
             }
         }
+        return false;
     }
 
     private static int RoundToBigger(int value)

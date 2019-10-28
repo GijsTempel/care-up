@@ -17,6 +17,9 @@ public class MainMenu : MonoBehaviour
     [SerializeField]
     private Text reward = default;
 
+    [SerializeField]
+    private GameObject rewardPanel = default;
+
     public GameObject UpdatesPanel;
 
     [System.Serializable]
@@ -49,7 +52,6 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
-        StoreViewModel.ShowRewardDialogue(reward);
 
         if (GameObject.Find("Preferences") != null)
         {
@@ -79,6 +81,9 @@ public class MainMenu : MonoBehaviour
             // }
 
             //handle updates panel
+
+            StoreViewModel.ShowRewardDialogue(reward);
+
             bool updatesSeen = PlayerPrefs.GetInt("_updatesSeen") == 1;
             string versionSeen = PlayerPrefs.GetString("__version", "");
             string currentVersion = Application.version;
@@ -329,6 +334,14 @@ public class MainMenu : MonoBehaviour
         + "&body="
         ));
         GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set("Uw mailprogramma wordt geopend.");
+    }
+
+    public void ShowReward()
+    {
+        if(!StoreViewModel.ShowRewardDialogue(reward, rewardPanel))
+        {
+            OnRetryButtonClick();
+        }
     }
 
     public void OnRetryButtonClick()
