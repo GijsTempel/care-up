@@ -268,6 +268,10 @@ public class QuizTab : MonoBehaviour
         transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().interactable = false;
         transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().blocksRaycasts = false;
 
+        Transform scrollbar = transform.Find("QuizTab/QuizAnsweredDynamicCanvas/ScrollViewDescription/Scrollbar Vertical");
+        if (scrollbar != null)
+            scrollbar.GetComponent<Scrollbar>().value = 1;
+
         Continue();
 
         transform.GetChild(0).gameObject.SetActive(true);

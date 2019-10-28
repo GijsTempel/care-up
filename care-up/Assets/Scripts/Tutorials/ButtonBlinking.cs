@@ -16,7 +16,6 @@ public class ButtonBlinking : MonoBehaviour
     public void OnEnable()
     {       
         prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
-        print(name);
         UpdateButtonState();
     }
 

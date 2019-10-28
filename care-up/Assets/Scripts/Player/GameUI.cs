@@ -5,9 +5,6 @@ using CareUp.Actions;
 using System.Linq;
 using AssetBundles;
 
-
-
-
 public class GameUI : MonoBehaviour
 {
     GameObject Player;
@@ -729,6 +726,11 @@ public class GameUI : MonoBehaviour
             {
                 GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
                 GameObject.FindObjectOfType<GameUI>().theoryPanel.SetActive(true);
+
+                Transform scrollBar = theoryPanel.transform.Find("ScrollViewMessege/Scrollbar Vertical");
+                if (scrollBar != null)
+                    scrollBar.GetComponent<Scrollbar>().value = 1;
+
                 GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Title").GetComponent<Text>().text = actionManager.MessageTitle;
                 GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Message").GetComponent<Text>().text = actionManager.Message;
             }
