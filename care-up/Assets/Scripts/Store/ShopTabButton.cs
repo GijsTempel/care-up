@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ShopTabButton : MonoBehaviour
 {
@@ -14,16 +12,5 @@ public class ShopTabButton : MonoBehaviour
     {
        SelectedImage.SetActive(value);
        UnselectedImage.SetActive(!value); 
-    }
-    
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    }   
 }

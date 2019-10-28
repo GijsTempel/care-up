@@ -25,7 +25,7 @@ public class ProductButton : MonoBehaviour
     {
         if (toSelect)
         {
-            GetComponent<Image>().color = Color.yellow;
+            GetComponent<Image>().color = new Color(0f, 214f, 255f, 255f);
         }
         else
         {
