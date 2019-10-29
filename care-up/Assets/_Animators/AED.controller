@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leftHand: 1
-  dropFrame: 5358
+  dropFrame: 5307
 --- !u!1102 &-9115167908294521011
 AnimatorState:
   serializedVersion: 5
@@ -92,6 +92,24 @@ MonoBehaviour:
   ObjNames:
   - Phone112Display3
   toShow: 0
+--- !u!114 &-8093489170804003872
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a536a9682af347488b2cfd1a613bf7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: AED_Wire1
+  HandToSwitch: 1
+  AnimationToChange: 1
+  ToFollowHoldingHand: 0
+  NewAnimationName: Wire1
+  ActionFrame: 0
 --- !u!1101 &-7814900232442860724
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -247,6 +265,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: _SQ1_Target
   resetCamera: 1
+--- !u!114 &-6540349861453085740
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfd1d24e9f498a642b6393e37bedc9e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SequenceName: AnimSeq_AED
+  TuggleFromCinematic: 1
+  keyFrames: 1e000000b801000031020000ff020000ee040000950500000f060000670a0000e20f0000d5120000c9150000801700009b180000881b0000
 --- !u!1107 &-6255440459986103778
 AnimatorStateMachine:
   serializedVersion: 5
@@ -404,7 +437,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectName: scissors
   unlock_frame: 1
-  lock_frame: 7030
+  lock_frame: 7170
   toActivate: 1
 --- !u!1101 &-5502765842217986541
 AnimatorStateTransition:
@@ -572,7 +605,10 @@ AnimatorState:
   - {fileID: -4133610178312269717}
   - {fileID: 1539766420693090895}
   - {fileID: 2661136334639457370}
-  - {fileID: 4424571866552221931}
+  - {fileID: -8093489170804003872}
+  - {fileID: 7277572132174069281}
+  - {fileID: -1242934202597212199}
+  - {fileID: -6540349861453085740}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -623,7 +659,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leftHand: 0
-  dropFrame: 5358
+  dropFrame: 5443
 --- !u!1101 &-4060563048576813513
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -770,7 +806,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectName: M2_A
   unlock_frame: 1
-  lock_frame: 7030
+  lock_frame: 7170
   toActivate: 1
 --- !u!114 &-2949900611328294623
 MonoBehaviour:
@@ -837,6 +873,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dropLeftFrame: 0
   dropRightFrame: 3861
+--- !u!114 &-1242934202597212199
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76a4f315e4e11d941865fa624024a887, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1101 &-1154289530244077690
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1135,7 +1183,7 @@ AnimatorController:
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
-    m_DefaultBool: 1
+    m_DefaultBool: 0
     m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
@@ -1453,7 +1501,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControlObjectName: 
-  showFrame: 5358
+  showFrame: 5443
   ObjNames:
   - LowerPadOnBody
   toShow: 1
@@ -1681,7 +1729,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400010, guid: 0ee30d12fd30d864c950a064b93b2010, type: 3}
+  m_Motion: {fileID: 7400176, guid: 0ee30d12fd30d864c950a064b93b2010, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -1704,22 +1752,6 @@ MonoBehaviour:
   hand: 1
   GhostObjectTarget: 
   destroyOnDrop: 0
---- !u!114 &4424571866552221931
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 522f6b56c9a2b7d4d8b535cd9870c5c7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  angleFrame: 0
-  angle: {x: 8, y: 0, z: 0}
-  saveCameraOrientation: 0
-  restoreCameraOrientation: 0
 --- !u!114 &4501382167763598122
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2034,6 +2066,22 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &7277572132174069281
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 839bcc7f24a9c47f8af28e853187bfa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: AED_Wire1
+  unlock_frame: 1
+  lock_frame: 7170
+  toActivate: 1
 --- !u!1107 &7552863910907657390
 AnimatorStateMachine:
   serializedVersion: 5
@@ -2182,7 +2230,7 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400008, guid: 0ee30d12fd30d864c950a064b93b2010, type: 3}
-  m_Tag: UI_On
+  m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
