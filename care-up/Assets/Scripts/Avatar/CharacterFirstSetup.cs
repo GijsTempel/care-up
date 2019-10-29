@@ -6,18 +6,18 @@ public class CharacterFirstSetup : MonoBehaviour
 {
     public InputField BigNumberHolder;
     public InputField FullName;
-    int currentTab = 0;
     public List<GameObject> tabs;
     public Button NextButton;
     public PlayerAvatar Avatar;
-    int currentChar = 0;
+    private int currentChar = 0;
+    private int currentTab = 0;
 
     PlayerPrefsManager pref;
     
-    // Start is called before the first frame update
     void Start()
     {
         pref = GameObject.FindObjectOfType<PlayerPrefsManager>();
+
         if (pref != null)
         {
             if (!pref.firstStart)
