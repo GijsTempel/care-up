@@ -173,7 +173,7 @@ public class TabGroup : MonoBehaviour
         }
 
         UpdatePurchesBtn();
-    }   
+    }
 
     public void UpdatePurchesBtn()
     {
@@ -401,6 +401,11 @@ public class TabGroup : MonoBehaviour
                     btn.SetDressOn(true);
                 }
             }
+
+            if (pages[i].transform.GetChild(1).gameObject.activeInHierarchy)
+                itemParent.GetComponent<GridLayoutGroup>().spacing = new Vector2(20f, 35f);
+            else
+                itemParent.GetComponent<GridLayoutGroup>().spacing = new Vector2(40f, 35f);
         }
     }
 
