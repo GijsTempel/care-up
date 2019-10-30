@@ -41,6 +41,7 @@ public class CharacterPanelManager : MonoBehaviour
         AdjustCharacter();
         loadCharacter.LoadCharacter();
         GameObject.FindObjectOfType<TabGroup>().DisplayItemsInStore();
+        GameObject.FindObjectOfType<StoreViewModel>().UpdateCurrancyPanel();
     }
 
     public void ShowConfirmationPanel(bool value)
@@ -72,15 +73,20 @@ public class CharacterPanelManager : MonoBehaviour
     private void Start()
     {
         Initialize();
-    } 
+    }
 
     private void Initialize()
     {
         uMP_Manager = GameObject.FindObjectOfType<UMP_Manager>();
         loadCharacter = GameObject.FindObjectOfType<LoadCharacterScene>();
         сarrousel = GameObject.FindObjectOfType<CharacterСarousel>();
-        currencyText.text = storeManager.Currency.ToString();
-        //buyButton?.GetComponent<Button>().onClick.AddListener(BuyCharacter);
+        UpdateCurrencyPanel();
+    }
+
+    public void UpdateCurrencyPanel()
+    {
+        if (currencyText != null)
+            currencyText.text = storeManager.Currency.ToString();
     }
 
     public void AdjustCharacter()

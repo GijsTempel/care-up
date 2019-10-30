@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class StoreViewModel : MonoBehaviour
 {
-    private Text currencyText;
+    private GameObject currencyText;
     private Text presentNumberText;
 
     public static int SavedCoins { get; set; }
@@ -13,8 +13,15 @@ public class StoreViewModel : MonoBehaviour
 
     private void Start()
     {
-        currencyText = GameObject.Find("NumbersStackPanel/CurrencyPanel/Panel/Text").GetComponent<Text>();
-        currencyText.text = PlayerPrefsManager.storeManager.Currency.ToString();
+        UpdateCurrancyPanel();
+    }
+
+    public void UpdateCurrancyPanel()
+    {
+        currencyText = GameObject.Find("NumbersStackPanel/CurrencyPanel/Panel/Text");
+
+        if (currencyText != null)
+            currencyText.GetComponent<Text>().text = PlayerPrefsManager.storeManager.Currency.ToString();
     }
 
     public static bool ShowRewardDialogue(Text panelText, GameObject popUp = null)
