@@ -73,8 +73,8 @@ public class StoreManager
 
     public void Init(string storeXml = "Store", string characterStoreXml = "CharacterStore")
     {
-        bool devDropAllPurchases = true; // change this to true once to clear all purchases
-        bool devAddCurrency = true; // change this to true once to get 100 currency
+        bool devDropAllPurchases = false; // change this to true once to clear all purchases
+        bool devAddCurrency = false; // change this to true once to get 100 currency
 
         // load up all items from xml into the list
         TextAsset textAsset = (TextAsset)Resources.Load("Xml/" + storeXml);
@@ -141,37 +141,37 @@ public class StoreManager
 
             Gender characterGender = (gender == "Female") ? Gender.Female : Gender.Male;
             PlayerAvatarData playerAvatar = new PlayerAvatarData(characterGender, headType, bodyType, glassesType, hatType, mouthType, eyeType);
-            // CharacterItem CharacterItem(index, price, purchased, playerAvatar)
+            //CharacterItem CharacterItem(index, price, purchased, playerAvatar)
             CharacterItem characterItem = new CharacterItem(index, price, purchased, playerAvatar);
-            //if (!devDropAllPurchases)
-            //{
-            //    string[][] charactersCategory = DatabaseManager.FetchCategory("CharacterItem_" + index.ToString());
-            //    if (charactersCategory != null)
-            //    {
-            //        foreach (string[] field in charactersCategory)
-            //        {
-            //            switch (field[0])
-            //            {
-            //                case "Index":
-            //                    int.TryParse(field[1], out index); break;
-            //                case "Price":
-            //                    int.TryParse(field[1], out price); break;
-            //                case "Purchased":
-            //                    bool.TryParse(field[1], out purchased); break;
-            //                case "Sex":
-            //                    gender = field[1]; break;
-            //                case "Head":
-            //                    int.TryParse(field[1], out headType); break;
-            //                case "Body":
-            //                    int.TryParse(field[1], out bodyType); break;
-            //                case "Glasses":
-            //                    int.TryParse(field[1], out glassesType); break;
-            //                case "Hat":
-            //                    hatType = field[1]; break;
-            //            }
-            //        }
-            //    }
-            //}
+            if (!devDropAllPurchases)
+            {
+                string[][] charactersCategory = DatabaseManager.FetchCategory("CharacterItem_" + index.ToString());
+                if (charactersCategory != null)
+                {
+                    foreach (string[] field in charactersCategory)
+                    {
+                        switch (field[0])
+                        {
+                            case "Index":
+                                int.TryParse(field[1], out index); break;
+                            case "Price":
+                                int.TryParse(field[1], out price); break;
+                            case "Purchased":
+                                bool.TryParse(field[1], out purchased); break;
+                            case "Sex":
+                                gender = field[1]; break;
+                            case "Head":
+                                int.TryParse(field[1], out headType); break;
+                            case "Body":
+                                int.TryParse(field[1], out bodyType); break;
+                            case "Glasses":
+                                int.TryParse(field[1], out glassesType); break;
+                            case "Hat":
+                                hatType = field[1]; break;
+                        }
+                    }
+                }
+            }
             PlayerAvatarData customizedPlayerAvatar = new PlayerAvatarData(characterGender, headType, bodyType, glassesType, hatType, mouthType, eyeType);
             characterItem.playerAvatar = customizedPlayerAvatar;
             CharacterItems.Add(characterItem);
@@ -181,7 +181,7 @@ public class StoreManager
         int.TryParse(DatabaseManager.FetchField("Store", "Currency"), out currentCurrency);
         int.TryParse(DatabaseManager.FetchField("Store", "Presents"), out currentPresents);
 
-        if (devAddCurrency) ModifyCurrencyBy(100);
+       /* if (devAddCurrency)*/ ModifyCurrencyBy(300);
     }
 
     public void ModifyCurrencyBy(int amount)

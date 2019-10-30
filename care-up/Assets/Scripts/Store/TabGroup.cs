@@ -243,6 +243,10 @@ public class TabGroup : MonoBehaviour
                     mainAvatar.UpdateCharacter();
                 }
             }
+            else
+            {
+               GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(8);
+            }
         }
         ShowConfirmPanel(false);
         UpdatePurchesBtn();
