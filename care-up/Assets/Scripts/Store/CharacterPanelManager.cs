@@ -36,12 +36,19 @@ public class CharacterPanelManager : MonoBehaviour
         }
     }
     public void Adjust()
-    {
+    {       
         uMP_Manager.ChangeWindow(9);
         AdjustCharacter();
         loadCharacter.LoadCharacter();
-        GameObject.FindObjectOfType<TabGroup>().DisplayItemsInStore();
-        GameObject.FindObjectOfType<StoreViewModel>().UpdateCurrancyPanel();
+        GameObject.FindObjectOfType<StoreViewModel>()?.UpdateCurrancyPanel();
+
+        TabGroup tabGroup = GameObject.FindObjectOfType<TabGroup>();
+
+        if (tabGroup != null)
+        {
+            tabGroup.DisplayItemsInStore();
+            tabGroup.ResetBuyBtn();
+        }
     }
 
     public void ShowConfirmationPanel(bool value)

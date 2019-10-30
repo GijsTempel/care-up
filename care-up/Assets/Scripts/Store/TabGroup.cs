@@ -173,7 +173,7 @@ public class TabGroup : MonoBehaviour
         }
 
         UpdatePurchesBtn();
-    }
+    }   
 
     public void UpdatePurchesBtn()
     {
@@ -195,6 +195,11 @@ public class TabGroup : MonoBehaviour
         {
             buyBtn.SetActive(false);
         }
+    }
+
+    public void ResetBuyBtn()
+    {
+        buyBtn.SetActive(false);
     }
 
     public void PurchesBtnClicked()
