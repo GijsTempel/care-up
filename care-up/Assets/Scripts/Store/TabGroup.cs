@@ -251,7 +251,7 @@ public class TabGroup : MonoBehaviour
         ShowConfirmPanel(false);
         UpdatePurchesBtn();
         Dress();
-        carousel.UpdateSelected(mainAvatar.avatarData);
+        //carousel.UpdateSelected(mainAvatar.avatarData);
     }
 
     public void InitializeTabPanel()
