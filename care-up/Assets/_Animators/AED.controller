@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leftHand: 1
-  dropFrame: 5307
+  dropFrame: 4316
 --- !u!1102 &-9115167908294521011
 AnimatorState:
   serializedVersion: 5
@@ -135,33 +135,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!1102 &-7685293277592633666
-AnimatorState:
-  serializedVersion: 5
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: empty1_5
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: -5975082752278003734}
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400176, guid: 0ee30d12fd30d864c950a064b93b2010, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!1101 &-7633096582779650721
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -199,7 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1d577ba52e334ef39dfa878ef5c62b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addFrame: 4654
+  addFrame: 3663
   objectName: PadsJoined
   hand: 0
   GhostObjectTarget: 
@@ -296,7 +269,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SequenceName: AnimSeq_AED
   TuggleFromCinematic: 1
-  keyFrames: 1e000000b801000031020000ff020000ee040000950500000f060000670a0000e20f0000d5120000c9150000801700009b180000881b0000
+  keyFrames: 1e000000b801000031020000ff020000ee0400009105000017060000710b0000ec0e0000e8110000aa130000b8140000
 --- !u!1107 &-6255440459986103778
 AnimatorStateMachine:
   serializedVersion: 5
@@ -320,17 +293,13 @@ AnimatorStateMachine:
     m_Position: {x: 470, y: -270, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4651203050507842835}
-    m_Position: {x: 580, y: 380, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 7655821376862297457}
-    m_Position: {x: 280, y: 380, z: 0}
+    m_Position: {x: 370, y: 390, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: 594882167822013843}
   - {fileID: 641944701684083419}
   - {fileID: -7397088113424353217}
-  m_EntryTransitions:
-  - {fileID: 1436805627198373676}
+  m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 110, y: -120, z: 0}
@@ -338,50 +307,36 @@ AnimatorStateMachine:
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: 8556911589546854302}
---- !u!1101 &-5991694968188169722
-AnimatorStateTransition:
+--- !u!114 &-5957176197512293630
+MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3bfdc7b806dd4226b7dbf32626f4a4e, type: 3}
   m_Name: 
-  m_Conditions: []
-  m_DstStateMachine: {fileID: 0}
-  m_DstState: {fileID: -4651203050507842835}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 0
-  serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.8333334
-  m_HasExitTime: 1
-  m_HasFixedDuration: 1
-  m_InterruptionSource: 0
-  m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
---- !u!1101 &-5975082752278003734
-AnimatorStateTransition:
+  m_EditorClassIdentifier: 
+  audioFileName: Step_1_AED
+  audioFrame: 1717
+  volume: 1
+--- !u!114 &-5782421794761227782
+MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3bfdc7b806dd4226b7dbf32626f4a4e, type: 3}
   m_Name: 
-  m_Conditions: []
-  m_DstStateMachine: {fileID: 0}
-  m_DstState: {fileID: 3405800815251510984}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 0
-  serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.8333334
-  m_HasExitTime: 1
-  m_HasFixedDuration: 1
-  m_InterruptionSource: 0
-  m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
+  m_EditorClassIdentifier: 
+  audioFileName: Step_5_AED
+  audioFrame: 5169
+  volume: 1
 --- !u!1101 &-5748323536208625052
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -417,7 +372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leftHand: 0
-  dropFrame: 4812
+  dropFrame: 3841
 --- !u!1101 &-5654236632707288433
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -440,6 +395,36 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-5621770508069438437
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3bfdc7b806dd4226b7dbf32626f4a4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioFileName: Step_3_AED
+  audioFrame: 4957
+  volume: 1
+--- !u!114 &-5603136821240669446
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b03eeecfc46c784a9e981273a503cc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  swapFrame: 3414
+  swapObjName: PadsBagOpened
+  leftHand: 1
 --- !u!114 &-5516041588176518624
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -454,7 +439,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectName: scissors
   unlock_frame: 1
-  lock_frame: 7210
+  lock_frame: 7120
   toActivate: 1
 --- !u!1101 &-5502765842217986541
 AnimatorStateTransition:
@@ -520,7 +505,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db02453133b0ab94d815dca8a28bbd6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionFrame: 3357
+  actionFrame: 2223
   objectName: scissors
   hand: 0
 --- !u!1101 &-4915620088079310321
@@ -558,7 +543,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControlObjectName: M2_A
-  showFrame: 3968
+  showFrame: 2832
   ObjNames:
   - M2_man:Male_TSihrt
   toShow: 0
@@ -598,7 +583,6 @@ AnimatorState:
   - {fileID: -1308514307698753888}
   - {fileID: -4863763573670379416}
   - {fileID: 5300875014698817643}
-  - {fileID: 6852718274745204055}
   - {fileID: 957410781327972129}
   - {fileID: 4374316730595767488}
   - {fileID: 5507727817654232105}
@@ -628,6 +612,12 @@ AnimatorState:
   - {fileID: -6540349861453085740}
   - {fileID: -7130795412134909173}
   - {fileID: -1285845669038961114}
+  - {fileID: -5603136821240669446}
+  - {fileID: -5957176197512293630}
+  - {fileID: -456469659216848269}
+  - {fileID: -5621770508069438437}
+  - {fileID: 7952866151186410162}
+  - {fileID: -5782421794761227782}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -678,7 +668,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leftHand: 0
-  dropFrame: 5443
+  dropFrame: 4452
 --- !u!1101 &-4060563048576813513
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -713,7 +703,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1d577ba52e334ef39dfa878ef5c62b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addFrame: 5141
+  addFrame: 4150
   objectName: LowerPad
   hand: 0
   GhostObjectTarget: 
@@ -731,7 +721,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControlObjectName: M2_A
-  showFrame: 3267
+  showFrame: 2127
   ObjNames:
   - M2_man:Male_casualsuit06.002
   toShow: 0
@@ -759,12 +749,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d1d577ba52e334ef39dfa878ef5c62b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addFrame: 4405
+  addFrame: 3414
   objectName: PadsBagOpened
   hand: 1
   GhostObjectTarget: 
@@ -825,7 +815,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectName: M2_A
   unlock_frame: 1
-  lock_frame: 7210
+  lock_frame: 7120
   toActivate: 1
 --- !u!114 &-2949900611328294623
 MonoBehaviour:
@@ -891,7 +881,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dropLeftFrame: 0
-  dropRightFrame: 3861
+  dropRightFrame: 2727
 --- !u!114 &-1285845669038961114
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -982,28 +972,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1d577ba52e334ef39dfa878ef5c62b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addFrame: 4833
+  addFrame: 3842
   objectName: UpperPad
   hand: 0
   GhostObjectTarget: 
   destroyOnDrop: 0
---- !u!1109 &-697646200335977751
-AnimatorTransition:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: Start_AED_SQ1
-    m_EventTreshold: 0
-  m_DstStateMachine: {fileID: 0}
-  m_DstState: {fileID: -7685293277592633666}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 0
-  serializedVersion: 1
 --- !u!114 &-590023424429513564
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1017,7 +990,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leftHand: 0
-  dropFrame: 4544
+  dropFrame: 3553
 --- !u!114 &-547318670081923215
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1033,6 +1006,21 @@ MonoBehaviour:
   audioFileName: Sound_Effects/Audio_TableCleaning
   audioFrame: 5
   volume: 15
+--- !u!114 &-456469659216848269
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3bfdc7b806dd4226b7dbf32626f4a4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioFileName: Step_2_AED
+  audioFrame: 3780
+  volume: 1
 --- !u!114 &-221440681566023616
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1046,7 +1034,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControlObjectName: UpperPad
-  showFrame: 4913
+  showFrame: 3922
   ObjNames:
   - UpperPadCover
   toShow: 0
@@ -1219,7 +1207,7 @@ AnimatorController:
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
-    m_DefaultBool: 1
+    m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
@@ -1270,7 +1258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1d577ba52e334ef39dfa878ef5c62b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addFrame: 5221
+  addFrame: 4230
   objectName: Pads_Cover
   hand: 1
   GhostObjectTarget: 
@@ -1365,7 +1353,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a4f7766142ffc1468fdda1d3e3f1781, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickFrame: 4074
+  pickFrame: 3021
   objectName: AED_Low_InHouse_
   hand: 0
 --- !u!1101 &1048758620388223854
@@ -1390,23 +1378,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!1109 &1436805627198373676
-AnimatorTransition:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: Start_AED_SQ1
-    m_EventTreshold: 0
-  m_DstStateMachine: {fileID: 0}
-  m_DstState: {fileID: 7655821376862297457}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 0
-  serializedVersion: 1
 --- !u!114 &1539766420693090895
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1420,7 +1391,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControlObjectName: 
-  showFrame: 5051
+  showFrame: 4060
   ObjNames:
   - UpperPadOnBody
   toShow: 1
@@ -1537,7 +1508,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControlObjectName: 
-  showFrame: 5443
+  showFrame: 4452
   ObjNames:
   - LowerPadOnBody
   toShow: 1
@@ -1566,7 +1537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1d577ba52e334ef39dfa878ef5c62b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addFrame: 4405
+  addFrame: 3414
   objectName: PadsBagOpened_Head
   hand: 0
   GhostObjectTarget: 
@@ -1709,13 +1680,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftHand: 0
-  dropFrame: 5051
+  leftHand: 1
+  dropFrame: 3412
 --- !u!1102 &3983404206857363854
 AnimatorState:
   serializedVersion: 5
@@ -1783,7 +1754,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1d577ba52e334ef39dfa878ef5c62b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addFrame: 4191
+  addFrame: 3178
   objectName: PadsBagClosed
   hand: 1
   GhostObjectTarget: 
@@ -1830,7 +1801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1d577ba52e334ef39dfa878ef5c62b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addFrame: 4913
+  addFrame: 3922
   objectName: Pads_Cover
   hand: 1
   GhostObjectTarget: 
@@ -1848,7 +1819,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControlObjectName: M2_A
-  showFrame: 3968
+  showFrame: 2832
   ObjNames:
   - M2_man:Male_TSihrtOpened2
   toShow: 1
@@ -1887,7 +1858,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dropLeftFrame: 0
-  dropRightFrame: 4310
+  dropRightFrame: 3297
 --- !u!1101 &5535683755792638187
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1923,7 +1894,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControlObjectName: LowerPad
-  showFrame: 5221
+  showFrame: 4230
   ObjNames:
   - LowerPadCover
   toShow: 0
@@ -1940,7 +1911,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControlObjectName: PadsBagOpened
-  showFrame: 4654
+  showFrame: 3663
   ObjNames:
   - LPad
   - UPad
@@ -2005,8 +1976,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftHand: 1
-  dropFrame: 4404
+  leftHand: 0
+  dropFrame: 4060
 --- !u!1101 &6582445050847660404
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -2032,23 +2003,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!114 &6852718274745204055
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ControlObjectName: 
-  showFrame: 2723
-  ObjNames:
-  - AED_Low_InHouse_
-  toShow: 1
 --- !u!1102 &6986048595109132906
 AnimatorState:
   serializedVersion: 5
@@ -2148,33 +2102,6 @@ AnimatorStateMachine:
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: 6208801811552389841}
---- !u!1102 &7655821376862297457
-AnimatorState:
-  serializedVersion: 5
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: empty1_5
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: -5991694968188169722}
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400176, guid: 0ee30d12fd30d864c950a064b93b2010, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!114 &7796254338810973405
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2188,7 +2115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControlObjectName: M2_A
-  showFrame: 3267
+  showFrame: 2127
   ObjNames:
   - M2_man:Male_OpenedHoodie
   toShow: 1
@@ -2226,6 +2153,21 @@ MonoBehaviour:
   ObjNames:
   - Phone112Display4
   toShow: 0
+--- !u!114 &7952866151186410162
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3bfdc7b806dd4226b7dbf32626f4a4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioFileName: Step_4_AED
+  audioFrame: 5041
+  volume: 1
 --- !u!114 &8483902085173516540
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2284,7 +2226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leftHand: 1
-  dropFrame: 5000
+  dropFrame: 4060
 --- !u!1107 &8848366984342097284
 AnimatorStateMachine:
   serializedVersion: 5
@@ -2308,17 +2250,13 @@ AnimatorStateMachine:
     m_Position: {x: 430, y: -170, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3405800815251510984}
-    m_Position: {x: 510, y: 350, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -7685293277592633666}
-    m_Position: {x: 260, y: 350, z: 0}
+    m_Position: {x: 400, y: 360, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: 6582445050847660404}
   - {fileID: 3879101760317871588}
   - {fileID: -7633096582779650721}
-  m_EntryTransitions:
-  - {fileID: -697646200335977751}
+  m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 50, y: -100, z: 0}
@@ -2357,4 +2295,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leftHand: 1
-  dropFrame: 4812
+  dropFrame: 3841
