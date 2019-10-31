@@ -2,7 +2,6 @@
 using UnityEngine;
 using System.Xml;
 using CareUpAvatar;
-using UnityEngine.UI;
 
 public class StoreItem
 {
@@ -181,7 +180,7 @@ public class StoreManager
         int.TryParse(DatabaseManager.FetchField("Store", "Currency"), out currentCurrency);
         int.TryParse(DatabaseManager.FetchField("Store", "Presents"), out currentPresents);
 
-       /* if (devAddCurrency)*/ ModifyCurrencyBy(300);
+       if (devAddCurrency) ModifyCurrencyBy(300);
     }
 
     public void ModifyCurrencyBy(int amount)
