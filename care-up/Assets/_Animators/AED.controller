@@ -269,7 +269,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SequenceName: AnimSeq_AED
   TuggleFromCinematic: 1
-  keyFrames: 1e000000b801000031020000ff020000ee0400009105000017060000710b0000ec0e0000e8110000aa130000b8140000
+  keyFrames: 1e000000b801000031020000ff020000ee0400009105000017060000710b0000ec0e0000e8110000aa130000b81400004f1b0000
+--- !u!1109 &-6420573642072954526
+AnimatorTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: Start_AED_SQ1
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: -4651203050507842835}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 1
 --- !u!1107 &-6255440459986103778
 AnimatorStateMachine:
   serializedVersion: 5
@@ -299,7 +316,8 @@ AnimatorStateMachine:
   - {fileID: 594882167822013843}
   - {fileID: 641944701684083419}
   - {fileID: -7397088113424353217}
-  m_EntryTransitions: []
+  m_EntryTransitions:
+  - {fileID: -6420573642072954526}
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 110, y: -120, z: 0}
@@ -618,6 +636,10 @@ AnimatorState:
   - {fileID: -5621770508069438437}
   - {fileID: 7952866151186410162}
   - {fileID: -5782421794761227782}
+  - {fileID: 1845278279600261360}
+  - {fileID: 8255894278163856637}
+  - {fileID: 8599712356939107351}
+  - {fileID: 6020111457950593403}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -1417,6 +1439,23 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &1845278279600261360
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: AED_Low_InHouse_
+  showFrame: 1720
+  ObjNames:
+  - OnOffButton_InHouse
+  toShow: 0
 --- !u!1101 &2007615747764407944
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -1512,6 +1551,23 @@ MonoBehaviour:
   ObjNames:
   - LowerPadOnBody
   toShow: 1
+--- !u!1109 &3137793597589666123
+AnimatorTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: Start_AED_SQ1
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 3405800815251510984}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 1
 --- !u!114 &3228838982963236034
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1938,6 +1994,22 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &6020111457950593403
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0b960189e3c63e4bbf73b5119c0281e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionFrame: 5150
+  trigger: StopBlinking
+  ObjectName: AED_Low_InHouse_
+  atTheEnd: 0
 --- !u!1102 &6208801811552389841
 AnimatorState:
   serializedVersion: 5
@@ -2168,6 +2240,23 @@ MonoBehaviour:
   audioFileName: Step_4_AED
   audioFrame: 5041
   volume: 1
+--- !u!114 &8255894278163856637
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: AED_Low_InHouse_
+  showFrame: 1720
+  ObjNames:
+  - OnOffButton_InHouse_Blinked
+  toShow: 1
 --- !u!114 &8483902085173516540
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2227,6 +2316,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftHand: 1
   dropFrame: 4060
+--- !u!114 &8599712356939107351
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0b960189e3c63e4bbf73b5119c0281e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionFrame: 5040
+  trigger: StartBlinking
+  ObjectName: AED_Low_InHouse_
+  atTheEnd: 0
 --- !u!1107 &8848366984342097284
 AnimatorStateMachine:
   serializedVersion: 5
@@ -2256,7 +2361,8 @@ AnimatorStateMachine:
   - {fileID: 6582445050847660404}
   - {fileID: 3879101760317871588}
   - {fileID: -7633096582779650721}
-  m_EntryTransitions: []
+  m_EntryTransitions:
+  - {fileID: 3137793597589666123}
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 50, y: -100, z: 0}

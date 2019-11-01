@@ -115,34 +115,33 @@
    value="KeepDoing"
    description="[KeepDoing]"
    points="1"
+   expected="good"
+   extra="Controleer het medicijn."
+   messageTitle="Some header here"
+   messageContent="some test here"
    type="sequenceStep"
   ></action>
 
   <action
- comment="Clean up materials"
- index="13"
- value=""
- description="[Ruim de materialen op]"
- points="1"
- type="sequenceStep"
+  comment="1. Apply hand hygiene"
+   index="13"
+   points="3"
+   description="[Pas handhygiëne]"
+   type="use"
+   value="HandCleaner"
+   extra="Pas handhygiëne toe"
+   messageTitle="Handhygiëne"
+   messageContent="Handhygiëne is het meest belangrijk om besmetting met ziektekiemen te voorkomen. Reinig je handen altijd op de juiste manier en op het juiste moment. Begin een handeling altijd met handhygiëne."
+  
   ></action>
 
   <action
- comment="Apply handhygiene"
- index="14"
- value=""
- description="[Pas handhygiene toe]"
- points="1"
- type="sequenceStep"
-  ></action>
-
-  <action
- comment="Record the actions, time, duration and findings"
- index="15"
- value=""
- description="[recordActions]"
- points="1"
- type="sequenceStep"
+   points="3"
+   description="Teken de toedienlijst af of noteer het tijdstip, het soort medicijn, de concentratie, de hoeveelheid en de wijze van toediening. Noteer tot slot je bevindingen."
+   index="14"
+   type="use"
+   value="PaperAndPen"
+   extra="Teken de toedienlijst af en noteer tijdstip, soort medicijn, concentratie, hoeveelheid, wijze van toediening. Noteer tot slot je bevindingen."
   ></action>
 
 </ActionList>
