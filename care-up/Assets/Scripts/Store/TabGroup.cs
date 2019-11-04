@@ -242,16 +242,16 @@ public class TabGroup : MonoBehaviour
                     mainAvatar.avatarData.bodyType = selectedItemBtn.item.index;
                     mainAvatar.UpdateCharacter();
                 }
+                carousel.UpdateSelected(mainAvatar.avatarData);
             }
             else
             {
-               GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(8);
+                GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(8);
             }
         }
         ShowConfirmPanel(false);
         UpdatePurchesBtn();
         Dress();
-        //carousel.UpdateSelected(mainAvatar.avatarData);
     }
 
     public void InitializeTabPanel()
