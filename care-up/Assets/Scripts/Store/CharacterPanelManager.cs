@@ -35,6 +35,12 @@ public class CharacterPanelManager : MonoBehaviour
             ShowConfirmationPanel(true);
         }
     }
+
+    private void OnEnable()
+    {
+        UpdateCurrencyPanel();
+    }
+
     public void Adjust()
     {       
         uMP_Manager.ChangeWindow(9);
