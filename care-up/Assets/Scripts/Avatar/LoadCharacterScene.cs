@@ -16,7 +16,6 @@ public class LoadCharacterScene : MonoBehaviour
         PlayerAvatar mainAvatar = GameObject.Find("MainPlayerAvatar").GetComponent<PlayerAvatar>();
 
         mainAvatar.avatarData = GetCurrentData();
-        print(GetCurrentData().eyeType);
         mainAvatar.UpdateCharacter();
     }
 
