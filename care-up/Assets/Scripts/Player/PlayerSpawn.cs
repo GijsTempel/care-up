@@ -34,8 +34,13 @@ public class PlayerSpawn : MonoBehaviour
             UIPrefab = Instantiate(Resources.Load("NecessaryPrefabs/UI/UI") as GameObject);
             UIPrefab.name = "UI";
         }
+        Vector3 r = transform.rotation.eulerAngles;
 
-        GameObject player = Instantiate(playerPrefab, transform.position, transform.rotation);
+        GameObject player = Instantiate(playerPrefab, transform.position, Quaternion.Euler(0, r.y, r.z));
+        Transform camTransform = player.transform.Find("CinematicControl/Arms/Armature/Hips/Spine/Spine1/Spine2/Neck/Head/Camera");
+        Vector3 co = camTransform.rotation.eulerAngles;
+        co.x = r.x;
+        camTransform.rotation = Quaternion.Euler(co);
         player.name = "Player";
 
         if (GetComponent<Animator>() != null)
