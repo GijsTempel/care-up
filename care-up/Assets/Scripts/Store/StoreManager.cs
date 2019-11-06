@@ -178,7 +178,7 @@ public class StoreManager
 
         // get amount of currency/presents saved
         int.TryParse(DatabaseManager.FetchField("Store", "Currency"), out currentCurrency);
-        int.TryParse(DatabaseManager.FetchField("Store", "Presents"), out currentPresents);
+        //int.TryParse(DatabaseManager.FetchField("Store", "Presents"), out currentPresents);
 
        if (devAddCurrency) ModifyCurrencyBy(300);
     }
