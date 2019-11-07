@@ -6,9 +6,6 @@ using System.Linq;
 using AssetBundles;
 using UnityEngine.SceneManagement;
 
-
-
-
 public class GameUI : MonoBehaviour
 {
     GameObject Player;
@@ -95,6 +92,7 @@ public class GameUI : MonoBehaviour
     PlayerScript ps;
     bool ICPCurrentState = false;
     public bool allowObjectControlUI = true;
+    public GameObject PatientInfoPanel;
     public enum ItemControlButtonType
     {
         None,
@@ -234,7 +232,7 @@ public class GameUI : MonoBehaviour
 
         if (value)
         {
-            ps.robotUIopened = true;
+            //ps.robotUIopened = true;
         }
         else
         {
@@ -357,6 +355,7 @@ public class GameUI : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        PatientInfoPanel = GameObject.Find("PatientInfo");
         gameLogic = GameObject.Find("GameLogic");
         objectsIDsController = GameObject.FindObjectOfType<ObjectsIDsController>();
         MovementSideButtons = GameObject.Find("MovementSideButtons");
@@ -381,6 +380,7 @@ public class GameUI : MonoBehaviour
         decombineButton_right.SetActive(false);
         noTargetButton.SetActive(false);
         ItemControlPanel.SetActive(false);
+        //PatientInfoPanel.SetActive(false);
         noTargetButton_right.SetActive(false);
         DropRightButton.SetActive(false);
         DropLeftButton.SetActive(false);
@@ -729,6 +729,11 @@ public class GameUI : MonoBehaviour
             {
                 GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
                 GameObject.FindObjectOfType<GameUI>().theoryPanel.SetActive(true);
+
+                Transform scrollBar = theoryPanel.transform.Find("ScrollViewMessege/Scrollbar Vertical");
+                if (scrollBar != null)
+                    scrollBar.GetComponent<Scrollbar>().value = 1;
+
                 GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Title").GetComponent<Text>().text = actionManager.MessageTitle;
                 GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Message").GetComponent<Text>().text = actionManager.Message;
             }
@@ -975,6 +980,7 @@ public class GameUI : MonoBehaviour
             if (PlayerScript.actionsLocked)
                 showItemControlPanel = false;
             ItemControlPanel.SetActive(showItemControlPanel);
+            PatientInfoPanel.SetActive(showItemControlPanel);
             MovementSideButtons.SetActive(showItemControlPanel);
 
             ICPCurrentState = ItemControlPanel.activeSelf;
@@ -1008,6 +1014,7 @@ public class GameUI : MonoBehaviour
             RightSideButton.gameObject.SetActive(false);
             WalkToGroupPanel.SetActive(false);
             ItemControlPanel.SetActive(false);
+            PatientInfoPanel.SetActive(false);
         }
         else
         {
