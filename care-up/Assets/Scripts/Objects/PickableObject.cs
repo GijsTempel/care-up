@@ -430,7 +430,7 @@ public class PickableObject : InteractableObject
 
     public void InstantiateGhostObject(Vector3 pos, Quaternion rot, int posID = 0)
     {
-        print("_CREATE Ghost!!! ");
+        // print("_CREATE Ghost!!! ");
         bool from_bundle = false;
 
         GameObject ghost = null;
