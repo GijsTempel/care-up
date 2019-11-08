@@ -74,10 +74,11 @@ public class DatabaseManager : MonoBehaviour
             GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed || WULogin.HasSerial;
 
         // set character info
-        CharacterInfo.sex = FetchField("AccountStats", "CharacterSex");
-        int.TryParse(FetchField("AccountStats", "CharacterHeadType"), out CharacterInfo.headType);
-        int.TryParse(FetchField("AccountStats", "CharacterBodyType"), out CharacterInfo.bodyType);
-        int.TryParse(FetchField("AccountStats", "CharacterGlassesType"), out CharacterInfo.glassesType);
+        CharacterInfo.sex = FetchField("AccountStats", "Sex");
+        int.TryParse(FetchField("AccountStats", "Head"), out CharacterInfo.headType);
+        int.TryParse(FetchField("AccountStats", "Body"), out CharacterInfo.bodyType);
+        int.TryParse(FetchField("AccountStats", "Glasses"), out CharacterInfo.glassesType);
+        CharacterInfo.hat = FetchField("AccountStats", "Hat");
 
         // set player irl full name
         GameObject.FindObjectOfType<PlayerPrefsManager>().fullPlayerName =
@@ -86,6 +87,9 @@ public class DatabaseManager : MonoBehaviour
         // set player BIG number
         GameObject.FindObjectOfType<PlayerPrefsManager>().bigNumber =
             FetchField("AccountStats", "BIG_number");
+        
+        // initialize store manager, cuz we just got info about current currency etc
+        PlayerPrefsManager.storeManager.Init();
 
         // check if character created, load proper scene
         // load scene at the end of this function
@@ -184,7 +188,7 @@ public class DatabaseManager : MonoBehaviour
         }
     }
 
-    private static void PrintDatabase()
+    public static void PrintDatabase()
     {
         string output = "";
         foreach (Category c in database)
@@ -195,8 +199,6 @@ public class DatabaseManager : MonoBehaviour
                 output += "    " + key + ": " + c.fields[key] + "\n";
             }
         }
-
-        Debug.Log(output);
     }
 
     public static string FetchField(string category, string fieldName)

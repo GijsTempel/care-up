@@ -92,7 +92,6 @@ public class GameUI : MonoBehaviour
     PlayerScript ps;
     bool ICPCurrentState = false;
     public bool allowObjectControlUI = true;
-    public GameObject PatientInfoPanel;
     public enum ItemControlButtonType
     {
         None,
@@ -228,11 +227,11 @@ public class GameUI : MonoBehaviour
     public void CloseButtonPressed(bool value)
     {
         closeDialog.SetActive(value);
-       // closeButton.SetActive(!value);
+        // closeButton.SetActive(!value);
 
         if (value)
         {
-            //ps.robotUIopened = true;
+            ps.robotUIopened = true;
         }
         else
         {
@@ -360,7 +359,6 @@ public class GameUI : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        PatientInfoPanel = GameObject.Find("PatientInfo");
         gameLogic = GameObject.Find("GameLogic");
         objectsIDsController = GameObject.FindObjectOfType<ObjectsIDsController>();
         MovementSideButtons = GameObject.Find("MovementSideButtons");
@@ -385,7 +383,6 @@ public class GameUI : MonoBehaviour
         decombineButton_right.SetActive(false);
         noTargetButton.SetActive(false);
         ItemControlPanel.SetActive(false);
-        //PatientInfoPanel.SetActive(false);
         noTargetButton_right.SetActive(false);
         DropRightButton.SetActive(false);
         DropLeftButton.SetActive(false);
@@ -463,7 +460,7 @@ public class GameUI : MonoBehaviour
         UpdateWalkToGroupButtons();
         UpdateWalkToGtoupUI(true);
 
-        foreach(InteractableObject o in Resources.FindObjectsOfTypeAll<InteractableObject>())
+        foreach (InteractableObject o in Resources.FindObjectsOfTypeAll<InteractableObject>())
         {
             o.assetSource = InteractableObject.AssetSource.Included;
         }
@@ -630,7 +627,7 @@ public class GameUI : MonoBehaviour
         GUIStyle style = new GUIStyle();
         style.normal.textColor = new Color(1f, 0f, 0f);
         style.fontSize = 30;
-        
+
 
         GUI.Label(new Rect(0, 0, 100, 100), ((int)(1.0f / Time.smoothDeltaTime)).ToString(), style);
         if (objectsIDsController != null)
@@ -638,9 +635,9 @@ public class GameUI : MonoBehaviour
             if (objectsIDsController.cheat)
                 GUI.Label(new Rect(30, 0, 100, 100), "Cheat enabled", style);
         }
-    
-    //debugSS = PlayerAnimationManager.animTimeout.ToString();
-    GUI.Label(new Rect(0, 30, 1000, 100), debugSS, style);
+
+        //debugSS = PlayerAnimationManager.animTimeout.ToString();
+        GUI.Label(new Rect(0, 30, 1000, 100), debugSS, style);
 #endif
     }
 
@@ -736,11 +733,6 @@ public class GameUI : MonoBehaviour
             {
                 GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
                 GameObject.FindObjectOfType<GameUI>().theoryPanel.SetActive(true);
-
-                Transform scrollBar = theoryPanel.transform.Find("ScrollViewMessege/Scrollbar Vertical");
-                if (scrollBar != null)
-                    scrollBar.GetComponent<Scrollbar>().value = 1;
-
                 GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Title").GetComponent<Text>().text = actionManager.MessageTitle;
                 GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Message").GetComponent<Text>().text = actionManager.Message;
             }
@@ -987,7 +979,6 @@ public class GameUI : MonoBehaviour
             if (PlayerScript.actionsLocked)
                 showItemControlPanel = false;
             ItemControlPanel.SetActive(showItemControlPanel);
-            PatientInfoPanel.SetActive(showItemControlPanel);
             MovementSideButtons.SetActive(showItemControlPanel);
 
             ICPCurrentState = ItemControlPanel.activeSelf;
@@ -1021,7 +1012,6 @@ public class GameUI : MonoBehaviour
             RightSideButton.gameObject.SetActive(false);
             WalkToGroupPanel.SetActive(false);
             ItemControlPanel.SetActive(false);
-            PatientInfoPanel.SetActive(false);
         }
         else
         {
