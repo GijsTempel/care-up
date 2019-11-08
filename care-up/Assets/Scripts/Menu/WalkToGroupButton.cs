@@ -168,7 +168,7 @@ public class WalkToGroupButton : MonoBehaviour {
             return;
         if (linkedWalkToGroup != null)
         {
-            GameObject.FindObjectOfType<PlayerScript>().WalkToGroup(linkedWalkToGroup);
+            GameObject.FindObjectOfType<PlayerScript>().WalkToGroup_(linkedWalkToGroup);
             linkedWalkToGroup.ButtonHovered = false;
             if (!SideButton)
                 HighlightButton(false);

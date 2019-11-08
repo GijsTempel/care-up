@@ -345,6 +345,11 @@ public class GameUI : MonoBehaviour
         }
     }
 
+    void ShowWalkToGroupPanel()
+    {
+        WalkToGroupPanel.SetActive(ps.away);
+    }
+
     public void HideTheoryTab()
     {
         GameObject.Find("PatientInfoTabs/Info/TheoryTab/Continue").gameObject.GetComponent<Button>().onClick.AddListener(
@@ -457,6 +462,8 @@ public class GameUI : MonoBehaviour
         {
             o.assetSource = InteractableObject.AssetSource.Included;
         }
+        WalkToGroupPanel.SetActive(false);
+        Invoke("ShowWalkToGroupPanel", 0.5f);
     }
 
 
