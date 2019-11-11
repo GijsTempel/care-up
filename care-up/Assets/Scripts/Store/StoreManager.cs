@@ -162,7 +162,7 @@ public class StoreManager
             //    }
             //}
 
-            if (!devDropAllPurchases && !purchased)
+            if (!devDropAllPurchases && purchased)
             {
                 string[][] charactersCategory = DatabaseManager.FetchCategory("CharacterItem_" + index.ToString());
                 if (charactersCategory != null)
