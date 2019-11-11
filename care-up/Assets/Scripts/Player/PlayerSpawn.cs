@@ -12,6 +12,7 @@ public class PlayerSpawn : MonoBehaviour
     //public UnityEditor.Animations.AnimatorController animationController = null;
     public Vector3 robotPosition;
     public Vector3 robotRotation;
+    public WalkToGroup.GroupType momentaryJumpTo = WalkToGroup.GroupType.NotSet;
 
     [System.Serializable]
     public struct InfoPair
@@ -56,7 +57,7 @@ public class PlayerSpawn : MonoBehaviour
         }
 
         player.GetComponentInChildren<Animator>().SetInteger("sceneID", sceneID);
-
+        player.GetComponent<PlayerScript>().momentaryJumpTo = momentaryJumpTo;
         GameObject itemControls = Instantiate(Resources.Load("NecessaryPrefabs/UI/ItemControls") as GameObject,
             transform.position, transform.rotation);
         itemControls.name = "ItemControls";

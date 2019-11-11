@@ -107,7 +107,9 @@ public class UsableObject : InteractableObject {
                             }
 
                             handsCleaned = true;
-                            string message = "Zorg voor een zorgvuldige handhygiëne. Handhygiëne is in dit protocol versneld om de gebruikerservaring te verbeteren";
+                            
+                            // never used
+                            //string message = "Zorg voor een zorgvuldige handhygiëne. Handhygiëne is in dit protocol versneld om de gebruikerservaring te verbeteren";
                         }
                         break;
                     case "OldBandAid":
