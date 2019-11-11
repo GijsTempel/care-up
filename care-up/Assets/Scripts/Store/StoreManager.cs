@@ -142,7 +142,24 @@ public class StoreManager
             PlayerAvatarData playerAvatar = new PlayerAvatarData(characterGender, headType, bodyType, glassesType, hatType, mouthType, eyeType);
             //CharacterItem CharacterItem(index, price, purchased, playerAvatar)
             CharacterItem characterItem = new CharacterItem(index, price, purchased, playerAvatar);
-            if (!devDropAllPurchases)
+            //if (devDropAllPurchases)
+            //{
+            //    string[][] charactersCategory = DatabaseManager.FetchCategory("CharacterItem_" + index.ToString());
+            //    if (charactersCategory != null)
+            //    {
+            //        foreach (string[] field in charactersCategory)
+            //        {
+            //            DatabaseManager.UpdateField("CharacterItem_" + index.ToString(), "Sex", gender.ToString());
+            //            DatabaseManager.UpdateField("CharacterItem_" + index.ToString(), "Body", bodyType.ToString());
+            //            DatabaseManager.UpdateField("CharacterItem_" + index.ToString(), "Head", headType.ToString());
+            //            DatabaseManager.UpdateField("CharacterItem_" + index.ToString(), "Hat", hatType);
+            //            DatabaseManager.UpdateField("CharacterItem_" + index.ToString(), "Glasses", glassesType.ToString());
+
+            //        }
+            //    }
+            //}
+
+            if (!devDropAllPurchases && !purchased)
             {
                 string[][] charactersCategory = DatabaseManager.FetchCategory("CharacterItem_" + index.ToString());
                 if (charactersCategory != null)
@@ -159,8 +176,8 @@ public class StoreManager
                                 bool.TryParse(field[1], out purchased); break;
                             case "Sex":
                                 gender = field[1]; break;
-                            case "Head":
-                                int.TryParse(field[1], out headType); break;
+                            //case "Head":
+                            //    int.TryParse(field[1], out headType); break;
                             case "Body":
                                 int.TryParse(field[1], out bodyType); break;
                             case "Glasses":

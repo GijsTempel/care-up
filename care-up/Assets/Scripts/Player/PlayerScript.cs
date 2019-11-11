@@ -95,6 +95,9 @@ public class PlayerScript : MonoBehaviour
     float defaultInteractionDistance = -1;
     [HideInInspector]
     public GameObject joystickObject;
+    //[HideInInspector]
+
+    public WalkToGroup.GroupType momentaryJumpTo;
 
     public bool UIHover
     {
@@ -208,6 +211,18 @@ public class PlayerScript : MonoBehaviour
         tutorial_theory = GameObject.FindObjectOfType<Tutorial_Theory>();
 
         GameObject.Find("GameLogic").AddComponent<GestureControls>();
+        if (momentaryJumpTo != WalkToGroup.GroupType.NotSet)
+            Invoke("MomentaryJumpToGroup", 0.01f);
+    }
+    void MomentaryJumpToGroup()
+    {
+        foreach (WalkToGroup w in GameObject.FindObjectsOfType<WalkToGroup>())
+        {
+            if (momentaryJumpTo == w.WalkToGroupType)
+            {
+                WalkToGroup_(w);
+            }
+        }
     }
 
     public void EnterHover()
@@ -240,6 +255,8 @@ public class PlayerScript : MonoBehaviour
             }
         }
     }
+
+
 
     public void ResetTargetRot()
     {
@@ -311,7 +328,7 @@ public class PlayerScript : MonoBehaviour
                 if (controls.SelectedObject != null &&
                     controls.SelectedObject.GetComponent<WalkToGroup>() && away)
                 {
-                    WalkToGroup(controls.SelectedObject.GetComponent<WalkToGroup>());
+                    WalkToGroup_(controls.SelectedObject.GetComponent<WalkToGroup>());
                 }
             }
         }
@@ -324,7 +341,7 @@ public class PlayerScript : MonoBehaviour
             if (rotated < 3.0f && controls.SelectedObject != null &&
                 controls.SelectedObject.GetComponent<WalkToGroup>() && away)
             {
-                WalkToGroup(controls.SelectedObject.GetComponent<WalkToGroup>());
+                WalkToGroup_(controls.SelectedObject.GetComponent<WalkToGroup>());
             }
             else
             {
@@ -367,7 +384,7 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    public void WalkToGroup(WalkToGroup group)
+    public void WalkToGroup_(WalkToGroup group)
     {
         if (robotUIopened)
             return;
