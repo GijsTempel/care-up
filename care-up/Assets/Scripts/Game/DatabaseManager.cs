@@ -199,6 +199,8 @@ public class DatabaseManager : MonoBehaviour
                 output += "    " + key + ": " + c.fields[key] + "\n";
             }
         }
+
+        Debug.Log(output);
     }
 
     public static string FetchField(string category, string fieldName)

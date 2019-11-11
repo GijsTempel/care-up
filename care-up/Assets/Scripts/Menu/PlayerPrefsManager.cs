@@ -496,6 +496,16 @@ public class PlayerPrefsManager : MonoBehaviour
         DatabaseManager.UpdateField("CertificateDates", currentTestScene, date);
     }
 
+    public void CreateBlankHighscore()
+    {
+        string currentTestScene = FormatSceneName(currentSceneVisualName);
+        string highscoreStr = DatabaseManager.FetchField("TestHighscores", currentTestScene);
+        if (highscoreStr == "") // returns empty string if field doesnt exist
+        {
+            DatabaseManager.UpdateField("TestHighscores", currentTestScene, (0.0f).ToString());
+        }
+    }
+
     public static void AddOneToSceneInCategory(string scene, string category)
     {
         string sceneName = FormatSceneName(scene);
