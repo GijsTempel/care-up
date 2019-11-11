@@ -93,6 +93,20 @@ public class CharacterInfo : MonoBehaviour
                     }
                 }
                 break;
+
+            case "Body":
+                CharacterInfo.bodyType = item.index;
+                DatabaseManager.UpdateField("CharacterItem_" + index.ToString(), "Body", CharacterInfo.bodyType.ToString());
+
+                foreach (CharacterItem characterItem in PlayerPrefsManager.storeManager.CharacterItems)
+                {
+                    if (characterItem.index == index)
+                    {
+                        characterItem.playerAvatar.bodyType = CharacterInfo.bodyType;
+                        break;
+                    }
+                }
+                break;
         }
     }
 }

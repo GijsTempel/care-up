@@ -16,14 +16,13 @@ public class ButtonBlinking : MonoBehaviour
     public void OnEnable()
     {       
         prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
-
         UpdateButtonState();
     }
 
     public void UpdateButtonState()
     {
-        GetComponent<Animator>().ResetTrigger("BlinkStart");
-        GetComponent<Animator>().ResetTrigger("BlinkStop");
+        GetComponent<Animator>().ResetTrigger("BlinkOn");
+        GetComponent<Animator>().ResetTrigger("BlinkOff");
         GetComponent<Animator>().ResetTrigger("BlinkOnes");
 
         if (prefs != null)
@@ -93,14 +92,14 @@ public class ButtonBlinking : MonoBehaviour
             {
                 if (!GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Blink"))
                 {
-                    GetComponent<Animator>().SetTrigger("BlinkStart");
+                    GetComponent<Animator>().SetTrigger("BlinkOn");
                 }
             }
             else
             {
                 if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Blink"))
                 {
-                    GetComponent<Animator>().SetTrigger("BlinkStop");
+                    GetComponent<Animator>().SetTrigger("BlinkOff");
                 }
             }
         }      
@@ -108,18 +107,18 @@ public class ButtonBlinking : MonoBehaviour
 
     public void StartBlinking()
     {
-        GetComponent<Animator>().SetTrigger("BlinkStart");
+        GetComponent<Animator>().SetTrigger("BlinkOn");
     }
 
     public void StopBlinking()
     {
         if (GetComponent<Animator>() != null && GetComponent<Animator>().isActiveAndEnabled)
-            GetComponent<Animator>().SetTrigger("BlinkStop");
+            GetComponent<Animator>().SetTrigger("BlinkOff");
     }
 
     public void JoystickStopBlinking()
     {
-        GameObject.Find("JoystickKnob").GetComponent<Animator>().SetTrigger("BlinkStop");
-        GameObject.Find("JoystickBackground").GetComponent<Animator>().SetTrigger("BlinkStop");
+        GameObject.Find("JoystickKnob").GetComponent<Animator>().SetTrigger("BlinkOff");
+        GameObject.Find("JoystickBackground").GetComponent<Animator>().SetTrigger("BlinkOff");
     }
 }

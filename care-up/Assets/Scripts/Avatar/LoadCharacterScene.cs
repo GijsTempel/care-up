@@ -3,9 +3,11 @@ using CareUpAvatar;
 
 public class LoadCharacterScene : MonoBehaviour
 {
+    PlayerPrefsManager pref;
     public void LoadScene()
     {
-        GameObject.FindObjectOfType<PlayerPrefsManager>().firstStart = false;
+        pref = GameObject.FindObjectOfType<PlayerPrefsManager>();
+        pref.firstStart = false;
         bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Character_Customisation");
     }
 
@@ -23,15 +25,19 @@ public class LoadCharacterScene : MonoBehaviour
         avatar.UpdateCharacter();
     }
 
+    
 
     public PlayerAvatarData GetCurrentData()
     {
+        if (pref == null)
+            pref = GameObject.FindObjectOfType<PlayerPrefsManager>();
         Gender gender = CharacterInfo.sex == "Female" ? Gender.Female : Gender.Male;
 
         PlayerAvatarData data = new PlayerAvatarData(gender, CharacterInfo.headType,
                CharacterInfo.bodyType, CharacterInfo.glassesType);
         data.hat = CharacterInfo.hat;
         
+        data.eyeType = PlayerPrefsManager.storeManager.CharacterItems[pref.CarouselPosition].playerAvatar.eyeType;
         return data;
     }
 }
