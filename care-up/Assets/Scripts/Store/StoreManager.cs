@@ -71,6 +71,20 @@ public class StoreManager
         return -1;
     }
 
+    public int GetPositionFromIndex(int _index)
+    {
+        int value = 0;
+        foreach (CharacterItem item in CharacterItems)
+        {
+            if (item.index == _index)
+            {
+                value = _index;
+                break;
+            }
+        }
+        return value;
+    }
+
     public void Init(string storeXml = "Store", string characterStoreXml = "CharacterStore")
     {
         bool devDropAllPurchases = false; // change this to true once to clear all purchases

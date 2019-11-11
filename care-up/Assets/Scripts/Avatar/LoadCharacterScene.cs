@@ -32,7 +32,6 @@ public class LoadCharacterScene : MonoBehaviour
         if (pref == null)
             pref = GameObject.FindObjectOfType<PlayerPrefsManager>();
         Gender gender = CharacterInfo.sex == "Female" ? Gender.Female : Gender.Male;
-
         PlayerAvatarData data = new PlayerAvatarData(gender, CharacterInfo.headType,
                CharacterInfo.bodyType, CharacterInfo.glassesType);
         data.hat = CharacterInfo.hat;
