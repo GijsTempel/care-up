@@ -51,7 +51,7 @@ public class CharacterСarousel : MonoBehaviour
 
         if (pref != null)
         {
-            TurnToPosition(pref.CarouselPosition);
+            TurnToPosition(PlayerPrefsManager.storeManager.GetPositionFromIndex(CharacterInfo.index));
         }
     }
 
@@ -99,6 +99,7 @@ public class CharacterСarousel : MonoBehaviour
         if (index >= 0 && index < (PlayerPrefsManager.storeManager.CharacterItems.Count))
         {
             //panelManager.SetStoreInfo(behindMarker, index);
+            print(PlayerPrefsManager.storeManager.CharacterItems[index].playerAvatar.hat); 
             return PlayerPrefsManager.storeManager.CharacterItems[index].playerAvatar;
         }
         return null;

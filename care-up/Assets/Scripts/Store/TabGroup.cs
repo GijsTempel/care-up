@@ -462,9 +462,9 @@ public class TabGroup : MonoBehaviour
         buyBtnSprite = buyBtn.GetComponent<Image>().sprite;
         pagesContainer = GameObject.Find("PageContainer");
 
-        tabBtnPrefab = Resources.Load<GameObject>("Prefabs/StoreTab");
-        tabPagePrefab = Resources.Load<GameObject>("Prefabs/PageHolder");
-        productItem = Resources.Load<GameObject>("Prefabs/ProductPanel");
+        tabBtnPrefab = Resources.Load<GameObject>("NecessaryPrefabs/StoreTab");
+        tabPagePrefab = Resources.Load<GameObject>("NecessaryPrefabs/PageHolder");
+        productItem = Resources.Load<GameObject>("NecessaryPrefabs/ProductPanel");
         tabParent = GameObject.Find("StoreTabContainer").transform;
     }
 }
