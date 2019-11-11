@@ -108,7 +108,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
         bool firstScene = true;
         LeaderBoardSceneButton.buttons.Clear();
 // FindObjectOfType<PlayerPrefsManager>().demoVersion
-        Transform protocolsTransorm = GameObject.Find("UMenuProManager/MenuCanvas/Play/InfoHolder/ProtocolList/ProtocolsHolder/Protocols/content").transform;
+        Transform protocolsTransorm = GameObject.Find("UMenuProManager/MenuCanvas/Play/InfoHolder/Panel/ProtocolList/ProtocolsHolder/Protocols/content").transform;
         foreach (XmlNode xmlSceneNode in xmlSceneList)
         {
             // bool activated = PlayerPrefs.GetInt(xmlSceneNode.Attributes["id"].Value + " activated") == 1;
@@ -303,7 +303,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
             sceneUnit.testDisabled = (xmlSceneNode.Attributes["test"] != null
                 && xmlSceneNode.Attributes["test"].Value == "disabled");
         }
-        ScrollRect levelScroll =  GameObject.Find("UMenuProManager/MenuCanvas/Play/InfoHolder/ProtocolList/ProtocolsHolder").GetComponent<ScrollRect>();
+        ScrollRect levelScroll =  GameObject.Find("UMenuProManager/MenuCanvas/Play/InfoHolder/Panel/ProtocolList/ProtocolsHolder").GetComponent<ScrollRect>();
         
         levelScroll.verticalNormalizedPosition = ppManager.LevelScrollPosition;
     }
