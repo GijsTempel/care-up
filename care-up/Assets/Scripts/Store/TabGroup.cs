@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -256,7 +257,9 @@ public class TabGroup : MonoBehaviour
 
     public void InitializeTabPanel()
     {
-        foreach (StoreCategory category in PlayerPrefsManager.storeManager.StoreItems)
+        List<StoreCategory> categories = PlayerPrefsManager.storeManager.StoreItems.Distinct().ToList();
+
+        foreach (StoreCategory category in categories)
         {
             InitializePrefabs(category);
             DressedButtons.Add(null);
