@@ -85,6 +85,18 @@ public class StoreManager
         return value;
     }
 
+    public CharacterItem GetAvatarData(int _index)
+    {
+        foreach (CharacterItem item in CharacterItems)
+        {
+            if (item.index == _index)
+            {
+                return item;
+            }
+        }
+        return null;
+    }
+
     public void Init(string storeXml = "Store", string characterStoreXml = "CharacterStore")
     {
         bool devDropAllPurchases = false; // change this to true once to clear all purchases
