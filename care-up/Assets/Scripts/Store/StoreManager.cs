@@ -199,8 +199,8 @@ public class StoreManager
                         {
                             case "Index":
                                 int.TryParse(field[1], out index); break;
-                            case "Price":
-                                int.TryParse(field[1], out price); break;
+                            //case "Price":
+                            //    int.TryParse(field[1], out price); break;
                             case "Purchased":
                                 bool.TryParse(field[1], out purchased); break;
                             case "Sex":
