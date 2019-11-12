@@ -216,13 +216,15 @@ public class TabGroup : MonoBehaviour
     public void PurchaseSelectedItem()
     {
         StoreItem item = selectedItemBtn.item;
-        CharacterInfo.UpdateCharacter(item);
-        GameObject.FindObjectOfType<LoadCharacterScene>().LoadCharacter();
+      
 
         if (!item.purchased)
         {
             if (PlayerPrefsManager.storeManager.Purchase(item.index))
             {
+                CharacterInfo.UpdateCharacter(item);
+                GameObject.FindObjectOfType<LoadCharacterScene>().LoadCharacter();
+
                 mainAvatar.SetAnimationAction(CareUpAvatar.Actions.Dance, true);
 
                 selectedItemBtn.SetPurchased(true);
