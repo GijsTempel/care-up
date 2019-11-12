@@ -112,7 +112,7 @@ public class PlayerAvatar : MonoBehaviour
             CurrentGlasses = null;
         }
         avatarData.glassesType = gIndex;
-        Object glassesPrefab = Resources.Load<GameObject>("NecessaryPrefabs/Shop_Items/gl_" + gIndex.ToString());
+        Object glassesPrefab = Resources.Load<GameObject>("NecessaryPrefabs/Shop_Items/gl_" + (gIndex - 3000000).ToString());
         if (glassesPrefab != null)
         {
             GameObject newGlasses = Instantiate(glassesPrefab, glassesAnchor, true) as GameObject;
