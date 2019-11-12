@@ -26,10 +26,12 @@ public class StoreViewModel : MonoBehaviour
 
     public static bool ShowRewardDialogue(Text panelText, GameObject popUp = null)
     {
-        if (SavedCoins <= 0)
-            SavedCoins = ActionManager.Points;
+        bool value = false;
 
-        if (SavedCoins > 0)
+        if (SavedCoins <= 0)
+            SavedCoins = ActionManager.Points;       
+
+        if (SavedCoins > 0 && (ActionManager.percentage > 30))
         {
             if (panelText != null)
             {
@@ -49,10 +51,14 @@ public class StoreViewModel : MonoBehaviour
                 }
                 SavedCoins = ActionManager.Points = 0;
 
-                return true;
+                value = true;
             }
         }
-        return false;
+        if (SavedCoins > 0)
+        {
+            SavedCoins = ActionManager.Points = 0;
+        }
+        return value;
     }
 
     private static int RoundToBigger(int value)
