@@ -85,6 +85,18 @@ public class StoreManager
         return value;
     }
 
+    public CharacterItem GetAvatarData(int _index)
+    {
+        foreach (CharacterItem item in CharacterItems)
+        {
+            if (item.index == _index)
+            {
+                return item;
+            }
+        }
+        return null;
+    }
+
     public void Init(string storeXml = "Store", string characterStoreXml = "CharacterStore")
     {
         bool devDropAllPurchases = false; // change this to true once to clear all purchases
@@ -187,8 +199,8 @@ public class StoreManager
                         {
                             case "Index":
                                 int.TryParse(field[1], out index); break;
-                            case "Price":
-                                int.TryParse(field[1], out price); break;
+                            //case "Price":
+                            //    int.TryParse(field[1], out price); break;
                             case "Purchased":
                                 bool.TryParse(field[1], out purchased); break;
                             case "Sex":
