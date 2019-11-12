@@ -23,7 +23,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
     private void Awake()
     {
-        Transform leaderPanel = GameObject.Find("UMenuProManager/MenuCanvas/Leaderboard/InfoBar").transform;
+        Transform leaderPanel = GameObject.Find("UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Leaderboard").transform;
         _Scores = scoreLines.GetComponentsInChildren<ScoreLine>();
 
         for (int i = 0; i < _Scores.Length; i++)
@@ -32,12 +32,12 @@ public class LevelSelectionScene_UI : MonoBehaviour
         }
 
         // variations buttons should be disabled from the beginning
-        for (int i = 0; i < 3; ++i)
-        {
-            Transform v = leaderPanel.parent.Find("InfoBar/menu/d" + (i + 1));
-            variations.Add(v);
-            v.gameObject.SetActive(false);
-        }
+        //for (int i = 0; i < 3; ++i)
+        //{
+        //    Transform v = leaderPanel.parent.Find("InfoBar/menu/d" + (i + 1));
+        //    variations.Add(v);
+        //    v.gameObject.SetActive(false);
+        //}
     }
 
     /// <summary>
@@ -108,7 +108,8 @@ public class LevelSelectionScene_UI : MonoBehaviour
         bool firstScene = true;
         LeaderBoardSceneButton.buttons.Clear();
 // FindObjectOfType<PlayerPrefsManager>().demoVersion
-        Transform protocolsTransorm = GameObject.Find("UMenuProManager/MenuCanvas/Play/InfoHolder/Panel/ProtocolList/ProtocolsHolder/Protocols/content").transform;
+
+        Transform protocolsTransorm = GameObject.Find("UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Play/ContentPanel/PlayElements/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder/Protocols/content").transform;
         foreach (XmlNode xmlSceneNode in xmlSceneList)
         {
             // bool activated = PlayerPrefs.GetInt(xmlSceneNode.Attributes["id"].Value + " activated") == 1;
@@ -270,8 +271,9 @@ public class LevelSelectionScene_UI : MonoBehaviour
             }
 
             // leaderboard stuff
+            
             GameObject button = Instantiate<GameObject>(Resources.Load<GameObject>("NecessaryPrefabs/UI/LeaderBoardSceneButton"),
-                GameObject.Find("UMenuProManager/MenuCanvas/Leaderboard/InfoHolder/ProtocolsHolder/Scroll View/Viewport/Content").transform);
+                GameObject.Find("UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Leaderboard/ContentPanel/PlayElements/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder/Protocols/content").transform);
             LeaderBoardSceneButton buttonInfo = button.GetComponent<LeaderBoardSceneButton>();
             button.transform.Find("Text").GetComponent<Text>().text = sceneUnit.displayName;
             button.transform.Find("LevelPreview").gameObject.SetActive(false);
@@ -303,7 +305,8 @@ public class LevelSelectionScene_UI : MonoBehaviour
             sceneUnit.testDisabled = (xmlSceneNode.Attributes["test"] != null
                 && xmlSceneNode.Attributes["test"].Value == "disabled");
         }
-        ScrollRect levelScroll =  GameObject.Find("UMenuProManager/MenuCanvas/Play/InfoHolder/Panel/ProtocolList/ProtocolsHolder").GetComponent<ScrollRect>();
+        
+        ScrollRect levelScroll =  GameObject.Find("UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Play/ContentPanel/PlayElements/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder").GetComponent<ScrollRect>();
         
         levelScroll.verticalNormalizedPosition = ppManager.LevelScrollPosition;
     }
