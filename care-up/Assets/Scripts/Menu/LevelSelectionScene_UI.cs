@@ -273,7 +273,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
             // leaderboard stuff
             
             GameObject button = Instantiate<GameObject>(Resources.Load<GameObject>("NecessaryPrefabs/UI/LeaderBoardSceneButton"),
-                GameObject.Find("UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Leaderboard/ContentPanel/PlayElements/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder/Protocols/content").transform);
+                GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Leaderboard/ContentPanel/Scenes/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder/Protocols/content").transform);
             LeaderBoardSceneButton buttonInfo = button.GetComponent<LeaderBoardSceneButton>();
             button.transform.Find("Text").GetComponent<Text>().text = sceneUnit.displayName;
             button.transform.Find("LevelPreview").gameObject.SetActive(false);
@@ -342,7 +342,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
     {
         List<MBS.CMLData> entries = cml.AllNodesOfType("person");
         List<MBS.CMLData> sortedEntries = entries.OrderByDescending(x => int.Parse(x.String("score"))).ToList();
-
+        LeaderBoard lb = GameObject.FindObjectOfType<LeaderBoard>();
         if (entries == null) return;
 
         for (int i = 0; i < 10; ++i)
@@ -355,17 +355,18 @@ public class LevelSelectionScene_UI : MonoBehaviour
         }
 
         // loading icon is shown
-        if (GameObject.FindObjectOfType<LeaderBoard>().leftBar.activeSelf)
-            GameObject.FindObjectOfType<LeaderBoard>().infoBar.SetActive(false);
+        if (lb.leftBar.activeSelf)
+            lb.infoBar.SetActive(false);
         else
         {
+            
             GameObject.FindObjectOfType<UMP_Manager>().LeaderBoardSearchBar.gameObject.SetActive(false);
-            GameObject.FindObjectOfType<LeaderBoard>().top.SetActive(false);
-            GameObject.FindObjectOfType<LeaderBoard>().backButton.GetComponent<Button>().interactable = true;
-            GameObject.FindObjectOfType<LeaderBoard>().topDescription.SetActive(false);
-            GameObject.FindObjectOfType<LeaderBoard>().infoBar.SetActive(true);
-            GameObject.FindObjectOfType<LeaderBoard>().description.GetComponent<Text>().text = LeaderBoardSceneButton.Descripton;
-            GameObject.FindObjectOfType<LeaderBoard>().leaderboard.SetActive(false);
+            lb.top.SetActive(false);
+            lb.backButton.GetComponent<Button>().interactable = true;
+            lb.topDescription.SetActive(false);
+            lb.infoBar.SetActive(true);
+            lb.description.GetComponent<Text>().text = LeaderBoardSceneButton.Descripton;
+            lb.leaderboard.SetActive(false);
         }       
     }
 }
