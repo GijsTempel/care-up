@@ -11,8 +11,7 @@ public static class CopyPathMenuItem
         {
             return;
         }
-
-        var path = go.name;
+        var path = "/" + go.name;
         while (go.transform.parent != null)
         {
             go = go.transform.parent.gameObject;
