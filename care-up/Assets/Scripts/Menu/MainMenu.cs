@@ -136,8 +136,8 @@ public class MainMenu : MonoBehaviour
 
             // shared field, will keep it outside DatabaseManager
             GameObject.FindObjectOfType<PlayerPrefsManager>().FetchLatestVersion();
-
-            GameObject.Find("UMenuProManager/MenuCanvas/Account/Top/UserName").GetComponent<Text>().text = MBS.WULogin.display_name;
+            
+            GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Account/TitlePanel/UserNamePanel/Text").GetComponent<Text>().text = MBS.WULogin.display_name;
 
             string bigNumber = GameObject.FindObjectOfType<PlayerPrefsManager>().bigNumber;
             string fullName = GameObject.FindObjectOfType<PlayerPrefsManager>().fullPlayerName;
