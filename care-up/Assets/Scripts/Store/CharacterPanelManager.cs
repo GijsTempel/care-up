@@ -43,6 +43,8 @@ public class CharacterPanelManager : MonoBehaviour
 
     public void Adjust()
     {       
+        if (uMP_Manager == null)
+            uMP_Manager = GameObject.FindObjectOfType<UMP_Manager>();
         uMP_Manager.ChangeWindow(9);
         AdjustCharacter();
         loadCharacter.LoadCharacter();
@@ -104,12 +106,17 @@ public class CharacterPanelManager : MonoBehaviour
 
     public void AdjustCharacter()
     {
+        if (сarrousel == null)
+            сarrousel = GameObject.FindObjectOfType<CharacterСarousel>(); ;
         int characterIndex = сarrousel.CurrentCharacter;
         storeManager.AdjustCharacter(storeManager.GetItemIndex(characterIndex));
     }
 
     public void BuyCharacter()
     {
+       
+        if (сarrousel == null)
+            сarrousel = GameObject.FindObjectOfType<CharacterСarousel>();
         int characterIndex = сarrousel.CurrentCharacter;
         if (storeManager.PurchaseCharacter(storeManager.GetItemIndex(characterIndex)))
         {

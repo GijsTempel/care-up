@@ -73,7 +73,7 @@ public class StoreManager
     public void Init(string storeXml = "Store", string characterStoreXml = "CharacterStore")
     {
         bool devDropAllPurchases = false; // change this to true once to clear all purchases
-        bool devAddCurrency = false; // change this to true once to get 100 currency
+        bool devAddCurrency = true; // change this to true once to get 100 currency
 
         // load up all items from xml into the list
         TextAsset textAsset = (TextAsset)Resources.Load("Xml/" + storeXml);
