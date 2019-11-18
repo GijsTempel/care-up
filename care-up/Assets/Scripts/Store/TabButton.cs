@@ -15,17 +15,17 @@ public class TabButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandl
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        tabGroup.OnTabSelected(this);
+        //tabGroup.OnTabSelected(this);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        tabGroup.OnTabEnter(this);
+        //tabGroup.OnTabEnter(this);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        tabGroup.OnTabExit(this);
+        //tabGroup.OnTabExit(this);
     }
 
     public void Select()
@@ -44,10 +44,11 @@ public class TabButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandl
         }
     }
 
+
     private void Awake()
     {
         tabGroup = transform.parent.gameObject.GetComponent<TabGroup>();
-        tabGroup.Subscribe(this);
+        //tabGroup.Subscribe(this);
         background = GetComponent<Image>();
     }    
 }

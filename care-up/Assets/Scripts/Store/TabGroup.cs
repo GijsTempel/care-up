@@ -4,14 +4,15 @@ using UnityEngine.UI;
 
 public class TabGroup : MonoBehaviour
 {
-    [SerializeField]
-    private Sprite tabIdle = default,
-                   tabActive = default,
-                   topTabIdle = default,
-                   topTabActive = default,
-                   buyBtnSprite = default,
-                   putOnBtnSprite = default;
-
+    //[SerializeField]
+    //private Sprite tabIdle = default,
+    //               tabActive = default,
+    //               topTabIdle = default,
+    //               topTabActive = default,
+    //               buyBtnSprite = default,
+    //               putOnBtnSprite = default;
+    public List<Button> TabButtons;
+    public List<GameObject> TabContainers;
     [SerializeField]
     private GameObject buyBtn = default,
                        confirmPanel = default,
@@ -19,16 +20,12 @@ public class TabGroup : MonoBehaviour
                        renewBtn = default,
                        onSaleBtn = default;
 
-    private GameObject pagesContainer = default,
-                       buyBtnCoin = default,
-                       tabBtnPrefab = default,
-                       tabPagePrefab = default,
-                       productItem = default,
-                       tab = default,
-                       page = default;
+    private GameObject buyBtnCoin = default,
+                       productItem = default;
 
-    private Transform tabParent = default,
-                      itemParent = default;
+    int pages = 3;
+    //private Transform tabParent = default,
+    //                  itemParent = default;
 
     [SerializeField]
     private UIParticleSystem currencyParticles = default(UIParticleSystem);
@@ -43,85 +40,98 @@ public class TabGroup : MonoBehaviour
 
     private ProductButton selectedItemBtn = null;
     private PlayerAvatar mainAvatar;
-    private List<TabButton> tabs;
-    private List<GameObject> pages = new List<GameObject>();
     CharacterСarousel carousel;
     PlayerPrefsManager pref;
+    
+    public void SwitchTab(int value)
+    {
+        foreach (Button b in TabButtons)
+        {
+            b.interactable = true;
+        }
+        TabButtons[value].interactable = false;
+        foreach (GameObject g in TabContainers)
+        {
+            g.SetActive(false);
+        }
+        TabContainers[value].SetActive(true);
+    }
+
 
     public void ShowConfirmPanel(bool toShow)
     {
         confirmPanel.SetActive(toShow);
     }
 
-    public void Subscribe(TabButton button)
-    {
-        if (tabs == null)
-            tabs = new List<TabButton>();
+    //public void Subscribe(TabButton button)
+    //{
+    //    if (tabs == null)
+    //        tabs = new List<TabButton>();
 
-        tabs.Add(button);
-    }
+    //    tabs.Add(button);
+    //}
 
-    public void OnTabEnter(TabButton button)
-    {
-        ResetTabs();
+    //public void OnTabEnter(TabButton button)
+    //{
+    //    //ResetTabs();
 
-        if (button != selectedTab)
-        {
-            button.GetComponent<CanvasGroup>().alpha = 0.8f;
-            button.background.rectTransform.localScale = new Vector3(1.01f, 1.01f, 1);
-        }
-    }
+    //    if (button != selectedTab)
+    //    {
+    //        button.GetComponent<CanvasGroup>().alpha = 0.8f;
+    //        button.background.rectTransform.localScale = new Vector3(1.01f, 1.01f, 1);
+    //    }
+    //}
 
-    public void OnTabExit(TabButton button) { }
+    //public void OnTabExit(TabButton button) { }
 
-    public void OnTabSelected(TabButton button)
-    {
-        selectedTab = button;
+    //public void OnTabSelected(TabButton button)
+    //{
+    //    selectedTab = button;
 
-        ResetTabs();
+    //    ResetTabs();
 
-        if (button == tabs[0])
-        {
-            ModifyTab(button, topTabActive, new Vector3(1.15f, 1.15f, 1f));
-        }
-        else
-        {
-            ModifyTab(button, tabActive, new Vector3(1.15f, 1.15f, 1f));
-        }
+    //    if (button == tabs[0])
+    //    {
+    //        ModifyTab(button, topTabActive, new Vector3(1.15f, 1.15f, 1f));
+    //    }
+    //    else
+    //    {
+    //        ModifyTab(button, tabActive, new Vector3(1.15f, 1.15f, 1f));
+    //    }
 
-        int index = button.transform.GetSiblingIndex();
-        selectedTabIndex = index;
-        for (int i = 0; i < pages.Count; i++)
-        {
-            if (i == index)
-                pages[i].SetActive(true);
-            else
-                pages[i].SetActive(false);
-        }
-    }
+    //    int index = button.transform.GetSiblingIndex();
+    //    selectedTabIndex = index;
+    //    for (int i = 0; i < pages.Count; i++)
+    //    {
+    //        if (i == index)
+    //            pages[i].SetActive(true);
+    //        else
+    //            pages[i].SetActive(false);
+    //    }
+    //}
 
-    public void ResetTabs()
-    {
-        foreach (TabButton button in tabs)
-        {
-            if (button != null)
-            {
-                button.GetComponent<CanvasGroup>().alpha = 1f;
+    //public void ResetTabs()
+    //{
+    //    foreach (TabButton button in tabs)
+    //    {
+    //        if (button != null)
+    //        {
+    //            button.GetComponent<CanvasGroup>().alpha = 1f;
 
-                if (button == selectedTab)
-                    continue;
+    //            if (button == selectedTab)
+    //                continue;
 
-                if (button == tabs[0])
-                {
-                    ModifyTab(button, topTabIdle, new Vector3(1, 1, 1));
-                }
-                else
-                {
-                    ModifyTab(button, tabIdle, new Vector3(1, 1, 1));
-                }
-            }
-        }
-    }
+    //            if (button == tabs[0])
+    //            {
+    //                ModifyTab(button, topTabIdle, new Vector3(1, 1, 1));
+    //            }
+    //            else
+    //            {
+    //                ModifyTab(button, tabIdle, new Vector3(1, 1, 1));
+    //            }
+    //        }
+    //    }
+    //}
 
     void Dress()
     {
@@ -184,7 +194,7 @@ public class TabGroup : MonoBehaviour
                 buyBtnText.text = selectedItemBtn.item.price.ToString();
                 buyBtnCoin.SetActive(true);
                 buyBtn.SetActive(true);
-                buyBtn.GetComponent<Image>().sprite = buyBtnSprite;
+                //buyBtn.GetComponent<Image>().sprite = buyBtnSprite;
             }
             else
             {
@@ -262,12 +272,12 @@ public class TabGroup : MonoBehaviour
             DressedButtons.Add(null);
         }
 
-        for (int i = 1; i < pagesContainer.transform.childCount; i++)
-        {
-            pages.Add(pagesContainer.transform.GetChild(i).gameObject);
-        }
+        //for (int i = 1; i < pagesContainer.transform.childCount; i++)
+        //{
+        //    pages.Add(pagesContainer.transform.GetChild(i).gameObject);
+        //}
 
-        OnTabSelected(tabs[0]);
+        //OnTabSelected(tabs[0]);
         DisplayItemsInStore();
         UpdatePurchesBtn();
     }
@@ -280,9 +290,10 @@ public class TabGroup : MonoBehaviour
             if (PlayerPrefsManager.storeManager.CharacterItems.Count >= pref.CarouselPosition)
                 currentCharacter = PlayerPrefsManager.storeManager.CharacterItems[pref.CarouselPosition];
         }
-        for (int i = 0; i < pages.Count; i++)
+        for (int i = 0; i < pages; i++)
         {
-            itemParent = pages[i].transform.Find("StoreTabPage/content");
+            //"Protocols/content"
+            Transform itemParent = TabContainers[i].transform.Find("Protocols/content");
 
             foreach (Transform child in itemParent)
             {
@@ -296,16 +307,16 @@ public class TabGroup : MonoBehaviour
                 if (i == 0)
                 {
                     StoreItem xItem = new StoreItem(0, 0, "x", "Hat", true);
-                    ProductButton xBtn = InstantiateProduct(xItem);
+                    ProductButton xBtn = InstantiateProduct(xItem, i);
                     if (currentCharacter.playerAvatar.hat == "")
                     {
                         DressedButtons[0] = xBtn;
-                        xBtn.SetDressOn(true);
+                        //xBtn.SetDressOn(true);
                     }
                     if (currentCharacter.defaultAvatarData.hat != "")
                     {
                         baseItem = new StoreItem(0, 0, currentCharacter.defaultAvatarData.hat, "Hat", true);
-                        ProductButton baseHatBtn = InstantiateProduct(baseItem);
+                        ProductButton baseHatBtn = InstantiateProduct(baseItem, i);
                         if (currentCharacter.playerAvatar.hat == currentCharacter.defaultAvatarData.hat)
                         {
                             DressedButtons[0] = baseHatBtn;
@@ -317,21 +328,21 @@ public class TabGroup : MonoBehaviour
                 else if (i == 1)
                 {
                     StoreItem xxItem = new StoreItem(-500, 0, "x", "Glasses", true);
-                    ProductButton xxBtn = InstantiateProduct(xxItem);
+                    ProductButton xxBtn = InstantiateProduct(xxItem, i);
                     if (mainAvatar.avatarData.glassesType == -1)
                     {
                         DressedButtons[1] = xxBtn;
-                        xxBtn.SetDressOn(true);
+                        //xxBtn.SetDressOn(true);
                     }
                     if (currentCharacter.defaultAvatarData.glassesType != -1)
                     {
                         int gl = currentCharacter.defaultAvatarData.glassesType;
                         baseItem = new StoreItem(gl, 0, "gl_" + gl.ToString(), "Glasses", true);
-                        ProductButton baseGlassesBtn = InstantiateProduct(baseItem);
+                        ProductButton baseGlassesBtn = InstantiateProduct(baseItem, i);
                         if (currentCharacter.playerAvatar.glassesType == currentCharacter.defaultAvatarData.glassesType)
                         {
                             DressedButtons[1] = baseGlassesBtn;
-                            baseGlassesBtn.SetDressOn(true);
+                            //baseGlassesBtn.SetDressOn(true);
                         }
                     }
                 }
@@ -341,12 +352,12 @@ public class TabGroup : MonoBehaviour
                     int _body = currentCharacter.defaultAvatarData.bodyType;
                     baseItem = new StoreItem(_body, 0, "body_" + _body.ToString(), "Body", true);
 
-                    ProductButton baseBodyBtn = InstantiateProduct(baseItem);
+                    ProductButton baseBodyBtn = InstantiateProduct(baseItem, i);
 
                     if (currentCharacter.playerAvatar.bodyType == currentCharacter.defaultAvatarData.bodyType)
                     {
                         DressedButtons[2] = baseBodyBtn;
-                        baseBodyBtn.SetDressOn(true);
+                        //baseBodyBtn.SetDressOn(true);
                     }
                 }
             }
@@ -376,17 +387,17 @@ public class TabGroup : MonoBehaviour
                     {
                         if (item.index >= 100000)
                         {
-                            btn = InstantiateProduct(item);
+                            btn = InstantiateProduct(item, i);
                         }
                     }
                     else if (item.index < 100000)
                     {
-                        btn = InstantiateProduct(item);
+                        btn = InstantiateProduct(item, i);
                     }
                 }
                 else
                 {
-                    btn = InstantiateProduct(item);
+                    btn = InstantiateProduct(item, i);
                 }
 
                 if (i == 0 && currentCharacter.playerAvatar.hat == item.name)
@@ -406,15 +417,12 @@ public class TabGroup : MonoBehaviour
                 }
             }
 
-            if (pages[i].transform.GetChild(1).gameObject.activeInHierarchy)
-                itemParent.GetComponent<GridLayoutGroup>().spacing = new Vector2(20f, 35f);
-            else
-                itemParent.GetComponent<GridLayoutGroup>().spacing = new Vector2(40f, 35f);
         }
     }
 
     private void Start()
     {
+        SwitchTab(0);
         carousel = GameObject.FindObjectOfType<CharacterСarousel>();
         pref = GameObject.FindObjectOfType<PlayerPrefsManager>();
         InitializeElements();
@@ -430,18 +438,19 @@ public class TabGroup : MonoBehaviour
     private void InitializePrefabs(StoreCategory storeCategory)
     {
         // setting tab button
-        tab = Instantiate(tabBtnPrefab, tabParent);
-        tab.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>($"Sprites/{storeCategory.icon}");
+        //tab = Instantiate(tabBtnPrefab, tabParent);
+        //tab.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>($"Sprites/{storeCategory.icon}");
 
-        page = Instantiate(tabPagePrefab, pagesContainer.transform);
-        itemParent = page.transform.Find("StoreTabPage/content");
+        ////page = Instantiate(tabPagePrefab, pagesContainer.transform);
+        //itemParent = page.transform.Find("StoreTabPage/content");
     }
 
-    private ProductButton InstantiateProduct(StoreItem item)
+    private ProductButton InstantiateProduct(StoreItem item, int TabNum)
     {
-        GameObject i = Instantiate(productItem, itemParent);
+        Transform tab = TabContainers[TabNum].transform.Find("Protocols/content");
+        GameObject i = Instantiate(productItem, tab);
         ProductButton btn = i.GetComponent<ProductButton>();
-        btn.Initialize(item, this);
+        //btn.Initialize(item, this);
         return btn;
     }
 
@@ -453,15 +462,15 @@ public class TabGroup : MonoBehaviour
 
     private void InitializeElements()
     {
+        print("BBBBBBBB");
         mainAvatar = GameObject.Find("MainPlayerAvatar").GetComponent<PlayerAvatar>();
         buyBtnText = buyBtn.transform.Find("Text").GetComponent<Text>();
         buyBtnCoin = buyBtn.transform.Find("Coin").gameObject;
-        buyBtnSprite = buyBtn.GetComponent<Image>().sprite;
-        pagesContainer = GameObject.Find("PageContainer");
+        //pagesContainer = GameObject.Find("PageContainer");
 
-        tabBtnPrefab = Resources.Load<GameObject>("NecessaryPrefabs/StoreTab");
-        tabPagePrefab = Resources.Load<GameObject>("NecessaryPrefabs/PageHolder");
-        productItem = Resources.Load<GameObject>("NecessaryPrefabs/ProductPanel");
-        tabParent = GameObject.Find("StoreTabContainer").transform;
+        //tabBtnPrefab = Resources.Load<GameObject>("NecessaryPrefabs/StoreTab");
+        //tabPagePrefab = Resources.Load<GameObject>("NecessaryPrefabs/PageHolder");
+        productItem = Resources.Load<GameObject>("NecessaryPrefabs/UI/ProductPanelBase");
+        //tabParent = GameObject.Find("StoreTabContainer").transform;
     }
 }

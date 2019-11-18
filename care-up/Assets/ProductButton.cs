@@ -16,21 +16,21 @@ public class ProductButton : MonoBehaviour
 
     void Start()
     {
-        originalColor = GetComponent<Image>().color;
+        //originalColor = GetComponent<Image>().color;
         // dressOn.SetActive(false);
         _name.gameObject.SetActive(false);
     }
     
     public void Select(bool toSelect)
     {
-        if (toSelect)
-        {
-            GetComponent<Image>().color = new Color(0f, 214f, 255f, 255f);
-        }
-        else
-        {
-            GetComponent<Image>().color = originalColor;
-        }
+        //if (toSelect)
+        //{
+        //    GetComponent<Image>().color = new Color(0f, 214f, 255f, 255f);
+        //}
+        //else
+        //{
+        //    GetComponent<Image>().color = originalColor;
+        //}
     }
 
     public void ButtonClicked()
