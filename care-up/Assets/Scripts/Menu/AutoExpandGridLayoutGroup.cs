@@ -48,7 +48,7 @@ namespace UnityEngine.UI
 
         public override void CalculateLayoutInputHorizontal()
         {
-            if (transform.GetChild(0) != null)
+            if (transform.childCount > 0)
             {
                 float w = transform.GetChild(0).GetComponent<RectTransform>().sizeDelta.x;
                 m_CellSize.y = w;
