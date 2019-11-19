@@ -51,11 +51,11 @@ public class CharacterFirstSetup : MonoBehaviour
     bool CheckFirstTab()
     {
         bool check = true;
-        if (BigNumberHolder.text == "")
-        {
-            BigNumberHolder.transform.GetComponentInParent<Animator>().SetTrigger("red");
-            check = false;
-        } 
+        //if (BigNumberHolder.text == "")
+        //{
+        //    BigNumberHolder.transform.GetComponentInParent<Animator>().SetTrigger("red");
+        //    check = false;
+        //} 
 
         if (FullName.text == "")
         {
