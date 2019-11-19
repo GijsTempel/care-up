@@ -61,6 +61,7 @@ public class ActionManager : MonoBehaviour
     public string MessageTitle { get; set; } = null;
     public bool ShowTheory { get; set; } = false;
 
+    public static int percentage;
     public List<Action> ActionList
     {
         get { return actionList; }
@@ -134,6 +135,7 @@ public class ActionManager : MonoBehaviour
             if (percent < 0)
                 percent = 0;
 
+            percentage = (int)percent;
             return percent;
         }
     }

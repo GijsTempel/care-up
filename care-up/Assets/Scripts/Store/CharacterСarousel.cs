@@ -51,7 +51,7 @@ public class CharacterСarousel : MonoBehaviour
 
         if (pref != null)
         {
-            TurnToPosition(pref.CarouselPosition);
+            TurnToPosition(PlayerPrefsManager.storeManager.GetPositionFromIndex(CharacterInfo.index));
         }
     }
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -71,6 +72,24 @@ public class TabGroup : MonoBehaviour
             button.background.rectTransform.localScale = new Vector3(1.01f, 1.01f, 1);
         }
     }
+    private void ChangeSpacing()
+    {
+        try
+        {
+            Transform pageTransform = pages[selectedTabIndex].transform;
+            GridLayoutGroup gridLayoutGroup = pageTransform.Find("StoreTabPage/content").GetComponent<GridLayoutGroup>();
+            GameObject scrollbar = pageTransform.GetChild(1).gameObject;
+
+            if (scrollbar.activeInHierarchy)
+                gridLayoutGroup.spacing = new Vector2(20f, 23f);
+            else
+                gridLayoutGroup.spacing = new Vector2(40f, 35f);
+        }
+        catch 
+        {
+            Debug.Log("No such element in tab control");
+        }
+    }
 
     public void OnTabExit(TabButton button) { }
 
@@ -91,13 +110,18 @@ public class TabGroup : MonoBehaviour
 
         int index = button.transform.GetSiblingIndex();
         selectedTabIndex = index;
+
         for (int i = 0; i < pages.Count; i++)
         {
             if (i == index)
+            {
                 pages[i].SetActive(true);
+            }
             else
                 pages[i].SetActive(false);
         }
+
+        Invoke("ChangeSpacing", 0.015f);
     }
 
     public void ResetTabs()
@@ -215,13 +239,15 @@ public class TabGroup : MonoBehaviour
     public void PurchaseSelectedItem()
     {
         StoreItem item = selectedItemBtn.item;
-        CharacterInfo.UpdateCharacter(item);
-        GameObject.FindObjectOfType<LoadCharacterScene>().LoadCharacter();
+
 
         if (!item.purchased)
         {
             if (PlayerPrefsManager.storeManager.Purchase(item.index))
             {
+                CharacterInfo.UpdateCharacter(item);
+                GameObject.FindObjectOfType<LoadCharacterScene>().LoadCharacter();
+
                 mainAvatar.SetAnimationAction(CareUpAvatar.Actions.Dance, true);
 
                 selectedItemBtn.SetPurchased(true);
@@ -256,7 +282,9 @@ public class TabGroup : MonoBehaviour
 
     public void InitializeTabPanel()
     {
-        foreach (StoreCategory category in PlayerPrefsManager.storeManager.StoreItems)
+        List<StoreCategory> categories = PlayerPrefsManager.storeManager.StoreItems.Distinct().ToList();
+
+        foreach (StoreCategory category in categories)
         {
             InitializePrefabs(category);
             DressedButtons.Add(null);
@@ -405,11 +433,6 @@ public class TabGroup : MonoBehaviour
                     btn.SetDressOn(true);
                 }
             }
-
-            if (pages[i].transform.GetChild(1).gameObject.activeInHierarchy)
-                itemParent.GetComponent<GridLayoutGroup>().spacing = new Vector2(20f, 35f);
-            else
-                itemParent.GetComponent<GridLayoutGroup>().spacing = new Vector2(40f, 35f);
         }
     }
 

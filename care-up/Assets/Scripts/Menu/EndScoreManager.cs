@@ -39,6 +39,7 @@ public class EndScoreManager : MonoBehaviour
     private Sprite fullStar;
 
     private bool emailsSent = false;
+    public static bool showReward = false;
 
     void Start()
     {
@@ -155,6 +156,8 @@ public class EndScoreManager : MonoBehaviour
         }
         if (actualScene)
         {
+            showReward = true;
+
             Transform quizParent = GameObject.Find("Interactable Objects/Canvas/Questionscreen/Image/QuizForm/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
 
             for (int i = 0; i < quizQuestionsTexts.Count; ++i)
