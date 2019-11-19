@@ -310,8 +310,9 @@ public class GameUI : MonoBehaviour
                 animator = playerAnimationManager.GetComponent<Animator>();
 
                 if (animator)
-                {
+                {                    
                     animator.SetTrigger(generalAction.Action);
+                    animator.SetTrigger("S " + generalAction.Action);
                     actionManager.OnGeneralAction();
                 }
             }
