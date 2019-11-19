@@ -190,7 +190,7 @@ namespace CareUp.Actions
         private string topicInput;
         private string person = "Patient"; // TODO
 
-        public TalkAction(string topic, int index, string sdescr, 
+        public TalkAction(string topic, int index, string sdescr,
             int points, bool notNeeded, float quizTime, string title, string content, List<string> blockReq,
             List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg)
             : base(ActionManager.ActionType.PersonTalk, index, sdescr, points, notNeeded,
@@ -452,6 +452,45 @@ namespace CareUp.Actions
         public override void ObjectNames(out string[] name)
         {
             string[] res = { positionInput };
+            name = res;
+        }
+    }
+    public class GeneralAction : Action
+    {
+        public string ButtonText { get; }
+        public string Action { get; }
+        public string Item { get; }
+
+        public GeneralAction(string itemValue, string actionValue, int index, string sdescr,
+            string buttonTextValue, int points, bool notNeeded, float quizTime, string title,
+            string content, List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg)
+            : base(ActionManager.ActionType.General, index, sdescr, points, notNeeded,
+                  quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg)
+        {
+            Item = itemValue;
+            Action = actionValue;
+            ButtonText = buttonTextValue;
+        }
+
+        public override bool Compare(string[] info)
+        {
+            bool same = false;
+            if (info != null)
+            {
+                if (info.Length == 1)
+                {
+                    if (info[0] == Item)
+                    {
+                        same = true;
+                    }
+                }
+            }
+            return same;
+        }
+
+        public override void ObjectNames(out string[] name)
+        {
+            string[] res = { Item };
             name = res;
         }
     }

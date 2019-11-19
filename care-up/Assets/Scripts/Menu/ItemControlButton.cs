@@ -6,15 +6,13 @@ public class ItemControlButton : MonoBehaviour
     GameUI gameUI;
     PlayerPrefsManager prefs;
 
-
     void Start()
     {
         gameUI = GameObject.FindObjectOfType<GameUI>();
         prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
-
     }
 
-    public void updateBlinkState()
+    public void UpdateBlinkState()
     {
         if (prefs != null)
             if (!prefs.practiceMode)
@@ -30,7 +28,6 @@ public class ItemControlButton : MonoBehaviour
         {
             if (gameUI.DropLeftBlink)
             {
-                //GetComponent<Animator>().SetTrigger("BlinkOn");
                 toBlink = true;
             }
         }
@@ -38,7 +35,6 @@ public class ItemControlButton : MonoBehaviour
         {
             if (gameUI.DropRightBlink)
             {
-                //GetComponent<Animator>().SetTrigger("BlinkOn");
                 toBlink = true;
             }
         }
@@ -49,7 +45,6 @@ public class ItemControlButton : MonoBehaviour
                 if (gameUI.moveButtonToBlink == buttonType)
                 {
                     {
-                        //GetComponent<Animator>().SetTrigger("BlinkOn");
                         toBlink = true;
                     }
                 }
@@ -58,12 +53,9 @@ public class ItemControlButton : MonoBehaviour
         else if (gameUI.buttonToBlink == buttonType && !directionActive)
         {
             {
-                //GetComponent<Animator>().SetTrigger("BlinkOn");
                 toBlink = true;
             }
         }
-
-
         if (!toBlink) 
         {
             if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ItemBlink"))
@@ -71,15 +63,11 @@ public class ItemControlButton : MonoBehaviour
         }
         else if (!GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ItemBlink"))
             GetComponent<Animator>().SetTrigger("BlinkOn");
-
-
-
     }
 
     private void OnEnable()
     {
         prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
-
-        updateBlinkState();
+        UpdateBlinkState();
     }   
 }

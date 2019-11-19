@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.UI;
 
 public struct NameAndDescription
 {
@@ -12,12 +11,9 @@ public struct NameAndDescription
 /// </summary>
 /// 
 
-
-
 [RequireComponent(typeof(Renderer))]
-public class UsableObject : InteractableObject {
-
-
+public class UsableObject : InteractableObject
+{
     [HideInInspector]
     public bool tutorial_used = false;
     public bool handsCleaned = false;
@@ -44,7 +40,7 @@ public class UsableObject : InteractableObject {
     {
         if (objectsToCreate == null)
             return "";
-        foreach(NameAndDescription nd in objectsToCreate)
+        foreach (NameAndDescription nd in objectsToCreate)
         {
             if (nd.name == str)
             {
@@ -54,7 +50,7 @@ public class UsableObject : InteractableObject {
                 return result;
             }
         }
-        return ""; 
+        return "";
     }
 
     public virtual void Use()
@@ -81,6 +77,7 @@ public class UsableObject : InteractableObject {
             }
             // CHeat mode for testing the game
             bool cheat = false;
+
 #if UNITY_EDITOR
             if (GameObject.FindObjectOfType<ObjectsIDsController>() != null)
             {
@@ -89,7 +86,6 @@ public class UsableObject : InteractableObject {
 #endif
             if (actionManager.CompareUseObject(name) || cheat)
             {
-                
                 switch (name)
                 {
                     case "HandCleaner":
@@ -107,7 +103,7 @@ public class UsableObject : InteractableObject {
                             }
 
                             handsCleaned = true;
-                            
+
                             // never used
                             //string message = "Zorg voor een zorgvuldige handhygiëne. Handhygiëne is in dit protocol versneld om de gebruikerservaring te verbeteren";
                         }
@@ -124,8 +120,11 @@ public class UsableObject : InteractableObject {
             }
 
             actionManager.OnUseAction(gameObject.name);
-            gameUI.UpdateHelpHighlight();
-            Reset();
+            if (actionManager.CheckGeneralAction() == null)
+            {
+                gameUI.UpdateHelpHighlight();
+                Reset();
+            }
         }
     }
 }
