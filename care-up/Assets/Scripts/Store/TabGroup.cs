@@ -194,7 +194,7 @@ public class TabGroup : MonoBehaviour
                 buyBtnText.text = selectedItemBtn.item.price.ToString();
                 buyBtnCoin.SetActive(true);
                 buyBtn.SetActive(true);
-                //buyBtn.GetComponent<Image>().sprite = buyBtnSprite;
+                // buyBtn.GetComponent<Image>().sprite = buyBtnSprite;
             }
             else
             {
@@ -311,7 +311,7 @@ public class TabGroup : MonoBehaviour
                     if (currentCharacter.playerAvatar.hat == "")
                     {
                         DressedButtons[0] = xBtn;
-                        //xBtn.SetDressOn(true);
+                        xBtn.SetDressOn(true);
                     }
                     if (currentCharacter.defaultAvatarData.hat != "")
                     {
@@ -332,7 +332,7 @@ public class TabGroup : MonoBehaviour
                     if (mainAvatar.avatarData.glassesType == -1)
                     {
                         DressedButtons[1] = xxBtn;
-                        //xxBtn.SetDressOn(true);
+                        xxBtn.SetDressOn(true);
                     }
                     if (currentCharacter.defaultAvatarData.glassesType != -1)
                     {
@@ -342,7 +342,7 @@ public class TabGroup : MonoBehaviour
                         if (currentCharacter.playerAvatar.glassesType == currentCharacter.defaultAvatarData.glassesType)
                         {
                             DressedButtons[1] = baseGlassesBtn;
-                            //baseGlassesBtn.SetDressOn(true);
+                            baseGlassesBtn.SetDressOn(true);
                         }
                     }
                 }
@@ -357,7 +357,7 @@ public class TabGroup : MonoBehaviour
                     if (currentCharacter.playerAvatar.bodyType == currentCharacter.defaultAvatarData.bodyType)
                     {
                         DressedButtons[2] = baseBodyBtn;
-                        //baseBodyBtn.SetDressOn(true);
+                        baseBodyBtn.SetDressOn(true);
                     }
                 }
             }
@@ -429,10 +429,6 @@ public class TabGroup : MonoBehaviour
         buyBtnCoin.SetActive(false);
 
         InitializeTabPanel();
-
-        // purchasedBtn.GetComponent<Button>().onClick.AddListener(() => FilterProducts(FilterParam.Purchased));
-        // onSaleBtn.GetComponent<Button>().onClick.AddListener(() => FilterProducts(FilterParam.OnSale));
-        // renewBtn.GetComponent<Button>().onClick.AddListener(RenewPanel);
     }
 
     private void InitializePrefabs(StoreCategory storeCategory)
@@ -441,7 +437,7 @@ public class TabGroup : MonoBehaviour
         //tab = Instantiate(tabBtnPrefab, tabParent);
         //tab.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>($"Sprites/{storeCategory.icon}");
 
-        ////page = Instantiate(tabPagePrefab, pagesContainer.transform);
+        //page = Instantiate(tabPagePrefab, pagesContainer.transform);
         //itemParent = page.transform.Find("StoreTabPage/content");
     }
 
@@ -450,7 +446,7 @@ public class TabGroup : MonoBehaviour
         Transform tab = TabContainers[TabNum].transform.Find("Protocols/content");
         GameObject i = Instantiate(productItem, tab);
         ProductButton btn = i.GetComponent<ProductButton>();
-        //btn.Initialize(item, this);
+        btn.Initialize(item, this);
         return btn;
     }
 
@@ -462,7 +458,6 @@ public class TabGroup : MonoBehaviour
 
     private void InitializeElements()
     {
-        print("BBBBBBBB");
         mainAvatar = GameObject.Find("MainPlayerAvatar").GetComponent<PlayerAvatar>();
         buyBtnText = buyBtn.transform.Find("Text").GetComponent<Text>();
         buyBtnCoin = buyBtn.transform.Find("Coin").gameObject;

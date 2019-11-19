@@ -233,6 +233,7 @@ GameObject:
   - component: {fileID: 2715068742784786417}
   - component: {fileID: 2715068742784786419}
   - component: {fileID: 2715068742784786418}
+  - component: {fileID: 2791933137125689930}
   m_Layer: 5
   m_Name: ProductPanelBase
   m_TagString: Untagged
@@ -297,6 +298,24 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &2791933137125689930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2715068742784786416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bb52856eb57a50e6977f039bb8d260a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _name: {fileID: 6679750758455776318}
+  price: {fileID: 8149627730090770881}
+  cost: {fileID: 7131304408430851764}
+  checkmark: {fileID: 2210575598683144970}
+  dressOn: {fileID: 5518877472394798483}
+  icon: {fileID: 2823343176990982982}
 --- !u!1 &2715068742805850635
 GameObject:
   m_ObjectHideFlags: 0
@@ -471,9 +490,7 @@ GameObject:
   - component: {fileID: 5027338789266270777}
   - component: {fileID: 5027338789266270780}
   - component: {fileID: 6374721348324684715}
-  - component: {fileID: 8100183031084719051}
   - component: {fileID: 5027338789266270778}
-  - component: {fileID: 8613244148146383583}
   m_Layer: 5
   m_Name: ProductPanel
   m_TagString: Untagged
@@ -558,7 +575,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8100183031084719051}
+      - m_Target: {fileID: 2791933137125689930}
         m_MethodName: ButtonClicked
         m_Mode: 1
         m_Arguments:
@@ -571,24 +588,6 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &8100183031084719051
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5027338789266270776}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bb52856eb57a50e6977f039bb8d260a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _name: {fileID: 6679750758455776318}
-  price: {fileID: 8149627730090770881}
-  cost: {fileID: 7131304408430851764}
-  checkmark: {fileID: 2210575598683144970}
-  dressOn: {fileID: 5518877472394798483}
-  icon: {fileID: 2823343176990982982}
 --- !u!114 &5027338789266270778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -603,27 +602,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AspectMode: 3
   m_AspectRatio: 1
---- !u!223 &8613244148146383583
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5027338789266270776}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 2
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 1
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 0
-  m_OverridePixelPerfect: 1
-  m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: -1
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_TargetDisplay: 0
 --- !u!1 &5518877472394798483
 GameObject:
   m_ObjectHideFlags: 0
