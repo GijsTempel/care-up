@@ -22,20 +22,29 @@ public class UMP_Manager : MonoBehaviour {
     public List<UMP_DialogUI> Dialogs = new List<UMP_DialogUI>();
     public GameObject LevelPrefab;
     public Transform LevelPanel;
+    MenuEffects menuEffects;
 
 
-    private int CurrentWindow = -1;
+    private int CurrentWindow = 0;
     private PlayerPrefsManager manager;
     /// <summary>
     /// 
     /// </summary>
+    /// 
+
+    public int GetCurrentWindow()
+    {
+        return CurrentWindow;
+    }
+
     void Awake()
     {
         InstanceLevels();
         GameObject.Find("Leaderboard").SetActive(false);
         GameObject.Find("Opties").SetActive(false);
         GameObject.Find("Store").SetActive(false);
-        GameObject.Find("AdjustCharacter").SetActive(false);        
+        GameObject.Find("AdjustCharacter").SetActive(false);
+        menuEffects = GameObject.FindObjectOfType<MenuEffects>();
     }
     /// <summary>
     /// 
@@ -65,14 +74,15 @@ public class UMP_Manager : MonoBehaviour {
         if (CurrentWindow == id)
             return;
 
-            for (int i = 0; i < Windows.Count; i++)
-            {
-            if (Windows[i] != null)
-                Windows[i].SetActive(false);
-            }           
+        for (int i = 0; i < Windows.Count; i++)
+        {
+        if (Windows[i] != null)
+            Windows[i].SetActive(false);
+        }           
         
         CurrentWindow = id;
-        Windows[id].SetActive(true);   
+        Windows[id].SetActive(true);
+        menuEffects.ApplyMenuEffect();
             
     }
 

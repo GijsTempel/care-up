@@ -18,7 +18,7 @@ public class StoreViewModel : MonoBehaviour
 
     public void UpdateCurrancyPanel()
     {
-        currencyText = GameObject.Find("NumbersStackPanel/CurrencyPanel/Panel/Text");
+        currencyText = GameObject.Find("TitlePanel/TitlePanel/Panel/CurrencyPanel/ValuePanel/Text");
 
         if (currencyText != null)
             currencyText.GetComponent<Text>().text = PlayerPrefsManager.storeManager.Currency.ToString();

@@ -235,8 +235,9 @@ public class TabGroup : MonoBehaviour
                 mainAvatar.SetAnimationAction(CareUpAvatar.Actions.Dance, true);
 
                 selectedItemBtn.SetPurchased(true);
-                GameObject.Find("AdjustCharacter/NumbersStackPanel/CurrencyPanel/Panel/Text").GetComponent<Text>().text
-                    = PlayerPrefsManager.storeManager.Currency.ToString();
+                GetComponent<StoreViewModel>().UpdateCurrancyPanel();
+                //GameObject.Find("TitlePanel/TitlePanel/Panel/CurrencyPanel/ValuePanel/Text").GetComponent<Text>().text
+                //    = PlayerPrefsManager.storeManager.Currency.ToString();
                 if (item.price > 0)
                 {
                     GameObject.Find("cashRegisterEffect").GetComponent<AudioSource>().Play();
