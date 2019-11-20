@@ -13,6 +13,8 @@ public class ActionManager : MonoBehaviour
 {
     public static bool practiceMode = true;
     public static bool personClicked = false;
+    public static bool generalAction = false;
+    public static bool generalActionDone = false;
 
     [HideInInspector]
     public bool tutorial_hintUsed = false;
@@ -202,13 +204,20 @@ public class ActionManager : MonoBehaviour
     // Will be refactored
     public static void UpdateRequirements(float showDelay = 0f)
     {
+        ActionManager actManager = GameObject.FindObjectOfType<ActionManager>();
+
         if (!practiceMode)
+        {
+            if (actManager.CheckGeneralAction() != null && !generalActionDone)
+            {
+                actManager.NotTriggeredAction();
+            }
             return;
+        }
 
         if (playerScript == null)
             playerScript = GameObject.FindObjectOfType<PlayerScript>();
 
-        ActionManager actManager = GameObject.FindObjectOfType<ActionManager>();
         GameUI gameUI = GameObject.FindObjectOfType<GameUI>();
 
         List<StepData> stepsList = new List<StepData>();
@@ -822,6 +831,11 @@ public class ActionManager : MonoBehaviour
 
         foreach (Action a in list)
         {
+            if (a.Type == ActionType.General)
+            {
+                GeneralAction action = (GeneralAction)a;
+                return action.ButtonText;
+            }
             if (a.Type == ActionType.ObjectUse)
             {
                 UseAction useA = (UseAction)a;
@@ -839,11 +853,6 @@ public class ActionManager : MonoBehaviour
                 {
                     return useOnA.buttonText;
                 }
-            }
-            else if (a.Type == ActionType.General)
-            {
-                GeneralAction action = (GeneralAction)a;
-                return action.ButtonText;
             }
         }
 
@@ -1368,8 +1377,10 @@ public class ActionManager : MonoBehaviour
         bool occured = Check(null, ActionType.General);
 
         if (!CheckScenarioCompleted() && occured)
+        {
             ActionManager.CorrectAction();
-
+            ActionManager.generalActionDone = true;
+        }
         UpdateRequirements();
     }
 
@@ -1391,14 +1402,20 @@ public class ActionManager : MonoBehaviour
 
     public void NotTriggeredAction()
     {
+        generalAction = false;
+
         HandsInventory inventory = GameObject.FindObjectOfType<HandsInventory>();
         if (inventory != null)
+        {
             if (inventory.LeftHandEmpty() && inventory.RightHandEmpty())
             {
                 GameUI gameUI = FindObjectOfType<GameUI>();
                 gameUI.ShowNoTargetButton();
-                gameUI.buttonToBlink = GameUI.ItemControlButtonType.NoTargetRight;
+
+                if (practiceMode)
+                    gameUI.buttonToBlink = GameUI.ItemControlButtonType.NoTargetRight;
             }
+        }
     }
 
     /// <summary>

@@ -904,10 +904,6 @@ public class GameUI : MonoBehaviour
                 bool showNoTarget = false;
                 bool showNoTarget_right = false;
 
-                bool showOnGeneralAction = false;
-
-                showOnGeneralAction = actionManager.CheckGeneralAction() != null;
-
                 if (!LEmpty)
                 {
                     DropLeftButton.SetActive(true);
@@ -988,7 +984,7 @@ public class GameUI : MonoBehaviour
                 zoomButtonLeft.SetActive(showZoomLeft);
                 zoomButtonRight.SetActive(showZoomRight);
                 noTargetButton.SetActive(showNoTarget);
-                noTargetButton_right.SetActive(showNoTarget_right || showOnGeneralAction);
+                noTargetButton_right.SetActive(showNoTarget_right || (ActionManager.generalAction && !ActionManager.generalActionDone));
                 combineButton.SetActive(showCombin);
             }
 
@@ -1022,6 +1018,7 @@ public class GameUI : MonoBehaviour
 
     public void ShowNoTargetButton()
     {
+        ActionManager.generalAction = true;
         noTargetButton_right.SetActive(true);
         noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text =
             actionManager.CurrentButtonText();
