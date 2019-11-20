@@ -1376,6 +1376,11 @@ public class ActionManager : MonoBehaviour
     {
         bool occured = Check(null, ActionType.General);
 
+        if (occured)
+        {
+            Debug.Log($"General action with result: {occured}");
+        }
+
         if (!CheckScenarioCompleted() && occured)
         {
             ActionManager.CorrectAction();
