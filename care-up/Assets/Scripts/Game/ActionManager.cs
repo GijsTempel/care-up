@@ -307,11 +307,7 @@ public class ActionManager : MonoBehaviour
             if (a.Type == ActionType.General)
             {
                 objectsData.Add(new StepData(false, $"- Klik op de '{actManager.CurrentButtonText()}' knop.", i));
-                if(inventory.LeftHandEmpty() && inventory.RightHandEmpty())
-                {
-                    gameUI.ShowNoTargetButton();
-                    gameUI.buttonToBlink = GameUI.ItemControlButtonType.NoTargetRight;
-                }
+                actManager.NotTriggeredAction();
             }
 
             string[] actionHand = { a.leftHandRequirement, a.rightHandRequirement };
@@ -906,7 +902,7 @@ public class ActionManager : MonoBehaviour
                     result = true;
             }
         }
-        
+
         return result;
     }
 
@@ -1391,6 +1387,18 @@ public class ActionManager : MonoBehaviour
             requirement = requirementValue;
             subindex = index;
         }
+    }
+
+    public void NotTriggeredAction()
+    {
+        HandsInventory inventory = GameObject.FindObjectOfType<HandsInventory>();
+        if (inventory != null)
+            if (inventory.LeftHandEmpty() && inventory.RightHandEmpty())
+            {
+                GameUI gameUI = FindObjectOfType<GameUI>();
+                gameUI.ShowNoTargetButton();
+                gameUI.buttonToBlink = GameUI.ItemControlButtonType.NoTargetRight;
+            }
     }
 
     /// <summary>

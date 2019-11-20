@@ -310,7 +310,7 @@ public class GameUI : MonoBehaviour
                 animator = playerAnimationManager.GetComponent<Animator>();
 
                 if (animator)
-                {                    
+                {
                     animator.SetTrigger(generalAction.Action);
                     animator.SetTrigger("S " + generalAction.Action);
                     actionManager.OnGeneralAction();
@@ -904,7 +904,9 @@ public class GameUI : MonoBehaviour
                 bool showNoTarget = false;
                 bool showNoTarget_right = false;
 
-                showNoTarget_right = (actionManager.CheckGeneralAction() != null) && noTargetButton_right.activeInHierarchy;
+                bool showOnGeneralAction = false;
+
+                showOnGeneralAction = actionManager.CheckGeneralAction() != null;
 
                 if (!LEmpty)
                 {
@@ -986,7 +988,7 @@ public class GameUI : MonoBehaviour
                 zoomButtonLeft.SetActive(showZoomLeft);
                 zoomButtonRight.SetActive(showZoomRight);
                 noTargetButton.SetActive(showNoTarget);
-                noTargetButton_right.SetActive(showNoTarget_right);
+                noTargetButton_right.SetActive(showNoTarget_right || showOnGeneralAction);
                 combineButton.SetActive(showCombin);
             }
 
