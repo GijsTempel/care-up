@@ -431,6 +431,8 @@ public class GameUI : MonoBehaviour
             ActionManager.practiceMode = prefs.practiceMode;
         }
 
+        SetAEDLogic();
+
 #if !(UNITY_EDITOR || DEVELOPMENT_BUILD)
         if(GameObject.Find("ActionsPanel") != null)
             GameObject.Find("ActionsPanel").SetActive(false);
@@ -1167,6 +1169,27 @@ public class GameUI : MonoBehaviour
             }
             float alpha = DetailedHintPanel.GetComponent<Image>().color.a;
             SetHintPanelAlpha(alpha);
+        }
+    }
+
+    private void SetAEDLogic()
+    {
+        if (SceneManager.GetActiveScene().name == "Scenes_AED")
+        {
+            Animator playerAnimator;
+            PlayerAnimationManager playerAnimationManager = GameObject.FindObjectOfType<PlayerAnimationManager>();
+
+            if (playerAnimationManager != null)
+            {
+                playerAnimator = playerAnimationManager.GetComponent<Animator>();
+
+                if (noTargetButton_right != null && playerAnimator != null)
+                {
+                    noTargetButton_right.SetActive(true);
+                    noTargetButton_right.gameObject.GetComponent<Button>().onClick.AddListener(() => playerAnimator.SetTrigger("Start_AED_SQ1"));
+                    noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text = "Help de cliënt";
+                }
+            }
         }
     }
 }
