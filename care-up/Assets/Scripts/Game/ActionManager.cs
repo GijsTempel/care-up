@@ -313,7 +313,7 @@ public class ActionManager : MonoBehaviour
                 }
             }
 
-            if (a.Type == ActionType.General)
+            if (a.Type == ActionType.General && !generalActionDone)
             {
                 objectsData.Add(new StepData(false, $"- Klik op de '{actManager.CurrentButtonText()}' knop.", i));
                 actManager.NotTriggeredAction();

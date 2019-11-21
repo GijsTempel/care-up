@@ -88,8 +88,6 @@
     type="use"
     value="gloveBox"
     extra="Trek de handschoenen aan."
-    messageTitle="Gebruik handschoenen en schort"
-    messageContent="Bij aanbrengen van stomamateriaal hoeven volgens de LCHV-richtlijn geen handschoenen te worden gedragen als deze blijven kleven aan huidplaat of plakranden. Beoordeel per situatie in hoeverre er risico is op contact met excreta en overweeg als alternatief een strak passende maat handschoenen. Het zelfde geldt voor een schort."
    blockUnlock="GlovesTakenOn"
     ></action>
 
@@ -204,6 +202,7 @@
     type="combine"
     left="SyringeWithAbsorptionNeedle"
     right="OpenedAmpoule"
+    blockUnlock="UnAirSyringe"
     extra="Zuig het medicijn op in de spuit. Zorg dat dit de juiste hoeveelheid is. De hoeveelheid bepaal je door een berekening te maken. Deze berekening laat je dubbel controleren. In het spel gaat de berekening automatisch en de dubbele controle heb je al uitgevoerd in stap 4.2."
   ></action>
 
@@ -217,6 +216,7 @@
     target=""
     buttonText="Ontluchten"
     extra="Ontlucht de opzuignaald tot er een druppel vloeistof aan de punt van de opzuignaald zichtbaar wordt. Ontlucht, wanneer geen opzuignaald gebruikt wordt, de injectienaald niet. De hoeveelheid lucht die ingespoten wordt (= inhoud van de injectienaald) is verwaarloosbaar klein."
+    blockRequired="UnAirSyringe"
   ></action>
 
   <action
@@ -227,6 +227,7 @@
     type="combine"
     left="SyringeWithAbsorptionNeedle"
     right=""
+    blockUnlock="PlaceInjectionNeedle"
     extra="Klik het beschermkapje met een duimbeweging over de opzuignaald, verwijder de naald van de spuit (bij naald zonder veiligheidsysteem met een naaldverwijderaar)"
   />
   <action
@@ -253,6 +254,8 @@
     messageTitle="Handschoenen"
     messageContent="Als tijdens de injectie geen bloedcontact te verwachten is hoeven er geen handschoenen gedragen te worden. "
     blockUnlock="AllowTakeOffGloves"
+    blockRequired="PlaceInjectionNeedle"
+     
   ></action>
 
   <action
@@ -264,6 +267,7 @@
     action="TakeOffGloves"
     buttonText="Trek handschoenen uit "
     blockRequired="AllowTakeOffGloves, GlovesTakenOn"
+    blockUnlock="CleanWorkfield"
   ></action>
   
   
@@ -275,6 +279,7 @@
      type="use"
      value="WorkField"
      extra="Ruim de materialen op door met lege handen op het werkveld te klikken"
+     blockRequired="CleanWorkfield"
      messegeTitle="Materialen opruimen"
      MessegeContent="Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen"
 ></action>
