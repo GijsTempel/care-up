@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using CareUp.Actions;
 using System.Linq;
 using AssetBundles;
+using UnityEngine.SceneManagement;
 
 public class GameUI : MonoBehaviour
 {
@@ -1174,7 +1175,7 @@ public class GameUI : MonoBehaviour
 
     private void SetAEDLogic()
     {
-        if (SceneManager.GetActiveScene().name == "Scenes_AED")
+        /*if (SceneManager.GetActiveScene().name == "Scenes_AED")
         {
             Animator playerAnimator;
             PlayerAnimationManager playerAnimationManager = GameObject.FindObjectOfType<PlayerAnimationManager>();
@@ -1190,6 +1191,6 @@ public class GameUI : MonoBehaviour
                     noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text = "Help de cliënt";
                 }
             }
-        }
+        }*/
     }
 }
