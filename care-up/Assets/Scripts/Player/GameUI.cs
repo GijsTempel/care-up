@@ -397,6 +397,8 @@ public class GameUI : MonoBehaviour
         objectsIDsController = GameObject.FindObjectOfType<ObjectsIDsController>();
         MovementSideButtons = GameObject.Find("MovementSideButtons");
 
+        ActionManager.generalActionDone = false;
+        ActionManager.generalAction = false;
         prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
         if (prefs != null)
             practiceMode = prefs.practiceMode;
