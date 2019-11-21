@@ -82,7 +82,11 @@ public class MainMenu : MonoBehaviour
 
             //handle updates panel
 
-            StoreViewModel.ShowRewardDialogue(reward);
+            if (EndScoreManager.showReward)
+            {
+                StoreViewModel.ShowRewardDialogue(reward);
+                EndScoreManager.showReward = false;
+            }
 
             bool updatesSeen = PlayerPrefs.GetInt("_updatesSeen") == 1;
             string versionSeen = PlayerPrefs.GetString("__version", "");
@@ -338,7 +342,7 @@ public class MainMenu : MonoBehaviour
 
     public void ShowReward()
     {
-        if(!StoreViewModel.ShowRewardDialogue(reward, rewardPanel))
+        if (!StoreViewModel.ShowRewardDialogue(reward, rewardPanel))
         {
             OnRetryButtonClick();
         }

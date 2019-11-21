@@ -4,7 +4,6 @@ using UnityEngine.UI;
 using CareUp.Actions;
 using System.Linq;
 using AssetBundles;
-using UnityEngine.SceneManagement;
 
 public class GameUI : MonoBehaviour
 {
@@ -295,6 +294,41 @@ public class GameUI : MonoBehaviour
         }
     }
 
+    public void GeneralAction()
+    {
+        GeneralAction generalAction = actionManager.CheckGeneralAction();
+
+        if (generalAction != null)
+        {
+            GameObject item = GameObject.Find(generalAction.Item);
+
+            PlayerAnimationManager playerAnimationManager = FindObjectOfType<PlayerAnimationManager>();
+            Animator animator;
+
+            if (playerAnimationManager != null)
+            {
+                animator = playerAnimationManager.GetComponent<Animator>();
+
+                if (animator)
+                {
+                    animator.SetTrigger(generalAction.Action);
+                    animator.SetTrigger("S " + generalAction.Action);
+                    actionManager.OnGeneralAction();
+                }
+            }
+            else if (item != null)
+            {
+                animator = item.GetComponent<Animator>();
+
+                if (animator)
+                {
+                    animator.SetTrigger(generalAction.Action);
+                    actionManager.OnGeneralAction();
+                }
+            }
+        }
+    }
+
     public void UpdateWalkToGroupButtons()
     {
         if (WTGButtons == null)
@@ -468,8 +502,6 @@ public class GameUI : MonoBehaviour
         Invoke("ShowWalkToGroupPanel", 0.5f);
     }
 
-
-
     public HighlightObject AddHighlight(Transform target, string prefix, HighlightObject.type hl_type = HighlightObject.type.NoChange, float startDelay = 0, float LifeTime = float.PositiveInfinity)
     {
         string hl_name = prefix + "_" + target.name;
@@ -623,7 +655,7 @@ public class GameUI : MonoBehaviour
 
     void OnGUI()
     {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD 
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
         GUIStyle style = new GUIStyle();
         style.normal.textColor = new Color(1f, 0f, 0f);
         style.fontSize = 30;
@@ -667,6 +699,7 @@ public class GameUI : MonoBehaviour
                 Destroy(g);
             }
         }
+        ActionManager.UpdateRequirements();
     }
 
     public void UpdateButtonsBlink()
@@ -679,7 +712,7 @@ public class GameUI : MonoBehaviour
 
         foreach (ItemControlButton b in GameObject.FindObjectsOfType<ItemControlButton>())
         {
-            b.updateBlinkState();
+            b.UpdateBlinkState();
         }
         foreach (ButtonBlinking b in GameObject.FindObjectsOfType<ButtonBlinking>())
         {
@@ -796,7 +829,10 @@ public class GameUI : MonoBehaviour
                 ActionManager.BuildRequirements();
                 ActionManager.UpdateRequirements();
 
-                UpdateHelpHighlight();
+                if (actionManager.CheckGeneralAction() == null)
+                {
+                    UpdateHelpHighlight();
+                }
                 UpdateWalkToGtoupUI(true);
             }
         }
@@ -846,8 +882,12 @@ public class GameUI : MonoBehaviour
                 decombineButton.SetActive(false);
                 decombineButton_right.SetActive(false);
                 ActionManager.UpdateRequirements();
-                UpdateHelpHighlight();
+                if (actionManager.CheckGeneralAction() == null)
+                {
+                    UpdateHelpHighlight();
+                }
                 currentActionsCount = actionManager.actionsCount;
+
                 //hide panel for the first frame of hands state change
                 //prevent quick blinking of buttons before animation starts
                 showItemControlPanel = false;
@@ -946,18 +986,7 @@ public class GameUI : MonoBehaviour
                 zoomButtonLeft.SetActive(showZoomLeft);
                 zoomButtonRight.SetActive(showZoomRight);
                 noTargetButton.SetActive(showNoTarget);
-                noTargetButton_right.SetActive(showNoTarget_right);
-                //if (showNoTarget)
-                //    decombineButton.SetActive(false);
-                //if(showNoTarget_right)
-                //    decombineButton_right.SetActive(false);
-
-
-                //decombineButton.SetActive(showDecomb && REmpty && !showNoTarget);
-                //if(decombineButton.activeSelf)
-                //decombineButton.GetComponent<Animator>().SetTrigger("BlinkOn");
-
-                //decombineButton_right.SetActive(showDecomb && LEmpty && !showNoTarget_right);
+                noTargetButton_right.SetActive(showNoTarget_right || (ActionManager.generalAction && !ActionManager.generalActionDone));
                 combineButton.SetActive(showCombin);
             }
 
@@ -989,6 +1018,13 @@ public class GameUI : MonoBehaviour
             currentAnimLock = false;
     }
 
+    public void ShowNoTargetButton()
+    {
+        ActionManager.generalAction = true;
+        noTargetButton_right.SetActive(true);
+        noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text =
+            actionManager.CurrentButtonText();
+    }
 
     public void UpdateWalkToGtoupUI(bool value)
     {
