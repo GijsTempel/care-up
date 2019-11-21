@@ -108,6 +108,12 @@ public class UMP_Manager : MonoBehaviour {
         }
     }
 
+    public void TestDialiog()
+    {
+        int value = 0;
+        int.TryParse(transform.Find("MenuCanvas/InputField").GetComponent<InputField>().text, out value);
+        ShowDialog(value);
+    }
     /// <summary>
     /// 
     /// </summary>
