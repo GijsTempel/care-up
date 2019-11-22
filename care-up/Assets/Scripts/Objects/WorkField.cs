@@ -59,8 +59,10 @@ public class WorkField : UsableObject {
             controls.ResetObject();
             Reset();
         }
-        _gameUI.UpdateHelpHighlight();
-
+        if (actionManager.CheckGeneralAction() == null)
+        {
+            _gameUI.UpdateHelpHighlight();
+        }
     }
 
     public void ToggleObjects()

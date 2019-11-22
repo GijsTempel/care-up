@@ -1928,8 +1928,8 @@ namespace AssetUsageDetectorNamespace
 			// Check if this GameObject's prefab is one of the selected assets
 			if( searchGameObjectReferences )
 			{
-				Object prefab = PrefabUtility.GetPrefabParent( go );
-				if( assetsSet.Contains( prefab ) && go == PrefabUtility.FindRootGameObjectWithSameParentPrefab( go ) )
+                Object prefab = PrefabUtility.GetCorrespondingObjectFromSource(go);
+                if ( assetsSet.Contains( prefab ) && go == PrefabUtility.GetOutermostPrefabInstanceRoot( go ) )
 					referenceNode.AddLinkTo( GetReferenceNode( prefab ), "Prefab object" );
 			}
 
@@ -2175,7 +2175,7 @@ namespace AssetUsageDetectorNamespace
 							continue;
 						else if( ( propertyName.Equals( "material" ) || propertyName.Equals( "materials" ) ) &&
 							( typeof( Renderer ).IsAssignableFrom( currType ) || typeof( Collider ).IsAssignableFrom( currType ) ||
-							typeof( Collider2D ).IsAssignableFrom( currType ) || typeof( GUIText ).IsAssignableFrom( currType ) ) )
+							typeof( Collider2D ).IsAssignableFrom( currType ) ) )
 							continue;
 						else
 						{

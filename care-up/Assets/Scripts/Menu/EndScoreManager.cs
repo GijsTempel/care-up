@@ -9,7 +9,6 @@ using System.Collections.Generic;
 /// </summary>
 public class EndScoreManager : MonoBehaviour
 {
-
     private int points;
     private int score;
     private float time;
@@ -20,6 +19,8 @@ public class EndScoreManager : MonoBehaviour
 
     public string completedSceneName;
     public string completedSceneBundle;
+
+    public Text reward;
 
     private List<string> steps;
     //private List<string> stepsDescr;
@@ -38,6 +39,7 @@ public class EndScoreManager : MonoBehaviour
     private Sprite fullStar;
 
     private bool emailsSent = false;
+    public static bool showReward = false;
 
     void Start()
     {
@@ -153,7 +155,9 @@ public class EndScoreManager : MonoBehaviour
 
         }
         if (actualScene)
-        {          
+        {
+            showReward = true;
+
             Transform quizParent = GameObject.Find("Interactable Objects/Canvas/Questionscreen/Image/QuizForm/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
 
             for (int i = 0; i < quizQuestionsTexts.Count; ++i)
@@ -186,7 +190,7 @@ public class EndScoreManager : MonoBehaviour
                     GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Stars/Star3").GetComponent<Image>().sprite = fullStar;
             }
 
-                if (time >= 900.0f)
+            if (time >= 900.0f)
             {
                 achievements.UpdateKeys("MoreThan15", 1);
             }
@@ -210,6 +214,27 @@ public class EndScoreManager : MonoBehaviour
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+
+
+            int counter = 0;
+            // add in-game currency once 3 finishes?
+            int.TryParse(DatabaseManager.FetchField("Store", "FinishedCounter"), out counter);
+            if (++counter >= 3)
+            {
+                counter = 0;
+                PlayerPrefsManager.storeManager.ModifyCurrencyBy(5);
+            }
+            DatabaseManager.UpdateField("Store", "FinishedCounter", counter.ToString());
+
+            // add in-game store presents once 15 successful finishes?
+            int.TryParse(DatabaseManager.FetchField("Store", "SuccessCounter"), out counter);
+            if (percent >= 0.7) ++counter;
+            if (counter >= 15)
+            {
+                counter = 0;
+                PlayerPrefsManager.storeManager.ModifyPresentsBy(1);
+            }
+            DatabaseManager.UpdateField("Store", "SuccessCounter", counter.ToString());
 
             GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().SetSceneCompletionData(
                 completedSceneName, points, Mathf.RoundToInt(time));
@@ -239,6 +264,8 @@ public class EndScoreManager : MonoBehaviour
     /// </summary>
     public void LoadEndScoreScene()
     {
+        StoreViewModel.SavedCoins = ActionManager.Points;
+
         actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
         if (actionManager == null) Debug.LogError("No action manager found.");
 
@@ -247,7 +274,7 @@ public class EndScoreManager : MonoBehaviour
 
         time = gameTimer.CurrentTime;
 
-        points = actionManager.Points;
+        points = ActionManager.Points;
         score = Mathf.FloorToInt(3.0f * points / actionManager.TotalPoints);
 
         Debug.Log("Current points: " + points);

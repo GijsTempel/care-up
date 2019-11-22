@@ -13,6 +13,8 @@ public class ActionManager : MonoBehaviour
 {
     public static bool practiceMode = true;
     public static bool personClicked = false;
+    public static bool generalAction = false;
+    public static bool generalActionDone = false;
 
     [HideInInspector]
     public bool tutorial_hintUsed = false;
@@ -37,7 +39,7 @@ public class ActionManager : MonoBehaviour
     private bool penalized = false;
 
     private int totalPoints = 0;         // max points of scene
-    private int points = 0;              // current points  
+    private static int points = 0;              // current points  
 
     // list of descriptions of steps, player got penalty on
     private List<string> stepsList = new List<string>();
@@ -61,6 +63,7 @@ public class ActionManager : MonoBehaviour
     public string MessageTitle { get; set; } = null;
     public bool ShowTheory { get; set; } = false;
 
+    public static int percentage;
     public List<Action> ActionList
     {
         get { return actionList; }
@@ -92,11 +95,12 @@ public class ActionManager : MonoBehaviour
     /// <summary>
     /// Current points during runtime.
     /// </summary>
-    public int Points
+    public static int Points
     {
         get { return points; }
         set { points = value; }
     }
+
 
     /// <summary>
     /// Total max points player can get on the scene.
@@ -133,6 +137,7 @@ public class ActionManager : MonoBehaviour
             if (percent < 0)
                 percent = 0;
 
+            percentage = (int)percent;
             return percent;
         }
     }
@@ -144,6 +149,11 @@ public class ActionManager : MonoBehaviour
     {
         get { return currentActionIndex; }
         set { currentActionIndex = value; }
+    }
+
+    public ActionType CurrentActionType
+    {
+        get { return currentAction.Type; }
     }
 
     /// <summary>
@@ -193,18 +203,26 @@ public class ActionManager : MonoBehaviour
         SequenceStep,
         ObjectDrop,
         Movement,
+        General
     };
 
     // Will be refactored
     public static void UpdateRequirements(float showDelay = 0f)
     {
+        ActionManager actManager = GameObject.FindObjectOfType<ActionManager>();
+
         if (!practiceMode)
+        {
+            if (actManager.CheckGeneralAction() != null && !generalActionDone)
+            {
+                actManager.NotTriggeredAction();
+            }
             return;
+        }
 
         if (playerScript == null)
             playerScript = GameObject.FindObjectOfType<PlayerScript>();
 
-        ActionManager actManager = GameObject.FindObjectOfType<ActionManager>();
         GameUI gameUI = GameObject.FindObjectOfType<GameUI>();
 
         List<StepData> stepsList = new List<StepData>();
@@ -298,6 +316,12 @@ public class ActionManager : MonoBehaviour
                     else
                         objectsData.Add(new StepData(false, $"- Klik op {placeName}.", i));
                 }
+            }
+
+            if (a.Type == ActionType.General && !generalActionDone)
+            {
+                objectsData.Add(new StepData(false, $"- Klik op de '{actManager.CurrentButtonText()}' knop.", i));
+                actManager.NotTriggeredAction();
             }
 
             string[] actionHand = { a.leftHandRequirement, a.rightHandRequirement };
@@ -806,12 +830,17 @@ public class ActionManager : MonoBehaviour
         return result;
     }
 
-    public string CurrentButtonText(string itemName, bool skipBlocks = false)
+    public string CurrentButtonText(string itemName = null, bool skipBlocks = false)
     {
         List<Action> list = !skipBlocks ? UnlockedIncompletedActions : IncompletedActions;
 
         foreach (Action a in list)
         {
+            if (a.Type == ActionType.General)
+            {
+                GeneralAction action = (GeneralAction)a;
+                return action.ButtonText;
+            }
             if (a.Type == ActionType.ObjectUse)
             {
                 UseAction useA = (UseAction)a;
@@ -891,6 +920,21 @@ public class ActionManager : MonoBehaviour
         return result;
     }
 
+    public GeneralAction CheckGeneralAction()
+    {
+        GeneralAction action = null;
+
+        foreach (Action a in UnlockedIncompletedActions)
+        {
+            if (a.Type == ActionType.General)
+            {
+                action = (GeneralAction)a;
+            }
+        }
+
+        return action;
+    }
+
     private Controls controls;
 
     /// <summary>
@@ -921,7 +965,6 @@ public class ActionManager : MonoBehaviour
         XmlDocument xmlFile = new XmlDocument();
         xmlFile.LoadXml(textAsset.text);
 
-        //totalPoints = int.Parse(xmlFile.FirstChild.NextSibling.Attributes["points"].Value);
         XmlNodeList actions = xmlFile.FirstChild.NextSibling.ChildNodes;
 
         foreach (XmlNode action in actions)
@@ -955,17 +998,11 @@ public class ActionManager : MonoBehaviour
                 commentUA = action.Attributes["commentUA"].Value;
             }
 
-            /*string audio = "";
-            if (action.Attributes["audioHint"] != null)
+            string item = "";
+            if (action.Attributes["item"] != null)
             {
-                audio = action.Attributes["audioHint"].Value;
+                item = action.Attributes["item"].Value;
             }
-
-            string extra = "";
-            if (action.Attributes["extra"] != null)
-            {
-                extra = localizationManager.GetValueIfKey(action.Attributes["extra"].Value);
-            }*/
 
             string buttonText = "";
             if (action.Attributes["buttonText"] != null)
@@ -1087,22 +1124,19 @@ public class ActionManager : MonoBehaviour
                         blockLock, blockTitle, blockMsg));
                     break;
                 case "useOn":
-                    string useItem = action.Attributes["item"].Value;
                     string target = action.Attributes["target"].Value;
-                    actionList.Add(new UseOnAction(useItem, target, index, descr,
+                    actionList.Add(new UseOnAction(item, target, index, descr,
                         buttonText, pointsValue, notNeeded, quizTime, messageTitle, messageContent,
                         blockRequire, blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
                 case "examine":
-                    string exItem = action.Attributes["item"].Value;
                     string expected = action.Attributes["expected"].Value;
-                    actionList.Add(new ExamineAction(exItem, expected, index, descr,
+                    actionList.Add(new ExamineAction(item, expected, index, descr,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
                         blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
                 case "pickUp":
-                    string itemPicked = action.Attributes["item"].Value;
-                    actionList.Add(new PickUpAction(itemPicked, index, descr,
+                    actionList.Add(new PickUpAction(item, index, descr,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
                         blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
@@ -1113,15 +1147,20 @@ public class ActionManager : MonoBehaviour
                         blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
                 case "drop":
-                    string dropItem = action.Attributes["item"].Value;
                     string dropID = (action.Attributes["posID"] != null) ? action.Attributes["posID"].Value : "0";
-                    actionList.Add(new ObjectDropAction(dropItem, dropID, index, descr,
+                    actionList.Add(new ObjectDropAction(item, dropID, index, descr,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
                         blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
                 case "movement":
                     string movement = action.Attributes["value"].Value;
                     actionList.Add(new MovementAction(movement, index, descr,
+                        pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
+                        blockUnlock, blockLock, blockTitle, blockMsg));
+                    break;
+                case "general":
+                    string actionValue = action.Attributes["action"].Value;
+                    actionList.Add(new GeneralAction(item, actionValue, index, descr, buttonText,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
                         blockUnlock, blockLock, blockTitle, blockMsg));
                     break;
@@ -1165,41 +1204,6 @@ public class ActionManager : MonoBehaviour
     /// </summary>
     void Update()
     {
-        /*if (controls.keyPreferences.GetHintKey.Pressed())
-        {
-            if (Narrator.PlayHintSound(CurrentAudioHint)) // if sound played
-            {
-                string[] obj;
-                currentAction.ObjectNames(out obj);
-                GameObject parent;
-
-                if (obj.Length > 0)
-                {
-                    parent = GameObject.Find(obj[0]);
-                    if (parent != null)
-                    {
-                        CreateParticleHint(parent.transform);
-                    }
-                }
-
-                if (obj.Length == 2)
-                {
-                    parent = GameObject.Find(obj[1]);
-                    if (parent != null)
-                    {
-                        CreateParticleHint(parent.transform);
-                    }
-                }
-
-                tutorial_hintUsed = true;
-                if (!currentStepHintUsed)
-                {
-                    UpdatePoints(-1); // penalty for using hint
-                    currentStepHintUsed = true;
-                }
-            }
-        }*/
-
         if (!menuScene && uiSet)
         {
             if (pointsText.gameObject.activeSelf)
@@ -1373,6 +1377,23 @@ public class ActionManager : MonoBehaviour
         UpdateRequirements();
     }
 
+    public void OnGeneralAction()
+    {
+        bool occured = Check(null, ActionType.General);
+
+        if (occured)
+        {
+            Debug.Log($"General action with result: {occured}");
+        }
+
+        if (!CheckScenarioCompleted() && occured)
+        {
+            ActionManager.CorrectAction();
+            ActionManager.generalActionDone = true;
+        }
+        UpdateRequirements();
+    }
+
     public class StepData
     {
         public bool completed;
@@ -1386,6 +1407,24 @@ public class ActionManager : MonoBehaviour
             completed = completedValue;
             requirement = requirementValue;
             subindex = index;
+        }
+    }
+
+    public void NotTriggeredAction()
+    {
+        generalAction = false;
+
+        HandsInventory inventory = GameObject.FindObjectOfType<HandsInventory>();
+        if (inventory != null)
+        {
+            if (inventory.LeftHandEmpty() && inventory.RightHandEmpty())
+            {
+                GameUI gameUI = FindObjectOfType<GameUI>();
+                gameUI.ShowNoTargetButton();
+
+                if (practiceMode)
+                    gameUI.buttonToBlink = GameUI.ItemControlButtonType.NoTargetRight;
+            }
         }
     }
 
@@ -1409,16 +1448,12 @@ public class ActionManager : MonoBehaviour
         {
             foreach (Action action in subtypelist)
             {
-                if (action.Compare(info))
+                if (action.Compare(info) || (action.Type == ActionType.General))
                 {
                     matched = true;
                     action.matched = true;
 
                     int index = actionList.IndexOf(action);
-
-                    //inserted checklist stuff
-                    //RobotUITabChecklist.StrikeStep(index);
-
 
                     if (action.blockUnlock.Count() > 0)
                     {
@@ -1510,9 +1545,6 @@ public class ActionManager : MonoBehaviour
                     message = "Je kunt deze stap nog niet doen, het kan zijn dat je een stap vergeten bent.";
                 }
 
-                //RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
-                //messageCenter.NewMessage(title, message, RobotUIMessageTab.Icon.Block);
-
                 GameObject.FindObjectOfType<GameUI>().ShowBlockMessage(title, message);
             }
         }
@@ -1538,11 +1570,6 @@ public class ActionManager : MonoBehaviour
                 if (IncompletedActions.Count > 0)
                 {
                     RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
-
-                    //if (type == ActionType.SequenceStep)
-                    //    messageCenter?.NewMessage("Verkeerde handeling!", IncompletedActions[0].shortDescr, RobotUIMessageTab.Icon.Error);
-                    //else
-                    //    messageCenter?.NewMessage("Verkeerde handeling!", IncompletedActions[0].shortDescr, RobotUIMessageTab.Icon.Block);
 
                     if (type != ActionType.SequenceStep)
                         GameObject.FindObjectOfType<GameUI>().ShowBlockMessage("Verkeerde handeling!", IncompletedActions[0].shortDescr);
@@ -1619,37 +1646,6 @@ public class ActionManager : MonoBehaviour
     {
         Narrator.PlaySound("LevelComplete", 0.1f);
         GameObject.FindObjectOfType<GameUI>().ShowDonePanel(true);
-
-        /*//Loginpro is removed but these achievements can be used with new system later
-        GameObject ach = GameObject.Find("FinishProtocol");
-        if (ach != null)
-        {
-            ach.GetComponent<LoginProAsset.LoginPro_Achievement>().Unlock(100);
-        }
-
-        ach = GameObject.Find("FinishProtocol5min");
-        if (ach != null && GameObject.FindObjectOfType<GameTimer>().CurrentTime < 300f)
-        {
-            ach.GetComponent<LoginProAsset.LoginPro_Achievement>().Unlock(100);
-        }
-
-        ach = GameObject.Find("FinishProtocol10min");
-        if (ach != null && GameObject.FindObjectOfType<GameTimer>().CurrentTime < 600f)
-        {
-            ach.GetComponent<LoginProAsset.LoginPro_Achievement>().Unlock(100);
-        }
-
-        ach = GameObject.Find("Finish3Protocols");
-        if (ach != null)
-        {
-            ach.GetComponent<LoginProAsset.LoginPro_Achievement>().Unlock(34);
-        }
-
-        ach = GameObject.Find("Finish5Protocols");
-        if (ach != null)
-        {
-            ach.GetComponent<LoginProAsset.LoginPro_Achievement>().Unlock(20);
-        }*/
     }
 
     /// <summary>
@@ -1693,38 +1689,6 @@ public class ActionManager : MonoBehaviour
             GameObject.Find("_Dev").GetComponent<Cheat_CurrentAction>().UpdateAction();
         }
     }
-
-    /* not used
-    public void OnGameOver()
-    {
-        Transform gameOver = GameObject.Find("UI").transform.Find("GameOver");
-        gameOver.gameObject.SetActive(true);
-
-        if (GameObject.Find("GameLogic") != null)
-        {
-            controls.keyPreferences.ToggleLock();
-            GameObject.Find("GameLogic").GetComponent<GameTimer>().enabled = false;
-        }
-
-        PlayerScript player = GameObject.Find("Player").GetComponent<PlayerScript>();
-        Crosshair crosshair = GameObject.Find("Player").GetComponent<Crosshair>();
-        Animator animator = player.transform.GetChild(0).GetChild(0).GetComponent<Animator>();
-
-        player.enabled = false;
-        crosshair.enabled = false;
-
-        animator.speed = 0.0f;
-        Time.timeScale = 0f;
-
-        AudioSource[] audio = GameObject.FindObjectsOfType<AudioSource>();
-        foreach (AudioSource a in audio)
-        {
-            a.Pause();
-        }
-
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-    } */
 
     public void OnRetryButtonClick()
     {
@@ -1815,7 +1779,7 @@ public class ActionManager : MonoBehaviour
                     break;
             }
         }
-        
+
 #if (UNITY_EDITOR || DEVELOPMENT_BUILD)
         if (GameObject.FindObjectOfType<ActionsPanel>() != null)
             GameObject.FindObjectOfType<ActionsPanel>().UpdatePanel();

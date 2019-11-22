@@ -91,7 +91,6 @@ public class GameUI : MonoBehaviour
     PlayerScript ps;
     bool ICPCurrentState = false;
     public bool allowObjectControlUI = true;
-    public GameObject PatientInfoPanel;
     public enum ItemControlButtonType
     {
         None,
@@ -227,11 +226,11 @@ public class GameUI : MonoBehaviour
     public void CloseButtonPressed(bool value)
     {
         closeDialog.SetActive(value);
-       // closeButton.SetActive(!value);
+        // closeButton.SetActive(!value);
 
         if (value)
         {
-            //ps.robotUIopened = true;
+            ps.robotUIopened = true;
         }
         else
         {
@@ -295,6 +294,41 @@ public class GameUI : MonoBehaviour
         }
     }
 
+    public void GeneralAction()
+    {
+        GeneralAction generalAction = actionManager.CheckGeneralAction();
+
+        if (generalAction != null)
+        {
+            GameObject item = GameObject.Find(generalAction.Item);
+
+            PlayerAnimationManager playerAnimationManager = FindObjectOfType<PlayerAnimationManager>();
+            Animator animator;
+
+            if (playerAnimationManager != null)
+            {
+                animator = playerAnimationManager.GetComponent<Animator>();
+
+                if (animator)
+                {
+                    animator.SetTrigger(generalAction.Action);
+                    animator.SetTrigger("S " + generalAction.Action);
+                    actionManager.OnGeneralAction();
+                }
+            }
+            else if (item != null)
+            {
+                animator = item.GetComponent<Animator>();
+
+                if (animator)
+                {
+                    animator.SetTrigger(generalAction.Action);
+                    actionManager.OnGeneralAction();
+                }
+            }
+        }
+    }
+
     public void UpdateWalkToGroupButtons()
     {
         if (WTGButtons == null)
@@ -345,6 +379,11 @@ public class GameUI : MonoBehaviour
         }
     }
 
+    void ShowWalkToGroupPanel()
+    {
+        WalkToGroupPanel.SetActive(ps.away);
+    }
+
     public void HideTheoryTab()
     {
         GameObject.Find("PatientInfoTabs/Info/TheoryTab/Continue").gameObject.GetComponent<Button>().onClick.AddListener(
@@ -354,11 +393,12 @@ public class GameUI : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        PatientInfoPanel = GameObject.Find("PatientInfo");
         gameLogic = GameObject.Find("GameLogic");
         objectsIDsController = GameObject.FindObjectOfType<ObjectsIDsController>();
         MovementSideButtons = GameObject.Find("MovementSideButtons");
 
+        ActionManager.generalActionDone = false;
+        ActionManager.generalAction = false;
         prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
         if (prefs != null)
             practiceMode = prefs.practiceMode;
@@ -379,7 +419,6 @@ public class GameUI : MonoBehaviour
         decombineButton_right.SetActive(false);
         noTargetButton.SetActive(false);
         ItemControlPanel.SetActive(false);
-        //PatientInfoPanel.SetActive(false);
         noTargetButton_right.SetActive(false);
         DropRightButton.SetActive(false);
         DropLeftButton.SetActive(false);
@@ -455,13 +494,13 @@ public class GameUI : MonoBehaviour
         UpdateWalkToGroupButtons();
         UpdateWalkToGtoupUI(true);
 
-        foreach(InteractableObject o in Resources.FindObjectsOfTypeAll<InteractableObject>())
+        foreach (InteractableObject o in Resources.FindObjectsOfTypeAll<InteractableObject>())
         {
             o.assetSource = InteractableObject.AssetSource.Included;
         }
+        WalkToGroupPanel.SetActive(false);
+        Invoke("ShowWalkToGroupPanel", 0.5f);
     }
-
-
 
     public HighlightObject AddHighlight(Transform target, string prefix, HighlightObject.type hl_type = HighlightObject.type.NoChange, float startDelay = 0, float LifeTime = float.PositiveInfinity)
     {
@@ -616,11 +655,11 @@ public class GameUI : MonoBehaviour
 
     void OnGUI()
     {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD 
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
         GUIStyle style = new GUIStyle();
         style.normal.textColor = new Color(1f, 0f, 0f);
         style.fontSize = 30;
-        
+
 
         GUI.Label(new Rect(0, 0, 100, 100), ((int)(1.0f / Time.smoothDeltaTime)).ToString(), style);
         if (objectsIDsController != null)
@@ -628,9 +667,9 @@ public class GameUI : MonoBehaviour
             if (objectsIDsController.cheat)
                 GUI.Label(new Rect(30, 0, 100, 100), "Cheat enabled", style);
         }
-    
-    //debugSS = PlayerAnimationManager.animTimeout.ToString();
-    GUI.Label(new Rect(0, 30, 1000, 100), debugSS, style);
+
+        //debugSS = PlayerAnimationManager.animTimeout.ToString();
+        GUI.Label(new Rect(0, 30, 1000, 100), debugSS, style);
 #endif
     }
 
@@ -660,6 +699,7 @@ public class GameUI : MonoBehaviour
                 Destroy(g);
             }
         }
+        ActionManager.UpdateRequirements();
     }
 
     public void UpdateButtonsBlink()
@@ -672,7 +712,7 @@ public class GameUI : MonoBehaviour
 
         foreach (ItemControlButton b in GameObject.FindObjectsOfType<ItemControlButton>())
         {
-            b.updateBlinkState();
+            b.UpdateBlinkState();
         }
         foreach (ButtonBlinking b in GameObject.FindObjectsOfType<ButtonBlinking>())
         {
@@ -726,11 +766,6 @@ public class GameUI : MonoBehaviour
             {
                 GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
                 GameObject.FindObjectOfType<GameUI>().theoryPanel.SetActive(true);
-
-                Transform scrollBar = theoryPanel.transform.Find("ScrollViewMessege/Scrollbar Vertical");
-                if (scrollBar != null)
-                    scrollBar.GetComponent<Scrollbar>().value = 1;
-
                 GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Title").GetComponent<Text>().text = actionManager.MessageTitle;
                 GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Message").GetComponent<Text>().text = actionManager.Message;
             }
@@ -794,7 +829,10 @@ public class GameUI : MonoBehaviour
                 ActionManager.BuildRequirements();
                 ActionManager.UpdateRequirements();
 
-                UpdateHelpHighlight();
+                if (actionManager.CheckGeneralAction() == null)
+                {
+                    UpdateHelpHighlight();
+                }
                 UpdateWalkToGtoupUI(true);
             }
         }
@@ -844,8 +882,12 @@ public class GameUI : MonoBehaviour
                 decombineButton.SetActive(false);
                 decombineButton_right.SetActive(false);
                 ActionManager.UpdateRequirements();
-                UpdateHelpHighlight();
+                if (actionManager.CheckGeneralAction() == null)
+                {
+                    UpdateHelpHighlight();
+                }
                 currentActionsCount = actionManager.actionsCount;
+
                 //hide panel for the first frame of hands state change
                 //prevent quick blinking of buttons before animation starts
                 showItemControlPanel = false;
@@ -944,18 +986,7 @@ public class GameUI : MonoBehaviour
                 zoomButtonLeft.SetActive(showZoomLeft);
                 zoomButtonRight.SetActive(showZoomRight);
                 noTargetButton.SetActive(showNoTarget);
-                noTargetButton_right.SetActive(showNoTarget_right);
-                //if (showNoTarget)
-                //    decombineButton.SetActive(false);
-                //if(showNoTarget_right)
-                //    decombineButton_right.SetActive(false);
-
-
-                //decombineButton.SetActive(showDecomb && REmpty && !showNoTarget);
-                //if(decombineButton.activeSelf)
-                //decombineButton.GetComponent<Animator>().SetTrigger("BlinkOn");
-
-                //decombineButton_right.SetActive(showDecomb && LEmpty && !showNoTarget_right);
+                noTargetButton_right.SetActive(showNoTarget_right || (ActionManager.generalAction && !ActionManager.generalActionDone));
                 combineButton.SetActive(showCombin);
             }
 
@@ -977,7 +1008,6 @@ public class GameUI : MonoBehaviour
             if (PlayerScript.actionsLocked)
                 showItemControlPanel = false;
             ItemControlPanel.SetActive(showItemControlPanel);
-            PatientInfoPanel.SetActive(showItemControlPanel);
             MovementSideButtons.SetActive(showItemControlPanel);
 
             ICPCurrentState = ItemControlPanel.activeSelf;
@@ -988,6 +1018,13 @@ public class GameUI : MonoBehaviour
             currentAnimLock = false;
     }
 
+    public void ShowNoTargetButton()
+    {
+        ActionManager.generalAction = true;
+        noTargetButton_right.SetActive(true);
+        noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text =
+            actionManager.CurrentButtonText();
+    }
 
     public void UpdateWalkToGtoupUI(bool value)
     {
@@ -1011,7 +1048,6 @@ public class GameUI : MonoBehaviour
             RightSideButton.gameObject.SetActive(false);
             WalkToGroupPanel.SetActive(false);
             ItemControlPanel.SetActive(false);
-            PatientInfoPanel.SetActive(false);
         }
         else
         {
@@ -1112,9 +1148,12 @@ public class GameUI : MonoBehaviour
         {
             GameObject currentHintPanel = null;
 
-            currentHintPanel = Instantiate<GameObject>(Resources.Load<GameObject>("NecessaryPrefabs/UI/HintPanel"), DetailedHintPanel.transform.Find("HintContainer").transform);
+            currentHintPanel = Instantiate<GameObject>(Resources.Load<GameObject>("NecessaryPrefabs/UI/HintPanel"), 
+                DetailedHintPanel.transform.Find("HintContainer").transform);
+            currentHintPanel.name = "HintPanel";
             hintText = currentHintPanel.transform.Find("Text").gameObject.GetComponent<Text>();
-            hintText.text = actionManager.CurrentDescription[i];
+            hintText.text =  (actionManager.CurrentActionType == ActionManager.ActionType.SequenceStep) ?
+                "Wat ga je doen?" : actionManager.CurrentDescription[i]; 
 
             for (int y = 0; y < subTasks.Count; y++)
             {
@@ -1126,7 +1165,7 @@ public class GameUI : MonoBehaviour
                         {
                             GameObject subtaskPanel = Instantiate<GameObject>(Resources.Load<GameObject>("NecessaryPrefabs/UI/SubtaskHints"), currentHintPanel.transform);
                             subTaskText = subtaskPanel.transform.Find("Text").GetComponent<Text>();
-                            subTaskText.text = subTasks[y].requirement;
+                            subTaskText.text = subTasks[y].requirement; 
                         }
                     }
                 }

@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
-
 
 public class EndScoreRadial : MonoBehaviour
 {
@@ -18,7 +15,7 @@ public class EndScoreRadial : MonoBehaviour
 
     public float score = 70f;
     float lastScore ;
-    // Start is called before the first frame update
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -34,7 +31,7 @@ public class EndScoreRadial : MonoBehaviour
         score = value;
         animator.SetTrigger("pop");
     }
-    // Update is called once per frame
+
     void Update()
     {
         if (!animationFinished)
@@ -61,7 +58,7 @@ public class EndScoreRadial : MonoBehaviour
                 else
                     ovation.SetActive(true);
                 trigger += Random.Range(1, 3).ToString();
-                GameObject.Find("w_char").GetComponent<Animator>().SetTrigger(trigger);
+                GameObject.Find("MainPlayerAvatar").GetComponent<Animator>().SetTrigger(trigger);
                 GameObject.Find("ResultInfoHolder").GetComponent<CanvasGroup>().alpha = 1f;
 
             }
