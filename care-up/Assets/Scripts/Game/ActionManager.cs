@@ -151,6 +151,11 @@ public class ActionManager : MonoBehaviour
         set { currentActionIndex = value; }
     }
 
+    public ActionType CurrentActionType
+    {
+        get { return currentAction.Type; }
+    }
+
     /// <summary>
     /// A list of not completed actions of current action index only
     /// </summary>
