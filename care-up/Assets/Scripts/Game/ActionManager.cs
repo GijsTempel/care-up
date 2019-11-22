@@ -151,6 +151,11 @@ public class ActionManager : MonoBehaviour
         set { currentActionIndex = value; }
     }
 
+    public ActionType CurrentActionType
+    {
+        get { return currentAction.Type; }
+    }
+
     /// <summary>
     /// A list of not completed actions of current action index only
     /// </summary>
@@ -313,7 +318,7 @@ public class ActionManager : MonoBehaviour
                 }
             }
 
-            if (a.Type == ActionType.General)
+            if (a.Type == ActionType.General && !generalActionDone)
             {
                 objectsData.Add(new StepData(false, $"- Klik op de '{actManager.CurrentButtonText()}' knop.", i));
                 actManager.NotTriggeredAction();
