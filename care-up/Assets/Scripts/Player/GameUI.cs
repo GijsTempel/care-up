@@ -163,47 +163,54 @@ public class GameUI : MonoBehaviour
 
     public void UseOnNoTarget(bool leftHand = true)
     {
-        if (tutorialUseOn != null && !tutorialUseOn.ventAllowed)
-        {
-            return;
-        }
+        GeneralAction generalAction = actionManager.CheckGeneralAction();
 
-        if (leftHand && !handsInventory.LeftHandEmpty())
+        if (generalAction == null)
         {
-            if (actionManager.CompareUseOnInfo(handsInventory.leftHandObject.name, ""))
+            if (tutorialUseOn != null && !tutorialUseOn.ventAllowed)
             {
-                if (handsInventory.LeftHandObject.GetComponent<PickableObject>().Use(true, true))
-                {
-                    UpdateWalkToGtoupUI(false);
-                }
-
-                if (tutorialUseOn != null)
-                {
-                    handsInventory.LeftHandObject.GetComponent<PickableObject>().tutorial_usedOn = true;
-                }
                 return;
             }
-            else
-                actionManager.OnUseOnAction(handsInventory.leftHandObject.name, "");
 
-        }
-        if (!leftHand && !handsInventory.RightHandEmpty())
-        {
-            if (actionManager.CompareUseOnInfo(handsInventory.rightHandObject.name, ""))
+            if (leftHand && !handsInventory.LeftHandEmpty())
             {
-                if (handsInventory.RightHandObject.GetComponent<PickableObject>().Use(false, true))
+                if (actionManager.CompareUseOnInfo(handsInventory.leftHandObject.name, ""))
                 {
-                    UpdateWalkToGtoupUI(false);
-                }
+                    if (handsInventory.LeftHandObject.GetComponent<PickableObject>().Use(true, true))
+                    {
+                        UpdateWalkToGtoupUI(false);
+                    }
 
-                if (tutorialUseOn != null)
-                {
-                    handsInventory.RightHandObject.GetComponent<PickableObject>().tutorial_usedOn = true;
+                    if (tutorialUseOn != null)
+                    {
+                        handsInventory.LeftHandObject.GetComponent<PickableObject>().tutorial_usedOn = true;
+                    }
+                    return;
                 }
+                else
+                    actionManager.OnUseOnAction(handsInventory.leftHandObject.name, "");
+
             }
-            else
-                actionManager.OnUseOnAction(handsInventory.rightHandObject.name, "");
+            if (!leftHand && !handsInventory.RightHandEmpty())
+            {
+                if (actionManager.CompareUseOnInfo(handsInventory.rightHandObject.name, ""))
+                {
+                    if (handsInventory.RightHandObject.GetComponent<PickableObject>().Use(false, true))
+                    {
+                        UpdateWalkToGtoupUI(false);
+                    }
+
+                    if (tutorialUseOn != null)
+                    {
+                        handsInventory.RightHandObject.GetComponent<PickableObject>().tutorial_usedOn = true;
+                    }
+                }
+                else
+                    actionManager.OnUseOnAction(handsInventory.rightHandObject.name, "");
+            }
         }
+        else
+            GeneralAction(generalAction);
     }
 
     public void OpenRobotUI()
@@ -295,10 +302,8 @@ public class GameUI : MonoBehaviour
         }
     }
 
-    public void GeneralAction()
+    public void GeneralAction(GeneralAction generalAction)
     {
-        GeneralAction generalAction = actionManager.CheckGeneralAction();
-
         if (generalAction != null)
         {
             GameObject item = GameObject.Find(generalAction.Item);
@@ -1151,12 +1156,12 @@ public class GameUI : MonoBehaviour
         {
             GameObject currentHintPanel = null;
 
-            currentHintPanel = Instantiate<GameObject>(Resources.Load<GameObject>("NecessaryPrefabs/UI/HintPanel"), 
+            currentHintPanel = Instantiate<GameObject>(Resources.Load<GameObject>("NecessaryPrefabs/UI/HintPanel"),
                 DetailedHintPanel.transform.Find("HintContainer").transform);
             currentHintPanel.name = "HintPanel";
             hintText = currentHintPanel.transform.Find("Text").gameObject.GetComponent<Text>();
-            hintText.text =  (actionManager.CurrentActionType == ActionManager.ActionType.SequenceStep) ?
-                "Wat ga je doen?" : actionManager.CurrentDescription[i]; 
+            hintText.text = (actionManager.CurrentActionType == ActionManager.ActionType.SequenceStep) ?
+                "Wat ga je doen?" : actionManager.CurrentDescription[i];
 
             for (int y = 0; y < subTasks.Count; y++)
             {
@@ -1168,7 +1173,7 @@ public class GameUI : MonoBehaviour
                         {
                             GameObject subtaskPanel = Instantiate<GameObject>(Resources.Load<GameObject>("NecessaryPrefabs/UI/SubtaskHints"), currentHintPanel.transform);
                             subTaskText = subtaskPanel.transform.Find("Text").GetComponent<Text>();
-                            subTaskText.text = subTasks[y].requirement; 
+                            subTaskText.text = subTasks[y].requirement;
                         }
                     }
                 }
