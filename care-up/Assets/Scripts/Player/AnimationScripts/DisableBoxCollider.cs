@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class DisableComponent : StateMachineBehaviour
+public class DisableBoxCollider : StateMachineBehaviour
 {
     [SerializeField]
     private int selectedFrame;
-
-    [SerializeField]
-    private List<string> componentsNames;
 
     [SerializeField]
     private List<string> objectsNames;
@@ -22,26 +19,20 @@ public class DisableComponent : StateMachineBehaviour
     {
         if (animator.speed != 0)
         {
-
             if (PlayerAnimationManager.CompareFrames(frame, prevFrame, selectedFrame) && (objectsNames.Count > 0))
             {
+                BoxCollider component;
+
                 foreach (string name in objectsNames)
                 {
-                    GameObject item = GameObject.Find(name);
-
-                    if (item)
-                    {
-                        foreach (string componentName in componentsNames)
-                        {
-                            if (item.GetComponent(componentName))
-                                item.GetComponent(componentName).gameObject.SetActive(enable);
-                        }
-                    }
+                    component = GameObject.Find(name).GetComponent<BoxCollider>();
+                    if (component)
+                        component.enabled = false;
                 }
-
-                prevFrame = frame;
-                frame += Time.deltaTime;
             }
+
+            prevFrame = frame;
+            frame += Time.deltaTime;
         }
     }
 }
