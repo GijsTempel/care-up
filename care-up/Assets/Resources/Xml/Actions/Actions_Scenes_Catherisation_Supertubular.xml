@@ -130,6 +130,64 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
      action="CloseCatheter"
      buttonText="Klem de katheter"> </action>
 
+  <action
+   comment="Put on gloves."
+   points="1"
+   description="Trek de handschoenen aan"
+   index="9"
+   type="use"
+   value="gloveBox"
+   extra="Trek de handschoenen aan."
+    ></action>
+  
+  <action
+    comment="??"
+    index="10"
+    points="1"
+    description="Open de verpakking van de urineopvangzak. Laat de steriele urineopvangzak op het steriele werkveld vallen, raak de urineopvangzak niet aan. Gooi de verpakking in de afvalbak."
+    type="combine"
+    left="catheter_bag_packed"
+    right=""
+    extra="Open de verpakking van de urineopvangzak. Laat de steriele urineopvangzak op het steriele werkveld vallen, raak de urineopvangzak niet aan. Gooi de verpakking in de afvalbak."
+    messageTitle="Dubbelverpakte katheter"
+    messageContent="In deze geprotocolleerde werkinstructie wordt uitgegaan van een dubbelverpakte katheter."
+></action>
+
+  <action
+    comment="Open the outer package of the catheter a few centimeters, fold the ends. Leave the inner package in the outer package and hold the outer package with the non-dominant hand on the folded ends."
+    index="11"
+    points="1"
+    description="Open de buitenverpakking van de katheter en laat de katheter in de binnenverpakking op het steriele werkveld vallen, zonder de binnenverpakking aan te raken"
+    type="combine"
+    left="catheter"
+    right=""
+    extra="Open de buitenverpakking van de katheter en laat de katheter in de binnenverpakking op het steriele werkveld vallen, zonder de binnenverpakking aan te raken"></action>
+
+  <action
+     comment="Remove the end of the inner package from the catheter so that the connection point for the urine collection bag is accessible. The catheter remains in the inner package."
+     index="12"
+     points="2"
+     description="Open de binnenverpakking van de katheter. De katheter blijft in de binnenverpakking zitten"
+     type="combine"
+     left="catheter_inner"
+     right=""
+     extra="Open de binnenverpakking van de katheter. De katheter blijft in binnenverpakking zitten"></action>
+
+  <action
+   comment="With the dominant hand, grasp the tube of the urine collection bag just behind the connection point and attach it to the catheter. Continue to hold the hose."
+   index="13"
+   points="1"
+   description="Verwijder de afsluitdop van de urineopvangzak en bevestig deze aan de katheter. De katheter blijft in binnenverpakking zitten"
+   type="combine"
+   left="CWB_inner_open"
+   right="catheter_bag_twisted"
+   extra="Verwijder de afsluitdop van de urineopvangzak en bevestig deze aan de katheter. De katheter blijft in binnenverpakking zitten"
+   blockRequired="patient lay down"
+   blockTitle="Deze handeling is nog niet mogelijk"
+   blockMessage="Communiceer met de cliënt en zorg ervoor dat de cliënt klaar is voor blaaskatheterisatie"
+   messageTitle="Desinfecteren aansluitpunt"
+   messageContent="Voorkom dat het aansluitpunt van de urineopvangzak in aanraking komt met de omgeving. Als dat wel gebeurt, moet het aansluitpunt worden gedesinfecteerd met alcohol 70%."
+></action>
 
   <action
     comment="last step"
