@@ -217,8 +217,8 @@ public class QuizTab : MonoBehaviour
         if (transform.GetChild(1).Find("ScrollViewDescription/Scrollbar Vertical") != null)
         {
             Vector3 pos = transform.position;
-            pos.y =- 100;
-            pos.x =+ 70;
+            pos.y = -100;
+            pos.x = +70;
 
             backToOptionsButton.transform.position = pos;
             continueButton.transform.position = pos;

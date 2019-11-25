@@ -226,7 +226,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
                     = sceneUnit.displayName = xmlSceneNode.Attributes["name"].Value;
 
                 ppManager.currentSceneVisualName = sceneUnit.displayName;
-                //ppManager.UpdateTestHighscore(0.0f);
+                ppManager.CreateBlankHighscore(); // has a check inside for no DB info already
 
                 // setting description
                 if (xmlSceneNode.Attributes["description"].Value != "")

@@ -16,11 +16,12 @@ public class WalkToGroup : MonoBehaviour
     public GameObject cone;
     public bool ButtonHovered = false;
     public string description;
-    [HideInInspector]
+    //[HideInInspector]
     public WalkToGroup LeftWalkToGroup = null;
-    [HideInInspector]
+    //[HideInInspector]
     public WalkToGroup RightWalkToGroup = null;
     PlayerScript player;
+    public bool ManualNeighborhood = false;
 
     public float interactionDistance = -1;
 
@@ -166,8 +167,11 @@ public class WalkToGroup : MonoBehaviour
 
             }
         }
-        LeftWalkToGroup = closestLeft;
-        RightWalkToGroup = closestRight;
+        if (!ManualNeighborhood)
+        {
+            LeftWalkToGroup = closestLeft;
+            RightWalkToGroup = closestRight;
+        }
     }
 
     protected void Update()

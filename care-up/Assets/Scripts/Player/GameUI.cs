@@ -163,47 +163,54 @@ public class GameUI : MonoBehaviour
 
     public void UseOnNoTarget(bool leftHand = true)
     {
-        if (tutorialUseOn != null && !tutorialUseOn.ventAllowed)
-        {
-            return;
-        }
+        GeneralAction generalAction = actionManager.CheckGeneralAction();
 
-        if (leftHand && !handsInventory.LeftHandEmpty())
+        if (generalAction == null)
         {
-            if (actionManager.CompareUseOnInfo(handsInventory.leftHandObject.name, ""))
+            if (tutorialUseOn != null && !tutorialUseOn.ventAllowed)
             {
-                if (handsInventory.LeftHandObject.GetComponent<PickableObject>().Use(true, true))
-                {
-                    UpdateWalkToGtoupUI(false);
-                }
-
-                if (tutorialUseOn != null)
-                {
-                    handsInventory.LeftHandObject.GetComponent<PickableObject>().tutorial_usedOn = true;
-                }
                 return;
             }
-            else
-                actionManager.OnUseOnAction(handsInventory.leftHandObject.name, "");
 
-        }
-        if (!leftHand && !handsInventory.RightHandEmpty())
-        {
-            if (actionManager.CompareUseOnInfo(handsInventory.rightHandObject.name, ""))
+            if (leftHand && !handsInventory.LeftHandEmpty())
             {
-                if (handsInventory.RightHandObject.GetComponent<PickableObject>().Use(false, true))
+                if (actionManager.CompareUseOnInfo(handsInventory.leftHandObject.name, ""))
                 {
-                    UpdateWalkToGtoupUI(false);
-                }
+                    if (handsInventory.LeftHandObject.GetComponent<PickableObject>().Use(true, true))
+                    {
+                        UpdateWalkToGtoupUI(false);
+                    }
 
-                if (tutorialUseOn != null)
-                {
-                    handsInventory.RightHandObject.GetComponent<PickableObject>().tutorial_usedOn = true;
+                    if (tutorialUseOn != null)
+                    {
+                        handsInventory.LeftHandObject.GetComponent<PickableObject>().tutorial_usedOn = true;
+                    }
+                    return;
                 }
+                else
+                    actionManager.OnUseOnAction(handsInventory.leftHandObject.name, "");
+
             }
-            else
-                actionManager.OnUseOnAction(handsInventory.rightHandObject.name, "");
+            if (!leftHand && !handsInventory.RightHandEmpty())
+            {
+                if (actionManager.CompareUseOnInfo(handsInventory.rightHandObject.name, ""))
+                {
+                    if (handsInventory.RightHandObject.GetComponent<PickableObject>().Use(false, true))
+                    {
+                        UpdateWalkToGtoupUI(false);
+                    }
+
+                    if (tutorialUseOn != null)
+                    {
+                        handsInventory.RightHandObject.GetComponent<PickableObject>().tutorial_usedOn = true;
+                    }
+                }
+                else
+                    actionManager.OnUseOnAction(handsInventory.rightHandObject.name, "");
+            }
         }
+        else
+            GeneralAction(generalAction);
     }
 
     public void OpenRobotUI()
@@ -295,6 +302,39 @@ public class GameUI : MonoBehaviour
         }
     }
 
+    public void GeneralAction(GeneralAction generalAction)
+    {
+        if (generalAction != null)
+        {
+            GameObject item = GameObject.Find(generalAction.Item);
+
+            PlayerAnimationManager playerAnimationManager = FindObjectOfType<PlayerAnimationManager>();
+            Animator animator;
+
+            if (playerAnimationManager != null)
+            {
+                animator = playerAnimationManager.GetComponent<Animator>();
+
+                if (animator)
+                {
+                    animator.SetTrigger(generalAction.Action);
+                    animator.SetTrigger("S " + generalAction.Action);
+                    actionManager.OnGeneralAction();
+                }
+            }
+            else if (item != null)
+            {
+                animator = item.GetComponent<Animator>();
+
+                if (animator)
+                {
+                    animator.SetTrigger(generalAction.Action);
+                    actionManager.OnGeneralAction();
+                }
+            }
+        }
+    }
+
     public void UpdateWalkToGroupButtons()
     {
         if (WTGButtons == null)
@@ -363,6 +403,8 @@ public class GameUI : MonoBehaviour
         objectsIDsController = GameObject.FindObjectOfType<ObjectsIDsController>();
         MovementSideButtons = GameObject.Find("MovementSideButtons");
 
+        ActionManager.generalActionDone = false;
+        ActionManager.generalAction = false;
         prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
         if (prefs != null)
             practiceMode = prefs.practiceMode;
@@ -396,6 +438,8 @@ public class GameUI : MonoBehaviour
         {
             ActionManager.practiceMode = prefs.practiceMode;
         }
+
+        SetAEDLogic();
 
 #if !(UNITY_EDITOR || DEVELOPMENT_BUILD)
         if(GameObject.Find("ActionsPanel") != null)
@@ -465,8 +509,6 @@ public class GameUI : MonoBehaviour
         WalkToGroupPanel.SetActive(false);
         Invoke("ShowWalkToGroupPanel", 0.5f);
     }
-
-
 
     public HighlightObject AddHighlight(Transform target, string prefix, HighlightObject.type hl_type = HighlightObject.type.NoChange, float startDelay = 0, float LifeTime = float.PositiveInfinity)
     {
@@ -621,7 +663,7 @@ public class GameUI : MonoBehaviour
 
     void OnGUI()
     {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD 
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
         GUIStyle style = new GUIStyle();
         style.normal.textColor = new Color(1f, 0f, 0f);
         style.fontSize = 30;
@@ -665,6 +707,7 @@ public class GameUI : MonoBehaviour
                 Destroy(g);
             }
         }
+        ActionManager.UpdateRequirements();
     }
 
     public void UpdateButtonsBlink()
@@ -677,7 +720,7 @@ public class GameUI : MonoBehaviour
 
         foreach (ItemControlButton b in GameObject.FindObjectsOfType<ItemControlButton>())
         {
-            b.updateBlinkState();
+            b.UpdateBlinkState();
         }
         foreach (ButtonBlinking b in GameObject.FindObjectsOfType<ButtonBlinking>())
         {
@@ -794,7 +837,10 @@ public class GameUI : MonoBehaviour
                 ActionManager.BuildRequirements();
                 ActionManager.UpdateRequirements();
 
-                UpdateHelpHighlight();
+                if (actionManager.CheckGeneralAction() == null)
+                {
+                    UpdateHelpHighlight();
+                }
                 UpdateWalkToGtoupUI(true);
             }
         }
@@ -821,6 +867,11 @@ public class GameUI : MonoBehaviour
             animationUiBlock = !PlayerAnimationManager.IsLongAnimation();
         }
 
+        if (donePanelYesNo.activeSelf)
+        {
+            ItemControlPanel.SetActive(false);
+            return;
+        }
         //to show object control panel if no animation block and action block
         bool showItemControlPanel = allowObjectControlUI && animationUiBlock;
 
@@ -844,8 +895,12 @@ public class GameUI : MonoBehaviour
                 decombineButton.SetActive(false);
                 decombineButton_right.SetActive(false);
                 ActionManager.UpdateRequirements();
-                UpdateHelpHighlight();
+                if (actionManager.CheckGeneralAction() == null)
+                {
+                    UpdateHelpHighlight();
+                }
                 currentActionsCount = actionManager.actionsCount;
+
                 //hide panel for the first frame of hands state change
                 //prevent quick blinking of buttons before animation starts
                 showItemControlPanel = false;
@@ -944,18 +999,7 @@ public class GameUI : MonoBehaviour
                 zoomButtonLeft.SetActive(showZoomLeft);
                 zoomButtonRight.SetActive(showZoomRight);
                 noTargetButton.SetActive(showNoTarget);
-                noTargetButton_right.SetActive(showNoTarget_right);
-                //if (showNoTarget)
-                //    decombineButton.SetActive(false);
-                //if(showNoTarget_right)
-                //    decombineButton_right.SetActive(false);
-
-
-                //decombineButton.SetActive(showDecomb && REmpty && !showNoTarget);
-                //if(decombineButton.activeSelf)
-                //decombineButton.GetComponent<Animator>().SetTrigger("BlinkOn");
-
-                //decombineButton_right.SetActive(showDecomb && LEmpty && !showNoTarget_right);
+                noTargetButton_right.SetActive(showNoTarget_right || (ActionManager.generalAction && !ActionManager.generalActionDone));
                 combineButton.SetActive(showCombin);
             }
 
@@ -987,6 +1031,13 @@ public class GameUI : MonoBehaviour
             currentAnimLock = false;
     }
 
+    public void ShowNoTargetButton()
+    {
+        ActionManager.generalAction = true;
+        noTargetButton_right.SetActive(true);
+        noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text =
+            actionManager.CurrentButtonText();
+    }
 
     public void UpdateWalkToGtoupUI(bool value)
     {
@@ -1110,9 +1161,12 @@ public class GameUI : MonoBehaviour
         {
             GameObject currentHintPanel = null;
 
-            currentHintPanel = Instantiate<GameObject>(Resources.Load<GameObject>("NecessaryPrefabs/UI/HintPanel"), DetailedHintPanel.transform.Find("HintContainer").transform);
+            currentHintPanel = Instantiate<GameObject>(Resources.Load<GameObject>("NecessaryPrefabs/UI/HintPanel"),
+                DetailedHintPanel.transform.Find("HintContainer").transform);
+            currentHintPanel.name = "HintPanel";
             hintText = currentHintPanel.transform.Find("Text").gameObject.GetComponent<Text>();
-            hintText.text = actionManager.CurrentDescription[i];
+            hintText.text = (actionManager.CurrentActionType == ActionManager.ActionType.SequenceStep) ?
+                "Wat ga je doen?" : actionManager.CurrentDescription[i];
 
             for (int y = 0; y < subTasks.Count; y++)
             {
@@ -1131,6 +1185,27 @@ public class GameUI : MonoBehaviour
             }
             float alpha = DetailedHintPanel.GetComponent<Image>().color.a;
             SetHintPanelAlpha(alpha);
+        }
+    }
+
+    private void SetAEDLogic()
+    {
+        if (SceneManager.GetActiveScene().name == "Scenes_AED")
+        {
+            Animator playerAnimator;
+            PlayerAnimationManager playerAnimationManager = GameObject.FindObjectOfType<PlayerAnimationManager>();
+
+            if (playerAnimationManager != null)
+            {
+                playerAnimator = playerAnimationManager.GetComponent<Animator>();
+
+                if (noTargetButton_right != null && playerAnimator != null)
+                {
+                    noTargetButton_right.SetActive(true);
+                    noTargetButton_right.gameObject.GetComponent<Button>().onClick.AddListener(() => playerAnimator.SetTrigger("Start_AED_SQ1"));
+                    noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text = "Help de cliënt";
+                }
+            }
         }
     }
 }

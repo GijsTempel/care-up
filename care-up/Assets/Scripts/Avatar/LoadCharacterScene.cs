@@ -25,19 +25,19 @@ public class LoadCharacterScene : MonoBehaviour
         avatar.UpdateCharacter();
     }
 
-    
-
     public PlayerAvatarData GetCurrentData()
     {
         if (pref == null)
             pref = GameObject.FindObjectOfType<PlayerPrefsManager>();
-        Gender gender = CharacterInfo.sex == "Female" ? Gender.Female : Gender.Male;
-
-        PlayerAvatarData data = new PlayerAvatarData(gender, CharacterInfo.headType,
-               CharacterInfo.bodyType, CharacterInfo.glassesType);
-        data.hat = CharacterInfo.hat;
-        
-        data.eyeType = PlayerPrefsManager.storeManager.CharacterItems[pref.CarouselPosition].playerAvatar.eyeType;
+        //-
+        CharacterItem Itam = PlayerPrefsManager.storeManager.GetAvatarData(CharacterInfo.index);
+        if (Itam == null)
+            return null;
+        Gender gender = Itam.playerAvatar.gender;
+        PlayerAvatarData data = new PlayerAvatarData(gender, Itam.playerAvatar.headType,
+               Itam.playerAvatar.bodyType, Itam.playerAvatar.glassesType);
+        data.hat = Itam.playerAvatar.hat;
+        data.eyeType = Itam.playerAvatar.eyeType;
         return data;
     }
 }

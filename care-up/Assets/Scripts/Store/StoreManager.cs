@@ -52,28 +52,58 @@ public class StoreManager
     private int currentCurrency = 0;
     private int currentPresents = 0;
     private List<StoreCategory> storeItems = new List<StoreCategory>();
+    private List<CharacterItem> characterItems = new List<CharacterItem>();
 
     public List<StoreCategory> StoreItems { get { return storeItems; } }
 
-    public List<CharacterItem> CharacterItems { get; } = new List<CharacterItem>();
+    public List<CharacterItem> CharacterItems { get { return characterItems; } }
 
     public int Currency { get { return currentCurrency; } }
     public int Presents { get { return currentPresents; } }
 
     public int GetItemIndex(int num)
     {
-        if (num >= 0 && num < CharacterItems.Count)
+        if (num >= 0 && num < characterItems.Count)
         {
-            int result = CharacterItems[num].index;
+            int result = characterItems[num].index;
             return result;
         }
         return -1;
+    }
+
+    public int GetPositionFromIndex(int _index)
+    {
+        int value = 0;
+        foreach (CharacterItem item in CharacterItems)
+        {
+            if (item.index == _index)
+            {
+                value = _index;
+                break;
+            }
+        }
+        return value;
+    }
+
+    public CharacterItem GetAvatarData(int _index)
+    {
+        foreach (CharacterItem item in CharacterItems)
+        {
+            if (item.index == _index)
+            {
+                return item;
+            }
+        }
+        return null;
     }
 
     public void Init(string storeXml = "Store", string characterStoreXml = "CharacterStore")
     {
         bool devDropAllPurchases = false; // change this to true once to clear all purchases
         bool devAddCurrency = false; // change this to true once to get 100 currency
+
+        storeItems = new List<StoreCategory>();
+        characterItems = new List<CharacterItem>();
 
         // load up all items from xml into the list
         TextAsset textAsset = (TextAsset)Resources.Load("Xml/" + storeXml);
@@ -140,7 +170,6 @@ public class StoreManager
 
             Gender characterGender = (gender == "Female") ? Gender.Female : Gender.Male;
             PlayerAvatarData playerAvatar = new PlayerAvatarData(characterGender, headType, bodyType, glassesType, hatType, mouthType, eyeType);
-            //CharacterItem CharacterItem(index, price, purchased, playerAvatar)
             CharacterItem characterItem = new CharacterItem(index, price, purchased, playerAvatar);
             //if (devDropAllPurchases)
             //{
@@ -159,7 +188,7 @@ public class StoreManager
             //    }
             //}
 
-            if (!devDropAllPurchases && !purchased)
+            if (!devDropAllPurchases && purchased)
             {
                 string[][] charactersCategory = DatabaseManager.FetchCategory("CharacterItem_" + index.ToString());
                 if (charactersCategory != null)
@@ -170,8 +199,8 @@ public class StoreManager
                         {
                             case "Index":
                                 int.TryParse(field[1], out index); break;
-                            case "Price":
-                                int.TryParse(field[1], out price); break;
+                            //case "Price":
+                            //    int.TryParse(field[1], out price); break;
                             case "Purchased":
                                 bool.TryParse(field[1], out purchased); break;
                             case "Sex":
@@ -190,14 +219,14 @@ public class StoreManager
             }
             PlayerAvatarData customizedPlayerAvatar = new PlayerAvatarData(characterGender, headType, bodyType, glassesType, hatType, mouthType, eyeType);
             characterItem.playerAvatar = customizedPlayerAvatar;
-            CharacterItems.Add(characterItem);
+            characterItems.Add(characterItem);
         }
 
         // get amount of currency/presents saved
         int.TryParse(DatabaseManager.FetchField("Store", "Currency"), out currentCurrency);
         //int.TryParse(DatabaseManager.FetchField("Store", "Presents"), out currentPresents);
 
-       if (devAddCurrency) ModifyCurrencyBy(300);
+        if (devAddCurrency) ModifyCurrencyBy(300);
     }
 
     public void ModifyCurrencyBy(int amount)
@@ -228,16 +257,9 @@ public class StoreManager
     public CharacterItem FindCharacterByIndex(int index)
     {
         CharacterItem result = new CharacterItem();
-        result = CharacterItems.Find(x => x.index == index);
+        result = characterItems.Find(x => x.index == index);
         return result;
     }
-
-    //public bool SetHeat(string heat)
-    //{
-    //    DatabaseManager.UpdateField("AccountStats", "CharacterHeat", heat);
-    //    CharacterInfo.heat = heat;
-    //    return true;
-    //}
 
     public bool Purchase(int itemIndex)
     {
@@ -257,7 +279,7 @@ public class StoreManager
 
     public void AdjustCharacter(int itemIndex)
     {
-        CharacterItem item = CharacterItems.Find(x => x.index == (itemIndex));
+        CharacterItem item = characterItems.Find(x => x.index == (itemIndex));
         if (itemIndex != CharacterInfo.index)
             CharacterInfo.SetCharacterCharacteristicsWU(item);
     }
@@ -266,7 +288,7 @@ public class StoreManager
     {
         if (itemIndex < 0)
             return false;
-        CharacterItem item = CharacterItems.Find(x => x.index == (itemIndex));
+        CharacterItem item = characterItems.Find(x => x.index == (itemIndex));
 
         if (item != null)
         {
@@ -364,5 +386,5 @@ public class StoreManager
         }
 
         return item;
-    }   
+    }
 }

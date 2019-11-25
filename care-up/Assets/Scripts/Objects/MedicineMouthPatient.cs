@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class MedicineMouthPatient : PersonObject {
-
+public class MedicineMouthPatient : PersonObject
+{
     private Animator animator;
-    private Animator PlayerAnimator;
+    private Animator playerAnimator;
     public Vector3 playerPosition;
     public Vector3 playerRotation;
     public Transform playerPositionTarget;
@@ -13,7 +11,7 @@ public class MedicineMouthPatient : PersonObject {
     protected override void Start()
     {
         base.Start();
-        PlayerAnimator = GameObject.FindObjectOfType<PlayerAnimationManager>().GetComponent<Animator>();
+        playerAnimator = GameObject.FindObjectOfType<PlayerAnimationManager>().GetComponent<Animator>();
         animator = GetComponent<Animator>();
     }
 
@@ -27,12 +25,12 @@ public class MedicineMouthPatient : PersonObject {
             switch (topic)
             {
                 case "Sitstraight":
-                    PlayerAnimator.SetTrigger("Player_TakeOffBlanket");
-                    PlayerAnimator.SetTrigger("S Player_TakeOffBlanket");
+                    playerAnimator.SetTrigger("Player_TakeOffBlanket");
+                    playerAnimator.SetTrigger("S Player_TakeOffBlanket");
                     break;
                 case "MouthOpen":
-                    PlayerAnimator.SetTrigger("OpenMouth");
-                    PlayerAnimator.SetTrigger("S OpenMouth");
+                    playerAnimator.SetTrigger("OpenMouth");
+                    playerAnimator.SetTrigger("S OpenMouth");
                     break;
                 default:
                     break;
