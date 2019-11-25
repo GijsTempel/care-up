@@ -52,12 +52,14 @@ public class CharacterPanelManager : MonoBehaviour
 
         TabGroup tabGroup = GameObject.FindObjectOfType<TabGroup>();
 
-        //if (tabGroup != null)
-        //{
-        //    tabGroup.DisplayItemsInStore();
-        //    tabGroup.ResetBuyBtn();
-        //}
+        if (tabGroup != null)
+        {
+           tabGroup.DisplayItemsInStore();
+           tabGroup.ResetBuyBtn();
+        }
     }
+
+    
 
     public void ShowConfirmationPanel(bool value)
     {

@@ -22,7 +22,7 @@ public class TabGroup : MonoBehaviour
 
     private GameObject buyBtnCoin = default,
                        productItem = default;
-
+    bool initialized = false;
     int pages = 3;
     //private Transform tabParent = default,
     //                  itemParent = default;
@@ -267,6 +267,15 @@ public class TabGroup : MonoBehaviour
 
     public void InitializeTabPanel()
     {
+        if (initialized)
+            return;
+
+        SwitchTab(0);
+        carousel = GameObject.FindObjectOfType<CharacterСarousel>();
+        pref = GameObject.FindObjectOfType<PlayerPrefsManager>();
+        InitializeElements();
+        buyBtnCoin.SetActive(false);
+
         foreach (StoreCategory category in PlayerPrefsManager.storeManager.StoreItems)
         {
             InitializePrefabs(category);
@@ -279,12 +288,14 @@ public class TabGroup : MonoBehaviour
         //}
 
         //OnTabSelected(tabs[0]);
-        DisplayItemsInStore();
+        // DisplayItemsInStore();
         UpdatePurchesBtn();
+        initialized = true;
     }
 
     public void DisplayItemsInStore()
     {
+        InitializeTabPanel();
         CharacterItem currentCharacter = null;
         if (pref != null)
         {
@@ -363,6 +374,11 @@ public class TabGroup : MonoBehaviour
                 }
             }
 
+            if (mainAvatar == null)
+                mainAvatar = GameObject.Find("MainPlayerAvatar").GetComponent<PlayerAvatar>();
+            if (pref == null)
+                pref = GameObject.FindObjectOfType<PlayerPrefsManager>();
+            
             int avIndex = mainAvatar.avatarData.GetHatOffsetIndex();
 
             foreach (StoreItem item in PlayerPrefsManager.storeManager.StoreItems[i].items)
@@ -423,11 +439,7 @@ public class TabGroup : MonoBehaviour
 
     private void Start()
     {
-        SwitchTab(0);
-        carousel = GameObject.FindObjectOfType<CharacterСarousel>();
-        pref = GameObject.FindObjectOfType<PlayerPrefsManager>();
-        InitializeElements();
-        buyBtnCoin.SetActive(false);
+   
 
         InitializeTabPanel();
     }
