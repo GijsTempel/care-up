@@ -870,6 +870,7 @@ public class GameUI : MonoBehaviour
         if (donePanelYesNo.activeSelf)
         {
             ItemControlPanel.SetActive(false);
+            patientInfo.SetActive(false);
             return;
         }
         //to show object control panel if no animation block and action block
@@ -1021,6 +1022,7 @@ public class GameUI : MonoBehaviour
             if (PlayerScript.actionsLocked)
                 showItemControlPanel = false;
             ItemControlPanel.SetActive(showItemControlPanel);
+            patientInfo.SetActive(showItemControlPanel);
             MovementSideButtons.SetActive(showItemControlPanel);
 
             ICPCurrentState = ItemControlPanel.activeSelf;
@@ -1061,6 +1063,7 @@ public class GameUI : MonoBehaviour
             RightSideButton.gameObject.SetActive(false);
             WalkToGroupPanel.SetActive(false);
             ItemControlPanel.SetActive(false);
+            patientInfo.SetActive(false);
         }
         else
         {
