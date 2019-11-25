@@ -123,8 +123,8 @@ public class MainMenu : MonoBehaviour
 
                     if (percent <= 0 || percent > 100)
                         continue; // don't show 0 percent scores as they are not completed even once
-
-                    GameObject layoutGroup = GameObject.Find("UMenuProManager/MenuCanvas/Account_Scores/Account_Panel_UI/ScoresHolder/Scores/LayoutGroup");
+                    
+                    GameObject layoutGroup = GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Account_Scores/ContentPanel/Scenes/Account_Panel_UI/Panel/ProtocolList/ProtocolsHolder/Protocols/content");
                     GameObject scoreObject = Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/UI/TestHighscore"), layoutGroup.transform);
                     scoreObject.transform.Find("SceneName").GetComponent<Text>().text = sceneName;
 
@@ -140,8 +140,8 @@ public class MainMenu : MonoBehaviour
 
             // shared field, will keep it outside DatabaseManager
             GameObject.FindObjectOfType<PlayerPrefsManager>().FetchLatestVersion();
-
-            GameObject.Find("UMenuProManager/MenuCanvas/Account/Top/UserName").GetComponent<Text>().text = MBS.WULogin.display_name;
+            
+            GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Account/TitlePanel/UserNamePanel/Text").GetComponent<Text>().text = MBS.WULogin.display_name;
 
             string bigNumber = GameObject.FindObjectOfType<PlayerPrefsManager>().bigNumber;
             string fullName = GameObject.FindObjectOfType<PlayerPrefsManager>().fullPlayerName;
