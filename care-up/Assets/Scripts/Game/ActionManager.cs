@@ -692,6 +692,7 @@ public class ActionManager : MonoBehaviour
 
             i++;
         }
+
         if (gameUI.moveButtonToBlink != GameUI.ItemControlButtonType.None)
         {
             gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
