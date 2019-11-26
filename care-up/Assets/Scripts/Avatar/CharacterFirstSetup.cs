@@ -11,6 +11,8 @@ public class CharacterFirstSetup : MonoBehaviour
     public PlayerAvatar Avatar;
     private int currentChar = 0;
     private int currentTab = 0;
+    public GameObject NoBigPopUp;
+    private bool DontHaveBIG = false;
 
     PlayerPrefsManager pref;
     
@@ -48,14 +50,32 @@ public class CharacterFirstSetup : MonoBehaviour
         }
     }
 
+    public void ShowNoBigNum(bool value)
+    {
+        if (!value && !DontHaveBIG)
+            BigNumberHolder.transform.GetComponentInParent<Animator>().SetTrigger("red");
+        NoBigPopUp.SetActive(value);
+    }
+
+    public void IDontHaveBIG()
+    {
+        DontHaveBIG = true;
+        NoBigPopUp.SetActive(false);
+        
+    }
+
     bool CheckFirstTab()
     {
         bool check = true;
-        //if (BigNumberHolder.text == "")
-        //{
-        //    BigNumberHolder.transform.GetComponentInParent<Animator>().SetTrigger("red");
-        //    check = false;
-        //} 
+        if (BigNumberHolder.text == "")
+        {
+            if (!DontHaveBIG)
+            {
+                ShowNoBigNum(true);
+                return false;
+            }
+            //check = false;
+        }
 
         if (FullName.text == "")
         {
