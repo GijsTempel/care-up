@@ -249,6 +249,10 @@ namespace MBS
 
         void Start()
         {
+            if (FindObjectOfType<PlayerPrefsManager>()!= null)
+            {
+                FindObjectOfType<PlayerPrefsManager>().firstStart = false;
+            }
             if ( this == Instance )
             {
                 InitWULoginGUI();
