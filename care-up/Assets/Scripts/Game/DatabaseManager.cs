@@ -98,6 +98,7 @@ public class DatabaseManager : MonoBehaviour
              FetchField("AccountStats", "FullName") != "" &&
              (FetchField("AccountStats", "CharSceneV2") == "true" ||
              FetchField("AccountStats", "BIG_number") != ""))
+            
         {
             WULogin.characterCreated = true;
 
