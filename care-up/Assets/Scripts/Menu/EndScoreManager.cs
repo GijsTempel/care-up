@@ -139,8 +139,7 @@ public class EndScoreManager : MonoBehaviour
             }
 
             emailsSent = flag;
-
-            GameObject.Find("Interactable Objects/Canvas/ScoreScreen/ScoreScreenButtons/BackToMainMenu")
+            GameObject.Find("Interactable Objects/Canvas/ScoreScreen/ScoreScreenButtons/Panel (2)/BackToMainMenu")
                 .GetComponent<Button>().onClick.AddListener(ConditionalHomeButton);
 
             // track amount of results per scene
@@ -251,12 +250,12 @@ public class EndScoreManager : MonoBehaviour
         Transform quizForm = GameObject.Find("Interactable Objects/Canvas/Questionscreen/Image/QuizForm").transform;
         if (quizQuestionsTexts.Count == 0)
         {
-            quizForm.GetChild(2).gameObject.SetActive(false);
-            quizForm.GetChild(3).gameObject.SetActive(false);
-            quizForm.GetChild(4).gameObject.SetActive(true);
+            quizForm.Find("YesNo").gameObject.SetActive(false);
+            quizForm.Find("WrongstepScroll").gameObject.SetActive(false);
+            quizForm.Find("BasicText").gameObject.SetActive(true);
         }
         else
-            quizForm.GetChild(4).gameObject.SetActive(false);
+            quizForm.Find("BasicText").gameObject.SetActive(false);
     }
 
     /// <summary>
