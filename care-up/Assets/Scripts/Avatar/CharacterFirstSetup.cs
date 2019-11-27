@@ -56,12 +56,14 @@ public class CharacterFirstSetup : MonoBehaviour
             BigNumberHolder.transform.GetComponentInParent<Animator>().SetTrigger("red");
         NoBigPopUp.SetActive(value);
     }
+  
 
     public void IDontHaveBIG()
     {
         DontHaveBIG = true;
+        if (FullName.text != "")
+            SetTab(1);
         NoBigPopUp.SetActive(false);
-        
     }
 
     bool CheckFirstTab()
