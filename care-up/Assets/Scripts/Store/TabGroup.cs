@@ -397,10 +397,10 @@ public class TabGroup : MonoBehaviour
                 }
 
                 ProductButton btn = null;
-
+                //print(currentCharacter.playerAvatar.gender);
                 if (item.category == "Body")
                 {
-                    if (currentCharacter.defaultAvatarData.gender == CareUpAvatar.Gender.Female)
+                    if (currentCharacter.playerAvatar.gender == CareUpAvatar.Gender.Female)
                     {
                         if (item.index >= 100000)
                         {
