@@ -306,7 +306,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 && xmlSceneNode.Attributes["test"].Value == "disabled");
         }
         
-        ScrollRect levelScroll =  GameObject.Find("UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Play/ContentPanel/PlayElements/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder").GetComponent<ScrollRect>();
+        ScrollRect levelScroll =  GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Play/ContentPanel/PlayElements/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder").GetComponent<ScrollRect>();
         
         levelScroll.verticalNormalizedPosition = ppManager.LevelScrollPosition;
     }
@@ -314,7 +314,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
     public void LevelScrollChanged()
     {
-        ScrollRect levelScroll =  GameObject.Find("UMenuProManager/MenuCanvas/Play/InfoHolder/ProtocolList/ProtocolsHolder").GetComponent<ScrollRect>();
+        ScrollRect levelScroll =  GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Play/ContentPanel/PlayElements/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder").GetComponent<ScrollRect>();
        
         ppManager.LevelScrollPosition = levelScroll.verticalNormalizedPosition;
     }
