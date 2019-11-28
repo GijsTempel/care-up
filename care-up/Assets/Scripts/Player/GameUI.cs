@@ -693,12 +693,14 @@ public class GameUI : MonoBehaviour
             GameObject ghost = null;
             List<PickableObject> ghosts = item.ghostObjects.OrderBy(x =>
                     Vector3.Distance(x.transform.position, ps.transform.position)).ToList();
-
-            ghost = ghosts[0].gameObject;
-            if (leftHand)
-                handsInventory.DropLeft(ghost);
-            else
-                handsInventory.DropRight(ghost);
+            if (ghosts.Count > 0)
+            {
+                ghost = ghosts[0].gameObject;
+                if (leftHand)
+                    handsInventory.DropLeft(ghost);
+                else
+                    handsInventory.DropRight(ghost);
+            }
 
             for (int i = item.ghostObjects.Count - 1; i >= 0; --i)
             {

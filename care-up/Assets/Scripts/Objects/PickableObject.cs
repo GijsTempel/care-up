@@ -75,7 +75,7 @@ public class PickableObject : InteractableObject
         {
             rigidBody = GetComponent<Rigidbody>();
         }
-
+        DeleteGhostObject();
         if (rigidBody != null)
         {
             rigidBody.isKinematic = true;

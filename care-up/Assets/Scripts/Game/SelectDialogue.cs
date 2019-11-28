@@ -288,8 +288,14 @@ public class SelectDialogue : MonoBehaviour
 
                         GameObject.FindObjectOfType<ActionManager>().OnSequenceStepAction("");
                         GameObject currentHintPanel = GameObject.Find("HintPanel");
-                        Text hintText = currentHintPanel.transform.Find("Text").gameObject.GetComponent<Text>();
-                        hintText.text = GameObject.FindObjectOfType<ActionManager>().CurrentDescription[0];
+                        if(currentHintPanel != null)
+                        {
+                            if (currentHintPanel.transform.Find("Text") != null)
+                            {
+                                Text hintText = currentHintPanel.transform.Find("Text").gameObject.GetComponent<Text>();
+                                hintText.text = GameObject.FindObjectOfType<ActionManager>().CurrentDescription[0];
+                            }
+                        }
                     }
                 }
             }
