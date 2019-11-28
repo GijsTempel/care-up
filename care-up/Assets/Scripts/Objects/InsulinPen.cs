@@ -84,7 +84,8 @@ public class InsulinPen : PickableObjectWithInfo {
                     return true;
                 }
             }
-            else if (!inventory.LeftHandEmpty())
+            //else if (!inventory.LeftHandEmpty())
+            if (!inventory.LeftHandEmpty())
             {
             if (inventory.leftHandObject.name == name)
                 {
