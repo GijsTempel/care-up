@@ -89,6 +89,18 @@ public class CharacterСarousel : MonoBehaviour
         Invoke("Initialize", 0.1f);
     }
 
+//    void OnGUI()
+//    {
+//#if UNITY_EDITOR || DEVELOPMENT_BUILD
+//        GUIStyle style = new GUIStyle();
+//        style.normal.textColor = new Color(1f, 0f, 0f);
+//        style.fontSize = 30;
+//        string ss = targetTurnPosition.ToString() + " " + CurrentCharacter.ToString();
+//        GUI.Label(new Rect(0, 0, 100, 100), ss, style);
+
+//#endif
+//    }
+
     public void SetAnimation()
     {
         avatars[GetCurrentMarker()].SetAnimationAction(Actions.Dance);

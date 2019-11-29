@@ -78,9 +78,9 @@ public class StoreManager
         {
             if (item.index == _index)
             {
-                value = _index;
                 break;
             }
+            value++;
         }
         return value;
     }
