@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class ProductButton : MonoBehaviour
 {
@@ -21,6 +22,16 @@ public class ProductButton : MonoBehaviour
         originalColor = image.color;
         dressOn.SetActive(false);
         _name.gameObject.SetActive(false);
+
+        EventTrigger trigger = GetComponent<EventTrigger>();
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerEnter;
+        Button_Functions bf = GameObject.FindObjectOfType<Button_Functions>();
+
+        entry.callback.AddListener((eventData) => { bf.OnButtonHover(); });
+        trigger.triggers.Add(entry);
+
+        transform.Find("ProductPanel").GetComponent<Button>().onClick.AddListener(() => bf.OnButtonClick());
     }
     
     public void Select(bool toSelect)
