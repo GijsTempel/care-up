@@ -359,7 +359,7 @@ public class EndScoreManager : MonoBehaviour
             GameObject.Find("Interactable Objects/Canvas/CertificatePopOp").SetActive(true);
             if (manager.validatedScene == false)
             {   // changing pop up text if scene is not validated
-                GameObject.Find("Interactable Objects/Canvas/CertificatePopOp/Certificate/InfoHolder/RegText").GetComponent<Text>().text
+                GameObject.Find("/Interactable Objects/Canvas/CertificatePopOp/Certificate/RegText").GetComponent<Text>().text
                     = "Neem snel een kijkje in je mailbox! Daar vind je je certificaat.";
             }
         }
