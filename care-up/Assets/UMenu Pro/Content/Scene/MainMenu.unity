@@ -2871,8 +2871,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 959.7807, y: -515.59375}
-  m_SizeDelta: {x: 1919.5614, y: 733.8907}
+  m_AnchoredPosition: {x: 959.8887, y: -515.5359}
+  m_SizeDelta: {x: 1919.7773, y: 733.8038}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &123095456
 MonoBehaviour:
@@ -4823,7 +4823,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.0000076293945}
+  m_AnchoredPosition: {x: 0, y: 0.0000038146973}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &201470575
@@ -8641,8 +8641,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 959.7807, y: -43.779858}
-  m_SizeDelta: {x: 1919.5614, y: 87.559715}
+  m_AnchoredPosition: {x: 959.8887, y: -43.775204}
+  m_SizeDelta: {x: 1919.7773, y: 87.55041}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &395831269
 MonoBehaviour:
@@ -10902,6 +10902,7 @@ GameObject:
   - component: {fileID: 482465759}
   - component: {fileID: 482465758}
   - component: {fileID: 482465757}
+  - component: {fileID: 482465760}
   m_Layer: 5
   m_Name: Hats
   m_TagString: Untagged
@@ -10984,6 +10985,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1338533976}
+        m_MethodName: OnButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &482465758
@@ -11023,6 +11035,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 482465755}
   m_CullTransparentMesh: 0
+--- !u!114 &482465760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 482465755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1338533976}
+          m_MethodName: OnButtonHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!1 &483780915
 GameObject:
   m_ObjectHideFlags: 0
@@ -12482,6 +12524,7 @@ GameObject:
   - component: {fileID: 542647821}
   - component: {fileID: 542647820}
   - component: {fileID: 542647819}
+  - component: {fileID: 542647822}
   m_Layer: 5
   m_Name: Cloths
   m_TagString: Untagged
@@ -12564,6 +12607,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1338533976}
+        m_MethodName: OnButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &542647820
@@ -12603,6 +12657,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 542647817}
   m_CullTransparentMesh: 0
+--- !u!114 &542647822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 542647817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1338533976}
+          m_MethodName: OnButtonHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!1 &560140215
 GameObject:
   m_ObjectHideFlags: 0
@@ -13221,8 +13305,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 959.7807, y: -407.22324}
-  m_SizeDelta: {x: 1819.5614, y: 583.33484}
+  m_AnchoredPosition: {x: 959.8887, y: -407.17358}
+  m_SizeDelta: {x: 1819.7773, y: 583.2604}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &597442599
 MonoBehaviour:
@@ -17586,7 +17670,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0000038146973}
+  m_AnchoredPosition: {x: 0, y: -0.000034332275}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &768729140
@@ -18070,6 +18154,7 @@ GameObject:
   - component: {fileID: 807965278}
   - component: {fileID: 807965277}
   - component: {fileID: 807965276}
+  - component: {fileID: 807965279}
   m_Layer: 5
   m_Name: Glasses
   m_TagString: Untagged
@@ -18152,6 +18237,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1338533976}
+        m_MethodName: OnButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &807965277
@@ -18191,6 +18287,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 807965274}
   m_CullTransparentMesh: 0
+--- !u!114 &807965279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 807965274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1338533976}
+          m_MethodName: OnButtonHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!1 &813806151
 GameObject:
   m_ObjectHideFlags: 0
@@ -18881,7 +19007,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 263.22513, y: -425.60623}
+  m_AnchoredPosition: {x: 263.22513, y: -425.6062}
   m_SizeDelta: {x: 526.45026, y: 162.2425}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &837722174
@@ -19132,7 +19258,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 502.49997, y: -372.5}
+  m_AnchoredPosition: {x: 502.49994, y: -372.5}
   m_SizeDelta: {x: 944.99994, y: 745}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &847515914
@@ -19225,7 +19351,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 215988652}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.8853329
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -23173,7 +23299,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 32767
+  m_SortingOrder: 10528
   m_TargetDisplay: 0
 --- !u!224 &977897602
 RectTransform:
@@ -33705,7 +33831,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 813845930}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.8853035
+  m_Size: 0.88533306
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -34263,7 +34389,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.0000038146973}
+  m_AnchoredPosition: {x: 0, y: 0.0000076293945}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1048117572
@@ -37224,8 +37350,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 959.7807, y: -62.777893}
-  m_SizeDelta: {x: 1819.5614, y: 105.55581}
+  m_AnchoredPosition: {x: 959.8887, y: -62.771698}
+  m_SizeDelta: {x: 1819.7773, y: 105.543396}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1158030555
 MonoBehaviour:
@@ -37511,8 +37637,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 227.45386, y: -270.86734}
-  m_SizeDelta: {x: 444.9077, y: 0}
+  m_AnchoredPosition: {x: 227.51706, y: -270.94632}
+  m_SizeDelta: {x: 445.03412, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1181206782
 MonoBehaviour:
@@ -38342,8 +38468,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 959.7807, y: -114.10408}
-  m_SizeDelta: {x: 1919.5614, y: 53.08873}
+  m_AnchoredPosition: {x: 959.8887, y: -114.092186}
+  m_SizeDelta: {x: 1919.7773, y: 53.08356}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1223003489
 MonoBehaviour:
@@ -38828,7 +38954,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0000038146973}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 5}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1245012292
@@ -43559,8 +43685,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 959.7807, y: -70.32422}
-  m_SizeDelta: {x: 1919.5614, y: 140.64844}
+  m_AnchoredPosition: {x: 959.8887, y: -70.316986}
+  m_SizeDelta: {x: 1919.7773, y: 140.63397}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1392938314
 MonoBehaviour:
@@ -52878,7 +53004,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 970632126}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.88530344
+  m_Size: 0.88533306
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -57041,7 +57167,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2096219169}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.88535064
+  m_Size: 0.8853344
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -59274,7 +59400,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0.88535064}
+  m_AnchorMax: {x: 1, y: 0.8853344}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0.0000019073486, y: 0.0000000037252903}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -60164,7 +60290,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 0.6784314}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 0.49019608}
     m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
@@ -60183,7 +60309,7 @@ MonoBehaviour:
     m_SelectedTrigger: Highlighted
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 2130237977}
+  m_TargetGraphic: {fileID: 539837524}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -65912,7 +66038,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 0.6784314}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 0.49019608}
     m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
@@ -65931,7 +66057,7 @@ MonoBehaviour:
     m_SelectedTrigger: Highlighted
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 114997238182028522}
+  m_TargetGraphic: {fileID: 114762553973275704}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -70442,7 +70568,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 0.6784314}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 0.49019608}
     m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
@@ -70460,7 +70586,7 @@ MonoBehaviour:
     m_SelectedTrigger: Highlighted
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 114775709478010504}
+  m_TargetGraphic: {fileID: 114989246704809814}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -70872,7 +70998,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 0.6784314}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 0.49019608}
     m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
@@ -70891,7 +71017,7 @@ MonoBehaviour:
     m_SelectedTrigger: Highlighted
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 114701571281151070}
+  m_TargetGraphic: {fileID: 114544038023161128}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -72032,7 +72158,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 0.6784314}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 0.49019608}
     m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
@@ -72051,7 +72177,7 @@ MonoBehaviour:
     m_SelectedTrigger: Highlighted
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 114536651150806728}
+  m_TargetGraphic: {fileID: 114474897234851964}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -79770,6 +79896,16 @@ PrefabInstance:
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1338533976}
+    - target: {fileID: 8905116345354235224, guid: 08a9b328628533944a9d4119ea1d1591,
+        type: 3}
+      propertyPath: PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8905116345354235224, guid: 08a9b328628533944a9d4119ea1d1591,
+        type: 3}
+      propertyPath: Looping
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 08a9b328628533944a9d4119ea1d1591, type: 3}
 --- !u!1 &1468405151164047161
