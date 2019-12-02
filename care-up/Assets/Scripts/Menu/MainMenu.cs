@@ -150,12 +150,10 @@ public class MainMenu : MonoBehaviour
                 GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Account/ContentPanel/Elements/NamePanel/NameHolder/InfoPanel/InfoHolder/UserName/Panel/Account_Username")
                .GetComponent<Text>().text = fullName;
             }
-
-            if (!string.IsNullOrEmpty(bigNumber))
-            {
-                GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Account/ContentPanel/Elements/NamePanel/NameHolder/InfoPanel/InfoHolder/UserNumber/BigNumber")
-               .GetComponent<Text>().text = bigNumber;
-            }
+           
+            GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Account/ContentPanel/Elements/NamePanel/NameHolder/InfoPanel/InfoHolder/UserNumber/BigNumber")
+            .GetComponent<Text>().text = bigNumber;
+    
         }
     }
 

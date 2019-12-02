@@ -64,6 +64,7 @@ public class CharacterFirstSetup : MonoBehaviour
         if (FullName.text != "")
             SetTab(1);
         NoBigPopUp.SetActive(false);
+        PlayerPrefsManager.SetBIGNumber(BigNumberHolder.text);
     }
 
     bool CheckFirstTab()
