@@ -14,6 +14,7 @@ using UnityEngine.Networking;
 using System.Linq;
 using System.Collections;
 using SmartLookUnity;
+using CareUp.Localize;
 
 /// <summary>
 /// Handles quick access to saved data.
@@ -24,7 +25,7 @@ public class PlayerPrefsManager : MonoBehaviour
     public static StoreManager storeManager = new StoreManager();
 
     public HatsPositioningDB hatsPositioning = new HatsPositioningDB();
-    private LocalizationManager localizationManager; // = new LocalizationManager();
+    //private LocalizationManager localizationManager; // = new LocalizationManager();
     public bool VR = true;
     public bool practiceMode = true;
     public bool TextDebug = false;
@@ -78,11 +79,6 @@ public class PlayerPrefsManager : MonoBehaviour
     public void Update()
     {
         SetEscapeButtonLogic();
-    }
-
-    public LocalizationManager GetLocalization()
-    {
-        return localizationManager;
     }
 
     private void OnLoaded(Scene s, LoadSceneMode m)
@@ -196,9 +192,6 @@ public class PlayerPrefsManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
 
-        localizationManager = new LocalizationManager();
-        localizationManager.LoadAllDictionaries();
-
         hatsPositioning.Init();
 
         // uncomment this, fill with correct info and start game
@@ -210,6 +203,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
     void Start()
     {
+        LocalizationManager.LoadAllDictionaries();
         SceneManager.sceneLoaded += OnLoaded;
 
         AudioListener.volume = Volume;
