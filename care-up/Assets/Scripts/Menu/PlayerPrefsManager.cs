@@ -30,7 +30,7 @@ public class PlayerPrefsManager : MonoBehaviour
     public bool TextDebug = false;
     // store value here after getting from server
     public bool tutorialCompleted;
-    public bool firstStart = true;
+    public static bool firstStart = true;
     private static PlayerPrefsManager instance;
 
     private List<string> activatedScenes = new List<string>();
