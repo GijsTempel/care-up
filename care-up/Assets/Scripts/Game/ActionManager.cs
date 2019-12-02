@@ -962,6 +962,7 @@ public class ActionManager : MonoBehaviour
             int index;
             int.TryParse(action.Attributes["index"].Value, out index);
             string type = action.Attributes["type"].Value;
+
             string descr = LocalizationManager.GetValueIfKey(action.Attributes["description"].Value);
 
             string comment = "";

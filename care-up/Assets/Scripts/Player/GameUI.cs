@@ -566,8 +566,6 @@ public class GameUI : MonoBehaviour
             string[] ObjectNames = new string[0];
             a.ObjectNames(out ObjectNames);
 
-            //if (a.Type == ActionManager.ActionType.ObjectUse ||
-            //a.Type == ActionManager.ActionType.ObjectDrop)
             foreach (string objectToUse in ObjectNames)
             {
                 if (GameObject.Find(objectToUse) != null)
@@ -627,7 +625,6 @@ public class GameUI : MonoBehaviour
         }
 
         //clear highlights
-
         for (int i = 0; i < activeHighlighted.Count; i++)
         {
             if (!newHLObjects.Contains(activeHighlighted[i]))
