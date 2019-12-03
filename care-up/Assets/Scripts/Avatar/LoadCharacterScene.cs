@@ -6,8 +6,7 @@ public class LoadCharacterScene : MonoBehaviour
     PlayerPrefsManager pref;
     public void LoadScene()
     {
-        pref = GameObject.FindObjectOfType<PlayerPrefsManager>();
-        pref.firstStart = false;
+        PlayerPrefsManager.firstStart = false;
         bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Character_Customisation");
     }
 

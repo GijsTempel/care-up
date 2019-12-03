@@ -22,7 +22,7 @@ public class CharacterFirstSetup : MonoBehaviour
 
         if (pref != null)
         {
-            if (!pref.firstStart)
+            if (!PlayerPrefsManager.firstStart)
             {
                 NextButton.transform.Find("Text").GetComponent<Text>().text = "Opslaan";
                 FullName.text = pref.fullPlayerName;
@@ -99,12 +99,10 @@ public class CharacterFirstSetup : MonoBehaviour
 
         if (check)
         {
-            if (pref != null)
+            print(PlayerPrefsManager.firstStart);
+            if (!PlayerPrefsManager.firstStart && currentTab == 0)
             {
-                if (!pref.firstStart && currentTab == 0)
-                {
-                    tab = -1;
-                }
+                tab = -1;
             }
             if (tab >= 0 && tab < tabs.Count)
             {
@@ -121,7 +119,7 @@ public class CharacterFirstSetup : MonoBehaviour
                 PlayerPrefsManager.SetFullName(FullName.text);
                 // save big number
                 PlayerPrefsManager.SetBIGNumber(BigNumberHolder.text);
-                if (pref.firstStart)
+                if (PlayerPrefsManager.firstStart)
                 {
                     CharacterInfo.SetCharacterCharacteristicsWU(PlayerPrefsManager.storeManager.CharacterItems[currentChar]);
                 }

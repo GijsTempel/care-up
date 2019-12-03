@@ -60,7 +60,7 @@ public class EndScoreManager : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "EndScore")
         {
             Transform uiFolder = GameObject.Find("Canvas").transform;
-
+            SetBasicText();
             //uiFolder.Find("Left").Find("Score").GetComponent<Text>().text = "Score: " + score;
             uiFolder.Find("ScoreScreen/ScoreInfo/InfoHolder/Info/Points").GetComponent<Text>().text = "Punten: " + points;
             uiFolder.Find("ScoreScreen/ScoreInfo/InfoHolder/Info/Time").GetComponent<Text>().text = string.Format("Tijd: {0}:{1:00}", (int)time / 60, (int)time % 60);
@@ -247,6 +247,7 @@ public class EndScoreManager : MonoBehaviour
 
     public void SetBasicText()
     {
+        print(quizQuestionsTexts.Count);
         Transform quizForm = GameObject.Find("Interactable Objects/Canvas/Questionscreen/Image/QuizForm").transform;
         if (quizQuestionsTexts.Count == 0)
         {
