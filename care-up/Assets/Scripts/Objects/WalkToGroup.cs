@@ -43,6 +43,8 @@ public class WalkToGroup : MonoBehaviour
 
     private Transform target;
 
+    public bool customPosition = false;
+
     public Vector3 Position
     {
         get { return (target == null) ? position : target.position; }
