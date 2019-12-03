@@ -120,14 +120,16 @@ public class ActionManager : MonoBehaviour
 
             float percent = 0f;
 
-            if (GameObject.FindObjectOfType<EndScoreManager>() != null)
+            EndScoreManager endScoreManager = GameObject.FindObjectOfType<EndScoreManager>();
+
+            if (endScoreManager != null)
             {
-                if (correctStepIndexes != null && GameObject.FindObjectOfType<EndScoreManager>().quizQuestionsTexts != null
-                    && GameObject.FindObjectOfType<EndScoreManager>().quizWrongIndexes != null && StepsList != null)
+                if (correctStepIndexes != null && endScoreManager.quizQuestionsTexts != null
+                    && endScoreManager.quizWrongIndexes != null && StepsList != null)
                 {
                     percent = 100f * (correctStepIndexes.Count +
-                        (GameObject.FindObjectOfType<EndScoreManager>().quizQuestionsTexts.Count - GameObject.FindObjectOfType<EndScoreManager>().quizWrongIndexes.Count))
-                        / (StepsList.Count + GameObject.FindObjectOfType<EndScoreManager>().quizQuestionsTexts.Count);
+                        (endScoreManager.quizQuestionsTexts.Count - endScoreManager.quizWrongIndexes.Count))
+                        / (StepsList.Count + endScoreManager.quizQuestionsTexts.Count);
                 }
             }
             else
