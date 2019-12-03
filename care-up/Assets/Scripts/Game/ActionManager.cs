@@ -944,6 +944,7 @@ public class ActionManager : MonoBehaviour
     /// </summary>
     void Awake()
     {
+        manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
         string sceneName = SceneManager.GetActiveScene().name;
         menuScene = sceneName == "Menu" || sceneName == "SceneSelection" || sceneName == "EndScore";
         particleHints = new List<GameObject>();
