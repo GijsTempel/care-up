@@ -132,7 +132,17 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
     right=""
     extra="Open de verpakking van de spuit met glijmiddel. Laat de spuit nog in de verpakking"></action>
 
-  <action comment="" points="1" description="Leg het plastic afvalbakje op de onderlegger" index="9" type="drop" item="PlasticTrashbucket" secondPlace="PatientPos" posID="2" extra="Leg het plastic afvalbakje op de onderlegger"></action>
+  <action 
+    comment="" 
+    points="1" 
+    description="Leg het plastic afvalbakje op de onderlegger" 
+    index="9" 
+    type="drop" 
+    item="PlasticTrashbucket" 
+    secondPlace="PatientPos" 
+    posID="2" 
+    blockUnlock="tray placed"
+    extra="Leg het plastic afvalbakje op de onderlegger"></action>
 
   <action
     comment="9. Put on gloves."
@@ -160,7 +170,7 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
     messageContent="Voordat je een katheter inbrengt, reinig je de genitaliën van de cliënt. Bij het inbrengen van verblijfskatheters wordt glijmiddel in de urethra aangebracht. (Bij een suprapubische katheter wordt glijmiddel in de fistel aangebracht
 
 Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskatheterisatie"
-    blockRequired="patient lay down"
+    blockRequired="patient lay down, tray placed"
     blockTitle="Handeling niet mogelijk."
     blockMessage="Zorg ervoor dat de cliënt klaar is voor blaaskatheterisatie."></action>
 
