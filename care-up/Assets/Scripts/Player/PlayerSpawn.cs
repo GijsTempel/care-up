@@ -29,10 +29,12 @@ public class PlayerSpawn : MonoBehaviour
     void Awake()
     {
         GameObject UIPrefab = null;
+        GameObject flyHelper = Instantiate(Resources.Load("NecessaryPrefabs/UI/flyHelper") as GameObject);
+        flyHelper.name = "flyHeloper";
         if (GameObject.FindObjectOfType(typeof(GameUI)) == null)
         {
-            // UIPrefab = Instantiate(Resources.Load("NecessaryPrefabs/UI/UI_debug") as GameObject);
             UIPrefab = Instantiate(Resources.Load("NecessaryPrefabs/UI/UI") as GameObject);
+            
             UIPrefab.name = "UI";
         }
         Vector3 r = transform.rotation.eulerAngles;

@@ -9,7 +9,6 @@ public class AnimatedFingerHint : MonoBehaviour
     public bool toMove = false;
     bool toWave = false;
     bool shown = false;
-    public Canvas myCanvas;
     public RectTransform FingerHolder;
     public RectTransform TargetPointer;
 
@@ -62,11 +61,13 @@ public class AnimatedFingerHint : MonoBehaviour
             fingerAnimator.SetTrigger("fly");
             toMove = true;
             Vector2 pos;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(myCanvas.transform as RectTransform, Input.mousePosition, myCanvas.worldCamera, out pos);
-            moveTarget = myCanvas.transform.TransformPoint(pos);
+            Canvas canvas = GetComponentInParent<Canvas>();
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, 
+                Input.mousePosition, canvas.worldCamera, out pos);
+            moveTarget = canvas.transform.TransformPoint(pos);
             TargetPointer.position = moveTarget;
             float dist = Vector3.Distance(FingerHolder.position, moveTarget);
-            print(dist);
+            print(Input.mousePosition);
             moveSpeed = dist * 1f;
         }
 
