@@ -7,17 +7,111 @@ using UnityEngine.UI;
 public class AnimatedFingerHint : MonoBehaviour
 {
     public bool toMove = false;
+    bool waveHi = true;
     bool toWave = false;
     bool shown = false;
     public RectTransform FingerHolder;
     public RectTransform TargetPointer;
-
+    GameObject targetUI_Element = null;
     public Animator fingerAnimator;
     float moveSpeed = 500f;
     Vector3 moveTarget = new Vector3();
+    GameUI gameUI;
     // Start is called before the first frame update
+
+    private void OnEnable()
+    {
+        Invoke("FindTarget", 0.3f);
+    }
+
+    void FindTarget()
+    {
+        if (!gameObject.activeSelf)
+            return;
+        if (waveHi)
+        {
+            waveHi = false;
+            fingerAnimator.SetTrigger("show");
+            fingerAnimator.SetTrigger("hi");
+        }
+        if (gameUI.DropLeftBlink || gameUI.DropRightBlink)
+        {
+            GameUI.ItemControlButtonType bType = GameUI.ItemControlButtonType.DropLeft;
+            if (gameUI.DropRightBlink)
+                bType = GameUI.ItemControlButtonType.DropRight;
+
+            GameObject button = FindItemControlButton(bType);
+            if (button != null)
+            {
+                MoveTo(button.GetComponent<RectTransform>().position);
+            }
+        }
+        else if (gameUI.recordsButtonBlink || gameUI.prescriptionButtonBlink || gameUI.paperAndPenButtonblink)
+        {
+            GameUI.ItemControlButtonType bType = GameUI.ItemControlButtonType.Records;
+            if (gameUI.prescriptionButtonBlink)
+                bType = GameUI.ItemControlButtonType.Prescription;
+            else if (gameUI.paperAndPenButtonblink)
+                bType = GameUI.ItemControlButtonType.PaperAndPen;
+
+            GameObject button = FindItemControlButton(bType);
+            if (button != null)
+            {
+                MoveTo(button.GetComponent<RectTransform>().position);
+            }
+        }
+        else if (gameUI.moveButtonToBlink != GameUI.ItemControlButtonType.None)
+        {
+            GameUI.ItemControlButtonType bType = GameUI.ItemControlButtonType.MoveLeft;
+            if (gameUI.moveButtonToBlink == GameUI.ItemControlButtonType.MoveRight)
+                bType = GameUI.ItemControlButtonType.MoveRight;
+            GameObject button = FindItemControlButton(bType);
+            if (button != null)
+            {
+                MoveTo(button.GetComponent<RectTransform>().position);
+            }
+        }
+        else if (gameUI.buttonToBlink == GameUI.ItemControlButtonType.ZoomLeft || gameUI.buttonToBlink == GameUI.ItemControlButtonType.ZoomRight)
+        {
+            GameUI.ItemControlButtonType bType = gameUI.buttonToBlink;
+            GameObject button = FindItemControlButton(bType);
+            if (button != null)
+            {
+                MoveTo(button.GetComponent<RectTransform>().position);
+            }
+        }
+        else if (gameUI.buttonToBlink == GameUI.ItemControlButtonType.DecombineLeft
+            || gameUI.buttonToBlink == GameUI.ItemControlButtonType.DecombineRight
+            || gameUI.buttonToBlink == GameUI.ItemControlButtonType.Combine
+            || gameUI.buttonToBlink == GameUI.ItemControlButtonType.NoTargetLeft
+            || gameUI.buttonToBlink == GameUI.ItemControlButtonType.NoTargetRight)
+             
+        {
+            GameUI.ItemControlButtonType bType = gameUI.buttonToBlink;
+            GameObject button = FindItemControlButton(bType);
+            if (button != null)
+            {
+                MoveTo(button.GetComponent<RectTransform>().position);
+            }
+        }
+
+     
+        
+    }
+
+    GameObject FindItemControlButton(GameUI.ItemControlButtonType buttonType)
+    {
+        foreach (ItemControlButton b in GameObject.FindObjectsOfType<ItemControlButton>())
+        {
+            if (b.buttonType == buttonType)
+                return b.gameObject;
+        }
+        return null;
+    }
+
     void Start()
     {
+        gameUI = GameObject.FindObjectOfType<GameUI>();
         moveTarget = FingerHolder.position;
     }
     void ShowHand(bool toShow, bool showEffect = false, bool _toWave = false)
@@ -42,7 +136,27 @@ public class AnimatedFingerHint : MonoBehaviour
             FingerHolder.gameObject.SetActive(false);
             toMove = false;
         }
+    }
 
+    public void MoveTo(Vector3 point)
+    {
+        Vector3 scr_center = new Vector3(Screen.width / 2f, Screen.height / 2f, 0f);
+        FingerHolder.position = scr_center;
+        fingerAnimator.SetTrigger("fly");
+        toMove = true;
+        Vector2 pos;
+        Canvas canvas = GetComponentInParent<Canvas>();
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform,
+            point, canvas.worldCamera, out pos);
+        moveTarget = canvas.transform.TransformPoint(pos);
+        TargetPointer.position = moveTarget;
+        float dist = Vector3.Distance(FingerHolder.position, moveTarget);
+        moveSpeed = dist * 1f;
+    }
+
+    public void clearTarget()
+    {
+        targetUI_Element = null;
     }
 
     public void startMove()
@@ -52,11 +166,11 @@ public class AnimatedFingerHint : MonoBehaviour
 
     void Update()
     {
-        if (toMove)
+        if (toMove )
         {
-            FingerHolder.position = Vector3.MoveTowards(FingerHolder.position, moveTarget, Time.deltaTime * moveSpeed);
+             FingerHolder.position = Vector3.MoveTowards(FingerHolder.position, moveTarget, Time.deltaTime * moveSpeed);
         }
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && false)
         {
             fingerAnimator.SetTrigger("fly");
             toMove = true;

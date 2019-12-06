@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class GameUI : MonoBehaviour
 {
+    public AnimatedFingerHint animatedFinger;
     GameObject Player;
     public Animator Blink;
     public Animator IPadBlink;
@@ -400,6 +401,7 @@ public class GameUI : MonoBehaviour
     void Start()
     {
         gameLogic = GameObject.Find("GameLogic");
+        animatedFinger = GameObject.FindObjectOfType<AnimatedFingerHint>();
         objectsIDsController = GameObject.FindObjectOfType<ObjectsIDsController>();
         MovementSideButtons = GameObject.Find("MovementSideButtons");
 
@@ -722,6 +724,7 @@ public class GameUI : MonoBehaviour
 
         foreach (ItemControlButton b in GameObject.FindObjectsOfType<ItemControlButton>())
         {
+            print(b.name);
             b.UpdateBlinkState();
         }
         foreach (ButtonBlinking b in GameObject.FindObjectsOfType<ButtonBlinking>())
@@ -1026,6 +1029,9 @@ public class GameUI : MonoBehaviour
             ItemControlPanel.SetActive(showItemControlPanel);
             patientInfo.SetActive(showItemControlPanel);
             MovementSideButtons.SetActive(showItemControlPanel);
+            //if (!showItemControlPanel)
+
+            animatedFinger.gameObject.SetActive(showItemControlPanel);
 
             ICPCurrentState = ItemControlPanel.activeSelf;
         }
@@ -1049,6 +1055,7 @@ public class GameUI : MonoBehaviour
         if (!value)
             cooldownTime = 1.0f;
         MovementSideButtons.SetActive(false);
+        animatedFinger.gameObject.SetActive(false);
         if (!allowObjectControlUI && !LeftSideButton.gameObject.activeSelf && !RightSideButton.gameObject.activeSelf &&
             !WalkToGroupPanel.activeSelf && !ItemControlPanel.activeSelf)
         {
