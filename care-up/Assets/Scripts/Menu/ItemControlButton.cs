@@ -10,6 +10,14 @@ public class ItemControlButton : MonoBehaviour
     {
         gameUI = GameObject.FindObjectOfType<GameUI>();
         prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
+        
+        print(GetComponentInParent<Canvas>().name);
+        Vector3 vec = new Vector3();
+        // RectTransformUtility.WorldToScreenPoint(Camera.ma(GetComponentInParent<RectTransform>(),
+        //     transform.position, Camera.main, out vec);
+        print(GetComponent<RectTransform>().position);
+        // RectTransformUtility.PixelAdjustPoint
+        print(vec);
     }
 
     public void UpdateBlinkState()
@@ -45,6 +53,21 @@ public class ItemControlButton : MonoBehaviour
                 toBlink = true;
             }
         }
+        else if (buttonType == GameUI.ItemControlButtonType.Records)
+        {
+            if (gameUI.recordsButtonBlink)
+                toBlink = true;
+        }
+        else if (buttonType == GameUI.ItemControlButtonType.Prescription)
+        {
+            if (gameUI.prescriptionButtonBlink)
+                toBlink = true;
+        }
+        else if (buttonType == GameUI.ItemControlButtonType.PaperAndPen)
+        {
+            if (gameUI.paperAndPenButtonblink)
+                toBlink = true;
+        }
         else if (gameUI.buttonToBlink == buttonType && !directionActive)
         {
             {
@@ -57,7 +80,10 @@ public class ItemControlButton : MonoBehaviour
                 GetComponent<Animator>().SetTrigger("BlinkOff");
         }
         else if (!GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ItemBlink"))
+        {
+            //GameObject.FindObjectOfType<AnimatedFingerHint>().MoveTo(GetComponent<RectTransform>().position);
             GetComponent<Animator>().SetTrigger("BlinkOn");
+        }
     }
 
     private void OnEnable()
