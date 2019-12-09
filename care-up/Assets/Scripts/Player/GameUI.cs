@@ -765,9 +765,9 @@ public class GameUI : MonoBehaviour
         return 0;
     }
 
-    public void ShowTheory(bool isSequence = false)
+    public void ShowIpad(bool isSequence = false)
     {
-        void ShowIPad()
+        void ShowTheoryTab()
         {
             if (!string.IsNullOrEmpty(actionManager.Message))
             {
@@ -775,10 +775,21 @@ public class GameUI : MonoBehaviour
                 GameObject.FindObjectOfType<GameUI>().theoryPanel.SetActive(true);
                 GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Title").GetComponent<Text>().text = actionManager.MessageTitle;
                 GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Message").GetComponent<Text>().text = actionManager.Message;
+                actionManager.Message = null;
+                actionManager.ShowTheory = false;
             }
         }
 
-        if (actionManager.ShowTheory)
+        void ShowRandomQuizTab()
+        {
+            if (!GameObject.FindObjectOfType<PlayerScript>().robotUIopened)
+            {
+                GameObject.FindObjectOfType<GameUI>().quiz_tab.NextQuizQuestion(true);
+                RandomQuiz.showQuestion = false;
+            }
+        }
+
+        if (actionManager.ShowTheory || RandomQuiz.showQuestion)
         {
             startTimer = true;
         }
@@ -790,17 +801,28 @@ public class GameUI : MonoBehaviour
 
         if (targetTime <= 0.0f)
         {
-            ShowIPad();
-            startTimer = false;
-            targetTime = 0.7f;
+            if (actionManager.Message != null)
+            {
+                ShowTheoryTab();
+                startTimer = false;
+                targetTime = 0.7f;
+            }
+            else if (RandomQuiz.showQuestion)
+            {
+                ShowRandomQuizTab();
+                startTimer = false;
+                targetTime = 0.7f;
+            }
         }
         else if (isSequence && actionManager.ShowTheory)
         {
-            ShowIPad();
+            ShowTheoryTab();
             actionManager.Message = null;
         }
-
-        actionManager.ShowTheory = false;
+        else if (isSequence && RandomQuiz.showQuestion)
+        {
+            ShowRandomQuizTab();
+        }        
     }
 
     public void PlaceTalkBubble(GameObject person)
@@ -826,6 +848,7 @@ public class GameUI : MonoBehaviour
 
     void Update()
     {
+        // print(RandomQuiz.showRandomQuestion);
         if (!timeOutEnded)
         {
             startTimeOut -= Time.deltaTime;
@@ -878,7 +901,8 @@ public class GameUI : MonoBehaviour
         //if some object was added or removed to hands
         if (showItemControlPanel)
         {
-            ShowTheory();
+            ShowIpad();
+
             int lHash = 0;
             if (handsInventory.leftHandObject != null)
                 lHash = handsInventory.leftHandObject.gameObject.GetHashCode();

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using CareUp.Localize;
+using UnityEngine.UI;
 
 /// <summary>
 /// Class for handling animation sequences.
@@ -173,6 +174,15 @@ public class AnimationSequence
                 Object.Destroy(GameObject.Find("SelectionDialogue"));
                 NextStep(dialogueOption);
 
+                if (!ActionManager.practiceMode)
+                {
+                    GameObject selectionDialogue = GameObject.Find("SelectionDialogue");
+                    if (selectionDialogue != null)
+                    {
+                        selectionDialogue.transform.Find("Top").Find("Title").GetComponent<Text>().text = question;
+                    }
+                }
+
                 actionManager.UpdatePoints(1);
                 dialogueOption.Clear();
                 return;
@@ -249,8 +259,7 @@ public class AnimationSequence
     /// </summary>
     public void NextStep(List<SelectDialogue.DialogueOption> additionalSteps = null)
     {
-        GameObject.FindObjectOfType<GameUI>().ShowTheory(true);
-
+        GameObject.FindObjectOfType<GameUI>().ShowIpad(true);     
         GameObject dialogueObject = GameObject.Find("SelectionDialogue");
 
         if (currentStep < steps.Count)

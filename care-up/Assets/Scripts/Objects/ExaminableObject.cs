@@ -45,7 +45,6 @@ public class ExaminableObject : InteractableObject {
         if (!audioExamine)
         {
             tutorial_examined = true;
-            Debug.Log (tutorial_examined);
             ToggleViewMode (true);
             cameraMode.ToggleCameraMode(CameraMode.Mode.ObjectPreview);
             actionManager.OnExamineAction(name, state);

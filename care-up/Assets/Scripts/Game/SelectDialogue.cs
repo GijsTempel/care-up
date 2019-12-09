@@ -219,14 +219,16 @@ public class SelectDialogue : MonoBehaviour
                     bool testingMode = false;
 
 #if UNITY_EDITOR
-                    if (GameObject.FindObjectOfType<PlayerPrefsManager>() != null)
+                    PlayerPrefsManager playerPrefsManager = GameObject.FindObjectOfType<PlayerPrefsManager>();
+                    ObjectsIDsController objectsIDsController = GameObject.FindObjectOfType<ObjectsIDsController>();
+                    if (playerPrefsManager != null)
                     {
-                        if (GameObject.FindObjectOfType<PlayerPrefsManager>().testingMode)
+                        if (playerPrefsManager.testingMode)
                             testingMode = true;
                     }
-                    if (GameObject.FindObjectOfType<ObjectsIDsController>() != null)
+                    if (objectsIDsController != null)
                     {
-                        if (GameObject.FindObjectOfType<ObjectsIDsController>().testingMode)
+                        if (objectsIDsController.testingMode)
                             testingMode = true;
                     }
 #endif
@@ -289,31 +291,41 @@ public class SelectDialogue : MonoBehaviour
                         GameObject.FindObjectOfType<ActionManager>().OnSequenceStepAction("");
                         GameObject currentHintPanel = GameObject.Find("HintPanel");
 
-                        string hintText = FindObjectOfType<ActionManager>().CurrentDescription[0];                    
-
-                        foreach (DialogueOption dialoqueOption in options)
+                        if (!ActionManager.practiceMode)
                         {
-                            if (dialoqueOption.additional != null)
+                            if (option.question != null)
                             {
-                                optionWithAdditions = dialoqueOption;
-                                hintText = dialoqueOption.text;
-                                break;
+                                //dialogueTitle.text = option.question;
                             }
-                        }                       
-
-                        if (currentHintPanel != null)
+                        }
+                        else if (currentHintPanel != null)
                         {
+                            string hintText = FindObjectOfType<ActionManager>().CurrentDescription[0];
+
+                            foreach (DialogueOption dialoqueOption in options)
+                            {
+                                if (dialoqueOption.additional != null)
+                                {
+                                    optionWithAdditions = dialoqueOption;
+                                    hintText = dialoqueOption.text;
+                                    break;
+                                }
+                            }
+
                             if (currentHintPanel.transform.Find("Text") != null)
                             {
                                 Text hint = currentHintPanel.transform.Find("Text").gameObject.GetComponent<Text>();
 
-                                if (hint.text == optionWithAdditions.question || hint.text == questionWithHint)
+                                if (optionWithAdditions != null)
                                 {
-                                    questionWithHint = optionWithAdditions.question + " " + FindObjectOfType<ActionManager>().CurrentDescription[0];
-                                    hint.text = questionWithHint;
-                                }
-                                else if (option == optionWithAdditions)
-                                    hint.text = optionWithAdditions.question;
+                                    if (hint.text == optionWithAdditions.question || hint.text == questionWithHint)
+                                    {
+                                        questionWithHint = optionWithAdditions.question + " " + FindObjectOfType<ActionManager>().CurrentDescription[0];
+                                        hint.text = questionWithHint;
+                                    }
+                                    else if (option == optionWithAdditions)
+                                        hint.text = optionWithAdditions.question;
+                                }                               
                                 else
                                     hint.text = hintText;
                             }

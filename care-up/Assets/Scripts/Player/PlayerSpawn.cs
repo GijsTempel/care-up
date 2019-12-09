@@ -2,14 +2,12 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Xml;
-//using UnityEditor.Animations;
 
 public class PlayerSpawn : MonoBehaviour
 {
     public int sceneID = 0;
     public string quizName;
     public GameObject playerPrefab;
-    //public UnityEditor.Animations.AnimatorController animationController = null;
     public Vector3 robotPosition;
     public Vector3 robotRotation;
     public WalkToGroup.GroupType momentaryJumpTo = WalkToGroup.GroupType.NotSet;
@@ -31,7 +29,6 @@ public class PlayerSpawn : MonoBehaviour
         GameObject UIPrefab = null;
         if (GameObject.FindObjectOfType(typeof(GameUI)) == null)
         {
-            // UIPrefab = Instantiate(Resources.Load("NecessaryPrefabs/UI/UI_debug") as GameObject);
             UIPrefab = Instantiate(Resources.Load("NecessaryPrefabs/UI/UI") as GameObject);
             UIPrefab.name = "UI";
         }
@@ -67,17 +64,7 @@ public class PlayerSpawn : MonoBehaviour
         itemDescription.name = "ItemDescription";
 
         GameObject iPad = UIPrefab.transform.Find("PatientInfoTabs").gameObject;
-
-        //GameObject iPad = Instantiate(Resources.Load("Prefabs/UI/IPad") as GameObject,
-        //  transform.position, transform.rotation);
-        //iPad.name = "ipad";
-
         IpadLoadXmlInfo(iPad.transform);
-
-        //GameObject iPad = Instantiate(Resources.Load("Prefabs/ipad") as GameObject,
-        //    transform.position + new Vector3(0, -100f, 0), transform.rotation);
-        //iPad.name = "ipad";
-        //IpadLoadXmlInfo(iPad.transform);
 
         GameObject robot = Instantiate(Resources.Load("NecessaryPrefabs/robot") as GameObject,
             robotPosition, Quaternion.Euler(robotRotation));
