@@ -24,6 +24,7 @@ public class AnimatedFingerHint : MonoBehaviour
         Invoke("FindTarget", 0.3f);
     }
 
+
     void FindTarget()
     {
         if (!gameObject.activeSelf)
@@ -40,11 +41,7 @@ public class AnimatedFingerHint : MonoBehaviour
             if (gameUI.DropRightBlink)
                 bType = GameUI.ItemControlButtonType.DropRight;
 
-            GameObject button = FindItemControlButton(bType);
-            if (button != null)
-            {
-                MoveTo(button.GetComponent<RectTransform>().position);
-            }
+            MoveToControlButton(bType);
         }
         else if (gameUI.recordsButtonBlink || gameUI.prescriptionButtonBlink || gameUI.paperAndPenButtonblink)
         {
@@ -53,32 +50,18 @@ public class AnimatedFingerHint : MonoBehaviour
                 bType = GameUI.ItemControlButtonType.Prescription;
             else if (gameUI.paperAndPenButtonblink)
                 bType = GameUI.ItemControlButtonType.PaperAndPen;
-
-            GameObject button = FindItemControlButton(bType);
-            if (button != null)
-            {
-                MoveTo(button.GetComponent<RectTransform>().position);
-            }
+            MoveToControlButton(bType);
         }
         else if (gameUI.moveButtonToBlink != GameUI.ItemControlButtonType.None)
         {
             GameUI.ItemControlButtonType bType = GameUI.ItemControlButtonType.MoveLeft;
             if (gameUI.moveButtonToBlink == GameUI.ItemControlButtonType.MoveRight)
                 bType = GameUI.ItemControlButtonType.MoveRight;
-            GameObject button = FindItemControlButton(bType);
-            if (button != null)
-            {
-                MoveTo(button.GetComponent<RectTransform>().position);
-            }
+            MoveToControlButton(bType);
         }
         else if (gameUI.buttonToBlink == GameUI.ItemControlButtonType.ZoomLeft || gameUI.buttonToBlink == GameUI.ItemControlButtonType.ZoomRight)
         {
-            GameUI.ItemControlButtonType bType = gameUI.buttonToBlink;
-            GameObject button = FindItemControlButton(bType);
-            if (button != null)
-            {
-                MoveTo(button.GetComponent<RectTransform>().position);
-            }
+            MoveToControlButton(gameUI.buttonToBlink);
         }
         else if (gameUI.buttonToBlink == GameUI.ItemControlButtonType.DecombineLeft
             || gameUI.buttonToBlink == GameUI.ItemControlButtonType.DecombineRight
@@ -87,26 +70,25 @@ public class AnimatedFingerHint : MonoBehaviour
             || gameUI.buttonToBlink == GameUI.ItemControlButtonType.NoTargetRight)
              
         {
-            GameUI.ItemControlButtonType bType = gameUI.buttonToBlink;
-            GameObject button = FindItemControlButton(bType);
-            if (button != null)
-            {
-                MoveTo(button.GetComponent<RectTransform>().position);
-            }
+            MoveToControlButton(gameUI.buttonToBlink);
         }
-
-     
-        
     }
 
-    GameObject FindItemControlButton(GameUI.ItemControlButtonType buttonType)
+    void MoveToControlButton(GameUI.ItemControlButtonType buttonType)
     {
+        RectTransform point = null;
         foreach (ItemControlButton b in GameObject.FindObjectsOfType<ItemControlButton>())
         {
             if (b.buttonType == buttonType)
-                return b.gameObject;
+            {
+                point = b.GetComponent<RectTransform>();
+                if (b.transform.Find("fingerPosition"))
+                    point =  b.transform.Find("fingerPosition").GetComponent<RectTransform>();
+
+                MoveTo(point.position);
+                break;
+            }
         }
-        return null;
     }
 
     void Start()
