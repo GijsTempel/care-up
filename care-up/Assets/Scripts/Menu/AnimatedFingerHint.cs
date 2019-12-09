@@ -32,6 +32,8 @@ public class AnimatedFingerHint : MonoBehaviour
         if (waveHi)
         {
             waveHi = false;
+            transform.Find("FingerHolder/animFinger/show_sound").GetComponent<AudioSource>().Play();
+
             fingerAnimator.SetTrigger("show");
             fingerAnimator.SetTrigger("hi");
         }
@@ -109,6 +111,7 @@ public class AnimatedFingerHint : MonoBehaviour
             {
                 toMove = false;
                 fingerAnimator.SetTrigger("show");
+                print("DDDDD");
                 if (_toWave)
                     fingerAnimator.SetTrigger("hi");
             }
@@ -125,6 +128,7 @@ public class AnimatedFingerHint : MonoBehaviour
         Vector3 scr_center = new Vector3(Screen.width / 2f, Screen.height / 2f, 0f);
         FingerHolder.position = scr_center;
         fingerAnimator.SetTrigger("fly");
+        transform.Find("FingerHolder/animFinger/sound").GetComponent<AudioSource>().Play();
         toMove = true;
         Vector2 pos;
         Canvas canvas = GetComponentInParent<Canvas>();
@@ -141,45 +145,12 @@ public class AnimatedFingerHint : MonoBehaviour
         targetUI_Element = null;
     }
 
-    public void startMove()
-    {
-
-    }
-
     void Update()
     {
         if (toMove )
         {
              FingerHolder.position = Vector3.MoveTowards(FingerHolder.position, moveTarget, Time.deltaTime * moveSpeed);
         }
-        if (Input.GetMouseButtonDown(0) && false)
-        {
-            fingerAnimator.SetTrigger("fly");
-            toMove = true;
-            Vector2 pos;
-            Canvas canvas = GetComponentInParent<Canvas>();
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, 
-                Input.mousePosition, canvas.worldCamera, out pos);
-            moveTarget = canvas.transform.TransformPoint(pos);
-            TargetPointer.position = moveTarget;
-            float dist = Vector3.Distance(FingerHolder.position, moveTarget);
-            print(Input.mousePosition);
-            moveSpeed = dist * 1f;
-        }
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            ShowHand(!FingerHolder.gameObject.activeSelf, true, toWave);
-            Debug.Log("Pressed secondary button.");
-        }
-
-        if (Input.GetMouseButtonDown(2))
-        {
-            fingerAnimator.SetTrigger("hi");
-
-            //Debug.Log("Pressed middle click.");
-            //toWave = !toWave;
-            //print(toWave);
-        }
+      
     }
 }
