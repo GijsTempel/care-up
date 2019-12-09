@@ -65,7 +65,7 @@ public class ItemControlButton : MonoBehaviour
         }
         else if (buttonType == GameUI.ItemControlButtonType.PaperAndPen)
         {
-            if (gameUI.paperAndPenButtonblink)
+            if (gameUI.paperAndPenButtonblink && !gameUI.LevelEnded)
                 toBlink = true;
         }
         else if (gameUI.buttonToBlink == buttonType && !directionActive)
@@ -76,14 +76,21 @@ public class ItemControlButton : MonoBehaviour
         }
         if (!toBlink)
         {
-            if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ItemBlink"))
-                GetComponent<Animator>().SetTrigger("BlinkOff");
+            if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ItemBlink") 
+                || GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Blink"))
+                    GetComponent<Animator>().SetTrigger("BlinkOff");
         }
-        else if (!GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ItemBlink"))
+        else if (!(GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ItemBlink") 
+            || GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Blink")))
         {
             //GameObject.FindObjectOfType<AnimatedFingerHint>().MoveTo(GetComponent<RectTransform>().position);
             GetComponent<Animator>().SetTrigger("BlinkOn");
         }
+    }
+
+    public void StopBlinking()
+    {
+        GetComponent<Animator>().SetTrigger("BlinkOff");
     }
 
     private void OnEnable()

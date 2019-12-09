@@ -43,7 +43,7 @@ public class AnimatedFingerHint : MonoBehaviour
 
             MoveToControlButton(bType);
         }
-        else if (gameUI.recordsButtonBlink || gameUI.prescriptionButtonBlink || gameUI.paperAndPenButtonblink)
+        else if (!gameUI.LevelEnded && (gameUI.recordsButtonBlink || gameUI.prescriptionButtonBlink || gameUI.paperAndPenButtonblink))
         {
             GameUI.ItemControlButtonType bType = GameUI.ItemControlButtonType.Records;
             if (gameUI.prescriptionButtonBlink)

@@ -38,6 +38,8 @@ public class GameUI : MonoBehaviour
     public bool DropLeftBlink = false;
     public bool DropRightBlink = false;
 
+    public bool LevelEnded = false;
+
     GameObject MovementSideButtons;
     public List<string> reqPlaces = new List<string>();
     List<ActionManager.StepData> Current_SubTasks;
@@ -118,7 +120,6 @@ public class GameUI : MonoBehaviour
         MessageTabBack,
         Close
     }
-
 
     public void TestOutput()
     {
@@ -236,7 +237,6 @@ public class GameUI : MonoBehaviour
     {
         closeDialog.SetActive(value);
         // closeButton.SetActive(!value);
-
         if (value)
         {
             ps.robotUIopened = true;
@@ -647,6 +647,7 @@ public class GameUI : MonoBehaviour
     public void ShowDonePanel(bool value)
     {
         donePanel.SetActive(value);
+        LevelEnded = value;
     }
 
     public void EndScene()
@@ -724,7 +725,6 @@ public class GameUI : MonoBehaviour
 
         foreach (ItemControlButton b in GameObject.FindObjectsOfType<ItemControlButton>())
         {
-            print(b.name);
             b.UpdateBlinkState();
         }
         foreach (ButtonBlinking b in GameObject.FindObjectsOfType<ButtonBlinking>())
