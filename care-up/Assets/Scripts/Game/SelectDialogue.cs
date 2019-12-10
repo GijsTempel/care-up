@@ -48,25 +48,27 @@ public class SelectDialogue : MonoBehaviour
 
     private bool destroy = true;
 
-    private Image top;
-    private Image bottom;
-    private Image right;
-    private Image left;
+    //private Image top;
+    //private Image bottom;
+    //private Image right;
+    //private Image left;
 
     private Button first;
     private Button second;
     private Button third;
     private Button fourth;
 
-    private ColorBlock firstCB;
-    private ColorBlock secondCB;
-    private ColorBlock thirdCB;
-    private ColorBlock fourthCB;
+    public List<Button> sqButtons;
 
-    private Color selectedMaterial;
-    private Color defaultMaterial;
-    private Color correctMaterial;
-    private Color wrongMaterial;
+    //private ColorBlock firstCB;
+    //private ColorBlock secondCB;
+    //private ColorBlock thirdCB;
+    //private ColorBlock fourthCB;
+
+    //private Color selectedMaterial;
+    //private Color defaultMaterial;
+    //private Color correctMaterial;
+    //private Color wrongMaterial;
 
     private string text;
 
@@ -94,50 +96,51 @@ public class SelectDialogue : MonoBehaviour
     public void Init(bool selfDestroy = true)
     {
         //selectedMaterial = Color.blue;
-        defaultMaterial = Color.white;
-        correctMaterial = Color.green;
-        wrongMaterial = Color.red;
 
-        top = transform.GetChild(1).GetComponent<Image>();
-        bottom = transform.GetChild(2).GetComponent<Image>();
-        right = transform.GetChild(3).GetComponent<Image>();
-        left = transform.GetChild(4).GetComponent<Image>();
+        //defaultMaterial = Color.white;
+        //correctMaterial = Color.green;
+        //wrongMaterial = Color.red;
 
-        first = transform.GetChild(1).GetComponent<Button>();
-        second = transform.GetChild(2).GetComponent<Button>();
-        third = transform.GetChild(3).GetComponent<Button>();
-        fourth = transform.GetChild(4).GetComponent<Button>();
+        //first = transform.Find("Image/Buttons/b0").GetComponent<Button>();
+        //second = transform.Find("Image/Buttons/b1").GetComponent<Button>();
+        //third = transform.Find("Image/Buttons/b2").GetComponent<Button>();
+        //fourth = transform.Find("Image/Buttons/b3").GetComponent<Button>();
 
-        firstCB = first.colors;
-        secondCB = second.colors;
-        thirdCB = third.colors;
-        fourthCB = fourth.colors;
+        //top = first.GetComponent<Image>();
+        //bottom = second.GetComponent<Image>();
+        //right = third.GetComponent<Image>();
+        //left = fourth.GetComponent<Image>();
 
-        top.color = defaultMaterial;
-        bottom.color = defaultMaterial;
-        right.color = defaultMaterial;
-        left.color = defaultMaterial;
+        //firstCB = first.colors;
+        //secondCB = second.colors;
+        //thirdCB = third.colors;
+        //fourthCB = fourth.colors;
 
-        top.gameObject.SetActive(false);
-        bottom.gameObject.SetActive(false);
-        right.gameObject.SetActive(false);
-        left.gameObject.SetActive(false);
+        //top.color = defaultMaterial;
+        //bottom.color = defaultMaterial;
+        //right.color = defaultMaterial;
+        //left.color = defaultMaterial;
 
-        first.gameObject.SetActive(false);
-        second.gameObject.SetActive(false);
-        third.gameObject.SetActive(false);
-        fourth.gameObject.SetActive(false);
+        //top.gameObject.SetActive(false);
+        //bottom.gameObject.SetActive(false);
+        //right.gameObject.SetActive(false);
+        //left.gameObject.SetActive(false);
+
+        //first.gameObject.SetActive(false);
+        //second.gameObject.SetActive(false);
+        //third.gameObject.SetActive(false);
+        //fourth.gameObject.SetActive(false);
 
         //mouseState = Vector2.zero;
-        currentOption = OptionSide.None;
-        currentMaterial = defaultMaterial;
-        options.Clear();
+        //currentOption = OptionSide.None;
+        //currentMaterial = defaultMaterial;
+        //options.Clear();
 
-        text = "";
-        cheated = false;
-        tutorial_lock = false;
+        //text = "";
+        //cheated = false;
+        //tutorial_lock = false;
 
-        destroy = selfDestroy;
+        //destroy = selfDestroy;
     }
 
     public void AddOptions(List<DialogueOption> list, bool cheat = false)
@@ -161,33 +164,44 @@ public class SelectDialogue : MonoBehaviour
             return;
         }
 
-        if (options.Count > 0)
+        for (int i = 0; i < 4; i++)
         {
-            top.gameObject.SetActive(true);
-            options[0].side = OptionSide.Top;
-            top.transform.GetChild(0).GetComponent<Text>().text = options[0].text;
+            if (i < options.Count)
+            {
+                sqButtons[i].gameObject.SetActive(true);
+                sqButtons[i].transform.Find("Text").GetComponent<Text>().text = options[i].text;
+            }
+            else
+                sqButtons[i].gameObject.SetActive(false);
         }
+     
+        //if (options.Count > 0)
+        //{
+        //    top.gameObject.SetActive(true);
+        //    options[0].side = OptionSide.Top;
+        //    top.transform.GetChild(0).GetComponent<Text>().text = options[0].text;
+        //}
 
-        if (options.Count > 1)
-        {
-            bottom.gameObject.SetActive(true);
-            options[1].side = OptionSide.Bottom;
-            bottom.transform.GetChild(0).GetComponent<Text>().text = options[1].text;
-        }
+        //if (options.Count > 1)
+        //{
+        //    bottom.gameObject.SetActive(true);
+        //    options[1].side = OptionSide.Bottom;
+        //    bottom.transform.GetChild(0).GetComponent<Text>().text = options[1].text;
+        //}
 
-        if (options.Count > 2)
-        {
-            right.gameObject.SetActive(true);
-            options[2].side = OptionSide.Right;
-            right.transform.GetChild(0).GetComponent<Text>().text = options[2].text;
-        }
+        //if (options.Count > 2)
+        //{
+        //    right.gameObject.SetActive(true);
+        //    options[2].side = OptionSide.Right;
+        //    right.transform.GetChild(0).GetComponent<Text>().text = options[2].text;
+        //}
 
-        if (options.Count > 3)
-        {
-            left.gameObject.SetActive(true);
-            options[3].side = OptionSide.Left;
-            left.transform.GetChild(0).GetComponent<Text>().text = options[3].text;
-        }
+        //if (options.Count > 3)
+        //{
+        //    left.gameObject.SetActive(true);
+        //    options[3].side = OptionSide.Left;
+        //    left.transform.GetChild(0).GetComponent<Text>().text = options[3].text;
+        //}
 
         if (cheated)
         {
@@ -200,6 +214,7 @@ public class SelectDialogue : MonoBehaviour
 
     void Update()
     {
+        /*
         if (!tutorial_lock)
         {
             if (!GamepadSwitch.HandleUpdate(top.GetComponent<Button>()))
@@ -334,6 +349,7 @@ public class SelectDialogue : MonoBehaviour
                 }
             }
         }
+        */
     }
 
     private void SetSelected(OptionSide option)
@@ -348,55 +364,55 @@ public class SelectDialogue : MonoBehaviour
 
     private void SetOptionTo(OptionSide option, bool state)
     {
-        switch (option)
-        {
-            case OptionSide.Top:
-                if (state)
-                {
-                    currentMaterial = top.color;
-                    //top.color = selectedMaterial;
-                }
-                else
-                {
-                    top.color = currentMaterial;
-                }
-                break;
-            case OptionSide.Bottom:
-                if (state)
-                {
-                    currentMaterial = bottom.color;
-                    //bottom.color = selectedMaterial;
-                }
-                else
-                {
-                    bottom.color = currentMaterial;
-                }
-                break;
-            case OptionSide.Right:
-                if (state)
-                {
-                    currentMaterial = right.color;
-                    //right.color = selectedMaterial;
-                }
-                else
-                {
-                    right.color = currentMaterial;
-                }
-                break;
-            case OptionSide.Left:
-                if (state)
-                {
-                    currentMaterial = left.color;
-                    //left.color = selectedMaterial;
-                }
-                else
-                {
-                    left.color = currentMaterial;
-                }
-                break;
-            default:
-                break;
-        }
+        //switch (option)
+        //{
+        //    case OptionSide.Top:
+        //        if (state)
+        //        {
+        //            currentMaterial = top.color;
+        //            //top.color = selectedMaterial;
+        //        }
+        //        else
+        //        {
+        //            top.color = currentMaterial;
+        //        }
+        //        break;
+        //    case OptionSide.Bottom:
+        //        if (state)
+        //        {
+        //            currentMaterial = bottom.color;
+        //            //bottom.color = selectedMaterial;
+        //        }
+        //        else
+        //        {
+        //            bottom.color = currentMaterial;
+        //        }
+        //        break;
+        //    case OptionSide.Right:
+        //        if (state)
+        //        {
+        //            currentMaterial = right.color;
+        //            //right.color = selectedMaterial;
+        //        }
+        //        else
+        //        {
+        //            right.color = currentMaterial;
+        //        }
+        //        break;
+        //    case OptionSide.Left:
+        //        if (state)
+        //        {
+        //            currentMaterial = left.color;
+        //            //left.color = selectedMaterial;
+        //        }
+        //        else
+        //        {
+        //            left.color = currentMaterial;
+        //        }
+        //        break;
+        //    default:
+        //        break;
+        //}
     }
 
     public void SetText(string t)
@@ -420,30 +436,30 @@ public class SelectDialogue : MonoBehaviour
 
     public void ShowAnswer()
     {
-        if (cheated)
-        {
-            foreach (DialogueOption o in options)
-            {
-                if (o.attribute != "" && o.attribute != "CM_Leave")
-                {
-                    switch (o.side)
-                    {
-                        case OptionSide.Bottom:
-                            bottom.color = correctMaterial;
-                            break;
-                        case OptionSide.Left:
-                            left.color = correctMaterial;
-                            break;
-                        case OptionSide.Right:
-                            right.color = correctMaterial;
-                            break;
-                        case OptionSide.Top:
-                            top.color = correctMaterial;
-                            break;
-                    }
-                }
-            }
-        }
+        //if (cheated)
+        //{
+        //    foreach (DialogueOption o in options)
+        //    {
+        //        if (o.attribute != "" && o.attribute != "CM_Leave")
+        //        {
+        //            switch (o.side)
+        //            {
+        //                case OptionSide.Bottom:
+        //                    bottom.color = correctMaterial;
+        //                    break;
+        //                case OptionSide.Left:
+        //                    left.color = correctMaterial;
+        //                    break;
+        //                case OptionSide.Right:
+        //                    right.color = correctMaterial;
+        //                    break;
+        //                case OptionSide.Top:
+        //                    top.color = correctMaterial;
+        //                    break;
+        //            }
+        //        }
+        //    }
+        //}
     }
 
 
