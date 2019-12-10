@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using UnityEngine;
-using System.Collections;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
@@ -9,27 +7,27 @@ using UnityEngine.UI;
 /// </summary>
 public class SelectDialogue : MonoBehaviour
 {
-
     public bool tutorial_lock = false;
     public bool cheated = false;
 
     public class DialogueOption
     {
-        public delegate void OptionAction(string attr);
+        public delegate void OptionAction(string attr = "", List<DialogueOption> additionalOption = null, string question = null);
 
         public string text;
-
         public string attribute;
+        public string question;
         public OptionAction function;
-
         public OptionSide side;
+        public List<DialogueOption> additional;
 
-        public DialogueOption(string txt, OptionAction func, string attr)
+        public DialogueOption(string txt, OptionAction func, string attr, List<DialogueOption> additionalOptions = null, string questionText = null)
         {
             text = txt;
-
             function = func;
             attribute = attr;
+            question = questionText;
+            additional = additionalOptions;
         }
     };
 
@@ -197,6 +195,9 @@ public class SelectDialogue : MonoBehaviour
         }
     }
 
+    static DialogueOption optionWithAdditions = null;
+    static string questionWithHint = null;
+
     void Update()
     {
         if (!tutorial_lock)
@@ -218,14 +219,16 @@ public class SelectDialogue : MonoBehaviour
                     bool testingMode = false;
 
 #if UNITY_EDITOR
-                    if (GameObject.FindObjectOfType<PlayerPrefsManager>() != null)
+                    PlayerPrefsManager playerPrefsManager = GameObject.FindObjectOfType<PlayerPrefsManager>();
+                    ObjectsIDsController objectsIDsController = GameObject.FindObjectOfType<ObjectsIDsController>();
+                    if (playerPrefsManager != null)
                     {
-                        if (GameObject.FindObjectOfType<PlayerPrefsManager>().testingMode)
+                        if (playerPrefsManager.testingMode)
                             testingMode = true;
                     }
-                    if (GameObject.FindObjectOfType<ObjectsIDsController>() != null)
+                    if (objectsIDsController != null)
                     {
-                        if (GameObject.FindObjectOfType<ObjectsIDsController>().testingMode)
+                        if (objectsIDsController.testingMode)
                             testingMode = true;
                     }
 #endif
@@ -237,7 +240,7 @@ public class SelectDialogue : MonoBehaviour
                                 option.attribute = dialoqueOption.attribute;
                         }
 
-                        option.function(option.attribute);
+                        option.function(option.attribute, option.additional, option.question);
 
                         if (destroy)
                         {
@@ -248,11 +251,10 @@ public class SelectDialogue : MonoBehaviour
                         return;
                     }
 
+                    option.function(option.attribute, option.additional, option.question);
 
                     if (option.attribute != "")
                     {
-                        option.function(option.attribute);
-
                         if (destroy)
                         {
                             Destroy(gameObject);
@@ -288,12 +290,44 @@ public class SelectDialogue : MonoBehaviour
 
                         GameObject.FindObjectOfType<ActionManager>().OnSequenceStepAction("");
                         GameObject currentHintPanel = GameObject.Find("HintPanel");
-                        if(currentHintPanel != null)
+
+                        if (!ActionManager.practiceMode)
                         {
+                            if (option.question != null)
+                            {
+                                //dialogueTitle.text = option.question;
+                            }
+                        }
+                        else if (currentHintPanel != null)
+                        {
+                            string hintText = FindObjectOfType<ActionManager>().CurrentDescription[0];
+
+                            foreach (DialogueOption dialoqueOption in options)
+                            {
+                                if (dialoqueOption.additional != null)
+                                {
+                                    optionWithAdditions = dialoqueOption;
+                                    hintText = dialoqueOption.text;
+                                    break;
+                                }
+                            }
+
                             if (currentHintPanel.transform.Find("Text") != null)
                             {
-                                Text hintText = currentHintPanel.transform.Find("Text").gameObject.GetComponent<Text>();
-                                hintText.text = GameObject.FindObjectOfType<ActionManager>().CurrentDescription[0];
+                                Text hint = currentHintPanel.transform.Find("Text").gameObject.GetComponent<Text>();
+
+                                if (optionWithAdditions != null)
+                                {
+                                    if (hint.text == optionWithAdditions.question || hint.text == questionWithHint)
+                                    {
+                                        questionWithHint = optionWithAdditions.question + " " + FindObjectOfType<ActionManager>().CurrentDescription[0];
+                                        hint.text = questionWithHint;
+                                    }
+                                    else if (option == optionWithAdditions)
+                                        hint.text = optionWithAdditions.question;
+                                }                               
+                                else
+                                    hint.text = hintText;
                             }
                         }
                     }

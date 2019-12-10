@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
-using System.Linq;
 using UnityEngine.UI;
 
 /// <summary>
@@ -59,7 +57,6 @@ public class PersonObject : InteractableObject
         lookAtCamera = true;
 
         rend = GetComponentInChildren<SkinnedMeshRenderer>();
-        
     }
 
     public bool hasTopic(string topic)
@@ -125,6 +122,11 @@ public class PersonObject : InteractableObject
         actionManager.OnTalkAction(topic);
     }
 
+    public void DialoqueTalk(string topic = "", List<SelectDialogue.DialogueOption> additionalOptions = null, string question = null)
+    {
+        Talk(topic);
+    }
+
     public void NextDialogue()
     {
         ++currentDialogueIndex;
@@ -143,7 +145,6 @@ public class PersonObject : InteractableObject
         }
     }
 
-
     public void SkipGreetingDialogue()
     {
         if (currentDialogueIndex < dialogueXmls.Count)
@@ -161,7 +162,6 @@ public class PersonObject : InteractableObject
     /// <param name="filename">Xml filename</param>
     protected void LoadDialogueOptions(string filename)
     {
-
         optionsList.Clear();
 
         TextAsset textAsset = (TextAsset)Resources.Load("Xml/PersonDialogues/" + filename);
@@ -177,7 +177,7 @@ public class PersonObject : InteractableObject
 
             if (count < 3) // 3 options max, 4 is Close.
             {
-                SelectDialogue.DialogueOption option = new SelectDialogue.DialogueOption(description, Talk, topic);
+                SelectDialogue.DialogueOption option = new SelectDialogue.DialogueOption(description, DialoqueTalk, topic);
                 optionsList.Add(option);
                 ++count;
             }
@@ -187,7 +187,7 @@ public class PersonObject : InteractableObject
             }
         }
         // for leave option
-        optionsList.Add(new SelectDialogue.DialogueOption("Verlaten", Talk, "CM_Leave"));
+        optionsList.Add(new SelectDialogue.DialogueOption("Verlaten", DialoqueTalk, "CM_Leave"));
     }
 
     /// <summary>
@@ -239,12 +239,7 @@ public class PersonObject : InteractableObject
             if (flag && !cameraMode.animating)
             {
                 if (controls.CanInteract)
-                {
-                    //if (rend.material.shader == onMouseExitShader)
-                    //{
-                    //    SetShaderTo(onMouseOverShader);
-                    //}
-
+                {                   
                     if (!itemDescription.activeSelf)
                     {
                         itemDescription.SetActive(true);
@@ -252,19 +247,14 @@ public class PersonObject : InteractableObject
 
                     itemDescription.GetComponentInChildren<Text>().text = (description == "") ? name : description;
                 }
-                else if (!controls.CanInteract /*&& rend.material.shader == onMouseOverShader*/)
+                else if (!controls.CanInteract)
                 {
                     SetShaderTo(onMouseExitShader);
                     itemDescription.SetActive(false);
                 }
             }
             else
-            {
-                //if (rend.material.shader == onMouseOverShader)
-                //{
-                //    SetShaderTo(onMouseExitShader);
-                //}
-
+            {               
                 if (!selectedIsInteractable)
                 {
                     itemDescription.SetActive(false);
@@ -272,7 +262,7 @@ public class PersonObject : InteractableObject
             }
         }
 
-        if (cameraMode.animating/* && rend.material.shader == onMouseOverShader*/)
+        if (cameraMode.animating)
         {
             SetShaderTo(onMouseExitShader);
             itemDescription.SetActive(false);

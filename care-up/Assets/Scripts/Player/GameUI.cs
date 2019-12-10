@@ -95,6 +95,7 @@ public class GameUI : MonoBehaviour
     PlayerScript ps;
     bool ICPCurrentState = false;
     public bool allowObjectControlUI = true;
+    public static bool encounterStarted = false;
     public enum ItemControlButtonType
     {
         None,
@@ -568,8 +569,6 @@ public class GameUI : MonoBehaviour
             string[] ObjectNames = new string[0];
             a.ObjectNames(out ObjectNames);
 
-            //if (a.Type == ActionManager.ActionType.ObjectUse ||
-            //a.Type == ActionManager.ActionType.ObjectDrop)
             foreach (string objectToUse in ObjectNames)
             {
                 if (GameObject.Find(objectToUse) != null)
@@ -629,7 +628,6 @@ public class GameUI : MonoBehaviour
         }
 
         //clear highlights
-
         for (int i = 0; i < activeHighlighted.Count; i++)
         {
             if (!newHLObjects.Contains(activeHighlighted[i]))
@@ -771,20 +769,53 @@ public class GameUI : MonoBehaviour
         return 0;
     }
 
-    public void ShowTheory(bool isSequence = false)
+    public void ShowIpad(bool isSequence = false)
     {
-        void ShowIPad()
+        void ShowTheoryTab()
         {
             if (!string.IsNullOrEmpty(actionManager.Message))
             {
-                GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
-                GameObject.FindObjectOfType<GameUI>().theoryPanel.SetActive(true);
-                GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Title").GetComponent<Text>().text = actionManager.MessageTitle;
-                GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Message").GetComponent<Text>().text = actionManager.Message;
+                if (!GameObject.FindObjectOfType<PlayerScript>().robotUIopened)
+                {
+                    GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
+                    GameObject.FindObjectOfType<GameUI>().theoryPanel.SetActive(true);
+                    GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Title").GetComponent<Text>().text = actionManager.MessageTitle;
+                    GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Message").GetComponent<Text>().text = actionManager.Message;
+                    actionManager.Message = null;
+                    actionManager.ShowTheory = false;
+                }
             }
         }
 
-        if (actionManager.ShowTheory)
+        void ShowRandomQuizTab()
+        {
+            if (!GameObject.FindObjectOfType<PlayerScript>().robotUIopened)
+            {
+                GameObject.FindObjectOfType<GameUI>().quiz_tab.NextQuizQuestion(true);
+                RandomQuiz.showQuestion = false;
+            }
+        }
+
+        void ShowEncounter()
+        {
+            if (!GameObject.FindObjectOfType<PlayerScript>().robotUIopened)
+            {
+                bool randomValue = System.Convert.ToBoolean(Random.Range(0, 2));
+                if (randomValue)
+                    PlayerScript.TriggerQuizQuestion(QuizTab.encounterDelay, true);
+                else
+                    QuizTab.encounterDelay = -1f;
+                encounterStarted = true;
+            }
+        }
+
+        void SetTargetTime(float time)
+        {
+            startTimer = false;
+            targetTime = time;
+        }
+
+        if (actionManager.ShowTheory || RandomQuiz.showQuestion || (QuizTab.encounterDelay >= 0))
         {
             startTimer = true;
         }
@@ -796,17 +827,38 @@ public class GameUI : MonoBehaviour
 
         if (targetTime <= 0.0f)
         {
-            ShowIPad();
-            startTimer = false;
-            targetTime = 0.7f;
+            if (QuizTab.encounterDelay >= 0)
+            {
+                if (encounterStarted == false)
+                {
+                    ShowEncounter();
+                    SetTargetTime(0.7f);
+                }
+            }
+            else if (actionManager.Message != null)
+            {
+                ShowTheoryTab();
+                SetTargetTime(0.7f);
+            }
+            else if (RandomQuiz.showQuestion)
+            {
+                ShowRandomQuizTab();
+                SetTargetTime(0.7f);
+            }
+        }
+        else if (isSequence && (QuizTab.encounterDelay > 0))
+        {
+            ShowEncounter();
         }
         else if (isSequence && actionManager.ShowTheory)
         {
-            ShowIPad();
+            ShowTheoryTab();
             actionManager.Message = null;
         }
-
-        actionManager.ShowTheory = false;
+        else if (isSequence && RandomQuiz.showQuestion)
+        {
+            ShowRandomQuizTab();
+        }
     }
 
     public void PlaceTalkBubble(GameObject person)
@@ -832,6 +884,7 @@ public class GameUI : MonoBehaviour
 
     void Update()
     {
+        // print(RandomQuiz.showRandomQuestion);
         if (!timeOutEnded)
         {
             startTimeOut -= Time.deltaTime;
@@ -884,7 +937,8 @@ public class GameUI : MonoBehaviour
         //if some object was added or removed to hands
         if (showItemControlPanel)
         {
-            ShowTheory();
+            ShowIpad();
+
             int lHash = 0;
             if (handsInventory.leftHandObject != null)
                 lHash = handsInventory.leftHandObject.gameObject.GetHashCode();
