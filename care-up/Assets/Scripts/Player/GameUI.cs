@@ -92,6 +92,7 @@ public class GameUI : MonoBehaviour
     PlayerScript ps;
     bool ICPCurrentState = false;
     public bool allowObjectControlUI = true;
+    public static bool encounterStarted = false;
     public enum ItemControlButtonType
     {
         None,
@@ -771,12 +772,15 @@ public class GameUI : MonoBehaviour
         {
             if (!string.IsNullOrEmpty(actionManager.Message))
             {
-                GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
-                GameObject.FindObjectOfType<GameUI>().theoryPanel.SetActive(true);
-                GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Title").GetComponent<Text>().text = actionManager.MessageTitle;
-                GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Message").GetComponent<Text>().text = actionManager.Message;
-                actionManager.Message = null;
-                actionManager.ShowTheory = false;
+                if (!GameObject.FindObjectOfType<PlayerScript>().robotUIopened)
+                {
+                    GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
+                    GameObject.FindObjectOfType<GameUI>().theoryPanel.SetActive(true);
+                    GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Title").GetComponent<Text>().text = actionManager.MessageTitle;
+                    GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Message").GetComponent<Text>().text = actionManager.Message;
+                    actionManager.Message = null;
+                    actionManager.ShowTheory = false;
+                }
             }
         }
 
@@ -789,7 +793,26 @@ public class GameUI : MonoBehaviour
             }
         }
 
-        if (actionManager.ShowTheory || RandomQuiz.showQuestion)
+        void ShowEncounter()
+        {
+            if (!GameObject.FindObjectOfType<PlayerScript>().robotUIopened)
+            {
+                bool randomValue = System.Convert.ToBoolean(Random.Range(0, 2));
+                if (randomValue)
+                    PlayerScript.TriggerQuizQuestion(QuizTab.encounterDelay, true);
+                else
+                    QuizTab.encounterDelay = -1f;
+                encounterStarted = true;
+            }
+        }
+
+        void SetTargetTime(float time)
+        {
+            startTimer = false;
+            targetTime = time;
+        }
+
+        if (actionManager.ShowTheory || RandomQuiz.showQuestion || (QuizTab.encounterDelay >= 0))
         {
             startTimer = true;
         }
@@ -801,18 +824,28 @@ public class GameUI : MonoBehaviour
 
         if (targetTime <= 0.0f)
         {
-            if (actionManager.Message != null)
+            if (QuizTab.encounterDelay >= 0)
+            {
+                if (encounterStarted == false)
+                {
+                    ShowEncounter();
+                    SetTargetTime(0.7f);
+                }
+            }
+            else if (actionManager.Message != null)
             {
                 ShowTheoryTab();
-                startTimer = false;
-                targetTime = 0.7f;
+                SetTargetTime(0.7f);
             }
             else if (RandomQuiz.showQuestion)
             {
                 ShowRandomQuizTab();
-                startTimer = false;
-                targetTime = 0.7f;
+                SetTargetTime(0.7f);
             }
+        }
+        else if (isSequence && (QuizTab.encounterDelay > 0))
+        {
+            ShowEncounter();
         }
         else if (isSequence && actionManager.ShowTheory)
         {
@@ -822,7 +855,7 @@ public class GameUI : MonoBehaviour
         else if (isSequence && RandomQuiz.showQuestion)
         {
             ShowRandomQuizTab();
-        }        
+        }
     }
 
     public void PlaceTalkBubble(GameObject person)

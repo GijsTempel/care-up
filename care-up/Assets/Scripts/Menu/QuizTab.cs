@@ -44,6 +44,8 @@ public class QuizTab : MonoBehaviour
 
     private ActionManager manager;
 
+    public static float encounterDelay = -1f;
+
     public void Init(string name)
     {
         manager = GameObject.FindObjectOfType<ActionManager>();
@@ -179,7 +181,8 @@ public class QuizTab : MonoBehaviour
         }
         else if (encounter)
         {
-            RandomQuiz.showQuestion = true;
+            encounterDelay = -1f;
+            GameUI.encounterStarted = false;
             currentQuestionID = Random.Range(0, encounterList[currentEncounter].Count);
             current = encounterList[currentEncounter][currentQuestionID];
         }
@@ -351,6 +354,8 @@ public class QuizTab : MonoBehaviour
         GameObject.FindObjectOfType<PlayerScript>().CloseRobotUI();
         // enable player if needed
         PlayerScript.actionsLocked = false;
+        //if (QuizTab.encounterDelay > 0)
+        //    QuizTab.encounterDelay = -1;
     }
 
     public void Continue()

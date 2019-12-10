@@ -1194,7 +1194,6 @@ public class ActionManager : MonoBehaviour
     /// </summary>
     void Update()
     {
-        print(PlayerScript.actionsLocked);
         if (!menuScene && uiSet)
         {
             if (pointsText.gameObject.activeSelf)
@@ -1469,10 +1468,8 @@ public class ActionManager : MonoBehaviour
                     }
 
                     if (action.encounter >= 0.0f)
-                    {
-                        bool randomValue = System.Convert.ToBoolean(Random.Range(0, 2));
-                        if (randomValue)
-                            PlayerScript.TriggerQuizQuestion(action.encounter, true);
+                    {                        
+                        QuizTab.encounterDelay = action.encounter;
                     }
 
                     if (action.messageContent != "" || action.messageTitle != "")
