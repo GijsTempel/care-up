@@ -22,6 +22,7 @@ public class WalkToGroup : MonoBehaviour
     public WalkToGroup RightWalkToGroup = null;
     PlayerScript player;
     public bool ManualNeighborhood = false;
+    public Color manualColor = new Color(0.0f, 0.8f, 1f, 0.6f);
 
     public float interactionDistance = -1;
 

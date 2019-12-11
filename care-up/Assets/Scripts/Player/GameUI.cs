@@ -5,6 +5,7 @@ using CareUp.Actions;
 using System.Linq;
 using AssetBundles;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class GameUI : MonoBehaviour
 {
@@ -513,6 +514,31 @@ public class GameUI : MonoBehaviour
                         gameUI.WalkToGroupPanel.transform);
                     created.name = g.name;
                     gameUI.WTGButtons.Add(g.name, created.GetComponent<WalkToGroupButton>());
+
+                    // triggers for sounds
+                    EventTrigger trigger = created.GetComponent<EventTrigger>();
+
+                    EventTrigger.Entry entry = new EventTrigger.Entry();
+                    entry.eventID = EventTriggerType.PointerEnter;
+                    entry.callback.AddListener((data) => {
+                        GameObject.FindObjectOfType<Button_Functions>().OnButtonHover(); });
+                    trigger.triggers.Add(entry);
+
+                    EventTrigger.Entry drag = new EventTrigger.Entry();
+                    drag.eventID = EventTriggerType.BeginDrag;
+                    drag.callback.AddListener((data) => {
+                        GameObject.FindObjectOfType<Button_Functions>().OnButtonHover();
+                    });
+                    trigger.triggers.Add(drag);
+
+                    // click effects for sounds
+                    Button btn = created.GetComponent<Button>();
+
+                    btn.onClick.AddListener(GameObject.FindObjectOfType<Button_Functions>().OnButtonClick);
+                    btn.onClick.AddListener(() => GameObject.FindObjectOfType<GameUI>().ButtonBlink(false));
+
+                    // set color
+                    created.GetComponent<Image>().color = g.manualColor;
                 }
             }
         }
