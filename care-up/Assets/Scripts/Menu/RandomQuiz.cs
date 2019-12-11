@@ -42,6 +42,8 @@ public class RandomQuiz
             else if (manager.CorrectStepIndexes.Count == selectedStep)
             {              
                 showQuestion = System.Convert.ToBoolean(Random.Range(0, 2));
+                if (showQuestion)
+                    Debug.Log("Random quiz on correct step " + selectedStep);
                 SelectRandomStep();
             }           
         }

@@ -805,6 +805,8 @@ public class GameUI : MonoBehaviour
                     PlayerScript.TriggerQuizQuestion(QuizTab.encounterDelay, true);
                 else
                     QuizTab.encounterDelay = -1f;
+
+                Debug.Log("Encounter quiz with result: " + randomValue);
                 encounterStarted = true;
             }
         }
@@ -816,7 +818,7 @@ public class GameUI : MonoBehaviour
         }
 
         if (actionManager.ShowTheory || RandomQuiz.showQuestion || (QuizTab.encounterDelay >= 0))
-        {
+        {          
             startTimer = true;
         }
 
@@ -832,18 +834,18 @@ public class GameUI : MonoBehaviour
                 if (encounterStarted == false)
                 {
                     ShowEncounter();
-                    SetTargetTime(0.7f);
+                    SetTargetTime(0.4f);
                 }
             }
             else if (actionManager.Message != null)
             {
                 ShowTheoryTab();
-                SetTargetTime(0.7f);
+                SetTargetTime(0.4f);
             }
             else if (RandomQuiz.showQuestion)
             {
                 ShowRandomQuizTab();
-                SetTargetTime(0.7f);
+                SetTargetTime(0.4f);
             }
         }
         else if (isSequence && (QuizTab.encounterDelay > 0))
