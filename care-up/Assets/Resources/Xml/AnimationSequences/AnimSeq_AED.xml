@@ -1,48 +1,55 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <AnimationSequence>
   <step>
-    <option text="Pak met je handen de cliënt voorzichtig bij de schouders" animation=""/>
-    <option text="Zorg voor een veilige omgeving voor de cliënt, jezelf en andere aanwezigen" animation="SafeEnv"/>
-    <option text="Vraag hulp van een collega of een omstander" animation=""/>
-    <option text="Controleer ademhaling" animation=""/>
-   
+    <option text="Leave patient alone"/>
+    <option text="Make an injection">
+      <additionalOption question="How to make an injection?">
+        <option text="Clap hands"/>
+        <option text="Clean hands"/>
+        <option text="Cut the leg"/>
+        <option text="Make a proper injection" animation="SafeEnv"/>
+      </additionalOption>
+    </option>
+    <option text="Go to collega"/>
+    <option text="Call 112"/>
+
   </step>
   <step>
-    <option text="Pak met je handen de cliënt voorzichtig bij het hoofd" animation=""/>
-    <option text="Controleer ademhaling" animation=""/>
-    <option text="Laat 112 bellen. Als je alleen bent, bel dan zelf" animation=""/>
+    <option text="Pak met je handen de cliënt voorzichtig bij het hoofd"/>
+    <option text="Controleer ademhaling"/>
+    <option text="Laat 112 bellen. Als je alleen bent, bel dan zelf"/>
     <option text="Pak met je handen de cliënt voorzichtig bij de schouders" animation="graspShoulders"/>
-   
+
   </step>
   <step>
     <option text="Schud rustig aan de schouders en controleer of de cliënt reageert. Vraag bijvoorbeeld luid: Gaat het?" animation="ShakeShoulders"/>
     <option text="Schud niet aan de schouders en controleer of de cliënt reageert. Vraag bijvoorbeeld luid: Gaat het?" animation=""/>
     <option text="Schud hevig aan de schouders en controleer of de cliënt reageert. Vraag bijvoorbeeld luid: Gaat het? " animation=""/>
     <option text="Zet de AED aan en volg instructies" animation=""/>
-    
+
   </step>
   <step>
     <option text="Controleer ademhaling" animation=""/>
     <option text="Vraag hulp van een collega of een omstander. Laat 112 of (wanneer van toepassing) het reanimatieteam bellen. Als je alleen bent, bel dan zelf" animation="Call112"/>
     <option text="Leg de cliënt in stabiele zijligging" animation=""/>
     <option text="Zet de AED aan en volg instructies" animation=""/>
-    
+
   </step>
   <step>
     <option text="Open de luchtweg" animation="CheckBreathing"/>
     <option text="Zet de AED aan" animation=""/>
     <option text="Ontbloot de borstkas van de cliënt" animation=""/>
     <option text="Begin met reanimeren" animation=""/>
-   
+
   </step>
   <step>
     <option text="Controleer de ademhaling van de cliënt minimaal 5 seconden" animation=""/>
     <option text="Controleer de ademhaling van de cliënt maximaal 20 seconden" animation=""/>
     <option text="Controleer de ademhaling van de cliënt maximaal 10 seconden" animation="CheckBreathingByEar"/>
     <option text="Controleer de ademhaling van de cliënt minimaal 10 seconden" animation=""/>
-    
+
   </step>
- 
+
   <step>
     <option text="Zet de AED aan en ontbloot de borstkas van de cliënt" animation="TurnOnAED"/>
     <option text="Begin met reanimeren" animation=""/>
@@ -94,6 +101,6 @@
     <option text="Zet de AED uit" animation=""/>
 
   </step>
-  
+
 
 </AnimationSequence>

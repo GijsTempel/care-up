@@ -30,10 +30,8 @@ public class ActionManager : MonoBehaviour
     // actual list of actions
     public List<Action> actionList = new List<Action>();
 
-    //private bool currentStepHintUsed = false;
     private Text pointsText;
     private Text percentageText;
-    //private LocalizationManager localizationManager;
 
     private Action currentAction;        // current action instance
     private int currentPointAward = 1;
@@ -55,6 +53,7 @@ public class ActionManager : MonoBehaviour
     private bool uiSet = false;
     private PlayerPrefsManager manager;
     private HandsInventory inventory;
+    public RandomQuiz randomQuiz = new RandomQuiz();
 
     private List<Action> incompletedActions;
     private List<Action> unlockedIncompletedActions;
@@ -70,18 +69,10 @@ public class ActionManager : MonoBehaviour
         get { return actionList; }
     }
 
-    /// <summary>
-    /// List of wrong steps, merged into a string with line breaks.
-    /// </summary>
     public List<string> StepsList
     {
         get { return stepsList; }
     }
-
-    /*public List<string> StepsDescriptionList
-    {
-        get { return stepsDescriptionList; }
-    }*/
 
     public List<int> WrongStepIndexes
     {
@@ -102,7 +93,6 @@ public class ActionManager : MonoBehaviour
         set { points = value; }
     }
 
-
     /// <summary>
     /// Total max points player can get on the scene.
     /// </summary>
@@ -120,14 +110,16 @@ public class ActionManager : MonoBehaviour
 
             float percent = 0f;
 
-            if (GameObject.FindObjectOfType<EndScoreManager>() != null)
+            EndScoreManager endScoreManager = GameObject.FindObjectOfType<EndScoreManager>();
+
+            if (endScoreManager != null)
             {
-                if (correctStepIndexes != null && GameObject.FindObjectOfType<EndScoreManager>().quizQuestionsTexts != null
-                    && GameObject.FindObjectOfType<EndScoreManager>().quizWrongIndexes != null && StepsList != null)
+                if (correctStepIndexes != null && endScoreManager.quizQuestionsTexts != null
+                    && endScoreManager.quizWrongIndexes != null && StepsList != null)
                 {
                     percent = 100f * (correctStepIndexes.Count +
-                        (GameObject.FindObjectOfType<EndScoreManager>().quizQuestionsTexts.Count - GameObject.FindObjectOfType<EndScoreManager>().quizWrongIndexes.Count))
-                        / (StepsList.Count + GameObject.FindObjectOfType<EndScoreManager>().quizQuestionsTexts.Count);
+                        (endScoreManager.quizQuestionsTexts.Count - endScoreManager.quizWrongIndexes.Count))
+                        / (StepsList.Count + endScoreManager.quizQuestionsTexts.Count);
                 }
             }
             else
@@ -963,6 +955,7 @@ public class ActionManager : MonoBehaviour
             int index;
             int.TryParse(action.Attributes["index"].Value, out index);
             string type = action.Attributes["type"].Value;
+
             string descr = LocalizationManager.GetValueIfKey(action.Attributes["description"].Value);
 
             string comment = "";
@@ -1027,6 +1020,14 @@ public class ActionManager : MonoBehaviour
                 float.TryParse(action.Attributes["quiz"].Value, out quizTime);
                 if (quizTime < 0.1f)
                     quizTime = 2.0f;
+            }
+
+            float encounterTime = -1.0f;
+            if (action.Attributes["encounter"] != null)
+            {
+                float.TryParse(action.Attributes["encounter"].Value, out encounterTime);
+                if (encounterTime < 0.1f)
+                    encounterTime = 2.0f;
             }
 
             string messageTitle = "";
@@ -1100,60 +1101,60 @@ public class ActionManager : MonoBehaviour
                     string right = action.Attributes["right"].Value;
                     actionList.Add(new CombineAction(left, right, index, descr,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
-                        blockUnlock, blockLock, blockTitle, blockMsg, decombineText));
+                        blockUnlock, blockLock, blockTitle, blockMsg, decombineText, encounterTime));
                     break;
                 case "use":
                     string use = action.Attributes["value"].Value;
                     actionList.Add(new UseAction(use, index, descr, buttonText,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
-                        blockUnlock, blockLock, blockTitle, blockMsg));
+                        blockUnlock, blockLock, blockTitle, blockMsg, encounterTime));
                     break;
                 case "talk":
                     string topic = action.Attributes["topic"].Value;
                     actionList.Add(new TalkAction(topic, index, descr, pointsValue,
                         notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock,
-                        blockLock, blockTitle, blockMsg));
+                        blockLock, blockTitle, blockMsg, encounterTime));
                     break;
                 case "useOn":
                     string target = action.Attributes["target"].Value;
                     actionList.Add(new UseOnAction(item, target, index, descr,
                         buttonText, pointsValue, notNeeded, quizTime, messageTitle, messageContent,
-                        blockRequire, blockUnlock, blockLock, blockTitle, blockMsg));
+                        blockRequire, blockUnlock, blockLock, blockTitle, blockMsg, encounterTime));
                     break;
                 case "examine":
                     string expected = action.Attributes["expected"].Value;
                     actionList.Add(new ExamineAction(item, expected, index, descr,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
-                        blockUnlock, blockLock, blockTitle, blockMsg));
+                        blockUnlock, blockLock, blockTitle, blockMsg, encounterTime));
                     break;
                 case "pickUp":
                     actionList.Add(new PickUpAction(item, index, descr,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
-                        blockUnlock, blockLock, blockTitle, blockMsg));
+                        blockUnlock, blockLock, blockTitle, blockMsg, encounterTime));
                     break;
                 case "sequenceStep":
                     string stepName = action.Attributes["value"].Value;
                     actionList.Add(new SequenceStepAction(stepName, index, descr,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
-                        blockUnlock, blockLock, blockTitle, blockMsg));
+                        blockUnlock, blockLock, blockTitle, blockMsg, encounterTime));
                     break;
                 case "drop":
                     string dropID = (action.Attributes["posID"] != null) ? action.Attributes["posID"].Value : "0";
                     actionList.Add(new ObjectDropAction(item, dropID, index, descr,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
-                        blockUnlock, blockLock, blockTitle, blockMsg));
+                        blockUnlock, blockLock, blockTitle, blockMsg, encounterTime));
                     break;
                 case "movement":
                     string movement = action.Attributes["value"].Value;
                     actionList.Add(new MovementAction(movement, index, descr,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
-                        blockUnlock, blockLock, blockTitle, blockMsg));
+                        blockUnlock, blockLock, blockTitle, blockMsg, encounterTime));
                     break;
                 case "general":
                     string actionValue = action.Attributes["action"].Value;
                     actionList.Add(new GeneralAction(item, actionValue, index, descr, buttonText,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
-                        blockUnlock, blockLock, blockTitle, blockMsg));
+                        blockUnlock, blockLock, blockTitle, blockMsg, encounterTime));
                     break;
                 default:
                     Debug.LogError("No action type found: " + type);
@@ -1183,7 +1184,6 @@ public class ActionManager : MonoBehaviour
         foreach (Action a in actionList)
         {
             stepsList.Add(a.shortDescr);
-            //stepsDescriptionList.Add(a.extraDescr);
         }
 
         currentAction = actionList.First();
@@ -1468,6 +1468,11 @@ public class ActionManager : MonoBehaviour
                         PlayerScript.TriggerQuizQuestion(action.quizTriggerTime);
                     }
 
+                    if (action.encounter >= 0.0f)
+                    {                        
+                        QuizTab.encounterDelay = action.encounter;
+                    }
+
                     if (action.messageContent != "" || action.messageTitle != "")
                     {
                         if (practiceMode)
@@ -1711,6 +1716,7 @@ public class ActionManager : MonoBehaviour
 
         ActionManager.BuildRequirements();
         ActionManager.UpdateRequirements(1.5f);
+        GameObject.FindObjectOfType<ActionManager>().randomQuiz.NextRandomQuiz();
     }
 
     public static void BuildRequirements()
