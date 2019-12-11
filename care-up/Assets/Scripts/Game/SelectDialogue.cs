@@ -448,6 +448,53 @@ public class SelectDialogue : MonoBehaviour
                 cameraMode.ToggleCameraMode(CameraMode.Mode.Free);
             }
         }
+
+
+
+        GameObject.FindObjectOfType<ActionManager>().OnSequenceStepAction("");
+        GameObject currentHintPanel = GameObject.Find("HintPanel");
+
+        if (!ActionManager.practiceMode)
+        {
+            if (options[num].question != null)
+            {
+                //dialogueTitle.text = option.question;
+            }
+        }
+
+        else if (currentHintPanel != null)
+        {
+            string hintText = FindObjectOfType<ActionManager>().CurrentDescription[0];
+
+            foreach (DialogueOption dialoqueOption in options)
+            {
+                if (dialoqueOption.additional != null)
+                {
+                    optionWithAdditions = dialoqueOption;
+                    hintText = dialoqueOption.text;
+                    break;
+                }
+            }
+
+            if (currentHintPanel.transform.Find("Text") != null)
+            {
+                Text hint = currentHintPanel.transform.Find("Text").gameObject.GetComponent<Text>();
+
+                if (optionWithAdditions != null)
+                {
+                    if (hint.text == optionWithAdditions.question || hint.text == questionWithHint)
+                    {
+                        questionWithHint = optionWithAdditions.question + " " + FindObjectOfType<ActionManager>().CurrentDescription[0];
+                        hint.text = questionWithHint;
+                    }
+                    else if (options[num] == optionWithAdditions)
+                        hint.text = optionWithAdditions.question;
+                }
+                else
+                    hint.text = hintText;
+            }
+        }
+
         // OptionSide side = OptionSide.None;
 
         // switch (num)
