@@ -85,7 +85,6 @@ public class SelectDialogue : MonoBehaviour
             cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
             if (cameraMode == null) Debug.LogError("No camera mode found");
         }
-
         if (controls == null)
         {
             controls = GameObject.Find("GameLogic").GetComponent<Controls>();
@@ -203,10 +202,10 @@ public class SelectDialogue : MonoBehaviour
         //    left.transform.GetChild(0).GetComponent<Text>().text = options[3].text;
         //}
 
-        if (cheated)
-        {
+        // if (cheated)
+        // {
             ShowAnswer();
-        }
+        // }
     }
 
     static DialogueOption optionWithAdditions = null;
@@ -217,16 +216,15 @@ public class SelectDialogue : MonoBehaviour
         /*
         if (!tutorial_lock)
         {
-            if (!GamepadSwitch.HandleUpdate(top.GetComponent<Button>()))
-            {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-            }
+            // if (!GamepadSwitch.HandleUpdate(top.GetComponent<Button>()))
+            // {
+            //     Cursor.lockState = CursorLockMode.None;
+            //     Cursor.visible = true;
+            // }
 
             if (optionSelected && currentOption != OptionSide.None)
             {
                 optionSelected = false;
-
                 DialogueOption option = options.Find(x => x.side == currentOption);
 
                 if (option != null)
@@ -281,26 +279,26 @@ public class SelectDialogue : MonoBehaviour
                     {
                         switch (currentOption)
                         {
-                            case OptionSide.Bottom:
-                                bottom.color = wrongMaterial;
-                                secondCB.highlightedColor = new Color(255, 0, 0, 255);
-                                second.colors = secondCB;
-                                break;
-                            case OptionSide.Left:
-                                left.color = wrongMaterial;
-                                fourthCB.highlightedColor = new Color(255, 0, 0, 255);
-                                fourth.colors = fourthCB;
-                                break;
-                            case OptionSide.Right:
-                                right.color = wrongMaterial;
-                                thirdCB.highlightedColor = new Color(255, 0, 0, 255);
-                                third.colors = thirdCB;
-                                break;
-                            case OptionSide.Top:
-                                top.color = wrongMaterial;
-                                firstCB.highlightedColor = new Color(255, 0, 0, 255);
-                                first.colors = firstCB;
-                                break;
+                            // case OptionSide.Bottom:
+                            //     bottom.color = wrongMaterial;
+                            //     secondCB.highlightedColor = new Color(255, 0, 0, 255);
+                            //     second.colors = secondCB;
+                            //     break;
+                            // case OptionSide.Left:
+                            //     left.color = wrongMaterial;
+                            //     fourthCB.highlightedColor = new Color(255, 0, 0, 255);
+                            //     fourth.colors = fourthCB;
+                            //     break;
+                            // case OptionSide.Right:
+                            //     right.color = wrongMaterial;
+                            //     thirdCB.highlightedColor = new Color(255, 0, 0, 255);
+                            //     third.colors = thirdCB;
+                            //     break;
+                            // case OptionSide.Top:
+                            //     top.color = wrongMaterial;
+                            //     firstCB.highlightedColor = new Color(255, 0, 0, 255);
+                            //     first.colors = firstCB;
+                            //     break;
                         }
 
                         GameObject.FindObjectOfType<ActionManager>().OnSequenceStepAction("");
@@ -352,18 +350,18 @@ public class SelectDialogue : MonoBehaviour
         */
     }
 
-    private void SetSelected(OptionSide option)
-    {
-        if (option != currentOption)
-        {
-            SetOptionTo(currentOption, false);
-            SetOptionTo(option, true);
-            currentOption = option;
-        }
-    }
+    // private void SetSelected(OptionSide option)
+    // {
+    //     if (option != currentOption)
+    //     {
+    //         SetOptionTo(currentOption, false);
+    //         SetOptionTo(option, true);
+    //         currentOption = option;
+    //     }
+    // }
 
-    private void SetOptionTo(OptionSide option, bool state)
-    {
+    // private void SetOptionTo(OptionSide option, bool state)
+    // {
         //switch (option)
         //{
         //    case OptionSide.Top:
@@ -413,77 +411,62 @@ public class SelectDialogue : MonoBehaviour
         //    default:
         //        break;
         //}
-    }
+    // }
 
     public void SetText(string t)
     {
         text = t;
     }
 
-    void OnGUI()
-    {
-        if (text != "")
-        {
-            GUIStyle style = GUI.skin.GetStyle("Label");
-            style.alignment = TextAnchor.LowerCenter;
-            style.fontSize = 30;
-            style.normal.textColor = Color.white;
-
-            GUI.Label(new Rect(0, 0, Screen.width, Screen.height),
-                text, style);
-        }
-    }
-
     public void ShowAnswer()
     {
-        //if (cheated)
-        //{
-        //    foreach (DialogueOption o in options)
-        //    {
-        //        if (o.attribute != "" && o.attribute != "CM_Leave")
-        //        {
-        //            switch (o.side)
-        //            {
-        //                case OptionSide.Bottom:
-        //                    bottom.color = correctMaterial;
-        //                    break;
-        //                case OptionSide.Left:
-        //                    left.color = correctMaterial;
-        //                    break;
-        //                case OptionSide.Right:
-        //                    right.color = correctMaterial;
-        //                    break;
-        //                case OptionSide.Top:
-        //                    top.color = correctMaterial;
-        //                    break;
-        //            }
-        //        }
-        //    }
-        //}
+        int i = 0;
+        foreach (DialogueOption o in options)
+        {
+            print(o.attribute);
+            if (o.attribute != "" && o.attribute != "CM_Leave")
+            {
+                sqButtons[i].GetComponent<Image>().color = Color.yellow;
+            }
+            i++;
+        }
     }
 
 
     public void ButtonClick(int num)
     {
-        OptionSide side = OptionSide.None;
+        print(options[num].text);
+        sqButtons[num].interactable = false;
 
-        switch (num)
+        options[num].function(options[num].attribute, options[num].additional, options[num].question);
+
+        if (options[num].attribute != "")
         {
-            case (0):
-                side = OptionSide.Top;
-                break;
-            case (1):
-                side = OptionSide.Bottom;
-                break;
-            case (2):
-                side = OptionSide.Right;
-                break;
-            case (3):
-                side = OptionSide.Left;
-                break;
+            if (destroy)
+            {
+                Destroy(gameObject);
+                cameraMode.ToggleCameraMode(CameraMode.Mode.Free);
+            }
         }
+        // OptionSide side = OptionSide.None;
 
-        currentOption = side;
-        optionSelected = true;
+        // switch (num)
+        // {
+        //     case (0):
+        //         side = OptionSide.Top;
+        //         break;
+        //     case (1):
+        //         side = OptionSide.Bottom;
+        //         break;
+        //     case (2):
+        //         side = OptionSide.Right;
+        //         break;
+        //     case (3):
+        //         side = OptionSide.Left;
+        //         break;
+        // }
+
+        // currentOption = side;
+        // optionSelected = true;
     }
 }
