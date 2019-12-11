@@ -205,7 +205,6 @@ public class PersonObject : InteractableObject
                     GameObject.Find("OverlayCamera").transform) as GameObject;
 
         SelectDialogue dialogue = dialogueObject.GetComponent<SelectDialogue>();
-        dialogue.Init();
 
         dialogue.AddOptions(optionsList);
 

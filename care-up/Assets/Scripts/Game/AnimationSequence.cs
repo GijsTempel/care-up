@@ -274,7 +274,6 @@ public class AnimationSequence
             dialogueObject.name = "SelectionDialogue";
 
             SelectDialogue dialogue = dialogueObject.GetComponent<SelectDialogue>();
-            dialogue.Init(false);
 
             if (additionalSteps != null)
             {
