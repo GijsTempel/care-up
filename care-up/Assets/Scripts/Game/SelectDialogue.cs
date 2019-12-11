@@ -46,7 +46,7 @@ public class SelectDialogue : MonoBehaviour
     private OptionSide currentOption = OptionSide.None;
     private Color currentMaterial;
 
-    private bool destroy = true;
+    //private bool destroy = true;
 
     //private Image top;
     //private Image bottom;
@@ -432,7 +432,6 @@ public class SelectDialogue : MonoBehaviour
         }
     }
 
-
     public void ButtonClick(int num)
     {
         print(options[num].text);
@@ -442,56 +441,45 @@ public class SelectDialogue : MonoBehaviour
 
         if (options[num].attribute != "")
         {
-            if (destroy)
-            {
-                Destroy(gameObject);
-                cameraMode.ToggleCameraMode(CameraMode.Mode.Free);
-            }
+            Destroy(gameObject);
+            cameraMode.ToggleCameraMode(CameraMode.Mode.Free);
         }
-
-
-
-        GameObject.FindObjectOfType<ActionManager>().OnSequenceStepAction("");
-        GameObject currentHintPanel = GameObject.Find("HintPanel");
-
-        if (!ActionManager.practiceMode)
+        else
         {
-            if (options[num].question != null)
-            {
-                //dialogueTitle.text = option.question;
-            }
-        }
+            GameObject.FindObjectOfType<ActionManager>().OnSequenceStepAction("");
+            GameObject currentHintPanel = GameObject.Find("HintPanel");
 
-        else if (currentHintPanel != null)
-        {
-            string hintText = FindObjectOfType<ActionManager>().CurrentDescription[0];
-
-            foreach (DialogueOption dialoqueOption in options)
+            if (ActionManager.practiceMode && currentHintPanel != null)
             {
-                if (dialoqueOption.additional != null)
+                string hintText = FindObjectOfType<ActionManager>().CurrentDescription[0];
+
+                foreach (DialogueOption dialoqueOption in options)
                 {
-                    optionWithAdditions = dialoqueOption;
-                    hintText = dialoqueOption.text;
-                    break;
-                }
-            }
-
-            if (currentHintPanel.transform.Find("Text") != null)
-            {
-                Text hint = currentHintPanel.transform.Find("Text").gameObject.GetComponent<Text>();
-
-                if (optionWithAdditions != null)
-                {
-                    if (hint.text == optionWithAdditions.question || hint.text == questionWithHint)
+                    if (dialoqueOption.additional != null)
                     {
-                        questionWithHint = optionWithAdditions.question + " " + FindObjectOfType<ActionManager>().CurrentDescription[0];
-                        hint.text = questionWithHint;
+                        optionWithAdditions = dialoqueOption;
+                        hintText = dialoqueOption.text;
+                        break;
                     }
-                    else if (options[num] == optionWithAdditions)
-                        hint.text = optionWithAdditions.question;
                 }
-                else
-                    hint.text = hintText;
+
+                if (currentHintPanel.transform.Find("Text") != null)
+                {
+                    Text hint = currentHintPanel.transform.Find("Text").gameObject.GetComponent<Text>();
+
+                    if (optionWithAdditions != null)
+                    {
+                        if (hint.text == optionWithAdditions.question || hint.text == questionWithHint)
+                        {
+                            questionWithHint = optionWithAdditions.question + " " + FindObjectOfType<ActionManager>().CurrentDescription[0];
+                            hint.text = questionWithHint;
+                        }
+                        else if (options[num] == optionWithAdditions)
+                            hint.text = optionWithAdditions.question;
+                    }
+                    else
+                        hint.text = hintText;
+                }
             }
         }
 
@@ -515,5 +503,6 @@ public class SelectDialogue : MonoBehaviour
 
         // currentOption = side;
         // optionSelected = true;
+
     }
 }
