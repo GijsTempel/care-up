@@ -32,7 +32,8 @@ namespace MBS
             registration_pop_up,
             custom_1,
             SessionTimeOutPanel,
-            start_menu;
+            start_menu,
+            debug_options;
         }
 
         [System.Serializable]
@@ -249,6 +250,14 @@ namespace MBS
 
         void Start()
         {
+#if !UNITY_EDITOR
+            panels.debug_options.SetActive(false);
+#endif
+            PlayerPrefsManager.plus300 = false;
+            PlayerPrefsManager.resetPurchases = false;
+            PlayerPrefsManager.editCharacterOnStart = false;
+            PlayerPrefsManager.tutorialOnStart = false;
+
             PlayerPrefsManager.firstStart = true;
             if ( this == Instance )
             {
@@ -258,6 +267,40 @@ namespace MBS
             ErrorText.GetComponent<Text> ();
             ErrorLoginText.GetComponent<Text> ();
         }
+
+
+        //-----------------------------------------------------------
+        //Debug options changed
+        public void Plus300Changed()
+        {
+            bool value = panels.debug_options.transform.Find("Panel/Plus300/Toggle").GetComponent<Toggle>().isOn;
+            PlayerPrefsManager.plus300 = value;
+        }
+
+        public void ResetPurchasesChanged()
+        {
+            bool value = panels.debug_options.transform.Find("Panel/ResetPurchases/Toggle").GetComponent<Toggle>().isOn;
+            PlayerPrefsManager.resetPurchases = value;
+        }
+        public void EditCharacterChanged()
+        {
+            bool value = panels.debug_options.transform.Find("Panel/EditCharacter/Toggle").GetComponent<Toggle>().isOn;
+            PlayerPrefsManager.editCharacterOnStart = value;
+            panels.debug_options.transform.Find("Panel/Tutorial/Toggle").GetComponent<Toggle>().interactable = value;
+        }
+
+        public void TutorialChanged()
+        {
+            bool value = panels.debug_options.transform.Find("Panel/Tutorial/Toggle").GetComponent<Toggle>().isOn;
+            PlayerPrefsManager.tutorialOnStart = value;
+        }
+
+
+        //-----------------------------------------------------------
+
+
+
+
 
         virtual protected void InitWULoginGUI()
         {

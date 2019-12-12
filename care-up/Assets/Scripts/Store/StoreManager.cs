@@ -99,9 +99,13 @@ public class StoreManager
 
     public void Init(string storeXml = "Store", string characterStoreXml = "CharacterStore")
     {
-        bool devDropAllPurchases = false; // change this to true once to clear all purchases
-        bool devAddCurrency = false; // change this to true once to get 100 currency
+        bool devDropAllPurchases = false; 
+        bool devAddCurrency = false; 
 
+#if UNITY_EDITOR
+        devDropAllPurchases = PlayerPrefsManager.resetPurchases;
+        devAddCurrency = PlayerPrefsManager.plus300;
+#endif
         storeItems = new List<StoreCategory>();
         characterItems = new List<CharacterItem>();
 

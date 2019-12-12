@@ -94,11 +94,16 @@ public class DatabaseManager : MonoBehaviour
 
         // check if character created, load proper scene
         // load scene at the end of this function
-        if (FetchField("AccountStats", "CharacterCreated") == "true" &&
+        bool goToMainMenu = FetchField("AccountStats", "CharacterCreated") == "true" &&
              FetchField("AccountStats", "FullName") != "" &&
              (FetchField("AccountStats", "CharSceneV2") == "true" ||
-             FetchField("AccountStats", "BIG_number") != ""))
-            
+             FetchField("AccountStats", "BIG_number") != "");
+
+#if UNITY_EDITOR
+        if (PlayerPrefsManager.editCharacterOnStart)
+            goToMainMenu = false;
+#endif
+        if (goToMainMenu)
         {
             WULogin.characterCreated = true;
 
