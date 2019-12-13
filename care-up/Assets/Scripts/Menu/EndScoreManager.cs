@@ -60,7 +60,7 @@ public class EndScoreManager : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "EndScore")
         {
             Transform uiFolder = GameObject.Find("Canvas").transform;
-
+            SetBasicText();
             //uiFolder.Find("Left").Find("Score").GetComponent<Text>().text = "Score: " + score;
             uiFolder.Find("ScoreScreen/ScoreInfo/InfoHolder/Info/Points").GetComponent<Text>().text = "Punten: " + points;
             uiFolder.Find("ScoreScreen/ScoreInfo/InfoHolder/Info/Time").GetComponent<Text>().text = string.Format("Tijd: {0}:{1:00}", (int)time / 60, (int)time % 60);
@@ -139,8 +139,7 @@ public class EndScoreManager : MonoBehaviour
             }
 
             emailsSent = flag;
-
-            GameObject.Find("Interactable Objects/Canvas/ScoreScreen/ScoreScreenButtons/BackToMainMenu")
+            GameObject.Find("Interactable Objects/Canvas/ScoreScreen/ScoreScreenButtons/Panel (2)/BackToMainMenu")
                 .GetComponent<Button>().onClick.AddListener(ConditionalHomeButton);
 
             // track amount of results per scene
@@ -248,15 +247,16 @@ public class EndScoreManager : MonoBehaviour
 
     public void SetBasicText()
     {
+        print(quizQuestionsTexts.Count);
         Transform quizForm = GameObject.Find("Interactable Objects/Canvas/Questionscreen/Image/QuizForm").transform;
         if (quizQuestionsTexts.Count == 0)
         {
-            quizForm.GetChild(2).gameObject.SetActive(false);
-            quizForm.GetChild(3).gameObject.SetActive(false);
-            quizForm.GetChild(4).gameObject.SetActive(true);
+            quizForm.Find("YesNo").gameObject.SetActive(false);
+            quizForm.Find("WrongstepScroll").gameObject.SetActive(false);
+            quizForm.Find("BasicText").gameObject.SetActive(true);
         }
         else
-            quizForm.GetChild(4).gameObject.SetActive(false);
+            quizForm.Find("BasicText").gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -360,7 +360,7 @@ public class EndScoreManager : MonoBehaviour
             GameObject.Find("Interactable Objects/Canvas/CertificatePopOp").SetActive(true);
             if (manager.validatedScene == false)
             {   // changing pop up text if scene is not validated
-                GameObject.Find("Interactable Objects/Canvas/CertificatePopOp/Certificate/InfoHolder/RegText").GetComponent<Text>().text
+                GameObject.Find("/Interactable Objects/Canvas/CertificatePopOp/Certificate/RegText").GetComponent<Text>().text
                     = "Neem snel een kijkje in je mailbox! Daar vind je je certificaat.";
             }
         }

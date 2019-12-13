@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using CareUp.Actions;
+using CareUp.Localize;
 
 /// <summary>
 /// GameLogic script. Everything about actions is managed by this script.
@@ -32,7 +33,7 @@ public class ActionManager : MonoBehaviour
     //private bool currentStepHintUsed = false;
     private Text pointsText;
     private Text percentageText;
-    private LocalizationManager localizationManager;
+    //private LocalizationManager localizationManager;
 
     private Action currentAction;        // current action instance
     private int currentPointAward = 1;
@@ -692,6 +693,7 @@ public class ActionManager : MonoBehaviour
 
             i++;
         }
+
         if (gameUI.moveButtonToBlink != GameUI.ItemControlButtonType.None)
         {
             gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
@@ -943,17 +945,6 @@ public class ActionManager : MonoBehaviour
     void Awake()
     {
         manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
-        if (manager != null)
-        {
-            TextDebug = manager.TextDebug;
-            localizationManager = manager.GetLocalization();
-        }
-        if (localizationManager == null)
-        {
-            localizationManager = new LocalizationManager();
-            localizationManager.LoadAllDictionaries();
-        }
-
         string sceneName = SceneManager.GetActiveScene().name;
         menuScene = sceneName == "Menu" || sceneName == "SceneSelection" || sceneName == "EndScore";
         particleHints = new List<GameObject>();
@@ -972,7 +963,7 @@ public class ActionManager : MonoBehaviour
             int index;
             int.TryParse(action.Attributes["index"].Value, out index);
             string type = action.Attributes["type"].Value;
-            string descr = localizationManager.GetValueIfKey(action.Attributes["description"].Value);
+            string descr = LocalizationManager.GetValueIfKey(action.Attributes["description"].Value);
 
             string comment = "";
             if (action.Attributes["comment"] != null)
@@ -1007,7 +998,7 @@ public class ActionManager : MonoBehaviour
             string buttonText = "";
             if (action.Attributes["buttonText"] != null)
             {
-                buttonText = localizationManager.GetValueIfKey(action.Attributes["buttonText"].Value);
+                buttonText = LocalizationManager.GetValueIfKey(action.Attributes["buttonText"].Value);
             }
             else
             {
@@ -1041,13 +1032,13 @@ public class ActionManager : MonoBehaviour
             string messageTitle = "";
             if (action.Attributes["messageTitle"] != null)
             {
-                messageTitle = localizationManager.GetValueIfKey(action.Attributes["messageTitle"].Value);
+                messageTitle = LocalizationManager.GetValueIfKey(action.Attributes["messageTitle"].Value);
             }
 
             string messageContent = "";
             if (action.Attributes["messageContent"] != null)
             {
-                messageContent = localizationManager.GetValueIfKey(action.Attributes["messageContent"].Value);
+                messageContent = LocalizationManager.GetValueIfKey(action.Attributes["messageContent"].Value);
             }
 
             List<string> blockUnlock = new List<string>();
@@ -1088,18 +1079,18 @@ public class ActionManager : MonoBehaviour
             string blockMsg = "";
             if (action.Attributes["blockTitle"] != null)
             {
-                blockTitle = localizationManager.GetValueIfKey(action.Attributes["blockTitle"].Value);
+                blockTitle = LocalizationManager.GetValueIfKey(action.Attributes["blockTitle"].Value);
             }
 
             if (action.Attributes["blockMessage"] != null)
             {
-                blockMsg = localizationManager.GetValueIfKey(action.Attributes["blockMessage"].Value);
+                blockMsg = LocalizationManager.GetValueIfKey(action.Attributes["blockMessage"].Value);
             }
 
             string decombineText = "Openen";
             if (action.Attributes["decombineText"] != null)
             {
-                decombineText = localizationManager.GetValueIfKey(action.Attributes["decombineText"].Value);
+                decombineText = LocalizationManager.GetValueIfKey(action.Attributes["decombineText"].Value);
             }
 
             switch (type)

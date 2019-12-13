@@ -10,6 +10,14 @@ public class ItemControlButton : MonoBehaviour
     {
         gameUI = GameObject.FindObjectOfType<GameUI>();
         prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
+        
+        print(GetComponentInParent<Canvas>().name);
+        Vector3 vec = new Vector3();
+        // RectTransformUtility.WorldToScreenPoint(Camera.ma(GetComponentInParent<RectTransform>(),
+        //     transform.position, Camera.main, out vec);
+        print(GetComponent<RectTransform>().position);
+        // RectTransformUtility.PixelAdjustPoint
+        print(vec);
     }
 
     public void UpdateBlinkState()
@@ -40,15 +48,25 @@ public class ItemControlButton : MonoBehaviour
         }
         else if (buttonType == GameUI.ItemControlButtonType.MoveLeft || buttonType == GameUI.ItemControlButtonType.MoveRight)
         {
-            if (!gameUI.DropRightBlink && !gameUI.DropLeftBlink)
+            if (gameUI.moveButtonToBlink == buttonType)
             {
-                if (gameUI.moveButtonToBlink == buttonType)
-                {
-                    {
-                        toBlink = true;
-                    }
-                }
+                toBlink = true;
             }
+        }
+        else if (buttonType == GameUI.ItemControlButtonType.Records)
+        {
+            if (gameUI.recordsButtonBlink)
+                toBlink = true;
+        }
+        else if (buttonType == GameUI.ItemControlButtonType.Prescription)
+        {
+            if (gameUI.prescriptionButtonBlink)
+                toBlink = true;
+        }
+        else if (buttonType == GameUI.ItemControlButtonType.PaperAndPen)
+        {
+            if (gameUI.paperAndPenButtonblink && !gameUI.LevelEnded)
+                toBlink = true;
         }
         else if (gameUI.buttonToBlink == buttonType && !directionActive)
         {
@@ -56,18 +74,28 @@ public class ItemControlButton : MonoBehaviour
                 toBlink = true;
             }
         }
-        if (!toBlink) 
+        if (!toBlink)
         {
-            if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ItemBlink"))
-                GetComponent<Animator>().SetTrigger("BlinkOff");
+            if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ItemBlink") 
+                || GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Blink"))
+                    GetComponent<Animator>().SetTrigger("BlinkOff");
         }
-        else if (!GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ItemBlink"))
+        else if (!(GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ItemBlink") 
+            || GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Blink")))
+        {
+            //GameObject.FindObjectOfType<AnimatedFingerHint>().MoveTo(GetComponent<RectTransform>().position);
             GetComponent<Animator>().SetTrigger("BlinkOn");
+        }
+    }
+
+    public void StopBlinking()
+    {
+        GetComponent<Animator>().SetTrigger("BlinkOff");
     }
 
     private void OnEnable()
     {
         prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
         UpdateBlinkState();
-    }   
+    }
 }

@@ -15,6 +15,9 @@ public class InsulinSequence : AnimationSequenceState
 
         inv.PutAllOnTable();
 
+        //inv.DropLeftObject();
+        //inv.DropRightObject();
+
         inv.sequenceAborted = false;
     }
 
@@ -25,7 +28,8 @@ public class InsulinSequence : AnimationSequenceState
         {
             if (PlayerAnimationManager.CompareFrames(frame, prevFrame, takePenFrame))
             {
-                inv.ForcePickItem("InsulinPenWithNeedle", false);
+                inv.ForcePickItem("InsulinPenWithNeedle", false, true);
+
                 PlayerAnimationManager.SetHandItem(false, GameObject.Find("InsulinPenWithNeedle"));
             }
             else if (PlayerAnimationManager.CompareFrames(frame, prevFrame, startButtonFrame))

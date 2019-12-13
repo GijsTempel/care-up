@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class GameUI : MonoBehaviour
 {
+    public AnimatedFingerHint animatedFinger;
     GameObject Player;
     public Animator Blink;
     public Animator IPadBlink;
@@ -36,6 +37,8 @@ public class GameUI : MonoBehaviour
     public QuizTab quiz_tab;
     public bool DropLeftBlink = false;
     public bool DropRightBlink = false;
+
+    public bool LevelEnded = false;
 
     GameObject MovementSideButtons;
     public List<string> reqPlaces = new List<string>();
@@ -117,7 +120,6 @@ public class GameUI : MonoBehaviour
         MessageTabBack,
         Close
     }
-
 
     public void TestOutput()
     {
@@ -235,7 +237,6 @@ public class GameUI : MonoBehaviour
     {
         closeDialog.SetActive(value);
         // closeButton.SetActive(!value);
-
         if (value)
         {
             ps.robotUIopened = true;
@@ -400,6 +401,7 @@ public class GameUI : MonoBehaviour
     void Start()
     {
         gameLogic = GameObject.Find("GameLogic");
+        animatedFinger = GameObject.FindObjectOfType<AnimatedFingerHint>();
         objectsIDsController = GameObject.FindObjectOfType<ObjectsIDsController>();
         MovementSideButtons = GameObject.Find("MovementSideButtons");
 
@@ -645,6 +647,7 @@ public class GameUI : MonoBehaviour
     public void ShowDonePanel(bool value)
     {
         donePanel.SetActive(value);
+        LevelEnded = value;
     }
 
     public void EndScene()
@@ -693,12 +696,14 @@ public class GameUI : MonoBehaviour
             GameObject ghost = null;
             List<PickableObject> ghosts = item.ghostObjects.OrderBy(x =>
                     Vector3.Distance(x.transform.position, ps.transform.position)).ToList();
-
-            ghost = ghosts[0].gameObject;
-            if (leftHand)
-                handsInventory.DropLeft(ghost);
-            else
-                handsInventory.DropRight(ghost);
+            if (ghosts.Count > 0)
+            {
+                ghost = ghosts[0].gameObject;
+                if (leftHand)
+                    handsInventory.DropLeft(ghost);
+                else
+                    handsInventory.DropRight(ghost);
+            }
 
             for (int i = item.ghostObjects.Count - 1; i >= 0; --i)
             {
@@ -867,6 +872,12 @@ public class GameUI : MonoBehaviour
             animationUiBlock = !PlayerAnimationManager.IsLongAnimation();
         }
 
+        if (donePanelYesNo.activeSelf)
+        {
+            ItemControlPanel.SetActive(false);
+            patientInfo.SetActive(false);
+            return;
+        }
         //to show object control panel if no animation block and action block
         bool showItemControlPanel = allowObjectControlUI && animationUiBlock;
 
@@ -1016,7 +1027,11 @@ public class GameUI : MonoBehaviour
             if (PlayerScript.actionsLocked)
                 showItemControlPanel = false;
             ItemControlPanel.SetActive(showItemControlPanel);
+            patientInfo.SetActive(showItemControlPanel);
             MovementSideButtons.SetActive(showItemControlPanel);
+            //if (!showItemControlPanel)
+
+            animatedFinger.gameObject.SetActive(showItemControlPanel);
 
             ICPCurrentState = ItemControlPanel.activeSelf;
         }
@@ -1040,6 +1055,7 @@ public class GameUI : MonoBehaviour
         if (!value)
             cooldownTime = 1.0f;
         MovementSideButtons.SetActive(false);
+        animatedFinger.gameObject.SetActive(false);
         if (!allowObjectControlUI && !LeftSideButton.gameObject.activeSelf && !RightSideButton.gameObject.activeSelf &&
             !WalkToGroupPanel.activeSelf && !ItemControlPanel.activeSelf)
         {
@@ -1056,6 +1072,7 @@ public class GameUI : MonoBehaviour
             RightSideButton.gameObject.SetActive(false);
             WalkToGroupPanel.SetActive(false);
             ItemControlPanel.SetActive(false);
+            patientInfo.SetActive(false);
         }
         else
         {
