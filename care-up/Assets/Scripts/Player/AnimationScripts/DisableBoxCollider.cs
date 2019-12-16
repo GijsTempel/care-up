@@ -21,13 +21,18 @@ public class DisableBoxCollider : StateMachineBehaviour
         {
             if (PlayerAnimationManager.CompareFrames(frame, prevFrame, selectedFrame) && (objectsNames.Count > 0))
             {
-                BoxCollider component;
+                BoxCollider boxCollider;
+                CapsuleCollider capsuleCollider;
 
                 foreach (string name in objectsNames)
                 {
-                    component = GameObject.Find(name).GetComponent<BoxCollider>();
-                    if (component)
-                        component.enabled = false;
+                    boxCollider = GameObject.Find(name).GetComponent<BoxCollider>();
+                    capsuleCollider = GameObject.Find(name).GetComponent<CapsuleCollider>();
+
+                    if (boxCollider)
+                        boxCollider.enabled = false;
+                    if (capsuleCollider)
+                        capsuleCollider.enabled = false;
                 }
             }
 
