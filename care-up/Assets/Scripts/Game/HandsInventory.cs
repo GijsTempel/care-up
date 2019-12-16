@@ -317,88 +317,67 @@ public class HandsInventory : MonoBehaviour {
         UpdateHoldAnimation();
     }
 
-    public void ReplaceHandObject(bool hand, string name)
+    public void ReplaceHandObject(bool isLeftHand, string name, string ghostName = "")
     {
-        if (hand)
+
+        PickableObject currentHandObject = rightHandObject;
+        if (isLeftHand)
+            currentHandObject = leftHandObject;
+        if (currentHandObject == null)
+            return;
+
+        Vector3 savedPos = Vector3.zero;
+        Quaternion savedRot = Quaternion.identity;
+        currentHandObject.GetSavesLocation(out savedPos, out savedRot);
+            
+        Vector3 saveInfo1 = new Vector3();
+        Vector3 saveInfo2 = new Vector3();
+        bool load = false;
+
+        if (currentHandObject.GetComponent<PickableObjectWithInfo>() != null)
         {
-            Vector3 leftSavedPos = Vector3.zero;
-            Quaternion leftSavedRot = Quaternion.identity;
-            leftHandObject.GetSavesLocation(out leftSavedPos, out leftSavedRot);
-            
-            Vector3 saveInfo1 = new Vector3();
-            Vector3 saveInfo2 = new Vector3();
-            bool load = false;
-
-            if (leftHandObject.GetComponent<PickableObjectWithInfo>() != null)
-            {
-                leftHandObject.GetComponent<PickableObjectWithInfo>().SaveInfo(ref saveInfo1, ref saveInfo2);
-                load = true;
-            }
-
-            leftHandObject.DeleteGhostObject();
-            Destroy(leftHandObject.gameObject);
-            leftHandObject = null;
-            
-            GameObject leftObject = CreateObjectByName(name, Vector3.zero);
-            leftHandObject = leftObject.GetComponent<PickableObject>();
-            leftHandObject.leftControlBone = leftControlBone;
-            leftHandObject.rightControlBone = rightControlBone;
-            SetHold(true);
-            
-            PlayerAnimationManager.SetHandItem(true, leftObject);
-
-            if (leftSavedPos != Vector3.zero)
-            {
-                leftHandObject.SavePosition(leftSavedPos, leftSavedRot);
-            }
-
-            leftHandObject.CreateGhostObject();
-
-            if (leftHandObject.GetComponent<PickableObjectWithInfo>() != null && load)
-            {
-                leftHandObject.GetComponent<PickableObjectWithInfo>().LoadInfo(saveInfo1, saveInfo2);
-            }
+            currentHandObject.GetComponent<PickableObjectWithInfo>().SaveInfo(ref saveInfo1, ref saveInfo2);
+            load = true;
         }
+
+        currentHandObject.DeleteGhostObject();
+        Destroy(currentHandObject.gameObject);
+        currentHandObject = null;
+        GameObject _object = CreateObjectByName(name, Vector3.zero);
+        currentHandObject = _object.GetComponent<PickableObject>();
+        currentHandObject.leftControlBone = leftControlBone;
+        currentHandObject.rightControlBone = rightControlBone;
+        if (isLeftHand)
+            leftHandObject = currentHandObject;
         else
-        {
-            Vector3 rightSavedPos = Vector3.zero;
-            Quaternion rightSavedRot = Quaternion.identity;
-            rightHandObject.GetSavesLocation(out rightSavedPos, out rightSavedRot);
+            rightHandObject = currentHandObject;
 
-            Vector3 saveInfo1 = new Vector3();
-            Vector3 saveInfo2 = new Vector3();
-            bool load = false;
-
-            if (rightHandObject.GetComponent<PickableObjectWithInfo>() != null)
-            {
-                rightHandObject.GetComponent<PickableObjectWithInfo>().SaveInfo(ref saveInfo1, ref saveInfo2);
-                load = true;
-            }
-
-            rightHandObject.DeleteGhostObject();
-            Destroy(rightHandObject.gameObject);
-            rightHandObject = null;
-
-            GameObject rightObject = CreateObjectByName(name, Vector3.zero);
-            rightHandObject = rightObject.GetComponent<PickableObject>();
-            rightHandObject.leftControlBone = leftControlBone;
-            rightHandObject.rightControlBone = rightControlBone;
-            SetHold(false);
+        SetHold(isLeftHand);
             
-            PlayerAnimationManager.SetHandItem(false, rightObject);
+        PlayerAnimationManager.SetHandItem(isLeftHand, _object);
 
-            if (rightSavedPos != Vector3.zero)
-            {
-                rightHandObject.SavePosition(rightSavedPos, rightSavedRot);
-            }
-            rightHandObject.CreateGhostObject();
+        if (savedPos != Vector3.zero)
+        {
+            currentHandObject.SavePosition(savedPos, savedRot);
+        }
 
-            if (rightHandObject.GetComponent<PickableObjectWithInfo>() != null && load)
+        bool toCreateCustomGhost = false;
+
+        if (ghostName != "")
+        {
+            if(GameObject.Find(ghostName) != null)
             {
-                rightHandObject.GetComponent<PickableObjectWithInfo>().LoadInfo(saveInfo1, saveInfo2);
+                toCreateCustomGhost = true;
+                Transform targetObj = GameObject.Find(ghostName).transform;
+                currentHandObject.InstantiateGhostObject(targetObj.position, targetObj.rotation, 0);
             }
         }
 
+        if (!toCreateCustomGhost)
+            currentHandObject.CreateGhostObject();
+
+        if (currentHandObject.GetComponent<PickableObjectWithInfo>() != null && load)
+            currentHandObject.GetComponent<PickableObjectWithInfo>().LoadInfo(saveInfo1, saveInfo2);
         UpdateHoldAnimation();
     }
 
