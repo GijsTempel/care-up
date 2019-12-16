@@ -4,13 +4,6 @@ using UnityEngine.UI;
 
 public class TabGroup : MonoBehaviour
 {
-    //[SerializeField]
-    //private Sprite tabIdle = default,
-    //               tabActive = default,
-    //               topTabIdle = default,
-    //               topTabActive = default,
-    //               buyBtnSprite = default,
-    //               putOnBtnSprite = default;
     public List<Button> TabButtons;
     public List<GameObject> TabContainers;
     [SerializeField]
@@ -24,8 +17,6 @@ public class TabGroup : MonoBehaviour
                        productItem = default;
     bool initialized = false;
     int pages = 3;
-    //private Transform tabParent = default,
-    //                  itemParent = default;
 
     [SerializeField]
     private UIParticleSystem currencyParticles = default(UIParticleSystem);
@@ -42,7 +33,7 @@ public class TabGroup : MonoBehaviour
     private PlayerAvatar mainAvatar;
     CharacterСarousel carousel;
     PlayerPrefsManager pref;
-    
+
     public void SwitchTab(int value)
     {
         foreach (Button b in TabButtons)
@@ -62,76 +53,6 @@ public class TabGroup : MonoBehaviour
     {
         confirmPanel.SetActive(toShow);
     }
-
-    //public void Subscribe(TabButton button)
-    //{
-    //    if (tabs == null)
-    //        tabs = new List<TabButton>();
-
-    //    tabs.Add(button);
-    //}
-
-    //public void OnTabEnter(TabButton button)
-    //{
-    //    //ResetTabs();
-
-    //    if (button != selectedTab)
-    //    {
-    //        button.GetComponent<CanvasGroup>().alpha = 0.8f;
-    //        button.background.rectTransform.localScale = new Vector3(1.01f, 1.01f, 1);
-    //    }
-    //}
-
-    //public void OnTabExit(TabButton button) { }
-
-    //public void OnTabSelected(TabButton button)
-    //{
-    //    selectedTab = button;
-
-    //    ResetTabs();
-
-    //    if (button == tabs[0])
-    //    {
-    //        ModifyTab(button, topTabActive, new Vector3(1.15f, 1.15f, 1f));
-    //    }
-    //    else
-    //    {
-    //        ModifyTab(button, tabActive, new Vector3(1.15f, 1.15f, 1f));
-    //    }
-
-    //    int index = button.transform.GetSiblingIndex();
-    //    selectedTabIndex = index;
-    //    for (int i = 0; i < pages.Count; i++)
-    //    {
-    //        if (i == index)
-    //            pages[i].SetActive(true);
-    //        else
-    //            pages[i].SetActive(false);
-    //    }
-    //}
-
-    //public void ResetTabs()
-    //{
-    //    foreach (TabButton button in tabs)
-    //    {
-    //        if (button != null)
-    //        {
-    //            button.GetComponent<CanvasGroup>().alpha = 1f;
-
-    //            if (button == selectedTab)
-    //                continue;
-
-    //            if (button == tabs[0])
-    //            {
-    //                ModifyTab(button, topTabIdle, new Vector3(1, 1, 1));
-    //            }
-    //            else
-    //            {
-    //                ModifyTab(button, tabIdle, new Vector3(1, 1, 1));
-    //            }
-    //        }
-    //    }
-    //}
 
     void Dress()
     {
@@ -194,7 +115,6 @@ public class TabGroup : MonoBehaviour
                 buyBtnText.text = selectedItemBtn.item.price.ToString();
                 buyBtnCoin.SetActive(true);
                 buyBtn.SetActive(true);
-                // buyBtn.GetComponent<Image>().sprite = buyBtnSprite;
             }
             else
             {
@@ -236,8 +156,6 @@ public class TabGroup : MonoBehaviour
 
                 selectedItemBtn.SetPurchased(true);
                 GetComponent<StoreViewModel>().UpdateCurrancyPanel();
-                //GameObject.Find("TitlePanel/TitlePanel/Panel/CurrencyPanel/ValuePanel/Text").GetComponent<Text>().text
-                //    = PlayerPrefsManager.storeManager.Currency.ToString();
                 if (item.price > 0)
                 {
                     GameObject.Find("cashRegisterEffect").GetComponent<AudioSource>().Play();
@@ -278,17 +196,9 @@ public class TabGroup : MonoBehaviour
 
         foreach (StoreCategory category in PlayerPrefsManager.storeManager.StoreItems)
         {
-            InitializePrefabs(category);
             DressedButtons.Add(null);
         }
 
-        //for (int i = 1; i < pagesContainer.transform.childCount; i++)
-        //{
-        //    pages.Add(pagesContainer.transform.GetChild(i).gameObject);
-        //}
-
-        //OnTabSelected(tabs[0]);
-        // DisplayItemsInStore();
         UpdatePurchesBtn();
         initialized = true;
     }
@@ -315,7 +225,7 @@ public class TabGroup : MonoBehaviour
             StoreItem baseItem = null;
             if (currentCharacter != null)
             {
-                //Hats------------------------
+                //Hats
                 if (i == 0)
                 {
                     StoreItem xItem = new StoreItem(0, 0, "x", "Hat", true);
@@ -336,7 +246,7 @@ public class TabGroup : MonoBehaviour
                         }
                     }
                 }
-                //Glasses------------------------
+                //Glasses
                 else if (i == 1)
                 {
                     StoreItem xxItem = new StoreItem(-500, 0, "x", "Glasses", true);
@@ -358,7 +268,7 @@ public class TabGroup : MonoBehaviour
                         }
                     }
                 }
-                //Bodies------------------------
+                //Bodies
                 else if (i == 2)
                 {
                     int _body = currentCharacter.defaultAvatarData.bodyType;
@@ -378,7 +288,7 @@ public class TabGroup : MonoBehaviour
                 mainAvatar = GameObject.Find("MainPlayerAvatar").GetComponent<PlayerAvatar>();
             if (pref == null)
                 pref = GameObject.FindObjectOfType<PlayerPrefsManager>();
-            
+
             int avIndex = mainAvatar.avatarData.GetHatOffsetIndex();
 
             foreach (StoreItem item in PlayerPrefsManager.storeManager.StoreItems[i].items)
@@ -397,7 +307,7 @@ public class TabGroup : MonoBehaviour
                 }
 
                 ProductButton btn = null;
-                //print(currentCharacter.playerAvatar.gender);
+
                 if (item.category == "Body")
                 {
                     if (currentCharacter.playerAvatar.gender == CareUpAvatar.Gender.Female)
@@ -433,25 +343,12 @@ public class TabGroup : MonoBehaviour
                     btn.SetDressOn(true);
                 }
             }
-
         }
     }
 
     private void Start()
     {
-   
-
         InitializeTabPanel();
-    }
-
-    private void InitializePrefabs(StoreCategory storeCategory)
-    {
-        // setting tab button
-        //tab = Instantiate(tabBtnPrefab, tabParent);
-        //tab.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>($"Sprites/{storeCategory.icon}");
-
-        //page = Instantiate(tabPagePrefab, pagesContainer.transform);
-        //itemParent = page.transform.Find("StoreTabPage/content");
     }
 
     private ProductButton InstantiateProduct(StoreItem item, int TabNum)
@@ -474,11 +371,6 @@ public class TabGroup : MonoBehaviour
         mainAvatar = GameObject.Find("MainPlayerAvatar").GetComponent<PlayerAvatar>();
         buyBtnText = buyBtn.transform.Find("Text").GetComponent<Text>();
         buyBtnCoin = buyBtn.transform.Find("Coin").gameObject;
-        //pagesContainer = GameObject.Find("PageContainer");
-
-        //tabBtnPrefab = Resources.Load<GameObject>("NecessaryPrefabs/StoreTab");
-        //tabPagePrefab = Resources.Load<GameObject>("NecessaryPrefabs/PageHolder");
         productItem = Resources.Load<GameObject>("NecessaryPrefabs/UI/ProductPanelBase");
-        //tabParent = GameObject.Find("StoreTabContainer").transform;
     }
 }
