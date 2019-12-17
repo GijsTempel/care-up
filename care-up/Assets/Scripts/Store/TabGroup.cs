@@ -156,6 +156,7 @@ public class TabGroup : MonoBehaviour
 
                 selectedItemBtn.SetPurchased(true);
                 GetComponent<StoreViewModel>().UpdateCurrancyPanel();
+                GetComponent<StoreViewModel>().UpdateExtraCurrancyPanel();
                 if (item.price > 0)
                 {
                     GameObject.Find("cashRegisterEffect").GetComponent<AudioSource>().Play();

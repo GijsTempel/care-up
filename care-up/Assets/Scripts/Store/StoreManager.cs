@@ -138,6 +138,8 @@ public class StoreManager
                 int.TryParse(xmlSceneNode.Attributes["index"].Value, out index);
                 if (xmlSceneNode.Attributes["price"] != null)
                     int.TryParse(xmlSceneNode.Attributes["price"].Value, out price);
+                if (xmlSceneNode.Attributes["extraPrice"] != null)
+                    int.TryParse(xmlSceneNode.Attributes["extraPrice"].Value, out extraPrice);
                 bool purchased = DatabaseManager.FetchField("Store", "StoreItem_" + index.ToString()) == "true";
 
                 if (devDropAllPurchases)
@@ -148,8 +150,6 @@ public class StoreManager
 
                 string name = xmlSceneNode.Attributes["name"].Value;
                 string category = (xmlSceneNode.Attributes["category"] != null) ? xmlSceneNode.Attributes["category"].Value : catName;
-                if (xmlSceneNode.Attributes["extraPrice"] != null)
-                    int.TryParse(xmlSceneNode.Attributes["extraPrice"].Value, out extraPrice);
 
                 catItems.Add(new StoreItem(index, price, name, category, purchased, extraPrice));
             }
@@ -167,7 +167,7 @@ public class StoreManager
             int index = -1, price = 1, extraPrice = -1;
 
             int.TryParse(xmlSceneNode.Attributes["index"].Value, out index);
-            if (xmlSceneNode.Attributes["price"].Value != null)
+            if (xmlSceneNode.Attributes["price"] != null)
                 int.TryParse(xmlSceneNode.Attributes["price"].Value, out price);
             if (xmlSceneNode.Attributes["extraPrice"] != null)
                 int.TryParse(xmlSceneNode.Attributes["extraPrice"].Value, out extraPrice);
@@ -281,17 +281,27 @@ public class StoreManager
     public bool Purchase(int itemIndex)
     {
         StoreItem item = FindItemByIndex(itemIndex);
-        if (item.index != -1 && currentCurrency >= item.price)
+        bool result = false;
+        if (item.index != -1)
         {
-            ModifyCurrencyBy(-item.price);
-            item.purchased = true;
-            DatabaseManager.UpdateField("Store", "StoreItem_" + itemIndex.ToString(), "true");
-            return true;
+            if ((item.extraPrice > 0) && (currentExtraCurrency >= item.extraPrice))
+            {
+                ModifyExtraCurrencyBy(-item.extraPrice);
+                result = true;
+            }
+            else if (currentCurrency >= item.price)
+            {
+                ModifyCurrencyBy(-item.price);
+                result = true;
+            }
+
+            if (result)
+            {
+                item.purchased = true;
+                DatabaseManager.UpdateField("Store", "StoreItem_" + itemIndex.ToString(), "true");
+            }
         }
-        else
-        {
-            return false;
-        }
+        return result;
     }
 
     public void AdjustCharacter(int itemIndex)

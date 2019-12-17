@@ -29,14 +29,14 @@ public class CharacterPanelManager : MonoBehaviour
 
     public void BuyButtonPressed()
     {
-        if (currentPrice == 0)
-        {
-            BuyCharacter();
-        }
-        else
-        {
-            ShowConfirmationPanel(true);
-        }
+        //if (currentPrice == 0)
+        //{
+        //    BuyCharacter();
+        //}
+        //else
+        //{
+        //    ShowConfirmationPanel(true);
+        //}
     }
 
     private void OnEnable()
