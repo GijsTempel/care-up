@@ -31,13 +31,13 @@ public class QuizTab : MonoBehaviour
     private int currentEncounter = 0;
     private int currentQuestionID = 0;
 
-    private List<Button> buttons = new List<Button>();
+    public List<Button> buttons = new List<Button>();
     private bool[] buttonsActive = new bool[4];
 
-    private Text descriptionText;
-    private Button continueButton;
-    private Button backToOptionsButton;
-    private Text answeredTitleText;
+    public Text descriptionText;
+    public Button continueButton;
+    public Button backToOptionsButton;
+    public Text answeredTitleText;
 
     private PlayerPrefsManager pref;
     private EndScoreManager endScoreManager;
@@ -103,10 +103,10 @@ public class QuizTab : MonoBehaviour
                 encounterList.Add(encounter);
         }
 
-        descriptionText = transform.GetChild(1).Find("ScrollViewDescription/Viewport/Content/Description").GetComponent<Text>();
-        continueButton = transform.GetChild(1).Find("Continue").GetComponent<Button>();
-        backToOptionsButton = transform.GetChild(1).Find("Back").GetComponent<Button>();
-        answeredTitleText = transform.GetChild(1).Find("AnswerTitle").GetComponent<Text>();
+        // descriptionText = transform.GetChild(1).Find("ScrollViewDescription/Viewport/Content/Description").GetComponent<Text>();
+        // continueButton = transform.GetChild(1).Find("Continue").GetComponent<Button>();
+        // backToOptionsButton = transform.GetChild(1).Find("Back").GetComponent<Button>();
+        // answeredTitleText = transform.GetChild(1).Find("AnswerTitle").GetComponent<Text>();
 
         continueBtn = false;
         continueButton.gameObject.SetActive(false);
@@ -119,10 +119,10 @@ public class QuizTab : MonoBehaviour
         PlayerScript.quiz = this;
         gameObject.SetActive(false);
 
-        buttons.Add(transform.GetChild(0).Find("Answer1").GetComponent<Button>());
-        buttons.Add(transform.GetChild(0).Find("Answer2").GetComponent<Button>());
-        buttons.Add(transform.GetChild(0).Find("Answer3").GetComponent<Button>());
-        buttons.Add(transform.GetChild(0).Find("Answer4").GetComponent<Button>());
+        // buttons.Add(transform.GetChild(0).Find("Answer1").GetComponent<Button>());
+        // buttons.Add(transform.GetChild(0).Find("Answer2").GetComponent<Button>());
+        // buttons.Add(transform.GetChild(0).Find("Answer3").GetComponent<Button>());
+        // buttons.Add(transform.GetChild(0).Find("Answer4").GetComponent<Button>());
 
         if (continueButton == null)
         {
