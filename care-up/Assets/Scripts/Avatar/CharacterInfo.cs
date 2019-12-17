@@ -83,7 +83,7 @@ public class CharacterInfo : MonoBehaviour
             case "Glasses":
                 CharacterInfo.glassesType = item.index;
                 DatabaseManager.UpdateField("CharacterItem_" + index.ToString(), "Glasses", CharacterInfo.glassesType.ToString());
-
+                DatabaseManager.UpdateField("AccountStats", "Glasses", CharacterInfo.glassesType.ToString());
                 foreach (CharacterItem characterItem in PlayerPrefsManager.storeManager.CharacterItems)
                 {
                     if (characterItem.index == index)
@@ -97,6 +97,7 @@ public class CharacterInfo : MonoBehaviour
             case "Body":
                 CharacterInfo.bodyType = item.index;
                 DatabaseManager.UpdateField("CharacterItem_" + index.ToString(), "Body", CharacterInfo.bodyType.ToString());
+                DatabaseManager.UpdateField("AccountStats", "Body", CharacterInfo.bodyType.ToString());
 
                 foreach (CharacterItem characterItem in PlayerPrefsManager.storeManager.CharacterItems)
                 {

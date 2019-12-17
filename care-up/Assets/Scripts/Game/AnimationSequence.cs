@@ -1,14 +1,15 @@
 ﻿using System.Xml;
 using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CareUp.Localize;
+using UnityEngine.UI;
 
 /// <summary>
 /// Class for handling animation sequences.
 /// </summary>
-public class AnimationSequence  {
-    
+public class AnimationSequence
+{
     public class RandomOption
     {
         public string audio;
@@ -97,20 +98,52 @@ public class AnimationSequence  {
         xmlFile.LoadXml(textAsset.text);
         XmlNodeList xmlSteps = xmlFile.FirstChild.NextSibling.ChildNodes;
 
+        SelectDialogue.DialogueOption GetOption(XmlNode xmlOption, List<SelectDialogue.DialogueOption> additionalOption = null, string question = null)
+        {
+            string description = LocalizationManager.GetValueIfKey(xmlOption.Attributes["text"].Value);
+            string animation = xmlOption.Attributes["animation"] != null ? xmlOption.Attributes["animation"].Value : "";
+            SelectDialogue.DialogueOption option = new SelectDialogue.DialogueOption(description, PlayAnimation, animation, additionalOption, question);
+
+            return option;
+        }
+
         foreach (XmlNode xmlStep in xmlSteps)
         {
             SequenceStep step = new SequenceStep();
             XmlNodeList xmlOptions = xmlStep.ChildNodes;
+            List<SelectDialogue.DialogueOption> additionalOption;
+
             foreach (XmlNode xmlOption in xmlOptions)
             {
                 if (xmlOption.Name == "option")
                 {
-                    string description = xmlOption.Attributes["text"].Value;
-                    string animation = xmlOption.Attributes["animation"] != null ? xmlOption.Attributes["animation"].Value : "";
-                    SelectDialogue.DialogueOption option = new SelectDialogue.DialogueOption(description, PlayAnimation, animation);
+                    additionalOption = null;
+                    string question = null;
+
+                    if (!string.IsNullOrEmpty(xmlOption.InnerXml))
+                    {
+                        additionalOption = new List<SelectDialogue.DialogueOption>();
+
+                        XmlNode additionalNode = xmlOption.FirstChild;
+                        XmlNodeList additionalList = additionalNode.ChildNodes;
+
+                        if (additionalNode.Attributes != null)
+                        {
+                            if (additionalNode.Attributes["question"] != null)
+                            {
+                                question = additionalNode.Attributes["question"].Value;
+                            }
+                        }
+
+                        foreach (XmlNode option in additionalList)
+                        {
+                            if (additionalOption.Count < 4)
+                                additionalOption.Add(GetOption(option));
+                        }
+                    }
                     if (step.options.Count < 4)
                     {
-                        step.options.Add(option);
+                        step.options.Add(GetOption(xmlOption, additionalOption, question));
                     }
                 }
                 else // randomoptions
@@ -123,9 +156,6 @@ public class AnimationSequence  {
             }
             // shuffle
             step.options = step.options.OrderBy(x => Random.value).ToList();
-            // add leave option
-            //step.options.Add(new SelectDialogue.DialogueOption("Verlaten", PlayAnimation, "CM_Leave"));
-
             steps.Add(step);
         }
     }
@@ -134,8 +164,31 @@ public class AnimationSequence  {
     /// Handles result of selection of sequence step.
     /// </summary>
     /// <param name="animation">Data from selection.</param>
-    private void PlayAnimation(string animation)
+    private void PlayAnimation(string animation, List<SelectDialogue.DialogueOption> dialogueOption = null, string question = null)
     {
+        // if sequence 
+        if (question != null)
+        {
+            if (dialogueOption != null)
+            {
+                Object.Destroy(GameObject.Find("SelectionDialogue"));
+                NextStep(dialogueOption);
+
+                if (!ActionManager.practiceMode)
+                {
+                    GameObject selectionDialogue = GameObject.Find("SelectionDialogue");
+                    if (selectionDialogue != null)
+                    {
+                        selectionDialogue.transform.Find("Top").Find("Title").GetComponent<Text>().text = question;
+                    }
+                }
+
+                actionManager.UpdatePoints(1);
+                dialogueOption.Clear();
+                return;
+            }
+        }
+
         if (animation != "")
         {
             // leave sequence
@@ -150,10 +203,10 @@ public class AnimationSequence  {
             else
             {
                 // if there's couple of correct options
-                if (steps.ElementAt(currentStep-1).randomOptions.Count > 0)
+                if (steps.ElementAt(currentStep - 1).randomOptions.Count > 0)
                 {
                     // if animation is correct
-                    if (animation == steps.ElementAt(currentStep-1).GetCorrectAnimation())
+                    if (animation == steps.ElementAt(currentStep - 1).GetCorrectAnimation())
                     {
                         actionManager.OnSequenceStepAction(animation);
                         pointsEarned++;
@@ -179,9 +232,9 @@ public class AnimationSequence  {
 
                     if (animation == "Inject medicine slow and steady")
                     {
-                        GameObject.FindObjectOfType<InjectionPatient>().InjectMedicineSlowlyDialogue();        
+                        GameObject.FindObjectOfType<InjectionPatient>().InjectMedicineSlowlyDialogue();
                     }
-                    
+
                     if (animation == "Inject Pricking pen" || animation == "ThrowSyringe")
                     {
                         GameObject.Find("GameLogic").GetComponent<HandsInventory>().PutAllOnTable();
@@ -201,34 +254,40 @@ public class AnimationSequence  {
         }
     }
 
-
     /// <summary>
     /// Goes to next step of sequence. Handles creating/changing Dialogue.
     /// </summary>
-    public void NextStep()
+    public void NextStep(List<SelectDialogue.DialogueOption> additionalSteps = null)
     {
-        GameObject.FindObjectOfType<GameUI>().ShowTheory(true);
-
+        GameObject.FindObjectOfType<GameUI>().ShowIpad(true);     
         GameObject dialogueObject = GameObject.Find("SelectionDialogue");
 
         if (currentStep < steps.Count)
         {
-            if (dialogueObject == null)
+            if (dialogueObject != null)
             {
-                dialogueObject = Object.Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/UI/SelectionDialogue"),
-                        GameObject.Find("OverlayCamera").transform) as GameObject;
-                dialogueObject.name = "SelectionDialogue";
+                Object.Destroy(dialogueObject.gameObject);
             }
+
+            dialogueObject = Object.Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/UI/SelectionDialogue"),
+                    GameObject.Find("OverlayCamera").transform) as GameObject;
+            dialogueObject.name = "SelectionDialogue";
 
             SelectDialogue dialogue = dialogueObject.GetComponent<SelectDialogue>();
-            dialogue.Init(false);
 
-            if (steps.ElementAt(currentStep).randomOptions.Count > 0)
+            if (additionalSteps != null)
             {
-                dialogue.SetText(steps.ElementAt(currentStep).GetCorrectAudio());
+                dialogue.AddOptions(additionalSteps);
             }
+            else
+            {
+                if (steps.ElementAt(currentStep).randomOptions.Count > 0)
+                {
+                    dialogue.SetText(steps.ElementAt(currentStep).GetCorrectAudio());
+                }
 
-            dialogue.AddOptions(steps.ElementAt(currentStep).options, cheated);
+                dialogue.AddOptions(steps.ElementAt(currentStep).options, cheated);
+            }
 
             cameraMode.ToggleCameraMode(CameraMode.Mode.SelectionDialogue);
         }
@@ -245,7 +304,8 @@ public class AnimationSequence  {
             cameraMode.cinematicToggle = false;
         }
 
-        currentStep += 1;
+        if (additionalSteps == null)
+            currentStep += 1;
     }
 
     /// <summary>
@@ -255,7 +315,7 @@ public class AnimationSequence  {
     public void TutorialLock(bool value)
     {
         SelectDialogue dialogue = GameObject.Find("SelectionDialogue").GetComponent<SelectDialogue>();
-        if ( value )
+        if (value)
         {
             dialogue.tutorial_lock = true;
         }

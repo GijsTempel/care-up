@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class GameUI : MonoBehaviour
 {
+    public AnimatedFingerHint animatedFinger;
     GameObject Player;
     public Animator Blink;
     public Animator IPadBlink;
@@ -36,6 +37,8 @@ public class GameUI : MonoBehaviour
     public QuizTab quiz_tab;
     public bool DropLeftBlink = false;
     public bool DropRightBlink = false;
+
+    public bool LevelEnded = false;
 
     GameObject MovementSideButtons;
     public List<string> reqPlaces = new List<string>();
@@ -92,6 +95,7 @@ public class GameUI : MonoBehaviour
     PlayerScript ps;
     bool ICPCurrentState = false;
     public bool allowObjectControlUI = true;
+    public static bool encounterStarted = false;
     public enum ItemControlButtonType
     {
         None,
@@ -117,7 +121,6 @@ public class GameUI : MonoBehaviour
         MessageTabBack,
         Close
     }
-
 
     public void TestOutput()
     {
@@ -163,47 +166,54 @@ public class GameUI : MonoBehaviour
 
     public void UseOnNoTarget(bool leftHand = true)
     {
-        if (tutorialUseOn != null && !tutorialUseOn.ventAllowed)
-        {
-            return;
-        }
+        GeneralAction generalAction = actionManager.CheckGeneralAction();
 
-        if (leftHand && !handsInventory.LeftHandEmpty())
+        if (generalAction == null)
         {
-            if (actionManager.CompareUseOnInfo(handsInventory.leftHandObject.name, ""))
+            if (tutorialUseOn != null && !tutorialUseOn.ventAllowed)
             {
-                if (handsInventory.LeftHandObject.GetComponent<PickableObject>().Use(true, true))
-                {
-                    UpdateWalkToGtoupUI(false);
-                }
-
-                if (tutorialUseOn != null)
-                {
-                    handsInventory.LeftHandObject.GetComponent<PickableObject>().tutorial_usedOn = true;
-                }
                 return;
             }
-            else
-                actionManager.OnUseOnAction(handsInventory.leftHandObject.name, "");
 
-        }
-        if (!leftHand && !handsInventory.RightHandEmpty())
-        {
-            if (actionManager.CompareUseOnInfo(handsInventory.rightHandObject.name, ""))
+            if (leftHand && !handsInventory.LeftHandEmpty())
             {
-                if (handsInventory.RightHandObject.GetComponent<PickableObject>().Use(false, true))
+                if (actionManager.CompareUseOnInfo(handsInventory.leftHandObject.name, ""))
                 {
-                    UpdateWalkToGtoupUI(false);
-                }
+                    if (handsInventory.LeftHandObject.GetComponent<PickableObject>().Use(true, true))
+                    {
+                        UpdateWalkToGtoupUI(false);
+                    }
 
-                if (tutorialUseOn != null)
-                {
-                    handsInventory.RightHandObject.GetComponent<PickableObject>().tutorial_usedOn = true;
+                    if (tutorialUseOn != null)
+                    {
+                        handsInventory.LeftHandObject.GetComponent<PickableObject>().tutorial_usedOn = true;
+                    }
+                    return;
                 }
+                else
+                    actionManager.OnUseOnAction(handsInventory.leftHandObject.name, "");
+
             }
-            else
-                actionManager.OnUseOnAction(handsInventory.rightHandObject.name, "");
+            if (!leftHand && !handsInventory.RightHandEmpty())
+            {
+                if (actionManager.CompareUseOnInfo(handsInventory.rightHandObject.name, ""))
+                {
+                    if (handsInventory.RightHandObject.GetComponent<PickableObject>().Use(false, true))
+                    {
+                        UpdateWalkToGtoupUI(false);
+                    }
+
+                    if (tutorialUseOn != null)
+                    {
+                        handsInventory.RightHandObject.GetComponent<PickableObject>().tutorial_usedOn = true;
+                    }
+                }
+                else
+                    actionManager.OnUseOnAction(handsInventory.rightHandObject.name, "");
+            }
         }
+        else
+            GeneralAction(generalAction);
     }
 
     public void OpenRobotUI()
@@ -228,7 +238,6 @@ public class GameUI : MonoBehaviour
     {
         closeDialog.SetActive(value);
         // closeButton.SetActive(!value);
-
         if (value)
         {
             ps.robotUIopened = true;
@@ -292,6 +301,39 @@ public class GameUI : MonoBehaviour
             }
             cameraMode.selectedObject.OnExamine();
             //controls.ResetObject();
+        }
+    }
+
+    public void GeneralAction(GeneralAction generalAction)
+    {
+        if (generalAction != null)
+        {
+            GameObject item = GameObject.Find(generalAction.Item);
+
+            PlayerAnimationManager playerAnimationManager = FindObjectOfType<PlayerAnimationManager>();
+            Animator animator;
+
+            if (playerAnimationManager != null)
+            {
+                animator = playerAnimationManager.GetComponent<Animator>();
+
+                if (animator)
+                {
+                    animator.SetTrigger(generalAction.Action);
+                    animator.SetTrigger("S " + generalAction.Action);
+                    actionManager.OnGeneralAction();
+                }
+            }
+            else if (item != null)
+            {
+                animator = item.GetComponent<Animator>();
+
+                if (animator)
+                {
+                    animator.SetTrigger(generalAction.Action);
+                    actionManager.OnGeneralAction();
+                }
+            }
         }
     }
 
@@ -360,9 +402,12 @@ public class GameUI : MonoBehaviour
     void Start()
     {
         gameLogic = GameObject.Find("GameLogic");
+        animatedFinger = GameObject.FindObjectOfType<AnimatedFingerHint>();
         objectsIDsController = GameObject.FindObjectOfType<ObjectsIDsController>();
         MovementSideButtons = GameObject.Find("MovementSideButtons");
 
+        ActionManager.generalActionDone = false;
+        ActionManager.generalAction = false;
         prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
         if (prefs != null)
             practiceMode = prefs.practiceMode;
@@ -396,6 +441,8 @@ public class GameUI : MonoBehaviour
         {
             ActionManager.practiceMode = prefs.practiceMode;
         }
+
+        SetAEDLogic();
 
 #if !(UNITY_EDITOR || DEVELOPMENT_BUILD)
         if(GameObject.Find("ActionsPanel") != null)
@@ -466,8 +513,6 @@ public class GameUI : MonoBehaviour
         Invoke("ShowWalkToGroupPanel", 0.5f);
     }
 
-
-
     public HighlightObject AddHighlight(Transform target, string prefix, HighlightObject.type hl_type = HighlightObject.type.NoChange, float startDelay = 0, float LifeTime = float.PositiveInfinity)
     {
         string hl_name = prefix + "_" + target.name;
@@ -524,8 +569,6 @@ public class GameUI : MonoBehaviour
             string[] ObjectNames = new string[0];
             a.ObjectNames(out ObjectNames);
 
-            //if (a.Type == ActionManager.ActionType.ObjectUse ||
-            //a.Type == ActionManager.ActionType.ObjectDrop)
             foreach (string objectToUse in ObjectNames)
             {
                 if (GameObject.Find(objectToUse) != null)
@@ -585,7 +628,6 @@ public class GameUI : MonoBehaviour
         }
 
         //clear highlights
-
         for (int i = 0; i < activeHighlighted.Count; i++)
         {
             if (!newHLObjects.Contains(activeHighlighted[i]))
@@ -603,6 +645,7 @@ public class GameUI : MonoBehaviour
     public void ShowDonePanel(bool value)
     {
         donePanel.SetActive(value);
+        LevelEnded = value;
     }
 
     public void EndScene()
@@ -621,7 +664,7 @@ public class GameUI : MonoBehaviour
 
     void OnGUI()
     {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD 
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
         GUIStyle style = new GUIStyle();
         style.normal.textColor = new Color(1f, 0f, 0f);
         style.fontSize = 30;
@@ -651,12 +694,14 @@ public class GameUI : MonoBehaviour
             GameObject ghost = null;
             List<PickableObject> ghosts = item.ghostObjects.OrderBy(x =>
                     Vector3.Distance(x.transform.position, ps.transform.position)).ToList();
-
-            ghost = ghosts[0].gameObject;
-            if (leftHand)
-                handsInventory.DropLeft(ghost);
-            else
-                handsInventory.DropRight(ghost);
+            if (ghosts.Count > 0)
+            {
+                ghost = ghosts[0].gameObject;
+                if (leftHand)
+                    handsInventory.DropLeft(ghost);
+                else
+                    handsInventory.DropRight(ghost);
+            }
 
             for (int i = item.ghostObjects.Count - 1; i >= 0; --i)
             {
@@ -665,6 +710,7 @@ public class GameUI : MonoBehaviour
                 Destroy(g);
             }
         }
+        ActionManager.UpdateRequirements();
     }
 
     public void UpdateButtonsBlink()
@@ -677,7 +723,7 @@ public class GameUI : MonoBehaviour
 
         foreach (ItemControlButton b in GameObject.FindObjectsOfType<ItemControlButton>())
         {
-            b.updateBlinkState();
+            b.UpdateBlinkState();
         }
         foreach (ButtonBlinking b in GameObject.FindObjectsOfType<ButtonBlinking>())
         {
@@ -723,21 +769,56 @@ public class GameUI : MonoBehaviour
         return 0;
     }
 
-    public void ShowTheory(bool isSequence = false)
+    public void ShowIpad(bool isSequence = false)
     {
-        void ShowIPad()
+        void ShowTheoryTab()
         {
             if (!string.IsNullOrEmpty(actionManager.Message))
             {
-                GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
-                GameObject.FindObjectOfType<GameUI>().theoryPanel.SetActive(true);
-                GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Title").GetComponent<Text>().text = actionManager.MessageTitle;
-                GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Message").GetComponent<Text>().text = actionManager.Message;
+                if (!GameObject.FindObjectOfType<PlayerScript>().robotUIopened)
+                {
+                    GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
+                    GameObject.FindObjectOfType<GameUI>().theoryPanel.SetActive(true);
+                    GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Title").GetComponent<Text>().text = actionManager.MessageTitle;
+                    GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Message").GetComponent<Text>().text = actionManager.Message;
+                    actionManager.Message = null;
+                    actionManager.ShowTheory = false;
+                }
             }
         }
 
-        if (actionManager.ShowTheory)
+        void ShowRandomQuizTab()
         {
+            if (!GameObject.FindObjectOfType<PlayerScript>().robotUIopened)
+            {
+                GameObject.FindObjectOfType<GameUI>().quiz_tab.NextQuizQuestion(true);
+                RandomQuiz.showQuestion = false;
+            }
+        }
+
+        void ShowEncounter()
+        {
+            if (!GameObject.FindObjectOfType<PlayerScript>().robotUIopened)
+            {
+                bool randomValue = System.Convert.ToBoolean(Random.Range(0, 2));
+                if (randomValue)
+                    PlayerScript.TriggerQuizQuestion(QuizTab.encounterDelay, true);
+                else
+                    QuizTab.encounterDelay = -1f;
+
+                Debug.Log("Encounter quiz with result: " + randomValue);
+                encounterStarted = true;
+            }
+        }
+
+        void SetTargetTime(float time)
+        {
+            startTimer = false;
+            targetTime = time;
+        }
+
+        if (actionManager.ShowTheory || RandomQuiz.showQuestion || (QuizTab.encounterDelay >= 0))
+        {          
             startTimer = true;
         }
 
@@ -748,17 +829,38 @@ public class GameUI : MonoBehaviour
 
         if (targetTime <= 0.0f)
         {
-            ShowIPad();
-            startTimer = false;
-            targetTime = 0.7f;
+            if (QuizTab.encounterDelay >= 0)
+            {
+                if (encounterStarted == false)
+                {
+                    ShowEncounter();
+                    SetTargetTime(0.4f);
+                }
+            }
+            else if (actionManager.Message != null)
+            {
+                ShowTheoryTab();
+                SetTargetTime(0.4f);
+            }
+            else if (RandomQuiz.showQuestion)
+            {
+                ShowRandomQuizTab();
+                SetTargetTime(0.4f);
+            }
+        }
+        else if (isSequence && (QuizTab.encounterDelay > 0))
+        {
+            ShowEncounter();
         }
         else if (isSequence && actionManager.ShowTheory)
         {
-            ShowIPad();
+            ShowTheoryTab();
             actionManager.Message = null;
         }
-
-        actionManager.ShowTheory = false;
+        else if (isSequence && RandomQuiz.showQuestion)
+        {
+            ShowRandomQuizTab();
+        }
     }
 
     public void PlaceTalkBubble(GameObject person)
@@ -784,6 +886,7 @@ public class GameUI : MonoBehaviour
 
     void Update()
     {
+        // print(RandomQuiz.showRandomQuestion);
         if (!timeOutEnded)
         {
             startTimeOut -= Time.deltaTime;
@@ -794,7 +897,10 @@ public class GameUI : MonoBehaviour
                 ActionManager.BuildRequirements();
                 ActionManager.UpdateRequirements();
 
-                UpdateHelpHighlight();
+                if (actionManager.CheckGeneralAction() == null)
+                {
+                    UpdateHelpHighlight();
+                }
                 UpdateWalkToGtoupUI(true);
             }
         }
@@ -821,13 +927,20 @@ public class GameUI : MonoBehaviour
             animationUiBlock = !PlayerAnimationManager.IsLongAnimation();
         }
 
+        if (donePanelYesNo.activeSelf)
+        {
+            ItemControlPanel.SetActive(false);
+            patientInfo.SetActive(false);
+            return;
+        }
         //to show object control panel if no animation block and action block
         bool showItemControlPanel = allowObjectControlUI && animationUiBlock;
 
         //if some object was added or removed to hands
         if (showItemControlPanel)
         {
-            ShowTheory();
+            ShowIpad();
+
             int lHash = 0;
             if (handsInventory.leftHandObject != null)
                 lHash = handsInventory.leftHandObject.gameObject.GetHashCode();
@@ -844,8 +957,12 @@ public class GameUI : MonoBehaviour
                 decombineButton.SetActive(false);
                 decombineButton_right.SetActive(false);
                 ActionManager.UpdateRequirements();
-                UpdateHelpHighlight();
+                if (actionManager.CheckGeneralAction() == null)
+                {
+                    UpdateHelpHighlight();
+                }
                 currentActionsCount = actionManager.actionsCount;
+
                 //hide panel for the first frame of hands state change
                 //prevent quick blinking of buttons before animation starts
                 showItemControlPanel = false;
@@ -944,18 +1061,7 @@ public class GameUI : MonoBehaviour
                 zoomButtonLeft.SetActive(showZoomLeft);
                 zoomButtonRight.SetActive(showZoomRight);
                 noTargetButton.SetActive(showNoTarget);
-                noTargetButton_right.SetActive(showNoTarget_right);
-                //if (showNoTarget)
-                //    decombineButton.SetActive(false);
-                //if(showNoTarget_right)
-                //    decombineButton_right.SetActive(false);
-
-
-                //decombineButton.SetActive(showDecomb && REmpty && !showNoTarget);
-                //if(decombineButton.activeSelf)
-                //decombineButton.GetComponent<Animator>().SetTrigger("BlinkOn");
-
-                //decombineButton_right.SetActive(showDecomb && LEmpty && !showNoTarget_right);
+                noTargetButton_right.SetActive(showNoTarget_right || (ActionManager.generalAction && !ActionManager.generalActionDone));
                 combineButton.SetActive(showCombin);
             }
 
@@ -977,7 +1083,11 @@ public class GameUI : MonoBehaviour
             if (PlayerScript.actionsLocked)
                 showItemControlPanel = false;
             ItemControlPanel.SetActive(showItemControlPanel);
+            patientInfo.SetActive(showItemControlPanel);
             MovementSideButtons.SetActive(showItemControlPanel);
+            //if (!showItemControlPanel)
+
+            animatedFinger.gameObject.SetActive(showItemControlPanel);
 
             ICPCurrentState = ItemControlPanel.activeSelf;
         }
@@ -987,6 +1097,13 @@ public class GameUI : MonoBehaviour
             currentAnimLock = false;
     }
 
+    public void ShowNoTargetButton()
+    {
+        ActionManager.generalAction = true;
+        noTargetButton_right.SetActive(true);
+        noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text =
+            actionManager.CurrentButtonText();
+    }
 
     public void UpdateWalkToGtoupUI(bool value)
     {
@@ -994,6 +1111,7 @@ public class GameUI : MonoBehaviour
         if (!value)
             cooldownTime = 1.0f;
         MovementSideButtons.SetActive(false);
+        animatedFinger.gameObject.SetActive(false);
         if (!allowObjectControlUI && !LeftSideButton.gameObject.activeSelf && !RightSideButton.gameObject.activeSelf &&
             !WalkToGroupPanel.activeSelf && !ItemControlPanel.activeSelf)
         {
@@ -1010,6 +1128,7 @@ public class GameUI : MonoBehaviour
             RightSideButton.gameObject.SetActive(false);
             WalkToGroupPanel.SetActive(false);
             ItemControlPanel.SetActive(false);
+            patientInfo.SetActive(false);
         }
         else
         {
@@ -1110,9 +1229,12 @@ public class GameUI : MonoBehaviour
         {
             GameObject currentHintPanel = null;
 
-            currentHintPanel = Instantiate<GameObject>(Resources.Load<GameObject>("NecessaryPrefabs/UI/HintPanel"), DetailedHintPanel.transform.Find("HintContainer").transform);
+            currentHintPanel = Instantiate<GameObject>(Resources.Load<GameObject>("NecessaryPrefabs/UI/HintPanel"),
+                DetailedHintPanel.transform.Find("HintContainer").transform);
+            currentHintPanel.name = "HintPanel";
             hintText = currentHintPanel.transform.Find("Text").gameObject.GetComponent<Text>();
-            hintText.text = actionManager.CurrentDescription[i];
+            hintText.text = (actionManager.CurrentActionType == ActionManager.ActionType.SequenceStep) ?
+                "Wat ga je doen?" : actionManager.CurrentDescription[i];
 
             for (int y = 0; y < subTasks.Count; y++)
             {
@@ -1131,6 +1253,27 @@ public class GameUI : MonoBehaviour
             }
             float alpha = DetailedHintPanel.GetComponent<Image>().color.a;
             SetHintPanelAlpha(alpha);
+        }
+    }
+
+    private void SetAEDLogic()
+    {
+        if (SceneManager.GetActiveScene().name == "Scenes_AED")
+        {
+            Animator playerAnimator;
+            PlayerAnimationManager playerAnimationManager = GameObject.FindObjectOfType<PlayerAnimationManager>();
+
+            if (playerAnimationManager != null)
+            {
+                playerAnimator = playerAnimationManager.GetComponent<Animator>();
+
+                if (noTargetButton_right != null && playerAnimator != null)
+                {
+                    noTargetButton_right.SetActive(true);
+                    noTargetButton_right.gameObject.GetComponent<Button>().onClick.AddListener(() => playerAnimator.SetTrigger("Start_AED_SQ1"));
+                    noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text = "Help de cliënt";
+                }
+            }
         }
     }
 }

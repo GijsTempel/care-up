@@ -14,6 +14,7 @@ using UnityEngine.Networking;
 using System.Linq;
 using System.Collections;
 using SmartLookUnity;
+using CareUp.Localize;
 
 /// <summary>
 /// Handles quick access to saved data.
@@ -24,13 +25,18 @@ public class PlayerPrefsManager : MonoBehaviour
     public static StoreManager storeManager = new StoreManager();
 
     public HatsPositioningDB hatsPositioning = new HatsPositioningDB();
-    private LocalizationManager localizationManager; // = new LocalizationManager();
+    //private LocalizationManager localizationManager; // = new LocalizationManager();
+    public static bool plus300 = false;
+    public static bool resetPurchases = false;
+    public static bool editCharacterOnStart = false;
+    public static bool tutorialOnStart = false;
+
     public bool VR = true;
     public bool practiceMode = true;
     public bool TextDebug = false;
     // store value here after getting from server
     public bool tutorialCompleted;
-    public bool firstStart = true;
+    public static bool firstStart = true;
     private static PlayerPrefsManager instance;
 
     private List<string> activatedScenes = new List<string>();
@@ -80,11 +86,6 @@ public class PlayerPrefsManager : MonoBehaviour
         SetEscapeButtonLogic();
     }
 
-    public LocalizationManager GetLocalization()
-    {
-        return localizationManager;
-    }
-
     private void OnLoaded(Scene s, LoadSceneMode m)
     {
         transform.position =
@@ -115,7 +116,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
         if (s.name == "MainMenu")
         {
-            GameObject.Find("UMenuProManager/MenuCanvas/Opties/PanelUI/OptionsGrid/PostProcessingToggle").GetComponent<Toggle>().isOn = postProcessingEnabled;
+            GameObject.Find("UMenuProManager/MenuCanvas/Opties/PanelUI/OptionsPanel/PostProcessingPanel/PostProcessingToggle").GetComponent<Toggle>().isOn = postProcessingEnabled;
         }
 
         // handle platform-dependant objects (deleting unnecesarry)
@@ -196,9 +197,6 @@ public class PlayerPrefsManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
 
-        localizationManager = new LocalizationManager();
-        localizationManager.LoadAllDictionaries();
-
         hatsPositioning.Init();
 
         // uncomment this, fill with correct info and start game
@@ -210,6 +208,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
     void Start()
     {
+        LocalizationManager.LoadAllDictionaries();
         SceneManager.sceneLoaded += OnLoaded;
 
         AudioListener.volume = Volume;
@@ -494,6 +493,16 @@ public class PlayerPrefsManager : MonoBehaviour
         // save certificate date here too
         string date = GetTodaysDateFormatted();
         DatabaseManager.UpdateField("CertificateDates", currentTestScene, date);
+    }
+
+    public void CreateBlankHighscore()
+    {
+        string currentTestScene = FormatSceneName(currentSceneVisualName);
+        string highscoreStr = DatabaseManager.FetchField("TestHighscores", currentTestScene);
+        if (highscoreStr == "") // returns empty string if field doesnt exist
+        {
+            DatabaseManager.UpdateField("TestHighscores", currentTestScene, (0.0f).ToString());
+        }
     }
 
     public static void AddOneToSceneInCategory(string scene, string category)

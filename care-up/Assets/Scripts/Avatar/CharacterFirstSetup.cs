@@ -11,6 +11,8 @@ public class CharacterFirstSetup : MonoBehaviour
     public PlayerAvatar Avatar;
     private int currentChar = 0;
     private int currentTab = 0;
+    public GameObject NoBigPopUp;
+    private bool DontHaveBIG = false;
 
     PlayerPrefsManager pref;
     
@@ -20,7 +22,7 @@ public class CharacterFirstSetup : MonoBehaviour
 
         if (pref != null)
         {
-            if (!pref.firstStart)
+            if (!PlayerPrefsManager.firstStart)
             {
                 NextButton.transform.Find("Text").GetComponent<Text>().text = "Opslaan";
                 FullName.text = pref.fullPlayerName;
@@ -48,14 +50,35 @@ public class CharacterFirstSetup : MonoBehaviour
         }
     }
 
+    public void ShowNoBigNum(bool value)
+    {
+        if (!value && !DontHaveBIG)
+            BigNumberHolder.transform.GetComponentInParent<Animator>().SetTrigger("red");
+        NoBigPopUp.SetActive(value);
+    }
+  
+
+    public void IDontHaveBIG()
+    {
+        DontHaveBIG = true;
+        if (FullName.text != "")
+            SetTab(1);
+        NoBigPopUp.SetActive(false);
+        PlayerPrefsManager.SetBIGNumber(BigNumberHolder.text);
+    }
+
     bool CheckFirstTab()
     {
         bool check = true;
         if (BigNumberHolder.text == "")
         {
-            BigNumberHolder.transform.GetComponentInParent<Animator>().SetTrigger("red");
-            check = false;
-        } 
+            if (!DontHaveBIG)
+            {
+                ShowNoBigNum(true);
+                return false;
+            }
+            //check = false;
+        }
 
         if (FullName.text == "")
         {
@@ -76,12 +99,10 @@ public class CharacterFirstSetup : MonoBehaviour
 
         if (check)
         {
-            if (pref != null)
+            print(PlayerPrefsManager.firstStart);
+            if (!PlayerPrefsManager.firstStart && currentTab == 0)
             {
-                if (!pref.firstStart && currentTab == 0)
-                {
-                    tab = -1;
-                }
+                tab = -1;
             }
             if (tab >= 0 && tab < tabs.Count)
             {
@@ -98,14 +119,19 @@ public class CharacterFirstSetup : MonoBehaviour
                 PlayerPrefsManager.SetFullName(FullName.text);
                 // save big number
                 PlayerPrefsManager.SetBIGNumber(BigNumberHolder.text);
-                if (pref.firstStart)
+                if (PlayerPrefsManager.firstStart)
                 {
                     CharacterInfo.SetCharacterCharacteristicsWU(PlayerPrefsManager.storeManager.CharacterItems[currentChar]);
                 }
                 // set new character scene to be seen and saved info
                 DatabaseManager.UpdateField("AccountStats", "CharSceneV2", "true");
+                bool goToMainMenu = (DatabaseManager.FetchField("AccountStats", "TutorialCompleted") == "true");
 
-                if (DatabaseManager.FetchField("AccountStats", "TutorialCompleted") == "true")
+#if UNITY_EDITOR
+                if (PlayerPrefsManager.tutorialOnStart)
+                    goToMainMenu = false;
+#endif
+                if (goToMainMenu)
                 {
                     bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
                 }

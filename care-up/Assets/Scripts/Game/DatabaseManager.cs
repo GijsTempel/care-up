@@ -78,6 +78,7 @@ public class DatabaseManager : MonoBehaviour
         int.TryParse(FetchField("AccountStats", "Head"), out CharacterInfo.headType);
         int.TryParse(FetchField("AccountStats", "Body"), out CharacterInfo.bodyType);
         int.TryParse(FetchField("AccountStats", "Glasses"), out CharacterInfo.glassesType);
+        int.TryParse(FetchField("AccountStats", "Index"), out CharacterInfo.index);
         CharacterInfo.hat = FetchField("AccountStats", "Hat");
 
         // set player irl full name
@@ -93,10 +94,16 @@ public class DatabaseManager : MonoBehaviour
 
         // check if character created, load proper scene
         // load scene at the end of this function
-        if (FetchField("AccountStats", "CharacterCreated") == "true" &&
+        bool goToMainMenu = FetchField("AccountStats", "CharacterCreated") == "true" &&
              FetchField("AccountStats", "FullName") != "" &&
              (FetchField("AccountStats", "CharSceneV2") == "true" ||
-             FetchField("AccountStats", "BIG_number") != ""))
+             FetchField("AccountStats", "BIG_number") != "");
+
+#if UNITY_EDITOR
+        if (PlayerPrefsManager.editCharacterOnStart)
+            goToMainMenu = false;
+#endif
+        if (goToMainMenu)
         {
             WULogin.characterCreated = true;
 
@@ -199,6 +206,8 @@ public class DatabaseManager : MonoBehaviour
                 output += "    " + key + ": " + c.fields[key] + "\n";
             }
         }
+
+        Debug.Log(output);
     }
 
     public static string FetchField(string category, string fieldName)

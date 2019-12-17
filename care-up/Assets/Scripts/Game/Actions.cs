@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace CareUp.Actions
 {
@@ -30,6 +27,7 @@ namespace CareUp.Actions
         public string placeRequirement;
         public string secondPlaceRequirement;
         public string _topic;
+        public float encounter;
 
         protected ActionManager.ActionType type;
 
@@ -55,7 +53,7 @@ namespace CareUp.Actions
         /// <param name="audio">Name of audiofile, that will be played when hint used</param>
         public Action(ActionManager.ActionType t, int index, string sdescr,
             int points, bool notNeeded, float quizTime, string title, string content,
-            List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg)
+            List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg, float encounterValue)
         {
             type = t;
             subindex = index;
@@ -71,6 +69,7 @@ namespace CareUp.Actions
             blockLock = blockL;
             blockTitle = blockTitl;
             blockMessage = blockMsg;
+            encounter = encounterValue;
         }
 
         /// <summary>
@@ -96,9 +95,9 @@ namespace CareUp.Actions
         public CombineAction(string left, string right, int index, string sdescr,
             int points, bool notNeeded, float quizTime, string title, string content,
             List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg,
-            string decombineBtnText)
+            string decombineBtnText, float encounterValue)
             : base(ActionManager.ActionType.ObjectCombine, index, sdescr, points,
-                  notNeeded, quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg)
+                  notNeeded, quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg, encounterValue)
         {
             leftInput = left;
             rightInput = right;
@@ -149,9 +148,9 @@ namespace CareUp.Actions
 
         public UseAction(string use, int index, string sdescr,
             string button, int points, bool notNeeded, float quizTime, string title, string content,
-            List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg)
+            List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg, float encounterValue)
             : base(ActionManager.ActionType.ObjectUse, index, sdescr, points, notNeeded,
-                  quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg)
+                  quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg, encounterValue)
         {
             useInput = use;
             buttonText = button;
@@ -190,11 +189,11 @@ namespace CareUp.Actions
         private string topicInput;
         private string person = "Patient"; // TODO
 
-        public TalkAction(string topic, int index, string sdescr, 
+        public TalkAction(string topic, int index, string sdescr,
             int points, bool notNeeded, float quizTime, string title, string content, List<string> blockReq,
-            List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg)
+            List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg, float encounterValue)
             : base(ActionManager.ActionType.PersonTalk, index, sdescr, points, notNeeded,
-                  quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg)
+                  quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg, encounterValue)
         {
             topicInput = topic;
             _topic = topic;
@@ -237,9 +236,9 @@ namespace CareUp.Actions
 
         public UseOnAction(string i, string t, int index, string sdescr,
             string button, int points, bool notNeeded, float quizTime, string title,
-            string content, List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg)
+            string content, List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg, float encounterValue)
             : base(ActionManager.ActionType.ObjectUseOn, index, sdescr, points, notNeeded,
-                  quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg)
+                  quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg, encounterValue)
         {
             item = i;
             target = t;
@@ -287,9 +286,9 @@ namespace CareUp.Actions
 
         public ExamineAction(string i, string exp, int index, string sdescr,
             int points, bool notNeeded, float quizTime, string title, string content,
-           List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg)
+           List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg, float encounterValue)
             : base(ActionManager.ActionType.ObjectExamine, index, sdescr, points,
-                  notNeeded, quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg)
+                  notNeeded, quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg, encounterValue)
         {
             item = i;
             expected = exp;
@@ -329,9 +328,9 @@ namespace CareUp.Actions
 
         public PickUpAction(string i, int index, string sdescr,
             int points, bool notNeeded, float quizTime, string title, string content, List<string> blockReq,
-           List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg)
+           List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg, float encounterValue)
             : base(ActionManager.ActionType.PickUp, index, sdescr, points, notNeeded,
-                  quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg)
+                  quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg, encounterValue)
         {
             item = i;
         }
@@ -362,9 +361,9 @@ namespace CareUp.Actions
 
         public SequenceStepAction(string name, int index, string sdescr,
             int points, bool notNeeded, float quizTime, string title, string content,
-            List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg)
+            List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg, float encounterValue)
             : base(ActionManager.ActionType.SequenceStep, index, sdescr, points,
-                  notNeeded, quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg)
+                  notNeeded, quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg, encounterValue)
         {
             stepName = name;
         }
@@ -393,9 +392,9 @@ namespace CareUp.Actions
 
         public ObjectDropAction(string name, string posId, int index, string sdescr,
             int points, bool notNeeded, float quizTime, string title,
-            string content, List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg)
+            string content, List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg, float encounterValue)
             : base(ActionManager.ActionType.ObjectDrop, index, sdescr, points,
-                  notNeeded, quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg)
+                  notNeeded, quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg, encounterValue)
         {
             objectName = name;
             dropPositionID = posId;
@@ -424,9 +423,9 @@ namespace CareUp.Actions
 
         public MovementAction(string position, int index, string sdescr,
             int points, bool notNeeded, float quizTime, string title,
-            string content, List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg)
+            string content, List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg, float encounterValue)
             : base(ActionManager.ActionType.Movement, index, sdescr, points,
-                  notNeeded, quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg)
+                  notNeeded, quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg, encounterValue)
         {
             positionInput = position;
         }
@@ -452,6 +451,45 @@ namespace CareUp.Actions
         public override void ObjectNames(out string[] name)
         {
             string[] res = { positionInput };
+            name = res;
+        }
+    }
+    public class GeneralAction : Action
+    {
+        public string ButtonText { get; }
+        public string Action { get; }
+        public string Item { get; }
+
+        public GeneralAction(string itemValue, string actionValue, int index, string sdescr,
+            string buttonTextValue, int points, bool notNeeded, float quizTime, string title,
+            string content, List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg, float encounterValue)
+            : base(ActionManager.ActionType.General, index, sdescr, points, notNeeded,
+                  quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg, encounterValue)
+        {
+            Item = itemValue;
+            Action = actionValue;
+            ButtonText = buttonTextValue;
+        }
+
+        public override bool Compare(string[] info)
+        {
+            bool same = false;
+            if (info != null)
+            {
+                if (info.Length == 1)
+                {
+                    if (info[0] == Item)
+                    {
+                        same = true;
+                    }
+                }
+            }
+            return same;
+        }
+
+        public override void ObjectNames(out string[] name)
+        {
+            string[] res = { Item };
             name = res;
         }
     }
