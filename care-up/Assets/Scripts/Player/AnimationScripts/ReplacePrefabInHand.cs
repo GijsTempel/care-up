@@ -23,13 +23,12 @@ public class ReplacePrefabInHand : StateMachineBehaviour {
         {
             if (PlayerAnimationManager.CompareFrames(frame, prevFrame, swapFrame) && swapObjName != "")
             {
+                Debug.Log("ffffff");
                 handsInventory.ReplaceHandObject(leftHand, swapObjName, GhostObjectTarget);
             }
-            if (animator.speed != 0)
-            {
-                prevFrame = frame;
-                frame += Time.deltaTime;
-            }
+           
+            prevFrame = frame;
+            frame += Time.deltaTime;
         }
     }
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
