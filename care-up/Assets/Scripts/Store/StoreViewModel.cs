@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class StoreViewModel : MonoBehaviour
 {
     private GameObject currencyText;
+    private GameObject extraCurrencyText;
     private Text presentNumberText;
 
     public static int SavedCoins { get; set; }
@@ -14,6 +15,7 @@ public class StoreViewModel : MonoBehaviour
     private void Start()
     {
         UpdateCurrancyPanel();
+        UpdateExtraCurrancyPanel();
     }
 
     public void UpdateCurrancyPanel()
@@ -24,12 +26,20 @@ public class StoreViewModel : MonoBehaviour
             currencyText.GetComponent<Text>().text = PlayerPrefsManager.storeManager.Currency.ToString();
     }
 
+    public void UpdateExtraCurrancyPanel()
+    {
+        extraCurrencyText = GameObject.Find("TitlePanel/TitlePanel/Panel/CurrencyPanel/ValuePanel/Text");
+
+        if (extraCurrencyText != null)
+            extraCurrencyText.GetComponent<Text>().text = PlayerPrefsManager.storeManager.ExtraCurrency.ToString();
+    }
+
     public static bool ShowRewardDialogue(Text panelText, GameObject popUp = null)
     {
         bool value = false;
 
         if (SavedCoins <= 0)
-            SavedCoins = ActionManager.Points;       
+            SavedCoins = ActionManager.Points;
 
         if (SavedCoins > 0 && (ActionManager.percentage > 30))
         {
@@ -51,6 +61,11 @@ public class StoreViewModel : MonoBehaviour
                 }
                 SavedCoins = ActionManager.Points = 0;
 
+                if (ActionManager.percentage == 100)
+                {
+                    Debug.Log("Extra reward for 100% score");
+                    PlayerPrefsManager.storeManager.ModifyExtraCurrencyBy(1);
+                }
                 value = true;
             }
         }

@@ -10,23 +10,26 @@ public class CharacterPanelManager : MonoBehaviour
     [SerializeField]
     private Text currencyText = default(Text);
 
+    [SerializeField]
+    private Text extraCurrencyText = default(Text);
+
     private static StoreManager storeManager = PlayerPrefsManager.storeManager;
     private SimpleGestureController gestureController = new SimpleGestureController();
     private UMP_Manager uMP_Manager;
     private LoadCharacterScene loadCharacter;
     private CharacterСarousel сarrousel;
-    public GameObject BuyBtnCoinIcon;
-    public GameObject BuyBtnFreeText;
-    public Text BuyBtnText;
-    public GameObject ConfirmationPanel;
-    public int CurrentPrice;
+    public GameObject buyBtnCoinIcon;
+    public GameObject buyBtnFreeText;
+    public Text buyBtnText;
+    public GameObject confirmationPanel;
+    public int currentPrice;
 
     [SerializeField]
     private UIParticleSystem currencyParticles = default;
 
     public void BuyButtonPressed()
     {
-        if (CurrentPrice == 0)
+        if (currentPrice == 0)
         {
             BuyCharacter();
         }
@@ -39,52 +42,52 @@ public class CharacterPanelManager : MonoBehaviour
     private void OnEnable()
     {
         UpdateCurrencyPanel();
+        UpdateExtraCurrencyPanel();
     }
 
     public void Adjust()
-    {       
+    {
         if (uMP_Manager == null)
             uMP_Manager = GameObject.FindObjectOfType<UMP_Manager>();
         uMP_Manager.ChangeWindow(9);
         AdjustCharacter();
         loadCharacter.LoadCharacter();
         GameObject.FindObjectOfType<StoreViewModel>()?.UpdateCurrancyPanel();
+        GameObject.FindObjectOfType<StoreViewModel>()?.UpdateExtraCurrancyPanel();
 
         TabGroup tabGroup = GameObject.FindObjectOfType<TabGroup>();
 
         if (tabGroup != null)
         {
-           tabGroup.DisplayItemsInStore();
-           tabGroup.ResetBuyBtn();
+            tabGroup.DisplayItemsInStore();
+            tabGroup.ResetBuyBtn();
         }
     }
 
-    
-
     public void ShowConfirmationPanel(bool value)
     {
-        ConfirmationPanel.SetActive(value);
+        confirmationPanel.SetActive(value);
     }
 
     public void SetStoreInfo(int characterIndex)
     {
-        CurrentPrice = storeManager.CharacterItems[characterIndex].price;
+        currentPrice = storeManager.CharacterItems[characterIndex].price;
         bool purchased = storeManager.CharacterItems[characterIndex].purchased;
-        string price = CurrentPrice.ToString();
-        if (CurrentPrice == 0)
+        string price = currentPrice.ToString();
+        if (currentPrice == 0)
         {
             price = "";
-            BuyBtnCoinIcon.SetActive(false);
-            BuyBtnFreeText.SetActive(true);
+            buyBtnCoinIcon.SetActive(false);
+            buyBtnFreeText.SetActive(true);
         }
         else
         {
-            BuyBtnCoinIcon.SetActive(true);
-            BuyBtnFreeText.SetActive(false);
+            buyBtnCoinIcon.SetActive(true);
+            buyBtnFreeText.SetActive(false);
         }
 
         adjustButton.SetActive(purchased);
-        BuyBtnText.GetComponent<Text>().text = price;
+        buyBtnText.GetComponent<Text>().text = price;
     }
 
     private void Start()
@@ -98,12 +101,19 @@ public class CharacterPanelManager : MonoBehaviour
         loadCharacter = GameObject.FindObjectOfType<LoadCharacterScene>();
         сarrousel = GameObject.FindObjectOfType<CharacterСarousel>();
         UpdateCurrencyPanel();
+        UpdateExtraCurrencyPanel();
     }
 
     public void UpdateCurrencyPanel()
     {
         if (currencyText != null)
             currencyText.text = storeManager.Currency.ToString();
+    }
+
+    public void UpdateExtraCurrencyPanel()
+    {
+        if (extraCurrencyText != null)
+            extraCurrencyText.text = storeManager.ExtraCurrency.ToString();
     }
 
     public void AdjustCharacter()
@@ -116,7 +126,6 @@ public class CharacterPanelManager : MonoBehaviour
 
     public void BuyCharacter()
     {
-       
         if (сarrousel == null)
             сarrousel = GameObject.FindObjectOfType<CharacterСarousel>();
         int characterIndex = сarrousel.CurrentCharacter;
@@ -125,7 +134,11 @@ public class CharacterPanelManager : MonoBehaviour
             сarrousel.SetAnimation();
             adjustButton.SetActive(true);
             currencyText.text = storeManager.Currency.ToString();
-            if (storeManager.CharacterItems[characterIndex].price > 0)
+            extraCurrencyText.text = storeManager.ExtraCurrency.ToString();
+
+            CharacterItem character = storeManager.CharacterItems[characterIndex];
+
+            if (character.price > 0)
             {
                 currencyParticles.Play();
                 GameObject.Find("cashRegisterEffect").GetComponent<AudioSource>().Play();

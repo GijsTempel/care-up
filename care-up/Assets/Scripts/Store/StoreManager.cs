@@ -10,10 +10,18 @@ public class StoreItem
     public string name;
     public string category;
     public bool purchased;
+    public int extraPrice;
 
     public StoreItem() { index = -1; price = 0; }
-    public StoreItem(int i, int p, string n, string c, bool s)
-    { index = i; price = p; name = n; category = c; purchased = s; }
+    public StoreItem(int index, int price, string name, string category, bool purchased, int extraPrice = 0)
+    {
+        this.index = index;
+        this.price = price;
+        this.extraPrice = extraPrice;
+        this.name = name;
+        this.category = category;
+        this.purchased = purchased;
+    }
 }
 
 public class StoreCategory
@@ -31,16 +39,18 @@ public class CharacterItem
 {
     public int index;
     public int price;
+    public int extraPrice;
     public bool purchased;
 
     public PlayerAvatarData playerAvatar;
     public PlayerAvatarData defaultAvatarData;
 
     public CharacterItem() { index = -1; price = 0; }
-    public CharacterItem(int indexValue, int priceValue, bool purchasedValue, PlayerAvatarData playerAvatarValue)
+    public CharacterItem(int indexValue, int priceValue, int extraPriceValue, bool purchasedValue, PlayerAvatarData playerAvatarValue)
     {
         index = indexValue;
         price = priceValue;
+        extraPrice = extraPriceValue;
         purchased = purchasedValue;
         playerAvatar = playerAvatarValue;
         defaultAvatarData = playerAvatarValue;
@@ -50,6 +60,7 @@ public class CharacterItem
 public class StoreManager
 {
     private int currentCurrency = 0;
+    private int currentExtraCurrency = 0;
     private int currentPresents = 0;
     private List<StoreCategory> storeItems = new List<StoreCategory>();
     private List<CharacterItem> characterItems = new List<CharacterItem>();
@@ -59,6 +70,7 @@ public class StoreManager
     public List<CharacterItem> CharacterItems { get { return characterItems; } }
 
     public int Currency { get { return currentCurrency; } }
+    public int ExtraCurrency { get { return currentExtraCurrency; } }
     public int Presents { get { return currentPresents; } }
 
     public int GetItemIndex(int num)
@@ -99,8 +111,8 @@ public class StoreManager
 
     public void Init(string storeXml = "Store", string characterStoreXml = "CharacterStore")
     {
-        bool devDropAllPurchases = false; 
-        bool devAddCurrency = false; 
+        bool devDropAllPurchases = false;
+        bool devAddCurrency = false;
 
 #if UNITY_EDITOR
         devDropAllPurchases = PlayerPrefsManager.resetPurchases;
@@ -122,9 +134,10 @@ public class StoreManager
             string catName = (xmlCatNode.Attributes["name"] != null) ? xmlCatNode.Attributes["name"].Value : "";
             foreach (XmlNode xmlSceneNode in xmlCatNode.ChildNodes)
             {
-                int index = -1, price = 1;
+                int index = -1, price = 1, extraPrice = -1;
                 int.TryParse(xmlSceneNode.Attributes["index"].Value, out index);
-                int.TryParse(xmlSceneNode.Attributes["price"].Value, out price);
+                if (xmlSceneNode.Attributes["price"] != null)
+                    int.TryParse(xmlSceneNode.Attributes["price"].Value, out price);
                 bool purchased = DatabaseManager.FetchField("Store", "StoreItem_" + index.ToString()) == "true";
 
                 if (devDropAllPurchases)
@@ -135,8 +148,10 @@ public class StoreManager
 
                 string name = xmlSceneNode.Attributes["name"].Value;
                 string category = (xmlSceneNode.Attributes["category"] != null) ? xmlSceneNode.Attributes["category"].Value : catName;
+                if (xmlSceneNode.Attributes["extraPrice"] != null)
+                    int.TryParse(xmlSceneNode.Attributes["extraPrice"].Value, out extraPrice);
 
-                catItems.Add(new StoreItem(index, price, name, category, purchased));
+                catItems.Add(new StoreItem(index, price, name, category, purchased, extraPrice));
             }
             string catIcon = (xmlCatNode.Attributes["icon"] != null) ? xmlCatNode.Attributes["icon"].Value : "";
             storeItems.Add(new StoreCategory(catItems, catName, catIcon));
@@ -149,10 +164,13 @@ public class StoreManager
 
         foreach (XmlNode xmlSceneNode in xmlCharacterList)
         {
-            int index = -1, price = 1;
+            int index = -1, price = 1, extraPrice = -1;
 
             int.TryParse(xmlSceneNode.Attributes["index"].Value, out index);
-            int.TryParse(xmlSceneNode.Attributes["price"].Value, out price);
+            if (xmlSceneNode.Attributes["price"].Value != null)
+                int.TryParse(xmlSceneNode.Attributes["price"].Value, out price);
+            if (xmlSceneNode.Attributes["extraPrice"] != null)
+                int.TryParse(xmlSceneNode.Attributes["extraPrice"].Value, out extraPrice);
 
             string gender = xmlSceneNode.Attributes["gender"].Value;
             int.TryParse(xmlSceneNode.Attributes["glassesType"].Value, out int glassesType);
@@ -174,23 +192,7 @@ public class StoreManager
 
             Gender characterGender = (gender == "Female") ? Gender.Female : Gender.Male;
             PlayerAvatarData playerAvatar = new PlayerAvatarData(characterGender, headType, bodyType, glassesType, hatType, mouthType, eyeType);
-            CharacterItem characterItem = new CharacterItem(index, price, purchased, playerAvatar);
-            //if (devDropAllPurchases)
-            //{
-            //    string[][] charactersCategory = DatabaseManager.FetchCategory("CharacterItem_" + index.ToString());
-            //    if (charactersCategory != null)
-            //    {
-            //        foreach (string[] field in charactersCategory)
-            //        {
-            //            DatabaseManager.UpdateField("CharacterItem_" + index.ToString(), "Sex", gender.ToString());
-            //            DatabaseManager.UpdateField("CharacterItem_" + index.ToString(), "Body", bodyType.ToString());
-            //            DatabaseManager.UpdateField("CharacterItem_" + index.ToString(), "Head", headType.ToString());
-            //            DatabaseManager.UpdateField("CharacterItem_" + index.ToString(), "Hat", hatType);
-            //            DatabaseManager.UpdateField("CharacterItem_" + index.ToString(), "Glasses", glassesType.ToString());
-
-            //        }
-            //    }
-            //}
+            CharacterItem characterItem = new CharacterItem(index, price, extraPrice, purchased, playerAvatar);
 
             if (!devDropAllPurchases && purchased)
             {
@@ -228,15 +230,27 @@ public class StoreManager
 
         // get amount of currency/presents saved
         int.TryParse(DatabaseManager.FetchField("Store", "Currency"), out currentCurrency);
+        int.TryParse(DatabaseManager.FetchField("Store", "ExtraCurrency"), out currentExtraCurrency);
         //int.TryParse(DatabaseManager.FetchField("Store", "Presents"), out currentPresents);
 
-        if (devAddCurrency) ModifyCurrencyBy(300);
+        ModifyExtraCurrencyBy(10);
+        if (devAddCurrency)
+        {
+            ModifyCurrencyBy(300);
+         
+        }
     }
 
     public void ModifyCurrencyBy(int amount)
     {
         currentCurrency += amount;
         DatabaseManager.UpdateField("Store", "Currency", currentCurrency.ToString());
+    }
+
+    public void ModifyExtraCurrencyBy(int amount)
+    {
+        currentExtraCurrency += amount;
+        DatabaseManager.UpdateField("Store", "ExtraCurrency", currentExtraCurrency.ToString());
     }
 
     public void ModifyPresentsBy(int amount)
@@ -292,22 +306,34 @@ public class StoreManager
     {
         if (itemIndex < 0)
             return false;
+
         CharacterItem item = characterItems.Find(x => x.index == (itemIndex));
+        bool result = false;
 
         if (item != null)
         {
-            if (item.index != -1 && currentCurrency >= item.price)
+            if (item.index != -1)
             {
-                ModifyCurrencyBy(-item.price);
-                item.purchased = true;
-                DatabaseManager.UpdateField("Store", "CharacterItem_" + itemIndex.ToString(), "true"); // temporarily
+                if ((item.extraPrice > 0) && (currentExtraCurrency >= item.extraPrice))
+                {
+                    ModifyExtraCurrencyBy(-item.extraPrice);
+                    result = true;
+                }
+                else if (currentCurrency >= item.price)
+                {
+                    ModifyCurrencyBy(-item.price);
+                    result = true;
+                }
 
-                CharacterInfo.SetCharacterCharacteristicsWU(item);
-
-                return true;
+                if (result)
+                {
+                    item.purchased = true;
+                    DatabaseManager.UpdateField("Store", "CharacterItem_" + itemIndex.ToString(), "true");
+                    CharacterInfo.SetCharacterCharacteristicsWU(item);
+                }
             }
         }
-        return false;
+        return result;
     }
 
     public void Fitting(int itemIndex) { }
