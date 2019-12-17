@@ -38,6 +38,8 @@ public class QuizTab : MonoBehaviour
     public Button continueButton;
     public Button backToOptionsButton;
     public Text answeredTitleText;
+    public GameObject answerPanel;
+    public GameObject questionsPanel;
 
     private PlayerPrefsManager pref;
     private EndScoreManager endScoreManager;
@@ -48,6 +50,9 @@ public class QuizTab : MonoBehaviour
 
     public void Init(string name)
     {
+        print(name);
+        print(gameObject.name);
+
         manager = GameObject.FindObjectOfType<ActionManager>();
 
         TextAsset textAsset = (TextAsset)Resources.Load("Xml/Quiz/" + name);
@@ -68,6 +73,7 @@ public class QuizTab : MonoBehaviour
                 question.answers = new List<Answer>();
 
                 question.text = q.Attributes["text"].Value;
+                print(question.text);
                 int.TryParse(q.Attributes["answer"].Value, out question.answerID);
 
                 if (q.Attributes["points"] != null)
@@ -96,7 +102,6 @@ public class QuizTab : MonoBehaviour
                 else
                     step.Add(question);
             }
-            print(step.Count);
             if (step.Count > 0)
                 questionList.Add(step);
             if (encounter.Count > 0)
@@ -109,6 +114,7 @@ public class QuizTab : MonoBehaviour
         continueBtn = false;
         continueButton.gameObject.SetActive(false);
         backToOptionsButton.gameObject.SetActive(false);
+        answerPanel.SetActive(false);
         descriptionText.text = "";
     }
 
@@ -223,7 +229,7 @@ public class QuizTab : MonoBehaviour
         if (random)
             RandomQuiz.randomQuestionsList.RemoveAt(currentQuestionID);
 
-        descriptionText.text = "";
+        //descriptionText.text = "";
 
         if ((random == false) && (encounter == false))
         {
@@ -244,6 +250,8 @@ public class QuizTab : MonoBehaviour
         //transform.GetChild(1).gameObject.SetActive(true);
         //transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().interactable = true;
         //transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        questionsPanel.SetActive(false);
+        answerPanel.SetActive(true);
 
         if ((encounter == false) && (random == false))
         {
@@ -269,7 +277,7 @@ public class QuizTab : MonoBehaviour
         {
             b.onClick.RemoveAllListeners();
         }
-
+        gameObject.SetActive(true);
         continueBtn = true;
         continueButton.gameObject.SetActive(true);
         backToOptionsButton.gameObject.SetActive(false);
@@ -305,6 +313,10 @@ public class QuizTab : MonoBehaviour
         //transform.GetChild(1).gameObject.SetActive(true);
         //transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().interactable = true;
         //transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        gameObject.SetActive(true);
+        questionsPanel.SetActive(false);
+        answerPanel.SetActive(true);
+
 
         if ((random == false) && (encounter == false))
         {
@@ -318,7 +330,7 @@ public class QuizTab : MonoBehaviour
         continueBtn = false;
         continueButton.gameObject.SetActive(false);
         backToOptionsButton.gameObject.SetActive(true);
-
+        gameObject.SetActive(true);
         if (endScoreManager != null)
         {
             if ((random == false) && (encounter == false))
@@ -346,8 +358,8 @@ public class QuizTab : MonoBehaviour
 
         Continue();
 
-        transform.GetChild(0).gameObject.SetActive(true);
-        transform.GetChild(1).gameObject.SetActive(false);
+        questionsPanel.SetActive(true);
+        answerPanel.SetActive(false);
 
         // disable quiz icon
         //icons.Find("QuizTab").gameObject.SetActive(false);
@@ -371,6 +383,8 @@ public class QuizTab : MonoBehaviour
 
     public void OnBackToOptionsButton()
     {
+        questionsPanel.SetActive(true);
+        answerPanel.SetActive(false);
         //transform.GetChild(0).gameObject.SetActive(true);
         //transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().interactable = true;
         //transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
