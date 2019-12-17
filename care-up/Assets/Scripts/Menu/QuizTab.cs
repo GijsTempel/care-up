@@ -38,6 +38,9 @@ public class QuizTab : MonoBehaviour
     public Button continueButton;
     public Button backToOptionsButton;
     public Text answeredTitleText;
+
+    public Text quastionTitle;
+
     public GameObject answerPanel;
     public GameObject questionsPanel;
 
@@ -200,7 +203,7 @@ public class QuizTab : MonoBehaviour
             current = questionList[currentStep][currentQuestionID];
         }
 
-        descriptionText.text = current.text;
+        quastionTitle.text = current.text;
 
         for (int i = 0; i < current.answers.Count; i++)
         {
@@ -229,7 +232,7 @@ public class QuizTab : MonoBehaviour
         if (random)
             RandomQuiz.randomQuestionsList.RemoveAt(currentQuestionID);
 
-        //descriptionText.text = "";
+        descriptionText.text = "";
 
         if ((random == false) && (encounter == false))
         {
