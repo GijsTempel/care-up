@@ -3,15 +3,14 @@ using UnityEngine.UI;
 
 public class StoreViewModel : MonoBehaviour
 {
-    private GameObject currencyText;
-    private GameObject extraCurrencyText;
-    private Text presentNumberText;
+    private GameObject currencyText = default;
+    private GameObject extraCurrencyText = default;
+    private Text presentNumberText = default;
+    [SerializeField]
+    private Button goToCharacterStoreButton = default;
 
     public static int SavedCoins { get; set; }
-
-    [SerializeField]
-    private Button goToCharacterStoreButton;
-
+       
     private void Start()
     {
         UpdateCurrancyPanel();
@@ -28,7 +27,7 @@ public class StoreViewModel : MonoBehaviour
 
     public void UpdateExtraCurrancyPanel()
     {
-        extraCurrencyText = GameObject.Find("TitlePanel/TitlePanel/Panel/CurrencyPanel/ValuePanel/Text");
+        extraCurrencyText = GameObject.Find("TitlePanel/TitlePanel/Panel/CUDiamondsPanel/ValuePanel/Text");
 
         if (extraCurrencyText != null)
             extraCurrencyText.GetComponent<Text>().text = PlayerPrefsManager.storeManager.ExtraCurrency.ToString();

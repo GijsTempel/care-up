@@ -233,11 +233,10 @@ public class StoreManager
         int.TryParse(DatabaseManager.FetchField("Store", "ExtraCurrency"), out currentExtraCurrency);
         //int.TryParse(DatabaseManager.FetchField("Store", "Presents"), out currentPresents);
 
-        ModifyExtraCurrencyBy(10);
         if (devAddCurrency)
         {
             ModifyCurrencyBy(300);
-         
+            ModifyExtraCurrencyBy(5);
         }
     }
 
