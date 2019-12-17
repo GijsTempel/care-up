@@ -48,7 +48,6 @@ public class QuizTab : MonoBehaviour
 
     public void Init(string name)
     {
-        print("DDDDDDDDDDDDDDDDDD " + name);
         manager = GameObject.FindObjectOfType<ActionManager>();
 
         TextAsset textAsset = (TextAsset)Resources.Load("Xml/Quiz/" + name);
@@ -59,14 +58,12 @@ public class QuizTab : MonoBehaviour
         XmlNodeList steps = xmlFile.FirstChild.NextSibling.ChildNodes;
         foreach (XmlNode s in steps)
         {
-            print("fgggggg");
             List<Question> step = new List<Question>();
             List<Question> encounter = new List<Question>();
             XmlNodeList questions = s.ChildNodes;
 
             foreach (XmlNode q in questions)
             {
-                print("FFFFF");
                 Question question = new Question();
                 question.answers = new List<Answer>();
 
@@ -105,13 +102,10 @@ public class QuizTab : MonoBehaviour
             if (encounter.Count > 0)
                 encounterList.Add(encounter);
         }
-        print(questionList.Count);
-
         // descriptionText = transform.GetChild(1).Find("ScrollViewDescription/Viewport/Content/Description").GetComponent<Text>();
         // continueButton = transform.GetChild(1).Find("Continue").GetComponent<Button>();
         // backToOptionsButton = transform.GetChild(1).Find("Back").GetComponent<Button>();
         // answeredTitleText = transform.GetChild(1).Find("AnswerTitle").GetComponent<Text>();
-
         continueBtn = false;
         continueButton.gameObject.SetActive(false);
         backToOptionsButton.gameObject.SetActive(false);
@@ -149,8 +143,6 @@ public class QuizTab : MonoBehaviour
 
     public void NextQuizQuestion(bool random = false, bool encounter = false)
     {
-        print(gameObject.name);
-        print(gameObject.name);
         quiz = true;
         if (random == false)
         {
@@ -179,7 +171,6 @@ public class QuizTab : MonoBehaviour
         // enable quiz icon
 
         //GameObject.FindObjectOfType<PatientInfoManager>().SetTabActive("QuizTab");
-        print(gameObject.name);
         gameObject.SetActive(true);
 
         int currentQuestionID;
@@ -204,7 +195,6 @@ public class QuizTab : MonoBehaviour
         }
 
         descriptionText.text = current.text;
-        print(current.text);
 
         for (int i = 0; i < current.answers.Count; i++)
         {
