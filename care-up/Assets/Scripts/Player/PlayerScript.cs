@@ -546,16 +546,16 @@ public class PlayerScript : MonoBehaviour
     public void CloseRobotUI()
     {
         //GameObject theoryTab = GameObject.Find("theoryPanel");
-        gameUI.HideTheoryTab();
+        
 
-        //if (theoryTab != null && (GameObject.FindObjectOfType<QuizTab>() != null))
-        //{
-        //    if (GameObject.FindObjectOfType<QuizTab>().quiz && theoryTab.gameObject.activeSelf)
-        //    {
-        //        theoryTab.gameObject.SetActive(false);
-        //        return;
-        //    }
-        //}
+        if (GameObject.FindObjectOfType<QuizTab>() != null)
+        {
+            if (GameObject.FindObjectOfType<QuizTab>().quiz && gameUI.theoryTab.gameObject.activeSelf)
+            {
+                gameUI.HideTheoryTab();
+                return;
+            }
+        }
 
         if ((tutorial_UI != null && tutorial_UI.expectedRobotUIstate == true) ||
             (tutorial_theory != null && tutorial_theory.expectedRobotUIstate == true))

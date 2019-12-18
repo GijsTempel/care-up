@@ -52,10 +52,10 @@ public class QuizTab : MonoBehaviour
 
     public static float encounterDelay = -1f;
 
-    public void Show(bool value)
-    {
-        gameObject.SetActive(value);
-    }
+    //public void Show(bool value)
+    //{
+    //    gameObject.SetActive(value);
+    //}
 
     public void Init(string name)
     {

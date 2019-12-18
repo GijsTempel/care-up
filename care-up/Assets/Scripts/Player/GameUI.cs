@@ -61,7 +61,7 @@ public class GameUI : MonoBehaviour
     public bool prescriptionButtonBlink;
     public bool recordsButtonBlink;
     public bool paperAndPenButtonblink;
-    public GameObject theoryPanel;
+    //public GameObject theoryPanel;
     public GameObject patientInfo;
 
     public GameObject noTargetButton;
@@ -85,7 +85,7 @@ public class GameUI : MonoBehaviour
     float lastCooldownTime = 0;
     int currentActionsCount = 0;
 
-    TheoryTab theoryTab;
+    public TheoryTab theoryTab;
 
     private bool startTimer = false;
     private float targetTime = 0.7f;
@@ -396,9 +396,9 @@ public class GameUI : MonoBehaviour
 
     public void HideTheoryTab()
     {
+        GameObject.Find("theoryPanel/panel/quizElements/Continue").gameObject.GetComponent<Button>().onClick.AddListener(
+             () => GameObject.FindObjectOfType<PlayerScript>().CloseRobotUI());
         theoryTab.Show(false);
-        //GameObject.Find("theoryPanel/panel/quizElements/Continue").gameObject.GetComponent<Button>().onClick.AddListener(
-        //     () => GameObject.FindObjectOfType<PlayerScript>().CloseRobotUI());
     }
 
 
@@ -781,17 +781,15 @@ public class GameUI : MonoBehaviour
         {
             if (!string.IsNullOrEmpty(actionManager.Message))
             {
-                theoryTab.ShowTheory(actionManager.MessageTitle, actionManager.Message);
                 actionManager.Message = null;
                 actionManager.ShowTheory = false;
-                //if (!GameObject.FindObjectOfType<PlayerScript>().robotUIopened)
-                //{
-                //    GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
-                //    GameObject.FindObjectOfType<GameUI>().theoryPanel.SetActive(true);
-                //    GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Title").GetComponent<Text>().text = actionManager.MessageTitle;
-                //    GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Message").GetComponent<Text>().text = actionManager.Message;
-
-                //}
+                if (!GameObject.FindObjectOfType<PlayerScript>().robotUIopened)
+                {
+                    GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
+                    theoryTab.ShowTheory(actionManager.MessageTitle, actionManager.Message);
+                    //GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Title").GetComponent<Text>().text = actionManager.MessageTitle;
+                    //GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Message").GetComponent<Text>().text = actionManager.Message;
+                }
             }
         }
 
@@ -799,7 +797,7 @@ public class GameUI : MonoBehaviour
         {
             if (!GameObject.FindObjectOfType<PlayerScript>().robotUIopened)
             {
-                GameObject.FindObjectOfType<GameUI>().quiz_tab.NextQuizQuestion(true);
+                quiz_tab.NextQuizQuestion(true);
                 RandomQuiz.showQuestion = false;
             }
         }
