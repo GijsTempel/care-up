@@ -52,6 +52,11 @@ public class QuizTab : MonoBehaviour
 
     public static float encounterDelay = -1f;
 
+    public void Show(bool value)
+    {
+        gameObject.SetActive(value);
+    }
+
     public void Init(string name)
     {
         manager = GameObject.FindObjectOfType<ActionManager>();
@@ -156,9 +161,6 @@ public class QuizTab : MonoBehaviour
             {
                 if (currentStep >= questionList.Count)
                 {
-                    print(currentStep);
-                    print(questionList.Count);
-
                     PlayerScript.actionsLocked = false;
                     return;
                 }

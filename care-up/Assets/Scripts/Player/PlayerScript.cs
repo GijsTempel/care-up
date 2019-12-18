@@ -545,16 +545,17 @@ public class PlayerScript : MonoBehaviour
 
     public void CloseRobotUI()
     {
-        GameObject theoryTab = GameObject.Find("PatientInfoTabs/TheoryTab");
+        //GameObject theoryTab = GameObject.Find("theoryPanel");
+        gameUI.HideTheoryTab();
 
-        if (theoryTab != null && (GameObject.FindObjectOfType<QuizTab>() != null))
-        {
-            if (GameObject.FindObjectOfType<QuizTab>().quiz && theoryTab.gameObject.activeSelf)
-            {
-                theoryTab.gameObject.SetActive(false);
-                return;
-            }
-        }
+        //if (theoryTab != null && (GameObject.FindObjectOfType<QuizTab>() != null))
+        //{
+        //    if (GameObject.FindObjectOfType<QuizTab>().quiz && theoryTab.gameObject.activeSelf)
+        //    {
+        //        theoryTab.gameObject.SetActive(false);
+        //        return;
+        //    }
+        //}
 
         if ((tutorial_UI != null && tutorial_UI.expectedRobotUIstate == true) ||
             (tutorial_theory != null && tutorial_theory.expectedRobotUIstate == true))
@@ -584,11 +585,12 @@ public class PlayerScript : MonoBehaviour
         GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<CanvasGroup>().alpha = 0f;
         GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<CanvasGroup>().blocksRaycasts = false;
 
-        if (theoryTab != null)
-        {
-            theoryTab.GetComponent<CanvasGroup>().alpha = 0f;
-            theoryTab.GetComponent<CanvasGroup>().blocksRaycasts = false;
-        }
+        //if (theoryTab != null)
+        //{
+        //    //theoryTab.GetComponent<CanvasGroup>().alpha = 0f;
+        //    //theoryTab.GetComponent<CanvasGroup>().blocksRaycasts = false;
+        //    theoryTab.SetActive(false);
+        //}
 
         robotUIopened = false;
 
