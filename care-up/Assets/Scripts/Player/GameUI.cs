@@ -406,7 +406,7 @@ public class GameUI : MonoBehaviour
         objectsIDsController = GameObject.FindObjectOfType<ObjectsIDsController>();
         MovementSideButtons = GameObject.Find("MovementSideButtons");
 
-        ActionManager.generalActionDone = false;
+        //ActionManager.generalActionDone = false;
         ActionManager.generalAction = false;
         prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
         if (prefs != null)
@@ -1033,6 +1033,8 @@ public class GameUI : MonoBehaviour
                         noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text =
                            actionManager.CurrentButtonText(handsInventory.rightHandObject.name, true);
                     }
+                    else
+                        showNoTarget_right = false;
                     if (LEmpty)
                     {
                         bool show_decomb_right = actionManager.CompareCombineObjects(handsInventory.rightHandObject.name, "", true);
@@ -1061,7 +1063,9 @@ public class GameUI : MonoBehaviour
                 zoomButtonLeft.SetActive(showZoomLeft);
                 zoomButtonRight.SetActive(showZoomRight);
                 noTargetButton.SetActive(showNoTarget);
-                noTargetButton_right.SetActive(showNoTarget_right || (ActionManager.generalAction && !ActionManager.generalActionDone));
+                if (showNoTarget_right)
+                    noTargetButton_right.SetActive(true);
+               // noTargetButton_right.SetActive(showNoTarget_right || (ActionManager.generalAction/* && !ActionManager.generalActionDone*/));
                 combineButton.SetActive(showCombin);
             }
 
@@ -1099,7 +1103,7 @@ public class GameUI : MonoBehaviour
 
     public void ShowNoTargetButton()
     {
-        ActionManager.generalAction = true;
+        //ActionManager.generalAction = true;
         noTargetButton_right.SetActive(true);
         noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text =
             actionManager.CurrentButtonText();
