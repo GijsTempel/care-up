@@ -43,6 +43,7 @@ public class QuizTab : MonoBehaviour
 
     public GameObject answerPanel;
     public GameObject questionsPanel;
+    public GameObject w_descriptionPanel;
 
     private PlayerPrefsManager pref;
     private EndScoreManager endScoreManager;
@@ -265,6 +266,7 @@ public class QuizTab : MonoBehaviour
         ActionManager.CorrectAction();
 
         answeredTitleText.text = "Heel goed!";
+        w_descriptionPanel.SetActive(description != "");
         descriptionText.text = description;
 
         if (random == false)
@@ -301,15 +303,15 @@ public class QuizTab : MonoBehaviour
 
     public void WrongAnswer(string description, bool random = false, bool encounter = false)
     {
-#if UNITY_EDITOR
-        PlayerPrefsManager prefsManager = FindObjectOfType<PlayerPrefsManager>();
-        if (prefsManager != null)
-            if (prefsManager.testingMode)
-            {
-                CorrectAnswer(description);
-                return;
-            }
-#endif
+//#if UNITY_EDITOR
+//        PlayerPrefsManager prefsManager = FindObjectOfType<PlayerPrefsManager>();
+//        if (prefsManager != null)
+//            if (prefsManager.testingMode)
+//            {
+//                CorrectAnswer(description);
+//                return;
+//            }
+//#endif
 
         //----------------------------------------
         //transform.GetChild(0).gameObject.SetActive(false);
@@ -329,7 +331,7 @@ public class QuizTab : MonoBehaviour
 
         answeredTitleText.text = "Helaas, dit antwoord is niet goed";
         descriptionText.text = description;
-
+        w_descriptionPanel.SetActive(description != "");
         continueBtn = false;
         continueButton.gameObject.SetActive(false);
         backToOptionsButton.gameObject.SetActive(true);
