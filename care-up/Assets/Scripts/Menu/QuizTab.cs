@@ -31,13 +31,19 @@ public class QuizTab : MonoBehaviour
     private int currentEncounter = 0;
     private int currentQuestionID = 0;
 
-    private List<Button> buttons = new List<Button>();
+    public List<Button> buttons = new List<Button>();
     private bool[] buttonsActive = new bool[4];
 
-    private Text descriptionText;
-    private Button continueButton;
-    private Button backToOptionsButton;
-    private Text answeredTitleText;
+    public Text descriptionText;
+    public Button continueButton;
+    public Button backToOptionsButton;
+    public Text answeredTitleText;
+
+    public Text quastionTitle;
+
+    public GameObject answerPanel;
+    public GameObject questionsPanel;
+    public GameObject w_descriptionPanel;
 
     private PlayerPrefsManager pref;
     private EndScoreManager endScoreManager;
@@ -56,7 +62,6 @@ public class QuizTab : MonoBehaviour
         RandomQuiz.randomQuestionsList = new List<Question>();
 
         XmlNodeList steps = xmlFile.FirstChild.NextSibling.ChildNodes;
-
         foreach (XmlNode s in steps)
         {
             List<Question> step = new List<Question>();
@@ -102,15 +107,14 @@ public class QuizTab : MonoBehaviour
             if (encounter.Count > 0)
                 encounterList.Add(encounter);
         }
-
-        descriptionText = transform.GetChild(1).Find("ScrollViewDescription/Viewport/Content/Description").GetComponent<Text>();
-        continueButton = transform.GetChild(1).Find("Continue").GetComponent<Button>();
-        backToOptionsButton = transform.GetChild(1).Find("Back").GetComponent<Button>();
-        answeredTitleText = transform.GetChild(1).Find("AnswerTitle").GetComponent<Text>();
-
+        // descriptionText = transform.GetChild(1).Find("ScrollViewDescription/Viewport/Content/Description").GetComponent<Text>();
+        // continueButton = transform.GetChild(1).Find("Continue").GetComponent<Button>();
+        // backToOptionsButton = transform.GetChild(1).Find("Back").GetComponent<Button>();
+        // answeredTitleText = transform.GetChild(1).Find("AnswerTitle").GetComponent<Text>();
         continueBtn = false;
         continueButton.gameObject.SetActive(false);
         backToOptionsButton.gameObject.SetActive(false);
+        answerPanel.SetActive(false);
         descriptionText.text = "";
     }
 
@@ -119,11 +123,13 @@ public class QuizTab : MonoBehaviour
         PlayerScript.quiz = this;
         gameObject.SetActive(false);
 
-        buttons.Add(transform.GetChild(0).Find("Answer1").GetComponent<Button>());
-        buttons.Add(transform.GetChild(0).Find("Answer2").GetComponent<Button>());
-        buttons.Add(transform.GetChild(0).Find("Answer3").GetComponent<Button>());
-        buttons.Add(transform.GetChild(0).Find("Answer4").GetComponent<Button>());
-
+        if (buttons.Count == 0)
+        {
+            buttons.Add(transform.GetChild(0).Find("Answer1").GetComponent<Button>());
+            buttons.Add(transform.GetChild(0).Find("Answer2").GetComponent<Button>());
+            buttons.Add(transform.GetChild(0).Find("Answer3").GetComponent<Button>());
+            buttons.Add(transform.GetChild(0).Find("Answer4").GetComponent<Button>());
+        }
         if (continueButton == null)
         {
             continueButton = transform.GetChild(1).Find("Continue").GetComponent<Button>();
@@ -150,6 +156,9 @@ public class QuizTab : MonoBehaviour
             {
                 if (currentStep >= questionList.Count)
                 {
+                    print(currentStep);
+                    print(questionList.Count);
+
                     PlayerScript.actionsLocked = false;
                     return;
                 }
@@ -162,13 +171,12 @@ public class QuizTab : MonoBehaviour
         }
 
         // open UI
-        GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
+        //GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
         // disable close button
-        GameObject.FindObjectOfType<RobotManager>().ToggleCloseBtn(false);
+        //GameObject.FindObjectOfType<RobotManager>().ToggleCloseBtn(false);
         // enable quiz icon
 
-        GameObject.FindObjectOfType<PatientInfoManager>().SetTabActive("QuizTab");
-
+        //GameObject.FindObjectOfType<PatientInfoManager>().SetTabActive("QuizTab");
         gameObject.SetActive(true);
 
         int currentQuestionID;
@@ -192,7 +200,7 @@ public class QuizTab : MonoBehaviour
             current = questionList[currentStep][currentQuestionID];
         }
 
-        transform.GetChild(0).Find("QuestionText").GetComponent<Text>().text = current.text;
+        quastionTitle.text = current.text;
 
         for (int i = 0; i < current.answers.Count; i++)
         {
@@ -238,10 +246,12 @@ public class QuizTab : MonoBehaviour
 
     public void CorrectAnswer(string description, bool random = false, bool encounter = false)
     {
-        transform.GetChild(0).gameObject.SetActive(false);
-        transform.GetChild(1).gameObject.SetActive(true);
-        transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().interactable = true;
-        transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        //transform.GetChild(0).gameObject.SetActive(false);
+        //transform.GetChild(1).gameObject.SetActive(true);
+        //transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().interactable = true;
+        //transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        questionsPanel.SetActive(false);
+        answerPanel.SetActive(true);
 
         if ((encounter == false) && (random == false))
         {
@@ -252,6 +262,7 @@ public class QuizTab : MonoBehaviour
         ActionManager.CorrectAction();
 
         answeredTitleText.text = "Heel goed!";
+        w_descriptionPanel.SetActive(description != "");
         descriptionText.text = description;
 
         if (random == false)
@@ -267,7 +278,7 @@ public class QuizTab : MonoBehaviour
         {
             b.onClick.RemoveAllListeners();
         }
-
+        gameObject.SetActive(true);
         continueBtn = true;
         continueButton.gameObject.SetActive(true);
         backToOptionsButton.gameObject.SetActive(false);
@@ -288,20 +299,25 @@ public class QuizTab : MonoBehaviour
 
     public void WrongAnswer(string description, bool random = false, bool encounter = false)
     {
-#if UNITY_EDITOR
-        PlayerPrefsManager prefsManager = FindObjectOfType<PlayerPrefsManager>();
-        if (prefsManager != null)
-            if (prefsManager.testingMode)
-            {
-                CorrectAnswer(description);
-                return;
-            }
-#endif
+//#if UNITY_EDITOR
+//        PlayerPrefsManager prefsManager = FindObjectOfType<PlayerPrefsManager>();
+//        if (prefsManager != null)
+//            if (prefsManager.testingMode)
+//            {
+//                CorrectAnswer(description);
+//                return;
+//            }
+//#endif
 
-        transform.GetChild(0).gameObject.SetActive(false);
-        transform.GetChild(1).gameObject.SetActive(true);
-        transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().interactable = true;
-        transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        //----------------------------------------
+        //transform.GetChild(0).gameObject.SetActive(false);
+        //transform.GetChild(1).gameObject.SetActive(true);
+        //transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().interactable = true;
+        //transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        gameObject.SetActive(true);
+        questionsPanel.SetActive(false);
+        answerPanel.SetActive(true);
+
 
         if ((random == false) && (encounter == false))
         {
@@ -311,11 +327,11 @@ public class QuizTab : MonoBehaviour
 
         answeredTitleText.text = "Helaas, dit antwoord is niet goed";
         descriptionText.text = description;
-
+        w_descriptionPanel.SetActive(description != "");
         continueBtn = false;
         continueButton.gameObject.SetActive(false);
         backToOptionsButton.gameObject.SetActive(true);
-
+        gameObject.SetActive(true);
         if (endScoreManager != null)
         {
             if ((random == false) && (encounter == false))
@@ -333,8 +349,9 @@ public class QuizTab : MonoBehaviour
     {
         GameObject.FindObjectOfType<PatientInfoManager>().SetInteractability(true);
         GameObject.FindObjectOfType<RobotManager>().ToggleCloseBtn(true);
-        transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().interactable = false;
-        transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().blocksRaycasts = false;
+        //--------------
+        //transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().interactable = false;
+        //transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().blocksRaycasts = false;
 
         Transform scrollbar = transform.Find("QuizTab/QuizAnsweredDynamicCanvas/ScrollViewDescription/Scrollbar Vertical");
         if (scrollbar != null)
@@ -342,8 +359,8 @@ public class QuizTab : MonoBehaviour
 
         Continue();
 
-        transform.GetChild(0).gameObject.SetActive(true);
-        transform.GetChild(1).gameObject.SetActive(false);
+        questionsPanel.SetActive(true);
+        answerPanel.SetActive(false);
 
         // disable quiz icon
         //icons.Find("QuizTab").gameObject.SetActive(false);
@@ -367,10 +384,12 @@ public class QuizTab : MonoBehaviour
 
     public void OnBackToOptionsButton()
     {
-        transform.GetChild(0).gameObject.SetActive(true);
-        transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().interactable = true;
-        transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
-        transform.GetChild(1).gameObject.SetActive(false);
+        questionsPanel.SetActive(true);
+        answerPanel.SetActive(false);
+        //transform.GetChild(0).gameObject.SetActive(true);
+        //transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().interactable = true;
+        //transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        //transform.GetChild(1).gameObject.SetActive(false);
     }
 }
 

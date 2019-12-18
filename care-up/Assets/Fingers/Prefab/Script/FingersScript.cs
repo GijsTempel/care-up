@@ -788,7 +788,7 @@ namespace DigitalRubyShared
             {
                 // pick a sensible dpi since we don't know the actual DPI
                 DeviceInfo.UnitMultiplier = DeviceInfo.PixelsPerInch = DefaultDPI;
-                Debug.LogError("Unable to determine DPI, using default DPI of " + DefaultDPI);
+                // Debug.LogError("Unable to determine DPI, using default DPI of " + DefaultDPI);
             }
 
             // set the main thread callback so gestures can callback after a delay
