@@ -135,23 +135,6 @@ MonoBehaviour:
   swapObjName: GauzeTrayWet
   leftHand: 1
   GhostObjectTarget: 
---- !u!114 &-8787644984927931831
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1d577ba52e334ef39dfa878ef5c62b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  addFrame: 74
-  objectName: catheter_Supertubular_InHands
-  hand: 0
-  GhostObjectTarget: _cahteterinWithBag
-  destroyOnDrop: 0
 --- !u!1101 &-8748819853806857391
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -218,6 +201,23 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &-8618590801221245385
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1d577ba52e334ef39dfa878ef5c62b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addFrame: 74
+  objectName: catheter_Supertubular_InHands
+  hand: 1
+  GhostObjectTarget: _cahteterinWithBag
+  destroyOnDrop: 0
 --- !u!114 &-8562155383357004815
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -341,6 +341,47 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1102 &-8383563804310514889
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BagWithCath_Left_BKP
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 2737576703939261559, guid: 715c600cbf41fa5478e666ab0411371a,
+    type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!114 &-8364866361661049449
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftHand: 0
+  dropFrame: 86
 --- !u!1101 &-8343904037658590164
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -461,6 +502,22 @@ MonoBehaviour:
   ToFollowHoldingHand: 0
   NewAnimationName: BagDisconnection
   ActionFrame: 0
+--- !u!114 &-8125603390643751884
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 839bcc7f24a9c47f8af28e853187bfa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: catheter_Supertubular_InHands
+  unlock_frame: 182
+  lock_frame: 0
+  toActivate: 1
 --- !u!1101 &-8106326804694837952
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -718,6 +775,28 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!1101 &-7768978261387919998
+AnimatorStateTransition:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 0}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 1
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.95341617
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1101 &-7699247795565706911
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -842,6 +921,22 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &-7604650131757953164
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b03eeecfc46c784a9e981273a503cc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  swapFrame: 86
+  swapObjName: catheter_Supertubular_InHands
+  leftHand: 1
+  GhostObjectTarget: _cahteterinWithBag
 --- !u!1102 &-7603860869075478574
 AnimatorState:
   serializedVersion: 5
@@ -1045,6 +1140,20 @@ MonoBehaviour:
   ObjNames:
   - water_flow_effect
   toShow: 1
+--- !u!114 &-7316736616276940615
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftHand: 1
+  dropFrame: 86
 --- !u!1101 &-7236262749548773489
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1489,6 +1598,22 @@ MonoBehaviour:
   ToFollowHoldingHand: 0
   NewAnimationName: Open21
   ActionFrame: 0
+--- !u!114 &-6390834415314928845
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 839bcc7f24a9c47f8af28e853187bfa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: catheter_Supertubular_InHands
+  unlock_frame: 182
+  lock_frame: 0
+  toActivate: 1
 --- !u!1101 &-6378050891721778908
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1673,7 +1798,7 @@ AnimatorStateMachine:
     m_Position: {x: -770, y: 580, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8492581328558803689}
-    m_Position: {x: -490, y: 590, z: 0}
+    m_Position: {x: -510, y: 580, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7221489495365781118}
     m_Position: {x: -380, y: -120, z: 0}
@@ -1683,6 +1808,12 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: -5965536957222856339}
     m_Position: {x: 850, y: 910, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 2960551237070184765}
+    m_Position: {x: -510, y: 660, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -2408176153884846983}
+    m_Position: {x: -770, y: 660, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: 594882167822013843}
@@ -1736,6 +1867,24 @@ AnimatorStateMachine:
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: 8556911589546854302}
+--- !u!114 &-6252552155239618615
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a536a9682af347488b2cfd1a613bf7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: catheter_Supertubular_InHands
+  HandToSwitch: 0
+  AnimationToChange: 2
+  ToFollowHoldingHand: 0
+  NewAnimationName: inHands
+  ActionFrame: 181
 --- !u!1102 &-6242757250765305761
 AnimatorState:
   serializedVersion: 5
@@ -2190,6 +2339,28 @@ MonoBehaviour:
   deleteFrame: 117
   objectName: cloth_02_inHands
   hand: 0
+--- !u!1101 &-5396264502568732627
+AnimatorStateTransition:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 0}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 1
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.95341617
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1102 &-5298492246828448116
 AnimatorState:
   serializedVersion: 5
@@ -2249,6 +2420,21 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-5139864607626006483
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db02453133b0ab94d815dca8a28bbd6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionFrame: 86
+  objectName: catheter_Supertubular_InHands
+  hand: 1
 --- !u!1102 &-5124438208366312419
 AnimatorState:
   serializedVersion: 5
@@ -3013,8 +3199,14 @@ AnimatorState:
   - {fileID: -7689340494898719284}
   m_StateMachineBehaviours:
   - {fileID: 6652868785630455802}
-  - {fileID: 7343155835926949622}
   - {fileID: 8269443341614830800}
+  - {fileID: -7604650131757953164}
+  - {fileID: 1193007299663026685}
+  - {fileID: 2076641526771556003}
+  - {fileID: -6252552155239618615}
+  - {fileID: -8125603390643751884}
+  - {fileID: -7316736616276940615}
+  - {fileID: -5139864607626006483}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -3023,8 +3215,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 2737576703939261559, guid: 715c600cbf41fa5478e666ab0411371a,
-    type: 3}
+  m_Motion: {fileID: 166764972190726188, guid: 715c600cbf41fa5478e666ab0411371a, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -3587,6 +3778,36 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!1102 &-2408176153884846983
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BagWithCath_Left_BKP
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours:
+  - {fileID: 2461324258837157069}
+  - {fileID: -8618590801221245385}
+  - {fileID: 6925240414117246699}
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 2737576703939261559, guid: 715c600cbf41fa5478e666ab0411371a,
+    type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!114 &-2388706341545374284
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3868,6 +4089,22 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-1720292846184386336
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b03eeecfc46c784a9e981273a503cc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  swapFrame: 74
+  swapObjName: catheter_Supertubular_InHands
+  leftHand: 0
+  GhostObjectTarget: _cahteterinWithBag
 --- !u!1101 &-1678472662234102594
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -4230,6 +4467,22 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-976890228849398803
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 839bcc7f24a9c47f8af28e853187bfa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: catheter_Supertubular_InHands
+  unlock_frame: 1
+  lock_frame: 180
+  toActivate: 1
 --- !u!1109 &-906887483424095109
 AnimatorTransition:
   m_ObjectHideFlags: 1
@@ -4438,6 +4691,22 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-671298186155866299
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 839bcc7f24a9c47f8af28e853187bfa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: 
+  unlock_frame: 0
+  lock_frame: 0
+  toActivate: 0
 --- !u!1109 &-655713402330400810
 AnimatorTransition:
   m_ObjectHideFlags: 1
@@ -4488,6 +4757,28 @@ MonoBehaviour:
   unlock_frame: 1
   lock_frame: 531
   toActivate: 1
+--- !u!1101 &-569141986766027201
+AnimatorStateTransition:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 0}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 1
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.95341617
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!114 &-547318670081923215
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4699,6 +4990,21 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &-414666145874261713
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db02453133b0ab94d815dca8a28bbd6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionFrame: 87
+  objectName: catheter_Supertubular_InHands
+  hand: 0
 --- !u!1101 &-199614011331189978
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -5001,7 +5307,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leftHand: 1
-  dropFrame: 74
+  dropFrame: 86
 --- !u!1102 &57717647000808745
 AnimatorState:
   serializedVersion: 5
@@ -5433,6 +5739,18 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &829572139491237814
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9b29f5ba63bb4aa5b477b8007d77187, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &833855043399432031
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5663,6 +5981,24 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &1193007299663026685
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a536a9682af347488b2cfd1a613bf7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: catheter_Supertubular_InHands
+  HandToSwitch: 0
+  AnimationToChange: 1
+  ToFollowHoldingHand: 0
+  NewAnimationName: Catheter_Bag_Combining
+  ActionFrame: 0
 --- !u!114 &1271211364317846673
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5775,6 +6111,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9b29f5ba63bb4aa5b477b8007d77187, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1102 &1647789402911245964
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BagWithCath_Right_BKP
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 4149779789994302205, guid: 715c600cbf41fa5478e666ab0411371a,
+    type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!114 &1674976935446225672
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6158,6 +6521,22 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &2076641526771556003
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 839bcc7f24a9c47f8af28e853187bfa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: catheter_Supertubular_InHands
+  unlock_frame: 1
+  lock_frame: 180
+  toActivate: 1
 --- !u!1101 &2092619120729866841
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -6284,6 +6663,20 @@ AnimatorTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 1
+--- !u!114 &2461324258837157069
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftHand: 0
+  dropFrame: 74
 --- !u!1102 &2470372325246916201
 AnimatorState:
   serializedVersion: 5
@@ -6526,6 +6919,24 @@ AnimatorTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 1
+--- !u!114 &2708216230085664263
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a536a9682af347488b2cfd1a613bf7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: catheter_Supertubular_InHands
+  HandToSwitch: 0
+  AnimationToChange: 1
+  ToFollowHoldingHand: 0
+  NewAnimationName: Catheter_Bag_Combining
+  ActionFrame: 0
 --- !u!1101 &2814867712370693603
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -6576,6 +6987,37 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!1102 &2960551237070184765
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BagWithCath_Right_BKP
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours:
+  - {fileID: 7436144176858686254}
+  - {fileID: 5464110441437516135}
+  - {fileID: 829572139491237814}
+  - {fileID: -1720292846184386336}
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 4149779789994302205, guid: 715c600cbf41fa5478e666ab0411371a,
+    type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1102 &2963840407324618785
 AnimatorState:
   serializedVersion: 5
@@ -7762,6 +8204,23 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &5464110441437516135
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1d577ba52e334ef39dfa878ef5c62b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addFrame: 74
+  objectName: catheter_Supertubular_InHands
+  hand: 0
+  GhostObjectTarget: _cahteterinWithBag
+  destroyOnDrop: 0
 --- !u!1101 &5507495201777399328
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -7979,7 +8438,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 4149779789994302205, guid: 715c600cbf41fa5478e666ab0411371a,
+  m_Motion: {fileID: -7362949901204373893, guid: 715c600cbf41fa5478e666ab0411371a,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -8153,12 +8612,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1b03eeecfc46c784a9e981273a503cc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swapFrame: 74
+  swapFrame: 86
   swapObjName: catheter_Supertubular_InHands
   leftHand: 0
   GhostObjectTarget: _cahteterinWithBag
@@ -8402,7 +8861,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leftHand: 0
-  dropFrame: 74
+  dropFrame: 86
 --- !u!1101 &6757027656908855855
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -8520,6 +8979,18 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &6925240414117246699
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9b29f5ba63bb4aa5b477b8007d77187, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6957779037356962403
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8813,23 +9284,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: Sterile_workpad
   resetCamera: 0
---- !u!114 &7343155835926949622
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1d577ba52e334ef39dfa878ef5c62b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  addFrame: 74
-  objectName: catheter_Supertubular_InHands
-  hand: 1
-  GhostObjectTarget: _cahteterinWithBag
-  destroyOnDrop: 0
 --- !u!1101 &7352896291809166770
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -8998,6 +9452,20 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &7436144176858686254
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftHand: 1
+  dropFrame: 74
 --- !u!1101 &7446726417843702891
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -9020,6 +9488,24 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &7452462667926530750
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a536a9682af347488b2cfd1a613bf7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: catheter_Supertubular_InHands
+  HandToSwitch: 0
+  AnimationToChange: 2
+  ToFollowHoldingHand: 0
+  NewAnimationName: inHands
+  ActionFrame: 181
 --- !u!114 &7515084852759983169
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9181,6 +9667,28 @@ MonoBehaviour:
   unlock_frame: 0
   lock_frame: 200
   toActivate: 0
+--- !u!1101 &7946966641480826925
+AnimatorStateTransition:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 0}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 1
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.95341617
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1101 &7963223796597407564
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -9546,9 +10054,14 @@ AnimatorState:
   - {fileID: -199614011331189978}
   m_StateMachineBehaviours:
   - {fileID: 52537209946421510}
-  - {fileID: -8787644984927931831}
   - {fileID: 6436596763256182129}
   - {fileID: 6237409933458383032}
+  - {fileID: 2708216230085664263}
+  - {fileID: -976890228849398803}
+  - {fileID: 7452462667926530750}
+  - {fileID: -6390834415314928845}
+  - {fileID: -8364866361661049449}
+  - {fileID: -414666145874261713}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -9557,7 +10070,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 4149779789994302205, guid: 715c600cbf41fa5478e666ab0411371a,
+  m_Motion: {fileID: -7362949901204373893, guid: 715c600cbf41fa5478e666ab0411371a,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -9955,6 +10468,12 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: -7061587626182686837}
     m_Position: {x: 870, y: 920, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 1647789402911245964}
+    m_Position: {x: -520, y: 580, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -8383563804310514889}
+    m_Position: {x: -760, y: 580, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: 6582445050847660404}
@@ -10051,8 +10570,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 2737576703939261559, guid: 715c600cbf41fa5478e666ab0411371a,
-    type: 3}
+  m_Motion: {fileID: 166764972190726188, guid: 715c600cbf41fa5478e666ab0411371a, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
