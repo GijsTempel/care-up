@@ -54,9 +54,6 @@ public class QuizTab : MonoBehaviour
 
     public void Init(string name)
     {
-        print(name);
-        print(gameObject.name);
-
         manager = GameObject.FindObjectOfType<ActionManager>();
 
         TextAsset textAsset = (TextAsset)Resources.Load("Xml/Quiz/" + name);
@@ -77,7 +74,6 @@ public class QuizTab : MonoBehaviour
                 question.answers = new List<Answer>();
 
                 question.text = q.Attributes["text"].Value;
-                print(question.text);
                 int.TryParse(q.Attributes["answer"].Value, out question.answerID);
 
                 if (q.Attributes["points"] != null)
