@@ -782,8 +782,6 @@ public class GameUI : MonoBehaviour
             if (!GameObject.FindObjectOfType<QuizTab>()){
                 if (!string.IsNullOrEmpty(actionManager.Message))
                 {
-                    actionManager.Message = null;
-                    actionManager.ShowTheory = false;
                     if (!GameObject.FindObjectOfType<PlayerScript>().robotUIopened)
                     {
                         GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
@@ -791,6 +789,8 @@ public class GameUI : MonoBehaviour
                         //GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Title").GetComponent<Text>().text = actionManager.MessageTitle;
                         //GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Message").GetComponent<Text>().text = actionManager.Message;
                     }
+                    actionManager.Message = null;
+                    actionManager.ShowTheory = false;
                 }
             }
         }
@@ -847,11 +847,8 @@ public class GameUI : MonoBehaviour
             }
             else if (actionManager.Message != null)
             {
-                if (allowObjectControlUI)
-                {
-                    ShowTheoryTab();
-                    SetTargetTime(0.4f);
-                }
+                ShowTheoryTab();
+                SetTargetTime(0.4f);
             }
             else if (RandomQuiz.showQuestion)
             {
@@ -865,11 +862,8 @@ public class GameUI : MonoBehaviour
         }
         else if (isSequence && actionManager.ShowTheory)
         {
-            if (allowObjectControlUI)
-            {
-                ShowTheoryTab();
-                actionManager.Message = null;
-            }
+            ShowTheoryTab();
+            actionManager.Message = null;
         }
         else if (isSequence && RandomQuiz.showQuestion)
         {

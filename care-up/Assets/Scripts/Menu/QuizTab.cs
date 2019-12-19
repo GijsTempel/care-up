@@ -156,7 +156,6 @@ public class QuizTab : MonoBehaviour
     public void NextQuizQuestion(bool random = false, bool encounter = false)
     {
         quiz = true;
-        gameUI.allowObjectControlUI = false;
         if (random == false)
         {
             if (encounter == false)
@@ -175,7 +174,7 @@ public class QuizTab : MonoBehaviour
         }
 
         // open UI
-        //GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
+        GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
         // disable close button
         //GameObject.FindObjectOfType<RobotManager>().ToggleCloseBtn(false);
         // enable quiz icon
