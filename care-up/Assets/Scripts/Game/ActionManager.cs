@@ -15,7 +15,6 @@ public class ActionManager : MonoBehaviour
     public static bool practiceMode = true;
     public static bool personClicked = false;
     public static bool generalAction = false;
-    public static bool generalActionDone = false;
 
     [HideInInspector]
     public bool tutorial_hintUsed = false;
@@ -206,7 +205,7 @@ public class ActionManager : MonoBehaviour
 
         if (!practiceMode)
         {
-            if (actManager.CheckGeneralAction() != null && !generalActionDone)
+            if (actManager.CheckGeneralAction() != null /*&& !generalActionDone*/)
             {
                 actManager.NotTriggeredAction();
             }
@@ -311,7 +310,7 @@ public class ActionManager : MonoBehaviour
                 }
             }
 
-            if (a.Type == ActionType.General && !generalActionDone)
+            if (a.Type == ActionType.General)
             {
                 objectsData.Add(new StepData(false, $"- Klik op de '{actManager.CurrentButtonText()}' knop.", i));
                 actManager.NotTriggeredAction();
@@ -1380,7 +1379,6 @@ public class ActionManager : MonoBehaviour
         if (!CheckScenarioCompleted() && occured)
         {
             ActionManager.CorrectAction();
-            ActionManager.generalActionDone = true;
         }
         UpdateRequirements();
     }
