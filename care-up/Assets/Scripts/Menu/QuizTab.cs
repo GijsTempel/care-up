@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class QuizTab : MonoBehaviour
 {
+    GameUI gameUI;
     public struct Question
     {
         public string text;
@@ -51,6 +52,11 @@ public class QuizTab : MonoBehaviour
     private ActionManager manager;
 
     public static float encounterDelay = -1f;
+
+    //public void Show(bool value)
+    //{
+    //    gameObject.SetActive(value);
+    //}
 
     public void Init(string name)
     {
@@ -122,7 +128,7 @@ public class QuizTab : MonoBehaviour
     {
         PlayerScript.quiz = this;
         gameObject.SetActive(false);
-
+        gameUI = GameObject.FindObjectOfType<GameUI>();
         if (buttons.Count == 0)
         {
             buttons.Add(transform.GetChild(0).Find("Answer1").GetComponent<Button>());
@@ -156,9 +162,6 @@ public class QuizTab : MonoBehaviour
             {
                 if (currentStep >= questionList.Count)
                 {
-                    print(currentStep);
-                    print(questionList.Count);
-
                     PlayerScript.actionsLocked = false;
                     return;
                 }
@@ -171,7 +174,7 @@ public class QuizTab : MonoBehaviour
         }
 
         // open UI
-        //GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
+        GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
         // disable close button
         //GameObject.FindObjectOfType<RobotManager>().ToggleCloseBtn(false);
         // enable quiz icon
