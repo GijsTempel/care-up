@@ -95,6 +95,7 @@ public class GameUI : MonoBehaviour
     PlayerScript ps;
     bool ICPCurrentState = false;
     public bool allowObjectControlUI = true;
+    public static bool encounterStarted = false;
     public enum ItemControlButtonType
     {
         None,
@@ -405,7 +406,7 @@ public class GameUI : MonoBehaviour
         objectsIDsController = GameObject.FindObjectOfType<ObjectsIDsController>();
         MovementSideButtons = GameObject.Find("MovementSideButtons");
 
-        ActionManager.generalActionDone = false;
+        //ActionManager.generalActionDone = false;
         ActionManager.generalAction = false;
         prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
         if (prefs != null)
@@ -568,8 +569,6 @@ public class GameUI : MonoBehaviour
             string[] ObjectNames = new string[0];
             a.ObjectNames(out ObjectNames);
 
-            //if (a.Type == ActionManager.ActionType.ObjectUse ||
-            //a.Type == ActionManager.ActionType.ObjectDrop)
             foreach (string objectToUse in ObjectNames)
             {
                 if (GameObject.Find(objectToUse) != null)
@@ -629,7 +628,6 @@ public class GameUI : MonoBehaviour
         }
 
         //clear highlights
-
         for (int i = 0; i < activeHighlighted.Count; i++)
         {
             if (!newHLObjects.Contains(activeHighlighted[i]))
@@ -771,21 +769,32 @@ public class GameUI : MonoBehaviour
         return 0;
     }
 
-    public void ShowTheory(bool isSequence = false)
+    public void ShowIpad(bool isSequence = false)
     {
-        void ShowIPad()
+        void ShowTheoryTab()
         {
             if (!string.IsNullOrEmpty(actionManager.Message))
             {
-                GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
-                GameObject.FindObjectOfType<GameUI>().theoryPanel.SetActive(true);
-                GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Title").GetComponent<Text>().text = actionManager.MessageTitle;
-                GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Message").GetComponent<Text>().text = actionManager.Message;
+                if (!GameObject.FindObjectOfType<PlayerScript>().robotUIopened)
+                {
+                    GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
+                    GameObject.FindObjectOfType<GameUI>().theoryPanel.SetActive(true);
+                    GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Title").GetComponent<Text>().text = actionManager.MessageTitle;
+                    GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Message").GetComponent<Text>().text = actionManager.Message;
+                    actionManager.Message = null;
+                    actionManager.ShowTheory = false;
+                }
             }
+        }       
+
+        void SetTargetTime(float time)
+        {
+            startTimer = false;
+            targetTime = time;
         }
 
         if (actionManager.ShowTheory)
-        {
+        {          
             startTimer = true;
         }
 
@@ -796,17 +805,17 @@ public class GameUI : MonoBehaviour
 
         if (targetTime <= 0.0f)
         {
-            ShowIPad();
-            startTimer = false;
-            targetTime = 0.7f;
-        }
+           if (actionManager.Message != null)
+            {
+                ShowTheoryTab();
+                SetTargetTime(0.4f);
+            }           
+        }       
         else if (isSequence && actionManager.ShowTheory)
         {
-            ShowIPad();
+            ShowTheoryTab();
             actionManager.Message = null;
-        }
-
-        actionManager.ShowTheory = false;
+        }       
     }
 
     public void PlaceTalkBubble(GameObject person)
@@ -832,6 +841,7 @@ public class GameUI : MonoBehaviour
 
     void Update()
     {
+        // print(RandomQuiz.showRandomQuestion);
         if (!timeOutEnded)
         {
             startTimeOut -= Time.deltaTime;
@@ -884,7 +894,8 @@ public class GameUI : MonoBehaviour
         //if some object was added or removed to hands
         if (showItemControlPanel)
         {
-            ShowTheory();
+            ShowIpad();
+
             int lHash = 0;
             if (handsInventory.leftHandObject != null)
                 lHash = handsInventory.leftHandObject.gameObject.GetHashCode();
@@ -977,6 +988,8 @@ public class GameUI : MonoBehaviour
                         noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text =
                            actionManager.CurrentButtonText(handsInventory.rightHandObject.name, true);
                     }
+                    else
+                        showNoTarget_right = false;
                     if (LEmpty)
                     {
                         bool show_decomb_right = actionManager.CompareCombineObjects(handsInventory.rightHandObject.name, "", true);
@@ -1005,7 +1018,9 @@ public class GameUI : MonoBehaviour
                 zoomButtonLeft.SetActive(showZoomLeft);
                 zoomButtonRight.SetActive(showZoomRight);
                 noTargetButton.SetActive(showNoTarget);
-                noTargetButton_right.SetActive(showNoTarget_right || (ActionManager.generalAction && !ActionManager.generalActionDone));
+                if (showNoTarget_right)
+                    noTargetButton_right.SetActive(true);
+               // noTargetButton_right.SetActive(showNoTarget_right || (ActionManager.generalAction/* && !ActionManager.generalActionDone*/));
                 combineButton.SetActive(showCombin);
             }
 
@@ -1043,7 +1058,7 @@ public class GameUI : MonoBehaviour
 
     public void ShowNoTargetButton()
     {
-        ActionManager.generalAction = true;
+        //ActionManager.generalAction = true;
         noTargetButton_right.SetActive(true);
         noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text =
             actionManager.CurrentButtonText();

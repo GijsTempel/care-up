@@ -207,7 +207,7 @@ public class AnimationSequence  {
     /// </summary>
     public void NextStep()
     {
-        GameObject.FindObjectOfType<GameUI>().ShowTheory(true);
+        GameObject.FindObjectOfType<GameUI>().ShowIpad(true);
 
         GameObject dialogueObject = GameObject.Find("SelectionDialogue");
 
