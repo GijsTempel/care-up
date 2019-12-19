@@ -1095,7 +1095,7 @@ public class GameUI : MonoBehaviour
             MovementSideButtons.SetActive(showItemControlPanel);
             //if (!showItemControlPanel)
 
-            animatedFinger.gameObject.SetActive(showItemControlPanel);
+            animatedFinger.gameObject.SetActive(showItemControlPanel && !theoryTab.gameObject.activeSelf);
 
             ICPCurrentState = ItemControlPanel.activeSelf;
         }
