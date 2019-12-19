@@ -779,16 +779,18 @@ public class GameUI : MonoBehaviour
     {
         void ShowTheoryTab()
         {
-            if (!string.IsNullOrEmpty(actionManager.Message))
-            {
-                actionManager.Message = null;
-                actionManager.ShowTheory = false;
-                if (!GameObject.FindObjectOfType<PlayerScript>().robotUIopened)
+            if (!GameObject.FindObjectOfType<QuizTab>()){
+                if (!string.IsNullOrEmpty(actionManager.Message))
                 {
-                    GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
-                    theoryTab.ShowTheory(actionManager.MessageTitle, actionManager.Message);
-                    //GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Title").GetComponent<Text>().text = actionManager.MessageTitle;
-                    //GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Message").GetComponent<Text>().text = actionManager.Message;
+                    actionManager.Message = null;
+                    actionManager.ShowTheory = false;
+                    if (!GameObject.FindObjectOfType<PlayerScript>().robotUIopened)
+                    {
+                        GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
+                        theoryTab.ShowTheory(actionManager.MessageTitle, actionManager.Message);
+                        //GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Title").GetComponent<Text>().text = actionManager.MessageTitle;
+                        //GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Message").GetComponent<Text>().text = actionManager.Message;
+                    }
                 }
             }
         }
@@ -845,8 +847,11 @@ public class GameUI : MonoBehaviour
             }
             else if (actionManager.Message != null)
             {
-                ShowTheoryTab();
-                SetTargetTime(0.4f);
+                if (allowObjectControlUI)
+                {
+                    ShowTheoryTab();
+                    SetTargetTime(0.4f);
+                }
             }
             else if (RandomQuiz.showQuestion)
             {
@@ -860,8 +865,11 @@ public class GameUI : MonoBehaviour
         }
         else if (isSequence && actionManager.ShowTheory)
         {
-            ShowTheoryTab();
-            actionManager.Message = null;
+            if (allowObjectControlUI)
+            {
+                ShowTheoryTab();
+                actionManager.Message = null;
+            }
         }
         else if (isSequence && RandomQuiz.showQuestion)
         {

@@ -10,6 +10,7 @@ public class TheoryTab : MonoBehaviour
 
     public void Show(bool value)
     {
+        print("FSAFASD");
         gameObject.SetActive(value);
     }
 
