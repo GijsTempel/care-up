@@ -19,6 +19,7 @@ public class CharacterPanelManager : MonoBehaviour
     private LoadCharacterScene loadCharacter;
     private CharacterСarousel сarrousel;
     public GameObject buyBtnCoinIcon;
+    public GameObject buyBtnDiamondIcon;
     public GameObject buyBtnFreeText;
     public Text buyBtnText;
     public GameObject confirmationPanel;
@@ -26,18 +27,6 @@ public class CharacterPanelManager : MonoBehaviour
 
     [SerializeField]
     private UIParticleSystem currencyParticles = default;
-
-    public void BuyButtonPressed()
-    {
-        //if (currentPrice == 0)
-        //{
-        //    BuyCharacter();
-        //}
-        //else
-        //{
-        //    ShowConfirmationPanel(true);
-        //}
-    }
 
     private void OnEnable()
     {
@@ -71,19 +60,29 @@ public class CharacterPanelManager : MonoBehaviour
 
     public void SetStoreInfo(int characterIndex)
     {
-        currentPrice = storeManager.CharacterItems[characterIndex].price;
-        bool purchased = storeManager.CharacterItems[characterIndex].purchased;
+        CharacterItem characterItem = storeManager.CharacterItems[characterIndex];
+        currentPrice = characterItem.extraPrice > 0 ? characterItem.extraPrice : characterItem.price;
+        bool purchased = characterItem.purchased;
         string price = currentPrice.ToString();
-        if (currentPrice == 0)
+
+        if (characterItem.price == 0)
         {
             price = "";
             buyBtnCoinIcon.SetActive(false);
-            buyBtnFreeText.SetActive(true);
+            buyBtnDiamondIcon.SetActive(false);
+            buyBtnFreeText.SetActive(true);            
         }
-        else
+        else if (characterItem.extraPrice > 0)
         {
+            buyBtnDiamondIcon.SetActive(true);
+            buyBtnCoinIcon.SetActive(false);
+            buyBtnFreeText.SetActive(false);
+        }
+        else 
+        {            
             buyBtnCoinIcon.SetActive(true);
             buyBtnFreeText.SetActive(false);
+            buyBtnDiamondIcon.SetActive(false);
         }
 
         adjustButton.SetActive(purchased);
