@@ -50,20 +50,27 @@ public class StoreViewModel : MonoBehaviour
 
                 UMP_Manager manager = GameObject.FindObjectOfType<UMP_Manager>();
 
+   
+                SavedCoins = ActionManager.Points = 0;
+
+                //manager.ShowCongratulation()
+                int diamants = 0;
+                if (ActionManager.percentage == 100)
+                {
+                    diamants = 1;
+                    Debug.Log("Extra reward for 100% score");
+                    PlayerPrefsManager.storeManager.ModifyExtraCurrencyBy(diamants);
+                }
+
                 if (popUp != null)
                 {
                     popUp.SetActive(true);
                 }
                 else if (manager != null)
                 {
-                    manager.ShowDialog(9);
-                }
-                SavedCoins = ActionManager.Points = 0;
+                    //manager.ShowDialog(9);
+                    manager.ShowCongratulation(rewardCoins, diamants);
 
-                if (ActionManager.percentage == 100)
-                {
-                    Debug.Log("Extra reward for 100% score");
-                    PlayerPrefsManager.storeManager.ModifyExtraCurrencyBy(1);
                 }
                 value = true;
             }
