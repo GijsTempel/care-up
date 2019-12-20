@@ -11,13 +11,10 @@ public class ItemControlButton : MonoBehaviour
         gameUI = GameObject.FindObjectOfType<GameUI>();
         prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
         
-        print(GetComponentInParent<Canvas>().name);
         Vector3 vec = new Vector3();
         // RectTransformUtility.WorldToScreenPoint(Camera.ma(GetComponentInParent<RectTransform>(),
         //     transform.position, Camera.main, out vec);
-        print(GetComponent<RectTransform>().position);
         // RectTransformUtility.PixelAdjustPoint
-        print(vec);
     }
 
     public void UpdateBlinkState()

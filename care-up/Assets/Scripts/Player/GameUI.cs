@@ -61,7 +61,7 @@ public class GameUI : MonoBehaviour
     public bool prescriptionButtonBlink;
     public bool recordsButtonBlink;
     public bool paperAndPenButtonblink;
-    public GameObject theoryPanel;
+    //public GameObject theoryPanel;
     public GameObject patientInfo;
 
     public GameObject noTargetButton;
@@ -84,6 +84,8 @@ public class GameUI : MonoBehaviour
     float cooldownTime = 0;
     float lastCooldownTime = 0;
     int currentActionsCount = 0;
+
+    public TheoryTab theoryTab;
 
     private bool startTimer = false;
     private float targetTime = 0.7f;
@@ -394,14 +396,18 @@ public class GameUI : MonoBehaviour
 
     public void HideTheoryTab()
     {
-        GameObject.Find("PatientInfoTabs/Info/TheoryTab/Continue").gameObject.GetComponent<Button>().onClick.AddListener(
+        GameObject.Find("theoryPanel/panel/quizElements/Continue").gameObject.GetComponent<Button>().onClick.AddListener(
              () => GameObject.FindObjectOfType<PlayerScript>().CloseRobotUI());
+        theoryTab.Show(false);
     }
+
 
     // Use this for initialization
     void Start()
     {
         gameLogic = GameObject.Find("GameLogic");
+        theoryTab = GameObject.FindObjectOfType<TheoryTab>();
+
         animatedFinger = GameObject.FindObjectOfType<AnimatedFingerHint>();
         objectsIDsController = GameObject.FindObjectOfType<ObjectsIDsController>();
         MovementSideButtons = GameObject.Find("MovementSideButtons");
@@ -773,14 +779,16 @@ public class GameUI : MonoBehaviour
     {
         void ShowTheoryTab()
         {
-            if (!string.IsNullOrEmpty(actionManager.Message))
-            {
-                if (!GameObject.FindObjectOfType<PlayerScript>().robotUIopened)
+            if (!GameObject.FindObjectOfType<QuizTab>()){
+                if (!string.IsNullOrEmpty(actionManager.Message))
                 {
-                    GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
-                    GameObject.FindObjectOfType<GameUI>().theoryPanel.SetActive(true);
-                    GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Title").GetComponent<Text>().text = actionManager.MessageTitle;
-                    GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Message").GetComponent<Text>().text = actionManager.Message;
+                    if (!GameObject.FindObjectOfType<PlayerScript>().robotUIopened)
+                    {
+                        GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
+                        theoryTab.ShowTheory(actionManager.MessageTitle, actionManager.Message);
+                        //GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Title").GetComponent<Text>().text = actionManager.MessageTitle;
+                        //GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Message").GetComponent<Text>().text = actionManager.Message;
+                    }
                     actionManager.Message = null;
                     actionManager.ShowTheory = false;
                 }
@@ -791,7 +799,7 @@ public class GameUI : MonoBehaviour
         {
             if (!GameObject.FindObjectOfType<PlayerScript>().robotUIopened)
             {
-                GameObject.FindObjectOfType<GameUI>().quiz_tab.NextQuizQuestion(true);
+                quiz_tab.NextQuizQuestion(true);
                 RandomQuiz.showQuestion = false;
             }
         }
@@ -1091,7 +1099,7 @@ public class GameUI : MonoBehaviour
             MovementSideButtons.SetActive(showItemControlPanel);
             //if (!showItemControlPanel)
 
-            animatedFinger.gameObject.SetActive(showItemControlPanel);
+            animatedFinger.gameObject.SetActive(showItemControlPanel && !theoryTab.gameObject.activeSelf);
 
             ICPCurrentState = ItemControlPanel.activeSelf;
         }
