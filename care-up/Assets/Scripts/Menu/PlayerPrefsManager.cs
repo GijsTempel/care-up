@@ -86,6 +86,10 @@ public class PlayerPrefsManager : MonoBehaviour
         SetEscapeButtonLogic();
     }
 
+
+    //Need to mute the music during congratulation
+
+
     private void OnLoaded(Scene s, LoadSceneMode m)
     {
         transform.position =

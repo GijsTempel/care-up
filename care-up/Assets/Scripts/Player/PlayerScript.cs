@@ -545,13 +545,14 @@ public class PlayerScript : MonoBehaviour
 
     public void CloseRobotUI()
     {
-        GameObject theoryTab = GameObject.Find("PatientInfoTabs/TheoryTab");
+        //GameObject theoryTab = GameObject.Find("theoryPanel");
+        
 
-        if (theoryTab != null && (GameObject.FindObjectOfType<QuizTab>() != null))
+        if (GameObject.FindObjectOfType<QuizTab>() != null)
         {
-            if (GameObject.FindObjectOfType<QuizTab>().quiz && theoryTab.gameObject.activeSelf)
+            if (GameObject.FindObjectOfType<QuizTab>().quiz && gameUI.theoryTab.gameObject.activeSelf)
             {
-                theoryTab.gameObject.SetActive(false);
+                gameUI.HideTheoryTab();
                 return;
             }
         }
@@ -584,11 +585,12 @@ public class PlayerScript : MonoBehaviour
         GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<CanvasGroup>().alpha = 0f;
         GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<CanvasGroup>().blocksRaycasts = false;
 
-        if (theoryTab != null)
-        {
-            theoryTab.GetComponent<CanvasGroup>().alpha = 0f;
-            theoryTab.GetComponent<CanvasGroup>().blocksRaycasts = false;
-        }
+        //if (theoryTab != null)
+        //{
+        //    //theoryTab.GetComponent<CanvasGroup>().alpha = 0f;
+        //    //theoryTab.GetComponent<CanvasGroup>().blocksRaycasts = false;
+        //    theoryTab.SetActive(false);
+        //}
 
         robotUIopened = false;
 
