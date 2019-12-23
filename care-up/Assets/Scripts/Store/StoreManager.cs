@@ -284,10 +284,14 @@ public class StoreManager
         bool result = false;
         if (item.index != -1)
         {
-            if ((item.extraPrice > 0) && (currentExtraCurrency >= item.extraPrice))
+            if (item.extraPrice > 0)
             {
-                ModifyExtraCurrencyBy(-item.extraPrice);
-                result = true;
+                result = currentExtraCurrency >= item.extraPrice;
+
+                if (result)
+                {
+                    ModifyExtraCurrencyBy(-item.extraPrice);
+                }
             }
             else if (currentCurrency >= item.price)
             {
@@ -323,10 +327,14 @@ public class StoreManager
         {
             if (item.index != -1)
             {
-                if ((item.extraPrice > 0) && (currentExtraCurrency >= item.extraPrice))
+                if (item.extraPrice > 0)
                 {
-                    ModifyExtraCurrencyBy(-item.extraPrice);
-                    result = true;
+                    result = currentExtraCurrency >= item.extraPrice;
+
+                    if (result)
+                    {
+                        ModifyExtraCurrencyBy(-item.extraPrice);
+                    }
                 }
                 else if (currentCurrency >= item.price)
                 {
