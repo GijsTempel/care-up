@@ -70,6 +70,9 @@ public class PlayerPrefsManager : MonoBehaviour
     public string fullPlayerName = "";
     public string bigNumber = "";
 
+    public bool muteMusicForEffect = false;
+    bool muteMusic = false;
+
     public string ActivatedScenes
     {
         get
@@ -86,9 +89,22 @@ public class PlayerPrefsManager : MonoBehaviour
         SetEscapeButtonLogic();
     }
 
+    public void ToPlayMusic(bool value)
+    {
+        bool toPlay = value;
+        if (muteMusicForEffect || muteMusic)
+            toPlay = false;
 
-    //Need to mute the music during congratulation
-
+        if (toPlay)
+        {
+            if (!GetComponent<AudioSource>().isPlaying)
+                GetComponent<AudioSource>().Play();
+        }
+        else
+        {
+            GetComponent<AudioSource>().Stop();
+        }
+    }
 
     private void OnLoaded(Scene s, LoadSceneMode m)
     {
@@ -103,7 +119,9 @@ public class PlayerPrefsManager : MonoBehaviour
                 s.name == "Scenes_Character_Customisation"))
         {
             // game scenes
-            GetComponent<AudioSource>().Stop();
+            muteMusic = true;
+            ToPlayMusic(false);
+            //GetComponent<AudioSource>().Stop();
             if(Camera.main != null)
                 if (Camera.main.GetComponent<PostProcessingBehaviour>() != null)
                 {
@@ -112,10 +130,11 @@ public class PlayerPrefsManager : MonoBehaviour
         }
 
         if (s.name == "EndScore" ||
-            (s.name == "MainMenu" &&
-                !GetComponent<AudioSource>().isPlaying))
+            (s.name == "MainMenu"))
         {
-            GetComponent<AudioSource>().Play();
+            muteMusic = false;
+            ToPlayMusic(true);
+            //GetComponent<AudioSource>().Play();
         }
 
         if (s.name == "MainMenu")

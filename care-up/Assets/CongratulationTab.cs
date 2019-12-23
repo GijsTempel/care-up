@@ -14,6 +14,9 @@ public class CongratulationTab : MonoBehaviour
     public void HideDialogue()
     {
         gameObject.SetActive(false);
+        PlayerPrefsManager pref = GameObject.FindObjectOfType<PlayerPrefsManager>();
+        pref.muteMusicForEffect = false;
+        pref.ToPlayMusic(true);
     }
 
     public void ShowDialogue(int coins, int diamants = 0)

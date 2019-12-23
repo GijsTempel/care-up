@@ -42,6 +42,11 @@ public class UMP_Manager : MonoBehaviour {
     {
         if (congratulation != null)
         {
+            if (manager == null)
+                manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
+            manager.muteMusicForEffect = true;
+            manager.ToPlayMusic(false);
+
             congratulation.ShowDialogue(coins, diamants);
         }
     }
