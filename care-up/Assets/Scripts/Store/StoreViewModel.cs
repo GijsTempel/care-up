@@ -54,7 +54,7 @@ public class StoreViewModel : MonoBehaviour
                 SavedCoins = ActionManager.Points = 0;
 
                 //manager.ShowCongratulation()
-                int diamants = 0;
+                int diamants = 1;
                 if (ActionManager.percentage == 100)
                 {
                     diamants = 1;
