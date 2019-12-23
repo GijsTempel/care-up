@@ -5,11 +5,20 @@ using UnityEngine.UI;
 
 public class CongratulationTab : MonoBehaviour
 {
-    public GameObject diamantEffect;
     public GameObject congratPanel;
     public Text coinText;
     public Text diamantText;
+    public GameObject Buttons;
+    bool countEffectOn = false;
+    float countTime = 0f;
     //GameObject diamantSection;
+    int coins = 0;
+    int countCoins = 0;
+    int diamonds = 0;
+    float countStep = 0.1f;
+    float coinCountTime = 0.5f;
+    bool diamantShown = false;
+    bool buttonsShown = false;
 
     public void HideDialogue()
     {
@@ -19,26 +28,65 @@ public class CongratulationTab : MonoBehaviour
         pref.ToPlayMusic(true);
     }
 
-    public void ShowDialogue(int coins, int diamants = 0)
+    public void ShowDialogue(int _coins, int _diamands = 0)
     {
         gameObject.SetActive(true);
-        string coinTextValue = "+" + coins.ToString();
-        if (coins < 10)
-            coinTextValue += "  ";
+        coins = _coins;
+        diamonds = _diamands;
+        countEffectOn = true;
+        countTime = 0f;
+        diamantText.text = "+" + _diamands.ToString();
+        diamantText.transform.parent.gameObject.SetActive(false);
+        Buttons.SetActive(false);
+        ShowCoins(0);
+        countStep = coinCountTime / coins;
+    }
+
+    void ShowCoins(int _coins)
+    {
+        string coinTextValue = "+" + _coins.ToString();
+        //if (_coins < 10)
+        //    coinTextValue += "  ";
         coinText.text = coinTextValue;
-        diamantText.text = "+" + diamants.ToString();
-        if (diamants == 0)
+    }
+
+    private void Update()
+    {
+        if (countEffectOn)
         {
-            diamantText.transform.parent.gameObject.SetActive(false);
+            countTime += Time.deltaTime;
+            int timeStep = (int)Mathf.Floor(countTime / countStep);
+            if (countCoins < coins)
+            {
+                if (timeStep > countCoins)
+                {
+                    countCoins += 1;
+                    ShowCoins(countCoins);
+                }
+            }
+            else if (diamonds > 0 && !diamantShown)
+            {
+                if (countTime > (coinCountTime + 1f))
+                {
+                    diamantText.transform.parent.gameObject.SetActive(true);
+                    diamantShown = true;
+                }
+            }
+            else if ((countTime > (coinCountTime + 2f) && !buttonsShown))
+            {
+                Buttons.SetActive(true);
+                transform.Find("buttonSound").GetComponent<AudioSource>().Play();
+            }
         }
         else
         {
-            ShowDiamantEffect(true);
+            enabled = false;
         }
+        
     }
+
     public void ShowDiamantEffect(bool value)
     {
-        diamantEffect.SetActive(value);
         congratPanel.SetActive(!value);
     }
 }
