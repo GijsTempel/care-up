@@ -10,8 +10,6 @@ public class WalkToGroupButton : MonoBehaviour {
     bool mouse_over = false;
     //button components
     [HideInInspector]
-    public GameObject blur;
-    public GameObject bg;
     public GameObject bg_h;
     [HideInInspector]
     public GameObject _icon;
@@ -29,20 +27,17 @@ public class WalkToGroupButton : MonoBehaviour {
             finger.SetActive(false);
         }
         ButtonColor = GetComponent<Image>().color;
-        if (transform.Find("blur"))
-        {
-            blur = transform.Find("blur").gameObject;
-            Color b2 = ButtonColor;
-            b2.a = 0.4f;
-            blur.GetComponent<Image>().color = b2;
-            //blur.SetActive(false);
-            bg = transform.Find("bg").gameObject;
-            bg_h = transform.Find("bg_h").gameObject;
-            bg_h.SetActive(false);
-            _icon = transform.Find("icon").gameObject;
-            if (!SideButton)
-               _icon.GetComponent<Image>().sprite = Resources.Load("Sprites/WalkGroup_Icons/" + name, typeof(Sprite)) as Sprite;
-        }
+        //if (transform.Find("blur"))
+        //{
+        //    Color b2 = ButtonColor;
+        //    b2.a = 0.4f;
+        //    //blur.SetActive(false);
+        //    bg_h = transform.Find("bg_h").gameObject;
+        //    bg_h.SetActive(false);
+        //    _icon = transform.Find("icon").gameObject;
+        //    if (!SideButton)
+        //       _icon.GetComponent<Image>().sprite = Resources.Load("Sprites/WalkGroup_Icons/" + name, typeof(Sprite)) as Sprite;
+        //}
     }
 
 
@@ -64,16 +59,13 @@ public class WalkToGroupButton : MonoBehaviour {
 
     void setColor(Color col)
     {
-        ColorBlock colors = GetComponent<Button>().colors;
+        //ColorBlock colors = GetComponent<Button>().colors;
    
-        colors.normalColor = col;
-        colors.pressedColor = col;
-        colors.selectedColor = col;
-        colors.highlightedColor = col;
-
-        GetComponent<Button>().colors = colors;
-        if(blur != null)
-            blur.GetComponent<Image>().color = col;
+        //colors.normalColor = col;
+        //colors.pressedColor = col;
+        //colors.selectedColor = col;
+        //colors.highlightedColor = col;
+        //GetComponent<Button>().colors = colors;
     }
 
 
@@ -84,7 +76,11 @@ public class WalkToGroupButton : MonoBehaviour {
         {
             GameUI gameUI = GameObject.FindObjectOfType<GameUI>();
             if (_icon == null)
-                _icon = transform.Find("icon").gameObject;
+            {
+                //_icon = transform.Find("icon").gameObject;
+                //if (_icon == null)
+                _icon = transform.Find("bg_h/icon").gameObject;
+            }
             switch (wtg.WalkToGroupType)
             {
                 case WalkToGroup.GroupType.WorkField:
@@ -119,29 +115,29 @@ public class WalkToGroupButton : MonoBehaviour {
     public void HighlightButton(bool value)
     {
         mouse_over = value;
-        if (blur != null)
-        {
-            //blur.SetActive(value);
-            if (value)
-            {
-                if (!SideButton)
-                    GetComponent<Image>().sprite = Resources.Load("Sprites/WalkGroup_Icons/button_ring", typeof(Sprite)) as Sprite;
-                else
-                    GetComponent<Image>().sprite = Resources.Load("Sprites/WalkGroup_Icons/sideButton_ring_h", typeof(Sprite)) as Sprite;
+        //if (blur != null)
+        //{
+        //    //blur.SetActive(value);
+        //    if (value)
+        //    {
+        //        if (!SideButton)
+        //            GetComponent<Image>().sprite = Resources.Load("Sprites/WalkGroup_Icons/button_ring", typeof(Sprite)) as Sprite;
+        //        else
+        //            GetComponent<Image>().sprite = Resources.Load("Sprites/WalkGroup_Icons/sideButton_ring_h", typeof(Sprite)) as Sprite;
 
-            }
-            else
-            {
-                if (!SideButton)
-                    GetComponent<Image>().sprite = Resources.Load("Sprites/WalkGroup_Icons/button_ring_small", typeof(Sprite)) as Sprite;
-                else
-                    GetComponent<Image>().sprite = Resources.Load("Sprites/WalkGroup_Icons/sideButton_ring", typeof(Sprite)) as Sprite;
+        //    }
+        //    else
+        //    {
+        //        if (!SideButton)
+        //            GetComponent<Image>().sprite = Resources.Load("Sprites/WalkGroup_Icons/button_ring_small", typeof(Sprite)) as Sprite;
+        //        else
+        //            GetComponent<Image>().sprite = Resources.Load("Sprites/WalkGroup_Icons/sideButton_ring", typeof(Sprite)) as Sprite;
 
 
-            }
-            bg_h.SetActive(value);
-            bg.SetActive(!value);
-        }
+        //    }
+        //    bg_h.SetActive(value);
+        //    bg.SetActive(!value);
+        //}
 
     }
 

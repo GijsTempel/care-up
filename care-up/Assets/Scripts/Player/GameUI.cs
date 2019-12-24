@@ -460,7 +460,7 @@ public class GameUI : MonoBehaviour
 
         WalkToGroupPanel = GameObject.Find("MovementButtons");
         Player = GameObject.Find("Player");
-        closeButton = transform.Find("CloseBtn").gameObject;
+        closeButton = transform.Find("CloseButtonPanel/CloseBtn").gameObject;
         closeDialog = transform.Find("CloseDialog").gameObject;
         closeDialog.SetActive(false);
         donePanel = transform.Find("DonePanel").gameObject;
@@ -1199,9 +1199,9 @@ public class GameUI : MonoBehaviour
     }
 
     public void SetHintPanelAlpha(float alpha)
-    {
+    { 
         Color panelColor = DetailedHintPanel.GetComponent<Image>().color;
-        panelColor.a = alpha;
+        panelColor.a = alpha * 0.7f;
         DetailedHintPanel.GetComponent<Image>().color = panelColor;
         foreach (Text t in DetailedHintPanel.GetComponentsInChildren<Text>())
         {
