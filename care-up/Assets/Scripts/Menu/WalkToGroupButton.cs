@@ -11,7 +11,6 @@ public class WalkToGroupButton : MonoBehaviour {
     //button components
     [HideInInspector]
     public GameObject bg_h;
-    [HideInInspector]
     public GameObject _icon;
     GameObject finger = null;
     GameUI gameUI;
@@ -27,17 +26,17 @@ public class WalkToGroupButton : MonoBehaviour {
             finger.SetActive(false);
         }
         ButtonColor = GetComponent<Image>().color;
-        //if (transform.Find("blur"))
-        //{
-        //    Color b2 = ButtonColor;
-        //    b2.a = 0.4f;
-        //    //blur.SetActive(false);
-        //    bg_h = transform.Find("bg_h").gameObject;
-        //    bg_h.SetActive(false);
-        //    _icon = transform.Find("icon").gameObject;
-        //    if (!SideButton)
-        //       _icon.GetComponent<Image>().sprite = Resources.Load("Sprites/WalkGroup_Icons/" + name, typeof(Sprite)) as Sprite;
-        //}
+        if (transform.Find("blur"))
+        {
+            Color b2 = ButtonColor;
+            b2.a = 0.4f;
+            //blur.SetActive(false);
+            bg_h = transform.Find("bg_h").gameObject;
+            bg_h.SetActive(false);
+            _icon = transform.Find("icon").gameObject;
+            if (!SideButton)
+                _icon.GetComponent<Image>().sprite = Resources.Load("Sprites/WalkGroup_Icons/" + name, typeof(Sprite)) as Sprite;
+        }
     }
 
 
@@ -77,8 +76,6 @@ public class WalkToGroupButton : MonoBehaviour {
             GameUI gameUI = GameObject.FindObjectOfType<GameUI>();
             if (_icon == null)
             {
-                //_icon = transform.Find("icon").gameObject;
-                //if (_icon == null)
                 _icon = transform.Find("bg_h/icon").gameObject;
             }
             switch (wtg.WalkToGroupType)
