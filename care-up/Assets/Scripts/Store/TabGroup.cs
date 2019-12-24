@@ -14,6 +14,7 @@ public class TabGroup : MonoBehaviour
                        onSaleBtn = default;
 
     private GameObject buyBtnCoin = default,
+                       buyBtnDiamond = default,
                        productItem = default;
     bool initialized = false;
     int pages = 3;
@@ -372,6 +373,7 @@ public class TabGroup : MonoBehaviour
         mainAvatar = GameObject.Find("MainPlayerAvatar").GetComponent<PlayerAvatar>();
         buyBtnText = buyBtn.transform.Find("Text").GetComponent<Text>();
         buyBtnCoin = buyBtn.transform.Find("Coin").gameObject;
+        buyBtnDiamond = buyBtn.transform.Find("Diamond").gameObject;
         productItem = Resources.Load<GameObject>("NecessaryPrefabs/UI/ProductPanelBase");
     }
 }
