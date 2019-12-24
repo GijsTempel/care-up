@@ -113,10 +113,12 @@ public class StoreManager
     {
         bool devDropAllPurchases = false;
         bool devAddCurrency = false;
+        bool devAddExtraCurrency = false;
 
 #if UNITY_EDITOR
         devDropAllPurchases = PlayerPrefsManager.resetPurchases;
-        devAddCurrency = PlayerPrefsManager.plus300;
+        devAddCurrency = PlayerPrefsManager.plusCoins;
+        devAddExtraCurrency = PlayerPrefsManager.plusDiamonds;
 #endif
         storeItems = new List<StoreCategory>();
         characterItems = new List<CharacterItem>();
@@ -236,6 +238,10 @@ public class StoreManager
         if (devAddCurrency)
         {
             ModifyCurrencyBy(300);
+        }
+
+        if (devAddExtraCurrency)
+        {
             ModifyExtraCurrencyBy(5);
         }
     }

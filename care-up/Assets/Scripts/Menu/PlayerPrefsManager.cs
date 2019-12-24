@@ -26,7 +26,8 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public HatsPositioningDB hatsPositioning = new HatsPositioningDB();
     //private LocalizationManager localizationManager; // = new LocalizationManager();
-    public static bool plus300 = false;
+    public static bool plusCoins = false;
+    public static bool plusDiamonds = false;
     public static bool resetPurchases = false;
     public static bool editCharacterOnStart = false;
     public static bool tutorialOnStart = false;
