@@ -12,6 +12,8 @@ public class TabGroup : MonoBehaviour
                        purchasedBtn = default,
                        renewBtn = default,
                        onSaleBtn = default;
+                       //coinProductMark = default,
+                       //diamond
 
     private GameObject buyBtnCoin = default,
                        buyBtnDiamond = default,
@@ -27,8 +29,8 @@ public class TabGroup : MonoBehaviour
     private TabButton selectedTab;
     int selectedTabIndex = 0;
 
-    private List<ProductButton> DressedButtons = new List<ProductButton>();
-    private List<ProductButton> SelectedButtons = new List<ProductButton>();
+    private List<ProductButton> dressedButtons = new List<ProductButton>();
+    private List<ProductButton> selectedButtons = new List<ProductButton>();
 
     private ProductButton selectedItemBtn = null;
     private PlayerAvatar mainAvatar;
@@ -61,10 +63,10 @@ public class TabGroup : MonoBehaviour
         {
             if (selectedItemBtn.item.purchased)
             {
-                if (DressedButtons[selectedTabIndex] != null)
-                    DressedButtons[selectedTabIndex].SetDressOn(false);
-                DressedButtons[selectedTabIndex] = selectedItemBtn;
-                DressedButtons[selectedTabIndex].SetDressOn(true);
+                if (dressedButtons[selectedTabIndex] != null)
+                    dressedButtons[selectedTabIndex].SetDressOn(false);
+                dressedButtons[selectedTabIndex] = selectedItemBtn;
+                dressedButtons[selectedTabIndex].SetDressOn(true);
             }
         }
     }
@@ -80,7 +82,17 @@ public class TabGroup : MonoBehaviour
             selectedItemBtn = btn;
             Dress();
             selectedItemBtn.Select(true);
-            buyBtnCoin.SetActive(true);
+
+            if (btn.item.extraPrice > 0)
+            {
+                buyBtnDiamond.SetActive(true);
+                buyBtnCoin.SetActive(false);
+            }
+            else
+            {
+                buyBtnDiamond.SetActive(false);
+                buyBtnCoin.SetActive(true);
+            }
 
             if (btn.item.category == "Hat")
             {
@@ -113,8 +125,18 @@ public class TabGroup : MonoBehaviour
         {
             if (!selectedItemBtn.item.purchased)
             {
+                if (selectedItemBtn.item.extraPrice > 0)
+                {
+                    buyBtnText.text = selectedItemBtn.item.extraPrice.ToString();
+                    buyBtnDiamond.SetActive(true);
+                    buyBtnCoin.SetActive(false);
+                    buyBtn.SetActive(true);
+                    return;
+                }   
+                
                 buyBtnText.text = selectedItemBtn.item.price.ToString();
                 buyBtnCoin.SetActive(true);
+                buyBtnDiamond.SetActive(false);
                 buyBtn.SetActive(true);
             }
             else
@@ -195,10 +217,11 @@ public class TabGroup : MonoBehaviour
         pref = GameObject.FindObjectOfType<PlayerPrefsManager>();
         InitializeElements();
         buyBtnCoin.SetActive(false);
+        buyBtnDiamond.SetActive(false);
 
         foreach (StoreCategory category in PlayerPrefsManager.storeManager.StoreItems)
         {
-            DressedButtons.Add(null);
+            dressedButtons.Add(null);
         }
 
         UpdatePurchesBtn();
@@ -234,7 +257,7 @@ public class TabGroup : MonoBehaviour
                     ProductButton xBtn = InstantiateProduct(xItem, i);
                     if (currentCharacter.playerAvatar.hat == "")
                     {
-                        DressedButtons[0] = xBtn;
+                        dressedButtons[0] = xBtn;
                         xBtn.SetDressOn(true);
                     }
                     if (currentCharacter.defaultAvatarData.hat != "")
@@ -243,7 +266,7 @@ public class TabGroup : MonoBehaviour
                         ProductButton baseHatBtn = InstantiateProduct(baseItem, i);
                         if (currentCharacter.playerAvatar.hat == currentCharacter.defaultAvatarData.hat)
                         {
-                            DressedButtons[0] = baseHatBtn;
+                            dressedButtons[0] = baseHatBtn;
                             baseHatBtn.SetDressOn(true);
                         }
                     }
@@ -255,7 +278,7 @@ public class TabGroup : MonoBehaviour
                     ProductButton xxBtn = InstantiateProduct(xxItem, i);
                     if (mainAvatar.avatarData.glassesType == -1)
                     {
-                        DressedButtons[1] = xxBtn;
+                        dressedButtons[1] = xxBtn;
                         xxBtn.SetDressOn(true);
                     }
                     if (currentCharacter.defaultAvatarData.glassesType != -1)
@@ -265,7 +288,7 @@ public class TabGroup : MonoBehaviour
                         ProductButton baseGlassesBtn = InstantiateProduct(baseItem, i);
                         if (currentCharacter.playerAvatar.glassesType == currentCharacter.defaultAvatarData.glassesType)
                         {
-                            DressedButtons[1] = baseGlassesBtn;
+                            dressedButtons[1] = baseGlassesBtn;
                             baseGlassesBtn.SetDressOn(true);
                         }
                     }
@@ -280,7 +303,7 @@ public class TabGroup : MonoBehaviour
 
                     if (currentCharacter.playerAvatar.bodyType == currentCharacter.defaultAvatarData.bodyType)
                     {
-                        DressedButtons[2] = baseBodyBtn;
+                        dressedButtons[2] = baseBodyBtn;
                         baseBodyBtn.SetDressOn(true);
                     }
                 }
@@ -331,17 +354,17 @@ public class TabGroup : MonoBehaviour
 
                 if (i == 0 && currentCharacter.playerAvatar.hat == item.name)
                 {
-                    DressedButtons[0] = btn;
+                    dressedButtons[0] = btn;
                     btn.SetDressOn(true);
                 }
                 else if (i == 1 && currentCharacter.playerAvatar.glassesType == item.index)
                 {
-                    DressedButtons[1] = btn;
+                    dressedButtons[1] = btn;
                     btn.SetDressOn(true);
                 }
                 else if (i == 2 && currentCharacter.playerAvatar.bodyType == item.index)
                 {
-                    DressedButtons[2] = btn;
+                    dressedButtons[2] = btn;
                     btn.SetDressOn(true);
                 }
             }

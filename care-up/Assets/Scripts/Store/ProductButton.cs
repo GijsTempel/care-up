@@ -4,24 +4,32 @@ using UnityEngine.EventSystems;
 
 public class ProductButton : MonoBehaviour
 {
-    public Text _name;
-    public GameObject price;
-    public Text cost;
-    public GameObject checkmark;
-    public GameObject dressOn;
+    [SerializeField]
+    private GameObject checkmark = default,
+                       dressOn = default,
+                       price = default,
+                       coinMark = default,
+                       diamondMark = default;
 
-    public Image icon;
+    [SerializeField]
+    private Text productName = default,
+                      cost = default;
+
+    [SerializeField]
+    private Image icon = default;
+
+    private TabGroup tabGroup;
+    private Color originalColor = new Color();
+    private Image image;
+
     public StoreItem item;
-    TabGroup tabGroup;
-    Color originalColor = new Color();
-    Image image;
 
     void Start()
     {
         image = transform.Find("ProductPanel/Image").GetComponent<Image>();
         originalColor = image.color;
         dressOn.SetActive(false);
-        _name.gameObject.SetActive(false);
+        productName.gameObject.SetActive(false);
 
         EventTrigger trigger = GetComponent<EventTrigger>();
         EventTrigger.Entry entry = new EventTrigger.Entry();
@@ -33,17 +41,10 @@ public class ProductButton : MonoBehaviour
 
         transform.Find("ProductPanel").GetComponent<Button>().onClick.AddListener(() => bf.OnButtonClick());
     }
-    
+
     public void Select(bool toSelect)
     {
-        if (toSelect)
-        {
-           image.color = new Color(0f, 214f, 255f, 255f);
-        }
-        else
-        {
-           image.color = originalColor;
-        }
+        image.color = toSelect ? new Color(0f, 214f, 255f, 255f) : originalColor;
     }
 
     public void ButtonClicked()
@@ -54,7 +55,8 @@ public class ProductButton : MonoBehaviour
     public void Initialize(StoreItem _item, TabGroup tg)
     {
         item = _item;
-        _name.text = item.name;
+        productName.text = item.name;
+        SetCurrancySprite(item.extraPrice);
         SetPrice(item.price);
 
         SetPurchased(item.purchased);
@@ -71,9 +73,23 @@ public class ProductButton : MonoBehaviour
         }
     }
 
-    public void SetPrice(int _price)
+    public void SetPrice(int price)
     {
-        cost.text = _price.ToString();
+        cost.text = price.ToString();
+    }
+
+    private void SetCurrancySprite(int extraPrice)
+    {
+        if (extraPrice > 0)
+        {
+            diamondMark.SetActive(true);
+            coinMark.SetActive(false);
+        }
+        else
+        {
+            diamondMark.SetActive(false);
+            coinMark.SetActive(true);
+        }
     }
 
     public void SetPurchased(bool isPurchased)
