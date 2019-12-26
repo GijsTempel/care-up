@@ -1,20 +1,17 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 using System.Collections.Generic;
 using MBS;
 
 public class UMP_Manager : MonoBehaviour {
 
     [Header("Level Manager")]
-    public List<LevelInfo> Levels = new List<LevelInfo>();
-    
+    public List<LevelInfo> Levels = new List<LevelInfo>();    
 
     public InputField SceneSearchBar;
     public InputField LeaderBoardSearchBar;
     [Header("Settings")]
     public string PlayButtonName = "QUICKPLAY >";
-
 
     [Header("References")]
     public List<GameObject> Windows = new List<GameObject>();
@@ -25,13 +22,8 @@ public class UMP_Manager : MonoBehaviour {
     public Transform LevelPanel;
     MenuEffects menuEffects;
 
-
     private int CurrentWindow = 0;
     private PlayerPrefsManager manager;
-    /// <summary>
-    /// 
-    /// </summary>
-    /// 
 
     public int GetCurrentWindow()
     {
@@ -60,9 +52,7 @@ public class UMP_Manager : MonoBehaviour {
         GameObject.Find("AdjustCharacter").SetActive(false);
         menuEffects = GameObject.FindObjectOfType<MenuEffects>();
     }
-    /// <summary>
-    /// 
-    /// </summary>
+  
     void InstanceLevels()
     {
         for (int i = 0; i < Levels.Count; i++)
@@ -75,9 +65,7 @@ public class UMP_Manager : MonoBehaviour {
             l.transform.SetParent(LevelPanel, false);
         }
     }
-    /// <summary>
-    /// 
-    /// </summary>
+   
     /// <param name="id">window to active</param>
     /// <param name="disable">disabled currents window?</param>
     public void ChangeWindow(int id)
@@ -96,8 +84,7 @@ public class UMP_Manager : MonoBehaviour {
         
         CurrentWindow = id;
         Windows[id].SetActive(true);
-        menuEffects.ApplyMenuEffect();
-            
+        menuEffects.ApplyMenuEffect();            
     }
 
     /// <summary>
@@ -106,9 +93,7 @@ public class UMP_Manager : MonoBehaviour {
     /// <param name="url"></param>
     public void SocialButton(string url) { Application.OpenURL(url); }
 
-    /// <summary>
-    /// 
-    /// </summary>
+  
     /// <param name="indexDialog"></param>
     public void ShowDialog(int indexDialog)
     {
@@ -156,6 +141,7 @@ public class UMP_Manager : MonoBehaviour {
 		Application.Quit();
 #endif
     }
+
     public void LogOff()
     {
         Windows[3].SetActive (false);
@@ -166,6 +152,7 @@ public class UMP_Manager : MonoBehaviour {
     {
         Windows[2].SetActive (false);
     }
+
     [System.Serializable]
     public class LevelInfo
     {
@@ -178,6 +165,4 @@ public class UMP_Manager : MonoBehaviour {
         public string Description;
         public Sprite Preview;
     }
-
-
 }

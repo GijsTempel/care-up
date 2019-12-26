@@ -10,7 +10,7 @@ public class StoreViewModel : MonoBehaviour
     private Button goToCharacterStoreButton = default;
 
     public static int SavedCoins { get; set; }
-       
+
     private void Start()
     {
         UpdateCurrancyPanel();
@@ -50,10 +50,9 @@ public class StoreViewModel : MonoBehaviour
 
                 UMP_Manager manager = GameObject.FindObjectOfType<UMP_Manager>();
 
-   
+
                 SavedCoins = ActionManager.Points = 0;
 
-                //manager.ShowCongratulation()
                 int diamants = 0;
                 if (ActionManager.percentage == 100)
                 {
@@ -63,22 +62,14 @@ public class StoreViewModel : MonoBehaviour
                 }
 
                 if (popUp != null)
-                {
                     popUp.SetActive(true);
-                }
                 else if (manager != null)
-                {
-                    //manager.ShowDialog(9);
                     manager.ShowCongratulation(rewardCoins, diamants);
-
-                }
                 value = true;
             }
         }
         if (SavedCoins > 0)
-        {
             SavedCoins = ActionManager.Points = 0;
-        }
         return value;
     }
 
@@ -86,5 +77,5 @@ public class StoreViewModel : MonoBehaviour
     {
         if (value % 10 != 0) value = (value / 10) * 10 + 10;
         return value;
-    }
+    }   
 }

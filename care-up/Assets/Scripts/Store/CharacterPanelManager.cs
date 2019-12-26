@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 public class CharacterPanelManager : MonoBehaviour
-{
+{   
     [SerializeField]
     private GameObject buyButton = default,
                        adjustButton = default;
@@ -26,7 +26,7 @@ public class CharacterPanelManager : MonoBehaviour
     public int currentPrice;
 
     [SerializeField]
-    private UIParticleSystem currencyParticles = default;
+    private UIParticleSystem currencyParticles = default;  
 
     private void OnEnable()
     {
@@ -70,7 +70,7 @@ public class CharacterPanelManager : MonoBehaviour
             price = "";
             buyBtnCoinIcon.SetActive(false);
             buyBtnDiamondIcon.SetActive(false);
-            buyBtnFreeText.SetActive(true);            
+            buyBtnFreeText.SetActive(true);
         }
         else if (characterItem.extraPrice > 0)
         {
@@ -78,8 +78,8 @@ public class CharacterPanelManager : MonoBehaviour
             buyBtnCoinIcon.SetActive(false);
             buyBtnFreeText.SetActive(false);
         }
-        else 
-        {            
+        else
+        {
             buyBtnCoinIcon.SetActive(true);
             buyBtnFreeText.SetActive(false);
             buyBtnDiamondIcon.SetActive(false);
@@ -156,5 +156,5 @@ public class CharacterPanelManager : MonoBehaviour
     private void PurchaseFail()
     {
         uMP_Manager.ShowDialog(8);
-    }
+    }   
 }
