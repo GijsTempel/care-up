@@ -61,7 +61,6 @@ public class GameUI : MonoBehaviour
     public bool prescriptionButtonBlink;
     public bool recordsButtonBlink;
     public bool paperAndPenButtonblink;
-    //public GameObject theoryPanel;
     public GameObject patientInfo;
 
     public GameObject noTargetButton;
@@ -72,7 +71,7 @@ public class GameUI : MonoBehaviour
     public GameObject zoomButtonLeft;
     public GameObject zoomButtonRight;
     public GameObject SubStepsPanel;
-    Text SubStepsText;
+    Text subStepsText;
 
     public bool currentAnimLock = false;
     public GameObject DropLeftButton;

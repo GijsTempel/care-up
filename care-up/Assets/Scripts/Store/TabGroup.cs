@@ -6,18 +6,20 @@ public class TabGroup : MonoBehaviour
 {
     public List<Button> TabButtons;
     public List<GameObject> TabContainers;
+
     [SerializeField]
     private GameObject buyBtn = default,
                        confirmPanel = default,
                        purchasedBtn = default,
                        renewBtn = default,
-                       onSaleBtn = default;
-    //coinProductMark = default,
-    //diamond
-
-    private GameObject buyBtnCoin = default,
+                       onSaleBtn = default,
+                       buyBtnCoin = default,
                        buyBtnDiamond = default,
-                       productItem = default;
+                       productItem = default;                     
+
+    [SerializeField]
+    private Text purchaseText = default;
+
     bool initialized = false;
     int pages = 3;
 
@@ -204,7 +206,10 @@ public class TabGroup : MonoBehaviour
             }
             else
             {
-                GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(8);
+                StorePopUpsManager.Currency currencyType;
+                currencyType = item.extraPrice > 0 ? StorePopUpsManager.Currency.Diamonds : StorePopUpsManager.Currency.Coins;
+
+                GameObject.FindObjectOfType<StorePopUpsManager>().PurchaseFail(purchaseText, currencyType);
             }
         }
         ShowConfirmPanel(false);

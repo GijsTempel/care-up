@@ -28,6 +28,9 @@ public class CharacterPanelManager : MonoBehaviour
     [SerializeField]
     private UIParticleSystem currencyParticles, extraCurrencyParticles = default;
 
+    [SerializeField]
+    private Text purchaseText = default;
+
     private void OnEnable()
     {
         UpdateCurrencyPanel();
@@ -128,6 +131,8 @@ public class CharacterPanelManager : MonoBehaviour
         if (сarrousel == null)
             сarrousel = GameObject.FindObjectOfType<CharacterСarousel>();
         int characterIndex = сarrousel.CurrentCharacter;
+        CharacterItem character = storeManager.CharacterItems[characterIndex];
+
         if (storeManager.PurchaseCharacter(storeManager.GetItemIndex(characterIndex)))
         {
             сarrousel.SetAnimation();
@@ -135,7 +140,6 @@ public class CharacterPanelManager : MonoBehaviour
             currencyText.text = storeManager.Currency.ToString();
             extraCurrencyText.text = storeManager.ExtraCurrency.ToString();
 
-            CharacterItem character = storeManager.CharacterItems[characterIndex];
 
             if (character.extraPrice > 0)
             {
@@ -154,12 +158,11 @@ public class CharacterPanelManager : MonoBehaviour
         }
         else
         {
-            PurchaseFail();
-        }
-    }
+            StorePopUpsManager manager = GameObject.FindObjectOfType<StorePopUpsManager>();
+            StorePopUpsManager.Currency currencyType;
+            currencyType = character.extraPrice > 0 ? StorePopUpsManager.Currency.Diamonds : StorePopUpsManager.Currency.Coins;
 
-    private void PurchaseFail()
-    {
-        uMP_Manager.ShowDialog(8);
+            manager.PurchaseFail(purchaseText,currencyType);
+        }
     }
 }

@@ -13,7 +13,7 @@ public class StorePopUpsManager : MonoBehaviour
     {
         Coins,
         Diamonds
-    }   
+    }
 
     public void SetClarificationText()
     {
@@ -21,5 +21,14 @@ public class StorePopUpsManager : MonoBehaviour
         string diamondsText = "Om diamanten te verdienen moet je 100% scoren op een protocol.";
 
         clarificationNote.text = currency == Currency.Coins ? coinsText : diamondsText;
+    }
+
+    public void PurchaseFail(Text info, StorePopUpsManager.Currency currencyType)
+    {
+        string coinsText = "Je hebt niet genoeg munten!";
+        string diamondsText = "Je hebt niet genoeg diamanten!";
+
+        info.text = currencyType == StorePopUpsManager.Currency.Coins ? coinsText : diamondsText;
+        GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(8);
     }
 }
