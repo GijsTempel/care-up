@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 public class CharacterPanelManager : MonoBehaviour
-{   
+{
     [SerializeField]
     private GameObject buyButton = default,
                        adjustButton = default;
@@ -26,7 +26,7 @@ public class CharacterPanelManager : MonoBehaviour
     public int currentPrice;
 
     [SerializeField]
-    private UIParticleSystem currencyParticles = default;  
+    private UIParticleSystem currencyParticles, extraCurrencyParticles = default;
 
     private void OnEnable()
     {
@@ -137,7 +137,12 @@ public class CharacterPanelManager : MonoBehaviour
 
             CharacterItem character = storeManager.CharacterItems[characterIndex];
 
-            if (character.price > 0)
+            if (character.extraPrice > 0)
+            {
+                extraCurrencyParticles.Play();
+                GameObject.Find("cashRegisterEffect").GetComponent<AudioSource>().Play();
+            }
+            else if (character.price > 0)
             {
                 currencyParticles.Play();
                 GameObject.Find("cashRegisterEffect").GetComponent<AudioSource>().Play();
@@ -156,5 +161,5 @@ public class CharacterPanelManager : MonoBehaviour
     private void PurchaseFail()
     {
         uMP_Manager.ShowDialog(8);
-    }   
+    }
 }

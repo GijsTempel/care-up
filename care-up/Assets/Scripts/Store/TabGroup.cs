@@ -12,8 +12,8 @@ public class TabGroup : MonoBehaviour
                        purchasedBtn = default,
                        renewBtn = default,
                        onSaleBtn = default;
-                       //coinProductMark = default,
-                       //diamond
+    //coinProductMark = default,
+    //diamond
 
     private GameObject buyBtnCoin = default,
                        buyBtnDiamond = default,
@@ -22,7 +22,7 @@ public class TabGroup : MonoBehaviour
     int pages = 3;
 
     [SerializeField]
-    private UIParticleSystem currencyParticles = default(UIParticleSystem);
+    private UIParticleSystem currencyParticles, extracurrencyParticles = default(UIParticleSystem);
 
     private Text buyBtnText = default;
 
@@ -132,8 +132,8 @@ public class TabGroup : MonoBehaviour
                     buyBtnCoin.SetActive(false);
                     buyBtn.SetActive(true);
                     return;
-                }   
-                
+                }
+
                 buyBtnText.text = selectedItemBtn.item.price.ToString();
                 buyBtnCoin.SetActive(true);
                 buyBtnDiamond.SetActive(false);
@@ -180,7 +180,12 @@ public class TabGroup : MonoBehaviour
                 selectedItemBtn.SetPurchased(true);
                 GetComponent<StoreViewModel>().UpdateCurrancyPanel();
                 GetComponent<StoreViewModel>().UpdateExtraCurrancyPanel();
-                if (item.price > 0)
+                if (item.extraPrice > 0)
+                {
+                    GameObject.Find("cashRegisterEffect").GetComponent<AudioSource>().Play();
+                    extracurrencyParticles.Play();
+                }
+                else if (item.price > 0)
                 {
                     GameObject.Find("cashRegisterEffect").GetComponent<AudioSource>().Play();
                     currencyParticles.Play();
