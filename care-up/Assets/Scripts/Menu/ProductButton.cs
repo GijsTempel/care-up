@@ -11,6 +11,8 @@ public class ProductButton : MonoBehaviour
     public GameObject dressOn;
 
     public Image icon;
+    Sprite nextIcon = null;
+
     public StoreItem item;
     TabGroup tabGroup;
     Color originalColor = new Color();
@@ -58,17 +60,21 @@ public class ProductButton : MonoBehaviour
         SetPrice(item.price);
 
         SetPurchased(item.purchased);
-        tabGroup = tg;
-        Sprite sprite = Resources.Load("Sprites/StoreItemPreview/" + item.name, typeof(Sprite)) as Sprite;
+        tabGroup = tg;       
+        nextIcon = Resources.Load("Sprites/StoreItemPreview/" + item.name, typeof(Sprite)) as Sprite;
+        Invoke("loadSprite", 0.1f);
+
         if (item.name == "x")
         {
             checkmark.SetActive(false);
-            sprite = Resources.Load("Sprites/StoreItemPreview/x", typeof(Sprite)) as Sprite;
-        }
-        if (sprite != null)
-        {
-            icon.sprite = sprite;
-        }
+            nextIcon = Resources.Load("Sprites/StoreItemPreview/x", typeof(Sprite)) as Sprite;
+        }      
+    }
+
+    void loadSprite()
+    {
+        if (nextIcon != null)
+            icon.GetComponent<Image>().sprite = nextIcon;
     }
 
     public void SetPrice(int _price)
