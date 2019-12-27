@@ -22,6 +22,7 @@ public class ProductButton : MonoBehaviour
     private Color originalColor = new Color();
     private Image image;
 
+    Sprite nextIcon = null;
     public StoreItem item;
 
     void Start()
@@ -61,16 +62,20 @@ public class ProductButton : MonoBehaviour
 
         SetPurchased(item.purchased);
         tabGroup = tg;
-        Sprite sprite = Resources.Load("Sprites/StoreItemPreview/" + item.name, typeof(Sprite)) as Sprite;
+        nextIcon = Resources.Load("Sprites/StoreItemPreview/" + item.name, typeof(Sprite)) as Sprite;
+        Invoke("loadSprite", 0.1f);
+
         if (item.name == "x")
         {
             checkmark.SetActive(false);
-            sprite = Resources.Load("Sprites/StoreItemPreview/x", typeof(Sprite)) as Sprite;
+            nextIcon = Resources.Load("Sprites/StoreItemPreview/x", typeof(Sprite)) as Sprite;
         }
-        if (sprite != null)
-        {
-            icon.sprite = sprite;
-        }
+    }
+
+    void loadSprite()
+    {
+        if (nextIcon != null)
+            icon.GetComponent<Image>().sprite = nextIcon;
     }
 
     public void SetPrice(int price)
