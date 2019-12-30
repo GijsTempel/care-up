@@ -237,7 +237,7 @@ public class ActionManager : MonoBehaviour
         gameUI.prescriptionButtonBlink = false;
 
         foreach (Action a in actManager.IncompletedActions)
-        {
+        {           
             StepData placeData = null;
             StepData secondPlaceData = null;
             bool correctObjectsInHands = true;
@@ -1467,7 +1467,7 @@ public class ActionManager : MonoBehaviour
                     }
 
                     if (action.encounter >= 0.0f)
-                    {                        
+                    {
                         QuizTab.encounterDelay = action.encounter;
                     }
 
