@@ -5,7 +5,7 @@ public class PatientInfoManager : MonoBehaviour
 {
     private Transform infoTabs;
     private GameObject prescriptionButton;
-    private GameObject patientButton;
+    public GameObject patientButton;
 
     public void SetTabActive(string tabName)
     {
@@ -34,7 +34,7 @@ public class PatientInfoManager : MonoBehaviour
         infoTabs = GameObject.Find("UI/IpadPanel/PatientInfoTabs/Info").transform;
 
         prescriptionButton = GameObject.Find("Prescription");
-        patientButton = GameObject.Find("Patient");
+        //patientButton = GetComponent<GameUI>().patientInfo;
 
         prescriptionButton.GetComponent<Button>().onClick.AddListener(OnPrescriptionFormClick);
         patientButton.GetComponent<Button>().onClick.AddListener(OnPatientRecordsClick);
