@@ -533,7 +533,7 @@ public class AvatarEditor : MonoBehaviour
             nextGlasses = MainAvatar.GetMaxGlassesNum();
         currentGlasses = nextGlasses;
         GlassesInput.text = currentGlasses.ToString();
-        MainAvatar.avatarData.glassesType = currentGlasses;
+        MainAvatar.avatarData.glassesType = currentGlasses + 3000000;
         MainAvatar.UpdateCharacter();
         UpdateItemXML();
     }
