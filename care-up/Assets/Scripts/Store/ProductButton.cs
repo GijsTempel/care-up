@@ -59,7 +59,11 @@ public class ProductButton : MonoBehaviour
         item = _item;
         productName.text = item.name;
         SetCurrancySprite(item.extraPrice);
-        SetPrice(item.price);
+
+        if (item.extraPrice > 0)
+            SetPrice(item.extraPrice);
+        else
+            SetPrice(item.price);
 
         SetPurchased(item.purchased);
         tabGroup = tg;
