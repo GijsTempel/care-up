@@ -23,6 +23,7 @@ public class ProductButton : MonoBehaviour
     private Image image;
 
     Sprite nextIcon = null;
+
     public StoreItem item;
 
     void Start()

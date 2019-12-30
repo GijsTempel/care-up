@@ -66,7 +66,7 @@ public class PlayerSpawn : MonoBehaviour
             transform.position, transform.rotation);
         itemDescription.name = "ItemDescription";
 
-        GameObject iPad = UIPrefab.transform.Find("PatientInfoTabs").gameObject;
+        GameObject iPad = UIPrefab.transform.Find("IpadPanel/PatientInfoTabs").gameObject;
         IpadLoadXmlInfo(iPad.transform);
 
         GameObject robot = Instantiate(Resources.Load("NecessaryPrefabs/robot") as GameObject,
