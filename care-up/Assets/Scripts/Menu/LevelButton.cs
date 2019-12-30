@@ -157,11 +157,11 @@ public class LevelButton : MonoBehaviour
             int practicePlays;
             int.TryParse(DatabaseManager.FetchField("PracticePlays", formattedSceneName), out practicePlays);
 
-            testBtn.interactable = practicePlays >= 3;
+            testBtn.interactable = practicePlays >= 1;
 
             GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
                     "DialogTestPractice/Panel_UI/Buttons/TestButton/contentlocked/practiceamount")
-                .GetComponent<Text>().text = (3 - practicePlays).ToString() + " keer";
+                .GetComponent<Text>().text = (1 - practicePlays).ToString() + " keer";
 
             if (testBtn.interactable)
             {
