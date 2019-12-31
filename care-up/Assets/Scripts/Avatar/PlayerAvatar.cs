@@ -18,7 +18,7 @@ public class PlayerAvatar : MonoBehaviour
 
     HatsPositioningDB.HatInfo hatOffsetInfo = new HatsPositioningDB.HatInfo();
 
-    int maxGlasses = 8;
+    int maxGlasses = 9;
 
     public PlayerAvatarData avatarData = new PlayerAvatarData();
 
