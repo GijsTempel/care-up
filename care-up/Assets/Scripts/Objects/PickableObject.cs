@@ -121,9 +121,7 @@ public class PickableObject : InteractableObject
                 case "catheter_Supertubular_InHands":
                     if (posID == 0 && actionManager.CompareDropPos(name, 0))
                     {
-                        print("FFFFFFF");
-                        Transform target = GameObject.Find("_closeKochertarget").transform;
-                        PlayerAnimationManager.PlayAnimationSequence("SQ1", target);
+                        GameObject.FindObjectOfType<PlayerAnimationManager>().GetComponent<Animator>().SetTrigger("SQ1Sequence");
                     }
                     break;
                 default:
