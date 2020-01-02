@@ -121,7 +121,7 @@ public class PickableObject : InteractableObject
                 case "catheter_Supertubular_InHands":
                     if (posID == 0 && actionManager.CompareDropPos(name, 0))
                     {
-                        Invoke("Freeze", 0.1f);
+                       //Invoke("Freeze", 0.1f);
                     }
                     break;
                 default:

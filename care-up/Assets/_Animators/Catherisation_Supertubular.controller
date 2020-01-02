@@ -701,6 +701,21 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-7991168827065324331
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa018439b75c6f64aabccc57a27aba61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TriggerName: AllowSQ1
+  value: 1
+  actionFrame: 150
 --- !u!114 &-7979757508725478286
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -988,6 +1003,20 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-7627792832640003524
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93b3ffca93d7f4c4b92d9cc041168da8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hideFrame: 7462
+  hideObjName: PlasticTrashbucket
 --- !u!1101 &-7611770865962484293
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -2501,6 +2530,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9b29f5ba63bb4aa5b477b8007d77187, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-5586713637341008632
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa018439b75c6f64aabccc57a27aba61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TriggerName: AllowSQ1
+  value: 1
+  actionFrame: 150
 --- !u!1101 &-5585349128001070452
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -3685,6 +3729,7 @@ AnimatorState:
   - {fileID: -7316736616276940615}
   - {fileID: -5139864607626006483}
   - {fileID: 6808965201867496568}
+  - {fileID: -7991168827065324331}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -5930,6 +5975,12 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
+  - m_Name: AllowSQ1
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: RightHand
@@ -6071,6 +6122,19 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &102830366281482443
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9585483e43cbafa4590af75ef6d3b653, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectName: catheter_Supertubular_InHands
 --- !u!114 &103833012877854691
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6169,6 +6233,20 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &267138004657725759
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93b3ffca93d7f4c4b92d9cc041168da8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hideFrame: 7462
+  hideObjName: GauzeTrayWet
 --- !u!114 &283640781930939841
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7879,6 +7957,9 @@ AnimatorState:
   - {fileID: 9194643989669174229}
   - {fileID: 3739574012698103204}
   - {fileID: 2148785965932828460}
+  - {fileID: 8076607043900196189}
+  - {fileID: 267138004657725759}
+  - {fileID: -7627792832640003524}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -8421,7 +8502,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SequenceName: AnimSeq_Catherisation_Supertubular
   TuggleFromCinematic: 1
-  keyFrames: 28000000900100007d02000049030000100400003e050000cf050000f5050000840600003d070000980800007709000086090000c80a0000e71300008f1500003d16000092180000261d0000
+  keyFrames: 2a000000900100007d02000049030000100400003e050000cf050000f5050000840600003d070000980800007709000086090000c80a0000e71300008f1500003d16000092180000261d0000
 --- !u!1102 &3866775553657193175
 AnimatorState:
   serializedVersion: 5
@@ -11317,6 +11398,20 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &8076607043900196189
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75d5649a1875edf478a49f715e29c332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showFrame: 7630
+  toPickup: 0
 --- !u!1102 &8082099767746702644
 AnimatorState:
   serializedVersion: 5
@@ -11656,6 +11751,7 @@ AnimatorState:
   - {fileID: -8364866361661049449}
   - {fileID: -414666145874261713}
   - {fileID: -2729329521561171398}
+  - {fileID: -5586713637341008632}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -11700,7 +11796,8 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 5367255547134389956}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 102830366281482443}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
