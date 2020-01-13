@@ -121,7 +121,10 @@ public class PickableObject : InteractableObject
                 case "catheter_Supertubular_InHands":
                     if (posID == 0 && actionManager.CompareDropPos(name, 0))
                     {
-                       //Invoke("Freeze", 0.1f);
+                        // print("posID == 0 && actionManager.CompareDropPos(name, 0)");
+                        // PlayerAnimationManager.PlayAnimation("SQ1Sequence");
+                        // "SQ1Sequence"
+                        Invoke("SQ1Sequence", 0.1f);
                     }
                     break;
                 default:
@@ -132,9 +135,9 @@ public class PickableObject : InteractableObject
         return res;
     }
 
-    void Freeze ()
+    void SQ1Sequence()
     {
-        GameObject.FindObjectOfType<PlayerAnimationManager>().GetComponent<Animator>().SetTrigger("SQ1Sequence");
+         PlayerAnimationManager.PlayAnimation("SQ1Sequence");
     }
 
     /// <summary>
