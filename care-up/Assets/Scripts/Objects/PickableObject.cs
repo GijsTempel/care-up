@@ -124,7 +124,7 @@ public class PickableObject : InteractableObject
                         // print("posID == 0 && actionManager.CompareDropPos(name, 0)");
                         // PlayerAnimationManager.PlayAnimation("SQ1Sequence");
                         // "SQ1Sequence"
-                        Invoke("SQ1Sequence", 0.1f);
+                        Invoke("SQ1Sequence", 0.3f);
                     }
                     break;
                 default:
@@ -137,7 +137,8 @@ public class PickableObject : InteractableObject
 
     void SQ1Sequence()
     {
-         PlayerAnimationManager.PlayAnimation("SQ1Sequence");
+        Transform _target = GameObject.Find("_closeKochertarget").transform;
+        PlayerAnimationManager.PlayAnimation("SQ1Sequence", _target);
     }
 
     /// <summary>
