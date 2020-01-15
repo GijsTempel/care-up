@@ -108,7 +108,7 @@ public class EndScoreManager : MonoBehaviour
             percent = 1.0f *
                 (correctStepIndexes.Count + (quizQuestionsTexts.Count - quizWrongIndexes.Count))
                 / (steps.Count + quizQuestionsTexts.Count);
-
+            ActionManager.percentage = (int)(percent * 100.0);
             if (percent < 0f)
                 percent = 0f;
 
@@ -245,9 +245,10 @@ public class EndScoreManager : MonoBehaviour
         }
     }
 
+
+   
     public void SetBasicText()
     {
-        print(quizQuestionsTexts.Count);
         Transform quizForm = GameObject.Find("Interactable Objects/Canvas/Questionscreen/Image/QuizForm").transform;
         if (quizQuestionsTexts.Count == 0)
         {

@@ -32,8 +32,8 @@ public class UMP_ButtonGroup : MonoBehaviour, IPointerClickHandler
                 b.UnSelect();
             }
         }
-        if (Button.name != "ScoresBTN" && Button.name != "AchievementBTN")
-            Button.interactable = false;
+        //if (Button.name != "ScoresBTN" && Button.name != "AchievementBTN")
+        //    Button.interactable = false;
     }
 
     public void UnSelect()

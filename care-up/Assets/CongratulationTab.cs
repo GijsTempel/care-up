@@ -75,7 +75,8 @@ public class CongratulationTab : MonoBehaviour
             else if ((countTime > (coinCountTime + 2f) && !buttonsShown))
             {
                 Buttons.SetActive(true);
-                transform.Find("buttonSound").GetComponent<AudioSource>().Play();
+                if (transform.Find("buttonSound").gameObject.activeSelf)
+                    transform.Find("buttonSound").GetComponent<AudioSource>().Play();
             }
         }
         else

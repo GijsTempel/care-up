@@ -100,6 +100,10 @@ public class ActionManager : MonoBehaviour
         get { return totalPoints; }
     }
 
+
+
+
+
     public float PercentageDone
     {
         get
@@ -129,7 +133,6 @@ public class ActionManager : MonoBehaviour
             if (percent < 0)
                 percent = 0;
 
-            percentage = (int)percent;
             return percent;
         }
     }
