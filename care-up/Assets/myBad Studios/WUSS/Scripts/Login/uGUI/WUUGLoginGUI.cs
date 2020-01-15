@@ -257,7 +257,7 @@ namespace MBS
 
         void Start()
         {
-#if !UNITY_EDITOR
+#if !(UNITY_EDITOR || DEVELOPMENT_BUILD)
             panels.debug_options.SetActive(false);
 #endif
             PlayerPrefsManager.plusCoins = false;

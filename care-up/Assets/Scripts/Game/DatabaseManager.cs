@@ -99,7 +99,7 @@ public class DatabaseManager : MonoBehaviour
              (FetchField("AccountStats", "CharSceneV2") == "true" ||
              FetchField("AccountStats", "BIG_number") != "");
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
         if (PlayerPrefsManager.editCharacterOnStart)
             goToMainMenu = false;
 #endif

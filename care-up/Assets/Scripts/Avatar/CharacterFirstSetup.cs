@@ -127,7 +127,7 @@ public class CharacterFirstSetup : MonoBehaviour
                 DatabaseManager.UpdateField("AccountStats", "CharSceneV2", "true");
                 bool goToMainMenu = (DatabaseManager.FetchField("AccountStats", "TutorialCompleted") == "true");
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
                 if (PlayerPrefsManager.tutorialOnStart)
                     goToMainMenu = false;
 #endif
