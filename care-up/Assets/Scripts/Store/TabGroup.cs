@@ -4,6 +4,11 @@ using UnityEngine.UI;
 
 public class TabGroup : MonoBehaviour
 {
+    public enum FilterModes
+    {
+        diamond,
+        purchased
+    };
     public List<Button> TabButtons;
     public List<GameObject> TabContainers;
 
@@ -19,6 +24,8 @@ public class TabGroup : MonoBehaviour
 
     [SerializeField]
     private Text purchaseText = default;
+
+    Dictionary<FilterModes, StoreItemFilterButton> FilterButtons = new Dictionary<FilterModes, StoreItemFilterButton>();
 
     bool initialized = false;
     int pages = 3;
@@ -39,6 +46,11 @@ public class TabGroup : MonoBehaviour
     CharacterСarousel carousel;
     PlayerPrefsManager pref;
 
+    public void AddFilterButton(StoreItemFilterButton button)
+    {
+
+    }
+
     public void SwitchTab(int value)
     {
         foreach (Button b in TabButtons)
@@ -53,6 +65,27 @@ public class TabGroup : MonoBehaviour
         TabContainers[value].SetActive(true);
     }
 
+    public void FilterItems(FilterModes filterMode)
+    {
+        print(filterMode);
+        bool state = FilterButtons[filterMode].GetState();
+        foreach (FilterModes b_key in FilterButtons.Keys)
+        {
+            FilterButtons[b_key].Select(false);
+        }
+        FilterButtons[filterMode].Select(!state);
+        DisplayItemsInStore();
+        //switch (filterMode)
+        //{
+        //    case 1:
+        //        filterPurchesed = !filterPurchesed;
+        //        FilterButtons[1].Select(filterPurchesed);
+        //        DisplayItemsInStore();
+        //        break;
+        //    default:
+        //        break;
+        //}
+    }
 
     public void ShowConfirmPanel(bool toShow)
     {
@@ -328,6 +361,14 @@ public class TabGroup : MonoBehaviour
 
             foreach (StoreItem item in PlayerPrefsManager.storeManager.StoreItems[i].items)
             {
+                //Filters----------------------------------
+                if (FilterButtons.ContainsKey(FilterModes.purchased))
+                {
+                    if(FilterButtons[FilterModes.purchased].GetState() && !item.purchased)
+                        continue;
+                }
+                //-----------------------------------------------
+
                 if (i == 0)
                 {
                     HatsPositioningDB.HatInfo info = pref.hatsPositioning.GetHatInfo(avIndex, item.name);
@@ -384,6 +425,13 @@ public class TabGroup : MonoBehaviour
     private void Start()
     {
         InitializeTabPanel();
+        foreach(StoreItemFilterButton b in GameObject.FindObjectsOfType<StoreItemFilterButton>())
+        {
+            if (!FilterButtons.ContainsKey(b.FilterMode))
+                FilterButtons.Add(b.FilterMode, b);
+            else
+                FilterButtons[b.FilterMode] = b;
+        }
     }
 
     private ProductButton InstantiateProduct(StoreItem item, int TabNum)
