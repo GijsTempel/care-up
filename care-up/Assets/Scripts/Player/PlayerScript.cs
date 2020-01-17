@@ -535,10 +535,6 @@ public class PlayerScript : MonoBehaviour
 
         if (robotUINotOpenedYet)
         {
-            //string title = "Hygiënisch smartphone- en tabletgebruik";
-            //string message = "Telefoons en tablets bevatten erg veel micro-organismen. Bij het gebruik van een smartphone of tablet heeft handhygiëne de grootste prioriteit. Zowel voor als na het gebruiken van een mobiel communicatiemiddel moet je je handen goed reinigen. Je kunt het gebruik van een mobiel apparaat tijdens werkzaamheden zien als het beëindigen en opnieuw aangaan van handcontact met de cliënt. In CareUp is dit niet nodig omdat het de gebruikerservaring negatief beïnvloedt maar zorg in de praktijk dus voor goede hygiëne tijdens het gebruik van mobiele apparaten.";
-            //GameObject.FindObjectOfType<RobotUIMessageTab>().NewMessage(title, message, RobotUIMessageTab.Icon.MWarning);
-
             robotUINotOpenedYet = false;
         }
         if (joystickObject != null)
@@ -549,13 +545,14 @@ public class PlayerScript : MonoBehaviour
 
     public void CloseRobotUI()
     {
-        GameObject theoryTab = GameObject.Find("PatientInfoTabs/TheoryTab");
+        //GameObject theoryTab = GameObject.Find("theoryPanel");
+        
 
-        if (theoryTab != null && (GameObject.FindObjectOfType<QuizTab>() != null))
+        if (GameObject.FindObjectOfType<QuizTab>() != null)
         {
-            if (GameObject.FindObjectOfType<QuizTab>().quiz && theoryTab.gameObject.activeSelf)
+            if (GameObject.FindObjectOfType<QuizTab>().quiz && gameUI.theoryTab.gameObject.activeSelf)
             {
-                theoryTab.gameObject.SetActive(false);
+                gameUI.HideTheoryTab();
                 return;
             }
         }
@@ -588,11 +585,12 @@ public class PlayerScript : MonoBehaviour
         GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<CanvasGroup>().alpha = 0f;
         GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<CanvasGroup>().blocksRaycasts = false;
 
-        if (theoryTab != null)
-        {
-            theoryTab.GetComponent<CanvasGroup>().alpha = 0f;
-            theoryTab.GetComponent<CanvasGroup>().blocksRaycasts = false;
-        }
+        //if (theoryTab != null)
+        //{
+        //    //theoryTab.GetComponent<CanvasGroup>().alpha = 0f;
+        //    //theoryTab.GetComponent<CanvasGroup>().blocksRaycasts = false;
+        //    theoryTab.SetActive(false);
+        //}
 
         robotUIopened = false;
 
@@ -683,7 +681,7 @@ public class PlayerScript : MonoBehaviour
     /// If there is no questions left - it will do nothing.
     /// </summary>
     /// <param name="delay">Delay before opening ipad.</param>
-    public static void TriggerQuizQuestion(float delay = 0.0f)
+    public static void TriggerQuizQuestion(float delay = 0.0f, bool encounter = false)
     {
         // dont trigger quiz if a testing mode is on
 #if UNITY_EDITOR
@@ -707,12 +705,12 @@ public class PlayerScript : MonoBehaviour
             itemDescription.SetActive(false);
         }
         // trigger quiz with delay
-        instance.StartCoroutine(QuizCoroutine(delay));
+        instance.StartCoroutine(QuizCoroutine(delay, encounter));
     }
 
-    private static IEnumerator QuizCoroutine(float delay)
+    private static IEnumerator QuizCoroutine(float delay, bool encounter)
     {
         yield return new WaitForSeconds(delay);
-        quiz.NextQuizQuestion();
+        quiz.NextQuizQuestion(false, encounter);
     }
 }

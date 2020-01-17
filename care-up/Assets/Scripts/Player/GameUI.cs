@@ -61,7 +61,6 @@ public class GameUI : MonoBehaviour
     public bool prescriptionButtonBlink;
     public bool recordsButtonBlink;
     public bool paperAndPenButtonblink;
-    public GameObject theoryPanel;
     public GameObject patientInfo;
 
     public GameObject noTargetButton;
@@ -72,7 +71,7 @@ public class GameUI : MonoBehaviour
     public GameObject zoomButtonLeft;
     public GameObject zoomButtonRight;
     public GameObject SubStepsPanel;
-    Text SubStepsText;
+    Text subStepsText;
 
     public bool currentAnimLock = false;
     public GameObject DropLeftButton;
@@ -84,6 +83,8 @@ public class GameUI : MonoBehaviour
     float cooldownTime = 0;
     float lastCooldownTime = 0;
     int currentActionsCount = 0;
+
+    public TheoryTab theoryTab;
 
     private bool startTimer = false;
     private float targetTime = 0.7f;
@@ -394,14 +395,18 @@ public class GameUI : MonoBehaviour
 
     public void HideTheoryTab()
     {
-        GameObject.Find("PatientInfoTabs/Info/TheoryTab/Continue").gameObject.GetComponent<Button>().onClick.AddListener(
+        GameObject.Find("theoryPanel/panel/quizElements/Continue").gameObject.GetComponent<Button>().onClick.AddListener(
              () => GameObject.FindObjectOfType<PlayerScript>().CloseRobotUI());
+        theoryTab.Show(false);
     }
+
 
     // Use this for initialization
     void Start()
     {
         gameLogic = GameObject.Find("GameLogic");
+        theoryTab = GameObject.FindObjectOfType<TheoryTab>();
+
         animatedFinger = GameObject.FindObjectOfType<AnimatedFingerHint>();
         objectsIDsController = GameObject.FindObjectOfType<ObjectsIDsController>();
         MovementSideButtons = GameObject.Find("MovementSideButtons");
@@ -454,7 +459,7 @@ public class GameUI : MonoBehaviour
 
         WalkToGroupPanel = GameObject.Find("MovementButtons");
         Player = GameObject.Find("Player");
-        closeButton = transform.Find("CloseBtn").gameObject;
+        closeButton = transform.Find("CloseButtonPanel/CloseBtn").gameObject;
         closeDialog = transform.Find("CloseDialog").gameObject;
         closeDialog.SetActive(false);
         donePanel = transform.Find("DonePanel").gameObject;
@@ -670,15 +675,15 @@ public class GameUI : MonoBehaviour
         style.fontSize = 30;
 
 
-        GUI.Label(new Rect(0, 0, 100, 100), ((int)(1.0f / Time.smoothDeltaTime)).ToString(), style);
-        if (objectsIDsController != null)
-        {
-            if (objectsIDsController.cheat)
-                GUI.Label(new Rect(30, 0, 100, 100), "Cheat enabled", style);
-        }
+        // GUI.Label(new Rect(0, 0, 100, 100), ((int)(1.0f / Time.smoothDeltaTime)).ToString(), style);
+        // if (objectsIDsController != null)
+        // {
+        //     if (objectsIDsController.cheat)
+        //         GUI.Label(new Rect(30, 0, 100, 100), "Cheat enabled", style);
+        // }
 
-        //debugSS = PlayerAnimationManager.animTimeout.ToString();
-        GUI.Label(new Rect(0, 30, 1000, 100), debugSS, style);
+        // //debugSS = PlayerAnimationManager.animTimeout.ToString();
+        // GUI.Label(new Rect(0, 30, 1000, 100), debugSS, style);
 #endif
     }
 
@@ -773,19 +778,45 @@ public class GameUI : MonoBehaviour
     {
         void ShowTheoryTab()
         {
-            if (!string.IsNullOrEmpty(actionManager.Message))
-            {
-                if (!GameObject.FindObjectOfType<PlayerScript>().robotUIopened)
+            if (!GameObject.FindObjectOfType<QuizTab>()){
+                if (!string.IsNullOrEmpty(actionManager.Message))
                 {
-                    GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
-                    GameObject.FindObjectOfType<GameUI>().theoryPanel.SetActive(true);
-                    GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Title").GetComponent<Text>().text = actionManager.MessageTitle;
-                    GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Message").GetComponent<Text>().text = actionManager.Message;
+                    if (!GameObject.FindObjectOfType<PlayerScript>().robotUIopened)
+                    {
+                        GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
+                        theoryTab.ShowTheory(actionManager.MessageTitle, actionManager.Message);
+                        //GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Title").GetComponent<Text>().text = actionManager.MessageTitle;
+                        //GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Message").GetComponent<Text>().text = actionManager.Message;
+                    }
                     actionManager.Message = null;
                     actionManager.ShowTheory = false;
                 }
             }
-        }       
+        }
+
+        void ShowRandomQuizTab()
+        {
+            if (!GameObject.FindObjectOfType<PlayerScript>().robotUIopened)
+            {
+                quiz_tab.NextQuizQuestion(true);
+                RandomQuiz.showQuestion = false;
+            }
+        }
+
+        void ShowEncounter()
+        {
+            if (!GameObject.FindObjectOfType<PlayerScript>().robotUIopened)
+            {
+                bool randomValue = System.Convert.ToBoolean(Random.Range(0, 2));
+                if (randomValue)
+                    PlayerScript.TriggerQuizQuestion(QuizTab.encounterDelay, true);
+                else
+                    QuizTab.encounterDelay = -1f;
+
+                Debug.Log("Encounter quiz with result: " + randomValue);
+                encounterStarted = true;
+            }
+        }
 
         void SetTargetTime(float time)
         {
@@ -793,7 +824,7 @@ public class GameUI : MonoBehaviour
             targetTime = time;
         }
 
-        if (actionManager.ShowTheory)
+        if (actionManager.ShowTheory || RandomQuiz.showQuestion || (QuizTab.encounterDelay >= 0))
         {          
             startTimer = true;
         }
@@ -805,17 +836,38 @@ public class GameUI : MonoBehaviour
 
         if (targetTime <= 0.0f)
         {
-           if (actionManager.Message != null)
+            if (QuizTab.encounterDelay >= 0)
+            {
+                if (encounterStarted == false)
+                {
+                    ShowEncounter();
+                    SetTargetTime(0.4f);
+                }
+            }
+            else if (actionManager.Message != null)
             {
                 ShowTheoryTab();
                 SetTargetTime(0.4f);
-            }           
-        }       
+            }
+            else if (RandomQuiz.showQuestion)
+            {
+                ShowRandomQuizTab();
+                SetTargetTime(0.4f);
+            }
+        }
+        else if (isSequence && (QuizTab.encounterDelay > 0))
+        {
+            ShowEncounter();
+        }
         else if (isSequence && actionManager.ShowTheory)
         {
             ShowTheoryTab();
             actionManager.Message = null;
-        }       
+        }
+        else if (isSequence && RandomQuiz.showQuestion)
+        {
+            ShowRandomQuizTab();
+        }
     }
 
     public void PlaceTalkBubble(GameObject person)
@@ -988,8 +1040,6 @@ public class GameUI : MonoBehaviour
                         noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text =
                            actionManager.CurrentButtonText(handsInventory.rightHandObject.name, true);
                     }
-                    else
-                        showNoTarget_right = false;
                     if (LEmpty)
                     {
                         bool show_decomb_right = actionManager.CompareCombineObjects(handsInventory.rightHandObject.name, "", true);
@@ -1018,8 +1068,7 @@ public class GameUI : MonoBehaviour
                 zoomButtonLeft.SetActive(showZoomLeft);
                 zoomButtonRight.SetActive(showZoomRight);
                 noTargetButton.SetActive(showNoTarget);
-                if (showNoTarget_right)
-                    noTargetButton_right.SetActive(true);
+                noTargetButton_right.SetActive(showNoTarget_right);
                // noTargetButton_right.SetActive(showNoTarget_right || (ActionManager.generalAction/* && !ActionManager.generalActionDone*/));
                 combineButton.SetActive(showCombin);
             }
@@ -1046,7 +1095,7 @@ public class GameUI : MonoBehaviour
             MovementSideButtons.SetActive(showItemControlPanel);
             //if (!showItemControlPanel)
 
-            animatedFinger.gameObject.SetActive(showItemControlPanel);
+            animatedFinger.gameObject.SetActive(showItemControlPanel && !theoryTab.gameObject.activeSelf);
 
             ICPCurrentState = ItemControlPanel.activeSelf;
         }
@@ -1150,9 +1199,9 @@ public class GameUI : MonoBehaviour
     }
 
     public void SetHintPanelAlpha(float alpha)
-    {
+    { 
         Color panelColor = DetailedHintPanel.GetComponent<Image>().color;
-        panelColor.a = alpha;
+        panelColor.a = alpha * 0.7f;
         DetailedHintPanel.GetComponent<Image>().color = panelColor;
         foreach (Text t in DetailedHintPanel.GetComponentsInChildren<Text>())
         {

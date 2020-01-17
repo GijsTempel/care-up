@@ -3,17 +3,18 @@ using UnityEngine.UI;
 
 public class StoreViewModel : MonoBehaviour
 {
-    private GameObject currencyText;
-    private Text presentNumberText;
+    private GameObject currencyText = default;
+    private GameObject extraCurrencyText = default;
+    private Text presentNumberText = default;
+    [SerializeField]
+    private Button goToCharacterStoreButton = default;
 
     public static int SavedCoins { get; set; }
-
-    [SerializeField]
-    private Button goToCharacterStoreButton;
 
     private void Start()
     {
         UpdateCurrancyPanel();
+        UpdateExtraCurrancyPanel();
     }
 
     public void UpdateCurrancyPanel()
@@ -24,12 +25,20 @@ public class StoreViewModel : MonoBehaviour
             currencyText.GetComponent<Text>().text = PlayerPrefsManager.storeManager.Currency.ToString();
     }
 
+    public void UpdateExtraCurrancyPanel()
+    {
+        extraCurrencyText = GameObject.Find("TitlePanel/TitlePanel/Panel/CUDiamondsPanel/ValuePanel/Text");
+
+        if (extraCurrencyText != null)
+            extraCurrencyText.GetComponent<Text>().text = PlayerPrefsManager.storeManager.ExtraCurrency.ToString();
+    }
+
     public static bool ShowRewardDialogue(Text panelText, GameObject popUp = null)
     {
         bool value = false;
 
         if (SavedCoins <= 0)
-            SavedCoins = ActionManager.Points;       
+            SavedCoins = ActionManager.Points;
 
         if (SavedCoins > 0 && (ActionManager.percentage > 30))
         {
@@ -41,23 +50,27 @@ public class StoreViewModel : MonoBehaviour
 
                 UMP_Manager manager = GameObject.FindObjectOfType<UMP_Manager>();
 
-                if (popUp != null)
-                {
-                    popUp.SetActive(true);
-                }
-                else if (manager != null)
-                {
-                    manager.ShowDialog(9);
-                }
+
                 SavedCoins = ActionManager.Points = 0;
 
+                int diamants = 0;
+                print("ActionManager.percentage  = " + ActionManager.percentage.ToString());
+                if (ActionManager.percentage == 100)
+                {
+                    diamants = 1;
+                    Debug.Log("Extra reward for 100% score");
+                    PlayerPrefsManager.storeManager.ModifyExtraCurrencyBy(diamants);
+                }
+
+                if (popUp != null)
+                    popUp.SetActive(true);
+                else if (manager != null)
+                    manager.ShowCongratulation(rewardCoins, diamants);
                 value = true;
             }
         }
         if (SavedCoins > 0)
-        {
             SavedCoins = ActionManager.Points = 0;
-        }
         return value;
     }
 
@@ -65,5 +78,5 @@ public class StoreViewModel : MonoBehaviour
     {
         if (value % 10 != 0) value = (value / 10) * 10 + 10;
         return value;
-    }
+    }   
 }

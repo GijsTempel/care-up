@@ -26,6 +26,12 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public HatsPositioningDB hatsPositioning = new HatsPositioningDB();
     //private LocalizationManager localizationManager; // = new LocalizationManager();
+    public static bool plusCoins = false;
+    public static bool plusDiamonds = false;
+    public static bool resetPurchases = false;
+    public static bool editCharacterOnStart = false;
+    public static bool tutorialOnStart = false;
+
     public bool VR = true;
     public bool practiceMode = true;
     public bool TextDebug = false;
@@ -65,6 +71,9 @@ public class PlayerPrefsManager : MonoBehaviour
     public string fullPlayerName = "";
     public string bigNumber = "";
 
+    public bool muteMusicForEffect = false;
+    bool muteMusic = false;
+
     public string ActivatedScenes
     {
         get
@@ -81,6 +90,23 @@ public class PlayerPrefsManager : MonoBehaviour
         SetEscapeButtonLogic();
     }
 
+    public void ToPlayMusic(bool value)
+    {
+        bool toPlay = value;
+        if (muteMusicForEffect || muteMusic)
+            toPlay = false;
+
+        if (toPlay)
+        {
+            if (!GetComponent<AudioSource>().isPlaying)
+                GetComponent<AudioSource>().Play();
+        }
+        else
+        {
+            GetComponent<AudioSource>().Stop();
+        }
+    }
+
     private void OnLoaded(Scene s, LoadSceneMode m)
     {
         transform.position =
@@ -94,7 +120,9 @@ public class PlayerPrefsManager : MonoBehaviour
                 s.name == "Scenes_Character_Customisation"))
         {
             // game scenes
-            GetComponent<AudioSource>().Stop();
+            muteMusic = true;
+            ToPlayMusic(false);
+            //GetComponent<AudioSource>().Stop();
             if(Camera.main != null)
                 if (Camera.main.GetComponent<PostProcessingBehaviour>() != null)
                 {
@@ -103,10 +131,11 @@ public class PlayerPrefsManager : MonoBehaviour
         }
 
         if (s.name == "EndScore" ||
-            (s.name == "MainMenu" &&
-                !GetComponent<AudioSource>().isPlaying))
+            (s.name == "MainMenu"))
         {
-            GetComponent<AudioSource>().Play();
+            muteMusic = false;
+            ToPlayMusic(true);
+            //GetComponent<AudioSource>().Play();
         }
 
         if (s.name == "MainMenu")

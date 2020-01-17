@@ -407,7 +407,7 @@ public class AvatarEditor : MonoBehaviour
         ShowSelector(false);
         if (currentSelection == Selections.Glasses)
         {
-            MainAvatar.avatarData.glassesType = element;
+            MainAvatar.avatarData.glassesType = element + 3000000;
             GlassesInput.text = element.ToString();
             currentGlasses = element;
             MainAvatar.UpdateCharacter();
@@ -533,7 +533,7 @@ public class AvatarEditor : MonoBehaviour
             nextGlasses = MainAvatar.GetMaxGlassesNum();
         currentGlasses = nextGlasses;
         GlassesInput.text = currentGlasses.ToString();
-        MainAvatar.avatarData.glassesType = currentGlasses;
+        MainAvatar.avatarData.glassesType = currentGlasses + 3000000;
         MainAvatar.UpdateCharacter();
         UpdateItemXML();
     }

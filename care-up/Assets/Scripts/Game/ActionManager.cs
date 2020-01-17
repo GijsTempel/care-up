@@ -52,6 +52,8 @@ public class ActionManager : MonoBehaviour
     private bool uiSet = false;
     private PlayerPrefsManager manager;
     private HandsInventory inventory;
+    public RandomQuiz randomQuiz = new RandomQuiz();
+
     private List<Action> incompletedActions;
     private List<Action> unlockedIncompletedActions;
     private List<string> unlockedBlocks = new List<string>();
@@ -98,6 +100,10 @@ public class ActionManager : MonoBehaviour
         get { return totalPoints; }
     }
 
+
+
+
+
     public float PercentageDone
     {
         get
@@ -127,7 +133,6 @@ public class ActionManager : MonoBehaviour
             if (percent < 0)
                 percent = 0;
 
-            percentage = (int)percent;
             return percent;
         }
     }
@@ -235,7 +240,7 @@ public class ActionManager : MonoBehaviour
         gameUI.prescriptionButtonBlink = false;
 
         foreach (Action a in actManager.IncompletedActions)
-        {
+        {           
             StepData placeData = null;
             StepData secondPlaceData = null;
             bool correctObjectsInHands = true;
@@ -1462,7 +1467,12 @@ public class ActionManager : MonoBehaviour
                     if (action.quizTriggerTime >= 0.0f)
                     {
                         PlayerScript.TriggerQuizQuestion(action.quizTriggerTime);
-                    }               
+                    }
+
+                    if (action.encounter >= 0.0f)
+                    {
+                        QuizTab.encounterDelay = action.encounter;
+                    }
 
                     if (action.messageContent != "" || action.messageTitle != "")
                     {
@@ -1707,6 +1717,7 @@ public class ActionManager : MonoBehaviour
 
         ActionManager.BuildRequirements();
         ActionManager.UpdateRequirements(1.5f);
+        GameObject.FindObjectOfType<ActionManager>().randomQuiz.NextRandomQuiz();
     }
 
     public static void BuildRequirements()

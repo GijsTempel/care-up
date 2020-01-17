@@ -125,8 +125,13 @@ public class CharacterFirstSetup : MonoBehaviour
                 }
                 // set new character scene to be seen and saved info
                 DatabaseManager.UpdateField("AccountStats", "CharSceneV2", "true");
+                bool goToMainMenu = (DatabaseManager.FetchField("AccountStats", "TutorialCompleted") == "true");
 
-                if (DatabaseManager.FetchField("AccountStats", "TutorialCompleted") == "true")
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+                if (PlayerPrefsManager.tutorialOnStart)
+                    goToMainMenu = false;
+#endif
+                if (goToMainMenu)
                 {
                     bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
                 }
