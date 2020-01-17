@@ -23,7 +23,6 @@ public class StoreItemFilterButton : MonoBehaviour
 
     public void Pressed()
     {
-        print("FFFFFFFFFFFFF");
         tabGroup.FilterItems(FilterMode);
     }
 

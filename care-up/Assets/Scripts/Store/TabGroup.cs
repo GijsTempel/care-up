@@ -7,7 +7,8 @@ public class TabGroup : MonoBehaviour
     public enum FilterModes
     {
         diamond,
-        purchased
+        purchased,
+        newItems
     };
     public List<Button> TabButtons;
     public List<GameObject> TabContainers;
@@ -67,7 +68,6 @@ public class TabGroup : MonoBehaviour
 
     public void FilterItems(FilterModes filterMode)
     {
-        print(filterMode);
         bool state = FilterButtons[filterMode].GetState();
         foreach (FilterModes b_key in FilterButtons.Keys)
         {
@@ -75,16 +75,7 @@ public class TabGroup : MonoBehaviour
         }
         FilterButtons[filterMode].Select(!state);
         DisplayItemsInStore();
-        //switch (filterMode)
-        //{
-        //    case 1:
-        //        filterPurchesed = !filterPurchesed;
-        //        FilterButtons[1].Select(filterPurchesed);
-        //        DisplayItemsInStore();
-        //        break;
-        //    default:
-        //        break;
-        //}
+
     }
 
     public void ShowConfirmPanel(bool toShow)
@@ -365,6 +356,16 @@ public class TabGroup : MonoBehaviour
                 if (FilterButtons.ContainsKey(FilterModes.purchased))
                 {
                     if(FilterButtons[FilterModes.purchased].GetState() && !item.purchased)
+                        continue;
+                }
+                if (FilterButtons.ContainsKey(FilterModes.diamond))
+                {
+                    if(FilterButtons[FilterModes.diamond].GetState() && (item.extraPrice <= 0))
+                        continue;
+                }
+                if (FilterButtons.ContainsKey(FilterModes.newItems))
+                {
+                    if(FilterButtons[FilterModes.newItems].GetState() && !item.isNew)
                         continue;
                 }
                 //-----------------------------------------------
