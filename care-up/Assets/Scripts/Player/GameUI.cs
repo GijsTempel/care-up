@@ -778,7 +778,8 @@ public class GameUI : MonoBehaviour
     {
         void ShowTheoryTab()
         {
-            if (!GameObject.FindObjectOfType<QuizTab>()){
+            if (!GameObject.FindObjectOfType<QuizTab>())
+            {
                 if (!string.IsNullOrEmpty(actionManager.Message))
                 {
                     if (!GameObject.FindObjectOfType<PlayerScript>().robotUIopened)
@@ -825,7 +826,7 @@ public class GameUI : MonoBehaviour
         }
 
         if (actionManager.ShowTheory || RandomQuiz.showQuestion || (QuizTab.encounterDelay >= 0))
-        {          
+        {
             startTimer = true;
         }
 
@@ -1068,8 +1069,9 @@ public class GameUI : MonoBehaviour
                 zoomButtonLeft.SetActive(showZoomLeft);
                 zoomButtonRight.SetActive(showZoomRight);
                 noTargetButton.SetActive(showNoTarget);
-                noTargetButton_right.SetActive(showNoTarget_right);
-               // noTargetButton_right.SetActive(showNoTarget_right || (ActionManager.generalAction/* && !ActionManager.generalActionDone*/));
+                if (actionManager.CheckGeneralAction() == null)
+                    noTargetButton_right.SetActive(showNoTarget_right);
+                // noTargetButton_right.SetActive(showNoTarget_right || (ActionManager.generalAction/* && !ActionManager.generalActionDone*/));
                 combineButton.SetActive(showCombin);
             }
 
@@ -1199,7 +1201,7 @@ public class GameUI : MonoBehaviour
     }
 
     public void SetHintPanelAlpha(float alpha)
-    { 
+    {
         Color panelColor = DetailedHintPanel.GetComponent<Image>().color;
         panelColor.a = alpha * 0.7f;
         DetailedHintPanel.GetComponent<Image>().color = panelColor;
