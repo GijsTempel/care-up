@@ -201,14 +201,14 @@ public class ActionManager : MonoBehaviour
         General
     };
 
-    // Will be refactored
+    // Will be refactored, someday
     public static void UpdateRequirements(float showDelay = 0f)
     {
         ActionManager actManager = GameObject.FindObjectOfType<ActionManager>();
 
         if (!practiceMode)
         {
-            if (actManager.CheckGeneralAction() != null /*&& !generalActionDone*/)
+            if (actManager.CheckGeneralAction() != null)
             {
                 actManager.NotTriggeredAction();
             }
@@ -276,7 +276,6 @@ public class ActionManager : MonoBehaviour
                         }
                     }
 
-                    //------------------------------------------------------------------------------
                     if (personClicked)
                         objectsData.Add(new StepData(false, $"- Kies wat je gaat doen.", i));
                     else
