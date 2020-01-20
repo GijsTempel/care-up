@@ -670,6 +670,17 @@ public class GameUI : MonoBehaviour
         GUIStyle style = new GUIStyle();
         style.normal.textColor = new Color(1f, 0f, 0f);
         style.fontSize = 30;
+        // ****Show FPS 
+        GUI.Label(new Rect(0, 0, 100, 100), ((int)(1.0f / Time.smoothDeltaTime)).ToString(), style);
+        if (objectsIDsController != null)
+        {
+            if (objectsIDsController.cheat)
+                GUI.Label(new Rect(30, 0, 100, 100), "Cheat enabled", style);
+        }
+        //****Show FPS end.
+
+        //debugSS = PlayerAnimationManager.animTimeout.ToString();
+        GUI.Label(new Rect(0, 30, 1000, 100), debugSS, style);
 #endif
     }
 
