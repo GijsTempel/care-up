@@ -1060,13 +1060,13 @@ public class GameUI : MonoBehaviour
             }
             lastCooldownTime = cooldownTime;
 
+            currentItemControlPanelState = showItemControlPanel;
+
             if (cooldownTime > 0)
-            {
+            {        
                 cooldownTime -= Time.deltaTime;
                 showItemControlPanel = false;
             }
-
-            currentItemControlPanelState = showItemControlPanel;
 
             if (PlayerScript.actionsLocked)
                 showItemControlPanel = false;
