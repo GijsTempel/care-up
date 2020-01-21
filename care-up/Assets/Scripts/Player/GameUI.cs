@@ -1065,7 +1065,8 @@ public class GameUI : MonoBehaviour
 
                 if (actionManager.CheckGeneralAction() == null)
                     noTargetButton_right.SetActive(showNoTarget_right);
-             
+                else 
+                    noTargetButton_right.SetActive(REmpty && LEmpty);
                 combineButton.SetActive(showCombin);
             }
 
