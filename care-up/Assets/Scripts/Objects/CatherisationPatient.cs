@@ -33,7 +33,7 @@ public class CatherisationPatient : PersonObject
         }
     }
 
-    public override void Talk(string topic = "")
+    public override void Talk(string topic = "", string audio = "")
     {
         if (ViewModeActive() || topic == "CM_Leave" || topic == "")
             return;
@@ -68,6 +68,7 @@ public class CatherisationPatient : PersonObject
                     break;
             }
 
+            AttemptPlayAudioAfterTalk(audio);
             NextDialogue();
         }
 

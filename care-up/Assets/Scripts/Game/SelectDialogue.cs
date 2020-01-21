@@ -12,20 +12,22 @@ public class SelectDialogue : MonoBehaviour
 
     public class DialogueOption
     {
-        public delegate void OptionAction(string attr = "", List<DialogueOption> additionalOption = null, string question = null);
+        public delegate void OptionAction(string attr = "", List<DialogueOption> additionalOption = null, string question = null, string audio = "");
 
         public string text;
         public string attribute;
         public string question;
+        public string audio;
         public OptionAction function;
         public OptionSide side;
         public List<DialogueOption> additional;
 
-        public DialogueOption(string txt, OptionAction func, string attr, List<DialogueOption> additionalOptions = null, string questionText = null)
+        public DialogueOption(string txt, OptionAction func, string attr, string aud, List<DialogueOption> additionalOptions = null, string questionText = null)
         {
             text = txt;
             function = func;
             attribute = attr;
+            audio = aud;
             question = questionText;
             additional = additionalOptions;
         }
@@ -132,7 +134,7 @@ public class SelectDialogue : MonoBehaviour
         print(options[num].text);
         sqButtons[num].interactable = false;
 
-        options[num].function(options[num].attribute, options[num].additional, options[num].question);
+        options[num].function(options[num].attribute, options[num].additional, options[num].question, options[num].audio);
 
         if (options[num].attribute != "")
         {
