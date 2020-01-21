@@ -411,7 +411,6 @@ public class GameUI : MonoBehaviour
         objectsIDsController = GameObject.FindObjectOfType<ObjectsIDsController>();
         MovementSideButtons = GameObject.Find("MovementSideButtons");
 
-        //ActionManager.generalActionDone = false;
         ActionManager.generalAction = false;
         prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
         if (prefs != null)
@@ -446,8 +445,6 @@ public class GameUI : MonoBehaviour
         {
             ActionManager.practiceMode = prefs.practiceMode;
         }
-
-        SetAEDLogic();
 
 #if !(UNITY_EDITOR || DEVELOPMENT_BUILD)
         if(GameObject.Find("ActionsPanel") != null)
@@ -523,7 +520,6 @@ public class GameUI : MonoBehaviour
         string hl_name = prefix + "_" + target.name;
         if (GameObject.Find(hl_name) != null)
             return null;
-        //------------
 
         // assets/resources/necessaryprefabs
 
@@ -543,6 +539,7 @@ public class GameUI : MonoBehaviour
     public void RemoveHighlight(string prefix, string _name)
     {
         string hl_name = prefix + "_" + _name;
+
         if (GameObject.Find(hl_name) != null)
         {
             if (GameObject.Find(hl_name).GetComponent<HighlightObject>())
@@ -550,10 +547,10 @@ public class GameUI : MonoBehaviour
         }
     }
 
-    //----------------------------------------------------------------------------------------------------------
     public void UpdateHelpHighlight()
     {
         bool practiceMode = true;
+
         if (prefs != null)
             practiceMode = prefs.practiceMode;
         if (!practiceMode)
@@ -673,17 +670,17 @@ public class GameUI : MonoBehaviour
         GUIStyle style = new GUIStyle();
         style.normal.textColor = new Color(1f, 0f, 0f);
         style.fontSize = 30;
+        // ****Show FPS 
+        GUI.Label(new Rect(0, 0, 100, 100), ((int)(1.0f / Time.smoothDeltaTime)).ToString(), style);
+        if (objectsIDsController != null)
+        {
+            if (objectsIDsController.cheat)
+                GUI.Label(new Rect(30, 0, 100, 100), "Cheat enabled", style);
+        }
+        //****Show FPS end.
 
-
-        // GUI.Label(new Rect(0, 0, 100, 100), ((int)(1.0f / Time.smoothDeltaTime)).ToString(), style);
-        // if (objectsIDsController != null)
-        // {
-        //     if (objectsIDsController.cheat)
-        //         GUI.Label(new Rect(30, 0, 100, 100), "Cheat enabled", style);
-        // }
-
-        // //debugSS = PlayerAnimationManager.animTimeout.ToString();
-        // GUI.Label(new Rect(0, 30, 1000, 100), debugSS, style);
+        //debugSS = PlayerAnimationManager.animTimeout.ToString();
+        GUI.Label(new Rect(0, 30, 1000, 100), debugSS, style);
 #endif
     }
 
@@ -786,8 +783,6 @@ public class GameUI : MonoBehaviour
                     {
                         GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
                         theoryTab.ShowTheory(actionManager.MessageTitle, actionManager.Message);
-                        //GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Title").GetComponent<Text>().text = actionManager.MessageTitle;
-                        //GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Message").GetComponent<Text>().text = actionManager.Message;
                     }
                     actionManager.Message = null;
                     actionManager.ShowTheory = false;
@@ -894,7 +889,6 @@ public class GameUI : MonoBehaviour
 
     void Update()
     {
-        // print(RandomQuiz.showRandomQuestion);
         if (!timeOutEnded)
         {
             startTimeOut -= Time.deltaTime;
@@ -912,7 +906,6 @@ public class GameUI : MonoBehaviour
                 UpdateWalkToGtoupUI(true);
             }
         }
-        //UpdateWalkToGtoupUI(false);
         if (toDelayUpdateHint)
         {
             if (current_UpdateHintDelay > 0)
@@ -1069,9 +1062,10 @@ public class GameUI : MonoBehaviour
                 zoomButtonLeft.SetActive(showZoomLeft);
                 zoomButtonRight.SetActive(showZoomRight);
                 noTargetButton.SetActive(showNoTarget);
+
                 if (actionManager.CheckGeneralAction() == null)
                     noTargetButton_right.SetActive(showNoTarget_right);
-                // noTargetButton_right.SetActive(showNoTarget_right || (ActionManager.generalAction/* && !ActionManager.generalActionDone*/));
+             
                 combineButton.SetActive(showCombin);
             }
 
@@ -1080,25 +1074,22 @@ public class GameUI : MonoBehaviour
                 cooldownTime = 1.0f;
             }
             lastCooldownTime = cooldownTime;
-            if (cooldownTime > 0)
-            {
-                cooldownTime -= Time.deltaTime;
-            }
-            currentItemControlPanelState = showItemControlPanel;
-            if (cooldownTime > 0)
-            {
-                showItemControlPanel = false;
 
+            currentItemControlPanelState = showItemControlPanel;
+
+            if (cooldownTime > 0)
+            {        
+                cooldownTime -= Time.deltaTime;
+                showItemControlPanel = false;
             }
+
             if (PlayerScript.actionsLocked)
                 showItemControlPanel = false;
+
             ItemControlPanel.SetActive(showItemControlPanel);
             patientInfo.SetActive(showItemControlPanel);
             MovementSideButtons.SetActive(showItemControlPanel);
-            //if (!showItemControlPanel)
-
             animatedFinger.gameObject.SetActive(showItemControlPanel && !theoryTab.gameObject.activeSelf);
-
             ICPCurrentState = ItemControlPanel.activeSelf;
         }
 
@@ -1109,7 +1100,6 @@ public class GameUI : MonoBehaviour
 
     public void ShowNoTargetButton()
     {
-        //ActionManager.generalAction = true;
         noTargetButton_right.SetActive(true);
         noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text =
             actionManager.CurrentButtonText();
@@ -1263,27 +1253,6 @@ public class GameUI : MonoBehaviour
             }
             float alpha = DetailedHintPanel.GetComponent<Image>().color.a;
             SetHintPanelAlpha(alpha);
-        }
-    }
-
-    private void SetAEDLogic()
-    {
-        if (SceneManager.GetActiveScene().name == "Scenes_AED")
-        {
-            Animator playerAnimator;
-            PlayerAnimationManager playerAnimationManager = GameObject.FindObjectOfType<PlayerAnimationManager>();
-
-            if (playerAnimationManager != null)
-            {
-                playerAnimator = playerAnimationManager.GetComponent<Animator>();
-
-                if (noTargetButton_right != null && playerAnimator != null)
-                {
-                    noTargetButton_right.SetActive(true);
-                    noTargetButton_right.gameObject.GetComponent<Button>().onClick.AddListener(() => playerAnimator.SetTrigger("Start_AED_SQ1"));
-                    noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text = "Help de cliënt";
-                }
-            }
         }
     }
 }

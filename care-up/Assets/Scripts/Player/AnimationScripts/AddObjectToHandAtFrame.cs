@@ -79,10 +79,6 @@ public class AddObjectToHandAtFrame : StateMachineBehaviour
                     }
                 }
             }
-        }
-
-        if (animator.speed != 0)
-        {
             prevFrame = frame;
             frame += Time.deltaTime;
         }

@@ -118,12 +118,27 @@ public class PickableObject : InteractableObject
                         Destroy(gameObject);
                     }
                     break;
+                case "catheter_Supertubular_InHands":
+                    if (posID == 0 && actionManager.CompareDropPos(name, 0))
+                    {
+                        // print("posID == 0 && actionManager.CompareDropPos(name, 0)");
+                        // PlayerAnimationManager.PlayAnimation("SQ1Sequence");
+                        // "SQ1Sequence"
+                        Invoke("SQ1Sequence", 0.3f);
+                    }
+                    break;
                 default:
                     break;
             }
         }
 
         return res;
+    }
+
+    void SQ1Sequence()
+    {
+        Transform _target = GameObject.Find("_closeKochertarget").transform;
+        PlayerAnimationManager.PlayAnimation("SQ1Sequence", _target);
     }
 
     /// <summary>

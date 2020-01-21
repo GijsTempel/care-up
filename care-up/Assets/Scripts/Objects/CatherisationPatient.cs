@@ -11,7 +11,7 @@ public class CatherisationPatient : PersonObject
     public Vector3 playerPosition;
     public Vector3 playerRotation;
     public Transform playerPositionTarget;
-    
+
     protected override void Start()
     {
         base.Start();
@@ -40,15 +40,20 @@ public class CatherisationPatient : PersonObject
 
         if (actionManager.CompareTopic(topic))
         {
-      
+
             switch (topic)
             {
                 case "LayOnBed":
                     animator.SetTrigger("pants_down");
-
-                    GameObject playerPosAtPatient = GameObject.Find("PlayerPositions/PatientPos/Target");
-                    playerPosAtPatient.transform.position = playerPositionTarget.position;
-                    playerPosAtPatient.transform.rotation = playerPositionTarget.rotation;
+                    if (playerPositionTarget != null)
+                    {
+                        GameObject playerPosAtPatient = GameObject.Find("PlayerPositions/PatientPos/Target");
+                        if (playerPosAtPatient != null)
+                        {
+                            playerPosAtPatient.transform.position = playerPositionTarget.position;
+                            playerPosAtPatient.transform.rotation = playerPositionTarget.rotation;
+                        }
+                    }
                     PlayerAnimator.SetTrigger("CloseCurtains");
                     PlayerAnimator.SetTrigger("S CloseCurtains");
                     break;
@@ -63,7 +68,7 @@ public class CatherisationPatient : PersonObject
                     animator.SetTrigger("patient_standup");
                     break;
 
-                    
+
                 default:
                     break;
             }
@@ -75,4 +80,4 @@ public class CatherisationPatient : PersonObject
         actionManager.OnTalkAction(topic);
     }
 }
-    
+
