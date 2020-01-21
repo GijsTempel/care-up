@@ -17,7 +17,7 @@ public class InsulfonInsertationPatient : PersonObject {
       //  PatientAnimator = GetComponent<Animator>();
     }
 
-    public override void Talk(string topic = "")
+    public override void Talk(string topic = "", string audio = "")
     {
         if (ViewModeActive() || topic == "CM_Leave" || topic == "")
             return;
@@ -41,6 +41,7 @@ public class InsulfonInsertationPatient : PersonObject {
                     break;
             }
 
+            AttemptPlayAudioAfterTalk(audio);
             NextDialogue();
         }
 

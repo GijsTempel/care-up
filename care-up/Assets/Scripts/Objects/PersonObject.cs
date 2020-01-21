@@ -98,7 +98,7 @@ public class PersonObject : InteractableObject
         }
     }
 
-    public virtual void Talk(string topic = "")
+    public virtual void Talk(string topic = "", string audio = "")
     {
         if (ViewModeActive() || topic == "CM_Leave" || topic == "")
             return;
@@ -116,15 +116,26 @@ public class PersonObject : InteractableObject
                     break;
             }
 
+            AttemptPlayAudioAfterTalk(audio);
             NextDialogue();
         }
 
         actionManager.OnTalkAction(topic);
     }
 
-    public void DialoqueTalk(string topic = "", List<SelectDialogue.DialogueOption> additionalOptions = null, string question = null)
+    public void AttemptPlayAudioAfterTalk(string audio)
     {
-        Talk(topic);
+        // play audio if set
+        if (audio != "")
+        {
+            AudioClip clip = Resources.Load<AudioClip>("Audio/" + audio);
+            audioSource.PlayOneShot(clip);
+        }
+    }
+
+    public void DialoqueTalk(string topic = "", List<SelectDialogue.DialogueOption> additionalOptions = null, string question = null, string audio = "")
+    {
+        Talk(topic, audio);
     }
 
     public void NextDialogue()
@@ -174,10 +185,11 @@ public class PersonObject : InteractableObject
         {
             string description = xmlOption.Attributes["text"].Value;
             string topic = xmlOption.Attributes["topic"] != null ? xmlOption.Attributes["topic"].Value : "";
+            string audio = xmlOption.Attributes["audio"] != null ? xmlOption.Attributes["audio"].Value : "";
 
             if (count < 3) // 3 options max, 4 is Close.
             {
-                SelectDialogue.DialogueOption option = new SelectDialogue.DialogueOption(description, DialoqueTalk, topic);
+                SelectDialogue.DialogueOption option = new SelectDialogue.DialogueOption(description, DialoqueTalk, topic, audio);
                 optionsList.Add(option);
                 ++count;
             }
@@ -186,8 +198,9 @@ public class PersonObject : InteractableObject
                 break;
             }
         }
+
         // for leave option
-        optionsList.Add(new SelectDialogue.DialogueOption("Verlaten", DialoqueTalk, "CM_Leave"));
+        optionsList.Add(new SelectDialogue.DialogueOption("Verlaten", DialoqueTalk, "CM_Leave", ""));
     }
 
     /// <summary>

@@ -102,7 +102,7 @@ public class AnimationSequence
         {
             string description = LocalizationManager.GetValueIfKey(xmlOption.Attributes["text"].Value);
             string animation = xmlOption.Attributes["animation"] != null ? xmlOption.Attributes["animation"].Value : "";
-            SelectDialogue.DialogueOption option = new SelectDialogue.DialogueOption(description, PlayAnimation, animation, additionalOption, question);
+            SelectDialogue.DialogueOption option = new SelectDialogue.DialogueOption(description, PlayAnimation, animation, "", additionalOption, question);
 
             return option;
         }
@@ -164,7 +164,7 @@ public class AnimationSequence
     /// Handles result of selection of sequence step.
     /// </summary>
     /// <param name="animation">Data from selection.</param>
-    private void PlayAnimation(string animation, List<SelectDialogue.DialogueOption> dialogueOption = null, string question = null)
+    private void PlayAnimation(string animation, List<SelectDialogue.DialogueOption> dialogueOption = null, string question = null, string audio = "")
     {
         // if sequence 
         if (question != null)
