@@ -87,11 +87,7 @@ public class PlayerSpawn : MonoBehaviour
 
         GameObject.FindObjectOfType<GameTimer>().SetTextObject(
             GameObject.Find("PatientInfoTabs").transform.Find("TopBarUI").Find("GeneralDynamicCanvas")
-            .Find("Timer").Find("Time").GetComponent<Text>());
-
-        GameTimer.FindObjectOfType<ActionManager>().SetUIObjects(
-            GameObject.Find("TopBarUI").transform.Find("GeneralDynamicCanvas").Find("Points").Find("PointsText").GetComponent<Text>(),
-            GameObject.Find("TopBarUI").transform.Find("GeneralDynamicCanvas").Find("Percentage").Find("PointsText").GetComponent<Text>());
+            .Find("Timer").Find("Time").GetComponent<Text>());     
 
         player.GetComponent<PlayerScript>().joystickObject = GameObject.Find("FingersJoystickPrefab");
 

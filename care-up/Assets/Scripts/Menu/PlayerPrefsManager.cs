@@ -502,7 +502,7 @@ public class PlayerPrefsManager : MonoBehaviour
     /// <param name="score"></param>
     public void UpdateTestHighscore(float score)
     {
-        float currentTestScore = score * 100.0f;
+        float currentTestScore = score;
         string currentTestScene = FormatSceneName(currentSceneVisualName);
 
         string highscoreStr = DatabaseManager.FetchField("TestHighscores", currentTestScene);

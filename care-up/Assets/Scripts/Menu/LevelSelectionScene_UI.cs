@@ -342,6 +342,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
     {
         List<MBS.CMLData> entries = cml.AllNodesOfType("person");
         List<MBS.CMLData> sortedEntries = entries.OrderByDescending(x => int.Parse(x.String("score"))).ToList();
+
         LeaderBoard lb = GameObject.FindObjectOfType<LeaderBoard>();
         if (entries == null) return;
 

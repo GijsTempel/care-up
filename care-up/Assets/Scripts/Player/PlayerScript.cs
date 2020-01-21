@@ -503,6 +503,8 @@ public class PlayerScript : MonoBehaviour
 
         robotUIopened = true;
 
+        gameUI.UpdateIpadInfo();
+
         if (devHintUI != null)
         {
             devHintActiveForIpad = devHintUI.activeSelf;

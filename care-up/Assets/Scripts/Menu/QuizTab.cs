@@ -25,7 +25,7 @@ public class QuizTab : MonoBehaviour
     [HideInInspector]
     public bool quiz = false;
 
-    private List<List<Question>> questionList = new List<List<Question>>();
+    public List<List<Question>> questionList = new List<List<Question>>();
     private List<List<Question>> encounterList = new List<List<Question>>();
 
     private int currentStep = 0;
@@ -52,11 +52,7 @@ public class QuizTab : MonoBehaviour
     private ActionManager manager;
 
     public static float encounterDelay = -1f;
-
-    //public void Show(bool value)
-    //{
-    //    gameObject.SetActive(value);
-    //}
+    public static int totalQuizesCount;
 
     public void Init(string name)
     {
@@ -113,15 +109,13 @@ public class QuizTab : MonoBehaviour
             if (encounter.Count > 0)
                 encounterList.Add(encounter);
         }
-        // descriptionText = transform.GetChild(1).Find("ScrollViewDescription/Viewport/Content/Description").GetComponent<Text>();
-        // continueButton = transform.GetChild(1).Find("Continue").GetComponent<Button>();
-        // backToOptionsButton = transform.GetChild(1).Find("Back").GetComponent<Button>();
-        // answeredTitleText = transform.GetChild(1).Find("AnswerTitle").GetComponent<Text>();
+    
         continueBtn = false;
         continueButton.gameObject.SetActive(false);
         backToOptionsButton.gameObject.SetActive(false);
         answerPanel.SetActive(false);
         descriptionText.text = "";
+        totalQuizesCount = questionList.Count;
     }
 
     private void Start()
@@ -129,6 +123,7 @@ public class QuizTab : MonoBehaviour
         PlayerScript.quiz = this;
         gameObject.SetActive(false);
         gameUI = GameObject.FindObjectOfType<GameUI>();
+
         if (buttons.Count == 0)
         {
             buttons.Add(transform.GetChild(0).Find("Answer1").GetComponent<Button>());
@@ -149,7 +144,6 @@ public class QuizTab : MonoBehaviour
         }
 
         backToOptionsButton.onClick.AddListener(OnBackToOptionsButton);
-
         endScoreManager = GameObject.FindObjectOfType<EndScoreManager>();
     }
 
@@ -175,11 +169,7 @@ public class QuizTab : MonoBehaviour
 
         // open UI
         GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
-        // disable close button
-        //GameObject.FindObjectOfType<RobotManager>().ToggleCloseBtn(false);
-        // enable quiz icon
 
-        //GameObject.FindObjectOfType<PatientInfoManager>().SetTabActive("QuizTab");
         gameObject.SetActive(true);
 
         int currentQuestionID;
@@ -249,10 +239,6 @@ public class QuizTab : MonoBehaviour
 
     public void CorrectAnswer(string description, bool random = false, bool encounter = false)
     {
-        //transform.GetChild(0).gameObject.SetActive(false);
-        //transform.GetChild(1).gameObject.SetActive(true);
-        //transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().interactable = true;
-        //transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
         questionsPanel.SetActive(false);
         answerPanel.SetActive(true);
 
@@ -312,11 +298,6 @@ public class QuizTab : MonoBehaviour
 //            }
 //#endif
 
-        //----------------------------------------
-        //transform.GetChild(0).gameObject.SetActive(false);
-        //transform.GetChild(1).gameObject.SetActive(true);
-        //transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().interactable = true;
-        //transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
         gameObject.SetActive(true);
         questionsPanel.SetActive(false);
         answerPanel.SetActive(true);
@@ -352,9 +333,6 @@ public class QuizTab : MonoBehaviour
     {
         GameObject.FindObjectOfType<PatientInfoManager>().SetInteractability(true);
         GameObject.FindObjectOfType<RobotManager>().ToggleCloseBtn(true);
-        //--------------
-        //transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().interactable = false;
-        //transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().blocksRaycasts = false;
 
         Transform scrollbar = transform.Find("QuizTab/QuizAnsweredDynamicCanvas/ScrollViewDescription/Scrollbar Vertical");
         if (scrollbar != null)
@@ -366,10 +344,7 @@ public class QuizTab : MonoBehaviour
         answerPanel.SetActive(false);
 
         // disable quiz icon
-        //icons.Find("QuizTab").gameObject.SetActive(false);
         quiz = false;
-        // close tab
-        // BackButton();
         // close UI 
         GameObject.FindObjectOfType<PlayerScript>().CloseRobotUI();
         // enable player if needed
@@ -388,11 +363,7 @@ public class QuizTab : MonoBehaviour
     public void OnBackToOptionsButton()
     {
         questionsPanel.SetActive(true);
-        answerPanel.SetActive(false);
-        //transform.GetChild(0).gameObject.SetActive(true);
-        //transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().interactable = true;
-        //transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
-        //transform.GetChild(1).gameObject.SetActive(false);
+        answerPanel.SetActive(false);      
     }
 }
 
