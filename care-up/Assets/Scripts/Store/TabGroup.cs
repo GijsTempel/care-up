@@ -8,7 +8,8 @@ public class TabGroup : MonoBehaviour
     {
         diamond,
         purchased,
-        newItems
+        newItems,
+        favorite
     };
     public List<Button> TabButtons;
     public List<GameObject> TabContainers;
@@ -368,6 +369,11 @@ public class TabGroup : MonoBehaviour
                     if(FilterButtons[FilterModes.newItems].GetState() && !item.isNew)
                         continue;
                 }
+                if (FilterButtons.ContainsKey(FilterModes.favorite))
+                {
+                    if (FilterButtons[FilterModes.favorite].GetState() && !item.isFavourite)
+                        continue;
+                }
                 //-----------------------------------------------
 
                 if (i == 0)
@@ -421,6 +427,12 @@ public class TabGroup : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void AddToFavorite()
+    {
+        StoreItem item = selectedItemBtn.item;
+        PlayerPrefsManager.storeManager.AddToFavourite(item.index);
     }
 
     private void Start()

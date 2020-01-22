@@ -448,6 +448,10 @@ public class StoreManager
     public bool AddToFavourite(int itemIndex)
     {
         StoreItem item = FindItemByIndex(itemIndex);
+        if (item.isFavourite)
+        {
+            return RemoveFromFavourite(itemIndex);
+        }
         bool result = false;
 
         if (item.index > -1)
