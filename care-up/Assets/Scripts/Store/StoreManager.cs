@@ -11,9 +11,10 @@ public class StoreItem
     public string category;
     public bool purchased;
     public int extraPrice;
+    public bool isNew = false;
 
     public StoreItem() { index = -1; price = 0; }
-    public StoreItem(int index, int price, string name, string category, bool purchased, int extraPrice = 0)
+    public StoreItem(int index, int price, string name, string category, bool purchased, int extraPrice = 0, bool isNew = false)
     {
         this.index = index;
         this.price = price;
@@ -21,6 +22,7 @@ public class StoreItem
         this.name = name;
         this.category = category;
         this.purchased = purchased;
+        this.isNew = isNew;
     }
 }
 
@@ -136,7 +138,10 @@ public class StoreManager
             string catName = (xmlCatNode.Attributes["name"] != null) ? xmlCatNode.Attributes["name"].Value : "";
             foreach (XmlNode xmlSceneNode in xmlCatNode.ChildNodes)
             {
+                bool isNew = false;
                 int index = -1, price = 1, extraPrice = -1;
+                if (xmlSceneNode.Attributes["new"] != null)
+                    isNew = true;
                 int.TryParse(xmlSceneNode.Attributes["index"].Value, out index);
                 if (xmlSceneNode.Attributes["price"] != null)
                     int.TryParse(xmlSceneNode.Attributes["price"].Value, out price);
@@ -153,7 +158,7 @@ public class StoreManager
                 string name = xmlSceneNode.Attributes["name"].Value;
                 string category = (xmlSceneNode.Attributes["category"] != null) ? xmlSceneNode.Attributes["category"].Value : catName;
 
-                catItems.Add(new StoreItem(index, price, name, category, purchased, extraPrice));
+                catItems.Add(new StoreItem(index, price, name, category, purchased, extraPrice, isNew));
             }
             string catIcon = (xmlCatNode.Attributes["icon"] != null) ? xmlCatNode.Attributes["icon"].Value : "";
             storeItems.Add(new StoreCategory(catItems, catName, catIcon));
