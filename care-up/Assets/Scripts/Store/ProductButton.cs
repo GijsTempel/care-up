@@ -9,7 +9,8 @@ public class ProductButton : MonoBehaviour
                        dressOn = default,
                        price = default,
                        coinMark = default,
-                       diamondMark = default;
+                       diamondMark = default,
+                       newMark = default;
 
     [SerializeField]
     private Text productName = default,
@@ -58,6 +59,7 @@ public class ProductButton : MonoBehaviour
     {
         item = _item;
         productName.text = item.name;
+        newMark.SetActive(item.isNew);
         SetCurrancySprite(item.extraPrice);
 
         if (item.extraPrice > 0)
