@@ -263,7 +263,7 @@ public class TabGroup : MonoBehaviour
                 //Hats
                 if (i == 0)
                 {
-                    StoreItem xItem = new StoreItem(0, 0, "x", "Hat", true);
+                    StoreItem xItem = new StoreItem(0, 0, "x", "Hat", true, false);
                     ProductButton xBtn = InstantiateProduct(xItem, i);
                     if (currentCharacter.playerAvatar.hat == "")
                     {
@@ -272,7 +272,7 @@ public class TabGroup : MonoBehaviour
                     }
                     if (currentCharacter.defaultAvatarData.hat != "")
                     {
-                        baseItem = new StoreItem(0, 0, currentCharacter.defaultAvatarData.hat, "Hat", true);
+                        baseItem = new StoreItem(0, 0, currentCharacter.defaultAvatarData.hat, "Hat", true, false);
                         ProductButton baseHatBtn = InstantiateProduct(baseItem, i);
                         if (currentCharacter.playerAvatar.hat == currentCharacter.defaultAvatarData.hat)
                         {
@@ -284,7 +284,7 @@ public class TabGroup : MonoBehaviour
                 //Glasses
                 else if (i == 1)
                 {
-                    StoreItem xxItem = new StoreItem(-500, 0, "x", "Glasses", true);
+                    StoreItem xxItem = new StoreItem(-500, 0, "x", "Glasses", true, false);
                     ProductButton xxBtn = InstantiateProduct(xxItem, i);
                     if (mainAvatar.avatarData.glassesType == -1)
                     {
@@ -294,7 +294,7 @@ public class TabGroup : MonoBehaviour
                     if (currentCharacter.defaultAvatarData.glassesType != -1)
                     {
                         int gl = currentCharacter.defaultAvatarData.glassesType;
-                        baseItem = new StoreItem(gl, 0, "gl_" + gl.ToString(), "Glasses", true);
+                        baseItem = new StoreItem(gl, 0, "gl_" + gl.ToString(), "Glasses", true, false);
                         ProductButton baseGlassesBtn = InstantiateProduct(baseItem, i);
                         if (currentCharacter.playerAvatar.glassesType == currentCharacter.defaultAvatarData.glassesType)
                         {
@@ -307,7 +307,7 @@ public class TabGroup : MonoBehaviour
                 else if (i == 2)
                 {
                     int _body = currentCharacter.defaultAvatarData.bodyType;
-                    baseItem = new StoreItem(_body, 0, "body_" + _body.ToString(), "Body", true);
+                    baseItem = new StoreItem(_body, 0, "body_" + _body.ToString(), "Body", true, false);
 
                     ProductButton baseBodyBtn = InstantiateProduct(baseItem, i);
 

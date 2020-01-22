@@ -11,9 +11,10 @@ public class StoreItem
     public string category;
     public bool purchased;
     public int extraPrice;
+    public bool isFavourite;
 
     public StoreItem() { index = -1; price = 0; }
-    public StoreItem(int index, int price, string name, string category, bool purchased, int extraPrice = 0)
+    public StoreItem(int index, int price, string name, string category, bool purchased, bool isFavourite, int extraPrice = 0)
     {
         this.index = index;
         this.price = price;
@@ -21,6 +22,7 @@ public class StoreItem
         this.name = name;
         this.category = category;
         this.purchased = purchased;
+        this.isFavourite = isFavourite;
     }
 }
 
@@ -143,6 +145,7 @@ public class StoreManager
                 if (xmlSceneNode.Attributes["extraPrice"] != null)
                     int.TryParse(xmlSceneNode.Attributes["extraPrice"].Value, out extraPrice);
                 bool purchased = DatabaseManager.FetchField("Store", "StoreItem_" + index.ToString()) == "true";
+                bool isFavourite = DatabaseManager.FetchField("Store", "StoreItemFavourite_" + index.ToString()) == "true";
 
                 if (devDropAllPurchases)
                 {
@@ -153,7 +156,7 @@ public class StoreManager
                 string name = xmlSceneNode.Attributes["name"].Value;
                 string category = (xmlSceneNode.Attributes["category"] != null) ? xmlSceneNode.Attributes["category"].Value : catName;
 
-                catItems.Add(new StoreItem(index, price, name, category, purchased, extraPrice));
+                catItems.Add(new StoreItem(index, price, name, category, purchased, isFavourite, extraPrice));
             }
             string catIcon = (xmlCatNode.Attributes["icon"] != null) ? xmlCatNode.Attributes["icon"].Value : "";
             storeItems.Add(new StoreCategory(catItems, catName, catIcon));
@@ -207,14 +210,10 @@ public class StoreManager
                         {
                             case "Index":
                                 int.TryParse(field[1], out index); break;
-                            //case "Price":
-                            //    int.TryParse(field[1], out price); break;
                             case "Purchased":
                                 bool.TryParse(field[1], out purchased); break;
                             case "Sex":
                                 gender = field[1]; break;
-                            //case "Head":
-                            //    int.TryParse(field[1], out headType); break;
                             case "Body":
                                 int.TryParse(field[1], out bodyType); break;
                             case "Glasses":
@@ -439,5 +438,43 @@ public class StoreManager
         }
 
         return item;
+    }
+
+    public bool AddToFavourite(int itemIndex)
+    {
+        StoreItem item = FindItemByIndex(itemIndex);
+        bool result = false;
+
+        if (item.index > -1)
+        {
+            item.isFavourite = true;
+            DatabaseManager.UpdateField("Store", "StoreItemFavourite_" + itemIndex.ToString(), "true");
+            result = true;
+        }
+        else
+        {
+            Debug.Log("Adding item to favourites operation failed. Check item properties.");
+        }
+
+        return result;
+    }
+
+    public bool RemoveFromFavourite(int itemIndex)
+    {
+        StoreItem item = FindItemByIndex(itemIndex);
+        bool result = false;
+
+        if (item.isFavourite)
+        {
+            item.isFavourite = false;
+            DatabaseManager.UpdateField("Store", "StoreItemFavourite_" + itemIndex.ToString(), "false");
+            result = true;
+        }
+        else
+        {
+            Debug.LogError("Removing item from favourites operation failed.");
+        }
+
+        return result;
     }
 }
