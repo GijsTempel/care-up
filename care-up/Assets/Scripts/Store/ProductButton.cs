@@ -10,7 +10,9 @@ public class ProductButton : MonoBehaviour
                        price = default,
                        coinMark = default,
                        diamondMark = default,
-                       newMark = default;
+                       newMark = default,
+                       favMark = default;
+
 
     [SerializeField]
     private Text productName = default,
@@ -60,6 +62,8 @@ public class ProductButton : MonoBehaviour
         item = _item;
         productName.text = item.name;
         newMark.SetActive(item.isNew);
+
+        favMark.SetActive(item.isFavourite && item.purchased);
         SetCurrancySprite(item.extraPrice);
 
         if (item.extraPrice > 0)
@@ -114,5 +118,10 @@ public class ProductButton : MonoBehaviour
     public void SetDressOn(bool isDressedOn)
     {
         dressOn.SetActive(isDressedOn);
+    }
+
+    public void UpdateFavIcon()
+    {
+        favMark.SetActive(item.isFavourite && item.purchased);
     }
 }

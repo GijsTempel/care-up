@@ -455,9 +455,7 @@ public class StoreManager
     public bool ManageFavouriteItems(int itemIndex)
     {
         StoreItem item = FindItemByIndex(itemIndex);
-
         bool result = !item.isFavourite;
-
         if (item.index > -1)
         {
             item.isFavourite = result;
