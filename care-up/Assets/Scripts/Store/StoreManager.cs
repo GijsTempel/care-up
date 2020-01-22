@@ -445,44 +445,26 @@ public class StoreManager
         return item;
     }
 
-    public bool AddToFavourite(int itemIndex)
+    /// <summary>
+    /// Manages 'add' and 'remove' items operations. 
+    /// </summary>
+    /// <param name="itemIndex"></param>
+    /// <returns>
+    /// True - if item is added. False - if item is removed.
+    /// </returns>
+    public bool ManageFavouriteItems(int itemIndex)
     {
         StoreItem item = FindItemByIndex(itemIndex);
-        if (item.isFavourite)
-        {
-            return RemoveFromFavourite(itemIndex);
-        }
-        bool result = false;
+
+        bool result = !item.isFavourite;
 
         if (item.index > -1)
         {
-            item.isFavourite = true;
-            DatabaseManager.UpdateField("Store", "StoreItemFavourite_" + itemIndex.ToString(), "true");
-            result = true;
+            item.isFavourite = result;
+            DatabaseManager.UpdateField("Store", "StoreItemFavourite_" + itemIndex.ToString(), result.ToString().ToLower());
         }
         else
-        {
-            Debug.Log("Adding item to favourites operation failed. Check item properties.");
-        }
-
-        return result;
-    }
-
-    public bool RemoveFromFavourite(int itemIndex)
-    {
-        StoreItem item = FindItemByIndex(itemIndex);
-        bool result = false;
-
-        if (item.isFavourite)
-        {
-            item.isFavourite = false;
-            DatabaseManager.UpdateField("Store", "StoreItemFavourite_" + itemIndex.ToString(), "false");
-            result = true;
-        }
-        else
-        {
-            Debug.LogError("Removing item from favourites operation failed.");
-        }
+            Debug.Log("Managing favourite items failed.");
 
         return result;
     }

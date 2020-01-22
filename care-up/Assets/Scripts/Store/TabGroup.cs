@@ -432,7 +432,7 @@ public class TabGroup : MonoBehaviour
     public void AddToFavorite()
     {
         StoreItem item = selectedItemBtn.item;
-        PlayerPrefsManager.storeManager.AddToFavourite(item.index);
+        PlayerPrefsManager.storeManager.ManageFavouriteItems(item.index);
     }
 
     private void Start()
