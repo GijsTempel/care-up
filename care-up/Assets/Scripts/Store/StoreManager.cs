@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Xml;
 using CareUpAvatar;
+using System.Linq;
 
 public class StoreItem
 {
@@ -138,17 +139,17 @@ public class StoreManager
         {
             List<StoreItem> catItems = new List<StoreItem>();
             string catName = (xmlCatNode.Attributes["name"] != null) ? xmlCatNode.Attributes["name"].Value : "";
-            foreach (XmlNode xmlSceneNode in xmlCatNode.ChildNodes)
+            foreach (XmlNode node in xmlCatNode.ChildNodes)
             {
                 bool isNew = false;
                 int index = -1, price = 1, extraPrice = -1;
-                if (xmlSceneNode.Attributes["new"] != null)
+                if (node.Attributes["new"] != null)
                     isNew = true;
-                int.TryParse(xmlSceneNode.Attributes["index"].Value, out index);
-                if (xmlSceneNode.Attributes["price"] != null)
-                    int.TryParse(xmlSceneNode.Attributes["price"].Value, out price);
-                if (xmlSceneNode.Attributes["extraPrice"] != null)
-                    int.TryParse(xmlSceneNode.Attributes["extraPrice"].Value, out extraPrice);
+                int.TryParse(node.Attributes["index"].Value, out index);
+                if (node.Attributes["price"] != null)
+                    int.TryParse(node.Attributes["price"].Value, out price);
+                if (node.Attributes["extraPrice"] != null)
+                    int.TryParse(node.Attributes["extraPrice"].Value, out extraPrice);
                 bool purchased = DatabaseManager.FetchField("Store", "StoreItem_" + index.ToString()) == "true";
                 bool isFavourite = DatabaseManager.FetchField("Store", "StoreItemFavourite_" + index.ToString()) == "true";
 
@@ -158,12 +159,22 @@ public class StoreManager
                     DatabaseManager.UpdateField("Store", "StoreItem_" + index.ToString(), "false");
                 }
 
-                string name = xmlSceneNode.Attributes["name"].Value;
-                string category = (xmlSceneNode.Attributes["category"] != null) ? xmlSceneNode.Attributes["category"].Value : catName;
+                string name = node.Attributes["name"].Value;
+                string category = (node.Attributes["category"] != null) ? node.Attributes["category"].Value : catName;
 
                 catItems.Add(new StoreItem(index, price, name, category, purchased, isFavourite, extraPrice, isNew));
             }
             string catIcon = (xmlCatNode.Attributes["icon"] != null) ? xmlCatNode.Attributes["icon"].Value : "";
+
+            List<int> duplicates = catItems.GroupBy(x => x.index).Where(g => g.Count() > 1).Select(g => g.Key).ToList();
+
+            if (duplicates.Count > 0)
+            {      foreach(int index in duplicates)
+                {
+                    Debug.LogError($"Store item`s index '{index}' is duplicated.");
+                }
+            }
+
             storeItems.Add(new StoreCategory(catItems, catName, catIcon));
         }
 
@@ -232,6 +243,13 @@ public class StoreManager
             PlayerAvatarData customizedPlayerAvatar = new PlayerAvatarData(characterGender, headType, bodyType, glassesType, hatType, mouthType, eyeType);
             characterItem.playerAvatar = customizedPlayerAvatar;
             characterItems.Add(characterItem);
+
+            List<int> duplicates = characterItems.GroupBy(x => x.index).Where(g => g.Count() > 1).Select(g => g.Key).ToList();
+            if (duplicates.Count > 0)
+            {
+                foreach (int duplicate in duplicates)
+                    Debug.LogError($"Character`s index '{index}' is duplicated.");
+            }
         }
 
         // get amount of currency/presents saved
