@@ -8,7 +8,8 @@ public class TabGroup : MonoBehaviour
     {
         diamond,
         purchased,
-        newItems
+        newItems,
+        favorite
     };
     public List<Button> TabButtons;
     public List<GameObject> TabContainers;
@@ -21,7 +22,8 @@ public class TabGroup : MonoBehaviour
                        onSaleBtn = default,
                        buyBtnCoin = default,
                        buyBtnDiamond = default,
-                       productItem = default;                     
+                       productItem = default,
+                       favoriteBtn = default;
 
     [SerializeField]
     private Text purchaseText = default;
@@ -36,6 +38,10 @@ public class TabGroup : MonoBehaviour
 
     private Text buyBtnText = default;
 
+    private GameObject FavButtonIconW;
+    private GameObject FavButtonIconY;
+
+
     private TabButton selectedTab;
     int selectedTabIndex = 0;
 
@@ -47,10 +53,6 @@ public class TabGroup : MonoBehaviour
     CharacterСarousel carousel;
     PlayerPrefsManager pref;
 
-    public void AddFilterButton(StoreItemFilterButton button)
-    {
-
-    }
 
     public void SwitchTab(int value)
     {
@@ -74,7 +76,9 @@ public class TabGroup : MonoBehaviour
             FilterButtons[b_key].Select(false);
         }
         FilterButtons[filterMode].Select(!state);
+        SelectItem(null);
         DisplayItemsInStore();
+        UpdateFavoriteButton();
 
     }
 
@@ -141,6 +145,8 @@ public class TabGroup : MonoBehaviour
                 carousel.UpdateSelected(mainAvatar.avatarData);
             }
         }
+        else
+            selectedItemBtn = null;
 
         UpdatePurchesBtn();
     }
@@ -174,6 +180,32 @@ public class TabGroup : MonoBehaviour
         {
             buyBtn.SetActive(false);
         }
+        UpdateFavoriteButton();
+    }
+
+
+    void UpdateFavoriteButton()
+    {
+        if (selectedItemBtn == null)
+        {
+            favoriteBtn.SetActive(false);
+            return;
+        }
+        if (selectedItemBtn.item.name == "x")
+        {
+            favoriteBtn.SetActive(false);
+            return;
+        }
+        StoreItem item = selectedItemBtn.item;
+        if (item.purchased)
+        {
+            favoriteBtn.SetActive(true);
+            FavButtonIconW.SetActive(!item.isFavourite);
+            FavButtonIconY.SetActive(item.isFavourite);
+        }
+        else
+            favoriteBtn.SetActive(false);
+
     }
 
     public void ResetBuyBtn()
@@ -287,7 +319,7 @@ public class TabGroup : MonoBehaviour
                 //Hats
                 if (i == 0)
                 {
-                    StoreItem xItem = new StoreItem(0, 0, "x", "Hat", true);
+                    StoreItem xItem = new StoreItem(0, 0, "x", "Hat", true, false);
                     ProductButton xBtn = InstantiateProduct(xItem, i);
                     if (currentCharacter.playerAvatar.hat == "")
                     {
@@ -296,7 +328,7 @@ public class TabGroup : MonoBehaviour
                     }
                     if (currentCharacter.defaultAvatarData.hat != "")
                     {
-                        baseItem = new StoreItem(0, 0, currentCharacter.defaultAvatarData.hat, "Hat", true);
+                        baseItem = new StoreItem(0, 0, currentCharacter.defaultAvatarData.hat, "Hat", true, false);
                         ProductButton baseHatBtn = InstantiateProduct(baseItem, i);
                         if (currentCharacter.playerAvatar.hat == currentCharacter.defaultAvatarData.hat)
                         {
@@ -308,7 +340,7 @@ public class TabGroup : MonoBehaviour
                 //Glasses
                 else if (i == 1)
                 {
-                    StoreItem xxItem = new StoreItem(-500, 0, "x", "Glasses", true);
+                    StoreItem xxItem = new StoreItem(-500, 0, "x", "Glasses", true, false);
                     ProductButton xxBtn = InstantiateProduct(xxItem, i);
                     if (mainAvatar.avatarData.glassesType == -1)
                     {
@@ -318,7 +350,7 @@ public class TabGroup : MonoBehaviour
                     if (currentCharacter.defaultAvatarData.glassesType != -1)
                     {
                         int gl = currentCharacter.defaultAvatarData.glassesType;
-                        baseItem = new StoreItem(gl, 0, "gl_" + gl.ToString(), "Glasses", true);
+                        baseItem = new StoreItem(gl, 0, "gl_" + gl.ToString(), "Glasses", true, false);
                         ProductButton baseGlassesBtn = InstantiateProduct(baseItem, i);
                         if (currentCharacter.playerAvatar.glassesType == currentCharacter.defaultAvatarData.glassesType)
                         {
@@ -331,7 +363,7 @@ public class TabGroup : MonoBehaviour
                 else if (i == 2)
                 {
                     int _body = currentCharacter.defaultAvatarData.bodyType;
-                    baseItem = new StoreItem(_body, 0, "body_" + _body.ToString(), "Body", true);
+                    baseItem = new StoreItem(_body, 0, "body_" + _body.ToString(), "Body", true, false);
 
                     ProductButton baseBodyBtn = InstantiateProduct(baseItem, i);
 
@@ -366,6 +398,11 @@ public class TabGroup : MonoBehaviour
                 if (FilterButtons.ContainsKey(FilterModes.newItems))
                 {
                     if(FilterButtons[FilterModes.newItems].GetState() && !item.isNew)
+                        continue;
+                }
+                if (FilterButtons.ContainsKey(FilterModes.favorite))
+                {
+                    if (FilterButtons[FilterModes.favorite].GetState() && (!item.isFavourite || !item.purchased))
                         continue;
                 }
                 //-----------------------------------------------
@@ -423,8 +460,28 @@ public class TabGroup : MonoBehaviour
         }
     }
 
+    public void AddToFavorite()
+    {
+        if (selectedItemBtn == null)
+            return;
+        if (selectedItemBtn.item.name == "x")
+            return;
+        StoreItem item = selectedItemBtn.item;
+        PlayerPrefsManager.storeManager.ManageFavouriteItems(item.index);
+        if (FilterButtons.ContainsKey(FilterModes.favorite))
+        {
+            if (FilterButtons[FilterModes.favorite].GetState())
+                DisplayItemsInStore();
+        }
+        UpdateFavoriteButton();
+        selectedItemBtn.UpdateFavIcon();
+    }
+
     private void Start()
     {
+        FavButtonIconW = favoriteBtn.transform.Find("Icon").gameObject;
+        FavButtonIconY = favoriteBtn.transform.Find("IconY").gameObject;
+
         InitializeTabPanel();
         foreach(StoreItemFilterButton b in GameObject.FindObjectsOfType<StoreItemFilterButton>())
         {
