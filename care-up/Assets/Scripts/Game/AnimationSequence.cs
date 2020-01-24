@@ -102,7 +102,8 @@ public class AnimationSequence
         {
             string description = LocalizationManager.GetValueIfKey(xmlOption.Attributes["text"].Value);
             string animation = xmlOption.Attributes["animation"] != null ? xmlOption.Attributes["animation"].Value : "";
-            SelectDialogue.DialogueOption option = new SelectDialogue.DialogueOption(description, PlayAnimation, animation, "", additionalOption, question);
+            string audio = xmlOption.Attributes["audio"] != null ? xmlOption.Attributes["audio"].Value : "";
+            SelectDialogue.DialogueOption option = new SelectDialogue.DialogueOption(description, PlayAnimation, animation, audio, additionalOption, question);
 
             return option;
         }
@@ -191,6 +192,8 @@ public class AnimationSequence
 
         if (animation != "")
         {
+            bool correct = false;
+
             // leave sequence
             if (animation == "CM_Leave")
             {
@@ -208,10 +211,7 @@ public class AnimationSequence
                     // if animation is correct
                     if (animation == steps.ElementAt(currentStep - 1).GetCorrectAnimation())
                     {
-                        actionManager.OnSequenceStepAction(animation);
-                        pointsEarned++;
-                        Object.Destroy(GameObject.Find("SelectionDialogue"));
-                        PlayerAnimationManager.NextSequenceStep(false);
+                        correct = true;
                     }
                     else
                     {
@@ -245,11 +245,19 @@ public class AnimationSequence
                         GameObject.Find("GameLogic").GetComponent<HandsInventory>().ForcePickItem("TestStrips", true);
                     }
 
-                    actionManager.OnSequenceStepAction(animation);
-                    pointsEarned++;
-                    Object.Destroy(GameObject.Find("SelectionDialogue"));
-                    PlayerAnimationManager.NextSequenceStep(false);
+                    correct = true;
                 }
+            }
+
+            if (correct)
+            {
+                actionManager.OnSequenceStepAction(animation);
+                pointsEarned++;
+                Object.Destroy(GameObject.Find("SelectionDialogue"));
+                PlayerAnimationManager.NextSequenceStep(false);
+
+                AudioClip clip = Resources.Load<AudioClip>("Audio/" + audio);
+                Narrator.PlayDialogueSound(clip);   
             }
         }
     }
