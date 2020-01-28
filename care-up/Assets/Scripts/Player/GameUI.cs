@@ -232,7 +232,7 @@ public class GameUI : MonoBehaviour
 
         Player.GetComponent<PlayerScript>().OpenRobotUI();
 
-       
+
     }
 
     public void ToggleUsingOnMode()
@@ -1286,7 +1286,8 @@ public class GameUI : MonoBehaviour
 
         if (percentageTextIpad.gameObject.activeSelf)
         {
-            percentageTextIpad.text = scoreManager.CalculatePercentage().ToString() + "%";
+            if (scoreManager != null)
+                percentageTextIpad.text = scoreManager.CalculatePercentage().ToString() + "%";
         }
     }
 }
