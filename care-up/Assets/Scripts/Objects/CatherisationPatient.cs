@@ -63,7 +63,15 @@ public class CatherisationPatient : PersonObject
                     animator.SetTrigger("patient_standup");
                     break;
 
-                    
+                case "Hello":
+
+                    PlayerAnimator.SetTrigger("Player_Dialog_Greeting");
+                    PlayerAnimator.SetTrigger("S Player_Dialog_Greeting");
+
+                    break;
+
+
+
                 default:
                     break;
             }
