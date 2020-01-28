@@ -112,6 +112,8 @@ namespace CareUp.Actions
         /// <returns>True if values are same.</returns>
         public override bool Compare(string[] info)
         {
+            if (info == null)
+                return false;
             bool same = false;
             if (info.Length == 2)
             {
@@ -158,6 +160,8 @@ namespace CareUp.Actions
 
         public override bool Compare(string[] info)
         {
+            if (info == null)
+                return false;
             bool same = false;
             if (info.Length == 1)
             {
@@ -201,6 +205,8 @@ namespace CareUp.Actions
 
         public override bool Compare(string[] info)
         {
+            if (info == null)
+                return false;
             bool same = false;
             if (info.Length == 1)
             {
@@ -252,6 +258,8 @@ namespace CareUp.Actions
         /// <returns>True if values same</returns>
         public override bool Compare(string[] info)
         {
+            if (info == null)
+                return false;
             bool same = false;
             if (info.Length == 2)
             {
@@ -301,6 +309,8 @@ namespace CareUp.Actions
         /// <returns>True if values same</returns>
         public override bool Compare(string[] info)
         {
+            if (info == null)
+                return false;
             bool same = false;
             if (info.Length == 2)
             {
@@ -337,6 +347,8 @@ namespace CareUp.Actions
 
         public override bool Compare(string[] info)
         {
+            if (info == null)
+                return false;
             bool same = false;
             if (info.Length == 1)
             {
@@ -370,6 +382,8 @@ namespace CareUp.Actions
 
         public override bool Compare(string[] info)
         {
+            if (info == null)
+                return false;
             if (info.Length == 1)
             {
                 return info[0] == stepName;
@@ -402,6 +416,8 @@ namespace CareUp.Actions
 
         public override bool Compare(string[] info)
         {
+            if (info == null)
+                return false;
             if (info.Length == 2)
             {
                 return (info[0] == objectName && info[1] == dropPositionID);
@@ -432,6 +448,8 @@ namespace CareUp.Actions
 
         public override bool Compare(string[] info)
         {
+            if (info == null)
+                return false;
             bool same = false;
             if (info.Length == 1)
             {

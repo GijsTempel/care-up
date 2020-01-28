@@ -208,7 +208,7 @@ public class ActionManager : MonoBehaviour
 
         if (!practiceMode)
         {
-            if (actManager.CheckGeneralAction() != null)
+            if (actManager.CheckGeneralAction(true) != null)
             {
                 actManager.NotTriggeredAction();
             }
@@ -240,7 +240,7 @@ public class ActionManager : MonoBehaviour
         gameUI.prescriptionButtonBlink = false;
 
         foreach (Action a in actManager.IncompletedActions)
-        {           
+        {
             StepData placeData = null;
             StepData secondPlaceData = null;
             bool correctObjectsInHands = true;
@@ -915,11 +915,12 @@ public class ActionManager : MonoBehaviour
         return result;
     }
 
-    public GeneralAction CheckGeneralAction()
+    public GeneralAction CheckGeneralAction(bool skipBlocks = false)
     {
         GeneralAction action = null;
+        List<Action> list = !skipBlocks ? UnlockedIncompletedActions : IncompletedActions;
 
-        foreach (Action a in UnlockedIncompletedActions)
+        foreach (Action a in list)
         {
             if (a.Type == ActionType.General)
             {
@@ -1428,6 +1429,10 @@ public class ActionManager : MonoBehaviour
     /// <returns>True if action expected and correct. False otherwise.</returns>
     public bool Check(string[] info, ActionType type, bool notWtongAction = false)
     {
+        //if (info == null)
+        //{
+        //    return false;
+        //}
         bool matched = false;
 
         int subcategoryLength = IncompletedActions.Count;
@@ -1496,6 +1501,9 @@ public class ActionManager : MonoBehaviour
                     // count only 1 step, some steps are identical
                     break;
                 }
+
+
+
             }
         }
 

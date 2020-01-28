@@ -167,8 +167,8 @@ public class GameUI : MonoBehaviour
 
     public void UseOnNoTarget(bool leftHand = true)
     {
-        GeneralAction generalAction = actionManager.CheckGeneralAction();
-
+        bool skipBlocks = !GameObject.FindObjectOfType<PlayerPrefsManager>().practiceMode;
+        GeneralAction generalAction = actionManager.CheckGeneralAction(skipBlocks);
         if (generalAction == null)
         {
             if (tutorialUseOn != null && !tutorialUseOn.ventAllowed)
@@ -309,6 +309,11 @@ public class GameUI : MonoBehaviour
     {
         if (generalAction != null)
         {
+            if (actionManager.CheckGeneralAction() == null)
+            {
+                Debug.Log("Blocked action");
+                return;
+            }
             GameObject item = GameObject.Find(generalAction.Item);
 
             PlayerAnimationManager playerAnimationManager = FindObjectOfType<PlayerAnimationManager>();
@@ -1103,7 +1108,7 @@ public class GameUI : MonoBehaviour
     {
         noTargetButton_right.SetActive(true);
         noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text =
-            actionManager.CurrentButtonText();
+            actionManager.CurrentButtonText(null, true);
     }
 
     public void UpdateWalkToGtoupUI(bool value)

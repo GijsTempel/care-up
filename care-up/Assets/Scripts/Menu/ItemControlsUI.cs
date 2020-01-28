@@ -155,7 +155,7 @@ public class ItemControlsUI : MonoBehaviour
         if (PlayerAnimationManager.IsLongAnimation())
             return;
         initedObject = iObject;
-
+        //bool skipBlocks = GameObject.FindObjectOfType<PlayerPrefsManager>().practiceMode;
         generalAction = actionManager.CheckGeneralAction();
 
         if (generalAction != null)
