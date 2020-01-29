@@ -14,7 +14,7 @@ public class ActionManager : MonoBehaviour
 {
     public static bool practiceMode = true;
     public static bool personClicked = false;
-    public static bool generalAction = false;
+    //public static bool generalAction = false;
 
     [HideInInspector]
     public bool tutorial_hintUsed = false;
@@ -210,9 +210,10 @@ public class ActionManager : MonoBehaviour
 
         if (!practiceMode)
         {
-            if (actManager.CheckGeneralAction(true) != null && !playerScript.away)
+            GeneralAction generalAction = actManager.CheckGeneralAction(true);
+            if (generalAction != null && !playerScript.away)
             {
-                actManager.NotTriggeredAction();
+                actManager.NotTriggeredAction(generalAction);
             }
             return;
         }
@@ -315,7 +316,7 @@ public class ActionManager : MonoBehaviour
             if (a.Type == ActionType.General)
             {
                 objectsData.Add(new StepData(false, $"- Klik op de '{actManager.CurrentButtonText()}' knop.", i));
-                actManager.NotTriggeredAction();
+                actManager.NotTriggeredAction((GeneralAction)a);
             }
 
             string[] actionHand = { a.leftHandRequirement, a.rightHandRequirement };
@@ -929,19 +930,16 @@ public class ActionManager : MonoBehaviour
                 generalList.Add(action);
             }
         }
-        if (generalList.Count > 0)
+        if (generalList.Count > 1)
         {
             Action firstGeneral = generalList[0];
             foreach (Action a in generalList)
             {
-                if (a.storedIndex > firstGeneral.storedIndex)
+                if (a.storedIndex < firstGeneral.storedIndex)
                     firstGeneral = a;
-                // Debug.Log(a.storedIndex);
             }
             action = (GeneralAction)firstGeneral;
         }
-        if (action != null)
-            print(action.storedIndex);
         return action;
     }
 
@@ -1418,9 +1416,9 @@ public class ActionManager : MonoBehaviour
         }
     }
 
-    public void NotTriggeredAction()
+    public void NotTriggeredAction(GeneralAction generalAction = null)
     {
-        generalAction = false;
+        //generalAction = false;
 
         HandsInventory inventory = GameObject.FindObjectOfType<HandsInventory>();
         if (inventory != null)
@@ -1428,7 +1426,10 @@ public class ActionManager : MonoBehaviour
             if (inventory.LeftHandEmpty() && inventory.RightHandEmpty())
             {
                 GameUI gameUI = FindObjectOfType<GameUI>();
-                gameUI.ShowNoTargetButton();
+                string buttonText = "";
+                if (generalAction != null)
+                    buttonText = generalAction.ButtonText;
+                gameUI.ShowNoTargetButton(buttonText);
 
                 if (practiceMode)
                     gameUI.buttonToBlink = GameUI.ItemControlButtonType.NoTargetRight;

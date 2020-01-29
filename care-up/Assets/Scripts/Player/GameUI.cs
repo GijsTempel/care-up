@@ -416,7 +416,7 @@ public class GameUI : MonoBehaviour
         objectsIDsController = GameObject.FindObjectOfType<ObjectsIDsController>();
         MovementSideButtons = GameObject.Find("MovementSideButtons");
 
-        ActionManager.generalAction = false;
+        //ActionManager.generalAction = false;
         prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
         if (prefs != null)
             practiceMode = prefs.practiceMode;
@@ -1104,11 +1104,14 @@ public class GameUI : MonoBehaviour
             currentAnimLock = false;
     }
 
-    public void ShowNoTargetButton()
+    public void ShowNoTargetButton(string buttonText = "")
     {
         noTargetButton_right.SetActive(true);
-        noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text =
-            actionManager.CurrentButtonText(null, true);
+        if (!string.IsNullOrEmpty(buttonText))
+            noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text = buttonText;
+        else
+            noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text =
+                actionManager.CurrentButtonText(null, true);
     }
 
     public void UpdateWalkToGtoupUI(bool value)
