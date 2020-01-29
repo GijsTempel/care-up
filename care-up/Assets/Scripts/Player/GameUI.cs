@@ -311,7 +311,8 @@ public class GameUI : MonoBehaviour
         {
             if (actionManager.CheckGeneralAction() == null)
             {
-                Debug.Log("Blocked action");
+                ActionManager.WrongAction(true);
+                actionManager.UpdatePoints(-1);
                 return;
             }
 
@@ -964,7 +965,7 @@ public class GameUI : MonoBehaviour
                 decombineButton.SetActive(false);
                 decombineButton_right.SetActive(false);
                 ActionManager.UpdateRequirements();
-                if (actionManager.CheckGeneralAction() == null)
+                if (actionManager.CheckGeneralAction(!practiceMode) == null)
                 {
                     UpdateHelpHighlight();
                 }
@@ -1069,10 +1070,10 @@ public class GameUI : MonoBehaviour
                 zoomButtonRight.SetActive(showZoomRight);
                 noTargetButton.SetActive(showNoTarget);
 
-                if (actionManager.CheckGeneralAction() == null)
+                if (actionManager.CheckGeneralAction(!practiceMode) == null)
                     noTargetButton_right.SetActive(showNoTarget_right);
                 else 
-                    noTargetButton_right.SetActive(true);
+                    noTargetButton_right.SetActive(!decombineButton_right.activeSelf);
 
                 combineButton.SetActive(showCombin);
             }
