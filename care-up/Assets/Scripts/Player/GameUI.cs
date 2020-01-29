@@ -37,8 +37,10 @@ public class GameUI : MonoBehaviour
     public QuizTab quiz_tab;
     public bool DropLeftBlink = false;
     public bool DropRightBlink = false;
+    bool generalButtonActive = false;
 
     public bool LevelEnded = false;
+    public bool showNoTarget_right = false;
 
     GameObject MovementSideButtons;
     public List<string> reqPlaces = new List<string>();
@@ -167,8 +169,16 @@ public class GameUI : MonoBehaviour
 
     public void UseOnNoTarget(bool leftHand = true)
     {
-        bool skipBlocks = !GameObject.FindObjectOfType<PlayerPrefsManager>().practiceMode;
-        GeneralAction generalAction = actionManager.CheckGeneralAction(skipBlocks);
+        GeneralAction generalAction = null;
+        if (!leftHand)
+        {
+            if (!showNoTarget_right)
+            {
+                bool skipBlocks = !GameObject.FindObjectOfType<PlayerPrefsManager>().practiceMode;
+                generalAction = actionManager.CheckGeneralAction(skipBlocks);
+            }
+        }
+
         if (generalAction == null)
         {
             if (tutorialUseOn != null && !tutorialUseOn.ventAllowed)
@@ -987,7 +997,7 @@ public class GameUI : MonoBehaviour
                 bool showZoomRight = false;
 
                 bool showNoTarget = false;
-                bool showNoTarget_right = false;
+                showNoTarget_right = false;
 
                 if (!LEmpty)
                 {
