@@ -155,13 +155,12 @@ public class ItemControlsUI : MonoBehaviour
         if (PlayerAnimationManager.IsLongAnimation())
             return;
         initedObject = iObject;
-        //bool skipBlocks = GameObject.FindObjectOfType<PlayerPrefsManager>().practiceMode;
         generalAction = actionManager.CheckGeneralAction();
 
         if (generalAction != null)
         {
             useOnNTButton.SetActive(true);
-            useOnNTButton.transform.GetChild(0).GetComponent<Text>().text = actionManager.CurrentButtonText();
+            useOnNTButton.transform.GetChild(0).GetComponent<Text>().text = generalAction.ButtonText;
         }
 
         if (initedObject != null && initedObject.GetComponent<InteractableObject>() != null)

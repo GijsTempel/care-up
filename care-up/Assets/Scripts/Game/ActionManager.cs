@@ -14,7 +14,6 @@ public class ActionManager : MonoBehaviour
 {
     public static bool practiceMode = true;
     public static bool personClicked = false;
-    //public static bool generalAction = false;
 
     [HideInInspector]
     public bool tutorial_hintUsed = false;
@@ -829,7 +828,6 @@ public class ActionManager : MonoBehaviour
     public string CurrentButtonText(string itemName = null, bool skipBlocks = false)
     {
         List<Action> list = !skipBlocks ? UnlockedIncompletedActions : IncompletedActions;
-//--------------------------------------------------------------
         foreach (Action a in list)
         {
             if (a.Type == ActionType.General)
@@ -1418,7 +1416,7 @@ public class ActionManager : MonoBehaviour
 
     public void NotTriggeredAction(GeneralAction generalAction = null)
     {
-        //generalAction = false;
+  
 
         HandsInventory inventory = GameObject.FindObjectOfType<HandsInventory>();
         if (inventory != null)
