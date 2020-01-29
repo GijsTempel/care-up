@@ -23,7 +23,6 @@ public class ReplacePrefabInHand : StateMachineBehaviour {
         {
             if (PlayerAnimationManager.CompareFrames(frame, prevFrame, swapFrame) && swapObjName != "")
             {
-                Debug.Log("ffffff");
                 handsInventory.ReplaceHandObject(leftHand, swapObjName, GhostObjectTarget);
             }
            

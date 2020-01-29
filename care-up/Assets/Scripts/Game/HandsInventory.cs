@@ -319,7 +319,6 @@ public class HandsInventory : MonoBehaviour {
 
     public void ReplaceHandObject(bool isLeftHand, string name, string ghostName = "")
     {
-
         PickableObject currentHandObject = rightHandObject;
         if (isLeftHand)
             currentHandObject = leftHandObject;

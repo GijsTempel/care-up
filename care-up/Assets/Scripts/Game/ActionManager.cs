@@ -240,7 +240,7 @@ public class ActionManager : MonoBehaviour
         gameUI.prescriptionButtonBlink = false;
 
         foreach (Action a in actManager.IncompletedActions)
-        {           
+        {
             StepData placeData = null;
             StepData secondPlaceData = null;
             bool correctObjectsInHands = true;
@@ -315,7 +315,7 @@ public class ActionManager : MonoBehaviour
             if (a.Type == ActionType.General)
             {
                 objectsData.Add(new StepData(false, $"- Klik op de '{actManager.CurrentButtonText()}' knop.", i));
-                actManager.NotTriggeredAction();
+                // actManager.NotTriggeredAction();
             }
 
             string[] actionHand = { a.leftHandRequirement, a.rightHandRequirement };
@@ -1403,20 +1403,12 @@ public class ActionManager : MonoBehaviour
 
     public void NotTriggeredAction()
     {
-        generalAction = false;
+        GameUI gameUI = FindObjectOfType<GameUI>();
+        gameUI.ShowNoTargetButton();
 
-        HandsInventory inventory = GameObject.FindObjectOfType<HandsInventory>();
-        if (inventory != null)
-        {
-            if (inventory.LeftHandEmpty() && inventory.RightHandEmpty())
-            {
-                GameUI gameUI = FindObjectOfType<GameUI>();
-                gameUI.ShowNoTargetButton();
+        if (practiceMode)
+            gameUI.buttonToBlink = GameUI.ItemControlButtonType.NoTargetRight;
 
-                if (practiceMode)
-                    gameUI.buttonToBlink = GameUI.ItemControlButtonType.NoTargetRight;
-            }
-        }
     }
 
     /// <summary>

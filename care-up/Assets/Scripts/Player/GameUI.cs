@@ -308,7 +308,7 @@ public class GameUI : MonoBehaviour
     public void GeneralAction(GeneralAction generalAction)
     {
         if (generalAction != null)
-        {
+        {          
             GameObject item = GameObject.Find(generalAction.Item);
 
             PlayerAnimationManager playerAnimationManager = FindObjectOfType<PlayerAnimationManager>();
@@ -1066,7 +1066,8 @@ public class GameUI : MonoBehaviour
                 if (actionManager.CheckGeneralAction() == null)
                     noTargetButton_right.SetActive(showNoTarget_right);
                 else 
-                    noTargetButton_right.SetActive(REmpty && LEmpty);
+                    noTargetButton_right.SetActive(true);
+
                 combineButton.SetActive(showCombin);
             }
 
