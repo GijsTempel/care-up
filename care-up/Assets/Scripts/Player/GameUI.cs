@@ -167,8 +167,8 @@ public class GameUI : MonoBehaviour
 
     public void UseOnNoTarget(bool leftHand = true)
     {
-        GeneralAction generalAction = actionManager.CheckGeneralAction();
-
+        bool skipBlocks = !GameObject.FindObjectOfType<PlayerPrefsManager>().practiceMode;
+        GeneralAction generalAction = actionManager.CheckGeneralAction(skipBlocks);
         if (generalAction == null)
         {
             if (tutorialUseOn != null && !tutorialUseOn.ventAllowed)
@@ -308,7 +308,13 @@ public class GameUI : MonoBehaviour
     public void GeneralAction(GeneralAction generalAction)
     {
         if (generalAction != null)
-        {          
+        {
+            if (actionManager.CheckGeneralAction() == null)
+            {
+                Debug.Log("Blocked action");
+                return;
+            }
+
             GameObject item = GameObject.Find(generalAction.Item);
 
             PlayerAnimationManager playerAnimationManager = FindObjectOfType<PlayerAnimationManager>();
@@ -411,7 +417,7 @@ public class GameUI : MonoBehaviour
         objectsIDsController = GameObject.FindObjectOfType<ObjectsIDsController>();
         MovementSideButtons = GameObject.Find("MovementSideButtons");
 
-        ActionManager.generalAction = false;
+        //ActionManager.generalAction = false;
         prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
         if (prefs != null)
             practiceMode = prefs.practiceMode;
@@ -1100,11 +1106,14 @@ public class GameUI : MonoBehaviour
             currentAnimLock = false;
     }
 
-    public void ShowNoTargetButton()
+    public void ShowNoTargetButton(string buttonText = "")
     {
         noTargetButton_right.SetActive(true);
-        noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text =
-            actionManager.CurrentButtonText();
+        if (!string.IsNullOrEmpty(buttonText))
+            noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text = buttonText;
+        else
+            noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text =
+                actionManager.CurrentButtonText(null, true);
     }
 
     public void UpdateWalkToGtoupUI(bool value)

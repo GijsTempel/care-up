@@ -28,6 +28,7 @@ namespace CareUp.Actions
         public string secondPlaceRequirement;
         public string _topic;
         public float encounter;
+        public int storedIndex;
 
         protected ActionManager.ActionType type;
 
@@ -112,6 +113,8 @@ namespace CareUp.Actions
         /// <returns>True if values are same.</returns>
         public override bool Compare(string[] info)
         {
+            if (info == null)
+                return false;
             bool same = false;
             if (info.Length == 2)
             {
@@ -158,6 +161,8 @@ namespace CareUp.Actions
 
         public override bool Compare(string[] info)
         {
+            if (info == null)
+                return false;
             bool same = false;
             if (info.Length == 1)
             {
@@ -201,6 +206,8 @@ namespace CareUp.Actions
 
         public override bool Compare(string[] info)
         {
+            if (info == null)
+                return false;
             bool same = false;
             if (info.Length == 1)
             {
@@ -252,6 +259,8 @@ namespace CareUp.Actions
         /// <returns>True if values same</returns>
         public override bool Compare(string[] info)
         {
+            if (info == null)
+                return false;
             bool same = false;
             if (info.Length == 2)
             {
@@ -301,6 +310,8 @@ namespace CareUp.Actions
         /// <returns>True if values same</returns>
         public override bool Compare(string[] info)
         {
+            if (info == null)
+                return false;
             bool same = false;
             if (info.Length == 2)
             {
@@ -337,6 +348,8 @@ namespace CareUp.Actions
 
         public override bool Compare(string[] info)
         {
+            if (info == null)
+                return false;
             bool same = false;
             if (info.Length == 1)
             {
@@ -370,6 +383,8 @@ namespace CareUp.Actions
 
         public override bool Compare(string[] info)
         {
+            if (info == null)
+                return false;
             if (info.Length == 1)
             {
                 return info[0] == stepName;
@@ -402,6 +417,8 @@ namespace CareUp.Actions
 
         public override bool Compare(string[] info)
         {
+            if (info == null)
+                return false;
             if (info.Length == 2)
             {
                 return (info[0] == objectName && info[1] == dropPositionID);
@@ -432,6 +449,8 @@ namespace CareUp.Actions
 
         public override bool Compare(string[] info)
         {
+            if (info == null)
+                return false;
             bool same = false;
             if (info.Length == 1)
             {
@@ -460,12 +479,13 @@ namespace CareUp.Actions
         public string Action { get; }
         public string Item { get; }
 
-        public GeneralAction(string itemValue, string actionValue, int index, string sdescr,
+        public GeneralAction(string itemValue, string actionValue, int index, int storedIndex, string sdescr,
             string buttonTextValue, int points, bool notNeeded, float quizTime, string title,
             string content, List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg, float encounterValue)
             : base(ActionManager.ActionType.General, index, sdescr, points, notNeeded,
                   quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg, encounterValue)
         {
+            this.storedIndex = storedIndex;
             Item = itemValue;
             Action = actionValue;
             ButtonText = buttonTextValue;
