@@ -123,7 +123,12 @@ public class MainMenu : MonoBehaviour
 
                     if (percent <= 0 || percent > 100)
                         continue; // don't show 0 percent scores as they are not completed even once
-                    
+
+                    // FILTERing old scenes that should not be displayed anymore
+                    if (sceneName == "Injecteren intramusculair (loodrechttechniek) - Flacon" ||
+                       sceneName == "AED")
+                        continue;
+
                     GameObject layoutGroup = GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Account_Scores/ContentPanel/Scenes/Account_Panel_UI/Panel/ProtocolList/ProtocolsHolder/Protocols/content");
                     GameObject scoreObject = Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/UI/TestHighscore"), layoutGroup.transform);
                     scoreObject.transform.Find("SceneName").GetComponent<Text>().text = sceneName;
