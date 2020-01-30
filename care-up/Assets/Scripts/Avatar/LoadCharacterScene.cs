@@ -24,6 +24,14 @@ public class LoadCharacterScene : MonoBehaviour
         avatar.UpdateCharacter();
     }
 
+    public void LoadCharacter(PlayerAvatarData avatarData)
+    {
+        PlayerAvatar mainAvatar = GameObject.Find("MainPlayerAvatar").GetComponent<PlayerAvatar>();
+
+        mainAvatar.avatarData = avatarData;
+        mainAvatar.UpdateCharacter();
+    }
+
     public PlayerAvatarData GetCurrentData()
     {
         if (pref == null)
