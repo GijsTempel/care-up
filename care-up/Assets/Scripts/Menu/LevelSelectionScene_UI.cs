@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Linq;
 using MBS;
+using CareUpAvatar;
 
 /// <summary>
 /// Handles Scene selection module
@@ -390,5 +391,25 @@ public class LevelSelectionScene_UI : MonoBehaviour
         string body = response.Elements[1]["CharacterBodyType"];
         string glasses = response.Elements[1]["CharacterGlassesType"];
         string hat = response.Elements[1]["hat??"]; // didnt find info
+        if (!string.IsNullOrEmpty(head))
+        {
+            PlayerAvatar mainAvatar = GameObject.Find("MainPlayerAvatar").GetComponent<PlayerAvatar>();
+            PlayerAvatarData prevCharData = new PlayerAvatarData();
+            int.TryParse(head, out prevCharData.headType);
+            if (sex == "Female")
+                prevCharData.gender = Gender.Female;
+            int.TryParse(body, out prevCharData.bodyType);
+            int.TryParse(glasses, out prevCharData.glassesType);
+            prevCharData.hat = hat;
+            mainAvatar.avatarData = prevCharData;
+            mainAvatar.UpdateCharacter();
+        }
+        else
+        {
+            print("aaaa");
+        }
+
+        
+
     }
 }
