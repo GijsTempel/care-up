@@ -3,7 +3,7 @@ using System.Xml;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Linq;
-
+using MBS;
 
 /// <summary>
 /// Handles Scene selection module
@@ -350,9 +350,10 @@ public class LevelSelectionScene_UI : MonoBehaviour
         {
             string name = sortedEntries[i].String("dname");
             string score = sortedEntries[i].String("score");
+            string uid = sortedEntries[i].String("uid");
 
             if (i < _Scores.Length)
-                _Scores[i].SetScoreLine(name, score, i);
+                _Scores[i].SetScoreLine(name, score, i, uid);
         }
 
         // loading icon is shown
@@ -369,5 +370,25 @@ public class LevelSelectionScene_UI : MonoBehaviour
             lb.description.GetComponent<Text>().text = LeaderBoardSceneButton.Descripton;
             lb.leaderboard.SetActive(false);
         }       
+    }
+
+    public void RequestCharacterInfoByUID(int uid)
+    {
+        // start loading animation?
+
+        // actual load stuff
+        WUData.FetchUserCategory(uid, "AccountStats", RequestCharacterInfoByUID_success);
+    }
+
+    public void RequestCharacterInfoByUID_success(CML response)
+    {
+        //loading done, stop loading animation, open UI
+
+        // use info from response
+        string sex = response.Elements[1]["CharacterSex"];
+        string head = response.Elements[1]["CharacterHeadType"];
+        string body = response.Elements[1]["CharacterBodyType"];
+        string glasses = response.Elements[1]["CharacterGlassesType"];
+        string hat = response.Elements[1]["hat??"]; // didnt find info
     }
 }
