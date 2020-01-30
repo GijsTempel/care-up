@@ -685,15 +685,15 @@ public class GameUI : MonoBehaviour
         style.fontSize = 30;
 
 
-        // GUI.Label(new Rect(0, 0, 100, 100), ((int)(1.0f / Time.smoothDeltaTime)).ToString(), style);
-        // if (objectsIDsController != null)
-        // {
-        //     if (objectsIDsController.cheat)
-        //         GUI.Label(new Rect(30, 0, 100, 100), "Cheat enabled", style);
-        // }
+        GUI.Label(new Rect(0, 0, 100, 100), ((int)(1.0f / Time.smoothDeltaTime)).ToString(), style);
+        if (objectsIDsController != null)
+        {
+            if (objectsIDsController.cheat)
+                GUI.Label(new Rect(30, 0, 100, 100), "Cheat enabled", style);
+        }
 
-        // //debugSS = PlayerAnimationManager.animTimeout.ToString();
-        // GUI.Label(new Rect(0, 30, 1000, 100), debugSS, style);
+        //debugSS = PlayerAnimationManager.animTimeout.ToString();
+        GUI.Label(new Rect(0, 30, 1000, 100), debugSS, style);
 #endif
     }
 
