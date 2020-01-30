@@ -281,6 +281,7 @@ public class EndScoreManager : MonoBehaviour
     public void LoadEndScoreScene()
     {
         StoreViewModel.SavedCoins = ActionManager.Points;
+        InitializeObjects();
         if (actionManager == null) Debug.LogError("No action manager found.");
 
         gameTimer = GameObject.Find("GameLogic").GetComponent<GameTimer>();
