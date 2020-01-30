@@ -215,7 +215,7 @@ public class AnimationSequence
                     }
                     else
                     {
-                        ActionManager.WrongAction();
+                        ActionManager.WrongAction(false);
                         actionManager.UpdatePoints(-1);
                     }
                 }
