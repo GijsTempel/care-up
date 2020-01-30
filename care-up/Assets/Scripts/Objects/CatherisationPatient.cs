@@ -46,14 +46,14 @@ public class CatherisationPatient : PersonObject
                 case "LayOnBed":
                     //animator.SetTrigger("pants_down");
 
-                    PlayerAnimator.SetTrigger("Player_Dialog_AskToLay");
-                    PlayerAnimator.SetTrigger("S Player_Dialog_AskToLay");
+                    /*PlayerAnimator.SetTrigger("Player_Dialog_AskToLay");
+                    PlayerAnimator.SetTrigger("S Player_Dialog_AskToLay");*/
 
                     GameObject playerPosAtPatient = GameObject.Find("PlayerPositions/PatientPos/Target");
                     playerPosAtPatient.transform.position = playerPositionTarget.position;
                     playerPosAtPatient.transform.rotation = playerPositionTarget.rotation;
-                    /*PlayerAnimator.SetTrigger("CloseCurtains");
-                    PlayerAnimator.SetTrigger("S CloseCurtains");*/
+                    PlayerAnimator.SetTrigger("CloseCurtains");
+                    PlayerAnimator.SetTrigger("S CloseCurtains");
 
                     break;
                 case "HelpGetUp":
