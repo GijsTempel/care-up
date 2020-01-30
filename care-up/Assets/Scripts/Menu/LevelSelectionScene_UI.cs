@@ -375,8 +375,8 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
     public void RequestCharacterInfoByUID(int uid)
     {
+        print(uid);
         // start loading animation?
-
         // actual load stuff
         WUData.FetchUserCategory(uid, "AccountStats", RequestCharacterInfoByUID_success);
     }
@@ -391,25 +391,24 @@ public class LevelSelectionScene_UI : MonoBehaviour
         string body = response.Elements[1]["CharacterBodyType"];
         string glasses = response.Elements[1]["CharacterGlassesType"];
         string hat = response.Elements[1]["hat??"]; // didnt find info
+        bool toShowPlayer = false;
         if (!string.IsNullOrEmpty(head))
         {
+            toShowPlayer = true;
             PlayerAvatar mainAvatar = GameObject.Find("MainPlayerAvatar").GetComponent<PlayerAvatar>();
             PlayerAvatarData prevCharData = new PlayerAvatarData();
             int.TryParse(head, out prevCharData.headType);
             if (sex == "Female")
                 prevCharData.gender = Gender.Female;
             int.TryParse(body, out prevCharData.bodyType);
-            int.TryParse(glasses, out prevCharData.glassesType);
+            int glassesType = -1;
+            int.TryParse(glasses, out glassesType);
+            prevCharData.glassesType = 3000000 + glassesType;
             prevCharData.hat = hat;
             mainAvatar.avatarData = prevCharData;
             mainAvatar.UpdateCharacter();
+            Debug.Log(glasses);
         }
-        else
-        {
-            print("aaaa");
-        }
-
-        
-
+        GameObject.FindObjectOfType<HighscoreCharacterPanel>().HideContent(false, toShowPlayer);
     }
 }
