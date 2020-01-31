@@ -60,9 +60,10 @@ public class InjectionPatient : PersonObject {
                     inhaling = true;
                     break;
                 case "ShowBellyForInsulin":
-                    animator.SetTrigger("ShowBellyForInsulin");
+                    GetComponent<InjectionPatient>().ShowBellyDialogue();
+                    //animator.SetTrigger("ShowBellyForInsulin");
                     pulledUp = true;
-                    PlayerScript.TriggerQuizQuestion(3.3f);
+                    //PlayerScript.TriggerQuizQuestion(3.3f);
                     break;
                 default:
                     break;
@@ -172,6 +173,24 @@ public class InjectionPatient : PersonObject {
         animator.SetTrigger("ShowArm");
         lookAtCamera = false;
         PlayerScript.TriggerQuizQuestion(3.7f);
+    }
+
+    public void ShowBellyDialogue()
+    {
+        StartCoroutine(ShowBellyCoroutine());
+    }
+
+    private IEnumerator ShowBellyCoroutine()
+    {
+        AudioClip Collega28 = Resources.Load<AudioClip>("Audio/Dialogue/Player/Collega 28");
+        Narrator.PlayDialogueSound(Collega28);
+        yield return new WaitForSeconds(Collega28.length);
+        animator.SetTrigger("ja_hoor_zal_ik_doen");
+        audioSource.PlayOneShot(audioClips[10]);
+        yield return new WaitForSeconds(audioClips[10].length);
+        animator.SetTrigger("ShowBellyForInsulin");
+        lookAtCamera = false;
+        //PlayerScript.TriggerQuizQuestion(3.7f);
     }
 
     public void InjectNeedleInArmDialogue()
