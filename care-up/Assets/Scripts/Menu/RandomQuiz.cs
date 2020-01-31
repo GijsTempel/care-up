@@ -32,20 +32,23 @@ public class RandomQuiz
 
     public void NextRandomQuiz()
     {
-        if (randomQuestionsList.Count > 0)
+        if (randomQuestionsList != null)
         {
-            if (counter <= 0 || selectedStep < manager.CorrectStepIndexes.Count)
+            if (randomQuestionsList.Count > 0)
             {
-                GetFrequency();
-                SelectRandomStep();
+                if (counter <= 0 || selectedStep < manager.CorrectStepIndexes.Count)
+                {
+                    GetFrequency();
+                    SelectRandomStep();
+                }
+                else if (manager.CorrectStepIndexes.Count == selectedStep)
+                {
+                    showQuestion = System.Convert.ToBoolean(Random.Range(0, 2));
+                    if (showQuestion)
+                        Debug.Log("Random quiz on correct step " + selectedStep);
+                    SelectRandomStep();
+                }
             }
-            else if (manager.CorrectStepIndexes.Count == selectedStep)
-            {              
-                showQuestion = System.Convert.ToBoolean(Random.Range(0, 2));
-                if (showQuestion)
-                    Debug.Log("Random quiz on correct step " + selectedStep);
-                SelectRandomStep();
-            }           
         }
     }
 }
