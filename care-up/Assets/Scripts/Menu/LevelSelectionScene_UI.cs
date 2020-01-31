@@ -375,7 +375,6 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
     public void RequestCharacterInfoByUID(int uid)
     {
-        print(uid);
         // start loading animation?
         // actual load stuff
         WUData.FetchUserCategory(uid, "AccountStats", RequestCharacterInfoByUID_success);
@@ -394,21 +393,33 @@ public class LevelSelectionScene_UI : MonoBehaviour
         bool toShowPlayer = false;
         if (!string.IsNullOrEmpty(head))
         {
-            toShowPlayer = true;
             PlayerAvatar mainAvatar = GameObject.Find("MainPlayerAvatar").GetComponent<PlayerAvatar>();
             PlayerAvatarData prevCharData = new PlayerAvatarData();
-            int.TryParse(head, out prevCharData.headType);
             if (sex == "Female")
                 prevCharData.gender = Gender.Female;
-            int.TryParse(body, out prevCharData.bodyType);
-            int glassesType = -1;
-            int.TryParse(glasses, out glassesType);
-            prevCharData.glassesType = 3000000 + glassesType;
-            prevCharData.hat = hat;
-            mainAvatar.avatarData = prevCharData;
-            mainAvatar.UpdateCharacter();
-            Debug.Log(glasses);
+            int.TryParse(head, out prevCharData.headType);
+            if (prevCharData.headType < mainAvatar.GetMaxHeadNum(prevCharData.gender))
+            {
+                int.TryParse(body, out prevCharData.bodyType);
+                if (prevCharData.bodyType < mainAvatar.GetMaxBodyNum())
+                {
+                    int glassesType = -1;
+                    int.TryParse(glasses, out glassesType);
+                    if (glassesType < 3000000)
+                        glassesType += 3000000;
+                    prevCharData.glassesType = glassesType;
+                    prevCharData.hat = hat;
+                    mainAvatar.avatarData = prevCharData;
+                    mainAvatar.UpdateCharacter();
+                    toShowPlayer = true;
+                    Debug.Log(glasses);
+                }
+            }
+            else
+                Debug.Log("No correct head");
         }
+        else
+            Debug.Log("No avatar data");
         GameObject.FindObjectOfType<HighscoreCharacterPanel>().HideContent(false, toShowPlayer);
     }
 }
