@@ -380,16 +380,14 @@ public class LevelSelectionScene_UI : MonoBehaviour
         WUData.FetchUserCategory(uid, "AccountStats", RequestCharacterInfoByUID_success);
     }
 
-    public void RequestCharacterInfoByUID_success(CML response)
+public void RequestCharacterInfoByUID_success(CML response)
     {
         //loading done, stop loading animation, open UI
-
-        // use info from response
-        string sex = response.Elements[1]["CharacterSex"];
-        string head = response.Elements[1]["CharacterHeadType"];
-        string body = response.Elements[1]["CharacterBodyType"];
-        string glasses = response.Elements[1]["CharacterGlassesType"];
-        string hat = response.Elements[1]["hat??"]; // didnt find info
+        string sex = response.Elements[1]["Sex"];
+        string head = response.Elements[1]["Head"];
+        string body = response.Elements[1]["Body"];
+        string glasses = response.Elements[1]["Glasses"];
+        string hat = response.Elements[1]["Hat"]; // didnt find info
         bool toShowPlayer = false;
         if (!string.IsNullOrEmpty(head))
         {
@@ -401,19 +399,16 @@ public class LevelSelectionScene_UI : MonoBehaviour
             if (prevCharData.headType < mainAvatar.GetMaxHeadNum(prevCharData.gender))
             {
                 int.TryParse(body, out prevCharData.bodyType);
-                if (prevCharData.bodyType < mainAvatar.GetMaxBodyNum())
-                {
-                    int glassesType = -1;
-                    int.TryParse(glasses, out glassesType);
-                    if (glassesType < 3000000)
-                        glassesType += 3000000;
-                    prevCharData.glassesType = glassesType;
-                    prevCharData.hat = hat;
-                    mainAvatar.avatarData = prevCharData;
-                    mainAvatar.UpdateCharacter();
-                    toShowPlayer = true;
-                    Debug.Log(glasses);
-                }
+               
+                int glassesType = -1;
+                int.TryParse(glasses, out glassesType);
+                if (glassesType < 3000000)
+                    glassesType += 3000000;
+                prevCharData.glassesType = glassesType;
+                prevCharData.hat = hat;
+                mainAvatar.avatarData = prevCharData;
+                mainAvatar.UpdateCharacter();
+                toShowPlayer = true;
             }
             else
                 Debug.Log("No correct head");
