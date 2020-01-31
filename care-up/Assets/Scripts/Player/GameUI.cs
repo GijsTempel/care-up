@@ -915,11 +915,7 @@ public class GameUI : MonoBehaviour
 
                 ActionManager.BuildRequirements();
                 ActionManager.UpdateRequirements();
-
-                if (actionManager.CheckGeneralAction() == null)
-                {
-                    UpdateHelpHighlight();
-                }
+                UpdateHelpHighlight();
                 UpdateWalkToGtoupUI(true);
             }
         }
@@ -975,10 +971,7 @@ public class GameUI : MonoBehaviour
                 decombineButton.SetActive(false);
                 decombineButton_right.SetActive(false);
                 ActionManager.UpdateRequirements();
-                if (actionManager.CheckGeneralAction(!practiceMode) == null)
-                {
-                    UpdateHelpHighlight();
-                }
+                UpdateHelpHighlight();
                 currentActionsCount = actionManager.actionsCount;
 
                 //hide panel for the first frame of hands state change
@@ -1082,7 +1075,7 @@ public class GameUI : MonoBehaviour
 
                 if (actionManager.CheckGeneralAction(!practiceMode) == null)
                     noTargetButton_right.SetActive(showNoTarget_right);
-                else 
+                else
                     noTargetButton_right.SetActive(!decombineButton_right.activeSelf);
 
                 combineButton.SetActive(showCombin);
@@ -1097,7 +1090,7 @@ public class GameUI : MonoBehaviour
             currentItemControlPanelState = showItemControlPanel;
 
             if (cooldownTime > 0)
-            {        
+            {
                 cooldownTime -= Time.deltaTime;
                 showItemControlPanel = false;
             }
