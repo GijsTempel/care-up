@@ -307,7 +307,7 @@ public class QuizTab : MonoBehaviour
         {
             GameObject.Find("GameLogic").GetComponent<ActionManager>().ActivatePenalty();
         }
-        ActionManager.WrongAction();
+        ActionManager.WrongAction(false);
 
         answeredTitleText.text = "Helaas, dit antwoord is niet goed";
         descriptionText.text = description;
