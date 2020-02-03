@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class ButtonBlinking : MonoBehaviour
 {
@@ -86,7 +87,7 @@ public class ButtonBlinking : MonoBehaviour
                 toBlink = true;
         }
 
-        if(prefs != null)
+        if (prefs != null)
         {
             if (toBlink && prefs.practiceMode)
             {
