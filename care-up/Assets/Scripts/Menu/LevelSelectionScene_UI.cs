@@ -3,7 +3,8 @@ using System.Xml;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Linq;
-
+using MBS;
+using CareUpAvatar;
 
 /// <summary>
 /// Handles Scene selection module
@@ -350,9 +351,10 @@ public class LevelSelectionScene_UI : MonoBehaviour
         {
             string name = sortedEntries[i].String("dname");
             string score = sortedEntries[i].String("score");
+            string uid = sortedEntries[i].String("uid");
 
             if (i < _Scores.Length)
-                _Scores[i].SetScoreLine(name, score, i);
+                _Scores[i].SetScoreLine(name, score, i, uid);
         }
 
         // loading icon is shown
@@ -369,5 +371,50 @@ public class LevelSelectionScene_UI : MonoBehaviour
             lb.description.GetComponent<Text>().text = LeaderBoardSceneButton.Descripton;
             lb.leaderboard.SetActive(false);
         }       
+    }
+
+    public void RequestCharacterInfoByUID(int uid)
+    {
+        // start loading animation?
+        // actual load stuff
+        WUData.FetchUserCategory(uid, "AccountStats", RequestCharacterInfoByUID_success);
+    }
+
+public void RequestCharacterInfoByUID_success(CML response)
+    {
+        //loading done, stop loading animation, open UI
+        string sex = response.Elements[1]["Sex"];
+        string head = response.Elements[1]["Head"];
+        string body = response.Elements[1]["Body"];
+        string glasses = response.Elements[1]["Glasses"];
+        string hat = response.Elements[1]["Hat"]; // didnt find info
+        bool toShowPlayer = false;
+        if (!string.IsNullOrEmpty(head))
+        {
+            PlayerAvatar mainAvatar = GameObject.Find("MainPlayerAvatar").GetComponent<PlayerAvatar>();
+            PlayerAvatarData prevCharData = new PlayerAvatarData();
+            if (sex == "Female")
+                prevCharData.gender = Gender.Female;
+            int.TryParse(head, out prevCharData.headType);
+            if (prevCharData.headType < mainAvatar.GetMaxHeadNum(prevCharData.gender))
+            {
+                int.TryParse(body, out prevCharData.bodyType);
+               
+                int glassesType = -1;
+                int.TryParse(glasses, out glassesType);
+                if (glassesType < 3000000)
+                    glassesType += 3000000;
+                prevCharData.glassesType = glassesType;
+                prevCharData.hat = hat;
+                mainAvatar.avatarData = prevCharData;
+                mainAvatar.UpdateCharacter();
+                toShowPlayer = true;
+            }
+            else
+                Debug.Log("No correct head");
+        }
+        else
+            Debug.Log("No avatar data");
+        GameObject.FindObjectOfType<HighscoreCharacterPanel>().HideContent(false, toShowPlayer);
     }
 }

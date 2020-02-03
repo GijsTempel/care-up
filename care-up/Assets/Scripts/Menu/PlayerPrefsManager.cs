@@ -40,6 +40,9 @@ public class PlayerPrefsManager : MonoBehaviour
     public static bool firstStart = true;
     private static PlayerPrefsManager instance;
 
+    public static string HighscorePlayerName = "";
+    public static string HighscoreSceneName = "";
+
     private List<string> activatedScenes = new List<string>();
 
     // sets up after selecting scene in "scene selection"
