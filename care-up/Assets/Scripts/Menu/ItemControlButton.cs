@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
+
 
 public class ItemControlButton : MonoBehaviour
 {
@@ -10,11 +12,6 @@ public class ItemControlButton : MonoBehaviour
     {
         gameUI = GameObject.FindObjectOfType<GameUI>();
         prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
-        
-        Vector3 vec = new Vector3();
-        // RectTransformUtility.WorldToScreenPoint(Camera.ma(GetComponentInParent<RectTransform>(),
-        //     transform.position, Camera.main, out vec);
-        // RectTransformUtility.PixelAdjustPoint
     }
 
     public void UpdateBlinkState()
@@ -76,6 +73,7 @@ public class ItemControlButton : MonoBehaviour
             if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ItemBlink") 
                 || GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Blink"))
                     GetComponent<Animator>().SetTrigger("BlinkOff");
+            //GetComponent<Button>().onClick.Invoke();
         }
         else if (!(GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ItemBlink") 
             || GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Blink")))
