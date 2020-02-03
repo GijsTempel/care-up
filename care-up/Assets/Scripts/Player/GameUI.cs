@@ -19,6 +19,7 @@ public class GameUI : MonoBehaviour
     GameObject closeDialog;
     GameObject donePanelYesNo;
     GameObject WalkToGroupPanel;
+
     public WalkToGroupButton LeftSideButton;
     public WalkToGroupButton RightSideButton;
     public Dictionary<string, WalkToGroupButton> WTGButtons;
@@ -48,6 +49,9 @@ public class GameUI : MonoBehaviour
     GameObject gameLogic;
     public GameObject TalkBubble;
     GameObject DetailedHintPanel;
+    public GameObject autoplayPanel;
+    protected Toggle autoplayToggle;
+    protected GameObject autoplayFrame;
 
     public List<string> activeHighlighted = new List<string>();
 
@@ -411,7 +415,10 @@ public class GameUI : MonoBehaviour
     {
         gameLogic = GameObject.Find("GameLogic");
         theoryTab = GameObject.FindObjectOfType<TheoryTab>();
-
+        autoplayToggle = autoplayPanel.transform.Find("bottomPanel/Toggle").GetComponent<Toggle>();
+        autoplayFrame = autoplayPanel.transform.Find("redRect").gameObject;
+        autoplayToggle.isOn = PlayerPrefsManager.simulatePlayerActions;
+        autoplayFrame.SetActive(PlayerPrefsManager.simulatePlayerActions);
         animatedFinger = GameObject.FindObjectOfType<AnimatedFingerHint>();
         objectsIDsController = GameObject.FindObjectOfType<ObjectsIDsController>();
         MovementSideButtons = GameObject.Find("MovementSideButtons");
@@ -458,13 +465,12 @@ public class GameUI : MonoBehaviour
         {
             ActionManager.practiceMode = prefs.practiceMode;
         }
-
 #if !(UNITY_EDITOR || DEVELOPMENT_BUILD)
         if(GameObject.Find("ActionsPanel") != null)
             GameObject.Find("ActionsPanel").SetActive(false);
         if(GameObject.Find("AssetDebugPanel") != null)
             GameObject.Find("AssetDebugPanel").SetActive(false);
-            
+        autoplayPanel.SetActive(false);
 #endif
 
         WalkToGroupPanel = GameObject.Find("MovementButtons");
@@ -1275,6 +1281,12 @@ public class GameUI : MonoBehaviour
             float alpha = DetailedHintPanel.GetComponent<Image>().color.a;
             SetHintPanelAlpha(alpha);
         }
+    }
+
+    public void AutoPlayModeChanged()
+    {
+        PlayerPrefsManager.simulatePlayerActions = autoplayToggle.isOn;
+        autoplayFrame.SetActive(PlayerPrefsManager.simulatePlayerActions);
     }
 
     public void UpdateIpadInfo()

@@ -9,6 +9,7 @@ public class SelectDialogue : MonoBehaviour
 {
     public bool tutorial_lock = false;
     public bool cheated = false;
+    int correctAnswerID = -1;
 
     public class DialogueOption
     {
@@ -102,12 +103,27 @@ public class SelectDialogue : MonoBehaviour
             {
                 sqButtons[i].gameObject.SetActive(true);
                 sqButtons[i].transform.Find("Text").GetComponent<Text>().text = options[i].text;
+                if (PlayerPrefsManager.simulatePlayerActions)
+                    if (options[i].attribute != "")
+                    {
+                        correctAnswerID = i;
+                        Invoke("AutoPlay", 1f);
+                    }
             }
             else
                 sqButtons[i].gameObject.SetActive(false);
         }
      
         //ShowAnswer();
+    }
+
+    void AutoPlay()
+    {
+        if (correctAnswerID >= 0)
+        {
+            if (sqButtons[correctAnswerID].gameObject.activeSelf)
+                sqButtons[correctAnswerID].GetComponent<Button>().onClick.Invoke();
+        }
     }
 
     public void SetText(string t)
