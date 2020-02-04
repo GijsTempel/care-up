@@ -120,7 +120,7 @@ public class SelectDialogue : MonoBehaviour
         int i = 0;
         foreach (DialogueOption o in options)
         {
-            print(o.attribute);
+            //print(o.attribute);
             if (o.attribute != "" && o.attribute != "CM_Leave")
             {
                 sqButtons[i].GetComponent<Image>().color = Color.yellow;

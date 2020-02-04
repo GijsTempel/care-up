@@ -50,7 +50,6 @@ public class StoreViewModel : MonoBehaviour
 
                 UMP_Manager manager = GameObject.FindObjectOfType<UMP_Manager>();
 
-
                 SavedCoins = ActionManager.Points = 0;
 
                 int diamants = 0;

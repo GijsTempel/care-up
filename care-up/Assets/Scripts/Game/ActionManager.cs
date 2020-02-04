@@ -31,7 +31,7 @@ public class ActionManager : MonoBehaviour
     private Text pointsText;
     private Text percentageText;
 
-    private Action currentAction;        // current action instance
+    public Action currentAction;        // current action instance
     private int currentPointAward = 1;
     private bool penalized = false;
 
@@ -97,41 +97,8 @@ public class ActionManager : MonoBehaviour
     public int TotalPoints
     {
         get { return totalPoints; }
-    }
-
-    public float PercentageDone
-    {
-        get
-        {
-            int cur = actionList.IndexOf(currentAction);
-            int tot = actionList.Count;
-
-            float percent = 0f;
-
-            EndScoreManager endScoreManager = GameObject.FindObjectOfType<EndScoreManager>();
-
-            if (endScoreManager != null)
-            {
-                if (correctStepIndexes != null && endScoreManager.quizQuestionsTexts != null
-                    && endScoreManager.quizWrongIndexes != null && StepsList != null)
-                {
-                    percent = 100f * (correctStepIndexes.Count +
-                        (endScoreManager.quizQuestionsTexts.Count - endScoreManager.quizWrongIndexes.Count))
-                        / (StepsList.Count + endScoreManager.quizQuestionsTexts.Count);
-                }
-            }
-            else
-            {
-                percent = 100.0f * cur / tot;
-            }
-
-            if (percent < 0)
-                percent = 0;
-
-            return percent;
-        }
-    }
-
+    } 
+ 
     /// <summary>
     /// Index of current action.
     /// </summary>
@@ -947,6 +914,7 @@ public class ActionManager : MonoBehaviour
         string sceneName = SceneManager.GetActiveScene().name;
         menuScene = sceneName == "Menu" || sceneName == "SceneSelection" || sceneName == "EndScore";
         particleHints = new List<GameObject>();
+        Points = 0;
 
         controls = GameObject.Find("GameLogic").GetComponent<Controls>();
         if (controls == null) Debug.LogError("No controls found");
@@ -1202,23 +1170,6 @@ public class ActionManager : MonoBehaviour
     /// Handle pressing "Get Hint" key.
     /// Play audio hint, create particle hint, do penalty.
     /// </summary>
-    void Update()
-    {
-        if (!menuScene && uiSet)
-        {
-            if (pointsText.gameObject.activeSelf)
-            {
-                pointsText.text = points.ToString();// + " / " + totalPoints;
-            }
-
-            if (percentageText.gameObject.activeSelf)
-            {
-                if (actionList.IndexOf(currentAction) >= 0)
-                    percentageText.text = Mathf.RoundToInt(PercentageDone).ToString() + "%";
-            }
-        }
-    }
-
     public void CreateParticleHint(Transform obj)
     {
         GameObject particles = Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/ParticleHint"),
@@ -1931,13 +1882,5 @@ public class ActionManager : MonoBehaviour
     public void ActivatePenalty()
     {
         penalized = true;
-    }
-
-    public void SetUIObjects(Text points, Text percentage)
-    {
-        uiSet = true;
-
-        pointsText = points;
-        percentageText = percentage;
-    }
+    }   
 }

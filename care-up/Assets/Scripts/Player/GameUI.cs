@@ -22,10 +22,10 @@ public class GameUI : MonoBehaviour
     public WalkToGroupButton LeftSideButton;
     public WalkToGroupButton RightSideButton;
     public Dictionary<string, WalkToGroupButton> WTGButtons;
-    //WalkToGroup prevWalkToGroup = null;
     private Tutorial_Combining tutorialCombine;
     private Tutorial_UseOn tutorialUseOn;
     private HandsInventory handsInventory;
+    private EndScoreManager scoreManager;
     private ActionManager actionManager;
     private Animator controller;
     private float startTimeOut = 0.5f;
@@ -87,6 +87,9 @@ public class GameUI : MonoBehaviour
     int currentActionsCount = 0;
 
     public TheoryTab theoryTab;
+
+    private Text pointsTextIpad;
+    private Text percentageTextIpad;
 
     private bool startTimer = false;
     private float targetTime = 0.7f;
@@ -238,6 +241,8 @@ public class GameUI : MonoBehaviour
         RobotManager.UIElementsState[0] = false;
 
         Player.GetComponent<PlayerScript>().OpenRobotUI();
+
+
     }
 
     public void ToggleUsingOnMode()
@@ -428,7 +433,12 @@ public class GameUI : MonoBehaviour
         objectsIDsController = GameObject.FindObjectOfType<ObjectsIDsController>();
         MovementSideButtons = GameObject.Find("MovementSideButtons");
 
-        //ActionManager.generalAction = false;
+        pointsTextIpad = GameObject.Find("TopBarUI").transform.Find("GeneralDynamicCanvas")
+            .Find("Points").Find("PointsText").GetComponent<Text>();
+
+        percentageTextIpad = GameObject.Find("TopBarUI").transform.Find("GeneralDynamicCanvas")
+            .Find("Percentage").Find("PointsText").GetComponent<Text>();
+
         prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
         if (prefs != null)
             practiceMode = prefs.practiceMode;
@@ -441,6 +451,8 @@ public class GameUI : MonoBehaviour
         tutorialCombine = GameObject.FindObjectOfType<Tutorial_Combining>();
         tutorialUseOn = GameObject.FindObjectOfType<Tutorial_UseOn>();
         actionManager = GameObject.FindObjectOfType<ActionManager>();
+        scoreManager = GameObject.FindObjectOfType<EndScoreManager>();
+
         ActionManager.BuildRequirements();
         zoomButtonLeft.SetActive(false);
         zoomButtonRight.SetActive(false);
@@ -1268,6 +1280,20 @@ public class GameUI : MonoBehaviour
             }
             float alpha = DetailedHintPanel.GetComponent<Image>().color.a;
             SetHintPanelAlpha(alpha);
+        }
+    }
+
+    public void UpdateIpadInfo()
+    {
+        if (pointsTextIpad.gameObject.activeSelf)
+        {
+            pointsTextIpad.text = ActionManager.Points.ToString();
+        }
+
+        if (percentageTextIpad.gameObject.activeSelf)
+        {
+            if (scoreManager != null)
+                percentageTextIpad.text = scoreManager.CalculatePercentage().ToString() + "%";
         }
     }
 }

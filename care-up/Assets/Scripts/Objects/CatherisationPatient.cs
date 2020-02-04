@@ -11,7 +11,7 @@ public class CatherisationPatient : PersonObject
     public Vector3 playerPosition;
     public Vector3 playerRotation;
     public Transform playerPositionTarget;
-
+    
     protected override void Start()
     {
         base.Start();
@@ -40,22 +40,21 @@ public class CatherisationPatient : PersonObject
 
         if (actionManager.CompareTopic(topic))
         {
-
+      
             switch (topic)
             {
                 case "LayOnBed":
-                    animator.SetTrigger("pants_down");
-                    if (playerPositionTarget != null)
-                    {
-                        GameObject playerPosAtPatient = GameObject.Find("PlayerPositions/PatientPos/Target");
-                        if (playerPosAtPatient != null)
-                        {
-                            playerPosAtPatient.transform.position = playerPositionTarget.position;
-                            playerPosAtPatient.transform.rotation = playerPositionTarget.rotation;
-                        }
-                    }
+                    //animator.SetTrigger("pants_down");
+
+                    /*PlayerAnimator.SetTrigger("Player_Dialog_AskToLay");
+                    PlayerAnimator.SetTrigger("S Player_Dialog_AskToLay");*/
+
+                    GameObject playerPosAtPatient = GameObject.Find("PlayerPositions/PatientPos/Target");
+                    playerPosAtPatient.transform.position = playerPositionTarget.position;
+                    playerPosAtPatient.transform.rotation = playerPositionTarget.rotation;
                     PlayerAnimator.SetTrigger("CloseCurtains");
                     PlayerAnimator.SetTrigger("S CloseCurtains");
+
                     break;
                 case "HelpGetUp":
                     PlayerAnimationManager.PlayAnimation("helppatientgetup");
@@ -65,8 +64,16 @@ public class CatherisationPatient : PersonObject
                     PlayerAnim.SetTrigger("MoveToSide");
                     PlayerAnim.SetTrigger("S MoveToSide");
 
-                    animator.SetTrigger("patient_standup");
+                    //animator.SetTrigger("patient_standup");
                     break;
+
+                case "Hello":
+
+                    PlayerAnimator.SetTrigger("Player_Dialog_Greeting");
+                    PlayerAnimator.SetTrigger("S Player_Dialog_Greeting");
+
+                    break;
+
 
 
                 default:
@@ -80,4 +87,4 @@ public class CatherisationPatient : PersonObject
         actionManager.OnTalkAction(topic);
     }
 }
-
+    

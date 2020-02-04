@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Xml;
 using CareUpAvatar;
+using System.Linq;
 
 public class StoreItem
 {
@@ -11,9 +12,11 @@ public class StoreItem
     public string category;
     public bool purchased;
     public int extraPrice;
+    public bool isFavourite;
+    public bool isNew;
 
     public StoreItem() { index = -1; price = 0; }
-    public StoreItem(int index, int price, string name, string category, bool purchased, int extraPrice = 0)
+    public StoreItem(int index, int price, string name, string category, bool purchased, bool isFavourite, int extraPrice = 0, bool isNew = false)
     {
         this.index = index;
         this.price = price;
@@ -21,6 +24,8 @@ public class StoreItem
         this.name = name;
         this.category = category;
         this.purchased = purchased;
+        this.isFavourite = isFavourite;
+        this.isNew = isNew;
     }
 }
 
@@ -134,15 +139,19 @@ public class StoreManager
         {
             List<StoreItem> catItems = new List<StoreItem>();
             string catName = (xmlCatNode.Attributes["name"] != null) ? xmlCatNode.Attributes["name"].Value : "";
-            foreach (XmlNode xmlSceneNode in xmlCatNode.ChildNodes)
+            foreach (XmlNode node in xmlCatNode.ChildNodes)
             {
+                bool isNew = false;
                 int index = -1, price = 1, extraPrice = -1;
-                int.TryParse(xmlSceneNode.Attributes["index"].Value, out index);
-                if (xmlSceneNode.Attributes["price"] != null)
-                    int.TryParse(xmlSceneNode.Attributes["price"].Value, out price);
-                if (xmlSceneNode.Attributes["extraPrice"] != null)
-                    int.TryParse(xmlSceneNode.Attributes["extraPrice"].Value, out extraPrice);
+                if (node.Attributes["new"] != null)
+                    isNew = true;
+                int.TryParse(node.Attributes["index"].Value, out index);
+                if (node.Attributes["price"] != null)
+                    int.TryParse(node.Attributes["price"].Value, out price);
+                if (node.Attributes["extraPrice"] != null)
+                    int.TryParse(node.Attributes["extraPrice"].Value, out extraPrice);
                 bool purchased = DatabaseManager.FetchField("Store", "StoreItem_" + index.ToString()) == "true";
+                bool isFavourite = DatabaseManager.FetchField("Store", "StoreItemFavourite_" + index.ToString()) == "true";
 
                 if (devDropAllPurchases)
                 {
@@ -150,12 +159,22 @@ public class StoreManager
                     DatabaseManager.UpdateField("Store", "StoreItem_" + index.ToString(), "false");
                 }
 
-                string name = xmlSceneNode.Attributes["name"].Value;
-                string category = (xmlSceneNode.Attributes["category"] != null) ? xmlSceneNode.Attributes["category"].Value : catName;
+                string name = node.Attributes["name"].Value;
+                string category = (node.Attributes["category"] != null) ? node.Attributes["category"].Value : catName;
 
-                catItems.Add(new StoreItem(index, price, name, category, purchased, extraPrice));
+                catItems.Add(new StoreItem(index, price, name, category, purchased, isFavourite, extraPrice, isNew));
             }
             string catIcon = (xmlCatNode.Attributes["icon"] != null) ? xmlCatNode.Attributes["icon"].Value : "";
+
+            List<int> duplicates = catItems.GroupBy(x => x.index).Where(g => g.Count() > 1).Select(g => g.Key).ToList();
+
+            if (duplicates.Count > 0)
+            {      foreach(int index in duplicates)
+                {
+                    Debug.LogError($"Store item`s index '{index}' is duplicated.");
+                }
+            }
+
             storeItems.Add(new StoreCategory(catItems, catName, catIcon));
         }
 
@@ -207,14 +226,10 @@ public class StoreManager
                         {
                             case "Index":
                                 int.TryParse(field[1], out index); break;
-                            //case "Price":
-                            //    int.TryParse(field[1], out price); break;
                             case "Purchased":
                                 bool.TryParse(field[1], out purchased); break;
                             case "Sex":
                                 gender = field[1]; break;
-                            //case "Head":
-                            //    int.TryParse(field[1], out headType); break;
                             case "Body":
                                 int.TryParse(field[1], out bodyType); break;
                             case "Glasses":
@@ -228,6 +243,13 @@ public class StoreManager
             PlayerAvatarData customizedPlayerAvatar = new PlayerAvatarData(characterGender, headType, bodyType, glassesType, hatType, mouthType, eyeType);
             characterItem.playerAvatar = customizedPlayerAvatar;
             characterItems.Add(characterItem);
+
+            List<int> duplicates = characterItems.GroupBy(x => x.index).Where(g => g.Count() > 1).Select(g => g.Key).ToList();
+            if (duplicates.Count > 0)
+            {
+                foreach (int duplicate in duplicates)
+                    Debug.LogError($"Character`s index '{index}' is duplicated.");
+            }
         }
 
         // get amount of currency/presents saved
@@ -439,5 +461,27 @@ public class StoreManager
         }
 
         return item;
+    }
+
+    /// <summary>
+    /// Manages 'add' and 'remove' items operations. 
+    /// </summary>
+    /// <param name="itemIndex"></param>
+    /// <returns>
+    /// True - if item is added. False - if item is removed.
+    /// </returns>
+    public bool ManageFavouriteItems(int itemIndex)
+    {
+        StoreItem item = FindItemByIndex(itemIndex);
+        bool result = !item.isFavourite;
+        if (item.index > -1)
+        {
+            item.isFavourite = result;
+            DatabaseManager.UpdateField("Store", "StoreItemFavourite_" + itemIndex.ToString(), result.ToString().ToLower());
+        }
+        else
+            Debug.Log("Managing favourite items failed.");
+
+        return result;
     }
 }
