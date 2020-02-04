@@ -543,6 +543,8 @@ public class PlayerScript : MonoBehaviour
             joystickObject.SetActive(!robotUIopened);
 
         itemControls.Close();
+        if (PlayerPrefsManager.simulatePlayerActions)
+            Invoke("CloseRobotUI", 1f);
     }
 
     public void CloseRobotUI()
