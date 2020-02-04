@@ -39,6 +39,8 @@ public class GameUI : MonoBehaviour
     public bool DropLeftBlink = false;
     public bool DropRightBlink = false;
 
+    string[] AutoActionObjectNames;
+
     public bool LevelEnded = false;
 
     GameObject MovementSideButtons;
@@ -566,6 +568,80 @@ public class GameUI : MonoBehaviour
         }
     }
 
+    void AutoPlay()
+    {
+        if (AutoActionObjectNames != null)
+        {
+            string ss = "";
+            foreach(string s in AutoActionObjectNames)
+                ss += s + "  |  ";
+            print(ss);
+        }
+        if (!currentAnimLock)
+        {
+            Invoke("AutoPlay", 1f);
+            return;
+        }
+
+        if (AutoActionObjectNames != null)
+        {
+            if (AutoActionObjectNames.Length == 1)
+            {
+                if (GameObject.Find(AutoActionObjectNames[0]) != null)
+                {
+                    if (GameObject.Find(AutoActionObjectNames[0]).GetComponent<UsableObject>() != null)
+                    {
+                        ps.AutoClick(GameObject.Find(AutoActionObjectNames[0]));
+                        //GameObject.Find(AutoActionObjectNames[0]).GetComponent<UsableObject>().Use();
+                        AutoActionObjectNames = null;
+                    }
+                }
+            }
+            else
+            {
+                if (GameObject.Find(AutoActionObjectNames[0]) != null)
+                {
+                    if (AutoActionObjectNames[1] == "")
+                    {
+                        if (GameObject.Find(AutoActionObjectNames[0]).GetComponent<PickableObject>() != null)
+                        {
+                            ps.AutoClick(GameObject.Find(AutoActionObjectNames[0]));
+                            //handsInventory.PickItem(GameObject.Find(AutoActionObjectNames[0]).GetComponent<PickableObject>(), PlayerAnimationManager.Hand.Right);
+                            AutoActionObjectNames = null;
+                        }
+                    }
+                    else
+                    {
+                        foreach(string o in AutoActionObjectNames)
+                        {
+                            if (GameObject.Find(o) != null)
+                            {
+                                if (GameObject.Find(o).GetComponent<PickableObject>() != null)
+                                {
+                                    if (handsInventory.rightHandObject == GameObject.Find(o).GetComponent<PickableObject>())
+                                        continue;
+                                    if (handsInventory.leftHandObject == GameObject.Find(o).GetComponent<PickableObject>())
+                                        continue;
+
+                                    ps.AutoClick(GameObject.Find(o));
+                                    break;
+                                }
+                                else if (GameObject.Find(o).GetComponent<UsableObject>() != null)
+                                {
+                                    if (!handsInventory.RightHandEmpty() || !handsInventory.LeftHandEmpty())
+                                    {
+                                        ps.AutoClick(GameObject.Find(o));
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     //----------------------------------------------------------------------------------------------------------
     public void UpdateHelpHighlight()
     {
@@ -584,16 +660,46 @@ public class GameUI : MonoBehaviour
 
         if (!handsInventory.RightHandEmpty())
             RemoveHighlight(prefix, handsInventory.rightHandObject.name);
-
+        bool autoObjectSelected = false;
         foreach (Action a in actionManager.IncompletedActions)
         {
             string[] ObjectNames = new string[0];
             a.ObjectNames(out ObjectNames);
-
+            if (!autoObjectSelected &&!ps.away && !DropLeftBlink && !DropRightBlink && moveButtonToBlink == ItemControlButtonType.None)
+            {
+                if (ObjectNames.Length == 1)
+                {
+                    if (GameObject.Find(ObjectNames[0]) != null)
+                    {
+                        if (GameObject.Find(ObjectNames[0]).GetComponent<PersonObject>() == null)
+                        {
+                            AutoActionObjectNames = ObjectNames;
+                            autoObjectSelected = true;
+                            Invoke("AutoPlay", 1f);
+                        }
+                    }
+                }
+                else
+                {
+                    if (ObjectNames[1] == "" && GameObject.Find(ObjectNames[0]) != null)
+                    {
+                        AutoActionObjectNames = ObjectNames;
+                        autoObjectSelected = true;
+                        Invoke("AutoPlay", 1f);
+                    }
+                    else
+                    {
+                        AutoActionObjectNames = ObjectNames;
+                        autoObjectSelected = true;
+                        Invoke("AutoPlay", 1f);
+                    }
+                }
+            }
             foreach (string objectToUse in ObjectNames)
             {
                 if (GameObject.Find(objectToUse) != null)
                 {
+                    
                     HighlightObject.type hl_type = HighlightObject.type.NoChange;
                     if (GameObject.Find(objectToUse).GetComponent<WorkField>() != null)
                     {
@@ -646,6 +752,7 @@ public class GameUI : MonoBehaviour
                     }
                 }
             }
+            
         }
 
         //clear highlights
@@ -908,6 +1015,7 @@ public class GameUI : MonoBehaviour
         }
     }
 
+
     void Update()
     {
         // print(RandomQuiz.showRandomQuestion);
@@ -920,11 +1028,10 @@ public class GameUI : MonoBehaviour
 
                 ActionManager.BuildRequirements();
                 ActionManager.UpdateRequirements();
-
+   
                 if (actionManager.CheckGeneralAction() == null)
-                {
                     UpdateHelpHighlight();
-                }
+
                 UpdateWalkToGtoupUI(true);
             }
         }

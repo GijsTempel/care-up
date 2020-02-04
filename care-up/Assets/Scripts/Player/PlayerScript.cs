@@ -42,7 +42,8 @@ public class PlayerScript : MonoBehaviour
     private Quaternion savedRot;
     private List<WalkToGroup> groups;
     public WalkToGroup currentWalkPosition;
-
+    private bool AutoPlayClicked = false;
+    private GameObject AutoPlayActionObject = null;
     private ActionManager actionManager = null;
 
     RobotManager robot;
@@ -293,13 +294,16 @@ public class PlayerScript : MonoBehaviour
         {
             rotated += mouseLook.LookRotation(transform, Camera.main.transform);
         }*/
+        GameObject selectedObject = controls.SelectedObject;
+        if (AutoPlayActionObject != null)
+            selectedObject = AutoPlayActionObject;
 
         if (!freeLook && !robotUIopened &&
             ((Input.touchCount < 1 && controls.MouseClicked()) ||
-            (Input.touchCount > 0 && Controls.MouseReleased())))
+            (Input.touchCount > 0 && Controls.MouseReleased()) || AutoPlayClicked))
         {
-            if (!away && controls.SelectedObject != null
-                && controls.SelectedObject.GetComponent<InteractableObject>() != null
+            if (!away && (selectedObject != null )
+                && selectedObject.GetComponent<InteractableObject>() != null
                 && !itemControls.gameObject.activeSelf && !actionsLocked)
             {
                 if (usingOnMode)
@@ -319,16 +323,16 @@ public class PlayerScript : MonoBehaviour
                 }
                 else
                 {
-                    itemControls.Init(controls.SelectedObject);
+                    itemControls.Init(selectedObject);
                 }
             }
             else if (Input.touchCount > 0 && Controls.MouseReleased())
             {
                 // catch falling touch here
-                if (controls.SelectedObject != null &&
-                    controls.SelectedObject.GetComponent<WalkToGroup>() && away)
+                if (selectedObject != null &&
+                    selectedObject.GetComponent<WalkToGroup>() && away)
                 {
-                    WalkToGroup_(controls.SelectedObject.GetComponent<WalkToGroup>());
+                    WalkToGroup_(selectedObject.GetComponent<WalkToGroup>());
                 }
             }
         }
@@ -338,10 +342,10 @@ public class PlayerScript : MonoBehaviour
         }
         else if (Controls.MouseReleased())// && freeLook)
         {
-            if (rotated < 3.0f && controls.SelectedObject != null &&
-                controls.SelectedObject.GetComponent<WalkToGroup>() && away)
+            if (rotated < 3.0f && selectedObject != null &&
+                selectedObject.GetComponent<WalkToGroup>() && away)
             {
-                WalkToGroup_(controls.SelectedObject.GetComponent<WalkToGroup>());
+                WalkToGroup_(selectedObject.GetComponent<WalkToGroup>());
             }
             else
             {
@@ -355,6 +359,8 @@ public class PlayerScript : MonoBehaviour
         {
             TriggerQuizQuestion();
         }
+        AutoPlayClicked = false;
+        AutoPlayActionObject = null;
     }
 
     public void ToggleUsingOnMode(bool value)
@@ -716,5 +722,11 @@ public class PlayerScript : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         quiz.NextQuizQuestion(false, encounter);
+    }
+
+    public void AutoClick(GameObject obj)
+    {
+        AutoPlayClicked = true;
+        AutoPlayActionObject = obj;
     }
 }
