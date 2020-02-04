@@ -64,7 +64,7 @@ public class CatherisationPatient : PersonObject
                     PlayerAnim.SetTrigger("MoveToSide");
                     PlayerAnim.SetTrigger("S MoveToSide");
 
-                    animator.SetTrigger("patient_standup");
+                    //animator.SetTrigger("patient_standup");
                     break;
 
                 case "Hello":
