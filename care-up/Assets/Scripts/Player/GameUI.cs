@@ -39,7 +39,7 @@ public class GameUI : MonoBehaviour
     public bool DropLeftBlink = false;
     public bool DropRightBlink = false;
 
-    string[] AutoActionObjectNames;
+    GameObject AutoActionObject;
 
     public bool LevelEnded = false;
 
@@ -570,78 +570,22 @@ public class GameUI : MonoBehaviour
 
     void AutoPlay()
     {
-        if (AutoActionObjectNames != null)
-        {
-            string ss = "";
-            foreach(string s in AutoActionObjectNames)
-                ss += s + "  |  ";
-            print(ss);
-        }
         if (!currentAnimLock)
         {
             Invoke("AutoPlay", 1f);
             return;
         }
 
-        if (AutoActionObjectNames != null)
+        if (AutoActionObject != null)
         {
-            if (AutoActionObjectNames.Length == 1)
+            if (AutoActionObject != null)
             {
-                if (GameObject.Find(AutoActionObjectNames[0]) != null)
-                {
-                    if (GameObject.Find(AutoActionObjectNames[0]).GetComponent<UsableObject>() != null)
-                    {
-                        ps.AutoClick(GameObject.Find(AutoActionObjectNames[0]));
-                        //GameObject.Find(AutoActionObjectNames[0]).GetComponent<UsableObject>().Use();
-                        AutoActionObjectNames = null;
-                    }
-                }
-            }
-            else
-            {
-                if (GameObject.Find(AutoActionObjectNames[0]) != null)
-                {
-                    if (AutoActionObjectNames[1] == "")
-                    {
-                        if (GameObject.Find(AutoActionObjectNames[0]).GetComponent<PickableObject>() != null)
-                        {
-                            ps.AutoClick(GameObject.Find(AutoActionObjectNames[0]));
-                            //handsInventory.PickItem(GameObject.Find(AutoActionObjectNames[0]).GetComponent<PickableObject>(), PlayerAnimationManager.Hand.Right);
-                            AutoActionObjectNames = null;
-                        }
-                    }
-                    else
-                    {
-                        foreach(string o in AutoActionObjectNames)
-                        {
-                            if (GameObject.Find(o) != null)
-                            {
-                                if (GameObject.Find(o).GetComponent<PickableObject>() != null)
-                                {
-                                    if (handsInventory.rightHandObject == GameObject.Find(o).GetComponent<PickableObject>())
-                                        continue;
-                                    if (handsInventory.leftHandObject == GameObject.Find(o).GetComponent<PickableObject>())
-                                        continue;
-
-                                    ps.AutoClick(GameObject.Find(o));
-                                    break;
-                                }
-                                else if (GameObject.Find(o).GetComponent<UsableObject>() != null)
-                                {
-                                    if (!handsInventory.RightHandEmpty() || !handsInventory.LeftHandEmpty())
-                                    {
-                                        ps.AutoClick(GameObject.Find(o));
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                ps.AutoClick(AutoActionObject);
+                AutoActionObject = null;
             }
         }
     }
-
+   
     //----------------------------------------------------------------------------------------------------------
     public void UpdateHelpHighlight()
     {
@@ -661,45 +605,60 @@ public class GameUI : MonoBehaviour
         if (!handsInventory.RightHandEmpty())
             RemoveHighlight(prefix, handsInventory.rightHandObject.name);
         bool autoObjectSelected = false;
+        bool AlloweAutoAction = PlayerPrefsManager.simulatePlayerActions && !ps.away && !DropLeftBlink && !DropRightBlink && moveButtonToBlink == ItemControlButtonType.None;
         foreach (Action a in actionManager.IncompletedActions)
         {
             string[] ObjectNames = new string[0];
             a.ObjectNames(out ObjectNames);
-            if (!autoObjectSelected &&!ps.away && !DropLeftBlink && !DropRightBlink && moveButtonToBlink == ItemControlButtonType.None)
+
+            if (AlloweAutoAction && !autoObjectSelected)
             {
                 if (ObjectNames.Length == 1)
                 {
                     if (GameObject.Find(ObjectNames[0]) != null)
                     {
-                        if (GameObject.Find(ObjectNames[0]).GetComponent<PersonObject>() == null)
+                        //if (a.Type != ActionManager.ActionType.PersonTalk)
+                        //{
+                        AutoActionObject = GameObject.Find(ObjectNames[0]);
+                        if (a.Type == ActionManager.ActionType.PersonTalk)
                         {
-                            AutoActionObjectNames = ObjectNames;
-                            autoObjectSelected = true;
-                            Invoke("AutoPlay", 1f);
+                            foreach (PersonObject po in GameObject.FindObjectsOfType<PersonObject>())
+                            {
+                                if (po.hasTopic(a._topic))
+                                {
+                                    AutoActionObject = po.gameObject.GetComponentInChildren<PersonObjectPart>().gameObject;
+                                }
+                            }
                         }
+                        autoObjectSelected = true;
+                        Invoke("AutoPlay", 1f);
+                        //}
                     }
                 }
                 else
                 {
                     if (ObjectNames[1] == "" && GameObject.Find(ObjectNames[0]) != null)
                     {
-                        AutoActionObjectNames = ObjectNames;
+                        AutoActionObject = GameObject.Find(ObjectNames[0]);
                         autoObjectSelected = true;
                         Invoke("AutoPlay", 1f);
                     }
-                    else
-                    {
-                        AutoActionObjectNames = ObjectNames;
-                        autoObjectSelected = true;
-                        Invoke("AutoPlay", 1f);
-                    }
+
                 }
             }
             foreach (string objectToUse in ObjectNames)
             {
                 if (GameObject.Find(objectToUse) != null)
                 {
-                    
+                    if (AlloweAutoAction && !autoObjectSelected && a.Type != ActionManager.ActionType.PersonTalk)
+                    {
+                        if (!handsInventory.IsInHand(GameObject.Find(objectToUse)))
+                        {
+                            AutoActionObject = GameObject.Find(objectToUse);
+                            autoObjectSelected = true;
+                            Invoke("AutoPlay", 1f);
+                        }
+                    }
                     HighlightObject.type hl_type = HighlightObject.type.NoChange;
                     if (GameObject.Find(objectToUse).GetComponent<WorkField>() != null)
                     {
@@ -726,21 +685,18 @@ public class GameUI : MonoBehaviour
                             break;
                         }
                     }
-                    if (usableHL != null)
-                    {
-                        HighlightObject h = AddHighlight(usableHL.transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f, 0.5f));
-                        if (h != null)
-                        {
-                            h.setGold(true);
-                        }
-                        newHLObjects.Add(usableHL.name);
-                    }
-                    else
+                    if (usableHL == null)
                     {
                         foreach (PickableObject p in GameObject.FindObjectsOfType<PickableObject>())
                         {
                             if (p.prefabInHands == objectToUse && p.prefabInHands != "")
                             {
+                                if (AlloweAutoAction && !autoObjectSelected)
+                                {
+                                    AutoActionObject = p.gameObject;
+                                    autoObjectSelected = true;
+                                    Invoke("AutoPlay", 1f);
+                                }
                                 HighlightObject h = AddHighlight(p.transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f, 0.5f));
                                 if (h != null)
                                 {
@@ -750,9 +706,23 @@ public class GameUI : MonoBehaviour
                             }
                         }
                     }
+                    else
+                    {
+                        if (AlloweAutoAction && !autoObjectSelected)
+                        {
+                            AutoActionObject = usableHL;
+                            autoObjectSelected = true;
+                            Invoke("AutoPlay", 1f);
+                        }
+                        HighlightObject h = AddHighlight(usableHL.transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f, 0.5f));
+                        if (h != null)
+                        {
+                            h.setGold(true);
+                        }
+                        newHLObjects.Add(usableHL.name);
+                    }
                 }
             }
-            
         }
 
         //clear highlights

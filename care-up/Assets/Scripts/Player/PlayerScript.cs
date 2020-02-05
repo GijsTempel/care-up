@@ -303,7 +303,6 @@ public class PlayerScript : MonoBehaviour
             (Input.touchCount > 0 && Controls.MouseReleased()) || AutoPlayClicked))
         {
             if (!away && (selectedObject != null )
-                && selectedObject.GetComponent<InteractableObject>() != null
                 && !itemControls.gameObject.activeSelf && !actionsLocked)
             {
                 if (usingOnMode)
@@ -394,12 +393,6 @@ public class PlayerScript : MonoBehaviour
     {
         if (robotUIopened)
             return;
-
-        //if (GameObject.FindObjectOfType<ObjectsPanel>() != null)
-        //{
-        //    GameObject.FindObjectOfType<ObjectsPanel>().UpdatePanel();
-        //}
-
         ToggleAway();
         transform.position = group.Position;
         if (prefs == null || (prefs != null && !prefs.VR))
@@ -428,6 +421,8 @@ public class PlayerScript : MonoBehaviour
         actionManager.OnMovementAction(currentWalkPosition.name);
         gameUI.UpdateWalkToGtoupUI(true);
 
+        if (PlayerPrefsManager.simulatePlayerActions)
+            gameUI.UpdateHelpHighlight();
         if (defaultInteractionDistance <= 0f)
         {
             defaultInteractionDistance = controls.interactionDistance;
