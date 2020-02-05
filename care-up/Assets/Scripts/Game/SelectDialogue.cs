@@ -104,7 +104,7 @@ public class SelectDialogue : MonoBehaviour
                 sqButtons[i].gameObject.SetActive(true);
                 sqButtons[i].transform.Find("Text").GetComponent<Text>().text = options[i].text;
                 if (PlayerPrefsManager.simulatePlayerActions)
-                    if (options[i].attribute != "")
+                    if (options[i].attribute != "" && options[i].attribute != "CM_Leave")
                     {
                         correctAnswerID = i;
                         Invoke("AutoPlay", 1f);
