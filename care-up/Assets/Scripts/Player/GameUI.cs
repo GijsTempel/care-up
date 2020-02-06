@@ -6,6 +6,7 @@ using System.Linq;
 using AssetBundles;
 using UnityEngine.SceneManagement;
 
+
 public class GameUI : MonoBehaviour
 {
     public AnimatedFingerHint animatedFinger;
@@ -38,7 +39,7 @@ public class GameUI : MonoBehaviour
     public QuizTab quiz_tab;
     public bool DropLeftBlink = false;
     public bool DropRightBlink = false;
-
+    public int stopAutoPlayOnStep = 0;
     GameObject AutoActionObject;
 
     public bool LevelEnded = false;
@@ -106,6 +107,28 @@ public class GameUI : MonoBehaviour
     bool ICPCurrentState = false;
     public bool allowObjectControlUI = true;
     public static bool encounterStarted = false;
+    InputField AutoplayStopInput;
+
+    public void ChangeAutoStopValue(int value)
+    {
+        stopAutoPlayOnStep += value;
+        AutoplayStopInput.text = stopAutoPlayOnStep.ToString();
+    }
+
+    public void AutoStopValueChanged()
+    {
+        stopAutoPlayOnStep = int.Parse(AutoplayStopInput.text);
+    }
+
+    public bool AllowAutoPlay(bool forActions = true)
+    {
+        bool result = PlayerPrefsManager.simulatePlayerActions;
+        if (result && forActions)
+            result = !ps.away && !DropLeftBlink && !DropRightBlink && moveButtonToBlink == ItemControlButtonType.None;
+        result = result && stopAutoPlayOnStep > 0 && stopAutoPlayOnStep > (actionManager.currentActionIndex);
+        return result;
+    }
+
     public enum ItemControlButtonType
     {
         None,
@@ -411,7 +434,6 @@ public class GameUI : MonoBehaviour
         theoryTab.Show(false);
     }
 
-
     // Use this for initialization
     void Start()
     {
@@ -421,6 +443,8 @@ public class GameUI : MonoBehaviour
         autoplayFrame = autoplayPanel.transform.Find("redRect").gameObject;
         autoplayToggle.isOn = PlayerPrefsManager.simulatePlayerActions;
         autoplayFrame.SetActive(PlayerPrefsManager.simulatePlayerActions);
+        AutoplayStopInput = autoplayPanel.transform.Find("bottomPanel/AutoPlayStop/InputField").GetComponent<InputField>();
+        ChangeAutoStopValue(0);
         animatedFinger = GameObject.FindObjectOfType<AnimatedFingerHint>();
         objectsIDsController = GameObject.FindObjectOfType<ObjectsIDsController>();
         MovementSideButtons = GameObject.Find("MovementSideButtons");
@@ -605,7 +629,8 @@ public class GameUI : MonoBehaviour
         if (!handsInventory.RightHandEmpty())
             RemoveHighlight(prefix, handsInventory.rightHandObject.name);
         bool autoObjectSelected = false;
-        bool AlloweAutoAction = PlayerPrefsManager.simulatePlayerActions && !ps.away && !DropLeftBlink && !DropRightBlink && moveButtonToBlink == ItemControlButtonType.None;
+        bool AlloweAutoAction = AllowAutoPlay();
+
         foreach (Action a in actionManager.IncompletedActions)
         {
             string[] ObjectNames = new string[0];

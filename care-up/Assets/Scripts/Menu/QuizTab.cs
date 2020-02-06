@@ -202,7 +202,7 @@ public class QuizTab : MonoBehaviour
         for (int i = 0; i < current.answers.Count; i++)
         {
             buttons[i].transform.GetChild(0).GetComponent<Text>().text = current.answers[i].text;
-            if (PlayerPrefsManager.simulatePlayerActions)
+            if (gameUI.AllowAutoPlay(false))
                 if (current.answers[i].isCorrect)
                 {
                     correctAnswerButton = i;
