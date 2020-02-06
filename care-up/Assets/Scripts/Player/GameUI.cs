@@ -443,7 +443,7 @@ public class GameUI : MonoBehaviour
         autoplayFrame = autoplayPanel.transform.Find("redRect").gameObject;
         autoplayToggle.isOn = PlayerPrefsManager.simulatePlayerActions;
         autoplayFrame.SetActive(PlayerPrefsManager.simulatePlayerActions);
-        AutoplayStopInput = autoplayPanel.transform.Find("bottomPanel/AutoPlayStop/InputField").GetComponent<InputField>();
+        AutoplayStopInput = autoplayPanel.transform.Find("bottomPanel/InputField").GetComponent<InputField>();
         ChangeAutoStopValue(0);
         animatedFinger = GameObject.FindObjectOfType<AnimatedFingerHint>();
         objectsIDsController = GameObject.FindObjectOfType<ObjectsIDsController>();

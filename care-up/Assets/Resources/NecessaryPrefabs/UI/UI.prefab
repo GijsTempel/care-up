@@ -2024,6 +2024,7 @@ MonoBehaviour:
   quiz_tab: {fileID: 2303784427743939269}
   DropLeftBlink: 0
   DropRightBlink: 0
+  stopAutoPlayOnStep: 0
   LevelEnded: 0
   reqPlaces: []
   TalkBubble: {fileID: 4695828206822536210}
@@ -18138,7 +18139,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 6577479213783799802}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.5320343
+  m_Size: 0.53409433
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -23586,7 +23587,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4261788842904193218
 RectTransform:
   m_ObjectHideFlags: 0
@@ -23697,7 +23698,18 @@ MonoBehaviour:
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114562994571074428}
+        m_MethodName: AutoStopValueChanged
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.InputField+SubmitEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_OnValueChanged:
@@ -29045,8 +29057,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6119961775782881942}
   m_HandleRect: {fileID: 5001565246769581971}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.51560223
+  m_Value: 0.9999999
+  m_Size: 0.5175986
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
