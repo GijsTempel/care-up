@@ -16,7 +16,7 @@ public class PersonObject : InteractableObject
     public bool allowToTalk = true;
 
     public List<string> dialogueXmls;
-    protected int currentDialogueIndex = 0;
+    public  int currentDialogueIndex = 0;
 
     private List<SelectDialogue.DialogueOption> optionsList;
 

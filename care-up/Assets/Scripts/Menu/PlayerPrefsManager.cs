@@ -31,6 +31,7 @@ public class PlayerPrefsManager : MonoBehaviour
     public static bool editCharacterOnStart = false;
     public static bool tutorialOnStart = false;
 
+    public static bool simulatePlayerActions = false;
     public bool VR = true;
     public bool practiceMode = true;
     public bool TextDebug = false;

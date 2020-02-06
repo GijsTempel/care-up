@@ -6,6 +6,7 @@ using System.Linq;
 using AssetBundles;
 using UnityEngine.SceneManagement;
 
+
 public class GameUI : MonoBehaviour
 {
     public AnimatedFingerHint animatedFinger;
@@ -19,6 +20,7 @@ public class GameUI : MonoBehaviour
     GameObject closeDialog;
     GameObject donePanelYesNo;
     GameObject WalkToGroupPanel;
+
     public WalkToGroupButton LeftSideButton;
     public WalkToGroupButton RightSideButton;
     public Dictionary<string, WalkToGroupButton> WTGButtons;
@@ -37,6 +39,8 @@ public class GameUI : MonoBehaviour
     public QuizTab quiz_tab;
     public bool DropLeftBlink = false;
     public bool DropRightBlink = false;
+    public int stopAutoPlayOnStep = 0;
+    GameObject AutoActionObject;
 
     public bool LevelEnded = false;
 
@@ -48,6 +52,9 @@ public class GameUI : MonoBehaviour
     GameObject gameLogic;
     public GameObject TalkBubble;
     GameObject DetailedHintPanel;
+    public GameObject autoplayPanel;
+    protected Toggle autoplayToggle;
+    protected GameObject autoplayFrame;
 
     public List<string> activeHighlighted = new List<string>();
 
@@ -100,6 +107,28 @@ public class GameUI : MonoBehaviour
     bool ICPCurrentState = false;
     public bool allowObjectControlUI = true;
     public static bool encounterStarted = false;
+    InputField AutoplayStopInput;
+
+    public void ChangeAutoStopValue(int value)
+    {
+        stopAutoPlayOnStep += value;
+        AutoplayStopInput.text = stopAutoPlayOnStep.ToString();
+    }
+
+    public void AutoStopValueChanged()
+    {
+        stopAutoPlayOnStep = int.Parse(AutoplayStopInput.text);
+    }
+
+    public bool AllowAutoPlay(bool forActions = true)
+    {
+        bool result = PlayerPrefsManager.simulatePlayerActions;
+        if (result && forActions)
+            result = !ps.away && !DropLeftBlink && !DropRightBlink && moveButtonToBlink == ItemControlButtonType.None;
+        result = result && (stopAutoPlayOnStep <= 0 || stopAutoPlayOnStep > (actionManager.currentActionIndex));
+        return result;
+    }
+
     public enum ItemControlButtonType
     {
         None,
@@ -405,13 +434,17 @@ public class GameUI : MonoBehaviour
         theoryTab.Show(false);
     }
 
-
     // Use this for initialization
     void Start()
     {
         gameLogic = GameObject.Find("GameLogic");
         theoryTab = GameObject.FindObjectOfType<TheoryTab>();
-
+        autoplayToggle = autoplayPanel.transform.Find("bottomPanel/Toggle").GetComponent<Toggle>();
+        autoplayFrame = autoplayPanel.transform.Find("redRect").gameObject;
+        autoplayToggle.isOn = PlayerPrefsManager.simulatePlayerActions;
+        autoplayFrame.SetActive(PlayerPrefsManager.simulatePlayerActions);
+        AutoplayStopInput = autoplayPanel.transform.Find("bottomPanel/InputField").GetComponent<InputField>();
+        ChangeAutoStopValue(0);
         animatedFinger = GameObject.FindObjectOfType<AnimatedFingerHint>();
         objectsIDsController = GameObject.FindObjectOfType<ObjectsIDsController>();
         MovementSideButtons = GameObject.Find("MovementSideButtons");
@@ -458,13 +491,12 @@ public class GameUI : MonoBehaviour
         {
             ActionManager.practiceMode = prefs.practiceMode;
         }
-
 #if !(UNITY_EDITOR || DEVELOPMENT_BUILD)
         if(GameObject.Find("ActionsPanel") != null)
             GameObject.Find("ActionsPanel").SetActive(false);
         if(GameObject.Find("AssetDebugPanel") != null)
             GameObject.Find("AssetDebugPanel").SetActive(false);
-            
+        autoplayPanel.SetActive(false);
 #endif
 
         WalkToGroupPanel = GameObject.Find("MovementButtons");
@@ -560,6 +592,24 @@ public class GameUI : MonoBehaviour
         }
     }
 
+    void AutoPlay()
+    {
+        if (!currentAnimLock)
+        {
+            Invoke("AutoPlay", 1f);
+            return;
+        }
+
+        if (AutoActionObject != null)
+        {
+            if (AutoActionObject != null)
+            {
+                ps.AutoClick(AutoActionObject);
+                AutoActionObject = null;
+            }
+        }
+    }
+   
     //----------------------------------------------------------------------------------------------------------
     public void UpdateHelpHighlight()
     {
@@ -578,16 +628,62 @@ public class GameUI : MonoBehaviour
 
         if (!handsInventory.RightHandEmpty())
             RemoveHighlight(prefix, handsInventory.rightHandObject.name);
+        bool autoObjectSelected = false;
+        bool AlloweAutoAction = AllowAutoPlay();
 
         foreach (Action a in actionManager.IncompletedActions)
         {
             string[] ObjectNames = new string[0];
             a.ObjectNames(out ObjectNames);
 
+            if (AlloweAutoAction && !autoObjectSelected)
+            {
+                if (ObjectNames.Length == 1)
+                {
+                    if (GameObject.Find(ObjectNames[0]) != null)
+                    {
+                        //if (a.Type != ActionManager.ActionType.PersonTalk)
+                        //{
+                        AutoActionObject = GameObject.Find(ObjectNames[0]);
+                        if (a.Type == ActionManager.ActionType.PersonTalk)
+                        {
+                            foreach (PersonObject po in GameObject.FindObjectsOfType<PersonObject>())
+                            {
+                                if (po.hasTopic(a._topic))
+                                {
+                                    AutoActionObject = po.gameObject.GetComponentInChildren<PersonObjectPart>().gameObject;
+                                }
+                            }
+                        }
+                        autoObjectSelected = true;
+                        Invoke("AutoPlay", 1f);
+                        //}
+                    }
+                }
+                else
+                {
+                    if (ObjectNames[1] == "" && GameObject.Find(ObjectNames[0]) != null)
+                    {
+                        AutoActionObject = GameObject.Find(ObjectNames[0]);
+                        autoObjectSelected = true;
+                        Invoke("AutoPlay", 1f);
+                    }
+
+                }
+            }
             foreach (string objectToUse in ObjectNames)
             {
                 if (GameObject.Find(objectToUse) != null)
                 {
+                    if (AlloweAutoAction && !autoObjectSelected && a.Type != ActionManager.ActionType.PersonTalk)
+                    {
+                        if (!handsInventory.IsInHand(GameObject.Find(objectToUse)))
+                        {
+                            AutoActionObject = GameObject.Find(objectToUse);
+                            autoObjectSelected = true;
+                            Invoke("AutoPlay", 1f);
+                        }
+                    }
                     HighlightObject.type hl_type = HighlightObject.type.NoChange;
                     if (GameObject.Find(objectToUse).GetComponent<WorkField>() != null)
                     {
@@ -614,21 +710,18 @@ public class GameUI : MonoBehaviour
                             break;
                         }
                     }
-                    if (usableHL != null)
-                    {
-                        HighlightObject h = AddHighlight(usableHL.transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f, 0.5f));
-                        if (h != null)
-                        {
-                            h.setGold(true);
-                        }
-                        newHLObjects.Add(usableHL.name);
-                    }
-                    else
+                    if (usableHL == null)
                     {
                         foreach (PickableObject p in GameObject.FindObjectsOfType<PickableObject>())
                         {
                             if (p.prefabInHands == objectToUse && p.prefabInHands != "")
                             {
+                                if (AlloweAutoAction && !autoObjectSelected)
+                                {
+                                    AutoActionObject = p.gameObject;
+                                    autoObjectSelected = true;
+                                    Invoke("AutoPlay", 1f);
+                                }
                                 HighlightObject h = AddHighlight(p.transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f, 0.5f));
                                 if (h != null)
                                 {
@@ -637,6 +730,21 @@ public class GameUI : MonoBehaviour
                                 newHLObjects.Add(p.name);
                             }
                         }
+                    }
+                    else
+                    {
+                        if (AlloweAutoAction && !autoObjectSelected)
+                        {
+                            AutoActionObject = usableHL;
+                            autoObjectSelected = true;
+                            Invoke("AutoPlay", 1f);
+                        }
+                        HighlightObject h = AddHighlight(usableHL.transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f, 0.5f));
+                        if (h != null)
+                        {
+                            h.setGold(true);
+                        }
+                        newHLObjects.Add(usableHL.name);
                     }
                 }
             }
@@ -902,6 +1010,7 @@ public class GameUI : MonoBehaviour
         }
     }
 
+
     void Update()
     {
         // print(RandomQuiz.showRandomQuestion);
@@ -914,11 +1023,10 @@ public class GameUI : MonoBehaviour
 
                 ActionManager.BuildRequirements();
                 ActionManager.UpdateRequirements();
-
+   
                 if (actionManager.CheckGeneralAction() == null)
-                {
                     UpdateHelpHighlight();
-                }
+
                 UpdateWalkToGtoupUI(true);
             }
         }
@@ -1275,6 +1383,12 @@ public class GameUI : MonoBehaviour
             float alpha = DetailedHintPanel.GetComponent<Image>().color.a;
             SetHintPanelAlpha(alpha);
         }
+    }
+
+    public void AutoPlayModeChanged()
+    {
+        PlayerPrefsManager.simulatePlayerActions = autoplayToggle.isOn;
+        autoplayFrame.SetActive(PlayerPrefsManager.simulatePlayerActions);
     }
 
     public void UpdateIpadInfo()

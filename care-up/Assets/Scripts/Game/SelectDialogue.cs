@@ -9,6 +9,8 @@ public class SelectDialogue : MonoBehaviour
 {
     public bool tutorial_lock = false;
     public bool cheated = false;
+    int correctAnswerID = -1;
+    GameUI gameUI;
 
     public class DialogueOption
     {
@@ -90,6 +92,8 @@ public class SelectDialogue : MonoBehaviour
     /// </summary>
     private void InitOptions()
     {
+        if (gameUI == null)
+            gameUI = GameObject.FindObjectOfType<GameUI>();
         if (options.Count == 0)
         {
             Debug.LogError("0 options inited.");
@@ -102,12 +106,27 @@ public class SelectDialogue : MonoBehaviour
             {
                 sqButtons[i].gameObject.SetActive(true);
                 sqButtons[i].transform.Find("Text").GetComponent<Text>().text = options[i].text;
+                if (gameUI.AllowAutoPlay(false))
+                    if (options[i].attribute != "" && options[i].attribute != "CM_Leave")
+                    {
+                        correctAnswerID = i;
+                        Invoke("AutoPlay", 1f);
+                    }
             }
             else
                 sqButtons[i].gameObject.SetActive(false);
         }
      
         //ShowAnswer();
+    }
+
+    void AutoPlay()
+    {
+        if (correctAnswerID >= 0)
+        {
+            if (sqButtons[correctAnswerID].gameObject.activeSelf)
+                sqButtons[correctAnswerID].GetComponent<Button>().onClick.Invoke();
+        }
     }
 
     public void SetText(string t)

@@ -308,6 +308,12 @@ namespace MBS
             PlayerPrefsManager.tutorialOnStart = value;
         }
 
+        public void AutoplayChanged()
+        {
+            bool value = panels.debug_options.transform.Find("Panel/AutoPlay/Toggle").GetComponent<Toggle>().isOn;
+            PlayerPrefsManager.simulatePlayerActions = value;
+        }
+
         virtual protected void InitWULoginGUI()
         {
             localization_change = PlayerPrefs.GetInt(localisation_pref_name, 0);

@@ -7,10 +7,13 @@ public class TheoryTab : MonoBehaviour
 {
     public Text Title;
     public Text Descr;
+    Button ContinueButton;
 
     public void Show(bool value)
     {
         gameObject.SetActive(value);
+        if (value && PlayerPrefsManager.simulatePlayerActions)
+            Invoke("AutoContinue", 1f);
     }
 
     public void ShowTheory(string title_text, string descr_text, string buttonText = "")
@@ -18,5 +21,13 @@ public class TheoryTab : MonoBehaviour
         Show(true);
         Title.text = title_text;
         Descr.text = descr_text;
+    }
+
+    void AutoContinue()
+    {
+        ContinueButton = transform.Find("panel/quizElements/Continue").GetComponent<Button>();
+        if (ContinueButton != null)
+            if (ContinueButton.gameObject.activeSelf)
+                ContinueButton.onClick.Invoke();
     }
 }
