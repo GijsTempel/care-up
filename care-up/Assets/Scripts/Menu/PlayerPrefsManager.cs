@@ -12,7 +12,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using System.Linq;
-using System.Collections;
 using SmartLookUnity;
 using CareUp.Localize;
 
@@ -76,7 +75,7 @@ public class PlayerPrefsManager : MonoBehaviour
     public string bigNumber = "";
 
     public bool muteMusicForEffect = false;
-    bool muteMusic = false;
+    private bool muteMusic = false;
 
     public string ActivatedScenes
     {
@@ -113,33 +112,40 @@ public class PlayerPrefsManager : MonoBehaviour
 
     private void OnLoaded(Scene s, LoadSceneMode m)
     {
-        transform.position =
-            GameObject.FindObjectOfType<AudioListener>().transform.position;
+        transform.position = GameObject.FindObjectOfType<AudioListener>().transform.position;
 
-        currentScene = s;
+        currentScene = s;      
 
         if (!(s.name == "LoginMenu" ||
                 s.name == "MainMenu" ||
                 s.name == "SceneSelection" ||
-                s.name == "Scenes_Character_Customisation"))
+                s.name == "Scenes_Character_Customisation" ||
+                s.name == "Scenes_Tutorial"))
         {
             // game scenes
             muteMusic = true;
-            ToPlayMusic(false);
-            //GetComponent<AudioSource>().Stop();
-            if(Camera.main != null)
+
+            ToPlayMusic(!muteMusic);
+
+            if (Camera.main != null)
+            {
                 if (Camera.main.GetComponent<PostProcessingBehaviour>() != null)
                 {
                     Camera.main.GetComponent<PostProcessingBehaviour>().enabled = postProcessingEnabled;
                 }
+            }
         }
 
-        if (s.name == "EndScore" ||
-            (s.name == "MainMenu"))
+        if (s.name == "EndScore" || (s.name == "MainMenu"))
         {
             muteMusic = false;
-            ToPlayMusic(true);
-            //GetComponent<AudioSource>().Play();
+            ToPlayMusic(!muteMusic);
+        }
+
+        if (!Convert.ToBoolean(MenuAudio))
+        {
+            muteMusic = true;
+            ToPlayMusic(!muteMusic);
         }
 
         if (s.name == "MainMenu")
@@ -242,6 +248,15 @@ public class PlayerPrefsManager : MonoBehaviour
         AudioListener.volume = Volume;
         //Debug.Log ("Volume is set to saved value: " + Volume);
 
+        if (Convert.ToBoolean(MenuAudio))
+        {
+            GetComponent<AudioSource>().Play();
+        }
+        else
+        {
+            GetComponent<AudioSource>().Stop();
+        }
+
         postProcessingEnabled = PlayerPrefs.GetInt("PostProcessing") == 1;
         //Debug.Log ("PostProcessing is set to saved value: " + postProcessingEnabled);
 
@@ -261,6 +276,12 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         get { return PlayerPrefs.HasKey("Volume") ? PlayerPrefs.GetFloat("Volume") : 1.0f; }
         set { PlayerPrefs.SetFloat("Volume", value); }
+    }
+
+    public int MenuAudio
+    {
+        get { return PlayerPrefs.HasKey("MenuAudio") ? PlayerPrefs.GetInt("MenuAudio") : 1; }
+        set { PlayerPrefs.SetInt("MenuAudio", value); }
     }
 
     public int CarouselPosition
