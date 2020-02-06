@@ -156,6 +156,11 @@ public class PersonObject : InteractableObject
         }
     }
 
+    public int GetDialogue()
+    {
+        return currentDialogueIndex;
+    }
+
     public void SkipGreetingDialogue()
     {
         if (currentDialogueIndex < dialogueXmls.Count)
