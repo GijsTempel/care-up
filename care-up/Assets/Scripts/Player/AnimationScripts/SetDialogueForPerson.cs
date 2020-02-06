@@ -19,8 +19,6 @@ public class SetDialogueForPerson : StateMachineBehaviour {
         if (GameObject.Find(ObjectName) != null)
         {
             if (GameObject.Find(ObjectName).GetComponent<PersonObject>() != null) {
-                Debug.Log(GameObject.Find(ObjectName).GetComponent<PersonObject>().currentDialogueIndex);
-
                 if (next)
                 {
                     GameObject.Find(ObjectName).GetComponent<PersonObject>().NextDialogue();
