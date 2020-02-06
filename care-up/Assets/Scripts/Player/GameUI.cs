@@ -177,7 +177,9 @@ public class GameUI : MonoBehaviour
         {
             if (!showNoTarget_right)
             {
-                bool skipBlocks = !GameObject.FindObjectOfType<PlayerPrefsManager>().practiceMode;
+                bool skipBlocks = false;
+                if (GameObject.FindObjectOfType<PlayerPrefsManager>() != null)
+                    skipBlocks = !GameObject.FindObjectOfType<PlayerPrefsManager>().practiceMode;
                 generalAction = actionManager.CheckGeneralAction(skipBlocks);
             }
         }

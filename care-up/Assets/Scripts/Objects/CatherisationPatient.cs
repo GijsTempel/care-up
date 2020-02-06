@@ -48,10 +48,12 @@ public class CatherisationPatient : PersonObject
 
                     /*PlayerAnimator.SetTrigger("Player_Dialog_AskToLay");
                     PlayerAnimator.SetTrigger("S Player_Dialog_AskToLay");*/
-
-                    GameObject playerPosAtPatient = GameObject.Find("PlayerPositions/PatientPos/Target");
-                    playerPosAtPatient.transform.position = playerPositionTarget.position;
-                    playerPosAtPatient.transform.rotation = playerPositionTarget.rotation;
+                    if (playerPositionTarget != null)
+                    {
+                        GameObject playerPosAtPatient = GameObject.Find("PlayerPositions/PatientPos/Target");
+                        playerPosAtPatient.transform.position = playerPositionTarget.position;
+                        playerPosAtPatient.transform.rotation = playerPositionTarget.rotation;
+                    }
                     PlayerAnimator.SetTrigger("CloseCurtains");
                     PlayerAnimator.SetTrigger("S CloseCurtains");
 
