@@ -125,7 +125,7 @@ public class GameUI : MonoBehaviour
         bool result = PlayerPrefsManager.simulatePlayerActions;
         if (result && forActions)
             result = !ps.away && !DropLeftBlink && !DropRightBlink && moveButtonToBlink == ItemControlButtonType.None;
-        result = result && stopAutoPlayOnStep > 0 && stopAutoPlayOnStep > (actionManager.currentActionIndex);
+        result = result && (stopAutoPlayOnStep <= 0 || stopAutoPlayOnStep > (actionManager.currentActionIndex));
         return result;
     }
 
