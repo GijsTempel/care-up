@@ -18,6 +18,7 @@ public class QuizTab : MonoBehaviour
     {
         public string text;
         public string descr;
+        public bool isCorrect;
     }
 
     public bool continueBtn = false;
@@ -31,7 +32,7 @@ public class QuizTab : MonoBehaviour
     private int currentStep = 0;
     private int currentEncounter = 0;
     private int currentQuestionID = 0;
-
+    int correctAnswerButton = -1;
     public List<Button> buttons = new List<Button>();
     private bool[] buttonsActive = new bool[4];
 
@@ -90,12 +91,15 @@ public class QuizTab : MonoBehaviour
                 --question.answerID; // let ppl write 1-4, but we need 0-3 as indexes
 
                 XmlNodeList answers = q.ChildNodes;
+                int j = 0;
                 foreach (XmlNode a in answers)
                 {
                     Answer t = new Answer();
                     t.text = a.Attributes["text"].Value;
                     t.descr = (a.Attributes["descr"] != null) ? a.Attributes["descr"].Value : "";
+                    t.isCorrect = question.answerID == j;
                     question.answers.Add(t);
+                    j++;
                 }
                 if (s.Name == "encounter")
                     encounter.Add(question);
@@ -198,6 +202,12 @@ public class QuizTab : MonoBehaviour
         for (int i = 0; i < current.answers.Count; i++)
         {
             buttons[i].transform.GetChild(0).GetComponent<Text>().text = current.answers[i].text;
+            if (gameUI.AllowAutoPlay(false))
+                if (current.answers[i].isCorrect)
+                {
+                    correctAnswerButton = i;
+                    Invoke("AutoPlay", 1.5f);
+                }
         }
 
         buttons[current.answerID].onClick.AddListener(delegate { CorrectAnswer(current.answers[current.answerID].descr, random, encounter); });
@@ -233,6 +243,18 @@ public class QuizTab : MonoBehaviour
             else
             {
                 Debug.LogWarning("No EndScoreManager found. Start from 1st scene.");
+            }
+        }
+    }
+
+    void AutoPlay()
+    {
+        if (correctAnswerButton >= 0)
+        {
+            if (buttons[correctAnswerButton].gameObject.activeSelf)
+            {
+                buttons[correctAnswerButton].onClick.Invoke();
+                Invoke("AutoContinue", 1f);
             }
         }
     }
@@ -327,6 +349,10 @@ public class QuizTab : MonoBehaviour
         {
             Debug.LogWarning("No EndScoreManager found. Start from 1st scene.");
         }
+    }
+    void AutoContinue()
+    {
+        OnContinueButton();
     }
 
     public void OnContinueButton()

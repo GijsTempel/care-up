@@ -17,6 +17,8 @@ public class AnimatedFingerHint : MonoBehaviour
     float moveSpeed = 500f;
     Vector3 moveTarget = new Vector3();
     GameUI gameUI;
+    Button ButtonToAutoClick = null;
+    ActionManager actionManager;
     // Start is called before the first frame update
 
     private void OnEnable()
@@ -24,6 +26,14 @@ public class AnimatedFingerHint : MonoBehaviour
         Invoke("FindTarget", 0.3f);
     }
 
+    void AutoClickButton()
+    {
+        if (ButtonToAutoClick != null)
+        {
+            if (ButtonToAutoClick.gameObject.activeSelf)
+                ButtonToAutoClick.onClick.Invoke();
+        }
+    }
 
     void FindTarget()
     {
@@ -85,7 +95,12 @@ public class AnimatedFingerHint : MonoBehaviour
             {
                 point = b.GetComponent<RectTransform>();
                 if (b.transform.Find("fingerPosition"))
+                {
+                    if (gameUI.AllowAutoPlay(false))
+                        Invoke("AutoClickButton", 1.5f);
+                    ButtonToAutoClick = b.GetComponent<Button>();
                     point =  b.transform.Find("fingerPosition").GetComponent<RectTransform>();
+                }
 
                 MoveTo(point.position);
                 break;
@@ -96,6 +111,7 @@ public class AnimatedFingerHint : MonoBehaviour
     void Start()
     {
         gameUI = GameObject.FindObjectOfType<GameUI>();
+        actionManager = GameObject.FindObjectOfType<ActionManager>();
         moveTarget = FingerHolder.position;
     }
     void ShowHand(bool toShow, bool showEffect = false, bool _toWave = false)
@@ -122,6 +138,7 @@ public class AnimatedFingerHint : MonoBehaviour
             toMove = false;
         }
     }
+
 
     public void MoveTo(Vector3 point)
     {

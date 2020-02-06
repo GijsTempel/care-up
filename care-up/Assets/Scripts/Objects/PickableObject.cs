@@ -155,7 +155,7 @@ public class PickableObject : InteractableObject
             return false;
         }
 
-        if (controls.SelectedObject != null && controls.CanInteract)
+        if (controls.SelectedObject != null && controls.CanInteract && !noTarget)
         {
             if ((actionManager.CompareUseOnInfo("InjectionNeedle", "NeedleCup", this.name) ||
                 actionManager.CompareUseOnInfo("AbsorptionNeedle", "NeedleCup", this.name) ||
@@ -369,7 +369,8 @@ public class PickableObject : InteractableObject
             // reassign to the main person object part for correct name
             targetObject = controls.SelectedObject.GetComponent<PersonObjectPart>().Person.name;
         }
-
+        if (noTarget)
+            targetObject = "";
         actionManager.OnUseOnAction(name, targetObject);
 
         return (controls.SelectedObject != null && actionManager.CompareUseOnInfo(name, targetObject));
