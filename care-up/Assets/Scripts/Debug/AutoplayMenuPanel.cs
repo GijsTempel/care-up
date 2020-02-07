@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class AutoplayMenuPanel : MonoBehaviour
 {
+    public GameObject panel;
     // Start is called before the first frame update
-    void Start()
+
+    void OnEnable()
     {
-        if (!PlayerPrefsManager.simulatePlayerActions)
-        {
-            gameObject.SetActive(false);
-        }
+        panel.SetActive(PlayerPrefsManager.simulatePlayerActions);
+#if !(UNITY_EDITOR || DEVELOPMENT_BUILD)
+        panel.SetActive(false);
+#endif
     }
 }

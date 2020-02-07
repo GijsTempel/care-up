@@ -26,7 +26,7 @@ public class LevelButton : MonoBehaviour
     private static Transform names;
     public bool demoLock = true;
     public Toggle AutoPlayToggle;
-
+    public Text AutoPlayNum;
 
     public bool GetAutoplayState()
     {
@@ -55,7 +55,6 @@ public class LevelButton : MonoBehaviour
 
     private void Start()
     {
-        //AutoPlayToggle.isOn = false;
         if (!PlayerPrefsManager.simulatePlayerActions)
             AutoPlayToggle.gameObject.SetActive(false);
 #if !(UNITY_EDITOR || DEVELOPMENT_BUILD)
@@ -86,7 +85,13 @@ public class LevelButton : MonoBehaviour
     public void AutoPlayStateChanged()
     {
         if (started)
+        {
             GameObject.FindObjectOfType<AutoPlayer>().AddSceneToList(sceneName, bundleName, AutoPlayToggle.isOn);
+            foreach(LevelButton levelButton in GameObject.FindObjectsOfType<LevelButton>())
+            {
+                levelButton.UpdateAutoPlayToggle();
+            }
+        }
     }
 
     public void OnHover()
@@ -106,6 +111,7 @@ public class LevelButton : MonoBehaviour
 
     public void UpdateAutoPlayToggle()
     {
+        AutoPlayNum.text = "";
         if (!PlayerPrefsManager.simulatePlayerActions)
         {
             AutoPlayToggle.gameObject.SetActive(false);
@@ -113,7 +119,10 @@ public class LevelButton : MonoBehaviour
         else
         {
             AutoPlayToggle.gameObject.SetActive(true);
-            AutoPlayToggle.isOn = GameObject.FindObjectOfType<AutoPlayer>().IsSceneInList(sceneName) != -1;
+            int autoPlayNumValue = GameObject.FindObjectOfType<AutoPlayer>().IsSceneInList(sceneName);
+            AutoPlayToggle.isOn = autoPlayNumValue != -1;
+            if (autoPlayNumValue >= 0)
+                AutoPlayNum.text = (autoPlayNumValue + 1).ToString();
         }
 
     }
