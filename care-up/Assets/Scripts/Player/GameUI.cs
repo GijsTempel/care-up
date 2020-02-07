@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using CareUp.Actions;
 using System.Linq;
 using AssetBundles;
-using UnityEngine.SceneManagement;
+using UnityEngine.SceneManagement;  
 
 
 public class GameUI : MonoBehaviour
@@ -630,35 +630,38 @@ public class GameUI : MonoBehaviour
             RemoveHighlight(prefix, handsInventory.rightHandObject.name);
         bool autoObjectSelected = false;
         bool AlloweAutoAction = AllowAutoPlay();
+        
 
         foreach (Action a in actionManager.IncompletedActions)
         {
             string[] ObjectNames = new string[0];
             a.ObjectNames(out ObjectNames);
+            if (a.Type == ActionManager.ActionType.PersonTalk)
+                AlloweAutoAction = AllowAutoPlay(false);
 
             if (AlloweAutoAction && !autoObjectSelected)
             {
                 if (ObjectNames.Length == 1)
                 {
-                    if (GameObject.Find(ObjectNames[0]) != null)
+                    if (a.Type == ActionManager.ActionType.PersonTalk)
                     {
-                        //if (a.Type != ActionManager.ActionType.PersonTalk)
-                        //{
-                        AutoActionObject = GameObject.Find(ObjectNames[0]);
-                        if (a.Type == ActionManager.ActionType.PersonTalk)
+                        foreach (PersonObject po in GameObject.FindObjectsOfType<PersonObject>())
                         {
-                            foreach (PersonObject po in GameObject.FindObjectsOfType<PersonObject>())
+                            if (po.hasTopic(a._topic))
                             {
-                                if (po.hasTopic(a._topic))
-                                {
-                                    AutoActionObject = po.gameObject.GetComponentInChildren<PersonObjectPart>().gameObject;
-                                }
+                                AutoActionObject = po.gameObject.GetComponentInChildren<PersonObjectPart>().gameObject;
+                                autoObjectSelected = true;
+                                Invoke("AutoPlay", 1f);
                             }
                         }
+                    }
+                    else if (GameObject.Find(ObjectNames[0]) != null)
+                    {
+                        AutoActionObject = GameObject.Find(ObjectNames[0]);
                         autoObjectSelected = true;
                         Invoke("AutoPlay", 1f);
-                        //}
                     }
+                        
                 }
                 else
                 {
