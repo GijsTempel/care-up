@@ -278,6 +278,9 @@ public class ActionManager : MonoBehaviour
             if (a.Type == ActionType.General)
             {
                 objectsData.Add(new StepData(false, $"- Klik op de '{actManager.CurrentButtonText()}' knop.", i));
+                actManager.NotTriggeredAction();
+                gameUI.buttonToBlink = GameUI.ItemControlButtonType.NoTargetRight;
+                foundComplitedAction = true;
             }
 
             string[] actionHand = { a.leftHandRequirement, a.rightHandRequirement };
@@ -452,7 +455,7 @@ public class ActionManager : MonoBehaviour
                                 gameUI.buttonToBlink = GameUI.ItemControlButtonType.Combine;
                             }
                         }
-
+                        
                         else if (leftR != null)
                         {
                             if (actManager.CompareUseOnInfo(inventory.leftHandObject.name, ""))

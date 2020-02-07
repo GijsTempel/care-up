@@ -17,4 +17,21 @@ public class ObjectViewButtons : MonoBehaviour {
             transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => cameraMode.ObjectViewPutDownButton());
         }
 	}
+    private void OnEnable()
+    {
+        if (GameObject.FindObjectOfType<GameUI>().AllowAutoPlay(false))
+        {
+            Invoke("AutoClose", 1f);
+
+        }
+    }
+
+    void AutoClose()
+    {
+        if (gameObject.activeSelf)
+        {
+            if (transform.Find("Close") != null)
+                transform.Find("Close").GetComponent<Button>().onClick.Invoke();
+        }
+    }
 }
