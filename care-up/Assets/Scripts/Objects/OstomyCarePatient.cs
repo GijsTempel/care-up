@@ -34,8 +34,6 @@ public class OstomyCarePatient : PersonObject {
                     patientAnimator.SetTrigger("Patient_Oke");
                     break;
               
-
-                    break;
                 case "Hello":
 
                     PlayerAnimator.SetTrigger("Player_Dialog_Greeting");
