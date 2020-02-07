@@ -305,6 +305,8 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
             sceneUnit.testDisabled = (xmlSceneNode.Attributes["test"] != null
                 && xmlSceneNode.Attributes["test"].Value == "disabled");
+            sceneUnit.UpdateAutoPlayToggle();
+            //---------------------
         }
         
         ScrollRect levelScroll =  GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Play/ContentPanel/PlayElements/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder").GetComponent<ScrollRect>();

@@ -16,6 +16,7 @@ public class LevelButton : MonoBehaviour
     public bool testDisabled;
     public bool validated;
     public string totalPoints;
+    bool started = false;
 
     private static Transform sceneInfoPanel = default(Transform);
     private static PlayerPrefsManager manager;
@@ -24,6 +25,15 @@ public class LevelButton : MonoBehaviour
     private static Transform scores;
     private static Transform names;
     public bool demoLock = true;
+    public Toggle AutoPlayToggle;
+
+
+    public bool GetAutoplayState()
+    {
+        if (PlayerPrefsManager.simulatePlayerActions)
+            return AutoPlayToggle.isOn;
+        return false;
+    }
 
     // saving info
     public struct Info
@@ -45,6 +55,13 @@ public class LevelButton : MonoBehaviour
 
     private void Start()
     {
+        //AutoPlayToggle.isOn = false;
+        if (!PlayerPrefsManager.simulatePlayerActions)
+            AutoPlayToggle.gameObject.SetActive(false);
+#if !UNITY_EDITOR && !DEVELOPMENT_BUILD
+        AutoPlayToggle.gameObject.SetActive(false);
+#endif
+
         if (GameObject.Find("Preferences") != null && loadingScreen == null)
         {
             loadingScreen = GameObject.Find("Preferences").GetComponent<LoadingScreen>();
@@ -63,6 +80,13 @@ public class LevelButton : MonoBehaviour
                 Debug.LogWarning("No prefs manager ( start from 1st scene? )");
             }
         }
+        started = true;
+    }
+
+    public void AutoPlayStateChanged()
+    {
+        if (started)
+            GameObject.FindObjectOfType<AutoPlayer>().AddSceneToList(sceneName, bundleName, AutoPlayToggle.isOn);
     }
 
     public void OnHover()
@@ -78,6 +102,20 @@ public class LevelButton : MonoBehaviour
 #if UNITY_EDITOR || DEVELOPMENT_BUILD 
         GameObject.FindObjectOfType<LevelSelectionScene_UI>().debugSS = "";
 #endif
+    }
+
+    public void UpdateAutoPlayToggle()
+    {
+        if (!PlayerPrefsManager.simulatePlayerActions)
+        {
+            AutoPlayToggle.gameObject.SetActive(false);
+        }
+        else
+        {
+            AutoPlayToggle.gameObject.SetActive(true);
+            AutoPlayToggle.isOn = GameObject.FindObjectOfType<AutoPlayer>().IsSceneInList(sceneName) != -1;
+        }
+
     }
 
     public void OnLevelButtonClick()
