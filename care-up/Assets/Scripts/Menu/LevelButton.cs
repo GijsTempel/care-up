@@ -58,7 +58,7 @@ public class LevelButton : MonoBehaviour
         //AutoPlayToggle.isOn = false;
         if (!PlayerPrefsManager.simulatePlayerActions)
             AutoPlayToggle.gameObject.SetActive(false);
-#if !UNITY_EDITOR && !DEVELOPMENT_BUILD
+#if !(UNITY_EDITOR || DEVELOPMENT_BUILD)
         AutoPlayToggle.gameObject.SetActive(false);
 #endif
 
@@ -116,6 +116,11 @@ public class LevelButton : MonoBehaviour
             AutoPlayToggle.isOn = GameObject.FindObjectOfType<AutoPlayer>().IsSceneInList(sceneName) != -1;
         }
 
+    }
+
+    void OnEnable()
+    {
+        UpdateAutoPlayToggle();
     }
 
     public void OnLevelButtonClick()

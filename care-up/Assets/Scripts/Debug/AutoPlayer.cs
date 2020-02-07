@@ -10,7 +10,7 @@ public class AutoPlayer : MonoBehaviour
         public string bundleName;
     }
     List<sceneData> AutoplayScenes = new List<sceneData>();
-    // Start is called before the first frame update
+
     void Start()
     {
         GameObject.DontDestroyOnLoad(this);
@@ -18,6 +18,8 @@ public class AutoPlayer : MonoBehaviour
 
     public void AddSceneToList(string sceneName, string bundleName, bool toAdd = true)
     {
+        if (!PlayerPrefsManager.simulatePlayerActions)
+            return;
         int inListID = IsSceneInList(sceneName);
         if (toAdd)
         {
