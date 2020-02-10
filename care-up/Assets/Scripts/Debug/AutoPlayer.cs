@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AutoPlayer : MonoBehaviour
 {
+    public bool toStartAutoplaySession = false;
     private struct sceneData
     {
         public string sceneName;
@@ -14,6 +15,22 @@ public class AutoPlayer : MonoBehaviour
     void Start()
     {
         GameObject.DontDestroyOnLoad(this);
+    }
+
+    //bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
+
+    public int GetSceneListSize()
+    {
+        return AutoplayScenes.Count;
+    }
+
+    public void StartAutoplaySession()
+    {
+        if (AutoplayScenes.Count == 0)
+            return;
+        sceneData currentSceneToStart = AutoplayScenes[0];
+        AutoplayScenes.Remove(AutoplayScenes[0]);
+        bl_SceneLoaderUtils.GetLoader.LoadLevel(currentSceneToStart.sceneName, currentSceneToStart.bundleName);
     }
 
     public int AddSceneToList(string sceneName, string bundleName, bool toAdd = true)
