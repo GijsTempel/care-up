@@ -631,7 +631,10 @@ public class GameUI : MonoBehaviour
         bool autoObjectSelected = false;
         bool AlloweAutoAction = AllowAutoPlay();
         
-
+        if (PlayerPrefsManager.simulatePlayerActions && ps.away)
+        {
+            ps.WalkToGroup_(GameObject.FindObjectOfType<WalkToGroup>());
+        }
         foreach (Action a in actionManager.IncompletedActions)
         {
             string[] ObjectNames = new string[0];
@@ -770,6 +773,10 @@ public class GameUI : MonoBehaviour
 
     public void ShowDonePanel(bool value)
     {
+        if (PlayerPrefsManager.simulatePlayerActions)
+        {
+            bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
+        }
         donePanel.SetActive(value);
         LevelEnded = value;
     }
