@@ -78,12 +78,15 @@ public class Syringe : PickableObjectWithInfo {
     public override bool Use(bool hand = false, bool noTarget = false)
     {
         tutorial_usedOn = true;
+        GameObject TempSelected = controls.SelectedObject;
+        if (noTarget)
+            TempSelected = null;
 
-        if (controls.SelectedObject != null && controls.CanInteract)
+        if (TempSelected != null && controls.CanInteract)
         {
             if (name == "SyringeWithInjectionSNeedleCap"
-                && controls.SelectedObject.GetComponent<PersonObjectPart>() != null
-                && controls.SelectedObject.GetComponent<PersonObjectPart>().Person.name == "Patient")
+                && TempSelected.GetComponent<PersonObjectPart>() != null
+                && TempSelected.GetComponent<PersonObjectPart>().Person.name == "Patient")
             {
                 if (actionManager.CompareUseOnInfo("SyringeWithInjectionSNeedleCap", "Patient"))
                 {
@@ -92,14 +95,14 @@ public class Syringe : PickableObjectWithInfo {
                         SceneManager.GetActiveScene().name == "Injection Subcutaneous v2_ampoule" ||
                         SceneManager.GetActiveScene().name == "Injection Subcutaneous v2_desolve")
                     {
-                        Transform target = controls.SelectedObject.GetComponent<PersonObjectPart>().Person;
+                        Transform target = TempSelected.GetComponent<PersonObjectPart>().Person;
                         target.GetComponent<InteractableObject>().Reset();
                         controls.ResetObject();
                         PlayerAnimationManager.PlayAnimationSequence("SubcutaneousInjection v2", target);
                     }
                     else if (SceneManager.GetActiveScene().name == "Injection scene v2")
                     {
-                        Transform target = controls.SelectedObject.GetComponent<PersonObjectPart>().Person;
+                        Transform target = TempSelected.GetComponent<PersonObjectPart>().Person;
                         target.GetComponent<InteractableObject>().Reset();
                         controls.ResetObject();
                         PlayerAnimationManager.PlayAnimationSequence("Injection v2", target);
@@ -108,8 +111,8 @@ public class Syringe : PickableObjectWithInfo {
                 }
             }
             else if (name == "SyringeWithInjectionNeedleCap"
-                && controls.SelectedObject.GetComponent<PersonObjectPart>() != null
-                && controls.SelectedObject.GetComponent<PersonObjectPart>().Person.name == "Patient")
+                && TempSelected.GetComponent<PersonObjectPart>() != null
+                && TempSelected.GetComponent<PersonObjectPart>().Person.name == "Patient")
             {
                 if (actionManager.CompareUseOnInfo("SyringeWithInjectionNeedleCap", "Patient"))
                 {
@@ -121,7 +124,7 @@ public class Syringe : PickableObjectWithInfo {
                         SceneManager.GetActiveScene().name == "Injection_disolve" ||
                         SceneManager.GetActiveScene().name == "Tutorial_Sequence")
                     {
-                        Transform target = controls.SelectedObject.GetComponent<PersonObjectPart>().Person;
+                        Transform target = TempSelected.GetComponent<PersonObjectPart>().Person;
                         target.GetComponent<InteractableObject>().Reset();
                         controls.ResetObject();
                         PlayerAnimationManager.PlayAnimationSequence("Injection", target);
@@ -132,7 +135,7 @@ public class Syringe : PickableObjectWithInfo {
                         SceneManager.GetActiveScene().name == "Injection Subcutaneous_ampoule" ||
                         SceneManager.GetActiveScene().name == "Injection Subcutaneous_desolve")
                     {
-                        Transform target = controls.SelectedObject.GetComponent<PersonObjectPart>().Person;
+                        Transform target = TempSelected.GetComponent<PersonObjectPart>().Person;
                         target.GetComponent<InteractableObject>().Reset();
                         controls.ResetObject();
                         PlayerAnimationManager.PlayAnimationSequence("SubcutaneousInjection", target);
@@ -154,7 +157,7 @@ public class Syringe : PickableObjectWithInfo {
                     return true;
                 }
             }
-            else if (name == "Syringe" && controls.SelectedObject.name == "Person")
+            else if (name == "Syringe" && TempSelected.name == "Person")
             {
                 if (actionManager.CompareUseOnInfo("Syringe", "Person"))
                 {
@@ -166,24 +169,24 @@ public class Syringe : PickableObjectWithInfo {
             }
             else if ((name == "SyringeWithAbsorptionNeedle" ||
                      name == "SyringeWithInjectionNeedle") &&
-                     controls.SelectedObject.name == "NeedleCup")
+                     TempSelected.name == "NeedleCup")
             {
                 if (actionManager.CompareUseOnInfo("SyringeWithAbsorptionNeedle", "NeedleCup") ||
                     actionManager.CompareUseOnInfo("SyringeWithInjectionNeedle", "NeedleCup"))
                 {
                     if (inventory.LeftHandEmpty())
                     {
-                        controls.SelectedObject.GetComponent<PickableObject>().Reset();
+                        TempSelected.GetComponent<PickableObject>().Reset();
                         PlayerAnimationManager.PlayAnimation("UseRight " + name + " " + "NeedleCup", 
-                            controls.SelectedObject.transform);
+                            TempSelected.transform);
                         actionManager.OnUseOnAction(name, "NeedleCup");
                         return true;
                     }
                     else if (inventory.RightHandEmpty())
                     {
-                        controls.SelectedObject.GetComponent<PickableObject>().Reset();
+                        TempSelected.GetComponent<PickableObject>().Reset();
                         PlayerAnimationManager.PlayAnimation("UseLeft " + name + " " + "NeedleCup", 
-                            controls.SelectedObject.transform);
+                            TempSelected.transform);
                         actionManager.OnUseOnAction(name, "NeedleCup");
                         return true;
                     }
@@ -216,9 +219,9 @@ public class Syringe : PickableObjectWithInfo {
             }
         }
 
-        actionManager.OnUseOnAction(name, controls.SelectedObject != null ? controls.SelectedObject.name : "");
+        actionManager.OnUseOnAction(name, TempSelected != null ? TempSelected.name : "");
 
-        return (controls.SelectedObject != null && actionManager.CompareUseOnInfo(name, controls.SelectedObject.name));
+        return (TempSelected != null && actionManager.CompareUseOnInfo(name, TempSelected.name));
     }
 
     public override void SaveInfo(ref Vector3 left, ref Vector3 right)
