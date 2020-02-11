@@ -4,8 +4,7 @@ using UnityEngine.UI;
 using CareUp.Actions;
 using System.Linq;
 using AssetBundles;
-using UnityEngine.SceneManagement;  
-
+using UnityEngine.SceneManagement;
 
 public class GameUI : MonoBehaviour
 {
@@ -20,6 +19,8 @@ public class GameUI : MonoBehaviour
     GameObject closeDialog;
     GameObject donePanelYesNo;
     GameObject WalkToGroupPanel;
+    float autoExitTime = 900f;
+    AutoPlayer autoPlayer;
 
     public WalkToGroupButton LeftSideButton;
     public WalkToGroupButton RightSideButton;
@@ -55,6 +56,7 @@ public class GameUI : MonoBehaviour
     public GameObject autoplayPanel;
     protected Toggle autoplayToggle;
     protected GameObject autoplayFrame;
+    protected Text autoExitLabeb;
 
     public List<string> activeHighlighted = new List<string>();
 
@@ -438,9 +440,11 @@ public class GameUI : MonoBehaviour
     void Start()
     {
         gameLogic = GameObject.Find("GameLogic");
+        autoPlayer = GameObject.FindObjectOfType<AutoPlayer>();
         theoryTab = GameObject.FindObjectOfType<TheoryTab>();
         autoplayToggle = autoplayPanel.transform.Find("bottomPanel/Toggle").GetComponent<Toggle>();
         autoplayFrame = autoplayPanel.transform.Find("redRect").gameObject;
+        autoExitLabeb = autoplayPanel.transform.Find("bottomPanel/exitLabel").GetComponent<Text>();
         autoplayToggle.isOn = PlayerPrefsManager.simulatePlayerActions;
         autoplayFrame.SetActive(PlayerPrefsManager.simulatePlayerActions);
         AutoplayStopInput = autoplayPanel.transform.Find("bottomPanel/InputField").GetComponent<InputField>();
@@ -791,7 +795,7 @@ public class GameUI : MonoBehaviour
         if (PlayerPrefsManager.simulatePlayerActions)
         {
             if (GameObject.FindObjectOfType<AutoPlayer>().toStartAutoplaySession)
-                bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
+                CloseGame();
         }
         donePanel.SetActive(value);
         LevelEnded = value;
@@ -1036,10 +1040,30 @@ public class GameUI : MonoBehaviour
         }
     }
 
-
     void Update()
     {
         // print(RandomQuiz.showRandomQuestion);
+#if (UNITY_EDITOR || DEVELOPMENT_BUILD)
+        if (PlayerPrefsManager.simulatePlayerActions)
+        {
+            if (autoPlayer.toStartAutoplaySession)
+            {
+                autoExitTime -= Time.deltaTime;
+                if (autoExitTime < 0 && autoExitTime > -15f)
+                {
+                    autoExitTime = -30;
+                    Debug.LogError("!! Exited from the scene before completion !!");
+                    CloseGame();
+                }
+                float t = autoExitTime;
+                if (autoExitTime < 0)
+                    t = 0;
+                System.TimeSpan interval = System.TimeSpan.FromSeconds(t);
+                autoExitLabeb.text = "Auto Exit In:" + string.Format("{0:D2}:{1:D2}", interval.Minutes, interval.Seconds);
+            }
+        }
+
+#endif
         if (!timeOutEnded)
         {
             startTimeOut -= Time.deltaTime;
@@ -1415,6 +1439,8 @@ public class GameUI : MonoBehaviour
     {
         PlayerPrefsManager.simulatePlayerActions = autoplayToggle.isOn;
         autoplayFrame.SetActive(PlayerPrefsManager.simulatePlayerActions);
+        autoExitLabeb.text = "";
+        autoPlayer.toStartAutoplaySession = false;
     }
 
     public void UpdateIpadInfo()
