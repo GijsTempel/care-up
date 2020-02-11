@@ -1059,7 +1059,7 @@ public class GameUI : MonoBehaviour
                 if (autoExitTime < 0)
                     t = 0;
                 System.TimeSpan interval = System.TimeSpan.FromSeconds(t);
-                autoExitLabeb.text = "Auto Exit In:" + string.Format("{0:D2}:{1:D2}", interval.Minutes, interval.Seconds);
+                autoExitLabeb.text = "Automatic exit in: " + string.Format("{0:D2}:{1:D2}", interval.Minutes, interval.Seconds);
             }
         }
 
