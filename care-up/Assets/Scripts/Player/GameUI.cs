@@ -631,17 +631,29 @@ public class GameUI : MonoBehaviour
         bool autoObjectSelected = false;
         bool AlloweAutoAction = AllowAutoPlay();
         
-        if (PlayerPrefsManager.simulatePlayerActions && ps.away)
-        {
-            ps.WalkToGroup_(GameObject.FindObjectOfType<WalkToGroup>());
-        }
+        
+        string AutoMoveTo = "";
         foreach (Action a in actionManager.IncompletedActions)
         {
             string[] ObjectNames = new string[0];
             a.ObjectNames(out ObjectNames);
-            if (a.Type == ActionManager.ActionType.PersonTalk)
-                AlloweAutoAction = AllowAutoPlay(false);
 
+            if (PlayerPrefsManager.simulatePlayerActions && ps.away)
+            {
+                if (a.placeRequirement != "")
+                {
+                    if (AutoMoveTo == "")
+                        AutoMoveTo = a.placeRequirement;
+                    else if (a.Type == ActionManager.ActionType.PersonTalk)
+                        AutoMoveTo = a.placeRequirement;
+                    
+                }
+            }
+            if (AutoMoveTo != "")
+                AlloweAutoAction = false;
+
+            // if (a.Type == ActionManager.ActionType.PersonTalk)
+            //     AlloweAutoAction = AllowAutoPlay(false);
             if (AlloweAutoAction && !autoObjectSelected)
             {
                 if (ObjectNames.Length == 1)
@@ -755,6 +767,9 @@ public class GameUI : MonoBehaviour
                 }
             }
         }
+        if (PlayerPrefsManager.simulatePlayerActions && ps.away)
+            if (AutoMoveTo != "")
+                ps.WalkToGroup_(GameObject.Find(AutoMoveTo).GetComponent<WalkToGroup>());
 
         //clear highlights
         for (int i = 0; i < activeHighlighted.Count; i++)
@@ -775,7 +790,8 @@ public class GameUI : MonoBehaviour
     {
         if (PlayerPrefsManager.simulatePlayerActions)
         {
-            bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
+            if (GameObject.FindObjectOfType<AutoPlayer>().toStartAutoplaySession)
+                bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
         }
         donePanel.SetActive(value);
         LevelEnded = value;

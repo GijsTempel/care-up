@@ -96,12 +96,16 @@ public class AutoplayMenuPanel : MonoBehaviour
     {
         if (autoPlayer == null)
             Init();
+        if (autoPlayer.toStartAutoplaySession)
+        {
+            if (PlayerPrefsManager.simulatePlayerActions)
+                StartButtonPressed();
+            else
+                PauseButtonPressed();
+        }
         panel.SetActive(PlayerPrefsManager.simulatePlayerActions);
 #if !(UNITY_EDITOR || DEVELOPMENT_BUILD)
         panel.SetActive(false);
 #endif
-
-        if (autoPlayer.toStartAutoplaySession)
-            StartButtonPressed();
     }
 }
