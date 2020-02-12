@@ -1437,6 +1437,8 @@ public class GameUI : MonoBehaviour
 
     public void AutoPlayModeChanged()
     {
+        if (GameObject.FindObjectOfType<AutoPlayer>() == null)
+            return;
         PlayerPrefsManager.simulatePlayerActions = autoplayToggle.isOn;
         autoplayFrame.SetActive(PlayerPrefsManager.simulatePlayerActions);
         autoExitLabeb.text = "";
