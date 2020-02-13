@@ -794,8 +794,9 @@ public class GameUI : MonoBehaviour
     {
         if (PlayerPrefsManager.simulatePlayerActions)
         {
-            if (GameObject.FindObjectOfType<AutoPlayer>().toStartAutoplaySession)
-                CloseGame();
+            if (GameObject.FindObjectOfType<AutoPlayer>() != null)
+                if (GameObject.FindObjectOfType<AutoPlayer>().toStartAutoplaySession)
+                    CloseGame();
         }
         donePanel.SetActive(value);
         LevelEnded = value;
@@ -1046,20 +1047,23 @@ public class GameUI : MonoBehaviour
 #if (UNITY_EDITOR || DEVELOPMENT_BUILD)
         if (PlayerPrefsManager.simulatePlayerActions)
         {
-            if (autoPlayer.toStartAutoplaySession)
+            if (autoPlayer != null)
             {
-                autoExitTime -= Time.deltaTime;
-                if (autoExitTime < 0 && autoExitTime > -15f)
+                if (autoPlayer.toStartAutoplaySession)
                 {
-                    autoExitTime = -30;
-                    Debug.LogError("!! Exited from the scene before completion !!");
-                    CloseGame();
+                    autoExitTime -= Time.deltaTime;
+                    if (autoExitTime < 0 && autoExitTime > -15f)
+                    {
+                        autoExitTime = -30;
+                        Debug.LogError("!! Exited from the scene before completion !!");
+                        CloseGame();
+                    }
+                    float t = autoExitTime;
+                    if (autoExitTime < 0)
+                        t = 0;
+                    System.TimeSpan interval = System.TimeSpan.FromSeconds(t);
+                    autoExitLabeb.text = "Automatic exit in: " + string.Format("{0:D2}:{1:D2}", interval.Minutes, interval.Seconds);
                 }
-                float t = autoExitTime;
-                if (autoExitTime < 0)
-                    t = 0;
-                System.TimeSpan interval = System.TimeSpan.FromSeconds(t);
-                autoExitLabeb.text = "Automatic exit in: " + string.Format("{0:D2}:{1:D2}", interval.Minutes, interval.Seconds);
             }
         }
 
@@ -1437,12 +1441,14 @@ public class GameUI : MonoBehaviour
 
     public void AutoPlayModeChanged()
     {
-        if (GameObject.FindObjectOfType<AutoPlayer>() == null)
-            return;
+
         PlayerPrefsManager.simulatePlayerActions = autoplayToggle.isOn;
-        autoplayFrame.SetActive(PlayerPrefsManager.simulatePlayerActions);
-        autoExitLabeb.text = "";
-        autoPlayer.toStartAutoplaySession = false;
+        if (autoPlayer != null)
+        {
+            autoplayFrame.SetActive(PlayerPrefsManager.simulatePlayerActions);
+            autoExitLabeb.text = "";
+            autoPlayer.toStartAutoplaySession = false;
+        }
     }
 
     public void UpdateIpadInfo()
