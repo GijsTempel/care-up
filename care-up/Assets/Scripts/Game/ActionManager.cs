@@ -14,7 +14,6 @@ public class ActionManager : MonoBehaviour
 {
     public static bool practiceMode = true;
     public static bool personClicked = false;
-    public static bool generalAction = false;
 
     [HideInInspector]
     public bool tutorial_hintUsed = false;
@@ -98,8 +97,8 @@ public class ActionManager : MonoBehaviour
     public int TotalPoints
     {
         get { return totalPoints; }
-    }   
-
+    } 
+ 
     /// <summary>
     /// Index of current action.
     /// </summary>
@@ -164,22 +163,23 @@ public class ActionManager : MonoBehaviour
         General
     };
 
-    // Will be refactored
+    // Will be refactored, someday
     public static void UpdateRequirements(float showDelay = 0f)
     {
         ActionManager actManager = GameObject.FindObjectOfType<ActionManager>();
-
-        if (!practiceMode)
-        {
-            if (actManager.CheckGeneralAction() != null /*&& !generalActionDone*/)
-            {
-                actManager.NotTriggeredAction();
-            }
-            return;
-        }
-
         if (playerScript == null)
             playerScript = GameObject.FindObjectOfType<PlayerScript>();
+
+        GeneralAction generalAction = actManager.CheckGeneralAction(true);
+        if (generalAction != null && !playerScript.away)
+        {
+            actManager.NotTriggeredAction(generalAction);
+        }
+
+        if (!practiceMode)
+        {           
+            return;
+        }
 
         GameUI gameUI = GameObject.FindObjectOfType<GameUI>();
 
@@ -203,7 +203,7 @@ public class ActionManager : MonoBehaviour
         gameUI.prescriptionButtonBlink = false;
 
         foreach (Action a in actManager.IncompletedActions)
-        {           
+        {
             StepData placeData = null;
             StepData secondPlaceData = null;
             bool correctObjectsInHands = true;
@@ -793,7 +793,6 @@ public class ActionManager : MonoBehaviour
     public string CurrentButtonText(string itemName = null, bool skipBlocks = false)
     {
         List<Action> list = !skipBlocks ? UnlockedIncompletedActions : IncompletedActions;
-
         foreach (Action a in list)
         {
             if (a.Type == ActionType.General)
@@ -880,18 +879,30 @@ public class ActionManager : MonoBehaviour
         return result;
     }
 
-    public GeneralAction CheckGeneralAction()
+    public GeneralAction CheckGeneralAction(bool skipBlocks = false)
     {
         GeneralAction action = null;
+        List<Action> list = !skipBlocks ? UnlockedIncompletedActions : IncompletedActions;
 
-        foreach (Action a in UnlockedIncompletedActions)
+        List<Action> generalList = new List<Action>();
+        foreach (Action a in list)
         {
             if (a.Type == ActionType.General)
             {
                 action = (GeneralAction)a;
+                generalList.Add(action);
             }
         }
-
+        if (generalList.Count > 1)
+        {
+            Action firstGeneral = generalList[0];
+            foreach (Action a in generalList)
+            {
+                if (a.storedIndex < firstGeneral.storedIndex)
+                    firstGeneral = a;
+            }
+            action = (GeneralAction)firstGeneral;
+        }
         return action;
     }
 
@@ -974,6 +985,7 @@ public class ActionManager : MonoBehaviour
             bool notNeeded = action.Attributes["optional"] != null;
 
             // try making all steps optional for test
+            int storedIndex = index;
             if (manager != null && !manager.practiceMode)
             {
                 notNeeded = true;
@@ -1119,9 +1131,10 @@ public class ActionManager : MonoBehaviour
                     break;
                 case "general":
                     string actionValue = action.Attributes["action"].Value;
-                    actionList.Add(new GeneralAction(item, actionValue, index, descr, buttonText,
+                    actionList.Add(new GeneralAction(item, actionValue, index, storedIndex, descr, buttonText,
                         pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
                         blockUnlock, blockLock, blockTitle, blockMsg, encounterTime));
+
                     break;
                 default:
                     Debug.LogError("No action type found: " + type);
@@ -1350,22 +1363,16 @@ public class ActionManager : MonoBehaviour
         }
     }
 
-    public void NotTriggeredAction()
+    public void NotTriggeredAction(GeneralAction generalAction = null)
     {
-        generalAction = false;
+        GameUI gameUI = FindObjectOfType<GameUI>();
+        string buttonText = "";
+        if (generalAction != null)
+            buttonText = generalAction.ButtonText;
+        gameUI.ShowNoTargetButton(buttonText);
 
-        HandsInventory inventory = GameObject.FindObjectOfType<HandsInventory>();
-        if (inventory != null)
-        {
-            if (inventory.LeftHandEmpty() && inventory.RightHandEmpty())
-            {
-                GameUI gameUI = FindObjectOfType<GameUI>();
-                gameUI.ShowNoTargetButton();
-
-                if (practiceMode)
-                    gameUI.buttonToBlink = GameUI.ItemControlButtonType.NoTargetRight;
-            }
-        }
+        if (practiceMode)
+            gameUI.buttonToBlink = GameUI.ItemControlButtonType.NoTargetRight;
     }
 
     /// <summary>
@@ -1377,6 +1384,10 @@ public class ActionManager : MonoBehaviour
     /// <returns>True if action expected and correct. False otherwise.</returns>
     public bool Check(string[] info, ActionType type, bool notWtongAction = false)
     {
+        //if (info == null)
+        //{
+        //    return false;
+        //}
         bool matched = false;
 
         int subcategoryLength = IncompletedActions.Count;
@@ -1445,6 +1456,9 @@ public class ActionManager : MonoBehaviour
                     // count only 1 step, some steps are identical
                     break;
                 }
+
+
+
             }
         }
 
