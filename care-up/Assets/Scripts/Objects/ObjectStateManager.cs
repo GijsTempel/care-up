@@ -42,6 +42,7 @@ public class ObjectStateManager : MonoBehaviour {
             else if (!isLieAnim && animName != HoldAnimName)
             {
                 HoldAnimName = animName;
+                print(animName);
                 if (isInHands())
                 {
                     animator.Play(HoldAnimName, 0, HoldAnimValue);

@@ -4,10 +4,12 @@ using UnityEngine.UI;
 
 public class OptionsAutoPlayToggle : MonoBehaviour
 {
+    Toggle toggle;
     // Start is called before the first frame update
     void Start()
     {
-        GetComponent<Toggle>().isOn = PlayerPrefsManager.simulatePlayerActions;
+        toggle = transform.Find("AutoPlayToggle2").GetComponent<Toggle>();
+        toggle.isOn = PlayerPrefsManager.simulatePlayerActions;
 
 #if !(UNITY_EDITOR || DEVELOPMENT_BUILD)
         gameObject.SetActive(false);
@@ -16,6 +18,6 @@ public class OptionsAutoPlayToggle : MonoBehaviour
 
     public void ValueChanged()
     {
-        PlayerPrefsManager.simulatePlayerActions = GetComponent<Toggle>().isOn;
+        PlayerPrefsManager.simulatePlayerActions = toggle.isOn;
     }
 }

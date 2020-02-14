@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class WorkField : UsableObject {
-    
+public class WorkField : UsableObject
+{
+
     public List<GameObject> objects = new List<GameObject>();
 
     private int toggleTime = 0;
@@ -17,7 +18,7 @@ public class WorkField : UsableObject {
     {
         base.Start();
         _gameUI = GameObject.FindObjectOfType<GameUI>();
-       
+
         toggleTime = 0;
         toggle = false;
 
@@ -59,10 +60,7 @@ public class WorkField : UsableObject {
             controls.ResetObject();
             Reset();
         }
-        if (actionManager.CheckGeneralAction() == null)
-        {
-            _gameUI.UpdateHelpHighlight();
-        }
+        _gameUI.UpdateHelpHighlight();
     }
 
     public void ToggleObjects()
@@ -77,7 +75,7 @@ public class WorkField : UsableObject {
                     obj.SetActive(toggle);
                 }
             }
-            
+
             ++toggleTime;
         }
         ActionManager.BuildRequirements();

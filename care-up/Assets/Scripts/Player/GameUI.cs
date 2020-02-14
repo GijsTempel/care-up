@@ -40,10 +40,12 @@ public class GameUI : MonoBehaviour
     public QuizTab quiz_tab;
     public bool DropLeftBlink = false;
     public bool DropRightBlink = false;
+    bool generalButtonActive = false;
     public int stopAutoPlayOnStep = 0;
     GameObject AutoActionObject;
 
     public bool LevelEnded = false;
+    public bool showNoTarget_right = false;
 
     GameObject MovementSideButtons;
     public List<string> reqPlaces = new List<string>();
@@ -201,7 +203,17 @@ public class GameUI : MonoBehaviour
 
     public void UseOnNoTarget(bool leftHand = true)
     {
-        GeneralAction generalAction = actionManager.CheckGeneralAction();
+        GeneralAction generalAction = null;
+        if (!leftHand)
+        {
+            if (!showNoTarget_right)
+            {
+                bool skipBlocks = false;
+                if (GameObject.FindObjectOfType<PlayerPrefsManager>() != null)
+                    skipBlocks = !GameObject.FindObjectOfType<PlayerPrefsManager>().practiceMode;
+                generalAction = actionManager.CheckGeneralAction(skipBlocks);
+            }
+        }
 
         if (generalAction == null)
         {
@@ -345,6 +357,13 @@ public class GameUI : MonoBehaviour
     {
         if (generalAction != null)
         {
+            if (actionManager.CheckGeneralAction() == null)
+            {
+                ActionManager.WrongAction(true);
+                actionManager.UpdatePoints(-1);
+                return;
+            }
+
             GameObject item = GameObject.Find(generalAction.Item);
 
             PlayerAnimationManager playerAnimationManager = FindObjectOfType<PlayerAnimationManager>();
@@ -459,7 +478,6 @@ public class GameUI : MonoBehaviour
         percentageTextIpad = GameObject.Find("TopBarUI").transform.Find("GeneralDynamicCanvas")
             .Find("Percentage").Find("PointsText").GetComponent<Text>();
 
-        ActionManager.generalAction = false;
         prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
         if (prefs != null)
             practiceMode = prefs.practiceMode;
@@ -569,7 +587,6 @@ public class GameUI : MonoBehaviour
         string hl_name = prefix + "_" + target.name;
         if (GameObject.Find(hl_name) != null)
             return null;
-        //------------
 
         // assets/resources/necessaryprefabs
 
@@ -589,6 +606,7 @@ public class GameUI : MonoBehaviour
     public void RemoveHighlight(string prefix, string _name)
     {
         string hl_name = prefix + "_" + _name;
+
         if (GameObject.Find(hl_name) != null)
         {
             if (GameObject.Find(hl_name).GetComponent<HighlightObject>())
@@ -614,10 +632,10 @@ public class GameUI : MonoBehaviour
         }
     }
    
-    //----------------------------------------------------------------------------------------------------------
     public void UpdateHelpHighlight()
     {
         bool practiceMode = true;
+
         if (prefs != null)
             practiceMode = prefs.practiceMode;
         if (!practiceMode)
@@ -794,8 +812,9 @@ public class GameUI : MonoBehaviour
     {
         if (PlayerPrefsManager.simulatePlayerActions)
         {
-            if (GameObject.FindObjectOfType<AutoPlayer>().toStartAutoplaySession)
-                CloseGame();
+            if (GameObject.FindObjectOfType<AutoPlayer>() != null)
+                if (GameObject.FindObjectOfType<AutoPlayer>().toStartAutoplaySession)
+                    CloseGame();
         }
         donePanel.SetActive(value);
         LevelEnded = value;
@@ -821,14 +840,14 @@ public class GameUI : MonoBehaviour
         GUIStyle style = new GUIStyle();
         style.normal.textColor = new Color(1f, 0f, 0f);
         style.fontSize = 30;
-
-
+        // ****Show FPS 
         GUI.Label(new Rect(0, 0, 100, 100), ((int)(1.0f / Time.smoothDeltaTime)).ToString(), style);
         if (objectsIDsController != null)
         {
             if (objectsIDsController.cheat)
                 GUI.Label(new Rect(30, 0, 100, 100), "Cheat enabled", style);
         }
+        //****Show FPS end.
 
         //debugSS = PlayerAnimationManager.animTimeout.ToString();
         GUI.Label(new Rect(0, 30, 1000, 100), debugSS, style);
@@ -934,8 +953,6 @@ public class GameUI : MonoBehaviour
                     {
                         GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
                         theoryTab.ShowTheory(actionManager.MessageTitle, actionManager.Message);
-                        //GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Title").GetComponent<Text>().text = actionManager.MessageTitle;
-                        //GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Message").GetComponent<Text>().text = actionManager.Message;
                     }
                     actionManager.Message = null;
                     actionManager.ShowTheory = false;
@@ -1042,24 +1059,26 @@ public class GameUI : MonoBehaviour
 
     void Update()
     {
-        // print(RandomQuiz.showRandomQuestion);
 #if (UNITY_EDITOR || DEVELOPMENT_BUILD)
         if (PlayerPrefsManager.simulatePlayerActions)
         {
-            if (autoPlayer.toStartAutoplaySession)
+            if (autoPlayer != null)
             {
-                autoExitTime -= Time.deltaTime;
-                if (autoExitTime < 0 && autoExitTime > -15f)
+                if (autoPlayer.toStartAutoplaySession)
                 {
-                    autoExitTime = -30;
-                    Debug.LogError("!! Exited from the scene before completion !!");
-                    CloseGame();
+                    autoExitTime -= Time.deltaTime;
+                    if (autoExitTime < 0 && autoExitTime > -15f)
+                    {
+                        autoExitTime = -30;
+                        Debug.LogError("!! Exited from the scene before completion !!");
+                        CloseGame();
+                    }
+                    float t = autoExitTime;
+                    if (autoExitTime < 0)
+                        t = 0;
+                    System.TimeSpan interval = System.TimeSpan.FromSeconds(t);
+                    autoExitLabeb.text = "Automatic exit in: " + string.Format("{0:D2}:{1:D2}", interval.Minutes, interval.Seconds);
                 }
-                float t = autoExitTime;
-                if (autoExitTime < 0)
-                    t = 0;
-                System.TimeSpan interval = System.TimeSpan.FromSeconds(t);
-                autoExitLabeb.text = "Automatic exit in: " + string.Format("{0:D2}:{1:D2}", interval.Minutes, interval.Seconds);
             }
         }
 
@@ -1073,6 +1092,7 @@ public class GameUI : MonoBehaviour
 
                 ActionManager.BuildRequirements();
                 ActionManager.UpdateRequirements();
+                UpdateHelpHighlight();
    
                 if (actionManager.CheckGeneralAction() == null)
                     UpdateHelpHighlight();
@@ -1080,7 +1100,6 @@ public class GameUI : MonoBehaviour
                 UpdateWalkToGtoupUI(true);
             }
         }
-        //UpdateWalkToGtoupUI(false);
         if (toDelayUpdateHint)
         {
             if (current_UpdateHintDelay > 0)
@@ -1133,10 +1152,7 @@ public class GameUI : MonoBehaviour
                 decombineButton.SetActive(false);
                 decombineButton_right.SetActive(false);
                 ActionManager.UpdateRequirements();
-                if (actionManager.CheckGeneralAction() == null)
-                {
-                    UpdateHelpHighlight();
-                }
+                UpdateHelpHighlight();
                 currentActionsCount = actionManager.actionsCount;
 
                 //hide panel for the first frame of hands state change
@@ -1155,7 +1171,7 @@ public class GameUI : MonoBehaviour
                 bool showZoomRight = false;
 
                 bool showNoTarget = false;
-                bool showNoTarget_right = false;
+                showNoTarget_right = false;
 
                 if (!LEmpty)
                 {
@@ -1237,10 +1253,12 @@ public class GameUI : MonoBehaviour
                 zoomButtonLeft.SetActive(showZoomLeft);
                 zoomButtonRight.SetActive(showZoomRight);
                 noTargetButton.SetActive(showNoTarget);
-                if (actionManager.CheckGeneralAction() == null)
+
+                if (actionManager.CheckGeneralAction(!practiceMode) == null)
                     noTargetButton_right.SetActive(showNoTarget_right);
                 else
-                    noTargetButton_right.SetActive(REmpty && LEmpty);
+                    noTargetButton_right.SetActive(!decombineButton_right.activeSelf);
+
                 combineButton.SetActive(showCombin);
             }
 
@@ -1249,25 +1267,22 @@ public class GameUI : MonoBehaviour
                 cooldownTime = 1.0f;
             }
             lastCooldownTime = cooldownTime;
+
+            currentItemControlPanelState = showItemControlPanel;
+
             if (cooldownTime > 0)
             {
                 cooldownTime -= Time.deltaTime;
-            }
-            currentItemControlPanelState = showItemControlPanel;
-            if (cooldownTime > 0)
-            {
                 showItemControlPanel = false;
-
             }
+
             if (PlayerScript.actionsLocked)
                 showItemControlPanel = false;
+
             ItemControlPanel.SetActive(showItemControlPanel);
             patientInfo.SetActive(showItemControlPanel);
             MovementSideButtons.SetActive(showItemControlPanel);
-            //if (!showItemControlPanel)
-
             animatedFinger.gameObject.SetActive(showItemControlPanel && !theoryTab.gameObject.activeSelf);
-
             ICPCurrentState = ItemControlPanel.activeSelf;
         }
 
@@ -1276,12 +1291,14 @@ public class GameUI : MonoBehaviour
             currentAnimLock = false;
     }
 
-    public void ShowNoTargetButton()
+    public void ShowNoTargetButton(string buttonText = "")
     {
-        //ActionManager.generalAction = true;
         noTargetButton_right.SetActive(true);
-        noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text =
-            actionManager.CurrentButtonText();
+        if (!string.IsNullOrEmpty(buttonText))
+            noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text = buttonText;
+        else
+            noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text =
+                actionManager.CurrentButtonText(null, true);
     }
 
     public void UpdateWalkToGtoupUI(bool value)
@@ -1437,10 +1454,14 @@ public class GameUI : MonoBehaviour
 
     public void AutoPlayModeChanged()
     {
+
         PlayerPrefsManager.simulatePlayerActions = autoplayToggle.isOn;
-        autoplayFrame.SetActive(PlayerPrefsManager.simulatePlayerActions);
-        autoExitLabeb.text = "";
-        autoPlayer.toStartAutoplaySession = false;
+        if (autoPlayer != null)
+        {
+            autoplayFrame.SetActive(PlayerPrefsManager.simulatePlayerActions);
+            autoExitLabeb.text = "";
+            autoPlayer.toStartAutoplaySession = false;
+        }
     }
 
     public void UpdateIpadInfo()
@@ -1457,4 +1478,3 @@ public class GameUI : MonoBehaviour
         }
     }
 }
-

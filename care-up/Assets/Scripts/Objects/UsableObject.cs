@@ -120,11 +120,8 @@ public class UsableObject : InteractableObject
             }
 
             actionManager.OnUseAction(gameObject.name);
-            if (actionManager.CheckGeneralAction() == null)
-            {
-                gameUI.UpdateHelpHighlight();
-                Reset();
-            }
+            gameUI.UpdateHelpHighlight();
+            Reset();
         }
     }
 }
