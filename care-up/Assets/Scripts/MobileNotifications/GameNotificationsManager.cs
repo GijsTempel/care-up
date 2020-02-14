@@ -196,23 +196,24 @@ public class GameNotificationsManager : MonoBehaviour
         if ((mode & OperatingMode.Queue) == OperatingMode.Queue)
         {
             // Filter out past events
-            for (var i = PendingNotifications.Count - 1; i >= 0; i--)
-            {
-                PendingNotification pendingNotification = PendingNotifications[i];
-                // Ignore already scheduled ones
-                if (pendingNotification.Notification.Scheduled)
+            if (PendingNotifications != null)
+                for (var i = PendingNotifications.Count - 1; i >= 0; i--)
                 {
-                    continue;
-                }
+                    PendingNotification pendingNotification = PendingNotifications[i];
+                    // Ignore already scheduled ones
+                    if (pendingNotification.Notification.Scheduled)
+                    {
+                        continue;
+                    }
 
-                // If a non-scheduled notification is in the past (or not within our threshold)
-                // just remove it immediately
-                if (pendingNotification.Notification.DeliveryTime != null &&
-                    pendingNotification.Notification.DeliveryTime - DateTime.Now < MinimumNotificationTime)
-                {
-                    PendingNotifications.RemoveAt(i);
+                    // If a non-scheduled notification is in the past (or not within our threshold)
+                    // just remove it immediately
+                    if (pendingNotification.Notification.DeliveryTime != null &&
+                        pendingNotification.Notification.DeliveryTime - DateTime.Now < MinimumNotificationTime)
+                    {
+                        PendingNotifications.RemoveAt(i);
+                    }
                 }
-            }
 
             // Sort notifications by delivery time, if no notifications have a badge number set
             bool noBadgeNumbersSet =
@@ -349,8 +350,8 @@ public class GameNotificationsManager : MonoBehaviour
                 CanShowBadge = notificationChannel.ShowsBadge,
                 EnableLights = notificationChannel.ShowLights,
                 EnableVibration = notificationChannel.Vibrates,
-                LockScreenVisibility = (LockScreenVisibility)notificationChannel.Privacy,
-                VibrationPattern = vibrationPattern
+                LockScreenVisibility = (LockScreenVisibility)notificationChannel.Privacy
+               // VibrationPattern = null
             };
 
             AndroidNotificationCenter.RegisterNotificationChannel(androidChannel);
