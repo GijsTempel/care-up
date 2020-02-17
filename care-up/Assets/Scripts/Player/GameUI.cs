@@ -112,6 +112,7 @@ public class GameUI : MonoBehaviour
     public bool allowObjectControlUI = true;
     public static bool encounterStarted = false;
     InputField AutoplayStopInput;
+    public GameObject PointToObject = null;
 
     public void ChangeAutoStopValue(int value)
     {
@@ -634,6 +635,7 @@ public class GameUI : MonoBehaviour
    
     public void UpdateHelpHighlight()
     {
+        PointToObject = null;
         bool practiceMode = true;
 
         if (prefs != null)
@@ -737,6 +739,8 @@ public class GameUI : MonoBehaviour
                         h.setGold(true);
                     }
                     newHLObjects.Add(objectToUse);
+                    if (PointToObject == null)
+                        PointToObject = GameObject.Find(objectToUse);
                 }
                 else
                 {

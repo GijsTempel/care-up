@@ -19,6 +19,7 @@ public class AnimatedFingerHint : MonoBehaviour
     GameUI gameUI;
     Button ButtonToAutoClick = null;
     ActionManager actionManager;
+    Camera cam;
     // Start is called before the first frame update
 
     private void OnEnable()
@@ -84,6 +85,10 @@ public class AnimatedFingerHint : MonoBehaviour
         {
             MoveToControlButton(gameUI.buttonToBlink);
         }
+        else if (gameUI.PointToObject != null)
+        {
+            MoveToGameObject(gameUI.PointToObject);
+        }
     }
 
     void MoveToControlButton(GameUI.ItemControlButtonType buttonType)
@@ -108,6 +113,20 @@ public class AnimatedFingerHint : MonoBehaviour
         }
     }
 
+    void Init()
+    {
+        cam = Camera.main.GetComponent<Camera>();
+    }
+
+    void MoveToGameObject(GameObject TargetObject)
+    {
+        if (cam == null)
+            Init();
+        Vector3 ObjWorldPos = TargetObject.transform.position;
+        Vector3 ScreenPos = cam.WorldToScreenPoint(ObjWorldPos);
+        MoveTo(ScreenPos);
+    }
+
     void Start()
     {
         gameUI = GameObject.FindObjectOfType<GameUI>();
@@ -127,7 +146,6 @@ public class AnimatedFingerHint : MonoBehaviour
             {
                 toMove = false;
                 fingerAnimator.SetTrigger("show");
-                print("DDDDD");
                 if (_toWave)
                     fingerAnimator.SetTrigger("hi");
             }
