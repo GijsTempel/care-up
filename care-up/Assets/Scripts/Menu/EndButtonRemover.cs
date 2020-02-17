@@ -22,7 +22,7 @@ public class EndButtonRemover : MonoBehaviour {
     private GameObject CertificatePanel = null;
 
     public void ButtonClick () {
-        goToMenuButton.SetActive (false);
+        // goToMenuButton.SetActive (false);
     }
 
     public void OnToQuizClick () {
