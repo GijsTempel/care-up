@@ -8,6 +8,7 @@ public class MobileNotifications
     public string title;
     public string body;
     public string largeIconName;
+    public bool isRewarded;
 }
 
 /// <summary>
@@ -20,6 +21,8 @@ public class CareUpNotification : MonoBehaviour
     // On iOS, this represents the notification's Category Identifier, and is optional
     // On Android, this represents the notification's channel, and is required (at least one).
     // Channels defined as global constants so can be referred to from GameController.cs script when setting/sending notification
+
+    public static bool SetNotificationReward { get; set; } = false;
 
     [SerializeField]
     private GameNotificationsManager manager;
@@ -55,7 +58,7 @@ public class CareUpNotification : MonoBehaviour
             }
 
             manager.Initialize(channels);
-                       
+
             if (string.IsNullOrEmpty(deliverInHours))
             {
                 Debug.LogError("Notification delivery time not set.");
@@ -72,12 +75,15 @@ public class CareUpNotification : MonoBehaviour
             float.TryParse(intervalInHours, out interval);
 
             int index;
+            string reward;
+
             for (int i = 0; i < channelsCount; i++)
             {
                 index = i <= notifications.Length ? i : notifications.Length - 1;
+                reward = notifications[index].isRewarded ? "reward" : "";
 
                 SendNotification(notifications[index].title, notifications[index].body, deliveryTime, null, true,
-                    $"channel{index}", "icon_0", notifications[index].largeIconName);
+                    $"channel{index}{reward}", "icon_0", notifications[index].largeIconName);
 
                 deliveryTime += TimeSpan.FromSeconds(interval);
             }
@@ -129,7 +135,7 @@ public class CareUpNotification : MonoBehaviour
 
         notification.Title = title;
         notification.Body = body;
-        notification.Group = !string.IsNullOrEmpty(id) ? id : "channel0";
+        notification.Group = !string.IsNullOrEmpty(id) ? id : "channel0reward";
         notification.DeliveryTime = deliveryTime;
         notification.SmallIcon = smallIcon;
         notification.LargeIcon = largeIcon;

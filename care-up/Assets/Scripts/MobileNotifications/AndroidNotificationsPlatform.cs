@@ -143,9 +143,17 @@ public class AndroidNotificationsPlatform : IGameNotificationsPlatform<AndroidGa
     // Event handler for receiving local notifications.
     private void OnLocalNotificationReceived(AndroidNotificationIntentData data)
     {
-        // Create a new AndroidGameNotification out of the delivered notification, but only
-        // if the event is registered
-        NotificationReceived?.Invoke(new AndroidGameNotification(data.Notification, data.Id, data.Channel));
+        if (data != null)
+        {
+            // Create a new AndroidGameNotification out of the delivered notification, but only
+            // if the event is registered
+            NotificationReceived?.Invoke(new AndroidGameNotification(data.Notification, data.Id, data.Channel));
+
+            if (data.Notification.Group.Contains("reward"))
+            {
+                CareUpNotification.SetNotificationReward = true;
+            }
+        }
     }
 }
 #endif
