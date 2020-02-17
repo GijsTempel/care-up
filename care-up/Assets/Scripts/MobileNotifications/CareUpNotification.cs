@@ -86,7 +86,6 @@ public class CareUpNotification : MonoBehaviour
                     $"channel{index}{reward}", "icon_0", notifications[index].largeIconName);
 
                 deliveryTime += TimeSpan.FromSeconds(interval);
-                print($"channel{index}{reward}");
             }
         }
     }
@@ -136,7 +135,7 @@ public class CareUpNotification : MonoBehaviour
 
         notification.Title = title;
         notification.Body = body;
-        notification.Group = !string.IsNullOrEmpty(id) ? id : "channel0";
+        notification.Group = !string.IsNullOrEmpty(id) ? id : "channel0reward";
         notification.DeliveryTime = deliveryTime;
         notification.SmallIcon = smallIcon;
         notification.LargeIcon = largeIcon;
