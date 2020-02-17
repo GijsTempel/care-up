@@ -13,7 +13,7 @@ using UnityEngine.UI;
 using UnityEngine.Networking;
 using System.Linq;
 using SmartLookUnity;
-using CareUp.Localize;
+using CareUp.Localize; 
 
 /// <summary>
 /// Handles quick access to saved data.

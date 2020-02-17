@@ -33,9 +33,26 @@ public class StoreViewModel : MonoBehaviour
             extraCurrencyText.GetComponent<Text>().text = PlayerPrefsManager.storeManager.ExtraCurrency.ToString();
     }
 
-    public static bool ShowRewardDialogue(Text panelText, GameObject popUp = null)
+    public static bool ShowRewardDialogue(Text panelText, GameObject popUp = null, int givenReward = 0)
     {
         bool value = false;
+
+        if (givenReward > 0 && (panelText != null))
+        {
+            givenReward = RoundToBigger(givenReward);
+            panelText.text = "+" + RoundToBigger(givenReward).ToString();
+
+            PlayerPrefsManager.storeManager.ModifyCurrencyBy(givenReward);
+            UMP_Manager manager = GameObject.FindObjectOfType<UMP_Manager>();
+
+            if (popUp != null)
+                popUp.SetActive(true);
+            else if (manager != null)
+                manager.ShowCongratulation(givenReward);
+
+            Debug.Log($"Got {givenReward} coins from notification reward.");
+            return true;
+        }
 
         if (SavedCoins <= 0)
             SavedCoins = ActionManager.Points;
@@ -77,5 +94,5 @@ public class StoreViewModel : MonoBehaviour
     {
         if (value % 10 != 0) value = (value / 10) * 10 + 10;
         return value;
-    }   
+    }
 }

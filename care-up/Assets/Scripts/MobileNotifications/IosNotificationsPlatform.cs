@@ -114,9 +114,20 @@ public class IosNotificationsPlatform : IGameNotificationsPlatform<IosGameNotifi
     // Event handler for receiving local notifications.
     private void OnLocalNotificationReceived(iOSNotification notification)
     {
-        // Create a new AndroidGameNotification out of the delivered notification, but only
-        // if the event is registered
-        NotificationReceived?.Invoke(new IosGameNotification(notification));
+        if (notification != null)
+        {
+            // Create a new AndroidGameNotification out of the delivered notification, but only
+            // if the event is registered
+            NotificationReceived?.Invoke(new IosGameNotification(notification));
+
+            if (notification.CategoryIdentifier != null)
+            {
+                if (notification.CategoryIdentifier.Contains("reward"))
+                {
+                    CareUpNotification.SetNotificationReward = true;
+                }
+            }               
+        }
     }
 }
 #endif

@@ -9,7 +9,6 @@ using System;
 
 public class MainMenu : MonoBehaviour
 {
-
     private LoadingScreen loadingScreen;
     private PlayerPrefsManager prefs;
     public string eMail = "info@triplemotion.nl";
@@ -82,6 +81,12 @@ public class MainMenu : MonoBehaviour
 
             //handle updates panel
 
+            if (CareUpNotification.SetNotificationReward)
+            {
+                StoreViewModel.ShowRewardDialogue(reward, rewardPanel, 50);
+                CareUpNotification.SetNotificationReward = false;
+            }
+
             if (EndScoreManager.showReward)
             {
                 StoreViewModel.ShowRewardDialogue(reward);
@@ -145,7 +150,7 @@ public class MainMenu : MonoBehaviour
 
             // shared field, will keep it outside DatabaseManager
             GameObject.FindObjectOfType<PlayerPrefsManager>().FetchLatestVersion();
-            
+
             GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Account/TitlePanel/UserNamePanel/Text").GetComponent<Text>().text = MBS.WULogin.display_name;
 
             string bigNumber = GameObject.FindObjectOfType<PlayerPrefsManager>().bigNumber;
@@ -155,10 +160,10 @@ public class MainMenu : MonoBehaviour
                 GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Account/ContentPanel/Elements/NamePanel/NameHolder/InfoPanel/InfoHolder/UserName/Panel/Account_Username")
                .GetComponent<Text>().text = fullName;
             }
-           
+
             GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Account/ContentPanel/Elements/NamePanel/NameHolder/InfoPanel/InfoHolder/UserNumber/BigNumber")
             .GetComponent<Text>().text = bigNumber;
-    
+
         }
     }
 
