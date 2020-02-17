@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class MobileNotifications : MonoBehaviour
+public class MobileNotifications
 {
     public string title;
     public string body;
@@ -22,17 +21,21 @@ public class CareUpNotification : MonoBehaviour
     // On Android, this represents the notification's channel, and is required (at least one).
     // Channels defined as global constants so can be referred to from GameController.cs script when setting/sending notification
 
-    //[Header("Notifications")]
     [SerializeField]
     private GameNotificationsManager manager;
 
     [SerializeField]
+    [Tooltip("First notification after game update.")]
     private string deliverInHours;
 
     [SerializeField]
+    [Tooltip("Time interval between next notifications ")]
     private string intervalInHours;
-   
-    public List<MobileNotifications> notifications = new List<MobileNotifications>();
+
+    private const int channelsCount = 7;
+
+    [SerializeField]
+    public MobileNotifications[] notifications = new MobileNotifications[channelsCount];
 
     // Update pending notifications in the next update.
     private bool updatePendingNotifications;
@@ -43,31 +46,35 @@ public class CareUpNotification : MonoBehaviour
         {
             int channelsCount = 5;
 
+            GameNotificationChannel[] channels = new GameNotificationChannel[channelsCount];
+
             // Set up channels (mostly for Android)
             for (int i = 0; i < channelsCount; i++)
             {
-                manager.Initialize(new GameNotificationChannel($"channel{i}", "Default", "Reminder"));
+                channels[i] = new GameNotificationChannel($"channel{i}", "Default", "Reminder");
+            }
+
+            manager.Initialize(channels);
+                       
+            if (string.IsNullOrEmpty(deliverInHours))
+            {
+                Debug.LogError("Notification delivery time not set.");
             }
 
             DateTime deliveryTime = DateTime.Now.ToLocalTime();
 
             if (float.TryParse(deliverInHours, out float hours))
             {
-                deliveryTime = DateTime.Now.ToLocalTime() + TimeSpan.FromHours(hours);
+                deliveryTime = DateTime.Now.ToLocalTime() + TimeSpan.FromSeconds(hours);
             }
 
             float interval = 0;
             float.TryParse(intervalInHours, out interval);
 
-            if (string.IsNullOrEmpty(deliverInHours))
-            {
-                Debug.LogError("Notification delivery time not set.");
-            }
-
             int index;
             for (int i = 0; i < channelsCount; i++)
             {
-                index = notifications.Count < i ? i : notifications.Count - 1;
+                index = i <= notifications.Length ? i : notifications.Length - 1;
 
                 SendNotification(notifications[index].title, notifications[index].body, deliveryTime, null, true,
                     $"channel{index}", "icon_0", notifications[index].largeIconName);
@@ -212,8 +219,8 @@ public class CareUpNotification : MonoBehaviour
     {
         if (notification.Notification.Id.HasValue)
         {
-            //Debug.Log($"Notification {notification.Notification.Id.Value} title = {notification.Notification.Title}, delivery time = " +
-            //    $"{notification.Notification.DeliveryTime.Value.ToString("yy-MM-dd HH:mm:ss")}");
+            Debug.Log($"Notification {notification.Notification.Id.Value} title = {notification.Notification.Title}, delivery time = " +
+                $"{notification.Notification.DeliveryTime.Value.ToString("yy-MM-dd HH:mm:ss")}");
         }
     }
 }
