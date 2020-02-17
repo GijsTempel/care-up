@@ -122,7 +122,10 @@ public class AnimatedFingerHint : MonoBehaviour
     {
         if (cam == null)
             Init();
-        Vector3 ObjWorldPos = TargetObject.transform.position;
+        GameObject _targetObject = TargetObject;
+        if (TargetObject.transform.Find("hl") != null)
+            _targetObject = TargetObject.transform.Find("hl").gameObject;
+        Vector3 ObjWorldPos = _targetObject.transform.position;
         Vector3 ScreenPos = cam.WorldToScreenPoint(ObjWorldPos);
         MoveTo(ScreenPos);
     }
