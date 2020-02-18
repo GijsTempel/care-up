@@ -35,19 +35,18 @@ public class CareUpNotification : MonoBehaviour
     [Tooltip("Time interval between next notifications ")]
     private string intervalInHours;
 
-    [SerializeField]
-    public MobileNotifications[] notifications = new MobileNotifications[channelsCount];
-
-    // Update pending notifications in the next update.
     private bool updatePendingNotifications;
     private const int channelsCount = 10;
     private string smallIcon = "icon_0";
 
+    [SerializeField]
+    public MobileNotifications[] notifications = new MobileNotifications[channelsCount];
+     
     private void Start()
     {
         if (notifications != null)
         {
-            GameNotificationChannel[] channels = new GameNotificationChannel[channelsCount];
+            GameNotificationChannel[] channels = new GameNotificationChannel[notifications.Length];
 
             string reward;
             // Set up channels (mostly for Android)
@@ -55,6 +54,7 @@ public class CareUpNotification : MonoBehaviour
             {
                 reward = notifications[i].isRewarded ? "reward" : "";
                 channels[i] = new GameNotificationChannel($"channel{i}{reward}", "Default", "Reminder");
+                print($"channel{i}{reward}");
             }
 
             manager.Initialize(channels);
@@ -80,6 +80,7 @@ public class CareUpNotification : MonoBehaviour
                 SendNotification(notifications[i].title, notifications[i].body, deliveryTime, null, true,
                     $"channel{i}{reward}", smallIcon, notifications[i].largeIconName);
                 deliveryTime += TimeSpan.FromSeconds(interval);
+                print($"notification channel{i}{reward}");
             }
         }
     }
