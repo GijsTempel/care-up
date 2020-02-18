@@ -70,6 +70,7 @@ Zorg voor een extra katheter, urineopvangzak en materialen voor het inbrengen, v
     type="combine"
     left="water_syringe_pack"
     right=""
+    blockUnlock="liqsyropened"
     extra="Open de verpakking van de spuit met 10 ml steriel water. Laat de spuit in de verpakking"></action>
 
   <action
@@ -80,6 +81,7 @@ Zorg voor een extra katheter, urineopvangzak en materialen voor het inbrengen, v
    type="combine"
    left="lube_syringe_pack"
    right=""
+   blockUnlock="lubsyropened"
    extra="Open de verpakking van de spuit met glijmiddel. Laat de spuit nog in de verpakking"></action>
 
   <action
@@ -215,7 +217,7 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
      left="catheter_Supertubular_InHands"
      right=""
      blockUnlock="removeInnerPack"
-     blockRequired="removeOuterPack"
+     blockRequired="removeOuterPack,liqsyropened,lubsyropened"
      extra=""></action>
   
    <action
@@ -419,6 +421,7 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
   index="35"
   type="sequenceStep"
   value="TakeOffGloves"
+  blockUnlock="AllowPutOnSterileGloves"
   extra=""
   ></action>
   
@@ -442,7 +445,7 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
     type="use"
     value="SterileGloves"
     extra="Trek de steriele handschoenen aan"
-    blockRequired="WashHands2Time"
+    blockRequired="WashHands2Time,AllowPutOnSterileGloves"
     messageTitle="Aantrekken steriele handschoenen"
     messageContent="Het aantrekken van steriele handschoenen vereist enige handigheid. Voorkom tijdens het aantrekken dat de handschoenen besmet raken. In deze werkinstructie wordt de verblijfskatheter met steriele handschoenen ingebracht. Het gebruik van een steriele pincet of de binnenverpakking van de katheter is ook mogelijk."></action>
 
