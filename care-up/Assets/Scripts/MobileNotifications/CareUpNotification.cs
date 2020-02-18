@@ -35,26 +35,26 @@ public class CareUpNotification : MonoBehaviour
     [Tooltip("Time interval between next notifications ")]
     private string intervalInHours;
 
-    private const int channelsCount = 7;
-
     [SerializeField]
     public MobileNotifications[] notifications = new MobileNotifications[channelsCount];
 
     // Update pending notifications in the next update.
     private bool updatePendingNotifications;
+    private const int channelsCount = 10;
+    private string smallIcon = "icon_0";
 
     private void Start()
     {
         if (notifications != null)
         {
-            int channelsCount = 5;
-
             GameNotificationChannel[] channels = new GameNotificationChannel[channelsCount];
 
+            string reward;
             // Set up channels (mostly for Android)
-            for (int i = 0; i < channelsCount; i++)
+            for (int i = 0; i < notifications.Length; i++)
             {
-                channels[i] = new GameNotificationChannel($"channel{i}", "Default", "Reminder");
+                reward = notifications[i].isRewarded ? "reward" : "";
+                channels[i] = new GameNotificationChannel($"channel{i}{reward}", "Default", "Reminder");
             }
 
             manager.Initialize(channels);
@@ -74,17 +74,11 @@ public class CareUpNotification : MonoBehaviour
             float interval = 0;
             float.TryParse(intervalInHours, out interval);
 
-            int index;
-            string reward;
-
-            for (int i = 0; i < channelsCount; i++)
+            for (int i = 0; i < notifications.Length; i++)
             {
-                index = i <= notifications.Length ? i : notifications.Length - 1;
-                reward = notifications[index].isRewarded ? "reward" : "";
-
-                SendNotification(notifications[index].title, notifications[index].body, deliveryTime, null, true,
-                    $"channel{index}{reward}", "icon_0", notifications[index].largeIconName);
-
+                reward = notifications[i].isRewarded ? "reward" : "";
+                SendNotification(notifications[i].title, notifications[i].body, deliveryTime, null, true,
+                    $"channel{i}{reward}", smallIcon, notifications[i].largeIconName);
                 deliveryTime += TimeSpan.FromSeconds(interval);
             }
         }
