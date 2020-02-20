@@ -8,6 +8,9 @@ namespace MBS
 {
     public enum WPServerState { None, Contacting }
 
+
+
+
     public class WPServer : MonoBehaviour
     {
 
@@ -25,6 +28,11 @@ namespace MBS
                 }
                 return _instance;
             }
+        }
+
+        public void setUseOnlineURL(bool value)
+        {
+            use_online_url = value;
         }
 
         public class WPServerErrorException : Exception { public WPServerErrorException( string message ) : base( message ) { } }

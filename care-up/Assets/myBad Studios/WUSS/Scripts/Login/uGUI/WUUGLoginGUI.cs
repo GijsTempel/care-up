@@ -295,6 +295,12 @@ namespace MBS
             PlayerPrefsManager.resetPurchases = value;
         }
 
+        public void UseTestDBServerChanged()
+        {
+            bool value = panels.debug_options.transform.Find("Panel/TestServer/Toggle").GetComponent<Toggle>().isOn;
+            GameObject.FindObjectOfType<WPServer>().setUseOnlineURL(!value);
+        }
+
         public void EditCharacterChanged()
         {
             bool value = panels.debug_options.transform.Find("Panel/EditCharacter/Toggle").GetComponent<Toggle>().isOn;
