@@ -54,7 +54,7 @@ public class CareUpNotification : MonoBehaviour
             {
                 reward = notifications[i].isRewarded ? "reward" : "";
                 channels[i] = new GameNotificationChannel($"channel{i}{reward}", "Default", "Reminder");
-                print($"channel{i}{reward}");
+                //print($"channel{i}{reward}");
             }
 
             manager.Initialize(channels);
@@ -80,7 +80,7 @@ public class CareUpNotification : MonoBehaviour
                 SendNotification(notifications[i].title, notifications[i].body, deliveryTime, null, true,
                     $"channel{i}{reward}", smallIcon, notifications[i].largeIconName);
                 deliveryTime += TimeSpan.FromSeconds(interval);
-                print($"notification channel{i}{reward}");
+                //print($"notification channel{i}{reward}");
             }
         }
     }
