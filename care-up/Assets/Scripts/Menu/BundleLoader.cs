@@ -39,14 +39,9 @@ public class BundleLoader : MonoBehaviour {
 		// Or customize the URL based on your deployment or configuration
 		AssetBundleManager.SetSourceAssetBundleURL("https://leren.careup.online/AssetBundles/" + Application.version + "/");
 #endif
-        if (GameObject.Find("url_test") != null)
+        if (PlayerPrefsManager.TestBundleIPAddr != "")
         {
-            if (GameObject.Find("url_test").GetComponent<InputField>().text != "")
-            {
-
-                AssetBundleManager.SetSourceAssetBundleURL(GameObject.Find("url_test").GetComponent<InputField>().text);
-                print("____++++++++++++++++++_______  " + GameObject.Find("url_test").GetComponent<InputField>().text);
-            }
+            AssetBundleManager.SetSourceAssetBundleURL(PlayerPrefsManager.TestBundleIPAddr);
         }
   
         // Initialize AssetBundleManifest which loads the AssetBundleManifest object.
