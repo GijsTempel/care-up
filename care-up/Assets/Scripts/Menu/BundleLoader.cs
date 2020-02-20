@@ -39,10 +39,10 @@ public class BundleLoader : MonoBehaviour {
 		// Or customize the URL based on your deployment or configuration
 		AssetBundleManager.SetSourceAssetBundleURL("https://leren.careup.online/AssetBundles/" + Application.version + "/");
 #endif
+        if (PlayerPrefsManager.UseDevBundleServer)
+            AssetBundleManager.SetSourceAssetBundleURL("https://ab.3dvit.in.ua/");
         if (PlayerPrefsManager.TestBundleIPAddr != "")
-        {
             AssetBundleManager.SetSourceAssetBundleURL(PlayerPrefsManager.TestBundleIPAddr);
-        }
   
         // Initialize AssetBundleManifest which loads the AssetBundleManifest object.
         var request = AssetBundleManager.Initialize();
