@@ -33,6 +33,10 @@ namespace MBS
         public void setUseOnlineURL(bool value)
         {
             use_online_url = value;
+            if (value)
+                WPServer.GameID = 2269;
+            else
+                WPServer.GameID = 13;
         }
 
         public class WPServerErrorException : Exception { public WPServerErrorException( string message ) : base( message ) { } }
@@ -65,14 +69,14 @@ namespace MBS
         static public Action<WPServerState> OnServerStateChange;
 
         [SerializeField] eWussServerContactType post_method = default(eWussServerContactType);
-        [SerializeField, HideInInspector, WPGameId] int game_id = 1;
+        [SerializeField, HideInInspector, WPGameId] int game_id = 2269;
         [SerializeField] bool use_online_url = true;
         [SerializeField]
         string
         online_url = "http://www.mysite.com",
         offline_url = "http://localhost";
 
-        static public int GameID => Instance.game_id;
+        static public int GameID = 2269;// => Instance.game_id;
 
         public eWussServerContactType PostMethod => post_method;
 
