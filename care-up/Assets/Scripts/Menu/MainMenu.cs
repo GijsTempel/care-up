@@ -81,7 +81,7 @@ public class MainMenu : MonoBehaviour
 
             //handle updates panel
 
-            if (true)
+            if (CareUpNotification.SetNotificationReward)
             {
                 StoreViewModel.ShowRewardDialogue(reward, rewardPanel, 50);
                 CareUpNotification.SetNotificationReward = false;

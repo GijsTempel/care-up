@@ -742,7 +742,7 @@ public class HandsInventory : MonoBehaviour {
             leftHold = true;
             leftHandObject.transform.parent = (leftToolHolder == null) ?
                 GameObject.Find("toolHolder.L").transform : leftToolHolder;
-            leftHandObject.transform.localPosition = leftHandObject.SavedPosition != null ? leftHandObject.SavedPosition : Vector3.zero;
+            leftHandObject.transform.localPosition = Vector3.zero;
             leftHandObject.transform.localRotation = Quaternion.identity;
             leftHandObject.Pick();
         }
