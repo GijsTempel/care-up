@@ -79,18 +79,18 @@ public class MainMenu : MonoBehaviour
             //     text.text = "";
             // }
 
-            //handle updates panel
-
-            if (CareUpNotification.SetNotificationReward)
-            {
-                StoreViewModel.ShowRewardDialogue(reward, rewardPanel, 50);
-                CareUpNotification.SetNotificationReward = false;
-            }
+            //handle updates panel           
 
             if (EndScoreManager.showReward)
             {
                 StoreViewModel.ShowRewardDialogue(reward);
                 EndScoreManager.showReward = false;
+            }
+
+            if (CareUpNotification.showReward)
+            {
+                StoreViewModel.ShowRewardDialogue(reward, rewardPanel, 50);
+                CareUpNotification.showReward = false;
             }
 
             bool updatesSeen = PlayerPrefs.GetInt("_updatesSeen") == 1;
@@ -163,7 +163,6 @@ public class MainMenu : MonoBehaviour
 
             GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Account/ContentPanel/Elements/NamePanel/NameHolder/InfoPanel/InfoHolder/UserNumber/BigNumber")
             .GetComponent<Text>().text = bigNumber;
-
         }
     }
 

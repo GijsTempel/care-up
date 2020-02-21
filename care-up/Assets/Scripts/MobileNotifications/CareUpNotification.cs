@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class MobileNotifications
@@ -22,7 +23,7 @@ public class CareUpNotification : MonoBehaviour
     // On Android, this represents the notification's channel, and is required (at least one).
     // Channels defined as global constants so can be referred to from GameController.cs script when setting/sending notification
 
-    public static bool SetNotificationReward { get; set; } = false;
+    public static bool showReward;
 
     [SerializeField]
     private GameNotificationsManager manager;
@@ -36,12 +37,12 @@ public class CareUpNotification : MonoBehaviour
     private string intervalInHours;
 
     private bool updatePendingNotifications;
-    private const int channelsCount = 10;
+    private const int channelsCount = 5;
     private string smallIcon = "icon_0";
 
     [SerializeField]
     public MobileNotifications[] notifications = new MobileNotifications[channelsCount];
-     
+
     private void Start()
     {
         if (notifications != null)
@@ -54,7 +55,6 @@ public class CareUpNotification : MonoBehaviour
             {
                 reward = notifications[i].isRewarded ? "reward" : "";
                 channels[i] = new GameNotificationChannel($"channel{i}{reward}", "Default", "Reminder");
-                //print($"channel{i}{reward}");
             }
 
             manager.Initialize(channels);
@@ -80,7 +80,6 @@ public class CareUpNotification : MonoBehaviour
                 SendNotification(notifications[i].title, notifications[i].body, deliveryTime, null, true,
                     $"channel{i}{reward}", smallIcon, notifications[i].largeIconName);
                 deliveryTime += TimeSpan.FromSeconds(interval);
-                //print($"notification channel{i}{reward}");
             }
         }
     }

@@ -115,7 +115,7 @@ public struct GameNotificationChannel
         ShowsBadge = false;
         ShowLights = true;
         Vibrates = true;
-        HighPriority = true;
+        HighPriority = false;
         Style = NotificationStyle.Popup;
         Privacy = PrivacyMode.Public;
         VibrationPattern = null;
@@ -125,7 +125,7 @@ public struct GameNotificationChannel
     /// Initialize a new instance of <see cref="GameNotificationChannel"/>, providing the notification style
     /// and optionally all other settings.
     /// </summary>
-    public GameNotificationChannel(string id, string name, string description, NotificationStyle style, bool showsBadge = false, bool showLights = true, bool vibrates = true, bool highPriority = true, PrivacyMode privacy = PrivacyMode.Public, long[] vibrationPattern = null)
+    public GameNotificationChannel(string id, string name, string description, NotificationStyle style, bool showsBadge = false, bool showLights = true, bool vibrates = true, bool highPriority = false, PrivacyMode privacy = PrivacyMode.Public, long[] vibrationPattern = null)
     {
         Id = id;
         Name = name;

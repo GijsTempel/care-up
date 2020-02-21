@@ -145,14 +145,14 @@ public class AndroidNotificationsPlatform : IGameNotificationsPlatform<AndroidGa
     {
         if (data != null)
         {
-            // Create a new AndroidGameNotification out of the delivered notification, but only
+            if (data.Channel.Contains("reward"))
+            {
+                CareUpNotification.showReward = true;
+            }
+
+            //Create a new AndroidGameNotification out of the delivered notification, but only
             // if the event is registered
             NotificationReceived?.Invoke(new AndroidGameNotification(data.Notification, data.Id, data.Channel));
-
-            if (data.Notification.Group.Contains("reward"))
-            {
-                CareUpNotification.SetNotificationReward = true;
-            }
         }
     }
 }
