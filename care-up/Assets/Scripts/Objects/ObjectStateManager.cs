@@ -31,6 +31,8 @@ public class ObjectStateManager : MonoBehaviour {
     {
         if (animName != "")
         {
+            if (animator == null)
+                animator = GetComponent<Animator>();
             if (isLieAnim && animName != LieAnimName)
             {
                 LieAnimName = animName;

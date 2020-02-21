@@ -41,6 +41,7 @@ public class PickableObject : InteractableObject
     public string prefabOutOfHands = "";
 
     public bool destroyOnDrop = false;
+    public GameObject customGhost;
     
     protected override void Start()
     {
@@ -450,7 +451,16 @@ public class PickableObject : InteractableObject
         bool from_bundle = false;
 
         GameObject ghost = null;
-        string FullPath = "assets/resources/prefabs/" + this.name.ToLower() + ".prefab";
+        string FullPath;
+        if (customGhost!= null)
+        {
+            FullPath = "assets/resources/prefabs/" + customGhost.name.ToLower() + ".prefab";
+        }
+        else
+        {
+            FullPath = "assets/resources/prefabs/" + this.name.ToLower() + ".prefab";
+        }
+        
         UnityEngine.Object bundleObject = AssetBundleManager.GetObjectFromLoaded(FullPath);
         if (bundleObject != null)
         {
@@ -459,8 +469,15 @@ public class PickableObject : InteractableObject
         }
         else
         {
-            ghost = Instantiate(Resources.Load<GameObject>("Prefabs/" + this.name),
-                pos, rot);
+            if (customGhost != null)
+            {
+                ghost = Instantiate(Resources.Load<GameObject>("Prefabs/" + customGhost.name), pos, rot);
+            }
+            else
+            {
+                ghost = Instantiate(Resources.Load<GameObject>("Prefabs/" + this.name),
+                    pos, rot);
+            }
         }
         ghost.layer = 9; // no collisions
         ghost.GetComponent<PickableObject>().mainObject = this;

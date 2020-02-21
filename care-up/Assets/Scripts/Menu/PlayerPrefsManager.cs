@@ -29,6 +29,7 @@ public class PlayerPrefsManager : MonoBehaviour
     public static bool plusDiamonds = false;
     public static bool resetPurchases = false;
     public static string TestBundleIPAddr = "";
+    public static bool UseDevBundleServer = false;
     public static bool editCharacterOnStart = false;
     public static bool tutorialOnStart = false;
 
