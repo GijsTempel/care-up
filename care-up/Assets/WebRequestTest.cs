@@ -22,10 +22,7 @@ public class WebRequestTest : MonoBehaviour
             public T[] array;
         }
     }
-
-
-
-
+         
     [System.Serializable]
     public class SceteStoreData
     {
@@ -35,7 +32,7 @@ public class WebRequestTest : MonoBehaviour
 
     public void TestWebRequest()
     {
-        StartCoroutine(GetRequest("https://ab.3dvit.in.ua/"));
+        StartCoroutine(GetRequest("https://ab.3dvit.in.ua/?user_id=1"));
     }
 
     IEnumerator GetRequest(string uri)
@@ -44,7 +41,6 @@ public class WebRequestTest : MonoBehaviour
         {
             // Request and wait for the desired page.
             yield return webRequest.SendWebRequest();
-
             string[] pages = uri.Split('/');
             int page = pages.Length - 1;
 
@@ -52,13 +48,17 @@ public class WebRequestTest : MonoBehaviour
             {
                 Debug.Log(pages[page] + ": Error: " + webRequest.error);
             }
-            else
+            else if (webRequest.downloadHandler.text != "")
             {
-                Debug.Log(pages[page] + ":\nReceived: " + webRequest.downloadHandler.text);
+                Debug.Log(webRequest.downloadHandler.text);
                 
                 SceteStoreData[] sceteStoreData; 
                 sceteStoreData = JsonHelper.getJsonArray<SceteStoreData>(webRequest.downloadHandler.text); 
-                Debug.Log(sceteStoreData[0].product_name);
+                PlayerPrefsManager pref = GameObject.FindObjectOfType<PlayerPrefsManager>();
+                foreach(SceteStoreData ssd in sceteStoreData)
+                {
+                    pref.AddSKU(ssd.product_name);
+                }
             }
         }
     }

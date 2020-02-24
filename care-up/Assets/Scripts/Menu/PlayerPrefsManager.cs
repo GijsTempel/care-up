@@ -32,11 +32,12 @@ public class PlayerPrefsManager : MonoBehaviour
     public static bool UseDevBundleServer = false;
     public static bool editCharacterOnStart = false;
     public static bool tutorialOnStart = false;
-
     public static bool simulatePlayerActions = false;
+
     public bool VR = true;
     public bool practiceMode = true;
     public bool TextDebug = false;
+    List<string> purchasedScenes = new List<string>();
     // store value here after getting from server
     public bool tutorialCompleted;
     public static bool firstStart = true;
@@ -88,6 +89,30 @@ public class PlayerPrefsManager : MonoBehaviour
                 result += s + " geactiveerd.\n";
             return result;
         }
+    }
+    
+    public bool IsScenePurchosed(string[] SKUs)
+    {
+        foreach (string purchasedScene in purchasedScenes)
+        {
+            foreach(string sku in SKUs)
+            {
+                if (purchasedScene == sku)
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    public void AddSKU(string sku)
+    {
+        if (purchasedScenes.IndexOf(sku) < 0)
+            purchasedScenes.Add(sku);
+    }
+
+    public void ClearSKU()
+    {
+        purchasedScenes = new List<string>();
     }
 
     public void Update()

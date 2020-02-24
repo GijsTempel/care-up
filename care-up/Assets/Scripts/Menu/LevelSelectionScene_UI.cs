@@ -129,24 +129,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
             GameObject sceneUnitObject = Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/UI/SceneSelectionUnit"), protocolsTransorm);
             sceneUnitObject.name = "SceneSelectionUnit"; // i dont like that 'clone' word at the end, ugh
             LevelButton sceneUnit = sceneUnitObject.GetComponent<LevelButton>();
-            bool locked = false;
-            if (pp.subscribed)
-            {
-                sceneUnit.demoLock = false;
-            }
-            else {
-                if (!demoLock)
-                {
-                    sceneUnit.GetComponent<Image>().sprite = Resources.Load("Sprites/small_button_bg_down_g", typeof(Sprite)) as Sprite;
-                    sceneUnit.demoLock = false;
-                }
-                else
-                {
-                    locked = true;
-                    sceneUnit.GetComponent<Image>().sprite = Resources.Load("Sprites/small_button_bg_inactive", typeof(Sprite)) as Sprite;
-                    sceneUnit.demoLock = true;
-                }
-            }
+
             if (!activated && !hidden)
             {
                 // but if scene is not activated and NOT hidden either
@@ -161,6 +144,10 @@ public class LevelSelectionScene_UI : MonoBehaviour
             }
 
             // now let's fill some actual info about the scene
+            if (xmlSceneNode.Attributes["isInProducts"] != null)
+            {
+                sceneUnit.isInProducts = xmlSceneNode.Attributes["isInProducts"].Value.Split('|');
+            }
             if (xmlSceneNode.Attributes["multiple"] != null)
             {
                 sceneUnit.multiple = true;
@@ -250,12 +237,8 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 if (Mathf.FloorToInt(fscore) >= 70)
                 {
                     sceneUnit.image = completedSceneIcon;
-                    sceneUnit.transform.Find("LevelPreview").gameObject.SetActive(true);
+                    //sceneUnit.transform.Find("LevelPreview").gameObject.SetActive(true);
                     sceneUnit.transform.Find("LevelPreview").GetComponent<Image>().sprite = sceneUnit.image;
-                }
-                else
-                {
-                    sceneUnit.transform.Find("LevelPreview").gameObject.SetActive(false);
                 }
 
                 if (xmlSceneNode.Attributes["validated"] != null)
@@ -272,16 +255,14 @@ public class LevelSelectionScene_UI : MonoBehaviour
             }
 
             // leaderboard stuff
-            
+            if (pp.subscribed)
+                sceneUnit.SetLockState(false);
+            else
+                sceneUnit.SetLockState(demoLock);
             GameObject button = Instantiate<GameObject>(Resources.Load<GameObject>("NecessaryPrefabs/UI/LeaderBoardSceneButton"),
                 GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Leaderboard/ContentPanel/Scenes/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder/Protocols/content").transform);
             LeaderBoardSceneButton buttonInfo = button.GetComponent<LeaderBoardSceneButton>();
             button.transform.Find("Text").GetComponent<Text>().text = sceneUnit.displayName;
-            button.transform.Find("LevelPreview").gameObject.SetActive(false);
-
-            if (locked)
-                sceneUnit.transform.Find("LevelPreview").GetComponent<Image>().sprite = 
-                    Resources.Load("Sprites/btn_icon_lock", typeof(Sprite)) as Sprite;
 
             buttonInfo.sceneName = sceneUnit.sceneName;
             buttonInfo.multiple = sceneUnit.multiple;

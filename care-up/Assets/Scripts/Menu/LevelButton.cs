@@ -17,6 +17,7 @@ public class LevelButton : MonoBehaviour
     public bool validated;
     public string totalPoints;
     bool started = false;
+    public string[] isInProducts = new string[0];
 
     private static Transform sceneInfoPanel = default(Transform);
     private static PlayerPrefsManager manager;
@@ -48,6 +49,24 @@ public class LevelButton : MonoBehaviour
         public bool validated;
         public string totalPoints;
     };
+
+    //--------------------------
+    public void SetLockState(bool _lock)
+    {
+        demoLock = _lock;
+
+        if (demoLock && isInProducts.Length > 0)
+            if (GameObject.FindObjectOfType<PlayerPrefsManager>().IsScenePurchosed(isInProducts))
+                demoLock = false;
+
+        if (demoLock)
+        {
+           
+            GetComponent<Image>().sprite = Resources.Load("Sprites/small_button_bg_inactive", typeof(Sprite)) as Sprite;
+            transform.Find("LevelPreview").GetComponent<Image>().sprite =
+                    Resources.Load("Sprites/btn_icon_lock", typeof(Sprite)) as Sprite;
+        }
+    }
 
     public List<Info> variations = new List<Info>();
 
