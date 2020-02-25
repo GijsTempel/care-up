@@ -165,16 +165,18 @@ namespace MBS
                 }
                 else if (webRequest.downloadHandler.text != "")
                 {
-                    PlayerPrefsManager.ClearSKU();
                     Debug.Log(webRequest.downloadHandler.text);
-                    
+                    PlayerPrefsManager.ClearSKU();
                     PlayerPrefsManager.PurchasedScetesData[] sceteStoreData; 
                     sceteStoreData = JsonHelper.getJsonArray<PlayerPrefsManager.PurchasedScetesData>(webRequest.downloadHandler.text); 
                     foreach(PlayerPrefsManager.PurchasedScetesData ssd in sceteStoreData)
-                    {
                         PlayerPrefsManager.AddSKU(ssd.product_name);
-                    }
                 }
+                else
+                    PlayerPrefsManager.ClearSKU();
+
+                if (GameObject.FindObjectOfType<LevelSelectionScene_UI>() != null)
+                    GameObject.FindObjectOfType<LevelSelectionScene_UI>().RefrashSceneSelectionButtons();
             }
         }
 
