@@ -8,9 +8,6 @@ namespace MBS
 {
     public enum WPServerState { None, Contacting }
 
-
-
-
     public class WPServer : MonoBehaviour
     {
 
@@ -132,7 +129,54 @@ namespace MBS
             Action<CMLData> failedresponse = null
         ) => Instance.StartCoroutine( CallServer( action, filepath, wuss_kit, data, response, failedresponse ) );
 
+        
+        public class JsonHelper
+        {
+            public static T[] getJsonArray<T>(string json)
+            {
+                string newJson = "{ \"array\": " + json + "}";
+                Wrapper<T> wrapper = JsonUtility.FromJson<Wrapper<T>>(newJson);
+                return wrapper.array;
+            }
+        
+            [System.Serializable]
+            private class Wrapper<T>
+            {
+                public T[] array;
+            }
+        }
 
+        static public void RequestPurchases(
+            int UserID) => Instance.StartCoroutine( RequestScenePurchases( UserID ) );
+
+        static public IEnumerator RequestScenePurchases(int UserID)
+        {
+            string url = Instance.SelectedURL + "/request_purchases.php?user_id=" + UserID.ToString();
+            using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
+            {
+                // Request and wait for the desired page.
+                yield return webRequest.SendWebRequest();
+                string[] pages = url.Split('/');
+                int page = pages.Length - 1;
+
+                if (webRequest.isNetworkError)
+                {
+                    Debug.Log(pages[page] + ": Error: " + webRequest.error);
+                }
+                else if (webRequest.downloadHandler.text != "")
+                {
+                    PlayerPrefsManager.ClearSKU();
+                    Debug.Log(webRequest.downloadHandler.text);
+                    
+                    PlayerPrefsManager.PurchasedScetesData[] sceteStoreData; 
+                    sceteStoreData = JsonHelper.getJsonArray<PlayerPrefsManager.PurchasedScetesData>(webRequest.downloadHandler.text); 
+                    foreach(PlayerPrefsManager.PurchasedScetesData ssd in sceteStoreData)
+                    {
+                        PlayerPrefsManager.AddSKU(ssd.product_name);
+                    }
+                }
+            }
+        }
 
         static public IEnumerator CallServer( string action, string filepath, string wuss_kit, CMLData data, Action<CML> response, Action<CMLData> failedresponse )
         {

@@ -37,7 +37,7 @@ public class PlayerPrefsManager : MonoBehaviour
     public bool VR = true;
     public bool practiceMode = true;
     public bool TextDebug = false;
-    List<string> purchasedScenes = new List<string>();
+    static List<string> purchasedScenes = new List<string>();
     // store value here after getting from server
     public bool tutorialCompleted;
     public static bool firstStart = true;
@@ -80,6 +80,13 @@ public class PlayerPrefsManager : MonoBehaviour
     public bool muteMusicForEffect = false;
     private bool muteMusic = false;
 
+    [System.Serializable]
+    public class PurchasedScetesData
+    {
+        public int product_id;
+        public string product_name;
+    }
+
     public string ActivatedScenes
     {
         get
@@ -91,7 +98,7 @@ public class PlayerPrefsManager : MonoBehaviour
         }
     }
     
-    public bool IsScenePurchosed(string[] SKUs)
+    static public bool IsScenePurchased(string[] SKUs)
     {
         foreach (string purchasedScene in purchasedScenes)
         {
@@ -104,13 +111,13 @@ public class PlayerPrefsManager : MonoBehaviour
         return false;
     }
 
-    public void AddSKU(string sku)
+    static public void AddSKU(string sku)
     {
         if (purchasedScenes.IndexOf(sku) < 0)
             purchasedScenes.Add(sku);
     }
 
-    public void ClearSKU()
+    static public void ClearSKU()
     {
         purchasedScenes = new List<string>();
     }

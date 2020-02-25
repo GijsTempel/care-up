@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using MBS;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
+
 
 public class DatabaseManager : MonoBehaviour
 {
@@ -48,8 +50,11 @@ public class DatabaseManager : MonoBehaviour
     public static void Init()
     {
         // querry all player info here?
+        // StartCoroutine(RequestPurchases(WULogin.UID));
+        WPServer.RequestPurchases(WULogin.UID);
         WUData.FetchUserGameInfo(WULogin.UID, FetchEverything_success, -1, PostInit);
     }
+
 
     public static void Clean()
     {

@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
-using System.Collections.Generic;
 
 
 
@@ -54,10 +53,9 @@ public class WebRequestTest : MonoBehaviour
                 
                 SceteStoreData[] sceteStoreData; 
                 sceteStoreData = JsonHelper.getJsonArray<SceteStoreData>(webRequest.downloadHandler.text); 
-                PlayerPrefsManager pref = GameObject.FindObjectOfType<PlayerPrefsManager>();
                 foreach(SceteStoreData ssd in sceteStoreData)
                 {
-                    pref.AddSKU(ssd.product_name);
+                    PlayerPrefsManager.AddSKU(ssd.product_name);
                 }
             }
         }

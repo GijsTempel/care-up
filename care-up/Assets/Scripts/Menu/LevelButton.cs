@@ -56,7 +56,7 @@ public class LevelButton : MonoBehaviour
         demoLock = _lock;
 
         if (demoLock && isInProducts.Length > 0)
-            if (GameObject.FindObjectOfType<PlayerPrefsManager>().IsScenePurchosed(isInProducts))
+            if (PlayerPrefsManager.IsScenePurchased(isInProducts))
                 demoLock = false;
 
         if (demoLock)
