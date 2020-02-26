@@ -33,7 +33,7 @@ namespace MBS
             if (value)
                 WPServer.GameID = 2269;
             else
-                WPServer.GameID = 13;
+                WPServer.GameID = 2269;
         }
 
         public class WPServerErrorException : Exception { public WPServerErrorException( string message ) : base( message ) { } }
