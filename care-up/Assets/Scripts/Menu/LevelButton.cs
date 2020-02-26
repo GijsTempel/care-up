@@ -18,7 +18,7 @@ public class LevelButton : MonoBehaviour
     public string totalPoints;
     bool started = false;
     public string[] isInProducts = new string[0];
-
+    Image LevelPreview;
     private static Transform sceneInfoPanel = default(Transform);
     private static PlayerPrefsManager manager;
 
@@ -54,17 +54,30 @@ public class LevelButton : MonoBehaviour
     public void SetLockState(bool _lock)
     {
         demoLock = _lock;
+        UpdateButtonLockState();
+    }
+
+
+    public void UpdateButtonLockState()
+    { 
+        if (LevelPreview == null)
+            LevelPreview = transform.Find("LevelPreview").GetComponent<Image>();
+        bool toLock = demoLock;
 
         if (demoLock && isInProducts.Length > 0)
             if (PlayerPrefsManager.IsScenePurchased(isInProducts))
-                demoLock = false;
+                toLock = false;
 
-        if (demoLock)
+        if (toLock)
         {
-           
-            GetComponent<Image>().sprite = Resources.Load("Sprites/small_button_bg_inactive", typeof(Sprite)) as Sprite;
-            transform.Find("LevelPreview").GetComponent<Image>().sprite =
-                    Resources.Load("Sprites/btn_icon_lock", typeof(Sprite)) as Sprite;
+            GetComponent<Image>().sprite = Resources.Load("Sprites/nUI/listElement_Base_gray", typeof(Sprite)) as Sprite;
+            LevelPreview.sprite = Resources.Load("Sprites/btn_icon_lock", typeof(Sprite)) as Sprite;
+            LevelPreview.gameObject.SetActive(true);
+        }
+        else
+        {
+            GetComponent<Image>().sprite = Resources.Load("Sprites/nUI/listElement_Base", typeof(Sprite)) as Sprite;
+            LevelPreview.gameObject.SetActive(false);
         }
     }
 
@@ -74,6 +87,7 @@ public class LevelButton : MonoBehaviour
 
     private void Start()
     {
+        LevelPreview = transform.Find("LevelPreview").GetComponent<Image>();
         if (!PlayerPrefsManager.simulatePlayerActions)
             AutoPlayToggle.gameObject.SetActive(false);
 #if !(UNITY_EDITOR || DEVELOPMENT_BUILD)

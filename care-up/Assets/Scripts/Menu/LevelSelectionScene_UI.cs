@@ -22,6 +22,19 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
     private Sprite completedSceneIcon;
 
+    public void UpdateScenePurchases()
+    {
+        WPServer.RequestPurchases(WULogin.UID);
+    }
+
+    public void RefrashSceneSelectionButtons()
+    {
+        foreach(LevelButton levelButton in GameObject.FindObjectsOfType<LevelButton>())
+        {
+            levelButton.UpdateButtonLockState();
+        }
+    }
+
     private void Awake()
     {
         Transform leaderPanel = GameObject.Find("UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Leaderboard").transform;
