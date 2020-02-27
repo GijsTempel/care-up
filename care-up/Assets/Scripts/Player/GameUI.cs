@@ -157,7 +157,8 @@ public class GameUI : MonoBehaviour
         RecordsBack,
         PrescriptionBack,
         MessageTabBack,
-        Close
+        Close,
+        TalkBubble
     }
 
     public void TestOutput()
@@ -1298,6 +1299,8 @@ public class GameUI : MonoBehaviour
     public void ShowNoTargetButton(string buttonText = "")
     {
         if (decombineButton_right.activeSelf)
+            return;
+        if (noTargetButton_right.activeSelf)
             return;
         noTargetButton_right.SetActive(true);
         if (!string.IsNullOrEmpty(buttonText))
