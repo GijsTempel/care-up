@@ -1258,7 +1258,7 @@ public class GameUI : MonoBehaviour
                 zoomButtonRight.SetActive(showZoomRight);
                 noTargetButton.SetActive(showNoTarget);
 
-                if (actionManager.CheckGeneralAction() == null)
+                if (actionManager.CheckGeneralAction() == null && !decombineButton_right.activeSelf)
                     noTargetButton_right.SetActive(showNoTarget_right);
                 else
                     noTargetButton_right.SetActive(!decombineButton_right.activeSelf);
@@ -1297,6 +1297,8 @@ public class GameUI : MonoBehaviour
 
     public void ShowNoTargetButton(string buttonText = "")
     {
+        if (decombineButton_right.activeSelf)
+            return;
         noTargetButton_right.SetActive(true);
         if (!string.IsNullOrEmpty(buttonText))
             noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text = buttonText;
