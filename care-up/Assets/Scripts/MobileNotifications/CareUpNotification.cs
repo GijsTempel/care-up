@@ -142,7 +142,7 @@ public class CareUpNotification : MonoBehaviour
         notificationToDisplay.Reschedule = reschedule;
         updatePendingNotifications = true;
 
-        LogNotification(notificationToDisplay);
+        //LogNotification(notificationToDisplay);
     }
 
     /// <summary>
