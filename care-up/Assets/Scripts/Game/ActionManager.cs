@@ -170,7 +170,7 @@ public class ActionManager : MonoBehaviour
         if (playerScript == null)
             playerScript = GameObject.FindObjectOfType<PlayerScript>();
 
-        GeneralAction generalAction = actManager.CheckGeneralAction(true);
+        GeneralAction generalAction = actManager.CheckGeneralAction();
         if (generalAction != null && !playerScript.away)
         {
             actManager.NotTriggeredAction(generalAction);
