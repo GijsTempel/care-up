@@ -157,7 +157,8 @@ public class GameUI : MonoBehaviour
         RecordsBack,
         PrescriptionBack,
         MessageTabBack,
-        Close
+        Close,
+        TalkBubble
     }
 
     public void TestOutput()
@@ -212,7 +213,7 @@ public class GameUI : MonoBehaviour
                 bool skipBlocks = false;
                 if (GameObject.FindObjectOfType<PlayerPrefsManager>() != null)
                     skipBlocks = !GameObject.FindObjectOfType<PlayerPrefsManager>().practiceMode;
-                generalAction = actionManager.CheckGeneralAction(skipBlocks);
+                generalAction = actionManager.CheckGeneralAction();
             }
         }
 
@@ -1258,7 +1259,7 @@ public class GameUI : MonoBehaviour
                 zoomButtonRight.SetActive(showZoomRight);
                 noTargetButton.SetActive(showNoTarget);
 
-                if (actionManager.CheckGeneralAction(!practiceMode) == null)
+                if (actionManager.CheckGeneralAction() == null && !decombineButton_right.activeSelf)
                     noTargetButton_right.SetActive(showNoTarget_right);
                 else
                     noTargetButton_right.SetActive(!decombineButton_right.activeSelf);
@@ -1297,6 +1298,12 @@ public class GameUI : MonoBehaviour
 
     public void ShowNoTargetButton(string buttonText = "")
     {
+        if (decombineButton_right.activeSelf)
+            return;
+        if (!handsInventory.RightHandEmpty())
+            if (actionManager.CompareUseOnInfo(handsInventory.rightHandObject.name, "", "", true))
+                return;
+        //if (noTargetButton_right.activeSelf)
         noTargetButton_right.SetActive(true);
         if (!string.IsNullOrEmpty(buttonText))
             noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text = buttonText;
