@@ -213,7 +213,7 @@ public class GameUI : MonoBehaviour
                 bool skipBlocks = false;
                 if (GameObject.FindObjectOfType<PlayerPrefsManager>() != null)
                     skipBlocks = !GameObject.FindObjectOfType<PlayerPrefsManager>().practiceMode;
-                generalAction = actionManager.CheckGeneralAction(skipBlocks);
+                generalAction = actionManager.CheckGeneralAction();
             }
         }
 
@@ -1300,8 +1300,10 @@ public class GameUI : MonoBehaviour
     {
         if (decombineButton_right.activeSelf)
             return;
-        if (noTargetButton_right.activeSelf)
-            return;
+        if (!handsInventory.RightHandEmpty())
+            if (actionManager.CompareUseOnInfo(handsInventory.rightHandObject.name, "", "", true))
+                return;
+        //if (noTargetButton_right.activeSelf)
         noTargetButton_right.SetActive(true);
         if (!string.IsNullOrEmpty(buttonText))
             noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text = buttonText;

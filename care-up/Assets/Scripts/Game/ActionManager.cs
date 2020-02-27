@@ -795,11 +795,6 @@ public class ActionManager : MonoBehaviour
         List<Action> list = !skipBlocks ? UnlockedIncompletedActions : IncompletedActions;
         foreach (Action a in list)
         {
-            if (a.Type == ActionType.General)
-            {
-                GeneralAction action = (GeneralAction)a;
-                return action.ButtonText;
-            }
             if (a.Type == ActionType.ObjectUse)
             {
                 UseAction useA = (UseAction)a;
@@ -817,6 +812,11 @@ public class ActionManager : MonoBehaviour
                 {
                     return useOnA.buttonText;
                 }
+            }
+            else if (a.Type == ActionType.General && !skipBlocks)
+            {
+                GeneralAction action = (GeneralAction)a;
+                return action.ButtonText;
             }
         }
 
