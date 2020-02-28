@@ -169,7 +169,7 @@ public class EndScoreManager : MonoBehaviour
                 if (score >= 2.0f)
                     starsFolder.transform.Find("Star2").GetComponent<Image>().sprite = fullStar;
                 if (score >= 3.0f)
-                    starsFolder.transform.Find("Star2").GetComponent<Image>().sprite = fullStar;
+                    starsFolder.transform.Find("Star3").GetComponent<Image>().sprite = fullStar;
             }
             else if (SceneManager.GetActiveScene().name == "EndScore_test")
             {
