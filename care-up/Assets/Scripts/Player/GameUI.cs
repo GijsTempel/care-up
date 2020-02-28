@@ -1309,7 +1309,7 @@ public class GameUI : MonoBehaviour
             noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text = buttonText;
         else
             noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text =
-                actionManager.CurrentButtonText(null, true);
+                actionManager.CurrentButtonText(null);
     }
 
     public void UpdateWalkToGtoupUI(bool value)
