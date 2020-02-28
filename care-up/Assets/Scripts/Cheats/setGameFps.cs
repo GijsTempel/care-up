@@ -8,7 +8,7 @@ public class setGameFps : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-#if !(UNITY_EDITOR || DEVELOPMENT_BUILD)
+#if (UNITY_EDITOR)
         if (frameRate != null || frameRate !=0 || frameRate>0)
         {
             Application.targetFrameRate = frameRate;
