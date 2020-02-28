@@ -68,7 +68,7 @@ public class CareUpNotification : MonoBehaviour
 
             if (float.TryParse(deliverInHours, out float hours))
             {
-                deliveryTime = DateTime.Now.ToLocalTime() + TimeSpan.FromSeconds(hours);
+                deliveryTime = DateTime.Now.ToLocalTime() + TimeSpan.FromHours(hours);
             }
 
             float interval = 0;
@@ -79,7 +79,7 @@ public class CareUpNotification : MonoBehaviour
                 reward = notifications[i].isRewarded ? "reward" : "";
                 SendNotification(notifications[i].title, notifications[i].body, deliveryTime, null, true,
                     $"channel{i}{reward}", smallIcon, notifications[i].largeIconName);
-                deliveryTime += TimeSpan.FromSeconds(interval);
+                deliveryTime += TimeSpan.FromHours(interval);
             }
         }
     }
