@@ -83,7 +83,6 @@ public class PlayerPrefsManager : MonoBehaviour
     [System.Serializable]
     public class PurchasedScetesData
     {
-        public int product_id;
         public string product_name;
     }
 
