@@ -150,7 +150,6 @@ public class SelectDialogue : MonoBehaviour
 
     public void ButtonClick(int num)
     {
-        print(options[num].text);
         sqButtons[num].interactable = false;
 
         options[num].function(options[num].attribute, options[num].additional, options[num].question, options[num].audio);

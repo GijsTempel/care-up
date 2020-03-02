@@ -8,6 +8,12 @@ public class ScoreLine : MonoBehaviour
 
     public void SetScoreLine(string name, string score, int i, string uid = "")
     {
+        if (score == "0")
+        {
+            score = "";
+            name = "";
+        }
+
         transform.Find("name").GetComponent<Text>().text = name;
         transform.Find("score/Text").GetComponent<Text>().text = score;
 

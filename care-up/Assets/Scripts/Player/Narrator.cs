@@ -1,17 +1,17 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 /// <summary>
 /// Narrator class, that plays audiofile as playing 'thinks' about smth
 /// </summary>
 [RequireComponent(typeof(AudioSource))]
-public class Narrator : MonoBehaviour {
-
+public class Narrator : MonoBehaviour
+{
     private static AudioSource[] sources;
     private static AudioSource playerSource;
+    private static string currentAudioClip;
 
-    void Start() {
-
+    void Start()
+    {
         if (sources == null)
         {
             sources = gameObject.GetComponents<AudioSource>();
@@ -22,6 +22,7 @@ public class Narrator : MonoBehaviour {
             }
             else
             {
+                currentAudioClip = sources[0].name;
                 playerSource = sources[0];
             }
         }
@@ -50,6 +51,7 @@ public class Narrator : MonoBehaviour {
     /// <returns>True if played</returns>
     public static bool PlaySound(string sound, float volume = 1.0f)
     {
+        playerSource.mute = false;
         if (sound == "WrongAction")
         {
             AudioClip clip = Resources.Load<AudioClip>("Audio/WA1-1");
@@ -59,11 +61,12 @@ public class Narrator : MonoBehaviour {
             }
             else
             {
+                currentAudioClip = "WA1-1";
                 PlayDialogueSound(clip);
             }
             return true;
         }
-        
+
         foreach (AudioSource src in sources)
         {
             if (src.isPlaying || src == playerSource)
@@ -96,6 +99,16 @@ public class Narrator : MonoBehaviour {
     /// <returns>True if played</returns>
     public static bool PlayDialogueSound(AudioClip sound, float volume = 1.0f)
     {
+        if (sound != null)
+        {
+            if (playerSource.isPlaying && (currentAudioClip == "WA1-1") && (sound.name != "WA1-1"))
+            {
+                playerSource.mute = true;
+                playerSource = sources[sources.Length - 1];
+                playerSource.PlayOneShot(sound, volume);
+                return true;
+            }
+        }
         if (playerSource.isPlaying)
         {
             Debug.LogWarning("Player is already saying something.");
@@ -103,15 +116,20 @@ public class Narrator : MonoBehaviour {
         }
         else
         {
+            if (sound != null)
+            {
+                currentAudioClip = sound.name;
+            }
             playerSource.PlayOneShot(sound, volume);
             return true;
         }
-
     }
 
     // checks if hint already playing to avoid multiple at same time
     public static bool PlayHintSound(string sound, float volume = 1.0f)
     {
+        playerSource.mute = false;
+
         if (playerSource.isPlaying)
         {
             Debug.Log("Hint already playing");
@@ -126,6 +144,7 @@ public class Narrator : MonoBehaviour {
             }
             else
             {
+                currentAudioClip = sound;
                 playerSource.PlayOneShot(clip, volume);
             }
 

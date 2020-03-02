@@ -110,7 +110,6 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
     extra="Vraag de cliënt het onderlichaam te ontbloten en op de rug te gaan liggen met de benen gespreid en de knieën opgetrokken"
     blockUnlock="patient lay down"
     messageTitle="Privacy van de cliënt"
-    secondPlace="PatientPos"
     messageContent="Denk tijdens het zorg verlenen altijd aan de privacy van de cliënt. Zorg ervoor dat de cliënt zich veilig en geborgen voelt door bijvoorbeeld de gordijnen dicht te trekken."></action>
 
   <action
@@ -292,6 +291,7 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
    type="sequenceStep"
    value="PullGently"
    extra=""
+  
    ></action>
 
   <action
@@ -322,6 +322,9 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
    type="sequenceStep"
    value="CoverInsertion"
    extra=""
+   messageTitle="Sluiting fistel"
+   messageContent="Na het verwijderen van een suprapubische katheter moet er zo snel mogelijk een nieuwe worden ingebracht. Dit moet omdat de fistel sluit binnen 1 tot 6 uur na het verwijderen van de katheter. Uit praktijkervaring blijkt dat bij sommige clïënten de fistel binnen enkele minuten niet meer toegankelijk is. 
+   De cliënt moet thuis een reservekather hebben en moet weten hoe te handelen bij het uitvallen van de katheter."
    ></action>
 
   <action
@@ -527,6 +530,7 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
     type="sequenceStep"
     value="InjectLiquid"
     extra=""
+    encounter="1"
   ></action>
 
   <action
@@ -636,6 +640,7 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
  index="56"
  type="sequenceStep"
  value="TakeOffSterileGloves"
+ blockUnlock ="AllowToCleanWorkfield"
  extra=""
   ></action>
 
@@ -646,6 +651,7 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
      index="57"
      type="use"
      value="WorkField"
+     blockRequired="AllowToCleanWorkfield"
      extra=""
      />
   

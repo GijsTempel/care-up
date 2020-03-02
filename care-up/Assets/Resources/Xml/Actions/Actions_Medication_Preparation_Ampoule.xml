@@ -36,20 +36,6 @@
   ></action>
 
   <action
-  index="2"
-  points="1"
-  description="Trek handschoenen uit en gooi ze in de afvalbak"
-  type="general"
-  item=""
-  action="TakeOffGloves"
-  buttonText="Trek handschoenen uit "
-  blockRequired="AllowTakeOffGloves, GlovesTakenOn"
-  blockUnlock="CleanWorkfield"
-  ></action>
-
-
-
-  <action
     points="2"
     description="Controleer cliëntgegevens"
     audioHint="Injection/H3-2"
@@ -250,6 +236,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     buttonText="Ontluchten"
     extra="Ontlucht de opzuignaald tot er een druppel vloeistof aan de punt van de opzuignaald zichtbaar wordt. Ontlucht, wanneer geen opzuignaald gebruikt wordt, de injectienaald niet. De hoeveelheid lucht die ingespoten wordt (= inhoud van de injectienaald) is verwaarloosbaar klein."
     blockRequired="UnAirSyringe"
+    blockUnlock="UnAirSyringeDone"
   ></action>
 
   <action
@@ -299,7 +286,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     item=""
     action="TakeOffGloves"
     buttonText="Trek handschoenen uit "
-    blockRequired="AllowTakeOffGloves, GlovesTakenOn"
+    blockRequired="AllowTakeOffGloves, GlovesTakenOn, UnAirSyringeDone"
     blockUnlock="CleanWorkfield"
   ></action>
   
