@@ -10,6 +10,8 @@ public class Narrator : MonoBehaviour
     private static AudioSource playerSource;
     private static string currentAudioClip;
 
+    private static AudioSource additionalPlayerSource;
+
     void Start()
     {
         if (sources == null)
@@ -25,6 +27,8 @@ public class Narrator : MonoBehaviour
                 currentAudioClip = sources[0].name;
                 playerSource = sources[0];
             }
+
+            additionalPlayerSource = gameObject.AddComponent<AudioSource>();
         }
         else
         {
@@ -104,8 +108,8 @@ public class Narrator : MonoBehaviour
             if (playerSource.isPlaying && (currentAudioClip == "WA1-1") && (sound.name != "WA1-1"))
             {
                 playerSource.mute = true;
-                playerSource = sources[sources.Length - 1];
-                playerSource.PlayOneShot(sound, volume);
+                //playerSource = sources[sources.Length - 1];
+                additionalPlayerSource.PlayOneShot(sound, volume);
                 return true;
             }
         }
