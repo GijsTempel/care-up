@@ -1,25 +1,36 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class ObjectStateManager : MonoBehaviour {
-    Animator animator;
-    PlayerAnimationManager playerAnimationManager;
-    public string LieAnimName = "";
-    public string HoldAnimName = "";
-    public float HoldAnimValue = 0f;
-    float LieAnimValue = 0f;
-    public bool LockHoldState = true;
-    public bool follow_left = true;
+public class ObjectStateManager : MonoBehaviour
+{
+    public string lieAnimName = "";
+    public string holdAnimName = "";
+    public float holdAnimValue = 0f;
+    public bool lockHoldState = true;
+    public bool followLeft = true;
     public bool isActive = true;
     public bool followHoldingHand = true;
 
+    private float lieAnimValue = 0f;
+    private Animator animator;
+    private PlayerAnimationManager playerAnimationManager;
 
-    // Use this for initialization
+    private bool IsInHands
+    {
+        get
+        {
+            if (transform.parent == null)
+            {
+                return false;
+            }
+            return (transform.parent.name == "toolHolder.L" || transform.parent.name == "toolHolder.R");
+        }
+    }
 
-    void Start () {
+    void Start()
+    {
         animator = GetComponent<Animator>();
         playerAnimationManager = GameObject.FindObjectOfType<PlayerAnimationManager>();
+
         if (isActive)
         {
             animator.speed = 0;
@@ -27,51 +38,44 @@ public class ObjectStateManager : MonoBehaviour {
     }
 
     public void SetAnimation(bool isLieAnim = true, string animName = "")
-
     {
         if (animName != "")
         {
             if (animator == null)
                 animator = GetComponent<Animator>();
-            if (isLieAnim && animName != LieAnimName)
+
+            if (isLieAnim && animName != lieAnimName)
             {
-                LieAnimName = animName;
-                if (!isInHands())
+                lieAnimName = animName;
+
+                if (!IsInHands)
                 {
-                    animator.Play(LieAnimName, 0, LieAnimValue);
+                    animator.Play(lieAnimName, 0, lieAnimValue);
                 }
             }
-            else if (!isLieAnim && animName != HoldAnimName)
+            else if (!isLieAnim && animName != holdAnimName)
             {
-                HoldAnimName = animName;
+                holdAnimName = animName;
                 print(animName);
-                if (isInHands())
+
+                if (IsInHands)
                 {
-                    animator.Play(HoldAnimName, 0, HoldAnimValue);
+                    animator.Play(holdAnimName, 0, holdAnimValue);
                 }
             }
         }
     }
 
-
-    bool isInHands()
+    void Update()
     {
-        if (transform.parent == null)
-        {
-            return false;
-        }
-        return (transform.parent.name == "toolHolder.L" || transform.parent.name == "toolHolder.R");
-    }
-
-
-	void Update () {
-        string anim_name = LieAnimName;
-        float anim_value = LieAnimValue;
+        string animationName = lieAnimName;
+        float animationValue = lieAnimValue;
 
         if (isActive)
         {
             animator.speed = 0;
-            if (isInHands())
+
+            if (IsInHands)
             {
                 bool f_left = true;
 
@@ -81,46 +85,45 @@ public class ObjectStateManager : MonoBehaviour {
                 }
                 else
                 {
-                    f_left = follow_left;
+                    f_left = followLeft;
                 }
-
-
 
                 if (f_left)
                 {
-                    anim_name = HoldAnimName;
-                    if (!LockHoldState)
+                    animationName = holdAnimName;
+                    if (!lockHoldState)
                     {
-                        HoldAnimValue = playerAnimationManager.leftModifier02;
+                        holdAnimValue = playerAnimationManager.leftModifier02;
                     }
-                    anim_value = HoldAnimValue;
+                    animationValue = holdAnimValue;
                 }
                 else
                 {
-                    anim_name = HoldAnimName;
-                    if (!LockHoldState)
+                    animationName = holdAnimName;
+
+                    if (!lockHoldState)
                     {
-                        HoldAnimValue = playerAnimationManager.rightModifier02;
+                        holdAnimValue = playerAnimationManager.rightModifier02;
                     }
-                    anim_value = HoldAnimValue;
+                    animationValue = holdAnimValue;
                 }
-                animator.Play(anim_name, 0, anim_value);
+                animator.Play(animationName, 0, animationValue);
             }
-            else if (!LockHoldState)
+            else if (!lockHoldState)
             {
-                anim_value = playerAnimationManager.rightModifier02;
-                LieAnimValue = anim_value;
-                if (follow_left)
+                animationValue = playerAnimationManager.rightModifier02;
+                lieAnimValue = animationValue;
+
+                if (followLeft)
                 {
-                    anim_value = playerAnimationManager.leftModifier02;
+                    animationValue = playerAnimationManager.leftModifier02;
                 }
-                animator.Play(anim_name, 0, anim_value);
+                animator.Play(animationName, 0, animationValue);
             }
         }
         else
         {
             animator.speed = 1.0f;
         }
-
     }
 }

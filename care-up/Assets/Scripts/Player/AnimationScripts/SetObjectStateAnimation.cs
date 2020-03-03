@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SetObjectStateAnimation : StateMachineBehaviour
 {
-
     public enum Hand
     {
         No,
@@ -26,39 +23,33 @@ public class SetObjectStateAnimation : StateMachineBehaviour
         NotFallow
     };
 
-
-
-    public string ObjectName = "";
-    public Hand HandToSwitch;
-    public AnimationType AnimationToChange;
-    public FollowStates ToFollowHoldingHand;
-    public string NewAnimationName = "";
+    public string objectName = "";
+    public Hand handToSwitch;
+    public AnimationType animationToChange;
+    public FollowStates toFollowHoldingHand;
+    public string newAnimationName = "";
+    public int actionFrame;
 
     protected float frame = 0f;
     protected float prevFrame = 0f;
-    public int ActionFrame;
-
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (ActionFrame == 0)
+        if (actionFrame == 0)
         {
-            set_set();
+            SetStateAnimation();
         }
         frame = 0f;
         prevFrame = 0f;
     }
 
-
-
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (animator.speed != 0)
         {
-            if (PlayerAnimationManager.CompareFrames(frame, prevFrame, ActionFrame))
+            if (PlayerAnimationManager.CompareFrames(frame, prevFrame, actionFrame))
             {
-                set_set();
-               
+                SetStateAnimation();
             }
 
             prevFrame = frame;
@@ -66,51 +57,40 @@ public class SetObjectStateAnimation : StateMachineBehaviour
         }
     }
 
-    void set_set()
+    void SetStateAnimation()
     {
-        if (GameObject.Find(ObjectName) != null)
+        if (GameObject.Find(objectName) != null)
         {
-           
-            if (GameObject.Find(ObjectName).GetComponent<ObjectStateManager>() != null)
+            if (GameObject.Find(objectName).GetComponent<ObjectStateManager>() != null)
             {
-                ObjectStateManager obj = GameObject.Find(ObjectName).GetComponent<ObjectStateManager>();
+                ObjectStateManager obj = GameObject.Find(objectName).GetComponent<ObjectStateManager>();
 
-
-                if (ToFollowHoldingHand != SetObjectStateAnimation.FollowStates.None)
+                if (toFollowHoldingHand != FollowStates.None)
                 {
-                    obj.followHoldingHand = ToFollowHoldingHand == SetObjectStateAnimation.FollowStates.Fallow;
+                    obj.followHoldingHand = toFollowHoldingHand == FollowStates.Fallow;
                 }
 
-                if (HandToSwitch == SetObjectStateAnimation.Hand.Left)
+                if (handToSwitch == Hand.Left)
                 {
-                    obj.follow_left = true;
+                    obj.followLeft = true;
                 }
-                else if (HandToSwitch == SetObjectStateAnimation.Hand.Right)
+                else if (handToSwitch == Hand.Right)
                 {
-                    obj.follow_left = false;
+                    obj.followLeft = false;
                 }
 
-                if (NewAnimationName != "" && AnimationToChange != SetObjectStateAnimation.AnimationType.None)
+                if (newAnimationName != "" && animationToChange != AnimationType.None)
                 {
-
-                    if (AnimationToChange == SetObjectStateAnimation.AnimationType.Lie)
+                    if (animationToChange == AnimationType.Lie)
                     {
-                        obj.SetAnimation(true, NewAnimationName);
+                        obj.SetAnimation(true, newAnimationName);
                     }
                     else
                     {
-                        obj.SetAnimation(false, NewAnimationName);
+                        obj.SetAnimation(false, newAnimationName);
                     }
-
                 }
             }
         }
     }
-
-
-    public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-
-    }
-
 }
