@@ -81,15 +81,21 @@ public class WorkField : UsableObject
         ActionManager.BuildRequirements();
     }
 
+    private int frames = 0;
     protected override void Update()
     {
-        base.Update();
-
-        if (/*rend.material.shader == onMouseOverShader && */
-            !actionManager.CompareUseObject("WorkField"))
+        frames++;
+        if (frames % 30 == 0)
         {
-            SetShaderTo(onMouseExitShader);
-            itemDescription.SetActive(false);
+            base.Update();
+
+            if (/*rend.material.shader == onMouseOverShader && */
+                !actionManager.CompareUseObject("WorkField"))
+            {
+                //SetShaderTo(onMouseExitShader);
+                itemDescription.SetActive(false);
+            }
         }
+
     }
 }
