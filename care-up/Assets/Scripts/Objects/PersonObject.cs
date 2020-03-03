@@ -72,7 +72,7 @@ public class PersonObject : InteractableObject
 
     protected override void Update()
     {
-        CallerUpdate();
+        /*CallerUpdate();
         callers.Clear();
 
         if (inhaling)
@@ -95,7 +95,7 @@ public class PersonObject : InteractableObject
                 }
             }
             transform.localScale = Vector3.one * inhaleCounter;
-        }
+        }*/
     }
 
     public virtual void Talk(string topic = "", string audio = "")
