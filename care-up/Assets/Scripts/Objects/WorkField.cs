@@ -93,7 +93,7 @@ public class WorkField : UsableObject
                 !actionManager.CompareUseObject("WorkField"))
             {
                 //SetShaderTo(onMouseExitShader);
-                itemDescription.SetActive(false);
+                //itemDescription.SetActive(false);
             }
         }
 

@@ -185,7 +185,6 @@ public class InteractableObject : MonoBehaviour {
                             //SetShaderTo(onMouseExitShader);
                             gameUI__.RemoveHighlight("hl", transform.name);
                             hasHighlight = false;
-
                             itemDescription.SetActive(false);
                         }
                     }
@@ -200,6 +199,8 @@ public class InteractableObject : MonoBehaviour {
 
                         if (!selectedIsInteractable)
                         {
+                            //print(name);
+
                             itemDescription.SetActive(false);
                         }
                     }
