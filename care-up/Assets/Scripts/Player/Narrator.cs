@@ -108,7 +108,6 @@ public class Narrator : MonoBehaviour
             if (playerSource.isPlaying && (currentAudioClip == "WA1-1") && (sound.name != "WA1-1"))
             {
                 playerSource.mute = true;
-                //playerSource = sources[sources.Length - 1];
                 additionalPlayerSource.PlayOneShot(sound, volume);
                 return true;
             }
