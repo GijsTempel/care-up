@@ -8,11 +8,13 @@ public class ObjectStateManager : MonoBehaviour {
     public string LieAnimName = "";
     public string HoldAnimName = "";
     public float HoldAnimValue = 0f;
-    float LieAnimValue = 0f;
+    public float LieAnimValue = 0f;
     public bool LockHoldState = true;
     public bool follow_left = true;
     public bool isActive = true;
     public bool followHoldingHand = true;
+    public bool ControlSpeedWithParameter = false;
+
 
 
     // Use this for initialization
@@ -20,9 +22,13 @@ public class ObjectStateManager : MonoBehaviour {
     void Start () {
         animator = GetComponent<Animator>();
         playerAnimationManager = GameObject.FindObjectOfType<PlayerAnimationManager>();
+
         if (isActive)
         {
-            animator.speed = 0;
+            if (ControlSpeedWithParameter)
+                animator.SetFloat("AnimSpeed", 0f);
+            else
+                animator.speed = 0f;
         }
     }
 
@@ -62,15 +68,18 @@ public class ObjectStateManager : MonoBehaviour {
         }
         return (transform.parent.name == "toolHolder.L" || transform.parent.name == "toolHolder.R");
     }
-
-
 	void Update () {
         string anim_name = LieAnimName;
         float anim_value = LieAnimValue;
 
         if (isActive)
         {
-            animator.speed = 0;
+            // animator.speed = 0;
+            if (ControlSpeedWithParameter)
+                animator.SetFloat("AnimSpeed", 0f);
+            else
+                animator.speed = 0f;
+
             if (isInHands())
             {
                 bool f_left = true;
@@ -83,9 +92,6 @@ public class ObjectStateManager : MonoBehaviour {
                 {
                     f_left = follow_left;
                 }
-
-
-
                 if (f_left)
                 {
                     anim_name = HoldAnimName;
@@ -119,7 +125,10 @@ public class ObjectStateManager : MonoBehaviour {
         }
         else
         {
-            animator.speed = 1.0f;
+            if (ControlSpeedWithParameter)
+                animator.SetFloat("AnimSpeed", 1f);
+            else
+                animator.speed = 1f;
         }
 
     }
