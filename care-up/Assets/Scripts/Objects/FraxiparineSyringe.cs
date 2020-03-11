@@ -69,10 +69,8 @@ public class FraxiparineSyringe : PickableObjectWithInfo
         transparencyFix = true;
     }
 
-    protected override void Update()
-    {
-        base.Update();
-
+    protected void Update()
+    {     
         if (updatePlunger)
         {
             plunger.localPosition = new Vector3(

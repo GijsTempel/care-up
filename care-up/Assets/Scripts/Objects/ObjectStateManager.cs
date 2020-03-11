@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class ObjectStateManager : MonoBehaviour {
+public class ObjectStateManager : MonoBehaviour
+{
     Animator animator;
     PlayerAnimationManager playerAnimationManager;
     public string LieAnimName = "";
@@ -14,10 +13,8 @@ public class ObjectStateManager : MonoBehaviour {
     public bool isActive = true;
     public bool followHoldingHand = true;
 
-
-    // Use this for initialization
-
-    void Start () {
+    void Start()
+    {
         animator = GetComponent<Animator>();
         playerAnimationManager = GameObject.FindObjectOfType<PlayerAnimationManager>();
         if (isActive)
@@ -27,7 +24,6 @@ public class ObjectStateManager : MonoBehaviour {
     }
 
     public void SetAnimation(bool isLieAnim = true, string animName = "")
-
     {
         if (animName != "")
         {
@@ -36,7 +32,7 @@ public class ObjectStateManager : MonoBehaviour {
             if (isLieAnim && animName != LieAnimName)
             {
                 LieAnimName = animName;
-                if (!isInHands())
+                if (!IsInHands)
                 {
                     animator.Play(LieAnimName, 0, LieAnimValue);
                 }
@@ -45,7 +41,7 @@ public class ObjectStateManager : MonoBehaviour {
             {
                 HoldAnimName = animName;
                 print(animName);
-                if (isInHands())
+                if (IsInHands)
                 {
                     animator.Play(HoldAnimName, 0, HoldAnimValue);
                 }
@@ -53,25 +49,27 @@ public class ObjectStateManager : MonoBehaviour {
         }
     }
 
-
-    bool isInHands()
+    private bool IsInHands
     {
-        if (transform.parent == null)
+        get
         {
-            return false;
+            if (transform.parent == null)
+            {
+                return false;
+            }
+            return transform.parent.name == "toolHolder.L" || transform.parent.name == "toolHolder.R";
         }
-        return (transform.parent.name == "toolHolder.L" || transform.parent.name == "toolHolder.R");
     }
 
-
-	void Update () {
+    void Update()
+    {
         string anim_name = LieAnimName;
         float anim_value = LieAnimValue;
 
         if (isActive)
         {
             animator.speed = 0;
-            if (isInHands())
+            if (IsInHands)
             {
                 bool f_left = true;
 
@@ -83,8 +81,6 @@ public class ObjectStateManager : MonoBehaviour {
                 {
                     f_left = follow_left;
                 }
-
-
 
                 if (f_left)
                 {
@@ -121,6 +117,5 @@ public class ObjectStateManager : MonoBehaviour {
         {
             animator.speed = 1.0f;
         }
-
     }
 }

@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Xml;
-using UnityEngine.UI;
 
 /// <summary>
 /// Player can perform Talk action to this object.
@@ -16,7 +15,7 @@ public class PersonObject : InteractableObject
     public bool allowToTalk = true;
 
     public List<string> dialogueXmls;
-    public  int currentDialogueIndex = 0;
+    public int currentDialogueIndex = 0;
 
     private List<SelectDialogue.DialogueOption> optionsList;
 
@@ -70,7 +69,7 @@ public class PersonObject : InteractableObject
         return false;
     }
 
-    protected override void Update()
+    protected virtual void Update()
     {
         CallerUpdate();
         callers.Clear();
@@ -110,7 +109,7 @@ public class PersonObject : InteractableObject
             switch (topic)
             {
                 case "DoubleCheck":
-                   this.GetComponent<MoveToPoint>().toWalk = true;
+                    this.GetComponent<MoveToPoint>().toWalk = true;
                     break;
                 default:
                     break;
@@ -253,41 +252,6 @@ public class PersonObject : InteractableObject
 
             bool selectedIsInteractable = (controls.SelectedObject != null && controls.CanInteract &&
                 controls.SelectedObject.GetComponent<InteractableObject>() != null);
-            if (flag && !cameraMode.animating)
-            {
-                if (controls.CanInteract)
-                {                   
-                    if (!itemDescription.activeSelf)
-                    {
-                        itemDescription.SetActive(true);
-                    }
-
-                    itemDescription.GetComponentInChildren<Text>().text = (description == "") ? name : description;
-                }
-                else if (!controls.CanInteract)
-                {
-                    SetShaderTo(onMouseExitShader);
-                    itemDescription.SetActive(false);
-                }
-            }
-            else
-            {               
-                if (!selectedIsInteractable)
-                {
-                    itemDescription.SetActive(false);
-                }
-            }
-        }
-
-        if (cameraMode.animating)
-        {
-            SetShaderTo(onMouseExitShader);
-            itemDescription.SetActive(false);
-        }
-
-        if (itemDescription.activeSelf && !player.itemControls.gameObject.activeSelf)
-        {
-            itemDescription.transform.GetChild(0).transform.position = Input.mousePosition + new Vector3(50.0f, 25.0f);
         }
     }
 

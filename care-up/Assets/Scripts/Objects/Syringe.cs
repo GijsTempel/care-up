@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Syringe : PickableObjectWithInfo {
-    
+public class Syringe : PickableObjectWithInfo
+{
+
     public bool updatePlunger = false;
     public bool updateProtector = false;
 
@@ -45,9 +46,7 @@ public class Syringe : PickableObjectWithInfo {
 
     protected override void Update()
     {
-        base.Update();
-
-        if ( updatePlunger )
+        if (updatePlunger)
         {
             float plunger_pos = 0f;
             if (leftControlBone != null)
@@ -60,7 +59,7 @@ public class Syringe : PickableObjectWithInfo {
             }
             plunger.localPosition = new Vector3(
                 plunger.localPosition.x,
-                
+
                 Mathf.Lerp(-0.013f, 0.06f, plunger_pos),
                 plunger.localPosition.z);
         }
@@ -69,7 +68,7 @@ public class Syringe : PickableObjectWithInfo {
         {
             if (protector != null)
             {
-                protector.localRotation = Quaternion.Euler(0, 0, 
+                protector.localRotation = Quaternion.Euler(0, 0,
                     -2.0f * Mathf.Rad2Deg * rightControlBone.localPosition.y);
             }
         }
@@ -116,8 +115,8 @@ public class Syringe : PickableObjectWithInfo {
             {
                 if (actionManager.CompareUseOnInfo("SyringeWithInjectionNeedleCap", "Patient"))
                 {
-					string triggerName = "";
-					
+                    string triggerName = "";
+
                     actionManager.OnUseOnAction("SyringeWithInjectionNeedleCap", "Patient");
                     if (SceneManager.GetActiveScene().name == "Injection" ||
                         SceneManager.GetActiveScene().name == "Injection_ampoule" ||
@@ -128,8 +127,8 @@ public class Syringe : PickableObjectWithInfo {
                         target.GetComponent<InteractableObject>().Reset();
                         controls.ResetObject();
                         PlayerAnimationManager.PlayAnimationSequence("Injection", target);
-						
-						triggerName = "ShowArm";
+
+                        triggerName = "ShowArm";
                     }
                     else if (SceneManager.GetActiveScene().name == "Injection Subcutaneous" ||
                         SceneManager.GetActiveScene().name == "Injection Subcutaneous_ampoule" ||
@@ -139,8 +138,8 @@ public class Syringe : PickableObjectWithInfo {
                         target.GetComponent<InteractableObject>().Reset();
                         controls.ResetObject();
                         PlayerAnimationManager.PlayAnimationSequence("SubcutaneousInjection", target);
-						
-						triggerName = "ShowBellyForInsulin";
+
+                        triggerName = "ShowBellyForInsulin";
                     }
 
                     PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
@@ -177,7 +176,7 @@ public class Syringe : PickableObjectWithInfo {
                     if (inventory.LeftHandEmpty())
                     {
                         TempSelected.GetComponent<PickableObject>().Reset();
-                        PlayerAnimationManager.PlayAnimation("UseRight " + name + " " + "NeedleCup", 
+                        PlayerAnimationManager.PlayAnimation("UseRight " + name + " " + "NeedleCup",
                             TempSelected.transform);
                         actionManager.OnUseOnAction(name, "NeedleCup");
                         return true;
@@ -185,7 +184,7 @@ public class Syringe : PickableObjectWithInfo {
                     else if (inventory.RightHandEmpty())
                     {
                         TempSelected.GetComponent<PickableObject>().Reset();
-                        PlayerAnimationManager.PlayAnimation("UseLeft " + name + " " + "NeedleCup", 
+                        PlayerAnimationManager.PlayAnimation("UseLeft " + name + " " + "NeedleCup",
                             TempSelected.transform);
                         actionManager.OnUseOnAction(name, "NeedleCup");
                         return true;
@@ -200,14 +199,15 @@ public class Syringe : PickableObjectWithInfo {
         }
         else // cannot interact or target == ""
         {
-            if (noTarget) {
+            if (noTarget)
+            {
                 if (actionManager.CompareUseOnInfo(name, ""))
                 {
                     if (inventory.rightHandObject == this)
                     {
                         PlayerAnimationManager.PlayAnimation("UseRight " + name);
                         actionManager.OnUseOnAction(name, "");
-                        return true; 
+                        return true;
                     }
                     if (inventory.leftHandObject == this)
                     {
@@ -227,20 +227,20 @@ public class Syringe : PickableObjectWithInfo {
     public override void SaveInfo(ref Vector3 left, ref Vector3 right)
     {
         left = new Vector3(
-            (updatePlunger ? 1.0f : 0.0f), 
-            Mathf.InverseLerp(-0.013f, 0.06f, plunger.localPosition.y), 
+            (updatePlunger ? 1.0f : 0.0f),
+            Mathf.InverseLerp(-0.013f, 0.06f, plunger.localPosition.y),
             0.0f);
     }
 
     public override void LoadInfo(Vector3 left, Vector3 right)
     {
         updatePlunger = left.x == 1.0f ? true : false;
-        
+
         if (plunger == null)
         {
             plunger = transform.Find("syringePlunger");
         }
-    
+
         plunger.localPosition = new Vector3(
                 plunger.localPosition.x,
                 Mathf.Lerp(-0.013f, 0.06f, left.y),

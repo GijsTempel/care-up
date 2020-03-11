@@ -302,7 +302,7 @@ public class PlayerScript : MonoBehaviour
             ((Input.touchCount < 1 && controls.MouseClicked()) ||
             (Input.touchCount > 0 && Controls.MouseReleased()) || AutoPlayClicked))
         {
-            if (!away && (selectedObject != null )
+            if (!away && (selectedObject != null)
                 && !itemControls.gameObject.activeSelf && !actionsLocked)
             {
                 if (usingOnMode)
@@ -550,9 +550,6 @@ public class PlayerScript : MonoBehaviour
 
     public void CloseRobotUI()
     {
-        //GameObject theoryTab = GameObject.Find("theoryPanel");
-        
-
         if (GameObject.FindObjectOfType<QuizTab>() != null)
         {
             if (GameObject.FindObjectOfType<QuizTab>().quiz && gameUI.theoryTab.gameObject.activeSelf)
@@ -560,13 +557,7 @@ public class PlayerScript : MonoBehaviour
                 gameUI.HideTheoryTab();
                 return;
             }
-        }
-
-        if ((tutorial_UI != null && tutorial_UI.expectedRobotUIstate == true) ||
-            (tutorial_theory != null && tutorial_theory.expectedRobotUIstate == true))
-        {
-            return;
-        }
+        }   
 
         GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<Animator>().enabled = false;
 
@@ -590,13 +581,6 @@ public class PlayerScript : MonoBehaviour
         GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<CanvasGroup>().alpha = 0f;
         GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<CanvasGroup>().blocksRaycasts = false;
 
-        //if (theoryTab != null)
-        //{
-        //    //theoryTab.GetComponent<CanvasGroup>().alpha = 0f;
-        //    //theoryTab.GetComponent<CanvasGroup>().blocksRaycasts = false;
-        //    theoryTab.SetActive(false);
-        //}
-
         robotUIopened = false;
 
         if (GameObject.FindObjectOfType<TutorialManager>() == null
@@ -616,7 +600,6 @@ public class PlayerScript : MonoBehaviour
             {
                 extraButton.SetActive(extraBtnActiveForIpad);
                 gameUI.UpdateWalkToGtoupUI(extraBtnActiveForIpad);
-
             }
 
             if (extraPanel != null)

@@ -3,21 +3,20 @@ using UnityEngine;
 
 public class WorkField : UsableObject
 {
-
     public List<GameObject> objects = new List<GameObject>();
 
     private int toggleTime = 0;
     private bool toggle = false;
 
     public bool tableCleaned = false;
-    GameUI _gameUI;
+    GameUI gameUI;
 
     public bool cleaningLocked = true;
 
     protected override void Start()
     {
         base.Start();
-        _gameUI = GameObject.FindObjectOfType<GameUI>();
+        gameUI = GameObject.FindObjectOfType<GameUI>();
 
         toggleTime = 0;
         toggle = false;
@@ -60,7 +59,7 @@ public class WorkField : UsableObject
             controls.ResetObject();
             Reset();
         }
-        _gameUI.UpdateHelpHighlight();
+        gameUI.UpdateHelpHighlight();
     }
 
     public void ToggleObjects()
@@ -79,17 +78,5 @@ public class WorkField : UsableObject
             ++toggleTime;
         }
         ActionManager.BuildRequirements();
-    }
-
-    protected override void Update()
-    {
-        base.Update();
-
-        if (/*rend.material.shader == onMouseOverShader && */
-            !actionManager.CompareUseObject("WorkField"))
-        {
-            SetShaderTo(onMouseExitShader);
-            itemDescription.SetActive(false);
-        }
-    }
+    }    
 }
