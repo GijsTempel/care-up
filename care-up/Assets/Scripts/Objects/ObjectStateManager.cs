@@ -1,29 +1,39 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class ObjectStateManager : MonoBehaviour
-{
+public class ObjectStateManager : MonoBehaviour {
     Animator animator;
     PlayerAnimationManager playerAnimationManager;
     public string LieAnimName = "";
     public string HoldAnimName = "";
     public float HoldAnimValue = 0f;
-    float LieAnimValue = 0f;
+    public float LieAnimValue = 0f;
     public bool LockHoldState = true;
     public bool follow_left = true;
     public bool isActive = true;
     public bool followHoldingHand = true;
+    public bool ControlSpeedWithParameter = false;
 
-    void Start()
-    {
+
+
+    // Use this for initialization
+
+    void Start () {
         animator = GetComponent<Animator>();
         playerAnimationManager = GameObject.FindObjectOfType<PlayerAnimationManager>();
+
         if (isActive)
         {
-            animator.speed = 0;
+            if (ControlSpeedWithParameter)
+                animator.SetFloat("AnimSpeed", 0f);
+            else
+                animator.speed = 0f;
         }
     }
 
     public void SetAnimation(bool isLieAnim = true, string animName = "")
+
     {
         if (animName != "")
         {
@@ -32,7 +42,7 @@ public class ObjectStateManager : MonoBehaviour
             if (isLieAnim && animName != LieAnimName)
             {
                 LieAnimName = animName;
-                if (!IsInHands)
+                if (!isInHands())
                 {
                     animator.Play(LieAnimName, 0, LieAnimValue);
                 }
@@ -41,7 +51,7 @@ public class ObjectStateManager : MonoBehaviour
             {
                 HoldAnimName = animName;
                 print(animName);
-                if (IsInHands)
+                if (isInHands())
                 {
                     animator.Play(HoldAnimName, 0, HoldAnimValue);
                 }
@@ -49,27 +59,28 @@ public class ObjectStateManager : MonoBehaviour
         }
     }
 
-    private bool IsInHands
-    {
-        get
-        {
-            if (transform.parent == null)
-            {
-                return false;
-            }
-            return transform.parent.name == "toolHolder.L" || transform.parent.name == "toolHolder.R";
-        }
-    }
 
-    void Update()
+    bool isInHands()
     {
+        if (transform.parent == null)
+        {
+            return false;
+        }
+        return (transform.parent.name == "toolHolder.L" || transform.parent.name == "toolHolder.R");
+    }
+	void Update () {
         string anim_name = LieAnimName;
         float anim_value = LieAnimValue;
 
         if (isActive)
         {
-            animator.speed = 0;
-            if (IsInHands)
+            // animator.speed = 0;
+            if (ControlSpeedWithParameter)
+                animator.SetFloat("AnimSpeed", 0f);
+            else
+                animator.speed = 0f;
+
+            if (isInHands())
             {
                 bool f_left = true;
 
@@ -81,7 +92,6 @@ public class ObjectStateManager : MonoBehaviour
                 {
                     f_left = follow_left;
                 }
-
                 if (f_left)
                 {
                     anim_name = HoldAnimName;
@@ -115,7 +125,11 @@ public class ObjectStateManager : MonoBehaviour
         }
         else
         {
-            animator.speed = 1.0f;
+            if (ControlSpeedWithParameter)
+                animator.SetFloat("AnimSpeed", 1f);
+            else
+                animator.speed = 1f;
         }
+
     }
 }
