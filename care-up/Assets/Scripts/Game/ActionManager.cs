@@ -930,6 +930,8 @@ public class ActionManager : MonoBehaviour
 
         foreach (XmlNode action in actions)
         {
+            if (action.Attributes["hidden"] != null)
+                continue;
             int index;
             int.TryParse(action.Attributes["index"].Value, out index);
             string type = action.Attributes["type"].Value;
