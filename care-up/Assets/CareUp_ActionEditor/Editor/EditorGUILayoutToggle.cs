@@ -347,6 +347,10 @@ namespace CareUp.ActionEditor
         bool toMoveSelectedActions = false;
         bool automateIndexes = false;
         int lastSelected = -1;
+        Action actionToEditInTE = null;
+        string attributeToEditInTE = "";
+        string TextEditorValue = "";
+        Vector2 TextEditorScroll = new Vector2();
 
         [MenuItem("Tools/Actions Editor")]
         static void Init()
@@ -354,8 +358,16 @@ namespace CareUp.ActionEditor
             EditorWindow.GetWindow<ActionEditor>();
         }
 
+        void ExitTextEdit(bool toSave = false)
+        {
+            if (toSave)
+                actionToEditInTE.SetAttributeByName(attributeToEditInTE, TextEditorValue);
+            actionToEditInTE = null;
+        }
+
         void LoadActionsData(string actionFilePath, bool toReload = false)
         {
+            actionToEditInTE = null;
             if (actionFilePath == loadedActionFilePath && !toReload)
                 return;
             actions = new ActionList();
@@ -692,8 +704,6 @@ namespace CareUp.ActionEditor
         string testText = "";
         void OnGUI()
         {
-            // testText = EditorGUI.TextArea(new Rect(90, 90, position.width - 96, position.height - 120), testText);
-            
             EditorGUILayout.BeginHorizontal();
             EditorGUI.BeginChangeCheck();
             actionsFile = EditorGUILayout.ObjectField(actionsFile, typeof(TextAsset), true);
@@ -705,274 +715,304 @@ namespace CareUp.ActionEditor
             EditorGUILayout.EndHorizontal();
             if (actions.Count > 0)
             {
-                int actionsSelected = 0;
-                automateIndexes = EditorGUILayout.Toggle("Automate indexes:", automateIndexes);
-                EditorGUILayout.BeginHorizontal();
-                if (automateIndexes)
+                if (actionToEditInTE != null && attributeToEditInTE != "")
                 {
-                    if (GUILayout.Button("Recalculate Indexes", GUILayout.Width(200)));
+                    EditorGUILayout.BeginHorizontal();
+                    if (GUILayout.Button("Cancel Edit"))
+                        ExitTextEdit();
+                    if (GUILayout.Button("Save Edit"))
+                        ExitTextEdit(true);
+                    EditorGUILayout.EndHorizontal();
+
+                    TextEditorScroll = EditorGUILayout.BeginScrollView(TextEditorScroll);
+                    TextEditorValue = EditorGUILayout.TextArea(TextEditorValue, GUILayout.Height(position.height - 30));
+                    EditorGUILayout.EndScrollView();
+                    // TextEditorValue = EditorGUI.TextArea(descRect, TextEditorValue);
+                }
+                else
+                {
+                    int actionsSelected = 0;
+                    automateIndexes = EditorGUILayout.Toggle("Automate indexes:", automateIndexes);
+                    EditorGUILayout.BeginHorizontal();
+                    if (automateIndexes)
                     {
-                        RecalculateIndexes();
-                    }
-                    if (GUILayout.Button("--Ungroup selected actions--"))
-                    {
-                        int groupPisition = InitMoveSelectedActions(ActionGrouping.toUngroup);
-                        if (groupPisition != -1)
+                        if (GUILayout.Button("Recalculate Indexes", GUILayout.Width(200)));
+                        {
                             RecalculateIndexes();
-                        toMoveSelectedActions = false;
+                        }
+                        if (GUILayout.Button("--Ungroup selected actions--"))
+                        {
+                            int groupPisition = InitMoveSelectedActions(ActionGrouping.toUngroup);
+                            if (groupPisition != -1)
+                                RecalculateIndexes();
+                            toMoveSelectedActions = false;
+                        }
+                        if (GUILayout.Button("++Group selected actions++", GUILayout.Width(200)))
+                        {
+                            int groupPisition = InitMoveSelectedActions(ActionGrouping.toGtoup);
+                            if (groupPisition != -1)
+                                MoveSelectedActionsTo(groupPisition);
+                        }
                     }
-                    if (GUILayout.Button("++Group selected actions++", GUILayout.Width(200)))
+                    EditorGUILayout.EndHorizontal();
+
+                    EditorGUILayout.BeginHorizontal();
+                    if (GUILayout.Button("Deselect All", GUILayout.Width(200)))
                     {
-                        int groupPisition = InitMoveSelectedActions(ActionGrouping.toGtoup);
-                        if (groupPisition != -1)
-                            MoveSelectedActionsTo(groupPisition);
+                        foreach (Action a in actions)
+                            a.selected = false;
                     }
-                }
-                EditorGUILayout.EndHorizontal();
-
-                EditorGUILayout.BeginHorizontal();
-                if (GUILayout.Button("Deselect All", GUILayout.Width(200)))
-                {
-                    foreach (Action a in actions)
-                        a.selected = false;
-                }
-                if (GUILayout.Button("Insert New Action"))
-                {
-                    toInsertAction = !toInsertAction;
-                }
-                if (GUILayout.Button("!!Delete Selected Actions!!", GUILayout.Width(200)))
-                {
-                    int selectedNum = 0;
-                    foreach(Action _act in actions)
+                    if (GUILayout.Button("Insert New Action"))
                     {
-                        if (_act.selected)
-                            selectedNum++;
+                        toInsertAction = !toInsertAction;
                     }
-                    if (selectedNum > 0 && EditorUtility.DisplayDialog("Deleting Selected Actions", 
-                        "Are you sure you want to delete\n[ " + 
-                        selectedNum.ToString() + " ] selected actions?","Yes", "No" ))
+                    if (GUILayout.Button("!!Delete Selected Actions!!", GUILayout.Width(200)))
                     {
-                        DeleteSelectedActions();
+                        int selectedNum = 0;
+                        foreach(Action _act in actions)
+                        {
+                            if (_act.selected)
+                                selectedNum++;
+                        }
+                        if (selectedNum > 0 && EditorUtility.DisplayDialog("Deleting Selected Actions", 
+                            "Are you sure you want to delete\n[ " + 
+                            selectedNum.ToString() + " ] selected actions?","Yes", "No" ))
+                        {
+                            DeleteSelectedActions();
+                        }
                     }
-                }
-                EditorGUILayout.EndHorizontal();
-                EditorGUILayout.BeginHorizontal();
-                if (GUILayout.Button("Hide selected actions", GUILayout.Width(200)))
-                {
-                    HideSelected();
-                    // InitMoveSelectedActions();
-                }
-                if (GUILayout.Button("Unhide selected actions"))
-                {
-                    HideSelected(false);
-                    // InitMoveSelectedActions();
-                }
-                string moveSelectedButtonText = "Move selected to..";
-                if (toMoveSelectedActions)
-                    moveSelectedButtonText = "Cancel move selected to..";
-                if (GUILayout.Button(moveSelectedButtonText, GUILayout.Width(200)))
-                {
-                    InitMoveSelectedActions();
-                }
-                EditorGUILayout.EndHorizontal();
+                    EditorGUILayout.EndHorizontal();
+                    EditorGUILayout.BeginHorizontal();
+                    if (GUILayout.Button("Hide selected actions", GUILayout.Width(200)))
+                    {
+                        HideSelected();
+                        // InitMoveSelectedActions();
+                    }
+                    if (GUILayout.Button("Unhide selected actions"))
+                    {
+                        HideSelected(false);
+                        // InitMoveSelectedActions();
+                    }
+                    string moveSelectedButtonText = "Move selected to..";
+                    if (toMoveSelectedActions)
+                        moveSelectedButtonText = "Cancel move selected to..";
+                    if (GUILayout.Button(moveSelectedButtonText, GUILayout.Width(200)))
+                    {
+                        InitMoveSelectedActions();
+                    }
+                    EditorGUILayout.EndHorizontal();
 
-                string saveButtonText = "Save";
-                if (GUILayout.Button(saveButtonText))
-                    SaveData();
+                    string saveButtonText = "Save";
+                    if (GUILayout.Button(saveButtonText))
+                        SaveData();
 
-                GUIStyle horizontalLine;
-                horizontalLine = new GUIStyle();
-                horizontalLine.normal.background = EditorGUIUtility.whiteTexture;
-                horizontalLine.margin = new RectOffset(0, 0, 4, 4);
-                horizontalLine.fixedHeight = 1;
-                EditorStyles.textField.wordWrap = true;
-                scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
-                ActionList currentActions = actions;
-                if (toMoveSelectedActions && actionsToStay != null)
-                    currentActions = actionsToStay;
+                    GUIStyle horizontalLine;
+                    horizontalLine = new GUIStyle();
+                    horizontalLine.normal.background = EditorGUIUtility.whiteTexture;
+                    horizontalLine.margin = new RectOffset(0, 0, 4, 4);
+                    horizontalLine.fixedHeight = 1;
+                    EditorStyles.textField.wordWrap = true;
+                    scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
+                    ActionList currentActions = actions;
+                    if (toMoveSelectedActions && actionsToStay != null)
+                        currentActions = actionsToStay;
 
-                Texture emptyTexture = Resources.Load("CareUp_ActionEditor_Icons/empty") as Texture;
-                GUIContent emptyIco = new GUIContent(emptyTexture);
-                Texture groupTexture = Resources.Load("CareUp_ActionEditor_Icons/group") as Texture;
-                GUIContent groupIco = new GUIContent(groupTexture);
-                Texture hiddenTexture = Resources.Load("CareUp_ActionEditor_Icons/hidden") as Texture;
-                foreach (Action a in currentActions)
-                {
-                    if (a.selected)
-                        actionsSelected++;
-                    int groupID = GetActionGroupID(a);
+                    Texture emptyTexture = Resources.Load("CareUp_ActionEditor_Icons/empty") as Texture;
+                    GUIContent emptyIco = new GUIContent(emptyTexture);
+                    Texture groupTexture = Resources.Load("CareUp_ActionEditor_Icons/group") as Texture;
+                    GUIContent groupIco = new GUIContent(groupTexture);
+                    Texture hiddenTexture = Resources.Load("CareUp_ActionEditor_Icons/hidden") as Texture;
+                    foreach (Action a in currentActions)
+                    {
+                        if (a.selected)
+                            actionsSelected++;
+                        int groupID = GetActionGroupID(a);
 
+                        if (toInsertAction)
+                        {
+                            if (GUILayout.Button("Insert Action Here"))
+                                InsertNewActionAt(currentActions.IndexOf(a));
+                        }
+                        if (toMoveSelectedActions && actionsToStay != null)
+                        {
+                            if (GUILayout.Button("Move Actions Here"))
+                                MoveSelectedActionsTo(currentActions.IndexOf(a));
+                        }
+                        GUILayout.Box(GUIContent.none, horizontalLine);
+                        EditorGUILayout.BeginHorizontal();
+
+                        Texture texture = Resources.Load("CareUp_ActionEditor_Icons/" + a.type.ToString()) as Texture;
+                        GUIContent iconGUIContent = new GUIContent(texture);
+
+                        GUIStyle labelStyle = new GUIStyle();
+                        if (a.hidden != null)
+                        {
+                            labelStyle.normal.textColor = Color.gray;
+                            iconGUIContent = new GUIContent(hiddenTexture);
+                        }
+                        EditorGUILayout.LabelField(iconGUIContent, GUILayout.Width(25));
+
+                        EditorGUI.BeginChangeCheck();
+
+                        a.unfold = EditorGUILayout.Foldout(a.unfold, a.type.ToString());
+
+                        if (EditorGUI.EndChangeCheck())
+                        {
+                            UnfoldAction(a);
+                        }
+                        foreach(string attr in ActionAttributeNames)
+                        {
+                            if (a.GetAttributeByName(attr) != null)
+                            {
+                                Texture t = Resources.Load("CareUp_ActionEditor_Icons/" + attr) as Texture;
+                                GUIContent ico = new GUIContent(t, attr + " = " + a.GetAttributeByName(attr));
+                                EditorGUILayout.LabelField(ico, GUILayout.Width(15));
+                            }
+                        }
+                        EditorGUILayout.LabelField("  ", GUILayout.Width(10));
+                        if (groupID == -1)
+                        {
+                            EditorGUILayout.LabelField(emptyIco, GUILayout.Width(15));
+                        }
+                        else
+                        {
+                            EditorGUILayout.LabelField(groupIco, GUILayout.Width(15));
+                        }
+
+                        if (!automateIndexes)
+                            a.index = EditorGUILayout.IntField(a.index, GUILayout.Width(25));
+                        else
+                        {
+                            string indexStr = a.index.ToString();
+                            if (a.hidden != null)
+                                indexStr = "_" + indexStr + "_";
+                            EditorGUILayout.LabelField(indexStr, GUILayout.Width(25));
+                        }
+
+
+                        if (GUILayout.Button("▲", GUILayout.Width(22)) && currentActions.IndexOf(a) != 0)
+                        {
+                            MoveSingleAction(a, currentActions.IndexOf(a) - 1);
+                        }
+                        if (GUILayout.Button("▼", GUILayout.Width(22)) && currentActions.IndexOf(a) < (currentActions.Count - 1))
+                        {
+                            MoveSingleAction(a, currentActions.IndexOf(a) + 2);
+                        } 
+
+                        EditorGUI.BeginChangeCheck();
+                        a.selected = EditorGUILayout.Toggle(a.selected, GUILayout.Width(30));
+                        if (EditorGUI.EndChangeCheck())
+                        {
+                            Event e = Event.current;
+                            if (e.shift)
+                            {
+                                if (lastSelected >= 0 && lastSelected < actions.Count)
+                                {
+                                    int _from = lastSelected;
+                                    int _to = actions.IndexOf(a);
+                                    if (_from > _to)
+                                    {
+                                        int __from = _from;
+                                        _from = _to;
+                                        _to = __from;
+                                    }
+                                    SelectRange(_from, _to, a.selected);
+                                }
+                            }
+                            lastSelected = actions.IndexOf(a);
+                        }
+                        EditorGUILayout.EndHorizontal();
+                        
+                        if (!a.unfold)
+                        {
+                            EditorGUILayout.BeginHorizontal();
+                            EditorGUILayout.LabelField("", GUILayout.Width(30));
+                            EditorGUILayout.LabelField(a.description, labelStyle);
+                            EditorGUILayout.EndHorizontal();
+                        }
+                        else
+                        {
+                            Rect descRect = GUILayoutUtility.GetLastRect();
+                            descRect.x = 150;
+                            descRect.width = position.width - 192;
+                            descRect.y += 24;
+                            descRect.height = 50;
+                            a.description = EditorGUI.TextArea(descRect, a.description);
+                            EditorGUILayout.BeginHorizontal();
+                            EditorGUILayout.LabelField("Description :", GUILayout.Height(55));
+                            if (GUILayout.Button("E", GUILayout.Width(22)))
+                            {
+                                TextEditorScroll = new Vector2();
+                                TextEditorValue = a.description;
+                                actionToEditInTE = a;
+                                attributeToEditInTE = "description";
+                            }
+                            EditorGUILayout.EndHorizontal();
+
+                            // a.description = EditorGUILayout.TextField("Description: ", a.description, GUILayout.Height(50));
+
+                            foreach (string attr in ActionAttributeNames)
+                            {
+                                if (a.GetAttributeByName(attr) != null)
+                                {
+                                    EditorGUILayout.BeginHorizontal();
+
+                                    Texture t = Resources.Load("CareUp_ActionEditor_Icons/" + attr) as Texture;
+                                    GUIContent ico = new GUIContent(t, attr + " = " + a.GetAttributeByName(attr));
+                                    EditorGUILayout.LabelField(ico, GUILayout.Width(25));
+                                    a.SetAttributeByName(attr, EditorGUILayout.TextField(attr + ": ", a.GetAttributeByName(attr)));
+                                    if (GUILayout.Button("E", GUILayout.Width(22)))
+                                    {
+                                        TextEditorScroll = new Vector2();
+                                        TextEditorValue = a.GetAttributeByName(attr);
+                                        actionToEditInTE = a;
+                                        attributeToEditInTE = attr;
+                                    }
+                                    if (GUILayout.Button("-", GUILayout.Width(22)))
+                                    {
+                                        a.SetAttributeByName(attr, null);
+                                    }
+                                    EditorGUILayout.EndHorizontal();
+                                }
+                            }
+                            EditorGUILayout.BeginHorizontal();
+                            a.type = (ActionType)EditorGUILayout.Popup((int)a.type, ActionTypeNames.ToArray());
+
+                            int v = 0;
+                            List<string> notListedAttributs = new List<string>();
+                            foreach (string attr in ActionAttributeNames)
+                            {
+                                if (a.GetAttributeByName(attr) == null)
+                                    notListedAttributs.Add(attr);
+                            }
+                            EditorGUILayout.LabelField("Points: ", GUILayout.Width(50));
+                            a.points = EditorGUILayout.IntField(a.points, GUILayout.Width(50));
+
+                            EditorGUI.BeginChangeCheck();
+                            v = EditorGUILayout.Popup(v, notListedAttributs.ToArray(), GUILayout.Width(150));
+                            if (EditorGUI.EndChangeCheck())
+                            {
+                                a.SetAttributeByName(notListedAttributs[v], "");
+                            }
+
+                            EditorGUILayout.EndHorizontal();
+                        }
+                        EditorGUILayout.Space();
+                    }
                     if (toInsertAction)
                     {
                         if (GUILayout.Button("Insert Action Here"))
-                            InsertNewActionAt(currentActions.IndexOf(a));
+                                AddNewAction();
                     }
                     if (toMoveSelectedActions && actionsToStay != null)
                     {
                         if (GUILayout.Button("Move Actions Here"))
-                            MoveSelectedActionsTo(currentActions.IndexOf(a));
+                            MoveSelectedActionsTo(currentActions.Count);
                     }
-                    GUILayout.Box(GUIContent.none, horizontalLine);
-                    EditorGUILayout.BeginHorizontal();
-
-                    Texture texture = Resources.Load("CareUp_ActionEditor_Icons/" + a.type.ToString()) as Texture;
-                    GUIContent iconGUIContent = new GUIContent(texture);
-
-                    GUIStyle labelStyle = new GUIStyle();
-                    if (a.hidden != null)
-                    {
-                        labelStyle.normal.textColor = Color.gray;
-                        iconGUIContent = new GUIContent(hiddenTexture);
-                    }
-                    EditorGUILayout.LabelField(iconGUIContent, GUILayout.Width(25));
-
-                    EditorGUI.BeginChangeCheck();
-
-                    a.unfold = EditorGUILayout.Foldout(a.unfold, a.type.ToString());
-
-                    if (EditorGUI.EndChangeCheck())
-                    {
-                        UnfoldAction(a);
-                    }
-                    foreach(string attr in ActionAttributeNames)
-                    {
-                        if (a.GetAttributeByName(attr) != null)
-                        {
-                            Texture t = Resources.Load("CareUp_ActionEditor_Icons/" + attr) as Texture;
-                            GUIContent ico = new GUIContent(t, attr + " = " + a.GetAttributeByName(attr));
-                            EditorGUILayout.LabelField(ico, GUILayout.Width(15));
-                        }
-                    }
-                    EditorGUILayout.LabelField("  ", GUILayout.Width(10));
-                    if (groupID == -1)
-                    {
-                        EditorGUILayout.LabelField(emptyIco, GUILayout.Width(15));
-                    }
-                    else
-                    {
-                        EditorGUILayout.LabelField(groupIco, GUILayout.Width(15));
-                    }
-
-                    if (!automateIndexes)
-                        a.index = EditorGUILayout.IntField(a.index, GUILayout.Width(25));
-                    else
-                    {
-                        string indexStr = a.index.ToString();
-                        if (a.hidden != null)
-                            indexStr = "_" + indexStr + "_";
-                        EditorGUILayout.LabelField(indexStr, GUILayout.Width(25));
-                    }
-
-
-                    if (GUILayout.Button("▲", GUILayout.Width(22)) && currentActions.IndexOf(a) != 0)
-                    {
-                        MoveSingleAction(a, currentActions.IndexOf(a) - 1);
-                    }
-                    if (GUILayout.Button("▼", GUILayout.Width(22)) && currentActions.IndexOf(a) < (currentActions.Count - 1))
-                    {
-                        MoveSingleAction(a, currentActions.IndexOf(a) + 2);
-                    } 
-
-                    EditorGUI.BeginChangeCheck();
-                    a.selected = EditorGUILayout.Toggle(a.selected, GUILayout.Width(30));
-                    if (EditorGUI.EndChangeCheck())
-                    {
-                        Event e = Event.current;
-                        if (e.shift)
-                        {
-                            if (lastSelected >= 0 && lastSelected < actions.Count)
-                            {
-                                int _from = lastSelected;
-                                int _to = actions.IndexOf(a);
-                                if (_from > _to)
-                                {
-                                    int __from = _from;
-                                    _from = _to;
-                                    _to = __from;
-                                }
-                                SelectRange(_from, _to, a.selected);
-                            }
-                        }
-                        lastSelected = actions.IndexOf(a);
-                    }
-                    EditorGUILayout.EndHorizontal();
-                    
-                    if (!a.unfold)
-                    {
-                        EditorGUILayout.BeginHorizontal();
-                        EditorGUILayout.LabelField("", GUILayout.Width(30));
-                        EditorGUILayout.LabelField(a.description, labelStyle);
-                        EditorGUILayout.EndHorizontal();
-                    }
-                    else
-                    {
-                        Rect descRect = GUILayoutUtility.GetLastRect();
-                        descRect.x = 150;
-                        descRect.width = position.width - 192;
-                        descRect.y += 24;
-                        descRect.height = 50;
-                        EditorGUILayout.LabelField("Description :", GUILayout.Height(55));
-                        a.description = EditorGUI.TextArea(descRect, a.description);
-                        // a.description = EditorGUILayout.TextField("Description: ", a.description, GUILayout.Height(50));
-
-                        foreach (string attr in ActionAttributeNames)
-                        {
-                            if (a.GetAttributeByName(attr) != null)
-                            {
-                                EditorGUILayout.BeginHorizontal();
-
-                                Texture t = Resources.Load("CareUp_ActionEditor_Icons/" + attr) as Texture;
-                                GUIContent ico = new GUIContent(t, attr + " = " + a.GetAttributeByName(attr));
-                                EditorGUILayout.LabelField(ico, GUILayout.Width(25));
-                                a.SetAttributeByName(attr, EditorGUILayout.TextField(attr + ": ", a.GetAttributeByName(attr)));
-                                // if (GUILayout.Button("E", GUILayout.Width(22)))
-                                // {
-                                // }
-                                if (GUILayout.Button("-", GUILayout.Width(22)))
-                                {
-                                    a.SetAttributeByName(attr, null);
-                                }
-                                EditorGUILayout.EndHorizontal();
-                            }
-                        }
-                        EditorGUILayout.BeginHorizontal();
-                        a.type = (ActionType)EditorGUILayout.Popup((int)a.type, ActionTypeNames.ToArray());
-
-                        int v = 0;
-                        List<string> notListedAttributs = new List<string>();
-                        foreach (string attr in ActionAttributeNames)
-                        {
-                            if (a.GetAttributeByName(attr) == null)
-                                notListedAttributs.Add(attr);
-                        }
-                        EditorGUILayout.LabelField("Points: ", GUILayout.Width(50));
-                        a.points = EditorGUILayout.IntField(a.points, GUILayout.Width(50));
-
-                        EditorGUI.BeginChangeCheck();
-                        v = EditorGUILayout.Popup(v, notListedAttributs.ToArray(), GUILayout.Width(150));
-                        if (EditorGUI.EndChangeCheck())
-                        {
-                            a.SetAttributeByName(notListedAttributs[v], "");
-                        }
-
-                        EditorGUILayout.EndHorizontal();
-                    }
-                    EditorGUILayout.Space();
+                    EditorGUILayout.EndScrollView();
+                    EditorGUILayout.LabelField("Selected [ " + actionsSelected.ToString() + " ] Actions");
                 }
-                if (toInsertAction)
-                {
-                    if (GUILayout.Button("Insert Action Here"))
-                            AddNewAction();
-                }
-                if (toMoveSelectedActions && actionsToStay != null)
-                {
-                    if (GUILayout.Button("Move Actions Here"))
-                        MoveSelectedActionsTo(currentActions.Count);
-                }
-                EditorGUILayout.EndScrollView();
-                EditorGUILayout.LabelField("Selected [ " + actionsSelected.ToString() + " ] Actions");
             }
-
         }
         void OnInspectorUpdate()
         {
