@@ -194,6 +194,8 @@ namespace CareUp.ActionEditor
                     return audioHint;
                 case "hidden":
                     return hidden;
+                case "description":
+                    return description;
             }
             return null;
         }
@@ -279,6 +281,9 @@ namespace CareUp.ActionEditor
                     break;
                 case "hidden":
                     hidden = _value;
+                    break;
+                case "description":
+                    description = _value;
                     break;
             }
         }
@@ -927,7 +932,7 @@ namespace CareUp.ActionEditor
                         {
                             EditorGUILayout.BeginHorizontal();
                             EditorGUILayout.LabelField("", GUILayout.Width(30));
-                            EditorGUILayout.LabelField(a.description, labelStyle);
+                            EditorGUILayout.LabelField(a.description.Split('\n')[0], labelStyle);
                             EditorGUILayout.EndHorizontal();
                         }
                         else
