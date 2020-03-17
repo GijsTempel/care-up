@@ -39,6 +39,8 @@ public class HatsPositioningDB
 
     public void Init(string filename = "HatsInfo")
     {
+        if (database.Count > 0)
+            return;
         // load up all items from xml into the list
         TextAsset textAsset = (TextAsset)Resources.Load("Xml/" + filename);
 
@@ -50,7 +52,6 @@ public class HatsPositioningDB
         {
             List<HatInfo> hatItems = new List<HatInfo>();
             string headIndex = (xmlCatNode.Attributes["index"] != null) ? xmlCatNode.Attributes["index"].Value : "";
-            //Debug.Log(headIndex);
             int index = 0;
             int.TryParse(headIndex, out index);
 
@@ -74,11 +75,8 @@ public class HatsPositioningDB
                 hatItems.Add(new HatInfo(index, name, new Vector3(posX, posY, posZ),
                     new Vector3(rotX, rotY, rotZ), scale, excl));
             }
-            
             database.Add(new HeadCategory(index, hatItems));
         }
-
-        PrintDatabase();
     }
 
     public void Clean()
