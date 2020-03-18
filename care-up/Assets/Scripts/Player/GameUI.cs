@@ -453,7 +453,7 @@ public class GameUI : MonoBehaviour
     public void HideTheoryTab()
     {
         GameObject.Find("theoryPanel/panel/quizElements/Continue").gameObject.GetComponent<Button>().onClick.AddListener(
-             () => GameObject.FindObjectOfType<PlayerScript>().CloseRobotUI());
+            () => GameObject.FindObjectOfType<PlayerScript>().CloseRobotUI());
         theoryTab.Show(false);
     }
 
