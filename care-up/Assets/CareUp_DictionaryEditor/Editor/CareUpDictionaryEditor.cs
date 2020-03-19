@@ -199,13 +199,6 @@ namespace CareUp.Localize
                         searchText = "";
                     }
                     EditorGUILayout.EndHorizontal();
-                    string saveButtonText = "Save all changes";
-                    if (selectedSet != -1)
-                    {
-                        saveButtonText = "Save [ " + dictNames[selectedSet] + " ]"; 
-                    }
-                    if (GUILayout.Button(saveButtonText))
-                        SaveChanges();
                     if (GUILayout.Button("Check keys usage in action files"))
                         CheckInActionFiles();
 
@@ -214,6 +207,12 @@ namespace CareUp.Localize
                     foreach(string d in dictNames)
                         dictsRollDownList.Add(d);
                     selectedSet = EditorGUILayout.Popup(selectedSet + 1, dictsRollDownList.ToArray()) - 1;
+
+                    string saveButtonText = "Save all changes";
+                    if (selectedSet != -1)
+                        saveButtonText = "Save [ " + dictNames[selectedSet] + " ]"; 
+                    if (GUILayout.Button(saveButtonText))
+                        SaveChanges();
                     GUILayout.Box(GUIContent.none, horizontalLine);
 
                     scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
