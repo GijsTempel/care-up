@@ -8,6 +8,10 @@ using System.Text;
 
 namespace CareUp.ActionEditor
 {
+
+/// <summary>
+/// Types of actions, that can be used in the game
+/// </summary>
     public enum ActionType
     {
         combine,
@@ -22,12 +26,18 @@ namespace CareUp.ActionEditor
         general
     };
 
+/// <summary>
+/// Base class, that is used as a root for the XML structure, that will store set of actions for the scene
+/// </summary>
     [XmlRoot("ActionList")]
     public class ActionList : List<Action>
     {
     
     }
 
+/// <summary>
+/// Class, that contains full set of data for action and is serialized to save and load the data
+/// </summary>
     [XmlRoot("action")]
     public class Action
     {
@@ -99,6 +109,10 @@ namespace CareUp.ActionEditor
         [XmlAttribute]
         public string hidden = null;
 
+/// <summary>
+/// Create new instance of an action with all the same data 
+/// </summary>
+/// <returns></returns>
         public Action Copy()
         {
             Action newCopy = new Action();
@@ -138,6 +152,11 @@ namespace CareUp.ActionEditor
             return newCopy;
         }
 
+/// <summary>
+/// Search for attribute in the action by the name and return the value
+/// </summary>
+/// <param name="_name">Name of the attribute</param>
+/// <returns>String value, stored in given attribute</returns>
         public string GetAttributeByName(string _name)
         {
             switch (_name)
@@ -199,7 +218,11 @@ namespace CareUp.ActionEditor
             }
             return null;
         }
-
+/// <summary>
+/// Search the attribute by name and change the value
+/// </summary>
+/// <param name="_name">Name of the attribute to find</param>
+/// <param name="_value">New value to store in the attribute</param>
         public void SetAttributeByName(string _name, string _value)
         {
             switch (_name)
@@ -289,16 +312,24 @@ namespace CareUp.ActionEditor
         }
     }
 
+/// <summary>
+/// Action editor window
+/// </summary>
     class ActionEditor : EditorWindow
     {
+
         enum ActionGrouping
         {
             none,
             toGtoup,
             toUngroup
         };
-
+        
+        //If true, with next redrow of the window, for each position in the list a button will be shown, to select the position for new action
         bool toInsertAction = false;
+        /// <summary>
+        /// A string list, that holds a list of action types, to be shown in foldown menu, that allow to change the type for the action 
+        /// </summary>
         List<string> ActionTypeNames = new List<string>{
             "combine",
             "use",
@@ -312,6 +343,9 @@ namespace CareUp.ActionEditor
             "general"
         };
 
+        /// <summary>
+        /// The string list, that contains all the names of attributes, that can be added to the action with folldown menu 
+        /// </summary>
         List<string> ActionAttributeNames = new List<string>{
             "__Add Attribute__",
             "comment",
@@ -342,7 +376,6 @@ namespace CareUp.ActionEditor
             "hidden"
         };
 
-        int ActionsHash = -1;
         public Object actionsFile;
         Vector2 scrollPos;
         string loadedActionFilePath = "";
@@ -357,12 +390,17 @@ namespace CareUp.ActionEditor
         string TextEditorValue = "";
         Vector2 TextEditorScroll = new Vector2();
 
+
         [MenuItem("Tools/Actions Editor")]
         static void Init()
         {
             EditorWindow.GetWindow<ActionEditor>();
         }
 
+/// <summary>
+/// Closing a text editor with canceling or saving cahnges to the attribute
+/// </summary>
+/// <param name="toSave">To save or not to save</param>
         void ExitTextEdit(bool toSave = false)
         {
             if (toSave)
@@ -370,6 +408,11 @@ namespace CareUp.ActionEditor
             actionToEditInTE = null;
         }
 
+/// <summary>
+/// Loading all the data from action file
+/// </summary>
+/// <param name="actionFilePath">Path to the file to be loaded</param>
+/// <param name="toReload">If true, reload will be forced</param>
         void LoadActionsData(string actionFilePath, bool toReload = false)
         {
             actionToEditInTE = null;
@@ -464,7 +507,6 @@ namespace CareUp.ActionEditor
                         actions.Add(action);
                     }
                     loadedActionFilePath = actionFilePath;
-                    ActionsHash = actions.GetHashCode();
                 }
             }
         }
@@ -611,8 +653,9 @@ namespace CareUp.ActionEditor
             if (actionsFile != null)
             {
                 string actionFilePath = AssetDatabase.GetAssetPath(actionsFile);
+                Debug.Log(actionFilePath);
                 XmlSerializer xmls = new XmlSerializer(typeof(ActionList));
-                StringWriter sw = new StringWriter();
+                // StringWriter sw = new StringWriter();
                 XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
                 ns.Add("", "");
 
