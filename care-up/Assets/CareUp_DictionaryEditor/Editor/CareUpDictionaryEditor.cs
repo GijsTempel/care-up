@@ -35,8 +35,11 @@ namespace CareUp.Localize
         string editValue = "";
         string editKey = "";
         string editControlKey = "";
+        int showFilesForSet = -1;
+        string showFilesForKey = "";
 
         Dictionary<string, List<string>> keyUsageDict = new Dictionary<string, List<string>>();
+        List<string> filesWithValueInstance = new List<string>();
 
         int editInSet = -1;
         string editOriginalKey = "";
@@ -81,6 +84,7 @@ namespace CareUp.Localize
 /// <param name="toSave">To save or not to save</param>
         void ExitTextEdit(bool toSave = false)
         {
+            filesWithValueInstance.Clear();
             if (toSave && editKey != "")
             {
                 if (editKey == editControlKey)
@@ -90,7 +94,14 @@ namespace CareUp.Localize
                 else
                 {
                     setOfDictionaries[editInSet].Remove(editControlKey);
-                    setOfDictionaries[editInSet].Add(editKey, editValue);
+                    if (setOfDictionaries[editInSet].ContainsKey(editKey))
+                    {
+                        setOfDictionaries[editInSet][editKey] = editValue;
+                    }
+                    else
+                    {
+                        setOfDictionaries[editInSet].Add(editKey, editValue);
+                    }
                 }
             }
             editInSet = -1;
@@ -108,14 +119,13 @@ namespace CareUp.Localize
             }
             return false;
         }
-
-        void CheckInActionFiles()
+        
+        List<string> GetAllActionFiles(out List<TextAsset> textAssets)
         {
-            keyUsageDict.Clear();
             var info = new DirectoryInfo("Assets/Resources/Xml/Actions");
-            var fileInfo = info.GetFiles();
+            FileInfo[] fileInfo = info.GetFiles();
             List<string> actionFiles = new List<string>();
-            List<TextAsset> textAssets = new List<TextAsset>();
+            textAssets = new List<TextAsset>();
             foreach (FileInfo file in fileInfo)
             {
                 if (file.Extension == ".xml")
@@ -125,6 +135,16 @@ namespace CareUp.Localize
                     textAssets.Add(textAsset);
                 }
             }
+            return actionFiles;
+        }
+
+        void CheckInActionFiles()
+        {
+            keyUsageDict.Clear();
+            // var info = new DirectoryInfo("Assets/Resources/Xml/Actions");
+            // var fileInfo = info.GetFiles();
+            List<TextAsset> textAssets;
+            List<string> actionFiles = GetAllActionFiles(out textAssets);
             // TextAsset textAsset = Resources.Load("Xml/Actions/Actions_AED", typeof(TextAsset))  as TextAsset;
             for(int i = 0; i < setOfDictionaries.Count; i++)
             {
@@ -136,7 +156,7 @@ namespace CareUp.Localize
 
                         foreach(TextAsset asset in textAssets)
                         {
-                            if (asset.text.Contains(key))
+                            if (asset.text.Contains("[" + key + "]"))
                             {
                                 usedInFiles.Add(asset.name);
                             }
@@ -148,6 +168,52 @@ namespace CareUp.Localize
                     }
                 }
             }
+        }
+
+        void CheckValueInActionFiles(string _value, string key = "")
+        {
+            filesWithValueInstance.Clear();
+            List<TextAsset> textAssets;
+            List<string> actionFiles = GetAllActionFiles(out textAssets);
+            foreach(TextAsset asset in textAssets)
+            {
+                bool contained = false;
+                if (asset.text.Contains('\"' + _value + '\"'))
+                {
+                    filesWithValueInstance.Add(asset.name);
+                    contained = true;
+                }
+                if (key != "" && contained)
+                {
+                    var stringBuilder = new StringBuilder();
+                    stringBuilder.Append(asset.text);
+                    stringBuilder.Replace('\"' + _value + '\"', "\"[" + key + "]\"");
+                    using (StreamWriter swriter = new StreamWriter(AssetDatabase.GetAssetPath(asset)))
+                        swriter.Write(stringBuilder.ToString());
+                }
+            }
+        }
+
+        void OpenFileContinedKey(string fileName, string key)
+        {
+            string filePath = "Assets/Resources/Xml/Actions/" + fileName + ".xml";
+            Debug.Log(filePath);
+            Object fileObject = AssetDatabase.LoadAssetAtPath(filePath, (typeof(TextAsset)));
+            int _line = 0;
+            TextAsset textAsset = Resources.Load("Xml/Actions/" + fileName) as TextAsset;
+            int i = 1;
+            foreach(string textLine in textAsset.text.Split('\n'))
+            {
+                if(textLine.Contains("[" + key + "]"))
+                {
+                    _line = i;
+                    Debug.Log(textLine);
+                    break;
+                }
+                i++;
+            }
+            //Find line number
+            AssetDatabase.OpenAsset(fileObject, _line);
         }
 
         void OnGUI()
@@ -170,17 +236,60 @@ namespace CareUp.Localize
                 ReloadDictionaries();
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.LabelField("[ " + dictNames.Count.ToString() + " ] dictionaries found");
-            if (editInSet != -1)
+            if (showFilesForKey != "" && showFilesForSet != -1)
+            {
+                if (!keyUsageDict.ContainsKey(showFilesForKey))
+                {
+                    showFilesForKey = "";
+                    showFilesForSet = -1;
+                }
+
+                if (GUILayout.Button("<--- Go Back"))
+                {
+                    showFilesForKey = "";
+                    showFilesForSet = -1;
+                }
+                else
+                {
+                    GUILayout.Box(GUIContent.none, horizontalLine);
+                    EditorGUILayout.LabelField("The key [ " + showFilesForKey + " ] was found in:");
+                    GUILayout.Box(GUIContent.none, horizontalLine);
+                    foreach(string _file in keyUsageDict[showFilesForKey])
+                    {
+                        if (GUILayout.Button(_file))
+                        {
+                            Debug.Log(_file);
+                            OpenFileContinedKey(_file, showFilesForKey);
+                        }
+                    }
+                }
+            }
+            else if (editInSet != -1)
             {
                 EditorGUILayout.BeginHorizontal();
                 if (GUILayout.Button("Cancel Edit"))
                     ExitTextEdit();
                 if (GUILayout.Button("Save Edit"))
                     ExitTextEdit(true);
-
                 EditorGUILayout.EndHorizontal();
+
                 if (editInSet >= 0)
                     EditorGUILayout.LabelField("Editing key and value in dictionary [ " + dictNames[editInSet] + " ]", greenStyle);
+
+                if (GUILayout.Button("Search by text in all Action Files"))
+                {
+                    CheckValueInActionFiles(editValue);
+                }
+                if (filesWithValueInstance.Count > 0)
+                {
+                    EditorGUILayout.LabelField("This text found in [ " + filesWithValueInstance.Count.ToString() + " ] files", greenStyle);
+                    if (GUILayout.Button("Replace instances of text in all Action Files"))
+                    {
+                        CheckValueInActionFiles(editValue, editKey);
+                    }
+                }
+
+                
                 editKey = EditorGUILayout.TextField("Key: ", editKey);
                 TextEditorScroll = EditorGUILayout.BeginScrollView(TextEditorScroll);
                 editValue = EditorGUILayout.TextArea(editValue, GUILayout.Height(position.height - 30));
@@ -199,8 +308,13 @@ namespace CareUp.Localize
                         searchText = "";
                     }
                     EditorGUILayout.EndHorizontal();
-                    if (GUILayout.Button("Check keys usage in action files"))
-                        CheckInActionFiles();
+                    if (GUILayout.Button("Open Test"))
+                    {
+                        AssetDatabase.OpenAsset(AssetDatabase.LoadAssetAtPath("Assets/Resources/Dictionaries/Text_Ostomy_Care.json", (typeof(TextAsset))), 15);
+                    }
+                    // if (GUILayout.Button("Check keys usage in action files"))
+                    //     CheckInActionFiles();
+
 
                     List<string> dictsRollDownList = new List<string>();
                     dictsRollDownList.Add("__Show All__");
@@ -258,12 +372,17 @@ namespace CareUp.Localize
                                 string tootTip = "";
                                 foreach(string s in keyUsageDict[key])
                                     tootTip += s + "\n";
-                                GUIContent usageText = new GUIContent("[ " + usageNum.ToString() + " ]", tootTip);
+                                GUIContent usageText = new GUIContent(usageNum.ToString(), tootTip);
 
-                                EditorGUILayout.LabelField(usageText, greenStyle, GUILayout.Width(30));
+                                if (GUILayout.Button(usageText, GUILayout.Width(30)))
+                                {
+                                    showFilesForSet = i;
+                                    showFilesForKey = key;
+                                    // EditorGUILayout.LabelField(usageText, greenStyle, GUILayout.Width(30));
+                                }
                             }
                             else
-                                EditorGUILayout.LabelField("[ " + usageNum.ToString() + " ]", GUILayout.Width(30));
+                                EditorGUILayout.LabelField("  ", GUILayout.Width(30));
 
                             string _line = "[ " + key + " ] ";
                             if (CheckForKeyCopies(key, i))
@@ -284,6 +403,7 @@ namespace CareUp.Localize
                             
                             if (GUILayout.Button("E", GUILayout.Width(22)))
                             {
+                                filesWithValueInstance.Clear();
                                 editValue = setOfDictionaries[i][key];
                                 editKey = key;
                                 editInSet = i;
@@ -322,6 +442,9 @@ namespace CareUp.Localize
 
         void ReloadDictionaries()
         {
+            filesWithValueInstance.Clear();
+            showFilesForKey = "";
+            showFilesForSet = -1;
             dictNames.Clear();
             selectedSet = -1;
             editInSet = -1;
@@ -339,6 +462,7 @@ namespace CareUp.Localize
             {
                 LoadDictionary(fileName);
             }
+            CheckInActionFiles();
         }
 
         void LoadDictionary(string fileName)
