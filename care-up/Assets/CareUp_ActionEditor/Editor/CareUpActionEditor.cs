@@ -432,6 +432,11 @@ namespace CareUp.ActionEditor
 
         string FindInDictByKey(string _key, out int dictID, bool toRemoveBrackets = true)
         {
+            if (_key.Length < 3)
+            {
+                dictID = -1;
+                return _key;
+            }
             string key = _key;
             if (toRemoveBrackets)
             {
@@ -1038,7 +1043,6 @@ namespace CareUp.ActionEditor
                                 EditorGUILayout.LabelField("", GUILayout.Width(30));
                                 EditorGUILayout.LabelField("From [ " + dictNames[descDictID] + " ] With Key " + a.description, greenStyle);
                                 EditorGUILayout.EndHorizontal();
-
                             }
                             EditorGUILayout.BeginHorizontal();
                             EditorGUILayout.LabelField("", GUILayout.Width(30));
@@ -1093,24 +1097,51 @@ namespace CareUp.ActionEditor
 
                             foreach (string attr in ActionAttributeNames)
                             {
-                                if (a.GetAttributeByName(attr) != null)
+                                string currentAttr = a.GetAttributeByName(attr);
+                                if (currentAttr != null)
                                 {
                                     EditorGUILayout.BeginHorizontal();
 
                                     Texture t = Resources.Load("CareUp_ActionEditor_Icons/" + attr) as Texture;
                                     GUIContent ico = new GUIContent(t, attr + " = " + a.GetAttributeByName(attr));
-                                    EditorGUILayout.LabelField(ico, GUILayout.Width(25));
-                                    a.SetAttributeByName(attr, EditorGUILayout.TextField(attr + ": ", a.GetAttributeByName(attr)));
-                                    if (GUILayout.Button("E", GUILayout.Width(22)))
+
+                                    //icon
+                                    EditorGUILayout.LabelField(ico, GUILayout.Width(22));
+                                    int _descDictID = -1;
+                                    string textToShow = FindInDictByKey(currentAttr, out _descDictID);
+                                    if (_descDictID != -1)
                                     {
-                                        TextEditorScroll = new Vector2();
-                                        TextEditorValue = a.GetAttributeByName(attr);
-                                        actionToEditInTE = a;
-                                        attributeToEditInTE = attr;
+                                        EditorGUILayout.LabelField("From [ " + dictNames[_descDictID] + " ] With Key " + currentAttr, greenStyle);
+                                        if (GUILayout.Button("K", GUILayout.Width(22)))
+                                        {
+                                            TextEditorScroll = new Vector2();
+                                            TextEditorValue = a.GetAttributeByName(attr);
+                                            actionToEditInTE = a;
+                                            attributeToEditInTE = attr;
+                                        }
+                                        if (GUILayout.Button("-", GUILayout.Width(22)))
+                                        {
+                                            a.SetAttributeByName(attr, null);
+                                        }
+                                        EditorGUILayout.EndHorizontal();
+                                        EditorGUILayout.BeginHorizontal();
+                                        EditorGUILayout.LabelField("", GUILayout.Width(22));
+                                        EditorGUILayout.LabelField(textToShow.Split('\n')[0]);
                                     }
-                                    if (GUILayout.Button("-", GUILayout.Width(22)))
+                                    else
                                     {
-                                        a.SetAttributeByName(attr, null);
+                                        a.SetAttributeByName(attr, EditorGUILayout.TextField(attr + ": ", currentAttr));
+                                        if (GUILayout.Button("E", GUILayout.Width(22)))
+                                        {
+                                            TextEditorScroll = new Vector2();
+                                            TextEditorValue = a.GetAttributeByName(attr);
+                                            actionToEditInTE = a;
+                                            attributeToEditInTE = attr;
+                                        }
+                                        if (GUILayout.Button("-", GUILayout.Width(22)))
+                                        {
+                                            a.SetAttributeByName(attr, null);
+                                        }
                                     }
                                     EditorGUILayout.EndHorizontal();
                                 }
