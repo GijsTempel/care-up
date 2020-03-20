@@ -29,9 +29,8 @@ namespace CareUp.Localize
             foreach (string key in data.Keys)
             {
                 if (!localizedText.ContainsKey(key))
-                    localizedText.Add(key, data[key]);
+                    localizedText.Add(key, data[key].ToString().Replace("<br>", "\n").Replace("\"",""));
             }
-
             isReady = true;
         }
 

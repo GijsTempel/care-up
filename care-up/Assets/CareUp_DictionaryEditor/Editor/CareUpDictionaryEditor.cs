@@ -70,7 +70,7 @@ namespace CareUp.Localize
                 stringBuilder.Append("{\n");
                 foreach(string key in setOfDictionaries[i].Keys)
                 {
-                    stringBuilder.Append("  \"" + key + "\": \"" + setOfDictionaries[i][key] + "\",\n");
+                    stringBuilder.Append("  \"" + key + "\": \"" + setOfDictionaries[i][key].Replace("\n", "<br>\n") + "\",\n");
                 }
                 stringBuilder.Append("}");
 
@@ -308,13 +308,6 @@ namespace CareUp.Localize
                         searchText = "";
                     }
                     EditorGUILayout.EndHorizontal();
-                    if (GUILayout.Button("Open Test"))
-                    {
-                        AssetDatabase.OpenAsset(AssetDatabase.LoadAssetAtPath("Assets/Resources/Dictionaries/Text_Ostomy_Care.json", (typeof(TextAsset))), 15);
-                    }
-                    // if (GUILayout.Button("Check keys usage in action files"))
-                    //     CheckInActionFiles();
-
 
                     List<string> dictsRollDownList = new List<string>();
                     dictsRollDownList.Add("__Show All__");
@@ -456,11 +449,9 @@ namespace CareUp.Localize
                 if (!string.IsNullOrEmpty(dictName))
                 {
                     dictNames.Add(dictName);
+                    LoadDictionary(dictName);
+
                 }
-            }
-            foreach (string fileName in dictNames)
-            {
-                LoadDictionary(fileName);
             }
             CheckInActionFiles();
         }
@@ -471,12 +462,11 @@ namespace CareUp.Localize
             TextAsset _data = (TextAsset)Resources.Load("Dictionaries/" + fileName);
             if (_data != null)
             {
-                string jsonString = _data.text;
-                JSONNode data = JSON.Parse(jsonString);
+                JSONNode data = JSON.Parse(_data.text);
                 foreach (string key in data.Keys)
                 {
                     if (!currentDict.ContainsKey(key))
-                        currentDict.Add(key, data[key]);
+                        currentDict.Add(key, data[key].ToString().Replace("<br>", "\n").Replace("\"",""));
                 }
             }
             setOfDictionaries.Add(currentDict);
