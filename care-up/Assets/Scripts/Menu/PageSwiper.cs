@@ -33,7 +33,6 @@ public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
     private Vector3 panelLocation;
     private Vector3 startPosition;
     private Vector3 currentPosition;
-    private Vector3 endPosition = new Vector3(-3200f, 0f, 0f);
     private List<GameObject> dots;
 
     private bool BoundariesCheck
@@ -43,9 +42,17 @@ public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
             if (objectToSwipe != null)
             {
                 return (objectToSwipe.localPosition.x < (startPosition.x + offset))
-                    && (objectToSwipe.localPosition.x > (endPosition.x - offset));
+                    && (objectToSwipe.localPosition.x > (EndPositionX - offset));
             }
             else return false;
+        }
+    }
+
+    private float EndPositionX
+    {
+        get
+        {
+            return -pageWidth * (pagesCount - 1);
         }
     }
 
