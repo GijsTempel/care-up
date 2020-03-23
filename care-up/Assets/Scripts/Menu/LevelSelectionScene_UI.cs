@@ -29,7 +29,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
     public void RefrashSceneSelectionButtons()
     {
-        foreach(LevelButton levelButton in GameObject.FindObjectsOfType<LevelButton>())
+        foreach (LevelButton levelButton in GameObject.FindObjectsOfType<LevelButton>())
         {
             levelButton.UpdateButtonLockState();
         }
@@ -91,14 +91,14 @@ public class LevelSelectionScene_UI : MonoBehaviour
     }
 
     public void ReinitializeUI()
-    {      
+    {
         ClearUI();
-        UpdateSceneUI();           
+        UpdateSceneUI();
     }
 
     void UpdateSceneUI()
     {
-       
+
         // load xml
         TextAsset textAsset;
 
@@ -121,7 +121,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
         // leaderboard stuff
         bool firstScene = true;
         LeaderBoardSceneButton.buttons.Clear();
-// FindObjectOfType<PlayerPrefsManager>().demoVersion
+        // FindObjectOfType<PlayerPrefsManager>().demoVersion
 
         Transform protocolsTransorm = GameObject.Find("UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Play/ContentPanel/PlayElements/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder/Protocols/content").transform;
         foreach (XmlNode xmlSceneNode in xmlSceneList)
@@ -200,7 +200,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
                         // set the image as main if this is 1st variation
                         sceneUnit.image = sceneUnit.variations[i].image;
 
-                        sceneUnit.validated = sceneUnit.variations[i].validated;                      
+                        sceneUnit.validated = sceneUnit.variations[i].validated;
                         sceneUnit.transform.Find("Validation").GetComponent<Text>().text =
                             sceneUnit.validated ? "Geaccrediteerd" : "";
 
@@ -260,7 +260,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
                     sceneUnit.transform.Find("Validation").GetComponent<Text>().text =
                         sceneUnit.validated ? "Geaccrediteerd" : "";
                 }
-                
+
                 if (xmlSceneNode.Attributes["totalPoints"] != null)
                 {
                     sceneUnit.totalPoints = xmlSceneNode.Attributes["totalPoints"].Value;
@@ -302,17 +302,17 @@ public class LevelSelectionScene_UI : MonoBehaviour
             sceneUnit.UpdateAutoPlayToggle();
             //---------------------
         }
-        
-        ScrollRect levelScroll =  GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Play/ContentPanel/PlayElements/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder").GetComponent<ScrollRect>();
-        
+
+        ScrollRect levelScroll = GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Play/ContentPanel/PlayElements/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder").GetComponent<ScrollRect>();
+
         levelScroll.verticalNormalizedPosition = ppManager.LevelScrollPosition;
     }
 
 
     public void LevelScrollChanged()
     {
-        ScrollRect levelScroll =  GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Play/ContentPanel/PlayElements/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder").GetComponent<ScrollRect>();
-       
+        ScrollRect levelScroll = GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Play/ContentPanel/PlayElements/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder").GetComponent<ScrollRect>();
+
         ppManager.LevelScrollPosition = levelScroll.verticalNormalizedPosition;
     }
 
@@ -358,7 +358,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
             lb.infoBar.SetActive(false);
         else
         {
-            
+
             GameObject.FindObjectOfType<UMP_Manager>().LeaderBoardSearchBar.gameObject.SetActive(false);
             lb.top.SetActive(false);
             lb.backButton.GetComponent<Button>().interactable = true;
@@ -366,7 +366,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
             lb.infoBar.SetActive(true);
             lb.description.GetComponent<Text>().text = LeaderBoardSceneButton.Descripton;
             lb.leaderboard.SetActive(false);
-        }       
+        }
     }
 
     public void RequestCharacterInfoByUID(int uid)
@@ -376,7 +376,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
         WUData.FetchUserCategory(uid, "AccountStats", RequestCharacterInfoByUID_success);
     }
 
-public void RequestCharacterInfoByUID_success(CML response)
+    public void RequestCharacterInfoByUID_success(CML response)
     {
         //loading done, stop loading animation, open UI
         string sex = response.Elements[1]["Sex"];
@@ -395,7 +395,7 @@ public void RequestCharacterInfoByUID_success(CML response)
             if (prevCharData.headType < mainAvatar.GetMaxHeadNum(prevCharData.gender))
             {
                 int.TryParse(body, out prevCharData.bodyType);
-               
+
                 int glassesType = -1;
                 int.TryParse(glasses, out glassesType);
                 if (glassesType < 3000000)
