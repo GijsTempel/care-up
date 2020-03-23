@@ -78,6 +78,16 @@ namespace CareUp.Localize
                     swriter.Write(stringBuilder.ToString());
             }
         }
+
+        public void CopyToClipboard(string _value)
+        {
+            TextEditor te = new TextEditor();
+            te.text = _value;
+            te.SelectAll();
+            te.Copy();
+        }
+
+
 /// <summary>
 /// Closing a text editor with canceling or saving cahnges to the attribute
 /// </summary>
@@ -348,12 +358,12 @@ namespace CareUp.Localize
                             {
                                 if (searchText[0] == '@')
                                 {
-                                    if (!key.ToLower().Contains(searchText.Substring(1)))
+                                    if (!key.ToLower().Contains(searchText.ToLower().Substring(1)))
                                         continue;
                                 }
                                 else
                                 {
-                                    if(!setOfDictionaries[i][key].ToLower().Contains(searchText))
+                                    if(!setOfDictionaries[i][key].ToLower().Contains(searchText.ToLower()))
                                         continue;
                                 }
                             }
@@ -393,7 +403,10 @@ namespace CareUp.Localize
                             {
                                 wordsToChange.Add(new WordToChangeData(i,key,UIWords[UIWords.Count - 1]));
                             }
-                            
+                            if (GUILayout.Button("C", GUILayout.Width(22)))
+                            {
+                                CopyToClipboard(key);
+                            }
                             if (GUILayout.Button("E", GUILayout.Width(22)))
                             {
                                 filesWithValueInstance.Clear();

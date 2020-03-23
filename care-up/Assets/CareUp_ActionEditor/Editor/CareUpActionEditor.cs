@@ -388,6 +388,9 @@ namespace CareUp.ActionEditor
         bool automateIndexes = false;
         int lastSelected = -1;
         Action actionToEditInTE = null;
+        int dictToEdit = -1;
+        string dictValueToEdit = "";
+
         string attributeToEditInTE = "";
         string TextEditorValue = "";
         Vector2 TextEditorScroll = new Vector2();
@@ -409,8 +412,24 @@ namespace CareUp.ActionEditor
         void ExitTextEdit(bool toSave = false)
         {
             if (toSave)
-                actionToEditInTE.SetAttributeByName(attributeToEditInTE, TextEditorValue);
+            {
+                if (dictToEdit != -1)
+                {
+                    string key = TextEditorValue.Substring(1, TextEditorValue.Length - 2);
+                    if (setOfDictionaries[dictToEdit].ContainsKey(key))
+                    {
+                        setOfDictionaries[dictToEdit][key] = dictValueToEdit;
+                        SaveDictChanges(dictToEdit);
+                    }
+                }
+                else
+                {
+                    actionToEditInTE.SetAttributeByName(attributeToEditInTE, TextEditorValue);
+                }
+            }
             actionToEditInTE = null;
+            dictToEdit = -1;
+            dictValueToEdit = "";
         }
 
         void LoadDictionary(string fileName)
@@ -430,13 +449,22 @@ namespace CareUp.ActionEditor
             setOfDictionaries.Add(currentDict);
         }
 
+        public void CopyToClipboard(string _value)
+        {
+            TextEditor te = new TextEditor();
+            te.text = _value;
+            te.SelectAll();
+            te.Copy();
+        }
+
         string FindInDictByKey(string _key, out int dictID, bool toRemoveBrackets = true)
         {
+            dictID = -1;
+            
             if (_key.Length < 3)
-            {
-                dictID = -1;
                 return _key;
-            }
+            if (_key[0] != '[' || _key[_key.Length - 1] != ']')
+                return _key;
             string key = _key;
             if (toRemoveBrackets)
             {
@@ -453,7 +481,6 @@ namespace CareUp.ActionEditor
                     }
                 }
             }
-            dictID = -1;
             return _key;
         } 
 
@@ -808,12 +835,32 @@ namespace CareUp.ActionEditor
             }
         }
 
+
+        void SaveDictChanges(int _dictID = -1)
+        {
+            string dictName = dictNames[_dictID];
+            string actionFilePath = "Assets/Resources/Dictionaries/"+ dictName + ".json";
+
+            var stringBuilder = new StringBuilder();
+            stringBuilder.Append("{\n");
+            foreach(string key in setOfDictionaries[_dictID].Keys)
+            {
+                stringBuilder.Append("  \"" + key + "\": \"" + setOfDictionaries[_dictID][key].Replace("\n", "<br>\n") + "\",\n");
+            }
+            stringBuilder.Append("}");
+
+            using (StreamWriter swriter = new StreamWriter(actionFilePath))
+                swriter.Write(stringBuilder.ToString());
+            
+        }
+
         string testText = "";
         void OnGUI()
         {
             GUIStyle greenStyle  = new GUIStyle();
             greenStyle.normal.textColor = new Color(0f, 0.5f, 0f);
-
+            GUIStyle warningStyle  = new GUIStyle();
+            warningStyle.normal.textColor = Color.red;
             GUIStyle multiline  = new GUIStyle();
             multiline.wordWrap = true;
             EditorGUILayout.BeginHorizontal();
@@ -835,9 +882,36 @@ namespace CareUp.ActionEditor
                         ExitTextEdit(true);
                     EditorGUILayout.EndHorizontal();
 
-                    TextEditorScroll = EditorGUILayout.BeginScrollView(TextEditorScroll);
-                    TextEditorValue = EditorGUILayout.TextArea(TextEditorValue, GUILayout.Height(position.height - 30));
-                    EditorGUILayout.EndScrollView();
+                    if (dictToEdit != -1)
+                    {
+                        EditorGUILayout.LabelField("Editing value for key " + TextEditorValue + 
+                        "From dictionary [" + dictNames[dictToEdit] + " ]\n!! Your changes might affect multiple files !!"
+                        ,warningStyle ,GUILayout.Height(50));
+                        
+                        EditorGUILayout.BeginHorizontal();
+                        EditorGUILayout.LabelField("Dictionary :", warningStyle ,GUILayout.Width(90));
+                        EditorGUILayout.LabelField(dictNames[dictToEdit], warningStyle);
+                        EditorGUILayout.EndHorizontal();
+                        EditorGUILayout.BeginHorizontal();
+                        EditorGUILayout.LabelField("Key :", warningStyle ,GUILayout.Width(90));
+                        EditorGUILayout.LabelField(TextEditorValue, warningStyle);
+                        if (GUILayout.Button("E", GUILayout.Width(22)))
+                        {
+                            dictToEdit = -1;
+                        }
+                        EditorGUILayout.EndHorizontal();
+
+                        TextEditorScroll = EditorGUILayout.BeginScrollView(TextEditorScroll);
+                        dictValueToEdit = EditorGUILayout.TextArea(dictValueToEdit, GUILayout.Height(position.height - 30));
+                        EditorGUILayout.EndScrollView();
+
+                    }
+                    else
+                    {
+                        TextEditorScroll = EditorGUILayout.BeginScrollView(TextEditorScroll);
+                        TextEditorValue = EditorGUILayout.TextArea(TextEditorValue, GUILayout.Height(position.height - 30));
+                        EditorGUILayout.EndScrollView();
+                    }
                 }
                 else
                 {
@@ -1070,8 +1144,15 @@ namespace CareUp.ActionEditor
                                 float showHeight = EditorGUIUtility.singleLineHeight * descToShow.Split('\n').Length;
 
                                 EditorGUILayout.LabelField(descToShow, multiline, GUILayout.Height(showHeight));
+                                if (GUILayout.Button("C", GUILayout.Width(22)))
+                                {
+                                    CopyToClipboard(a.description.Substring(1, a.description.Length - 2));
+                                }
+                                
                                 if (GUILayout.Button("K", GUILayout.Width(22)))
                                 {
+                                    dictToEdit = descDictID;
+                                    dictValueToEdit = descToShow;
                                     TextEditorScroll = new Vector2();
                                     TextEditorValue = a.description;
                                     actionToEditInTE = a;
@@ -1094,7 +1175,6 @@ namespace CareUp.ActionEditor
                                 EditorGUILayout.EndHorizontal();
                             }
 
-
                             foreach (string attr in ActionAttributeNames)
                             {
                                 string currentAttr = a.GetAttributeByName(attr);
@@ -1112,12 +1192,18 @@ namespace CareUp.ActionEditor
                                     if (_descDictID != -1)
                                     {
                                         EditorGUILayout.LabelField("From [ " + dictNames[_descDictID] + " ] With Key " + currentAttr, greenStyle);
+                                        if (GUILayout.Button("C", GUILayout.Width(22)))
+                                        {
+                                            CopyToClipboard(currentAttr.Substring(1, currentAttr.Length - 2));
+                                        }
                                         if (GUILayout.Button("K", GUILayout.Width(22)))
                                         {
                                             TextEditorScroll = new Vector2();
                                             TextEditorValue = a.GetAttributeByName(attr);
                                             actionToEditInTE = a;
                                             attributeToEditInTE = attr;
+                                            dictToEdit = _descDictID;
+                                            dictValueToEdit = textToShow;
                                         }
                                         if (GUILayout.Button("-", GUILayout.Width(22)))
                                         {
@@ -1125,8 +1211,9 @@ namespace CareUp.ActionEditor
                                         }
                                         EditorGUILayout.EndHorizontal();
                                         EditorGUILayout.BeginHorizontal();
+                                        float showHeight = EditorGUIUtility.singleLineHeight * textToShow.Split('\n').Length;
                                         EditorGUILayout.LabelField("", GUILayout.Width(22));
-                                        EditorGUILayout.LabelField(textToShow.Split('\n')[0]);
+                                        EditorGUILayout.LabelField(textToShow, GUILayout.Height(showHeight));
                                     }
                                     else
                                     {
