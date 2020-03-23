@@ -6,27 +6,11 @@ using UnityEngine.UI;
 
 public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
 {
-    private Vector3 panelLocation;
-
     [SerializeField]
     private Transform objectToSwipe;
 
     [SerializeField]
-    private float percentThreshold = 0.2f;
-
-    [SerializeField]
-    private float easing = 0.3f;
-
-    private Vector3 startPosition;
-
-    private Vector3 endPosition = new Vector3(-3200f, 0f, 0f);
-
-    private Vector3 currentPosition;
-
-    private bool moved = false;
-
-    [SerializeField]
-    private Sprite currentDotSprite;
+    private GameObject panelHolder;
 
     [SerializeField]
     private Sprite dotSprite;
@@ -34,50 +18,48 @@ public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
     [SerializeField]
     private GameObject dotPanel;
 
-    private List<GameObject> dots = new List<GameObject>();
-    private int pagesCount = 3;
+    [SerializeField]
+    private float percentThreshold = 0.2f;
 
+    [SerializeField]
+    private float easing = 0.3f;
+
+    private bool moved = false;
+    private int pagesCount;
     private int index = 0;
+    private float offset = 50f;
+    private float pageWidth = 0f;
 
-    private void DotsInstantiating()
+    private Vector3 panelLocation;
+    private Vector3 startPosition;
+    private Vector3 currentPosition;
+    private Vector3 endPosition = new Vector3(-3200f, 0f, 0f);
+    private List<GameObject> dots;
+
+    private bool BoundariesCheck
     {
-        for (int i = 0; i < pagesCount; i++)
+        get
         {
-            GameObject dot = Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/UI/dotTut"), dotPanel.transform) as GameObject;
-            dot.GetComponent<Image>().color = new Color(1, 1, 1, 0.3f);
-            dot.transform.SetParent(dotPanel.transform);
-            dots.Add(dot);
+            if (objectToSwipe != null)
+            {
+                return (objectToSwipe.localPosition.x < (startPosition.x + offset))
+                    && (objectToSwipe.localPosition.x > (endPosition.x - offset));
+            }
+            else return false;
         }
-
-        UpdateDots();
-    }
-
-    private void UpdateDots()
-    {
-        foreach (GameObject d in dots)
-        {
-            d.GetComponent<Image>().color = new Color(1, 1, 1, 0.3f);
-        }
-        dots[index].GetComponent<Image>().color = new Color(1, 1, 1, 1f);
-    }
-
-    private void Start()
-    {
-        startPosition = objectToSwipe.localPosition;
-        panelLocation = objectToSwipe.localPosition;
-
-        DotsInstantiating();
     }
 
     public void OnDrag(PointerEventData data)
     {
-        if ((objectToSwipe.localPosition.x < 50f) && (objectToSwipe.localPosition.x > -3250f))
+        if (BoundariesCheck)
         {
             if (!moved)
             {
                 float difference = (data.pressPosition.x - data.position.x) / 5;
                 currentPosition = panelLocation - new Vector3(difference, 0, 0);
-                objectToSwipe.localPosition = currentPosition;
+
+                if (objectToSwipe != null)
+                    objectToSwipe.localPosition = currentPosition;
 
                 float percentage = (data.pressPosition.x - data.position.x) / Screen.width;
 
@@ -88,12 +70,12 @@ public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
                     if (percentage > 0)
                     {
                         index++;
-                        newLocation += new Vector3(-1600f, 0, 0);
+                        newLocation += new Vector3(-pageWidth, 0, 0);
                     }
                     else if (percentage < 0)
                     {
                         index--;
-                        newLocation += new Vector3(1600f, 0, 0);
+                        newLocation += new Vector3(pageWidth, 0, 0);
                     }
 
                     StartCoroutine(SmoothMove(currentPosition, newLocation, easing));
@@ -116,14 +98,43 @@ public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
         moved = false;
     }
 
-    private IEnumerator SmoothMove(Vector3 startPos, Vector3 endPos, float seconds)
+    private void Start()
     {
-        float t = 0f;
-        while (t <= 1.0)
+        if (objectToSwipe != null)
         {
-            t += Time.deltaTime / seconds;
-            objectToSwipe.localPosition = Vector3.Lerp(startPos, endPos, Mathf.SmoothStep(0f, 1f, t));
-            yield return null;
+            panelLocation = objectToSwipe.localPosition;
+            startPosition = panelLocation;
+        }
+
+        if (panelHolder != null)
+        {
+            pagesCount = panelHolder.transform.childCount;
+
+            if (pagesCount > 0)
+            {
+                if (panelHolder.transform.GetChild(0) != null)
+                {
+                    if (panelHolder.transform.GetChild(0).gameObject.GetComponent<RectTransform>() != null)
+                    {
+                        pageWidth = panelHolder.transform.GetChild(0).gameObject.GetComponent<RectTransform>().sizeDelta.x;
+                    }
+                }
+            }
+        }
+
+        InstantiateDots();
+    }
+
+    private void UpdateDots()
+    {
+        foreach (GameObject d in dots)
+        {
+            d.GetComponent<Image>().color = new Color(1, 1, 1, 0.3f);
+        }
+
+        if (dots[index] != null)
+        {
+            dots[index].GetComponent<Image>().color = new Color(1, 1, 1, 1f);
         }
     }
 
@@ -131,19 +142,19 @@ public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
     {
         float percentage = (pressPosition.x - position.x) / Screen.width;
 
-        if (Mathf.Abs(percentage) >= percentThreshold && (objectToSwipe.localPosition.x < 50f) && (objectToSwipe.localPosition.x > -3250f))
+        if (Mathf.Abs(percentage) >= percentThreshold && BoundariesCheck)
         {
             Vector3 newLocation = panelLocation;
 
             if (percentage > 0)
             {
                 index++;
-                newLocation += new Vector3(-1600f, 0, 0);
+                newLocation += new Vector3(-pageWidth, 0, 0);
             }
             else if (percentage < 0)
             {
                 index--;
-                newLocation += new Vector3(1600f, 0, 0);
+                newLocation += new Vector3(pageWidth, 0, 0);
             }
 
             StartCoroutine(SmoothMove(currentPosition, newLocation, easing));
@@ -154,5 +165,31 @@ public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
         {
             StartCoroutine(SmoothMove(currentPosition, panelLocation, easing));
         }
+    }
+
+    private IEnumerator SmoothMove(Vector3 startPos, Vector3 endPos, float seconds)
+    {
+        float time = 0f;
+        while (time <= 1.0)
+        {
+            time += Time.deltaTime / seconds;
+            objectToSwipe.localPosition = Vector3.Lerp(startPos, endPos, Mathf.SmoothStep(0f, 1f, time));
+            yield return null;
+        }
+    }
+
+    private void InstantiateDots()
+    {
+        dots = new List<GameObject>();
+
+        for (int i = 0; i < pagesCount; i++)
+        {
+            GameObject dot = Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/UI/dotTut"), dotPanel.transform) as GameObject;
+            dot.GetComponent<Image>().color = new Color(1, 1, 1, 0.3f);
+            dot.transform.SetParent(dotPanel.transform);
+            dots.Add(dot);
+        }
+
+        UpdateDots();
     }
 }
