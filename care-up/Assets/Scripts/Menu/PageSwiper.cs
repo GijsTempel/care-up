@@ -76,13 +76,19 @@ public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
 
                     if (percentage > 0)
                     {
-                        index++;
-                        newLocation += new Vector3(-pageWidth, 0, 0);
+                        if (index < dots.Count - 1)
+                        {
+                            ++index;
+                            newLocation += new Vector3(-pageWidth, 0, 0);
+                        }
                     }
                     else if (percentage < 0)
                     {
-                        index--;
-                        newLocation += new Vector3(pageWidth, 0, 0);
+                        if (index > 0)
+                        {
+                            --index;
+                            newLocation += new Vector3(pageWidth, 0, 0);
+                        }
                     }
 
                     StartCoroutine(SmoothMove(currentPosition, newLocation, easing));
@@ -138,7 +144,6 @@ public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
         {
             d.GetComponent<Image>().color = new Color(1, 1, 1, 0.3f);
         }
-
         if (dots[index] != null)
         {
             dots[index].GetComponent<Image>().color = new Color(1, 1, 1, 1f);
@@ -155,13 +160,19 @@ public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
 
             if (percentage > 0)
             {
-                index++;
-                newLocation += new Vector3(-pageWidth, 0, 0);
+                if (index < dots.Count - 1)
+                {
+                    ++index;
+                    newLocation += new Vector3(-pageWidth, 0, 0);
+                }
             }
             else if (percentage < 0)
             {
-                index--;
-                newLocation += new Vector3(pageWidth, 0, 0);
+                if (index > 0)
+                {
+                    --index;
+                    newLocation += new Vector3(pageWidth, 0, 0);
+                }
             }
 
             StartCoroutine(SmoothMove(currentPosition, newLocation, easing));
