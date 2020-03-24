@@ -13,6 +13,7 @@ namespace MBS
         {
             public GameObject
             login_menu,
+            apple_login_menu,
             login_screen,
             register_screen,
             password_reset_screen,
@@ -218,6 +219,7 @@ namespace MBS
         [SerializeField] WUInputFields fields = default(WUInputFields);
         [SerializeField] WUPanels panels = default(WUPanels);
         [SerializeField] Toggle auto_login_toggle = default(Toggle);
+        [SerializeField] Toggle apple_auto_login_toggle = default(Toggle);
 #if WUS
         [Header("Leaderboards")]
         [SerializeField] bool fetch_scores_on_showing_panel = true;
@@ -234,7 +236,7 @@ namespace MBS
         GameObject active_screen = null;
 
         void DisplayScreen(GameObject screen)
-        {
+        {          
             active_state = eWULUGUIState.Active;
 
             if (null != active_screen && screen != active_screen)
@@ -260,6 +262,14 @@ namespace MBS
 #if !(UNITY_EDITOR || DEVELOPMENT_BUILD)
             panels.debug_options.SetActive(false);
 #endif
+
+#if UNITY_IOS
+            panels.login_menu = panels.apple_login_menu;
+            panels.post_login_menu_screen = panels.apple_login_menu;
+            panels.start_menu = panels.apple_login_menu;
+            auto_login_toggle = apple_auto_login_toggle;
+#endif    
+
             PlayerPrefsManager.plusCoins = false;
             PlayerPrefsManager.plusDiamonds = false;
             PlayerPrefsManager.resetPurchases = false;
@@ -281,8 +291,8 @@ namespace MBS
         {
             bool value = panels.debug_options.transform.Find("Panel/Plus300/Toggle").GetComponent<Toggle>().isOn;
             PlayerPrefsManager.plusCoins = value;
-        }  
-        
+        }
+
         public void PlusDiamonds()
         {
             bool value = panels.debug_options.transform.Find("Panel/Plus5/Toggle").GetComponent<Toggle>().isOn;
