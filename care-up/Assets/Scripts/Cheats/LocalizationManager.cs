@@ -50,7 +50,7 @@ namespace CareUp.Localize
             //Resources.Load("Dictionaries/");
             foreach (string fileName in dicts)
             {
-                LoadLocalizedText(fileName);
+                LoadLocalizedText(fileName.Replace("\r",""));
             }
             loadedDicts = true;
         }
