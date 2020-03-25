@@ -196,8 +196,8 @@ namespace UnityEngine.PostProcessing
             bool taaActive = m_Taa.active && !m_RenderingInSceneView;
             bool dofActive = m_DepthOfField.active && !m_RenderingInSceneView;
 
-            var uberMaterial = m_MaterialFactory.Get("Hidden/Post FX/Uber Shader");
-            uberMaterial.shaderKeywords = null;
+            //var uberMaterial = m_MaterialFactory.Get("Hidden/Post FX/Uber Shader");
+            //uberMaterial.shaderKeywords = null;
 
             var src = source;
             var dst = destination;
@@ -219,30 +219,30 @@ namespace UnityEngine.PostProcessing
 #endif
 
             Texture autoExposure = GraphicsUtils.whiteTexture;
-            if (m_EyeAdaptation.active)
-            {
-                uberActive = true;
-                autoExposure = m_EyeAdaptation.Prepare(src, uberMaterial);
-            }
+            //if (m_EyeAdaptation.active)
+            //{
+                //uberActive = true;
+                //autoExposure = m_EyeAdaptation.Prepare(src, uberMaterial);
+            //}
 
-            uberMaterial.SetTexture("_AutoExposure", autoExposure);
+            //uberMaterial.SetTexture("_AutoExposure", autoExposure);
 
-            if (dofActive)
-            {
-                uberActive = true;
-                m_DepthOfField.Prepare(src, uberMaterial, taaActive, m_Taa.jitterVector, m_Taa.model.settings.taaSettings.motionBlending);
-            }
+            //if (dofActive)
+            //{
+            //    uberActive = true;
+            //    m_DepthOfField.Prepare(src, uberMaterial, taaActive, m_Taa.jitterVector, m_Taa.model.settings.taaSettings.motionBlending);
+            //}
 
-            if (m_Bloom.active)
-            {
-                uberActive = true;
-                m_Bloom.Prepare(src, uberMaterial, autoExposure);
-            }
+            //if (m_Bloom.active)
+            //{
+            //    uberActive = true;
+            //    m_Bloom.Prepare(src, uberMaterial, autoExposure);
+            //}
 
-            uberActive |= TryPrepareUberImageEffect(m_ChromaticAberration, uberMaterial);
-            uberActive |= TryPrepareUberImageEffect(m_ColorGrading, uberMaterial);
-            uberActive |= TryPrepareUberImageEffect(m_Vignette, uberMaterial);
-            uberActive |= TryPrepareUberImageEffect(m_UserLut, uberMaterial);
+            //uberActive |= TryPrepareUberImageEffect(m_ChromaticAberration, uberMaterial);
+            //uberActive |= TryPrepareUberImageEffect(m_ColorGrading, uberMaterial);
+            //uberActive |= TryPrepareUberImageEffect(m_Vignette, uberMaterial);
+            //uberActive |= TryPrepareUberImageEffect(m_UserLut, uberMaterial);
 
             var fxaaMaterial = fxaaActive
                 ? m_MaterialFactory.Get("Hidden/Post FX/FXAA")
@@ -257,7 +257,7 @@ namespace UnityEngine.PostProcessing
                 if (uberActive)
                 {
                     var output = m_RenderTextureFactory.Get(src);
-                    Graphics.Blit(src, output, uberMaterial, 0);
+                    //Graphics.Blit(src, output, uberMaterial, 0);
                     src = output;
                 }
 
@@ -265,16 +265,16 @@ namespace UnityEngine.PostProcessing
             }
             else
             {
-                uberActive |= TryPrepareUberImageEffect(m_Grain, uberMaterial);
-                uberActive |= TryPrepareUberImageEffect(m_Dithering, uberMaterial);
+                //uberActive |= TryPrepareUberImageEffect(m_Grain, uberMaterial);
+                //uberActive |= TryPrepareUberImageEffect(m_Dithering, uberMaterial);
 
-                if (uberActive)
-                {
-                    if (!GraphicsUtils.isLinearColorSpace)
-                        uberMaterial.EnableKeyword("UNITY_COLORSPACE_GAMMA");
+                //if (uberActive)
+                //{
+                    //if (!GraphicsUtils.isLinearColorSpace)
+                        //uberMaterial.EnableKeyword("UNITY_COLORSPACE_GAMMA");
 
-                    Graphics.Blit(src, dst, uberMaterial, 0);
-                }
+                    //Graphics.Blit(src, dst, uberMaterial, 0);
+                //}
             }
 
             if (!uberActive && !fxaaActive)
