@@ -89,7 +89,7 @@ public class MainMenu : MonoBehaviour
 
             if (CareUpNotification.showReward)
             {
-                StoreViewModel.ShowRewardDialogue(reward, rewardPanel, 50);
+                StoreViewModel.ShowRewardDialogue(reward, rewardPanel, 20);
                 CareUpNotification.showReward = false;
             }
 
