@@ -461,8 +461,8 @@ namespace CareUp.Localize
             {   
                 if (!string.IsNullOrEmpty(dictName))
                 {
-                    dictNames.Add(dictName);
-                    LoadDictionary(dictName);
+                    dictNames.Add(dictName.Replace("\r", ""));
+                    LoadDictionary(dictName.Replace("\r", ""));
 
                 }
             }
