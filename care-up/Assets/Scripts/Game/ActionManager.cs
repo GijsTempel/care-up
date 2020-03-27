@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using CareUp.Actions;
 using CareUp.Localize;
+using System.Collections;
 
 /// <summary>
 /// GameLogic script. Everything about actions is managed by this script.
@@ -97,8 +98,8 @@ public class ActionManager : MonoBehaviour
     public int TotalPoints
     {
         get { return totalPoints; }
-    } 
- 
+    }
+
     /// <summary>
     /// Index of current action.
     /// </summary>
@@ -177,7 +178,7 @@ public class ActionManager : MonoBehaviour
         }
 
         if (!practiceMode)
-        {           
+        {
             return;
         }
 
@@ -455,7 +456,7 @@ public class ActionManager : MonoBehaviour
                                 gameUI.buttonToBlink = GameUI.ItemControlButtonType.Combine;
                             }
                         }
-                        
+
                         else if (leftR != null)
                         {
                             if (actManager.CompareUseOnInfo(inventory.leftHandObject.name, ""))
@@ -908,11 +909,33 @@ public class ActionManager : MonoBehaviour
 
     private Controls controls;
 
+    private IEnumerator ChangeFPS26()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(3f);
+            Application.targetFrameRate = 11;
+        }
+    }
+
+    private IEnumerator ChangeFPS5()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(5f);
+            Application.targetFrameRate = 25;
+        }
+    }
+
     /// <summary>
     /// Set some variables and load info from xml file.
     /// </summary>
     void Awake()
     {
+        //Application.targetFrameRate = 4;
+        //StartCoroutine("ChangeFPS5");
+        //StartCoroutine("ChangeFPS26");
+
         manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
         string sceneName = SceneManager.GetActiveScene().name;
         menuScene = sceneName == "Menu" || sceneName == "SceneSelection" || sceneName == "EndScore";
@@ -930,6 +953,8 @@ public class ActionManager : MonoBehaviour
 
         foreach (XmlNode action in actions)
         {
+            if (action.Attributes["hidden"] != null)
+                continue;
             int index;
             int.TryParse(action.Attributes["index"].Value, out index);
             string type = action.Attributes["type"].Value;
@@ -1885,5 +1910,5 @@ public class ActionManager : MonoBehaviour
     public void ActivatePenalty()
     {
         penalized = true;
-    }   
+    }
 }

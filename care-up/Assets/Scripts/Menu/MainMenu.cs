@@ -87,11 +87,11 @@ public class MainMenu : MonoBehaviour
                 EndScoreManager.showReward = false;
             }
 
-            //if (CareUpNotification.showReward)
-            //{
-            //    StoreViewModel.ShowRewardDialogue(reward, rewardPanel, 50);
-            //    CareUpNotification.showReward = false;
-            //}
+            if (CareUpNotification.showReward)
+            {
+                StoreViewModel.ShowRewardDialogue(reward, rewardPanel, 20);
+                CareUpNotification.showReward = false;
+            }
 
             bool updatesSeen = PlayerPrefs.GetInt("_updatesSeen") == 1;
             string versionSeen = PlayerPrefs.GetString("__version", "");

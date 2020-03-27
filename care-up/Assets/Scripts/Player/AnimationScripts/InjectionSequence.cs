@@ -8,7 +8,7 @@ public class InjectionSequence : AnimationSequenceState
     public int swapHandsFrame;
     public int takeOffCapFrame;
     public int dropCapFrame;
-    
+
     private Syringe syringe;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -28,8 +28,7 @@ public class InjectionSequence : AnimationSequenceState
             PlayerAnimationManager.SetHandItem(false, GameObject.Find("SyringeWithInjectionNeedleCap"));
             inv.RightHandObject.GetComponent<Syringe>().updatePlunger = true;
         }
-        else
-         if (PlayerAnimationManager.CompareFrames(frame, prevFrame, swapHandsFrame))
+        else if (PlayerAnimationManager.CompareFrames(frame, prevFrame, swapHandsFrame))
         {
             inv.SwapHands();
         }
