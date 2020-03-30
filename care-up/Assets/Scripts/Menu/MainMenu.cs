@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using MBS;
 using System.Linq;
 using System;
+using System.Runtime.InteropServices;
 
 public class MainMenu : MonoBehaviour
 {
@@ -381,6 +382,20 @@ public class MainMenu : MonoBehaviour
     {
         Application.OpenURL(url);
     }
+
+    public void OpenUrl_NewWindow(string url)
+    {
+#if UNITY_WEBGL
+        openWindow(url);
+#endif
+    }
+
+#if UNITY_WEBGL
+
+    [DllImport("__Internal")]
+    private static extern void openWindow(string url);
+#endif
+
 
     public void OnTutorialButtonClick_Interface()
     {

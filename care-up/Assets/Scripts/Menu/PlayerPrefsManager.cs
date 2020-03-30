@@ -226,6 +226,12 @@ public class PlayerPrefsManager : MonoBehaviour
                 Destroy(GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/WUSerialScreen" +
                     "/RegisterArea/Buttons/PurchaseButton_AndroidWeb"));
             }
+
+            if ((Application.platform != RuntimePlatform.WebGLPlayer))
+            {
+                Destroy(GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/WUSerialScreen" +
+                    "/RegisterArea/Buttons/PurchaseButton_WebGL"));
+            }
         }
 
         if (s.name == "LoginMenu")
