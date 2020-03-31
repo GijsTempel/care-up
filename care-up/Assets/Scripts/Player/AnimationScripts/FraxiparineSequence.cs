@@ -43,9 +43,7 @@ public class FraxiparineSequence : AnimationSequenceState
         }
         else if (PlayerAnimationManager.CompareFrames(frame, prevFrame, dropCapFrame))
         {
-            //inv.DropLeftObject();
             inv.RemoveHandObject(true); // left
-
             inv.RightHandObject.GetComponent<FraxiparineSyringe>().updatePlunger = true;
         }
 
@@ -115,14 +113,4 @@ public class FraxiparineSequence : AnimationSequenceState
             GameObject.FindObjectOfType<InjectionPatient>().GetComponent<Animator>().SetTrigger("ShirtDown");
         }
     }
-
-    // OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here
-    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-    //
-    //}
-
-    // OnStateIK is called right after Animator.OnAnimatorIK(). Code that sets up animation IK (inverse kinematics) should be implemented here.
-    //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-    //
-    //}
 }

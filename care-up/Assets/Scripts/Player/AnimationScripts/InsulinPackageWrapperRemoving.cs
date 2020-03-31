@@ -39,6 +39,9 @@ public class InsulinPackageWrapperRemoving : StateMachineBehaviour
     {
         if (animator.speed != 0)
         {
+            prevFrame = frame;
+            frame += Time.deltaTime;
+
             if (PlayerAnimationManager.CompareFrames(frame, prevFrame, combineFrame))
             {
                 inv.ExecuteDelayedCombination();
@@ -49,9 +52,7 @@ public class InsulinPackageWrapperRemoving : StateMachineBehaviour
             {
                 inv.DeleteAnimationObject();
             }
-
-            prevFrame = frame;
-            frame += Time.deltaTime;
+          
             inv.ToggleControls(true);
         }
     }

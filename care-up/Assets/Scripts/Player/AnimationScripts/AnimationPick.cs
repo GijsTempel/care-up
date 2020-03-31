@@ -39,8 +39,7 @@ public class AnimationPick : StateMachineBehaviour
     {
         if (pickFrame / 60f > frame)
         {
-            inv.SetHold(hand);
-            Debug.LogWarning("OnStateExit action. Low frame rate.");
+            inv.SetHold(hand);          
         }
 
         inv.ToggleControls(false);

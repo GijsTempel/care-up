@@ -28,6 +28,12 @@ public class VentingSyringe : AnimationUseOn
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        if (animator.speed != 0)
+        {
+            prevFrame = frame;
+            frame += Time.deltaTime;
+        }
+
         if (PlayerAnimationManager.CompareFrames(frame, prevFrame, plungerStart))
         {
             syringe.updatePlunger = true;
@@ -36,12 +42,6 @@ public class VentingSyringe : AnimationUseOn
         if (PlayerAnimationManager.CompareFrames(frame, prevFrame, plungerEnd))
         {
             syringe.updatePlunger = false;
-        }
-
-        if (animator.speed != 0)
-        {
-            prevFrame = frame;
-            frame += Time.deltaTime;
         }
 
         base.OnStateUpdate(animator, stateInfo, layerIndex);

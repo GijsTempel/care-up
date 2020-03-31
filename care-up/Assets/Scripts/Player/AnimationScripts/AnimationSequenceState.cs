@@ -41,14 +41,15 @@ public class AnimationSequenceState : StateMachineBehaviour {
         {
             if (animator.speed != 0)
             {
+                prevFrame = frame;
+                frame += Time.deltaTime;
+
                 if (PlayerAnimationManager.CompareFrames(frame, prevFrame, keyFrames[keyFrame]))
                 {
                     PlayerAnimationManager.NextSequenceStep(true);
                     animator.speed = 0f;
                     ++keyFrame;
-                }
-                prevFrame = frame;
-                frame += Time.deltaTime;
+                }             
             }
         }
         else
@@ -78,15 +79,5 @@ public class AnimationSequenceState : StateMachineBehaviour {
         {
             wf.cleaningLocked = false;
         }
-    }
-
-	// OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here
-	//override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-	//
-	//}
-
-	// OnStateIK is called right after Animator.OnAnimatorIK(). Code that sets up animation IK (inverse kinematics) should be implemented here.
-	//override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-	//
-	//}
+    }	
 }

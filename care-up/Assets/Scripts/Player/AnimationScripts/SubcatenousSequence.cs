@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SubcatenousSequence : AnimationSequenceState
 {
@@ -51,8 +49,7 @@ public class SubcatenousSequence : AnimationSequenceState
             inv.ForcePickItem("SyringeInjectionCap", true);
         }
         else if (PlayerAnimationManager.CompareFrames(frame, prevFrame, dropCapFrame))
-        {
-            //inv.DropLeftObject();
+        {            
             inv.RemoveHandObject(true); // left
         }
 
@@ -116,14 +113,4 @@ public class SubcatenousSequence : AnimationSequenceState
 
         syringe.updateProtector = false;
     }
-
-    // OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here
-    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-    //
-    //}
-
-    // OnStateIK is called right after Animator.OnAnimatorIK(). Code that sets up animation IK (inverse kinematics) should be implemented here.
-    //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-    //
-    //}
 }
