@@ -6,7 +6,7 @@ public class AnimationPick : StateMachineBehaviour
     private float frame;
     private float prevFrame;
     private HandsInventory inv;
-    bool isHolding = false;
+    private int pickFrame = 50;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -22,25 +22,26 @@ public class AnimationPick : StateMachineBehaviour
     {
         if (animator.speed != 0)
         {
-            if (PlayerAnimationManager.CompareFrames(frame, prevFrame, 50))
+            prevFrame = frame;
+            frame += Time.deltaTime;
+
+            if (PlayerAnimationManager.CompareFrames(frame, prevFrame, pickFrame))
             {
-                //Debug.Log("targetFrame: " + 50 / 60f + ". currentFrame : " + frame + ". previousFrame" + prevFrame);
-                isHolding = true;
                 inv.SetHold(hand);
             }
 
             inv.ToggleControls(true);
             PlayerScript.actionsLocked = true;
-
-            prevFrame = frame;
-            frame += Time.deltaTime;
         }
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (!isHolding)
+        if (pickFrame / 60f > frame)
+        {
             inv.SetHold(hand);
+            Debug.LogWarning("OnStateExit action. Low frame rate.");
+        }
 
         inv.ToggleControls(false);
         PlayerScript.actionsLocked = false;
