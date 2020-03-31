@@ -167,7 +167,11 @@ public class LevelButton : MonoBehaviour
 
     public void OnLevelButtonClick()
     {
-        if (buy || demoLock)
+        bool locked = (buy || demoLock);
+        if (locked && isInProducts.Length > 0)
+            if (PlayerPrefsManager.IsScenePurchased(isInProducts))
+                locked = false;
+        if (locked)
         {
             // show dialogue now instead
             GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(5);
