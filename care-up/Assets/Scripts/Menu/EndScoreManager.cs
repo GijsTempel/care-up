@@ -2,6 +2,8 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.Networking;
+
 
 /// <summary>
 /// Handles EndScore scene.
@@ -353,8 +355,9 @@ public class EndScoreManager : MonoBehaviour
         link += "&userMail=" + MBS.WULogin.email;
         link += "&bigNum=" + manager.bigNumber;
         link += "&percent=" + percent.ToString();
-        
-        Application.OpenURL(link.Replace(" ", "%20"));
+
+        UnityWebRequest unityWebRequest = new UnityWebRequest(link.Replace(" ", "%20"));
+        unityWebRequest.SendWebRequest();
         Debug.Log("E-mail verzonden");
     }
 
