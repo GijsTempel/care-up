@@ -517,11 +517,13 @@ public class PlayerPrefsManager : MonoBehaviour
         DatabaseManager.UpdateField("AccountStats", "Plays_Number", PlayerPrefsManager.plays.ToString());
     }
 
+    // keeping this just in case we need to send smth else
     public static void __sendMail(string topic, string message)
     {
         if (Application.platform == RuntimePlatform.WebGLPlayer)
-        { // apparently SMTP doesnt work with webgl
-            //__sendMailApp(topic, message);
+        {
+            // apparently SMTP doesnt work with webgl
+            Debug.LogError("Can't send email from webGL");
             return;
         }
         else
@@ -551,14 +553,7 @@ public class PlayerPrefsManager : MonoBehaviour
         return WWW.EscapeURL(url).Replace("+", "%20");
 #pragma warning restore
     }
-
-    public static void __sendMailApp(string topic, string message)
-    {
-        topic = MyEscapeURL(topic);
-        message = MyEscapeURL(message);
-        Application.OpenURL("mailto:" + "info@careup.nl" + "?subject=" + topic + "&body=" + message);
-    }
-
+    
     /// <summary>
     /// Updates % highscore on database if new one is higher then old one.
     /// Also saves certificate date if there was no such previously.

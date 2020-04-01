@@ -343,18 +343,18 @@ public class EndScoreManager : MonoBehaviour
     // copied from EndScoreSendMailResults.cs
     public void EndScoreSendMailResults()
     {
-        string topic = "Care Up accreditatie aanvraag";
-        string content = "Completed scene: " + manager.currentSceneVisualName + "\n";
-        content += "Username: " + MBS.WULogin.username + "\n";
-        content += "E-mail: " + MBS.WULogin.email + "\n";
-
-        content += "Big- of registratienummer:" + manager.bigNumber + "\n";
         int percent = GameObject.FindObjectOfType<EndScoreManager>().percent;
-        content += "Percentage: " + percent.ToString() + "%\n";
 
         achievements.UpdateKeys("StudyPoints", 1);
 
-        PlayerPrefsManager.__sendMail(topic, content);
+        string link = "https://leren.careup.online/MailSceneComplStats.php";
+        link += "?name=" + MBS.WULogin.username;
+        link += "&scene=" + manager.currentSceneVisualName;
+        link += "&userMail=" + MBS.WULogin.email;
+        link += "&bigNum=" + manager.bigNumber;
+        link += "&percent=" + percent.ToString();
+        
+        Application.OpenURL(link.Replace(" ", "%20"));
         Debug.Log("E-mail verzonden");
     }
 
