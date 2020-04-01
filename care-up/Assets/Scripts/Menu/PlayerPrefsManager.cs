@@ -521,7 +521,7 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         if (Application.platform == RuntimePlatform.WebGLPlayer)
         { // apparently SMTP doesnt work with webgl
-            __sendMailApp(topic, message);
+            //__sendMailApp(topic, message);
             return;
         }
         else
