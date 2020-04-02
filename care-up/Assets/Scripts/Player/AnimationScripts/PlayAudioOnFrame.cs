@@ -13,8 +13,7 @@ public class PlayAudioOnFrame : StateMachineBehaviour {
     public bool moveWithCamera = false;
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-     
+    {     
         if (PlayerAnimationManager.CompareFrames(frame, prevFrame, audioFrame))
         {
             AudioClip clip = Resources.Load<AudioClip>("Audio/" + audioFileName);

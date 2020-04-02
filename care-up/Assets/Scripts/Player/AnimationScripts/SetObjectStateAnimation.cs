@@ -39,6 +39,7 @@ public class SetObjectStateAnimation : StateMachineBehaviour
         {
             SetState();
         }
+
         frame = 0f;
         prevFrame = 0f;
     }
@@ -47,14 +48,21 @@ public class SetObjectStateAnimation : StateMachineBehaviour
     {
         if (animator.speed != 0)
         {
+            prevFrame = frame;
+            frame += Time.deltaTime;
+
             if (PlayerAnimationManager.CompareFrames(frame, prevFrame, ActionFrame))
             {
                 SetState();
+            }           
+        }
+    }
 
-            }
-
-            prevFrame = frame;
-            frame += Time.deltaTime;
+    public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        if (ActionFrame / 60f > frame)
+        {
+            SetState();
         }
     }
 
