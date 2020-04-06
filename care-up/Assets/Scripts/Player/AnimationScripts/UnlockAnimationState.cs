@@ -45,7 +45,6 @@ public class UnlockAnimationState : StateMachineBehaviour
                             if (toActivate)
                             {
                                 gameObj.GetComponent<ObjectStateManager>().isActive = !value;
-                                //Debug.Log(gameObj.GetComponent<ObjectStateManager>().isActive);
                             }
                         }
                         else if (gameObj.GetComponent<Syringe>() != null)
@@ -63,6 +62,9 @@ public class UnlockAnimationState : StateMachineBehaviour
     {
         if (animator.speed != 0)
         {
+            prevFrame = frame;
+            frame += Time.deltaTime;
+
             if (PlayerAnimationManager.CompareFrames(frame, prevFrame, unlock_frame))
             {
                 Lock(false);
@@ -73,9 +75,7 @@ public class UnlockAnimationState : StateMachineBehaviour
                 {
                     Lock(true);
                 }
-            }
-            prevFrame = frame;
-            frame += Time.deltaTime;
+            }           
         }
     }   
 }

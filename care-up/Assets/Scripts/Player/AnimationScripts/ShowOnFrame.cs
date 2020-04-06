@@ -16,28 +16,29 @@ public class ShowOnFrame : StateMachineBehaviour
     {
         frame = 0f;
         prevFrame = 0f;
+
         if (showFrame == 0)
         {
-            set_set();
+            SetObject();
         }
     }
 
-    void set_set()
+    void SetObject()
     {
         if (ControlObjectName == "")
         {
             if (GameObject.FindObjectOfType<ObjectsIDsController>() != null && ObjNames.Count != 0)
             {
                 ObjectsIDsController idCont = GameObject.FindObjectOfType<ObjectsIDsController>();
-                foreach (string __name in ObjNames)
+                foreach (string name in ObjNames)
                 {
-                    if (GameObject.Find(__name) != null && !toShow)
+                    if (GameObject.Find(name) != null && !toShow)
                     {
-                        GameObject.Find(__name).SetActive(false);
+                        GameObject.Find(name).SetActive(false);
                     }
                     else
                     {
-                        Obj = idCont.GetFromHidden(__name);
+                        Obj = idCont.GetFromHidden(name);
                         if (Obj != null)
                         {
                             Obj.SetActive(toShow);
@@ -48,11 +49,11 @@ public class ShowOnFrame : StateMachineBehaviour
         }
         else if (ControlObjectName == "-")
         {
-            foreach (string __name in ObjNames)
+            foreach (string name in ObjNames)
             {
-                if (GameObject.Find(__name) != null)
+                if (GameObject.Find(name) != null)
                 {
-                    GameObject.Find(__name).SetActive(toShow);
+                    GameObject.Find(name).SetActive(toShow);
                 }
             }
         }
@@ -64,9 +65,9 @@ public class ShowOnFrame : StateMachineBehaviour
                 {
                     ExtraObjectOptions ControlObject = GameObject.Find(ControlObjectName).GetComponent<ExtraObjectOptions>();
 
-                    foreach (string __name in ObjNames)
+                    foreach (string name in ObjNames)
                     {
-                        ControlObject._show(__name, toShow);
+                        ControlObject._show(name, toShow);
                     }
                 }
             }
@@ -76,16 +77,23 @@ public class ShowOnFrame : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-
         if (animator.speed != 0)
         {
-            if (PlayerAnimationManager.CompareFrames(frame, prevFrame, showFrame))
-            {
-                set_set();
-            }
-
             prevFrame = frame;
             frame += Time.deltaTime;
+
+            if (PlayerAnimationManager.CompareFrames(frame, prevFrame, showFrame))
+            {
+                SetObject();
+            }
+        }
+    }
+
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        if (showFrame / 60f > frame)
+        {
+            SetObject();
         }
     }
 }

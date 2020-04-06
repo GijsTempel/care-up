@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SwapHands : StateMachineBehaviour {
 
@@ -26,13 +24,21 @@ public class SwapHands : StateMachineBehaviour {
     {
         if (animator.speed != 0)
         {
+            prevFrame = frame;
+            frame += Time.deltaTime;
+
             if (PlayerAnimationManager.CompareFrames(frame, prevFrame, actionFrame))
             {
                 handsInventory.SwapHands();
-            }
+            }         
+        }
+    }
 
-            prevFrame = frame;
-            frame += Time.deltaTime;
+    public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        if (actionFrame / 60f > frame)
+        {
+            handsInventory.SwapHands();
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PickUpGlovesAnimation : StateMachineBehaviour
 {
@@ -25,15 +23,21 @@ public class PickUpGlovesAnimation : StateMachineBehaviour
     {
         if (animator.speed != 0)
         {
+            prevFrame = frame;
+            frame += Time.deltaTime;
+
             if (PlayerAnimationManager.CompareFrames(frame, prevFrame, showFrame))
             {
                 handsInventory.GlovesToggle(toPickup);
             }
-            
-            prevFrame = frame;
-            frame += Time.deltaTime;
         }
     }
 
-
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        if (showFrame / 60f > frame)
+        {
+            handsInventory.GlovesToggle(toPickup);
+        }
+    }
 }
