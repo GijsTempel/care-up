@@ -8,16 +8,18 @@ using UnityEngine.EventSystems;
 public class UserDataSelection : MonoBehaviour
 {
     [SerializeField]
-    private GameObject inputNameField, inputBIGfield = default;
+    private GameObject inputNameField = default(GameObject), 
+        inputBIGfield = default(GameObject);
 
     [SerializeField]
-    private GameObject textInfoPanel, avatarPanel = default;
+    private GameObject textInfoPanel = default(GameObject), 
+        avatarPanel = default(GameObject);
 
     [SerializeField]
-    private List<GameObject> avatarsButtons = default;
+    private List<GameObject> avatarsButtons = default(List<GameObject>);
 
     [SerializeField]
-    private List<PlayerAvatar> avatars = default;
+    private List<PlayerAvatar> avatars = default(List<PlayerAvatar>);
 
     private void InitializeAvatars()
     {

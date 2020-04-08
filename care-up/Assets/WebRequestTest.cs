@@ -18,7 +18,7 @@ public class WebRequestTest : MonoBehaviour
         [System.Serializable]
         private class Wrapper<T>
         {
-            public T[] array;
+            public T[] array = default(T[]);
         }
     }
          

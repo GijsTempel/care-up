@@ -5,9 +5,8 @@ public class StoreViewModel : MonoBehaviour
 {
     private GameObject currencyText = default;
     private GameObject extraCurrencyText = default;
-    private Text presentNumberText = default;
-    [SerializeField]
-    private Button goToCharacterStoreButton = default;
+    //private Text presentNumberText = default;
+    //[SerializeField] private Button goToCharacterStoreButton = default;
 
     public static int SavedCoins { get; set; }
 

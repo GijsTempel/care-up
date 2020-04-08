@@ -57,7 +57,7 @@ public class InjectionPatient : PersonObject {
                     pulledUp = true;
                     break;
                 case "ComfortablePosition":
-                    inhaling = true;
+                    //inhaling = true;
                     break;
                 case "ShowBellyForInsulin":
                     GetComponent<InjectionPatient>().ShowBellyDialogue();

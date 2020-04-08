@@ -73,7 +73,7 @@ public class GameNotificationsManager : MonoBehaviour
     }
 
     [SerializeField, Tooltip("The operating mode for the notifications manager.")]
-    private OperatingMode mode;
+    private OperatingMode mode = default(OperatingMode);
 
     [SerializeField, Tooltip(
          "Check to make the notifications manager automatically set badge numbers so that they increment.\n" +

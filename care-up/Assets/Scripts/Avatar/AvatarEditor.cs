@@ -55,7 +55,7 @@ public class AvatarEditor : MonoBehaviour
     public List<GameObject> Tabs;
     public List<Button> TabsButtons;
 
-    int currentTab = 0;
+    //int currentTab = 0;
 
     int currentHead = 0;
     int currentBody = 0;

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class CharacterPanelManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject buyButton = default,
+    private GameObject //buyButton = default,
                        adjustButton = default;
 
     [SerializeField]
@@ -26,7 +26,8 @@ public class CharacterPanelManager : MonoBehaviour
     public int currentPrice;
 
     [SerializeField]
-    private UIParticleSystem currencyParticles, extraCurrencyParticles = default;
+    private UIParticleSystem currencyParticles = default(UIParticleSystem), 
+        extraCurrencyParticles = default(UIParticleSystem);
 
     [SerializeField]
     private Text purchaseText = default;

@@ -28,8 +28,10 @@ public class SystemObject : InteractableObject
         }
     }
 
-    protected /*override*/ void Update()
+    protected override void Update()
     {
+        base.Update(); // added with override
+
         if (prefs != null && prefs.VR)
         {
             //base.Update();
