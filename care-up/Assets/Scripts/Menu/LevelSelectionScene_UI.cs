@@ -250,8 +250,9 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 if (Mathf.FloorToInt(fscore) >= 70)
                 {
                     sceneUnit.image = completedSceneIcon;
+                    sceneUnit.GetComponent<LevelButton>().SetLevelPreviewIcon(true, sceneUnit.image);
                     //sceneUnit.transform.Find("LevelPreview").gameObject.SetActive(true);
-                    sceneUnit.transform.Find("LevelPreview").GetComponent<Image>().sprite = sceneUnit.image;
+                    //sceneUnit.transform.Find("LevelPreview").GetComponent<Image>().sprite = sceneUnit.image;
                 }
 
                 if (xmlSceneNode.Attributes["validated"] != null)

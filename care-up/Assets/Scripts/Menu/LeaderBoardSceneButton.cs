@@ -21,6 +21,7 @@ public class LeaderBoardSceneButton : MonoBehaviour, IPointerEnterHandler, IPoin
     {
         buttons.Add(this);
         sounds = GameObject.FindObjectOfType<Button_Functions>();
+        transform.Find("LevelPreview").gameObject.SetActive(false);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
