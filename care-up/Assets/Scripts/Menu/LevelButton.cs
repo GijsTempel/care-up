@@ -9,6 +9,7 @@ public class LevelButton : MonoBehaviour
 
     public string bundleName;
     public string sceneName;
+    bool PreviewIconChanged = false;
 
     public bool multiple;
     public string displayName;
@@ -77,8 +78,18 @@ public class LevelButton : MonoBehaviour
         else
         {
             GetComponent<Image>().sprite = Resources.Load("Sprites/nUI/listElement_Base", typeof(Sprite)) as Sprite;
-            LevelPreview.gameObject.SetActive(false);
+            if (!PreviewIconChanged)
+                LevelPreview.gameObject.SetActive(false);
         }
+    }
+
+    public void SetLevelPreviewIcon(bool iconToShow, Sprite newIcon)
+    {
+        if (LevelPreview == null)
+            LevelPreview = transform.Find("LevelPreview").GetComponent<Image>();
+        LevelPreview.gameObject.SetActive(LevelPreview);
+        LevelPreview.sprite = newIcon;
+        PreviewIconChanged = true;
     }
 
     public List<Info> variations = new List<Info>();
@@ -167,7 +178,11 @@ public class LevelButton : MonoBehaviour
 
     public void OnLevelButtonClick()
     {
-        if (buy || demoLock)
+        bool locked = (buy || demoLock);
+        if (locked && isInProducts.Length > 0)
+            if (PlayerPrefsManager.IsScenePurchased(isInProducts))
+                locked = false;
+        if (locked)
         {
             // show dialogue now instead
             GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(5);

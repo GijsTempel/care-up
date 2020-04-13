@@ -187,7 +187,10 @@ namespace MBS
             string[] aIDs = data.Last.String("achievements").Split(',');
             foreach(string id in aIDs)
             {
-                unlockedAIDs.Add(int.Parse(id));
+                int parsedID;
+                int.TryParse(id, out parsedID);
+                if (parsedID != 0)
+                    unlockedAIDs.Add(parsedID);
             }
 
             WUAchieve.FetchEverything(GenerateEntries);

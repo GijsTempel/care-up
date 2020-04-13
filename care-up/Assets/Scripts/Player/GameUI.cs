@@ -40,7 +40,7 @@ public class GameUI : MonoBehaviour
     public QuizTab quiz_tab;
     public bool DropLeftBlink = false;
     public bool DropRightBlink = false;
-    bool generalButtonActive = false;
+    //bool generalButtonActive = false;
     public int stopAutoPlayOnStep = 0;
     GameObject AutoActionObject;
 

@@ -66,7 +66,7 @@ namespace MBS
         static public Action<WPServerState> OnServerStateChange;
 
         [SerializeField] eWussServerContactType post_method = default(eWussServerContactType);
-        [SerializeField, HideInInspector, WPGameId] int game_id = 2269;
+        //[SerializeField, HideInInspector, WPGameId] int game_id = 2269;
         [SerializeField] bool use_online_url = true;
         [SerializeField]
         string
@@ -142,7 +142,7 @@ namespace MBS
             [System.Serializable]
             private class Wrapper<T>
             {
-                public T[] array;
+                public T[] array = default(T[]);
             }
         }
 
@@ -193,8 +193,6 @@ namespace MBS
 
             string _uri = Instance.URL( filepath ) + ( Instance.post_method == eWussServerContactType.GET ? get : string.Empty );
             UnityWebRequest w = Instance.post_method == eWussServerContactType.GET ? UnityWebRequest.Get( _uri ) : UnityWebRequest.Post( _uri, f );
-
-            w.chunkedTransfer = false;
             
             switch ( Application.platform )
             {

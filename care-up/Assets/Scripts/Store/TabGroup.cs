@@ -17,9 +17,9 @@ public class TabGroup : MonoBehaviour
     [SerializeField]
     private GameObject buyBtn = default,
                        confirmPanel = default,
-                       purchasedBtn = default,
-                       renewBtn = default,
-                       onSaleBtn = default,
+                       //purchasedBtn = default,
+                       //renewBtn = default,
+                       //onSaleBtn = default,
                        buyBtnCoin = default,
                        buyBtnDiamond = default,
                        productItem = default,
@@ -34,7 +34,8 @@ public class TabGroup : MonoBehaviour
     int pages = 3;
 
     [SerializeField]
-    private UIParticleSystem currencyParticles, extracurrencyParticles = default(UIParticleSystem);
+    private UIParticleSystem currencyParticles = default(UIParticleSystem), 
+        extracurrencyParticles = default(UIParticleSystem);
 
     private Text buyBtnText = default;
 

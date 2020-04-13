@@ -11,12 +11,12 @@ public class setGameFps : MonoBehaviour
     void Start()
     {
 #if (UNITY_EDITOR)
-        if (frameRate != null || frameRate !=0 || frameRate>0)
+        if (frameRate !=0 || frameRate>0)
         {
             Application.targetFrameRate = frameRate;
         }
 #endif
-        _getTotalReservedMemory = Convert.ToInt32(UnityEngine.Profiling.Profiler.GetTotalReservedMemory()/ 1000000f);
+        _getTotalReservedMemory = Convert.ToInt32(UnityEngine.Profiling.Profiler.GetTotalReservedMemoryLong()/ 1000000f);
     }
 
     // Update is called once per frame

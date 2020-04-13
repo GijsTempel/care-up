@@ -4,10 +4,10 @@ using UnityEngine;
 public class DisableBoxCollider : StateMachineBehaviour
 {
     [SerializeField]
-    private int selectedFrame;
+    private int selectedFrame = default(int);
 
     [SerializeField]
-    private List<string> objectsNames;
+    private List<string> objectsNames = default(List<string>);
 
     [SerializeField]
     private bool enable;
@@ -19,6 +19,9 @@ public class DisableBoxCollider : StateMachineBehaviour
     {
         if (animator.speed != 0)
         {
+            prevFrame = frame;
+            frame += Time.deltaTime;
+
             if (PlayerAnimationManager.CompareFrames(frame, prevFrame, selectedFrame) && (objectsNames.Count > 0))
             {
                 BoxCollider boxCollider;
@@ -34,10 +37,27 @@ public class DisableBoxCollider : StateMachineBehaviour
                     if (capsuleCollider)
                         capsuleCollider.enabled = false;
                 }
-            }
+            }        
+        }
+    }
 
-            prevFrame = frame;
-            frame += Time.deltaTime;
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        if (selectedFrame / 60f > frame)
+        {
+            BoxCollider boxCollider;
+            CapsuleCollider capsuleCollider;
+
+            foreach (string name in objectsNames)
+            {
+                boxCollider = GameObject.Find(name).GetComponent<BoxCollider>();
+                capsuleCollider = GameObject.Find(name).GetComponent<CapsuleCollider>();
+
+                if (boxCollider)
+                    boxCollider.enabled = false;
+                if (capsuleCollider)
+                    capsuleCollider.enabled = false;
+            }
         }
     }
 }

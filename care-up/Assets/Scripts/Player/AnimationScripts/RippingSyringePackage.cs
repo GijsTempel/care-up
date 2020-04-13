@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class RippingSyringePackage : AnimationCombine
 {
@@ -49,7 +47,5 @@ public class RippingSyringePackage : AnimationCombine
         }
 
         base.OnStateUpdate(animator, stateInfo, layerIndex);
-    }
-
- 
+    } 
 }

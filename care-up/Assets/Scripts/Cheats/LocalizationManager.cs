@@ -6,11 +6,8 @@ namespace CareUp.Localize
 {
     public static class LocalizationManager
     {
-        static string[] dicts = new string[] {
-            "TextData",
-            "Text_Ostomy_Care",
-            "TextData_AED"
-        };
+        static string dictListFile = "dicts";
+        static List<string> dicts = new List<string>();
 
         //public static LocalizationManager instance;
         private static bool loadedDicts = false;
@@ -32,18 +29,28 @@ namespace CareUp.Localize
             foreach (string key in data.Keys)
             {
                 if (!localizedText.ContainsKey(key))
-                    localizedText.Add(key, data[key]);
+                    localizedText.Add(key, data[key].ToString().Replace("<br>", "\n").Replace("\"",""));
             }
-
             isReady = true;
         }
 
         public static void LoadAllDictionaries()
         {
+            if (dicts.Count == 0)
+            {
+                TextAsset dictListData = (TextAsset)Resources.Load("Dictionaries/" + dictListFile);
+                foreach(string dictName in dictListData.text.Split('\n'))
+                {   
+                    if (!string.IsNullOrEmpty(dictName))
+                    {
+                        dicts.Add(dictName);
+                    }
+                }
+            }
             //Resources.Load("Dictionaries/");
             foreach (string fileName in dicts)
             {
-                LoadLocalizedText(fileName);
+                LoadLocalizedText(fileName.Replace("\r",""));
             }
             loadedDicts = true;
         }

@@ -26,15 +26,15 @@ public class CareUpNotification : MonoBehaviour
     public static bool showReward;
 
     [SerializeField]
-    private GameNotificationsManager manager;
+    private GameNotificationsManager manager = default(GameNotificationsManager);
 
     [SerializeField]
     [Tooltip("First notification after game update.")]
-    private string deliverInHours;
+    private string deliverInHours = default(string);
 
     [SerializeField]
     [Tooltip("Time interval between next notifications ")]
-    private string intervalInHours;
+    private string intervalInHours = default(string);
 
     private bool updatePendingNotifications;
     private const int channelsCount = 5;

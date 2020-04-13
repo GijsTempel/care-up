@@ -8,11 +8,11 @@ public class AnimatedFingerHint : MonoBehaviour
 {
     public bool toMove = false;
     bool waveHi = true;
-    bool toWave = false;
-    bool shown = false;
+    //bool toWave = false;
+    //bool shown = false;
     public RectTransform FingerHolder;
     public RectTransform TargetPointer;
-    GameObject targetUI_Element = null;
+    //GameObject targetUI_Element = null;
     public Animator fingerAnimator;
     float moveSpeed = 500f;
     Vector3 moveTarget = new Vector3();
@@ -179,10 +179,10 @@ public class AnimatedFingerHint : MonoBehaviour
         moveSpeed = dist * 1f;
     }
 
-    public void clearTarget()
+    /*public void clearTarget()
     {
         targetUI_Element = null;
-    }
+    }*/
 
     void Update()
     {

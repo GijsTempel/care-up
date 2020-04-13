@@ -21,9 +21,9 @@ public class PersonObject : InteractableObject
 
     private List<GameObject> callers;
 
-    protected bool inhaling = false;
-    private bool direction = true;
-    private float inhaleCounter = 1.0f;
+    //protected bool inhaling = false;
+    //private bool direction = true;
+    //private float inhaleCounter = 1.0f;
 
     protected AudioSource audioSource;
 
@@ -49,9 +49,9 @@ public class PersonObject : InteractableObject
 
         audioSource = GetComponent<AudioSource>();
 
-        inhaling = false;
-        direction = true;
-        inhaleCounter = 1.0f;
+        //inhaling = false;
+        //direction = true;
+        //inhaleCounter = 1.0f;
 
         lookAtCamera = true;
 
@@ -69,9 +69,10 @@ public class PersonObject : InteractableObject
         return false;
     }
 
-    protected virtual void Update()
+    protected override void Update()
     {
-        /*CallerUpdate();
+        /*
+        CallerUpdate();
         callers.Clear();
 
         if (inhaling)
@@ -94,10 +95,11 @@ public class PersonObject : InteractableObject
                 }
             }
             transform.localScale = Vector3.one * inhaleCounter;
-        }*/
+        } 
+        */
     }
 
-    public virtual void Talk(string topic = "", string audio = "")
+public virtual void Talk(string topic = "", string audio = "")
     {
         if (ViewModeActive() || topic == "CM_Leave" || topic == "")
             return;
@@ -241,12 +243,12 @@ public class PersonObject : InteractableObject
     {
         if (cameraMode.CurrentMode == CameraMode.Mode.Free && !player.away)
         {
-            bool flag = false;
+            //bool flag = false; never used
             foreach (GameObject caller in callers)
             {
                 if (caller == controls.SelectedObject)
                 {
-                    flag = true;
+                    //flag = true;
                 }
             }
 

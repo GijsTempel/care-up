@@ -51,7 +51,7 @@ public class CharacterСarousel : MonoBehaviour
 
         if (pref != null)
         {
-            TurnToPosition(PlayerPrefsManager.storeManager.GetPositionFromIndex(CharacterInfo.index));
+            ImmediateTurnToPos(PlayerPrefsManager.storeManager.GetPositionFromIndex(CharacterInfo.index));
         }
     }
 
@@ -104,6 +104,7 @@ public class CharacterСarousel : MonoBehaviour
     public void SetAnimation()
     {
         avatars[GetCurrentMarker()].SetAnimationAction(Actions.Dance);
+        checkMarks[GetCurrentMarker()].SetActive(PlayerPrefsManager.storeManager.CharacterItems[CurrentCharacter].purchased);
     }
 
     private PlayerAvatarData GetAvatarData(int index)
@@ -119,6 +120,37 @@ public class CharacterСarousel : MonoBehaviour
     public void TurnToPosition(int value)
     {
         targetTurnPosition = value;
+    }
+
+    public void ImmediateTurnToPos(int value)
+    {
+        CurrentCharacter = value;
+        int CurrentMarker = GetCurrentMarker();
+        avatars[CurrentMarker].avatarData = GetAvatarData(CurrentCharacter);
+        avatars[CurrentMarker].UpdateCharacter();
+        checkMarks[CurrentMarker].SetActive(PlayerPrefsManager.storeManager.CharacterItems[CurrentCharacter].purchased);
+        int leftMarker = CurrentMarker - 1;
+        if (leftMarker < 0)
+            leftMarker = 3;
+        PlayerAvatarData leftAvatar = GetAvatarData(CurrentCharacter - 1);
+        platforms[leftMarker].SetActive(leftAvatar != null);
+        if (leftAvatar != null)
+        {
+            avatars[leftMarker].avatarData = leftAvatar;
+            avatars[leftMarker].UpdateCharacter();
+            checkMarks[leftMarker].SetActive(PlayerPrefsManager.storeManager.CharacterItems[CurrentCharacter - 1].purchased);
+        }
+        int rightMarker = CurrentMarker + 1;
+        if (rightMarker > 3)
+            rightMarker = 0;
+        PlayerAvatarData rightAvatar = GetAvatarData(CurrentCharacter + 1);
+        platforms[rightMarker].SetActive(rightAvatar != null);
+        if (rightAvatar != null)
+        {
+            avatars[rightMarker].avatarData = rightAvatar;
+            avatars[rightMarker].UpdateCharacter();
+            checkMarks[rightMarker].SetActive(PlayerPrefsManager.storeManager.CharacterItems[CurrentCharacter + 1].purchased);
+        }
     }
 
     private void Update()
