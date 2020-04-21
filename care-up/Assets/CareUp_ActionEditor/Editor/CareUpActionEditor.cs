@@ -854,7 +854,7 @@ namespace CareUp.ActionEditor
             
         }
 
-        string testText = "";
+        //string testText = "";
         void OnGUI()
         {
             GUIStyle greenStyle  = new GUIStyle();
@@ -920,7 +920,7 @@ namespace CareUp.ActionEditor
                     EditorGUILayout.BeginHorizontal();
                     if (automateIndexes)
                     {
-                        if (GUILayout.Button("Recalculate Indexes", GUILayout.Width(200)));
+                        if (GUILayout.Button("Recalculate Indexes", GUILayout.Width(200)))
                         {
                             RecalculateIndexes();
                         }

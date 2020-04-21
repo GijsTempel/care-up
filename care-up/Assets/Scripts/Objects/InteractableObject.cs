@@ -32,7 +32,7 @@ public class InteractableObject : MonoBehaviour
     private static bool selectedIsInteractable;
     private static Text descriptionText;
 
-    private bool hasHighlight = false;
+    //private bool hasHighlight = false;
     private Vector3 descriptionPanelOffset = new Vector3(50.0f, 25.0f);
     private GameUI gameUI;
 
@@ -157,7 +157,7 @@ public class InteractableObject : MonoBehaviour
         if (rend)
         {
             gameUI.RemoveHighlight("hl", transform.name);
-            hasHighlight = false;
+            //hasHighlight = false;
             itemDescription.SetActive(false);
         }
     }
@@ -266,7 +266,7 @@ public class InteractableObject : MonoBehaviour
         if (value == false)
         {
             gameUI.RemoveHighlight("hl", transform.name);
-            hasHighlight = false;
+            //hasHighlight = false;
         }
     }
 

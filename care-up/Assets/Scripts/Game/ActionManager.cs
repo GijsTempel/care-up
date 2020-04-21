@@ -49,7 +49,7 @@ public class ActionManager : MonoBehaviour
     private static PlayerScript playerScript;
     private List<GameObject> particleHints;
     private bool menuScene;
-    private bool uiSet = false;
+    //private bool uiSet = false;
     private PlayerPrefsManager manager;
     private HandsInventory inventory;
     public RandomQuiz randomQuiz = new RandomQuiz();

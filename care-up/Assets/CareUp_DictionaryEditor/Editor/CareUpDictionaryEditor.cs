@@ -42,7 +42,7 @@ namespace CareUp.Localize
         List<string> filesWithValueInstance = new List<string>();
 
         int editInSet = -1;
-        string editOriginalKey = "";
+        //string editOriginalKey = "";
         Vector2 TextEditorScroll = new Vector2();
 
         List<string> dictNames = new List<string>();

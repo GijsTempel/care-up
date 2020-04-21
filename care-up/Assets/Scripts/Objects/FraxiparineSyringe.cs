@@ -69,7 +69,7 @@ public class FraxiparineSyringe : PickableObjectWithInfo
         transparencyFix = true;
     }
 
-    protected void Update()
+    protected override void Update()
     {     
         if (updatePlunger)
         {

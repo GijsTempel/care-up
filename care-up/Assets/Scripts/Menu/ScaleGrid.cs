@@ -13,7 +13,7 @@ using UnityEngine.UI;
 public class ScaleGrid : MonoBehaviour
 {
 
-    [SerializeField] [Range(0, 1)] float widthPercentage;
+    [SerializeField] [Range(0, 1)] float widthPercentage = default(float);
     float lWidthPercentage = 0;
     Vector2 viewSize = Vector2.zero;
 

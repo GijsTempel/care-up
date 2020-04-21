@@ -46,7 +46,7 @@ public class SelectDialogue : MonoBehaviour
 
     private List<DialogueOption> options = new List<DialogueOption>();
 
-    private OptionSide currentOption = OptionSide.None;
+    //private OptionSide currentOption = OptionSide.None;
     private Color currentMaterial;
 
     private Button first;
@@ -58,7 +58,7 @@ public class SelectDialogue : MonoBehaviour
     private string text;
     private static CameraMode cameraMode;
     private static Controls controls;
-    private bool optionSelected = false;
+    //private bool optionSelected = false;
 
     static DialogueOption optionWithAdditions = null;
     static string questionWithHint = null;

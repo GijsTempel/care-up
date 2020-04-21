@@ -4,10 +4,10 @@ using UnityEngine;
 public class DisableBoxCollider : StateMachineBehaviour
 {
     [SerializeField]
-    private int selectedFrame;
+    private int selectedFrame = default(int);
 
     [SerializeField]
-    private List<string> objectsNames;
+    private List<string> objectsNames = default(List<string>);
 
     [SerializeField]
     private bool enable;

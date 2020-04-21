@@ -8,11 +8,11 @@ public class AnimatedFingerHint : MonoBehaviour
 {
     public bool toMove = false;
     bool waveHi = true;
-    bool toWave = false;
-    bool shown = false;
+    //bool toWave = false;
+    //bool shown = false;
     public RectTransform FingerHolder;
     public RectTransform TargetPointer;
-    GameObject targetUI_Element = null;
+    //GameObject targetUI_Element = null;
     public Animator fingerAnimator;
     float moveSpeed = 500f;
     Vector3 moveTarget = new Vector3();
@@ -40,7 +40,14 @@ public class AnimatedFingerHint : MonoBehaviour
     {
         if (!gameObject.activeSelf)
             return;
-        if (waveHi)
+        RectTransform ActiveTalkBubblePoint = gameUI.GetActiveTalkBubblePoint();
+        bool toTalk = false;
+        if (ActiveTalkBubblePoint != null)
+        {
+            if (ActiveTalkBubblePoint.transform.parent.gameObject.activeSelf)
+                toTalk = true;
+        }
+        if (waveHi) 
         {
             waveHi = false;
             transform.Find("FingerHolder/animFinger/show_sound").GetComponent<AudioSource>().Play();
@@ -48,7 +55,11 @@ public class AnimatedFingerHint : MonoBehaviour
             fingerAnimator.SetTrigger("show");
             fingerAnimator.SetTrigger("hi");
         }
-        if (gameUI.DropLeftBlink || gameUI.DropRightBlink)
+        else if (toTalk)
+        {
+            MoveTo(ActiveTalkBubblePoint.position);
+        }
+        else if (gameUI.DropLeftBlink || gameUI.DropRightBlink)
         {
             GameUI.ItemControlButtonType bType = GameUI.ItemControlButtonType.DropLeft;
             if (gameUI.DropRightBlink)
@@ -179,10 +190,10 @@ public class AnimatedFingerHint : MonoBehaviour
         moveSpeed = dist * 1f;
     }
 
-    public void clearTarget()
+    /*public void clearTarget()
     {
         targetUI_Element = null;
-    }
+    }*/
 
     void Update()
     {

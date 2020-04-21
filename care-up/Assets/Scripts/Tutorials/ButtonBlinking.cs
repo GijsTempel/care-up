@@ -80,11 +80,12 @@ public class ButtonBlinking : MonoBehaviour
             if (gameUI.paperAndPenButtonblink || gameUI.recordsButtonBlink || gameUI.prescriptionButtonBlink)
                 toBlink = true;
         }
-        else if (buttonType == GameUI.ItemControlButtonType.Close)
+        if (buttonType == GameUI.ItemControlButtonType.Close)
         {
-            if (!gameUI.recordsButtonBlink && !gameUI.prescriptionButtonBlink && !gameUI.paperAndPenButtonblink &&
-                GameObject.Find("QuizDynamicCanvas") == null)
-                toBlink = true;
+            toBlink = true;
+
+            //if (!gameUI.recordsButtonBlink && !gameUI.prescriptionButtonBlink && !gameUI.paperAndPenButtonblink &&
+            //    GameObject.Find("QuizDynamicCanvas") == null)
         }
 
         if (prefs != null)

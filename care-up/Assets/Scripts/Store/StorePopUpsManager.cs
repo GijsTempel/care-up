@@ -4,10 +4,10 @@ using UnityEngine.UI;
 public class StorePopUpsManager : MonoBehaviour
 {
     [SerializeField]
-    private Text clarificationNote = default;
+    private Text clarificationNote = default(Text);
 
     [SerializeField]
-    private Currency currency;
+    private Currency currency = default(Currency);
 
     public enum Currency
     {

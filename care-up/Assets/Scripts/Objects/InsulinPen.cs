@@ -19,7 +19,7 @@ public class InsulinPen : PickableObjectWithInfo
         button = transform.Find("insulinPenButton");
     }
 
-    protected void Update()
+    protected override void Update()
     {
         if (animateButton)
         {
