@@ -13,7 +13,7 @@ using UnityEngine.UI;
 using UnityEngine.Networking;
 using System.Linq;
 using SmartLookUnity;
-using CareUp.Localize; 
+using CareUp.Localize;
 
 /// <summary>
 /// Handles quick access to saved data.
@@ -96,12 +96,12 @@ public class PlayerPrefsManager : MonoBehaviour
             return result;
         }
     }
-    
+
     static public bool IsScenePurchased(string[] SKUs)
     {
         foreach (string purchasedScene in purchasedScenes)
         {
-            foreach(string sku in SKUs)
+            foreach (string sku in SKUs)
             {
                 if (purchasedScene == sku)
                     return true;
@@ -147,7 +147,7 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         transform.position = GameObject.FindObjectOfType<AudioListener>().transform.position;
 
-        currentScene = s;      
+        currentScene = s;
 
         if (!(s.name == "LoginMenu" ||
                 s.name == "MainMenu" ||
@@ -553,7 +553,7 @@ public class PlayerPrefsManager : MonoBehaviour
         return WWW.EscapeURL(url).Replace("+", "%20");
 #pragma warning restore
     }
-    
+
     /// <summary>
     /// Updates % highscore on database if new one is higher then old one.
     /// Also saves certificate date if there was no such previously.

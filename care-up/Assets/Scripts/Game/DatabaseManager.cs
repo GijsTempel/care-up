@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using MBS;
 using UnityEngine.SceneManagement;
-using UnityEngine.Networking;
-
+using System;
+using System.Globalization;
 
 public class DatabaseManager : MonoBehaviour
 {
@@ -24,6 +24,9 @@ public class DatabaseManager : MonoBehaviour
     private static List<Category> database = new List<Category>();
 
     private static Coroutine sessionCheck;
+    private static Coroutine timeCheck;
+
+    private static string formattedTimeSpan = TimeSpan.Zero.ToString();
 
     private void Awake()
     {
@@ -55,16 +58,17 @@ public class DatabaseManager : MonoBehaviour
         WUData.FetchUserGameInfo(WULogin.UID, FetchEverything_success, -1, PostInit);
     }
 
-
     public static void Clean()
     {
         database.Clear();
         instance.StopCoroutine(sessionCheck);
+        instance.StopCoroutine(timeCheck);
         GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed = false;
     }
 
     private static void PostInit(CMLData ignore = null)
     {
+        print("PostInit");
         // increment logins number
         int loginNumber;
         int.TryParse(FetchField("AccountStats", "Login_Number"), out loginNumber);
@@ -93,7 +97,7 @@ public class DatabaseManager : MonoBehaviour
         // set player BIG number
         GameObject.FindObjectOfType<PlayerPrefsManager>().bigNumber =
             FetchField("AccountStats", "BIG_number");
-        
+
         // initialize store manager, cuz we just got info about current currency etc
         PlayerPrefsManager.storeManager.Init();
 
@@ -111,9 +115,6 @@ public class DatabaseManager : MonoBehaviour
         if (goToMainMenu)
         {
             WULogin.characterCreated = true;
-
-            //DatabaseManager.UpdateField("AccountStats", "TutorialCompleted", "false");
-
             if (FetchField("AccountStats", "TutorialCompleted") == "true")
             {
                 bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
@@ -121,7 +122,6 @@ public class DatabaseManager : MonoBehaviour
             else
             {
                 bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Tutorial", "scenes_tutorial");
-                // bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Tutorial");
             }
         }
         else
@@ -134,6 +134,7 @@ public class DatabaseManager : MonoBehaviour
         sessionKey = PlayerPrefsManager.RandomString(16);
         UpdateField("AccountStats", "SessionKey", sessionKey);
         sessionCheck = instance.StartCoroutine(CheckSession(60.0f));
+        timeCheck = instance.StartCoroutine(SetTime(60.0f));
     }
 
     private static void FetchEverything_success(CML response)
@@ -282,6 +283,30 @@ public class DatabaseManager : MonoBehaviour
         }
     }
 
+    private static IEnumerator SetTime(float refreshTime)
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(refreshTime);
+
+            string format = @"dd\:hh\:mm";
+            string fetchedTimeSpan = FetchField("AccountStats", "TotalTime");
+            TimeSpan currentTimeSpan = new TimeSpan(0, 0, 1, 0, 0);
+
+            if (string.IsNullOrEmpty(fetchedTimeSpan))
+            {
+                formattedTimeSpan = currentTimeSpan.ToString(format);
+            }
+            else
+            {
+                currentTimeSpan += ConvertTimeFormat(fetchedTimeSpan, format);
+                formattedTimeSpan = currentTimeSpan.ToString(format);
+            }
+
+            UpdateField("AccountStats", "TotalTime", formattedTimeSpan);
+        }
+    }
+
     private static void OnSessionCheckResponse(CML response)
     {
         string dbSessionKey = response[1].String("SessionKey");
@@ -291,5 +316,15 @@ public class DatabaseManager : MonoBehaviour
             sessionTimeOut = true;
             WULogin.LogOut();
         }
+    }
+
+    private static TimeSpan ConvertTimeFormat(string fetchedTimeSpan, string format)
+    {
+        if (TimeSpan.TryParseExact(fetchedTimeSpan, format, null, TimeSpanStyles.None, out TimeSpan convertedTimeSpan))
+        {
+            return convertedTimeSpan;
+        }
+
+        return TimeSpan.Zero;
     }
 }

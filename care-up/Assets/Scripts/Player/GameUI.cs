@@ -21,6 +21,7 @@ public class GameUI : MonoBehaviour
     GameObject WalkToGroupPanel;
     float autoExitTime = 900f;
     AutoPlayer autoPlayer;
+    public GameObject activeTalkBobblePoint = null;
 
     public WalkToGroupButton LeftSideButton;
     public WalkToGroupButton RightSideButton;
@@ -179,6 +180,7 @@ public class GameUI : MonoBehaviour
         if (PersonToTalk == null)
             return;
         PersonToTalk.CreateSelectionDialogue();
+        activeTalkBobblePoint = null;
     }
 
     public void ShowBlockMessage(string Title, string Message)
@@ -630,6 +632,7 @@ public class GameUI : MonoBehaviour
             {
                 ps.AutoClick(AutoActionObject);
                 AutoActionObject = null;
+                activeTalkBobblePoint = null;
             }
         }
     }
@@ -742,6 +745,11 @@ public class GameUI : MonoBehaviour
                     newHLObjects.Add(objectToUse);
                     if (PointToObject == null)
                         PointToObject = GameObject.Find(objectToUse);
+                        if (PointToObject != null)
+                        {
+                            if (PointToObject.GetComponent<PersonObject>() != null)
+                                PointToObject = null;
+                        }
                 }
                 else
                 {
@@ -1041,8 +1049,16 @@ public class GameUI : MonoBehaviour
         }
     }
 
+    public RectTransform GetActiveTalkBubblePoint()
+    {
+        if (activeTalkBobblePoint != null)
+            return activeTalkBobblePoint.GetComponent<RectTransform>();
+        return null;
+    }
+
     public void PlaceTalkBubble(GameObject person)
     {
+        activeTalkBobblePoint = null;
         if (person == null)
             return;
         PersonObject personObject = person.GetComponent<PersonObject>();
@@ -1059,6 +1075,7 @@ public class GameUI : MonoBehaviour
             TalkBubble.GetComponent<TutorialHintsN>().WorldObject = personObject.TalkBubbleAnchor;
             TalkBubble.GetComponent<TutorialHintsN>().Update();
             PersonToTalk = personObject;
+            activeTalkBobblePoint = TalkBubble.transform.Find("cloud").gameObject;
         }
     }
 
