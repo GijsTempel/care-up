@@ -10,7 +10,7 @@ public class Narrator : MonoBehaviour
     private static AudioSource playerSource;
     private static string currentAudioClip;
 
-    private static AudioSource additionalPlayerSource;
+    private static AudioSource additionalPlayerSource = null;
 
     void Start()
     {
@@ -108,7 +108,8 @@ public class Narrator : MonoBehaviour
             if (playerSource.isPlaying && (currentAudioClip == "WA1-1") && (sound.name != "WA1-1"))
             {
                 playerSource.mute = true;
-                additionalPlayerSource.PlayOneShot(sound, volume);
+                if (additionalPlayerSource != null)
+                    additionalPlayerSource.PlayOneShot(sound, volume);
                 return true;
             }
         }
