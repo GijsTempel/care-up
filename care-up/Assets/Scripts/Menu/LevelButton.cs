@@ -231,6 +231,8 @@ public class LevelButton : MonoBehaviour
 
                 // for single variation we can skip into practice/test dialogue
                 GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(3);
+                GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(11);
+
 
                 if (manager != null)
                 {
@@ -244,13 +246,13 @@ public class LevelButton : MonoBehaviour
             //    .GetComponent<Button>().interactable = !testDisabled;
 
             //making button not interactable was not noticable (maybe change design), hiding instead
-            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/DialogTestPractice/Panel_UI/Buttons/TestButton")
+            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/DialogTestPractice/Panel_UI/Buttons/right/TestButton")
                 .SetActive(!testDisabled);
 
             // now we can fetch practice plays number in order to know whethere to hide or show test button
             // making test button inactive from the beginning before fetching
             Button testBtn = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-            "DialogTestPractice/Panel_UI/Buttons/TestButton").GetComponent<Button>();
+            "DialogTestPractice/Panel_UI/Buttons/right/TestButton").GetComponent<Button>();
 
             string formattedSceneName = PlayerPrefsManager.FormatSceneName(manager.currentSceneVisualName);
 
@@ -260,7 +262,7 @@ public class LevelButton : MonoBehaviour
             testBtn.interactable = practicePlays >= 1;
 
             GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-                    "DialogTestPractice/Panel_UI/Buttons/TestButton/contentlocked/practiceamount")
+                    "DialogTestPractice/Panel_UI/Buttons/right/TestButton/contentlocked/practiceamount")
                 .GetComponent<Text>().text = (1 - practicePlays).ToString() + " keer";
 
             if (testBtn.interactable)
@@ -269,36 +271,36 @@ public class LevelButton : MonoBehaviour
                 float.TryParse(DatabaseManager.FetchField("TestHighscores",
                     formattedSceneName).Replace(",", "."), out testHighscore);
                 GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-                    "DialogTestPractice/Panel_UI/Buttons/TestButton/contentunlocked/percentage")
+                    "DialogTestPractice/Panel_UI/Buttons/right/TestButton/contentunlocked/percentage")
                     .GetComponent<Text>().text = Mathf.RoundToInt(testHighscore).ToString() + "%";
             }
 
             GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-                "DialogTestPractice/Panel_UI/Buttons/TestButton/contentunlocked").SetActive(testBtn.interactable);
+                "DialogTestPractice/Panel_UI/Buttons/right/TestButton/contentunlocked").SetActive(testBtn.interactable);
             GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-                "DialogTestPractice/Panel_UI/Buttons/TestButton/contentlocked").SetActive(!testBtn.interactable);
+                "DialogTestPractice/Panel_UI/Buttons/right/TestButton/contentlocked").SetActive(!testBtn.interactable);
 
             int practiceHighscore, practiceStars;
             int.TryParse(DatabaseManager.FetchField("PracticeHighscores", "score_" + formattedSceneName), out practiceHighscore);
             int.TryParse(DatabaseManager.FetchField("PracticeHighscores", "stars_" + formattedSceneName), out practiceStars);
 
             GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-                "DialogTestPractice/Panel_UI/Buttons/PracticeButton/content/score").
+                "DialogTestPractice/Panel_UI/Buttons/left/PracticeButton/content/score").
             GetComponent<Text>().text = practiceHighscore.ToString();
 
             Sprite grey = Resources.Load<Sprite>("Sprites/Stars/star 1");
             Sprite gold = Resources.Load<Sprite>("Sprites/Stars/star_128x128px");
 
             GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-                    "DialogTestPractice/Panel_UI/Buttons/PracticeButton/content/Stars/Star1")
+                    "DialogTestPractice/Panel_UI/Buttons/left/PracticeButton/content/Stars/Star1")
                 .GetComponent<Image>().sprite = (practiceStars >= 1.0f) ? gold : grey;
 
             GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-                    "DialogTestPractice/Panel_UI/Buttons/PracticeButton/content/Stars/Star2")
+                    "DialogTestPractice/Panel_UI/Buttons/left/PracticeButton/content/Stars/Star2")
                 .GetComponent<Image>().sprite = (practiceStars >= 2.0f) ? gold : grey;
 
             GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-                    "DialogTestPractice/Panel_UI/Buttons/PracticeButton/content/Stars/Star3")
+                    "DialogTestPractice/Panel_UI/Buttons/left/PracticeButton/content/Stars/Star3")
                 .GetComponent<Image>().sprite = (practiceStars >= 3.0f) ? gold : grey;
 
             SetPointsAmount();

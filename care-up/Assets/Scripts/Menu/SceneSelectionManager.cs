@@ -11,8 +11,8 @@ public class SceneSelectionManager : MonoBehaviour {
     public Image testButton;
 
     private PlayerPrefsManager manager;
-
     public LevelButton startButton;
+    int SceneLocation = 0;
     
     //private string practiceText = "Kies je voor oefenen, dan zie je bovenin het scherm elke stap van de werkwijze. ";
     //private string testText = "Kies je voor toetsen, dan zie je geen hints en moet je de stappen van de handelingen uit je hoofd uitvoeren. Let op de volgorde van de acties!";
@@ -79,6 +79,12 @@ public class SceneSelectionManager : MonoBehaviour {
 
         // imitate closing dialogue
         GameObject.Find("DialogTestPractice").SetActive(false);
+    }
+
+    public void SceneLocationSelected(int value)
+    {
+        SceneLocation = value;
+        GameObject.Find("DialogLocationSelect").SetActive(false);
     }
 
     public void OnTestButtonClick() 
