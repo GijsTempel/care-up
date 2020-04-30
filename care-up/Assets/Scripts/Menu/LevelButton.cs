@@ -9,6 +9,9 @@ public class LevelButton : MonoBehaviour
 
     public string bundleName;
     public string sceneName;
+    public string inHouseBundleName = "";
+    public string inHouseSceneName = "";
+
     bool PreviewIconChanged = false;
 
     public bool multiple;
