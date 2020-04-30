@@ -6,10 +6,15 @@ public class ApplePaymentsUI : MonoBehaviour
     [TextArea]
     public string AppleOnlyText;
 
-#if UNITY_IOS
     private void Start()
     {
+#if UNITY_IOS
         gameObject.GetComponent<Text>().text = AppleOnlyText;
-    }
 #endif
+
+        if (Application.platform == RuntimePlatform.IPhonePlayer)
+        {
+            gameObject.GetComponent<Text>().text = AppleOnlyText;
+        }
+    }
 }
