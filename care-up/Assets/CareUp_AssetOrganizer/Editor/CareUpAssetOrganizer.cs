@@ -17,7 +17,7 @@ public class CareUpAssetOrganizer : EditorWindow
         List<string> scenes = LoadScenesList();
         var scenesFolder = "Assets/Scenes/";
         List<string> matExt = new List<string> { ".mat", ".jpg", ".fbx", ".png", ".exr", ".ogg", ".prefab", ".ttf",
-        ".wav", ".controller", ".anim", ".otf", ".mask", ".shader", ".psd", ".mp3", ".asset", ".tif", ".tga", ".tiff", 
+        ".wav", ".controller", ".anim", ".otf", ".mask", ".shader", ".psd", ".mp3", ".asset", ".tif", ".tga", ".tiff", ".jpeg", 
         ".mesh", ".exr", ".renderTexture"};
         int i = 0;
         foreach (string scene in scenes)
