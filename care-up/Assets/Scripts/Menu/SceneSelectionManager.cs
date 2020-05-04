@@ -85,6 +85,10 @@ public class SceneSelectionManager : MonoBehaviour {
     {
         SceneLocation = value;
         GameObject.Find("DialogLocationSelect").SetActive(false);
+        if (value == 1 && startButton != null)
+        {
+            startButton.toLoadInhouse = true;
+        }
     }
 
     public void OnTestButtonClick() 

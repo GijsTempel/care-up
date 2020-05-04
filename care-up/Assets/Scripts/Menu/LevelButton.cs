@@ -11,6 +11,7 @@ public class LevelButton : MonoBehaviour
     public string sceneName;
     public string inHouseBundleName = "";
     public string inHouseSceneName = "";
+    public bool toLoadInhouse = false;
 
     bool PreviewIconChanged = false;
 
@@ -232,10 +233,14 @@ public class LevelButton : MonoBehaviour
                 mainBtn.bundleName = bundleName;
                 mainBtn.sceneName = sceneName;
 
+                mainBtn.inHouseBundleName = inHouseBundleName;
+                mainBtn.inHouseSceneName = inHouseSceneName;
+                mainBtn.toLoadInhouse = false;
+
                 // for single variation we can skip into practice/test dialogue
                 GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(3);
-                GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(11);
-
+                if (inHouseSceneName != "")
+                    GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(11);
 
                 if (manager != null)
                 {
@@ -322,8 +327,11 @@ public class LevelButton : MonoBehaviour
         {
             PlayerPrefsManager.AddOneToTestPlays(manager.currentSceneVisualName);
         }
+        if (toLoadInhouse)
+            bl_SceneLoaderUtils.GetLoader.LoadLevel(inHouseSceneName, inHouseBundleName);
+        else
+            bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
 
-        bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
     }
 
     public void GetSceneDatabaseInfo_Success(string[] info)

@@ -187,9 +187,25 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
             if (xmlSceneNode.Attributes["mainScene"] != null)
                 sceneInfo.mainScene = xmlSceneNode.Attributes["mainScene"].Value;
+            string sceneType = "";
+            if (xmlSceneNode.Attributes["type"] != null)
+                sceneType = xmlSceneNode.Attributes["type"].Value;
 
-            if (!scenesInfo.ContainsKey(sceneInfo.sceneName))
+
+            if (!scenesInfo.ContainsKey(sceneInfo.sceneName) && sceneInfo.mainScene == "")
                 scenesInfo.Add(sceneInfo.sceneName, sceneInfo);
+
+            if (sceneInfo.mainScene != "" && sceneType != "")
+            {
+                if(scenesInfo.ContainsKey(sceneInfo.mainScene))
+                {
+                    if (sceneType == "in_house")
+                    {
+                        scenesInfo[sceneInfo.mainScene].inHouseBundleName = sceneInfo.bundleName;
+                        scenesInfo[sceneInfo.mainScene].inHouseSceneName = sceneInfo.sceneName;
+                    }
+                }
+            }
         }
 
 
