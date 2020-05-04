@@ -104,7 +104,7 @@ public class RobotManager : MonoBehaviour
     public static void SetUITriggerActive(bool value)
     {
         //UI_trigger.SetActive(value);
-        GameObject.FindObjectOfType<GameUI>().UpdateWalkToGtoupUI(value);
+        GameObject.FindObjectOfType<GameUI>().UpdateWalkToGroupUI(value);
     }
 
     //public static void SetNotification(int n)

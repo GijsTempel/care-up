@@ -81,7 +81,7 @@ public class Cheat_CurrentAction : MonoBehaviour
                 extraPanel.SetActive(false);
                 if (extraButton != null)
                     extraButton.gameObject.SetActive(false);
-                gameUI.UpdateWalkToGtoupUI(false);
+                gameUI.UpdateWalkToGroupUI(false);
             }
         }
         else
@@ -104,7 +104,7 @@ public class Cheat_CurrentAction : MonoBehaviour
                     GameObject.Find("BiggerDevHint").SetActive(false);
                     extraPanel.SetActive(false);
                     extraButton.gameObject.SetActive(false);
-                    gameUI.UpdateWalkToGtoupUI(false);
+                    gameUI.UpdateWalkToGroupUI(false);
 
                 }
             }

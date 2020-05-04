@@ -419,7 +419,7 @@ public class PlayerScript : MonoBehaviour
         }
 
         actionManager.OnMovementAction(currentWalkPosition.name);
-        gameUI.UpdateWalkToGtoupUI(true);
+        gameUI.UpdateWalkToGroupUI(true);
 
         if (PlayerPrefsManager.simulatePlayerActions)
             gameUI.UpdateHelpHighlight();
@@ -522,7 +522,7 @@ public class PlayerScript : MonoBehaviour
         {
             extraBtnActiveForIpad = extraButton.activeSelf;
             extraButton.SetActive(false);
-            gameUI.UpdateWalkToGtoupUI(false);
+            gameUI.UpdateWalkToGroupUI(false);
         }
 
         if (extraPanel == null)
@@ -599,7 +599,7 @@ public class PlayerScript : MonoBehaviour
             if (extraButton != null)
             {
                 extraButton.SetActive(extraBtnActiveForIpad);
-                gameUI.UpdateWalkToGtoupUI(extraBtnActiveForIpad);
+                gameUI.UpdateWalkToGroupUI(extraBtnActiveForIpad);
             }
 
             if (extraPanel != null)
