@@ -11,6 +11,7 @@
            image="icon_catheter"
            validated="true"
            totalPoints="2"/>
+	  
     <scene id="CATVSO"
            isInProducts="CathW|Katheter"
            bundleName="scene/scenes_catherisation_women"
@@ -66,17 +67,12 @@
            image="icon_syringe"
            validated="true"
            totalPoints="1"/>
-
-    <scene id="IILTGF"
-           isInProducts="IntraL|Inject"
+	  
+	  <scene id="IILTGF"
+           mainScene="Injection"
            bundleName="scene/injection_in_house"
-           name="Injecteren intramusculair (loodrechttechniek)_INHOUSE"
-           description=""
            sceneName="Injection_In_House"
-           image="icon_syringe"
-           validated="true"
-           totalPoints="1"
-           hidden="true"/>
+           type="in_house"/>
 
     <scene id="GFTP"
            isInProducts="Sonde"
@@ -109,15 +105,10 @@
            totalPoints="1"/>
 
     <scene id="ISHTGF"
-           isInProducts="SubH|Inject"
+           mainScene="Injection Subcutaneous"
            bundleName="scene/injection_subcutaneous_in_house"
-           name="Injecteren subcutaan (huidplooitechniek)_INHOUSE"
-           description=""
            sceneName="Injection_Subcutaneous_In_House"
-           image="icon_syringe"
-           validated="true"
-           totalPoints="1"
-           hidden="true"/>
+           type="in_house"/>
 
     <scene id="SCAED"
            bundleName="scene/scenes_aed"
@@ -138,15 +129,10 @@
            totalPoints="1"/>
 
     <scene id="FRAXI"
-           isInProducts="SubL|Inject"
+           mainScene="Fraxiparine_Injecteren"
            bundleName="scene/fraxiparine_injecteren_in_house"
-           name="Injecteren subcutaan (loodrechttechniek - Fraxiparine)_INHOUSE"
-           description="Sbcutaan injecteren met kant-en-klare fraxiparine spuit."
            sceneName="Fraxiparine_Injecteren_In_House"
-           image="icon_syringe"
-           validated="true"
-           totalPoints="1"
-           hidden="true"/>
+           type="in_house"/>
 
     <scene id="THHD"
            demo="true"
@@ -177,6 +163,12 @@
            image="icon_pill"
            validated="true"
            totalPoints="1"/>
+	  
+	  <scene id="TMMW"
+		   mainScene="Scenes_Medicine_Cheek_Pouch"
+           bundleName="scene/scenes_medicine_cheek_pouch_in_house"
+           sceneName="Scenes_Medicine_Cheek_Pouch_In_House"
+           type="in_house"/>
 
     <scene id="TMMT"
            isInProducts="Tong|Mond"
@@ -207,6 +199,7 @@
            image="icon_syringe"
            validated="true"
            totalPoints="1"/>
+	  
     <scene id="SOC"
            isInProducts="StoTwee|Stoma"
            bundleName="scene/scenes_ostomy_care"
@@ -236,6 +229,13 @@
            image="icon_syringe"
            validated="true"
            totalPoints="1"/>
+	  
+    <scene id="SMPA"
+	       mainScene="Scene_Medication_Preparation_Ampoule"
+           bundleName="scene/scene_medication_preparation_ampoule_in_house"
+           sceneName="Scene_Medication_Preparation_Ampoule_In_House"
+           type="in_house"/>
+	  
     <scene id="SMPF"
            isInProducts="Fla|Inject"
            bundleName="scene/scene_medication_preparation_flacon"
@@ -245,16 +245,13 @@
            image="icon_syringe"
            validated="true"
            totalPoints="1"/>
-    <scene id="SMPF"
-           isInProducts="Fla|Inject"
+	  
+	  <scene id="SMPF"
+	       mainScene="Scene_Medication_Preparation_Flacon"
            bundleName="scene/scene_medication_preparation_flacon_in_house"
-           name="Voorbereiden medicijn injecteren flacon_INHOUSE"
-           description=""
            sceneName="Scene_Medication_Preparation_Flacon_In_House"
-           image="icon_syringe"
-           validated="true"
-           totalPoints="1"
-           hidden="true"/>
+           type="in_house"/>
+	  
 
     <scene id="SMPD"
            isInProducts="Opl|Inject"
@@ -265,6 +262,12 @@
            image="icon_syringe"
            validated="true"
            totalPoints="1"/>
+	  
+	  <scene id="SMPD"
+	       mainScene="Scene_Medication_Preparation_Dissolve"
+           bundleName="scene/scene_medication_preparation_dissolve_in_house"
+           sceneName="Scene_Medication_Preparation_Dissolve_In_House"
+           type="in_house"/>
 
   </group>
 
