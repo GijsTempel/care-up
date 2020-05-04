@@ -238,9 +238,10 @@ public class LevelButton : MonoBehaviour
                 mainBtn.toLoadInhouse = false;
 
                 // for single variation we can skip into practice/test dialogue
-                GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(3);
                 if (inHouseSceneName != "")
                     GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(11);
+                else
+                    GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(3);
 
                 if (manager != null)
                 {
