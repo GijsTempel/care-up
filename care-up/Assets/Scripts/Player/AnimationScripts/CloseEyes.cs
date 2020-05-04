@@ -16,7 +16,7 @@ public class CloseEyes : StateMachineBehaviour {
             if (toClose)
             {
                 animator.SetTrigger("close_eyes");
-                GameObject.FindObjectOfType<GameUI>().UpdateWalkToGtoupUI(false);
+                GameObject.FindObjectOfType<GameUI>().UpdateWalkToGroupUI(false);
             }
             else
             {
@@ -39,7 +39,7 @@ public class CloseEyes : StateMachineBehaviour {
                     if (toClose)
                     {
                         animator.SetTrigger("close_eyes");
-                        GameObject.FindObjectOfType<GameUI>().UpdateWalkToGtoupUI(false);
+                        GameObject.FindObjectOfType<GameUI>().UpdateWalkToGroupUI(false);
 
                     }
                     else

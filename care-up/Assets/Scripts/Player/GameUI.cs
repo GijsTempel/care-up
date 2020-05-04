@@ -232,7 +232,7 @@ public class GameUI : MonoBehaviour
                 {
                     if (handsInventory.LeftHandObject.GetComponent<PickableObject>().Use(true, true))
                     {
-                        UpdateWalkToGtoupUI(false);
+                        UpdateWalkToGroupUI(false);
                     }
 
                     if (tutorialUseOn != null)
@@ -251,7 +251,7 @@ public class GameUI : MonoBehaviour
                 {
                     if (handsInventory.RightHandObject.GetComponent<PickableObject>().Use(false, true))
                     {
-                        UpdateWalkToGtoupUI(false);
+                        UpdateWalkToGroupUI(false);
                     }
 
                     if (tutorialUseOn != null)
@@ -576,7 +576,7 @@ public class GameUI : MonoBehaviour
             }
         }
         UpdateWalkToGroupButtons();
-        UpdateWalkToGtoupUI(true);
+        UpdateWalkToGroupUI(true);
 
         foreach (InteractableObject o in Resources.FindObjectsOfTypeAll<InteractableObject>())
         {
@@ -1119,7 +1119,7 @@ public class GameUI : MonoBehaviour
                 if (actionManager.CheckGeneralAction() == null)
                     UpdateHelpHighlight();
 
-                UpdateWalkToGtoupUI(true);
+                UpdateWalkToGroupUI(true);
             }
         }
         if (toDelayUpdateHint)
@@ -1329,7 +1329,7 @@ public class GameUI : MonoBehaviour
                 actionManager.CurrentButtonText(null);
     }
 
-    public void UpdateWalkToGtoupUI(bool value)
+    public void UpdateWalkToGroupUI(bool value)
     {
         allowObjectControlUI = value;
         if (!value)
