@@ -397,6 +397,8 @@ public class HandsInventory : MonoBehaviour {
     public GameObject CreateObjectByName(string name, Vector3 position)
     {
         Object bundleObject = FindFromBundles(name);
+        if (bundleObject == null)
+            Debug.Log("_____" + name);
         bool from_bundle = bundleObject != null;
         if (bundleObject == null)
             bundleObject = Resources.Load<GameObject>("Prefabs\\" + name);
@@ -429,8 +431,9 @@ public class HandsInventory : MonoBehaviour {
 
     public GameObject CreateStaticObjectByName(string name, Vector3 position, Quaternion rotation)
     {
-
         Object bundleObject = FindFromBundles(name);
+        if (bundleObject == null)
+            Debug.Log("_____" + name);
         bool from_bundle = bundleObject != null;
         if (bundleObject == null)
             bundleObject = Resources.Load<GameObject>("Prefabs\\" + name);
@@ -451,7 +454,10 @@ public class HandsInventory : MonoBehaviour {
 
     public void CreateAnimationObject(string name, bool hand)
     {
+        
         Object bundleObject = FindFromBundles(name);
+        if (bundleObject == null)
+            Debug.Log("_____" + name);
         bool from_bundle = bundleObject != null;
         if (bundleObject == null)
             bundleObject = Resources.Load<GameObject>("Prefabs\\" + name);
@@ -498,6 +504,8 @@ public class HandsInventory : MonoBehaviour {
     public void CreateAnimationObject2(string name, bool hand)
     {
         Object bundleObject = FindFromBundles(name);
+        if (bundleObject == null)
+            Debug.Log("_____" + name);
         bool from_bundle = bundleObject != null;
         if (bundleObject == null)
             bundleObject = Resources.Load<GameObject>("Prefabs\\" + name);
