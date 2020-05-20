@@ -60,6 +60,7 @@ public class CameraMode : MonoBehaviour
     private bool closingEyes = false;
     private bool closeEyesTriggered = false;
     public bool moveBackFromExam = false;
+    private Transform targetToResetCinematic = null;
 
     //private Quaternion camPosition; never used
 
@@ -94,6 +95,21 @@ public class CameraMode : MonoBehaviour
         confirmUI = (GameObject)Instantiate(Resources.Load("NecessaryPrefabs/UI/ConfirmUI"), Vector3.zero, Quaternion.identity);
         confirmUI.SetActive(false);
     }
+
+    public void ResetPlayerToTarget(Transform target)
+    {
+
+        Vector3 currentCinematicControlPos = cinematicControl.position;
+        Quaternion currentCinematicControlRot = cinematicControl.rotation;
+        cinematicControl.parent.position = target.position;
+        cinematicControl.parent.rotation = target.rotation;
+
+        cinematicControl.position = currentCinematicControlPos;
+        cinematicControl.rotation = currentCinematicControlRot;
+        cinematicPos = target.position;
+        cinematicRot = target.rotation;
+    }
+
     void Update()
     {
         if (Time.time > camMoveBackAt)
@@ -261,6 +277,11 @@ public class CameraMode : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void SetTargetToReset(Transform target)
+    {
+        targetToResetCinematic = transform;
     }
 
     public void ObjectViewPickUpButton()
