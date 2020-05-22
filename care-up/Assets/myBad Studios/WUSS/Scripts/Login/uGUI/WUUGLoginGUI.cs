@@ -259,7 +259,8 @@ namespace MBS
         {
 #if !(UNITY_EDITOR || DEVELOPMENT_BUILD)
             panels.debug_options.SetActive(false);
-#endif
+#endif 
+
             PlayerPrefsManager.plusCoins = false;
             PlayerPrefsManager.plusDiamonds = false;
             PlayerPrefsManager.resetPurchases = false;
@@ -281,8 +282,8 @@ namespace MBS
         {
             bool value = panels.debug_options.transform.Find("Panel/Plus300/Toggle").GetComponent<Toggle>().isOn;
             PlayerPrefsManager.plusCoins = value;
-        }  
-        
+        }
+
         public void PlusDiamonds()
         {
             bool value = panels.debug_options.transform.Find("Panel/Plus5/Toggle").GetComponent<Toggle>().isOn;

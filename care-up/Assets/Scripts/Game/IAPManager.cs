@@ -18,20 +18,20 @@ public class IAPManager : MonoBehaviour, IStoreListener
 
     private void Start()
     {
-        #if (UNITY_IOS || UNITY_ANDROID)
-            var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
-            builder.AddProduct("CareUp_Lidmaatschap", ProductType.Subscription, new IDs
-            {
-                {"CareUp_Lidmaatschap", AppleAppStore.Name},
-                {"careup_lidmaatschap", GooglePlay.Name},
-                {"CareUp_Lidmaatschap", MacAppStore.Name}
-            });
+        //#if (UNITY_ANDROID)
+        //    var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
+        //    builder.AddProduct("CareUp_Lidmaatschap", ProductType.Subscription, new IDs
+        //    {
+        //       // {"CareUp_Lidmaatschap", AppleAppStore.Name},
+        //        {"careup_lidmaatschap", GooglePlay.Name},
+        //       // {"CareUp_Lidmaatschap", MacAppStore.Name}
+        //    });
 
-            UnityPurchasing.Initialize(this, builder);
-        #else
-            Destroy(this);
-            return;
-        #endif
+        //    UnityPurchasing.Initialize(this, builder);
+        //#else
+        //    Destroy(this);
+        //    return;
+        //#endif
     }
 
     /// <summary>
@@ -42,10 +42,10 @@ public class IAPManager : MonoBehaviour, IStoreListener
         this.controller = controller;
         this.extensions = extensions;
 
-        #if UNITY_IOS
-            m_AppleExtensions = extensions.GetExtension<IAppleExtensions>();
-            introductory_info_dict = m_AppleExtensions.GetIntroductoryPriceDictionary();
-        #endif
+        //#if UNITY_IOS
+        //    m_AppleExtensions = extensions.GetExtension<IAppleExtensions>();
+        //    introductory_info_dict = m_AppleExtensions.GetIntroductoryPriceDictionary();
+        //#endif
 
         #if UNITY_ANDROID
             m_GooglePlayStoreExtensions = extensions.GetExtension<IGooglePlayStoreExtensions>();

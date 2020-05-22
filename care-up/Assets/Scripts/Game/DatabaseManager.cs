@@ -68,7 +68,6 @@ public class DatabaseManager : MonoBehaviour
 
     private static void PostInit(CMLData ignore = null)
     {
-        print("PostInit");
         // increment logins number
         int loginNumber;
         int.TryParse(FetchField("AccountStats", "Login_Number"), out loginNumber);

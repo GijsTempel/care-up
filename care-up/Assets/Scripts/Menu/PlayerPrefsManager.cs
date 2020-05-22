@@ -199,10 +199,10 @@ public class PlayerPrefsManager : MonoBehaviour
                 Destroy(GameObject.Find("UMenuProManager/MenuCanvas/VersionUpdatePanel/Panel_Version_UI" +
                     "/NewVersionButtonGreenApple"));
 
-                Destroy(GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/WUSerialScreen" +
-                    "/RegisterArea/Buttons/MoreInfo_Apple"));
-                Destroy(GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/WUSerialScreen" +
-                    "/RegisterArea/Buttons/Purchase_Apple"));
+                //Destroy(GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/WUSerialScreen" +
+                //    "/RegisterArea/Buttons/MoreInfo_Apple"));
+                //Destroy(GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/WUSerialScreen" +
+                //    "/RegisterArea/Buttons/Purchase_Apple"));
             }
 
             if (Application.platform != RuntimePlatform.Android)
@@ -248,8 +248,8 @@ public class PlayerPrefsManager : MonoBehaviour
 
             if (Application.platform != RuntimePlatform.IPhonePlayer)
             {
-                Destroy(GameObject.Find("Canvas/WULoginPrefab/WUSerialScreen/RegisterArea/MoreInfo_Apple"));
-                Destroy(GameObject.Find("Canvas/WULoginPrefab/WUSerialScreen/RegisterArea/Purchase_Apple"));
+                //Destroy(GameObject.Find("Canvas/WULoginPrefab/WUSerialScreen/RegisterArea/MoreInfo_Apple"));
+                //Destroy(GameObject.Find("Canvas/WULoginPrefab/WUSerialScreen/RegisterArea/Purchase_Apple"));
             }
         }
     }
