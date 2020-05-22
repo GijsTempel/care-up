@@ -385,12 +385,14 @@ public class MainMenu : MonoBehaviour
 
     public void OpenUrl_NewWindow(string url)
     {
-#if UNITY_WEBGL
+#if UNITY_WEBGL && ! UNITY_EDITOR
         openWindow(url);
+#else
+        OpenUrl(url);
 #endif
     }
 
-#if UNITY_WEBGL
+#if UNITY_WEBGL 
 
     [DllImport("__Internal")]
     private static extern void openWindow(string url);
