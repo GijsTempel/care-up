@@ -54,8 +54,8 @@ public class CatherisationPatient_InHouse : PersonObject
                         playerPosAtPatient.transform.position = playerPositionTarget.position;
                         playerPosAtPatient.transform.rotation = playerPositionTarget.rotation;
                     }
-                    PlayerAnimator.SetTrigger("CloseCurtains");
-                    PlayerAnimator.SetTrigger("S CloseCurtains");
+                    PlayerAnimator.SetTrigger("CloseCurtainsInHouse");
+                    PlayerAnimator.SetTrigger("S CloseCurtainsInHouse");
 
                     break;
                 case "HelpGetUp":

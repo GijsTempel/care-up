@@ -6,7 +6,18 @@ public class ChangePlayerPositionValue : StateMachineBehaviour {
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         Debug.Log("OnStateEnter");
-        GameObject.FindObjectOfType<CatherisationPatient>().startCheckingPlayersPosition = true;
+        
+        if(GameObject.FindObjectOfType<CatherisationPatient>())
+        {
+            GameObject.FindObjectOfType<CatherisationPatient>().startCheckingPlayersPosition = true;
+        }
+        else
+        {
+            if (GameObject.FindObjectOfType<CatherisationPatient_InHouse>())
+            {
+                GameObject.FindObjectOfType<CatherisationPatient_InHouse>().startCheckingPlayersPosition = true;
+            }
+        }
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
