@@ -13,10 +13,11 @@ public class ActivateAtFrame : StateMachineBehaviour
     void Activate()
     {
         GameObject ActionObject = GameObject.Find(actionObjectName);
-        if (ActionObject.GetComponent<WTGNeighborsUpdater>() != null)
-        {
-            ActionObject.GetComponent<WTGNeighborsUpdater>().Activate();
-        }
+        if (ActionObject != null)
+            if (ActionObject.GetComponent<WTGNeighborsUpdater>() != null)
+            {
+                ActionObject.GetComponent<WTGNeighborsUpdater>().Activate();
+            }
     }
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
