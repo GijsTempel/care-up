@@ -20,8 +20,11 @@ public class ExtraObjectOptions : MonoBehaviour
             {
                 if (obj.GetComponent<InteractableObject>() != null)
                 {
-                    neededObjectsData.Add(obj.name, obj.GetComponent<InteractableObject>().description);
-                    neededObjectsArticle.Add(obj.name, obj.GetComponent<InteractableObject>().nameArticle);
+                    if (!neededObjectsData.ContainsKey(obj.name))
+                    {
+                        neededObjectsData.Add(obj.name, obj.GetComponent<InteractableObject>().description);
+                        neededObjectsArticle.Add(obj.name, obj.GetComponent<InteractableObject>().nameArticle);
+                    }
 
                 }
             }
