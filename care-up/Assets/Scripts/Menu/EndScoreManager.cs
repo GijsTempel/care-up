@@ -123,7 +123,7 @@ public class EndScoreManager : MonoBehaviour
             if (flag)
             {
                 //PlayerPrefsManager.__sendCertificateToUserMail(manager.currentSceneVisualName);
-                PlayerPrefsManager.__openCertificate(manager.currentSceneVisualName);
+                //PlayerPrefsManager.__openCertificate(manager.currentSceneVisualName);
 
                 achievements.UpdateKeys("FirstPassedExam", 1);
 
