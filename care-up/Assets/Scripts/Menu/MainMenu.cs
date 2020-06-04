@@ -461,4 +461,11 @@ public class MainMenu : MonoBehaviour
         string bundleName = "tutorial_full";
         bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
     }
+
+    public void DownloadCertificate()
+    {
+        EndScoreManager endScoreManager = GameObject.FindObjectOfType<EndScoreManager>();
+        if (endScoreManager != null)
+            endScoreManager.OpenCertificateBtn();
+    }
 }
