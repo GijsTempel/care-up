@@ -7,16 +7,17 @@ using UnityEngine.UI;
 public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
 {
     [SerializeField]
-    private Transform objectToSwipe;
+    private Transform objectToSwipe = default;
 
     [SerializeField]
-    private GameObject panelHolder;
+    private GameObject panelHolder = default;
+
+    //never used
+    //[SerializeField]
+    //private Sprite dotSprite = default;
 
     [SerializeField]
-    private Sprite dotSprite;
-
-    [SerializeField]
-    private GameObject dotPanel;
+    private GameObject dotPanel = default;
 
     [SerializeField]
     private float percentThreshold = 0.2f;
