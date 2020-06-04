@@ -14,6 +14,7 @@ using UnityEngine.Networking;
 using System.Linq;
 using SmartLookUnity;
 using CareUp.Localize;
+using System.Runtime.InteropServices;
 
 /// <summary>
 /// Handles quick access to saved data.
@@ -700,6 +701,25 @@ public class PlayerPrefsManager : MonoBehaviour
         }
     }
 
+    public static void OpenUrl(string url)
+    {
+        Application.OpenURL(url);
+    }
+
+    public static void OpenUrl_NewWindow(string url)
+    {
+        #if UNITY_WEBGL && ! UNITY_EDITOR
+            openWindow(url);
+        #else
+            OpenUrl(url);
+        #endif
+    }
+
+    #if UNITY_WEBGL 
+    [DllImport("__Internal")]
+    private static extern void openWindow(string url);
+    #endif
+
     public static void __dev__customCertificate(string playerFullName, string sceneName, string date)
     {
         int keyValue = 192378; // salt
@@ -771,7 +791,8 @@ public class PlayerPrefsManager : MonoBehaviour
         link += PlayerPrefsManager.__getCertificateLinkParams(scene, date);
 
         Debug.LogWarning("OPENING LINK " + link);
-        Application.OpenURL(link.Replace(" ", "%20"));
+        
+        OpenUrl_NewWindow(link.Replace(" ", "%20"));
     }
 
     public static void __sendCertificateToUserMail(string scene, string date = "")
@@ -971,6 +992,6 @@ public class PlayerPrefsManager : MonoBehaviour
         link += "&quote=I just passed a test for ";                  // quote=text for text quote
         link += sceneName + ". You can try it out yourself by going to https%3A%2F%2Fcareup.online";
 
-        Application.OpenURL(link.Replace(" ", "%20"));
+        OpenUrl_NewWindow(link.Replace(" ", "%20"));
     }
 }
