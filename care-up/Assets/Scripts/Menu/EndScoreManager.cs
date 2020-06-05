@@ -357,9 +357,9 @@ public class EndScoreManager : MonoBehaviour
         link += "&bigNum=" + manager.bigNumber;
         link += "&percent=" + percent.ToString();
 
-        UnityWebRequest unityWebRequest = new UnityWebRequest(link.Replace(" ", "%20"));
-        unityWebRequest.SendWebRequest();
-        Debug.Log("E-mail verzonden");
+        //UnityWebRequest unityWebRequest = new UnityWebRequest(link.Replace(" ", "%20"));
+        //unityWebRequest.SendWebRequest();
+        //Debug.Log("E-mail verzonden");
     }
 
     /// <summary>
