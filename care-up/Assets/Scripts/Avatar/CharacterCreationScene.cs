@@ -485,7 +485,7 @@ public class CharacterCreationScene : MonoBehaviour
             }
             else
             {
-                bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Tutorial", "scenes_tutorial");
+                bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Tutorial", "scene/scenes_tutorial");
 
                 // bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Tutorial");
             }
