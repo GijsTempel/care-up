@@ -76,7 +76,22 @@ public class BandagingPatient : PersonObject
 
                     break;
 
+                case "SitDown":
 
+                    /*PlayerAnimator.SetTrigger("Player_Dialog_Greeting");
+                    PlayerAnimator.SetTrigger("S Player_Dialog_Greeting");*/
+                    animator.SetTrigger("PatientSit");
+
+                    break;
+
+                case "LegOnSupport":
+
+                    /*PlayerAnimator.SetTrigger("Player_Dialog_Greeting");
+                    PlayerAnimator.SetTrigger("S Player_Dialog_Greeting");*/
+                    animator.SetTrigger("PutLegOnSupport");
+
+                    break;
+                    
 
                 default:
                     break;
