@@ -348,9 +348,6 @@ public class EndScoreManager : MonoBehaviour
     {
         achievements.UpdateKeys("StudyPoints", 1);
 		
-        if (manager.bigNumber == "")
-            return;
-
         int percent = GameObject.FindObjectOfType<EndScoreManager>().percent;
 
         string link = "https://leren.careup.online/MailSceneComplStats.php";
