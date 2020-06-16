@@ -346,9 +346,12 @@ public class EndScoreManager : MonoBehaviour
     // copied from EndScoreSendMailResults.cs
     public void EndScoreSendMailResults()
     {
-        int percent = GameObject.FindObjectOfType<EndScoreManager>().percent;
-
         achievements.UpdateKeys("StudyPoints", 1);
+		
+        if (manager.bigNumber == "")
+            return;
+
+        int percent = GameObject.FindObjectOfType<EndScoreManager>().percent;
 
         string link = "https://leren.careup.online/MailSceneComplStats.php";
         link += "?name=" + MBS.WULogin.username;
