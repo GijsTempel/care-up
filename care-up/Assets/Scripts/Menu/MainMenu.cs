@@ -145,7 +145,7 @@ public class MainMenu : MonoBehaviour
 
                     scoreObject.transform.Find("Button").GetComponent<Button>().interactable = passed;
                     scoreObject.transform.Find("Button").GetComponent<Button>().onClick.AddListener
-                        (delegate { ResendCertificate(sceneName, date); });
+                        (delegate { PlayerPrefsManager.__openCertificate(sceneName, date); });
                 }
             }
 
@@ -175,7 +175,7 @@ public class MainMenu : MonoBehaviour
         if (flag)
         {
             // send if so
-            PlayerPrefsManager.__sendCertificateToUserMail(scene, date);
+            //PlayerPrefsManager.__sendCertificateToUserMail(scene, date);
 
             // show pop up that it's sent
             GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/CertificatePopOp").SetActive(true);
