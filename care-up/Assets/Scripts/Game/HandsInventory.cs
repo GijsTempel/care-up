@@ -589,7 +589,11 @@ public class HandsInventory : MonoBehaviour {
     {
         if (leftHandObject)
         {
-            leftHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
+            Transform originalParent = leftHandObject.GetOriginalParent();
+            if (originalParent != null)
+                leftHandObject.transform.parent = originalParent;
+            else
+                leftHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
             leftHandObject.Drop(true);
             leftHandObject = null;
             leftHold = false;
@@ -598,7 +602,11 @@ public class HandsInventory : MonoBehaviour {
 
         if (rightHandObject)
         {
-            rightHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
+            Transform originalParent = rightHandObject.GetOriginalParent();
+            if (originalParent != null)
+                rightHandObject.transform.parent = originalParent;
+            else
+                rightHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
             rightHandObject.Drop(true);
             rightHandObject = null;
             rightHold = false;
@@ -614,7 +622,11 @@ public class HandsInventory : MonoBehaviour {
         if (leftHandObject)
         {
             leftHandObject.DeleteGhostObject();
-            leftHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
+            Transform originalParent = leftHandObject.GetOriginalParent();
+            if (originalParent != null)
+                leftHandObject.transform.parent = originalParent;
+            else
+                leftHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
             leftHandObject.Drop(true);
             leftHandObject = null;
             leftHold = false;
@@ -628,7 +640,11 @@ public class HandsInventory : MonoBehaviour {
         if (rightHandObject)
         {
             rightHandObject.DeleteGhostObject();
-            rightHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
+            Transform originalParent = rightHandObject.GetOriginalParent();
+            if (originalParent != null)
+                rightHandObject.transform.parent = originalParent;
+            else
+                rightHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
             rightHandObject.Drop(true);
             rightHandObject = null;
             rightHold = false;
@@ -644,7 +660,11 @@ public class HandsInventory : MonoBehaviour {
             if (leftHandObject)
             {
                 leftHandObject.DeleteGhostObject();
-                leftHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
+                Transform originalParent = leftHandObject.GetOriginalParent();
+                if (originalParent != null)
+                    leftHandObject.transform.parent = originalParent;
+                else
+                    leftHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
                 leftHandObject.enabled = false;
                 leftHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 leftHandObject = null;
@@ -657,7 +677,11 @@ public class HandsInventory : MonoBehaviour {
             if (rightHandObject)
             {
                 rightHandObject.DeleteGhostObject();
-                rightHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
+                Transform originalParent = rightHandObject.GetOriginalParent();
+                if (originalParent != null)
+                    rightHandObject.transform.parent = originalParent;
+                else
+                    rightHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
                 rightHandObject.enabled = false;
                 rightHandObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 rightHandObject = null;
@@ -1055,7 +1079,11 @@ public class HandsInventory : MonoBehaviour {
     {
         if (leftHandObject)
         {
-            leftHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
+            Transform originalParent = leftHandObject.GetOriginalParent();
+            if (originalParent != null)
+                leftHandObject.transform.parent = originalParent;
+            else
+                leftHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
             tutorial_droppedLeft = true;
 
             int posID = 0;
@@ -1088,7 +1116,11 @@ public class HandsInventory : MonoBehaviour {
     {
         if (rightHandObject)
         {
-            rightHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
+            Transform originalParent = rightHandObject.GetOriginalParent();
+            if (originalParent != null)
+                rightHandObject.transform.parent = originalParent;
+            else
+                rightHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
             tutorial_droppedRight = true;
 
             int posID = 0;
