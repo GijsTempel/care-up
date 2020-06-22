@@ -342,8 +342,7 @@ public class EndScoreManager : MonoBehaviour
 
         GameObject.Find("Interactable Objects/Canvas/NamePopUp").SetActive(false);
     }
-
-    // copied from EndScoreSendMailResults.cs
+    
     public void EndScoreSendMailResults()
     {
         achievements.UpdateKeys("StudyPoints", 1);
@@ -357,9 +356,9 @@ public class EndScoreManager : MonoBehaviour
         link += "&bigNum=" + manager.bigNumber;
         link += "&percent=" + percent.ToString();
 
-        //UnityWebRequest unityWebRequest = new UnityWebRequest(link.Replace(" ", "%20"));
-        //unityWebRequest.SendWebRequest();
-        //Debug.Log("E-mail verzonden");
+        UnityWebRequest unityWebRequest = new UnityWebRequest(link.Replace(" ", "%20"));
+        unityWebRequest.SendWebRequest();
+        Debug.Log("E-mail verzonden");
     }
 
     /// <summary>
