@@ -18,6 +18,7 @@ public class InteractableObject : MonoBehaviour
     protected bool positionSaved = false;
     protected Vector3 savedPosition;
     protected Quaternion savedRotation;
+    protected Vector3 savedScale;
     protected Renderer rend;
 
     static protected CameraMode cameraMode;
@@ -54,8 +55,14 @@ public class InteractableObject : MonoBehaviour
         get { return savedRotation; }
     }
 
+    public Vector3 SavedScale
+    {
+        get { return savedScale ; }
+    }
+
     protected virtual void Start()
     {
+        savedScale = transform.lossyScale;
         gameUI = GameObject.FindObjectOfType<GameUI>();
         rend = GetComponent<Renderer>();
 
@@ -180,6 +187,7 @@ public class InteractableObject : MonoBehaviour
 
             savedPosition = transform.position;
             savedRotation = transform.rotation;
+            savedScale = transform.lossyScale;
         }
     }
 
@@ -198,6 +206,10 @@ public class InteractableObject : MonoBehaviour
     {
         transform.position = savedPosition;
         transform.rotation = savedRotation;
+        Transform p = transform.parent;
+        transform.parent = null;
+        transform.localScale = savedScale;
+        transform.parent = p;
     }
 
     public void BaseLoadPosition()
