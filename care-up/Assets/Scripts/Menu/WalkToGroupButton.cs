@@ -85,7 +85,7 @@ public class WalkToGroupButton : MonoBehaviour {
                     break;
                 case WalkToGroup.GroupType.NotSet: // let's use this when we're setting icon/color from gameObject
                     _icon.GetComponent<Image>().sprite = Resources.Load("Sprites/WalkGroup_Icons/" + wtg.name, typeof(Sprite)) as Sprite;
-                    setColor(gameUI.WTGButtons[wtg.name].GetComponent<Image>().color);
+                    //setColor(gameUI.WTGButtons[wtg.name].GetComponent<Image>().color);
                     break;
             }
         }
