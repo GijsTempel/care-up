@@ -22,6 +22,7 @@ public class WalkToGroup : MonoBehaviour
     public WalkToGroup RightWalkToGroup = null;
     PlayerScript player;
     public bool ManualNeighborhood = false;
+    public Color manualColor = new Color(0.0f, 0.8f, 1f, 0.6f);
 
     public float interactionDistance = -1;
 
@@ -42,6 +43,8 @@ public class WalkToGroup : MonoBehaviour
     ParticleSystem particles;
 
     private Transform target;
+
+    public bool customPosition = false;
 
     public Vector3 Position
     {

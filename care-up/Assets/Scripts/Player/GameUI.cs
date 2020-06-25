@@ -5,6 +5,7 @@ using CareUp.Actions;
 using System.Linq;
 using AssetBundles;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class GameUI : MonoBehaviour
 {
@@ -18,10 +19,11 @@ public class GameUI : MonoBehaviour
     GameObject closeButton;
     GameObject closeDialog;
     GameObject donePanelYesNo;
-    GameObject WalkToGroupPanel;
     float autoExitTime = 900f;
     AutoPlayer autoPlayer;
     public GameObject activeTalkBobblePoint = null;
+
+    [HideInInspector] public GameObject WalkToGroupPanel;
 
     public WalkToGroupButton LeftSideButton;
     public WalkToGroupButton RightSideButton;
@@ -433,6 +435,10 @@ public class GameUI : MonoBehaviour
                     WTGButtons["Sink"].gameObject.SetActive(true);
                     activeGroupButtons++;
                     break;
+                default:
+                    WTGButtons[g.name].setWalkToGroup(g);
+                    WTGButtons[g.name].gameObject.SetActive(true);
+                    break;
             }
         }
         if ((!WTGButtons["Sink"].gameObject.activeSelf || activeGroupButtons <= 2) && WalkToGroupPanel.transform.Find("spacer0") != null)
@@ -572,6 +578,44 @@ public class GameUI : MonoBehaviour
                     {
                         WTGButtons.Add(key, b);
                     }
+                }
+            }
+
+            foreach (WalkToGroup g in GameObject.FindObjectsOfType<WalkToGroup>())
+            {
+                if (g.customPosition)
+                {
+                    GameUI gameUI = GameObject.FindObjectOfType<GameUI>();
+                    GameObject created = Instantiate(
+                        Resources.Load<GameObject>("NecessaryPrefabs/WalkToGroups/MoveButton"),
+                        gameUI.WalkToGroupPanel.transform);
+                    created.name = g.name;
+                    gameUI.WTGButtons.Add(g.name, created.GetComponent<WalkToGroupButton>());
+
+                    // triggers for sounds
+                    EventTrigger trigger = created.GetComponent<EventTrigger>();
+
+                    EventTrigger.Entry entry = new EventTrigger.Entry();
+                    entry.eventID = EventTriggerType.PointerEnter;
+                    entry.callback.AddListener((data) => {
+                        GameObject.FindObjectOfType<Button_Functions>().OnButtonHover(); });
+                    trigger.triggers.Add(entry);
+
+                    EventTrigger.Entry drag = new EventTrigger.Entry();
+                    drag.eventID = EventTriggerType.BeginDrag;
+                    drag.callback.AddListener((data) => {
+                        GameObject.FindObjectOfType<Button_Functions>().OnButtonHover();
+                    });
+                    trigger.triggers.Add(drag);
+
+                    // click effects for sounds
+                    Button btn = created.GetComponent<Button>();
+
+                    btn.onClick.AddListener(GameObject.FindObjectOfType<Button_Functions>().OnButtonClick);
+                    btn.onClick.AddListener(() => GameObject.FindObjectOfType<GameUI>().ButtonBlink(false));
+
+                    // set color
+                    created.GetComponent<Image>().color = g.manualColor;
                 }
             }
         }
