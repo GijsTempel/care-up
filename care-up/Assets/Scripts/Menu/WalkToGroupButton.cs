@@ -36,8 +36,6 @@ public class WalkToGroupButton : MonoBehaviour {
             bg_h = transform.Find("bg_h").gameObject;
             bg_h.SetActive(false);
             _icon = transform.Find("icon").gameObject;
-            if (!SideButton)
-                _icon.GetComponent<Image>().sprite = Resources.Load("Sprites/WalkGroup_Icons/" + name, typeof(Sprite)) as Sprite;
         }
     }
 
@@ -61,28 +59,29 @@ public class WalkToGroupButton : MonoBehaviour {
     public void setWalkToGroup(WalkToGroup wtg)
     {
         linkedWalkToGroup = wtg;
-        if (SideButton)
+        GameUI gameUI = GameObject.FindObjectOfType<GameUI>();
+        if (_icon == null)
         {
-            GameUI gameUI = GameObject.FindObjectOfType<GameUI>();
-            if (_icon == null)
-            {
+            if (SideButton)
                 _icon = transform.Find("bg_h/icon").gameObject;
-            }
-            switch (wtg.WalkToGroupType)
-            {
-                case WalkToGroup.GroupType.WorkField:
-                    _icon.GetComponent<Image>().sprite = Resources.Load("Sprites/WalkGroup_Icons/MoveWorkfield" , typeof(Sprite)) as Sprite;
-                    break;
-                case WalkToGroup.GroupType.Doctor:
-                    _icon.GetComponent<Image>().sprite = Resources.Load("Sprites/WalkGroup_Icons/MoveCollegue", typeof(Sprite)) as Sprite;
-                    break;
-                case WalkToGroup.GroupType.Patient:
-                    _icon.GetComponent<Image>().sprite = Resources.Load("Sprites/WalkGroup_Icons/Movepatient", typeof(Sprite)) as Sprite;
-                    break;
-                case WalkToGroup.GroupType.Sink:
-                    _icon.GetComponent<Image>().sprite = Resources.Load("Sprites/WalkGroup_Icons/MoveSink", typeof(Sprite)) as Sprite;
-                    break;
-            }
+            else
+                _icon = transform.Find("icon").gameObject;
+
+        }
+        switch (wtg.WalkToGroupType)
+        {
+            case WalkToGroup.GroupType.WorkField:
+                _icon.GetComponent<Image>().sprite = Resources.Load("Sprites/WalkGroup_Icons/MoveWorkfield", typeof(Sprite)) as Sprite;
+                break;
+            case WalkToGroup.GroupType.Doctor:
+                _icon.GetComponent<Image>().sprite = Resources.Load("Sprites/WalkGroup_Icons/MoveCollegue", typeof(Sprite)) as Sprite;
+                break;
+            case WalkToGroup.GroupType.Patient:
+                _icon.GetComponent<Image>().sprite = Resources.Load("Sprites/WalkGroup_Icons/Movepatient", typeof(Sprite)) as Sprite;
+                break;
+            case WalkToGroup.GroupType.Sink:
+                _icon.GetComponent<Image>().sprite = Resources.Load("Sprites/WalkGroup_Icons/MoveSink", typeof(Sprite)) as Sprite;
+                break;
         }
     }
 
