@@ -257,13 +257,13 @@ public virtual void Talk(string topic = "", string audio = "")
         }
     }
 
-    //protected void OnAnimatorIK()
-    //{
-    //    if (lookAtCamera)
-    //    {
-    //        Animator animator = GetComponent<Animator>();
-    //        animator.SetLookAtWeight(1);
-    //        animator.SetLookAtPosition(Camera.main.transform.position);
-    //    }
-    //}
+    protected void OnAnimatorIK()
+    {
+        if (lookAtCamera && Camera.main != null)
+        {
+            Animator animator = GetComponent<Animator>();
+            animator.SetLookAtWeight(1);
+            animator.SetLookAtPosition(Camera.main.transform.position);
+        }
+    }
 }
