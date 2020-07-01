@@ -29,6 +29,8 @@ public class PlayerScript : MonoBehaviour
     public string itemControlsToInit = "";
 
     public Camera cam;
+    Camera currentExtraCamera;
+
     public MouseLook mouseLook = new MouseLook();
     public bool freeLook = false;
     GameUI gameUI;
@@ -108,6 +110,34 @@ public class PlayerScript : MonoBehaviour
     public void ResetUIHover()
     {
         onButtonHover = false;
+    }
+
+    public void SwitchCamera(string cameraName)
+    {
+        if (cameraName == "")
+        {
+            gameUI.GetComponent<CanvasGroup>().alpha = 1.0f;
+            gameUI.GetComponent<CanvasGroup>().interactable = true;
+
+            if (currentExtraCamera != null)
+                currentExtraCamera.enabled = false;
+            cam.enabled = true;
+        }
+        else
+        {
+            GameObject extraCamGO = GameObject.Find(cameraName);
+            if (extraCamGO != null)
+            {
+                if (extraCamGO.GetComponent<Camera>() != null)
+                {
+                    currentExtraCamera = extraCamGO.GetComponent<Camera>();
+                    cam.enabled = false;
+                    currentExtraCamera.enabled = true;
+                    gameUI.GetComponent<CanvasGroup>().alpha = 0.0f;
+                    gameUI.GetComponent<CanvasGroup>().interactable = false;
+                }
+            }
+        }
     }
 
     private void Start()

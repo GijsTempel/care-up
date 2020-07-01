@@ -275,6 +275,9 @@ public class GameUI : MonoBehaviour
         if (PlayerAnimationManager.IsLongAnimation())
             return;
 
+        if (Camera.main == null)
+            return;
+
         RobotManager.UIElementsState[0] = false;
 
         Player.GetComponent<PlayerScript>().OpenRobotUI();
@@ -1123,6 +1126,8 @@ public class GameUI : MonoBehaviour
         if (allowObjectControlUI)
         {
             animationUiBlock = !PlayerAnimationManager.IsLongAnimation();
+            if (Camera.main == null)
+                animationUiBlock = false;
         }
 
         if (donePanelYesNo.activeSelf)
