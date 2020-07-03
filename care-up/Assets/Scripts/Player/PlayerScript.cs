@@ -30,6 +30,7 @@ public class PlayerScript : MonoBehaviour
 
     public Camera cam;
     Camera currentExtraCamera;
+    GameObject flyHeloper;
 
     public MouseLook mouseLook = new MouseLook();
     public bool freeLook = false;
@@ -114,6 +115,8 @@ public class PlayerScript : MonoBehaviour
 
     public void SwitchCamera(string cameraName)
     {
+        if (flyHeloper == null)
+            flyHeloper = GameObject.Find("flyHeloper");
         if (cameraName == "")
         {
             gameUI.GetComponent<CanvasGroup>().alpha = 1.0f;
@@ -122,6 +125,7 @@ public class PlayerScript : MonoBehaviour
             if (currentExtraCamera != null)
                 currentExtraCamera.enabled = false;
             cam.enabled = true;
+            flyHeloper.SetActive(true);
         }
         else
         {
@@ -135,6 +139,7 @@ public class PlayerScript : MonoBehaviour
                     currentExtraCamera.enabled = true;
                     gameUI.GetComponent<CanvasGroup>().alpha = 0.0f;
                     gameUI.GetComponent<CanvasGroup>().interactable = false;
+                    flyHeloper.SetActive(false);
                 }
             }
         }
@@ -419,8 +424,28 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
+    void WalkToGroupAction(WalkToGroup fromGroup, WalkToGroup toGroup)
+    {
+        string fromName = "";
+        if (fromGroup != null)
+            fromName = fromGroup.name;
+        if (GameObject.Find("PanoFlyCamera") != null)
+        {
+            GameObject panoFlyCamera = GameObject.Find("PanoFlyCamera");
+            if (panoFlyCamera.GetComponent<Animator>() != null)
+            {
+                panoFlyCamera.GetComponent<Animator>().SetTrigger("from_" + fromName + "_to_" + toGroup.name);
+            }
+        }
+    }
+
     public void WalkToGroup_(WalkToGroup group)
     {
+        WalkToGroupAction(currentWalkPosition, group);
+        string fromGroupName = "____";
+        if (currentWalkPosition != null)
+            fromGroupName = currentWalkPosition.name;
+        Debug.Log("from " + fromGroupName + " to " + group.name);
         if (robotUIopened)
             return;
         ToggleAway();

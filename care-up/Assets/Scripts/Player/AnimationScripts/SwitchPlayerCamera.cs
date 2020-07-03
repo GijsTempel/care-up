@@ -38,7 +38,6 @@ public class SwitchPlayerCamera : StateMachineBehaviour {
         {
             player.SwitchCamera(cameraName);
         }
-        actionFrame = 0;
         frame = 0;
         prevFrame = 0;
     }
