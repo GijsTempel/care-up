@@ -32,6 +32,8 @@ public class PlayerScript : MonoBehaviour
     Camera currentExtraCamera;
     GameObject flyHeloper;
 
+    WalkToGroup ImmediateWTG;
+
     public MouseLook mouseLook = new MouseLook();
     public bool freeLook = false;
     GameUI gameUI;
@@ -310,6 +312,7 @@ public class PlayerScript : MonoBehaviour
 
     private void Update()
     {
+
         if (prefs != null)
         {
             if (!prefs.VR)
@@ -324,6 +327,11 @@ public class PlayerScript : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
         }
 
+        if (ImmediateWTG != null)
+        {
+            Immediate_WalkToGroup(ImmediateWTG);
+            ImmediateWTG = null;
+        }
         // OLD mouse look code, transfering to joystick
         /*if (freeLook && !robotUIopened && cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
@@ -439,13 +447,8 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    public void WalkToGroup_(WalkToGroup group)
+    void Immediate_WalkToGroup(WalkToGroup group)
     {
-        WalkToGroupAction(currentWalkPosition, group);
-        string fromGroupName = "____";
-        if (currentWalkPosition != null)
-            fromGroupName = currentWalkPosition.name;
-        Debug.Log("from " + fromGroupName + " to " + group.name);
         if (robotUIopened)
             return;
         ToggleAway();
@@ -486,6 +489,12 @@ public class PlayerScript : MonoBehaviour
             controls.interactionDistance = group.interactionDistance;
         else
             controls.interactionDistance = defaultInteractionDistance;
+    }
+
+    public void WalkToGroup_(WalkToGroup group)
+    {
+        WalkToGroupAction(currentWalkPosition, group);
+        ImmediateWTG = group;
     }
 
     private void ToggleAway(bool _away = false)
