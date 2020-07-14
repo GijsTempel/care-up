@@ -21,7 +21,7 @@ public class WalkToGroup : MonoBehaviour
     //[HideInInspector]
     public WalkToGroup RightWalkToGroup = null;
     PlayerScript player;
-    public bool ManualNeighborhood = false;
+    public bool ManualNeighborhood = false; 
 
     public float interactionDistance = -1;
 

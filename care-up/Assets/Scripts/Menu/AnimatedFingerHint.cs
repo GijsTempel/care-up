@@ -175,13 +175,15 @@ public class AnimatedFingerHint : MonoBehaviour
 
     public void MoveTo(Vector3 point)
     {
+        Canvas canvas = GetComponentInParent<Canvas>();
+        if (canvas == null)
+            return;
         Vector3 scr_center = new Vector3(Screen.width / 2f, Screen.height / 2f, 0f);
         FingerHolder.position = scr_center;
         fingerAnimator.SetTrigger("fly");
         transform.Find("FingerHolder/animFinger/sound").GetComponent<AudioSource>().Play();
         toMove = true;
         Vector2 pos;
-        Canvas canvas = GetComponentInParent<Canvas>();
         RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform,
             point, canvas.worldCamera, out pos);
         moveTarget = canvas.transform.TransformPoint(pos);

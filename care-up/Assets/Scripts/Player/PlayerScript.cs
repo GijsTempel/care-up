@@ -29,6 +29,11 @@ public class PlayerScript : MonoBehaviour
     public string itemControlsToInit = "";
 
     public Camera cam;
+    Camera currentExtraCamera;
+    GameObject flyHeloper;
+
+    WalkToGroup ImmediateWTG;
+
     public MouseLook mouseLook = new MouseLook();
     public bool freeLook = false;
     GameUI gameUI;
@@ -108,6 +113,38 @@ public class PlayerScript : MonoBehaviour
     public void ResetUIHover()
     {
         onButtonHover = false;
+    }
+
+    public void SwitchCamera(string cameraName)
+    {
+        if (flyHeloper == null)
+            flyHeloper = GameObject.Find("flyHeloper");
+        if (cameraName == "")
+        {
+            gameUI.GetComponent<CanvasGroup>().alpha = 1.0f;
+            gameUI.GetComponent<CanvasGroup>().interactable = true;
+
+            if (currentExtraCamera != null)
+                currentExtraCamera.enabled = false;
+            cam.enabled = true;
+            flyHeloper.SetActive(true);
+        }
+        else
+        {
+            GameObject extraCamGO = GameObject.Find(cameraName);
+            if (extraCamGO != null)
+            {
+                if (extraCamGO.GetComponent<Camera>() != null)
+                {
+                    currentExtraCamera = extraCamGO.GetComponent<Camera>();
+                    cam.enabled = false;
+                    currentExtraCamera.enabled = true;
+                    gameUI.GetComponent<CanvasGroup>().alpha = 0.0f;
+                    gameUI.GetComponent<CanvasGroup>().interactable = false;
+                    flyHeloper.SetActive(false);
+                }
+            }
+        }
     }
 
     private void Start()
@@ -275,6 +312,7 @@ public class PlayerScript : MonoBehaviour
 
     private void Update()
     {
+
         if (prefs != null)
         {
             if (!prefs.VR)
@@ -289,6 +327,11 @@ public class PlayerScript : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
         }
 
+        if (ImmediateWTG != null)
+        {
+            Immediate_WalkToGroup(ImmediateWTG);
+            ImmediateWTG = null;
+        }
         // OLD mouse look code, transfering to joystick
         /*if (freeLook && !robotUIopened && cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
@@ -389,7 +432,22 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    public void WalkToGroup_(WalkToGroup group)
+    void WalkToGroupAction(WalkToGroup fromGroup, WalkToGroup toGroup)
+    {
+        string fromName = "";
+        if (fromGroup != null)
+            fromName = fromGroup.name;
+        if (GameObject.Find("PanoFlyCamera") != null)
+        {
+            GameObject panoFlyCamera = GameObject.Find("PanoFlyCamera");
+            if (panoFlyCamera.GetComponent<Animator>() != null)
+            {
+                panoFlyCamera.GetComponent<Animator>().SetTrigger("from_" + fromName + "_to_" + toGroup.name);
+            }
+        }
+    }
+
+    void Immediate_WalkToGroup(WalkToGroup group)
     {
         if (robotUIopened)
             return;
@@ -431,6 +489,12 @@ public class PlayerScript : MonoBehaviour
             controls.interactionDistance = group.interactionDistance;
         else
             controls.interactionDistance = defaultInteractionDistance;
+    }
+
+    public void WalkToGroup_(WalkToGroup group)
+    {
+        WalkToGroupAction(currentWalkPosition, group);
+        ImmediateWTG = group;
     }
 
     private void ToggleAway(bool _away = false)
