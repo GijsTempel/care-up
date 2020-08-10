@@ -8,6 +8,7 @@ public class ShowOnFrame : StateMachineBehaviour
     private GameObject Obj = null;
     public List<string> ObjNames;
     public bool toShow = true;
+    public bool hideMeshRenderer = false;
 
     protected float frame;
     protected float prevFrame;
@@ -23,6 +24,18 @@ public class ShowOnFrame : StateMachineBehaviour
         }
     }
 
+    void ShowHideObj(GameObject _obj)
+    {
+        if (hideMeshRenderer && _obj.GetComponent<MeshRenderer>() != null)
+        {
+            _obj.GetComponent<MeshRenderer>().enabled = toShow;
+        }
+        else
+        {
+            _obj.SetActive(toShow);
+        }
+    }
+
     void SetObject()
     {
         if (ControlObjectName == "")
@@ -34,14 +47,14 @@ public class ShowOnFrame : StateMachineBehaviour
                 {
                     if (GameObject.Find(name) != null && !toShow)
                     {
-                        GameObject.Find(name).SetActive(false);
+                        ShowHideObj(GameObject.Find(name));
                     }
                     else
                     {
                         Obj = idCont.GetFromHidden(name);
                         if (Obj != null)
                         {
-                            Obj.SetActive(toShow);
+                            ShowHideObj(Obj);
                         }
                     }
                 }
@@ -53,7 +66,7 @@ public class ShowOnFrame : StateMachineBehaviour
             {
                 if (GameObject.Find(name) != null)
                 {
-                    GameObject.Find(name).SetActive(toShow);
+                    ShowHideObj(GameObject.Find(name));
                 }
             }
         }
@@ -67,7 +80,7 @@ public class ShowOnFrame : StateMachineBehaviour
 
                     foreach (string name in ObjNames)
                     {
-                        ControlObject._show(name, toShow);
+                        ControlObject._show(name, toShow, hideMeshRenderer);
                     }
                 }
             }

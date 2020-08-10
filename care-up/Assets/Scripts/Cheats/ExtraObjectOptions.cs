@@ -42,7 +42,8 @@ public class ExtraObjectOptions : MonoBehaviour
         return "";
     }
 
-    public void _show(string _name, bool value)
+
+    public void _show(string _name, bool value, bool hideMeshRenderer = false)
     {
         foreach (GameObject o in hidenObjects)
         {
@@ -50,7 +51,14 @@ public class ExtraObjectOptions : MonoBehaviour
             {
                 if (o.name == _name)
                 {
-                    o.SetActive(value);
+                    if (hideMeshRenderer && o.GetComponent<MeshRenderer>() != null)
+                    {
+                        o.GetComponent<MeshRenderer>().enabled = value;
+                    }
+                    else
+                    {
+                        o.SetActive(value);
+                    }
                 }
             }
         }
