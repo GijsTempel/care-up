@@ -8,7 +8,7 @@ public class ShowOnFrame : StateMachineBehaviour
     private GameObject Obj = null;
     public List<string> ObjNames;
     public bool toShow = true;
-    public bool hideMeshRenderer = false;
+    public bool meshRenderer = false;
 
     protected float frame;
     protected float prevFrame;
@@ -26,15 +26,23 @@ public class ShowOnFrame : StateMachineBehaviour
 
     void ShowHideObj(GameObject _obj)
     {
-        if (hideMeshRenderer && _obj.GetComponent<MeshRenderer>() != null)
+        if (meshRenderer && (_obj.GetComponent<MeshRenderer>() != null || _obj.GetComponent<SkinnedMeshRenderer>() != null))
         {
             if (!toShow)
             {
-                _obj.GetComponent<MeshRenderer>().enabled = false;
+                if (_obj.GetComponent<MeshRenderer>() != null)
+                    _obj.GetComponent<MeshRenderer>().enabled = false;
+                else
+                    _obj.GetComponent<SkinnedMeshRenderer>().enabled = false;
+
             }
             else
             {
                 foreach(MeshRenderer m in _obj.GetComponents<MeshRenderer>())
+                {
+                    m.enabled = true;
+                }
+                foreach (SkinnedMeshRenderer m in _obj.GetComponents<SkinnedMeshRenderer>())
                 {
                     m.enabled = true;
                 }
@@ -90,7 +98,7 @@ public class ShowOnFrame : StateMachineBehaviour
 
                     foreach (string name in ObjNames)
                     {
-                        ControlObject._show(name, toShow, hideMeshRenderer);
+                        ControlObject._show(name, toShow, meshRenderer);
                     }
                 }
             }
