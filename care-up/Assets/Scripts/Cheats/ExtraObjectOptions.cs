@@ -51,9 +51,17 @@ public class ExtraObjectOptions : MonoBehaviour
             {
                 if (o.name == _name)
                 {
-                    if (hideMeshRenderer && o.GetComponent<MeshRenderer>() != null)
+                    if (hideMeshRenderer && o.GetComponents<MeshRenderer>() != null)
                     {
-                        o.GetComponent<MeshRenderer>().enabled = value;
+                        if (value)
+                            o.GetComponent<MeshRenderer>().enabled = value;
+                        else
+                        {
+                            foreach (MeshRenderer m in o.GetComponents<MeshRenderer>())
+                            {
+                                m.enabled = true;
+                            }
+                        }
                     }
                     else
                     {

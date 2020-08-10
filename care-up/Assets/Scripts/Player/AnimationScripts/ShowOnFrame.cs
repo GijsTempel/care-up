@@ -28,7 +28,17 @@ public class ShowOnFrame : StateMachineBehaviour
     {
         if (hideMeshRenderer && _obj.GetComponent<MeshRenderer>() != null)
         {
-            _obj.GetComponent<MeshRenderer>().enabled = toShow;
+            if (!toShow)
+            {
+                _obj.GetComponent<MeshRenderer>().enabled = false;
+            }
+            else
+            {
+                foreach(MeshRenderer m in _obj.GetComponents<MeshRenderer>())
+                {
+                    m.enabled = true;
+                }
+            }
         }
         else
         {
@@ -45,7 +55,7 @@ public class ShowOnFrame : StateMachineBehaviour
                 ObjectsIDsController idCont = GameObject.FindObjectOfType<ObjectsIDsController>();
                 foreach (string name in ObjNames)
                 {
-                    if (GameObject.Find(name) != null && !toShow)
+                    if (GameObject.Find(name) != null)
                     {
                         ShowHideObj(GameObject.Find(name));
                     }
