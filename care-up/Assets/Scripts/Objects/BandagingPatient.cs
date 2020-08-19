@@ -91,7 +91,8 @@ public class BandagingPatient : PersonObject
                     animator.SetTrigger("PutLegOnSupport");
 
                     break;
-                    
+
+
 
                 default:
                     break;
