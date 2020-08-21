@@ -259,7 +259,8 @@ namespace MBS
         {
 #if !(UNITY_EDITOR || DEVELOPMENT_BUILD)
             panels.debug_options.SetActive(false);
-#endif
+#endif 
+
             PlayerPrefsManager.plusCoins = false;
             PlayerPrefsManager.plusDiamonds = false;
             PlayerPrefsManager.resetPurchases = false;
@@ -281,8 +282,8 @@ namespace MBS
         {
             bool value = panels.debug_options.transform.Find("Panel/Plus300/Toggle").GetComponent<Toggle>().isOn;
             PlayerPrefsManager.plusCoins = value;
-        }  
-        
+        }
+
         public void PlusDiamonds()
         {
             bool value = panels.debug_options.transform.Find("Panel/Plus5/Toggle").GetComponent<Toggle>().isOn;
@@ -754,7 +755,8 @@ namespace MBS
         public void ShowPostLoginScreen() => DisplayScreen(panels.post_login_menu_screen);
         public void ShowPasswordResetScreen() //=> DisplayScreen( panels.password_reset_screen );
         {
-            Application.OpenURL("https://careup.online/culogin/?action=lostpassword&error=expiredkey");
+            PlayerPrefsManager.OpenUrl_NewWindow("https://careup.online/culogin/?action=lostpassword&error=expiredkey");
+            //Application.OpenURL("https://careup.online/culogin/?action=lostpassword&error=expiredkey");
         }
         public void ShowPasswordChangeScreen() => DisplayScreen(panels.password_change_screen);
         public void ShowAccountDetailsScreen() => DisplayScreen(panels.personal_info_screen);

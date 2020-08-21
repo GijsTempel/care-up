@@ -9,6 +9,10 @@ public class LevelButton : MonoBehaviour
 
     public string bundleName;
     public string sceneName;
+    public string inHouseBundleName = "";
+    public string inHouseSceneName = "";
+    public bool toLoadInhouse = false;
+
     bool PreviewIconChanged = false;
 
     public bool multiple;
@@ -28,14 +32,9 @@ public class LevelButton : MonoBehaviour
     private static Transform names;
     public bool demoLock = true;
     public Toggle AutoPlayToggle;
+    public Toggle AutoPlayToggle2;
     public Text AutoPlayNum;
-
-    public bool GetAutoplayState()
-    {
-        if (PlayerPrefsManager.simulatePlayerActions)
-            return AutoPlayToggle.isOn;
-        return false;
-    }
+    public Text AutoPlayNum2;
 
     // saving info
     public struct Info
@@ -57,7 +56,6 @@ public class LevelButton : MonoBehaviour
         demoLock = _lock;
         UpdateButtonLockState();
     }
-
 
     public void UpdateButtonLockState()
     { 
@@ -100,9 +98,20 @@ public class LevelButton : MonoBehaviour
     {
         LevelPreview = transform.Find("LevelPreview").GetComponent<Image>();
         if (!PlayerPrefsManager.simulatePlayerActions)
+        {
             AutoPlayToggle.gameObject.SetActive(false);
+            AutoPlayToggle2.gameObject.SetActive(false);
+
+        }
+        else
+        {
+            if(inHouseSceneName == "")
+                AutoPlayToggle2.gameObject.SetActive(false);
+        }
 #if !(UNITY_EDITOR || DEVELOPMENT_BUILD)
         AutoPlayToggle.gameObject.SetActive(false);
+        AutoPlayToggle2.gameObject.SetActive(false);
+
 #endif
 
         if (GameObject.Find("Preferences") != null && loadingScreen == null)
@@ -126,11 +135,21 @@ public class LevelButton : MonoBehaviour
         started = true;
     }
 
-    public void AutoPlayStateChanged()
+    public void AutoPlayStateChanged(int locationID = 0)
     {
         if (started)
         {
-            GameObject.FindObjectOfType<AutoPlayer>().AddSceneToList(sceneName, bundleName, AutoPlayToggle.isOn);
+            string _sceneName = sceneName;
+            string _bundleName = bundleName;
+            bool _toggle = AutoPlayToggle.isOn;
+
+            if (locationID == 1)
+            {
+                _sceneName = inHouseSceneName;
+                _bundleName = inHouseBundleName;
+                _toggle = AutoPlayToggle2.isOn;
+            }
+            GameObject.FindObjectOfType<AutoPlayer>().AddSceneToList(_sceneName, _bundleName, _toggle);
             foreach(LevelButton levelButton in GameObject.FindObjectsOfType<LevelButton>())
             {
                 levelButton.UpdateAutoPlayToggle();
@@ -156,19 +175,29 @@ public class LevelButton : MonoBehaviour
     public void UpdateAutoPlayToggle()
     {
         AutoPlayNum.text = "";
+        AutoPlayNum2.text = "";
+
         if (!PlayerPrefsManager.simulatePlayerActions)
         {
             AutoPlayToggle.gameObject.SetActive(false);
+            AutoPlayToggle2.gameObject.SetActive(false);
         }
         else
         {
             AutoPlayToggle.gameObject.SetActive(true);
+            if (inHouseSceneName != "")
+                AutoPlayToggle2.gameObject.SetActive(true);
+
             int autoPlayNumValue = GameObject.FindObjectOfType<AutoPlayer>().IsSceneInList(sceneName);
+            int autoPlayNumValue2 = GameObject.FindObjectOfType<AutoPlayer>().IsSceneInList(inHouseSceneName);
+
             AutoPlayToggle.isOn = autoPlayNumValue != -1;
+            AutoPlayToggle2.isOn = autoPlayNumValue2 != -1;
             if (autoPlayNumValue >= 0)
                 AutoPlayNum.text = (autoPlayNumValue + 1).ToString();
+            if (autoPlayNumValue2 >= 0)
+                AutoPlayNum2.text = (autoPlayNumValue2 + 1).ToString();
         }
-
     }
 
     void OnEnable()
@@ -229,8 +258,15 @@ public class LevelButton : MonoBehaviour
                 mainBtn.bundleName = bundleName;
                 mainBtn.sceneName = sceneName;
 
+                mainBtn.inHouseBundleName = inHouseBundleName;
+                mainBtn.inHouseSceneName = inHouseSceneName;
+                mainBtn.toLoadInhouse = false;
+
                 // for single variation we can skip into practice/test dialogue
-                GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(3);
+                if (inHouseSceneName != "")
+                    GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(11);
+                else
+                    GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(3);
 
                 if (manager != null)
                 {
@@ -244,13 +280,13 @@ public class LevelButton : MonoBehaviour
             //    .GetComponent<Button>().interactable = !testDisabled;
 
             //making button not interactable was not noticable (maybe change design), hiding instead
-            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/DialogTestPractice/Panel_UI/Buttons/TestButton")
+            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/DialogTestPractice/Panel_UI/Buttons/right/TestButton")
                 .SetActive(!testDisabled);
 
             // now we can fetch practice plays number in order to know whethere to hide or show test button
             // making test button inactive from the beginning before fetching
             Button testBtn = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-            "DialogTestPractice/Panel_UI/Buttons/TestButton").GetComponent<Button>();
+            "DialogTestPractice/Panel_UI/Buttons/right/TestButton").GetComponent<Button>();
 
             string formattedSceneName = PlayerPrefsManager.FormatSceneName(manager.currentSceneVisualName);
 
@@ -260,7 +296,7 @@ public class LevelButton : MonoBehaviour
             testBtn.interactable = practicePlays >= 1;
 
             GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-                    "DialogTestPractice/Panel_UI/Buttons/TestButton/contentlocked/practiceamount")
+                    "DialogTestPractice/Panel_UI/Buttons/right/TestButton/contentlocked/practiceamount")
                 .GetComponent<Text>().text = (1 - practicePlays).ToString() + " keer";
 
             if (testBtn.interactable)
@@ -269,36 +305,36 @@ public class LevelButton : MonoBehaviour
                 float.TryParse(DatabaseManager.FetchField("TestHighscores",
                     formattedSceneName).Replace(",", "."), out testHighscore);
                 GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-                    "DialogTestPractice/Panel_UI/Buttons/TestButton/contentunlocked/percentage")
+                    "DialogTestPractice/Panel_UI/Buttons/right/TestButton/contentunlocked/percentage")
                     .GetComponent<Text>().text = Mathf.RoundToInt(testHighscore).ToString() + "%";
             }
 
             GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-                "DialogTestPractice/Panel_UI/Buttons/TestButton/contentunlocked").SetActive(testBtn.interactable);
+                "DialogTestPractice/Panel_UI/Buttons/right/TestButton/contentunlocked").SetActive(testBtn.interactable);
             GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-                "DialogTestPractice/Panel_UI/Buttons/TestButton/contentlocked").SetActive(!testBtn.interactable);
+                "DialogTestPractice/Panel_UI/Buttons/right/TestButton/contentlocked").SetActive(!testBtn.interactable);
 
             int practiceHighscore, practiceStars;
             int.TryParse(DatabaseManager.FetchField("PracticeHighscores", "score_" + formattedSceneName), out practiceHighscore);
             int.TryParse(DatabaseManager.FetchField("PracticeHighscores", "stars_" + formattedSceneName), out practiceStars);
 
             GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-                "DialogTestPractice/Panel_UI/Buttons/PracticeButton/content/score").
+                "DialogTestPractice/Panel_UI/Buttons/left/PracticeButton/content/score").
             GetComponent<Text>().text = practiceHighscore.ToString();
 
             Sprite grey = Resources.Load<Sprite>("Sprites/Stars/star 1");
             Sprite gold = Resources.Load<Sprite>("Sprites/Stars/star_128x128px");
 
             GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-                    "DialogTestPractice/Panel_UI/Buttons/PracticeButton/content/Stars/Star1")
+                    "DialogTestPractice/Panel_UI/Buttons/left/PracticeButton/content/Stars/Star1")
                 .GetComponent<Image>().sprite = (practiceStars >= 1.0f) ? gold : grey;
 
             GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-                    "DialogTestPractice/Panel_UI/Buttons/PracticeButton/content/Stars/Star2")
+                    "DialogTestPractice/Panel_UI/Buttons/left/PracticeButton/content/Stars/Star2")
                 .GetComponent<Image>().sprite = (practiceStars >= 2.0f) ? gold : grey;
 
             GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-                    "DialogTestPractice/Panel_UI/Buttons/PracticeButton/content/Stars/Star3")
+                    "DialogTestPractice/Panel_UI/Buttons/left/PracticeButton/content/Stars/Star3")
                 .GetComponent<Image>().sprite = (practiceStars >= 3.0f) ? gold : grey;
 
             SetPointsAmount();
@@ -317,8 +353,11 @@ public class LevelButton : MonoBehaviour
         {
             PlayerPrefsManager.AddOneToTestPlays(manager.currentSceneVisualName);
         }
+        if (toLoadInhouse)
+            bl_SceneLoaderUtils.GetLoader.LoadLevel(inHouseSceneName, inHouseBundleName);
+        else
+            bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
 
-        bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
     }
 
     public void GetSceneDatabaseInfo_Success(string[] info)

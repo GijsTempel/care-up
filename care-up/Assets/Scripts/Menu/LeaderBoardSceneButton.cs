@@ -36,10 +36,11 @@ public class LeaderBoardSceneButton : MonoBehaviour, IPointerEnterHandler, IPoin
 
     public void OnMainButtonClick()
     {
-        PlayerPrefsManager.HighscoreSceneName = Descripton;
         // loading icon is shown
         HideElements();
 
+        PlayerPrefsManager.HighscoreSceneName = Descripton;
+        
         LevelSelectionScene_UI manager = GameObject.FindObjectOfType<LevelSelectionScene_UI>();
 
         // clear variations to fill

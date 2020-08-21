@@ -6,9 +6,32 @@ using System.Linq;
 using MBS;
 using CareUpAvatar;
 
+
+public class SceleInfo
+{
+    public string sceneType = "";
+    public bool activated = true;
+    public bool demoLock = false;
+    public bool hidden = false;
+    public string[] isInProducts = null;
+    public string bundleName = "";
+    public string displayName = "";
+    public string description = "";
+    public string sceneName = "";
+    public string image = "";
+    public bool validated = false;
+    public string totalPoints = "0";
+    public string mainScene = "";
+    public bool multiple = false;
+    public bool testDisabled = false;
+    public string inHouseBundleName = "";
+    public string inHouseSceneName = "";
+}
+
 /// <summary>
 /// Handles Scene selection module
 /// </summary>
+/// 
 public class LevelSelectionScene_UI : MonoBehaviour
 {
     public string debugSS;
@@ -101,16 +124,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
        
         // load xml
         TextAsset textAsset;
-
         PlayerPrefsManager pp = GameObject.FindObjectOfType<PlayerPrefsManager>();
-        // if (pp != null && pp.demoVersion)
-        // {
-        //     textAsset = (TextAsset)Resources.Load("Xml/Scenes_Demo");
-        // }
-        // else
-        // {
-        //     textAsset = (TextAsset)Resources.Load("Xml/Scenes");
-        // }
 
         textAsset = (TextAsset)Resources.Load("Xml/Scenes");
 
@@ -124,26 +138,96 @@ public class LevelSelectionScene_UI : MonoBehaviour
 // FindObjectOfType<PlayerPrefsManager>().demoVersion
 
         Transform protocolsTransorm = GameObject.Find("UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Play/ContentPanel/PlayElements/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder/Protocols/content").transform;
+
+        Dictionary<string, SceleInfo> scenesInfo = new Dictionary<string, SceleInfo>();
+
+
+        //Load data for scenes
         foreach (XmlNode xmlSceneNode in xmlSceneList)
         {
+            SceleInfo sceneInfo = new SceleInfo();
             // bool activated = PlayerPrefs.GetInt(xmlSceneNode.Attributes["id"].Value + " activated") == 1;
-            bool activated = true;
-            bool hidden = xmlSceneNode.Attributes["hidden"] != null;
-            bool demoLock = !(xmlSceneNode.Attributes["demo"] != null);
+            sceneInfo.activated = true;
+            if (xmlSceneNode.Attributes["type"] != null)
+                sceneInfo.sceneType = xmlSceneNode.Attributes["type"].Value;
 
-            if ((!activated && hidden) || hidden)
+            if (xmlSceneNode.Attributes["hidden"] != null)
+                sceneInfo.hidden = xmlSceneNode.Attributes["hidden"].Value == "true";
+
+            sceneInfo.demoLock = !(xmlSceneNode.Attributes["demo"] != null);
+
+            if (xmlSceneNode.Attributes["isInProducts"] != null)
+            {
+                sceneInfo.isInProducts = xmlSceneNode.Attributes["isInProducts"].Value.Split('|');
+            }
+
+            sceneInfo.sceneName = xmlSceneNode.Attributes["sceneName"].Value;
+
+            sceneInfo.bundleName = xmlSceneNode.Attributes["bundleName"].Value;
+            if (xmlSceneNode.Attributes["name"] != null)
+                sceneInfo.displayName = xmlSceneNode.Attributes["name"].Value;
+
+            if (xmlSceneNode.Attributes["description"] != null)
+                sceneInfo.description = xmlSceneNode.Attributes["description"].Value;
+
+            /* setting image
+            if (xmlSceneNode.Attributes["image"] != null)
+            {
+                sceneUnit.image = Resources.Load<Sprite>("Sprites/ScenePreview/" + xmlSceneNode.Attributes["image"].Value);
+                sceneUnit.transform.Find("LevelPreview").GetComponent<Image>().sprite = sceneUnit.image;
+            } */
+
+            if (xmlSceneNode.Attributes["validated"] != null)
+                sceneInfo.validated = xmlSceneNode.Attributes["validated"].Value == "true";
+            if (xmlSceneNode.Attributes["totalPoints"] != null)
+                sceneInfo.totalPoints = xmlSceneNode.Attributes["totalPoints"].Value;
+
+            if (xmlSceneNode.Attributes["test"] != null)
+                sceneInfo.testDisabled = xmlSceneNode.Attributes["test"].Value == "disabled";
+
+            if (xmlSceneNode.Attributes["mainScene"] != null)
+                sceneInfo.mainScene = xmlSceneNode.Attributes["mainScene"].Value;
+            string sceneType = "";
+            if (xmlSceneNode.Attributes["type"] != null)
+                sceneType = xmlSceneNode.Attributes["type"].Value;
+
+
+            if (!scenesInfo.ContainsKey(sceneInfo.sceneName) && sceneInfo.mainScene == "")
+                scenesInfo.Add(sceneInfo.sceneName, sceneInfo);
+
+            if (sceneInfo.mainScene != "" && sceneType != "")
+            {
+                if(scenesInfo.ContainsKey(sceneInfo.mainScene))
+                {
+                    if (sceneType == "in_house")
+                    {
+                        scenesInfo[sceneInfo.mainScene].inHouseBundleName = sceneInfo.bundleName;
+                        scenesInfo[sceneInfo.mainScene].inHouseSceneName = sceneInfo.sceneName;
+                    }
+                }
+            }
+        }
+
+
+        //Creation of menu elements from loaded data
+        foreach (string key in scenesInfo.Keys)
+        {
+            SceleInfo sceneInfo = scenesInfo[key];
+            if ((!sceneInfo.activated && sceneInfo.hidden) || sceneInfo.hidden)
             {
                 // not activated and hidden scene should not even create a panel, so just end up here
                 continue;
             }
 
-            // if we're here, then we have real scene, that is not hidden
-            // instantiating panel
             GameObject sceneUnitObject = Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/UI/SceneSelectionUnit"), protocolsTransorm);
             sceneUnitObject.name = "SceneSelectionUnit"; // i dont like that 'clone' word at the end, ugh
+
             LevelButton sceneUnit = sceneUnitObject.GetComponent<LevelButton>();
 
-            if (!activated && !hidden)
+            sceneUnit.inHouseBundleName = sceneInfo.inHouseBundleName;
+            sceneUnit.inHouseSceneName = sceneInfo.inHouseSceneName;
+
+            if (!sceneInfo.activated && !sceneInfo.hidden)
             {
                 // but if scene is not activated and NOT hidden either
                 // just disable play button, but show the panel to the player
@@ -155,124 +239,42 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 colorBlock.highlightedColor = Color.grey;
                 sceneUnit.GetComponent<Button>().colors = colorBlock;
             }
+            if (sceneInfo.isInProducts != null)
+                sceneUnit.isInProducts = sceneInfo.isInProducts;
 
-            // now let's fill some actual info about the scene
-            if (xmlSceneNode.Attributes["isInProducts"] != null)
+            sceneUnit.sceneName = sceneInfo.sceneName;
+            sceneUnit.bundleName = sceneInfo.bundleName;
+
+            // setting scene title
+            sceneUnit.transform.Find("Title").GetComponent<Text>().text
+                = sceneUnit.displayName = sceneInfo.displayName;
+
+            ppManager.currentSceneVisualName = sceneUnit.displayName;
+            ppManager.CreateBlankHighscore(); // has a check inside for no DB info already
+
+            // override image if scene is completed
+            float fscore = 0.0f;
+            float.TryParse(DatabaseManager.FetchField("TestHighscores",
+                PlayerPrefsManager.FormatSceneName(sceneUnit.displayName)).Replace(",", "."), out fscore);
+            if (Mathf.FloorToInt(fscore) >= 70)
             {
-                sceneUnit.isInProducts = xmlSceneNode.Attributes["isInProducts"].Value.Split('|');
+                sceneUnit.image = completedSceneIcon;
+                sceneUnit.GetComponent<LevelButton>().SetLevelPreviewIcon(true, sceneUnit.image);
+                //sceneUnit.transform.Find("LevelPreview").gameObject.SetActive(true);
+                //sceneUnit.transform.Find("LevelPreview").GetComponent<Image>().sprite = sceneUnit.image;
             }
-            if (xmlSceneNode.Attributes["multiple"] != null)
-            {
-                sceneUnit.multiple = true;
+            sceneUnit.validated = sceneInfo.validated;
+            sceneUnit.transform.Find("Validation").GetComponent<Text>().text =
+                sceneUnit.validated ? "Geaccrediteerd" : "";
 
-                // so we're setting only scene title and picture 
-                // saving everything else for dialogues
-
-                // setting scene title
-                sceneUnit.transform.Find("Title").GetComponent<Text>().text
-                    = sceneUnit.displayName = xmlSceneNode.Attributes["name"].Value;
-
-                ppManager.currentSceneVisualName = sceneUnit.displayName;
-                //ppManager.UpdateTestHighscore(0.0f);
-                ppManager.validatedScene = sceneUnit.validated;
-
-                // saving bundle name for later
-                string bundleName = sceneUnit.bundleName = xmlSceneNode.Attributes["bundleName"].Value;
-
-                int i = 0;
-                foreach (XmlNode variation in xmlSceneNode.ChildNodes)
-                {
-                    LevelButton.Info info = new LevelButton.Info();
-                    // saving all the info for scene variation, use in dialogue
-                    info.bundleName = bundleName;
-                    info.sceneName = variation.Attributes["name"].Value;
-                    info.displayName = variation.Attributes["displayname"].Value;
-                    info.description = variation.Attributes["description"].Value;
-                    info.image = Resources.Load<Sprite>("Sprites/ScenePreview/" + variation.Attributes["image"].Value);
-                    info.validated = variation.Attributes["validated"] != null ?
-                         variation.Attributes["validated"].Value == "true" : false;
-                    info.totalPoints = variation.Attributes["totalPoints"].Value;
-
-                    sceneUnit.variations.Add(info);
-
-                    if (i == 0)
-                    {
-                        // set the image as main if this is 1st variation
-                        sceneUnit.image = sceneUnit.variations[i].image;
-
-                        sceneUnit.validated = sceneUnit.variations[i].validated;                      
-                        sceneUnit.transform.Find("Validation").GetComponent<Text>().text =
-                            sceneUnit.validated ? "Geaccrediteerd" : "";
-
-                        sceneUnit.totalPoints = sceneUnit.variations[i].totalPoints;
-
-                        // also make 1st option 'selected'
-                        sceneUnit.sceneName = sceneUnit.variations[i].sceneName;
-                    }
-
-                    // setting max 3 for now, dont see that UI supports more
-                    if (++i > 2)
-                        break;
-                }
-            }
-            else
-            {
-                // saving info for loading
-                sceneUnit.multiple = false;
-                sceneUnit.sceneName = xmlSceneNode.Attributes["sceneName"].Value;
-                sceneUnit.bundleName = xmlSceneNode.Attributes["bundleName"].Value;
-
-                // setting scene title
-                sceneUnit.transform.Find("Title").GetComponent<Text>().text
-                    = sceneUnit.displayName = xmlSceneNode.Attributes["name"].Value;
-
-                ppManager.currentSceneVisualName = sceneUnit.displayName;
-                ppManager.CreateBlankHighscore(); // has a check inside for no DB info already
-
-                // setting description
-                if (xmlSceneNode.Attributes["description"].Value != "")
-                {
-                    // no description atm
-                    //  = scene.Attributes["description"].Value;
-                }
-
-                /* setting image
-                if (xmlSceneNode.Attributes["image"] != null)
-                {
-                    sceneUnit.image = Resources.Load<Sprite>("Sprites/ScenePreview/" + xmlSceneNode.Attributes["image"].Value);
-                    sceneUnit.transform.Find("LevelPreview").GetComponent<Image>().sprite = sceneUnit.image;
-                } */
-
-                // override image if scene is completed
-                float fscore = 0.0f;
-                float.TryParse(DatabaseManager.FetchField("TestHighscores",
-                    PlayerPrefsManager.FormatSceneName(sceneUnit.displayName)).Replace(",", "."), out fscore);
-                if (Mathf.FloorToInt(fscore) >= 70)
-                {
-                    sceneUnit.image = completedSceneIcon;
-                    sceneUnit.GetComponent<LevelButton>().SetLevelPreviewIcon(true, sceneUnit.image);
-                    //sceneUnit.transform.Find("LevelPreview").gameObject.SetActive(true);
-                    //sceneUnit.transform.Find("LevelPreview").GetComponent<Image>().sprite = sceneUnit.image;
-                }
-
-                if (xmlSceneNode.Attributes["validated"] != null)
-                {
-                    sceneUnit.validated = xmlSceneNode.Attributes["validated"].Value == "true";
-                    sceneUnit.transform.Find("Validation").GetComponent<Text>().text =
-                        sceneUnit.validated ? "Geaccrediteerd" : "";
-                }
-                
-                if (xmlSceneNode.Attributes["totalPoints"] != null)
-                {
-                    sceneUnit.totalPoints = xmlSceneNode.Attributes["totalPoints"].Value;
-                }
-            }
+            sceneUnit.totalPoints = sceneInfo.totalPoints;
 
             // leaderboard stuff
             if (pp.subscribed)
                 sceneUnit.SetLockState(false);
             else
-                sceneUnit.SetLockState(demoLock);
+                sceneUnit.SetLockState(sceneInfo.demoLock);
+
             GameObject button = Instantiate<GameObject>(Resources.Load<GameObject>("NecessaryPrefabs/UI/LeaderBoardSceneButton"),
                 GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Leaderboard/ContentPanel/Scenes/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder/Protocols/content").transform);
             LeaderBoardSceneButton buttonInfo = button.GetComponent<LeaderBoardSceneButton>();
@@ -280,7 +282,6 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
             buttonInfo.sceneName = sceneUnit.sceneName;
             buttonInfo.multiple = sceneUnit.multiple;
-
 
             if (buttonInfo.multiple)
             {
@@ -291,19 +292,15 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 }
             }
 
-
             if (firstScene)
             {
                 firstScene = false;
                 buttonInfo.OnMainButtonClick();
             }
 
-            sceneUnit.testDisabled = (xmlSceneNode.Attributes["test"] != null
-                && xmlSceneNode.Attributes["test"].Value == "disabled");
+            sceneUnit.testDisabled = sceneInfo.testDisabled;
             sceneUnit.UpdateAutoPlayToggle();
-            //---------------------
         }
-        
         ScrollRect levelScroll =  GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Play/ContentPanel/PlayElements/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder").GetComponent<ScrollRect>();
         
         levelScroll.verticalNormalizedPosition = ppManager.LevelScrollPosition;

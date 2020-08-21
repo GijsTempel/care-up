@@ -68,7 +68,6 @@ public class DatabaseManager : MonoBehaviour
 
     private static void PostInit(CMLData ignore = null)
     {
-        print("PostInit");
         // increment logins number
         int loginNumber;
         int.TryParse(FetchField("AccountStats", "Login_Number"), out loginNumber);
@@ -121,7 +120,7 @@ public class DatabaseManager : MonoBehaviour
             }
             else
             {
-                bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Tutorial", "scenes_tutorial");
+                bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Tutorial", "scene/scenes_tutorial");
             }
         }
         else
