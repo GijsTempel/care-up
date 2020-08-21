@@ -200,9 +200,12 @@ public class TabGroup : MonoBehaviour
         StoreItem item = selectedItemBtn.item;
         if (item.purchased)
         {
-            favoriteBtn.SetActive(true);
-            FavButtonIconW.SetActive(!item.isFavourite);
-            FavButtonIconY.SetActive(item.isFavourite);
+            if (PlayerPrefsManager.storeManager.FindItemByIndex(item.index) != null)
+            {
+                favoriteBtn.SetActive(true);
+                FavButtonIconW.SetActive(!item.isFavourite);
+                FavButtonIconY.SetActive(item.isFavourite);
+            }
         }
         else
             favoriteBtn.SetActive(false);
@@ -365,13 +368,31 @@ public class TabGroup : MonoBehaviour
                 {
                     int _body = currentCharacter.defaultAvatarData.bodyType;
                     baseItem = new StoreItem(_body, 0, "body_" + _body.ToString(), "Body", true, false);
-
-                    ProductButton baseBodyBtn = InstantiateProduct(baseItem, i);
-
-                    if (currentCharacter.playerAvatar.bodyType == currentCharacter.defaultAvatarData.bodyType)
+                    bool filtered = false;
+                    if (FilterButtons.ContainsKey(FilterModes.diamond))
                     {
-                        dressedButtons[2] = baseBodyBtn;
-                        baseBodyBtn.SetDressOn(true);
+                        if (FilterButtons[FilterModes.diamond].GetState() && (baseItem.extraPrice <= 0))
+                            filtered = true;
+                    }
+                    if (FilterButtons.ContainsKey(FilterModes.newItems))
+                    {
+                        if (FilterButtons[FilterModes.newItems].GetState() && !baseItem.isNew)
+                            filtered = true;
+                    }
+                    if (FilterButtons.ContainsKey(FilterModes.favorite))
+                    {
+                        if (FilterButtons[FilterModes.favorite].GetState() && (!baseItem.isFavourite || !baseItem.purchased))
+                            filtered = true;
+                    }
+                    if (!filtered)
+                    {
+                        ProductButton baseBodyBtn = InstantiateProduct(baseItem, i);
+
+                        if (currentCharacter.playerAvatar.bodyType == currentCharacter.defaultAvatarData.bodyType)
+                        {
+                            dressedButtons[2] = baseBodyBtn;
+                            baseBodyBtn.SetDressOn(true);
+                        }
                     }
                 }
             }

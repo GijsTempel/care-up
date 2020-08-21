@@ -332,7 +332,7 @@ public class CameraMode : MonoBehaviour
 
             GameObject.Find("ObjectViewButtons").SetActive(false);
             //gameUI.allowObjectControlUI = !playerScript.away;
-            gameUI.UpdateWalkToGtoupUI(!playerScript.away);
+            gameUI.UpdateWalkToGroupUI(!playerScript.away);
             //playerScript.joystickObject.SetActive(!playerScript.robotUIopened);
 
             if ((GameObject.FindObjectOfType<TutorialManager>() == null ||

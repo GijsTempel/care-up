@@ -122,7 +122,8 @@ public class EndScoreManager : MonoBehaviour
 
             if (flag)
             {
-                PlayerPrefsManager.__sendCertificateToUserMail(manager.currentSceneVisualName);
+                //PlayerPrefsManager.__sendCertificateToUserMail(manager.currentSceneVisualName);
+                //PlayerPrefsManager.__openCertificate(manager.currentSceneVisualName);
 
                 achievements.UpdateKeys("FirstPassedExam", 1);
 
@@ -341,13 +342,12 @@ public class EndScoreManager : MonoBehaviour
 
         GameObject.Find("Interactable Objects/Canvas/NamePopUp").SetActive(false);
     }
-
-    // copied from EndScoreSendMailResults.cs
+    
     public void EndScoreSendMailResults()
     {
-        int percent = GameObject.FindObjectOfType<EndScoreManager>().percent;
-
         achievements.UpdateKeys("StudyPoints", 1);
+		
+        int percent = GameObject.FindObjectOfType<EndScoreManager>().percent;
 
         string link = "https://leren.careup.online/MailSceneComplStats.php";
         link += "?name=" + MBS.WULogin.username;

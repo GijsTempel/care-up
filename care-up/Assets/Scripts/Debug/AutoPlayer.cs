@@ -37,6 +37,8 @@ public class AutoPlayer : MonoBehaviour
     {
         if (!PlayerPrefsManager.simulatePlayerActions)
             return -1;
+        if (sceneName == "")
+            return -1;
         int inListID = IsSceneInList(sceneName);
         if (toAdd)
         {
@@ -59,6 +61,8 @@ public class AutoPlayer : MonoBehaviour
 
     public int IsSceneInList(string sceneName)
     {
+        if (sceneName == "")
+            return -1;
         if (AutoplayScenes != null)
         {
             for (int i = 0; i < AutoplayScenes.Count; i++)

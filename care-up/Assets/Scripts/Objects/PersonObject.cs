@@ -259,7 +259,7 @@ public virtual void Talk(string topic = "", string audio = "")
 
     protected void OnAnimatorIK()
     {
-        if (lookAtCamera)
+        if (lookAtCamera && Camera.main != null)
         {
             Animator animator = GetComponent<Animator>();
             animator.SetLookAtWeight(1);

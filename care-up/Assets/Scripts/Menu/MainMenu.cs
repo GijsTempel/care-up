@@ -145,7 +145,7 @@ public class MainMenu : MonoBehaviour
 
                     scoreObject.transform.Find("Button").GetComponent<Button>().interactable = passed;
                     scoreObject.transform.Find("Button").GetComponent<Button>().onClick.AddListener
-                        (delegate { ResendCertificate(sceneName, date); });
+                        (delegate { PlayerPrefsManager.__openCertificate(sceneName, date); });
                 }
             }
 
@@ -175,7 +175,7 @@ public class MainMenu : MonoBehaviour
         if (flag)
         {
             // send if so
-            PlayerPrefsManager.__sendCertificateToUserMail(scene, date);
+            //PlayerPrefsManager.__sendCertificateToUserMail(scene, date);
 
             // show pop up that it's sent
             GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/CertificatePopOp").SetActive(true);
@@ -385,12 +385,14 @@ public class MainMenu : MonoBehaviour
 
     public void OpenUrl_NewWindow(string url)
     {
-#if UNITY_WEBGL
+#if UNITY_WEBGL && ! UNITY_EDITOR
         openWindow(url);
+#else
+        OpenUrl(url);
 #endif
     }
 
-#if UNITY_WEBGL
+#if UNITY_WEBGL 
 
     [DllImport("__Internal")]
     private static extern void openWindow(string url);
@@ -458,5 +460,12 @@ public class MainMenu : MonoBehaviour
         string sceneName = "Tutorial_Full";
         string bundleName = "tutorial_full";
         bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
+    }
+
+    public void DownloadCertificate()
+    {
+        EndScoreManager endScoreManager = GameObject.FindObjectOfType<EndScoreManager>();
+        if (endScoreManager != null)
+            endScoreManager.OpenCertificateBtn();
     }
 }
