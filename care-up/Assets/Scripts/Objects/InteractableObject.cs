@@ -57,7 +57,7 @@ public class InteractableObject : MonoBehaviour
 
     public Vector3 SavedScale
     {
-        get { return savedScale ; }
+        get { return savedScale; }
     }
 
     protected virtual void Start()
@@ -181,14 +181,9 @@ public class InteractableObject : MonoBehaviour
 
     public void SavePosition()
     {
-        if (!positionSaved)
-        {
-            positionSaved = true;
-
-            savedPosition = transform.position;
-            savedRotation = transform.rotation;
-            savedScale = transform.lossyScale;
-        }
+        savedPosition = transform.position;
+        savedRotation = transform.rotation;
+        savedScale = transform.lossyScale;
     }
 
     public void SavePosition(Vector3 pos, Quaternion rot, bool force = false)
