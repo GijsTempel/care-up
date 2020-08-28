@@ -171,9 +171,6 @@ public class QuizTab : MonoBehaviour
             }
         }
 
-        // open UI
-        GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
-
         gameObject.SetActive(true);
 
         int currentQuestionID;

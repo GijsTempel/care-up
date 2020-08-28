@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
-
 
 public class ItemControlButton : MonoBehaviour
 {
@@ -70,15 +68,13 @@ public class ItemControlButton : MonoBehaviour
         }
         if (!toBlink)
         {
-            if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ItemBlink") 
+            if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ItemBlink")
                 || GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Blink"))
-                    GetComponent<Animator>().SetTrigger("BlinkOff");
-            //GetComponent<Button>().onClick.Invoke();
+                GetComponent<Animator>().SetTrigger("BlinkOff");
         }
-        else if (!(GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ItemBlink") 
+        else if (!(GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ItemBlink")
             || GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Blink")))
         {
-            //GameObject.FindObjectOfType<AnimatedFingerHint>().MoveTo(GetComponent<RectTransform>().position);
             GetComponent<Animator>().SetTrigger("BlinkOn");
         }
     }

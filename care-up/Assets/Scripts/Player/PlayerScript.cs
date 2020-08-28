@@ -100,6 +100,8 @@ public class PlayerScript : MonoBehaviour
 
     public WalkToGroup.GroupType momentaryJumpTo;
 
+    private GameObject prescriptionButtonQuiz;
+
     public bool UIHover
     {
         get { return onButtonHover; }
@@ -169,26 +171,15 @@ public class PlayerScript : MonoBehaviour
         usingOnCancelButton.GetComponent<EventTrigger>().triggers.Add(event2);
         usingOnCancelButton.GetComponent<EventTrigger>().triggers.Add(event3);
 
-        //GameObject robotUI = GameObject.Find("RobotUI");
-        //robotUI.AddComponent<EventTrigger>();
-        //robotUI.GetComponent<EventTrigger>().triggers.Add(event1);
-        //robotUI.GetComponent<EventTrigger>().triggers.Add(event2);
-
         if (GameObject.Find("DetailedHintPanel") != null)
             devHintUI = GameObject.Find("DetailedHintPanel").gameObject;
         if (GameObject.Find("BiggerDevHint") != null)
             biggerDevHintUI = GameObject.Find("BiggerDevHint").gameObject;
 
-        // warningPopUp.AddComponent<EventTrigger>();
-        //warningPopUp.GetComponent<EventTrigger>().triggers.Add(event1);
-        // warningPopUp.GetComponent<EventTrigger>().triggers.Add(event2);
-        // warningPopUp.GetComponent<EventTrigger>().triggers.Add(event3);
 
         EventTrigger.Entry closePopUp = new EventTrigger.Entry();
         event3.eventID = EventTriggerType.PointerClick;
         event3.callback.AddListener((eventData) => { TimedPopUp.ForceHide(); });
-
-        //warningPopUp.GetComponent<EventTrigger>().triggers.Add(closePopUp);
 
         if (GameObject.Find("GameLogic").GetComponent<TutorialManager>() != null)
         {
@@ -214,8 +205,11 @@ public class PlayerScript : MonoBehaviour
         GameObject.Find("GameLogic").AddComponent<GestureControls>();
         if (momentaryJumpTo != WalkToGroup.GroupType.NotSet)
             Invoke("MomentaryJumpToGroup", 0.01f);
+
+        prescriptionButtonQuiz = GameObject.FindObjectOfType<PatientInfoManager>().prescriptionButtonQuiz;
     }
-    void MomentaryJumpToGroup()
+
+    private void MomentaryJumpToGroup()
     {
         foreach (WalkToGroup w in GameObject.FindObjectsOfType<WalkToGroup>())
         {
@@ -257,8 +251,6 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-
-
     public void ResetTargetRot()
     {
         mouseLook.Init(transform, Camera.main.transform);
@@ -289,11 +281,6 @@ public class PlayerScript : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
         }
 
-        // OLD mouse look code, transfering to joystick
-        /*if (freeLook && !robotUIopened && cameraMode.CurrentMode == CameraMode.Mode.Free)
-        {
-            rotated += mouseLook.LookRotation(transform, Camera.main.transform);
-        }*/
         GameObject selectedObject = controls.SelectedObject;
         if (AutoPlayActionObject != null)
             selectedObject = AutoPlayActionObject;
@@ -543,6 +530,12 @@ public class PlayerScript : MonoBehaviour
         if (joystickObject != null)
             joystickObject.SetActive(!robotUIopened);
 
+        if (prescriptionButtonQuiz != null && prescriptionButtonQuiz.activeInHierarchy)
+        {
+            quiz.transform.GetComponentInChildren<CanvasGroup>().blocksRaycasts = false;
+            quiz.transform.GetComponentInChildren<CanvasGroup>().alpha = 0f;
+        }
+
         itemControls.Close();
         if (PlayerPrefsManager.simulatePlayerActions)
             Invoke("CloseRobotUI", 1f);
@@ -550,15 +543,6 @@ public class PlayerScript : MonoBehaviour
 
     public void CloseRobotUI()
     {
-        if (GameObject.FindObjectOfType<QuizTab>() != null)
-        {
-            if (GameObject.FindObjectOfType<QuizTab>().quiz && gameUI.theoryTab.gameObject.activeSelf)
-            {
-                gameUI.HideTheoryTab();
-                return;
-            }
-        }   
-
         GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<Animator>().enabled = false;
 
         if (GameObject.FindObjectOfType<CameraMode>() != null)
@@ -569,19 +553,18 @@ public class PlayerScript : MonoBehaviour
             }
         }
 
-        QuizTab quizTab = GameObject.FindObjectOfType<QuizTab>();
-
-        if (quizTab != null && quizTab.continueBtn)
-        {
-            GameObject.FindObjectOfType<QuizTab>().OnContinueButton();
-        }
-
         GameObject.FindObjectOfType<GameUI>().allowObjectControlUI = false;
 
         GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<CanvasGroup>().alpha = 0f;
         GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<CanvasGroup>().blocksRaycasts = false;
 
         robotUIopened = false;
+
+        if (prescriptionButtonQuiz != null && prescriptionButtonQuiz.activeInHierarchy)
+        {
+            quiz.transform.GetComponentInChildren<CanvasGroup>().blocksRaycasts = true;
+            quiz.transform.GetComponentInChildren<CanvasGroup>().alpha = 1f;
+        }
 
         if (GameObject.FindObjectOfType<TutorialManager>() == null
             || tutorial_UI != null || tutorial_theory != null)

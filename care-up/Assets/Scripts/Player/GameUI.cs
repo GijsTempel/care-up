@@ -276,8 +276,6 @@ public class GameUI : MonoBehaviour
         RobotManager.UIElementsState[0] = false;
 
         Player.GetComponent<PlayerScript>().OpenRobotUI();
-
-
     }
 
     public void ToggleUsingOnMode()
