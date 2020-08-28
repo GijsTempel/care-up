@@ -7,6 +7,7 @@ public class ExtraObjectOptions : MonoBehaviour
 
     public List<GameObject> hidenObjects;
     public List<GameObject> neededObjects;
+    public WalkToGroup nearestWalkToGroup;
 
     public Dictionary<string, string> neededObjectsData = new Dictionary<string, string>();
     public Dictionary<string, string> neededObjectsArticle = new Dictionary<string, string>();

@@ -46,8 +46,7 @@ public class AnimatedFingerHint : MonoBehaviour
         {
             if (ActiveTalkBubblePoint.transform.parent.gameObject.activeSelf)
             {
-                if (ActiveTalkBubblePoint.rect.x > 0 && ActiveTalkBubblePoint.rect.y > 0)
-                    toTalk = true;
+                toTalk = true;
             }
         }
         if (waveHi) 
