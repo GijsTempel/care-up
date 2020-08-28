@@ -524,7 +524,7 @@ public class PlayerScript : MonoBehaviour
 
     public void ResetFreeLook()
     {
-        transform.rotation = mouseLook.SavedCharRot;
+        //transform.rotation = mouseLook.SavedCharRot;
         Camera.main.transform.rotation = mouseLook.SavedCamRot;
     }
 

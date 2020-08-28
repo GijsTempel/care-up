@@ -17,7 +17,8 @@ public class PickableObject : InteractableObject
     public bool tutorial_usedOn = false;
     [HideInInspector]
     public bool depoistNeedle = false;
-
+    public bool useOriginalParent = false;
+    Transform originalParent;
     [HideInInspector]
     public Transform leftControlBone;
     [HideInInspector]
@@ -42,14 +43,25 @@ public class PickableObject : InteractableObject
 
     public bool destroyOnDrop = false;
     public GameObject customGhost;
+    bool gravityUsed = false;
     
+    public Transform GetOriginalParent()
+    {
+        return originalParent;
+    }
+
     protected override void Start()
     {
         base.Start();
 
+        if (useOriginalParent)
+        {
+            originalParent = transform.parent;
+        }
         framePositions.Clear();
 
         rigidBody = GetComponent<Rigidbody>();
+        gravityUsed = GetComponent<Rigidbody>().useGravity;
     }
 
     /// <summary>
@@ -67,7 +79,7 @@ public class PickableObject : InteractableObject
         if (GetComponent<Rigidbody>() != null)
         {
             // stop falling mid frame?
-            GetComponent<Rigidbody>().useGravity = true;
+            GetComponent<Rigidbody>().useGravity = gravityUsed;
         }
         gameObject.layer = 0;
         GetComponent<Collider>().enabled = true;

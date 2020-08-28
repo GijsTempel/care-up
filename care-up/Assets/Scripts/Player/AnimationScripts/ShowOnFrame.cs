@@ -8,6 +8,7 @@ public class ShowOnFrame : StateMachineBehaviour
     private GameObject Obj = null;
     public List<string> ObjNames;
     public bool toShow = true;
+    public bool meshRenderer = false;
 
     protected float frame;
     protected float prevFrame;
@@ -23,6 +24,36 @@ public class ShowOnFrame : StateMachineBehaviour
         }
     }
 
+    void ShowHideObj(GameObject _obj)
+    {
+        if (meshRenderer && (_obj.GetComponent<MeshRenderer>() != null || _obj.GetComponent<SkinnedMeshRenderer>() != null))
+        {
+            if (!toShow)
+            {
+                if (_obj.GetComponent<MeshRenderer>() != null)
+                    _obj.GetComponent<MeshRenderer>().enabled = false;
+                else
+                    _obj.GetComponent<SkinnedMeshRenderer>().enabled = false;
+
+            }
+            else
+            {
+                foreach(MeshRenderer m in _obj.GetComponents<MeshRenderer>())
+                {
+                    m.enabled = true;
+                }
+                foreach (SkinnedMeshRenderer m in _obj.GetComponents<SkinnedMeshRenderer>())
+                {
+                    m.enabled = true;
+                }
+            }
+        }
+        else
+        {
+            _obj.SetActive(toShow);
+        }
+    }
+
     void SetObject()
     {
         if (ControlObjectName == "")
@@ -32,16 +63,16 @@ public class ShowOnFrame : StateMachineBehaviour
                 ObjectsIDsController idCont = GameObject.FindObjectOfType<ObjectsIDsController>();
                 foreach (string name in ObjNames)
                 {
-                    if (GameObject.Find(name) != null && !toShow)
+                    if (GameObject.Find(name) != null)
                     {
-                        GameObject.Find(name).SetActive(false);
+                        ShowHideObj(GameObject.Find(name));
                     }
                     else
                     {
                         Obj = idCont.GetFromHidden(name);
                         if (Obj != null)
                         {
-                            Obj.SetActive(toShow);
+                            ShowHideObj(Obj);
                         }
                     }
                 }
@@ -53,7 +84,7 @@ public class ShowOnFrame : StateMachineBehaviour
             {
                 if (GameObject.Find(name) != null)
                 {
-                    GameObject.Find(name).SetActive(toShow);
+                    ShowHideObj(GameObject.Find(name));
                 }
             }
         }
@@ -67,7 +98,7 @@ public class ShowOnFrame : StateMachineBehaviour
 
                     foreach (string name in ObjNames)
                     {
-                        ControlObject._show(name, toShow);
+                        ControlObject._show(name, toShow, meshRenderer);
                     }
                 }
             }
