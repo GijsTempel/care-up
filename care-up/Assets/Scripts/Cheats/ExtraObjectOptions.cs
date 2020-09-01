@@ -45,7 +45,8 @@ public class ExtraObjectOptions : MonoBehaviour
         return "";
     }
 
-    public void _show(string _name, bool value)
+
+    public void _show(string _name, bool value, bool meshRenderer = false)
     {
         foreach (GameObject o in hidenObjects)
         {
@@ -53,7 +54,31 @@ public class ExtraObjectOptions : MonoBehaviour
             {
                 if (o.name == _name)
                 {
-                    o.SetActive(value);
+                    if (meshRenderer && (o.GetComponents<MeshRenderer>() != null || o.GetComponents<SkinnedMeshRenderer>() != null))
+                    {
+                        if (value)
+                        {
+                            if (o.GetComponent<MeshRenderer>()  != null)
+                                o.GetComponent<MeshRenderer>().enabled = value;
+                            else
+                                o.GetComponent<SkinnedMeshRenderer>().enabled = value;
+                        }
+                        else
+                        {
+                            foreach (MeshRenderer m in o.GetComponents<MeshRenderer>())
+                            {
+                                m.enabled = true;
+                            }
+                            foreach (SkinnedMeshRenderer m in o.GetComponents<SkinnedMeshRenderer>())
+                            {
+                                m.enabled = true;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        o.SetActive(value);
+                    }
                 }
             }
         }

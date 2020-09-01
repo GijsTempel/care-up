@@ -112,7 +112,7 @@ public class PlayerAnimationManager : MonoBehaviour
         animationController.SetInteger("rightID", rightID);
         animationController.SetTrigger("Combine");
         animationController.SetTrigger("S Combine");
-        playerScript.ResetFreeLook();
+        //playerScript.ResetFreeLook();
         if (target)
         {
             cameraMode.SetCinematicMode(target);
@@ -205,7 +205,7 @@ public class PlayerAnimationManager : MonoBehaviour
             name != "no")
         {
             animationController.SetTrigger("S " + name);
-            playerScript.ResetFreeLook();
+            //playerScript.ResetFreeLook();
         }
 
         if (target)
