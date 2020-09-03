@@ -33,7 +33,7 @@ public class SetExtraCounter : StateMachineBehaviour {
                 animator.SetInteger(vname, value);
             }
             prevFrame = frame;
-            frame += Time.deltaTime;
+            frame = stateInfo.normalizedTime * stateInfo.length;
         }
     }
 }

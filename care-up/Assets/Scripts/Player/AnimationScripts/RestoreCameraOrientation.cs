@@ -29,7 +29,7 @@ public class RestoreCameraOrientation : StateMachineBehaviour
                 Camera.main.transform.localRotation = PlayerAnimationManager.GetSavedCameraOrientation();
             }
             prevFrame = frame;
-            frame += Time.deltaTime;
+            frame = stateInfo.normalizedTime * stateInfo.length;
         }
     }
 

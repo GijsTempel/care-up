@@ -35,7 +35,7 @@ public class SetCameraAngleOnFrame : StateMachineBehaviour
                 Camera.main.transform.localRotation = Quaternion.Euler(angle);
             }
             prevFrame = frame;
-            frame += Time.deltaTime;
+            frame = stateInfo.normalizedTime * stateInfo.length;
         }
     }
 

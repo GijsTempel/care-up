@@ -45,7 +45,7 @@ public class IPadAnimation : StateMachineBehaviour
             }
 
             prevFrame = frame;
-            frame += Time.deltaTime;
+            frame = stateInfo.normalizedTime * stateInfo.length;
         }
     }
 
