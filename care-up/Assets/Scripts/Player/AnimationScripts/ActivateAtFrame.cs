@@ -40,7 +40,7 @@ public class ActivateAtFrame : StateMachineBehaviour
             }
 
             prevFrame = currentFrame;
-            currentFrame += Time.deltaTime;
+            currentFrame = stateInfo.normalizedTime * stateInfo.length;
         }
     }
 

@@ -35,7 +35,7 @@ public class AnimationForceSync : StateMachineBehaviour
             }
 
             prevFrame = frame;
-            frame += Time.deltaTime;
+            frame = stateInfo.normalizedTime * stateInfo.length;
         }
     }
 }

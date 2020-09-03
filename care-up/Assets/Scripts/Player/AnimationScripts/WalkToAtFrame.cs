@@ -29,7 +29,7 @@ public class WalkToAtFrame : StateMachineBehaviour
             }
 
             prevFrame = frame;
-            frame += Time.deltaTime;
+            frame = stateInfo.normalizedTime * stateInfo.length;
         }
     }
 

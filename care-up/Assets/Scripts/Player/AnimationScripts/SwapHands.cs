@@ -25,7 +25,7 @@ public class SwapHands : StateMachineBehaviour {
         if (animator.speed != 0)
         {
             prevFrame = frame;
-            frame += Time.deltaTime;
+            frame = stateInfo.normalizedTime * stateInfo.length;
 
             if (PlayerAnimationManager.CompareFrames(frame, prevFrame, actionFrame))
             {

@@ -30,7 +30,7 @@ public class HoldEyesClosed : StateMachineBehaviour
                 cameraMode.AllowOpenEyes = !toHoldClose;
             }
             prevFrame = frame;
-            frame += Time.deltaTime;
+            frame = stateInfo.normalizedTime * stateInfo.length;
         }
     }
 

@@ -21,13 +21,11 @@ public class ShowFrame : StateMachineBehaviour {
         if (animator.speed != 0)
         {
             prevFrame = frame;
-            frame += Time.deltaTime;
+            frame = stateInfo.normalizedTime * stateInfo.length;
             gameUI.debugSS = ((int)(frame * 60)).ToString();
 
             /*frame = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length * (animator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1) * animator.GetCurrentAnimatorClipInfo(0)[0].clip.frameRate;
             gameUI.debugSS = frame.ToString(); */
-            
-            
             
         }
     }

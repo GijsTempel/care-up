@@ -79,7 +79,7 @@ public class SubcatenousSequence_v2 : AnimationSequenceState
         if (animator.speed != 0)
         {
             prevFrame = frame;
-            frame += Time.deltaTime;
+            frame = stateInfo.normalizedTime * stateInfo.length;
         }
     }
 
