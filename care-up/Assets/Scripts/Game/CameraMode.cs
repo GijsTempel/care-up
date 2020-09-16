@@ -506,6 +506,7 @@ public class CameraMode : MonoBehaviour
         }
         else
         {
+            cinematicControl.transform.localRotation = new Quaternion();
             cinematicControl.transform.position =
                 Vector3.Lerp(cinematicPos, cinematicTargetPos, cinematicLerp);
             if (animationEnded || cinematicDirection == 1)
@@ -608,7 +609,8 @@ public class CameraMode : MonoBehaviour
         cinematicTargetPos = cTarget.position;
         cinematicControl = playerScript.transform.GetChild(0);
         cinematicControl.transform.position = cinematicTargetPos;
-        cinematicControl.Find("Arms").transform.rotation = cinematicTargetRot;
+        cinematicControl.transform.localRotation = new Quaternion();
+       cinematicControl.Find("Arms").transform.rotation = cinematicTargetRot;
     }
         
     public void SetCinematicMode(Transform target)
