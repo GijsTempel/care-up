@@ -7,7 +7,7 @@ using System.Security.Cryptography.X509Certificates;
 using MBS;
 using PaperPlaneTools;
 using UnityEngine;
-using UnityEngine.PostProcessing;
+//using UnityEngine.PostProcessing;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Networking;
@@ -163,10 +163,10 @@ public class PlayerPrefsManager : MonoBehaviour
 
             if (Camera.main != null)
             {
-                if (Camera.main.GetComponent<PostProcessingBehaviour>() != null)
+                /*if (Camera.main.GetComponent<PostProcessingBehaviour>() != null)
                 {
                     Camera.main.GetComponent<PostProcessingBehaviour>().enabled = postProcessingEnabled;
-                }
+                }*/
             }
         }
 
