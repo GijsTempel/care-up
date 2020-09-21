@@ -36,6 +36,8 @@ public class LevelSelectionScene_UI : MonoBehaviour
 {
     public string debugSS;
     private PlayerPrefsManager ppManager;
+    float initTime = 0f;
+    bool sceneButtonsUpdated = false;
 
     // leaderboard stuff
     public ScoreLine[] _Scores;
@@ -82,10 +84,24 @@ public class LevelSelectionScene_UI : MonoBehaviour
     /// </summary>
     void Start()
     {
+        initTime = Time.realtimeSinceStartup;
         ppManager = GameObject.FindObjectOfType<PlayerPrefsManager>();
         completedSceneIcon = Resources.Load<Sprite>("Sprites/check_circle_on");
 
         UpdateSceneUI();
+    }
+
+    private void Update()
+    {
+        if (!sceneButtonsUpdated)
+        {
+            if (Time.realtimeSinceStartup - initTime > 5f)
+            {
+                sceneButtonsUpdated = true;
+                RefrashSceneSelectionButtons();
+                Debug.Log("Updated menu");
+            }
+        }
     }
 
     void ClearUI()
