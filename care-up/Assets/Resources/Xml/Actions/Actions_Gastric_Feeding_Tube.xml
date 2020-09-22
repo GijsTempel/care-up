@@ -167,8 +167,34 @@ Gebruik bij voorkeur een neus-maagsonde met centimeteraanduiding en markeer de b
     extra="Markeer de maagsonde op de afgemeten lengte."/>
 
   <action
+  comment="Put the pad on the chest of the client."
+  points="2"
+  description="Leg de onderlegger op de borst van de cliënt"
+  index="10"
+  type="useOn"
+  item="cloth_02_folded"
+  target=""
+  buttonText="Onderlegger plaatsen"
+  blockRequired="clienInHalfSitPos"
+  blockUnlock="clienReadyForProcedure"
+  extra="Leg de onderlegger op de borst van de cliënt. "></action>
+
+  <action
+  comment="Put on gloves. ---Start Sequence"
+  points="1"
+  description="Trek handschoenen aan"
+  index="11"
+  type="use"
+  value="gloveBox"
+  extra="Trek handschoenen aan"
+  blockRequired="clienReadyForProcedure"
+  blockTitle="Onderlegger"
+  blockMessage="Leg eerst de onderlegger op de borst van de cliënt."
+></action>
+  
+  <action
     comment="Make the probe wet under a tap or to immerse it under water in a bowl."
-    points="1"
+    points="12"
     description="Maak de maagsonde nat onder de kraan of door hem in de kom met water te dompelen"
     index="10"
     type="useOn"
@@ -177,31 +203,9 @@ Gebruik bij voorkeur een neus-maagsonde met centimeteraanduiding en markeer de b
     buttonText="Plaats de sonde in het water"
     extra="Neem de maagsonde uit de verpakking"/>
   
-  <action
-    comment="Put the pad on the chest of the client."
-    points="2"
-    description="Leg de onderlegger op de borst van de cliënt"
-    index="11"
-    type="useOn"
-    item="cloth_02_folded"
-    target=""
-    buttonText="Onderlegger plaatsen"
-    blockRequired="clienInHalfSitPos"
-    blockUnlock="clienReadyForProcedure"
-    extra="Leg de onderlegger op de borst van de cliënt. "></action>
 
-  <action
-    comment="Put on gloves. ---Start Sequence"
-    points="1"
-    description="Trek handschoenen aan"
-    index="12"
-    type="use"
-    value="gloveBox"
-    extra="Trek handschoenen aan"
-    blockRequired="clienReadyForProcedure"
-    blockTitle="Onderlegger"
-    blockMessage="Leg eerst de onderlegger op de borst van de cliënt."
-></action>
+
+
   
   <action
     comment="Inspect the nose."
