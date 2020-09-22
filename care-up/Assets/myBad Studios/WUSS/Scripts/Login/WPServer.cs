@@ -152,6 +152,9 @@ namespace MBS
         static public IEnumerator RequestScenePurchases(int UserID)
         {
             string url = Instance.SelectedURL + "/request_purchases.php?user_id=" + UserID.ToString();
+#if UNITY_WEBGL
+            url = "https://leren.careup.online/request_purchases.php?user_id=" + UserID.ToString();
+#endif
             using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
             {
                 // Request and wait for the desired page.
