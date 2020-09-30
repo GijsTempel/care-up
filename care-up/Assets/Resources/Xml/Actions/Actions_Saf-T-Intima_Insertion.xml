@@ -324,12 +324,21 @@ buik en dijen. De huid moet intact zijn en er moet voldoende subcutaan weefsel a
    encounter="1"
    extra="Breng de canule halverwege de huidplooi onder een hoek van 30-45° subcutaan in. Laat de huidplooi los."
   />
-
+  <action
+   comment="(5) Unclamp cannule"
+   points="1"
+   description="Unclamp cannule"
+   index="22"
+   type="sequenceStep"
+   value="UnclampCannule"
+   encounter="1"
+   extra=""
+  />
   <action
    comment="(6) Fix the wings of the Insuflon with one hand. "
    points="1"
    description="Fixeer de vleugels van de canule met de ene hand"
-   index="22"
+   index="23"
    type="sequenceStep"
    value="fixate needle"
    extra="Fixeer de vleugels van de canule met de ene hand."
@@ -339,7 +348,7 @@ buik en dijen. De huid moet intact zijn en er moet voldoende subcutaan weefsel a
    comment="(7) Press the wings of the infusion needle against the skin."
    points="1"
    description="Trek met de andere hand aan de witte veiligheidscilinder. Deze komt los van de canule, een beschermkoker omsluit vervolgens de voernaald"
-   index="23"
+   index="24"
    type="sequenceStep"
    value="remove cilinder"
    extra="Trek met de andere hand aan de witte veiligheidscilinder. Deze komt los van de canule, een beschermkoker omsluit vervolgens de voernaald"
@@ -349,7 +358,7 @@ buik en dijen. De huid moet intact zijn en er moet voldoende subcutaan weefsel a
    comment="(8) Throw the cannula in the NeedleTrashcan."
    points="1"
    description="Gooi de opvoernaald in de naaldenbeker"
-   index="24"
+   index="25"
    type="sequenceStep"
    value="throw away cilinder"
    extra="Gooi de opvoernaald in de naaldenbeker."
@@ -359,7 +368,7 @@ buik en dijen. De huid moet intact zijn en er moet voldoende subcutaan weefsel a
    comment="(9) Close off cannula with a sterile cap."
    points="1"
    description="Sluit de infuuscanule af met een connector (naaldloos afsluitdopje) of steriel afsluitdopje"
-   index="25"
+   index="26"
    type="sequenceStep"
    value="close canule with cap"
    extra="Sluit de infuuscanule af met een connector (naaldloos afsluitdopje) of steriel afsluitdopje."
@@ -371,32 +380,33 @@ buik en dijen. De huid moet intact zijn en er moet voldoende subcutaan weefsel a
    comment="(10) Fix the Insuflon with the corresponding fixation plaster."
    points="1"
    description="Fixeer de Saf-T-Intima-canule met de transparante infuuspleister, de verlengslang eventueel met huidpleister"
-   index="26"
+   index="27"
    type="sequenceStep"
    value="fixate with bandaid"
    extra="Fixeer de Saf-T-Intima-canule met de transparante infuuspleister, de verlengslang eventueel met huidpleister."
    messageTitle="Verwisselen subcutane infuuscanule"
    messageContent="Verwissel de subcutane infuuscanule eens per 7 dagen, of eerder wanneer inspectie van de insteekplaats hier aanleiding toe geeft. Breng de canule volgens een roterend schema op een andere plaats in."
+   blockUnlock ="FixWithPlaster"
   />
 
 
   <action
      points="1"
      description="Ruim de materialen op door met lege handen op het werkveld te klikken"
-     index="27"
+     index="28"
      type="use"
      value="WorkField"
      extra="Ruim de materialen op door met lege handen op het werkveld te klikken"
      messageTitle="Materialen opruimen"
      messageContent="Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen."
-     blockRequired="remove gloves"
+     blockRequired="FixWithPlaster"
      blockTitle="Handeling is niet mogelijk"
      blockmessage="Zorg ervoor dat de Sat-T-Intima is ingebracht voordat je het materiaal opruimt."
 ></action>
 
   <action
    comment="46. Apply hand hygiene."
-   index="28"
+   index="29"
    points="3"
    description="[Pas handhygiëne]"
    type="use"
@@ -406,7 +416,7 @@ buik en dijen. De huid moet intact zijn en er moet voldoende subcutaan weefsel a
 
   <action
    comment="last step"
-   index="29"
+   index="30"
    points="1"
    description="Noteer datum, tijdstip en bevindingen"
    type="use"
