@@ -29,6 +29,7 @@ MonoBehaviour:
   ObjNames:
   - ring
   toShow: 0
+  meshRenderer: 0
 --- !u!114 &-9153320463488794332
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -128,6 +129,7 @@ MonoBehaviour:
   ObjNames:
   - puller.001
   toShow: 1
+  meshRenderer: 0
 --- !u!1102 &-9042619322384602239
 AnimatorState:
   serializedVersion: 5
@@ -258,6 +260,7 @@ MonoBehaviour:
   audioFileName: Sound_Effects/Opening_Plastic_Package
   audioFrame: 65
   volume: 0.2
+  moveWithCamera: 0
 --- !u!114 &-8809948831291187702
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -276,6 +279,7 @@ MonoBehaviour:
   - Omni_bottom
   - omni_unfolded
   toShow: 1
+  meshRenderer: 0
 --- !u!114 &-8796672272947272464
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -337,6 +341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: cloth_target
+  resetToTarget: 
   resetCamera: 0
 --- !u!1101 &-8665538925130121420
 AnimatorStateTransition:
@@ -517,12 +522,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75d5649a1875edf478a49f715e29c332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showFrame: 3207
+  showFrame: 3318
   toPickup: 0
 --- !u!1101 &-8357715618586455003
 AnimatorStateTransition:
@@ -629,10 +634,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControlObjectName: insulfon_fix
-  showFrame: 2660
+  showFrame: 2771
   ObjNames:
   - insuflon_inner
   toShow: 0
+  meshRenderer: 0
+--- !u!1101 &-8208637108321107872
+AnimatorStateTransition:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 1628511385027716384}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.8333334
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!114 &-8181673920890525524
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -780,6 +808,7 @@ MonoBehaviour:
   ObjNames:
   - BandAid4
   toShow: 1
+  meshRenderer: 0
 --- !u!1109 &-8076333724642223564
 AnimatorTransition:
   m_ObjectHideFlags: 1
@@ -835,6 +864,28 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!1101 &-7876357931582311343
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: -7286597930341008473}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.9385246
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1102 &-7865489216507526789
 AnimatorState:
   serializedVersion: 5
@@ -862,6 +913,32 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1102 &-7846683528952338558
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Armature|010_Idle1_5s_L_Lib_003 1
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400048, guid: 2a7c0f56993cb40409f8a80ac4bf4578, type: 3}
+  m_Tag: UI_On_Sequence
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!114 &-7846304443775212224
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -877,6 +954,7 @@ MonoBehaviour:
   audioFileName: Sound_Effects/Audio_Opening_Package
   audioFrame: 95
   volume: 0.8
+  moveWithCamera: 0
 --- !u!1101 &-7814900232442860724
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -1264,6 +1342,48 @@ MonoBehaviour:
   ObjNames:
   - folded
   toShow: 0
+  meshRenderer: 0
+--- !u!114 &-7308234561377689249
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b9c9f3106e5ff7449cd0b07126b8b77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropLeftFrame: 1
+  dropRightFrame: 1
+--- !u!1102 &-7286597930341008473
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Empty___1__5
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions:
+  - {fileID: 7552296892107441890}
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400048, guid: 2a7c0f56993cb40409f8a80ac4bf4578, type: 3}
+  m_Tag: UI_On_Sequence
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1101 &-7271420151298438697
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -1313,6 +1433,28 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1101 &-7250251380476367202
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 4736304957078678734}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.9385246
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1102 &-7239620515666207164
 AnimatorState:
   serializedVersion: 5
@@ -1572,6 +1714,7 @@ MonoBehaviour:
   audioFileName: Sound_Effects/Audio_Opening_Package
   audioFrame: 60
   volume: 0.5
+  moveWithCamera: 0
 --- !u!1101 &-6890922962977674114
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1628,6 +1771,7 @@ MonoBehaviour:
   ObjNames:
   - folded
   toShow: 0
+  meshRenderer: 0
 --- !u!114 &-6827323480163242906
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1645,6 +1789,7 @@ MonoBehaviour:
   ObjNames:
   - cap
   toShow: 0
+  meshRenderer: 0
 --- !u!1101 &-6826360315965463459
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -1716,6 +1861,7 @@ MonoBehaviour:
   audioFileName: Sound_Effects/Audio_Opening_Package
   audioFrame: 60
   volume: 0.5
+  moveWithCamera: 0
 --- !u!1109 &-6734217572229484658
 AnimatorTransition:
   m_ObjectHideFlags: 1
@@ -1999,6 +2145,7 @@ MonoBehaviour:
   audioFileName: Sound_Effects/Audio_Opening_Package
   audioFrame: 95
   volume: 0.8
+  moveWithCamera: 0
 --- !u!114 &-6323430736364959458
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -2014,6 +2161,7 @@ MonoBehaviour:
   audioFileName: Sound_Effects/Opening_Plastic_Package
   audioFrame: 65
   volume: 0.2
+  moveWithCamera: 0
 --- !u!1101 &-6284936912103125435
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -2083,10 +2231,10 @@ AnimatorStateMachine:
     m_Position: {x: -1560, y: 1620, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4401056021710026262}
-    m_Position: {x: -1870, y: 740, z: 0}
+    m_Position: {x: -960, y: 880, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7851042581897733222}
-    m_Position: {x: -1620, y: 740, z: 0}
+    m_Position: {x: -410, y: 890, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4396757907712008424}
     m_Position: {x: -2120, y: 1460, z: 0}
@@ -2164,13 +2312,16 @@ AnimatorStateMachine:
     m_Position: {x: -420, y: 1380, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6288800825395508097}
-    m_Position: {x: -140, y: 1750, z: 0}
+    m_Position: {x: -150, y: 1760, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4394558198436497617}
     m_Position: {x: -420, y: 1750, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7060284457489302924}
     m_Position: {x: 120, y: 2130, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 4736304957078678734}
+    m_Position: {x: -730, y: 960, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: 594882167822013843}
@@ -2247,6 +2398,7 @@ MonoBehaviour:
   - Omni_bottom
   - omni_unfolded
   toShow: 1
+  meshRenderer: 0
 --- !u!1109 &-6173147318835104318
 AnimatorTransition:
   m_ObjectHideFlags: 3
@@ -2295,6 +2447,7 @@ MonoBehaviour:
   ObjNames:
   - OmniBag
   toShow: 0
+  meshRenderer: 0
 --- !u!1102 &-6088348176067391519
 AnimatorState:
   serializedVersion: 5
@@ -2423,6 +2576,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: DesinfectedAnimStartPoint
+  resetToTarget: 
   resetCamera: 0
 --- !u!1102 &-5915567116436009901
 AnimatorState:
@@ -2495,6 +2649,7 @@ MonoBehaviour:
   ObjNames:
   - omni_unfolded
   toShow: 0
+  meshRenderer: 0
 --- !u!114 &-5807715295496164250
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -2508,6 +2663,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: cloth_target
+  resetToTarget: 
   resetCamera: 0
 --- !u!114 &-5790227248495379554
 MonoBehaviour:
@@ -2727,6 +2883,7 @@ MonoBehaviour:
   ObjNames:
   - cap
   toShow: 0
+  meshRenderer: 0
 --- !u!1101 &-5654236632707288433
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -2868,6 +3025,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: DesinfectedAnimStartPoint
+  resetToTarget: 
   resetCamera: 0
 --- !u!1102 &-5544488509109010647
 AnimatorState:
@@ -2995,6 +3153,7 @@ MonoBehaviour:
   ObjNames:
   - insulfon_fix
   toShow: 1
+  meshRenderer: 0
 --- !u!114 &-5338064355212407437
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -3084,6 +3243,7 @@ MonoBehaviour:
   ObjNames:
   - cloth_02
   toShow: 1
+  meshRenderer: 0
 --- !u!114 &-5163695543182585653
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -3101,6 +3261,7 @@ MonoBehaviour:
   ObjNames:
   - OmniBag
   toShow: 0
+  meshRenderer: 0
 --- !u!114 &-5153556693369066238
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -3161,6 +3322,28 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1101 &-5108366907484956216
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 7851042581897733222}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.8333334
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1101 &-5052746438731417781
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -3400,6 +3583,32 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!1102 &-4758773612229583743
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Armature|010_Idle1_5s_L_Lib_003 1
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400048, guid: 2a7c0f56993cb40409f8a80ac4bf4578, type: 3}
+  m_Tag: UI_On_Sequence
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!114 &-4744215862658397316
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -3480,6 +3689,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: DesinfectedAnimStartPoint
+  resetToTarget: 
   resetCamera: 0
 --- !u!114 &-4567355286504636220
 MonoBehaviour:
@@ -3593,7 +3803,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectName: insulfon_obj
   unlock_frame: 21
-  lock_frame: 2785
+  lock_frame: 2896
   toActivate: 1
 --- !u!114 &-4509657327783324213
 MonoBehaviour:
@@ -3612,6 +3822,7 @@ MonoBehaviour:
   ObjNames:
   - cloth_02
   toShow: 1
+  meshRenderer: 0
 --- !u!1101 &-4500627446405556681
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -3917,7 +4128,41 @@ MonoBehaviour:
   hand: 1
   GhostObjectTarget: _ghostBandAidPackage
   destroyOnDrop: 0
+--- !u!1101 &-4279916032777278591
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 4736304957078678734}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.9385246
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!114 &-4277586838888602583
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9b29f5ba63bb4aa5b477b8007d77187, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-4270268257659762718
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4102,6 +4347,7 @@ MonoBehaviour:
   - Omni_bottom
   - omni_unfolded
   toShow: 1
+  meshRenderer: 0
 --- !u!114 &-3999090849296778941
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -4272,6 +4518,7 @@ MonoBehaviour:
   ObjNames:
   - insulfonPackageCover
   toShow: 0
+  meshRenderer: 0
 --- !u!1101 &-3662614987530957549
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -4317,6 +4564,7 @@ MonoBehaviour:
   ObjNames:
   - BandAid
   toShow: 1
+  meshRenderer: 0
 --- !u!114 &-3649241803304746257
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -4342,6 +4590,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: sq_target
+  resetToTarget: 
   resetCamera: 0
 --- !u!114 &-3639862798702248651
 MonoBehaviour:
@@ -4602,7 +4851,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SequenceName: AnimSeq_Insuflon_Insertion
   TuggleFromCinematic: 1
-  keyFrames: 5a000000270100009803000028050000c0050000b8060000520800003a0a0000e10a0000650b0000d60b0000
+  keyFrames: 5a000000270100009803000028050000c0050000ab06000027070000c1080000a90a0000500b0000d40b0000
 --- !u!114 &-3357833926911316522
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -4620,6 +4869,7 @@ MonoBehaviour:
   ObjNames:
   - insuflon_inner
   toShow: 0
+  meshRenderer: 0
 --- !u!1101 &-3353831122319630868
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -4655,6 +4905,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: DesinfectedAnimStartPoint
+  resetToTarget: 
   resetCamera: 0
 --- !u!114 &-3303610818817905140
 MonoBehaviour:
@@ -4673,6 +4924,7 @@ MonoBehaviour:
   ObjNames:
   - label
   toShow: 0
+  meshRenderer: 0
 --- !u!1101 &-3292788108155850339
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -4731,10 +4983,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControlObjectName: insulfon_fix
-  showFrame: 2043
+  showFrame: 2154
   ObjNames:
   - BandAid4
   toShow: 1
+  meshRenderer: 0
 --- !u!114 &-3139164103521430743
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -4753,6 +5006,7 @@ MonoBehaviour:
   - inner
   - outer
   toShow: 0
+  meshRenderer: 0
 --- !u!1102 &-3129467649113761150
 AnimatorState:
   serializedVersion: 5
@@ -4819,6 +5073,7 @@ MonoBehaviour:
   ObjNames:
   - cloth_02
   toShow: 1
+  meshRenderer: 0
 --- !u!114 &-3087186274072936846
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4899,6 +5154,7 @@ MonoBehaviour:
   ObjNames:
   - cap
   toShow: 0
+  meshRenderer: 0
 --- !u!114 &-3004675599671011624
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -4916,6 +5172,7 @@ MonoBehaviour:
   ObjNames:
   - folded
   toShow: 1
+  meshRenderer: 0
 --- !u!114 &-2950292257984680521
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -4943,6 +5200,7 @@ MonoBehaviour:
   audioFileName: Sound_Effects/Audio_TableCleaning
   audioFrame: 305
   volume: 15
+  moveWithCamera: 0
 --- !u!1102 &-2912162760177474087
 AnimatorState:
   serializedVersion: 5
@@ -5183,6 +5441,7 @@ MonoBehaviour:
   ObjNames:
   - insulfonPackageCover
   toShow: 0
+  meshRenderer: 0
 --- !u!1102 &-2618185857425996461
 AnimatorState:
   serializedVersion: 5
@@ -5228,6 +5487,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: sq_target
+  resetToTarget: 
   resetCamera: 0
 --- !u!1102 &-2564167287620794468
 AnimatorState:
@@ -5438,7 +5698,8 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400036, guid: 2a7c0f56993cb40409f8a80ac4bf4578, type: 3}
+  m_Motion: {fileID: -8699848692101240100, guid: 2a7c0f56993cb40409f8a80ac4bf4578,
+    type: 3}
   m_Tag: UI_On_Sequence
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -5534,6 +5795,34 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!1102 &-2159809933840975002
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Empty___1_5 0
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours:
+  - {fileID: -4270268257659762718}
+  - {fileID: -2144928088025429380}
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400048, guid: 2a7c0f56993cb40409f8a80ac4bf4578, type: 3}
+  m_Tag: UI_On_Sequence
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!114 &-2153872591859864479
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -5547,6 +5836,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionFrame: 1111
+--- !u!114 &-2144928088025429380
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b9c9f3106e5ff7449cd0b07126b8b77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropLeftFrame: 1
+  dropRightFrame: 1
 --- !u!114 &-2109227688009854852
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -5564,7 +5867,7 @@ MonoBehaviour:
   AnimationToChange: 1
   ToFollowHoldingHand: 0
   NewAnimationName: inner590
-  ActionFrame: 2412
+  ActionFrame: 2523
 --- !u!114 &-2091768489827223850
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -5656,6 +5959,7 @@ MonoBehaviour:
   - inner
   - outer
   toShow: 0
+  meshRenderer: 0
 --- !u!114 &-2046354612857606008
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -5669,7 +5973,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: sq_venting_target
+  resetToTarget: 
   resetCamera: 0
+--- !u!1101 &-2037774186961494954
+AnimatorStateTransition:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 1628511385027716384}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.8333334
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1101 &-2029902402110346559
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -5810,6 +6137,7 @@ MonoBehaviour:
   ObjNames:
   - BandAid
   toShow: 1
+  meshRenderer: 0
 --- !u!1101 &-1828782159544318573
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -5858,6 +6186,7 @@ MonoBehaviour:
   ObjNames:
   - label
   toShow: 0
+  meshRenderer: 0
 --- !u!1101 &-1767177972724346662
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -5914,6 +6243,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9b29f5ba63bb4aa5b477b8007d77187, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1101 &-1727998873956301325
+AnimatorStateTransition:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 7851042581897733222}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.8333334
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!114 &-1699266813642839664
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -6031,6 +6382,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: 
+  resetToTarget: 
   resetCamera: 0
 --- !u!114 &-1548818582703173573
 MonoBehaviour:
@@ -6049,6 +6401,7 @@ MonoBehaviour:
   ObjNames:
   - cloth_02
   toShow: 1
+  meshRenderer: 0
 --- !u!1101 &-1545582014661583465
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -6261,6 +6614,24 @@ MonoBehaviour:
   actionFrame: 5
   ObjectName: insulfonPackage
   HoldAnimationID: 51
+--- !u!114 &-1267723131351980909
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: 
+  showFrame: 3000
+  ObjNames:
+  - insulfonPackage
+  toShow: 0
+  meshRenderer: 0
 --- !u!1109 &-1246625307197035437
 AnimatorTransition:
   m_ObjectHideFlags: 1
@@ -6389,8 +6760,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectName: insuflon_inner
-  unlock_frame: 2413
-  lock_frame: 2665
+  unlock_frame: 2524
+  lock_frame: 2776
   toActivate: 1
 --- !u!114 &-1143614228547679793
 MonoBehaviour:
@@ -6409,6 +6780,7 @@ MonoBehaviour:
   ObjNames:
   - OmniBag
   toShow: 0
+  meshRenderer: 0
 --- !u!1101 &-1110411228858692089
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -6554,28 +6926,6 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1101 &-923701604375168995
-AnimatorStateTransition:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_Conditions: []
-  m_DstStateMachine: {fileID: 0}
-  m_DstState: {fileID: 0}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 1
-  serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.9385246
-  m_HasExitTime: 1
-  m_HasFixedDuration: 1
-  m_InterruptionSource: 0
-  m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
 --- !u!1102 &-910760175508008176
 AnimatorState:
   serializedVersion: 5
@@ -6673,6 +7023,7 @@ MonoBehaviour:
   ObjNames:
   - omni_unfolded
   toShow: 0
+  meshRenderer: 0
 --- !u!1102 &-850107279348993094
 AnimatorState:
   serializedVersion: 5
@@ -6703,6 +7054,28 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1101 &-794601245710599775
+AnimatorStateTransition:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 7851042581897733222}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.8333334
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1101 &-780874363326955198
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -6785,6 +7158,7 @@ MonoBehaviour:
   ObjNames:
   - cloth_02
   toShow: 1
+  meshRenderer: 0
 --- !u!1101 &-668864268632047961
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -6820,10 +7194,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControlObjectName: insulfon_fix
-  showFrame: 3012
+  showFrame: 3123
   ObjNames:
   - BandAid
   toShow: 1
+  meshRenderer: 0
 --- !u!114 &-547318670081923215
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6839,6 +7214,7 @@ MonoBehaviour:
   audioFileName: Sound_Effects/Audio_TableCleaning
   audioFrame: 5
   volume: 15
+  moveWithCamera: 0
 --- !u!114 &-439403617169004978
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -6872,6 +7248,7 @@ MonoBehaviour:
   ObjNames:
   - label
   toShow: 0
+  meshRenderer: 0
 --- !u!114 &-393106519715858724
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -6889,6 +7266,7 @@ MonoBehaviour:
   ObjNames:
   - BandAid4
   toShow: 0
+  meshRenderer: 0
 --- !u!114 &-384023856555270348
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -6967,6 +7345,7 @@ MonoBehaviour:
   ObjNames:
   - BandAid4
   toShow: 0
+  meshRenderer: 0
 --- !u!1101 &-334357898783868989
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -7229,6 +7608,7 @@ MonoBehaviour:
   - OmniflushSyringeBarrel
   - OmniflushSyringePlunger
   toShow: 0
+  meshRenderer: 0
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
@@ -7243,193 +7623,193 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: rightID
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: leftID
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: RightHandState
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: LeftHandState
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Use
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: S Use
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: LeftPick
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: RightPick
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: no
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: close_eyes
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: open_eyes
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Use WorkField
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: S Use WorkField
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Use HandCleaner
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: S Use HandCleaner
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: UseRight
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: S UseRight
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: UseLeft
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: S UseLeft
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: closeup_left
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: closeup_right
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: faraway_left
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: faraway_right
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Combine
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: S Combine
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: BlanketEmpty
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: S BlanketEmpty
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Use gloveBox
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: S Use gloveBox
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Player_Dialog_Greeting
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: S Player_Dialog_Greeting
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: RightHand
@@ -7482,6 +7862,7 @@ MonoBehaviour:
   audioFileName: Sound_Effects/Audio_Opening_Package
   audioFrame: 95
   volume: 0.8
+  moveWithCamera: 0
 --- !u!1101 &80216621155536716
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -7536,6 +7917,7 @@ MonoBehaviour:
   audioFileName: Sound_Effects/Audio_Opening_Package
   audioFrame: 95
   volume: 0.8
+  moveWithCamera: 0
 --- !u!1101 &148177258957793183
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -7592,6 +7974,7 @@ MonoBehaviour:
   audioFileName: Sound_Effects/Audio_Opening_Package
   audioFrame: 60
   volume: 0.5
+  moveWithCamera: 0
 --- !u!1102 &231491842703282912
 AnimatorState:
   serializedVersion: 5
@@ -7829,6 +8212,7 @@ MonoBehaviour:
   ObjNames:
   - OmniBag
   toShow: 0
+  meshRenderer: 0
 --- !u!114 &497617441143200778
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -7844,6 +8228,7 @@ MonoBehaviour:
   audioFileName: Sound_Effects/Opening_Plastic_Package
   audioFrame: 65
   volume: 0.2
+  moveWithCamera: 0
 --- !u!114 &544779394722753693
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -8040,6 +8425,28 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!1101 &814142477056253262
+AnimatorStateTransition:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 1628511385027716384}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.8333334
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1102 &845875539738424690
 AnimatorState:
   serializedVersion: 5
@@ -8116,6 +8523,7 @@ MonoBehaviour:
   ObjNames:
   - folded
   toShow: 1
+  meshRenderer: 0
 --- !u!114 &953575822044957722
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -8248,6 +8656,7 @@ MonoBehaviour:
   audioFileName: Sound_Effects/Opening_Plastic_Package
   audioFrame: 65
   volume: 0.2
+  moveWithCamera: 0
 --- !u!1101 &1079966185916644316
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -8309,6 +8718,7 @@ MonoBehaviour:
   ObjNames:
   - omni_unfolded
   toShow: 0
+  meshRenderer: 0
 --- !u!114 &1107083503664075412
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -8340,6 +8750,7 @@ MonoBehaviour:
   ObjNames:
   - label
   toShow: 0
+  meshRenderer: 0
 --- !u!114 &1163787304255635897
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -8353,6 +8764,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: cloth_target
+  resetToTarget: 
   resetCamera: 0
 --- !u!114 &1338662855549098917
 MonoBehaviour:
@@ -8371,6 +8783,7 @@ MonoBehaviour:
   ObjNames:
   - MicroClavePackage
   toShow: 0
+  meshRenderer: 0
 --- !u!114 &1406358173020926578
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -8401,6 +8814,7 @@ MonoBehaviour:
   ObjNames:
   - label
   toShow: 0
+  meshRenderer: 0
 --- !u!1102 &1432118605771172231
 AnimatorState:
   serializedVersion: 5
@@ -8428,28 +8842,6 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1101 &1434247943047697053
-AnimatorStateTransition:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_Conditions: []
-  m_DstStateMachine: {fileID: 0}
-  m_DstState: {fileID: 0}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 1
-  serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.9385246
-  m_HasExitTime: 1
-  m_HasFixedDuration: 1
-  m_InterruptionSource: 0
-  m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
 --- !u!114 &1435604685540230437
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -8483,6 +8875,7 @@ MonoBehaviour:
   audioFileName: Sound_Effects/Audio_Opening_Package
   audioFrame: 60
   volume: 0.5
+  moveWithCamera: 0
 --- !u!114 &1454221802505508464
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -8500,6 +8893,7 @@ MonoBehaviour:
   ObjNames:
   - insulfonPackageCover
   toShow: 0
+  meshRenderer: 0
 --- !u!114 &1460397240808766798
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -8513,6 +8907,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: sq_target
+  resetToTarget: 
   resetCamera: 0
 --- !u!114 &1480867821736828883
 MonoBehaviour:
@@ -8664,6 +9059,7 @@ MonoBehaviour:
   audioFileName: Sound_Effects/Opening_Plastic_Package
   audioFrame: 65
   volume: 0.2
+  moveWithCamera: 0
 --- !u!114 &1620002077221630407
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -8720,6 +9116,9 @@ AnimatorState:
   - {fileID: 5829397874857801845}
   - {fileID: -3390319180192004048}
   - {fileID: 6651804473179626222}
+  - {fileID: 6517691527393776931}
+  - {fileID: -1267723131351980909}
+  - {fileID: 8432668930573186318}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -8728,7 +9127,8 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400036, guid: 2a7c0f56993cb40409f8a80ac4bf4578, type: 3}
+  m_Motion: {fileID: -8699848692101240100, guid: 2a7c0f56993cb40409f8a80ac4bf4578,
+    type: 3}
   m_Tag: UI_On_Sequence
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -8771,6 +9171,7 @@ MonoBehaviour:
   - tube_
   - insulfonPackageCover
   toShow: 0
+  meshRenderer: 0
 --- !u!1102 &1653208273910281561
 AnimatorState:
   serializedVersion: 5
@@ -8904,6 +9305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: DesinfectedAnimStartPoint
+  resetToTarget: 
   resetCamera: 0
 --- !u!1101 &1912949393165758299
 AnimatorStateTransition:
@@ -8940,10 +9342,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControlObjectName: m0_underwear
-  showFrame: 1894
+  showFrame: 2005
   ObjNames:
   - insulfon_fix
   toShow: 1
+  meshRenderer: 0
 --- !u!114 &1943481817123214850
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -8959,6 +9362,7 @@ MonoBehaviour:
   audioFileName: Sound_Effects/Audio_Opening_Package
   audioFrame: 100
   volume: 1
+  moveWithCamera: 0
 --- !u!114 &1963260380163511064
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -8976,6 +9380,7 @@ MonoBehaviour:
   ObjNames:
   - ring.002
   toShow: 0
+  meshRenderer: 0
 --- !u!1101 &1980880563910885468
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -9104,6 +9509,7 @@ MonoBehaviour:
   audioFileName: Sound_Effects/Audio_Opening_Package
   audioFrame: 95
   volume: 0.8
+  moveWithCamera: 0
 --- !u!114 &2084323413594904890
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -9130,7 +9536,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5879d561c03f44906a01b56f8c828e6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionFrame: 1792
+  actionFrame: 1903
 --- !u!1101 &2259690776113435906
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -9210,28 +9616,6 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1101 &2331610883184597532
-AnimatorStateTransition:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_Conditions: []
-  m_DstStateMachine: {fileID: 0}
-  m_DstState: {fileID: 0}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 1
-  serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.9385246
-  m_HasExitTime: 1
-  m_HasFixedDuration: 1
-  m_InterruptionSource: 0
-  m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
 --- !u!1101 &2359319673726694175
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -9270,7 +9654,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leftHand: 1
-  dropFrame: 1895
+  dropFrame: 2005
 --- !u!114 &2423684104452411313
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -9486,7 +9870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5879d561c03f44906a01b56f8c828e6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionFrame: 2108
+  actionFrame: 2219
 --- !u!114 &2540574143865111578
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -9547,10 +9931,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControlObjectName: insulfon_fix
-  showFrame: 2880
+  showFrame: 2991
   ObjNames:
   - puller.001
   toShow: 1
+  meshRenderer: 0
 --- !u!1102 &2584688291866858863
 AnimatorState:
   serializedVersion: 5
@@ -9632,6 +10017,7 @@ MonoBehaviour:
   audioFileName: Sound_Effects/Audio_Gloves
   audioFrame: 1
   volume: 0.09
+  moveWithCamera: 0
 --- !u!1101 &2694029612159910655
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -9669,6 +10055,7 @@ MonoBehaviour:
   audioFileName: Sound_Effects/Audio_Opening_Package
   audioFrame: 100
   volume: 1
+  moveWithCamera: 0
 --- !u!114 &2734867315961765357
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -9687,6 +10074,7 @@ MonoBehaviour:
   - OmniflushSyringeBarrel
   - OmniflushSyringePlunger
   toShow: 1
+  meshRenderer: 0
 --- !u!114 &2757945210227104984
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -9704,6 +10092,7 @@ MonoBehaviour:
   ObjNames:
   - folded
   toShow: 0
+  meshRenderer: 0
 --- !u!1101 &2780367008490896540
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -9859,6 +10248,7 @@ MonoBehaviour:
   audioFileName: Sound_Effects/Audio_Opening_Package
   audioFrame: 95
   volume: 0.8
+  moveWithCamera: 0
 --- !u!114 &2940579072383717652
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -9876,6 +10266,7 @@ MonoBehaviour:
   ObjNames:
   - insuflon_inner
   toShow: 1
+  meshRenderer: 0
 --- !u!1101 &2970710527106977412
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -9994,6 +10385,7 @@ MonoBehaviour:
   audioFileName: Sound_Effects/Audio_Opening_Package
   audioFrame: 100
   volume: 1
+  moveWithCamera: 0
 --- !u!114 &3111735268184265988
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -10082,6 +10474,7 @@ MonoBehaviour:
   - m
   - tube_
   toShow: 0
+  meshRenderer: 0
 --- !u!114 &3228838982963236034
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10171,6 +10564,7 @@ MonoBehaviour:
   - inner
   - outer
   toShow: 0
+  meshRenderer: 0
 --- !u!114 &3361372046318643517
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -10188,28 +10582,7 @@ MonoBehaviour:
   ObjNames:
   - BandAid4
   toShow: 1
---- !u!1101 &3363369238110237987
-AnimatorStateTransition:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_Conditions: []
-  m_DstStateMachine: {fileID: 0}
-  m_DstState: {fileID: 0}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 1
-  serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.9385246
-  m_HasExitTime: 1
-  m_HasFixedDuration: 1
-  m_InterruptionSource: 0
-  m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
+  meshRenderer: 0
 --- !u!1101 &3376844884816726495
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -10258,6 +10631,7 @@ MonoBehaviour:
   ObjNames:
   - OmniBag
   toShow: 0
+  meshRenderer: 0
 --- !u!1101 &3522219902917117043
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -10291,7 +10665,7 @@ AnimatorState:
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
-  - {fileID: 3363369238110237987}
+  - {fileID: -7876357931582311343}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -10473,6 +10847,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: cloth_target
+  resetToTarget: 
   resetCamera: 0
 --- !u!114 &3762006248590359272
 MonoBehaviour:
@@ -10491,6 +10866,7 @@ MonoBehaviour:
   ObjNames:
   - folded
   toShow: 0
+  meshRenderer: 0
 --- !u!1101 &3796462836649616849
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -10800,6 +11176,7 @@ MonoBehaviour:
   ObjNames:
   - insulfonPackageCover
   toShow: 0
+  meshRenderer: 0
 --- !u!1102 &4066559876281021242
 AnimatorState:
   serializedVersion: 5
@@ -10873,6 +11250,7 @@ MonoBehaviour:
   ObjNames:
   - label
   toShow: 0
+  meshRenderer: 0
 --- !u!114 &4145929141685978585
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -10890,6 +11268,7 @@ MonoBehaviour:
   ObjNames:
   - OmniflushSyringeBag
   toShow: 0
+  meshRenderer: 0
 --- !u!114 &4164286220780926182
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -10907,6 +11286,7 @@ MonoBehaviour:
   ObjNames:
   - OmniBag
   toShow: 0
+  meshRenderer: 0
 --- !u!114 &4195418485558297595
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -10990,6 +11370,7 @@ MonoBehaviour:
   audioFileName: Sound_Effects/Audio_Opening_Package
   audioFrame: 100
   volume: 1
+  moveWithCamera: 0
 --- !u!1101 &4238332245603384429
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -11031,6 +11412,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: cloth_target
+  resetToTarget: 
   resetCamera: 0
 --- !u!114 &4318451345508756268
 MonoBehaviour:
@@ -11116,6 +11498,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: cloth_target
+  resetToTarget: 
   resetCamera: 0
 --- !u!114 &4347430803651246495
 MonoBehaviour:
@@ -11130,10 +11513,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControlObjectName: insulfon_fix
-  showFrame: 2408
+  showFrame: 2519
   ObjNames:
   - insuflon_inner
   toShow: 1
+  meshRenderer: 0
 --- !u!1102 &4394558198436497617
 AnimatorState:
   serializedVersion: 5
@@ -11238,12 +11622,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7f8245cec82648289be348a2189ab01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addFrame: 3207
+  addFrame: 3318
   deleteFrame: 3268
   objectName: gloves_folded
   hand: 0
@@ -11337,6 +11721,7 @@ MonoBehaviour:
   ObjNames:
   - insuflon_inner
   toShow: 1
+  meshRenderer: 0
 --- !u!1101 &4583800478834335406
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -11379,6 +11764,7 @@ MonoBehaviour:
   ObjNames:
   - omni_unfolded
   toShow: 0
+  meshRenderer: 0
 --- !u!1101 &4661954528518032477
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -11438,7 +11824,7 @@ AnimatorState:
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
-  - {fileID: -923701604375168995}
+  - {fileID: -7250251380476367202}
   m_StateMachineBehaviours:
   - {fileID: 6343518430111887757}
   - {fileID: 2084323413594904890}
@@ -11479,6 +11865,35 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!1102 &4736304957078678734
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Empty___1__5
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions:
+  - {fileID: -5108366907484956216}
+  m_StateMachineBehaviours:
+  - {fileID: 6113891112078462809}
+  - {fileID: -7308234561377689249}
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400048, guid: 2a7c0f56993cb40409f8a80ac4bf4578, type: 3}
+  m_Tag: UI_On_Sequence
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1101 &4755608690907829506
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -11545,8 +11960,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectName: insulfon_obj2
-  unlock_frame: 1895
-  lock_frame: 2795
+  unlock_frame: 2006
+  lock_frame: 2906
   toActivate: 1
 --- !u!114 &4871168804304186421
 MonoBehaviour:
@@ -11565,6 +11980,7 @@ MonoBehaviour:
   ObjNames:
   - omni_unfolded
   toShow: 0
+  meshRenderer: 0
 --- !u!1101 &4904443668267593164
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -11641,6 +12057,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: 
+  resetToTarget: 
   resetCamera: 0
 --- !u!1101 &5002304384132212416
 AnimatorStateTransition:
@@ -11786,6 +12203,28 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!1101 &5181211119278333169
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: -7286597930341008473}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.9385246
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1101 &5208174989088226144
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -11835,6 +12274,7 @@ MonoBehaviour:
   - Omni_bottom
   - omni_unfolded
   toShow: 1
+  meshRenderer: 0
 --- !u!114 &5312670695906758215
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -11850,6 +12290,7 @@ MonoBehaviour:
   audioFileName: Sound_Effects/Opening_Plastic_Package
   audioFrame: 65
   volume: 0.2
+  moveWithCamera: 0
 --- !u!1101 &5337209492028562869
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -11889,6 +12330,7 @@ MonoBehaviour:
   ObjNames:
   - insulfonPackageCover
   toShow: 0
+  meshRenderer: 0
 --- !u!1101 &5367255547134389956
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -11977,7 +12419,7 @@ AnimatorState:
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
-  - {fileID: 1434247943047697053}
+  - {fileID: 5181211119278333169}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -12121,6 +12563,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: DesinfectedAnimStartPoint
+  resetToTarget: 
   resetCamera: 0
 --- !u!114 &5682847831480478958
 MonoBehaviour:
@@ -12135,6 +12578,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: DesinfectedAnimStartPoint
+  resetToTarget: 
   resetCamera: 0
 --- !u!1101 &5745334809457679677
 AnimatorStateTransition:
@@ -12180,10 +12624,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControlObjectName: insulfon_fix
-  showFrame: 3012
+  showFrame: 3123
   ObjNames:
   - BandAid4
   toShow: 0
+  meshRenderer: 0
 --- !u!1101 &5903985384884404972
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -12328,6 +12773,7 @@ MonoBehaviour:
   ObjNames:
   - ring.002
   toShow: 0
+  meshRenderer: 0
 --- !u!114 &6016687029089988479
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -12346,6 +12792,41 @@ MonoBehaviour:
   - Omni_bottom
   - omni_unfolded
   toShow: 1
+  meshRenderer: 0
+--- !u!1101 &6065896101335195601
+AnimatorStateTransition:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 7851042581897733222}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.8333334
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
+--- !u!114 &6113891112078462809
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9b29f5ba63bb4aa5b477b8007d77187, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1102 &6208801811552389841
 AnimatorState:
   serializedVersion: 5
@@ -12420,6 +12901,7 @@ MonoBehaviour:
   audioFileName: Sound_Effects/Audio_Opening_Package
   audioFrame: 100
   volume: 1
+  moveWithCamera: 0
 --- !u!114 &6276527394389600120
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -12494,6 +12976,7 @@ MonoBehaviour:
   ObjNames:
   - folded
   toShow: 0
+  meshRenderer: 0
 --- !u!114 &6355395826886186498
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -12514,6 +12997,7 @@ MonoBehaviour:
   - tube_
   - i_connector_
   toShow: 1
+  meshRenderer: 0
 --- !u!114 &6466141172084185375
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -12531,6 +13015,7 @@ MonoBehaviour:
   ObjNames:
   - folded
   toShow: 1
+  meshRenderer: 0
 --- !u!114 &6501164120532339909
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -12557,6 +13042,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftHand: 1
   dropFrame: 0
+--- !u!114 &6517691527393776931
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76a4f315e4e11d941865fa624024a887, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1101 &6582445050847660404
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -12652,6 +13149,7 @@ MonoBehaviour:
   ObjNames:
   - cloth_02
   toShow: 1
+  meshRenderer: 0
 --- !u!114 &6877348904204733960
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -12714,6 +13212,7 @@ MonoBehaviour:
   ObjNames:
   - folded
   toShow: 1
+  meshRenderer: 0
 --- !u!1102 &6986048595109132906
 AnimatorState:
   serializedVersion: 5
@@ -12840,6 +13339,7 @@ MonoBehaviour:
   ObjNames:
   - i_connector
   toShow: 1
+  meshRenderer: 0
 --- !u!114 &7174178478976412289
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -12969,6 +13469,7 @@ MonoBehaviour:
   - Omni_bottom
   - omni_unfolded
   toShow: 1
+  meshRenderer: 0
 --- !u!1101 &7341193591772748780
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -13031,6 +13532,7 @@ MonoBehaviour:
   audioFileName: Sound_Effects/Audio_Opening_Package
   audioFrame: 60
   volume: 0.5
+  moveWithCamera: 0
 --- !u!1109 &7514044671699720359
 AnimatorTransition:
   m_ObjectHideFlags: 3
@@ -13065,6 +13567,7 @@ MonoBehaviour:
   ObjNames:
   - folded
   toShow: 1
+  meshRenderer: 0
 --- !u!1102 &7537421963071505284
 AnimatorState:
   serializedVersion: 5
@@ -13092,6 +13595,28 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1101 &7552296892107441890
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: -3129467649113761150}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.8333334
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1107 &7552863910907657390
 AnimatorStateMachine:
   serializedVersion: 5
@@ -13197,6 +13722,7 @@ MonoBehaviour:
   ObjNames:
   - insulfonPackageCover
   toShow: 0
+  meshRenderer: 0
 --- !u!114 &7646464096727389368
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -13212,6 +13738,29 @@ MonoBehaviour:
   audioFileName: Sound_Effects/Audio_Opening_Package
   audioFrame: 100
   volume: 1
+  moveWithCamera: 0
+--- !u!1101 &7671317500051904289
+AnimatorStateTransition:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 7851042581897733222}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.8333334
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!114 &7721329060832632832
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -13227,6 +13776,7 @@ MonoBehaviour:
   audioFileName: Sound_Effects/Audio_Opening_Package
   audioFrame: 60
   volume: 0.5
+  moveWithCamera: 0
 --- !u!1102 &7727082272270674085
 AnimatorState:
   serializedVersion: 5
@@ -13490,7 +14040,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5879d561c03f44906a01b56f8c828e6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionFrame: 1888
+  actionFrame: 1999
 --- !u!114 &7978097264346957984
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -13522,7 +14072,7 @@ MonoBehaviour:
   AnimationToChange: 1
   ToFollowHoldingHand: 0
   NewAnimationName: 590
-  ActionFrame: 1895
+  ActionFrame: 2006
 --- !u!114 &8024773805821160056
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -13586,6 +14136,7 @@ MonoBehaviour:
   ObjNames:
   - folded
   toShow: 0
+  meshRenderer: 0
 --- !u!114 &8102310379711773137
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -13603,6 +14154,7 @@ MonoBehaviour:
   ObjNames:
   - folded
   toShow: 1
+  meshRenderer: 0
 --- !u!114 &8127968767247883014
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -13642,7 +14194,7 @@ AnimatorState:
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
-  - {fileID: 2331610883184597532}
+  - {fileID: -4279916032777278591}
   m_StateMachineBehaviours:
   - {fileID: -6825290637439945635}
   - {fileID: 8153595696958571095}
@@ -13678,6 +14230,7 @@ MonoBehaviour:
   ObjNames:
   - insuflon_inner
   toShow: 0
+  meshRenderer: 0
 --- !u!1109 &8195823316497094646
 AnimatorTransition:
   m_ObjectHideFlags: 3
@@ -13840,6 +14393,7 @@ MonoBehaviour:
   ObjNames:
   - puller.001
   toShow: 1
+  meshRenderer: 0
 --- !u!114 &8315246039015841701
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -13867,6 +14421,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: 
+  resetToTarget: 
   resetCamera: 0
 --- !u!1101 &8351968904490020786
 AnimatorStateTransition:
@@ -13910,6 +14465,7 @@ MonoBehaviour:
   ObjNames:
   - omni_unfolded
   toShow: 0
+  meshRenderer: 0
 --- !u!114 &8427016524008659371
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -13927,6 +14483,20 @@ MonoBehaviour:
   hand: 0
   GhostObjectTarget: _ghostDesinfectedCloth
   destroyOnDrop: 0
+--- !u!114 &8432668930573186318
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93b3ffca93d7f4c4b92d9cc041168da8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hideFrame: 3000
+  hideObjName: BandAidPackageOpened
 --- !u!114 &8482326095044096120
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -14071,10 +14641,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControlObjectName: insulfon_fix
-  showFrame: 2880
+  showFrame: 2991
   ObjNames:
   - ring.002
   toShow: 0
+  meshRenderer: 0
 --- !u!114 &8582495748184210926
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -14252,7 +14823,7 @@ AnimatorStateMachine:
     m_Position: {x: -1140, y: -40, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3983404206857363854}
-    m_Position: {x: -1170, y: 310, z: 0}
+    m_Position: {x: -1160, y: 360, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -9115167908294521011}
     m_Position: {x: -1140, y: -180, z: 0}
@@ -14264,10 +14835,10 @@ AnimatorStateMachine:
     m_Position: {x: -1120, y: 540, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3233345988687513423}
-    m_Position: {x: -1400, y: -320, z: 0}
+    m_Position: {x: -570, y: -480, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3129467649113761150}
-    m_Position: {x: -1160, y: -320, z: 0}
+    m_Position: {x: -330, y: -480, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3760647825511329457}
     m_Position: {x: -1620, y: 510, z: 0}
@@ -14315,7 +14886,7 @@ AnimatorStateMachine:
     m_Position: {x: 0, y: 80, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5439422448817012875}
-    m_Position: {x: 0, y: -90, z: 0}
+    m_Position: {x: 0, y: -60, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 2584688291866858863}
     m_Position: {x: 760, y: 80, z: 0}
@@ -14327,7 +14898,7 @@ AnimatorStateMachine:
     m_Position: {x: 280, y: 80, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3578022852982671193}
-    m_Position: {x: 0, y: 0, z: 0}
+    m_Position: {x: 0, y: 10, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5131048174064011742}
     m_Position: {x: 0, y: 650, z: 0}
@@ -14352,6 +14923,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 1653208273910281561}
     m_Position: {x: -910, y: 1040, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -7286597930341008473}
+    m_Position: {x: -600, y: -290, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: 6582445050847660404}
@@ -14417,7 +14991,7 @@ AnimatorStateMachine:
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: -1380, y: 30, z: 0}
   m_EntryPosition: {x: -2220, y: 170, z: 0}
-  m_ExitPosition: {x: 20, y: 1220, z: 0}
+  m_ExitPosition: {x: 820, y: -140, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: 3983404206857363854}
 --- !u!1101 &8921478827165148815
@@ -14549,6 +15123,7 @@ MonoBehaviour:
   ObjNames:
   - insulfon_fix
   toShow: 1
+  meshRenderer: 0
 --- !u!114 &9151611051612283276
 MonoBehaviour:
   m_ObjectHideFlags: 3
