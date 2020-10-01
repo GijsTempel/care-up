@@ -16,7 +16,9 @@ public class UMP_Manager : MonoBehaviour {
     [Header("References")]
     public List<GameObject> Windows = new List<GameObject>();
     public List<UMP_DialogUI> Dialogs = new List<UMP_DialogUI>();
-    public CongratulationTab congratulation;
+
+    public GameObject notificationWindow;
+    public  CongratulationTab congratulation;
 
     public GameObject LevelPrefab;
     public Transform LevelPanel;
@@ -28,6 +30,14 @@ public class UMP_Manager : MonoBehaviour {
     public int GetCurrentWindow()
     {
         return CurrentWindow;
+    }
+
+    public void ShowNotificationWindow(bool toShow = true)
+    {
+        if (notificationWindow != null)
+        {
+            notificationWindow.SetActive(toShow);
+        }
     }
 
     public void ShowCongratulation(int coins, int diamants = 0)
