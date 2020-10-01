@@ -312,18 +312,18 @@ public class PlayerPrefsManager : MonoBehaviour
 
     void Start()
     {
-        //Notifications[0] = new CANotifications("TTTTTT TTTTTT", " MMMMMMMMM MMMMMMM MMMMMMMMMMM MMMMMMMMMM MMMMMMMMMM",
-        //    "AAAAAAAAAA AAAAAAA", false, 0);
-        //Notifications[1] = new CANotifications("TTTTTT TTTTTT", " MMMMMMMMM MMMMMMM MMMMMMMMMMM MMMMMMMMMM MMMMMMMMMM",
-        //    "AAAAAAAAAA AAAAAAA", false, 0);
-        //Notifications[2] = new CANotifications("TTTTTT TTTTTT", " MMMMMMMMM MMMMMMM MMMMMMMMMMM MMMMMMMMMM MMMMMMMMMM",
-        //            "AAAAAAAAAA AAAAAAA", false, 0);
-        //Notifications[3] = new CANotifications("TTTTTT TTTTTT", " MMMMMMMMM MMMMMMM MMMMMMMMMMM MMMMMMMMMM MMMMMMMMMM",
-        //            "AAAAAAAAAA AAAAAAA", false, 0);
-        //Notifications[4] = new CANotifications("TTTTTT TTTTTT", " MMMMMMMMM MMMMMMM MMMMMMMMMMM MMMMMMMMMM MMMMMMMMMM",
-        //            "AAAAAAAAAA AAAAAAA", false, 0);
-        //Notifications[5] = new CANotifications("TTTTTT TTTTTT", " MMMMMMMMM MMMMMMM MMMMMMMMMMM MMMMMMMMMM MMMMMMMMMM",
-        //            "AAAAAAAAAA AAAAAAA", false, 0);
+        Notifications[0] = new CANotifications("TTTTTT TTTTTT", " MMMMMMMMM MMMMMMM MMMMMMMMMMM MMMMMMMMMM MMMMMMMMMM",
+            "AAAAAAAAAA AAAAAAA", false, 0);
+        Notifications[1] = new CANotifications("TTTTTT TTTTTT", " MMMMMMMMM MMMMMMM MMMMMMMMMMM MMMMMMMMMM MMMMMMMMMM",
+            "AAAAAAAAAA AAAAAAA", false, 0);
+        Notifications[2] = new CANotifications("TTTTTT TTTTTT", " MMMMMMMMM MMMMMMM MMMMMMMMMMM MMMMMMMMMM MMMMMMMMMM",
+                    "AAAAAAAAAA AAAAAAA", false, 0);
+        Notifications[3] = new CANotifications("TTTTTT TTTTTT", " MMMMMMMMM MMMMMMM MMMMMMMMMMM MMMMMMMMMM MMMMMMMMMM",
+                    "AAAAAAAAAA AAAAAAA", false, 0);
+        Notifications[4] = new CANotifications("TTTTTT TTTTTT", " MMMMMMMMM MMMMMMM MMMMMMMMMMM MMMMMMMMMM MMMMMMMMMM",
+                    "AAAAAAAAAA AAAAAAA", false, 0);
+        Notifications[5] = new CANotifications("TTTTTT TTTTTT", " MMMMMMMMM MMMMMMM MMMMMMMMMMM MMMMMMMMMM MMMMMMMMMM",
+                    "AAAAAAAAAA AAAAAAA", false, 0);
 
         LocalizationManager.LoadAllDictionaries();
         SceneManager.sceneLoaded += OnLoaded;

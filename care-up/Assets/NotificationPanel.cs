@@ -32,7 +32,11 @@ public class NotificationPanel : MonoBehaviour
     {
         if (PlayerPrefsManager.Notifications.Count > 0)
         {
-
+            foreach(int _id in PlayerPrefsManager.Notifications.Keys )
+            {
+                GameObject notifInst = Instantiate(Resources.Load<GameObject>("Prefabs/NotificationItem"), newNotifContainer.transform);
+                notifInst.GetComponent<NotificationItem>().LoadData(_id);
+            }
         }
     }
 
