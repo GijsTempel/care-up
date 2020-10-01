@@ -310,20 +310,34 @@ public class PlayerPrefsManager : MonoBehaviour
         SmartLook.Init("22f3cf28278dbff71183ef8e0fa90c90048b850d");
     }
 
+    public static bool HasNewNorifications()
+    {
+        bool hasNew = false;
+        foreach (int _key in Notifications.Keys)
+        {
+            if (!Notifications[_key].isRead)
+            {
+                hasNew = true;
+                break;
+            }
+        }
+        return hasNew;
+    }
+
     void Start()
     {
-        Notifications[0] = new CANotifications("TTTTTT TTTTTT", " MMMMMMMMM MMMMMMM MMMMMMMMMMM MMMMMMMMMM MMMMMMMMMM",
-            "AAAAAAAAAA AAAAAAA", false, 0);
-        Notifications[1] = new CANotifications("TTTTTT TTTTTT", " MMMMMMMMM MMMMMMM MMMMMMMMMMM MMMMMMMMMM MMMMMMMMMM",
-            "AAAAAAAAAA AAAAAAA", false, 0);
-        Notifications[2] = new CANotifications("TTTTTT TTTTTT", " MMMMMMMMM MMMMMMM MMMMMMMMMMM MMMMMMMMMM MMMMMMMMMM",
-                    "AAAAAAAAAA AAAAAAA", false, 0);
-        Notifications[3] = new CANotifications("TTTTTT TTTTTT", " MMMMMMMMM MMMMMMM MMMMMMMMMMM MMMMMMMMMM MMMMMMMMMM",
-                    "AAAAAAAAAA AAAAAAA", false, 0);
-        Notifications[4] = new CANotifications("TTTTTT TTTTTT", " MMMMMMMMM MMMMMMM MMMMMMMMMMM MMMMMMMMMM MMMMMMMMMM",
-                    "AAAAAAAAAA AAAAAAA", false, 0);
-        Notifications[5] = new CANotifications("TTTTTT TTTTTT", " MMMMMMMMM MMMMMMM MMMMMMMMMMM MMMMMMMMMM MMMMMMMMMM",
-                    "AAAAAAAAAA AAAAAAA", false, 0);
+        Notifications[0] = new CANotifications("Title number 1", "Some message that can be sent to player",
+                    "William Shakespeare", false, 0);
+        Notifications[1] = new CANotifications("Title number 2", "Some other message that can be sent to player",
+                    "Agatha Christie", false, 0);
+        Notifications[2] = new CANotifications("Title number 3", "More messages",
+                    "J. K. Rowling", false, 0);
+        Notifications[3] = new CANotifications("Title number 4", "Many many many more messages",
+                    "Stephen King", false, 0);
+        Notifications[4] = new CANotifications("Title number 5", "This message can be a bit long. I had to place it here to test, how it will fit to the selected place for the test. If you can read this, it was shown correctly, and there is enough space for message like this",
+                    "Robert Asprin", false, 0);
+        Notifications[5] = new CANotifications("Title number 6", "And the last one",
+                    "Ian Fleming", false, 0);
 
         LocalizationManager.LoadAllDictionaries();
         SceneManager.sceneLoaded += OnLoaded;

@@ -18,7 +18,9 @@ public class UMP_Manager : MonoBehaviour {
     public List<UMP_DialogUI> Dialogs = new List<UMP_DialogUI>();
 
     public GameObject notificationWindow;
-    public  CongratulationTab congratulation;
+    public GameObject newNotificationIcon;
+
+    public CongratulationTab congratulation;
 
     public GameObject LevelPrefab;
     public Transform LevelPanel;
@@ -34,11 +36,13 @@ public class UMP_Manager : MonoBehaviour {
 
     public void ShowNotificationWindow(bool toShow = true)
     {
+        UpdateNotifButton();
         if (notificationWindow != null)
         {
             notificationWindow.SetActive(toShow);
         }
     }
+
 
     public void ShowCongratulation(int coins, int diamants = 0)
     {
@@ -53,6 +57,11 @@ public class UMP_Manager : MonoBehaviour {
         }
     }
 
+    public void UpdateNotifButton()
+    {
+        newNotificationIcon.SetActive(PlayerPrefsManager.HasNewNorifications());
+    }
+
     void Awake()
     {
         InstanceLevels();
@@ -62,7 +71,13 @@ public class UMP_Manager : MonoBehaviour {
         GameObject.Find("AdjustCharacter").SetActive(false);
         menuEffects = GameObject.FindObjectOfType<MenuEffects>();
     }
-  
+
+    private void Start()
+    {
+        UpdateNotifButton();
+        ShowNotificationWindow(PlayerPrefsManager.HasNewNorifications());
+    }
+
     void InstanceLevels()
     {
         for (int i = 0; i < Levels.Count; i++)

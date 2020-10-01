@@ -22,7 +22,7 @@ public class NotificationItem : MonoBehaviour
         titleObj.GetComponent<Text>().text = notif.title;
         messageObj.GetComponent<Text>().text = notif.message;
         authorObj.GetComponent<Text>().text = notif.author;
-        star.SetActive(notif.isRead);
+        star.SetActive(!notif.isRead);
     }
 
     public void Start()
@@ -34,14 +34,20 @@ public class NotificationItem : MonoBehaviour
     }
     public void Clicked()
     {
-        Debug.Log("AAAAAAAAAAAAAAA");
         MarkAsRead();
     }
 
     public void MarkAsRead()
     {
-        isRead = true;
-        star.SetActive(false);
+        if (!isRead)
+        {
+            isRead = true;
+            star.SetActive(false);
+            PlayerPrefsManager.Notifications[notifID].isRead = true;
+            GameObject.FindObjectOfType<NotificationPanel>().UpdatePanel();
+            //Insert update to database
+            //---------------------------------------------------------------
+        }
     }
 
 }

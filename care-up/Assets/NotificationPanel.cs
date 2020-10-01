@@ -11,8 +11,6 @@ public class NotificationPanel : MonoBehaviour
     public GameObject newNotifContainer;
     public GameObject notifContainer;
 
-    // Start is called before the first frame update
-
     public void ShowPage(int pageNum)
     {
         foreach(GameObject page in pages)
@@ -28,21 +26,74 @@ public class NotificationPanel : MonoBehaviour
 
     }
 
-    void Start()
+    private static int Compare(int x, int y)
     {
-        if (PlayerPrefsManager.Notifications.Count > 0)
-        {
-            foreach(int _id in PlayerPrefsManager.Notifications.Keys )
-            {
-                GameObject notifInst = Instantiate(Resources.Load<GameObject>("Prefabs/NotificationItem"), newNotifContainer.transform);
-                notifInst.GetComponent<NotificationItem>().LoadData(_id);
-            }
-        }
+        if (x == y)
+            return 0;
+        else if (x > y)
+            return -1;
+        else
+            return 1;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        
+        RebuildPanel();
+        if (PlayerPrefsManager.HasNewNorifications())
+            ShowPage(0);
+        else
+            ShowPage(1);
     }
+
+    public void UpdatePanel()
+    {
+        RebuildPanel(false, true);
+    }
+
+    void RebuildPanel(bool newItems = true, bool oldItems = true)
+    {
+        if (newItems)
+        {
+            foreach (Transform child in newNotifContainer.transform)
+                GameObject.Destroy(child.gameObject);
+            
+        }
+
+        if (oldItems)
+        {
+            foreach (Transform child in notifContainer.transform)
+            GameObject.Destroy(child.gameObject);
+        }
+
+        if (PlayerPrefsManager.Notifications.Count > 0)
+        {
+            List<int> notifIDs = new List<int>();
+            foreach (int _id in PlayerPrefsManager.Notifications.Keys)
+                notifIDs.Add(_id);
+
+            notifIDs.Sort(Compare);
+
+            foreach (int _id in notifIDs)
+            {
+                if (!PlayerPrefsManager.Notifications[_id].isRead)
+                {
+                    if (newItems)
+                    {
+                        GameObject newNotifInst = Instantiate(Resources.Load<GameObject>("Prefabs/NotificationItem"), newNotifContainer.transform);
+                        newNotifInst.GetComponent<NotificationItem>().LoadData(_id);
+                    }
+                }
+                else
+                {
+                    if (oldItems)
+                    {
+                        GameObject notifInst = Instantiate(Resources.Load<GameObject>("Prefabs/NotificationItem"), notifContainer.transform);
+                        notifInst.GetComponent<NotificationItem>().LoadData(_id);
+                    }
+                }
+            }
+        }
+
+    }
+
 }
