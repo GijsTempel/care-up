@@ -30,7 +30,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectName: InsulinPenContainer
   HandToSwitch: 0
-  AnimationToChange: 1
+  AnimationToChange: 2
   ToFollowHoldingHand: 0
   NewAnimationName: Pen_SQ1
   ActionFrame: 2
@@ -100,20 +100,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!114 &-8576093269076751801
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b9c9f3106e5ff7449cd0b07126b8b77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dropLeftFrame: 2
-  dropRightFrame: 2
 --- !u!114 &-8456615782067556886
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -355,7 +341,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: db02453133b0ab94d815dca8a28bbd6a, type: 3}
   m_Name: 
@@ -509,6 +495,23 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &-6112467513456453572
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1d577ba52e334ef39dfa878ef5c62b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addFrame: 750
+  objectName: InsulinPenWithNeedle
+  hand: 1
+  GhostObjectTarget: _ghostOldInsulinPen
+  destroyOnDrop: 0
 --- !u!114 &-6060083105221566838
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -974,6 +977,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toClose: 0
   actionFrame: 60
+--- !u!114 &-3859349468489373198
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1d577ba52e334ef39dfa878ef5c62b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addFrame: 750
+  objectName: InsulinPenWithNeedle
+  hand: 0
+  GhostObjectTarget: _ghostOldInsulinPen
+  destroyOnDrop: 0
 --- !u!114 &-3804004560286003639
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1044,7 +1064,8 @@ AnimatorState:
   - {fileID: 7892434703191925060}
   - {fileID: -8971490591551886634}
   - {fileID: -3654104614820046857}
-  - {fileID: -8576093269076751801}
+  - {fileID: 1747077568781891921}
+  - {fileID: 5906268672077810206}
   - {fileID: -5716498859472448137}
   - {fileID: -2278610288509044029}
   - {fileID: 5043732694806937702}
@@ -1055,6 +1076,7 @@ AnimatorState:
   - {fileID: -2536250387600179144}
   - {fileID: 1121337156756332498}
   - {fileID: -1290851758068984313}
+  - {fileID: -3859349468489373198}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -1086,6 +1108,20 @@ MonoBehaviour:
   audioFrame: 1
   volume: 0.09
   moveWithCamera: 0
+--- !u!114 &-3492572197526672677
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftHand: 1
+  dropFrame: 2
 --- !u!1101 &-3346789034112186836
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1198,7 +1234,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: db02453133b0ab94d815dca8a28bbd6a, type: 3}
   m_Name: 
@@ -68322,6 +68358,20 @@ MonoBehaviour:
   trigger: Patient_Ja
   ObjectName: m1_A
   atTheEnd: 0
+--- !u!114 &1747077568781891921
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b9c9f3106e5ff7449cd0b07126b8b77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropLeftFrame: 2
+  dropRightFrame: -1
 --- !u!114 &1879441734851228043
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -68384,7 +68434,8 @@ AnimatorState:
   - {fileID: -2436539729629855451}
   - {fileID: 4552067248573788386}
   - {fileID: -5421733163585301294}
-  - {fileID: 9060750189793449107}
+  - {fileID: 7971211859461343707}
+  - {fileID: -3492572197526672677}
   - {fileID: 1701603559748878504}
   - {fileID: 1879441734851228043}
   - {fileID: -32221997445881688}
@@ -68395,6 +68446,7 @@ AnimatorState:
   - {fileID: -6811721962749636061}
   - {fileID: -8098677678390460576}
   - {fileID: -2425650554967649544}
+  - {fileID: -6112467513456453572}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -68751,7 +68803,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectName: InsulinPenContainer
   HandToSwitch: 0
-  AnimationToChange: 1
+  AnimationToChange: 2
   ToFollowHoldingHand: 0
   NewAnimationName: Pen_SQ1
   ActionFrame: 2
@@ -69128,6 +69180,20 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &5906268672077810206
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftHand: 0
+  dropFrame: 2
 --- !u!114 &6157120880033191971
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -69410,6 +69476,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9b29f5ba63bb4aa5b477b8007d77187, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7971211859461343707
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b9c9f3106e5ff7449cd0b07126b8b77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropLeftFrame: -1
+  dropRightFrame: 2
 --- !u!114 &8121813855160088560
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -69571,17 +69651,3 @@ MonoBehaviour:
   deleteFrame: 745
   objectName: ClothWithAmpouleTop
   hand: 1
---- !u!114 &9060750189793449107
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b9c9f3106e5ff7449cd0b07126b8b77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dropLeftFrame: 2
-  dropRightFrame: 2
