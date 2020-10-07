@@ -100,6 +100,10 @@ public class DatabaseManager : MonoBehaviour
         // initialize store manager, cuz we just got info about current currency etc
         PlayerPrefsManager.storeManager.Init();
 
+
+        // fetch all messages-notifications
+        FetchCANotifications();
+
         // check if character created, load proper scene
         // load scene at the end of this function
         bool goToMainMenu = FetchField("AccountStats", "CharacterCreated") == "true" &&
@@ -325,5 +329,32 @@ public class DatabaseManager : MonoBehaviour
         }
 
         return TimeSpan.Zero;
+    }
+
+    private static void FetchCANotifications()
+    {
+        string[][] result = FetchCategory("CANotifications");
+
+        Debug.Log("fetching notif");
+        foreach(string[] message in result)
+        {
+            int id = -1;
+            int.TryParse(message[0], out id);
+            Debug.Log(message[0] + " " + message[1]);
+            if (id >= 0)
+            {
+                PlayerPrefsManager.Notifications[id] = 
+                    JsonUtility.FromJson<PlayerPrefsManager.CANotifications>(message[1]);
+
+                // some clean-up! remove fields from DB that are marked as read
+                if (PlayerPrefsManager.Notifications[id].isRead)
+                    WUData.RemoveField(id.ToString(), "CANotifications");
+            }
+        }
+    }
+
+    public static void PushCANotification(int id, PlayerPrefsManager.CANotifications notif)
+    {
+        UpdateField("CANotifications", id.ToString(), JsonUtility.ToJson(notif));
     }
 }

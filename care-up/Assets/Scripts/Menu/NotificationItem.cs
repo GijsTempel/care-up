@@ -59,7 +59,7 @@ public class NotificationItem : MonoBehaviour
             GameObject.FindObjectOfType<NotificationPanel>().UpdatePanel();
             long unixTimestamp = (long)(System.DateTime.Now.Subtract(new System.DateTime(1970, 1, 1))).TotalSeconds;
             //Insert update to database
-            //---------------------------------------------------------------
+            DatabaseManager.PushCANotification(notifID, PlayerPrefsManager.Notifications[notifID]);
         }
     }
 
