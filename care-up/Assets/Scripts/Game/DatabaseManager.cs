@@ -335,26 +335,36 @@ public class DatabaseManager : MonoBehaviour
     {
         string[][] result = FetchCategory("CANotifications");
 
-        Debug.Log("fetching notif");
-        foreach(string[] message in result)
+        if (result != null)
         {
-            int id = -1;
-            int.TryParse(message[0], out id);
-            Debug.Log(message[0] + " " + message[1]);
-            if (id >= 0)
+            Debug.Log("fetching notif");
+            foreach (string[] message in result)
             {
-                PlayerPrefsManager.Notifications[id] = 
-                    JsonUtility.FromJson<PlayerPrefsManager.CANotifications>(message[1]);
+                Debug.Log(message[0] + " " + message[1]);
 
-                // some clean-up! remove fields from DB that are marked as read
-                if (PlayerPrefsManager.Notifications[id].isRead)
-                    WUData.RemoveField(id.ToString(), "CANotifications");
+                int id = -1;
+                if (message[0].Length > 2)
+                {
+                    int.TryParse(message[0].Remove(0, 2), out id);
+                }
+
+                if (id >= 0)
+                {
+                    PlayerPrefsManager.Notifications[id] =
+                        JsonUtility.FromJson<PlayerPrefsManager.CANotifications>(message[1]);
+
+                    // some clean-up! remove fields from DB that are marked as read
+                    if (PlayerPrefsManager.Notifications[id].isRead)
+                        WUData.RemoveField(id.ToString(), "CANotifications");
+                }
             }
         }
     }
 
     public static void PushCANotification(int id, PlayerPrefsManager.CANotifications notif)
     {
-        UpdateField("CANotifications", id.ToString(), JsonUtility.ToJson(notif));
+        string json = JsonUtility.ToJson(notif);
+        Debug.Log("push " + id.ToString() + " " + json);
+        UpdateField("CANotifications", "id"+id.ToString(), json);
     }
 }
