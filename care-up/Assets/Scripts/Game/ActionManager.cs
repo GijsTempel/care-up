@@ -1836,6 +1836,11 @@ public class ActionManager : MonoBehaviour
     public static WalkToGroup NearestWalkToGroup(GameObject obj)
     {
         WalkToGroup nearest = GameObject.FindObjectOfType<WalkToGroup>();
+        if (obj.GetComponent<ExtraObjectOptions>() != null)
+        {
+            if (obj.GetComponent<ExtraObjectOptions>().nearestWalkToGroup != null)
+                return obj.GetComponent<ExtraObjectOptions>().nearestWalkToGroup;
+        }
         float nearestDist = Vector3.Distance(nearest.transform.position, obj.transform.position);
         foreach (WalkToGroup w in GameObject.FindObjectsOfType<WalkToGroup>())
         {

@@ -104,6 +104,7 @@ public class ShowOnFrame : StateMachineBehaviour
             }
         }
         ActionManager.BuildRequirements();
+        ActionManager.UpdateRequirements();
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

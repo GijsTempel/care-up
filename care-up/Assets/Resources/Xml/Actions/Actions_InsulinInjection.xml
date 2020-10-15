@@ -158,22 +158,36 @@ Wanneer er een nieuwe insulinepatroon in de pen geplaatst moet worden. Plaats de
   ></action>
   
   <action
-    points="2"
-    description="Ontlucht de insulinepen voor gebruik, door 2 IE weg te spuiten, om na te gaan of de pen goed werkt"
+    points="1"
+    description="Set the pen to 2 IU for venting"
     index="9"
-    type="useOn"
-    item="InsulinPenWithNeedle"
-    target=""
-    buttonText="Ontluchten"
+    type="sequenceStep"
+    value="Set2IU"
     extra=""
-    messageTitle="Ontluchten"
-    messageContent="Ontlucht de insulinepen (geldt niet bij gebruik van een injectiespuit) vóór elke injectie, door 2 IE weg te spuiten met de pennaald naar boven gericht. Herhaal dit zo nodig totdat insuline uit de pennaald komt. Controleer of er daadwerkelijk insuline uit de pennaald komt (NB bij fixed-dose pennen is dit niet altijd mogelijk)"
+  ></action>
+	
+	<action
+    points="1"
+    description="Hold the pen up and press the doseknob until a drop of insulin appears on the tip of the pen needle."
+    index="10"
+    type="sequenceStep"
+    value="HoldUntilDrop"
+    extra=""
+  ></action>
+	
+	<action
+    points="1"
+    description="Spray the remaining insulin in a gauze, pointing the pen downwards."
+    index="11"
+    type="sequenceStep"
+    value="SprayInGauze"
+    extra=""
   ></action>
   
   <action
     points="3"
     description="Stel het juiste aantal eenheden insuline in. Draai de doseerdop totdat de gewenste dosering in het afleesvenster staat. (Zorg voor een vrije hand. Klik op de insulinepen en kies de optie 'Instellen')"
-    index="10"
+    index="12"
     type="useOn"
     item="InsulinPenWithNeedle"
     target=""
@@ -185,7 +199,7 @@ Wanneer er een nieuwe insulinepatroon in de pen geplaatst moet worden. Plaats de
     points="3"
     description="Vraag aan je collega om een dubbele controle"
     audioHint=""
-    index="11"
+    index="13"
     type="talk"
     topic="DoubleCheck"
     extra="Voer dubbele controle uit. Het verkeerd toedienen van medicijnen brengt risico’s met zich mee. Het risico op blijvend letsel bij verkeerde dosering of toediening verschilt, afhankelijk van het medicijn. Ook is de ene toedieningsweg risicovoller dan een andere. Dubbele controle van de medicatie is belangrijk voor de veiligheid, met name bij risicovolle medicatie. Laat ook je berekeningen die je hebt gemaakt checken."
@@ -194,7 +208,7 @@ Wanneer er een nieuwe insulinepatroon in de pen geplaatst moet worden. Plaats de
   <action
     points="1"
     description="Vraag de cliënt de injectieplaats te ontbloten en zich te ontspannen"
-    index="12"
+    index="14"
     type="talk"
     blockUnlock="patient shirt up"
     topic="ShowBellyForInsulin"
@@ -213,7 +227,7 @@ NB. De bovenarm is minder geschikt injectiegebied. Het is voor de cliënt ook la
   <action
     points="1"
     description="Start injecteren"
-    index="13"
+    index="15"
     type="useOn"
     item="InsulinPenWithNeedle"
     target=""
@@ -228,7 +242,7 @@ NB. De bovenarm is minder geschikt injectiegebied. Het is voor de cliënt ook la
   <action
     points="1"
     description="Controleer of de injectieplaats schoon en droog is"
-    index="14"
+    index="16"
     type="sequenceStep"
     value="CheckSkin"
     extra="Controleer of de injectieplaats schoon en droog is om besmetting van ziektekiemen te voorkomen. Desinfecteer de huid bij cliënten met verminderde weerstand."
@@ -237,7 +251,7 @@ NB. De bovenarm is minder geschikt injectiegebied. Het is voor de cliënt ook la
   <action 
     points="1"
     description="Neem de insulinepen in de injecterende hand"
-    index="15" 
+    index="17" 
     type="sequenceStep" 
     value="takeoffcap" 
     extra="Neem de insulinepen in je injecterende hand."
@@ -246,7 +260,7 @@ NB. De bovenarm is minder geschikt injectiegebied. Het is voor de cliënt ook la
   <action
     points="1"
     description="Steek de naald loodrecht in de huid in het onderhuidse weefsel, minimaal 1 cm verwijderd van de vorige injectieplaats, in een roterend schema"
-    index="16"
+    index="18"
     type="sequenceStep"
     value="Stick needle in arm"
     extra="Steek de naald loodrecht in de huid in het onderhuidse weefsel. De loodrechttechniek heeft de voorkeur bij het subcutaan injecteren omdat deze techniek eenvoudig is. Bij kinderen en dunne mensen en bij injectieplaatsen waar weinig vetweefsel zit, kan het nuttig zijn om de dikte van de subcutane vetlaag te meten en indien nodig adviseren schuin en/of met huidplooi te injecteren."
@@ -255,7 +269,7 @@ NB. De bovenarm is minder geschikt injectiegebied. Het is voor de cliënt ook la
   <action
     points="1"
     description="Fixeer de insulinepen met de andere hand om onverwachte bewegingen op te vangen"
-    index="17"
+    index="19"
     type="sequenceStep"
     value="FixateInsulinPen"
     extra="Fixeer de spuit en naald met de niet injecterende hand om onverwachte bewegingen op te vangen."
@@ -266,7 +280,7 @@ NB. De bovenarm is minder geschikt injectiegebied. Het is voor de cliënt ook la
   <action
     points="1"
     description="Druk met de duim van de injecterende hand de knop van de insulinepen in"
-    index="18"
+    index="20"
     type="sequenceStep"
     value="Inject medicine slow and steady"
     extra="Druk met duim van de injecterende hand de knop van de insulinepen in. Doe dit totdat de pen blokeert."
@@ -275,16 +289,18 @@ NB. De bovenarm is minder geschikt injectiegebied. Het is voor de cliënt ook la
   <action
     points="1"
     description="Houd de knop ingedrukt en laat de naald minstens 10 tellen in de huid om alle insuline goed in te laten stromen"
-    index="19"
+    index="21"
     type="sequenceStep"
     value="WaitInsulinPen"
     extra="Houd de knop ingedrukt en laat de naald minstens 10 tellen in de huid om alle insuline goed in te laten stromen en om eventuele lekkage te voorkomen."
+    messageTitle="Controleer insulinepen"
+    messageContent="Controleer of de doseerknop op 0 staat voordat je de pennaald uit de huid trekt."
   ></action>
   
   <action
     points="1"
     description="Trek de naald uit de huid. Let bij gebruik van een veiligheidsnaald op het verschijnen van de rode indicator aan de zijkant van het beschermkapje dat automatisch over de naald schuift. Houd een gaasje voor de opvang van de eventuele bloeddruppel gereed. Masseer de huid niet"
-    index="20"
+    index="22"
     type="sequenceStep"
     value="PullInsulinPen"
     encounter="2"
@@ -295,7 +311,7 @@ NB. De bovenarm is minder geschikt injectiegebied. Het is voor de cliënt ook la
     points="1"
     description="Verwijder de naald van de insulinepen"
     audioHint="InsulinInjection/Step 7"
-    index="21"
+    index="23"
     type="combine"
     left="InsulinPenWithNeedle"
     right=""
@@ -306,7 +322,7 @@ NB. De bovenarm is minder geschikt injectiegebied. Het is voor de cliënt ook la
     points="2"
     description="Doe de naald in de naaldenbeker"
     audioHint="InsulinInjection/Step 8"
-    index="22"
+    index="24"
     type="useOn"
     item="InsulinNeedle"
     target=""
@@ -318,7 +334,7 @@ NB. De bovenarm is minder geschikt injectiegebied. Het is voor de cliënt ook la
     points="1"
     description="Plaats de beschermdop op de insulinepen"
     audioHint="InsulinInjection/Step 7"
-    index="23"
+    index="25"
     type="combine"
     left="InsulinPen"
     right="InsulinPenCap"
@@ -328,7 +344,7 @@ NB. De bovenarm is minder geschikt injectiegebied. Het is voor de cliënt ook la
   <action
      points="1"
      description="Ruim de materialen op door met lege handen op het werkveld te klikken"
-     index="24"
+     index="26"
      type="use"
      value="WorkField"
      extra="Ruim de materialen op door met lege handen op het werkveld te klikken"
@@ -338,7 +354,7 @@ NB. De bovenarm is minder geschikt injectiegebied. Het is voor de cliënt ook la
   
   <action
     comment="1. Apply hand hygiene"
-    index="25"
+    index="27"
     points="3"
     description="[Pas handhygiëne]"
     type="use"
@@ -350,7 +366,7 @@ NB. De bovenarm is minder geschikt injectiegebied. Het is voor de cliënt ook la
     points="3"
     description="Teken de toedienlijst af of noteer het tijdstip, het soort medicijn, de concentratie, de hoeveelheid en de wijze van toediening. Noteer tot slot je bevindingen"
     audioHint="InsulinInjection/Step 11"
-    index="26"
+    index="28"
     type="use"
     value="PaperAndPen"
     extra="Teken de toedienlijst af of noteer het tijdstip, het soort medicijn, de concentratie, de hoeveelheid en de wijze van toediening. Noteer tot slot je bevindingen"
