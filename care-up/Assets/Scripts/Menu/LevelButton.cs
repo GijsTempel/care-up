@@ -79,6 +79,11 @@ public class LevelButton : MonoBehaviour
             if (!PreviewIconChanged)
                 LevelPreview.gameObject.SetActive(false);
         }
+        //if(!demoLock)
+        //{
+        //    GetComponent<Image>().sprite = Resources.Load("Sprites/nUI/listElement_Base_gray", typeof(Sprite)) as Sprite;
+        //    GetComponent<Image>().color = new Color(0f, 0.85f, 0.6f);
+        //}
     }
 
     public void SetLevelPreviewIcon(bool iconToShow, Sprite newIcon)
