@@ -273,7 +273,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
             sceneUnitObject.name = "SceneSelectionUnit"; // i dont like that 'clone' word at the end, ugh
 
             LevelButton sceneUnit = sceneUnitObject.GetComponent<LevelButton>();
-
+            sceneUnit.SetDemoMark(!sceneInfo.demoLock);
             sceneUnit.inHouseBundleName = sceneInfo.inHouseBundleName;
             sceneUnit.inHouseSceneName = sceneInfo.inHouseSceneName;
 
@@ -324,6 +324,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 sceneUnit.SetLockState(false);
             else
                 sceneUnit.SetLockState(sceneInfo.demoLock);
+
 
             GameObject button = Instantiate<GameObject>(Resources.Load<GameObject>("NecessaryPrefabs/UI/LeaderBoardSceneButton"),
                 GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Leaderboard/ContentPanel/Scenes/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder/Protocols/content").transform);
