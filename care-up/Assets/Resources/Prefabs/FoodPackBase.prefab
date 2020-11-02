@@ -1,5 +1,49 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1628214644
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1628214645}
+  - component: {fileID: 1628214646}
+  m_Layer: 0
+  m_Name: hl_control
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1628214645
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1628214644}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0, z: -0.018}
+  m_LocalScale: {x: 1, y: 1, z: 1.5}
+  m_Children: []
+  m_Father: {fileID: 5528627139077905547}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1628214646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1628214644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c34eecdde24d47db816fe0faca03a6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hl_type: 2
 --- !u!1 &718131436235491945
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,6 +296,7 @@ GameObject:
   - component: {fileID: 5418701622249515529}
   - component: {fileID: 5418701622249515528}
   - component: {fileID: 731032671102872651}
+  - component: {fileID: 272272026}
   m_Layer: 0
   m_Name: FoodPackBase
   m_TagString: Untagged
@@ -271,6 +316,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6950102461049007781}
+  - {fileID: 1628214645}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -12.500001, y: 90.36301, z: -179.77802}
@@ -347,7 +393,7 @@ MonoBehaviour:
   nameArticle: _
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
-  assetSource: 0
+  assetSource: 1
   transparencyFix: 0
   tutorial_usedOn: 0
   depoistNeedle: 0
@@ -376,3 +422,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.17964025, y: 0.053322583, z: 0.2662027}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &272272026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5184331172433544753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6095384fe7173243b9fb25bc8b25d06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PrefabName: FoodPack
+  ObjectID: 0
+  description: FoodPack
+  nameArticle: _
+  muplipleMesh: 0
+  descriptionOffset: {x: 0, y: 0, z: 0}
+  assetSource: 0
+  transparencyFix: 0
+  tutorial_picked: 0
+  tutorial_closed: 0
+  tutorial_examined: 0
+  examineRotation: {x: 0, y: 0, z: 0}
+  audioExamine: 0
+  animationExamine: 1
+  viewSettings:
+    distanceFromCamera: 2
+    rotationSensetivity: 90
+  state: good
