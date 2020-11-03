@@ -201,6 +201,7 @@ MonoBehaviour:
   - CWB_inner_open_in2
   - BandAid_twisted
   toShow: 0
+  meshRenderer: 0
 --- !u!114 &114140002450746060
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -218,6 +219,7 @@ MonoBehaviour:
   ObjNames:
   - CWB_inner_open_in
   toShow: 1
+  meshRenderer: 0
 --- !u!114 &114145925930491472
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -235,6 +237,7 @@ MonoBehaviour:
   ObjNames:
   - M1:Harvey_fscrubbottoms2
   toShow: 0
+  meshRenderer: 0
 --- !u!114 &114207097591808498
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -252,6 +255,7 @@ MonoBehaviour:
   ObjNames:
   - fixator_on
   toShow: 1
+  meshRenderer: 0
 --- !u!114 &114223821684403554
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -284,6 +288,7 @@ MonoBehaviour:
   ObjNames:
   - M1:Harvey_fscrubbottoms2
   toShow: 1
+  meshRenderer: 0
 --- !u!114 &1032926600921908817
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -595,6 +600,7 @@ AnimatorState:
   - {fileID: 1101908134435571136}
   m_StateMachineBehaviours:
   - {fileID: 114145925930491472}
+  - {fileID: 1769635581466688062}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -770,6 +776,25 @@ AnimatorStateMachine:
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: 1102128948186709048}
+--- !u!114 &1769635581466688062
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4061d83f57d71c641af3488026248c65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dataList:
+  - objectName: PlasticTrashbucket
+    TargetName: PlasticTrashbucket_basePosition
+    id: 1
+  - objectName: PlasticTrashbucket
+    TargetName: PlasticTrashbucket_secPosition
+    id: 2
 --- !u!1107 &2999504086838540591
 AnimatorStateMachine:
   serializedVersion: 5
