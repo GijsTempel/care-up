@@ -123,7 +123,9 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
     target=""
     item="cloth_02_folded"
     secondPlace="PatientPos"
+	blockUnlock="clothPlaced"
     buttonText="Onderlegger plaatsen"
+	
     extra="Leg een onderlegger onder de billen en dijen van de cliënt"></action>
   
   <action
@@ -133,7 +135,7 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
      type="general"
      item=""
      action="CloseCatheter"
-     blockRequired="patient lay down"
+     blockRequired="patient lay down,clothPlaced"
      blockUnlock="kocherClosed"
      buttonText="Klem de katheter"> </action>
 

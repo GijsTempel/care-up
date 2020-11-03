@@ -226,20 +226,54 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
 
         //Creation of menu elements from loaded data
+
+        Dictionary<string, SceleInfo> scenesInfoUnlocked = new Dictionary<string, SceleInfo>();
+        Dictionary<string, SceleInfo> scenesInfoLocked = new Dictionary<string, SceleInfo>();
+        Dictionary<string, SceleInfo> scenesInfoDemo = new Dictionary<string, SceleInfo>();
+
         foreach (string key in scenesInfo.Keys)
         {
             SceleInfo sceneInfo = scenesInfo[key];
+
             if ((!sceneInfo.activated && sceneInfo.hidden) || sceneInfo.hidden)
             {
                 // not activated and hidden scene should not even create a panel, so just end up here
                 continue;
             }
 
+            if (!sceneInfo.demoLock)
+            {
+                scenesInfoDemo.Add(key, scenesInfo[key]);
+            }
+            else
+            {
+                scenesInfoLocked.Add(key, scenesInfo[key]);
+            }
+        }
+
+        Dictionary<string, SceleInfo> scenesInfoSorted = new Dictionary<string, SceleInfo>();
+        foreach (string key in scenesInfoDemo.Keys)
+            scenesInfoSorted.Add(key, scenesInfoDemo[key]);
+
+        foreach (string key in scenesInfoLocked.Keys)
+            scenesInfoSorted.Add(key, scenesInfoLocked[key]);
+
+
+        foreach (string key in scenesInfoSorted.Keys)
+        {
+            SceleInfo sceneInfo = scenesInfoSorted[key];
+            if ((!sceneInfo.activated && sceneInfo.hidden) || sceneInfo.hidden)
+            {
+                // not activated and hidden scene should not even create a panel, so just end up here
+                continue;
+            }
+        
+
             GameObject sceneUnitObject = Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/UI/SceneSelectionUnit"), protocolsTransorm);
             sceneUnitObject.name = "SceneSelectionUnit"; // i dont like that 'clone' word at the end, ugh
 
             LevelButton sceneUnit = sceneUnitObject.GetComponent<LevelButton>();
-
+            sceneUnit.SetDemoMark(!sceneInfo.demoLock);
             sceneUnit.inHouseBundleName = sceneInfo.inHouseBundleName;
             sceneUnit.inHouseSceneName = sceneInfo.inHouseSceneName;
 
@@ -290,6 +324,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 sceneUnit.SetLockState(false);
             else
                 sceneUnit.SetLockState(sceneInfo.demoLock);
+
 
             GameObject button = Instantiate<GameObject>(Resources.Load<GameObject>("NecessaryPrefabs/UI/LeaderBoardSceneButton"),
                 GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Leaderboard/ContentPanel/Scenes/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder/Protocols/content").transform);
