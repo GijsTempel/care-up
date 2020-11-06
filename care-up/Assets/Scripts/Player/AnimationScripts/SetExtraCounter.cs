@@ -10,6 +10,7 @@ public class SetExtraCounter : StateMachineBehaviour {
     public int actionFrame = 0;
     protected float frame;
     protected float prevFrame;
+    public int increase = 0;
 
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -30,7 +31,15 @@ public class SetExtraCounter : StateMachineBehaviour {
         {
             if (PlayerAnimationManager.CompareFrames(frame, prevFrame, actionFrame))
             {
-                animator.SetInteger(vname, value);
+                if (increase != 0)
+                {
+                    int new_value = animator.GetInteger(vname) + increase;
+                    animator.SetInteger(vname, new_value);
+                }
+                else
+                {
+                    animator.SetInteger(vname, value);
+                }
             }
             prevFrame = frame;
             frame = stateInfo.normalizedTime * stateInfo.length;

@@ -80,6 +80,7 @@ Zorg voor een extra katheter, urineopvangzak en materialen voor het inbrengen, v
     type="combine"
     left="water_syringe_pack"
     right=""
+	blockUnlock="WaterUnpacked"
     extra="Open de verpakking van de spuit met 10 ml steriel water. Laat de spuit in de verpakking"></action>
 
   <action
@@ -143,6 +144,7 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
     type="combine"
     left="lube_syringe_pack"
     right=""
+	blockUnlock="LubUnpacked"
     extra="Open de verpakking van de spuit met glijmiddel. Laat de spuit nog in de verpakking"></action>
 
   <action 
@@ -154,6 +156,7 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
     item="PlasticTrashbucket" 
     secondPlace="PatientPos" 
     posID="2" 
+	blockRequired="LubUnpacked, WaterUnpacked"
     blockUnlock="tray placed"
     extra="Leg het plastic afvalbakje op de onderlegger"></action>
 
