@@ -340,7 +340,7 @@ public class DatabaseManager : MonoBehaviour
             Debug.Log("fetching notif");
             foreach (string[] message in result)
             {
-                Debug.Log(message[0] + " " + message[1]);
+                //Debug.Log(message[0] + " " + message[1]);
 
                 int id = -1;
                 if (message[0].Length > 2)
