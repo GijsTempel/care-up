@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using AssetBundles;
 using System.IO;
 
 
@@ -188,7 +187,9 @@ public class AssetDebugPanel : MonoBehaviour
         }
         else if (activeTab == 1)
         {
-
+            Debug.LogWarning("disabled this cheat for now, required old asset bundle manager");
+            /* TODO: fix cheat for new asset system
+             *
             Transform content = transform.Find("PrefabList/Viewport/Content").transform;
             foreach (Transform child in content)
             {
@@ -226,7 +227,7 @@ public class AssetDebugPanel : MonoBehaviour
                     }
                 }
 			}
-            
+            */
 
         }
     }

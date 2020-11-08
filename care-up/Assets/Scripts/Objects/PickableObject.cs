@@ -4,7 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using System.Linq;
-using AssetBundles;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 /// <summary>
 /// Object that can be picked in hand
@@ -455,7 +456,7 @@ public class PickableObject : InteractableObject
         }
     }
 
-    public void InstantiateGhostObject(Vector3 pos, Quaternion rot, int posID = 0)
+    public IEnumerator InstantiateGhostObject(Vector3 pos, Quaternion rot, int posID = 0)
     {
         bool from_bundle = false;
 
@@ -469,39 +470,47 @@ public class PickableObject : InteractableObject
         {
             FullPath = "assets/resources/prefabs/" + this.name.ToLower() + ".prefab";
         }
-        
-        UnityEngine.Object bundleObject = AssetBundleManager.GetObjectFromLoaded(FullPath);
-        if (bundleObject != null)
+
+        AsyncOperationHandle<UnityEngine.Object> handle = Addressables.LoadAssetAsync<UnityEngine.Object>(FullPath);
+        yield return handle;
+
+        if (handle.Status == AsyncOperationStatus.Succeeded)
         {
-            ghost = Instantiate(bundleObject, pos, rot) as GameObject;
-            from_bundle = true;
-        }
-        else
-        {
-            if (customGhost != null)
+            UnityEngine.Object bundleObject = handle.Result;
+            if (bundleObject != null)
             {
-                ghost = Instantiate(Resources.Load<GameObject>("Prefabs/" + customGhost.name), pos, rot);
+                ghost = Instantiate(bundleObject, pos, rot) as GameObject;
+                from_bundle = true;
             }
             else
             {
-                ghost = Instantiate(Resources.Load<GameObject>("Prefabs/" + this.name),
-                    pos, rot);
+                if (customGhost != null)
+                {
+                    ghost = Instantiate(Resources.Load<GameObject>("Prefabs/" + customGhost.name), pos, rot);
+                }
+                else
+                {
+                    ghost = Instantiate(Resources.Load<GameObject>("Prefabs/" + this.name),
+                        pos, rot);
+                }
             }
-        }
-        ghost.layer = 9; // no collisions
-        ghost.GetComponent<PickableObject>().mainObject = this;
-        PickableObject ghostObject = ghost.GetComponent<PickableObject>();
-        ghostObject.sihlouette = true;
-        ghostObject.positionID = posID;
-        ghostObject.SetGhostShader();
-        ghostObject.GetComponent<Rigidbody>().useGravity = false;
-        ghostObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-        ghostObject.name = this.name;
-        ghostObject.assetSource = InteractableObject.AssetSource.Resources;
-        if (from_bundle)
-            ghostObject.assetSource = InteractableObject.AssetSource.Bundle;
+            ghost.layer = 9; // no collisions
+            ghost.GetComponent<PickableObject>().mainObject = this;
+            PickableObject ghostObject = ghost.GetComponent<PickableObject>();
+            ghostObject.sihlouette = true;
+            ghostObject.positionID = posID;
+            ghostObject.SetGhostShader();
+            ghostObject.GetComponent<Rigidbody>().useGravity = false;
+            ghostObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            ghostObject.name = this.name;
+            ghostObject.assetSource = InteractableObject.AssetSource.Resources;
+            if (from_bundle)
+                ghostObject.assetSource = InteractableObject.AssetSource.Bundle;
 
-        this.ghostObjects.Add(ghostObject);
+            this.ghostObjects.Add(ghostObject);
+        }
+
+        Addressables.Release(handle);
     }
 
     public void DeleteGhostObject()
