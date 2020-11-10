@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.IO;
+using UnityEditor.AddressableAssets;
 
 public class CareUpAssetOrganizer : EditorWindow
 {
@@ -27,22 +28,21 @@ public class CareUpAssetOrganizer : EditorWindow
 
             string scenePath = scenesFolder + scene + ".unity";
 
-            AssetImporter.GetAtPath(scenePath).assetBundleName = "scene/" + scene.ToLower().Replace(' ', '_');
-            string sceneBundleName = AssetImporter.GetAtPath(scenePath).assetBundleName;
-            if (sceneBundleName != "")
-            {
-                string[] dep = AssetDatabase.GetDependencies(scenePath);
-                foreach (string d in dep)
-                {
-                    if (matExt.Contains(Path.GetExtension(d.ToLower())))
-                    {
-                        if (!_resources.Contains(d))
-                            _resources.Add(d);
+            //AssetImporter.GetAtPath(scenePath).assetBundleName = "scene/" + scene.ToLower().Replace(' ', '_');
+            AddAssetToGroup(scenePath, "scene-" + scene.ToLower().Replace(' ', '_'));
 
-                        scenesData[scene].Add(d);
-                    }
+            string[] dep = AssetDatabase.GetDependencies(scenePath);
+            foreach (string d in dep)
+            {
+                if (matExt.Contains(Path.GetExtension(d.ToLower())))
+                {
+                    if (!_resources.Contains(d))
+                        _resources.Add(d);
+
+                    scenesData[scene].Add(d);
                 }
             }
+            
             i++;
         }
         Dictionary<string, string> _resCont = new Dictionary<string, string>();
@@ -53,10 +53,31 @@ public class CareUpAssetOrganizer : EditorWindow
             if (!bundleNames.Contains(resContainerName))
                 bundleNames.Add(resContainerName);
             _resCont.Add(res, resContainerName);
-            AssetImporter.GetAtPath(res).assetBundleName = "asset/" + resContainerName;
+            AddAssetToGroup(res, "asset-" + resContainerName);
+            //AssetImporter.GetAtPath(res).assetBundleName = "asset/" + resContainerName;
         }
         Debug.Log("Finished");
     }
+
+    public static void AddAssetToGroup(string path, string groupName)
+    {
+        var settings = AddressableAssetSettingsDefaultObject.Settings;
+        var group = settings.FindGroup(groupName);
+        if (!group)
+        {
+            group = settings.CreateGroup(groupName, false, false, false, new List<UnityEditor.AddressableAssets.Settings.AddressableAssetGroupSchema>
+            { settings.DefaultGroup.Schemas[0] });
+        }
+        var entry = settings.CreateOrMoveEntry(AssetDatabase.AssetPathToGUID(path), group,
+            false,
+            true);
+
+        if (entry == null)
+        {
+            Debug.Log($"Addressable : can't add {path} to group {groupName}");
+        }
+    }
+
 
     static string IntToCode(int value)
     {
