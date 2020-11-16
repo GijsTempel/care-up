@@ -582,6 +582,24 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-7785966383090683461
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: TubeForPumpRigged
+  showFrame: 1200
+  ObjNames:
+  - NutritionDrops
+  toShow: 0
+  meshRenderer: 0
 --- !u!114 &-7753747307792116251
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1208,6 +1226,7 @@ AnimatorState:
   - {fileID: -429300367757281970}
   - {fileID: 631708225708898307}
   - {fileID: 8256283472929477770}
+  - {fileID: 6423367449029942477}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -1523,6 +1542,26 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-5918793051883824627
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: GastricFeedingPump_
+  showFrame: 824
+  ObjNames:
+  - ml
+  - 0
+  - volume
+  toShow: 0
+  meshRenderer: 0
 --- !u!114 &-5865029418868549096
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2245,6 +2284,27 @@ AnimatorTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 1
+--- !u!114 &-4440693897286661281
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: GastricFeedingPump_
+  showFrame: 0
+  ObjNames:
+  - Battery
+  - 0
+  - volume
+  - ml
+  toShow: 1
+  meshRenderer: 0
 --- !u!1102 &-4330465194346748935
 AnimatorState:
   serializedVersion: 5
@@ -3245,7 +3305,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectName: TubeForPumpRigged
   unlock_frame: 1
-  lock_frame: 1677
+  lock_frame: 1660
   toActivate: 1
 --- !u!114 &-1940562575022523337
 MonoBehaviour:
@@ -3261,7 +3321,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectName: GastricFeedingPump_
   unlock_frame: 1
-  lock_frame: 1677
+  lock_frame: 1660
   toActivate: 1
 --- !u!1102 &-1916098084872444976
 AnimatorState:
@@ -5130,6 +5190,24 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &1437123445813149870
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: TubeForPumpRigged
+  showFrame: 882
+  ObjNames:
+  - TubeForPumpLongNutrition
+  toShow: 1
+  meshRenderer: 0
 --- !u!1109 &1474192876434861334
 AnimatorTransition:
   m_ObjectHideFlags: 1
@@ -5250,6 +5328,25 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &1997050505964795191
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: GastricFeedingPump_
+  showFrame: 824
+  ObjNames:
+  - CircleCanvas
+  - CanvasFillSet
+  toShow: 1
+  meshRenderer: 0
 --- !u!1101 &2007615747764407944
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -5628,6 +5725,14 @@ AnimatorState:
   - {fileID: 3711106425118995505}
   - {fileID: -1682416561922418112}
   - {fileID: 4115786137663505779}
+  - {fileID: -4440693897286661281}
+  - {fileID: -5918793051883824627}
+  - {fileID: 1997050505964795191}
+  - {fileID: 7851743765400114365}
+  - {fileID: 8193183312536781306}
+  - {fileID: 4217218650235432467}
+  - {fileID: -7785966383090683461}
+  - {fileID: 1437123445813149870}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -5638,7 +5743,7 @@ AnimatorState:
   m_TimeParameterActive: 0
   m_Motion: {fileID: -1136521277187938389, guid: 6a4fe276066f8ca4fa2d6b85e4482404,
     type: 3}
-  m_Tag: 
+  m_Tag: UI_On_Sequence
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
@@ -6053,7 +6158,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfd1d24e9f498a642b6393e37bedc9e3, type: 3}
   m_Name: 
@@ -6432,6 +6537,24 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &4217218650235432467
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: TubeForPumpRigged
+  showFrame: 1015
+  ObjNames:
+  - NutritionDrops
+  toShow: 1
+  meshRenderer: 0
 --- !u!1101 &4221929273122071048
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -7454,6 +7577,20 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &6423367449029942477
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93b3ffca93d7f4c4b92d9cc041168da8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hideFrame: 430
+  hideObjName: TubeForPumpWithoutPackContainer
 --- !u!114 &6569410384030496509
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8019,6 +8156,25 @@ MonoBehaviour:
   - tubeCap2Rigged_ProtectiveCover
   toShow: 1
   meshRenderer: 0
+--- !u!114 &7851743765400114365
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: GastricFeedingPump_
+  showFrame: 1249
+  ObjNames:
+  - CircleCanvas
+  - CanvasFillSet
+  toShow: 0
+  meshRenderer: 0
 --- !u!1102 &7856687163696241104
 AnimatorState:
   serializedVersion: 5
@@ -8191,6 +8347,26 @@ MonoBehaviour:
   ToFollowHoldingHand: 0
   NewAnimationName: Sq17-21_Pump
   ActionFrame: 0
+--- !u!114 &8193183312536781306
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: GastricFeedingPump_
+  showFrame: 1249
+  ObjNames:
+  - ml
+  - 0
+  - volume
+  toShow: 1
+  meshRenderer: 0
 --- !u!114 &8232195512353670748
 MonoBehaviour:
   m_ObjectHideFlags: 1
