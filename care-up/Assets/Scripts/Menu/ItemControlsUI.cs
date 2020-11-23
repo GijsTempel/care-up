@@ -380,10 +380,14 @@ public class ItemControlsUI : MonoBehaviour
                             if (item.prefabInHands != "")
                             {
                                 item.SavePosition();
-                                GameObject replaced = handsInventory.CreateObjectByName(item.prefabInHands, Vector3.zero);
-                                replaced.GetComponent<PickableObject>().SavePosition(item.SavedPosition, item.SavedRotation, true);
-                                Destroy(item.gameObject);
-                                item = replaced.GetComponent<PickableObject>();
+                                GameObject replaced = null;
+                                handsInventory.CreateObjectByName(item.prefabInHands, Vector3.zero, callback => replaced = callback);
+                                if (replaced != null)
+                                {
+                                    replaced.GetComponent<PickableObject>().SavePosition(item.SavedPosition, item.SavedRotation, true);
+                                    Destroy(item.gameObject);
+                                    item = replaced.GetComponent<PickableObject>();
+                                }
                             }
 
                             if (handsInventory.PickItem(item))

@@ -34,7 +34,8 @@ public class SubcatenousSequence : AnimationSequenceState
         {
             inv.ReplaceHandObject(false, "SyringeWithInjectionNeedle");
 
-            GameObject cap = inv.CreateObjectByName("SyringeInjectionCap", Vector3.zero);
+            GameObject cap = null;
+            inv.CreateObjectByName("SyringeInjectionCap", Vector3.zero, callback => cap = callback);
 
             syringe = inv.RightHandObject.GetComponent<Syringe>();
             syringe.updateProtector = true;
@@ -42,9 +43,12 @@ public class SubcatenousSequence : AnimationSequenceState
             Vector3 savedPos = Vector3.zero;
             Quaternion savedRot = Quaternion.identity;
             inv.RightHandObject.GetComponent<PickableObject>().GetSavesLocation(out savedPos, out savedRot);
-            float offset = inv.RightHandObject.GetComponent<MeshFilter>().mesh.bounds.size.z * inv.RightHandObject.transform.lossyScale.z +
-                            cap.GetComponent<MeshFilter>().mesh.bounds.size.z * cap.transform.lossyScale.z;
-            cap.GetComponent<PickableObject>().SavePosition(savedPos + new Vector3(0, 0, -3f * offset), savedRot);
+
+            if (cap != null) {
+                float offset = inv.RightHandObject.GetComponent<MeshFilter>().mesh.bounds.size.z * inv.RightHandObject.transform.lossyScale.z +
+                                cap.GetComponent<MeshFilter>().mesh.bounds.size.z * cap.transform.lossyScale.z;
+                cap.GetComponent<PickableObject>().SavePosition(savedPos + new Vector3(0, 0, -3f * offset), savedRot);
+            }
 
             inv.ForcePickItem("SyringeInjectionCap", true);
         }
