@@ -340,8 +340,7 @@ public class HandsInventory : MonoBehaviour {
         currentHandObject.DeleteGhostObject();
         Destroy(currentHandObject.gameObject);
         currentHandObject = null;
-        GameObject _object = CreateObjectByName(name, Vector3.zero);
-        currentHandObject = _object.GetComponent<PickableObject>();
+        CreateObjectByName(name, Vector3.zero, _object => currentHandObject = _object.GetComponent<PickableObject>());
         currentHandObject.leftControlBone = leftControlBone;
         currentHandObject.rightControlBone = rightControlBone;
         if (isLeftHand)
@@ -351,7 +350,7 @@ public class HandsInventory : MonoBehaviour {
 
         SetHold(isLeftHand);
             
-        PlayerAnimationManager.SetHandItem(isLeftHand, _object);
+        PlayerAnimationManager.SetHandItem(isLeftHand, currentHandObject.gameObject);
 
         if (savedPos != Vector3.zero)
         {
@@ -396,12 +395,15 @@ public class HandsInventory : MonoBehaviour {
     /// <param name="name">Name of the object</param>
     /// <param name="position">Position of the object</param>
     /// <returns>Object created.</returns>
-    public GameObject CreateObjectByName(string name, Vector3 position)
+    public async System.Threading.Tasks.Task CreateObjectByName(string name, Vector3 position, System.Action<GameObject> callback = null)
     {
-        //Object bundleObject = FindFromBundles(name);
+        Debug.Log("starting loading " + name);
         AsyncOperationHandle<Object> handle = Addressables.LoadAssetAsync<Object>(GetFullPath(name));
+        await handle.Task;
+
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
+            Debug.Log("loaded " + handle.Result.name);
             Object bundleObject = handle.Result;
             if (bundleObject == null)
                 Debug.Log("_____" + name);
@@ -431,15 +433,18 @@ public class HandsInventory : MonoBehaviour {
 
             RefrashAssetDict();
 
-            return newObject;
+            if (callback != null)
+            {
+                callback.Invoke(newObject);
+            }
         }
-        return null;
     }
 
-
-    public GameObject CreateStaticObjectByName(string name, Vector3 position, Quaternion rotation)
+    public async System.Threading.Tasks.Task CreateStaticObjectByName(string name, Vector3 position, Quaternion rotation)
     {
         AsyncOperationHandle<Object> handle = Addressables.LoadAssetAsync<Object>(GetFullPath(name));
+        await handle.Task;
+
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
             Object bundleObject = handle.Result;
@@ -454,20 +459,19 @@ public class HandsInventory : MonoBehaviour {
                 newObject.GetComponent<InteractableObject>().assetSource = InteractableObject.AssetSource.Bundle;
 
             RefrashAssetDict();
-
-            return newObject;
         }
-        return null;
     }
     
     public void CreateAnimationObject(string name, PlayerAnimationManager.Hand hand)
     {
-        CreateAnimationObject(name, hand == PlayerAnimationManager.Hand.Left);
+        CreateAnimationObject(name, hand == PlayerAnimationManager.Hand.Left).Wait();
     }
 
-    public void CreateAnimationObject(string name, bool hand)
+    public async System.Threading.Tasks.Task CreateAnimationObject(string name, bool hand)
     {
         AsyncOperationHandle<Object> handle = Addressables.LoadAssetAsync<Object>(GetFullPath(name));
+        await handle.Task;
+
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
             Object bundleObject = handle.Result;
@@ -517,9 +521,11 @@ public class HandsInventory : MonoBehaviour {
         animationObject = null;
     }
 
-    public void CreateAnimationObject2(string name, bool hand)
+    public async System.Threading.Tasks.Task CreateAnimationObject2(string name, bool hand)
     {
         AsyncOperationHandle<Object> handle = Addressables.LoadAssetAsync<Object>(GetFullPath(name));
+        await handle.Task;
+
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
             Object bundleObject = handle.Result;
@@ -744,11 +750,15 @@ public class HandsInventory : MonoBehaviour {
         if (item != null && item.prefabInHands != "")
         {
             item.SavePosition();
-            GameObject replaced = CreateObjectByName(item.prefabInHands, Vector3.zero);
-            replaced.GetComponent<PickableObject>().SavePosition(item.SavedPosition, item.SavedRotation, true);
-            item.DeleteGhostObject();
-            Destroy(item.gameObject);
-            item = replaced.GetComponent<PickableObject>();
+            GameObject replaced = null;
+            CreateObjectByName(item.prefabInHands, Vector3.zero, callback => replaced = callback);
+            if (replaced != null)
+            {
+                replaced.GetComponent<PickableObject>().SavePosition(item.SavedPosition, item.SavedRotation, true);
+                item.DeleteGhostObject();
+                Destroy(item.gameObject);
+                item = replaced.GetComponent<PickableObject>();
+            }
         }
 
         if (hand == PlayerAnimationManager.Hand.Left)
@@ -885,13 +895,17 @@ public class HandsInventory : MonoBehaviour {
 
                 if (leftCombineResult != "")
                 {
-                    GameObject leftObject = CreateObjectByName(leftCombineResult, Vector3.zero);
-                    leftHandObject = leftObject.GetComponent<PickableObject>();
-                    leftHandObject.leftControlBone = leftControlBone;
-                    leftHandObject.rightControlBone = rightControlBone;
-                    SetHold(true);
+                    GameObject leftObject = null;
+                    CreateObjectByName(leftCombineResult, Vector3.zero, callback => leftObject = callback); 
+                    if (leftObject != null)
+                    {
+                        leftHandObject = leftObject.GetComponent<PickableObject>();
+                        leftHandObject.leftControlBone = leftControlBone;
+                        leftHandObject.rightControlBone = rightControlBone;
+                        SetHold(true);
 
-                    PlayerAnimationManager.SetHandItem(true, leftObject);
+                        PlayerAnimationManager.SetHandItem(true, leftObject);
+                    }
 
                     if (leftSavedPos != Vector3.zero)
                     {
@@ -940,13 +954,17 @@ public class HandsInventory : MonoBehaviour {
 
                 if (rightCombineResult != "")
                 {
-                    GameObject rightObject = CreateObjectByName(rightCombineResult, Vector3.zero);
-                    rightHandObject = rightObject.GetComponent<PickableObject>();
-                    rightHandObject.leftControlBone = leftControlBone;
-                    rightHandObject.rightControlBone = rightControlBone;
-                    SetHold(false);
+                    GameObject rightObject = null;
+                    CreateObjectByName(rightCombineResult, Vector3.zero, callback => rightObject = callback);
+                    if (rightObject != null)
+                    {
+                        rightHandObject = rightObject.GetComponent<PickableObject>();
+                        rightHandObject.leftControlBone = leftControlBone;
+                        rightHandObject.rightControlBone = rightControlBone;
+                        SetHold(false);
 
-                    PlayerAnimationManager.SetHandItem(false, rightObject);
+                        PlayerAnimationManager.SetHandItem(false, rightObject);
+                    }
 
                     if (rightSavedPos != Vector3.zero)
                     {

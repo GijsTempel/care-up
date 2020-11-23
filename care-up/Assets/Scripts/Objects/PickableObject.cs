@@ -106,10 +106,14 @@ public class PickableObject : InteractableObject
     {
         if (prefabOutOfHands != "")
         {
-            GameObject replaced = inventory.CreateObjectByName(prefabOutOfHands, savedPosition);
-            replaced.GetComponent<PickableObject>().SavePosition(savedPosition, savedRotation, true);
-            replaced.GetComponent<PickableObject>().BaseLoadPosition();
-            Destroy(gameObject);
+            GameObject replaced = null;
+            inventory.CreateObjectByName(prefabOutOfHands, savedPosition, callback => replaced = callback);
+            if (replaced != null)
+            {
+                replaced.GetComponent<PickableObject>().SavePosition(savedPosition, savedRotation, true);
+                replaced.GetComponent<PickableObject>().BaseLoadPosition();
+                Destroy(gameObject);
+            }
         }
         else
         {
@@ -456,7 +460,7 @@ public class PickableObject : InteractableObject
         }
     }
 
-    public IEnumerator InstantiateGhostObject(Vector3 pos, Quaternion rot, int posID = 0)
+    public async System.Threading.Tasks.Task InstantiateGhostObject(Vector3 pos, Quaternion rot, int posID = 0)
     {
         bool from_bundle = false;
 
@@ -472,7 +476,7 @@ public class PickableObject : InteractableObject
         }
 
         AsyncOperationHandle<UnityEngine.Object> handle = Addressables.LoadAssetAsync<UnityEngine.Object>(FullPath);
-        yield return handle;
+        await handle.Task;
 
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {

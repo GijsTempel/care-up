@@ -57,7 +57,7 @@ public class RippingFraxiparinePackage : AnimationCombine
         {
             inv.ReplaceHandObject(!hand, "fraxiPackageTop");
 
-            obj = inv.CreateObjectByName("Frexi_with_needle_cap", Vector3.zero);
+            inv.CreateObjectByName("Frexi_with_needle_cap", Vector3.zero, callback => obj = callback);
             inv.ForcePickItem("Frexi_with_needle_cap", hand);
 
         }
