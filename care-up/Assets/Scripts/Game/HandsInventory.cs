@@ -848,7 +848,7 @@ public class HandsInventory : MonoBehaviour {
         }
     }
     
-    public void ExecuteDelayedCombination()
+    public async void ExecuteDelayedCombination()
     {
         if (combineDelayed)
         {
@@ -896,7 +896,7 @@ public class HandsInventory : MonoBehaviour {
                 if (leftCombineResult != "")
                 {
                     GameObject leftObject = null;
-                    CreateObjectByName(leftCombineResult, Vector3.zero, callback => leftObject = callback); 
+                    await CreateObjectByName(leftCombineResult, Vector3.zero, callback => leftObject = callback); 
                     if (leftObject != null)
                     {
                         leftHandObject = leftObject.GetComponent<PickableObject>();
@@ -955,7 +955,7 @@ public class HandsInventory : MonoBehaviour {
                 if (rightCombineResult != "")
                 {
                     GameObject rightObject = null;
-                    CreateObjectByName(rightCombineResult, Vector3.zero, callback => rightObject = callback);
+                    await CreateObjectByName(rightCombineResult, Vector3.zero, callback => rightObject = callback);
                     if (rightObject != null)
                     {
                         rightHandObject = rightObject.GetComponent<PickableObject>();
