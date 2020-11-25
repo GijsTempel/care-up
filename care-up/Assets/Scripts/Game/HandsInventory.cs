@@ -462,9 +462,9 @@ public class HandsInventory : MonoBehaviour {
         }
     }
     
-    public void CreateAnimationObject(string name, PlayerAnimationManager.Hand hand)
+    public async void CreateAnimationObject(string name, PlayerAnimationManager.Hand hand)
     {
-        CreateAnimationObject(name, hand == PlayerAnimationManager.Hand.Left).Wait();
+        await CreateAnimationObject(name, hand == PlayerAnimationManager.Hand.Left);
     }
 
     public async System.Threading.Tasks.Task CreateAnimationObject(string name, bool hand)

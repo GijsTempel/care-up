@@ -49,9 +49,13 @@ public class CatherisationPutClothUnder : CinematicAnimation
                 }
             }
 
-            inv.CreateAnimationObject("cloth_02_inHands", false);
+            CreateObj();
         }
+    }
 
+    async void CreateObj()
+    {
+        await inv.CreateAnimationObject("cloth_02_inHands", false); 
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
