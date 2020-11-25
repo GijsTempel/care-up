@@ -315,7 +315,7 @@ public class HandsInventory : MonoBehaviour {
         UpdateHoldAnimation();
     }
 
-    public void ReplaceHandObject(bool isLeftHand, string name, string ghostName = "")
+    public async void ReplaceHandObject(bool isLeftHand, string name, string ghostName = "")
     {
         PickableObject currentHandObject = rightHandObject;
         if (isLeftHand)
@@ -340,7 +340,7 @@ public class HandsInventory : MonoBehaviour {
         currentHandObject.DeleteGhostObject();
         Destroy(currentHandObject.gameObject);
         currentHandObject = null;
-        CreateObjectByName(name, Vector3.zero, _object => currentHandObject = _object.GetComponent<PickableObject>());
+        await CreateObjectByName(name, Vector3.zero, _object => currentHandObject = _object.GetComponent<PickableObject>());
         currentHandObject.leftControlBone = leftControlBone;
         currentHandObject.rightControlBone = rightControlBone;
         if (isLeftHand)
