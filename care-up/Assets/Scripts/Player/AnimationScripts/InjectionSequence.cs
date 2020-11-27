@@ -18,7 +18,7 @@ public class InjectionSequence : AnimationSequenceState
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-    public async override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (PlayerAnimationManager.CompareFrames(frame, prevFrame, takeSyringeFrame))
         {
@@ -38,7 +38,7 @@ public class InjectionSequence : AnimationSequenceState
             syringe.updateProtector = true;
 
             GameObject cap = null;
-            await inv.CreateObjectByName("SyringeInjectionCap", Vector3.zero, callback => cap = callback);
+            inv.CreateObjectByName("SyringeInjectionCap", Vector3.zero, callback => cap = callback);
 
             Vector3 savedPos = Vector3.zero;
             Quaternion savedRot = Quaternion.identity;
