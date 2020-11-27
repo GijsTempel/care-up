@@ -39,7 +39,10 @@ public class RippingFraxiparinePackage : AnimationCombine
     {
         if (PlayerAnimationManager.CompareFrames(frame, prevFrame, openTopFrame))
         {
-            AddFrexiPackageBottom();
+            inv.CreateObjectByName("fraxiPackageBottom", Vector3.zero);
+            inv.ForcePickItem("fraxiPackageBottom", !hand);
+
+            inv.ReplaceHandObject(hand, "fraxiPackageSyringeBottom");
         }
         else if (PlayerAnimationManager.CompareFrames(frame, prevFrame, dropTopFrame))
         {
@@ -52,7 +55,10 @@ public class RippingFraxiparinePackage : AnimationCombine
         }
         else if (PlayerAnimationManager.CompareFrames(frame, prevFrame, removeBottomFrame))
         {
-            AddFrexiWithNeedleCap();
+            inv.ReplaceHandObject(!hand, "fraxiPackageTop");
+
+            inv.CreateObjectByName("Frexi_with_needle_cap", Vector3.zero, callback => obj = callback);
+            inv.ForcePickItem("Frexi_with_needle_cap", hand);
 
         }
         else if (PlayerAnimationManager.CompareFrames(frame, prevFrame, dropBottomFrame))
@@ -69,21 +75,7 @@ public class RippingFraxiparinePackage : AnimationCombine
         base.OnStateUpdate(animator, stateInfo, layerIndex);
     }
 
-    async void AddFrexiPackageBottom()
-    {
-        await inv.CreateObjectByName("fraxiPackageBottom", Vector3.zero);
-        inv.ForcePickItem("fraxiPackageBottom", !hand);
 
-        inv.ReplaceHandObject(hand, "fraxiPackageSyringeBottom");
-    }
-
-    async void AddFrexiWithNeedleCap()
-    {
-        inv.ReplaceHandObject(!hand, "fraxiPackageTop");
-
-        await inv.CreateObjectByName("Frexi_with_needle_cap", Vector3.zero, callback => obj = callback);
-        inv.ForcePickItem("Frexi_with_needle_cap", hand);
-    }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
