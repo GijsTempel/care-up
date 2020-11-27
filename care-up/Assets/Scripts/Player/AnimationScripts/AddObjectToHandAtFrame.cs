@@ -54,9 +54,9 @@ public class AddObjectToHandAtFrame : StateMachineBehaviour
         obj = null;
     }
 
-    private void AddObject()
+    private async void AddObject()
     {
-        inventory.CreateObjectByName(objectName, Vector3.zero, callback => obj = callback);
+        await inventory.CreateObjectByName(objectName, Vector3.zero, callback => obj = callback);
         inventory.ForcePickItem(obj, hand);
         PlayerAnimationManager.SetHandItem(hand == PlayerAnimationManager.Hand.Left, obj);
 
