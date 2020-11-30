@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using CareUp.Actions;
 using System.Linq;
 using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
+//using UnityEngine.ResourceManagement.AsyncOperations;
 
 /// <summary>
 /// Handles things in hands.
@@ -395,16 +395,15 @@ public class HandsInventory : MonoBehaviour {
     /// <param name="name">Name of the object</param>
     /// <param name="position">Position of the object</param>
     /// <returns>Object created.</returns>
-    public async System.Threading.Tasks.Task CreateObjectByName(string name, Vector3 position, System.Action<GameObject> callback = null)
+    public void CreateObjectByName(string name, Vector3 position, System.Action<GameObject> callback = null)
     {
-        Debug.Log("starting loading " + name);
-        AsyncOperationHandle<Object> handle = Addressables.LoadAssetAsync<Object>(GetFullPath(name));
-        await handle.Task;
+        GameObject bundleObject = SpawnObject(name);
+        //Debug.Log("starting loading " + name);
+        //AsyncOperationHandle<Object> handle = Addressables.LoadAssetAsync<Object>(GetFullPath(name));
+        //await handle.Task;
 
-        if (handle.Status == AsyncOperationStatus.Succeeded)
+        if (bundleObject != null)
         {
-            Debug.Log("loaded " + handle.Result.name);
-            Object bundleObject = handle.Result;
             if (bundleObject == null)
                 Debug.Log("_____" + name);
             bool from_bundle = bundleObject != null;
@@ -412,6 +411,8 @@ public class HandsInventory : MonoBehaviour {
                 bundleObject = Resources.Load<GameObject>("Prefabs\\" + name);
 
             GameObject newObject = Instantiate(bundleObject, position, Quaternion.identity) as GameObject;
+            newObject.SetActive(true);
+            newObject.name = name;
             if (newObject != null)
             {
                 newObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
@@ -440,20 +441,22 @@ public class HandsInventory : MonoBehaviour {
         }
     }
 
-    public async System.Threading.Tasks.Task CreateStaticObjectByName(string name, Vector3 position, Quaternion rotation)
+    public void CreateStaticObjectByName(string name, Vector3 position, Quaternion rotation)
     {
-        AsyncOperationHandle<Object> handle = Addressables.LoadAssetAsync<Object>(GetFullPath(name));
-        await handle.Task;
+        GameObject bundleObject = SpawnObject(name);
 
-        if (handle.Status == AsyncOperationStatus.Succeeded)
+        //AsyncOperationHandle<Object> handle = Addressables.LoadAssetAsync<Object>(GetFullPath(name));
+        //await handle.Task;
+
+        if (bundleObject != null)
         {
-            Object bundleObject = handle.Result;
             if (bundleObject == null)
                 Debug.Log("_____" + name);
             bool from_bundle = bundleObject != null;
             if (bundleObject == null)
                 bundleObject = Resources.Load<GameObject>("Prefabs\\" + name);
             GameObject newObject = Instantiate(bundleObject, position, rotation) as GameObject;
+            newObject.SetActive(true);
             newObject.name = name;
             if (from_bundle)
                 newObject.GetComponent<InteractableObject>().assetSource = InteractableObject.AssetSource.Bundle;
@@ -464,17 +467,18 @@ public class HandsInventory : MonoBehaviour {
     
     public void CreateAnimationObject(string name, PlayerAnimationManager.Hand hand)
     {
-        CreateAnimationObject(name, hand == PlayerAnimationManager.Hand.Left).Wait();
+        CreateAnimationObject(name, hand == PlayerAnimationManager.Hand.Left);
     }
 
-    public async System.Threading.Tasks.Task CreateAnimationObject(string name, bool hand)
+    public void CreateAnimationObject(string name, bool hand)
     {
-        AsyncOperationHandle<Object> handle = Addressables.LoadAssetAsync<Object>(GetFullPath(name));
-        await handle.Task;
+        Object bundleObject = SpawnObject(name);
 
-        if (handle.Status == AsyncOperationStatus.Succeeded)
+        //AsyncOperationHandle<Object> handle = Addressables.LoadAssetAsync<Object>(GetFullPath(name));
+        //await handle.Task;
+
+        if (bundleObject != null)
         {
-            Object bundleObject = handle.Result;
             if (bundleObject == null)
                 Debug.Log("_____" + name);
             bool from_bundle = bundleObject != null;
@@ -482,7 +486,8 @@ public class HandsInventory : MonoBehaviour {
                 bundleObject = Resources.Load<GameObject>("Prefabs\\" + name);
 
             animationObject = Instantiate(bundleObject, Vector3.zero, Quaternion.identity) as GameObject;
-
+            animationObject.SetActive(true);
+            animationObject.name = name;
             if (animationObject != null)
             {
 
@@ -521,21 +526,31 @@ public class HandsInventory : MonoBehaviour {
         animationObject = null;
     }
 
-    public async System.Threading.Tasks.Task CreateAnimationObject2(string name, bool hand)
-    {
-        AsyncOperationHandle<Object> handle = Addressables.LoadAssetAsync<Object>(GetFullPath(name));
-        await handle.Task;
 
-        if (handle.Status == AsyncOperationStatus.Succeeded)
+    GameObject SpawnObject(string _name)
+    {
+        GameObject newInstance = null;
+        PrefabHolder prefabHolder = GameObject.FindObjectOfType<PrefabHolder>();
+        if (prefabHolder != null)
         {
-            Object bundleObject = handle.Result;
+            newInstance = prefabHolder.GetPrefab(_name);
+        }
+        return newInstance;
+    }
+
+    public void CreateAnimationObject2(string name, bool hand)
+    {
+        GameObject bundleObject = SpawnObject(name);
+
+        if (bundleObject != null)
+        {
             if (bundleObject == null)
                 Debug.Log("_____" + name);
             bool from_bundle = bundleObject != null;
-            if (bundleObject == null)
-                bundleObject = Resources.Load<GameObject>("Prefabs\\" + name);
 
             GameObject animationObject2 = Instantiate(bundleObject, Vector3.zero, Quaternion.identity) as GameObject;
+            animationObject2.SetActive(true);
+            animationObject2.name = name;
 
             animationObject2.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             animationObject2.GetComponent<Rigidbody>().useGravity = false;
