@@ -66,6 +66,9 @@ namespace MBS
 
         [SerializeField] private Image LoginUsernameField = default(Image);
         [SerializeField] private Image LoginPasswordField = default(Image);
+        [SerializeField] private GameObject loginPasswordVisibilityOn = default;
+        [SerializeField] private GameObject loginPasswordVisibilityOff = default;
+        [SerializeField] private Button loginPasswordVisibility = default;
 
         [SerializeField] private Image RegUsernameField = default(Image);
         [SerializeField] private Image RegEmailField = default(Image);
@@ -77,6 +80,7 @@ namespace MBS
         [SerializeField] private Text SuccesText = default(Text);
 
         private bool removeText = false;
+        private bool passwordVisible = false;
 
         void Update()
         {
@@ -366,6 +370,15 @@ namespace MBS
             //if "Remember me" was selected during the last login, try to log in automatically...
             if (attempt_auto_login && !WULogin.logged_in)
                 WULogin.AttemptAutoLogin();
+
+            if (loginPasswordVisibility != null)
+            {
+                loginPasswordVisibility.onClick.AddListener(OnTogglePasswordVisibility);
+            }
+            if (fields.login_password != null)
+            {
+                fields.login_password.onValueChanged.AddListener(delegate { EnablePasswordVisibilityIcon(); });
+            }
         }
 
         void SetupResponders()
@@ -914,6 +927,24 @@ namespace MBS
             m_image = m_image.GetComponent<Image>();
 
             m_image.color = new Color32(210, 210, 210, 150);
+        }
+
+        public void OnTogglePasswordVisibility()
+        {
+            passwordVisible = !passwordVisible;
+
+            fields.login_password.contentType = passwordVisible ? InputField.ContentType.Standard : InputField.ContentType.Password;
+            loginPasswordVisibilityOn.SetActive(!passwordVisible);
+            loginPasswordVisibilityOff.SetActive(passwordVisible);
+            fields.login_password.ForceLabelUpdate();
+        }
+
+        public void EnablePasswordVisibilityIcon()
+        {
+            if (!string.IsNullOrEmpty(fields.login_password.text))
+                loginPasswordVisibility.gameObject.SetActive(true);
+            else
+                loginPasswordVisibility.gameObject.SetActive(false);
         }
 
         #endregion

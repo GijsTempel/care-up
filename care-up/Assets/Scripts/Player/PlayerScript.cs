@@ -397,10 +397,7 @@ public class PlayerScript : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            TriggerQuizQuestion();
-        }
+       
         AutoPlayClicked = false;
         AutoPlayActionObject = null;
     }

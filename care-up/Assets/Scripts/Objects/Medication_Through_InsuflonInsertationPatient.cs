@@ -29,11 +29,11 @@ public class Medication_Through_InsuflonInsertationPatient : PersonObject {
             switch (topic)
             {
                 case "show injection spot":
-                    /*PlayerAnimator.SetTrigger("BlanketEmpty");
+                    PlayerAnimator.SetTrigger("BlanketEmpty");
                     PlayerAnimator.SetTrigger("S BlanketEmpty");
-                    PlayerAnimator.SetTrigger("TakeOffBlanket");*/
+                    //PlayerAnimator.SetTrigger("TakeOffBlanket");
 
-                    PatientAnimator.SetTrigger("Patient_Zeker");
+                    //PatientAnimator.SetTrigger("Patient_Zeker");
                     break;
                 case "Hello":
 

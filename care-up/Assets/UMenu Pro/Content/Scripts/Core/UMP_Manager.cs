@@ -16,6 +16,10 @@ public class UMP_Manager : MonoBehaviour {
     [Header("References")]
     public List<GameObject> Windows = new List<GameObject>();
     public List<UMP_DialogUI> Dialogs = new List<UMP_DialogUI>();
+
+    public GameObject notificationWindow;
+    public GameObject newNotificationIcon;
+
     public CongratulationTab congratulation;
 
     public GameObject LevelPrefab;
@@ -28,6 +32,33 @@ public class UMP_Manager : MonoBehaviour {
     public int GetCurrentWindow()
     {
         return CurrentWindow;
+    }
+
+    public void ShowNotificationWindow(bool toShow = true)
+    {
+        UpdateNotifButton();
+        if (notificationWindow != null)
+        {
+            notificationWindow.SetActive(toShow);
+        }
+    }
+
+    public void LoadTestNotificationData()
+    {
+        // it's gonne be sent to server now and saved there
+
+        DatabaseManager.PushCANotification(0, new PlayerPrefsManager.CANotifications("Title number 1", "Some message that can be sent to player",
+                    "William Shakespeare", false, 1599264000));
+        DatabaseManager.PushCANotification(1, new PlayerPrefsManager.CANotifications("Title number 2", "Some other message that can be sent to player",
+                   "Agatha Christie", false, 1600128000));
+        DatabaseManager.PushCANotification(2, new PlayerPrefsManager.CANotifications("Title number 3", "More messages",
+                    "J. K. Rowling", false, 1601645343));
+        DatabaseManager.PushCANotification(3, new PlayerPrefsManager.CANotifications("Title number 4", "Many many many more messages",
+                    "Stephen King", false, 1601645343));
+        DatabaseManager.PushCANotification(4, new PlayerPrefsManager.CANotifications("Title number 5", "This message can be a bit long. I had to place it here to test, how it will fit to the selected place for the test. If you can read this, it was shown correctly, and there is enough space for message like this",
+                    "Robert Asprin", false, 1601645343));
+        DatabaseManager.PushCANotification(5, new PlayerPrefsManager.CANotifications("Title number 6", "And the last one",
+                    "Ian Fleming", false, 1601645343));
     }
 
     public void ShowCongratulation(int coins, int diamants = 0)
@@ -43,6 +74,11 @@ public class UMP_Manager : MonoBehaviour {
         }
     }
 
+    public void UpdateNotifButton()
+    {
+        newNotificationIcon.SetActive(PlayerPrefsManager.HasNewNorifications());
+    }
+
     void Awake()
     {
         InstanceLevels();
@@ -52,7 +88,13 @@ public class UMP_Manager : MonoBehaviour {
         GameObject.Find("AdjustCharacter").SetActive(false);
         menuEffects = GameObject.FindObjectOfType<MenuEffects>();
     }
-  
+
+    private void Start()
+    {
+        UpdateNotifButton();
+        ShowNotificationWindow(PlayerPrefsManager.HasNewNorifications());
+    }
+
     void InstanceLevels()
     {
         for (int i = 0; i < Levels.Count; i++)

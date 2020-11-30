@@ -16,12 +16,33 @@ using SmartLookUnity;
 using CareUp.Localize;
 using System.Runtime.InteropServices;
 
+
 /// <summary>
 /// Handles quick access to saved data.
 /// Volume | Tutorial completion | Scene completion + results
 /// </summary>
 public class PlayerPrefsManager : MonoBehaviour
 {
+    public class CANotifications
+    {
+        public string title;
+        public string message;
+        public string author;
+        public bool isRead = false;
+        public long createdTime;
+
+        public CANotifications(string _title, string _message, string _author, bool _isRead, long _createdTime)
+        {
+            title = _title;
+            message = _message;
+            author = _author;
+            isRead = _isRead;
+            createdTime = _createdTime;
+        }
+    };
+
+    public static Dictionary<int, CANotifications> Notifications = new Dictionary<int, CANotifications>();
+
     public static StoreManager storeManager = new StoreManager();
 
     public HatsPositioningDB hatsPositioning = new HatsPositioningDB();
@@ -80,6 +101,15 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public bool muteMusicForEffect = false;
     private bool muteMusic = false;
+
+    public static CANotifications GetNotificationByID(int _id)
+    {
+        if (Notifications.ContainsKey(_id))
+        {
+            return Notifications[_id];
+        }
+        return null;
+    }
 
     [System.Serializable]
     public class PurchasedScetesData
@@ -278,6 +308,20 @@ public class PlayerPrefsManager : MonoBehaviour
         //PlayerPrefsManager.__dev__customCertificate("playerFullName", "sceneName", "06202019");
 
         SmartLook.Init("22f3cf28278dbff71183ef8e0fa90c90048b850d");
+    }
+
+    public static bool HasNewNorifications()
+    {
+        bool hasNew = false;
+        foreach (int _key in Notifications.Keys)
+        {
+            if (!Notifications[_key].isRead)
+            {
+                hasNew = true;
+                break;
+            }
+        }
+        return hasNew;
     }
 
     void Start()

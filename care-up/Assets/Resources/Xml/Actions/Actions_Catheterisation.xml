@@ -77,22 +77,10 @@ Gazen voor het reinigen van de urethraopening hoeven niet steriel te zijn, wel s
 ></action>
 
 <action
-    comment="3. Open package of the syringe with 10 ml of sterile water. Leave the syringe in the package "
-    points="1"
-    description="Open de verpakking van de spuit met 10 ml steriel water. Laat de spuit in de verpakking"
-    index="4" 
-    type="combine"
-    left="water_syringe_pack"
-    right=""
-    extra="Open de verpakking van de spuit met 10 ml steriel water. Laat de spuit in de verpakking"
-    blockUnlock="block1"
-></action>
-
-<action
     comment="4. Pour tap water from a large tap (or sterile water) over the gauze."
     points="1"
     description="Giet kraanwater uit een flink stromende kraan (of steriel water) over de wattenbollen"
-    index="5"
+    index="4"
     type="useOn"
     item="GauzeTrayFull"
     secondPlace="SinkPos"
@@ -107,7 +95,7 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
 
 <action
     comment="5. Ask the client to uncover the lower body and lie on the back with the legs spread apart and the knees raised."
-	  index="6"
+	  index="5"
     points="1"
     description="Vraag de cliënt het onderlichaam te ontbloten en op de rug te gaan liggen met de benen gespreid en de knieën opgetrokken"
     type="talk"
@@ -121,7 +109,7 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
     comment="6. Place a pad under the buttocks and thighs of the cliënt."
     points="2"
     description="Leg een onderlegger onder de billen en dijen van de cliënt"
-    index="7"
+    index="6"
     type="useOn"
     target=""
     item="cloth_02_folded"
@@ -137,13 +125,25 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
     comment="7. Place the tray with gauze on the underpad."
     points="1"
     description="Zet het bakje met wattenbollen op de onderlegger"
-    index="8"
+    index="7"
     type="drop"
     item="GauzeTrayWet"
     secondPlace="PatientPos"
     posID="2"
     extra="Zet het bakje met wattenbollen op de onderlegger"
     blockUnlock="block2"
+></action>
+
+  <action
+    comment="3. Open package of the syringe with 10 ml of sterile water. Leave the syringe in the package "
+    points="1"
+    description="Open de verpakking van de spuit met 10 ml steriel water. Laat de spuit in de verpakking"
+    index="8"
+    type="combine"
+    left="water_syringe_pack"
+    right=""
+    extra="Open de verpakking van de spuit met 10 ml steriel water. Laat de spuit in de verpakking"
+    blockUnlock="block1"
 ></action>
 
 <action
@@ -167,6 +167,7 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
     item="PlasticTrashbucket"
     secondPlace="PatientPos"
     posID="2"
+	blockRequired="block1, block3"
     extra="Leg het plastic afvalbakje op de onderlegger"
     blockUnlock="block4, tray placed"
 ></action>
@@ -287,6 +288,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
     type="sequenceStep"
     value="take off gloves"
     extra="Trek de handschoenen uit en gooi ze in het afvalbakje."
+	blockUnlock="GenitalsCleaned"
 ></action>
 
   <action
@@ -373,7 +375,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
     left="CWB_inner_open"
     right="catheter_bag_twisted"
     extra="Verwijder de afsluitdop van de urineopvangzak en bevestig deze aan de katheter. De katheter blijft in binnenverpakking zitten"
-    blockRequired="patient lay down"
+    blockRequired="patient lay down, GenitalsCleaned"
     blockTitle="Deze handeling is nog niet mogelijk"
     blockMessage="Communiceer met de cliënt en zorg ervoor dat de cliënt klaar is voor blaaskatheterisatie"
     messageTitle="Desinfecteren aansluitpunt"

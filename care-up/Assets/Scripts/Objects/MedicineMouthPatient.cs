@@ -27,10 +27,10 @@ public class MedicineMouthPatient : PersonObject
             switch (topic)
             {
                 case "Sitstraight":
-                    /*playerAnimator.SetTrigger("Player_TakeOffBlanket");
-                    playerAnimator.SetTrigger("S Player_TakeOffBlanket");*/
+                    playerAnimator.SetTrigger("Player_TakeOffBlanket");
+                    playerAnimator.SetTrigger("S Player_TakeOffBlanket");
 
-                    patientAnimator.SetTrigger("Patient_JaHoor");
+                    //patientAnimator.SetTrigger("Patient_JaHoor");
 
                     break;
 
@@ -50,7 +50,9 @@ public class MedicineMouthPatient : PersonObject
 
                 case "NoSwallow":
 
-                    patientAnimator.SetTrigger("Patient_Oke2");
+                    //patientAnimator.SetTrigger("Patient_Oke2");
+                    playerAnimator.SetTrigger("WaitNoSwallowDialog");
+                    playerAnimator.SetTrigger("S WaitNoSwallowDialog");
 
                     break;
                 default:

@@ -12,7 +12,8 @@ public class LevelButton : MonoBehaviour
     public string inHouseBundleName = "";
     public string inHouseSceneName = "";
     public bool toLoadInhouse = false;
-
+    public GameObject IsFreeIcon;
+    bool demoMark = false;
     bool PreviewIconChanged = false;
 
     public bool multiple;
@@ -57,6 +58,11 @@ public class LevelButton : MonoBehaviour
         UpdateButtonLockState();
     }
 
+    public void SetDemoMark(bool _mark)
+    {
+        demoMark = _mark;
+    }
+
     public void UpdateButtonLockState()
     { 
         if (LevelPreview == null)
@@ -79,6 +85,12 @@ public class LevelButton : MonoBehaviour
             if (!PreviewIconChanged)
                 LevelPreview.gameObject.SetActive(false);
         }
+        IsFreeIcon.SetActive(demoMark);
+        //if(!demoLock)
+        //{
+        //    GetComponent<Image>().sprite = Resources.Load("Sprites/nUI/listElement_Base_gray", typeof(Sprite)) as Sprite;
+        //    GetComponent<Image>().color = new Color(0f, 0.85f, 0.6f);
+        //}
     }
 
     public void SetLevelPreviewIcon(bool iconToShow, Sprite newIcon)
