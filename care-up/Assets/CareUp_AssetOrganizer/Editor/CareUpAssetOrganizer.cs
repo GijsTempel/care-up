@@ -187,7 +187,10 @@ public class CareUpAssetOrganizer : EditorWindow
         {
             if (!string.IsNullOrEmpty(dictName))
             {
-                scenes.Add(dictName.Replace("\r", ""));
+                if (dictName.Substring(0, 1) != "#")
+                {
+                    scenes.Add(dictName.Replace("\r", ""));
+                }
             }
         }
         return scenes;
