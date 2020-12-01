@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using System.IO;
 using UnityEditor.AddressableAssets;
+using UnityEditor.SceneManagement;
 
 public class CareUpAssetOrganizer : EditorWindow
 {
@@ -22,6 +23,36 @@ public class CareUpAssetOrganizer : EditorWindow
 
     void OnGUI()
     {
+        if (GUILayout.Button("Select Dependency Prefabs"))
+        {
+            string scenePath = EditorSceneManager.GetActiveScene().path;
+            string[] dep = AssetDatabase.GetDependencies(scenePath);
+            GameObject prefabHolder = GameObject.Find("PrefabHolder");
+            if (prefabHolder == null)
+            {
+                GameObject holder = (GameObject)AssetDatabase.LoadMainAssetAtPath("Assets/Resources/NecessaryPrefabs/PrefabHolder.prefab");
+                prefabHolder = Instantiate(holder) as GameObject;
+                prefabHolder.name = "PrefabHolder";
+            }
+            if (prefabHolder != null)
+            {
+                foreach (string d in dep)
+                {
+                    if (Path.GetExtension(d.ToLower()) == ".prefab" &&
+                        d.Split('/')[2] == "Prefabs")
+                    {
+                        GameObject prefab = (GameObject)AssetDatabase.LoadMainAssetAtPath(d);
+                        if (prefab.GetComponent<PickableObject>() != null)
+                        {
+                            GameObject prefabInst = Instantiate(prefab, prefabHolder.transform) as GameObject;
+                            prefabInst.name = Path.GetFileNameWithoutExtension(d);
+                        }
+                    }
+                }
+            }
+
+
+        }
         if (GUILayout.Button("Start Process"))
         {
             itemsToProsess = 1;
