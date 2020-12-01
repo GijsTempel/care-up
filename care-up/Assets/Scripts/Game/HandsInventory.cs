@@ -398,9 +398,7 @@ public class HandsInventory : MonoBehaviour {
     public void CreateObjectByName(string name, Vector3 position, System.Action<GameObject> callback = null)
     {
         GameObject bundleObject = SpawnObject(name);
-        //Debug.Log("starting loading " + name);
-        //AsyncOperationHandle<Object> handle = Addressables.LoadAssetAsync<Object>(GetFullPath(name));
-        //await handle.Task;
+
 
         if (bundleObject != null)
         {
@@ -445,8 +443,6 @@ public class HandsInventory : MonoBehaviour {
     {
         GameObject bundleObject = SpawnObject(name);
 
-        //AsyncOperationHandle<Object> handle = Addressables.LoadAssetAsync<Object>(GetFullPath(name));
-        //await handle.Task;
 
         if (bundleObject != null)
         {
@@ -473,9 +469,6 @@ public class HandsInventory : MonoBehaviour {
     public void CreateAnimationObject(string name, bool hand)
     {
         Object bundleObject = SpawnObject(name);
-
-        //AsyncOperationHandle<Object> handle = Addressables.LoadAssetAsync<Object>(GetFullPath(name));
-        //await handle.Task;
 
         if (bundleObject != null)
         {
@@ -534,6 +527,10 @@ public class HandsInventory : MonoBehaviour {
         if (prefabHolder != null)
         {
             newInstance = prefabHolder.GetPrefab(_name);
+        }
+        else
+        {
+            Debug.Log("!!!Object  " + _name + " not found");
         }
         return newInstance;
     }
