@@ -5,7 +5,6 @@ using UnityEditor;
 using System.IO;
 using UnityEditor.AddressableAssets;
 using UnityEditor.SceneManagement;
-
 public class CareUpAssetOrganizer : EditorWindow
 {
     public static int itemsToProsess = 1;
@@ -108,8 +107,8 @@ public class CareUpAssetOrganizer : EditorWindow
                 if (!bundleNames.Contains(resContainerName))
                     bundleNames.Add(resContainerName);
                 _resCont.Add(res, resContainerName);
-                AddAssetToGroup(res, "asset-" + resContainerName);
-                //AssetImporter.GetAtPath(res).assetBundleName = "asset/" + resContainerName;
+                string groupName = "asset-" + (Mathf.Abs(resContainerName.GetHashCode())).ToString();
+                AddAssetToGroup(res, groupName);
                 itemsProsessed++;
                 string titleMessage = "Progressed " + itemsProsessed.ToString() + " of " + itemsToProsess.ToString();
                 EditorUtility.DisplayProgressBar(titleMessage, "Processing assets | " + res, (float)itemsProsessed / (float)itemsToProsess);
