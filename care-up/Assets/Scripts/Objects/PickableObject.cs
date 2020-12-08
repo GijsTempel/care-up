@@ -31,7 +31,7 @@ public class PickableObject : InteractableObject
 
     [HideInInspector]
     public bool sihlouette = false;
-    [HideInInspector]
+    //[HideInInspector]
     public int positionID = 0;
     [HideInInspector]
     public PickableObject mainObject;

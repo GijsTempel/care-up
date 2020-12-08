@@ -1416,6 +1416,19 @@ public class ActionManager : MonoBehaviour
         // make a list from sublist with actions of performed action type only
         List<Action> subtypelist = UnlockedIncompletedActions.Where(action => action.Type == type).ToList();
 
+        // Ugly temporary fix for catheterisation scene
+        if (type == ActionType.ObjectDrop && info.Length > 1)
+        {
+            if (info[0] == "PlasticTrashbucket" && info[1] == "1")
+            {
+                if (unlockedBlocks.Contains("WaterUnpacked") && unlockedBlocks.Contains("LubUnpacked"))
+                {
+                    print("catch");
+                    info[1] = "2";
+                }
+            }
+        }
+
         if (IncompletedActions.Count != 0)
         {
             foreach (Action action in subtypelist)
@@ -1477,9 +1490,6 @@ public class ActionManager : MonoBehaviour
                     // count only 1 step, some steps are identical
                     break;
                 }
-
-
-
             }
         }
 
