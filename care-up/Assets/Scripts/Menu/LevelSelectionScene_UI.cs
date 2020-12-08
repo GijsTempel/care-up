@@ -26,6 +26,7 @@ public class SceleInfo
     public bool testDisabled = false;
     public string inHouseBundleName = "";
     public string inHouseSceneName = "";
+    public string url = "";
 }
 
 /// <summary>
@@ -211,6 +212,9 @@ public class LevelSelectionScene_UI : MonoBehaviour
             if (!scenesInfo.ContainsKey(sceneInfo.sceneName) && sceneInfo.mainScene == "")
                 scenesInfo.Add(sceneInfo.sceneName, sceneInfo);
 
+            if (xmlSceneNode.Attributes["url"] != null)
+                sceneInfo.url = xmlSceneNode.Attributes["url"].Value;
+
             if (sceneInfo.mainScene != "" && sceneType != "")
             {
                 if(scenesInfo.ContainsKey(sceneInfo.mainScene))
@@ -294,6 +298,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
             sceneUnit.sceneName = sceneInfo.sceneName;
             sceneUnit.bundleName = sceneInfo.bundleName;
+            sceneUnit.url = sceneInfo.url;
 
             // setting scene title
             sceneUnit.transform.Find("Title").GetComponent<Text>().text

@@ -14,6 +14,8 @@ public class MainMenu : MonoBehaviour
     private PlayerPrefsManager prefs;
     public string eMail = "info@triplemotion.nl";
 
+    public static string storeUrl;
+
     [SerializeField]
     private Text reward = default;
 
@@ -390,6 +392,14 @@ public class MainMenu : MonoBehaviour
 #else
         OpenUrl(url);
 #endif
+    }
+
+    public void OpenStoreUrl()
+    {
+        if (string.IsNullOrEmpty(storeUrl))
+            storeUrl = "https://careup.online/cursussen-zorg/";
+
+        Application.OpenURL(storeUrl);
     }
 
 #if UNITY_WEBGL 

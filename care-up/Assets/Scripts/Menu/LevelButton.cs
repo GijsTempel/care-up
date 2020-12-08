@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class LevelButton : MonoBehaviour
 {
-
     private static LoadingScreen loadingScreen;
 
     public string bundleName;
@@ -12,6 +11,7 @@ public class LevelButton : MonoBehaviour
     public string inHouseBundleName = "";
     public string inHouseSceneName = "";
     public bool toLoadInhouse = false;
+    public string url;
     public GameObject IsFreeIcon;
     bool demoMark = false;
     bool PreviewIconChanged = false;
@@ -219,6 +219,8 @@ public class LevelButton : MonoBehaviour
 
     public void OnLevelButtonClick()
     {
+        MainMenu.storeUrl = url;
+
         bool locked = (buy || demoLock);
         if (locked && isInProducts.Length > 0)
             if (PlayerPrefsManager.IsScenePurchased(isInProducts))
