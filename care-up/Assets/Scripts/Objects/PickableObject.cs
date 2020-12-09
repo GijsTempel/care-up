@@ -4,7 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using System.Linq;
-using AssetBundles;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 /// <summary>
 /// Object that can be picked in hand
@@ -105,10 +106,14 @@ public class PickableObject : InteractableObject
     {
         if (prefabOutOfHands != "")
         {
-            GameObject replaced = inventory.CreateObjectByName(prefabOutOfHands, savedPosition);
-            replaced.GetComponent<PickableObject>().SavePosition(savedPosition, savedRotation, true);
-            replaced.GetComponent<PickableObject>().BaseLoadPosition();
-            Destroy(gameObject);
+            GameObject replaced = null;
+            inventory.CreateObjectByName(prefabOutOfHands, savedPosition, callback => replaced = callback);
+            if (replaced != null)
+            {
+                replaced.GetComponent<PickableObject>().SavePosition(savedPosition, savedRotation, true);
+                replaced.GetComponent<PickableObject>().BaseLoadPosition();
+                Destroy(gameObject);
+            }
         }
         else
         {
@@ -455,53 +460,46 @@ public class PickableObject : InteractableObject
         }
     }
 
+    GameObject SpawnObject(string _name)
+    {
+        GameObject newInstance = null;
+        PrefabHolder prefabHolder = GameObject.FindObjectOfType<PrefabHolder>();
+        if (prefabHolder != null)
+        {
+            newInstance = prefabHolder.GetPrefab(_name);
+        }
+        else
+        {
+            Debug.Log("!!!Object  " + _name + " not found");
+        }
+        return newInstance;
+    }
+
     public void InstantiateGhostObject(Vector3 pos, Quaternion rot, int posID = 0)
     {
-        bool from_bundle = false;
+
+        GameObject bundleObject = SpawnObject(name);
 
         GameObject ghost = null;
-        string FullPath;
-        if (customGhost!= null)
-        {
-            FullPath = "assets/resources/prefabs/" + customGhost.name.ToLower() + ".prefab";
-        }
-        else
-        {
-            FullPath = "assets/resources/prefabs/" + this.name.ToLower() + ".prefab";
-        }
-        
-        UnityEngine.Object bundleObject = AssetBundleManager.GetObjectFromLoaded(FullPath);
+
         if (bundleObject != null)
         {
+            bundleObject.SetActive(true);
             ghost = Instantiate(bundleObject, pos, rot) as GameObject;
-            from_bundle = true;
-        }
-        else
-        {
-            if (customGhost != null)
-            {
-                ghost = Instantiate(Resources.Load<GameObject>("Prefabs/" + customGhost.name), pos, rot);
-            }
-            else
-            {
-                ghost = Instantiate(Resources.Load<GameObject>("Prefabs/" + this.name),
-                    pos, rot);
-            }
-        }
-        ghost.layer = 9; // no collisions
-        ghost.GetComponent<PickableObject>().mainObject = this;
-        PickableObject ghostObject = ghost.GetComponent<PickableObject>();
-        ghostObject.sihlouette = true;
-        ghostObject.positionID = posID;
-        ghostObject.SetGhostShader();
-        ghostObject.GetComponent<Rigidbody>().useGravity = false;
-        ghostObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-        ghostObject.name = this.name;
-        ghostObject.assetSource = InteractableObject.AssetSource.Resources;
-        if (from_bundle)
-            ghostObject.assetSource = InteractableObject.AssetSource.Bundle;
+           
+            ghost.layer = 9; // no collisions
+            ghost.GetComponent<PickableObject>().mainObject = this;
+            PickableObject ghostObject = ghost.GetComponent<PickableObject>();
+            ghostObject.sihlouette = true;
+            ghostObject.positionID = posID;
+            ghostObject.SetGhostShader();
+            ghostObject.GetComponent<Rigidbody>().useGravity = false;
+            ghostObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            ghostObject.name = this.name;
+            ghostObject.assetSource = InteractableObject.AssetSource.Resources;
 
-        this.ghostObjects.Add(ghostObject);
+            this.ghostObjects.Add(ghostObject);
+        }
     }
 
     public void DeleteGhostObject()

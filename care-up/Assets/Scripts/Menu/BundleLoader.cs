@@ -1,14 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using AssetBundles;
 using UnityEngine.UI;
 
 
 public class BundleLoader : MonoBehaviour {
-
+    /*
     string sceneAssetBundle;
     string sceneName;
+    
     
     public IEnumerator Load(string scene, string bundle)
     {
@@ -66,4 +66,5 @@ public class BundleLoader : MonoBehaviour {
         //float elapsedTime = Time.realtimeSinceStartup - startTime;
         //print(elapsedTime);
     }
+ */
 }
