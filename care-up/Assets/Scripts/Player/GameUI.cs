@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using CareUp.Actions;
 using System.Linq;
-using AssetBundles;
 using UnityEngine.SceneManagement;
 
 public class GameUI : MonoBehaviour
@@ -164,7 +163,9 @@ public class GameUI : MonoBehaviour
 
     public void TestOutput()
     {
-        AssetBundleManager.PrintLoadedBundles();
+        Debug.LogWarning("removed due to new asset bundle manager");
+        // TODO - new asset bundle
+        //AssetBundleManager.PrintLoadedBundles();
     }
 
     public void UseOn()

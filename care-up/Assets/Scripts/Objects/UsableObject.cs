@@ -68,10 +68,14 @@ public class UsableObject : InteractableObject
                 if (tutorial == null || (tutorial != null &&
                     (PrefabToAppear == tutorial.itemToPick || PrefabToAppear == tutorial.itemToPick2)))
                 {
-                    GameObject gameObject = handsInventory.CreateObjectByName(PrefabToAppear, Vector3.zero);
-                    handsInventory.PickItem(gameObject.GetComponent<PickableObject>());
-                    gameObject.GetComponent<PickableObject>().CreateGhostObject(true);
-                    Reset();
+                    GameObject gameObject = null;
+                    handsInventory.CreateObjectByName(PrefabToAppear, Vector3.zero, callback => gameObject = callback);
+                    if (gameObject != null)
+                    {
+                        handsInventory.PickItem(gameObject.GetComponent<PickableObject>());
+                        gameObject.GetComponent<PickableObject>().CreateGhostObject(true);
+                        Reset();
+                    }
                 }
                 return;
             }

@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using MBS;
 using UnityEngine.SceneManagement;
+using UnityEngine.AddressableAssets;
 
 [RequireComponent(typeof(AudioSource))]
 public class bl_SceneLoader : MonoBehaviour
@@ -54,7 +55,7 @@ public class bl_SceneLoader : MonoBehaviour
     [SerializeField] private CanvasGroup FadeImageCanvas = null;
 
     private bl_SceneLoaderManager Manager = null;
-    private AsyncOperation async;
+    private AsyncOperation async = default(AsyncOperation);
     private bool isOperationStarted = false;
     public bool FinishLoad = false;
     private CanvasGroup RootAlpha;
@@ -188,11 +189,11 @@ public class bl_SceneLoader : MonoBehaviour
 
     void OnFinish()
     {
-        BundleLoader loader = GameObject.FindObjectOfType<BundleLoader>();
+        /*BundleLoader loader = GameObject.FindObjectOfType<BundleLoader>();
         if (loader != null)
         {
             loader.ClearLoader();
-        }
+        }*/
         FinishLoad = true;
         if (FlashImage != null) { FlashImage.SetActive(true); }
         //Can skip when next level is loaded.
@@ -254,6 +255,8 @@ public class bl_SceneLoader : MonoBehaviour
 
     public void ActualLoadLevel(CML action)
     {
+        // entrance to scene loading, replacing with Addressables method
+
         if (isLoading)
         {
             Debug.Log("Already loading something!");
@@ -281,11 +284,20 @@ public class bl_SceneLoader : MonoBehaviour
             return;
 
         SetupUI(CurrentLoadLevel);
-        StartCoroutine(StartAsyncOperation(CurrentLoadLevel.SceneName, bundle));
+
+        //StartCoroutine(StartAsyncOperation(CurrentLoadLevel.SceneName, bundle));
+        StartCoroutine(NewSceneLoad(CurrentLoadLevel.SceneName));
+
         if (CurrentLoadLevel.LoadingType == LoadingType.Fake)
         {
             StartCoroutine(StartFakeLoading());
         }
+    }
+
+    IEnumerator NewSceneLoad(string name)
+    {
+        name = "Assets/Scenes/" + name + ".unity";
+        yield return Addressables.LoadSceneAsync(name);
     }
 
     // unity is too dumb to allow functions with 2 parameters in editor
@@ -353,7 +365,7 @@ public class bl_SceneLoader : MonoBehaviour
         StartCoroutine(LoadNextSceneIE());
     }
 
-    private IEnumerator StartAsyncOperation(string level, string bundle = "")
+    /*private IEnumerator StartAsyncOperation(string level, string bundle = "")
     {
         while (RootAlpha.alpha < 1)
         {
@@ -380,7 +392,7 @@ public class bl_SceneLoader : MonoBehaviour
             isOperationStarted = true;
             yield return async;
         }
-    }
+    }*/
 
     IEnumerator StartFakeLoading()
     {
