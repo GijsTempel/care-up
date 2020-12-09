@@ -6,10 +6,13 @@ using System.Collections.Generic;
 using MBS;
 using UnityEngine.SceneManagement;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.ResourceManagement.ResourceProviders;
 
 [RequireComponent(typeof(AudioSource))]
 public class bl_SceneLoader : MonoBehaviour
 {
+    AsyncOperationHandle<SceneInstance> loadHandle;
     [Header("Settings")]
     public SceneSkipType SkipType = SceneSkipType.Button;
     [Range(0.5f, 7)] public float SceneSmoothLoad = 3;
@@ -122,13 +125,14 @@ public class bl_SceneLoader : MonoBehaviour
     {
         LoadingRotator();
 
-        if (!isOperationStarted)
+        //if (!isOperationStarted)
+        //    return;
+        //if (async == null)
+        //    return;
+        if (!loadHandle.IsValid())
             return;
-        if (async == null)
-            return;
-
         UpdateUI();
-        SkipWithKey();
+        //SkipWithKey();
     }
 
     void SkipWithKey()
@@ -144,13 +148,15 @@ public class bl_SceneLoader : MonoBehaviour
 
     void UpdateUI()
     {
+
         if (CurrentLoadLevel.LoadingType == LoadingType.Async)
         {
             //Get progress of load level
-            float Extra = (GetSkipType == SceneSkipType.InstantComplete) ? 0 : 0.1f;
-            float p = (async.progress + Extra); //Fix problem of 90%
+            //float Extra = (GetSkipType == SceneSkipType.InstantComplete) ? 0 : 0.1f;
+            //float p = (async.progress + Extra); //Fix problem of 90%
+            float p = loadHandle.PercentComplete;
             lerpValue = Mathf.Lerp(lerpValue, p, DeltaTime * SceneSmoothLoad);
-            if (async.isDone || lerpValue > 0.99f)
+            if (lerpValue > 0.99f)
             {
                 //Called one time what is inside in this function.
                 if (!FinishLoad)
@@ -297,7 +303,9 @@ public class bl_SceneLoader : MonoBehaviour
     IEnumerator NewSceneLoad(string name)
     {
         name = "Assets/Scenes/" + name + ".unity";
-        yield return Addressables.LoadSceneAsync(name);
+        AsyncOperationHandle<SceneInstance> handle = Addressables.LoadSceneAsync(name);
+        loadHandle = handle;
+        yield return handle;
     }
 
     // unity is too dumb to allow functions with 2 parameters in editor
@@ -313,6 +321,10 @@ public class bl_SceneLoader : MonoBehaviour
         //Show all UI
         RootAlpha.alpha = 1.0f;
         RootUI.SetActive(true);
+        if (TipText != null)
+            TipText.text = "";
+        if (LoadBarSlider != null) 
+            LoadBarSlider.value = 0; 
     }
 
     void SetupUI(bl_SceneLoaderInfo info)
