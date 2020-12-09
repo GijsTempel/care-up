@@ -227,7 +227,7 @@ public class bl_SceneLoader : MonoBehaviour
     {
         sceneToLoad = level;
         bundleToLoad = bundle;
-
+        ShowLoadingScreen();
         string scoring_filepath = "wuss_scoring/unity_functions.php";
         string SCORINGConstant = "SCORING";
 
@@ -306,6 +306,15 @@ public class bl_SceneLoader : MonoBehaviour
         LoadLevel(level);
     }
 
+
+    void ShowLoadingScreen()
+    {
+      
+        //Show all UI
+        RootAlpha.alpha = 1.0f;
+        RootUI.SetActive(true);
+    }
+
     void SetupUI(bl_SceneLoaderInfo info)
     {
         if (BackgroundImage != null && useBackgrounds)
@@ -350,7 +359,7 @@ public class bl_SceneLoader : MonoBehaviour
             StartCoroutine(TipsLoop());
         }
         //Show all UI
-        RootAlpha.alpha = 0;
+        RootAlpha.alpha = 1.0f;
         RootUI.SetActive(true);
 
         //start audio loop
