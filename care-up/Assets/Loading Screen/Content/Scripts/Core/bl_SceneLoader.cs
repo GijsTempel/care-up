@@ -231,6 +231,12 @@ public class bl_SceneLoader : MonoBehaviour
 
     public void LoadLevel(string level, string bundle = "")
     {
+        if (level == "LoginMenu")
+        {
+            SceneManager.LoadScene(0);
+            return;
+        }
+        
         sceneToLoad = level;
         bundleToLoad = bundle;
         ShowLoadingScreen();
@@ -315,9 +321,8 @@ public class bl_SceneLoader : MonoBehaviour
     }
 
 
-    void ShowLoadingScreen()
+    public void ShowLoadingScreen()
     {
-      
         //Show all UI
         RootAlpha.alpha = 1.0f;
         RootUI.SetActive(true);
