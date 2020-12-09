@@ -131,7 +131,7 @@ public class CareUpAssetOrganizer : EditorWindow
         if (!group)
         {
             group = settings.CreateGroup(groupName, false, false, false, new List<UnityEditor.AddressableAssets.Settings.AddressableAssetGroupSchema>
-            { settings.DefaultGroup.Schemas[0] });
+            { settings.DefaultGroup.Schemas[1] });
         }
         var entry = settings.CreateOrMoveEntry(AssetDatabase.AssetPathToGUID(path), group, false, true);
 
