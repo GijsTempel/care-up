@@ -5,10 +5,11 @@ using UnityEditor;
 using System.IO;
 using UnityEditor.AddressableAssets;
 using UnityEditor.SceneManagement;
-public class CareUpAssetOrganizer : EditorWindow
+
+    public class CareUpAssetOrganizer : EditorWindow
 {
-    public static int itemsToProsess = 1;
-    public static int itemsProsessed = 1;
+    public static int itemsToProcess = 1;
+    public static int itemsProcessed = 1;
 
     static string ListOfScenes = "BundleBuilderScenes";
     static Dictionary<string, List<string>> scenesData = new Dictionary<string, List<string>>();
@@ -52,10 +53,10 @@ public class CareUpAssetOrganizer : EditorWindow
 
 
         }
-        if (GUILayout.Button("Start Process"))
+        if (GUILayout.Button("++Start Creating Addressable Groups++"))
         {
-            itemsToProsess = 1;
-            itemsProsessed = 0;
+            itemsToProcess = 1;
+            itemsProcessed = 0;
 
             List<string> _resources = new List<string>();
             scenesData.Clear();
@@ -65,7 +66,7 @@ public class CareUpAssetOrganizer : EditorWindow
                 ".wav", ".controller", ".anim", ".otf", ".mask", ".shader", ".psd", ".mp3", ".asset", ".tif", ".tga", ".tiff", ".jpeg",
                 ".mesh", ".exr", ".renderTexture"};
             int i = 0;
-            itemsToProsess = scenes.Count;
+            itemsToProcess = scenes.Count;
             foreach (string scene in scenes)
             {
                 string scenePath = scenesFolder + scene + ".unity";
@@ -94,13 +95,13 @@ public class CareUpAssetOrganizer : EditorWindow
                 }
 
                 i++;
-                itemsProsessed++;
-                EditorUtility.DisplayProgressBar("Progress", "Processing scenes", (float)itemsProsessed / (float)itemsToProsess);
+                itemsProcessed++;
+                EditorUtility.DisplayProgressBar("Progress", "Processing scenes", (float)itemsProcessed / (float)itemsToProcess);
             }
             Dictionary<string, string> _resCont = new Dictionary<string, string>();
             List<string> bundleNames = new List<string>();
-            itemsToProsess = _resources.Count;
-            itemsProsessed = 0;
+            itemsToProcess = _resources.Count;
+            itemsProcessed = 0;
             foreach (string res in _resources)
             {
                 string resContainerName = GetContainerName(res);
@@ -109,14 +110,30 @@ public class CareUpAssetOrganizer : EditorWindow
                 _resCont.Add(res, resContainerName);
                 string groupName = "asset-" + (Mathf.Abs(resContainerName.GetHashCode())).ToString();
                 AddAssetToGroup(res, groupName);
-                itemsProsessed++;
-                string titleMessage = "Progressed " + itemsProsessed.ToString() + " of " + itemsToProsess.ToString();
-                EditorUtility.DisplayProgressBar(titleMessage, "Processing assets | " + res, (float)itemsProsessed / (float)itemsToProsess);
+                itemsProcessed++;
+                string titleMessage = "Progressed " + itemsProcessed.ToString() + " of " + itemsToProcess.ToString();
+                EditorUtility.DisplayProgressBar(titleMessage, "Processing assets | " + res, (float)itemsProcessed / (float)itemsToProcess);
             }
             Debug.Log("Finished");
         }
-            
         EditorUtility.ClearProgressBar();
+        if (GUILayout.Button("Remove Empty Addressable Groups"))
+        {
+            var settings = AddressableAssetSettingsDefaultObject.Settings;
+            var groups = settings.groups;
+            List<UnityEditor.AddressableAssets.Settings.AddressableAssetGroup> groupsToDelete = 
+                new List<UnityEditor.AddressableAssets.Settings.AddressableAssetGroup>();
+            foreach(var g in groups)
+            {
+                Debug.Log(g.name + " " + g.entries.Count.ToString());
+                if (g.entries.Count == 0)
+                    groupsToDelete.Add(g);
+            }
+            foreach(var g in groupsToDelete)
+            {
+                settings.RemoveGroup(g);
+            }
+        }
     }
 
     void OnInspectorUpdate()
@@ -130,8 +147,12 @@ public class CareUpAssetOrganizer : EditorWindow
         var group = settings.FindGroup(groupName);
         if (!group)
         {
-            group = settings.CreateGroup(groupName, false, false, false, new List<UnityEditor.AddressableAssets.Settings.AddressableAssetGroupSchema>
+            group = settings.CreateGroup(groupName, false, false, true, new List<UnityEditor.AddressableAssets.Settings.AddressableAssetGroupSchema>
             { settings.DefaultGroup.Schemas[1] });
+        }
+        if (group.entries.Count == 0)
+        {
+            Debug.Log("FFFFFFFFFFFFFFFFFF  " + group.name);
         }
         var entry = settings.CreateOrMoveEntry(AssetDatabase.AssetPathToGUID(path), group, false, true);
 
