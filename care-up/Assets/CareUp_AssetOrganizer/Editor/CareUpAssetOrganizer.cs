@@ -150,10 +150,6 @@ using UnityEditor.SceneManagement;
             group = settings.CreateGroup(groupName, false, false, true, new List<UnityEditor.AddressableAssets.Settings.AddressableAssetGroupSchema>
             { settings.DefaultGroup.Schemas[1] });
         }
-        if (group.entries.Count == 0)
-        {
-            Debug.Log("FFFFFFFFFFFFFFFFFF  " + group.name);
-        }
         var entry = settings.CreateOrMoveEntry(AssetDatabase.AssetPathToGUID(path), group, false, true);
 
         if (entry == null)
