@@ -3,10 +3,12 @@
 public class PickUpOnFrame : StateMachineBehaviour
 {
 
+    [Header("OLD SCRIPT. DO NOT USE IT ANYMORE")]
+    
     public int actionFrame;
     public string objectName;
     public PlayerAnimationManager.Hand hand;
-
+    
     protected float frame = 0f;
     protected float prevFrame;
 
