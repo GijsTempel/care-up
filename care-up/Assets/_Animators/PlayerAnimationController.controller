@@ -1269,6 +1269,7 @@ MonoBehaviour:
   valueName: extra
   value: 1
   actionFrame: 750
+  increase: 0
 --- !u!114 &-2278610288509044029
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1486,6 +1487,7 @@ MonoBehaviour:
   valueName: extra
   value: 1
   actionFrame: 750
+  increase: 0
 --- !u!114 &-1155734117807687315
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -4579,6 +4581,7 @@ MonoBehaviour:
   valueName: 
   value: 1
   actionFrame: 500
+  increase: 0
 --- !u!114 &114073671283099594
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5045,6 +5048,7 @@ MonoBehaviour:
   valueName: 
   value: 2
   actionFrame: 300
+  increase: 0
 --- !u!114 &114118635965240648
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -6529,6 +6533,7 @@ MonoBehaviour:
   valueName: 
   value: 2
   actionFrame: 100
+  increase: 0
 --- !u!114 &114256083915008472
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7051,6 +7056,7 @@ MonoBehaviour:
   valueName: 
   value: 1
   actionFrame: 5
+  increase: 0
 --- !u!114 &114304732068146338
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -8475,6 +8481,7 @@ MonoBehaviour:
   valueName: 
   value: 1
   actionFrame: 5
+  increase: 0
 --- !u!114 &114416044307036448
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8552,6 +8559,7 @@ MonoBehaviour:
   valueName: 
   value: 1
   actionFrame: 100
+  increase: 0
 --- !u!114 &114417942723197964
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9242,6 +9250,7 @@ MonoBehaviour:
   valueName: 
   value: 2
   actionFrame: 300
+  increase: 0
 --- !u!114 &114464927506291312
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10495,6 +10504,7 @@ MonoBehaviour:
   valueName: 
   value: 2
   actionFrame: 100
+  increase: 0
 --- !u!114 &114589633268416878
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -11730,6 +11740,7 @@ MonoBehaviour:
   valueName: 
   value: 1
   actionFrame: 100
+  increase: 0
 --- !u!114 &114708145076739790
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -14451,6 +14462,7 @@ MonoBehaviour:
   valueName: 
   value: 1
   actionFrame: 500
+  increase: 0
 --- !u!114 &114962425673359156
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -15674,8 +15686,14 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Combine Ampoule DesinfectionCloth
+    m_ConditionEvent: Combine
     m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: rightID
+    m_EventTreshold: 10900
+  - m_ConditionMode: 6
+    m_ConditionEvent: leftID
+    m_EventTreshold: 51500
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102112948827730458}
   m_Solo: 0
@@ -16134,8 +16152,14 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: S Combine DesinfectedAmpoule Cloth
+    m_ConditionEvent: S Combine
     m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: rightID
+    m_EventTreshold: 10700
+  - m_ConditionMode: 6
+    m_ConditionEvent: leftID
+    m_EventTreshold: 51700
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102244532272829328}
   m_Solo: 0
@@ -16484,8 +16508,14 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Combine DesinfectionCloth Medicine
+    m_ConditionEvent: Combine
     m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: rightID
+    m_EventTreshold: 51600
+  - m_ConditionMode: 6
+    m_ConditionEvent: leftID
+    m_EventTreshold: 10900
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102579656766245302}
   m_Solo: 0
@@ -16722,8 +16752,14 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Combine SyringeWithSolvent Medicine
+    m_ConditionEvent: Combine
     m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: rightID
+    m_EventTreshold: 51600
+  - m_ConditionMode: 6
+    m_ConditionEvent: leftID
+    m_EventTreshold: 51800
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102571943431489080}
   m_Solo: 0
@@ -18886,8 +18922,14 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: S Combine Medicine DesinfectionCloth
+    m_ConditionEvent: S Combine
     m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: rightID
+    m_EventTreshold: 10900
+  - m_ConditionMode: 6
+    m_ConditionEvent: leftID
+    m_EventTreshold: 51600
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102652954442146612}
   m_Solo: 0
@@ -20184,8 +20226,14 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Combine Cloth Alcohol
+    m_ConditionEvent: Combine
     m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: rightID
+    m_EventTreshold: 10800
+  - m_ConditionMode: 6
+    m_ConditionEvent: leftID
+    m_EventTreshold: 10700
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102115190834661006}
   m_Solo: 0
@@ -20989,8 +21037,14 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: S Combine Medicine SyringeWithSolvent
+    m_ConditionEvent: S Combine
     m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: rightID
+    m_EventTreshold: 51800
+  - m_ConditionMode: 6
+    m_ConditionEvent: leftID
+    m_EventTreshold: 51600
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102897853043735706}
   m_Solo: 0
@@ -21014,8 +21068,14 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Combine Medicine SyringeWithSolvent
+    m_ConditionEvent: Combine
     m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: rightID
+    m_EventTreshold: 51800
+  - m_ConditionMode: 6
+    m_ConditionEvent: leftID
+    m_EventTreshold: 51600
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102073497163459894}
   m_Solo: 0
@@ -21277,8 +21337,14 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: S Combine Cloth DesinfectedAmpoule
+    m_ConditionEvent: S Combine
     m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: rightID
+    m_EventTreshold: 51700
+  - m_ConditionMode: 6
+    m_ConditionEvent: leftID
+    m_EventTreshold: 10700
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102422177043780756}
   m_Solo: 0
@@ -21424,8 +21490,14 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: S Combine DesinfectionCloth Medicine
+    m_ConditionEvent: S Combine
     m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: rightID
+    m_EventTreshold: 51600
+  - m_ConditionMode: 6
+    m_ConditionEvent: leftID
+    m_EventTreshold: 10900
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102850928651655516}
   m_Solo: 0
@@ -22074,8 +22146,14 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: S Combine SyringeWithSolvent Medicine
+    m_ConditionEvent: S Combine
     m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: rightID
+    m_EventTreshold: 51600
+  - m_ConditionMode: 6
+    m_ConditionEvent: leftID
+    m_EventTreshold: 51800
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102236764374306200}
   m_Solo: 0
@@ -24477,8 +24555,14 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: S Combine Cloth Alcohol
+    m_ConditionEvent: S Combine
     m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: rightID
+    m_EventTreshold: 10800
+  - m_ConditionMode: 6
+    m_ConditionEvent: leftID
+    m_EventTreshold: 10700
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102491321923060966}
   m_Solo: 0
@@ -24524,8 +24608,14 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: S Combine Ampoule DesinfectionCloth
+    m_ConditionEvent: S Combine
     m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: rightID
+    m_EventTreshold: 10900
+  - m_ConditionMode: 6
+    m_ConditionEvent: leftID
+    m_EventTreshold: 51500
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102769291966097100}
   m_Solo: 0
@@ -31885,8 +31975,14 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Combine Cloth DesinfectedAmpoule
+    m_ConditionEvent: Combine
     m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: rightID
+    m_EventTreshold: 51700
+  - m_ConditionMode: 6
+    m_ConditionEvent: leftID
+    m_EventTreshold: 10700
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102377607342358262}
   m_Solo: 0
@@ -33825,8 +33921,14 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Combine Alcohol Cloth
+    m_ConditionEvent: Combine
     m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: rightID
+    m_EventTreshold: 10700
+  - m_ConditionMode: 6
+    m_ConditionEvent: leftID
+    m_EventTreshold: 10800
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102470358904981774}
   m_Solo: 0
@@ -33872,8 +33974,14 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Combine DesinfectedAmpoule Cloth
+    m_ConditionEvent: Combine
     m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: rightID
+    m_EventTreshold: 10700
+  - m_ConditionMode: 6
+    m_ConditionEvent: leftID
+    m_EventTreshold: 51700
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102699838673084062}
   m_Solo: 0
@@ -34714,8 +34822,14 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Combine DesinfectionCloth Ampoule
+    m_ConditionEvent: Combine
     m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: rightID
+    m_EventTreshold: 51500
+  - m_ConditionMode: 6
+    m_ConditionEvent: leftID
+    m_EventTreshold: 10900
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102858872368555272}
   m_Solo: 0
@@ -35914,8 +36028,14 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Combine Medicine DesinfectionCloth
+    m_ConditionEvent: Combine
     m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: rightID
+    m_EventTreshold: 10900
+  - m_ConditionMode: 6
+    m_ConditionEvent: leftID
+    m_EventTreshold: 51600
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102063336657612302}
   m_Solo: 0
@@ -37839,8 +37959,14 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: S Combine DesinfectionCloth Ampoule
+    m_ConditionEvent: S Combine
     m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: rightID
+    m_EventTreshold: 51500
+  - m_ConditionMode: 6
+    m_ConditionEvent: leftID
+    m_EventTreshold: 10900
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102129405743141150}
   m_Solo: 0
@@ -44165,8 +44291,14 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: S Combine Alcohol Cloth
+    m_ConditionEvent: S Combine
     m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: rightID
+    m_EventTreshold: 10700
+  - m_ConditionMode: 6
+    m_ConditionEvent: leftID
+    m_EventTreshold: 10800
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102137780137470846}
   m_Solo: 0
@@ -63322,7 +63454,7 @@ AnimatorStateMachine:
     m_Position: {x: 264, y: 24, z: 0}
   - serializedVersion: 1
     m_StateMachine: {fileID: 1107395490132057308}
-    m_Position: {x: 264, y: 72, z: 0}
+    m_Position: {x: 260, y: 70, z: 0}
   - serializedVersion: 1
     m_StateMachine: {fileID: 1107200286236833448}
     m_Position: {x: 264, y: 120, z: 0}
@@ -63745,16 +63877,16 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 1102115190834661006}
-    m_Position: {x: 444, y: 24, z: 0}
+    m_Position: {x: 450, y: 20, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102470358904981774}
-    m_Position: {x: 96, y: 24, z: 0}
+    m_Position: {x: 90, y: 20, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102579656766245302}
-    m_Position: {x: 432, y: 72, z: 0}
+    m_Position: {x: 540, y: -180, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102063336657612302}
-    m_Position: {x: 216, y: 72, z: 0}
+    m_Position: {x: 10, y: -160, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102562732890319256}
     m_Position: {x: 216, y: 168, z: 0}
@@ -63775,16 +63907,16 @@ AnimatorStateMachine:
     m_Position: {x: 432, y: 264, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102351789558424998}
-    m_Position: {x: 432, y: 312, z: 0}
+    m_Position: {x: 430, y: 310, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102386727594552838}
     m_Position: {x: 216, y: 312, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102858872368555272}
-    m_Position: {x: 220, y: 360, z: 0}
+    m_Position: {x: 380, y: -250, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102112948827730458}
-    m_Position: {x: 432, y: 360, z: 0}
+    m_Position: {x: 130, y: -250, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102154884938229444}
     m_Position: {x: 0, y: 576, z: 0}
@@ -64607,16 +64739,16 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 1102491321923060966}
-    m_Position: {x: 348, y: -12, z: 0}
+    m_Position: {x: 550, y: 10, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102137780137470846}
-    m_Position: {x: 132, y: -12, z: 0}
+    m_Position: {x: -120, y: -10, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102850928651655516}
-    m_Position: {x: 348, y: 36, z: 0}
+    m_Position: {x: 580, y: -160, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102652954442146612}
-    m_Position: {x: 132, y: 36, z: 0}
+    m_Position: {x: -100, y: -180, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102324318351853524}
     m_Position: {x: 132, y: 132, z: 0}
@@ -64643,10 +64775,10 @@ AnimatorStateMachine:
     m_Position: {x: 360, y: -456, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102129405743141150}
-    m_Position: {x: 132, y: 372, z: 0}
+    m_Position: {x: 440, y: -340, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102769291966097100}
-    m_Position: {x: 348, y: 372, z: 0}
+    m_Position: {x: 0, y: -330, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102964560638443986}
     m_Position: {x: -300, y: 516, z: 0}
@@ -64697,7 +64829,7 @@ AnimatorStateMachine:
     m_Position: {x: 1103, y: 497, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102972990488346324}
-    m_Position: {x: 1138, y: 562, z: 0}
+    m_Position: {x: 1110, y: 280, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -65064,22 +65196,22 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 1102377607342358262}
-    m_Position: {x: -340, y: 130, z: 0}
+    m_Position: {x: 50, y: 310, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102699838673084062}
-    m_Position: {x: 492, y: 108, z: 0}
+    m_Position: {x: 270, y: 330, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102181421561648862}
-    m_Position: {x: 252, y: 108, z: 0}
+    m_Position: {x: 250, y: 400, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102987325517238360}
-    m_Position: {x: 36, y: 108, z: 0}
+    m_Position: {x: -10, y: 380, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102571943431489080}
-    m_Position: {x: 36, y: 156, z: 0}
+    m_Position: {x: -70, y: 450, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102073497163459894}
-    m_Position: {x: 252, y: 156, z: 0}
+    m_Position: {x: 200, y: 460, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -66066,7 +66198,7 @@ AnimatorStateMachine:
     m_Position: {x: 480, y: 120, z: 0}
   - serializedVersion: 1
     m_StateMachine: {fileID: 1107289738026177930}
-    m_Position: {x: 480, y: 168, z: 0}
+    m_Position: {x: 480, y: 170, z: 0}
   - serializedVersion: 1
     m_StateMachine: {fileID: 1107620577318736694}
     m_Position: {x: 480, y: 216, z: 0}
@@ -66618,22 +66750,22 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 1102422177043780756}
-    m_Position: {x: 36, y: 60, z: 0}
+    m_Position: {x: -60, y: 220, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102244532272829328}
-    m_Position: {x: 252, y: 60, z: 0}
+    m_Position: {x: 280, y: 230, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102051982922830520}
-    m_Position: {x: 252, y: 108, z: 0}
+    m_Position: {x: 280, y: 270, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102114633419522446}
-    m_Position: {x: 36, y: 108, z: 0}
+    m_Position: {x: 70, y: 270, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102236764374306200}
-    m_Position: {x: 36, y: 156, z: 0}
+    m_Position: {x: -40, y: 410, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102897853043735706}
-    m_Position: {x: 252, y: 156, z: 0}
+    m_Position: {x: 230, y: 430, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
