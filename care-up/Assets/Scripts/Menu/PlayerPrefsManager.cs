@@ -39,6 +39,21 @@ public class PlayerPrefsManager : MonoBehaviour
             isRead = _isRead;
             createdTime = _createdTime;
         }
+
+        public string GetCreatedTimeString()
+        {
+            System.DateTime notifDate = UnixTimeStampToDate(createdTime);
+            string sDate = notifDate.Day.ToString() + "." + notifDate.Month.ToString() + "." + notifDate.Year.ToString();
+            return sDate;
+        }
+        public System.DateTime UnixTimeStampToDate(long unixTimeStamp)
+        {
+            // Unix timestamp is seconds past epoch
+            System.DateTime dtDateTime = new System.DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+            dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
+            return dtDateTime;
+        }
+
     };
 
     public static Dictionary<int, CANotifications> Notifications = new Dictionary<int, CANotifications>();

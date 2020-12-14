@@ -20,12 +20,17 @@ public class NotificationItem : MonoBehaviour
         PlayerPrefsManager.CANotifications notif = PlayerPrefsManager.GetNotificationByID(_id);
         notifID = _id;
         titleObj.GetComponent<Text>().text = notif.title;
-        messageObj.GetComponent<Text>().text = notif.message;
+        string messageToShow = notif.message;
+        int lines = notif.message.Split('\n').Length;
+        if (notif.message.Length > 120 || lines > 2)
+        {
+            messageToShow = notif.message.Substring(0, 120) + "...";
+        }
+        messageObj.GetComponent<Text>().text = messageToShow;
         authorObj.GetComponent<Text>().text = notif.author;
         star.SetActive(!notif.isRead);
 
-        System.DateTime notifDate = UnixTimeStampToDate(notif.createdTime);
-        string sDate = notifDate.Day.ToString() + "." + notifDate.Month.ToString() + "." + notifDate.Year.ToString();
+        string sDate = notif.GetCreatedTimeString();
         dateObj.GetComponent<Text>().text = sDate;
     }
 
@@ -41,14 +46,6 @@ public class NotificationItem : MonoBehaviour
         MarkAsRead();
     }
 
-    public System.DateTime UnixTimeStampToDate(long unixTimeStamp)
-    {
-        // Unix timestamp is seconds past epoch
-        System.DateTime dtDateTime = new System.DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
-        dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
-        return dtDateTime;
-    }
-
     public void MarkAsRead()
     {
         if (!isRead)
@@ -61,6 +58,8 @@ public class NotificationItem : MonoBehaviour
             //Insert update to database
             DatabaseManager.PushCANotification(notifID, PlayerPrefsManager.Notifications[notifID]);
         }
+        GameObject.FindObjectOfType<NotificationPanel>().ShowFullMessage(PlayerPrefsManager.Notifications[notifID]);
+
     }
 
 }

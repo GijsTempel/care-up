@@ -10,7 +10,11 @@ public class NotificationPanel : MonoBehaviour
     public List<GameObject> pages;
     public GameObject newNotifContainer;
     public GameObject notifContainer;
-
+    public NotificationPanelFull notificationPanelFull;
+    public void ShowFullMessage(PlayerPrefsManager.CANotifications _notif)
+    {
+        notificationPanelFull.ShowMessage(_notif);
+    }
     public void ShowPage(int pageNum)
     {
         foreach(GameObject page in pages)

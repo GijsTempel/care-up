@@ -47,18 +47,27 @@ public class UMP_Manager : MonoBehaviour {
     {
         // it's gonne be sent to server now and saved there
 
-        DatabaseManager.PushCANotification(0, new PlayerPrefsManager.CANotifications("Title number 1", "Some message that can be sent to player",
+        string longMessage1 = "The Unity game engine launched in 2005, aiming to \"democratize\" game development by making it accessible to more developers. \nThe next year, Unity was named runner-up in the Best Use of Mac OS X Graphics category in Apple Inc.'s Apple Design Awards. Unity was initially released for Mac OS X, later adding support for Microsoft Windows and Web browsers.";
+        string longMessage2 = "Godot aims to offer a fully integrated game development environment. \n " +
+            "It allows developers to create a game from scratch, needing no other tools beyond those used for content creation (art assets, music, etc.). \n" +
+            "The engine's architecture is built around the concept of a tree of \"nodes\". \n" +
+            "Nodes are organized inside of \"scenes\", which are reusable, instanceable, inheritable, and nestable groups of nodes. \n" +
+            "All game resources, including scripts and graphical assets, are saved as part of the computer's file system (rather than in a database). \n" +
+            "This storage solution is intended to facilitate collaboration between game development teams using software version control systems. \n\n" +
+            "The engine supports deployment to multiple platforms and allows specification of texture compression and resolution settings for each platform. Currently, supported platforms include Linux, macOS, Microsoft Windows, BSD, Android, iOS, Universal Windows Platform, HTML5, and WebAssembly.";
+
+        DatabaseManager.PushCANotification(0, new PlayerPrefsManager.CANotifications("Title number 1", longMessage1,
                     "William Shakespeare", false, 1599264000));
-        DatabaseManager.PushCANotification(1, new PlayerPrefsManager.CANotifications("Title number 2", "Some other message that can be sent to player",
+        DatabaseManager.PushCANotification(1, new PlayerPrefsManager.CANotifications("Title number 2", longMessage2,
                    "Agatha Christie", false, 1600128000));
-        DatabaseManager.PushCANotification(2, new PlayerPrefsManager.CANotifications("Title number 3", "More messages",
-                    "J. K. Rowling", false, 1601645343));
-        DatabaseManager.PushCANotification(3, new PlayerPrefsManager.CANotifications("Title number 4", "Many many many more messages",
-                    "Stephen King", false, 1601645343));
-        DatabaseManager.PushCANotification(4, new PlayerPrefsManager.CANotifications("Title number 5", "This message can be a bit long. I had to place it here to test, how it will fit to the selected place for the test. If you can read this, it was shown correctly, and there is enough space for message like this",
-                    "Robert Asprin", false, 1601645343));
-        DatabaseManager.PushCANotification(5, new PlayerPrefsManager.CANotifications("Title number 6", "And the last one",
-                    "Ian Fleming", false, 1601645343));
+        //DatabaseManager.PushCANotification(2, new PlayerPrefsManager.CANotifications("Title number 3", "More messages",
+        //            "J. K. Rowling", false, 1601645343));
+        //DatabaseManager.PushCANotification(3, new PlayerPrefsManager.CANotifications("Title number 4", "Many many many more messages",
+        //            "Stephen King", false, 1601645343));
+        //DatabaseManager.PushCANotification(4, new PlayerPrefsManager.CANotifications("Title number 5", "This message can be a bit long. I had to place it here to test, how it will fit to the selected place for the test. If you can read this, it was shown correctly, and there is enough space for message like this",
+        //            "Robert Asprin", false, 1601645343));
+        //DatabaseManager.PushCANotification(5, new PlayerPrefsManager.CANotifications("Title number 6", "And the last one",
+        //            "Ian Fleming", false, 1601645343));
     }
 
     public void ShowCongratulation(int coins, int diamants = 0)
