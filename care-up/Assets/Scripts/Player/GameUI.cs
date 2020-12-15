@@ -191,7 +191,12 @@ public class GameUI : MonoBehaviour
             if (objectsIDsController.cheat)
                 return;
         }
-
+        if (PlayerAnimationManager.IsLongAnimation())
+            return;
+        if (GameObject.Find("Sequences") != null)
+        {
+            return;
+        }
         if (Message == "")
             return;
         BlockTitle.text = Title;
