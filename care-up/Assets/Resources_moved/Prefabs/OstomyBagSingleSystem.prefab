@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 644401510}
   - component: {fileID: 644401511}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: hl_control
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,7 +53,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3157142785364887891}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bone.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,7 +84,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5169717387895069993}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bone.002_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 2988535045333011669}
   - component: {fileID: 6859456422858004452}
   - component: {fileID: 614254178014015856}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cover
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,6 +159,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -170,6 +171,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -191,7 +193,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4093082144258476986}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bone.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -229,7 +231,7 @@ GameObject:
   - component: {fileID: 2517788780961799702}
   - component: {fileID: 1432070078}
   - component: {fileID: 1432070079}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: OstomyBagSingleSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -287,6 +289,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -298,6 +301,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -348,6 +352,7 @@ MonoBehaviour:
   transparencyFix: 0
   tutorial_usedOn: 0
   depoistNeedle: 0
+  useOriginalParent: 0
   leftControlBone: {fileID: 0}
   rightControlBone: {fileID: 0}
   holdAnimationID: 91
@@ -358,6 +363,7 @@ MonoBehaviour:
   prefabInHands: 
   prefabOutOfHands: 
   destroyOnDrop: 0
+  customGhost: {fileID: 0}
 --- !u!65 &2517788780961799702
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -387,6 +393,7 @@ MonoBehaviour:
   hidenObjects:
   - {fileID: 5250339874281040092}
   neededObjects: []
+  nearestWalkToGroup: {fileID: 0}
 --- !u!114 &1432070079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -402,10 +409,12 @@ MonoBehaviour:
   LieAnimName: 
   HoldAnimName: 
   HoldAnimValue: 0
+  LieAnimValue: 0
   LockHoldState: 1
   follow_left: 1
   isActive: 0
   followHoldingHand: 0
+  ControlSpeedWithParameter: 0
 --- !u!1 &6526746997036984294
 GameObject:
   m_ObjectHideFlags: 0
@@ -416,7 +425,7 @@ GameObject:
   m_Component:
   - component: {fileID: 558821361017218038}
   - component: {fileID: 7379961430935935879}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -451,6 +460,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -463,6 +473,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -499,7 +510,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5396494276390605884}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -530,7 +541,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4975693866248158259}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: OstomyBagArmature
   m_TagString: Untagged
   m_Icon: {fileID: 0}

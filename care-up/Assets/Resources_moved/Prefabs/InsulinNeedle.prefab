@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 33401602866111202}
   - component: {fileID: 23219979041661676}
   - component: {fileID: 7611862033250728789}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: INeenle_protector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,6 +55,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -66,6 +67,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -88,9 +90,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 0
-  serializedVersion: 3
+  serializedVersion: 4
   m_Convex: 0
-  m_CookingOptions: 14
+  m_CookingOptions: 30
   m_Mesh: {fileID: 4300026, guid: 242d14ef29768a149a9d7112375bedc3, type: 3}
 --- !u!1 &1946491309512822
 GameObject:
@@ -106,7 +108,7 @@ GameObject:
   - component: {fileID: 54368529041326722}
   - component: {fileID: 114357331872952674}
   - component: {fileID: 136410184863328354}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: InsulinNeedle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,6 +153,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -162,6 +165,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -212,6 +216,7 @@ MonoBehaviour:
   transparencyFix: 0
   tutorial_usedOn: 0
   depoistNeedle: 0
+  useOriginalParent: 0
   leftControlBone: {fileID: 0}
   rightControlBone: {fileID: 0}
   holdAnimationID: 13
@@ -222,6 +227,7 @@ MonoBehaviour:
   prefabInHands: 
   prefabOutOfHands: 
   destroyOnDrop: 0
+  customGhost: {fileID: 0}
 --- !u!136 &136410184863328354
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -246,7 +252,7 @@ GameObject:
   m_Component:
   - component: {fileID: 383188430050750333}
   - component: {fileID: 1120304007832765814}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: hl_control
   m_TagString: Untagged
   m_Icon: {fileID: 0}

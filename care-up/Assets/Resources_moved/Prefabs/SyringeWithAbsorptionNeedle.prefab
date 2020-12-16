@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 54000011920969042}
   - component: {fileID: 114603151800055606}
   - component: {fileID: 136206371087936280}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SyringeWithAbsorptionNeedle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,6 +60,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -71,6 +72,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -121,6 +123,7 @@ MonoBehaviour:
   transparencyFix: 0
   tutorial_usedOn: 0
   depoistNeedle: 0
+  useOriginalParent: 0
   leftControlBone: {fileID: 0}
   rightControlBone: {fileID: 0}
   holdAnimationID: 4
@@ -131,6 +134,7 @@ MonoBehaviour:
   prefabInHands: 
   prefabOutOfHands: 
   destroyOnDrop: 0
+  customGhost: {fileID: 0}
   updatePlunger: 0
   updateProtector: 0
 --- !u!136 &136206371087936280
@@ -159,7 +163,7 @@ GameObject:
   - component: {fileID: 33390326218445148}
   - component: {fileID: 23613370981903950}
   - component: {fileID: 6675970558802789425}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Prot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -202,6 +206,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -213,6 +218,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -235,9 +241,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 0
-  serializedVersion: 3
+  serializedVersion: 4
   m_Convex: 0
-  m_CookingOptions: 14
+  m_CookingOptions: 30
   m_Mesh: {fileID: 4300010, guid: 0ecef9ec7bce10b43a2e2fc73ef34f15, type: 3}
 --- !u!1 &1233461338986780
 GameObject:
@@ -251,7 +257,7 @@ GameObject:
   - component: {fileID: 33653295221793874}
   - component: {fileID: 23622372432032494}
   - component: {fileID: 9139021042925554054}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: syringePlunger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -294,6 +300,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -305,6 +312,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -327,9 +335,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 0
-  serializedVersion: 3
+  serializedVersion: 4
   m_Convex: 0
-  m_CookingOptions: 14
+  m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: cdc14bd54fba5c9459e68ede3cf68d4a, type: 3}
 --- !u!1 &1310890392937308
 GameObject:
@@ -343,7 +351,7 @@ GameObject:
   - component: {fileID: 33588193409959086}
   - component: {fileID: 23331905354192692}
   - component: {fileID: 3378663562732136704}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: AbsorptionNeedle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -388,6 +396,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 2
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -399,6 +408,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -421,9 +431,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 0
-  serializedVersion: 3
+  serializedVersion: 4
   m_Convex: 0
-  m_CookingOptions: 14
+  m_CookingOptions: 30
   m_Mesh: {fileID: 4300006, guid: 0ecef9ec7bce10b43a2e2fc73ef34f15, type: 3}
 --- !u!1 &1376935152037536
 GameObject:
@@ -434,7 +444,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4398473672257474}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CinematicTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -465,7 +475,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4222304380624856}
   - component: {fileID: 114768445326876574}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: hl
   m_TagString: Untagged
   m_Icon: {fileID: 0}

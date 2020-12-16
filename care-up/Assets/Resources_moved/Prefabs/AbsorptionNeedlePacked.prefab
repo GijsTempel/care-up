@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4001957529357212}
   - component: {fileID: 33752926818457300}
   - component: {fileID: 23762836247981184}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,6 +54,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -65,6 +66,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -91,7 +93,7 @@ GameObject:
   - component: {fileID: 54780286621934396}
   - component: {fileID: 114951192538008290}
   - component: {fileID: 114513864859636140}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: AbsorptionNeedlePacked
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,6 +147,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -156,6 +159,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -206,6 +210,7 @@ MonoBehaviour:
   transparencyFix: 0
   tutorial_usedOn: 0
   depoistNeedle: 0
+  useOriginalParent: 0
   leftControlBone: {fileID: 0}
   rightControlBone: {fileID: 0}
   holdAnimationID: 200
@@ -216,6 +221,7 @@ MonoBehaviour:
   prefabInHands: 
   prefabOutOfHands: 
   destroyOnDrop: 0
+  customGhost: {fileID: 0}
 --- !u!114 &114513864859636140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,6 +242,7 @@ MonoBehaviour:
   - {fileID: 1743742545273558}
   - {fileID: 1476499308158892}
   neededObjects: []
+  nearestWalkToGroup: {fileID: 0}
 --- !u!1 &1231340221648028
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,7 +253,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4377099918102204}
   - component: {fileID: 114853244387713708}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: hl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -291,7 +298,7 @@ GameObject:
   - component: {fileID: 4691406371889268}
   - component: {fileID: 33565524763132084}
   - component: {fileID: 23733446592129248}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: needlepack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -334,6 +341,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -345,6 +353,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -368,7 +377,7 @@ GameObject:
   - component: {fileID: 4880114367517480}
   - component: {fileID: 33635193153173934}
   - component: {fileID: 23992537757472518}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: needle_base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -411,6 +420,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -422,6 +432,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -445,7 +456,7 @@ GameObject:
   - component: {fileID: 4073385500959704}
   - component: {fileID: 33629636879789688}
   - component: {fileID: 23556783274982826}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Prot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -488,6 +499,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -499,6 +511,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -522,7 +535,7 @@ GameObject:
   - component: {fileID: 4896589299180400}
   - component: {fileID: 33306692731199968}
   - component: {fileID: 23104154761729520}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: needlepackOpened
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -565,6 +578,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -576,6 +590,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
