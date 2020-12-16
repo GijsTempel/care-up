@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4349835491017310}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: pi0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4676440472993972}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: end.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4853719538424608}
   - component: {fileID: 137091973870070826}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: catheter_bag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,6 +107,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -121,6 +122,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -180,7 +182,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4402124694899154}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: b.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -211,7 +213,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4279846382386296}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: IK_M_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -242,7 +244,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4454440143640872}
   - component: {fileID: 137603721900367252}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: catOuter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -277,6 +279,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -288,6 +291,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -347,7 +351,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4356195617418946}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: b_tube1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -385,7 +389,7 @@ GameObject:
   - component: {fileID: 114498147887228340}
   - component: {fileID: 114062220270552138}
   - component: {fileID: 114182741109013750}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CWB_inner_open
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -462,6 +466,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -473,6 +478,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -523,6 +529,7 @@ MonoBehaviour:
   transparencyFix: 1
   tutorial_usedOn: 0
   depoistNeedle: 0
+  useOriginalParent: 0
   leftControlBone: {fileID: 0}
   rightControlBone: {fileID: 0}
   holdAnimationID: 500
@@ -533,6 +540,7 @@ MonoBehaviour:
   prefabInHands: 
   prefabOutOfHands: 
   destroyOnDrop: 0
+  customGhost: {fileID: 0}
 --- !u!114 &114062220270552138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -548,10 +556,12 @@ MonoBehaviour:
   LieAnimName: lie
   HoldAnimName: catheter_tweest
   HoldAnimValue: 0
+  LieAnimValue: 0
   LockHoldState: 1
   follow_left: 1
   isActive: 1
   followHoldingHand: 1
+  ControlSpeedWithParameter: 0
 --- !u!114 &114182741109013750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -575,6 +585,7 @@ MonoBehaviour:
   - {fileID: 1128787856743826}
   - {fileID: 1869492055326190}
   neededObjects: []
+  nearestWalkToGroup: {fileID: 0}
 --- !u!1 &1183372036132398
 GameObject:
   m_ObjectHideFlags: 0
@@ -584,7 +595,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4117125993919430}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: b.008
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -615,7 +626,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4929562993509842}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: b.006
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -646,7 +657,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4782485228684222}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: a.001_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -677,7 +688,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4343610772041218}
   - component: {fileID: 137125825353451520}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: catInnerTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -712,6 +723,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -723,6 +735,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -782,7 +795,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4828956119285934}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: b.000
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -813,7 +826,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4430536281947378}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: start
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -847,7 +860,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4737662816143014}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: pi1_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -877,7 +890,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4157320364784282}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: b.007
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -909,7 +922,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4413716222048300}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: bag0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -941,7 +954,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4389052285071482}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: catArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -974,7 +987,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4640188380039796}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: pi1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1005,7 +1018,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4867758625408818}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: pi0_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1035,7 +1048,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4441529991278456}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: b_tube0.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1066,7 +1079,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4482583905161250}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: a.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1097,7 +1110,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4964593640698504}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: IK_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1128,7 +1141,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4203077824427298}
   - component: {fileID: 137224468182555004}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: catCover
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1163,6 +1176,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -1174,6 +1188,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1233,7 +1248,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4635703132557708}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: end.001_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1263,7 +1278,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4148294793035386}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: IK_M
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1294,7 +1309,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4762675965957334}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: control_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1325,7 +1340,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4165417106622732}
   - component: {fileID: 137719784254630434}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: catheter_bag_tube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1360,6 +1375,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -1371,6 +1387,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1430,7 +1447,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4152891630475412}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: b.005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1461,7 +1478,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4680850434000586}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: control
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1493,7 +1510,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4371586797266246}
   - component: {fileID: 137867096387274884}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: catheter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1528,6 +1545,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -1540,6 +1558,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1599,7 +1618,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4761776418842020}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: b.004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1630,7 +1649,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4566698753272382}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: b.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1661,7 +1680,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4221086981915112}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: b_tube4_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1691,7 +1710,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4990271616973282}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: a.000
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1722,7 +1741,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4495032152402864}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1753,7 +1772,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4176289613329118}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: b_tube0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1784,7 +1803,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4411653412631954}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: b.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1816,7 +1835,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4500251866256644}
   - component: {fileID: 137676621468463134}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: pi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1851,6 +1870,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -1862,6 +1882,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1921,7 +1942,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4152395464730484}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: b_tube4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1953,7 +1974,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4467103114653902}
   - component: {fileID: 114014848988408782}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: hl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1997,7 +2018,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4083512020657606}
   - component: {fileID: 137850351680784114}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: catInner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2032,6 +2053,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -2043,6 +2065,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -2102,7 +2125,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4084870805558662}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: IK
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2133,7 +2156,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4595252055441512}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: b_tube2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2164,7 +2187,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4779666878227548}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: bag1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

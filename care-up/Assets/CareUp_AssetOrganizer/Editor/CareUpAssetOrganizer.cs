@@ -23,6 +23,23 @@ using UnityEditor.SceneManagement;
 
     void OnGUI()
     {
+        if (GUILayout.Button("Set prefabs to Object Layer"))
+        {
+            string[] __prefabs = Directory.GetFiles("Assets/Resources_moved/Prefabs/");
+            foreach(string p in __prefabs)
+            {
+                if (Path.GetExtension(p.ToLower()) == ".prefab")
+                {
+                    GameObject __prefab = (GameObject)AssetDatabase.LoadMainAssetAtPath(p);
+                    if (__prefab.GetComponent<PickableObject>() != null)
+                    {
+                        PrefabUtility.InstantiatePrefab(__prefab);
+                        Debug.Log(p);
+                    }
+                }
+            }
+        }
+
         if (GUILayout.Button("Select Dependency Prefabs"))
         {
             string scenePath = EditorSceneManager.GetActiveScene().path;

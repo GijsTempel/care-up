@@ -1067,6 +1067,10 @@ public class GameUI : MonoBehaviour
             PersonToTalk = personObject;
             activeTalkBobblePoint = TalkBubble.transform.Find("cloud").gameObject;
         }
+        else
+        {
+            TalkBubble.SetActive(false);
+        }
     }
 
     void Update()

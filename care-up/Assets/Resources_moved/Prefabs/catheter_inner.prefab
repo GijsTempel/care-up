@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4373084210985226}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: b.000
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4545577071660670}
   - component: {fileID: 137439845687671408}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: catInnerTop.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76,6 +76,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -87,6 +88,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -129,7 +131,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4226408842985974}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: start
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -161,7 +163,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4104221607224672}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: b.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,7 +200,7 @@ GameObject:
   - component: {fileID: 54286053369813770}
   - component: {fileID: 114594178073568194}
   - component: {fileID: 114671226286568188}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: catheter_inner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -270,6 +272,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -281,6 +284,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -331,6 +335,7 @@ MonoBehaviour:
   transparencyFix: 1
   tutorial_usedOn: 0
   depoistNeedle: 0
+  useOriginalParent: 0
   leftControlBone: {fileID: 0}
   rightControlBone: {fileID: 0}
   holdAnimationID: 440
@@ -341,6 +346,7 @@ MonoBehaviour:
   prefabInHands: 
   prefabOutOfHands: 
   destroyOnDrop: 0
+  customGhost: {fileID: 0}
 --- !u!114 &114671226286568188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356,10 +362,12 @@ MonoBehaviour:
   LieAnimName: 
   HoldAnimName: 
   HoldAnimValue: 0
+  LieAnimValue: 0
   LockHoldState: 1
   follow_left: 1
   isActive: 1
   followHoldingHand: 1
+  ControlSpeedWithParameter: 0
 --- !u!1 &1296235721165242
 GameObject:
   m_ObjectHideFlags: 0
@@ -370,7 +378,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4987691997693804}
   - component: {fileID: 137320398378069194}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: catInner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -405,6 +413,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -416,6 +425,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -458,7 +468,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4692738510670832}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: b.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -490,7 +500,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4770645672314608}
   - component: {fileID: 137517872888838000}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: catheter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -525,6 +535,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -537,6 +548,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -579,7 +591,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4755608087329318}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: a.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -610,7 +622,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4910701898254206}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -641,7 +653,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4322495996998442}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: a.000
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -672,7 +684,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4697737084055268}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -703,7 +715,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4908935894544446}
   - component: {fileID: 114953975016647940}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: hl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -746,7 +758,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4989365276530520}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: a.001_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -776,7 +788,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4425585400962106}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: b.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -807,7 +819,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4591996770243420}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: catArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -838,7 +850,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4907369963545102}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: b.004
   m_TagString: Untagged
   m_Icon: {fileID: 0}

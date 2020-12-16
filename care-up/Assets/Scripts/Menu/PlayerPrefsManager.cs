@@ -302,6 +302,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
     void Awake()
     {
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
         if (!Application.isEditor)
         {
             testingMode = false;
