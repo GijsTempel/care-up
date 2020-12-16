@@ -33,8 +33,8 @@ using UnityEditor.SceneManagement;
                     GameObject __prefab = (GameObject)AssetDatabase.LoadMainAssetAtPath(p);
                     if (__prefab.GetComponent<PickableObject>() != null)
                     {
+                        PrefabUtility.InstantiatePrefab(__prefab);
                         Debug.Log(p);
-                        __prefab.layer = 11;
                     }
                 }
             }
