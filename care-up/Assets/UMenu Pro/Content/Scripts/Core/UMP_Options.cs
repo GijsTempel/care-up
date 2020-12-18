@@ -240,7 +240,7 @@ public class UMP_Options : MonoBehaviour
                 QualityLevel = 7;
             QualitySettings.SetQualityLevel(QualityLevel, true);
         }
-        StatusMessage.Message = "Aanpassingen zijn opgeslagen";
+        //StatusMessage.Message = "Aanpassingen zijn opgeslagen";
     } 
 
     public void ChangeName(InputField field) { if (field == null || PlayerNameText == null) return; PlayerNameText.text = field.text; field.text = string.Empty; CNAnimationWindow(); }
