@@ -54,6 +54,7 @@ public class DatabaseManager : MonoBehaviour
     {
         // querry all player info here?
         // StartCoroutine(RequestPurchases(WULogin.UID));
+        WPServer._CheckBundleVersion();
         WPServer.RequestPurchases(WULogin.UID);
         WUData.FetchUserGameInfo(WULogin.UID, FetchEverything_success, -1, PostInit);
     }

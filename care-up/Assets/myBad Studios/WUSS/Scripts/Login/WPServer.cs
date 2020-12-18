@@ -149,6 +149,48 @@ namespace MBS
         static public void RequestPurchases(
             int UserID) => Instance.StartCoroutine( RequestScenePurchases( UserID ) );
 
+        static public void _CheckBundleVersion() => Instance.StartCoroutine(CheckBundleVersion());
+
+
+        static public IEnumerator CheckBundleVersion()
+        {
+            string url = CAServer.BundleAddress + "/" + Application.version + "/version.txt";
+            Debug.Log(url);
+            using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
+            {
+
+                // Request and wait for the desired page.
+                yield return webRequest.SendWebRequest();
+
+                if (webRequest.isNetworkError)
+                {
+
+                }
+                else if (webRequest.downloadHandler.text != "")
+                {
+                    int bundleVersion = 0;
+                    int.TryParse(webRequest.downloadHandler.text, out bundleVersion);
+                    if (bundleVersion != 0)
+                    {
+                        PlayerPrefsManager playerPrefsManager = GameObject.FindObjectOfType<PlayerPrefsManager>();
+                        if (playerPrefsManager != null)
+                        {
+                            if (bundleVersion != playerPrefsManager.BundleVersion)
+                            {
+                                Caching.ClearCache();
+                            }
+                            playerPrefsManager.BundleVersion = bundleVersion;
+                        }
+                    }
+                }
+                else
+                {
+
+                }
+
+            }
+        }
+
         static public IEnumerator RequestScenePurchases(int UserID)
         {
             string url = Instance.SelectedURL + "/request_purchases.php?user_id=" + UserID.ToString();
