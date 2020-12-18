@@ -168,8 +168,6 @@ namespace MBS
                 }
                 else if (webRequest.downloadHandler.text != "")
                 {
-
-                    Debug.Log(webRequest.downloadHandler.text);
                     int bundleVersion = 0;
                     int.TryParse(webRequest.downloadHandler.text, out bundleVersion);
                     if (bundleVersion != 0)
@@ -184,7 +182,6 @@ namespace MBS
                             playerPrefsManager.BundleVersion = bundleVersion;
                         }
                     }
-                    Debug.Log(bundleVersion);
                 }
                 else
                 {
