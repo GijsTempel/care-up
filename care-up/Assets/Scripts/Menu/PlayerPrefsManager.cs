@@ -378,6 +378,12 @@ public class PlayerPrefsManager : MonoBehaviour
         set { PlayerPrefs.SetFloat("Volume", value); }
     }
 
+    public int BundleVersion
+    {
+        get { return PlayerPrefs.HasKey("BundleVersion") ? PlayerPrefs.GetInt("BundleVersion") : 0; }
+        set { PlayerPrefs.SetInt("BundleVersion", value); }
+    }
+
     public int MenuAudio
     {
         get { return PlayerPrefs.HasKey("MenuAudio") ? PlayerPrefs.GetInt("MenuAudio") : 1; }

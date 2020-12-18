@@ -536,7 +536,8 @@ public class bl_SceneLoader : MonoBehaviour
             FadeImageCanvas.alpha += DeltaTime * FadeInSpeed;
             yield return null;
         }
-        async.allowSceneActivation = true;
+        if (async != null)
+            async.allowSceneActivation = true;
     }
 
     private IEnumerator FadeOutCanvas(CanvasGroup alpha, float delay = 0)
