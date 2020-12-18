@@ -229,7 +229,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
         if (s.name == "MainMenu")
         {
-            GameObject.Find("UMenuProManager/MenuCanvas/Opties/PanelUI/OptionsPanel/PostProcessingPanel/PostProcessingToggle").GetComponent<Toggle>().isOn = postProcessingEnabled;
+            GameObject.Find("/UMenuProManager/MenuCanvas/Opties/PanelUI/OptionsPanel/LeftSide/PostProcessingPanel/PostProcessingToggle").GetComponent<Toggle>().isOn = postProcessingEnabled;
         }
 
         // handle platform-dependant objects (deleting unnecesarry)

@@ -61,7 +61,8 @@ using UnityEditor.SceneManagement;
                         GameObject prefab = (GameObject)AssetDatabase.LoadMainAssetAtPath(d);
                         if (prefab.GetComponent<PickableObject>() != null)
                         {
-                            GameObject prefabInst = Instantiate(prefab, prefabHolder.transform) as GameObject;
+                            GameObject prefabInst = PrefabUtility.InstantiatePrefab(prefab, prefabHolder.transform) as GameObject;
+                            //GameObject prefabInst = Instantiate(prefab, prefabHolder.transform) as GameObject;
                             prefabInst.name = Path.GetFileNameWithoutExtension(d);
                         }
                     }
