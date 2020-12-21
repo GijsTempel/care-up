@@ -6,6 +6,7 @@ public class SyncAnim : MonoBehaviour
 {
 
     protected Animator PlayerAnimator;
+    public Animator MasterObject;
     public Animator SlaveObject;
     public string AnimName;
     public bool IsSyncing;
@@ -16,7 +17,11 @@ public class SyncAnim : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PlayerAnimator = GameObject.FindObjectOfType<PlayerAnimationManager>().GetComponent<Animator>(); 
+        PlayerAnimator = GameObject.FindObjectOfType<PlayerAnimationManager>().GetComponent<Animator>();
+        if (MasterObject==null)
+        {
+            MasterObject = PlayerAnimator;
+        }    
         //SlaveObject.GetComponent<Animator>();
         
     }
@@ -28,7 +33,7 @@ public class SyncAnim : MonoBehaviour
         {
             if (SlaveObject)
             {
-                SlaveObject.Play(AnimName, -1, PlayerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime);
+                SlaveObject.Play(AnimName, -1, MasterObject.GetCurrentAnimatorStateInfo(0).normalizedTime);
             }
         }
         

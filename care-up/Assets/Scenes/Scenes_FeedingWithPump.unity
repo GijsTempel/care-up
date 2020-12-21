@@ -497,6 +497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78fefb52d4740034d98a625de948e115, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MasterObject: {fileID: 0}
   SlaveObject: {fileID: 459320690}
   AnimName: _SQ17-21_Tube_Baked
   IsSyncing: 0
@@ -507,12 +508,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 123105395}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.284462, y: 2.3086865, z: 8.599743}
+  m_LocalRotation: {x: 0.49999815, y: -0.4999994, z: 0.5000021, w: 0.5000005}
+  m_LocalPosition: {x: -1.2064204, y: -8.454673, z: 13.048181}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 43
+  m_Father: {fileID: 251147197}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &123105398
 MonoBehaviour:
@@ -526,6 +527,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78fefb52d4740034d98a625de948e115, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MasterObject: {fileID: 0}
   SlaveObject: {fileID: 636348500}
   AnimName: Sq17-21_Pump
   IsSyncing: 0
@@ -1221,7 +1223,11 @@ Transform:
   m_LocalRotation: {x: -0.49999815, y: 0.4999994, z: -0.5000021, w: 0.5000005}
   m_LocalPosition: {x: -3.7637, y: 1.1023, z: 0.145}
   m_LocalScale: {x: 1.0000019, y: 1.0000008, z: 1.0000017}
-  m_Children: []
+  m_Children:
+  - {fileID: 123105397}
+  - {fileID: 643162906}
+  - {fileID: 529723764}
+  - {fileID: 452771774}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1710,6 +1716,53 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 459320683}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &452771773
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 452771774}
+  - component: {fileID: 452771775}
+  m_Layer: 0
+  m_Name: _patientIdleSync
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &452771774
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 452771773}
+  m_LocalRotation: {x: 0.49999815, y: -0.4999994, z: 0.5000021, w: 0.5000005}
+  m_LocalPosition: {x: 2.6122975, y: -1.7439069, z: 16.02476}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 251147197}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &452771775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 452771773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78fefb52d4740034d98a625de948e115, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MasterObject: {fileID: 828034801}
+  SlaveObject: {fileID: 914421314}
+  AnimName: idle
+  IsSyncing: 0
 --- !u!4 &453125554 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -2562186645580673180, guid: 84b817bf6e9d7dc488bdad1ec7d1d7ce,
@@ -2431,6 +2484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78fefb52d4740034d98a625de948e115, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MasterObject: {fileID: 0}
   SlaveObject: {fileID: 459320690}
   AnimName: TubeOnPole_SQ30-36_BAKED
   IsSyncing: 0
@@ -2446,6 +2500,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78fefb52d4740034d98a625de948e115, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MasterObject: {fileID: 0}
   SlaveObject: {fileID: 914421314}
   AnimName: _Tube_SQ30-36
   IsSyncing: 0
@@ -2456,12 +2511,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 529723761}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.284462, y: 2.3086865, z: 8.599743}
+  m_LocalRotation: {x: 0.49999815, y: -0.4999994, z: 0.5000021, w: 0.5000005}
+  m_LocalPosition: {x: -1.2064204, y: -8.454673, z: 13.048181}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 45
+  m_Father: {fileID: 251147197}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &529723765
 MonoBehaviour:
@@ -2475,6 +2530,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78fefb52d4740034d98a625de948e115, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MasterObject: {fileID: 0}
   SlaveObject: {fileID: 8593444338967717357}
   AnimName: 50ml_syringe_sq30-36
   IsSyncing: 0
@@ -3401,6 +3457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78fefb52d4740034d98a625de948e115, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MasterObject: {fileID: 0}
   SlaveObject: {fileID: 914421314}
   AnimName: Tube_SQ22-27
   IsSyncing: 0
@@ -3416,6 +3473,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78fefb52d4740034d98a625de948e115, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MasterObject: {fileID: 0}
   SlaveObject: {fileID: 828034801}
   AnimName: GWP_SQ22-27
   IsSyncing: 0
@@ -3426,12 +3484,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 643162903}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.284462, y: 2.3086865, z: 8.599743}
+  m_LocalRotation: {x: 0.49999815, y: -0.4999994, z: 0.5000021, w: 0.5000005}
+  m_LocalPosition: {x: -1.2064204, y: -8.454673, z: 13.048181}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 44
+  m_Father: {fileID: 251147197}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &659313497 stripped
 GameObject:
