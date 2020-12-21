@@ -26,7 +26,10 @@ public class SyncAnim : MonoBehaviour
     {
         if(IsSyncing)
         {
-            SlaveObject.Play(AnimName, -1, PlayerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime);
+            if (SlaveObject)
+            {
+                SlaveObject.Play(AnimName, -1, PlayerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime);
+            }
         }
         
     }

@@ -2,17 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SyncWithSyncer : StateMachineBehaviour
+public class SyncWithObject : StateMachineBehaviour
 {
-    public string Syncer;
+    public string SyncObject;
+    SyncAnim[] syncAnimations;
+    GameObject syncer;
+
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
-   override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (GameObject.Find(Syncer))
+        syncer = GameObject.Find(SyncObject);
+
+        if (syncer != null)
         {
-            GameObject.Find(Syncer).GetComponent<SyncAnim>().IsSyncing = true;
+            syncAnimations = syncer.GetComponents<SyncAnim>();
+
+            foreach (var anim in syncAnimations)
+                anim.IsSyncing = true;
         }
-        
+
+
+
+        /*if (GameObject.Find(Syncer))
+        {
+            foreach (GameObject.Find(Syncer).GetComponent<SyncAnim>() in GameObject.Find(Syncer))
+            {
+                GameObject.Find(Syncer).GetComponent<SyncAnim>().IsSyncing = true;
+            }
+
+        }*/
+
+
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -24,9 +44,12 @@ public class SyncWithSyncer : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (GameObject.Find(Syncer))
+        if (syncer != null)
         {
-            GameObject.Find(Syncer).GetComponent<SyncAnim>().IsSyncing = false ;
+            syncAnimations = syncer.GetComponents<SyncAnim>();
+
+            foreach (var anim in syncAnimations)
+                anim.IsSyncing = false;
         }
     }
 
