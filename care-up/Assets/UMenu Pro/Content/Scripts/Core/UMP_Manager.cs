@@ -56,12 +56,12 @@ public class UMP_Manager : MonoBehaviour {
             "This storage solution is intended to facilitate collaboration between game development teams using software version control systems. \n\n" +
             "The engine supports deployment to multiple platforms and allows specification of texture compression and resolution settings for each platform. Currently, supported platforms include Linux, macOS, Microsoft Windows, BSD, Android, iOS, Universal Windows Platform, HTML5, and WebAssembly.";
 
-        DatabaseManager.PushCANotification(0, new PlayerPrefsManager.CANotifications("Title number 1", longMessage1,
+        DatabaseManager.PushCANotification(0, new PlayerPrefsManager.CANotifications("Title number 111", longMessage1,
                     "William Shakespeare", false, 1599264000));
-        DatabaseManager.PushCANotification(1, new PlayerPrefsManager.CANotifications("Title number 2", longMessage2,
+        DatabaseManager.PushCANotification(1, new PlayerPrefsManager.CANotifications("Title number 222", longMessage2,
                    "Agatha Christie", false, 1600128000));
-        //DatabaseManager.PushCANotification(2, new PlayerPrefsManager.CANotifications("Title number 3", "More messages",
-        //            "J. K. Rowling", false, 1601645343));
+        DatabaseManager.PushCANotification(2, new PlayerPrefsManager.CANotifications("Title number 3", "More messages",
+                    "J. K. Rowling", false, 1601645343));
         //DatabaseManager.PushCANotification(3, new PlayerPrefsManager.CANotifications("Title number 4", "Many many many more messages",
         //            "Stephen King", false, 1601645343));
         //DatabaseManager.PushCANotification(4, new PlayerPrefsManager.CANotifications("Title number 5", "This message can be a bit long. I had to place it here to test, how it will fit to the selected place for the test. If you can read this, it was shown correctly, and there is enough space for message like this",
