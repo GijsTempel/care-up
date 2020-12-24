@@ -22,9 +22,15 @@ public class NotificationItem : MonoBehaviour
         titleObj.GetComponent<Text>().text = notif.title;
         string messageToShow = notif.message;
         int lines = notif.message.Split('\n').Length;
+      
         if (notif.message.Length > 120 || lines > 2)
         {
-            messageToShow = notif.message.Substring(0, 120) + "...";
+            if (notif.message.Length > 120)
+                messageToShow = notif.message.Substring(0, 120) + "...";
+            else
+            {
+                messageToShow = notif.message.Split('\n')[0] + "\n" + notif.message.Split('\n')[1] + "...";
+            }
         }
         messageObj.GetComponent<Text>().text = messageToShow;
         authorObj.GetComponent<Text>().text = notif.author;
