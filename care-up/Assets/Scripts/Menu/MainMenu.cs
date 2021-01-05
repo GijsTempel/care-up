@@ -399,7 +399,7 @@ public class MainMenu : MonoBehaviour
         if (string.IsNullOrEmpty(storeUrl))
             storeUrl = "https://careup.online/cursussen-zorg/";
 
-        Application.OpenURL(storeUrl);
+        OpenUrl_NewWindow(storeUrl);
     }
 
 #if UNITY_WEBGL 
@@ -407,7 +407,6 @@ public class MainMenu : MonoBehaviour
     [DllImport("__Internal")]
     private static extern void openWindow(string url);
 #endif
-
 
     public void OnTutorialButtonClick_Interface()
     {
