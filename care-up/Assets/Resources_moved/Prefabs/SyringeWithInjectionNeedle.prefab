@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 54000011948281532}
   - component: {fileID: 114842199415760888}
   - component: {fileID: 136777438463260484}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SyringeWithInjectionNeedle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,6 +60,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -71,6 +72,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -121,6 +123,7 @@ MonoBehaviour:
   transparencyFix: 0
   tutorial_usedOn: 0
   depoistNeedle: 0
+  useOriginalParent: 0
   leftControlBone: {fileID: 0}
   rightControlBone: {fileID: 0}
   holdAnimationID: 4
@@ -131,6 +134,7 @@ MonoBehaviour:
   prefabInHands: 
   prefabOutOfHands: 
   destroyOnDrop: 0
+  customGhost: {fileID: 0}
   updatePlunger: 0
   updateProtector: 0
 --- !u!136 &136777438463260484
@@ -157,7 +161,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4191543789266188}
   - component: {fileID: 114911200617412632}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: hl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -203,7 +207,7 @@ GameObject:
   - component: {fileID: 33906856595331368}
   - component: {fileID: 23039949434445196}
   - component: {fileID: 7811343418257408316}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Prot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -246,6 +250,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -257,6 +262,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -279,9 +285,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 0
-  serializedVersion: 3
+  serializedVersion: 4
   m_Convex: 0
-  m_CookingOptions: 14
+  m_CookingOptions: 30
   m_Mesh: {fileID: 4300010, guid: 0ecef9ec7bce10b43a2e2fc73ef34f15, type: 3}
 --- !u!1 &1584394237403640
 GameObject:
@@ -295,7 +301,7 @@ GameObject:
   - component: {fileID: 33904683254936140}
   - component: {fileID: 23699000923443312}
   - component: {fileID: 2521748816490927677}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: syringePlunger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -338,6 +344,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -349,6 +356,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -371,9 +379,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 0
-  serializedVersion: 3
+  serializedVersion: 4
   m_Convex: 0
-  m_CookingOptions: 14
+  m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: cdc14bd54fba5c9459e68ede3cf68d4a, type: 3}
 --- !u!1 &1820246410719058
 GameObject:
@@ -384,7 +392,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4261823217490292}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CinematicTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -417,7 +425,7 @@ GameObject:
   - component: {fileID: 33707512934990418}
   - component: {fileID: 23856610439569936}
   - component: {fileID: 8670336440827865627}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: InjectionNeedle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -462,6 +470,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 2
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -473,6 +482,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -495,7 +505,7 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 0
-  serializedVersion: 3
+  serializedVersion: 4
   m_Convex: 0
-  m_CookingOptions: 14
+  m_CookingOptions: 30
   m_Mesh: {fileID: 4300006, guid: 0ecef9ec7bce10b43a2e2fc73ef34f15, type: 3}

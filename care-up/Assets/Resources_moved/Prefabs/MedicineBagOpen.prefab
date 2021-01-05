@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4759719024086396}
   - component: {fileID: 33482180514749882}
   - component: {fileID: 23801230450885786}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Tablet1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,6 +54,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -65,6 +66,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -91,7 +93,8 @@ GameObject:
   - component: {fileID: 65044760361990888}
   - component: {fileID: 54442207483428260}
   - component: {fileID: 114761534974427206}
-  m_Layer: 0
+  - component: {fileID: 616147252}
+  m_Layer: 11
   m_Name: MedicineBagOpen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,6 +138,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 2
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -146,6 +150,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -205,10 +210,11 @@ MonoBehaviour:
   nameArticle: het
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
-  assetSource: 0
+  assetSource: 1
   transparencyFix: 0
   tutorial_usedOn: 0
   depoistNeedle: 0
+  useOriginalParent: 0
   leftControlBone: {fileID: 0}
   rightControlBone: {fileID: 0}
   holdAnimationID: 0
@@ -219,3 +225,21 @@ MonoBehaviour:
   prefabInHands: 
   prefabOutOfHands: 
   destroyOnDrop: 0
+  customGhost: {fileID: 0}
+--- !u!114 &616147252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1572820801270874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4c9b1c7c042e4794b2aca8df5be8730, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TrashBin: 
+  hidenObjects:
+  - {fileID: 1427652054389886}
+  neededObjects: []
+  nearestWalkToGroup: {fileID: 0}

@@ -10,7 +10,11 @@ public class NotificationPanel : MonoBehaviour
     public List<GameObject> pages;
     public GameObject newNotifContainer;
     public GameObject notifContainer;
-
+    public NotificationPanelFull notificationPanelFull;
+    public void ShowFullMessage(PlayerPrefsManager.CANotifications _notif)
+    {
+        notificationPanelFull.ShowMessage(_notif);
+    }
     public void ShowPage(int pageNum)
     {
         foreach(GameObject page in pages)
@@ -79,7 +83,7 @@ public class NotificationPanel : MonoBehaviour
                 {
                     if (newItems)
                     {
-                        GameObject newNotifInst = Instantiate(Resources.Load<GameObject>("Prefabs/NotificationItem"), newNotifContainer.transform);
+                        GameObject newNotifInst = Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/NotificationItem"), newNotifContainer.transform);
                         newNotifInst.GetComponent<NotificationItem>().LoadData(_id);
                     }
                 }
@@ -87,7 +91,7 @@ public class NotificationPanel : MonoBehaviour
                 {
                     if (oldItems)
                     {
-                        GameObject notifInst = Instantiate(Resources.Load<GameObject>("Prefabs/NotificationItem"), notifContainer.transform);
+                        GameObject notifInst = Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/NotificationItem"), notifContainer.transform);
                         notifInst.GetComponent<NotificationItem>().LoadData(_id);
                     }
                 }

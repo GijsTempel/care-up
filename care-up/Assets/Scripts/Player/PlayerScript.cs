@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-
+using UnityEngine.PostProcessing;
 public class PlayerScript : MonoBehaviour
 {
     [HideInInspector]
@@ -437,6 +437,18 @@ public class PlayerScript : MonoBehaviour
         if (GameObject.Find("PanoFlyCamera") != null)
         {
             GameObject panoFlyCamera = GameObject.Find("PanoFlyCamera");
+            GameObject playerCamera = GameObject.Find("PlayerMainCamera");
+            if (playerCamera != null)
+            {
+                if (playerCamera.GetComponent<PostProcessingBehaviour>() != null)
+                {
+                    if (panoFlyCamera.GetComponent<PostProcessingBehaviour>() != null)
+                    {
+                        panoFlyCamera.GetComponent<PostProcessingBehaviour>().enabled = 
+                            playerCamera.GetComponent<PostProcessingBehaviour>().isActiveAndEnabled;
+                    }
+                }
+            }
             if (panoFlyCamera.GetComponent<Animator>() != null)
             {
                 panoFlyCamera.GetComponent<Animator>().SetTrigger("from_" + fromName + "_to_" + toGroup.name);

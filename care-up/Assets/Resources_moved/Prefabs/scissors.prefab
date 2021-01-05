@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1056617961823489784}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bone_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 4852385460514655855}
   - component: {fileID: 1730730101079723342}
   - component: {fileID: 1677903114508115586}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Hand1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,6 +84,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -95,6 +96,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -116,7 +118,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5723513281215699335}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bone2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -150,7 +152,7 @@ GameObject:
   - component: {fileID: 286907339807982309}
   - component: {fileID: 4987948761156182568}
   - component: {fileID: 8438071478259477080}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Pin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -193,6 +195,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -204,6 +207,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -225,7 +229,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2483717128833421359}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -263,7 +267,7 @@ GameObject:
   - component: {fileID: 5360170778411833979}
   - component: {fileID: 5360170778411833860}
   - component: {fileID: 5360170778411833861}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: scissors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -277,7 +281,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4126084483237921550}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+  m_LocalRotation: {x: -0.7069834, y: 0, z: 0, w: 0.7072302}
   m_LocalPosition: {x: -15.955, y: 0.848, z: 0.775}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -285,7 +289,7 @@ Transform:
   - {fileID: 286907339807982309}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 0}
 --- !u!95 &7031123848492194919
 Animator:
   serializedVersion: 3
@@ -320,10 +324,12 @@ MonoBehaviour:
   LieAnimName: 
   HoldAnimName: 
   HoldAnimValue: 0
+  LieAnimValue: 0
   LockHoldState: 1
   follow_left: 1
   isActive: 0
   followHoldingHand: 0
+  ControlSpeedWithParameter: 0
 --- !u!65 &5360170778411833978
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -351,6 +357,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -362,6 +369,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -412,6 +420,7 @@ MonoBehaviour:
   transparencyFix: 0
   tutorial_usedOn: 0
   depoistNeedle: 0
+  useOriginalParent: 0
   leftControlBone: {fileID: 0}
   rightControlBone: {fileID: 0}
   holdAnimationID: 0
@@ -422,6 +431,7 @@ MonoBehaviour:
   prefabInHands: 
   prefabOutOfHands: 
   destroyOnDrop: 0
+  customGhost: {fileID: 0}
 --- !u!1 &5451798334598288795
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,7 +441,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3726614911566166675}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Armature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -465,7 +475,7 @@ GameObject:
   - component: {fileID: 5375841717572584358}
   - component: {fileID: 7805887960143557663}
   - component: {fileID: 138527081171945339}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Hand2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -508,6 +518,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -519,6 +530,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -540,7 +552,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8161383891835164341}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bone2_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}

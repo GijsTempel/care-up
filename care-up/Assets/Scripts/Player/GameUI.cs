@@ -191,7 +191,12 @@ public class GameUI : MonoBehaviour
             if (objectsIDsController.cheat)
                 return;
         }
-
+        if (PlayerAnimationManager.IsLongAnimation())
+            return;
+        if (GameObject.Find("Sequences") != null)
+        {
+            return;
+        }
         if (Message == "")
             return;
         BlockTitle.text = Title;
@@ -1061,6 +1066,10 @@ public class GameUI : MonoBehaviour
             TalkBubble.GetComponent<TutorialHintsN>().Update();
             PersonToTalk = personObject;
             activeTalkBobblePoint = TalkBubble.transform.Find("cloud").gameObject;
+        }
+        else
+        {
+            TalkBubble.SetActive(false);
         }
     }
 

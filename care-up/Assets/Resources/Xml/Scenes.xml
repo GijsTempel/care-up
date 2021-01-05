@@ -2,7 +2,6 @@
 <Scenes>
   <group name="basic">
 
-	  
 
     <scene id="CATMSO"
            isInProducts="CathM|Katheter|Full"
@@ -58,7 +57,7 @@
     <scene id="BGM"
            isInProducts="Blood|Full|Suiker"
            bundleName="scene/scenes_bloodglucose_measurement"
-           name="Bloedglucosewaarde meten via vingerprik en bloedglucosemeter"
+           name="Bloedglucosewaarde meten via vingerprik"
            description="Bloedglucosewaarde meten via vingerprik en bloedglucosemeter"
            sceneName="Scenes_Bloodglucose_Measurement"
            image="icon_thermometer"
@@ -76,7 +75,7 @@
            demo="true"
            isInProducts="Insul|Full|Suiker"
            bundleName="scene/insulin_injection"
-           name="Injecteren insuline met navulbare insulinepen"
+           name="Subcutaan injecteren met insulinepen"
            description="Plaatsen van pennaald op de navulbare insulinepen. Testen van de insulinepen. Instellen van juiste dosering. Loodrecht onderhuids inspuiten van de insuline."
            sceneName="Insulin Injection"
            image="icon_syringe"
@@ -107,7 +106,7 @@
            type="in_house"/>
 
     <scene id="GFTP"
-           isInProducts="Sonde|Full"
+           isInProducts="Sonde|Full|SondePakket"
            bundleName="scene/scenes_gastric_feeding_tube"
            name="Inbrengen neusmaagsonde"
            description=""
@@ -245,6 +244,22 @@
            sceneName="Scenes_medicine_mouth_In_House"
            type="in_house"/>
 
+    <scene id="ANWP"
+           isInProducts="Full|Pump|SondePakket"
+           bundleName="scene/scenes_feedingwithpump"
+           name="Toedienen voeding via neus-maagsonde met pomp"
+           description=""
+           sceneName="Scenes_FeedingWithPump"
+           image="icon_catheter"
+           validated="false"
+           totalPoints="0"/>
+
+    <scene id="ANWP"
+		   mainScene="Scenes_FeedingWithPump"
+           bundleName="scene/scenes_feedingwithpump_in_house"
+           sceneName="Scenes_FeedingWithPump_In_House"
+           type="in_house"/>
+
     <scene id="MSSI"
            isInProducts="ToeSaf|Canule|Full"
            bundleName="scene/scenes_medication_saf-t-intima"
@@ -364,25 +379,6 @@
            bundleName="scene/scene_medication_preparation_dissolve_in_house"
            sceneName="Scene_Medication_Preparation_Dissolve_In_House"
            type="in_house"/>
-
-    <scene id="BND"
-           
-      isInProducts="Full|Zwacht"
-		  bundleName="scene/scenes_bandaging"
-		  name="Zwachtelen onderbeen met korte rek zwachtels"
-		  description="Zwachtelen onderbeen met korte rek zwachtels"
-		  sceneName="Scenes_Bandaging"
-		  image="icon_catheter"
-		  validated="false"
-		  totalPoints="0"/>
-
-    <scene id="BND"
-		   mainScene="Scenes_Bandaging"
-           bundleName="scene/scenes_bandaging_in_house"
-           sceneName="Scenes_Bandaging_In_House"
-           type="in_house"/>
-	  
-  
 
   </group>
 

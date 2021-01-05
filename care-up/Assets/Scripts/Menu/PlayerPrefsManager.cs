@@ -39,6 +39,21 @@ public class PlayerPrefsManager : MonoBehaviour
             isRead = _isRead;
             createdTime = _createdTime;
         }
+
+        public string GetCreatedTimeString()
+        {
+            System.DateTime notifDate = UnixTimeStampToDate(createdTime);
+            string sDate = notifDate.Day.ToString() + "." + notifDate.Month.ToString() + "." + notifDate.Year.ToString();
+            return sDate;
+        }
+        public System.DateTime UnixTimeStampToDate(long unixTimeStamp)
+        {
+            // Unix timestamp is seconds past epoch
+            System.DateTime dtDateTime = new System.DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+            dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
+            return dtDateTime;
+        }
+
     };
 
     public static Dictionary<int, CANotifications> Notifications = new Dictionary<int, CANotifications>();
@@ -214,7 +229,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
         if (s.name == "MainMenu")
         {
-            GameObject.Find("UMenuProManager/MenuCanvas/Opties/PanelUI/OptionsPanel/PostProcessingPanel/PostProcessingToggle").GetComponent<Toggle>().isOn = postProcessingEnabled;
+            GameObject.Find("/UMenuProManager/MenuCanvas/Opties/PanelUI/OptionsPanel/LeftSide/PostProcessingPanel/PostProcessingToggle").GetComponent<Toggle>().isOn = postProcessingEnabled;
         }
 
         // handle platform-dependant objects (deleting unnecesarry)
@@ -287,6 +302,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
     void Awake()
     {
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
         if (!Application.isEditor)
         {
             testingMode = false;
@@ -360,6 +376,12 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         get { return PlayerPrefs.HasKey("Volume") ? PlayerPrefs.GetFloat("Volume") : 1.0f; }
         set { PlayerPrefs.SetFloat("Volume", value); }
+    }
+
+    public int BundleVersion
+    {
+        get { return PlayerPrefs.HasKey("BundleVersion") ? PlayerPrefs.GetInt("BundleVersion") : 0; }
+        set { PlayerPrefs.SetInt("BundleVersion", value); }
     }
 
     public int MenuAudio

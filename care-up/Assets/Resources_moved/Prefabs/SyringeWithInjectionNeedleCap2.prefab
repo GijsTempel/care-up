@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 54000011948281532}
   - component: {fileID: 65258225986405852}
   - component: {fileID: 114344080883372966}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SyringeWithInjectionNeedleCap2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,6 +60,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -71,6 +72,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -134,6 +136,7 @@ MonoBehaviour:
   transparencyFix: 0
   tutorial_usedOn: 0
   depoistNeedle: 0
+  useOriginalParent: 0
   leftControlBone: {fileID: 0}
   rightControlBone: {fileID: 0}
   holdAnimationID: 4
@@ -144,6 +147,7 @@ MonoBehaviour:
   prefabInHands: 
   prefabOutOfHands: 
   destroyOnDrop: 0
+  customGhost: {fileID: 0}
 --- !u!1 &1424438080982320
 GameObject:
   m_ObjectHideFlags: 0
@@ -156,7 +160,7 @@ GameObject:
   - component: {fileID: 33621772889386226}
   - component: {fileID: 23498870553753718}
   - component: {fileID: 1954783351974490650}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: InjectionNeedle (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -202,6 +206,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 2
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -213,6 +218,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -235,9 +241,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 0
-  serializedVersion: 3
+  serializedVersion: 4
   m_Convex: 0
-  m_CookingOptions: 14
+  m_CookingOptions: 30
   m_Mesh: {fileID: 4300006, guid: 0ecef9ec7bce10b43a2e2fc73ef34f15, type: 3}
 --- !u!1 &1584394237403640
 GameObject:
@@ -251,7 +257,7 @@ GameObject:
   - component: {fileID: 33904683254936140}
   - component: {fileID: 23699000923443312}
   - component: {fileID: 1446999528034988865}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: syringePlunger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -294,6 +300,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -305,6 +312,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -327,9 +335,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 0
-  serializedVersion: 3
+  serializedVersion: 4
   m_Convex: 0
-  m_CookingOptions: 14
+  m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: cdc14bd54fba5c9459e68ede3cf68d4a, type: 3}
 --- !u!1 &1650204655740976
 GameObject:
@@ -343,7 +351,7 @@ GameObject:
   - component: {fileID: 33600719186193960}
   - component: {fileID: 23906640513016518}
   - component: {fileID: 2958889094669233006}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Prot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -386,6 +394,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -397,6 +406,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -419,9 +429,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 0
-  serializedVersion: 3
+  serializedVersion: 4
   m_Convex: 0
-  m_CookingOptions: 14
+  m_CookingOptions: 30
   m_Mesh: {fileID: 4300010, guid: 0ecef9ec7bce10b43a2e2fc73ef34f15, type: 3}
 --- !u!1 &1769068175511350
 GameObject:
@@ -433,7 +443,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4827208133439044}
   - component: {fileID: 114286251173155450}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: hl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -476,7 +486,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4526615605917214}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CinematicTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -509,7 +519,7 @@ GameObject:
   - component: {fileID: 33236810737240408}
   - component: {fileID: 23655444818333110}
   - component: {fileID: 4133366480897401467}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -552,6 +562,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -563,6 +574,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -585,7 +597,7 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 0
-  serializedVersion: 3
+  serializedVersion: 4
   m_Convex: 0
-  m_CookingOptions: 14
+  m_CookingOptions: 30
   m_Mesh: {fileID: 4300008, guid: 0ecef9ec7bce10b43a2e2fc73ef34f15, type: 3}

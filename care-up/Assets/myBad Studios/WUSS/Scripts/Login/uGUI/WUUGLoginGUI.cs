@@ -310,6 +310,10 @@ namespace MBS
         {
             bool value = panels.debug_options.transform.Find("Panel/DevBundleServer/Toggle").GetComponent<Toggle>().isOn;
             PlayerPrefsManager.UseDevBundleServer = value;
+            if (!value)
+                CAServer.BundleAddress = CAServer.ReleaseBundleAddress;
+            else
+                CAServer.BundleAddress = CAServer.DevBundleAddress;
         }
 
         public void UseTestDBServerChanged()
