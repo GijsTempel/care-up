@@ -802,13 +802,13 @@ public class PlayerPrefsManager : MonoBehaviour
         hexKey = __trashFillString(hexKey);
 
         string link = "https://leren.careup.online/certificate.php";
-        link += "?name=" + playerFullName;
-        link += "&scene=" + sceneName;
-        link += "&date=" + date;
+        link += "?name=" + UnityWebRequest.EscapeURL(playerFullName);
+        link += "&scene=" + UnityWebRequest.EscapeURL(sceneName);
+        link += "&date=" + UnityWebRequest.EscapeURL(date);
         link += "&misc=" + hexKey;
 
         Debug.LogWarning("OPENING LINK " + link);
-        Application.OpenURL(link.Replace(" ", "%20"));
+        Application.OpenURL(link);
     }
 
     public static string __getCertificateLinkParams(string scene, string date = "", bool mail = false)
@@ -831,13 +831,13 @@ public class PlayerPrefsManager : MonoBehaviour
         hexKey = __trashFillString(hexKey);
 
         string link = "?";
-        link += "name=" + name;
-        link += "&scene=" + scene;
-        link += "&date=" + date;
+        link += "name=" + UnityWebRequest.EscapeURL(name);
+        link += "&scene=" + UnityWebRequest.EscapeURL(scene);
+        link += "&date=" + UnityWebRequest.EscapeURL(date);
         link += "&misc=" + hexKey;
         if (mail)
         {
-            link += "&mail=" + email;
+            link += "&mail=" + UnityWebRequest.EscapeURL(email);
         }
 
         return link;
