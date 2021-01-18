@@ -34,20 +34,21 @@
 - Voorgeschreven steriele spuit met glijmiddel
 - Steriel water voor het vullen van de ballon of wat de fabrikant aanraadt, steriele spuit en steriele opzuignaald
 - 2 onderleggers
-- Gaasje
 - Bakje met 4 gaasjes/wattenbollen
 - Water uit flink stromende kraan (of steriel water)
 - Steriele handschoenen
 - Steriel gaasje/wattenbol
 - Handschoenen
-- Steriele doek
+- Steriele doek voor steriel werkveld
 - Materiaal om genitale gebied na katheterisatie mee te reinigen (vochtige washand, handdoek)
-- Naaldenbeker
+- Zo nodig gaasje of wattenstokje voor desinfectie aansluiting urineopvangzak
+- Zo nodig alcohol 70% voor desinfectie aansluiting urineopvangzak
+- Urineopvangzak (met kraantje)
 - Steriele urineopvangzak (met kraantje)
 - Ophangrekje, fixatiemateriaal
 - Zo nodig penisklem
 - Afvalbak
-    
+
 Zorg voor een extra katheter, urineopvangzak en materialen voor het inbrengen, voor het geval het inbrengen mislukt.
  "></action>
 
@@ -115,12 +116,25 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
      messageTitle="Privacy van de cliënt"
     messageContent="Denk tijdens het zorg verlenen altijd aan de privacy van de cliënt. Zorg ervoor dat de cliënt zich veilig en geborgen voelt door bijvoorbeeld de gordijnen dicht te trekken."
     ></action>
+	
+	<action
+    comment="9. Put on gloves."
+    points="2"
+    description="Trek handschoenen aan"
+    index="7"
+    type="use"
+    value="gloveBox"
+    extra="Trek handschoenen aan"
+    quiz="2"
+    messageTitle="Gebruik handschoenen"
+    messageContent="Gebruik handschoenen eenmalig en bij steeds dezelfde cliënt. Vermijd tijdens het dragen van handschoenen contact met deurknopen, telefoon, apparatuur, toetsenborden, enzovoort. Trek ze na gebruik direct uit. Bij het uittrekken van de handschoenen kunnen je handen besmet zijn geraakt. Was of desinfecteer daarom je handen altijd na het uittrekken van de handschoenen."></action>
+
 
   <action
     comment="7. Place the tray with gauze on the underpad."
     points="1"
     description="Zet het bakje met wattenbollen op de onderlegger"
-    index="7"
+    index="8"
     type="drop"
     item="GauzeTrayWet"
     secondPlace="PatientPos"
@@ -131,7 +145,7 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
     comment="3. Open package of the syringe with 10 ml of sterile water. Leave the syringe in the package "
     points="1"
     description="Open de verpakking van de spuit met 10 ml steriel water. Laat de spuit in de verpakking"
-    index="8"
+    index="9"
     type="combine"
     left="water_syringe_pack"
     right=""
@@ -142,7 +156,7 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
     comment="8. Open the packaging of the syringe with lubricant, leave the syringe in the packaging."
     points="1"
     description="Open de verpakking van de spuit met glijmiddel. Laat de spuit nog in de verpakking"
-    index="9"
+    index="10"
     type="combine"
     left="lube_syringe_pack"
     right=""
@@ -153,7 +167,7 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
     comment="" 
     points="1" 
     description="Leg het plastic afvalbakje op de onderlegger" 
-    index="10" 
+    index="11" 
     type="drop" 
     item="PlasticTrashbucket" 
     secondPlace="PatientPos" 
@@ -161,18 +175,6 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
 	blockRequired="LubUnpacked, WaterUnpacked"
     blockUnlock="tray placed"
     extra="Leg het plastic afvalbakje op de onderlegger"></action>
-
-  <action
-    comment="9. Put on gloves."
-    points="2"
-    description="Trek handschoenen aan"
-    index="11"
-    type="use"
-    value="gloveBox"
-    extra="Trek handschoenen aan"
-    quiz="2"
-    messageTitle="Gebruik handschoenen"
-    messageContent="Gebruik handschoenen eenmalig en bij steeds dezelfde cliënt. Vermijd tijdens het dragen van handschoenen contact met deurknopen, telefoon, apparatuur, toetsenborden, enzovoort. Trek ze na gebruik direct uit. Bij het uittrekken van de handschoenen kunnen je handen besmet zijn geraakt. Was of desinfecteer daarom je handen altijd na het uittrekken van de handschoenen."></action>
 
   <action
     comment="Clean the glans penis with the moist gauze, place the sterile gauze under the penis and place the penis on it."
