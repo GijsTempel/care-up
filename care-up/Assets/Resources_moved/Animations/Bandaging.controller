@@ -1104,7 +1104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControlObjectName: 
-  showFrame: 7582
+  showFrame: 7422
   ObjNames:
   - CuttedStripBody_OnBody3
   toShow: 1
@@ -3282,7 +3282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControlObjectName: 
-  showFrame: 7568
+  showFrame: 7582
   ObjNames:
   - CuttedStripBody_OnBody4
   toShow: 1
@@ -3302,8 +3302,8 @@ MonoBehaviour:
   ControlObjectName: 
   showFrame: 60
   ObjNames:
-  - Bandage1_ForSQ
-  - Bandage2_ForSQ
+  - Bandage1_ForSQ_v2
+  - Bandage2_ForSQ_v2
   - AppliedJersey_OnLeg_FoldedTopBottom
   - Padding_LeftSide_Leg
   - Padding_RightSide_Leg
@@ -3371,14 +3371,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfd1d24e9f498a642b6393e37bedc9e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   SequenceName: AnimSeq_Bandaging
   TuggleFromCinematic: 1
-  keyFrames: d3010000a9040000c605000027090000e90900003c0a00005f0b0000b00b0000040c00009c0c00003e0d0000d80f00008a100000b7120000ee13000041140000d615000049160000a516000049170000f4170000c8190000551a0000b61c0000e41d0000
+  keyFrames: d3010000a9040000c605000027090000e90900003c0a0000d20b00003f0c00009b0c0000430d0000f10d00008510000033110000c7120000da1300003214000052150000a4150000f81500009116000030170000c81900007c1a0000ac1c0000e31d0000
 --- !u!1102 &-2125187118849621551
 AnimatorState:
   serializedVersion: 5
@@ -6129,6 +6129,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dropLeftFrame: 440
   dropRightFrame: -1
+--- !u!114 &4190250065390163850
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a223eabb31ae4af1b76b935e7206be8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toClose: 0
+  actionFrame: 75
 --- !u!1102 &4198100950388091247
 AnimatorState:
   serializedVersion: 5
@@ -7110,7 +7124,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectName: Bandage1_ForSQ_v2
   unlock_frame: 1
-  lock_frame: 7980
+  lock_frame: 7955
   toActivate: 1
 --- !u!1101 &6733710447017948958
 AnimatorStateTransition:
@@ -7394,7 +7408,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectName: Bandage2_ForSQ_v2
   unlock_frame: 1
-  lock_frame: 7980
+  lock_frame: 7955
   toActivate: 1
 --- !u!114 &7231837717396512112
 MonoBehaviour:
@@ -7562,6 +7576,20 @@ MonoBehaviour:
   target: _takeChairTarget
   resetToTarget: 
   resetCamera: 0
+--- !u!114 &7465181227653233658
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a223eabb31ae4af1b76b935e7206be8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toClose: 1
+  actionFrame: 45
 --- !u!114 &7500509478420469850
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7951,6 +7979,8 @@ AnimatorState:
   m_StateMachineBehaviours:
   - {fileID: -2399499978832853148}
   - {fileID: -403315811404194126}
+  - {fileID: 7465181227653233658}
+  - {fileID: 4190250065390163850}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
