@@ -254,6 +254,9 @@ public class EndScoreManager : MonoBehaviour
 
     public int CalculatePercentage()
     {
+        //If you need to test endscore scene with hith score, uncomment this line:
+        //return 99;
+
         InitializeObjects();
 
         int correctSteps;
@@ -378,7 +381,7 @@ public class EndScoreManager : MonoBehaviour
             if (manager.validatedScene == false)
             {   // changing pop up text if scene is not validated
                 GameObject.Find("/Interactable Objects/Canvas/CertificatePopOp/Certificate/RegText").GetComponent<Text>().text
-                    = "Neem snel een kijkje in je mailbox! Daar vind je je certificaat.";
+                    = "Je kan je certificaat nu downloaden via de knop hieronder. Dit kan ook later vanuit de portal.";
             }
         }
         else // if not demo and emails not sent just load menu
