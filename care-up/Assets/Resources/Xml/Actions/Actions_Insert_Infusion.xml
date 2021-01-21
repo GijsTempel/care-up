@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ActionList>
-
+	<action
+		points="1"
+		description="[Begroet]"
+		audioHint=""
+		index="0"
+		type="talk"
+		topic="Hello"
+		extra="Ondanks dat het begroeten niet in de werkwijze is vermeld. Is het wel netjes om contact te leggen met de cliënt."
+		optional=""
+  />
   <action
     comment="1. Apply hand hygiene"
     index="0"
@@ -263,18 +272,16 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     buttonText="Opzuignaald weggooien"
     extra="Verwijder de opzuignaald en doe de naald in de naaldencontainer. Gebruik voor injecteren spuiten en naalden voor eenmalig gebruik (disposable). Plaats een naald na gebruik nooit in de plastic beschermhuls terug. Werk met veilige opzuig injectienaalden. Gebruik de inkepingen op de deksel om de naald en spuit te scheiden of gebruik een naaldverwijderaar."
   ></action>
-
-	<action
-	comment="Place the syringe back in the package"
-    points="1"
-    description="Leg de spuit terug in de geopende verpakking."
-    index="17"
-    type="PutDown"
-    item="Syringe"
-    target=""
-	extra=""
-     ></action>
 	
+	<action
+    index="18"
+    description="Vraag de cliënt op de rug op bed te gaan liggen of te gaan zitten"
+	type="talk"
+	comment="Ask the client to lie or sit on the bed on his back."
+	points="2"
+	blockUnlock="PatIsLyingDown"
+	topic="SitOnBed" 
+	></action>
 
 	<action
      points="1"
