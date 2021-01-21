@@ -111,12 +111,14 @@ public class PlayerSpawn : MonoBehaviour
 
             foreach (XmlNode node in nodes)
             {
-                if (prescriptionPanel.Find(node.Name) != null)
-                    prescriptionPanel.Find(node.Name).GetComponent<Text>().text =
+                string lineName = "P" + node.Name;
+                if (prescriptionPanel.Find(lineName) != null)
+                    
+                    prescriptionPanel.Find(lineName).Find(node.Name).GetComponent<Text>().text =
                         node.Attributes["value"].Value;
 
-                if (secondPrescriptionPanel.Find(node.Name) != null)
-                    secondPrescriptionPanel.Find(node.Name).GetComponent<Text>().text =
+                if (secondPrescriptionPanel.Find(lineName) != null)
+                    secondPrescriptionPanel.Find(lineName).Find(node.Name).GetComponent<Text>().text =
                         node.Attributes["value"].Value;
             }
         }
@@ -124,7 +126,7 @@ public class PlayerSpawn : MonoBehaviour
         if (patientRecordsXml != "")
         {
             Transform patientRecordsXmlPanel = robotUI.Find("RecordsTab/Panel");
-
+            Transform patientRecordsTab = robotUI.Find("RecordsTab");
             TextAsset textAsset = (TextAsset)Resources.Load("Xml/IpadInfo/" + patientRecordsXml);
             XmlDocument xmlFile = new XmlDocument();
             xmlFile.LoadXml(textAsset.text);
@@ -133,8 +135,12 @@ public class PlayerSpawn : MonoBehaviour
 
             foreach (XmlNode node in nodes)
             {
-                if (patientRecordsXmlPanel.Find(node.Name) != null)
-                    patientRecordsXmlPanel.Find(node.Name).GetComponent<Text>().text =
+                string lineName = "P" + node.Name;
+                if (patientRecordsXmlPanel.Find(lineName) != null)
+                    patientRecordsXmlPanel.Find(lineName).Find(node.Name).GetComponent<Text>().text =
+                        node.Attributes["value"].Value;
+                else if(patientRecordsTab.Find(node.Name) != null)
+                    patientRecordsTab.Find(node.Name).GetComponent<Text>().text =
                         node.Attributes["value"].Value;
             }
         }
