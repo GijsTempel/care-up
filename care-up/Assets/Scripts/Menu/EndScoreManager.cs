@@ -115,7 +115,7 @@ public class EndScoreManager : MonoBehaviour
             actualScene = true;
 
             // show/hide buttons
-            bool flag = (percent > 70 && manager.subscribed);
+            bool flag = (percent > 70 && (manager.subscribed || IsCovidScene()));
 
             // update test highscore + save certificate date
             manager.UpdateTestHighscore(percent);
@@ -254,6 +254,9 @@ public class EndScoreManager : MonoBehaviour
 
     public int CalculatePercentage()
     {
+        //If you need to test endscore scene with hith score, uncomment this line:
+        //return 99;
+
         InitializeObjects();
 
         int correctSteps;
@@ -360,7 +363,15 @@ public class EndScoreManager : MonoBehaviour
         unityWebRequest.SendWebRequest();
         Debug.Log("E-mail verzonden");
     }
-
+    bool IsCovidScene()
+    {
+        bool isCovidScene = false;
+        if (manager.currentSceneVisualName == "Covid-19-vaccin van Pfizer-BioNtech injecteren")
+            isCovidScene = true;
+        if (manager.currentSceneVisualName == "Covid-19-vaccin van Moderna injecteren")
+            isCovidScene = true;
+        return isCovidScene;
+    }
     /// <summary>
     /// if email was sent - opens panel
     /// if email was not sent - loads main menu
@@ -368,7 +379,7 @@ public class EndScoreManager : MonoBehaviour
     public void ConditionalHomeButton()
     {
         // special panel for demo
-        if (!manager.subscribed)
+        if (!manager.subscribed && !IsCovidScene())
         {
             GameObject.Find("Interactable Objects/Canvas/CertificateDemoPopOp").SetActive(true);
         }
@@ -378,7 +389,7 @@ public class EndScoreManager : MonoBehaviour
             if (manager.validatedScene == false)
             {   // changing pop up text if scene is not validated
                 GameObject.Find("/Interactable Objects/Canvas/CertificatePopOp/Certificate/RegText").GetComponent<Text>().text
-                    = "Neem snel een kijkje in je mailbox! Daar vind je je certificaat.";
+                    = "Je kan je certificaat nu downloaden via de knop hieronder. Dit kan ook later vanuit de portal.";
             }
         }
         else // if not demo and emails not sent just load menu
