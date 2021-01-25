@@ -57,9 +57,6 @@ public class AddObjectToHandAtFrame : StateMachineBehaviour
     private void AddObject()
     {
         inventory.CreateObjectByName(objectName, Vector3.zero, callback => obj = callback);
-        inventory.ForcePickItem(obj, hand);
-        PlayerAnimationManager.SetHandItem(hand == PlayerAnimationManager.Hand.Left, obj);
-
         if (GhostObjectTarget != "" && obj != null)
         {
             if (GameObject.Find(GhostObjectTarget) != null)
@@ -96,5 +93,8 @@ public class AddObjectToHandAtFrame : StateMachineBehaviour
                 }
             }
         }
+        inventory.ForcePickItem(obj, hand);
+        PlayerAnimationManager.SetHandItem(hand == PlayerAnimationManager.Hand.Left, obj);
+
     }
 }
