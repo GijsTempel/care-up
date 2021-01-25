@@ -759,19 +759,26 @@ public class HandsInventory : MonoBehaviour {
     public void ForcePickItem(GameObject obj, PlayerAnimationManager.Hand hand, bool createGhost = false)
     {
         PickableObject item = obj.GetComponent<PickableObject>();
-        if (item != null && item.prefabInHands != "")
+        if (item != null)
         {
-            item.SavePosition();
-            GameObject replaced = null;
-            CreateObjectByName(item.prefabInHands, Vector3.zero, callback => replaced = callback);
-            if (replaced != null)
+            if (item.prefabInHands != "")
             {
-                replaced.GetComponent<PickableObject>().SavePosition(item.SavedPosition, item.SavedRotation, true);
-                item.DeleteGhostObject();
-                Destroy(item.gameObject);
-                item = replaced.GetComponent<PickableObject>();
+                //item.SavePosition();
+                GameObject replaced = null;
+                CreateObjectByName(item.prefabInHands, Vector3.zero, callback => replaced = callback);
+                if (replaced != null)
+                {
+                    replaced.GetComponent<PickableObject>().SavePosition(item.SavedPosition, item.SavedRotation, true);
+                    item.DeleteGhostObject();
+                    Destroy(item.gameObject);
+                    item = replaced.GetComponent<PickableObject>();
+                    item.transform.position = item.SavedPosition;
+                    item.transform.rotation = item.SavedRotation;
+                    item.CreateGhostObject();
+                }
             }
         }
+
 
         if (hand == PlayerAnimationManager.Hand.Left)
         {
