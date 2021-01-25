@@ -387,6 +387,8 @@ public class ItemControlsUI : MonoBehaviour
                                     replaced.GetComponent<PickableObject>().SavePosition(item.SavedPosition, item.SavedRotation, true);
                                     Destroy(item.gameObject);
                                     item = replaced.GetComponent<PickableObject>();
+                                    item.transform.position = item.SavedPosition;
+                                    item.transform.rotation = item.SavedRotation;
                                 }
                             }
 
