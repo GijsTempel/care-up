@@ -115,7 +115,7 @@ public class EndScoreManager : MonoBehaviour
             actualScene = true;
 
             // show/hide buttons
-            bool flag = (percent > 70 && (manager.subscribed || IsCovidScene()));
+            bool flag = (percent > 70 && (manager.subscribed || HasFreeCert()));
 
             // update test highscore + save certificate date
             manager.UpdateTestHighscore(percent);
@@ -363,14 +363,9 @@ public class EndScoreManager : MonoBehaviour
         unityWebRequest.SendWebRequest();
         Debug.Log("E-mail verzonden");
     }
-    bool IsCovidScene()
+    bool HasFreeCert()
     {
-        bool isCovidScene = false;
-        if (manager.currentSceneVisualName == "Covid-19-vaccin van Pfizer-BioNtech injecteren")
-            isCovidScene = true;
-        if (manager.currentSceneVisualName == "Covid-19-vaccin van Moderna injecteren")
-            isCovidScene = true;
-        return isCovidScene;
+        return manager.HasFreeCert(manager.currentSceneVisualName);
     }
     /// <summary>
     /// if email was sent - opens panel
@@ -379,7 +374,7 @@ public class EndScoreManager : MonoBehaviour
     public void ConditionalHomeButton()
     {
         // special panel for demo
-        if (!manager.subscribed && !IsCovidScene())
+        if (!manager.subscribed && !HasFreeCert())
         {
             GameObject.Find("Interactable Objects/Canvas/CertificateDemoPopOp").SetActive(true);
         }

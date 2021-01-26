@@ -27,6 +27,7 @@ public class SceleInfo
     public string inHouseBundleName = "";
     public string inHouseSceneName = "";
     public string url = "";
+    public bool freeCert = false;
 }
 
 /// <summary>
@@ -155,7 +156,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
 // FindObjectOfType<PlayerPrefsManager>().demoVersion
 
         Transform protocolsTransorm = GameObject.Find("UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Play/ContentPanel/PlayElements/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder/Protocols/content").transform;
-
+        pp.ClearFreeCertList();
         Dictionary<string, SceleInfo> scenesInfo = new Dictionary<string, SceleInfo>();
 
 
@@ -168,6 +169,18 @@ public class LevelSelectionScene_UI : MonoBehaviour
             if (xmlSceneNode.Attributes["type"] != null)
                 sceneInfo.sceneType = xmlSceneNode.Attributes["type"].Value;
 
+            sceneInfo.freeCert = false;
+            if (xmlSceneNode.Attributes["freeCertificate"] != null)
+                sceneInfo.freeCert = (xmlSceneNode.Attributes["freeCertificate"].Value == "true");
+            if (xmlSceneNode.Attributes["name"] != null)
+            {
+                sceneInfo.displayName = xmlSceneNode.Attributes["name"].Value;
+                if (sceneInfo.freeCert)
+                    pp.AddFreeCertScene(sceneInfo.displayName);
+            }
+
+            sceneInfo.sceneName = xmlSceneNode.Attributes["sceneName"].Value;
+
             if (xmlSceneNode.Attributes["hidden"] != null)
                 sceneInfo.hidden = xmlSceneNode.Attributes["hidden"].Value == "true";
 
@@ -178,11 +191,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 sceneInfo.isInProducts = xmlSceneNode.Attributes["isInProducts"].Value.Split('|');
             }
 
-            sceneInfo.sceneName = xmlSceneNode.Attributes["sceneName"].Value;
-
             sceneInfo.bundleName = xmlSceneNode.Attributes["bundleName"].Value;
-            if (xmlSceneNode.Attributes["name"] != null)
-                sceneInfo.displayName = xmlSceneNode.Attributes["name"].Value;
 
             if (xmlSceneNode.Attributes["description"] != null)
                 sceneInfo.description = xmlSceneNode.Attributes["description"].Value;
@@ -208,12 +217,11 @@ public class LevelSelectionScene_UI : MonoBehaviour
             if (xmlSceneNode.Attributes["type"] != null)
                 sceneType = xmlSceneNode.Attributes["type"].Value;
 
+            if (xmlSceneNode.Attributes["url"] != null)
+                sceneInfo.url = xmlSceneNode.Attributes["url"].Value;
 
             if (!scenesInfo.ContainsKey(sceneInfo.sceneName) && sceneInfo.mainScene == "")
                 scenesInfo.Add(sceneInfo.sceneName, sceneInfo);
-
-            if (xmlSceneNode.Attributes["url"] != null)
-                sceneInfo.url = xmlSceneNode.Attributes["url"].Value;
 
             if (sceneInfo.mainScene != "" && sceneType != "")
             {

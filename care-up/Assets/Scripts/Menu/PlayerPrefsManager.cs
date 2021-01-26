@@ -70,6 +70,7 @@ public class PlayerPrefsManager : MonoBehaviour
     public static bool editCharacterOnStart = false;
     public static bool tutorialOnStart = false;
     public static bool simulatePlayerActions = false;
+    List<string> scenesWithFreeCert = new List<string>();
 
     public bool VR = true;
     public bool practiceMode = true;
@@ -130,6 +131,21 @@ public class PlayerPrefsManager : MonoBehaviour
     public class PurchasedScetesData
     {
         public string product_name;
+    }
+
+
+    public void AddFreeCertScene(string sceneName)
+    {
+        if (!scenesWithFreeCert.Contains(sceneName))
+            scenesWithFreeCert.Add(sceneName);
+    }
+    public void ClearFreeCertList()
+    {
+        scenesWithFreeCert.Clear();
+    }
+    public bool HasFreeCert(string sceneName)
+    {
+        return scenesWithFreeCert.Contains(sceneName);
     }
 
     public string ActivatedScenes
