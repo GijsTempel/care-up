@@ -21,18 +21,21 @@ public class AddNewGhostPositionsOnAnimation : StateMachineBehaviour
     {
         foreach (GhostPositionData d in dataList)
         {
-            Transform targetTransform = GameObject.Find(d.TargetName).transform;
+            if (GameObject.Find(d.TargetName) != null)
+            {
+                Transform targetTransform = GameObject.Find(d.TargetName).transform;
 
-            Vector3 pos = targetTransform.position;
-            Vector3 rot = targetTransform.rotation.eulerAngles;
-            HandsInventory.GhostPosition listItem = new HandsInventory.GhostPosition();
-            listItem.id = d.id;
-            listItem.position = pos;
-            listItem.rotation = rot;
-            listItem.objectName = d.objectName;
-            list.Add(listItem);
+                Vector3 pos = targetTransform.position;
+                Vector3 rot = targetTransform.rotation.eulerAngles;
+                HandsInventory.GhostPosition listItem = new HandsInventory.GhostPosition();
+                listItem.id = d.id;
+                listItem.position = pos;
+                listItem.rotation = rot;
+                listItem.objectName = d.objectName;
+                list.Add(listItem);
+            }
         }
-
+        
         HandsInventory inv = GameObject.FindObjectOfType<HandsInventory>();
         
         foreach (HandsInventory.GhostPosition i in list)
