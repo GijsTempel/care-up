@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class RobotUITabInfo : RobotUITabs
 {
@@ -17,22 +15,22 @@ public class RobotUITabInfo : RobotUITabs
     private bool set = false;
     private float timer = 0.0f;
 
-    private float initButtonWidth  = 0;
+    private float initButtonWidth = 0;
     private float initButtonHeight = 0;
-	public GameObject ItemList;
-	public GameObject ItemListButton;
-    
-	public void FullScreenPDF()
-	{
+    public GameObject ItemList;
+    public GameObject ItemListButton;
+
+    public void FullScreenPDF()
+    {
         // never used?
         //GameObject FullScreenPDF_UI = 
-        Instantiate(Resources.Load("Prefabs/PDFFullScreen"));
+        Instantiate(Resources.Load("PDFFullScreen/PDFFullScreen"));
         //as GameObject;
 
         tutorial_fullscreen = true;
     }
 
-	protected override void Start()
+    protected override void Start()
     {
         base.Start();
 
@@ -43,25 +41,26 @@ public class RobotUITabInfo : RobotUITabs
             OnItemButtonClick(t.GetComponent<RectTransform>());
         }
 
-		//SwitchItemList(true);
-
-
+        //SwitchItemList(true);
         // generate buttons
         // done in playerspawn
     }
 
-       
-	public void ToggleItemList()
-	{
-		ItemListButton.GetComponent<Animator>().SetTrigger("BlinkStop");
-		ItemList.SetActive(!ItemList.activeSelf);
+
+    public void ToggleItemList()
+    {
+        if (ItemListButton.GetComponent<Animator>() != null && ItemListButton.GetComponent<Animator>().isActiveAndEnabled)
+        
+          
+        ItemListButton.GetComponent<Animator>().SetTrigger("BlinkStop");
+        ItemList.SetActive(!ItemList.activeSelf);
 
         tutorial_listButton = true;
     }
 
-	public void SwitchItemList(bool value)
+    public void SwitchItemList(bool value)
     {
-		ItemList.SetActive(value);
+        ItemList.SetActive(value);
     }
 
 
@@ -110,7 +109,7 @@ public class RobotUITabInfo : RobotUITabs
             initButtonWidth = selectedButton.sizeDelta.x;
             initButtonHeight = selectedButton.sizeDelta.y;
         }
-		ToggleItemList();
+        ToggleItemList();
 
         tutorial_changedPDF = true;
     }

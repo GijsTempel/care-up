@@ -9,8 +9,9 @@ namespace Paroxe.PdfRenderer.Examples
 #if !UNITY_WEBGL
         IEnumerator Start()
         {
+#pragma warning disable
             WWW www = new WWW("https://www.dropbox.com/s/tssavtnvaym2t6b/DocumentationEN.pdf?raw=1");
-
+#pragma warning restore
             Debug.Log("Downloading document...");
 
             yield return www;

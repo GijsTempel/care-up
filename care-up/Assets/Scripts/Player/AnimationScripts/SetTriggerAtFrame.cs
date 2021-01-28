@@ -7,43 +7,64 @@ public class SetTriggerAtFrame : StateMachineBehaviour
     private float currentFrame;
     private float prevFrame;
 
-    public int frame;
+    public int actionFrame;
     public string trigger;
+    public string ObjectName = "";
+    public bool atTheEnd = false;
 
-    // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
+
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         currentFrame = 0f;
         prevFrame = 0f;
-    }
-
-    // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-    public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        if (animator.speed != 0)
+        if (actionFrame == 0 && !atTheEnd)
         {
-            if (PlayerAnimationManager.CompareFrames(currentFrame, prevFrame, frame))
-            {
-                animator.SetTrigger(trigger);
-            }
-
-            prevFrame = currentFrame;
-            currentFrame += Time.deltaTime;
+            set_trigger(animator);
         }
     }
 
-    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    //public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //}
+    void set_trigger(Animator animator)
+    {
+        if (ObjectName == "")
+        {
+            animator.SetTrigger(trigger);
+        }
+        else
+        {
+            if (GameObject.Find(ObjectName) != null)
+            {
+               
+                if (GameObject.Find(ObjectName).GetComponent<Animator>() != null)                
+                    GameObject.Find(ObjectName).GetComponent<Animator>().SetTrigger(trigger);
+            }
+        }
+    }
 
-    // OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here
-    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-    //
-    //}
+    public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        
+        if (animator.speed != 0)
+        {
+            if (!atTheEnd)
+            {
+                if (PlayerAnimationManager.CompareFrames(currentFrame, prevFrame, actionFrame))
+                {
+                    set_trigger(animator);
+                }
 
-    // OnStateIK is called right after Animator.OnAnimatorIK(). Code that sets up animation IK (inverse kinematics) should be implemented here.
-    //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-    //
-    //}
+                prevFrame = currentFrame;
+                currentFrame = stateInfo.normalizedTime * stateInfo.length;
+            }
+        }
+    }
+
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        currentFrame = 0;
+        prevFrame = 0;
+        if (atTheEnd)
+        {
+            set_trigger(animator);
+        }
+    }
 }

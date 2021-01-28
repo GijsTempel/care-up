@@ -181,7 +181,9 @@ namespace MBS {
             Sprite sprite = Resources.Load<Sprite>( filename );
             if ( null == sprite )
             {
+#pragma warning disable
                 WWW w = new WWW( url );
+#pragma warning restore
                 yield return w;
                 if ( string.IsNullOrEmpty( w.error ) )
                 {
@@ -222,7 +224,7 @@ namespace MBS {
             Keys.AddNode( "Keys" );
         }
 
-        public void UpdateKeys( string name, int qty = 1 )
+        public void UpdateKeys( string name, int qty = 0 )
         {
             //Save the current tracking keys so we are up to date across game sessions
             _keys.Add( qty, name );

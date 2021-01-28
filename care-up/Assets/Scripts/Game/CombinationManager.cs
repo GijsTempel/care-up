@@ -16,6 +16,7 @@ public class CombinationManager : MonoBehaviour {
         public string rightInput;
         public string leftResult;
         public string rightResult;
+        public bool allowMultiple = false;
     };
 
     public string combinationListName;
@@ -42,6 +43,9 @@ public class CombinationManager : MonoBehaviour {
             combination.rightInput = c.Attributes["rightInput"].Value;
             combination.leftResult = c.Attributes["leftResult"].Value;
             combination.rightResult = c.Attributes["rightResult"].Value;
+            combination.allowMultiple = false;
+            if (c.Attributes["allowMultiple"] != null)
+                combination.allowMultiple = c.Attributes["allowMultiple"].Value == "true";
             combinationList.Add(combination);
         }
     }
@@ -77,9 +81,19 @@ public class CombinationManager : MonoBehaviour {
             }
         }
 
-        actionManager.OnCombineAction(leftInput, rightInput);
-
         return found;
+    }
+
+    public bool CombineMultiple(string leftInput, string rightInput)
+    {
+        foreach (Combination c in combinationList)
+        {
+            if (leftInput == c.leftInput && rightInput == c.rightInput && c.allowMultiple)
+                return true;
+            if (leftInput == c.rightInput && rightInput == c.leftInput && c.allowMultiple)
+                return true;
+        }
+        return false;
     }
 
 }

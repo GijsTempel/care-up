@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-    
-public class PlayerScript : MonoBehaviour {
+using UnityEngine.PostProcessing;
+public class PlayerScript : MonoBehaviour
+{
     [HideInInspector]
     public bool tutorial_movementLock = false;
     [HideInInspector]
@@ -28,9 +29,14 @@ public class PlayerScript : MonoBehaviour {
     public string itemControlsToInit = "";
 
     public Camera cam;
+    Camera currentExtraCamera;
+    GameObject flyHeloper;
+
+    WalkToGroup ImmediateWTG;
+
     public MouseLook mouseLook = new MouseLook();
     public bool freeLook = false;
-
+    GameUI gameUI;
     PlayerPrefsManager prefs;
     Controls controls;
     HandsInventory handsInv;
@@ -40,7 +46,10 @@ public class PlayerScript : MonoBehaviour {
     private Vector3 savedPos;
     private Quaternion savedRot;
     private List<WalkToGroup> groups;
-    private WalkToGroup currentWalkPosition;
+    public WalkToGroup currentWalkPosition;
+    private bool AutoPlayClicked = false;
+    private GameObject AutoPlayActionObject = null;
+    private ActionManager actionManager = null;
 
     RobotManager robot;
     private Vector3 savedRobotPos;
@@ -51,7 +60,6 @@ public class PlayerScript : MonoBehaviour {
     private float fadeTimer = 0.0f;
     Texture fadeTex;
 
-    Button moveBackButton;
     public ItemControlsUI itemControls;
 
     public bool usingOnMode = false;
@@ -68,20 +76,21 @@ public class PlayerScript : MonoBehaviour {
     [HideInInspector]
     public static QuizTab quiz;
     private static PlayerScript instance; // fix for coroutines
-    
+
     public bool robotUIopened = false;
     private bool robotUINotOpenedYet = true;
     public GameObject robotSavedLeft;
     public GameObject robotSavedRight;
 
     GameObject devHintUI = null;
+    GameObject biggerDevHintUI = null;
     GameObject tutorialCanvas;
 
     Tutorial_UI tutorial_UI;
     Tutorial_Theory tutorial_theory;
 
-    bool moveBackBtnActiveForIpad = false;
     bool devHintActiveForIpad = false;
+    bool biggerDevHintActiveForIpad = false;
 
     GameObject extraButton;
     bool extraBtnActiveForIpad = false;
@@ -89,11 +98,12 @@ public class PlayerScript : MonoBehaviour {
     bool extraPanelActiveForIpad = false;
 
     public static bool actionsLocked = false;
+    float defaultInteractionDistance = -1;
+    [HideInInspector]
+    public GameObject joystickObject;
+    //[HideInInspector]
 
-    public GameObject MoveBackButtonObject
-    {
-        get { return moveBackButton.gameObject; }
-    }
+    public WalkToGroup.GroupType momentaryJumpTo;
 
     public bool UIHover
     {
@@ -105,10 +115,48 @@ public class PlayerScript : MonoBehaviour {
         onButtonHover = false;
     }
 
+    public void SwitchCamera(string cameraName)
+    {
+        if (flyHeloper == null)
+            flyHeloper = GameObject.Find("flyHeloper");
+        if (cameraName == "")
+        {
+            gameUI.GetComponent<CanvasGroup>().alpha = 1.0f;
+            gameUI.GetComponent<CanvasGroup>().interactable = true;
+
+            if (currentExtraCamera != null)
+                currentExtraCamera.enabled = false;
+            cam.enabled = true;
+            flyHeloper.SetActive(true);
+        }
+        else
+        {
+            GameObject extraCamGO = GameObject.Find(cameraName);
+            if (extraCamGO != null)
+            {
+                if (extraCamGO.GetComponent<Camera>() != null)
+                {
+                    currentExtraCamera = extraCamGO.GetComponent<Camera>();
+                    cam.enabled = false;
+                    currentExtraCamera.enabled = true;
+                    gameUI.GetComponent<CanvasGroup>().alpha = 0.0f;
+                    gameUI.GetComponent<CanvasGroup>().interactable = false;
+                    flyHeloper.SetActive(false);
+                }
+            }
+        }
+    }
+
     private void Start()
     {
         instance = this;
         actionsLocked = false;
+        gameUI = GameObject.FindObjectOfType<GameUI>();
+
+        if (GameObject.Find("GameLogic") != null)
+        {
+            actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
+        }
 
         mouseLook.Init(transform, cam.transform);
 
@@ -116,8 +164,8 @@ public class PlayerScript : MonoBehaviour {
         {
             prefs = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
         }
-        
-        GetComponent<Crosshair>().enabled = ( prefs == null ) ? false : prefs.VR;
+
+        GetComponent<Crosshair>().enabled = (prefs == null) ? false : prefs.VR;
 
         controls = GameObject.Find("GameLogic").GetComponent<Controls>();
 
@@ -126,12 +174,9 @@ public class PlayerScript : MonoBehaviour {
 
         fadeTex = Resources.Load<Texture>("Sprites/Black");
 
-        moveBackButton = GameObject.Find("MoveBackButton").GetComponent<Button>();
-        moveBackButton.gameObject.SetActive(false);
-
         extraButton = GameObject.Find("ExtraButton");
         extraPanel = GameObject.Find("Extra");
-        
+
         itemControls = GameObject.FindObjectOfType<ItemControlsUI>();
         itemControls.gameObject.SetActive(false);
 
@@ -139,15 +184,15 @@ public class PlayerScript : MonoBehaviour {
         cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
 
         usingOnText = GameObject.Find("UsingOnModeText");
-		usingOnCancelButton = GameObject.Find("CancelUseOnButton").gameObject;
+        usingOnCancelButton = GameObject.Find("CancelUseOnButton").gameObject;
         usingOnText.SetActive(false);
 
-        quiz = GameObject.FindObjectOfType<QuizTab>(); 
+        quiz = gameUI.quiz_tab;
 
         EventTrigger.Entry event1 = new EventTrigger.Entry();
         event1.eventID = EventTriggerType.PointerEnter;
         event1.callback.AddListener((eventData) => { EnterHover(); });
-        
+
         EventTrigger.Entry event2 = new EventTrigger.Entry();
         event2.eventID = EventTriggerType.PointerExit;
         event2.callback.AddListener((eventData) => { ExitHover(); });
@@ -160,33 +205,26 @@ public class PlayerScript : MonoBehaviour {
         usingOnCancelButton.GetComponent<EventTrigger>().triggers.Add(event1);
         usingOnCancelButton.GetComponent<EventTrigger>().triggers.Add(event2);
         usingOnCancelButton.GetComponent<EventTrigger>().triggers.Add(event3);
-        
-        GameObject robotUI = GameObject.Find("RobotUI");
-        robotUI.AddComponent<EventTrigger>();
-        robotUI.GetComponent<EventTrigger>().triggers.Add(event1);
-        robotUI.GetComponent<EventTrigger>().triggers.Add(event2);
 
-        if (GameObject.Find("DevHint") != null)
-            devHintUI = GameObject.Find("DevHint").gameObject;
+        //GameObject robotUI = GameObject.Find("RobotUI");
+        //robotUI.AddComponent<EventTrigger>();
+        //robotUI.GetComponent<EventTrigger>().triggers.Add(event1);
+        //robotUI.GetComponent<EventTrigger>().triggers.Add(event2);
 
-        GameObject wrongActionPopUp = GameObject.Find("WrongAction").gameObject;
-		//GameObject warningPopUp = GameObject.Find("EmptyHandsWarning").gameObject;
+        if (GameObject.Find("DetailedHintPanel") != null)
+            devHintUI = GameObject.Find("DetailedHintPanel").gameObject;
+        if (GameObject.Find("BiggerDevHint") != null)
+            biggerDevHintUI = GameObject.Find("BiggerDevHint").gameObject;
 
-        wrongActionPopUp.AddComponent<EventTrigger>();
-        wrongActionPopUp.GetComponent<EventTrigger>().triggers.Add(event1);
-        wrongActionPopUp.GetComponent<EventTrigger>().triggers.Add(event2);
-        wrongActionPopUp.GetComponent<EventTrigger>().triggers.Add(event3);
-
-       // warningPopUp.AddComponent<EventTrigger>();
+        // warningPopUp.AddComponent<EventTrigger>();
         //warningPopUp.GetComponent<EventTrigger>().triggers.Add(event1);
-       // warningPopUp.GetComponent<EventTrigger>().triggers.Add(event2);
-       // warningPopUp.GetComponent<EventTrigger>().triggers.Add(event3);
-        
+        // warningPopUp.GetComponent<EventTrigger>().triggers.Add(event2);
+        // warningPopUp.GetComponent<EventTrigger>().triggers.Add(event3);
+
         EventTrigger.Entry closePopUp = new EventTrigger.Entry();
         event3.eventID = EventTriggerType.PointerClick;
         event3.callback.AddListener((eventData) => { TimedPopUp.ForceHide(); });
-        
-        wrongActionPopUp.GetComponent<EventTrigger>().triggers.Add(closePopUp);
+
         //warningPopUp.GetComponent<EventTrigger>().triggers.Add(closePopUp);
 
         if (GameObject.Find("GameLogic").GetComponent<TutorialManager>() != null)
@@ -209,6 +247,20 @@ public class PlayerScript : MonoBehaviour {
 
         tutorial_UI = GameObject.FindObjectOfType<Tutorial_UI>();
         tutorial_theory = GameObject.FindObjectOfType<Tutorial_Theory>();
+
+        GameObject.Find("GameLogic").AddComponent<GestureControls>();
+        if (momentaryJumpTo != WalkToGroup.GroupType.NotSet)
+            Invoke("MomentaryJumpToGroup", 0.01f);
+    }
+    void MomentaryJumpToGroup()
+    {
+        foreach (WalkToGroup w in GameObject.FindObjectsOfType<WalkToGroup>())
+        {
+            if (momentaryJumpTo == w.WalkToGroupType)
+            {
+                WalkToGroup_(w);
+            }
+        }
     }
 
     public void EnterHover()
@@ -242,8 +294,25 @@ public class PlayerScript : MonoBehaviour {
         }
     }
 
+
+
+    public void ResetTargetRot()
+    {
+        mouseLook.Init(transform, Camera.main.transform);
+    }
+
+    public void LookRotationUpdate(Vector2 amount)
+    {
+        // OLD mouse look code, transfering to joystick
+        if (freeLook && !robotUIopened && cameraMode.CurrentMode == CameraMode.Mode.Free)
+        {
+            rotated += mouseLook.LookRotation(transform, Camera.main.transform, amount);
+        }
+    }
+
     private void Update()
     {
+
         if (prefs != null)
         {
             if (!prefs.VR)
@@ -257,16 +326,26 @@ public class PlayerScript : MonoBehaviour {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
-        
-        if (freeLook && !robotUIopened && cameraMode.CurrentMode == CameraMode.Mode.Free)
+
+        if (ImmediateWTG != null)
+        {
+            Immediate_WalkToGroup(ImmediateWTG);
+            ImmediateWTG = null;
+        }
+        // OLD mouse look code, transfering to joystick
+        /*if (freeLook && !robotUIopened && cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
             rotated += mouseLook.LookRotation(transform, Camera.main.transform);
-        }
+        }*/
+        GameObject selectedObject = controls.SelectedObject;
+        if (AutoPlayActionObject != null)
+            selectedObject = AutoPlayActionObject;
 
-        if (!freeLook && controls.MouseClicked() && !robotUIopened)
+        if (!freeLook && !robotUIopened &&
+            ((Input.touchCount < 1 && controls.MouseClicked()) ||
+            (Input.touchCount > 0 && Controls.MouseReleased()) || AutoPlayClicked))
         {
-            if (!away && controls.SelectedObject != null 
-                && controls.SelectedObject.GetComponent<InteractableObject>() != null
+            if (!away && (selectedObject != null)
                 && !itemControls.gameObject.activeSelf && !actionsLocked)
             {
                 if (usingOnMode)
@@ -286,36 +365,45 @@ public class PlayerScript : MonoBehaviour {
                 }
                 else
                 {
-                    itemControls.Init(controls.SelectedObject);
+                    itemControls.Init(selectedObject);
                 }
             }
-            else
+            else if (Input.touchCount > 0 && Controls.MouseReleased())
             {
-                FreeLookButton();
+                // catch falling touch here
+                if (selectedObject != null &&
+                    selectedObject.GetComponent<WalkToGroup>() && away)
+                {
+                    WalkToGroup_(selectedObject.GetComponent<WalkToGroup>());
+                }
             }
         }
         else if (Input.GetMouseButtonDown(1) && usingOnMode)
         {
             ToggleUsingOnMode(false);
         }
-        else if (Controls.MouseReleased() && freeLook)
+        else if (Controls.MouseReleased())// && freeLook)
         {
-            if (rotated < 3.0f && controls.SelectedObject != null &&
-                controls.SelectedObject.GetComponent<WalkToGroup>())
+            if (rotated < 3.0f && selectedObject != null &&
+                selectedObject.GetComponent<WalkToGroup>() && away)
             {
-                WalkToGroup(controls.SelectedObject.GetComponent<WalkToGroup>());
+                WalkToGroup_(selectedObject.GetComponent<WalkToGroup>());
             }
             else
             {
-                FreeLookButton();
+                rotated = 0.0f;
+                freeLook = false;
+                //FreeLookButton();
             }
         }
-        
-        moveBackButton.GetComponent<Button>().interactable = !tutorial_movementLock;
+
+       
+        AutoPlayClicked = false;
+        AutoPlayActionObject = null;
     }
 
     public void ToggleUsingOnMode(bool value)
-    {   
+    {
         usingOnMode = value;
         if (value)
         {
@@ -341,14 +429,40 @@ public class PlayerScript : MonoBehaviour {
         }
     }
 
-    public void WalkToGroup(WalkToGroup group)
+    void WalkToGroupAction(WalkToGroup fromGroup, WalkToGroup toGroup)
+    {
+        string fromName = "";
+        if (fromGroup != null)
+            fromName = fromGroup.name;
+        if (GameObject.Find("PanoFlyCamera") != null)
+        {
+            GameObject panoFlyCamera = GameObject.Find("PanoFlyCamera");
+            GameObject playerCamera = GameObject.Find("PlayerMainCamera");
+            if (playerCamera != null)
+            {
+                if (playerCamera.GetComponent<PostProcessingBehaviour>() != null)
+                {
+                    if (panoFlyCamera.GetComponent<PostProcessingBehaviour>() != null)
+                    {
+                        panoFlyCamera.GetComponent<PostProcessingBehaviour>().enabled = 
+                            playerCamera.GetComponent<PostProcessingBehaviour>().isActiveAndEnabled;
+                    }
+                }
+            }
+            if (panoFlyCamera.GetComponent<Animator>() != null)
+            {
+                panoFlyCamera.GetComponent<Animator>().SetTrigger("from_" + fromName + "_to_" + toGroup.name);
+            }
+        }
+    }
+
+    void Immediate_WalkToGroup(WalkToGroup group)
     {
         if (robotUIopened)
             return;
-
         ToggleAway();
         transform.position = group.Position;
-        if ( prefs == null || (prefs != null && !prefs.VR))
+        if (prefs == null || (prefs != null && !prefs.VR))
         {
             transform.rotation = Quaternion.Euler(0.0f, group.Rotation.y, 0.0f);
             Camera.main.transform.localRotation = Quaternion.Euler(group.Rotation.x, 0.0f, 0.0f);
@@ -358,7 +472,38 @@ public class PlayerScript : MonoBehaviour {
 
         robot.transform.position = group.robotPosition;
         robot.transform.rotation = Quaternion.Euler(group.robotRotation);
-        
+
+        freeLook = false;
+
+        foreach (WalkToGroup g in groups)
+        {
+            if (g != currentWalkPosition)
+            {
+                g.HighlightGroup(false);
+                g.enabled = true;
+                g.GetComponent<Collider>().enabled = true;
+            }
+        }
+
+        actionManager.OnMovementAction(currentWalkPosition.name);
+        gameUI.UpdateWalkToGroupUI(true);
+
+        if (PlayerPrefsManager.simulatePlayerActions)
+            gameUI.UpdateHelpHighlight();
+        if (defaultInteractionDistance <= 0f)
+        {
+            defaultInteractionDistance = controls.interactionDistance;
+        }
+        if (group.interactionDistance > 0)
+            controls.interactionDistance = group.interactionDistance;
+        else
+            controls.interactionDistance = defaultInteractionDistance;
+    }
+
+    public void WalkToGroup_(WalkToGroup group)
+    {
+        WalkToGroupAction(currentWalkPosition, group);
+        ImmediateWTG = group;
     }
 
     private void ToggleAway(bool _away = false)
@@ -371,8 +516,7 @@ public class PlayerScript : MonoBehaviour {
             g.enabled = away;
             g.GetComponent<Collider>().enabled = away;
         }
-        moveBackButton.gameObject.SetActive(!away);
-        
+
         itemControls.Close();
 
         if (away)
@@ -389,7 +533,7 @@ public class PlayerScript : MonoBehaviour {
 
     public void ResetFreeLook()
     {
-        transform.rotation = mouseLook.SavedCharRot;
+        //transform.rotation = mouseLook.SavedCharRot;
         Camera.main.transform.rotation = mouseLook.SavedCamRot;
     }
 
@@ -404,30 +548,11 @@ public class PlayerScript : MonoBehaviour {
             }
             else
             {
-                GUI.color = new Color(0.0f, 0.0f, 0.0f, 1.0f -  
+                GUI.color = new Color(0.0f, 0.0f, 0.0f, 1.0f -
                     Mathf.InverseLerp(0.0f, fadeTime, fadeTimer));
                 GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), fadeTex);
                 fadeTimer += Time.deltaTime;
             }
-        }
-    }
-
-    public void MoveBackButton()
-    {
-        if (true)
-        {
-            ToggleAway(true);
-            transform.position = savedPos;
-            if (prefs == null || (prefs != null && !prefs.VR))
-            {
-                transform.rotation = Quaternion.Euler(0.0f, savedRot.eulerAngles.y, 0.0f);
-                Camera.main.transform.localRotation = Quaternion.Euler(savedRot.eulerAngles.x, 0.0f, 0.0f);
-                mouseLook.SaveRot(transform, Camera.main.transform);
-            }
-            currentWalkPosition = null;
-
-            robot.transform.position = savedRobotPos;
-            robot.transform.rotation = savedRobotRot;
         }
     }
 
@@ -442,17 +567,17 @@ public class PlayerScript : MonoBehaviour {
             return;
         }
 
-        if (!handsInv.Empty())
-        {
-            robotSavedLeft = handsInv.LeftHandObject;
-            robotSavedRight = handsInv.RightHandObject;
+        GameObject IPad = GameObject.FindObjectOfType<GameUI>().IPad;
 
-            handsInv.DropLeftObject();
-            handsInv.DropRightObject();
-        }
+        IPad.GetComponent<Animator>().enabled = true;
+        IPad.GetComponent<Animator>().SetTrigger("start");
 
-        PlayerAnimationManager.PlayAnimation("IpadCloseUp");
+        IPad.GetComponent<CanvasGroup>().alpha = 1f;
+        IPad.GetComponent<CanvasGroup>().blocksRaycasts = true;
+
         robotUIopened = true;
+
+        gameUI.UpdateIpadInfo();
 
         if (devHintUI != null)
         {
@@ -460,10 +585,17 @@ public class PlayerScript : MonoBehaviour {
             devHintUI.SetActive(false);
         }
 
+        if (biggerDevHintUI != null)
+        {
+            biggerDevHintActiveForIpad = biggerDevHintUI.activeSelf;
+            biggerDevHintUI.SetActive(false);
+        }
+
         if (extraButton != null)
         {
             extraBtnActiveForIpad = extraButton.activeSelf;
             extraButton.SetActive(false);
+            gameUI.UpdateWalkToGroupUI(false);
         }
 
         if (extraPanel == null)
@@ -471,58 +603,60 @@ public class PlayerScript : MonoBehaviour {
             extraPanel = GameObject.Find("Extra");
         }
 
-        if (extraPanel != null)
-        {
-            extraPanelActiveForIpad = extraPanel.activeSelf;
-            extraPanel.SetActive(false);
-        }
-        else
-        {
-            Debug.LogWarning("Did not find hints extra panel.");
-        }
-
         RobotManager.SetUITriggerActive(false);
-        Camera.main.transform.localRotation = Quaternion.Euler(8.0f, 0.0f, 0.0f);
-
-        // no switching to message tab anymore :<
-        /*if (RobotManager.NotificationNumber > 0)
-        {
-            GameObject.FindObjectOfType<RobotUIMessageTab>().OnTabSwitch();
-        }*/
 
         tutorial_robotUI_opened = true;
 
-        moveBackBtnActiveForIpad = MoveBackButtonObject.activeSelf;
-        MoveBackButtonObject.SetActive(false);
+        GameObject.FindObjectOfType<GameUI>().allowObjectControlUI = false;
 
         if (robotUINotOpenedYet)
         {
-            string title = "Hygiënisch smartphone- en tabletgebruik";
-            string message = "Telefoons en tablet bevatten erg veel micro-organismen. Bij het gebruik van een smartphone of tablet heeft handhygiëne de grootste prioriteit. Zowel voor als na het gebruiken van een mobiel communicatiemiddel moet je je handen goed reinigen. Je kunt het gebruik van een mobiel apparaat tijdens werkzaamheden zien als het beëindigen en opnieuw aangaan van handcontact met de cliënt. In Care Up is dit niet nodig omdat het de gebruikerservaring negatief beïnvloed maar zorg in de praktijk dus voor goede hygiëne tijdens het gebruik van mobiele apparaten.";
-            GameObject.FindObjectOfType<RobotUIMessageTab>().NewMessage(title, message, RobotUIMessageTab.Icon.Warning);
-
             robotUINotOpenedYet = false;
         }
+        if (joystickObject != null)
+            joystickObject.SetActive(!robotUIopened);
+
+        itemControls.Close();
+        if (PlayerPrefsManager.simulatePlayerActions)
+            Invoke("CloseRobotUI", 1f);
     }
 
     public void CloseRobotUI()
     {
-        if ((tutorial_UI != null && tutorial_UI.expectedRobotUIstate == true) ||
-            (tutorial_theory != null && tutorial_theory.expectedRobotUIstate == true))
+        if (GameObject.FindObjectOfType<QuizTab>() != null)
         {
-            return;
+            if (GameObject.FindObjectOfType<QuizTab>().quiz && gameUI.theoryTab.gameObject.activeSelf)
+            {
+                gameUI.HideTheoryTab();
+                return;
+            }
+        }   
+
+        GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<Animator>().enabled = false;
+
+        if (GameObject.FindObjectOfType<CameraMode>() != null)
+        {
+            if (GameObject.FindObjectOfType<CameraMode>().currentMode != CameraMode.Mode.SelectionDialogue)
+            {
+                RobotManager.SetUITriggerActive(true);
+            }
         }
 
         QuizTab quizTab = GameObject.FindObjectOfType<QuizTab>();
+
         if (quizTab != null && quizTab.continueBtn)
         {
             GameObject.FindObjectOfType<QuizTab>().OnContinueButton();
         }
 
-        PlayerAnimationManager.PlayAnimation("IPadFarAway");
+        GameObject.FindObjectOfType<GameUI>().allowObjectControlUI = false;
+
+        GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<CanvasGroup>().alpha = 0f;
+        GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<CanvasGroup>().blocksRaycasts = false;
+
         robotUIopened = false;
-        
-        if (GameObject.FindObjectOfType<TutorialManager>() == null 
+
+        if (GameObject.FindObjectOfType<TutorialManager>() == null
             || tutorial_UI != null || tutorial_theory != null)
         {
             if (devHintUI != null)
@@ -530,9 +664,15 @@ public class PlayerScript : MonoBehaviour {
                 devHintUI.SetActive(devHintActiveForIpad);
             }
 
+            if (biggerDevHintUI != null)
+            {
+                biggerDevHintUI.SetActive(biggerDevHintActiveForIpad);
+            }
+
             if (extraButton != null)
             {
                 extraButton.SetActive(extraBtnActiveForIpad);
+                gameUI.UpdateWalkToGroupUI(extraBtnActiveForIpad);
             }
 
             if (extraPanel != null)
@@ -541,25 +681,40 @@ public class PlayerScript : MonoBehaviour {
             }
         }
 
-        RobotManager.SetUITriggerActive(true);
         tutorial_robotUI_closed = true;
 
-        MoveBackButtonObject.SetActive(moveBackBtnActiveForIpad);
+        GameObject.FindObjectOfType<GameUI>().allowObjectControlUI = true;
+
+        if (joystickObject != null)
+            joystickObject.SetActive(!robotUIopened);
     }
 
     public void PickItemsBackAfterRobotUI()
     {
-        StartCoroutine(DelayedPickItemsAfterIpad(0.5f));
+        if (robotSavedLeft != null || robotSavedRight != null)
+        {
+            StartCoroutine(DelayedPickItemsAfterIpad(0.5f));
+        }
 
         if (robotSavedLeft != null)
         {
-            PlayerAnimationManager.SetHandItem(true, robotSavedLeft.gameObject);
+            PlayerAnimationManager.SetHandItem(true, robotSavedLeft);
+        }
+        else
+        {
+            PlayerAnimationManager.SetHandItem(true, null);
         }
 
         if (robotSavedRight != null)
         {
-            PlayerAnimationManager.SetHandItem(false, robotSavedRight.gameObject);
+            PlayerAnimationManager.SetHandItem(false, robotSavedRight);
         }
+        else
+        {
+            PlayerAnimationManager.SetHandItem(false, null);
+        }
+
+        itemControls.Close();
     }
 
     IEnumerator DelayedPickItemsAfterIpad(float delay)
@@ -568,17 +723,17 @@ public class PlayerScript : MonoBehaviour {
 
         if (robotSavedLeft != null)
         {
-            handsInv.ForcePickItem(robotSavedLeft.name, true);
-            robotSavedLeft.GetComponent<PickableObject>().CreateGhostObject();
+            handsInv.ForcePickItem(robotSavedLeft, PlayerAnimationManager.Hand.Left, true);
             robotSavedLeft = null; // reset
         }
 
         if (robotSavedRight != null)
         {
-            handsInv.ForcePickItem(robotSavedRight.name, false);
-            robotSavedRight.GetComponent<PickableObject>().CreateGhostObject();
+            handsInv.ForcePickItem(robotSavedRight, PlayerAnimationManager.Hand.Right, true);
             robotSavedRight = null; // reset
         }
+
+        robotSavedLeft = robotSavedRight = null;
     }
 
     /// <summary>
@@ -587,8 +742,17 @@ public class PlayerScript : MonoBehaviour {
     /// If there is no questions left - it will do nothing.
     /// </summary>
     /// <param name="delay">Delay before opening ipad.</param>
-    public static void TriggerQuizQuestion(float delay = 0.0f)
+    public static void TriggerQuizQuestion(float delay = 0.0f, bool encounter = false)
     {
+        // dont trigger quiz if a testing mode is on
+#if UNITY_EDITOR
+        //if (GameObject.FindObjectOfType<PlayerPrefsManager>() != null)
+        //    if (GameObject.FindObjectOfType<PlayerPrefsManager>().testingMode)
+        //        return;
+        //if (GameObject.FindObjectOfType<ObjectsIDsController>() != null)
+        //if (GameObject.FindObjectOfType<ObjectsIDsController>().testingMode)
+        //return;
+#endif
         // just dont trigger quiz if it's a tutorial for all cases
         if (GameObject.FindObjectOfType<TutorialManager>() != null)
             return;
@@ -602,12 +766,18 @@ public class PlayerScript : MonoBehaviour {
             itemDescription.SetActive(false);
         }
         // trigger quiz with delay
-        instance.StartCoroutine(QuizCoroutine(delay));
+        instance.StartCoroutine(QuizCoroutine(delay, encounter));
     }
 
-    private static IEnumerator QuizCoroutine(float delay)
+    private static IEnumerator QuizCoroutine(float delay, bool encounter)
     {
         yield return new WaitForSeconds(delay);
-        quiz.NextQuizQuestion();
+        quiz.NextQuizQuestion(false, encounter);
+    }
+
+    public void AutoClick(GameObject obj)
+    {
+        AutoPlayClicked = true;
+        AutoPlayActionObject = obj;
     }
 }

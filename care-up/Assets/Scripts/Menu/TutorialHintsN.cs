@@ -9,8 +9,15 @@ using UnityEditor;
 public class TutorialHintsN : MonoBehaviour
 {
     public GameObject WorldObject;
+    public string FollowIfExist = "";
     public Vector3 offset;
 	public bool FullPath = true;
+
+    public float XMin = -1;
+    public float XMax = -1;
+    public float YMin = -1;
+    public float YMax = -1;
+
     Camera cam;
     float screenCorrection = 1f;
     public string ScriptCommand;
@@ -41,7 +48,24 @@ public class TutorialHintsN : MonoBehaviour
         }
         return path;
     }
-	//--------------------------------------
+    //--------------------------------------
+
+
+    Vector3 LimitScreenPos(Vector3 screenPosition)
+    {
+        if (XMin < 0 && XMax < 0 && YMin < 0 && YMin < 0)
+            return screenPosition;
+        if (XMin >= 0 && screenPosition.x < XMin)
+            screenPosition.x = XMin;
+        else if (XMax >= 0 && screenPosition.x > XMax)
+            screenPosition.x = XMax;
+        if (YMin >= 0 && screenPosition.y < YMin)
+            screenPosition.y = YMin;
+        else if (XMax >= 0 && screenPosition.y > YMax)
+            screenPosition.y = YMax;
+
+        return screenPosition;
+    }
 
 	public void LockTo(string ObjectPath, Vector3 _offset)
 	{
@@ -51,12 +75,20 @@ public class TutorialHintsN : MonoBehaviour
 
     void Start()
     {
-        cam = GameObject.Find("Camera").GetComponent<Camera>();
-        UpdateToScreenResolution();
-		originalPos = new Vector2(267f, -176f);
-		originalSize = new Vector2(452f, 300f);
+        Setup();
     }
 
+
+    void Setup()
+    {
+        if (Camera.main != null)
+        {
+            cam = Camera.main.GetComponent<Camera>();
+            UpdateToScreenResolution();
+            originalPos = new Vector2(267f, -176f);
+            originalSize = new Vector2(452f, 300f);
+        }
+    }
 
 	public void SetSize(float x, float y)
 	{
@@ -103,10 +135,9 @@ public class TutorialHintsN : MonoBehaviour
 				Icon.anchoredPosition = new Vector2(10f, -hintSize.y + 10f);
 				break;
 		}
-
 	}
 
-    void Update()
+    public void Update()
     {
         Vector2 scr = new Vector2(Screen.width, Screen.height);
         if (res != scr)
@@ -130,6 +161,9 @@ public class TutorialHintsN : MonoBehaviour
         }
 #endif
 
+        if (FollowIfExist != "" && WorldObject == null)
+            WorldObject = GameObject.Find(FollowIfExist);
+
         if (WorldObject != null)
         {
 			string path = WorldObject.name;
@@ -143,9 +177,17 @@ public class TutorialHintsN : MonoBehaviour
 			ScriptCommand = ("hintsN.LockTo(\"" + (path).ToString() + "\", new Vector3(" + x+y+z + "));");
             if (WorldObject.GetComponent<RectTransform>() == null)
             {
-                Vector3 ObjWorldPos = WorldObject.transform.position;
-                Vector3 ScreenPos = cam.WorldToScreenPoint(ObjWorldPos + offset) / screenCorrection;
-                GetComponent<RectTransform>().anchoredPosition = ScreenPos;
+                if (cam == null)
+                {
+                    Setup();
+                    return;
+                }
+                else
+                {
+                    Vector3 ObjWorldPos = WorldObject.transform.position;
+                    Vector3 ScreenPos = cam.WorldToScreenPoint(ObjWorldPos + offset) / screenCorrection;
+                    GetComponent<RectTransform>().anchoredPosition = LimitScreenPos(ScreenPos);
+                }
             }
             else
             {
@@ -154,7 +196,7 @@ public class TutorialHintsN : MonoBehaviour
                     GameObject canv = WorldObject.GetComponentInParent<Canvas>().gameObject;
                     Vector3 ObjWorldPos = WorldObject.GetComponent<RectTransform>().TransformPoint(WorldObject.GetComponent<RectTransform>().position + offset);
                     Vector3 ScreenPos = cam.WorldToScreenPoint(ObjWorldPos) / screenCorrection;
-                    GetComponent<RectTransform>().anchoredPosition = ScreenPos;
+                    GetComponent<RectTransform>().anchoredPosition = LimitScreenPos(ScreenPos);
                 }
                 else
                 {

@@ -118,7 +118,8 @@ public class TutorialManager : MonoBehaviour
 
     public void EndButtonClick()
     {
-        GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().tutorialCompleted = true;
+        // TUTORIAL COMPLETION, used only after last tutorial
+        GameObject.FindObjectOfType<PlayerPrefsManager>().SetTutorialCompletedWU();
         bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
     }
 
@@ -184,8 +185,7 @@ public class TutorialManager : MonoBehaviour
     protected void TutorialEnd()
     {
         endPanel.SetActive(true);
-        player.MoveBackButtonObject.SetActive(false);
-
+        GameObject.FindObjectOfType<GameUI>().allowObjectControlUI = false;
         player.enabled = false;
         GameObject.FindObjectOfType<RobotManager>().enabled = false;
         foreach (InteractableObject o in GameObject.FindObjectsOfType<InteractableObject>())

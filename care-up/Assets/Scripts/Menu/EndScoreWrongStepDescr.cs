@@ -10,13 +10,13 @@ public class EndScoreWrongStepDescr : MonoBehaviour, IPointerEnterHandler
     public bool wrong;
     
     private Color redish = new Color(0.5f, 0.0f, 0.0f, 1.0f);
-    private Color greyish = new Color(0.25f, 0.25f, 0.25f, 1.0f);
+    private Color greyish = new Color(1f, 1f, 1f, 1.0f);
 
     private static Button_Functions sounds;
 
     void Start()
     {
-        GetComponent<Text>().color = wrong ? Color.red : Color.black;
+        GetComponent<Text>().color = wrong ? Color.red : Color.white;
 
         if (sounds == null)
         {
@@ -37,7 +37,7 @@ public class EndScoreWrongStepDescr : MonoBehaviour, IPointerEnterHandler
             text.color = text.GetComponent<EndScoreWrongStepDescr>().wrong ? redish : greyish;
         }
 
-        GetComponent<Text>().color = wrong ? Color.red : Color.black;
+        GetComponent<Text>().color = wrong ? Color.red : Color.white;
         GameObject.Find("StepDescription").GetComponent<Text>().text = text;
     }
 }

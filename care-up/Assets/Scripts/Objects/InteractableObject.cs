@@ -1,29 +1,25 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 
 /// <summary>
-/// General abstract class for objects.
+/// General class for objects.
 /// </summary>
-public class InteractableObject : MonoBehaviour {
-	public int ObjectID = 0;
-    HandsInventory handsInventory;
-
+public class InteractableObject : MonoBehaviour
+{
+    public string PrefabName = "";
+    public int ObjectID = 0;
     public string description;
+    public string nameArticle;
     public bool muplipleMesh = false;
     public Vector3 descriptionOffset;
-
-    protected Renderer rend;
-    protected Shader onMouseOverShader;
-
-    static private Shader onMouseOverShaderSihlouette;
-    static private Shader onMouseOverShadeOutline;
-    static protected Shader onMouseExitShader;
-    static protected Shader ghostShader;
+    public AssetSource assetSource;
+    public bool transparencyFix = false;
 
     protected bool positionSaved = false;
     protected Vector3 savedPosition;
     protected Quaternion savedRotation;
+    protected Vector3 savedScale;
+    protected Renderer rend;
 
     static protected CameraMode cameraMode;
     static protected Controls controls;
@@ -31,8 +27,23 @@ public class InteractableObject : MonoBehaviour {
     static protected GameObject itemDescription;
     static protected PlayerScript player;
     static protected HandsInventory inventory;
+    static protected Shader ghostShader;
 
-    public bool transparencyFix = false;
+    private static Transform descriptionPanelPosition;
+    private static bool selectedIsInteractable;
+    private static Text descriptionText;
+
+    //private bool hasHighlight = false;
+    private Vector3 descriptionPanelOffset = new Vector3(50.0f, 25.0f);
+    private GameUI gameUI;
+
+    public enum AssetSource
+    {
+        None,
+        Included,
+        Resources,
+        Bundle
+    };
 
     public Vector3 SavedPosition
     {
@@ -44,27 +55,16 @@ public class InteractableObject : MonoBehaviour {
         get { return savedRotation; }
     }
 
+    public Vector3 SavedScale
+    {
+        get { return savedScale; }
+    }
+
     protected virtual void Start()
     {
-        handsInventory = GameObject.FindObjectOfType<HandsInventory>();
+        savedScale = transform.lossyScale;
+        gameUI = GameObject.FindObjectOfType<GameUI>();
         rend = GetComponent<Renderer>();
-
-        if (onMouseOverShaderSihlouette == null)
-        {
-            onMouseOverShaderSihlouette = Shader.Find("Outlined/Diffuse");
-        }
-
-        if (onMouseOverShadeOutline == null)
-        {
-            onMouseOverShadeOutline = Shader.Find("Outlined/Diffuse");
-        }
-
-        onMouseOverShader = (muplipleMesh) ? onMouseOverShadeOutline : onMouseOverShaderSihlouette;
-
-        if (onMouseExitShader == null)
-        {
-            onMouseExitShader = Shader.Find("Standard");
-        }
 
         if (ghostShader == null)
         {
@@ -103,8 +103,6 @@ public class InteractableObject : MonoBehaviour {
 
         if (itemDescription == null)
         {
-            //itemDescription = Instantiate(Resources.Load<GameObject>("Prefabs/ItemDescription"),
-            //    Vector3.zero, Quaternion.identity) as GameObject;
             itemDescription = GameObject.Find("ItemDescription");
 
             if (itemDescription == null)
@@ -113,71 +111,51 @@ public class InteractableObject : MonoBehaviour {
             }
             else
             {
+                descriptionPanelPosition = itemDescription.transform.GetChild(0).transform;
+                descriptionText = itemDescription.GetComponentInChildren<Text>();
                 itemDescription.name = "ItemDescription";
                 itemDescription.SetActive(false);
             }
         }
     }
 
-    /// <summary>
-    /// Handle changing shader ( highlighting on aiming ) 
-    /// and showing Description at bottom of the screen.
-    /// </summary>
-    protected virtual void Update()
+    public void SetDescription()
     {
-        if (cameraMode.CurrentMode == CameraMode.Mode.Free && !player.away && !player.robotUIopened)
+        if (cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
-            bool selectedIsInteractable = (controls.SelectedObject != null && controls.CanInteract &&
-                controls.SelectedObject.GetComponent<InteractableObject>() != null);
-
-            PickableObject pickableObject = null;
-            if (controls.SelectedObject != null)
+            if (!player.away && !player.robotUIopened && !cameraMode.animating)
             {
-                pickableObject = controls.SelectedObject.GetComponent<PickableObject>();
-            }
-
-            bool notSihlouette = (pickableObject == null || (pickableObject != null && pickableObject.sihlouette == false));
-            selectedIsInteractable &= notSihlouette;
-
-            if ((controls.SelectedObject == gameObject && !cameraMode.animating) && notSihlouette)
-            {
-                if (controls.CanInteract)
+                if (description == "Werkveld")
                 {
-                    if (rend.material.shader == onMouseExitShader)
+                    if (!actionManager.CompareUseObject("WorkField"))
                     {
-                        SetShaderTo(onMouseOverShader);
+                        return;
                     }
-
-                    if (!itemDescription.activeSelf)
-                    {
-                        itemDescription.SetActive(true);
-                    }
-
-                    itemDescription.GetComponentInChildren<Text>().text = (description == "") ? name : description;
-                }
-                else if (!controls.CanInteract && rend.material.shader == onMouseOverShader)
-                {
-                    SetShaderTo(onMouseExitShader);
-                    itemDescription.SetActive(false);
-                }
-            }
-            else
-            {
-                if (rend.material.shader == onMouseOverShader)
-                {
-                    SetShaderTo(onMouseExitShader);
                 }
 
-                if (!selectedIsInteractable)
+                PickableObject pickableObject = null;
+
+                if (controls.SelectedObject != null)
                 {
-                    itemDescription.SetActive(false);
+                    pickableObject = controls.SelectedObject.GetComponent<PickableObject>();
+                }
+
+                bool notSihlouette = pickableObject == null || (pickableObject != null && pickableObject.sihlouette == false);
+
+                if (!string.IsNullOrEmpty(description) && notSihlouette)
+                {
+                    itemDescription.SetActive(true);
+                    descriptionText.text = (description == "") ? name : description;
                 }
             }
         }
+    }
 
-        if (itemDescription.activeSelf && !player.itemControls.gameObject.activeSelf)
+    protected virtual void Update()
+    {
+        if (itemDescription.activeSelf)
         {
-            itemDescription.transform.GetChild(0).transform.position = Input.mousePosition + new Vector3(50.0f, 25.0f);
+            descriptionPanelPosition.position = Input.mousePosition + descriptionOffset;
         }
     }
 
@@ -185,7 +163,8 @@ public class InteractableObject : MonoBehaviour {
     {
         if (rend)
         {
-            SetShaderTo(onMouseExitShader);
+            gameUI.RemoveHighlight("hl", transform.name);
+            //hasHighlight = false;
             itemDescription.SetActive(false);
         }
     }
@@ -202,13 +181,9 @@ public class InteractableObject : MonoBehaviour {
 
     public void SavePosition()
     {
-        if (!positionSaved)
-        {
-            positionSaved = true;
-
-            savedPosition = transform.position;
-            savedRotation = transform.rotation;
-        }
+        savedPosition = transform.position;
+        savedRotation = transform.rotation;
+        savedScale = transform.lossyScale;
     }
 
     public void SavePosition(Vector3 pos, Quaternion rot, bool force = false)
@@ -226,6 +201,16 @@ public class InteractableObject : MonoBehaviour {
     {
         transform.position = savedPosition;
         transform.rotation = savedRotation;
+        Transform p = transform.parent;
+        transform.parent = null;
+        transform.localScale = savedScale;
+        transform.parent = p;
+    }
+
+    public void BaseLoadPosition()
+    {
+        transform.position = savedPosition;
+        transform.rotation = savedRotation;
     }
 
     public void GetSavesLocation(out Vector3 outPosition, out Quaternion outRotation)
@@ -234,17 +219,16 @@ public class InteractableObject : MonoBehaviour {
         outRotation = savedRotation;
     }
 
-
     protected virtual void SetShaderTo(Shader shader)
     {
         foreach (Material m in rend.materials)
         {
             m.shader = shader;
         }
-        
+
         foreach (Renderer r in GetComponentsInChildren<Renderer>())
         {
-            if (r.name != "ParticleHint" )
+            if (r.name != "ParticleHint")
             {
                 foreach (Material m in r.materials)
                 {
@@ -286,15 +270,14 @@ public class InteractableObject : MonoBehaviour {
             rend = GetComponent<Renderer>();
         }
 
-        if (value)
+        if (value == false)
         {
-            if (rend.material.shader == onMouseExitShader)
-                SetShaderTo(onMouseOverShader);
-        }
-        else
-        {
-            if (rend.material.shader == onMouseOverShader)
-                SetShaderTo(onMouseExitShader);
+            gameUI.RemoveHighlight("hl", transform.name);
+            //hasHighlight = false;
         }
     }
+
+    void OnMouseExit() => ResetDescription();
+
+    void OnMouseEnter() => SetDescription();
 }

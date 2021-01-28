@@ -1,12 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using DG.Tweening;
 public class Tutorial_Sequence : TutorialManager
 {
 
     public AudioClip Popup;
+    public AudioClip Done;
+    public AudioClip Robot1;
+    public AudioClip Robot2;
+    public AudioClip Robot3;
+    public AudioClip RobotShort1;
+    public AudioClip RobotShort2;
     AudioSource audioSource;
+    private MBS.WUADisplay achievements;
 
     public enum TutorialStep
     {
@@ -38,6 +45,7 @@ public class Tutorial_Sequence : TutorialManager
     {
         base.Start();
 
+        achievements = GameObject.Find ("AchievementsDisplayPrefab").GetComponent<MBS.WUADisplay> ();
         patient = GameObject.FindObjectOfType<InjectionPatient>();
     }
 
@@ -54,21 +62,25 @@ public class Tutorial_Sequence : TutorialManager
             {
                 case TutorialStep.First:
                     audioSource.PlayOneShot (Popup, 0.1F);
+                    audioSource.PlayOneShot(RobotShort1, 0.1F);
                     GameObject.FindObjectOfType<InjectionPatient>().allowToTalk = false;
                     currentStep = TutorialStep.Welcome;
-                    hintsN.SetSize(788f, 524.9f);
-                    hintsN.LockTo("UI(Clone)", new Vector3(-393.80f, 214.70f, 0.00f));
-                    UItext.text = "Welkom, In deze tutorial zul je leren hoe je ingewikkelde handelingen, zoals injecteren, moet uitvoeren.";
+                    hintsN.SetSize(551.6f, 400f);
+                    hintsN.SetIconPosition(1);
+                    hintsN.LockTo("robot", new Vector3(-704.81f, 3.20f, 317.20f));
+                    UItext.DOText("In deze training leer je ingewikkelde handelingen uit te voeren.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
                     SetUpTutorialNextButton();
                     break;
                 case TutorialStep.Welcome:
                     if (nextButtonClicked)
                     {
                         audioSource.PlayOneShot (Popup, 0.1F);
-                        hintsN.ResetSize();
-                        hintsN.LockTo("WorkField", new Vector3(0.00f, 0.51f, -0.73f));
+                        audioSource.PlayOneShot(RobotShort2, 0.1F);
+                        hintsN.SetIconPosition(0);
+                        hintsN.SetSize(452f, 157.4f);
+                        hintsN.LockTo("WorkField", new Vector3(0.00f, 0.51f, -1.33f));
                         currentStep = TutorialStep.MoveTo;
-                        UItext.text = "Laten we beginnen. Beweeg naar het werkveld door erop te klikken.";
+                        UItext.DOText("Klik op het werkveld om te beginnen.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
 
                         player.tutorial_movedTo = false;
                     }
@@ -77,12 +89,12 @@ public class Tutorial_Sequence : TutorialManager
                     if (player.tutorial_movedTo)
                     {
                         audioSource.PlayOneShot (Popup, 0.1F);
+                        audioSource.PlayOneShot(RobotShort1, 0.1F);
                         player.tutorial_movedTo = false;
 						hintsN.LockTo("SyringeWithInjectionNeedleCap", new Vector3(0.00f, 0.12f, 0.00f));
 						hintsN.SetIconPosition(3);
                         currentStep = TutorialStep.PickSyringe;
-                        UItext.text = "Pak de spuit + injectienaald + beschermdop op door op het object te klikken.";
-
+                        UItext.DOText("Klik op de spuit met injectienaald om deze op te pakken.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
                         handsInventory.tutorial_pickedLeft = false;
                         itemToPick = "SyringeWithInjectionNeedleCap";
                     }
@@ -91,12 +103,13 @@ public class Tutorial_Sequence : TutorialManager
                     if (handsInventory.tutorial_pickedLeft)
                     {
                         audioSource.PlayOneShot (Popup, 0.1F);
+                        audioSource.PlayOneShot(RobotShort1, 0.1F);
                         handsInventory.tutorial_pickedLeft = false;
                         hintsN.LockTo("WorkField", new Vector3(0.13f, 0.93f, -1.17f));
                         hintsN.SetIconPosition(1);
+                        hintsN.SetSize(452f, 60f);
                         currentStep = TutorialStep.MoveToPatient;
-                        UItext.text = "Heel goed. Laten we naar de cliënt toe gaan. Dit kan door op door op de 'terug naar overzicht' knop te klikken en daarna op de cliënt of door de camera te draaien richting de cliënt op hem te klikken. ";
-
+                        UItext.DOText("Beweeg naar de cliënt toe.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
                         player.tutorial_movedTo = false;
                     }
                     break;
@@ -104,13 +117,14 @@ public class Tutorial_Sequence : TutorialManager
                     if (player.tutorial_movedTo)
                     {
                         audioSource.PlayOneShot (Popup, 0.1F);
+                        audioSource.PlayOneShot(Robot2, 0.1F);
                         player.tutorial_movedTo = false;
 						GameObject.FindObjectOfType<InjectionPatient>().allowToTalk = true;
-                        hintsN.LockTo("RightShoulder", new Vector3(0.00f, 0.00f, 0.23f));
+                        hintsN.LockTo("/Patient/pArmature/Hips/Spine/Spine1/Spine2/RightShoulder", new Vector3(0.00f, 0.00f, 0.32f));
+                        hintsN.SetSize(489f, 251.5f);
                         hintsN.SetIconPosition(1);
                         currentStep = TutorialStep.Talk;
-                        UItext.text = "Vraag de cliënt om zijn mouw omhoog te doen door op de cliënt te klikken en te kiezen voor de eerste optie. ";
-
+                        UItext.DOText("Vraag de cliënt om zijn mouw omhoog te doen door op de cliënt te klikken en te kiezen voor de eerste optie. ", 1f, true, ScrambleMode.All).SetEase(Ease.Linear);
                         patient.tutorial_talked = false;
                     }
                     break;
@@ -118,12 +132,13 @@ public class Tutorial_Sequence : TutorialManager
                     if (patient.tutorial_talked)
                     {
                         audioSource.PlayOneShot (Popup, 0.1F);
+                        audioSource.PlayOneShot(Robot2, 0.1F);
                         patient.tutorial_talked = false;
                         hintsN.LockTo("RightArm", new Vector3(417.45f, -214.30f, -287.30f));
                         hintsN.SetIconPosition(3);
                         currentStep = TutorialStep.UseOnPatient;
-                        UItext.text = "Gebruik nu de spuit + naald + dop met de cliënt. Doe dit door op de spuit + injectienaald + beschermdop te klikken, te kklikken op het + icoon en vervolgens te klikken op de cliënt.";
-
+                        UItext.text = "";
+                        UItext.DOText("Gebruik de spuit door op het object te klikken. Klik daarna op het +icoon en vervolgens op de cliënt.", 1f, true, ScrambleMode.All).SetEase(Ease.Linear);
                         handsInventory.tutorial_itemUsedOn = false;
                     }
                     break;
@@ -131,11 +146,12 @@ public class Tutorial_Sequence : TutorialManager
                     if (handsInventory.tutorial_itemUsedOn)
                     {
                         audioSource.PlayOneShot (Popup, 0.1F);
-                        hintsN.LockTo("/UI(Clone)", new Vector3(-793.25f, 157.60f, 0.00f));
-                        hintsN.SetIconPosition(0);
-                        hintsN.SetSize(788f, 524.9f);
+                        audioSource.PlayOneShot(Robot3, 0.1F);
+                        hintsN.LockTo("SelectionDialogue", new Vector3(136.90f, 94.20f, -287.30f));
+                        hintsN.SetIconPosition(1);
+                        hintsN.SetSize(611.5f, 372.4f);
                         currentStep = TutorialStep.SequenceExplanation;
-                        UItext.text = "Ingewikkelde handelingen die uit meerdere stappen bestaan openen het 'actie keuze menu'. De handeling start automatisch. Zodra er een belangrijke stap is aangebroken, pauzeert het spel. Er verschijnen keuzes in het beeld en het is aan jou om de juiste keuze te selecteren. Zodra je de goede keuze maakt zal de handeling verder worden uitgevoerd. Dit herhaalt zich tot de handeling is afgerond.";
+                        UItext.DOText("Ingewikkelde handelingen starten automatisch. Er verschijnen keuzes in het beeld en het is aan jou om de juiste keuze te selecteren.", 1f, true, ScrambleMode.All).SetEase(Ease.Linear);
                         SetUpTutorialNextButton();
                     }
                     break;
@@ -143,22 +159,26 @@ public class Tutorial_Sequence : TutorialManager
                     if (nextButtonClicked)
                     {
                         audioSource.PlayOneShot (Popup, 0.1F);
-                        hintsN.LockTo("/UI(Clone)", new Vector3(135.20f, 288.50f, 0.00f));
-                        hintsN.ResetSize();
+                        audioSource.PlayOneShot(RobotShort2, 0.1F);
+                        hintsN.LockTo("SelectionDialogue", new Vector3(584.80f, 435.86f, -46.70f));
+                        hintsN.SetSize(1079f, 105f);
                         hintsN.SetIconPosition(1);
                         currentStep = TutorialStep.CompleteSequence;
                         sequenceCompleted = sequenceLock = false;
                         PlayerAnimationManager.SequenceTutorialLock(false);
-                        UItext.text = "In deze instructie zijn de juiste keuzes aangegeven in het groen. Doorloop nu de verschillende injectie stappen door de juiste keuzes te selecteren.";
+                        UItext.DOText("Probeer nu te injecteren door de juiste keuzes te selecteren.", 0.5f, true, ScrambleMode.All).SetEase(Ease.Linear);
                     }
                     break;
                 case TutorialStep.CompleteSequence:
                     if (sequenceCompleted && dialogueEnded)
                     {
-                        audioSource.PlayOneShot (Popup, 0.1F);
+                        audioSource.PlayOneShot(Done, 0.1F);
+                        audioSource.PlayOneShot(Robot2, 0.1F);
+                        hintsN.ResetSize();
                         hintsN.LockTo("SceneLoader 1", new Vector3(262.50f, -69.10f, 0.00f));
                         currentStep = TutorialStep.Done;
-                        UItext.text = "Gefeliciteerd! Je weet nu hoe je ingewikkelde handelingen succesvol kunt uitvoeren.";
+                        UItext.DOText("Gefeliciteerd! Je hebt de laatste training afgerond. Je bent klaar om verpleegtehcnische handelingen te oefenen en te toesten. ", 1f, true, ScrambleMode.All).SetEase(Ease.Linear);
+                        achievements.UpdateKeys ("FinishedTutorial", 1);
                     }
                     break;
                 case TutorialStep.Done:

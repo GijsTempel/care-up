@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ActionList>
-  <action description="Doe de naald in de naaldcontainer door de tips op je scherm te volgen." audioHint="" fullDescription="Volg de tips op je scherm."
-		index="0" type="useOn" item="AbsorptionNeedleNoCap" target="NeedleCup" extra="Helaas dit is een verkeerde actie. Volg de tips om verder te gaan."></action>
+  <action description="Volg de tips op je scherm" audioHint="" fullDescription="Volg de tips op je scherm."
+  index="0" type="combine" left="InsulinPen" right="InsulinOpenedNeedlePackage" extra="Helaas dit is een verkeerde actie. Volg de bovenstaande tip om verder te gaan."></action>
+  <action description="Volg de tips op je scherm" audioHint="" fullDescription="Volg de tips op je scherm."
+		index="1" type="combine" left="InsulinPenWithNeedlePackage" right="" extra="Helaas dit is een verkeerde actie. Volg de bovenstaande tip om verder te gaan."></action>
+  <action points="2" description="Volg de tips op je scherm" fullDescription="Volg de tips op je scherm" audioHint="InsulinInjection/Step 5"
+		index="2" type="useOn" item="InsulinPenWithNeedle" target="" buttonText="Ontluchten" extra ="Helaas dit is een verkeerde actie. Volg de bovenstaande tip om verder te gaan."></action>
+  <action description="Volg de tips op je scherm" audioHint="" fullDescription="Volg de tips op je scherm."
+  index="3" type="combine" left="InsulinPenWithNeedle" right="" extra="Helaas dit is een verkeerde actie. Volg de bovenstaande tip om verder te gaan."></action>
+  <action points="2" description="Volg de tips op je scherm" fullDescription="Volg de tips op je scherm" audioHint="InsulinInjection/Step 8"
+  index="4" type="useOn" item="InsulinNeedle" target="NeedleCup" extra ="Helaas dit is een verkeerde actie. Volg de bovenstaande tip om verder te gaan."></action>
   
   <action description="Gefeliciteerd!" fullDescription="" audioHint=""
-		index="2" type="use" value="__tutorialEnd" />
+		index="5" type="use" value="__tutorialEnd" />
 </ActionList>

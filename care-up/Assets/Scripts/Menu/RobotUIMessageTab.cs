@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class RobotUIMessageTab : RobotUITabs
@@ -11,6 +9,7 @@ public class RobotUIMessageTab : RobotUITabs
     private Sprite infoIcon;
 
     private Transform _parent;
+    GameUI gameUI;
 
     private static Transform notification;
 
@@ -21,14 +20,18 @@ public class RobotUIMessageTab : RobotUITabs
     {
         Info,
         Warning,
-        Error
+        Error,
+        Block,
+        MWarning,
     }
 
     protected override void Start()
     {
-        errorIcon = Resources.Load<Sprite>("Sprites/ErrorIcon");
-        warningIcon = Resources.Load<Sprite>("Sprites/Sign-Alert");
-        infoIcon = Resources.Load<Sprite>("Sprites/Sign-Alert");
+        gameUI = GameObject.FindObjectOfType<GameUI>();
+        errorIcon = Resources.Load<Sprite>("Sprites/txt_field_ic_error");
+
+        warningIcon = Resources.Load<Sprite>("Sprites/exclamation_b");
+        infoIcon = Resources.Load<Sprite>("Sprites/question_t");
 
         _parent = transform.Find("GeneralDynamicCanvas").Find("ScrollViewTileMessege")
             .Find("Viewport").Find("Content");
@@ -52,6 +55,13 @@ public class RobotUIMessageTab : RobotUITabs
             // ik, condition is dumb, but whatever
             return;
         }
+        //--------------------------------------------------------
+        if (icon == Icon.Block || icon == Icon.Warning )
+        {
+            gameUI.ShowBlockMessage(title, content);
+        }
+
+        //--------------------------------------------------------
 
         GameObject button = Instantiate(buttonPrefab, _parent);
 
@@ -71,15 +81,19 @@ public class RobotUIMessageTab : RobotUITabs
             case Icon.Warning:
                 i = warningIcon;
                 break;
+            case Icon.MWarning:
+                i = warningIcon;
+                break;
             case Icon.Error:
-				GameObject.FindObjectOfType<GameUI>().ButtonBlink(true);
+            case Icon.Block:
+                GameObject.FindObjectOfType<GameUI>().ButtonBlink(true);
                 i = errorIcon;
                 break;
         }
 
         button.GetComponent<RobotUIMessage>().NewMessage(title, content, i);
 
-        RobotManager.SetNotification(RobotManager.NotificationNumber + 1);
+       // RobotManager.SetNotification(RobotManager.NotificationNumber + 1);
 
         Narrator.PlaySound("Notification");
     }

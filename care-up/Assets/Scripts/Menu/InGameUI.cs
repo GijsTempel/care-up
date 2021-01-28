@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityStandardAssets.Characters.FirstPerson;
 using UnityEngine.UI;
 
-public class InGameUI : MonoBehaviour {
+public class InGameUI : MonoBehaviour
+{
 
     private Transform ui;
     private Transform main;
@@ -36,7 +35,8 @@ public class InGameUI : MonoBehaviour {
 
     private bool startChange;
 
-	void Start () {
+    void Start()
+    {
 
         ui = transform.GetChild(0);
         main = ui.GetChild(0);
@@ -149,7 +149,7 @@ public class InGameUI : MonoBehaviour {
             Time.timeScale = 0f;
 
             ToggleAllSounds(false);
-            
+
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
@@ -159,7 +159,7 @@ public class InGameUI : MonoBehaviour {
     {
         Toggle();
     }
-		
+
 
     public void OnOptionsBackButtonClick()
     {
@@ -173,15 +173,6 @@ public class InGameUI : MonoBehaviour {
         Screen.SetResolution(resolutions[resolutionDropdown.value].width,
             resolutions[resolutionDropdown.value].height, fullscrToggle.isOn);
     }
-
-    /*public void OnControlsButtonClick()
-    {
-        main.gameObject.SetActive(false);
-        controlsUI.gameObject.SetActive(true);
-
-        gamepadDefault = controlsUI.Find("BackButton").GetComponent<Button>();
-
-    }*/
 
     public void OnControlsBackButtonClick()
     {
@@ -198,10 +189,10 @@ public class InGameUI : MonoBehaviour {
 
     public void ToggleAllSounds(bool value)
     {
-        AudioSource [] audio = GameObject.FindObjectsOfType<AudioSource>();
-        foreach ( AudioSource a in audio )
+        AudioSource[] audio = GameObject.FindObjectsOfType<AudioSource>();
+        foreach (AudioSource a in audio)
         {
-            if ( value )
+            if (value)
             {
                 a.UnPause();
             }

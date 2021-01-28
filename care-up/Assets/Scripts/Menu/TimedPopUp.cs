@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TimedPopUp : MonoBehaviour {
-
+public class TimedPopUp : MonoBehaviour
+{
     public float time = 5.0f;
 
     private float timer = 0.0f;
@@ -49,7 +49,8 @@ public class TimedPopUp : MonoBehaviour {
     {
         foreach (TimedPopUp tpu in popUps)
         {
-            tpu.GetComponent<Animator>().SetBool("set", false);
+            if (tpu != null)
+                tpu.GetComponent<Animator>().SetBool("set", false);
         }
     }
 
@@ -72,16 +73,17 @@ public class TimedPopUp : MonoBehaviour {
         {
             GetComponent<Animator>().SetTrigger("reset");
         }
-        
+
         popUps.RemoveAll(item => item == null);
 
         foreach (TimedPopUp tpu in popUps)
         {
-            tpu.GetComponent<Animator>().SetBool("set", false);
+            if (tpu != null)
+                tpu.GetComponent<Animator>().SetBool("set", false);
         }
 
         GetComponent<Animator>().SetBool("set", true);
-     
+
         if (GameObject.Find("UI") != null)
         {
             if (GameObject.Find("UI").transform.Find("GameOver") != null)

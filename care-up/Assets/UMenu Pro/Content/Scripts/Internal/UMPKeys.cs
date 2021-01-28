@@ -10,5 +10,6 @@ public class UMPKeys  {
     public const string BlendWeight = "UMPBlendWeight";
     public const string Resolution = "UMPResolution";
     public const string Volumen = "UMPVolumen";
+    public const string MenuAudio = "UMPMenuAudio";
     public const string FullScreen = "UMPFullScreen";
 }

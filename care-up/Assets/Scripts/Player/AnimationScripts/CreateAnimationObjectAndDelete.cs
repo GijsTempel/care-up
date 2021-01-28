@@ -27,6 +27,9 @@ public class CreateAnimationObjectAndDelete : StateMachineBehaviour
     {
         if (animator.speed != 0)
         {
+            prevFrame = frame;
+            frame = stateInfo.normalizedTime * stateInfo.length;
+
             if (PlayerAnimationManager.CompareFrames(frame, prevFrame, addFrame))
             {
                 inventory.CreateAnimationObject(objectName, hand);
@@ -36,10 +39,19 @@ public class CreateAnimationObjectAndDelete : StateMachineBehaviour
             {
                 inventory.DeleteAnimationObject();
             }
+        }
+    }
 
+    public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        if (addFrame / 60f > frame)
+        {
+            inventory.CreateAnimationObject(objectName, hand);
+        }
 
-            prevFrame = frame;
-            frame += Time.deltaTime;
+        if (deleteFrame / 60f > frame)
+        {
+            inventory.DeleteAnimationObject();
         }
     }
 }

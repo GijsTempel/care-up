@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-using System;
+﻿using System.Collections.Generic;
 
 namespace CareUp.Actions
 {
@@ -11,12 +9,26 @@ namespace CareUp.Actions
     {
         public bool matched = false;
         public string shortDescr;
-        public string descr;
-        public string audioHint;
-        public string extraDescr;
         public int pointValue;
         public bool notMandatory;
         public bool sceneDoneTrigger; // for test version, when all steps are optional
+        public float quizTriggerTime;
+        public string messageTitle;
+        public string messageContent;
+        public List<string> blockRequired;
+        public List<string> blockUnlock;
+        public List<string> blockLock;
+        public string blockTitle;
+        public string blockMessage;
+        public string comment;
+        public string commentUA;
+        public string leftHandRequirement;
+        public string rightHandRequirement;
+        public string placeRequirement;
+        public string secondPlaceRequirement;
+        public string _topic;
+        public float encounter;
+        public int storedIndex;
 
         protected ActionManager.ActionType type;
 
@@ -40,17 +52,25 @@ namespace CareUp.Actions
         /// <param name="index">Index of action (see xml)</param>
         /// <param name="descr">Sentence from xml, describing action</param>
         /// <param name="audio">Name of audiofile, that will be played when hint used</param>
-        public Action(ActionManager.ActionType t, int index, string sdescr, string fdescr, string audio, string extra, int points, bool notNeeded)
+        public Action(ActionManager.ActionType t, int index, string sdescr,
+            int points, bool notNeeded, float quizTime, string title, string content,
+            List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg, float encounterValue)
         {
             type = t;
             subindex = index;
             shortDescr = sdescr;
-            descr = fdescr;
-            audioHint = audio;
-            extraDescr = extra;
             pointValue = points;
             notMandatory = notNeeded;
             sceneDoneTrigger = false;
+            quizTriggerTime = quizTime;
+            messageTitle = title;
+            messageContent = content;
+            blockRequired = blockReq;
+            blockUnlock = blockUnl;
+            blockLock = blockL;
+            blockTitle = blockTitl;
+            blockMessage = blockMsg;
+            encounter = encounterValue;
         }
 
         /// <summary>
@@ -71,11 +91,19 @@ namespace CareUp.Actions
         private string leftInput;
         private string rightInput;
 
-        public CombineAction(string left, string right, int index, string sdescr, string fdescr, string audio, string extra, int points, bool notNeeded)
-            : base(ActionManager.ActionType.ObjectCombine, index, sdescr, fdescr, audio, extra, points, notNeeded)
+        public string decombineText;
+
+        public CombineAction(string left, string right, int index, string sdescr,
+            int points, bool notNeeded, float quizTime, string title, string content,
+            List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg,
+            string decombineBtnText, float encounterValue)
+            : base(ActionManager.ActionType.ObjectCombine, index, sdescr, points,
+                  notNeeded, quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg, encounterValue)
         {
             leftInput = left;
             rightInput = right;
+
+            decombineText = decombineBtnText;
         }
 
         /// <summary>
@@ -85,6 +113,8 @@ namespace CareUp.Actions
         /// <returns>True if values are same.</returns>
         public override bool Compare(string[] info)
         {
+            if (info == null)
+                return false;
             bool same = false;
             if (info.Length == 2)
             {
@@ -119,8 +149,11 @@ namespace CareUp.Actions
 
         public string buttonText;
 
-        public UseAction(string use, int index, string sdescr, string fdescr, string audio, string extra, string button, int points, bool notNeeded)
-            : base(ActionManager.ActionType.ObjectUse, index, sdescr, fdescr, audio, extra, points, notNeeded)
+        public UseAction(string use, int index, string sdescr,
+            string button, int points, bool notNeeded, float quizTime, string title, string content,
+            List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg, float encounterValue)
+            : base(ActionManager.ActionType.ObjectUse, index, sdescr, points, notNeeded,
+                  quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg, encounterValue)
         {
             useInput = use;
             buttonText = button;
@@ -128,6 +161,8 @@ namespace CareUp.Actions
 
         public override bool Compare(string[] info)
         {
+            if (info == null)
+                return false;
             bool same = false;
             if (info.Length == 1)
             {
@@ -159,14 +194,20 @@ namespace CareUp.Actions
         private string topicInput;
         private string person = "Patient"; // TODO
 
-        public TalkAction(string topic, int index, string sdescr, string fdescr, string audio, string extra, int points, bool notNeeded)
-            : base(ActionManager.ActionType.PersonTalk, index, sdescr, fdescr, audio, extra, points, notNeeded)
+        public TalkAction(string topic, int index, string sdescr,
+            int points, bool notNeeded, float quizTime, string title, string content, List<string> blockReq,
+            List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg, float encounterValue)
+            : base(ActionManager.ActionType.PersonTalk, index, sdescr, points, notNeeded,
+                  quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg, encounterValue)
         {
             topicInput = topic;
+            _topic = topic;
         }
 
         public override bool Compare(string[] info)
         {
+            if (info == null)
+                return false;
             bool same = false;
             if (info.Length == 1)
             {
@@ -197,11 +238,14 @@ namespace CareUp.Actions
     {
         private string item;
         private string target;
-        
+
         public string buttonText;
 
-        public UseOnAction(string i, string t, int index, string sdescr, string fdescr, string audio, string extra, string button, int points, bool notNeeded)
-            : base(ActionManager.ActionType.ObjectUseOn, index, sdescr, fdescr, audio, extra, points, notNeeded)
+        public UseOnAction(string i, string t, int index, string sdescr,
+            string button, int points, bool notNeeded, float quizTime, string title,
+            string content, List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg, float encounterValue)
+            : base(ActionManager.ActionType.ObjectUseOn, index, sdescr, points, notNeeded,
+                  quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg, encounterValue)
         {
             item = i;
             target = t;
@@ -215,6 +259,8 @@ namespace CareUp.Actions
         /// <returns>True if values same</returns>
         public override bool Compare(string[] info)
         {
+            if (info == null)
+                return false;
             bool same = false;
             if (info.Length == 2)
             {
@@ -247,8 +293,11 @@ namespace CareUp.Actions
         private string item;
         private string expected;
 
-        public ExamineAction(string i, string exp, int index, string sdescr, string fdescr, string audio, string extra, int points, bool notNeeded)
-            : base(ActionManager.ActionType.ObjectExamine, index, sdescr, fdescr, audio, extra, points, notNeeded)
+        public ExamineAction(string i, string exp, int index, string sdescr,
+            int points, bool notNeeded, float quizTime, string title, string content,
+           List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg, float encounterValue)
+            : base(ActionManager.ActionType.ObjectExamine, index, sdescr, points,
+                  notNeeded, quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg, encounterValue)
         {
             item = i;
             expected = exp;
@@ -261,6 +310,8 @@ namespace CareUp.Actions
         /// <returns>True if values same</returns>
         public override bool Compare(string[] info)
         {
+            if (info == null)
+                return false;
             bool same = false;
             if (info.Length == 2)
             {
@@ -286,14 +337,19 @@ namespace CareUp.Actions
     {
         private string item;
 
-        public PickUpAction(string i, int index, string sdescr, string fdescr, string audio, string extra, int points, bool notNeeded)
-            : base(ActionManager.ActionType.PickUp, index, sdescr, fdescr, audio, extra, points, notNeeded)
+        public PickUpAction(string i, int index, string sdescr,
+            int points, bool notNeeded, float quizTime, string title, string content, List<string> blockReq,
+           List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg, float encounterValue)
+            : base(ActionManager.ActionType.PickUp, index, sdescr, points, notNeeded,
+                  quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg, encounterValue)
         {
             item = i;
         }
 
         public override bool Compare(string[] info)
         {
+            if (info == null)
+                return false;
             bool same = false;
             if (info.Length == 1)
             {
@@ -316,14 +372,19 @@ namespace CareUp.Actions
     {
         private string stepName;
 
-        public SequenceStepAction(string name, int index, string sdescr, string fdescr, string audio, string extra, int points, bool notNeeded)
-            : base(ActionManager.ActionType.SequenceStep, index, sdescr, fdescr, audio, extra, points, notNeeded)
+        public SequenceStepAction(string name, int index, string sdescr,
+            int points, bool notNeeded, float quizTime, string title, string content,
+            List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg, float encounterValue)
+            : base(ActionManager.ActionType.SequenceStep, index, sdescr, points,
+                  notNeeded, quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg, encounterValue)
         {
             stepName = name;
         }
 
         public override bool Compare(string[] info)
         {
+            if (info == null)
+                return false;
             if (info.Length == 1)
             {
                 return info[0] == stepName;
@@ -344,8 +405,11 @@ namespace CareUp.Actions
         private string objectName;
         private string dropPositionID;
 
-        public ObjectDropAction(string name, string posId, int index, string sdescr, string fdescr, string audio, string extra, int points, bool notNeeded)
-            : base(ActionManager.ActionType.ObjectDrop, index, sdescr, fdescr, audio, extra, points, notNeeded)
+        public ObjectDropAction(string name, string posId, int index, string sdescr,
+            int points, bool notNeeded, float quizTime, string title,
+            string content, List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg, float encounterValue)
+            : base(ActionManager.ActionType.ObjectDrop, index, sdescr, points,
+                  notNeeded, quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg, encounterValue)
         {
             objectName = name;
             dropPositionID = posId;
@@ -353,6 +417,8 @@ namespace CareUp.Actions
 
         public override bool Compare(string[] info)
         {
+            if (info == null)
+                return false;
             if (info.Length == 2)
             {
                 return (info[0] == objectName && info[1] == dropPositionID);
@@ -364,6 +430,86 @@ namespace CareUp.Actions
         public override void ObjectNames(out string[] name)
         {
             string[] res = { objectName, dropPositionID };
+            name = res;
+        }
+    }
+
+    public class MovementAction : Action
+    {
+        private string positionInput;
+
+        public MovementAction(string position, int index, string sdescr,
+            int points, bool notNeeded, float quizTime, string title,
+            string content, List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg, float encounterValue)
+            : base(ActionManager.ActionType.Movement, index, sdescr, points,
+                  notNeeded, quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg, encounterValue)
+        {
+            positionInput = position;
+        }
+
+        public override bool Compare(string[] info)
+        {
+            if (info == null)
+                return false;
+            bool same = false;
+            if (info.Length == 1)
+            {
+                if (info[0] == positionInput)
+                {
+                    same = true;
+                }
+            }
+            return same;
+        }
+
+        public string GetInfo()
+        {
+            return positionInput;
+        }
+
+        public override void ObjectNames(out string[] name)
+        {
+            string[] res = { positionInput };
+            name = res;
+        }
+    }
+    public class GeneralAction : Action
+    {
+        public string ButtonText { get; }
+        public string Action { get; }
+        public string Item { get; }
+
+        public GeneralAction(string itemValue, string actionValue, int index, int storedIndex, string sdescr,
+            string buttonTextValue, int points, bool notNeeded, float quizTime, string title,
+            string content, List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg, float encounterValue)
+            : base(ActionManager.ActionType.General, index, sdescr, points, notNeeded,
+                  quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg, encounterValue)
+        {
+            this.storedIndex = storedIndex;
+            Item = itemValue;
+            Action = actionValue;
+            ButtonText = buttonTextValue;
+        }
+
+        public override bool Compare(string[] info)
+        {
+            bool same = false;
+            if (info != null)
+            {
+                if (info.Length == 1)
+                {
+                    if (info[0] == Item)
+                    {
+                        same = true;
+                    }
+                }
+            }
+            return same;
+        }
+
+        public override void ObjectNames(out string[] name)
+        {
+            string[] res = { Item };
             name = res;
         }
     }

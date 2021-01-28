@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
-public class RobotUITabs : MonoBehaviour {
-
+public class RobotUITabs : MonoBehaviour
+{
     protected static List<RobotUITabs> tabs = new List<RobotUITabs>();
     protected static Transform icons;
 
@@ -17,8 +15,6 @@ public class RobotUITabs : MonoBehaviour {
     public static bool tutorial_back = false;
     [HideInInspector]
     public static bool tutorial_generalOpened = false;
-    [HideInInspector]
-    public static bool tutorial_checkListOpened = false;
     [HideInInspector]
     public static bool tutorial_messageCenterOpened = false;
     [HideInInspector]
@@ -39,18 +35,18 @@ public class RobotUITabs : MonoBehaviour {
         tabs.RemoveAll(item => item == null);
 
         icons = transform.parent.Find("TabletIcons");
-        
-		if (transform.tag == "alg")
-		{
-			tabTrigger = transform.parent.Find("GeneralTab").Find(name).gameObject;
-		}
-		else 
-		{ 
-			tabTrigger = icons.Find(name).gameObject;
-		}
+
+        if (transform.tag == "alg")
+        {
+            tabTrigger = transform.parent.Find("GeneralTab").Find(name).gameObject;
+        }
+        else
+        {
+            tabTrigger = icons.Find(name).gameObject;
+        }
 
         children = transform.GetComponentsInChildren<RectTransform>();
-        
+
         GameObject sceneTitle = GameObject.Find("SceneTitle");
         GameObject manager = GameObject.Find("Preferences");
         if (sceneTitle != null && (manager != null && manager.GetComponent<PlayerPrefsManager>() != null))
@@ -75,7 +71,7 @@ public class RobotUITabs : MonoBehaviour {
         {
             if (!GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().practiceMode)
             {
-                if (name == "InfoTab" || name == "CheckListTab")
+                if (name == "InfoTab")
                 {
                     SetTabActive(false);
                     gameObject.SetActive(false);
@@ -87,15 +83,21 @@ public class RobotUITabs : MonoBehaviour {
 
         tabTrigger.GetComponent<Button>().onClick.AddListener(OnTabSwitch);
 
-        GameObject backBtn = transform.Find("Button").gameObject;
+        GameObject backBtn = null;
 
+        if (transform.Find("Button") != null)
+        {
+            backBtn = transform.Find("Button").gameObject;
+        }
         if (transform.tag == "alg")
         {
-            backBtn.GetComponent<Button>().onClick.AddListener(BackBtnToGeneral);
+            if (backBtn != null)
+                backBtn.GetComponent<Button>().onClick.AddListener(BackBtnToGeneral);
         }
         else
         {
-            backBtn.GetComponent<Button>().onClick.AddListener(BackButton);
+            if (backBtn != null)
+                backBtn.GetComponent<Button>().onClick.AddListener(BackButton);
         }
 
         if (name == "GeneralTab")
@@ -131,7 +133,7 @@ public class RobotUITabs : MonoBehaviour {
         SetTabActive(true);
 
         switch (name)
-        { 
+        {
             case "PrescriptionTab":
                 FindObjectOfType<ActionManager>().OnExamineAction("PrescriptionForm", "good");
                 break;
@@ -156,15 +158,12 @@ public class RobotUITabs : MonoBehaviour {
             case "GeneralTab":
                 tutorial_generalOpened = true;
                 break;
-            case "CheckListTab":
-                tutorial_checkListOpened = true;
-                break;
             case "MessageCenter":
                 tutorial_messageCenterOpened = true;
                 break;
             case "InfoTab":
                 tutorial_infoTabOpened = true;
-				GameObject.FindObjectOfType<RobotUITabInfo>().SwitchItemList(false);
+                GameObject.FindObjectOfType<RobotUITabInfo>().SwitchItemList(false);
                 break;
             case "PrescriptionTab":
                 tutorial_prescriptionOpened = true;
@@ -178,19 +177,19 @@ public class RobotUITabs : MonoBehaviour {
     protected void BackButton()
     {
         if ((tutorial_UI != null && tutorial_UI.closeTab == false) ||
-            ( tutorial_theory != null && tutorial_theory.closeTab == false))
+            (tutorial_theory != null && tutorial_theory.closeTab == false))
         {
             return;
         }
 
         tutorial_back = true;
-        
+
         foreach (RobotUITabs t in tabs)
         {
             t.SetTabActive(false);
         }
 
-		icons.gameObject.SetActive(true);
+        icons.gameObject.SetActive(true);
     }
 
     public void OnIpadRecordButtonClick()
@@ -204,8 +203,10 @@ public class RobotUITabs : MonoBehaviour {
         {
             FindObjectOfType<ActionManager>().OnUseAction("PaperAndPen");
         }
+
+        GameObject.FindObjectOfType<PlayerScript>().CloseRobotUI();
     }
-    
+
     protected void BackBtnToGeneral()
     {
         if ((tutorial_UI != null && tutorial_UI.closeTab == false) ||

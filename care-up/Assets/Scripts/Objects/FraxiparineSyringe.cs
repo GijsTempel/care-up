@@ -70,9 +70,7 @@ public class FraxiparineSyringe : PickableObjectWithInfo
     }
 
     protected override void Update()
-    {
-        base.Update();
-
+    {     
         if (updatePlunger)
         {
             plunger.localPosition = new Vector3(
@@ -136,6 +134,7 @@ public class FraxiparineSyringe : PickableObjectWithInfo
                 actionManager.OnUseOnAction(name, "NeedleCup");
                 return true;
             }
+
         }
 
         // venting && tube

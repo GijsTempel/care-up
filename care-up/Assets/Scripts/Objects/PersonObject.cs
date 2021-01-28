@@ -1,9 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
-using System.Linq;
-using UnityEngine.UI;
 
 /// <summary>
 /// Player can perform Talk action to this object.
@@ -15,22 +12,24 @@ public class PersonObject : InteractableObject
     public bool tutorial_talked = false;
     [HideInInspector]
     public bool tutorial_used = false;
-	public bool allowToTalk = true;
+    public bool allowToTalk = true;
 
     public List<string> dialogueXmls;
-    protected int currentDialogueIndex = 0;
+    public int currentDialogueIndex = 0;
 
     private List<SelectDialogue.DialogueOption> optionsList;
 
     private List<GameObject> callers;
 
-    protected bool inhaling = false;
-    private bool direction = true;
-    private float inhaleCounter = 1.0f;
+    //protected bool inhaling = false;
+    //private bool direction = true;
+    //private float inhaleCounter = 1.0f;
 
     protected AudioSource audioSource;
 
     protected bool lookAtCamera;
+
+    public GameObject TalkBubbleAnchor = null;
 
     protected override void Start()
     {
@@ -50,17 +49,29 @@ public class PersonObject : InteractableObject
 
         audioSource = GetComponent<AudioSource>();
 
-        inhaling = false;
-        direction = true;
-        inhaleCounter = 1.0f;
+        //inhaling = false;
+        //direction = true;
+        //inhaleCounter = 1.0f;
 
         lookAtCamera = true;
 
         rend = GetComponentInChildren<SkinnedMeshRenderer>();
     }
 
+    public bool hasTopic(string topic)
+    {
+        if (optionsList != null)
+            foreach (SelectDialogue.DialogueOption sd in optionsList)
+            {
+                if (sd.attribute == topic)
+                    return true;
+            }
+        return false;
+    }
+
     protected override void Update()
     {
+        /*
         CallerUpdate();
         callers.Clear();
 
@@ -84,30 +95,50 @@ public class PersonObject : InteractableObject
                 }
             }
             transform.localScale = Vector3.one * inhaleCounter;
-        }
+        } 
+        */
     }
 
-    public virtual void Talk(string topic = "")
+public virtual void Talk(string topic = "", string audio = "")
     {
         if (ViewModeActive() || topic == "CM_Leave" || topic == "")
             return;
-        
+
         if (actionManager.CompareTopic(topic))
         {
             tutorial_talked = true;
 
             switch (topic)
             {
+                case "DoubleCheck":
+                    this.GetComponent<MoveToPoint>().toWalk = true;
+                    break;
                 default:
                     break;
             }
 
+            AttemptPlayAudioAfterTalk(audio);
             NextDialogue();
         }
 
         actionManager.OnTalkAction(topic);
     }
-    
+
+    public void AttemptPlayAudioAfterTalk(string audio)
+    {
+        // play audio if set
+        if (audio != "")
+        {
+            AudioClip clip = Resources.Load<AudioClip>("Audio/" + audio);
+            audioSource.PlayOneShot(clip);
+        }
+    }
+
+    public void DialoqueTalk(string topic = "", List<SelectDialogue.DialogueOption> additionalOptions = null, string question = null, string audio = "")
+    {
+        Talk(topic, audio);
+    }
+
     public void NextDialogue()
     {
         ++currentDialogueIndex;
@@ -117,15 +148,39 @@ public class PersonObject : InteractableObject
         }
     }
 
+    public void SetDialogue(int d)
+    {
+        currentDialogueIndex = d;
+        if (currentDialogueIndex < dialogueXmls.Count)
+        {
+            LoadDialogueOptions(dialogueXmls[currentDialogueIndex]);
+        }
+    }
+
+    public int GetDialogue()
+    {
+        return currentDialogueIndex;
+    }
+
+    public void SkipGreetingDialogue()
+    {
+        if (currentDialogueIndex < dialogueXmls.Count)
+        {
+            if (dialogueXmls[currentDialogueIndex] == "Greeting")
+            {
+                NextDialogue();
+            }
+        }
+    }
+
     /// <summary>
     /// Loads available topics to talk from xml file.
     /// </summary>
     /// <param name="filename">Xml filename</param>
     protected void LoadDialogueOptions(string filename)
     {
-
         optionsList.Clear();
-        
+
         TextAsset textAsset = (TextAsset)Resources.Load("Xml/PersonDialogues/" + filename);
         XmlDocument xmlFile = new XmlDocument();
         xmlFile.LoadXml(textAsset.text);
@@ -136,10 +191,11 @@ public class PersonObject : InteractableObject
         {
             string description = xmlOption.Attributes["text"].Value;
             string topic = xmlOption.Attributes["topic"] != null ? xmlOption.Attributes["topic"].Value : "";
+            string audio = xmlOption.Attributes["audio"] != null ? xmlOption.Attributes["audio"].Value : "";
 
             if (count < 3) // 3 options max, 4 is Close.
             {
-                SelectDialogue.DialogueOption option = new SelectDialogue.DialogueOption(description, Talk, topic);
+                SelectDialogue.DialogueOption option = new SelectDialogue.DialogueOption(description, DialoqueTalk, topic, audio);
                 optionsList.Add(option);
                 ++count;
             }
@@ -148,8 +204,9 @@ public class PersonObject : InteractableObject
                 break;
             }
         }
+
         // for leave option
-        optionsList.Add(new SelectDialogue.DialogueOption("Verlaten", Talk, "CM_Leave"));
+        optionsList.Add(new SelectDialogue.DialogueOption("Verlaten", DialoqueTalk, "CM_Leave", ""));
     }
 
     /// <summary>
@@ -157,17 +214,16 @@ public class PersonObject : InteractableObject
     /// </summary>
     public void CreateSelectionDialogue()
     {
-		if (!allowToTalk)
-		{
-			return;
-		}
+        if (!allowToTalk)
+        {
+            return;
+        }
 
         tutorial_used = true;
-        GameObject dialogueObject = Instantiate(Resources.Load<GameObject>("Prefabs/UI/SelectionDialogue"),
+        GameObject dialogueObject = Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/UI/SelectionDialogue"),
                     GameObject.Find("OverlayCamera").transform) as GameObject;
 
         SelectDialogue dialogue = dialogueObject.GetComponent<SelectDialogue>();
-        dialogue.Init();
 
         dialogue.AddOptions(optionsList);
 
@@ -187,68 +243,23 @@ public class PersonObject : InteractableObject
     {
         if (cameraMode.CurrentMode == CameraMode.Mode.Free && !player.away)
         {
-            bool flag = false;
+            //bool flag = false; never used
             foreach (GameObject caller in callers)
             {
                 if (caller == controls.SelectedObject)
                 {
-                    flag = true;
+                    //flag = true;
                 }
             }
 
             bool selectedIsInteractable = (controls.SelectedObject != null && controls.CanInteract &&
                 controls.SelectedObject.GetComponent<InteractableObject>() != null);
-            if (flag && !cameraMode.animating)
-            {
-                if (controls.CanInteract)
-                {
-                    if (rend.material.shader == onMouseExitShader)
-                    {
-                        SetShaderTo(onMouseOverShader);
-                    }
-
-                    if (!itemDescription.activeSelf)
-                    {
-                        itemDescription.SetActive(true);
-                    }
-
-                    itemDescription.GetComponentInChildren<Text>().text = (description == "") ? name : description;
-                }
-                else if (!controls.CanInteract && rend.material.shader == onMouseOverShader)
-                {
-                    SetShaderTo(onMouseExitShader);
-                    itemDescription.SetActive(false);
-                }
-            }
-            else
-            {
-                if (rend.material.shader == onMouseOverShader)
-                {
-                    SetShaderTo(onMouseExitShader);
-                }
-
-                if (!selectedIsInteractable)
-                {
-                    itemDescription.SetActive(false);
-                }
-            }
-        }
-
-        if (cameraMode.animating && rend.material.shader == onMouseOverShader)
-        {
-            SetShaderTo(onMouseExitShader);
-            itemDescription.SetActive(false);
-        }
-
-        if (itemDescription.activeSelf && !player.itemControls.gameObject.activeSelf)
-        {
-            itemDescription.transform.GetChild(0).transform.position = Input.mousePosition + new Vector3(50.0f, 25.0f);
         }
     }
 
     protected void OnAnimatorIK()
     {
-        if (lookAtCamera)
+        if (lookAtCamera && Camera.main != null)
         {
             Animator animator = GetComponent<Animator>();
             animator.SetLookAtWeight(1);

@@ -1,19 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class WorkField : UsableObject {
-    
+public class WorkField : UsableObject
+{
     public List<GameObject> objects = new List<GameObject>();
 
     private int toggleTime = 0;
     private bool toggle = false;
+
+    public bool tableCleaned = false;
+    GameUI gameUI;
 
     public bool cleaningLocked = true;
 
     protected override void Start()
     {
         base.Start();
+        gameUI = GameObject.FindObjectOfType<GameUI>();
 
         toggleTime = 0;
         toggle = false;
@@ -38,6 +41,7 @@ public class WorkField : UsableObject {
             if (actionManager.CompareUseObject(name))
             {
                 tutorial_used = true;
+                tableCleaned = true;
                 PlayerAnimationManager.PlayAnimation("Use WorkField", transform);
 
                 if (toggleTime == 0)
@@ -55,6 +59,7 @@ public class WorkField : UsableObject {
             controls.ResetObject();
             Reset();
         }
+        gameUI.UpdateHelpHighlight();
     }
 
     public void ToggleObjects()
@@ -69,20 +74,9 @@ public class WorkField : UsableObject {
                     obj.SetActive(toggle);
                 }
             }
-            
+
             ++toggleTime;
         }
-    }
-
-    protected override void Update()
-    {
-        base.Update();
-
-        if (rend.material.shader == onMouseOverShader
-            && !actionManager.CompareUseObject("WorkField"))
-        {
-            SetShaderTo(onMouseExitShader);
-            itemDescription.SetActive(false);
-        }
-    }
+        ActionManager.BuildRequirements();
+    }    
 }
