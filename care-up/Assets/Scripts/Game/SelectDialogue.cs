@@ -1,34 +1,37 @@
-﻿using System.Linq;
-using UnityEngine;
-using System.Collections;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
 /// <summary>
 /// Instance of dialogue with up to 4 options.
 /// </summary>
-public class SelectDialogue : MonoBehaviour {
-    
+public class SelectDialogue : MonoBehaviour
+{
     public bool tutorial_lock = false;
     public bool cheated = false;
+    int correctAnswerID = -1;
+    GameUI gameUI;
 
     public class DialogueOption
     {
-        public delegate void OptionAction(string attr);
+        public delegate void OptionAction(string attr = "", List<DialogueOption> additionalOption = null, string question = null, string audio = "");
 
         public string text;
-
         public string attribute;
+        public string question;
+        public string audio;
         public OptionAction function;
-
         public OptionSide side;
+        public List<DialogueOption> additional;
 
-        public DialogueOption(string txt, OptionAction func, string attr)
+        public DialogueOption(string txt, OptionAction func, string attr, string aud, List<DialogueOption> additionalOptions = null, string questionText = null)
         {
             text = txt;
-
             function = func;
             attribute = attr;
+            audio = aud;
+            question = questionText;
+            additional = additionalOptions;
         }
     };
 
@@ -40,32 +43,25 @@ public class SelectDialogue : MonoBehaviour {
         Right,
         Left
     };
-    
+
     private List<DialogueOption> options = new List<DialogueOption>();
 
-    //private Vector2 mouseState = new Vector2();
-    private OptionSide currentOption = OptionSide.None;
+    //private OptionSide currentOption = OptionSide.None;
     private Color currentMaterial;
 
-    private bool destroy = true;
+    private Button first;
+    private Button second;
+    private Button third;
+    private Button fourth;
 
-    private Image top;
-    private Image bottom;
-    private Image right;
-    private Image left;
-
-    private Color selectedMaterial;
-    private Color defaultMaterial;
-    private Color correctMaterial;
-    private Color wrongMaterial;
-
+    public List<Button> sqButtons;
     private string text;
-
     private static CameraMode cameraMode;
     private static Controls controls;
+    //private bool optionSelected = false;
 
-    private bool optionSelected = false;
-
+    static DialogueOption optionWithAdditions = null;
+    static string questionWithHint = null;
 
     void Start()
     {
@@ -74,7 +70,6 @@ public class SelectDialogue : MonoBehaviour {
             cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
             if (cameraMode == null) Debug.LogError("No camera mode found");
         }
-
         if (controls == null)
         {
             controls = GameObject.Find("GameLogic").GetComponent<Controls>();
@@ -82,43 +77,9 @@ public class SelectDialogue : MonoBehaviour {
         }
     }
 
-    public void Init(bool selfDestroy = true)
-    {
-        selectedMaterial = Color.blue;
-        defaultMaterial = Color.white;
-        correctMaterial = Color.green;
-        wrongMaterial = Color.red;
-
-        top = transform.GetChild(1).GetComponent<Image>();
-        bottom = transform.GetChild(2).GetComponent<Image>();
-        right = transform.GetChild(3).GetComponent<Image>();
-        left = transform.GetChild(4).GetComponent<Image>();
-
-        top.color = defaultMaterial;
-        bottom.color = defaultMaterial;
-        right.color = defaultMaterial;
-        left.color = defaultMaterial;
-        
-        top.gameObject.SetActive(false);
-        bottom.gameObject.SetActive(false);
-        right.gameObject.SetActive(false);
-        left.gameObject.SetActive(false);
-
-        //mouseState = Vector2.zero;
-        currentOption = OptionSide.None;
-        currentMaterial = defaultMaterial;
-        options.Clear();
-
-        text = "";
-        cheated = false;
-        tutorial_lock = false;
-
-        destroy = selfDestroy;
-    }
-
     public void AddOptions(List<DialogueOption> list, bool cheat = false)
     {
-        foreach(DialogueOption item in list )
+        foreach (DialogueOption item in list)
         {
             options.Add(item);
         }
@@ -131,157 +92,40 @@ public class SelectDialogue : MonoBehaviour {
     /// </summary>
     private void InitOptions()
     {
+        if (gameUI == null)
+            gameUI = GameObject.FindObjectOfType<GameUI>();
         if (options.Count == 0)
         {
             Debug.LogError("0 options inited.");
             return;
         }
 
-        if (options.Count > 0)
+        for (int i = 0; i < 4; i++)
         {
-            top.gameObject.SetActive(true);
-            options[0].side = OptionSide.Top;
-            top.transform.GetChild(0).GetComponent<Text>().text = options[0].text;
-        }
-
-        if (options.Count > 1)
-        {
-            bottom.gameObject.SetActive(true);
-            options[1].side = OptionSide.Bottom;
-            bottom.transform.GetChild(0).GetComponent<Text>().text = options[1].text;
-        }
-
-        if (options.Count > 2)
-        {
-            right.gameObject.SetActive(true);
-            options[2].side = OptionSide.Right;
-            right.transform.GetChild(0).GetComponent<Text>().text = options[2].text;
-        }
-
-        if (options.Count > 3)
-        {
-            left.gameObject.SetActive(true);
-            options[3].side = OptionSide.Left;
-            left.transform.GetChild(0).GetComponent<Text>().text = options[3].text;
-        }
-
-        if ( cheated )
-        {
-            ShowAnswer();
-        }
-    }
-
-    void Update()
-    {
-        if (!tutorial_lock)
-        {
-            if (!GamepadSwitch.HandleUpdate(top.GetComponent<Button>()))
+            if (i < options.Count)
             {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-            }
-
-            if (optionSelected && currentOption != OptionSide.None)
-            {
-                optionSelected = false;
-
-                DialogueOption option = options.Find(x => x.side == currentOption);
-                if (option != null)
-                {
-                    if (option.attribute != "")
+                sqButtons[i].gameObject.SetActive(true);
+                sqButtons[i].transform.Find("Text").GetComponent<Text>().text = options[i].text;
+                if (gameUI.AllowAutoPlay(false))
+                    if (options[i].attribute != "" && options[i].attribute != "CM_Leave")
                     {
-                        option.function(option.attribute);
-                        if (destroy)
-                        {
-                            Destroy(gameObject);
-                            cameraMode.ToggleCameraMode(CameraMode.Mode.Free);
-                        }
+                        correctAnswerID = i;
+                        Invoke("AutoPlay", 1f);
                     }
-                    else // no info means wrong choice
-                    {
-                        switch(currentOption)
-                        {
-                            case OptionSide.Bottom:
-                                bottom.color = wrongMaterial;
-                                break;
-                            case OptionSide.Left:
-                                left.color = wrongMaterial;
-                                break;
-                            case OptionSide.Right:
-                                right.color = wrongMaterial;
-                                break;
-                            case OptionSide.Top:
-                                top.color = wrongMaterial;
-                                break;
-                        }
-
-                        GameObject.FindObjectOfType<ActionManager>().OnSequenceStepAction("");
-                    }
-                }
             }
+            else
+                sqButtons[i].gameObject.SetActive(false);
         }
+     
+        //ShowAnswer();
     }
 
-    private void SetSelected(OptionSide option)
+    void AutoPlay()
     {
-        if ( option != currentOption )
+        if (correctAnswerID >= 0)
         {
-            SetOptionTo(currentOption, false);
-            SetOptionTo(option, true);
-            currentOption = option;
-        }
-    }
-    
-    private void SetOptionTo(OptionSide option, bool state)
-    {
-        switch (option)
-        {
-            case OptionSide.Top:
-                if ( state )
-                {
-                    currentMaterial = top.color;
-                    top.color = selectedMaterial;
-                }
-                else
-                {
-                    top.color = currentMaterial;
-                }
-                break;
-            case OptionSide.Bottom:
-                if (state)
-                {
-                    currentMaterial = bottom.color;
-                    bottom.color = selectedMaterial;
-                }
-                else
-                {
-                    bottom.color = currentMaterial;
-                }
-                break;
-            case OptionSide.Right:
-                if (state)
-                {
-                    currentMaterial = right.color;
-                    right.color = selectedMaterial;
-                }
-                else
-                {
-                    right.color = currentMaterial;
-                }
-                break;
-            case OptionSide.Left:
-                if (state)
-                {
-                    currentMaterial = left.color;
-                    left.color = selectedMaterial;
-                }
-                else
-                {
-                    left.color = currentMaterial;
-                }
-                break;
-            default:
-                break;
+            if (sqButtons[correctAnswerID].gameObject.activeSelf)
+                sqButtons[correctAnswerID].GetComponent<Button>().onClick.Invoke();
         }
     }
 
@@ -290,69 +134,68 @@ public class SelectDialogue : MonoBehaviour {
         text = t;
     }
 
-    void OnGUI()
-    {
-        if (text != "")
-        {
-            GUIStyle style = GUI.skin.GetStyle("Label");
-            style.alignment = TextAnchor.LowerCenter;
-            style.fontSize = 30;
-            style.normal.textColor = Color.white;
-
-            GUI.Label(new Rect(0, 0, Screen.width, Screen.height),
-                text, style);
-        }
-    }
-
     public void ShowAnswer()
     {
-        if ( cheated )
+        int i = 0;
+        foreach (DialogueOption o in options)
         {
-            foreach (DialogueOption o in options)
+            //print(o.attribute);
+            if (o.attribute != "" && o.attribute != "CM_Leave")
             {
-                if ( o.attribute != "" && o.attribute != "CM_Leave")
-                {
-                    switch (o.side)
-                    {
-                        case OptionSide.Bottom:
-                            bottom.color = correctMaterial;
-                            break;
-                        case OptionSide.Left:
-                            left.color = correctMaterial;
-                            break;
-                        case OptionSide.Right:
-                            right.color = correctMaterial;
-                            break;
-                        case OptionSide.Top:
-                            top.color = correctMaterial;
-                            break;
-                    }
-                }
+                sqButtons[i].GetComponent<Image>().color = Color.yellow;
             }
+            i++;
         }
     }
 
     public void ButtonClick(int num)
     {
-        OptionSide side = OptionSide.None;
+        sqButtons[num].interactable = false;
 
-        switch (num)
+        options[num].function(options[num].attribute, options[num].additional, options[num].question, options[num].audio);
+
+        if (options[num].attribute != "")
         {
-            case (0):
-                side = OptionSide.Top;
-                break;
-            case (1):
-                side = OptionSide.Bottom;
-                break;
-            case (2):
-                side = OptionSide.Right;
-                break;
-            case (3):
-                side = OptionSide.Left ;
-                break;
+            Destroy(gameObject);
+            cameraMode.ToggleCameraMode(CameraMode.Mode.Free);
         }
+        else
+        {
+            GameObject.FindObjectOfType<ActionManager>().OnSequenceStepAction("");
+            GameObject currentHintPanel = GameObject.Find("HintPanel");
 
-        currentOption = side;
-        optionSelected = true;
+            if (ActionManager.practiceMode && currentHintPanel != null)
+            {
+                string hintText = FindObjectOfType<ActionManager>().CurrentDescription[0];
+
+                foreach (DialogueOption dialoqueOption in options)
+                {
+                    if (dialoqueOption.additional != null)
+                    {
+                        optionWithAdditions = dialoqueOption;
+                        hintText = dialoqueOption.text;
+                        break;
+                    }
+                }
+
+                if (currentHintPanel.transform.Find("Text") != null)
+                {
+                    Text hint = currentHintPanel.transform.Find("Text").gameObject.GetComponent<Text>();
+
+                    if (optionWithAdditions != null)
+                    {
+                        if (hint.text == optionWithAdditions.question || hint.text == questionWithHint)
+                        {
+                            questionWithHint = optionWithAdditions.question + " " + FindObjectOfType<ActionManager>().CurrentDescription[0];
+                            hint.text = questionWithHint;
+                        }
+                        else if (options[num] == optionWithAdditions)
+                            hint.text = optionWithAdditions.question;
+                    }
+                    else
+                        hint.text = hintText;
+                }
+            }
+        }
     }
 }

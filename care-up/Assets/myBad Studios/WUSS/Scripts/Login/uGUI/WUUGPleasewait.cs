@@ -6,9 +6,9 @@ namespace MBS
     public class WUUGPleasewait : MonoBehaviour
     {
 
-        [SerializeField] Image spinner;
-        [SerializeField] float speed= 300f;
-        [SerializeField] WUUGLoginGUI gui;
+        [SerializeField] Image spinner = default(Image);
+        [SerializeField] float speed = 300f;
+        [SerializeField] WUUGLoginGUI gui = default(WUUGLoginGUI);
 
         void Awake()
         {

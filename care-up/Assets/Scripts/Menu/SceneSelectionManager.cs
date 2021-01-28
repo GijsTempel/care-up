@@ -9,14 +9,13 @@ public class SceneSelectionManager : MonoBehaviour {
 
     public Image practiceButton;
     public Image testButton;
-    public Text description;
 
     private PlayerPrefsManager manager;
+    public LevelButton startButton;
+    int SceneLocation = 0;
     
-    private string practiceText =
-        "Oefenen: Oefen de handeling waarin je elke stap van de werkwijze bovenin het scherm kunt zien. Volg de stappen om ze te oefenen en te leren.";
-    private string testText =
-        "Toetsen: Toets je kennis. Tijdens een toets zie je geen hints en moet je de stappen van de handeling uit je hoofd uitvoeren. Je kunt nu iedere actie in een willekeurige volgorde uitvoeren. Je kunt dus dingen in de verkeerde volgorde doen of zelf vergeten. Net zoals tijdens een praktijktoets.";
+    //private string practiceText = "Kies je voor oefenen, dan zie je bovenin het scherm elke stap van de werkwijze. ";
+    //private string testText = "Kies je voor toetsen, dan zie je geen hints en moet je de stappen van de handelingen uit je hoofd uitvoeren. Let op de volgorde van de acties!";
     
     public void Start()
     {
@@ -35,14 +34,18 @@ public class SceneSelectionManager : MonoBehaviour {
         //practiceButton = GameObject.Find("PracticeButton").GetComponent<Image>();
         //testButton = GameObject.Find("TestButton").GetComponent<Image>();
 
-        practiceButton.color = Color.green;
+        // dont need to make one green anymore, player need to actually select one of them
+        //practiceButton.color = Color.green;
         if (manager)
         {
             manager.practiceMode = true;
         }
 
         //description = GameObject.Find("PracticeTestDescription").GetComponent<Text>();
-        description.text = practiceText;
+        //description.text = practiceText;
+
+        // we need start button to exist but hide it
+        startButton.gameObject.SetActive(false);
     }
 
     public void ShowMenu (SceneSelection sceneselection)
@@ -56,29 +59,58 @@ public class SceneSelectionManager : MonoBehaviour {
         }
     }
 
-    public void OnPracticeButtonClick()
+    public void OnPracticeButtonClick() 
     {
-        practiceButton.color = Color.green;
-        testButton.color = Color.white;
+        //practiceButton.color = Color.green;
+        //testButton.color = Color.white;
 
-        description.text = practiceText;
+        
 
         if (manager)
         {
             manager.practiceMode = true;
         }
+
+        // imitate pressing start
+        if (startButton != null)
+        {
+            startButton.OnStartButtonClick();
+        }
+
+        // imitate closing dialogue
+        GameObject.Find("DialogTestPractice").SetActive(false);
     }
 
-    public void OnTestButtonClick()
+    public void SceneLocationSelected(int value)
+    {
+        SceneLocation = value;
+        GameObject.Find("DialogLocationSelect").SetActive(false);
+        GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(3);
+        if (value == 1 && startButton != null)
+        {
+            startButton.toLoadInhouse = true;
+        }
+    }
+
+    public void OnTestButtonClick() 
     {
         practiceButton.color = Color.white;
         testButton.color = Color.green;
 
-        description.text = testText;
+       
 
         if (manager)
         {
             manager.practiceMode = false;
         }
+
+        // imitate pressing start
+        if (startButton != null)
+        {
+            startButton.OnStartButtonClick();
+        }
+
+        // imitate closing dialogue
+        GameObject.Find("DialogTestPractice").SetActive(false);
     }
 }

@@ -11,8 +11,30 @@ public class WalkToGroup : MonoBehaviour
     public Vector3 robotPosition;
     public Vector3 robotRotation;
 
+    bool lastHighlightState = false;
     private GameObject text;
+    public GameObject cone;
+    public bool ButtonHovered = false;
+    public string description;
+    //[HideInInspector]
+    public WalkToGroup LeftWalkToGroup = null;
+    //[HideInInspector]
+    public WalkToGroup RightWalkToGroup = null;
+    PlayerScript player;
+    public bool ManualNeighborhood = false; 
 
+    public float interactionDistance = -1;
+
+    public enum GroupType
+    {
+        NotSet,
+        WorkField,
+        Doctor,
+        Patient,
+        Sink
+    };
+
+    public WalkToGroup.GroupType WalkToGroupType;
     CameraMode cameraMode;
     Controls controls;
 
@@ -34,10 +56,28 @@ public class WalkToGroup : MonoBehaviour
     public void HighlightGroup(bool value)
     {
         if (SystemInfo.deviceType == DeviceType.Handheld)
+        {
+            text.SetActive(player.away);
+            cone.SetActive(false);
+            return;
+        }
+     
+        Camera cam = null;
+        foreach(Camera c in GameObject.FindObjectsOfType<Camera>())
+        {
+            if (c.transform.parent != null)
+            {
+                if (c.transform.parent.name == "Head")
+                    cam = c;
+            }
+        }
+        if (cam == null)
             return;
         text.SetActive(value);
+        if (cone != null)
+            cone.SetActive(value);
 
-        text.transform.rotation = Camera.main.transform.rotation;
+        //text.transform.rotation = Camera.main.transform.rotation;
 
         if (particles != null)
         {
@@ -46,17 +86,30 @@ public class WalkToGroup : MonoBehaviour
         }
     }
 
+
+    public void SetTarget(Transform _target)
+    {
+        target = _target;
+    }
+
+
+
     private void Start()
     {
+        player = GameObject.FindObjectOfType<PlayerScript>();
+        //FindNeighbors();   
         gameLogic = GameObject.Find("GameLogic");
 
         cameraMode = gameLogic.GetComponent<CameraMode>();
         controls = gameLogic.GetComponent<Controls>();
 
-        text = transform.GetChild(0).gameObject;
+        text = transform.Find("TextMesh").gameObject;
+
         if (SystemInfo.deviceType != DeviceType.Handheld)
         {
             text.SetActive(false);
+            if (cone != null)
+                cone.SetActive(false);
         }
 
         particles = GetComponent<ParticleSystem>();
@@ -76,21 +129,74 @@ public class WalkToGroup : MonoBehaviour
         }
     }
 
-    protected void Update()
+    public void FindNeighbors()
     {
-        if (cameraMode.CurrentMode == CameraMode.Mode.Free)
+        Vector3 tVec = transform.forward;
+        WalkToGroup closestLeft = null;
+        WalkToGroup closestRight = null;
+        foreach (WalkToGroup w in GameObject.FindObjectsOfType<WalkToGroup>())
         {
-            if (controls.SelectedObject == gameObject && !cameraMode.animating /*&& (player.away || player.freeLook)*/)
+            if (w != this)
             {
-                if (gameLogic.GetComponent<TutorialManager>() != null)
-                    if (gameLogic.GetComponent<TutorialManager>().TutorialEnding)
-                        return;
-                HighlightGroup(true);
-            }
-            else
-            {
-                HighlightGroup(false);
+                Vector3 direct = (transform.position - w.position).normalized;
+                float wDot = Vector3.Dot(tVec, direct);
+                if (wDot < 0)
+                {
+                    if (closestLeft == null)
+                        closestLeft = w;
+                    else
+                    {
+                        float currentDist = Vector3.Distance(closestLeft.transform.position, transform.position);
+                        float candidateDist = Vector3.Distance(w.transform.position, transform.position);
+                        if (candidateDist < currentDist)
+                            closestLeft = w;
+                    }
+                }
+                else
+                {
+                    if (closestRight == null)
+                        closestRight = w;
+                    else
+                    {
+                        float currentDist = Vector3.Distance(closestRight.transform.position, transform.position);
+                        float candidateDist = Vector3.Distance(w.transform.position, transform.position);
+                        if (candidateDist < currentDist)
+                            closestRight = w;
+                    }
+                }
+
             }
         }
+        if (!ManualNeighborhood)
+        {
+            LeftWalkToGroup = closestLeft;
+            RightWalkToGroup = closestRight;
+        }
+    }
+
+    protected void Update()
+    {
+        if (player.away)
+        {
+            bool value = false;
+            if (cameraMode.CurrentMode == CameraMode.Mode.Free)
+            {
+                if (controls.SelectedObject == gameObject && !cameraMode.animating || ButtonHovered/*&& (player.away || player.freeLook)*/)
+                {
+                    if (gameLogic.GetComponent<TutorialManager>() != null)
+                        if (gameLogic.GetComponent<TutorialManager>().TutorialEnding)
+                            return;
+                    value = true;
+                }
+                else
+                {
+                    value = false;
+                }
+            }
+            if (lastHighlightState != value)
+                HighlightGroup(value);
+            lastHighlightState = value;
+        }
+
     }
 }

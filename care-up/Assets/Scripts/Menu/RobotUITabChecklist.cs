@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class RobotUITabChecklist : RobotUITabs {
-
+    /*
     private static Text[] items;
     //private static int current = 0;
     
@@ -49,5 +49,5 @@ public class RobotUITabChecklist : RobotUITabs {
             strikethrough = strikethrough + c + '\u0336';
         }
         return strikethrough;
-    }
+    }*/
 }

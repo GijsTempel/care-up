@@ -32,10 +32,6 @@ namespace UnityStandardAssets.CrossPlatformInput.Inspector
             {
                 case BuildTarget.Android:
                 case BuildTarget.iOS:
-                //case BuildTarget.WP8Player:
-                //case BuildTarget.BlackBerry:
-				case BuildTarget.PSM: 
-				case BuildTarget.Tizen: 
 				case BuildTarget.WSAPlayer: 
                     EditorUtility.DisplayDialog("Mobile Input",
                                                 "You have enabled Mobile Input. You'll need to use the Unity Remote app on a connected device to control your game in the Editor.",
@@ -101,8 +97,9 @@ namespace UnityStandardAssets.CrossPlatformInput.Inspector
                 BuildTargetGroup.iOS,
                 BuildTargetGroup.WSA,
                 //BuildTargetGroup.BlackBerry,
+#pragma warning disable CS0618 // Type or member is obsolete
 				BuildTargetGroup.PSM, 
-				BuildTargetGroup.Tizen, 
+#pragma warning restore CS0618 // Type or member is obsolete
 				BuildTargetGroup.WSA 
             };
 

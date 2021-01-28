@@ -50,9 +50,9 @@ namespace Paroxe.PdfRenderer
                 yield return null;
 
             string url = urlString as string;
-
+#pragma warning disable
             WWW www = new WWW(url);
-
+#pragma warning restore
             yield return www;
 
             if (string.IsNullOrEmpty(www.error))

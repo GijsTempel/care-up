@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ActionList>
+  <action
+    points="1"
+    description="[Begroet]"
+    commentUA="Привітатись з пацієнтом"
+    audioHint=""
+    index="0"
+    type="talk"
+    topic="Hello"
+    extra="Ondanks dat het begroeten niet in de werkwijze staat, is het wel netjes om contact te leggen met de cliënt."
+    optional=""
+   />
+
+  <action
+    comment="1. Apply hand hygiene"
+    index="0"
+    points="3"
+    description="[Pas handhygiëne]"
+    type="use"
+    value="HandCleaner"
+    extra="[Pas handhygiëne]"
+    messageTitle="Werkinstructie"
+    messageContent="Deze werkinstructie is geschikt voor het injecteren van het Comirnaty concentraat voor verdunning van het vaccin gefabriceerd door Pfizer-BioNtech. Het medicijn is geschikt voor intramusculaire injectie voor mensen boven de 16 jaar."
+   ></action>
+
+  <action
+    points="1"
+    description="[Maak een schoon werkveld]"
+    commentUA="Очистити та приготувати робочий стіл"
+    audioHint="Injection/H2-2"
+    index="1"
+    type="use"
+    value="WorkField"
+    extra="Maak een schoon werkveld en zet de benodigdheden binnen handbereik."
+    messageTitle="Je het volgende nodig hebt?"
+    messageContent="
+- toedienlijst
+- toedieningsetiket
+- gaasje
+- steriele injectienaald
+- desinfectans alcohol 70%
+- handschoenen
+- naaldenbeker
+- afvalbak
+    "></action>
+
+  <action
+    points="2"
+    description="Controleer cliëntgegevens"
+    commentUA="Перевірити медичні записи пацієнта"
+    index="2"
+    type="examine"
+    item="PatientRecords"
+    expected="good"
+    extra="Controleer de cliëntgegevens. Het is belangrijk dat je de juiste persoon voor je hebt. "
+    messageTitle="Controle cliëntgegevens."
+    messageContent="Controleer de naam en geboortedatum van cliënt"
+   ></action>
+
+  <action
+    points="2"
+    description="Controleer de spuit met medicijn"
+    commentUA="Перевірити назначене лікування"
+    audioHint="Injection/H3-2"
+    index="2"
+    type="examine"
+    item="SyringeWithInjectionNeedleCap"
+    expected="good"
+    extra="Controleer de spuit met medicijn"
+    messageTitle="Controle medicijn"
+    messageContent="
+Controleer het medicijn op:
+- Vervaldatum/houdbaarheid
+- Wanneer van toepassing: kleur en substantie
+- Voer wanneer nodig de dubbele controle uit volgens de afspraken binnen de organisatie"
+></action>
+
+  <action
+    points="2"
+    description="Controleer de toedienlijst"
+    commentUA="Перевірити відповідність медикаментів"
+    audioHint="InjectionSubcutaneous/Step 5"
+    index="2"
+    type="examine"
+    item="PrescriptionForm"
+    expected="good"
+    extra="Controleer de toedienlijst. Controleer de toedienlijst op soort, dosering en toedientijdstip."
+    messageTitle="5x juist-regel"
+    messageContent="Er zijn 5 controles die je altijd moet doen voordat je medicijnen geeft. Alleen als alle 5 punten juist zijn, mag je het medicijn toedienen.
+    
+    De vijf regels zijn:
+    
+1.  Het juiste medicijn: 
+kijk op de toedienlijst en controleer of de informatie op de medicijnverpakking of het baxterzakje hiermee overeenkomen. Kijk hierbij ook naar de vervaldatum van het medicijn.
+        
+2.  De juiste cliënt: 
+controleer of je de juiste cliënt voor je hebt.
+        
+3.  Het juiste tijdstip: 
+kijk op de toedienlijst voor het tijdstip en vergelijk dit met het tijdstip waarop je de medicijnen geeft.
+        
+4.  De juiste manier van toedienen: 
+hanteer de instructies van de toedienlijst. Je moet bekend zijn met de toedieningsvorm. Ben je hier niet mee bekent, dien dan niet toe.
+    
+5.  De juiste dosis: 
+je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toedienlijst. De verantwoordelijkheid van de juiste dosering ligt bij de arts en de apotheker."
+></action>
+
+  <action
+    points="1"
+    description="Vraag de cliënt de injectieplaats te ontbloten"
+    commentUA="Попросити пацієнта розкрити місце для інєкції"
+    audioHint="Injection/H12-2"
+    index="3"
+    type="talk"
+    topic="RollUpSleeves"
+    extra="Vraag de cliënt de injectieplaats te ontbloten en zich te ontspannen."
+    blockUnlock="patient show spot"
+    messageTitle="Injectieplaats "
+    messageContent="Injecteer bij voorkeur in de bovenarm (buitenste deel). Alternatieve plek is het bovenbeen. Desinfecteer de huid bij cliënten met verminderde weerstand.
+    "
+   ></action>
+
+  <action
+    points="1"
+    description="Start injecteren"
+    commentUA="Розпочати інєкцію"
+    audioHint="Injection/H13-2"
+    index="4"
+    type="useOn"
+    item="SyringeWithInjectionNeedleCap"
+    secondPlace="PatientPos"
+    target=""
+    buttonText="Start injecteren"
+    extra="Start met het toedienen van de injectie. Alles is klaar voor gebruik en je kunt dus starten met injecteren."
+    blockRequired="patient show spot"
+    blockTitle="Deze handeling is nog niet mogelijk"
+    blockMessage="Treft de juiste voorbereidingen en vraag de cliënt de injectieplaats te ontbloten."
+  ></action>
+
+  <action
+    points="1"
+    description="Palpeer de injectieplaats en controleer of de injectieplaats schoon en droog is"
+    audioHint="Injection/AS1-2"
+    index="5"
+    type="sequenceStep"
+    value="clean skin"
+    extra="Controleer of de injectieplaats schoon en droog is om besmetting van ziektekiemen te voorkomen."
+  ></action>
+
+  <action
+    points="1"
+    description="Neem de spuit in de injecterende hand en verwijder de naaldhuls"
+    index="6"
+    type="sequenceStep"
+    value="take off cap"
+    extra="De beschermdop zit nog op de naald. Deze dien je te verwijderen om gebruik te maken van de spuit. Concentreer je tijdens het verwijderen van de dop om prikaccidenten te voorkomen."
+   />
+
+  <action
+    points="2"
+    description="Span de huid met de duim en wijsvinger van uw vrije hand"
+    index="7"
+    type="sequenceStep"
+    value="Hold skin"
+    extra="Span de huid met de duim en wijsvinger van uw vrije hand."
+    messageTitle="Huid spannen"
+    messageContent="Neem de spier tussen duim en wijsvinger van de ene hand en trek de huid wat strakker. De spier als een dikke plooi tussen de duim en wijs- en middelvinger opnemen, voor een intramusculaire injectie wordt afgeraden (WHO). Deze techniek vergroot het risico op per ongeluk subcutaan injecteren. "
+  ></action>
+
+  <action
+    points="3"
+    description="Steek de naald met een snelle beweging loodrecht in de spier"
+    audioHint="Injection/AS3-2"
+    index="8"
+    type="sequenceStep"
+    value="Stick needle in arm"
+    extra="Steek de naald met een snelle beweging loodrecht in de spier. Wissel injectieplaatsen af wanneer frequent in eenzelfde gebied geïnjecteerd moet worden."
+  ></action>
+
+  <action
+    points="1"
+    description="Laat de huid los"
+    audioHint="Injection/AS4-2"
+    index="9"
+    type="sequenceStep"
+    value="Release skin with left hand"
+    extra="Laat de huid los met je vrije hand."
+   ></action>
+
+  <action
+    points="1"
+    description="Fixeer de spuit en naald met de niet injecterende hand om onverwachte bewegingen op te vangen"
+    index="10"
+    type="sequenceStep"
+    value="Secure the needle"
+    extra="Fixeer de spuit en naald met de niet injecterende hand om onverwachte bewegingen op te vangen."
+    messageTitle="Fixeren van de spuit"
+    messageContent="Bij een cliënt die onrustig is of plotselinge bewegingen maakt, is het van belang dat de injectienaald en de spuit goed gefixeerd worden tijdens de injectie. Houd de naald tussen duim en wijsvinger van de vrije hand op de plaats waar de naald op de spuit zit. Zorg dat de rest van deze hand stevig op de huid rust. Als de cliënt beweegt, beweegt de hand met daarin de naald en de spuit, mee."
+  ></action>
+
+  <action
+    points="2"
+    description="Spuit de vloeistof langzaam en regelmatig in (ongeveer 10 sec/ml)"
+    index="11"
+    type="sequenceStep"
+    value="Inject medicine slow and steady"
+    extra="Spuit het medicijn langzaam in (ongeveer 10 sec/ml)."
+    messageTitle="Injecteren bovenarmspier"
+    messageContent="De bovenarmspier is een kleine dikke driehoekige spier. Leg twee vingers horizontaal beneden het botje (acromion) dat de punt van de schouder vormt. Je vindt de basis van de driehoek waarin je kunt injecteren."
+  ></action>
+
+  <action
+    points="1"
+    description="Trek na het injecteren de naald uit de huid. Hierbij kun je een gaasje gereed houden om een eventuele bloeddruppel op te vangen"
+    index="12"
+    type="sequenceStep"
+    value="pull needle out of skin"
+    extra="Trek de naald uit de huid en activeer het veiligheidsmechanisme van de injectienaald. Houd een gaasje voor de opvang van een eventuele bloeddruppel gereed. Masseer de huid niet."
+  ></action>
+
+  <action
+    points="1"
+    description="Verwijder de naald van de spuit"
+    commentUA="Зняти гоку зі шприця"
+    index="13"
+    type="combine"
+    left="SyringeWithInjectionNeedle"
+    right=""
+    extra="Klik het beschermkapje met een duimbeweging over de opzuignaald, verwijder de naald van de spuit (bij naald zonder veiligheidsysteem met een naaldverwijderaar)."
+  />
+
+  <action
+    points="2"
+    description="Doe de injectienaald in de naaldencontainer"
+    commentUA="Помістити голку в контейнер"
+    index="14"
+    type="useOn"
+    item="InjectionNeedleNoCap"
+    target=""
+    buttonText="Injectienaald weggooien"
+    extra="Verwijder de opzuignaald en doe de naald in de naaldencontainer. Gebruik voor het injecteren spuiten en naalden voor eenmalig gebruik (dit worden ook wel eens disposables genoemd). Plaats een naald na gebruik nooit in de plastic beschermhuls terug. Werk met veilige opzuignaalden. Gebruik de inkepingen op de deksel om de naald en spuit te verwijderen of gebruik een naaldverwijderaar."
+  ></action>
+
+  <action
+     points="1"
+     description="Ruim de materialen op door met lege handen op het werkveld te klikken"
+     index="15"
+     type="use"
+     value="WorkField"
+     extra="Ruim de materialen op door met lege handen op het werkveld te klikken"
+     messegeTitle="Materialen opruimen"
+     MessegeContent="Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen"
+></action>
+
+  <action
+    points="3"
+    description="Teken de toedienlijst af of noteer het tijdstip, het soort medicijn, de concentratie, de hoeveelheid en de wijze van toediening in het dossier en het vaccinatiebewijs."
+    commentUA="Зробити запис про проведену процедуру"
+    audioHint="Injection/EAS4-2"
+    index="16"
+    type="use"
+    value="PaperAndPen"
+    extra="Teken de toedienlijst af of noteer het tijdstip, het soort medicijn, de concentratie, de hoeveelheid en de wijze van toediening in het dossier en het vaccinatiebewijs."
+  ></action>
+
+
+  
+</ActionList>

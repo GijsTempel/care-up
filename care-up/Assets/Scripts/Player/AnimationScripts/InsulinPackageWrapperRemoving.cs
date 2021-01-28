@@ -39,6 +39,9 @@ public class InsulinPackageWrapperRemoving : StateMachineBehaviour
     {
         if (animator.speed != 0)
         {
+            prevFrame = frame;
+            frame = stateInfo.normalizedTime * stateInfo.length;
+
             if (PlayerAnimationManager.CompareFrames(frame, prevFrame, combineFrame))
             {
                 inv.ExecuteDelayedCombination();
@@ -49,9 +52,7 @@ public class InsulinPackageWrapperRemoving : StateMachineBehaviour
             {
                 inv.DeleteAnimationObject();
             }
-
-            prevFrame = frame;
-            frame += Time.deltaTime;
+          
             inv.ToggleControls(true);
         }
     }
@@ -61,15 +62,5 @@ public class InsulinPackageWrapperRemoving : StateMachineBehaviour
     {
         inv.ToggleControls(false);
         mode.animating = false;
-    }
-
-    // OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here
-    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-    //
-    //}
-
-    // OnStateIK is called right after Animator.OnAnimatorIK(). Code that sets up animation IK (inverse kinematics) should be implemented here.
-    //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-    //
-    //}
+    }   
 }

@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -28,7 +27,7 @@ public class InjectionPatient : PersonObject {
         animator = GetComponent<Animator>();
     }
 
-    public override void Talk(string topic = "")
+    public override void Talk(string topic = "", string audio = "")
     {
         if (ViewModeActive() || topic == "CM_Leave" || topic == "")
             return;
@@ -58,17 +57,19 @@ public class InjectionPatient : PersonObject {
                     pulledUp = true;
                     break;
                 case "ComfortablePosition":
-                    inhaling = true;
+                    //inhaling = true;
                     break;
                 case "ShowBellyForInsulin":
-                    animator.SetTrigger("ShowBellyForInsulin");
+                    GetComponent<InjectionPatient>().ShowBellyDialogue();
+                    //animator.SetTrigger("ShowBellyForInsulin");
                     pulledUp = true;
-                    PlayerScript.TriggerQuizQuestion(3.3f);
+                    //PlayerScript.TriggerQuizQuestion(3.3f);
                     break;
                 default:
                     break;
             }
 
+            AttemptPlayAudioAfterTalk(audio);
             NextDialogue();
         }
         else
@@ -86,7 +87,8 @@ public class InjectionPatient : PersonObject {
     {
         string title = "Injectieplaats ontbloten";
         string message = "De cliënt heeft de injectieplaats al ontbloot. je kunt beginnen met injecteren door de injectie naald+ spuit + schermdop te begebruiken met de Cliënt.";
-        FindObjectOfType<RobotUIMessageTab>().NewMessage(title, message, RobotUIMessageTab.Icon.Warning);
+
+        GameObject.FindObjectOfType<GameUI>().ShowBlockMessage(title, message);
     }
 
     public void GreetDialogue()
@@ -171,6 +173,24 @@ public class InjectionPatient : PersonObject {
         animator.SetTrigger("ShowArm");
         lookAtCamera = false;
         PlayerScript.TriggerQuizQuestion(3.7f);
+    }
+
+    public void ShowBellyDialogue()
+    {
+        StartCoroutine(ShowBellyCoroutine());
+    }
+
+    private IEnumerator ShowBellyCoroutine()
+    {
+        AudioClip Collega28 = Resources.Load<AudioClip>("Audio/Dialogue/Player/Collega 28");
+        Narrator.PlayDialogueSound(Collega28);
+        yield return new WaitForSeconds(Collega28.length);
+        animator.SetTrigger("ja_hoor_zal_ik_doen");
+        audioSource.PlayOneShot(audioClips[10]);
+        yield return new WaitForSeconds(audioClips[10].length);
+        animator.SetTrigger("ShowBellyForInsulin");
+        lookAtCamera = false;
+        //PlayerScript.TriggerQuizQuestion(3.7f);
     }
 
     public void InjectNeedleInArmDialogue()

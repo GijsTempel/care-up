@@ -9,6 +9,23 @@ public class CloseEyes : StateMachineBehaviour {
     protected float prevFrame;
 
 
+    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        if (actionFrame == 0)
+        {
+            if (toClose)
+            {
+                animator.SetTrigger("close_eyes");
+                GameObject.FindObjectOfType<GameUI>().UpdateWalkToGroupUI(false);
+            }
+            else
+            {
+                animator.SetTrigger("open_eyes");
+            }
+        }
+    }
+
+
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
     
@@ -19,20 +36,21 @@ public class CloseEyes : StateMachineBehaviour {
             {
                 if (GameObject.FindObjectOfType<PlayerAnimationManager>() != null)
                 {
-                    Animator anim = GameObject.FindObjectOfType<PlayerAnimationManager>().GetComponent<Animator>();
                     if (toClose)
                     {
-                        anim.SetTrigger("close_eyes");
+                        animator.SetTrigger("close_eyes");
+                        GameObject.FindObjectOfType<GameUI>().UpdateWalkToGroupUI(false);
+
                     }
                     else
                     {
-                        anim.SetTrigger("open_eyes");
+                        animator.SetTrigger("open_eyes");
                     }
                 }
 
             }
             prevFrame = frame;
-            frame += Time.deltaTime;
+            frame = stateInfo.normalizedTime * stateInfo.length;
         }
 
     }

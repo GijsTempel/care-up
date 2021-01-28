@@ -35,7 +35,8 @@ public class IngameMenu : MonoBehaviour
            
     }
 
-    void Update()
+    // not used for ages
+    /*void Update()
     {
         if (controls.MouseClicked())
         {
@@ -57,5 +58,5 @@ public class IngameMenu : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
 }

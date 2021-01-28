@@ -59,11 +59,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_CameraTargetRot = camera.localRotation;
         }
         
-        public float LookRotation(Transform character, Transform camera)
+        public float LookRotation(Transform character, Transform camera, Vector2 amount)
         {
             float yRot = 0.0f, xRot = 0.0f;
 
-            if (Input.touchCount > 0)
+            /*if (Input.touchCount > 0)
             {
                 xRot = Input.GetTouch(0).deltaPosition.y * XTouchSensetivity;
                 yRot = Input.GetTouch(0).deltaPosition.x * YTouchSensetivity;
@@ -80,7 +80,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     xRot = Input.GetAxisRaw("Mouse Y") * XSensitivity;
                     yRot = Input.GetAxisRaw("Mouse X") * YSensitivity;
                 #endif
-            }
+            }*/
+
+            yRot = amount.x * YSensitivity;
+            xRot = amount.y * XSensitivity;
 
             if (lookOnly)
             {

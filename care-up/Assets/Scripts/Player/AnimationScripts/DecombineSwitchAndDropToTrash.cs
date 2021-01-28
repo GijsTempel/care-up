@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class DecombineSwitchAndDropToTrash : DecombineAndDropToTrash
 {
@@ -8,8 +6,7 @@ public class DecombineSwitchAndDropToTrash : DecombineAndDropToTrash
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        base.OnStateEnter(animator, stateInfo, layerIndex);
-       
+        base.OnStateEnter(animator, stateInfo, layerIndex);       
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -20,5 +17,4 @@ public class DecombineSwitchAndDropToTrash : DecombineAndDropToTrash
         }
         base.OnStateUpdate(animator, stateInfo, layerIndex);
     }
-
 }
