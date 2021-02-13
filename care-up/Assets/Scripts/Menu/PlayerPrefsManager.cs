@@ -656,6 +656,21 @@ public class PlayerPrefsManager : MonoBehaviour
             DatabaseManager.UpdateField("TestHighscores", currentTestScene, currentTestScore.ToString());
         }
 
+        // saving average score for analyzing
+        //get current avg score
+        string avgScoreStr = DatabaseManager.FetchField("TestAvgscores", currentTestScene);
+        float avgScore = 0;
+        float.TryParse(avgScoreStr.Replace(",", "."), out avgScore);
+        //get total number of finishes
+        string avgScorePlaysStr = DatabaseManager.FetchField("TestAvgscorePlays", currentTestScene);
+        float avgScorePlays = 0;
+        float.TryParse(avgScorePlaysStr.Replace(",", "."), out avgScorePlays);
+        //new avg
+        float newAvgScore = (avgScore * avgScorePlays + currentTestScore) / (avgScorePlays + 1);
+        //push
+        DatabaseManager.UpdateField("TestAvgscores", currentTestScene, newAvgScore.ToString());
+        DatabaseManager.UpdateField("TestAvgscorePlays", currentTestScene, (avgScorePlays+1).ToString());
+
         // save certificate date here too
         string date = GetTodaysDateFormatted();
         DatabaseManager.UpdateField("CertificateDates", currentTestScene, date);
