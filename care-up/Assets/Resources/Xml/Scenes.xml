@@ -3,7 +3,7 @@
   <group name="basic">
 
     <scene id="PFBIO"
-       isInProducts="Covid"
+       isInProducts="Covid|Full"
        bundleName="scene/scenes_covid"
        name="Covid-19-vaccin van Pfizer-BioNtech injecteren"
        description=""
@@ -11,6 +11,7 @@
        image="icon_syringe"
        validated="false"
        demo="true"
+       freeCertificate="true"
        totalPoints="0"/>
 
 	  <scene id="SCII"
@@ -27,6 +28,21 @@
 		  bundleName="scene/scene_insert_infusion_in_house"
 		  sceneName="Scene_Insert_Infusion_In_House"
 		  type="in_house"/>
+
+
+
+    <scene id="VACMOD"
+      isInProducts="Covmod|Full"
+      bundleName="scene/scenes_covid_moderna"
+      name="Covid-19-vaccin van Moderna injecteren"
+      description=""
+      sceneName="scenes_covid_moderna"
+      image="icon_syringe"
+      validated="false"
+      demo="true"
+      freeCertificate="true"
+      totalPoints="0"/>
+
 
     <scene id="CATMSO"
            isInProducts="CathM|Katheter|Full"
@@ -404,6 +420,24 @@
            bundleName="scene/scene_medication_preparation_dissolve_in_house"
            sceneName="Scene_Medication_Preparation_Dissolve_In_House"
            type="in_house"/>
+
+    <scene id="BND"
+isInProducts="Zwacht|Full"
+bundleName="scene/scenes_bandaging"
+name="Zwachtelen onderbeen met korte rek zwachtels"
+description=""
+sceneName="Scenes_Bandaging"
+image="icon_syringe"
+validated="false"
+totalPoints="0"/>
+
+
+    <scene id="BND"
+		   mainScene="Scenes_Bandaging"
+           bundleName="scene/scenes_bandaging_in_house"
+           sceneName="Scenes_Bandaging_In_House"
+           type="in_house"/>
+
 
   </group>
 

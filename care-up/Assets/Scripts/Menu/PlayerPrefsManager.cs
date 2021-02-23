@@ -70,6 +70,7 @@ public class PlayerPrefsManager : MonoBehaviour
     public static bool editCharacterOnStart = false;
     public static bool tutorialOnStart = false;
     public static bool simulatePlayerActions = false;
+    List<string> scenesWithFreeCert = new List<string>();
 
     public bool VR = true;
     public bool practiceMode = true;
@@ -130,6 +131,21 @@ public class PlayerPrefsManager : MonoBehaviour
     public class PurchasedScetesData
     {
         public string product_name;
+    }
+
+
+    public void AddFreeCertScene(string sceneName)
+    {
+        if (!scenesWithFreeCert.Contains(sceneName))
+            scenesWithFreeCert.Add(sceneName);
+    }
+    public void ClearFreeCertList()
+    {
+        scenesWithFreeCert.Clear();
+    }
+    public bool HasFreeCert(string sceneName)
+    {
+        return scenesWithFreeCert.Contains(sceneName);
     }
 
     public string ActivatedScenes
@@ -639,6 +655,21 @@ public class PlayerPrefsManager : MonoBehaviour
         {
             DatabaseManager.UpdateField("TestHighscores", currentTestScene, currentTestScore.ToString());
         }
+
+        // saving average score for analyzing
+        //get current avg score
+        string avgScoreStr = DatabaseManager.FetchField("TestAvgscores", currentTestScene);
+        float avgScore = 0;
+        float.TryParse(avgScoreStr.Replace(",", "."), out avgScore);
+        //get total number of finishes
+        string avgScorePlaysStr = DatabaseManager.FetchField("TestAvgscorePlays", currentTestScene);
+        float avgScorePlays = 0;
+        float.TryParse(avgScorePlaysStr.Replace(",", "."), out avgScorePlays);
+        //new avg
+        float newAvgScore = (avgScore * avgScorePlays + currentTestScore) / (avgScorePlays + 1);
+        //push
+        DatabaseManager.UpdateField("TestAvgscores", currentTestScene, newAvgScore.ToString());
+        DatabaseManager.UpdateField("TestAvgscorePlays", currentTestScene, (avgScorePlays+1).ToString());
 
         // save certificate date here too
         string date = GetTodaysDateFormatted();

@@ -402,28 +402,15 @@ public class HandsInventory : MonoBehaviour {
 
         if (bundleObject != null)
         {
-            if (bundleObject == null)
-                Debug.Log("_____" + name);
-            bool from_bundle = bundleObject != null;
-            if (bundleObject == null)
-                bundleObject = Resources.Load<GameObject>("Prefabs\\" + name);
-
             GameObject newObject = Instantiate(bundleObject, position, Quaternion.identity) as GameObject;
             newObject.SetActive(true);
             newObject.name = name;
-            if (newObject != null)
-            {
-                newObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                newObject.GetComponent<Rigidbody>().useGravity = false;
-                newObject.GetComponent<Rigidbody>().isKinematic = false;
-                newObject.transform.parent = interactableObjects.transform;
-                newObject.name = name;
-                newObject.GetComponent<InteractableObject>().assetSource = InteractableObject.AssetSource.Resources;
-                if (from_bundle)
-                    newObject.GetComponent<InteractableObject>().assetSource = InteractableObject.AssetSource.Bundle;
-            }
-            else
-                print("!!!!!!! Object not available " + name);
+            newObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            newObject.GetComponent<Rigidbody>().useGravity = false;
+            newObject.GetComponent<Rigidbody>().isKinematic = false;
+            newObject.transform.parent = interactableObjects.transform;
+            newObject.GetComponent<InteractableObject>().assetSource = InteractableObject.AssetSource.Bundle;
+           
             GameObject wf = GameObject.Find("WorkField");
             if (wf != null)
             {
