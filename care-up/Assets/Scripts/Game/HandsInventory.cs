@@ -976,7 +976,7 @@ public class HandsInventory : MonoBehaviour {
                     {
                         rightHandObject.SavePosition(rightSavedPos, rightSavedRot);
                     }
-                    else if (leftSavedPos != Vector3.zero)
+                    else if (leftSavedPos != Vector3.zero && leftHandObject != null)
                     {
                         rightHandObject.SavePosition(leftSavedPos + GetOffset(leftHandObject, rightHandObject, leftSavedRot), leftSavedRot);
                     }
