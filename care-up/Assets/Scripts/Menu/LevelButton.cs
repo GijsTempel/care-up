@@ -14,6 +14,7 @@ public class LevelButton : MonoBehaviour
     public string url;
     public GameObject IsFreeIcon;
     bool demoMark = false;
+    int demoMarkType = 0;
     bool PreviewIconChanged = false;
 
     public bool multiple;
@@ -58,9 +59,10 @@ public class LevelButton : MonoBehaviour
         UpdateButtonLockState();
     }
 
-    public void SetDemoMark(bool _mark)
+    public void SetDemoMark(bool _mark, int _markType)
     {
         demoMark = _mark;
+        demoMarkType = _markType;
     }
 
     public void UpdateButtonLockState()
@@ -85,7 +87,22 @@ public class LevelButton : MonoBehaviour
             if (!PreviewIconChanged)
                 LevelPreview.gameObject.SetActive(false);
         }
-        IsFreeIcon.SetActive(demoMark);
+        //IsFreeIcon.SetActive(demoMark);
+        string demoMarkElementName = "GFrame_Full";
+
+        switch (demoMarkType)
+        {
+            case 1:
+                demoMarkElementName = "GFrame_Top";
+                break;
+            case 2:
+                demoMarkElementName = "GFrame_Bot";
+                break;
+            case 3:
+                demoMarkElementName = "GFrame_Mid";
+                break;
+        }
+        transform.Find(demoMarkElementName).gameObject.SetActive(demoMark);
         //if(!demoLock)
         //{
         //    GetComponent<Image>().sprite = Resources.Load("Sprites/nUI/listElement_Base_gray", typeof(Sprite)) as Sprite;

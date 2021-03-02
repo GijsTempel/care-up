@@ -487,7 +487,10 @@ public class ActionManager : MonoBehaviour
                                     }
                                 }
                                 else
+                                {
+                                    gameUI.DropLeftBlink = true;
                                     objectsData.Add(new StepData(false, $"- Leg {article} {handValue} neer.", i));
+                                }
                             }
                             else if (a.Type == ActionType.ObjectExamine && inventory.leftHandObject.name == a.leftHandRequirement)
                             {
@@ -542,7 +545,10 @@ public class ActionManager : MonoBehaviour
                                     }
                                 }
                                 else
+                                {
+                                    gameUI.DropRightBlink = true;
                                     objectsData.Add(new StepData(false, $"- Leg {article} {handValue} neer.", i));
+                                }    
                             }
                             else if (a.Type == ActionType.ObjectExamine && inventory.rightHandObject.name == a.leftHandRequirement)
                             {
