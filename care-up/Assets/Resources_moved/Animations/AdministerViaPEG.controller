@@ -254,6 +254,25 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-7759761438094736017
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: MedicineBagParacetamolOpen
+  showFrame: 162
+  ObjNames:
+  - ParacetamolTablet1
+  - ParacetamolTablet2
+  toShow: 0
+  meshRenderer: 0
 --- !u!1101 &-7633096582779650721
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -653,7 +672,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   addFrame: 162
-  objectName: TabletRound1
+  objectName: TabletsParacetamol1
   hand: 1
   GhostObjectTarget: TabletRound1Ghost
   destroyOnDrop: 0
@@ -747,7 +766,10 @@ AnimatorStateMachine:
     m_Position: {x: -330, y: 80, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6021939170875573668}
-    m_Position: {x: -90, y: 40, z: 0}
+    m_Position: {x: -80, y: 40, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 2996823315591900029}
+    m_Position: {x: 230, y: -130, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: 594882167822013843}
@@ -761,6 +783,7 @@ AnimatorStateMachine:
   - {fileID: 1718914383620036175}
   - {fileID: 5114888004330461677}
   - {fileID: 3572511580999326219}
+  - {fileID: 2559095320472172656}
   m_EntryTransitions:
   - {fileID: -7528698999985062748}
   - {fileID: -5723493315059444657}
@@ -1138,7 +1161,7 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 6
     m_ConditionEvent: leftID
-    m_EventTreshold: 10200
+    m_EventTreshold: 10201
   - m_ConditionMode: 6
     m_ConditionEvent: rightID
     m_EventTreshold: 0
@@ -1216,6 +1239,21 @@ MonoBehaviour:
   actionFrame: 3
   ObjectName: m1_B_AdministerViaPEG
   DialogueNum: 1
+--- !u!114 &-4708555309495928472
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e72c07ae9fe847f19fb1b3a669e3399, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: _targetHelpToLay
+  resetToTarget: 
+  resetCamera: 0
 --- !u!1101 &-4533287201262344971
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1238,6 +1276,24 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-4497342108396440383
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a536a9682af347488b2cfd1a613bf7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: m1_B_AdministerViaPEG
+  HandToSwitch: 0
+  AnimationToChange: 1
+  ToFollowHoldingHand: 0
+  NewAnimationName: SitInBed
+  ActionFrame: 0
 --- !u!1101 &-4022356143878945468
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1403,6 +1459,34 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!1102 &-3544407707389192111
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: HelpToLay
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions:
+  - {fileID: 5653628800868537777}
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: -2006469942706503247, guid: 9a272617a72f3464a861bef0337a56d0,
+    type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1101 &-3437412958183194217
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1424,6 +1508,28 @@ AnimatorStateTransition:
   m_TransitionOffset: 0
   m_ExitTime: 0.75
   m_HasExitTime: 0
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
+--- !u!1101 &-3277885260175208706
+AnimatorStateTransition:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 0}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 1
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.95726496
+  m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -1496,7 +1602,7 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 6
     m_ConditionEvent: rightID
-    m_EventTreshold: 10200
+    m_EventTreshold: 10201
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8431978530738646276}
   m_Solo: 0
@@ -1725,8 +1831,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -1352846489516494965, guid: 9a272617a72f3464a861bef0337a56d0,
-    type: 3}
+  m_Motion: {fileID: 153530252636895189, guid: 9a272617a72f3464a861bef0337a56d0, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -1753,7 +1858,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -4409231660577148585, guid: 9a272617a72f3464a861bef0337a56d0,
+  m_Motion: {fileID: 8421468552255537127, guid: 9a272617a72f3464a861bef0337a56d0,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -1944,6 +2049,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9b29f5ba63bb4aa5b477b8007d77187, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-1642452814879823646
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 839bcc7f24a9c47f8af28e853187bfa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: m1_B_AdministerViaPEG
+  unlock_frame: 1
+  lock_frame: 336
+  toActivate: 1
 --- !u!1102 &-1620005473879024177
 AnimatorState:
   serializedVersion: 5
@@ -1977,6 +2098,28 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1101 &-1417351530061784562
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 0}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 1
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.95726496
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1101 &-1174175918436165687
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -2162,181 +2305,193 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: rightID
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: leftID
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: RightHandState
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: LeftHandState
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Use
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: S Use
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: LeftPick
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: RightPick
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: no
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: close_eyes
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: open_eyes
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Use WorkField
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: S Use WorkField
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Use HandCleaner
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: S Use HandCleaner
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: UseRight
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: S UseRight
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: UseLeft
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: S UseLeft
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: closeup_left
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: closeup_right
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: faraway_left
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: faraway_right
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Combine
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: S Combine
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Use gloveBox
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: S Use gloveBox
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: S Player_Dialog_Greeting
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Player_Dialog_Greeting
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
+  - m_Name: HelpToLay
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: S HelpToLay
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: RightHand
@@ -2684,8 +2839,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -1352846489516494965, guid: 9a272617a72f3464a861bef0337a56d0,
-    type: 3}
+  m_Motion: {fileID: 153530252636895189, guid: 9a272617a72f3464a861bef0337a56d0, type: 3}
   m_Tag: UI_On
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -2705,7 +2859,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   addFrame: 79
   deleteFrame: 212
-  objectName: MedicineBagOpen
+  objectName: MedicineBagParacetamolOpen
   hand: 0
 --- !u!1101 &2007615747764407944
 AnimatorStateTransition:
@@ -2884,6 +3038,31 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1101 &2559095320472172656
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: HelpToLay
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 2996823315591900029}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.75
+  m_HasExitTime: 0
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1102 &2844342133056118572
 AnimatorState:
   serializedVersion: 5
@@ -2946,6 +3125,38 @@ MonoBehaviour:
   - syringe_pack_opened
   toShow: 1
   meshRenderer: 0
+--- !u!1102 &2996823315591900029
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: HelpToLay
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions:
+  - {fileID: -1417351530061784562}
+  m_StateMachineBehaviours:
+  - {fileID: -4708555309495928472}
+  - {fileID: -4497342108396440383}
+  - {fileID: -1642452814879823646}
+  - {fileID: 5470989287034431776}
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: -2006469942706503247, guid: 9a272617a72f3464a861bef0337a56d0,
+    type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!114 &3228838982963236034
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3057,7 +3268,7 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 6
     m_ConditionEvent: leftID
-    m_EventTreshold: 10200
+    m_EventTreshold: 10201
   - m_ConditionMode: 6
     m_ConditionEvent: rightID
     m_EventTreshold: 0
@@ -3088,7 +3299,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   addFrame: 162
-  objectName: TabletRound1
+  objectName: TabletsParacetamol1
   hand: 1
   GhostObjectTarget: TabletRound1Ghost
   destroyOnDrop: 0
@@ -3468,6 +3679,21 @@ MonoBehaviour:
   audioFrame: 20
   positionObjectName: HandCleaner
   volume: 0.2
+--- !u!114 &4810253048578826693
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e72c07ae9fe847f19fb1b3a669e3399, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: _targetOpenMedicine
+  resetToTarget: 
+  resetCamera: 0
 --- !u!114 &4963993696537505083
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3482,8 +3708,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   addFrame: 79
   deleteFrame: 212
-  objectName: MedicineBagOpen
+  objectName: MedicineBagParacetamolOpen
   hand: 0
+--- !u!1101 &4979721343005041752
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: S HelpToLay
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: -3544407707389192111}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.75
+  m_HasExitTime: 0
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1101 &5002570337903378249
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -3525,7 +3776,7 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 6
     m_ConditionEvent: rightID
-    m_EventTreshold: 10200
+    m_EventTreshold: 10201
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 7321926876289534878}
   m_Solo: 0
@@ -3625,6 +3876,20 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &5470989287034431776
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22a8116c83a5f4d4089789b9fa16ac5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftHand: 1
+  rightHand: 1
 --- !u!114 &5500695122009009565
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3654,6 +3919,28 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0.9112426
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
+--- !u!1101 &5653628800868537777
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 0}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 1
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.95726496
   m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -3725,6 +4012,8 @@ AnimatorState:
   - {fileID: 8705238155186655651}
   - {fileID: -8925746633533971395}
   - {fileID: 5190499846071404789}
+  - {fileID: -7759761438094736017}
+  - {fileID: 4810253048578826693}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -3733,7 +4022,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -4409231660577148585, guid: 9a272617a72f3464a861bef0337a56d0,
+  m_Motion: {fileID: 8421468552255537127, guid: 9a272617a72f3464a861bef0337a56d0,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -4009,6 +4298,7 @@ AnimatorState:
   - {fileID: -6759422048676540743}
   - {fileID: 3512049842182031807}
   - {fileID: 8689582078720131873}
+  - {fileID: 8787232988353173038}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -4017,7 +4307,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -7476712159240894332, guid: 9a272617a72f3464a861bef0337a56d0,
+  m_Motion: {fileID: 1783496802635050053, guid: 9a272617a72f3464a861bef0337a56d0,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -4185,7 +4475,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -7476712159240894332, guid: 9a272617a72f3464a861bef0337a56d0,
+  m_Motion: {fileID: 1783496802635050053, guid: 9a272617a72f3464a861bef0337a56d0,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -4231,10 +4521,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ControlObjectName: MedicineBagOpen
+  ControlObjectName: MedicineBagParacetamolOpen
   showFrame: 162
   ObjNames:
-  - Tablet1
+  - ParacetamolTablet1
+  - ParacetamolTablet2
   toShow: 0
   meshRenderer: 0
 --- !u!114 &8705238155186655651
@@ -4251,6 +4542,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftHand: 0
   dropFrame: 79
+--- !u!114 &8787232988353173038
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e72c07ae9fe847f19fb1b3a669e3399, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: _targetOpenMedicine
+  resetToTarget: 
+  resetCamera: 0
 --- !u!1107 &8848366984342097284
 AnimatorStateMachine:
   serializedVersion: 5
@@ -4317,6 +4623,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 8431978530738646276}
     m_Position: {x: -460, y: 140, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -3544407707389192111}
+    m_Position: {x: 180, y: -80, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: 6582445050847660404}
@@ -4330,6 +4639,7 @@ AnimatorStateMachine:
   - {fileID: -5954778277860839757}
   - {fileID: -3090083355543638175}
   - {fileID: -5071222898436438334}
+  - {fileID: 4979721343005041752}
   m_EntryTransitions:
   - {fileID: -2603737403358780648}
   - {fileID: -7259184517102237639}
