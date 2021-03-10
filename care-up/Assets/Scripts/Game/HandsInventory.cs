@@ -774,7 +774,8 @@ public class HandsInventory : MonoBehaviour {
             leftHandObject.GetComponent<Rigidbody>().isKinematic = false;
             leftHandObject.leftControlBone = leftControlBone;
             leftHandObject.rightControlBone = rightControlBone;
-            leftHandObject.SavePosition();
+            if (leftHandObject.SavedPosition == Vector3.zero)
+                leftHandObject.SavePosition();
         }
         else
         {
@@ -783,7 +784,8 @@ public class HandsInventory : MonoBehaviour {
             rightHandObject.GetComponent<Rigidbody>().isKinematic = false;
             rightHandObject.leftControlBone = leftControlBone;
             rightHandObject.rightControlBone = rightControlBone;
-            rightHandObject.SavePosition();
+            if (rightHandObject.SavedPosition == Vector3.zero)
+                rightHandObject.SavePosition();
         }
 
         if (createGhost)
