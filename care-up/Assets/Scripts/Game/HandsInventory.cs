@@ -1089,8 +1089,13 @@ public class HandsInventory : MonoBehaviour {
                     
 				}
 			}
+            //To be removed !!!!!
+            if (leftName == "SyringeWithAbsorptionNeedle" || rightName == "SyringeWithAbsorptionNeedle")
+            {
+                idModeAllow = false;
+            }
 
-			if (idModeAllow)
+            if (idModeAllow)
 			{
 		        int leftID = ObjectsID_Controller.GetIDByName(leftName);
                 int rightID = ObjectsID_Controller.GetIDByName(rightName);
