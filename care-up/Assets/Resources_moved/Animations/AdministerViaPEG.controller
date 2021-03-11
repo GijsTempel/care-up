@@ -314,6 +314,21 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &-8007493066327250603
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a4f7766142ffc1468fdda1d3e3f1781, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickFrame: 872
+  objectName: syringe_50mm_plunger_separate
+  hand: 1
 --- !u!114 &-7968016857178628616
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -521,6 +536,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9b29f5ba63bb4aa5b477b8007d77187, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-7490664043585579881
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: MedicineBagParacetamolOpen
+  showFrame: 537
+  ObjNames:
+  - ParacetamolTablet1
+  - ParacetamolTablet2
+  toShow: 0
+  meshRenderer: 0
+--- !u!114 &-7439530991358247588
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: Syringe50ml
+  showFrame: 789
+  ObjNames:
+  - TabletsParacetamol1_InSyringe1
+  toShow: 1
+  meshRenderer: 0
 --- !u!1101 &-7397088113424353217
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -667,24 +719,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!114 &-7246521457688496799
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ControlObjectName: Syringe50ml
-  showFrame: 633
-  ObjNames:
-  - syringe_50mm_plunger
-  toShow: 1
-  meshRenderer: 0
 --- !u!114 &-7187121288696992095
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1246,24 +1280,6 @@ MonoBehaviour:
   - 50ml_top_package_opened
   toShow: 1
   meshRenderer: 0
---- !u!114 &-6071450926034613281
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ControlObjectName: 
-  showFrame: 166
-  ObjNames:
-  - Syringe50ml_packed
-  toShow: 0
-  meshRenderer: 0
 --- !u!1109 &-6071039310979316813
 AnimatorTransition:
   m_ObjectHideFlags: 1
@@ -1637,20 +1653,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!114 &-5289961588011752509
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b9c9f3106e5ff7449cd0b07126b8b77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dropLeftFrame: 715
-  dropRightFrame: 715
 --- !u!114 &-5168538621308125405
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1896,6 +1898,20 @@ MonoBehaviour:
   ToFollowHoldingHand: 0
   NewAnimationName: SitInBed
   ActionFrame: 0
+--- !u!114 &-4206656084206020277
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftHand: 0
+  dropFrame: 603
 --- !u!1101 &-4022356143878945468
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -2455,21 +2471,6 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!114 &-2795965511968049368
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a4f7766142ffc1468fdda1d3e3f1781, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pickFrame: 357
-  objectName: TabletsParacetamol1
-  hand: 1
 --- !u!1102 &-2676522346849551493
 AnimatorState:
   serializedVersion: 5
@@ -2911,24 +2912,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!114 &-1863829046841857297
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ControlObjectName: Syringe50ml
-  showFrame: 440
-  ObjNames:
-  - TabletsParacetamol1_InSyringe1
-  toShow: 1
-  meshRenderer: 0
 --- !u!1101 &-1828121938491067598
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -3052,6 +3035,24 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &-1302009763516591061
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: Syringe50ml
+  showFrame: 982
+  ObjNames:
+  - syringe_50mm_plunger
+  toShow: 1
+  meshRenderer: 0
 --- !u!114 &-1264397734808935384
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3160,6 +3161,24 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-915713396156475344
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: 
+  showFrame: 165
+  ObjNames:
+  - Syringe50ml_packed
+  toShow: 0
+  meshRenderer: 0
 --- !u!114 &-852677645847752710
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3263,7 +3282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a4f7766142ffc1468fdda1d3e3f1781, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickFrame: 720
+  pickFrame: 1056
   objectName: GlassOfWater_without_tube
   hand: 0
 --- !u!114 &-547318670081923215
@@ -3295,7 +3314,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toHoldClose: 1
-  actionFrame: 720
+  actionFrame: 1055
 --- !u!1102 &-487098727087854914
 AnimatorState:
   serializedVersion: 5
@@ -3385,20 +3404,6 @@ MonoBehaviour:
   - 50mlSyringeCapOnSyringe
   toShow: 1
   meshRenderer: 0
---- !u!114 &-275463501621880035
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftHand: 1
-  dropFrame: 440
 --- !u!1101 &-197690163253600959
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -3424,6 +3429,37 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-95355519477423149
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b03eeecfc46c784a9e981273a503cc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  swapFrame: 455
+  swapObjName: MedicineBagParacetamolOpen
+  leftHand: 0
+  GhostObjectTarget: 
+--- !u!114 &-91987933395186081
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a4f7766142ffc1468fdda1d3e3f1781, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickFrame: 672
+  objectName: Syringe50ml
+  hand: 0
 --- !u!114 &-61690584862128908
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3677,20 +3713,6 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
---- !u!114 &37675020349712445
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b9c9f3106e5ff7449cd0b07126b8b77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dropLeftFrame: 633
-  dropRightFrame: 0
 --- !u!114 &96098925715897589
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3864,7 +3886,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SequenceName: AnimSeq_AdminiserMedicineViaPEG_p2
   TuggleFromCinematic: 1
-  keyFrames: 28000000a30000006101000074020000
+  keyFrames: 28000000a300000061010000a10200001a040000
+--- !u!114 &893154265405027547
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a4f7766142ffc1468fdda1d3e3f1781, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickFrame: 349
+  objectName: MedicineBagParacetamol
+  hand: 0
 --- !u!1102 &1022320517062705854
 AnimatorState:
   serializedVersion: 5
@@ -3973,20 +4010,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!114 &1300123026810994214
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b9c9f3106e5ff7449cd0b07126b8b77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dropLeftFrame: 356
-  dropRightFrame: 0
 --- !u!1101 &1357710152018105191
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -4027,22 +4050,26 @@ AnimatorState:
   - {fileID: -1683974356848368212}
   - {fileID: -4727059856161467914}
   - {fileID: -7719111818909575475}
-  - {fileID: 1300123026810994214}
-  - {fileID: -2795965511968049368}
-  - {fileID: -275463501621880035}
-  - {fileID: 1495452952307902989}
-  - {fileID: 37675020349712445}
-  - {fileID: -7246521457688496799}
   - {fileID: 6182200031782892418}
-  - {fileID: -5289961588011752509}
   - {fileID: -578922958122175897}
   - {fileID: -1264397734808935384}
   - {fileID: 7136169284776349360}
   - {fileID: 4271548897627317157}
   - {fileID: -492613245015339315}
   - {fileID: 881881558669234624}
-  - {fileID: -1863829046841857297}
-  - {fileID: -6071450926034613281}
+  - {fileID: 5023435425775243624}
+  - {fileID: 893154265405027547}
+  - {fileID: -95355519477423149}
+  - {fileID: 4749068307194634144}
+  - {fileID: -4206656084206020277}
+  - {fileID: -91987933395186081}
+  - {fileID: -8007493066327250603}
+  - {fileID: 1442047341856523639}
+  - {fileID: -1302009763516591061}
+  - {fileID: 8970423419347676083}
+  - {fileID: -7439530991358247588}
+  - {fileID: -915713396156475344}
+  - {fileID: -7490664043585579881}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -4058,7 +4085,7 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!114 &1495452952307902989
+--- !u!114 &1442047341856523639
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4067,12 +4094,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a4f7766142ffc1468fdda1d3e3f1781, type: 3}
+  m_Script: {fileID: 11500000, guid: 9b9c9f3106e5ff7449cd0b07126b8b77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickFrame: 523
-  objectName: syringe_50mm_plunger_separate
-  hand: 1
+  dropLeftFrame: 982
+  dropRightFrame: -1
 --- !u!1101 &1718914383620036175
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -5338,7 +5364,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toClose: 1
-  actionFrame: 720
+  actionFrame: 1055
 --- !u!1109 &4365172455505348311
 AnimatorTransition:
   m_ObjectHideFlags: 1
@@ -5468,6 +5494,22 @@ MonoBehaviour:
   audioFrame: 20
   positionObjectName: HandCleaner
   volume: 0.2
+--- !u!114 &4749068307194634144
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7f8245cec82648289be348a2189ab01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addFrame: 537
+  deleteFrame: 788
+  objectName: TabletsParacetamol1
+  hand: 1
 --- !u!114 &4810253048578826693
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5563,6 +5605,20 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &5023435425775243624
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b9c9f3106e5ff7449cd0b07126b8b77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropLeftFrame: 348
+  dropRightFrame: 348
 --- !u!1101 &5094551364402014141
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -7095,6 +7151,20 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &8970423419347676083
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b9c9f3106e5ff7449cd0b07126b8b77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropLeftFrame: 1050
+  dropRightFrame: 1050
 --- !u!114 &9015964757895497063
 MonoBehaviour:
   m_ObjectHideFlags: 1
