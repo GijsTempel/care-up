@@ -396,6 +396,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionFrame: 123
+--- !u!1101 &-8507144058220037261
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: S TakeOffGlovesWithoutThrowing
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 7543261908013945957}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.75
+  m_HasExitTime: 0
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!114 &-8501584001829462636
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -504,6 +529,20 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &-8081804206372934584
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93b3ffca93d7f4c4b92d9cc041168da8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hideFrame: 19
+  hideObjName: Syringe20Ml
 --- !u!114 &-8007493066327250603
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -798,6 +837,24 @@ AnimatorTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 1
+--- !u!114 &-7505531855676395795
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: PEG_Sonde
+  showFrame: 1841
+  ObjNames:
+  - PEG_ClampClosed_L
+  toShow: 1
+  meshRenderer: 0
 --- !u!114 &-7497711446647485731
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1360,7 +1417,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5879d561c03f44906a01b56f8c828e6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionFrame: 436
+  actionFrame: 322
 --- !u!1101 &-6781243909069410088
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1719,13 +1776,16 @@ AnimatorStateMachine:
     m_Position: {x: -520, y: 550, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5793234162636528858}
-    m_Position: {x: -520, y: 680, z: 0}
+    m_Position: {x: -520, y: 690, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4141086641329115287}
-    m_Position: {x: -520, y: 610, z: 0}
+    m_Position: {x: -520, y: 620, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2665462138068088545}
-    m_Position: {x: -520, y: 740, z: 0}
+    m_Position: {x: -520, y: 760, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -1706067918357948542}
+    m_Position: {x: 0, y: -570, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: 594882167822013843}
@@ -1742,6 +1802,7 @@ AnimatorStateMachine:
   - {fileID: 2559095320472172656}
   - {fileID: 2569465744135765303}
   - {fileID: -2778189314611017102}
+  - {fileID: 4634433118509029693}
   m_EntryTransitions:
   - {fileID: -7528698999985062748}
   - {fileID: -5723493315059444657}
@@ -1861,6 +1922,24 @@ MonoBehaviour:
   audioFrame: 65
   volume: 0.2
   moveWithCamera: 0
+--- !u!114 &-5993737207255106970
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: PEG_Sonde
+  showFrame: 1084
+  ObjNames:
+  - PEG_ClampClosed_L
+  toShow: 1
+  meshRenderer: 0
 --- !u!1101 &-5954778277860839757
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1948,6 +2027,28 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1101 &-5757023362353787589
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 0}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 1
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.94208497
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1101 &-5748323536208625052
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -2712,6 +2813,24 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &-3890444888121444083
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: PEG_Sonde
+  showFrame: 689
+  ObjNames:
+  - PEG_ClampClosed_L
+  toShow: 1
+  meshRenderer: 0
 --- !u!1101 &-3860542425704768818
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -2884,6 +3003,20 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &-3632538641372322950
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftHand: 0
+  dropFrame: 226
 --- !u!1102 &-3544407707389192111
 AnimatorState:
   serializedVersion: 5
@@ -3486,6 +3619,8 @@ AnimatorState:
   - {fileID: -452673299388250226}
   - {fileID: -4087444483510136796}
   - {fileID: 1549834448950614277}
+  - {fileID: 8808631115902287076}
+  - {fileID: -8081804206372934584}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -3648,6 +3783,24 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-2321100558852445680
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: PEG_Sonde
+  showFrame: 404
+  ObjNames:
+  - PEG_ClampOpened_L
+  toShow: 1
+  meshRenderer: 0
 --- !u!1102 &-2298645894643676005
 AnimatorState:
   serializedVersion: 5
@@ -4069,6 +4222,56 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &-1725617780429815173
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: PEG_Sonde
+  showFrame: 689
+  ObjNames:
+  - PEG_ClampOpened_L
+  toShow: 0
+  meshRenderer: 0
+--- !u!1102 &-1706067918357948542
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: TakeOffGlovesWithoutThrowing
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions:
+  - {fileID: 8717963096355736851}
+  m_StateMachineBehaviours:
+  - {fileID: 7798222371672332193}
+  - {fileID: 7521106066226320102}
+  - {fileID: -3632538641372322950}
+  - {fileID: 1178959981872355110}
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: -893553838967910094, guid: 9a272617a72f3464a861bef0337a56d0,
+    type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!114 &-1703395882617127537
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4271,6 +4474,24 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-965519422992216931
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: PEG_Sonde
+  showFrame: 1471
+  ObjNames:
+  - PEG_ClampClosed_L
+  toShow: 0
+  meshRenderer: 0
 --- !u!114 &-915713396156475344
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4556,6 +4777,24 @@ MonoBehaviour:
   - 50mlSyringeCapOnSyringe
   toShow: 1
   meshRenderer: 0
+--- !u!114 &-233872353494362975
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: PEG_Sonde
+  showFrame: 480
+  ObjNames:
+  - PEG_ClampClosed_L
+  toShow: 1
+  meshRenderer: 0
 --- !u!114 &-205779504491551334
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4569,7 +4808,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toHoldClose: 1
-  actionFrame: 1180
+  actionFrame: 1090
 --- !u!1101 &-197690163253600959
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -4590,6 +4829,28 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
+--- !u!1101 &-193152249782071860
+AnimatorStateTransition:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 0}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 1
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.94208497
   m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -4641,6 +4902,42 @@ MonoBehaviour:
   target: _targetOpenMedicine
   resetToTarget: 
   resetCamera: 0
+--- !u!114 &-47284903340569214
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: PEG_Sonde
+  showFrame: 1084
+  ObjNames:
+  - PEG_ClampOpened_L
+  toShow: 0
+  meshRenderer: 0
+--- !u!114 &-19624247158205748
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: PEG_Sonde
+  showFrame: 799
+  ObjNames:
+  - PEG_ClampOpened_L
+  toShow: 1
+  meshRenderer: 0
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
@@ -4655,205 +4952,217 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: rightID
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: leftID
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: RightHandState
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: LeftHandState
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Use
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: S Use
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: LeftPick
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: RightPick
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: no
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: close_eyes
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: open_eyes
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Use WorkField
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: S Use WorkField
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Use HandCleaner
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: S Use HandCleaner
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: UseRight
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: S UseRight
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: UseLeft
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: S UseLeft
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: closeup_left
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: closeup_right
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: faraway_left
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: faraway_right
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Combine
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: S Combine
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Use gloveBox
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: S Use gloveBox
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: S Player_Dialog_Greeting
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Player_Dialog_Greeting
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: HelpToLay
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: S HelpToLay
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Fill20MlSyringe
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: S Fill20MlSyringe
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
+  - m_Name: TakeOffGlovesWithoutThrowing
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: S TakeOffGlovesWithoutThrowing
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: RightHand
@@ -4989,7 +5298,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectName: Syringe20Ml
   unlock_frame: 1
-  lock_frame: 1180
+  lock_frame: 1090
   toActivate: 1
 --- !u!1101 &594882167822013843
 AnimatorStateTransition:
@@ -5137,6 +5446,24 @@ MonoBehaviour:
   pickFrame: 349
   objectName: MedicineBagParacetamol
   hand: 0
+--- !u!114 &990988627650670674
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: PEG_Sonde
+  showFrame: 480
+  ObjNames:
+  - PEG_ClampOpened_L
+  toShow: 0
+  meshRenderer: 0
 --- !u!1102 &1022320517062705854
 AnimatorState:
   serializedVersion: 5
@@ -5245,6 +5572,20 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &1178959981872355110
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b9c9f3106e5ff7449cd0b07126b8b77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropLeftFrame: 1
+  dropRightFrame: 1
 --- !u!1101 &1292352045346353650
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -6005,6 +6346,24 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &2472165787041018520
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: PEG_Sonde
+  showFrame: 1841
+  ObjNames:
+  - PEG_ClampOpened_L
+  toShow: 0
+  meshRenderer: 0
 --- !u!114 &2472957869795740563
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6049,7 +6408,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5879d561c03f44906a01b56f8c828e6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionFrame: 887
+  actionFrame: 773
 --- !u!114 &2513924345099482532
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -6372,7 +6731,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a4f7766142ffc1468fdda1d3e3f1781, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickFrame: 359
+  pickFrame: 245
   objectName: Syringe20Ml
   hand: 1
 --- !u!1101 &3397019482744625284
@@ -6553,6 +6912,21 @@ MonoBehaviour:
   audioFrame: 0
   positionObjectName: 
   volume: 1
+--- !u!114 &3612290587782483196
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfd1d24e9f498a642b6393e37bedc9e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SequenceName: AnimSeq_AdminiserMedicineViaPEG_SQ2_part3
+  TuggleFromCinematic: 1
+  keyFrames: 740000004d030000
 --- !u!1101 &3612871666588506967
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -7153,6 +7527,31 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1101 &4634433118509029693
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: TakeOffGlovesWithoutThrowing
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: -1706067918357948542}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.75
+  m_HasExitTime: 0
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!114 &4658582913262833215
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7165,7 +7564,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b9c9f3106e5ff7449cd0b07126b8b77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropLeftFrame: 959
+  dropLeftFrame: 848
   dropRightFrame: -1
 --- !u!1102 &4668310067909070484
 AnimatorState:
@@ -7244,7 +7643,7 @@ AnimatorState:
   m_TimeParameterActive: 0
   m_Motion: {fileID: -1574684402183436631, guid: 9a272617a72f3464a861bef0337a56d0,
     type: 3}
-  m_Tag: 
+  m_Tag: UI_On_Sequence
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
@@ -7564,6 +7963,17 @@ AnimatorState:
   - {fileID: -3376153234821225901}
   - {fileID: -2003116197197034519}
   - {fileID: -2237429729645539064}
+  - {fileID: 6726236766635441093}
+  - {fileID: -233872353494362975}
+  - {fileID: 990988627650670674}
+  - {fileID: 7052727741091654386}
+  - {fileID: -19624247158205748}
+  - {fileID: -47284903340569214}
+  - {fileID: -5993737207255106970}
+  - {fileID: 5461680493967949590}
+  - {fileID: -965519422992216931}
+  - {fileID: -7505531855676395795}
+  - {fileID: 2472165787041018520}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -7574,7 +7984,7 @@ AnimatorState:
   m_TimeParameterActive: 0
   m_Motion: {fileID: -4716096624255870210, guid: 9a272617a72f3464a861bef0337a56d0,
     type: 3}
-  m_Tag: 
+  m_Tag: UI_On_Sequence
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
@@ -7629,6 +8039,24 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &5461680493967949590
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: PEG_Sonde
+  showFrame: 1471
+  ObjNames:
+  - PEG_ClampOpened_L
+  toShow: 1
+  meshRenderer: 0
 --- !u!114 &5470989287034431776
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7816,6 +8244,11 @@ AnimatorState:
   - {fileID: 518204705242971583}
   - {fileID: 6891484817209415517}
   - {fileID: -205779504491551334}
+  - {fileID: 3612290587782483196}
+  - {fileID: 6911541554942649229}
+  - {fileID: -2321100558852445680}
+  - {fileID: -1725617780429815173}
+  - {fileID: -3890444888121444083}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -7826,7 +8259,7 @@ AnimatorState:
   m_TimeParameterActive: 0
   m_Motion: {fileID: -164478770350567219, guid: 9a272617a72f3464a861bef0337a56d0,
     type: 3}
-  m_Tag: 
+  m_Tag: UI_On_Sequence
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
@@ -8367,6 +8800,21 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &6726236766635441093
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfd1d24e9f498a642b6393e37bedc9e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SequenceName: AnimSeq_AdminiserMedicineViaPEG_SQ2_part1
+  TuggleFromCinematic: 1
+  keyFrames: 72000000310100007d020000f904000055050000bb070000
 --- !u!1101 &6733710447017948958
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -8417,7 +8865,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toClose: 1
-  actionFrame: 1180
+  actionFrame: 1090
 --- !u!114 &6893270729051483738
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8432,8 +8880,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectName: PEG_Sonde
   unlock_frame: 1
-  lock_frame: 1180
+  lock_frame: 1090
   toActivate: 1
+--- !u!114 &6911541554942649229
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: PEG_Sonde
+  showFrame: 404
+  ObjNames:
+  - PEG_ClampClosed_L
+  toShow: 0
+  meshRenderer: 0
 --- !u!1102 &6986048595109132906
 AnimatorState:
   serializedVersion: 5
@@ -8463,6 +8929,24 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &7052727741091654386
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: PEG_Sonde
+  showFrame: 799
+  ObjNames:
+  - PEG_ClampClosed_L
+  toShow: 0
+  meshRenderer: 0
 --- !u!1101 &7065052811735711966
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -8694,6 +9178,23 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &7521106066226320102
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1d577ba52e334ef39dfa878ef5c62b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addFrame: 182
+  objectName: gloves_folded
+  hand: 0
+  GhostObjectTarget: 
+  destroyOnDrop: 0
 --- !u!1101 &7525548838148765336
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -8716,6 +9217,34 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!1102 &7543261908013945957
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: TakeOffGlovesWithoutThrowing
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions:
+  - {fileID: -5757023362353787589}
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: -893553838967910094, guid: 9a272617a72f3464a861bef0337a56d0,
+    type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1101 &7547267526613189724
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -8814,6 +9343,20 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &7798222371672332193
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75d5649a1875edf478a49f715e29c332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showFrame: 182
+  toPickup: 0
 --- !u!1101 &7819323966953435293
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -9100,6 +9643,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftHand: 0
   dropFrame: 79
+--- !u!1101 &8717963096355736851
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 0}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 1
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.94208497
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1101 &8759895518974533443
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -9159,6 +9724,20 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &8808631115902287076
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93b3ffca93d7f4c4b92d9cc041168da8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hideFrame: 19
+  hideObjName: Syringe50ml
 --- !u!1107 &8848366984342097284
 AnimatorStateMachine:
   serializedVersion: 5
@@ -9285,6 +9864,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: -9087819684242942350}
     m_Position: {x: -560, y: 770, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 7543261908013945957}
+    m_Position: {x: -10, y: -500, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: 6582445050847660404}
@@ -9301,6 +9883,7 @@ AnimatorStateMachine:
   - {fileID: 4979721343005041752}
   - {fileID: 4959694486980552148}
   - {fileID: -480383046323987808}
+  - {fileID: -8507144058220037261}
   m_EntryTransitions:
   - {fileID: -2603737403358780648}
   - {fileID: -7259184517102237639}
