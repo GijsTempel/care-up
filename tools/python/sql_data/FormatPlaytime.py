@@ -3,25 +3,29 @@
 import sys
 import pprint
 
-def time_to_minutes(time_str):
+def time_to_minutes(time_str, debug = False):
     splited_time = time_str.split(":")
+    if (debug):
+        print(splited_time)
     if len(splited_time) < 3:
         return 0
     days = 0
     hours = 0
     mins = 0
     try:
-        days = int(splited_time[0])
+        days = int(splited_time[0].replace('"', ''))
     except ValueError:
         days = 0
     try:
-        hours = int(splited_time[1])
+        hours = int(splited_time[1].replace('"', ''))
     except ValueError:
         hours = 0
     try:
-        mins = int(splited_time[2])
+        mins = int(splited_time[2].replace('"', ''))
     except ValueError:
         mins = 0
+    if (debug):
+        print(days)
     total_mins = days * 1440 + hours * 60 + mins
     return total_mins
 
@@ -37,6 +41,8 @@ def load_data(file_name):
         current_line = c.split(',')
         if len(current_line) < 3:
             continue
+        if 'Marijn' in current_line[1]:
+            time_to_minutes(current_line[2], True)
         content.append([current_line[1], time_to_minutes(current_line[2]), current_line[2]])
     return content
 
