@@ -76,6 +76,7 @@ public class PlayerPrefsManager : MonoBehaviour
     public bool practiceMode = true;
     public bool TextDebug = false;
     static List<string> purchasedScenes = new List<string>();
+    static List<SceneInfo> ScenesInfo = new List<SceneInfo>();
     // store value here after getting from server
     public bool tutorialCompleted;
     public static bool firstStart = true;
@@ -181,6 +182,28 @@ public class PlayerPrefsManager : MonoBehaviour
     static public void ClearSKU()
     {
         purchasedScenes = new List<string>();
+    }
+
+    public void ClearScenesInfo()
+    {
+        ScenesInfo.Clear();
+    }
+
+    public void AddSceneInfo(SceneInfo sceleInfo)
+    {
+        ScenesInfo.Add(sceleInfo);
+    }
+
+    public bool IsScenePurchasedByName(string sceneName)
+    {
+        foreach(SceneInfo sceneInfo in ScenesInfo)
+        {
+            if (sceneInfo.sceneName == sceneName)
+            {
+                return IsScenePurchased(sceneInfo.isInProducts);
+            }
+        }
+        return false;
     }
 
     public void Update()
