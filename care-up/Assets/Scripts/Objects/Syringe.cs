@@ -203,17 +203,41 @@ public class Syringe : PickableObjectWithInfo
             {
                 if (actionManager.CompareUseOnInfo(name, ""))
                 {
+                    int objectID = -1;
+
+                    if (GameObject.Find("GameLogic").GetComponent<ObjectsIDsController>() != null)
+                    {
+                        ObjectsIDsController ObjectsID_Controller = GameObject.Find("GameLogic").GetComponent<ObjectsIDsController>();
+                        if (ObjectsID_Controller.FindByName(name) != -1)
+                            objectID = ObjectsID_Controller.GetIDByName(name);
+                    }
+
                     if (inventory.rightHandObject == this)
                     {
-                        PlayerAnimationManager.PlayAnimation("UseRight " + name);
-                        actionManager.OnUseOnAction(name, "");
-                        return true;
+                        if (objectID == -1)
+                        {
+                            PlayerAnimationManager.PlayAnimation("UseRight " + name);
+                            actionManager.OnUseOnAction(name, "");
+                            return true;
+                        }
+                        else
+                        {
+                            PlayerAnimationManager.PlayUseOnIDAnimation(objectID, false);
+                        }
                     }
-                    if (inventory.leftHandObject == this)
+
+                    else if (inventory.leftHandObject == this)
                     {
-                        PlayerAnimationManager.PlayAnimation("UseLeft " + name);
-                        actionManager.OnUseOnAction(name, "");
-                        return true;
+                        if (objectID == -1)
+                        {
+                            PlayerAnimationManager.PlayAnimation("UseLeft " + name);
+                            actionManager.OnUseOnAction(name, "");
+                            return true;
+                        }
+                        else
+                        {
+                            PlayerAnimationManager.PlayUseOnIDAnimation(objectID, true);
+                        }
                     }
                 }
             }
