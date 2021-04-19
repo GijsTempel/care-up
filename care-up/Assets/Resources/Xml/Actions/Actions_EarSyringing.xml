@@ -58,17 +58,44 @@
     messageContent="Controleer de naam en geboortedatum van cliënt"
    ></action>
 
- <Action
-		index="3"
-		description="Vraag de cliënt om te gaan zitten"
-		type="talk"
-		points="1"
-		topic="SitDown" />
+
+	<action
+    points="1"
+    description="Plaats de hat op de otoscoop"
+    audioHint=""
+    index="3"
+    type="combine"
+    left="OtoscopeHat_Separate"
+    right="Otoscope"
+    extra=""
+	></action>
+
+	<Action
+	  index="4"
+	  description="Vraag de cliënt om te gaan zitten"
+	  type="talk"
+	  points="1"
+	  blockUnlock ="patient sit"
+	  topic="SitDown" />
+	
+	 <Action
+    index="5"
+    description="Bekijk het oor van de client met de otoscope"
+    type="useOn"
+    comment="View the client's ear with the otoscope"
+    secondPlace="PatientPos"
+    item="Otoscope"
+    points="1"
+    buttonText="Check ear"
+    target=""
+    blockRequired="patient sit"
+    blockTitle="Handeling nog niet mogelijk"
+    blockMessage="Vraag de cliënt eerst om rechtop te gaan zitten." />
 
   <action
      points="1"
      description="Ruim de materialen op door met lege handen op het werkveld te klikken"
-     index="4"
+     index="6"
      type="use"
      value="WorkField"
      extra="Ruim de materialen op door met lege handen op het werkveld te klikken"
@@ -81,7 +108,7 @@
     description="Teken de toedienlijst af of noteer het tijdstip, het soort medicijn, de concentratie, de hoeveelheid en de wijze van toediening in het dossier en het vaccinatiebewijs."
     commentUA="Зробити запис про проведену процедуру"
     audioHint="Injection/EAS4-2"
-    index="5"
+    index="7"
     type="use"
     value="PaperAndPen"
     extra="Teken de toedienlijst af of noteer het tijdstip, het soort medicijn, de concentratie, de hoeveelheid en de wijze van toediening in het dossier en het vaccinatiebewijs."
