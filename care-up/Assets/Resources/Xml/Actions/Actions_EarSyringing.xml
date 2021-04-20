@@ -37,12 +37,7 @@
     messageContent="
 - toedienlijst
 - toedieningsetiket
-- gaasje
-- steriele injectienaald
 - desinfectans alcohol 70%
-- handschoenen
-- naaldenbeker
-- afvalbak
     "></action>
 
   <action
@@ -67,6 +62,7 @@
     type="combine"
     left="OtoscopeHat_Separate"
     right="Otoscope"
+	blockUnlock ="HatPlaced"
     extra=""
 	></action>
 
@@ -88,7 +84,8 @@
     points="1"
     buttonText="Check ear"
     target=""
-    blockRequired="patient sit"
+    blockRequired="patient sit, HatPlaced"
+	blockUnlock="CleanWorkfield"
     blockTitle="Handeling nog niet mogelijk"
     blockMessage="Vraag de cliënt eerst om rechtop te gaan zitten." />
 
@@ -101,6 +98,7 @@
      extra="Ruim de materialen op door met lege handen op het werkveld te klikken"
      messegeTitle="Materialen opruimen"
      MessegeContent="Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen"
+	 blockRequired="CleanWorkfield"
 ></action>
 
   <action

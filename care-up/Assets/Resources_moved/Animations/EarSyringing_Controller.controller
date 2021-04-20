@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5879d561c03f44906a01b56f8c828e6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionFrame: 30
+  actionFrame: 15
 --- !u!1101 &-7633096582779650721
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -748,6 +748,7 @@ AnimatorState:
   - {fileID: -4157396023356635756}
   - {fileID: -7519491254139455551}
   - {fileID: -8764385210900269700}
+  - {fileID: 1655470144808849333}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -1014,7 +1015,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControlObjectName: Otoscope
-  showFrame: 110
+  showFrame: 106
   ObjNames:
   - OtoscopeHat
   toShow: 1
@@ -1531,6 +1532,25 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &1655470144808849333
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: Otoscope
+  showFrame: 35
+  ObjNames:
+  - OtoscopeLight
+  - Camera
+  toShow: 1
+  meshRenderer: 0
 --- !u!1101 &1844768404858410418
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1600,6 +1620,20 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &2312308113553845257
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b9c9f3106e5ff7449cd0b07126b8b77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropLeftFrame: 16
+  dropRightFrame: -1
 --- !u!1102 &2470372325246916201
 AnimatorState:
   serializedVersion: 5
@@ -1829,7 +1863,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leftHand: 0
-  dropFrame: 111
+  dropFrame: 106
 --- !u!1102 &3692966592069962536
 AnimatorState:
   serializedVersion: 5
@@ -2128,20 +2162,6 @@ MonoBehaviour:
   - OtoscopeHat
   toShow: 1
   meshRenderer: 0
---- !u!114 &5042674392898477180
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b9c9f3106e5ff7449cd0b07126b8b77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dropLeftFrame: -1
-  dropRightFrame: 1
 --- !u!1101 &5367255547134389956
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -2606,8 +2626,8 @@ AnimatorState:
   m_Transitions:
   - {fileID: -3623259187237673909}
   m_StateMachineBehaviours:
-  - {fileID: 5042674392898477180}
   - {fileID: -7671978661071739241}
+  - {fileID: 2312308113553845257}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
