@@ -20,8 +20,15 @@
     type="use"
     value="HandCleaner"
     extra="[Pas handhygiëne]"
-    messageTitle="Theory"
-    messageContent="Text of the theory"
+    messageTitle="Contra-indicaties"
+    messageContent="
+Controleer voordat je gaat spuiten of er contra-indicaties bestaan zoals:
+- Oorpijn
+- Trommelvliesperforatie
+- Trommelvliesbuisjes
+- Operatie aan middenoor of trommelvlies
+
+In al deze gevallen is het handig om eerst met de arts te overleggen voordat er gespoten gaat worden."
    ></action>
 
   <action
@@ -35,9 +42,15 @@
     extra="Maak een schoon werkveld en zet de benodigdheden binnen handbereik."
     messageTitle="Je het volgende nodig hebt?"
     messageContent="
-- toedienlijst
-- toedieningsetiket
-- desinfectans alcohol 70%
+- Oorspuit (inclusief het afschroefbare, steriliseerbare uiteinde of wegwerpuiteinde);
+- Handoek of wegwerpcelstofmatje;
+- Handwarm water (circa 37 graden Celsius);
+- Bakje waar het water in kan
+- Nierbekken om het water op te vangen;
+- Otoscoop met wegwerpdopjes;
+- Cerumenhaakje
+- Thermometer 
+- Gaasje
     "></action>
 
   <action
@@ -49,14 +62,12 @@
     item="PatientRecords"
     expected="good"
     extra="Controleer de cliëntgegevens. Het is belangrijk dat je de juiste persoon voor je hebt. "
-    messageTitle="Controle cliëntgegevens."
-    messageContent="Controleer de naam en geboortedatum van cliënt"
    ></action>
 
 
 	<action
     points="1"
-    description="Plaats de hat op de otoscoop"
+    description="Plaats de oortrechter op de otoscoop"
     audioHint=""
     index="3"
     type="combine"
@@ -72,7 +83,9 @@
 	  type="talk"
 	  points="1"
 	  blockUnlock ="patient sit"
-	  topic="SitDown" />
+	  topic="SitDown"
+    messageTitle="Stoel"
+    messageContent="Laat de patiënt bij voorkeur zitten op een stevige stoel met armleuningen. "/>
 	
 	 <Action
     index="5"
@@ -84,6 +97,8 @@
     points="1"
     buttonText="Check ear"
     target=""
+    messageTitle="Oren bekijken"
+    messageContent="Kijk eerst met de otoscoop in beide oren en begin daarbij altijd bij het oor zonder klachten. Gebruik voor beide oren een andere oortrechter. Kijk goed hoe de gehoorgang loopt en waar de prop zit."
     blockRequired="patient sit, HatPlaced"
 	blockUnlock="CleanWorkfield"
     blockTitle="Handeling nog niet mogelijk"
