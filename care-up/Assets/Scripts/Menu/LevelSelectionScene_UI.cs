@@ -7,7 +7,7 @@ using MBS;
 using CareUpAvatar;
 
 
-public class SceleInfo
+public class SceneInfo
 {
     public string sceneType = "";
     public bool activated = true;
@@ -157,13 +157,14 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
         Transform protocolsTransorm = GameObject.Find("UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Play/ContentPanel/PlayElements/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder/Protocols/content").transform;
         pp.ClearFreeCertList();
-        Dictionary<string, SceleInfo> scenesInfo = new Dictionary<string, SceleInfo>();
+        pp.ClearScenesInfo();
+        Dictionary<string, SceneInfo> scenesInfo = new Dictionary<string, SceneInfo>();
 
 
         //Load data for scenes
         foreach (XmlNode xmlSceneNode in xmlSceneList)
         {
-            SceleInfo sceneInfo = new SceleInfo();
+            SceneInfo sceneInfo = new SceneInfo();
             // bool activated = PlayerPrefs.GetInt(xmlSceneNode.Attributes["id"].Value + " activated") == 1;
             sceneInfo.activated = true;
             if (xmlSceneNode.Attributes["type"] != null)
@@ -239,13 +240,14 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
         //Creation of menu elements from loaded data
 
-        Dictionary<string, SceleInfo> scenesInfoUnlocked = new Dictionary<string, SceleInfo>();
-        Dictionary<string, SceleInfo> scenesInfoLocked = new Dictionary<string, SceleInfo>();
-        Dictionary<string, SceleInfo> scenesInfoDemo = new Dictionary<string, SceleInfo>();
+        Dictionary<string, SceneInfo> scenesInfoUnlocked = new Dictionary<string, SceneInfo>();
+        Dictionary<string, SceneInfo> scenesInfoLocked = new Dictionary<string, SceneInfo>();
+        Dictionary<string, SceneInfo> scenesInfoDemo = new Dictionary<string, SceneInfo>();
 
         foreach (string key in scenesInfo.Keys)
         {
-            SceleInfo sceneInfo = scenesInfo[key];
+            pp.AddSceneInfo(scenesInfo[key]);
+            SceneInfo sceneInfo = scenesInfo[key];
 
             if ((!sceneInfo.activated && sceneInfo.hidden) || sceneInfo.hidden)
             {
@@ -263,7 +265,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
             }
         }
 
-        Dictionary<string, SceleInfo> scenesInfoSorted = new Dictionary<string, SceleInfo>();
+        Dictionary<string, SceneInfo> scenesInfoSorted = new Dictionary<string, SceneInfo>();
         foreach (string key in scenesInfoDemo.Keys)
             scenesInfoSorted.Add(key, scenesInfoDemo[key]);
 
@@ -274,7 +276,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
         {
             string key = scenesInfoSorted.Keys.ElementAt(i);
 
-            SceleInfo sceneInfo = scenesInfoSorted[key];
+            SceneInfo sceneInfo = scenesInfoSorted[key];
             if ((!sceneInfo.activated && sceneInfo.hidden) || sceneInfo.hidden)
             {
                 // not activated and hidden scene should not even create a panel, so just end up here
