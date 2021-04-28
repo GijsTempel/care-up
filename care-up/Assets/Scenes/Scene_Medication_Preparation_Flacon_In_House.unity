@@ -58,7 +58,7 @@ LightmapSettings:
     serializedVersion: 12
     m_Resolution: 3
     m_BakeResolution: 100
-    m_AtlasSize: 1024
+    m_AtlasSize: 512
     m_AO: 1
     m_AOMaxDistance: 1
     m_CompAOExponent: 1
@@ -68,7 +68,7 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 15200, guid: 0000000000000000f000000000000000,
       type: 0}
     m_LightmapsBakeMode: 0
-    m_TextureCompression: 1
+    m_TextureCompression: 0
     m_FinalGather: 0
     m_FinalGatherFiltering: 1
     m_FinalGatherRayCount: 512
@@ -76,15 +76,15 @@ LightmapSettings:
     m_MixedBakeMode: 1
     m_BakeBackend: 1
     m_PVRSampling: 1
-    m_PVRDirectSampleCount: 128
+    m_PVRDirectSampleCount: 256
     m_PVRSampleCount: 512
-    m_PVRBounces: 0
+    m_PVRBounces: 4
     m_PVREnvironmentSampleCount: 256
     m_PVREnvironmentReferencePointCount: 2048
     m_PVRFilteringMode: 2
-    m_PVRDenoiserTypeDirect: 0
-    m_PVRDenoiserTypeIndirect: 0
-    m_PVRDenoiserTypeAO: 0
+    m_PVRDenoiserTypeDirect: 1
+    m_PVRDenoiserTypeIndirect: 1
+    m_PVRDenoiserTypeAO: 1
     m_PVRFilterTypeDirect: 0
     m_PVRFilterTypeIndirect: 0
     m_PVRFilterTypeAO: 0
@@ -234,6 +234,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6729622377662169822, guid: 0ca7e8d6a4352de4a8dea12d5a6cfbe7,
+        type: 3}
+      propertyPath: m_ReflectionProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6729622377729988322, guid: 0ca7e8d6a4352de4a8dea12d5a6cfbe7,
+        type: 3}
+      propertyPath: m_ReflectionProbeUsage
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ca7e8d6a4352de4a8dea12d5a6cfbe7, type: 3}
@@ -7266,15 +7276,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7073042649394417551, guid: 974c28e80fc23964cbff0a202cedaf81,
+    - target: {fileID: 7073042648998492898, guid: 974c28e80fc23964cbff0a202cedaf81,
         type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.063
-      objectReference: {fileID: 0}
-    - target: {fileID: 7073042649394417551, guid: 974c28e80fc23964cbff0a202cedaf81,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.905
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7073042650189869506, guid: 974c28e80fc23964cbff0a202cedaf81,
         type: 3}
@@ -7339,17 +7344,12 @@ PrefabInstance:
     - target: {fileID: 7073042650389598548, guid: 974c28e80fc23964cbff0a202cedaf81,
         type: 3}
       propertyPath: m_Intensity
-      value: 1.2
+      value: 0.8
       objectReference: {fileID: 0}
-    - target: {fileID: 7073042650389598549, guid: 974c28e80fc23964cbff0a202cedaf81,
+    - target: {fileID: 7073042650389598548, guid: 974c28e80fc23964cbff0a202cedaf81,
         type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.06299995
-      objectReference: {fileID: 0}
-    - target: {fileID: 7073042650389598549, guid: 974c28e80fc23964cbff0a202cedaf81,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.90499985
+      propertyPath: m_BounceIntensity
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8737828994943861481, guid: 974c28e80fc23964cbff0a202cedaf81,
         type: 3}
@@ -7879,7 +7879,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4405023099832756, guid: 29005710551304da0b97315eb527431d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.675
+      value: 10.674
       objectReference: {fileID: 0}
     - target: {fileID: 4405023099832756, guid: 29005710551304da0b97315eb527431d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7887,7 +7887,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4405023099832756, guid: 29005710551304da0b97315eb527431d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.691
+      value: 10.626
       objectReference: {fileID: 0}
     - target: {fileID: 4405023099832756, guid: 29005710551304da0b97315eb527431d, type: 3}
       propertyPath: m_LocalRotation.w
