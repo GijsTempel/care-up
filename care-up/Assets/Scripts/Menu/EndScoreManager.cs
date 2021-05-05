@@ -115,7 +115,10 @@ public class EndScoreManager : MonoBehaviour
             actualScene = true;
 
             // show/hide buttons
-            bool flag = (percent > 70 && (manager.subscribed || HasFreeCert()));
+            bool subscribed = manager.subscribed;
+            if (manager.IsScenePurchasedByName(completedSceneName))
+                subscribed = true;
+            bool flag = (percent > 70 && (subscribed || HasFreeCert()));
 
             // update test highscore + save certificate date
             manager.UpdateTestHighscore(percent);
@@ -374,7 +377,10 @@ public class EndScoreManager : MonoBehaviour
     public void ConditionalHomeButton()
     {
         // special panel for demo
-        if (!manager.subscribed && !HasFreeCert())
+        bool subscribed = manager.subscribed;
+        if (manager.IsScenePurchasedByName(completedSceneName))
+            subscribed = true;
+        if (!subscribed && !HasFreeCert())
         {
             GameObject.Find("Interactable Objects/Canvas/CertificateDemoPopOp").SetActive(true);
         }
