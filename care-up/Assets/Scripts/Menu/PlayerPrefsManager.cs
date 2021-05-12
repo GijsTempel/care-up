@@ -1149,7 +1149,7 @@ public class PlayerPrefsManager : MonoBehaviour
         settings.AppendChild(settingOutput);
 
         XmlElement emailOutput = xmlDoc.CreateElement("emailOutput");
-        emailOutput.InnerText = "olexandrzhytaryuk@gmail.com";
+        emailOutput.InnerText = "info@careup.online";
         settings.AppendChild(emailOutput);
 
         XmlElement languageID = xmlDoc.CreateElement("languageID");
