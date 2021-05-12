@@ -15,7 +15,7 @@ using UnityEngine.Networking;
 using System.Linq;
 using SmartLookUnity;
 using CareUp.Localize;
-using System.IO;
+using System.Runtime.InteropServices;
 
 /// <summary>
 /// Handles quick access to saved data.
@@ -119,6 +119,13 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public bool muteMusicForEffect = false;
     private bool muteMusic = false;
+
+    [DllImport("__Internal")]
+    private static extern string GetStringParams();
+
+    public string currentLoginToken = "";
+    public string currentLoginName = "";
+    public string currentLoginPass = "";
 
     public static CANotifications GetNotificationByID(int _id)
     {
@@ -364,6 +371,15 @@ public class PlayerPrefsManager : MonoBehaviour
         //PlayerPrefsManager.__dev__customCertificate("playerFullName", "sceneName", "06202019");
 
         SmartLook.Init("22f3cf28278dbff71183ef8e0fa90c90048b850d");
+
+#if UNITY_WEBGL
+        HandleLoginToken();
+#endif
+        /* stupid way to push new tokens
+        CMLData data = new CMLData();
+        data.Set("token12asudh", "login12asiud pass12asiuhd");
+        WUData.UpdateSharedCategory("LoginTokens", data);
+        */
     }
 
     public static bool HasNewNorifications()
@@ -829,17 +845,17 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public static void OpenUrl_NewWindow(string url)
     {
-        #if UNITY_WEBGL && ! UNITY_EDITOR
+#if UNITY_WEBGL && !UNITY_EDITOR
             openWindow(url);
-        #else
+#else
             OpenUrl(url);
-        #endif
+#endif
     }
 
-    #if UNITY_WEBGL 
+#if UNITY_WEBGL
     [DllImport("__Internal")]
     private static extern void openWindow(string url);
-    #endif
+#endif
 
     public static void __dev__customCertificate(string playerFullName, string sceneName, string date)
     {
@@ -1124,7 +1140,7 @@ public class PlayerPrefsManager : MonoBehaviour
         XmlElement root = xmlDoc.CreateElement("Entry");
         xmlDoc.AppendChild(root);
 
-        #region Settings
+#region Settings
         XmlElement settings = xmlDoc.CreateElement("Settings");
         root.AppendChild(settings);
 
@@ -1159,9 +1175,9 @@ public class PlayerPrefsManager : MonoBehaviour
         XmlElement defaultLanguageID = xmlDoc.CreateElement("defaultLanguageID");
         defaultLanguageID.InnerText = "1";
         settings.AppendChild(defaultLanguageID);
-        #endregion
+#endregion
 
-        #region Attendance
+#region Attendance
         XmlElement attendance = xmlDoc.CreateElement("Attendance");
         root.AppendChild(attendance);
         
@@ -1181,8 +1197,43 @@ public class PlayerPrefsManager : MonoBehaviour
         endDate.InnerText = DateTime.Now.AddDays(-1).ToString("yyyy-MM-ddTHH:mm:ss.fffffffK")
             .Replace("+", "%2B"); // "+" sign is operator in url, need to replace
         attendance.AppendChild(endDate);
-        #endregion
+#endregion
 
         return xmlDoc.OuterXml;
+    }
+    
+    public void HandleLoginToken()
+    {
+        // get login token
+        //currentLoginToken = GetStringParams();
+        currentLoginToken = "token12asudh"; // let's pretend we got it
+        // fetch date from db, follows into next function
+        WUData.FetchSharedField(currentLoginToken, "LoginTokens", CheckLoginToken_success, -1, CheckLoginToken_error);
+    }
+
+    public void CheckLoginToken_error(CMLData response)
+    {
+        Debug.Log(response.ToString());
+        // most likely if we're here - no token found
+    }
+
+    public void CheckLoginToken_success(CML response)
+    {
+        string tokenValue;
+        if (response.Elements.Count > 1 && response.Elements[1].Values.Length > 2)
+        {
+            tokenValue = response.Elements[1].Values[2];
+            string[] split = tokenValue.Split(' ');
+            if (split.Length > 1)
+            {
+                currentLoginName = split[0];
+                currentLoginPass = split[1];
+            }
+        }
+
+        Debug.Log("Login: " + currentLoginName);
+        Debug.Log("Pass: " + currentLoginPass);
+
+        // do w/e you want with login/pass from now on
     }
 }
