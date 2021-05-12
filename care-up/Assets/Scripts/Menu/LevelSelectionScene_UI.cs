@@ -9,6 +9,7 @@ using CareUpAvatar;
 
 public class SceneInfo
 {
+    public string sceneID = "";
     public string sceneType = "";
     public bool activated = true;
     public bool demoLock = false;
@@ -165,8 +166,13 @@ public class LevelSelectionScene_UI : MonoBehaviour
         foreach (XmlNode xmlSceneNode in xmlSceneList)
         {
             SceneInfo sceneInfo = new SceneInfo();
+
             // bool activated = PlayerPrefs.GetInt(xmlSceneNode.Attributes["id"].Value + " activated") == 1;
             sceneInfo.activated = true;
+
+            if (xmlSceneNode.Attributes["id"] != null)
+                sceneInfo.sceneID = xmlSceneNode.Attributes["id"].Value;
+
             if (xmlSceneNode.Attributes["type"] != null)
                 sceneInfo.sceneType = xmlSceneNode.Attributes["type"].Value;
 
@@ -340,6 +346,10 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 = sceneUnit.displayName = sceneInfo.displayName;
 
             ppManager.currentSceneVisualName = sceneUnit.displayName;
+            // setting id next to manager visual name
+            sceneUnit.sceneID = sceneInfo.sceneID; // yes, duping value is important
+            ppManager.currentPEcourseID = sceneUnit.sceneID;
+
             ppManager.CreateBlankHighscore(); // has a check inside for no DB info already
 
             // override image if scene is completed
