@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
@@ -14,8 +15,7 @@ using UnityEngine.Networking;
 using System.Linq;
 using SmartLookUnity;
 using CareUp.Localize;
-using System.Runtime.InteropServices;
-
+using System.IO;
 
 /// <summary>
 /// Handles quick access to saved data.
@@ -89,6 +89,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
     // sets up after selecting scene in "scene selection"
     public string currentSceneVisualName;
+    public string currentPEcourseID;
     public bool validatedScene;
 
     // post processing on camera
@@ -1113,5 +1114,75 @@ public class PlayerPrefsManager : MonoBehaviour
         link += sceneName + ". You can try it out yourself by going to https%3A%2F%2Fcareup.online";
 
         OpenUrl_NewWindow(link.Replace(" ", "%20"));
+    }
+
+    public static string GenerateAttendanceSXML(string BIG, string course)
+    {
+        XmlDocument xmlDoc = new XmlDocument();
+        xmlDoc.CreateXmlDeclaration("1.0", "UTF-8", "yes");
+
+        XmlElement root = xmlDoc.CreateElement("Entry");
+        xmlDoc.AppendChild(root);
+
+        #region Settings
+        XmlElement settings = xmlDoc.CreateElement("Settings");
+        root.AppendChild(settings);
+
+        XmlElement userID = xmlDoc.CreateElement("userID");
+        userID.InnerText = "24352";
+        settings.AppendChild(userID);
+
+        XmlElement userRole = xmlDoc.CreateElement("userRole");
+        userRole.InnerText = "EDU";
+        settings.AppendChild(userRole);
+
+        XmlElement userKey = xmlDoc.CreateElement("userKey");
+        userKey.InnerText = "2435202551361";
+        settings.AppendChild(userKey);
+        
+        XmlElement orgID = xmlDoc.CreateElement("orgID");
+        orgID.InnerText = "52";
+        settings.AppendChild(orgID);
+
+        XmlElement settingOutput = xmlDoc.CreateElement("settingOutput");
+        settingOutput.InnerText = "1";
+        settings.AppendChild(settingOutput);
+
+        XmlElement emailOutput = xmlDoc.CreateElement("emailOutput");
+        emailOutput.InnerText = "olexandrzhytaryuk@gmail.com";
+        settings.AppendChild(emailOutput);
+
+        XmlElement languageID = xmlDoc.CreateElement("languageID");
+        languageID.InnerText = "1";
+        settings.AppendChild(languageID);
+
+        XmlElement defaultLanguageID = xmlDoc.CreateElement("defaultLanguageID");
+        defaultLanguageID.InnerText = "1";
+        settings.AppendChild(defaultLanguageID);
+        #endregion
+
+        #region Attendance
+        XmlElement attendance = xmlDoc.CreateElement("Attendance");
+        root.AppendChild(attendance);
+        
+        XmlElement PECourseID = xmlDoc.CreateElement("PECourseID");
+        PECourseID.InnerText = "409087";
+        attendance.AppendChild(PECourseID);
+
+        XmlElement externalModuleID = xmlDoc.CreateElement("externalmoduleID");
+        externalModuleID.InnerText = course;
+        attendance.AppendChild(externalModuleID);
+
+        XmlElement externalPersonID = xmlDoc.CreateElement("externalPersonID");
+        externalPersonID.InnerText = BIG;
+        attendance.AppendChild(externalPersonID);
+        
+        XmlElement endDate = xmlDoc.CreateElement("endDate");
+        endDate.InnerText = DateTime.Now.AddDays(-1).ToString("yyyy-MM-ddTHH:mm:ss.fffffffK")
+            .Replace("+", "%2B"); // "+" sign is operator in url, need to replace
+        attendance.AppendChild(endDate);
+        #endregion
+
+        return xmlDoc.OuterXml;
     }
 }
