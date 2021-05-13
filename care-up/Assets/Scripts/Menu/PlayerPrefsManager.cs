@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Xml;
 using System.Collections.Generic;
 using System.Net;
@@ -123,9 +124,9 @@ public class PlayerPrefsManager : MonoBehaviour
     [DllImport("__Internal")]
     private static extern string GetStringParams();
 
-    public string currentLoginToken = "";
-    public string currentLoginName = "";
-    public string currentLoginPass = "";
+    //public string currentLoginToken = "";
+    //public string currentLoginName = "";
+    //public string currentLoginPass = "";
 
     public static CANotifications GetNotificationByID(int _id)
     {
@@ -372,14 +373,19 @@ public class PlayerPrefsManager : MonoBehaviour
 
         SmartLook.Init("22f3cf28278dbff71183ef8e0fa90c90048b850d");
 
-#if UNITY_WEBGL
+#if UNITY_WEBGL || UNITY_EDITOR
         HandleLoginToken();
 #endif
-        /* stupid way to push new tokens
-        CMLData data = new CMLData();
-        data.Set("token12asudh", "login12asiud pass12asiuhd");
-        WUData.UpdateSharedCategory("LoginTokens", data);
-        */
+        // stupid way to push new tokens 
+        //CMLData data = new CMLData();
+        //string testLogin = "test";
+        //string testPass = "123";
+        //byte[] encodeLogin = Encoding.UTF8.GetBytes(testLogin);
+        //byte[] encodePass = Encoding.UTF8.GetBytes(testPass);
+        //string authData = Convert.ToBase64String(encodeLogin) + " " + Convert.ToBase64String(encodePass);
+        //data.Set("abcdefg123456", authData);
+        //WUData.UpdateSharedCategory("LoginTokens", data);
+        
     }
 
     public static bool HasNewNorifications()
@@ -1205,8 +1211,14 @@ public class PlayerPrefsManager : MonoBehaviour
     public void HandleLoginToken()
     {
         // get login token
-        //currentLoginToken = GetStringParams();
-        currentLoginToken = "token12asudh"; // let's pretend we got it
+        string currentLoginToken;
+#if UNITY_WEBGL && !UNITY_EDITOR
+        currentLoginToken = GetStringParams();
+#endif
+#if UNITY_EDITOR
+        //currentLoginToken = "token12asudh"; // let's pretend we got it
+        currentLoginToken = "abcdefg123456"; // let's pretend we got it
+#endif
         // fetch date from db, follows into next function
         WUData.FetchSharedField(currentLoginToken, "LoginTokens", CheckLoginToken_success, -1, CheckLoginToken_error);
     }
@@ -1226,14 +1238,18 @@ public class PlayerPrefsManager : MonoBehaviour
             string[] split = tokenValue.Split(' ');
             if (split.Length > 1)
             {
-                currentLoginName = split[0];
-                currentLoginPass = split[1];
+                string base64LoginName = split[0];
+                string base64LoginPass = split[1];
+                if (base64LoginName != "" && base64LoginPass != "")
+                {
+                    byte[] loginData = Convert.FromBase64String(base64LoginName);
+                    string decodedLogin = Encoding.UTF8.GetString(loginData);
+                    byte[] passData = Convert.FromBase64String(base64LoginPass);
+                    string decodedPass = Encoding.UTF8.GetString(passData);
+
+                    GameObject.FindObjectOfType<WUUGLoginGUI>().DoAutoLogin(decodedLogin, decodedPass);
+                }
             }
         }
-
-        Debug.Log("Login: " + currentLoginName);
-        Debug.Log("Pass: " + currentLoginPass);
-
-        // do w/e you want with login/pass from now on
     }
 }

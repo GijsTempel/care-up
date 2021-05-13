@@ -441,6 +441,19 @@ namespace MBS
             DisplayScreen(panels.login_menu);
         }
 
+        public void DoAutoLogin(string username, string password)
+        {
+            WULogin.onLoginFailed += On_Login_Fail;
+            WULogin.on_Login_Success = true;
+            CMLData data = new CMLData();
+            data.Set("username", username);
+            data.Set("password", password);
+            WULogin.AttemptToLogin(data);
+            PlayerPrefs.SetInt("Remember Me", attempt_auto_login ? 1 : 0);
+            DisplayScreen(panels.login_menu);
+        }
+
+
         void On_Login_Fail(CMLData response) => WULogin.on_Login_Success = false;
 
         public void DoTrustedLogin(string email)
