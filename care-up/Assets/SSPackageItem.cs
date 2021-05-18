@@ -7,10 +7,16 @@ public class SSPackageItem : MonoBehaviour
 {
     public Text titleText;
     public Text priceText;
+    public bool isSelected = false;
     public float price;
     public string packageSKU = "";
-    public void Setup(string _title, List<string> _scenes, string _packageSKU, float _price)
+    public GameObject basketIcon;
+    InGameSceneStore storeControl = null;
+    Color baseColor = Color.white;
+    Color selectedColor;
+    public void Setup(string _title, List<string> _scenes, string _packageSKU, float _price, InGameSceneStore _storeControl)
     {
+        selectedColor = basketIcon.GetComponent<Image>().color;
         price = _price;
         priceText.text = "€" + price.ToString("F2");
         Object SceneItemPrefab = Resources.Load<GameObject>("NecessaryPrefabs/UI/SSPackageItemScene");
@@ -33,8 +39,28 @@ public class SSPackageItem : MonoBehaviour
         }
     }
 
+    public bool TuggleSelection()
+    {
+        if (storeControl == null)
+            storeControl = GameObject.FindObjectOfType<InGameSceneStore>();
+
+        isSelected = !isSelected;
+        basketIcon.SetActive(isSelected);
+        if (isSelected)
+        {
+            titleText.color = selectedColor;
+            priceText.color = selectedColor;
+        }
+        else
+        {
+            titleText.color = baseColor;
+            priceText.color = baseColor;
+        }
+        storeControl.SelectItem(this, isSelected);
+        return isSelected;
+    }
     public void ButtonPressed()
     {
-
+        TuggleSelection();
     }
 }

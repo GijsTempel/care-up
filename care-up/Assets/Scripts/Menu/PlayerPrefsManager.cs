@@ -215,6 +215,26 @@ public class PlayerPrefsManager : MonoBehaviour
         return false;
     }
 
+    public List<string> GetScenesInProduct(string SKU)
+    {
+        List<string> _scenes = new List<string>();
+        foreach (SceneInfo sceneInfo in ScenesInfo)
+        {
+            if (sceneInfo.isInProducts != null)
+            {
+                foreach(string __sku in sceneInfo.isInProducts)
+                {
+                    if (SKU == __sku)
+                    {
+                        _scenes.Add(sceneInfo.displayName);
+                        break;
+                    }
+                }
+            }
+        }
+        return _scenes;
+    }
+
     public void Update()
     {
         SetEscapeButtonLogic();
