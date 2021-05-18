@@ -18,6 +18,7 @@ public class LevelButton : MonoBehaviour
     bool PreviewIconChanged = false;
 
     public bool multiple;
+    public string sceneID;
     public string displayName;
     public Sprite image;
     public bool testDisabled;
@@ -261,6 +262,7 @@ public class LevelButton : MonoBehaviour
                 if (manager != null)
                 {
                     manager.currentSceneVisualName = displayName;
+                    manager.currentPEcourseID = sceneID;
                     manager.validatedScene = validated;
                 }
 
@@ -302,6 +304,7 @@ public class LevelButton : MonoBehaviour
                 if (manager != null)
                 {
                     manager.currentSceneVisualName = displayName;
+                    manager.currentPEcourseID = sceneID;
                     manager.validatedScene = validated;
                 }
             }

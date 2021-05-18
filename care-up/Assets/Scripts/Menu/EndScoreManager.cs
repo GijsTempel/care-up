@@ -3,7 +3,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.Networking;
-
+using System.IO;
+using System.Net;
 
 /// <summary>
 /// Handles EndScore scene.
@@ -133,6 +134,7 @@ public class EndScoreManager : MonoBehaviour
                 if (manager.validatedScene)
                 {
                     EndScoreSendMailResults();
+                    AutomaticPEcourseValidation();
                 }
             }
 
@@ -397,5 +399,47 @@ public class EndScoreManager : MonoBehaviour
         {
             bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
         }
+    }
+
+    // testing mode for now (test.pe-online)
+    // "GET" request is pretty bad practice, but this is 8th attempt and first thing that gave an actual server response
+    public void AutomaticPEcourseValidation()
+    {
+        Debug.Log("AutomaticPEcourseValidation");
+
+        if (manager.bigNumber == "")
+        {
+            Debug.LogWarning("BigNumber was empty, aborting PEcourseValidation.");
+            return;
+        }
+
+        // Create a request for the URL.
+        string _url = "https://test.pe-online.org/pe-services/pe-attendanceelearning/WriteAttendance.asmx/ProcessXML?sXML=";
+
+        // someone's BIG for testing only // insuline for testing only
+        _url += PlayerPrefsManager.GenerateAttendanceSXML(manager.bigNumber, manager.currentPEcourseID);
+        Debug.Log("Generated url: " + _url);
+
+        WebRequest request = WebRequest.Create(_url);
+        // If required by the server, set the credentials.
+        request.Credentials = CredentialCache.DefaultCredentials;
+
+        // Get the response.
+        WebResponse response = request.GetResponse();
+
+        // Get the stream containing content returned by the server.
+        // The using block ensures the stream is automatically closed.
+        using (Stream dataStream = response.GetResponseStream())
+        {
+            // Open the stream using a StreamReader for easy access.
+            StreamReader reader = new StreamReader(dataStream);
+            // Read the content.
+            string responseFromServer = reader.ReadToEnd();
+            // Display the content.
+            Debug.Log("Server response: \n" + responseFromServer);
+        }
+
+        // Close the response.
+        response.Close();
     }
 }
