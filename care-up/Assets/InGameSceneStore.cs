@@ -35,6 +35,19 @@ public class InGameSceneStore : MonoBehaviour
     int currentTab = 0;
     List<SSPackageItem> SelectedItems = new List<SSPackageItem>();
 
+
+    public void RemoveSelectedItem(SSPackageItem _selectedItem)
+    {
+        for (int i = 0; i < SelectedItems.Count; i++)
+        {
+            if (_selectedItem.packageSKU == SelectedItems[i].packageSKU && _selectedItem.titleText.text == SelectedItems[i].titleText.text)
+            {
+                SelectedItems[i].TuggleSelection();
+                break;
+            }
+        }
+        ShowCheckoutWindow(true);
+    }
     public void SelectItem(SSPackageItem _item, bool toSelect)
     {
         if (SelectedItems == null)
@@ -62,15 +75,24 @@ public class InGameSceneStore : MonoBehaviour
 
     public void ShowCheckoutWindow(bool toShow = true)
     {
+        if (SelectedItems.Count == 0 && !checkoutWindow.activeSelf)
+            return;
+
         if (toShow)
         {
+            Object SSPackageItemPrefabCheckout = Resources.Load<GameObject>("NecessaryPrefabs/UI/SSPackageItemCheckout");
             foreach (Transform child in checkoutContent.transform)
             {
                 GameObject.Destroy(child.gameObject);
             }
-
+            for (int i = 0; i < SelectedItems.Count; i++)
+            {
+                List<string> includedScenes = ppm.GetScenesInProduct(SelectedItems[i].packageSKU);
+                GameObject packageButton = Instantiate(SSPackageItemPrefabCheckout, checkoutContent.transform) as GameObject;
+                packageButton.GetComponent<SSPackageItem>().Setup(SelectedItems[i].titleText.text, includedScenes, SelectedItems[i].packageSKU, SelectedItems[i].price, this);
+                packageButton.GetComponent<SSPackageItem>().SetInteractable(false);
+            }
         }
-
         checkoutWindow.SetActive(toShow);
     }
     public void SwitchTab(int newTab)
@@ -147,7 +169,7 @@ public class InGameSceneStore : MonoBehaviour
         {
             List<string> includedScenes = ppm.GetScenesInProduct(SSPData[i].SKU);
             GameObject packageButton = Instantiate(SSPackageItemPrefab, packageStoreContent.transform) as GameObject;
-            packageButton.GetComponent<SSPackageItem>().Setup(SSPData[i].title, includedScenes, "", SSPData[i].price, this);
+            packageButton.GetComponent<SSPackageItem>().Setup(SSPData[i].title, includedScenes, SSPData[i].SKU, SSPData[i].price, this);
         }
     }
     void Start()

@@ -39,6 +39,17 @@ public class SSPackageItem : MonoBehaviour
         }
     }
 
+    public void RemoveSelectedElement()
+    {
+        if (storeControl == null)
+            storeControl = GameObject.FindObjectOfType<InGameSceneStore>();
+        storeControl.RemoveSelectedItem(this);
+    }
+
+    public void SetInteractable(bool toSet)
+    {
+        GetComponent<Button>().interactable = toSet;
+    }
     public bool TuggleSelection()
     {
         if (storeControl == null)
