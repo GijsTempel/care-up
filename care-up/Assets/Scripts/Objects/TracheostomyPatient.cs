@@ -17,7 +17,7 @@ public class TracheostomyPatient : PersonObject {
         animator = GetComponent<Animator>();
     }
 
-    public override void Talk(string topic = "")
+    public override void Talk(string topic = "", string audio = "")
     {
         if (ViewModeActive() || topic == "CM_Leave" || topic == "")
             return;
