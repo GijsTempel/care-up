@@ -2,16 +2,15 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Xml;
-//using UnityEditor.Animations;
 
 public class PlayerSpawn : MonoBehaviour
 {
     public int sceneID = 0;
     public string quizName;
     public GameObject playerPrefab;
-    //public UnityEditor.Animations.AnimatorController animationController = null;
     public Vector3 robotPosition;
     public Vector3 robotRotation;
+    public WalkToGroup.GroupType momentaryJumpTo = WalkToGroup.GroupType.NotSet;
 
     [System.Serializable]
     public struct InfoPair
@@ -28,13 +27,21 @@ public class PlayerSpawn : MonoBehaviour
     void Awake()
     {
         GameObject UIPrefab = null;
+        GameObject flyHelper = Instantiate(Resources.Load("NecessaryPrefabs/UI/flyHelper") as GameObject);
+        flyHelper.name = "flyHeloper";
         if (GameObject.FindObjectOfType(typeof(GameUI)) == null)
         {
-            UIPrefab = Instantiate(Resources.Load("Prefabs/UI/UI") as GameObject);
+            UIPrefab = Instantiate(Resources.Load("NecessaryPrefabs/UI/UI") as GameObject);
+            
             UIPrefab.name = "UI";
         }
+        Vector3 r = transform.rotation.eulerAngles;
 
-        GameObject player = Instantiate(playerPrefab, transform.position, transform.rotation);
+        GameObject player = Instantiate(playerPrefab, transform.position, Quaternion.Euler(0, r.y, r.z));
+        Transform camTransform = player.transform.Find("CinematicControl/Arms/Armature/Hips/Spine/Spine1/Spine2/Neck/Head/PlayerMainCamera");
+        Vector3 co = camTransform.rotation.eulerAngles;
+        co.x = r.x;
+        camTransform.rotation = Quaternion.Euler(co);
         player.name = "Player";
 
         if (GetComponent<Animator>() != null)
@@ -50,29 +57,19 @@ public class PlayerSpawn : MonoBehaviour
         }
 
         player.GetComponentInChildren<Animator>().SetInteger("sceneID", sceneID);
-
-        GameObject itemControls = Instantiate(Resources.Load("Prefabs/UI/ItemControls") as GameObject,
+        player.GetComponent<PlayerScript>().momentaryJumpTo = momentaryJumpTo;
+        GameObject itemControls = Instantiate(Resources.Load("NecessaryPrefabs/UI/ItemControls") as GameObject,
             transform.position, transform.rotation);
         itemControls.name = "ItemControls";
 
-        GameObject itemDescription = Instantiate(Resources.Load("Prefabs/UI/ItemDescription") as GameObject,
+        GameObject itemDescription = Instantiate(Resources.Load("NecessaryPrefabs/UI/ItemDescription") as GameObject,
             transform.position, transform.rotation);
         itemDescription.name = "ItemDescription";
 
-        GameObject iPad = UIPrefab.transform.Find("PatientInfoTabs").gameObject;
-
-        //GameObject iPad = Instantiate(Resources.Load("Prefabs/UI/IPad") as GameObject,
-        //  transform.position, transform.rotation);
-        //iPad.name = "ipad";
-
+        GameObject iPad = UIPrefab.transform.Find("IpadPanel/PatientInfoTabs").gameObject;
         IpadLoadXmlInfo(iPad.transform);
 
-        //GameObject iPad = Instantiate(Resources.Load("Prefabs/ipad") as GameObject,
-        //    transform.position + new Vector3(0, -100f, 0), transform.rotation);
-        //iPad.name = "ipad";
-        //IpadLoadXmlInfo(iPad.transform);
-
-        GameObject robot = Instantiate(Resources.Load("Prefabs/robot") as GameObject,
+        GameObject robot = Instantiate(Resources.Load("NecessaryPrefabs/robot") as GameObject,
             robotPosition, Quaternion.Euler(robotRotation));
         robot.name = "robot";
 
@@ -90,11 +87,7 @@ public class PlayerSpawn : MonoBehaviour
 
         GameObject.FindObjectOfType<GameTimer>().SetTextObject(
             GameObject.Find("PatientInfoTabs").transform.Find("TopBarUI").Find("GeneralDynamicCanvas")
-            .Find("Timer").Find("Time").GetComponent<Text>());
-
-        GameTimer.FindObjectOfType<ActionManager>().SetUIObjects(
-            GameObject.Find("TopBarUI").transform.Find("GeneralDynamicCanvas").Find("Points").Find("PointsText").GetComponent<Text>(),
-            GameObject.Find("TopBarUI").transform.Find("GeneralDynamicCanvas").Find("Percentage").Find("PointsText").GetComponent<Text>());
+            .Find("Timer").Find("Time").GetComponent<Text>());     
 
         player.GetComponent<PlayerScript>().joystickObject = GameObject.Find("FingersJoystickPrefab");
 
@@ -118,12 +111,14 @@ public class PlayerSpawn : MonoBehaviour
 
             foreach (XmlNode node in nodes)
             {
-                if (prescriptionPanel.Find(node.Name) != null)
-                    prescriptionPanel.Find(node.Name).GetComponent<Text>().text =
+                string lineName = "P" + node.Name;
+                if (prescriptionPanel.Find(lineName) != null)
+                    
+                    prescriptionPanel.Find(lineName).Find(node.Name).GetComponent<Text>().text =
                         node.Attributes["value"].Value;
 
-                if (secondPrescriptionPanel.Find(node.Name) != null)
-                    secondPrescriptionPanel.Find(node.Name).GetComponent<Text>().text =
+                if (secondPrescriptionPanel.Find(lineName) != null)
+                    secondPrescriptionPanel.Find(lineName).Find(node.Name).GetComponent<Text>().text =
                         node.Attributes["value"].Value;
             }
         }
@@ -131,7 +126,7 @@ public class PlayerSpawn : MonoBehaviour
         if (patientRecordsXml != "")
         {
             Transform patientRecordsXmlPanel = robotUI.Find("RecordsTab/Panel");
-
+            Transform patientRecordsTab = robotUI.Find("RecordsTab");
             TextAsset textAsset = (TextAsset)Resources.Load("Xml/IpadInfo/" + patientRecordsXml);
             XmlDocument xmlFile = new XmlDocument();
             xmlFile.LoadXml(textAsset.text);
@@ -140,8 +135,12 @@ public class PlayerSpawn : MonoBehaviour
 
             foreach (XmlNode node in nodes)
             {
-                if (patientRecordsXmlPanel.Find(node.Name) != null)
-                    patientRecordsXmlPanel.Find(node.Name).GetComponent<Text>().text =
+                string lineName = "P" + node.Name;
+                if (patientRecordsXmlPanel.Find(lineName) != null)
+                    patientRecordsXmlPanel.Find(lineName).Find(node.Name).GetComponent<Text>().text =
+                        node.Attributes["value"].Value;
+                else if(patientRecordsTab.Find(node.Name) != null)
+                    patientRecordsTab.Find(node.Name).GetComponent<Text>().text =
                         node.Attributes["value"].Value;
             }
         }

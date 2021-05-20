@@ -60,6 +60,7 @@ public class CameraMode : MonoBehaviour
     private bool closingEyes = false;
     private bool closeEyesTriggered = false;
     public bool moveBackFromExam = false;
+    private Transform targetToResetCinematic = null;
 
     //private Quaternion camPosition; never used
 
@@ -91,9 +92,24 @@ public class CameraMode : MonoBehaviour
         blur = Camera.main.GetComponent<UnityStandardAssets.ImageEffects.BlurOptimized>();
         if (blur == null) Debug.Log("No Blur Attached to main camera.");
 
-        confirmUI = (GameObject)Instantiate(Resources.Load("Prefabs/UI/ConfirmUI"), Vector3.zero, Quaternion.identity);
+        confirmUI = (GameObject)Instantiate(Resources.Load("NecessaryPrefabs/UI/ConfirmUI"), Vector3.zero, Quaternion.identity);
         confirmUI.SetActive(false);
     }
+
+    public void ResetPlayerToTarget(Transform target)
+    {
+
+        Vector3 currentCinematicControlPos = cinematicControl.position;
+        Quaternion currentCinematicControlRot = cinematicControl.rotation;
+        cinematicControl.parent.position = target.position;
+        cinematicControl.parent.rotation = target.rotation;
+
+        cinematicControl.position = currentCinematicControlPos;
+        cinematicControl.rotation = currentCinematicControlRot;
+        cinematicPos = target.position;
+        cinematicRot = target.rotation;
+    }
+
     void Update()
     {
         if (Time.time > camMoveBackAt)
@@ -263,6 +279,11 @@ public class CameraMode : MonoBehaviour
         }
     }
 
+    public void SetTargetToReset(Transform target)
+    {
+        targetToResetCinematic = transform;
+    }
+
     public void ObjectViewPickUpButton()
     {
         PickableObject pickableObject = selectedObject.GetComponent<PickableObject>();
@@ -311,7 +332,7 @@ public class CameraMode : MonoBehaviour
 
             GameObject.Find("ObjectViewButtons").SetActive(false);
             //gameUI.allowObjectControlUI = !playerScript.away;
-            gameUI.UpdateWalkToGtoupUI(!playerScript.away);
+            gameUI.UpdateWalkToGroupUI(!playerScript.away);
             //playerScript.joystickObject.SetActive(!playerScript.robotUIopened);
 
             if ((GameObject.FindObjectOfType<TutorialManager>() == null ||
@@ -485,6 +506,7 @@ public class CameraMode : MonoBehaviour
         }
         else
         {
+            cinematicControl.transform.localRotation = new Quaternion();
             cinematicControl.transform.position =
                 Vector3.Lerp(cinematicPos, cinematicTargetPos, cinematicLerp);
             if (animationEnded || cinematicDirection == 1)
@@ -587,7 +609,8 @@ public class CameraMode : MonoBehaviour
         cinematicTargetPos = cTarget.position;
         cinematicControl = playerScript.transform.GetChild(0);
         cinematicControl.transform.position = cinematicTargetPos;
-        cinematicControl.Find("Arms").transform.rotation = cinematicTargetRot;
+        cinematicControl.transform.localRotation = new Quaternion();
+       cinematicControl.Find("Arms").transform.rotation = cinematicTargetRot;
     }
         
     public void SetCinematicMode(Transform target)

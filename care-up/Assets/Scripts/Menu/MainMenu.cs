@@ -5,12 +5,22 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using MBS;
 using System.Linq;
+using System;
+using System.Runtime.InteropServices;
 
-public class MainMenu : MonoBehaviour {
-    
+public class MainMenu : MonoBehaviour
+{
     private LoadingScreen loadingScreen;
     private PlayerPrefsManager prefs;
-	public string eMail="info@triplemotion.nl";
+    public string eMail = "info@triplemotion.nl";
+
+    public static string storeUrl;
+
+    [SerializeField]
+    private Text reward = default;
+
+    [SerializeField]
+    private GameObject rewardPanel = default;
 
     public GameObject UpdatesPanel;
 
@@ -30,8 +40,21 @@ public class MainMenu : MonoBehaviour {
     [UnityEngine.SerializeField]
     public List<ResendingLock> resendingLocks = new List<ResendingLock>();
 
+
+#if UNITY_EDITOR
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F4))
+        {
+            bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Character_Editor");
+        }
+    }
+
+#endif  
+
     private void Start()
     {
+
         if (GameObject.Find("Preferences") != null)
         {
             loadingScreen = GameObject.Find("Preferences").GetComponent<LoadingScreen>();
@@ -59,7 +82,20 @@ public class MainMenu : MonoBehaviour {
             //     text.text = "";
             // }
 
-            //handle updates panel
+            //handle updates panel           
+
+            if (EndScoreManager.showReward)
+            {
+                StoreViewModel.ShowRewardDialogue(reward);
+                EndScoreManager.showReward = false;
+            }
+
+            if (CareUpNotification.showReward)
+            {
+                StoreViewModel.ShowRewardDialogue(reward, rewardPanel, 20);
+                CareUpNotification.showReward = false;
+            }
+
             bool updatesSeen = PlayerPrefs.GetInt("_updatesSeen") == 1;
             string versionSeen = PlayerPrefs.GetString("__version", "");
             string currentVersion = Application.version;
@@ -96,8 +132,13 @@ public class MainMenu : MonoBehaviour {
                     if (percent <= 0 || percent > 100)
                         continue; // don't show 0 percent scores as they are not completed even once
 
-                    GameObject layoutGroup = GameObject.Find("UMenuProManager/MenuCanvas/Account_Scores/Account_Panel_UI/ScoresHolder/Scores/LayoutGroup");
-                    GameObject scoreObject = Instantiate(Resources.Load<GameObject>("Prefabs/UI/TestHighscore"), layoutGroup.transform);
+                    // FILTERing old scenes that should not be displayed anymore
+                    if (sceneName == "Injecteren intramusculair (loodrechttechniek) - Flacon" ||
+                       sceneName == "AED")
+                        continue;
+
+                    GameObject layoutGroup = GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Account_Scores/ContentPanel/Scenes/Account_Panel_UI/Panel/ProtocolList/ProtocolsHolder/Protocols/content");
+                    GameObject scoreObject = Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/UI/TestHighscore"), layoutGroup.transform);
                     scoreObject.transform.Find("SceneName").GetComponent<Text>().text = sceneName;
 
                     scoreObject.transform.Find("Percent").GetComponent<Text>().text = percent.ToString() + "%";
@@ -106,29 +147,25 @@ public class MainMenu : MonoBehaviour {
 
                     scoreObject.transform.Find("Button").GetComponent<Button>().interactable = passed;
                     scoreObject.transform.Find("Button").GetComponent<Button>().onClick.AddListener
-                        (delegate { ResendCertificate(sceneName, date); });
+                        (delegate { PlayerPrefsManager.__openCertificate(sceneName, date); });
                 }
             }
 
             // shared field, will keep it outside DatabaseManager
             GameObject.FindObjectOfType<PlayerPrefsManager>().FetchLatestVersion();
 
-            GameObject.Find("UMenuProManager/MenuCanvas/Account/Top/UserName").GetComponent<Text>().text = MBS.WULogin.display_name;
+            GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Account/TitlePanel/UserNamePanel/Text").GetComponent<Text>().text = MBS.WULogin.display_name;
 
             string bigNumber = GameObject.FindObjectOfType<PlayerPrefsManager>().bigNumber;
             string fullName = GameObject.FindObjectOfType<PlayerPrefsManager>().fullPlayerName;
-
             if (!string.IsNullOrEmpty(fullName))
             {
-                GameObject.Find("UMenuProManager/MenuCanvas/Account/InfoHolder/AccountPanelUI/UserInfoHolder/NameHolder/Account_Username")
+                GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Account/ContentPanel/Elements/NamePanel/NameHolder/InfoPanel/InfoHolder/UserName/Panel/Account_Username")
                .GetComponent<Text>().text = fullName;
             }
 
-            if (!string.IsNullOrEmpty(bigNumber))
-            {
-                GameObject.Find("UMenuProManager/MenuCanvas/Account/InfoHolder/AccountPanelUI/UserInfoHolder/BigNumberHolder/BigNumber")
-               .GetComponent<Text>().text = bigNumber;
-            }           
+            GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Account/ContentPanel/Elements/NamePanel/NameHolder/InfoPanel/InfoHolder/UserNumber/BigNumber")
+            .GetComponent<Text>().text = bigNumber;
         }
     }
 
@@ -140,7 +177,7 @@ public class MainMenu : MonoBehaviour {
         if (flag)
         {
             // send if so
-            PlayerPrefsManager.__sendCertificateToUserMail(scene, date);
+            //PlayerPrefsManager.__sendCertificateToUserMail(scene, date);
 
             // show pop up that it's sent
             GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/CertificatePopOp").SetActive(true);
@@ -196,7 +233,7 @@ public class MainMenu : MonoBehaviour {
 
             canvas.transform.Find("MainMenu").gameObject.SetActive(false);
             //canvas.transform.Find("Logo").gameObject.SetActive(false);
-           // canvas.transform.Find("OptionsBtn").gameObject.SetActive(false);
+            // canvas.transform.Find("OptionsBtn").gameObject.SetActive(false);
 
             canvas.transform.Find("TutorialPopUp").gameObject.SetActive(true);
         }
@@ -215,11 +252,11 @@ public class MainMenu : MonoBehaviour {
 
     public void OnQuitButtonClick()
     {
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
-        #else
+#else
         Application.Quit();
-        #endif
+#endif
     }
 
     public void OnMainMenuButtonClick()
@@ -237,7 +274,7 @@ public class MainMenu : MonoBehaviour {
         GameObject canvas = GameObject.Find("Canvas");
 
         //canvas.transform.Find("MainMenu").gameObject.SetActive(false);
-		canvas.transform.Find("MainMenu").gameObject.SetActive(false);
+        canvas.transform.Find("MainMenu").gameObject.SetActive(false);
         //canvas.transform.Find("OptionsBtn").gameObject.SetActive(false);
         canvas.transform.Find("Opties").gameObject.SetActive(true);
     }
@@ -247,7 +284,7 @@ public class MainMenu : MonoBehaviour {
         GameObject canvas = GameObject.Find("Canvas");
 
         //canvas.transform.Find("MainMenu").gameObject.SetActive(true);
-		canvas.transform.Find("MainMenu").gameObject.SetActive(true);
+        canvas.transform.Find("MainMenu").gameObject.SetActive(true);
         //canvas.transform.Find("OptionsBtn").gameObject.SetActive(true);
         canvas.transform.Find("Opties").gameObject.SetActive(false);
     }
@@ -257,8 +294,8 @@ public class MainMenu : MonoBehaviour {
         GameObject canvas = GameObject.Find("Canvas");
 
         //canvas.transform.Find("MainMenu").gameObject.SetActive(false);
-		canvas.transform.Find("MainMenu").gameObject.SetActive(false);
-       // canvas.transform.Find("OptionsBtn").gameObject.SetActive(false);
+        canvas.transform.Find("MainMenu").gameObject.SetActive(false);
+        // canvas.transform.Find("OptionsBtn").gameObject.SetActive(false);
         canvas.transform.Find("ControlsUI").gameObject.SetActive(true);
     }
 
@@ -267,7 +304,7 @@ public class MainMenu : MonoBehaviour {
         GameObject canvas = GameObject.Find("Canvas");
 
         //canvas.transform.Find("MainMenu").gameObject.SetActive(true);
-		canvas.transform.Find("MainMenu").gameObject.SetActive(true);
+        canvas.transform.Find("MainMenu").gameObject.SetActive(true);
         //canvas.transform.Find("OptionsBtn").gameObject.SetActive(true);
         canvas.transform.Find("ControlsUI").gameObject.SetActive(false);
     }
@@ -277,7 +314,7 @@ public class MainMenu : MonoBehaviour {
         GameObject canvas = GameObject.Find("Canvas");
 
         //canvas.transform.Find("MainMenu").gameObject.SetActive(false);
-		canvas.transform.Find("MainMenu").gameObject.SetActive(false);
+        canvas.transform.Find("MainMenu").gameObject.SetActive(false);
         //canvas.transform.Find("OptionsBtn").gameObject.SetActive(false);
         canvas.transform.Find("BugReportUI").gameObject.SetActive(true);
     }
@@ -287,7 +324,7 @@ public class MainMenu : MonoBehaviour {
         GameObject canvas = GameObject.Find("Canvas");
 
         //canvas.transform.Find("MainMenu").gameObject.SetActive(true);
-		canvas.transform.Find("MainMenu").gameObject.SetActive(true);
+        canvas.transform.Find("MainMenu").gameObject.SetActive(true);
         //canvas.transform.Find("OptionsBtn").gameObject.SetActive(true);
         canvas.transform.Find("BugReportUI").gameObject.SetActive(false);
 
@@ -305,11 +342,19 @@ public class MainMenu : MonoBehaviour {
     }
 
     public void OnSendEmail()
-	{
-		System.Diagnostics.Process.Start (("mailto:" + eMail + "?subject=" + "Fout melding Care-Up."
-		+ "&body="
-		));
+    {
+        System.Diagnostics.Process.Start(("mailto:" + eMail + "?subject=" + "Fout melding Care-Up."
+        + "&body="
+        ));
         GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set("Uw mailprogramma wordt geopend.");
+    }
+
+    public void ShowReward()
+    {
+        if (!StoreViewModel.ShowRewardDialogue(reward, rewardPanel))
+        {
+            OnRetryButtonClick();
+        }
     }
 
     public void OnRetryButtonClick()
@@ -339,6 +384,29 @@ public class MainMenu : MonoBehaviour {
     {
         Application.OpenURL(url);
     }
+
+    public void OpenUrl_NewWindow(string url)
+    {
+#if UNITY_WEBGL && ! UNITY_EDITOR
+        openWindow(url);
+#else
+        OpenUrl(url);
+#endif
+    }
+
+    public void OpenStoreUrl()
+    {
+        if (string.IsNullOrEmpty(storeUrl))
+            storeUrl = "https://careup.online/cursussen-zorg/";
+
+        OpenUrl_NewWindow(storeUrl);
+    }
+
+#if UNITY_WEBGL 
+
+    [DllImport("__Internal")]
+    private static extern void openWindow(string url);
+#endif
 
     public void OnTutorialButtonClick_Interface()
     {
@@ -396,9 +464,17 @@ public class MainMenu : MonoBehaviour {
         bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
     }
 
-    public void OnTutorialButtonClick_Full () {
+    public void OnTutorialButtonClick_Full()
+    {
         string sceneName = "Tutorial_Full";
         string bundleName = "tutorial_full";
-        bl_SceneLoaderUtils.GetLoader.LoadLevel (sceneName, bundleName);
+        bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
+    }
+
+    public void DownloadCertificate()
+    {
+        EndScoreManager endScoreManager = GameObject.FindObjectOfType<EndScoreManager>();
+        if (endScoreManager != null)
+            endScoreManager.OpenCertificateBtn();
     }
 }

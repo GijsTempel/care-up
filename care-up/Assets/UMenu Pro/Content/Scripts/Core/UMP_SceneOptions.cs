@@ -25,6 +25,7 @@ public class UMP_SceneOptions : MonoBehaviour {
         if (PlayerPrefs.HasKey(UMPKeys.BlendWeight)) { CurrentBW = PlayerPrefs.GetInt(UMPKeys.BlendWeight); }
         if (PlayerPrefs.HasKey(UMPKeys.VSync)) { CurrentVSC = PlayerPrefs.GetInt(UMPKeys.VSync); }
         if (PlayerPrefs.HasKey(UMPKeys.Volumen)) { AudioListener.volume = PlayerPrefs.GetFloat(UMPKeys.Volumen); }
+        if (PlayerPrefs.HasKey(UMPKeys.MenuAudio)) { AudioListener.volume = PlayerPrefs.GetInt(UMPKeys.MenuAudio); }
 
         QualitySettings.SetQualityLevel(CurrentQuality);
         switch (CurrentAS)

@@ -3,59 +3,62 @@ using UnityEngine.UI;
 using Lovatto.SceneLoader;
 using System.Collections;
 using System.Collections.Generic;
-using LoginProAsset;
 using MBS;
 using UnityEngine.SceneManagement;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.ResourceManagement.ResourceProviders;
 
 [RequireComponent(typeof(AudioSource))]
 public class bl_SceneLoader : MonoBehaviour
 {
+    AsyncOperationHandle<SceneInstance> loadHandle;
     [Header("Settings")]
     public SceneSkipType SkipType = SceneSkipType.Button;
-    [Range(0.5f,7)]public float SceneSmoothLoad = 3;
-    [Range(0.5f,7)]public float FadeInSpeed = 2;
-    [Range(0.5f,7)]public float FadeOutSpeed = 2;
+    [Range(0.5f, 7)] public float SceneSmoothLoad = 3;
+    [Range(0.5f, 7)] public float FadeInSpeed = 2;
+    [Range(0.5f, 7)] public float FadeOutSpeed = 2;
     public bool useTimeScale = false;
     [Header("Background")]
     public bool useBackgrounds = true;
     public bool ShowDescription = true;
-    [Range(1,60)]public float TimePerBackground = 5;
-    [Range(0.5f,7)]public float FadeBackgroundSpeed = 2;
-    [Range(0.5f,5)]public float TimeBetweenBackground = 0.5f;
+    [Range(1, 60)] public float TimePerBackground = 5;
+    [Range(0.5f, 7)] public float FadeBackgroundSpeed = 2;
+    [Range(0.5f, 5)] public float TimeBetweenBackground = 0.5f;
     [Header("Tips")]
     public bool RandomTips = false;
-    [Range(1,60)]public float TimePerTip = 5;
-    [Range(0.5f,5)]public float FadeTipsSpeed = 2;
+    [Range(1, 60)] public float TimePerTip = 5;
+    [Range(0.5f, 5)] public float FadeTipsSpeed = 2;
     [Header("Loading")]
     public bool FadeLoadingBarOnFinish = false;
-    [Range(50,1000)]public float LoadingCircleSpeed = 300;
-    [TextArea(2,2)]public string LoadingTextFormat = "{0}";
+    [Range(50, 1000)] public float LoadingCircleSpeed = 300;
+    [TextArea(2, 2)] public string LoadingTextFormat = "{0}";
 
     [Header("Audio")]
-    [Range(0.1f,1)]public float AudioVolume = 1f;
-    [Range(0.5f,5)]public float FadeAudioSpeed = 0.5f;
-    [Range(0.1f,1)]public float FinishSoundVolume = 0.5f;
-    [SerializeField]private AudioClip FinishSound = null;
-    [SerializeField]private AudioClip BackgroundAudio = null;
+    [Range(0.1f, 1)] public float AudioVolume = 1f;
+    [Range(0.5f, 5)] public float FadeAudioSpeed = 0.5f;
+    [Range(0.1f, 1)] public float FinishSoundVolume = 0.5f;
+    [SerializeField] private AudioClip FinishSound = null;
+    [SerializeField] private AudioClip BackgroundAudio = null;
 
     [Header("References")]
-    [SerializeField]private Text SceneNameText = null;
-    [SerializeField]private Text DescriptionText = null;
-    [SerializeField]private Text ProgressText = null;
-    [SerializeField]private Text TipText = null;
-    [SerializeField]private Image BackgroundImage = null;
-    [SerializeField]private Image FilledImage = null;
-    [SerializeField]private Slider LoadBarSlider = null;
-    [SerializeField]private GameObject ContinueUI = null;
-    [SerializeField]private GameObject RootUI = null;
-    [SerializeField]private GameObject FlashImage = null;
-    [SerializeField]private GameObject SkipKeyText = null;
-    [SerializeField]private RectTransform LoadingCircle = null;
-    [SerializeField]private CanvasGroup LoadingCircleCanvas = null;
-    [SerializeField]private CanvasGroup FadeImageCanvas = null;
+    [SerializeField] private Text SceneNameText = null;
+    [SerializeField] private Text DescriptionText = null;
+    [SerializeField] private Text ProgressText = null;
+    [SerializeField] private Text TipText = null;
+    [SerializeField] private Image BackgroundImage = null;
+    [SerializeField] private Image FilledImage = null;
+    [SerializeField] private Slider LoadBarSlider = null;
+    [SerializeField] private GameObject ContinueUI = null;
+    [SerializeField] private GameObject RootUI = null;
+    [SerializeField] private GameObject FlashImage = null;
+    [SerializeField] private GameObject SkipKeyText = null;
+    [SerializeField] private RectTransform LoadingCircle = null;
+    [SerializeField] private CanvasGroup LoadingCircleCanvas = null;
+    [SerializeField] private CanvasGroup FadeImageCanvas = null;
 
     private bl_SceneLoaderManager Manager = null;
-    private AsyncOperation async;
+    private AsyncOperation async = default(AsyncOperation);
     private bool isOperationStarted = false;
     public bool FinishLoad = false;
     private CanvasGroup RootAlpha;
@@ -66,7 +69,7 @@ public class bl_SceneLoader : MonoBehaviour
     private List<string> cacheTips = new List<string>();
     private int CurrentBackground = 0;
     private List<Sprite> cacheBackgrounds = new List<Sprite>();
-    private AudioSource Source = null;
+    private AudioSource audioSource = null;
     private float lerpValue = 0;
     private bool canSkipWithKey = false;
     private bl_SceneLoaderInfo CurrentLoadLevel = null;
@@ -76,18 +79,15 @@ public class bl_SceneLoader : MonoBehaviour
 
     private bool isLoading = false;
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Awake()
     {
         Manager = bl_SceneLoaderUtils.GetSceneLoaderManager();
 
         //Setup Audio Source
-        Source = GetComponent<AudioSource>();
-        Source.volume = 0;
-        Source.loop = true;
-        if (BackgroundAudio != null) { Source.clip = BackgroundAudio; }
+        audioSource = GetComponent<AudioSource>();
+        audioSource.volume = 0;
+        audioSource.loop = true;
+        if (BackgroundAudio != null) { audioSource.clip = BackgroundAudio; }
 
         //Setup UI
         RootUI.SetActive(false);
@@ -96,17 +96,17 @@ public class bl_SceneLoader : MonoBehaviour
         {
             ContinueUI.SetActive(false);
         }
-        if(FlashImage != null) { FlashImage.SetActive(false); }
+        if (FlashImage != null) { FlashImage.SetActive(false); }
         if (FadeImageCanvas != null)
         {
             FadeImageCanvas.alpha = 1;
             StartCoroutine(FadeOutCanvas(FadeImageCanvas));
         }
-        if(SkipKeyText != null) { SkipKeyText.SetActive(false); }
-        if(LoadBarSlider != null) { LoadingBarAlpha = LoadBarSlider.GetComponent<CanvasGroup>(); }
-        if(BackgroundImage != null) { BackgroundAlpha = BackgroundImage.GetComponent<CanvasGroup>(); }
+        if (SkipKeyText != null) { SkipKeyText.SetActive(false); }
+        if (LoadBarSlider != null) { LoadingBarAlpha = LoadBarSlider.GetComponent<CanvasGroup>(); }
+        if (BackgroundImage != null) { BackgroundAlpha = BackgroundImage.GetComponent<CanvasGroup>(); }
         if (Manager.HasTips) { cacheTips = Manager.TipsList; }
-        if(FilledImage != null) { FilledImage.type = Image.Type.Filled; FilledImage.fillAmount = 0; }
+        if (FilledImage != null) { FilledImage.type = Image.Type.Filled; FilledImage.fillAmount = 0; }
         transform.SetAsLastSibling();
     }
 
@@ -121,25 +121,20 @@ public class bl_SceneLoader : MonoBehaviour
         isLoading = false;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Update()
     {
         LoadingRotator();
 
-        if (!isOperationStarted)
+        //if (!isOperationStarted)
+        //    return;
+        //if (async == null)
+        //    return;
+        if (!loadHandle.IsValid())
             return;
-        if (async == null)
-            return;
-
         UpdateUI();
-        SkipWithKey();
+        //SkipWithKey();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void SkipWithKey()
     {
         if (!canSkipWithKey)
@@ -149,21 +144,19 @@ public class bl_SceneLoader : MonoBehaviour
         {
             LoadNextScene();
         }
-
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void UpdateUI()
     {
+
         if (CurrentLoadLevel.LoadingType == LoadingType.Async)
         {
             //Get progress of load level
-            float Extra = (GetSkipType == SceneSkipType.InstantComplete) ? 0 : 0.1f;
-            float p = (async.progress + Extra); //Fix problem of 90%
+            //float Extra = (GetSkipType == SceneSkipType.InstantComplete) ? 0 : 0.1f;
+            //float p = (async.progress + Extra); //Fix problem of 90%
+            float p = loadHandle.PercentComplete;
             lerpValue = Mathf.Lerp(lerpValue, p, DeltaTime * SceneSmoothLoad);
-            if (async.isDone || lerpValue > 0.99f)
+            if (lerpValue > 0.99f)
             {
                 //Called one time what is inside in this function.
                 if (!FinishLoad)
@@ -174,7 +167,7 @@ public class bl_SceneLoader : MonoBehaviour
         }
         else
         {
-            if(lerpValue >= 1)
+            if (lerpValue >= 1)
             {
                 //Called one time what is inside in this function.
                 if (!FinishLoad)
@@ -192,9 +185,6 @@ public class bl_SceneLoader : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void LoadingRotator()
     {
         if (LoadingCircle == null)
@@ -203,15 +193,13 @@ public class bl_SceneLoader : MonoBehaviour
         LoadingCircle.Rotate(-Vector3.forward * 0.01f * LoadingCircleSpeed);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnFinish()
     {
-        BundleLoader loader = GameObject.FindObjectOfType<BundleLoader>();
-        if (loader != null){
+        /*BundleLoader loader = GameObject.FindObjectOfType<BundleLoader>();
+        if (loader != null)
+        {
             loader.ClearLoader();
-        }
+        }*/
         FinishLoad = true;
         if (FlashImage != null) { FlashImage.SetActive(true); }
         //Can skip when next level is loaded.
@@ -236,16 +224,22 @@ public class bl_SceneLoader : MonoBehaviour
             if (SkipKeyText != null) { SkipKeyText.SetActive(true); }
         }
 
-        if (FinishSound != null) { AudioSource.PlayClipAtPoint(FinishSound, transform.position,FinishSoundVolume); }
+        if (FinishSound != null) { AudioSource.PlayClipAtPoint(FinishSound, transform.position, FinishSoundVolume); }
         if (LoadingCircleCanvas != null) { StartCoroutine(FadeOutCanvas(LoadingCircleCanvas, 0.5f)); }
         if (LoadingBarAlpha != null && FadeLoadingBarOnFinish) { StartCoroutine(FadeOutCanvas(LoadingBarAlpha, 1)); }
     }
 
     public void LoadLevel(string level, string bundle = "")
     {
+        if (level == "LoginMenu")
+        {
+            SceneManager.LoadScene(0);
+            return;
+        }
+        
         sceneToLoad = level;
         bundleToLoad = bundle;
-
+        ShowLoadingScreen();
         string scoring_filepath = "wuss_scoring/unity_functions.php";
         string SCORINGConstant = "SCORING";
 
@@ -273,6 +267,8 @@ public class bl_SceneLoader : MonoBehaviour
 
     public void ActualLoadLevel(CML action)
     {
+        // entrance to scene loading, replacing with Addressables method
+
         if (isLoading)
         {
             Debug.Log("Already loading something!");
@@ -300,11 +296,22 @@ public class bl_SceneLoader : MonoBehaviour
             return;
 
         SetupUI(CurrentLoadLevel);
-        StartCoroutine(StartAsyncOperation(CurrentLoadLevel.SceneName, bundle));
+
+        //StartCoroutine(StartAsyncOperation(CurrentLoadLevel.SceneName, bundle));
+        StartCoroutine(NewSceneLoad(CurrentLoadLevel.SceneName));
+
         if (CurrentLoadLevel.LoadingType == LoadingType.Fake)
         {
             StartCoroutine(StartFakeLoading());
         }
+    }
+
+    IEnumerator NewSceneLoad(string name)
+    {
+        name = "Assets/Scenes/" + name + ".unity";
+        AsyncOperationHandle<SceneInstance> handle = Addressables.LoadSceneAsync(name);
+        loadHandle = handle;
+        yield return handle;
     }
 
     // unity is too dumb to allow functions with 2 parameters in editor
@@ -313,10 +320,18 @@ public class bl_SceneLoader : MonoBehaviour
         LoadLevel(level);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="info"></param>
+
+    public void ShowLoadingScreen()
+    {
+        //Show all UI
+        RootAlpha.alpha = 1.0f;
+        RootUI.SetActive(true);
+        if (TipText != null)
+            TipText.text = "";
+        if (LoadBarSlider != null) 
+            LoadBarSlider.value = 0; 
+    }
+
     void SetupUI(bl_SceneLoaderInfo info)
     {
         if (BackgroundImage != null && useBackgrounds)
@@ -327,13 +342,13 @@ public class bl_SceneLoader : MonoBehaviour
                 StartCoroutine(BackgroundTransition());
                 BackgroundImage.color = Color.white;
             }
-            else if(info.Backgrounds != null && info.Backgrounds.Length > 0)
+            else if (info.Backgrounds != null && info.Backgrounds.Length > 0)
             {
                 BackgroundImage.sprite = info.Backgrounds[0];
                 BackgroundImage.color = Color.white;
             }
         }
-        if(SceneNameText != null) { SceneNameText.text = info.DisplayName; }
+        if (SceneNameText != null) { SceneNameText.text = info.DisplayName; }
         if (DescriptionText != null)
         {
             if (ShowDescription) { DescriptionText.text = info.Description; }
@@ -342,7 +357,7 @@ public class bl_SceneLoader : MonoBehaviour
                 DescriptionText.text = string.Empty;
             }
         }
-        if(LoadBarSlider != null) { LoadBarSlider.value = 0; }
+        if (LoadBarSlider != null) { LoadBarSlider.value = 0; }
         if (ProgressText != null)
         {
             ProgressText.text = "Laden";//string.Format(LoadingTextFormat, 0);
@@ -361,17 +376,14 @@ public class bl_SceneLoader : MonoBehaviour
             StartCoroutine(TipsLoop());
         }
         //Show all UI
-        RootAlpha.alpha = 0;
+        RootAlpha.alpha = 1.0f;
         RootUI.SetActive(true);
 
         //start audio loop
-        Source.Play();
+        audioSource.Play();
         StartCoroutine(FadeAudio(true));
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void LoadNextScene()
     {
         //fade audio loop
@@ -379,12 +391,9 @@ public class bl_SceneLoader : MonoBehaviour
         StartCoroutine(LoadNextSceneIE());
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    private IEnumerator StartAsyncOperation(string level, string bundle = "")
+    /*private IEnumerator StartAsyncOperation(string level, string bundle = "")
     {
-        while(RootAlpha.alpha < 1)
+        while (RootAlpha.alpha < 1)
         {
             RootAlpha.alpha += DeltaTime * FadeInSpeed;
             yield return null;
@@ -409,26 +418,18 @@ public class bl_SceneLoader : MonoBehaviour
             isOperationStarted = true;
             yield return async;
         }
-    }
+    }*/
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     IEnumerator StartFakeLoading()
     {
         lerpValue = 0;
-        while(lerpValue < 1)
+        while (lerpValue < 1)
         {
-            lerpValue += Time.deltaTime / CurrentLoadLevel.FakeLoadingTime;          
+            lerpValue += Time.deltaTime / CurrentLoadLevel.FakeLoadingTime;
             yield return new WaitForEndOfFrame();
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     IEnumerator BackgroundTransition()
     {
         while (true)
@@ -440,7 +441,7 @@ public class bl_SceneLoader : MonoBehaviour
                 yield return new WaitForEndOfFrame();
             }
             yield return new WaitForSeconds(TimePerBackground);
-            while(BackgroundAlpha.alpha > 0)
+            while (BackgroundAlpha.alpha > 0)
             {
                 BackgroundAlpha.alpha -= DeltaTime * FadeBackgroundSpeed;
                 yield return new WaitForEndOfFrame();
@@ -450,10 +451,6 @@ public class bl_SceneLoader : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     IEnumerator TipsLoop()
     {
         if (TipText == null)
@@ -501,10 +498,6 @@ public class bl_SceneLoader : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     IEnumerator FadeAudio(bool FadeIn)
     {
         if (BackgroundAudio == null)
@@ -512,25 +505,22 @@ public class bl_SceneLoader : MonoBehaviour
 
         if (FadeIn)
         {
-            while(Source.volume < AudioVolume)
+            while (audioSource.volume < AudioVolume)
             {
-                Source.volume += DeltaTime * FadeAudioSpeed;
+                audioSource.volume += DeltaTime * FadeAudioSpeed;
                 yield return new WaitForEndOfFrame();
             }
         }
         else
         {
-            while (Source.volume > 0)
+            while (audioSource.volume > 0)
             {
-                Source.volume -= DeltaTime * FadeAudioSpeed * 3;
+                audioSource.volume -= DeltaTime * FadeAudioSpeed * 3;
                 yield return new WaitForEndOfFrame();
             }
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     IEnumerator WaitNextTip(float t)
     {
         isTipFadeOut = !isTipFadeOut;
@@ -538,10 +528,6 @@ public class bl_SceneLoader : MonoBehaviour
         StartCoroutine(TipsLoop());
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     private IEnumerator LoadNextSceneIE()
     {
         FadeImageCanvas.alpha = 0;
@@ -550,13 +536,11 @@ public class bl_SceneLoader : MonoBehaviour
             FadeImageCanvas.alpha += DeltaTime * FadeInSpeed;
             yield return null;
         }
-        async.allowSceneActivation = true;
+        if (async != null)
+            async.allowSceneActivation = true;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    private IEnumerator FadeOutCanvas(CanvasGroup alpha,float delay = 0)
+    private IEnumerator FadeOutCanvas(CanvasGroup alpha, float delay = 0)
     {
         yield return new WaitForSeconds(delay);
         while (alpha.alpha > 0)
@@ -566,9 +550,6 @@ public class bl_SceneLoader : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private IEnumerator FadeInCanvas(CanvasGroup alpha, float delay = 0)
     {
         yield return new WaitForSeconds(delay);
@@ -583,9 +564,9 @@ public class bl_SceneLoader : MonoBehaviour
     {
         get
         {
-            if(CurrentLoadLevel != null)
+            if (CurrentLoadLevel != null)
             {
-                if(CurrentLoadLevel.SkipType != SceneSkipType.None)
+                if (CurrentLoadLevel.SkipType != SceneSkipType.None)
                 {
                     return CurrentLoadLevel.SkipType;
                 }

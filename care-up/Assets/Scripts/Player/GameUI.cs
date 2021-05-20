@@ -3,9 +3,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using CareUp.Actions;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class GameUI : MonoBehaviour
 {
+    public AnimatedFingerHint animatedFinger;
     GameObject Player;
     public Animator Blink;
     public Animator IPadBlink;
@@ -16,13 +18,17 @@ public class GameUI : MonoBehaviour
     GameObject closeDialog;
     GameObject donePanelYesNo;
     GameObject WalkToGroupPanel;
+    float autoExitTime = 900f;
+    AutoPlayer autoPlayer;
+    public GameObject activeTalkBobblePoint = null;
+
     public WalkToGroupButton LeftSideButton;
     public WalkToGroupButton RightSideButton;
     public Dictionary<string, WalkToGroupButton> WTGButtons;
-    //WalkToGroup prevWalkToGroup = null;
     private Tutorial_Combining tutorialCombine;
     private Tutorial_UseOn tutorialUseOn;
     private HandsInventory handsInventory;
+    private EndScoreManager scoreManager;
     private ActionManager actionManager;
     private Animator controller;
     private float startTimeOut = 0.5f;
@@ -34,6 +40,12 @@ public class GameUI : MonoBehaviour
     public QuizTab quiz_tab;
     public bool DropLeftBlink = false;
     public bool DropRightBlink = false;
+    //bool generalButtonActive = false;
+    public int stopAutoPlayOnStep = 0;
+    GameObject AutoActionObject;
+
+    public bool LevelEnded = false;
+    public bool showNoTarget_right = false;
 
     GameObject MovementSideButtons;
     public List<string> reqPlaces = new List<string>();
@@ -43,6 +55,10 @@ public class GameUI : MonoBehaviour
     GameObject gameLogic;
     public GameObject TalkBubble;
     GameObject DetailedHintPanel;
+    public GameObject autoplayPanel;
+    protected Toggle autoplayToggle;
+    protected GameObject autoplayFrame;
+    protected Text autoExitLabeb;
 
     public List<string> activeHighlighted = new List<string>();
 
@@ -56,7 +72,6 @@ public class GameUI : MonoBehaviour
     public bool prescriptionButtonBlink;
     public bool recordsButtonBlink;
     public bool paperAndPenButtonblink;
-    public GameObject theoryPanel;
     public GameObject patientInfo;
 
     public GameObject noTargetButton;
@@ -67,7 +82,7 @@ public class GameUI : MonoBehaviour
     public GameObject zoomButtonLeft;
     public GameObject zoomButtonRight;
     public GameObject SubStepsPanel;
-    Text SubStepsText;
+    Text subStepsText;
 
     public bool currentAnimLock = false;
     public GameObject DropLeftButton;
@@ -80,6 +95,11 @@ public class GameUI : MonoBehaviour
     float lastCooldownTime = 0;
     int currentActionsCount = 0;
 
+    public TheoryTab theoryTab;
+
+    private Text pointsTextIpad;
+    private Text percentageTextIpad;
+
     private bool startTimer = false;
     private float targetTime = 0.7f;
     public PersonObject PersonToTalk = null;
@@ -90,6 +110,30 @@ public class GameUI : MonoBehaviour
     PlayerScript ps;
     bool ICPCurrentState = false;
     public bool allowObjectControlUI = true;
+    public static bool encounterStarted = false;
+    InputField AutoplayStopInput;
+    public GameObject PointToObject = null;
+
+    public void ChangeAutoStopValue(int value)
+    {
+        stopAutoPlayOnStep += value;
+        AutoplayStopInput.text = stopAutoPlayOnStep.ToString();
+    }
+
+    public void AutoStopValueChanged()
+    {
+        stopAutoPlayOnStep = int.Parse(AutoplayStopInput.text);
+    }
+
+    public bool AllowAutoPlay(bool forActions = true)
+    {
+        bool result = PlayerPrefsManager.simulatePlayerActions;
+        if (result && forActions)
+            result = !ps.away && !DropLeftBlink && !DropRightBlink && moveButtonToBlink == ItemControlButtonType.None;
+        result = result && (stopAutoPlayOnStep <= 0 || stopAutoPlayOnStep > (actionManager.currentActionIndex));
+        return result;
+    }
+
     public enum ItemControlButtonType
     {
         None,
@@ -113,7 +157,15 @@ public class GameUI : MonoBehaviour
         RecordsBack,
         PrescriptionBack,
         MessageTabBack,
-        Close
+        Close,
+        TalkBubble
+    }
+
+    public void TestOutput()
+    {
+        Debug.LogWarning("removed due to new asset bundle manager");
+        // TODO - new asset bundle
+        //AssetBundleManager.PrintLoadedBundles();
     }
 
     public void UseOn()
@@ -129,6 +181,7 @@ public class GameUI : MonoBehaviour
         if (PersonToTalk == null)
             return;
         PersonToTalk.CreateSelectionDialogue();
+        activeTalkBobblePoint = null;
     }
 
     public void ShowBlockMessage(string Title, string Message)
@@ -138,7 +191,12 @@ public class GameUI : MonoBehaviour
             if (objectsIDsController.cheat)
                 return;
         }
-
+        if (PlayerAnimationManager.IsLongAnimation())
+            return;
+        if (GameObject.Find("Sequences") != null)
+        {
+            return;
+        }
         if (Message == "")
             return;
         BlockTitle.text = Title;
@@ -155,47 +213,64 @@ public class GameUI : MonoBehaviour
 
     public void UseOnNoTarget(bool leftHand = true)
     {
-        if (tutorialUseOn != null && !tutorialUseOn.ventAllowed)
+        GeneralAction generalAction = null;
+        if (!leftHand)
         {
-            return;
+            if (!showNoTarget_right)
+            {
+                bool skipBlocks = false;
+                if (GameObject.FindObjectOfType<PlayerPrefsManager>() != null)
+                    skipBlocks = !GameObject.FindObjectOfType<PlayerPrefsManager>().practiceMode;
+                generalAction = actionManager.CheckGeneralAction();
+            }
         }
 
-        if (leftHand && !handsInventory.LeftHandEmpty())
+        if (generalAction == null)
         {
-            if (actionManager.CompareUseOnInfo(handsInventory.leftHandObject.name, ""))
+            if (tutorialUseOn != null && !tutorialUseOn.ventAllowed)
             {
-                if (handsInventory.LeftHandObject.GetComponent<PickableObject>().Use(true, true))
-                {
-                    UpdateWalkToGtoupUI(false);
-                }
-
-                if (tutorialUseOn != null)
-                {
-                    handsInventory.LeftHandObject.GetComponent<PickableObject>().tutorial_usedOn = true;
-                }
                 return;
             }
-            else
-                actionManager.OnUseOnAction(handsInventory.leftHandObject.name, "");
 
-        }
-        if (!leftHand && !handsInventory.RightHandEmpty())
-        {
-            if (actionManager.CompareUseOnInfo(handsInventory.rightHandObject.name, ""))
+            if (leftHand && !handsInventory.LeftHandEmpty())
             {
-                if (handsInventory.RightHandObject.GetComponent<PickableObject>().Use(false, true))
+                if (actionManager.CompareUseOnInfo(handsInventory.leftHandObject.name, ""))
                 {
-                    UpdateWalkToGtoupUI(false);
-                }
+                    if (handsInventory.LeftHandObject.GetComponent<PickableObject>().Use(true, true))
+                    {
+                        UpdateWalkToGroupUI(false);
+                    }
 
-                if (tutorialUseOn != null)
-                {
-                    handsInventory.RightHandObject.GetComponent<PickableObject>().tutorial_usedOn = true;
+                    if (tutorialUseOn != null)
+                    {
+                        handsInventory.LeftHandObject.GetComponent<PickableObject>().tutorial_usedOn = true;
+                    }
+                    return;
                 }
+                else
+                    actionManager.OnUseOnAction(handsInventory.leftHandObject.name, "");
+
             }
-            else
-                actionManager.OnUseOnAction(handsInventory.rightHandObject.name, "");
+            if (!leftHand && !handsInventory.RightHandEmpty())
+            {
+                if (actionManager.CompareUseOnInfo(handsInventory.rightHandObject.name, ""))
+                {
+                    if (handsInventory.RightHandObject.GetComponent<PickableObject>().Use(false, true))
+                    {
+                        UpdateWalkToGroupUI(false);
+                    }
+
+                    if (tutorialUseOn != null)
+                    {
+                        handsInventory.RightHandObject.GetComponent<PickableObject>().tutorial_usedOn = true;
+                    }
+                }
+                else
+                    actionManager.OnUseOnAction(handsInventory.rightHandObject.name, "");
+            }
         }
+        else
+            GeneralAction(generalAction);
     }
 
     public void OpenRobotUI()
@@ -206,9 +281,14 @@ public class GameUI : MonoBehaviour
         if (PlayerAnimationManager.IsLongAnimation())
             return;
 
+        if (Camera.main == null)
+            return;
+
         RobotManager.UIElementsState[0] = false;
 
         Player.GetComponent<PlayerScript>().OpenRobotUI();
+
+
     }
 
     public void ToggleUsingOnMode()
@@ -219,8 +299,7 @@ public class GameUI : MonoBehaviour
     public void CloseButtonPressed(bool value)
     {
         closeDialog.SetActive(value);
-       // closeButton.SetActive(!value);
-
+        // closeButton.SetActive(!value);
         if (value)
         {
             ps.robotUIopened = true;
@@ -287,6 +366,46 @@ public class GameUI : MonoBehaviour
         }
     }
 
+    public void GeneralAction(GeneralAction generalAction)
+    {
+        if (generalAction != null)
+        {
+            if (actionManager.CheckGeneralAction() == null)
+            {
+                ActionManager.WrongAction(true);
+                actionManager.UpdatePoints(-1);
+                return;
+            }
+
+            GameObject item = GameObject.Find(generalAction.Item);
+
+            PlayerAnimationManager playerAnimationManager = FindObjectOfType<PlayerAnimationManager>();
+            Animator animator;
+
+            if (playerAnimationManager != null)
+            {
+                animator = playerAnimationManager.GetComponent<Animator>();
+
+                if (animator)
+                {
+                    animator.SetTrigger(generalAction.Action);
+                    animator.SetTrigger("S " + generalAction.Action);
+                    actionManager.OnGeneralAction();
+                }
+            }
+            else if (item != null)
+            {
+                animator = item.GetComponent<Animator>();
+
+                if (animator)
+                {
+                    animator.SetTrigger(generalAction.Action);
+                    actionManager.OnGeneralAction();
+                }
+            }
+        }
+    }
+
     public void UpdateWalkToGroupButtons()
     {
         if (WTGButtons == null)
@@ -299,56 +418,78 @@ public class GameUI : MonoBehaviour
             WTGButtons[k].gameObject.SetActive(false);
         }
 
-        int activeGroupButtons = 0;
-        foreach (WalkToGroup g in GameObject.FindObjectsOfType<WalkToGroup>())
-        {
-            switch (g.WalkToGroupType)
-            {
-                case WalkToGroup.GroupType.WorkField:
-                    WTGButtons["WorkField"].setWalkToGroup(g);
-                    WTGButtons["WorkField"].gameObject.SetActive(true);
-                    activeGroupButtons++;
-                    break;
-                case WalkToGroup.GroupType.Doctor:
-                    WTGButtons["Doctor"].setWalkToGroup(g);
-                    WTGButtons["Doctor"].gameObject.SetActive(true);
-                    activeGroupButtons++;
-                    break;
-                case WalkToGroup.GroupType.Patient:
-                    WTGButtons["Patient"].setWalkToGroup(g);
-                    WTGButtons["Patient"].gameObject.SetActive(true);
-                    break;
-                case WalkToGroup.GroupType.Sink:
-                    WTGButtons["Sink"].setWalkToGroup(g);
-                    WTGButtons["Sink"].gameObject.SetActive(true);
-                    activeGroupButtons++;
-                    break;
-            }
-        }
-        if ((!WTGButtons["Sink"].gameObject.activeSelf || activeGroupButtons <= 2) && WalkToGroupPanel.transform.Find("spacer0") != null)
-            WalkToGroupPanel.transform.Find("spacer0").gameObject.SetActive(false);
-        if ((!WTGButtons["Patient"].gameObject.activeSelf || activeGroupButtons < 2) && WalkToGroupPanel.transform.Find("spacer2") != null)
-            WalkToGroupPanel.transform.Find("spacer2").gameObject.SetActive(false);
-        if ((activeGroupButtons < 2) && WalkToGroupPanel.transform.Find("spacer1") != null)
-            WalkToGroupPanel.transform.Find("spacer1").gameObject.SetActive(false);
         foreach (WalkToGroup w in GameObject.FindObjectsOfType<WalkToGroup>())
         {
             w.FindNeighbors();
         }
+        // Find left WalkToGroup
+        WalkToGroup leftWTG = null;
+
+        foreach (WalkToGroup w in GameObject.FindObjectsOfType<WalkToGroup>())
+        {
+            if (w.LeftWalkToGroup == null)
+            {
+                leftWTG = w;
+                break;
+            }
+        }
+        List<WalkToGroup> WTGInOrder = new List<WalkToGroup>();
+        WTGInOrder.Add(leftWTG);
+        int n = 0;
+        while(leftWTG != null && n < 10)
+        {
+            if (leftWTG.RightWalkToGroup != null)
+            {
+                WTGInOrder.Add(leftWTG.RightWalkToGroup);
+            }
+            leftWTG = leftWTG.RightWalkToGroup;
+            n++;
+        }
+
+        string[] buttonNames = { "A", "B", "C", "D" };
+        for(int i = 0; i < WTGInOrder.Count; i++)
+        {
+            if (i > buttonNames.Length)
+                break;
+            WTGButtons[buttonNames[i]].setWalkToGroup(WTGInOrder[i]);
+            WTGButtons[buttonNames[i]].gameObject.SetActive(true);
+        }
+    }
+
+    void ShowWalkToGroupPanel()
+    {
+        WalkToGroupPanel.SetActive(ps.away);
     }
 
     public void HideTheoryTab()
     {
-        GameObject.Find("PatientInfoTabs/Info/TheoryTab/Continue").gameObject.GetComponent<Button>().onClick.AddListener(
-             () => GameObject.FindObjectOfType<PlayerScript>().CloseRobotUI());
+        GameObject.Find("theoryPanel/panel/quizElements/Continue").gameObject.GetComponent<Button>().onClick.AddListener(
+            () => GameObject.FindObjectOfType<PlayerScript>().CloseRobotUI());
+        theoryTab.Show(false);
     }
 
     // Use this for initialization
     void Start()
     {
         gameLogic = GameObject.Find("GameLogic");
+        autoPlayer = GameObject.FindObjectOfType<AutoPlayer>();
+        theoryTab = GameObject.FindObjectOfType<TheoryTab>();
+        autoplayToggle = autoplayPanel.transform.Find("bottomPanel/Toggle").GetComponent<Toggle>();
+        autoplayFrame = autoplayPanel.transform.Find("redRect").gameObject;
+        autoExitLabeb = autoplayPanel.transform.Find("bottomPanel/exitLabel").GetComponent<Text>();
+        autoplayToggle.isOn = PlayerPrefsManager.simulatePlayerActions;
+        autoplayFrame.SetActive(PlayerPrefsManager.simulatePlayerActions);
+        AutoplayStopInput = autoplayPanel.transform.Find("bottomPanel/InputField").GetComponent<InputField>();
+        ChangeAutoStopValue(0);
+        animatedFinger = GameObject.FindObjectOfType<AnimatedFingerHint>();
         objectsIDsController = GameObject.FindObjectOfType<ObjectsIDsController>();
         MovementSideButtons = GameObject.Find("MovementSideButtons");
+
+        pointsTextIpad = GameObject.Find("TopBarUI").transform.Find("GeneralDynamicCanvas")
+            .Find("Points").Find("PointsText").GetComponent<Text>();
+
+        percentageTextIpad = GameObject.Find("TopBarUI").transform.Find("GeneralDynamicCanvas")
+            .Find("Percentage").Find("PointsText").GetComponent<Text>();
 
         prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
         if (prefs != null)
@@ -362,6 +503,8 @@ public class GameUI : MonoBehaviour
         tutorialCombine = GameObject.FindObjectOfType<Tutorial_Combining>();
         tutorialUseOn = GameObject.FindObjectOfType<Tutorial_UseOn>();
         actionManager = GameObject.FindObjectOfType<ActionManager>();
+        scoreManager = GameObject.FindObjectOfType<EndScoreManager>();
+
         ActionManager.BuildRequirements();
         zoomButtonLeft.SetActive(false);
         zoomButtonRight.SetActive(false);
@@ -383,14 +526,17 @@ public class GameUI : MonoBehaviour
         {
             ActionManager.practiceMode = prefs.practiceMode;
         }
-
-#if !UNITY_EDITOR
+#if !(UNITY_EDITOR || DEVELOPMENT_BUILD)
         if(GameObject.Find("ActionsPanel") != null)
             GameObject.Find("ActionsPanel").SetActive(false);
+        if(GameObject.Find("AssetDebugPanel") != null)
+            GameObject.Find("AssetDebugPanel").SetActive(false);
+        autoplayPanel.SetActive(false);
 #endif
+
         WalkToGroupPanel = GameObject.Find("MovementButtons");
         Player = GameObject.Find("Player");
-        closeButton = transform.Find("CloseBtn").gameObject;
+        closeButton = transform.Find("CloseButtonPanel/CloseBtn").gameObject;
         closeDialog = transform.Find("CloseDialog").gameObject;
         closeDialog.SetActive(false);
         donePanel = transform.Find("DonePanel").gameObject;
@@ -415,31 +561,19 @@ public class GameUI : MonoBehaviour
                 }
                 else
                 {
-                    string key = "";
-                    switch (b.name)
-                    {
-                        case "MoveWorkfield":
-                            key = "WorkField";
-                            break;
-                        case "Movepatient":
-                            key = "Patient";
-                            break;
-                        case "MoveCollegue":
-                            key = "Doctor";
-                            break;
-                        case "MoveSink":
-                            key = "Sink";
-                            break;
-                    }
-                    if (key != "")
-                    {
-                        WTGButtons.Add(key, b);
-                    }
+                    WTGButtons.Add(b.name, b);
                 }
             }
         }
         UpdateWalkToGroupButtons();
-        UpdateWalkToGtoupUI(true);
+        UpdateWalkToGroupUI(true);
+
+        foreach (InteractableObject o in Resources.FindObjectsOfTypeAll<InteractableObject>())
+        {
+            o.assetSource = InteractableObject.AssetSource.Included;
+        }
+        WalkToGroupPanel.SetActive(false);
+        Invoke("ShowWalkToGroupPanel", 0.5f);
     }
 
     public HighlightObject AddHighlight(Transform target, string prefix, HighlightObject.type hl_type = HighlightObject.type.NoChange, float startDelay = 0, float LifeTime = float.PositiveInfinity)
@@ -447,7 +581,10 @@ public class GameUI : MonoBehaviour
         string hl_name = prefix + "_" + target.name;
         if (GameObject.Find(hl_name) != null)
             return null;
-        GameObject hl_obj = Instantiate(Resources.Load<GameObject>("Prefabs\\HighlightObject"), target.position, new Quaternion()) as GameObject;
+
+        // assets/resources/necessaryprefabs
+
+        GameObject hl_obj = Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/HighlightObject"), target.position, new Quaternion()) as GameObject;
 
         HighlightObject hl = hl_obj.GetComponent<HighlightObject>();
         hl.name = hl_name;
@@ -463,6 +600,7 @@ public class GameUI : MonoBehaviour
     public void RemoveHighlight(string prefix, string _name)
     {
         string hl_name = prefix + "_" + _name;
+
         if (GameObject.Find(hl_name) != null)
         {
             if (GameObject.Find(hl_name).GetComponent<HighlightObject>())
@@ -470,10 +608,30 @@ public class GameUI : MonoBehaviour
         }
     }
 
-    //----------------------------------------------------------------------------------------------------------
+    void AutoPlay()
+    {
+        if (!currentAnimLock)
+        {
+            Invoke("AutoPlay", 1f);
+            return;
+        }
+
+        if (AutoActionObject != null)
+        {
+            if (AutoActionObject != null)
+            {
+                ps.AutoClick(AutoActionObject);
+                AutoActionObject = null;
+                activeTalkBobblePoint = null;
+            }
+        }
+    }
+   
     public void UpdateHelpHighlight()
     {
+        PointToObject = null;
         bool practiceMode = true;
+
         if (prefs != null)
             practiceMode = prefs.practiceMode;
         if (!practiceMode)
@@ -488,18 +646,80 @@ public class GameUI : MonoBehaviour
 
         if (!handsInventory.RightHandEmpty())
             RemoveHighlight(prefix, handsInventory.rightHandObject.name);
-
+        bool autoObjectSelected = false;
+        bool AlloweAutoAction = AllowAutoPlay();
+        
+        
+        string AutoMoveTo = "";
         foreach (Action a in actionManager.IncompletedActions)
         {
             string[] ObjectNames = new string[0];
             a.ObjectNames(out ObjectNames);
 
-            //if (a.Type == ActionManager.ActionType.ObjectUse ||
-            //a.Type == ActionManager.ActionType.ObjectDrop)
+            if (PlayerPrefsManager.simulatePlayerActions && ps.away)
+            {
+                if (a.placeRequirement != "")
+                {
+                    if (AutoMoveTo == "")
+                        AutoMoveTo = a.placeRequirement;
+                    else if (a.Type == ActionManager.ActionType.PersonTalk)
+                        AutoMoveTo = a.placeRequirement;
+                    
+                }
+            }
+            if (AutoMoveTo != "")
+                AlloweAutoAction = false;
+
+            // if (a.Type == ActionManager.ActionType.PersonTalk)
+            //     AlloweAutoAction = AllowAutoPlay(false);
+            if (AlloweAutoAction && !autoObjectSelected)
+            {
+                if (ObjectNames.Length == 1)
+                {
+                    if (a.Type == ActionManager.ActionType.PersonTalk)
+                    {
+                        foreach (PersonObject po in GameObject.FindObjectsOfType<PersonObject>())
+                        {
+                            if (po.hasTopic(a._topic))
+                            {
+                                AutoActionObject = po.gameObject.GetComponentInChildren<PersonObjectPart>().gameObject;
+                                autoObjectSelected = true;
+                                Invoke("AutoPlay", 1f);
+                            }
+                        }
+                    }
+                    else if (GameObject.Find(ObjectNames[0]) != null)
+                    {
+                        AutoActionObject = GameObject.Find(ObjectNames[0]);
+                        autoObjectSelected = true;
+                        Invoke("AutoPlay", 1f);
+                    }
+                        
+                }
+                else
+                {
+                    if (ObjectNames[1] == "" && GameObject.Find(ObjectNames[0]) != null)
+                    {
+                        AutoActionObject = GameObject.Find(ObjectNames[0]);
+                        autoObjectSelected = true;
+                        Invoke("AutoPlay", 1f);
+                    }
+
+                }
+            }
             foreach (string objectToUse in ObjectNames)
             {
                 if (GameObject.Find(objectToUse) != null)
                 {
+                    if (AlloweAutoAction && !autoObjectSelected && a.Type != ActionManager.ActionType.PersonTalk)
+                    {
+                        if (!handsInventory.IsInHand(GameObject.Find(objectToUse)))
+                        {
+                            AutoActionObject = GameObject.Find(objectToUse);
+                            autoObjectSelected = true;
+                            Invoke("AutoPlay", 1f);
+                        }
+                    }
                     HighlightObject.type hl_type = HighlightObject.type.NoChange;
                     if (GameObject.Find(objectToUse).GetComponent<WorkField>() != null)
                     {
@@ -513,6 +733,13 @@ public class GameUI : MonoBehaviour
                         h.setGold(true);
                     }
                     newHLObjects.Add(objectToUse);
+                    if (PointToObject == null)
+                        PointToObject = GameObject.Find(objectToUse);
+                        if (PointToObject != null)
+                        {
+                            if (PointToObject.GetComponent<PersonObject>() != null)
+                                PointToObject = null;
+                        }
                 }
                 else
                 {
@@ -526,21 +753,18 @@ public class GameUI : MonoBehaviour
                             break;
                         }
                     }
-                    if (usableHL != null)
-                    {
-                        HighlightObject h = AddHighlight(usableHL.transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f, 0.5f));
-                        if (h != null)
-                        {
-                            h.setGold(true);
-                        }
-                        newHLObjects.Add(usableHL.name);
-                    }
-                    else
+                    if (usableHL == null)
                     {
                         foreach (PickableObject p in GameObject.FindObjectsOfType<PickableObject>())
                         {
                             if (p.prefabInHands == objectToUse && p.prefabInHands != "")
                             {
+                                if (AlloweAutoAction && !autoObjectSelected)
+                                {
+                                    AutoActionObject = p.gameObject;
+                                    autoObjectSelected = true;
+                                    Invoke("AutoPlay", 1f);
+                                }
                                 HighlightObject h = AddHighlight(p.transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f, 0.5f));
                                 if (h != null)
                                 {
@@ -550,12 +774,29 @@ public class GameUI : MonoBehaviour
                             }
                         }
                     }
+                    else
+                    {
+                        if (AlloweAutoAction && !autoObjectSelected)
+                        {
+                            AutoActionObject = usableHL;
+                            autoObjectSelected = true;
+                            Invoke("AutoPlay", 1f);
+                        }
+                        HighlightObject h = AddHighlight(usableHL.transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f, 0.5f));
+                        if (h != null)
+                        {
+                            h.setGold(true);
+                        }
+                        newHLObjects.Add(usableHL.name);
+                    }
                 }
             }
         }
+        if (PlayerPrefsManager.simulatePlayerActions && ps.away)
+            if (AutoMoveTo != "")
+                ps.WalkToGroup_(GameObject.Find(AutoMoveTo).GetComponent<WalkToGroup>());
 
         //clear highlights
-
         for (int i = 0; i < activeHighlighted.Count; i++)
         {
             if (!newHLObjects.Contains(activeHighlighted[i]))
@@ -572,7 +813,14 @@ public class GameUI : MonoBehaviour
 
     public void ShowDonePanel(bool value)
     {
+        if (PlayerPrefsManager.simulatePlayerActions)
+        {
+            if (GameObject.FindObjectOfType<AutoPlayer>() != null)
+                if (GameObject.FindObjectOfType<AutoPlayer>().toStartAutoplaySession)
+                    CloseGame();
+        }
         donePanel.SetActive(value);
+        LevelEnded = value;
     }
 
     public void EndScene()
@@ -590,19 +838,25 @@ public class GameUI : MonoBehaviour
     }
 
     void OnGUI()
-    {
-#if UNITY_EDITOR
-        GUI.Label(new Rect(0, 0, 100, 100), ((int)(1.0f / Time.smoothDeltaTime)).ToString());
+    {/*
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        GUIStyle style = new GUIStyle();
+        style.normal.textColor = new Color(1f, 0f, 0f);
+        style.fontSize = 30;
+        // ****Show FPS 
+        GUI.Label(new Rect(0, 0, 100, 100), ((int)(1.0f / Time.smoothDeltaTime)).ToString(), style);
         if (objectsIDsController != null)
         {
             if (objectsIDsController.cheat)
-                GUI.Label(new Rect(30, 0, 100, 100), "Cheat enabled");
+                GUI.Label(new Rect(30, 0, 100, 100), "Cheat enabled", style);
         }
-        //debugSS = PlayerAnimationManager.animTimeout.ToString();
-        GUI.Label(new Rect(0, 30, 1000, 100), debugSS);
-#endif
-    }
+        //****Show FPS end.
 
+        //debugSS = PlayerAnimationManager.animTimeout.ToString();
+        GUI.Label(new Rect(0, 30, 1000, 100), debugSS, style);
+#endif
+  */  }
+    
     public void DropFromHand(bool leftHand = true)
     {
         PickableObject item = null;
@@ -615,12 +869,14 @@ public class GameUI : MonoBehaviour
             GameObject ghost = null;
             List<PickableObject> ghosts = item.ghostObjects.OrderBy(x =>
                     Vector3.Distance(x.transform.position, ps.transform.position)).ToList();
-
-            ghost = ghosts[0].gameObject;
-            if (leftHand)
-                handsInventory.DropLeft(ghost);
-            else
-                handsInventory.DropRight(ghost);
+            if (ghosts.Count > 0)
+            {
+                ghost = ghosts[0].gameObject;
+                if (leftHand)
+                    handsInventory.DropLeft(ghost);
+                else
+                    handsInventory.DropRight(ghost);
+            }
 
             for (int i = item.ghostObjects.Count - 1; i >= 0; --i)
             {
@@ -629,6 +885,7 @@ public class GameUI : MonoBehaviour
                 Destroy(g);
             }
         }
+        ActionManager.UpdateRequirements();
     }
 
     public void UpdateButtonsBlink()
@@ -641,7 +898,7 @@ public class GameUI : MonoBehaviour
 
         foreach (ItemControlButton b in GameObject.FindObjectsOfType<ItemControlButton>())
         {
-            b.updateBlinkState();
+            b.UpdateBlinkState();
         }
         foreach (ButtonBlinking b in GameObject.FindObjectsOfType<ButtonBlinking>())
         {
@@ -687,20 +944,56 @@ public class GameUI : MonoBehaviour
         return 0;
     }
 
-    public void ShowTheory(bool isSequence = false)
+    public void ShowIpad(bool isSequence = false)
     {
-        void ShowIPad()
+        void ShowTheoryTab()
         {
-            if (!string.IsNullOrEmpty(actionManager.Message))
+            if (!GameObject.FindObjectOfType<QuizTab>())
             {
-                GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
-                GameObject.FindObjectOfType<GameUI>().theoryPanel.SetActive(true);
-                GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Title").GetComponent<Text>().text = actionManager.MessageTitle;
-                GameObject.FindObjectOfType<GameUI>().theoryPanel.transform.Find("ScrollViewMessege/Viewport/Content/Message").GetComponent<Text>().text = actionManager.Message;
+                if (!string.IsNullOrEmpty(actionManager.Message))
+                {
+                    if (!GameObject.FindObjectOfType<PlayerScript>().robotUIopened)
+                    {
+                        GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
+                        theoryTab.ShowTheory(actionManager.MessageTitle, actionManager.Message);
+                    }
+                    actionManager.Message = null;
+                    actionManager.ShowTheory = false;
+                }
             }
         }
 
-        if (actionManager.ShowTheory)
+        void ShowRandomQuizTab()
+        {
+            if (!GameObject.FindObjectOfType<PlayerScript>().robotUIopened)
+            {
+                quiz_tab.NextQuizQuestion(true);
+                RandomQuiz.showQuestion = false;
+            }
+        }
+
+        void ShowEncounter()
+        {
+            if (!GameObject.FindObjectOfType<PlayerScript>().robotUIopened)
+            {
+                bool randomValue = System.Convert.ToBoolean(Random.Range(0, 2));
+                if (randomValue)
+                    PlayerScript.TriggerQuizQuestion(QuizTab.encounterDelay, true);
+                else
+                    QuizTab.encounterDelay = -1f;
+
+                Debug.Log("Encounter quiz with result: " + randomValue);
+                encounterStarted = true;
+            }
+        }
+
+        void SetTargetTime(float time)
+        {
+            startTimer = false;
+            targetTime = time;
+        }
+
+        if (actionManager.ShowTheory || RandomQuiz.showQuestion || (QuizTab.encounterDelay >= 0))
         {
             startTimer = true;
         }
@@ -712,21 +1005,50 @@ public class GameUI : MonoBehaviour
 
         if (targetTime <= 0.0f)
         {
-            ShowIPad();
-            startTimer = false;
-            targetTime = 0.7f;
+            if (QuizTab.encounterDelay >= 0)
+            {
+                if (encounterStarted == false)
+                {
+                    ShowEncounter();
+                    SetTargetTime(0.4f);
+                }
+            }
+            else if (actionManager.Message != null)
+            {
+                ShowTheoryTab();
+                SetTargetTime(0.4f);
+            }
+            else if (RandomQuiz.showQuestion)
+            {
+                ShowRandomQuizTab();
+                SetTargetTime(0.4f);
+            }
+        }
+        else if (isSequence && (QuizTab.encounterDelay > 0))
+        {
+            ShowEncounter();
         }
         else if (isSequence && actionManager.ShowTheory)
         {
-            ShowIPad();
+            ShowTheoryTab();
             actionManager.Message = null;
         }
+        else if (isSequence && RandomQuiz.showQuestion)
+        {
+            ShowRandomQuizTab();
+        }
+    }
 
-        actionManager.ShowTheory = false;
+    public RectTransform GetActiveTalkBubblePoint()
+    {
+        if (activeTalkBobblePoint != null)
+            return activeTalkBobblePoint.GetComponent<RectTransform>();
+        return null;
     }
 
     public void PlaceTalkBubble(GameObject person)
     {
+        activeTalkBobblePoint = null;
         if (person == null)
             return;
         PersonObject personObject = person.GetComponent<PersonObject>();
@@ -743,11 +1065,40 @@ public class GameUI : MonoBehaviour
             TalkBubble.GetComponent<TutorialHintsN>().WorldObject = personObject.TalkBubbleAnchor;
             TalkBubble.GetComponent<TutorialHintsN>().Update();
             PersonToTalk = personObject;
+            activeTalkBobblePoint = TalkBubble.transform.Find("cloud").gameObject;
+        }
+        else
+        {
+            TalkBubble.SetActive(false);
         }
     }
 
     void Update()
     {
+#if (UNITY_EDITOR || DEVELOPMENT_BUILD)
+        if (PlayerPrefsManager.simulatePlayerActions)
+        {
+            if (autoPlayer != null)
+            {
+                if (autoPlayer.toStartAutoplaySession)
+                {
+                    autoExitTime -= Time.deltaTime;
+                    if (autoExitTime < 0 && autoExitTime > -15f)
+                    {
+                        autoExitTime = -30;
+                        Debug.LogError("!! Exited from the scene before completion !!");
+                        CloseGame();
+                    }
+                    float t = autoExitTime;
+                    if (autoExitTime < 0)
+                        t = 0;
+                    System.TimeSpan interval = System.TimeSpan.FromSeconds(t);
+                    autoExitLabeb.text = "Automatic exit in: " + string.Format("{0:D2}:{1:D2}", interval.Minutes, interval.Seconds);
+                }
+            }
+        }
+
+#endif
         if (!timeOutEnded)
         {
             startTimeOut -= Time.deltaTime;
@@ -757,12 +1108,14 @@ public class GameUI : MonoBehaviour
 
                 ActionManager.BuildRequirements();
                 ActionManager.UpdateRequirements();
-
                 UpdateHelpHighlight();
-                UpdateWalkToGtoupUI(true);
+   
+                if (actionManager.CheckGeneralAction() == null)
+                    UpdateHelpHighlight();
+
+                UpdateWalkToGroupUI(true);
             }
         }
-        //UpdateWalkToGtoupUI(false);
         if (toDelayUpdateHint)
         {
             if (current_UpdateHintDelay > 0)
@@ -783,15 +1136,24 @@ public class GameUI : MonoBehaviour
         if (allowObjectControlUI)
         {
             animationUiBlock = !PlayerAnimationManager.IsLongAnimation();
+            if (Camera.main == null)
+                animationUiBlock = false;
         }
 
+        if (donePanelYesNo.activeSelf)
+        {
+            ItemControlPanel.SetActive(false);
+            patientInfo.SetActive(false);
+            return;
+        }
         //to show object control panel if no animation block and action block
         bool showItemControlPanel = allowObjectControlUI && animationUiBlock;
 
         //if some object was added or removed to hands
         if (showItemControlPanel)
         {
-            ShowTheory();
+            ShowIpad();
+
             int lHash = 0;
             if (handsInventory.leftHandObject != null)
                 lHash = handsInventory.leftHandObject.gameObject.GetHashCode();
@@ -810,6 +1172,7 @@ public class GameUI : MonoBehaviour
                 ActionManager.UpdateRequirements();
                 UpdateHelpHighlight();
                 currentActionsCount = actionManager.actionsCount;
+
                 //hide panel for the first frame of hands state change
                 //prevent quick blinking of buttons before animation starts
                 showItemControlPanel = false;
@@ -826,14 +1189,14 @@ public class GameUI : MonoBehaviour
                 bool showZoomRight = false;
 
                 bool showNoTarget = false;
-                bool showNoTarget_right = false;
+                showNoTarget_right = false;
 
                 if (!LEmpty)
                 {
                     DropLeftButton.SetActive(true);
                     if (handsInventory.leftHandObject.GetComponent<ExaminableObject>() != null)
                         showZoomLeft = true;
-                    if (actionManager.CompareUseOnInfo(handsInventory.leftHandObject.name, "", "", true))
+                    if (actionManager.CompareUseOnInfo(handsInventory.leftHandObject.name, "", "", false))
                     {
                         showNoTarget = true;
                         noTargetButton.transform.GetChild(0).GetComponent<Text>().text =
@@ -874,7 +1237,7 @@ public class GameUI : MonoBehaviour
 
                     if (handsInventory.rightHandObject.GetComponent<ExaminableObject>() != null)
                         showZoomRight = true;
-                    if (actionManager.CompareUseOnInfo(handsInventory.rightHandObject.name, "", "", true))
+                    if (actionManager.CompareUseOnInfo(handsInventory.rightHandObject.name, "", "", false))
                     {
                         showNoTarget_right = true;
                         noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text =
@@ -908,18 +1271,12 @@ public class GameUI : MonoBehaviour
                 zoomButtonLeft.SetActive(showZoomLeft);
                 zoomButtonRight.SetActive(showZoomRight);
                 noTargetButton.SetActive(showNoTarget);
-                noTargetButton_right.SetActive(showNoTarget_right);
-                //if (showNoTarget)
-                //    decombineButton.SetActive(false);
-                //if(showNoTarget_right)
-                //    decombineButton_right.SetActive(false);
 
+                if (actionManager.CheckGeneralAction() == null && !decombineButton_right.activeSelf)
+                    noTargetButton_right.SetActive(showNoTarget_right);
+                else
+                    noTargetButton_right.SetActive(!decombineButton_right.activeSelf);
 
-                //decombineButton.SetActive(showDecomb && REmpty && !showNoTarget);
-                //if(decombineButton.activeSelf)
-                //decombineButton.GetComponent<Animator>().SetTrigger("BlinkOn");
-
-                //decombineButton_right.SetActive(showDecomb && LEmpty && !showNoTarget_right);
                 combineButton.SetActive(showCombin);
             }
 
@@ -928,21 +1285,22 @@ public class GameUI : MonoBehaviour
                 cooldownTime = 1.0f;
             }
             lastCooldownTime = cooldownTime;
+
+            currentItemControlPanelState = showItemControlPanel;
+
             if (cooldownTime > 0)
             {
                 cooldownTime -= Time.deltaTime;
-            }
-            currentItemControlPanelState = showItemControlPanel;
-            if (cooldownTime > 0)
-            {
                 showItemControlPanel = false;
-
             }
+
             if (PlayerScript.actionsLocked)
                 showItemControlPanel = false;
-            ItemControlPanel.SetActive(showItemControlPanel);
-            MovementSideButtons.SetActive(showItemControlPanel);
 
+            ItemControlPanel.SetActive(showItemControlPanel);
+            patientInfo.SetActive(showItemControlPanel);
+            MovementSideButtons.SetActive(showItemControlPanel);
+            animatedFinger.gameObject.SetActive(showItemControlPanel && !theoryTab.gameObject.activeSelf);
             ICPCurrentState = ItemControlPanel.activeSelf;
         }
 
@@ -951,13 +1309,29 @@ public class GameUI : MonoBehaviour
             currentAnimLock = false;
     }
 
+    public void ShowNoTargetButton(string buttonText = "")
+    {
+        if (decombineButton_right.activeSelf)
+            return;
+        if (!handsInventory.RightHandEmpty())
+            if (actionManager.CompareUseOnInfo(handsInventory.rightHandObject.name, "", "", false))
+                return;
+        //if (noTargetButton_right.activeSelf)
+        noTargetButton_right.SetActive(true);
+        if (!string.IsNullOrEmpty(buttonText))
+            noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text = buttonText;
+        else
+            noTargetButton_right.transform.GetChild(0).GetComponent<Text>().text =
+                actionManager.CurrentButtonText(null);
+    }
 
-    public void UpdateWalkToGtoupUI(bool value)
+    public void UpdateWalkToGroupUI(bool value)
     {
         allowObjectControlUI = value;
         if (!value)
             cooldownTime = 1.0f;
         MovementSideButtons.SetActive(false);
+        animatedFinger.gameObject.SetActive(false);
         if (!allowObjectControlUI && !LeftSideButton.gameObject.activeSelf && !RightSideButton.gameObject.activeSelf &&
             !WalkToGroupPanel.activeSelf && !ItemControlPanel.activeSelf)
         {
@@ -974,6 +1348,7 @@ public class GameUI : MonoBehaviour
             RightSideButton.gameObject.SetActive(false);
             WalkToGroupPanel.SetActive(false);
             ItemControlPanel.SetActive(false);
+            patientInfo.SetActive(false);
         }
         else
         {
@@ -1038,7 +1413,7 @@ public class GameUI : MonoBehaviour
     public void SetHintPanelAlpha(float alpha)
     {
         Color panelColor = DetailedHintPanel.GetComponent<Image>().color;
-        panelColor.a = alpha;
+        panelColor.a = alpha * 0.7f;
         DetailedHintPanel.GetComponent<Image>().color = panelColor;
         foreach (Text t in DetailedHintPanel.GetComponentsInChildren<Text>())
         {
@@ -1074,19 +1449,22 @@ public class GameUI : MonoBehaviour
         {
             GameObject currentHintPanel = null;
 
-            currentHintPanel = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/UI/HintPanel"), DetailedHintPanel.transform.Find("HintContainer").transform);
+            currentHintPanel = Instantiate<GameObject>(Resources.Load<GameObject>("NecessaryPrefabs/UI/HintPanel"),
+                DetailedHintPanel.transform.Find("HintContainer").transform);
+            currentHintPanel.name = "HintPanel";
             hintText = currentHintPanel.transform.Find("Text").gameObject.GetComponent<Text>();
-            hintText.text = actionManager.CurrentDescription[i];
+            hintText.text = (actionManager.CurrentActionType == ActionManager.ActionType.SequenceStep) ?
+                "Wat ga je doen?" : actionManager.CurrentDescription[i];
 
             for (int y = 0; y < subTasks.Count; y++)
             {
                 if (subTasks[y].subindex == i)
                 {
-                    if (Resources.Load<GameObject>("Prefabs/UI/SubtaskHints") != null)
+                    if (Resources.Load<GameObject>("NecessaryPrefabs/UI/SubtaskHints") != null)
                     {
                         if (!subTasks[y].completed)
                         {
-                            GameObject subtaskPanel = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/UI/SubtaskHints"), currentHintPanel.transform);
+                            GameObject subtaskPanel = Instantiate<GameObject>(Resources.Load<GameObject>("NecessaryPrefabs/UI/SubtaskHints"), currentHintPanel.transform);
                             subTaskText = subtaskPanel.transform.Find("Text").GetComponent<Text>();
                             subTaskText.text = subTasks[y].requirement;
                         }
@@ -1095,6 +1473,32 @@ public class GameUI : MonoBehaviour
             }
             float alpha = DetailedHintPanel.GetComponent<Image>().color.a;
             SetHintPanelAlpha(alpha);
+        }
+    }
+
+    public void AutoPlayModeChanged()
+    {
+
+        PlayerPrefsManager.simulatePlayerActions = autoplayToggle.isOn;
+        if (autoPlayer != null)
+        {
+            autoplayFrame.SetActive(PlayerPrefsManager.simulatePlayerActions);
+            autoExitLabeb.text = "";
+            autoPlayer.toStartAutoplaySession = false;
+        }
+    }
+
+    public void UpdateIpadInfo()
+    {
+        if (pointsTextIpad.gameObject.activeSelf)
+        {
+            pointsTextIpad.text = ActionManager.Points.ToString();
+        }
+
+        if (percentageTextIpad.gameObject.activeSelf)
+        {
+            if (scoreManager != null)
+                percentageTextIpad.text = scoreManager.CalculatePercentage().ToString() + "%";
         }
     }
 }

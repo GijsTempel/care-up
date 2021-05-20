@@ -1,42 +1,467 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Scenes>
-    <group name="basic">
-      <scene id="INSIG" demo="true" bundleName="insinj" name="Injecteren insuline met navulbare insulinepen" description="Plaatsen van pennaald op de navulbare insulinepen. Testen van de insulinepen. Instellen van juiste dosering. Loodrecht onderhuids inspuiten van de insuline." sceneName="Insulin Injection" image="icon_syringe" validated="true" totalPoints="1"/>
-     
+  <group name="basic">
 
-      <scene id="THHD"  demo="true" bundleName="thhd" name="Techniek handdesinfectie" description="Techniek handdesinfectie" sceneName="Scenes_HandHygiene_Alcohol" image="icon_handhygiene" validated="true" totalPoints="1"/>
+    <scene id="PFBIO"
+       isInProducts="Covid|Full"
+       bundleName="scene/scenes_covid"
+       name="Covid-19-vaccin van Pfizer-BioNtech injecteren"
+       description=""
+       sceneName="scenes_covid"
+       image="icon_syringe"
+       validated="false"
+       demo="true"
+       freeCertificate="true"
+       totalPoints="0"/>
 
-      <scene id="OSTMOPS" bundleName="ostomy_care_ops" name="Verwisselen huidplaat en stomazakje eendelig systeem" description="" sceneName="Scenes_Ostomy_Care_One_Part_System" image="icon_syringe" totalPoints="1"/>
-      <scene id="SOC"  bundleName="scenes_ostomy_care" name="Verwisselen huidplaat en stomazakje tweedelig systeem" description="" sceneName="Scenes_Ostomy_Care" image="icon_ostromy" totalPoints="1"/>
+    <scene id="VACMOD"
+      isInProducts="Covmod|Full"
+      bundleName="scene/scenes_covid_moderna"
+      name="Covid-19-vaccin van Moderna injecteren"
+      description=""
+      sceneName="scenes_covid_moderna"
+      image="icon_syringe"
+      validated="false"
+      demo="true"
+      freeCertificate="true"
+      totalPoints="0"/>
 
-      <scene id="GFTP" bundleName="gftp" name="Inbrengen neusmaagsonde" description="" sceneName="Scenes_Gastric_Feeding_Tube" image="icon_gastric_feeding_tube" />
 
-      <scene id="CATVSO" bundleName="catvso" name="Blaaskatheterisatie bij een vrouw, verblijfskatheter" description="Blaaskatheterisatie bij vrouw, verblijfskatheter met steriele opvangzak." sceneName="Scenes_Catherisation_Women" image="icon_catheter" validated="true" totalPoints="5" />
-      <scene id="CATMSO" bundleName="catmso" name="Blaaskatheterisatie bij een man, verblijfskatheter" description="Blaaskatheterisatie bij man, verblijfskatheter met steriele opvangzak." sceneName="Scenes_Catherisation_Male" image="icon_catheter" />
-      <scene id="CATMSO" bundleName="bsvs" name="Blaasspoelen met spoelzakje via verblijfskatheter" description="Blaasspoelen met spoelzakje via verblijfskatheter" sceneName="Scenes_bladder_irrigation_through_catheter" image="icon_catheter" />
+    <scene id="BMVS"
+           isInProducts="CathM|Katheter|Full"
+           bundleName="scene/scenes_catherisation_male"
+           name="Blaaskatheterisatie bij een man, verblijfskatheter"
+           description="Blaaskatheterisatie bij man, verblijfskatheter met steriele opvangzak."
+           sceneName="Scenes_Catherisation_Male"
+           image="icon_catheter"
+           validated="true"
+           totalPoints="2"
+		   url="https://careup.online/cursussen-zorg/blaaskatheterisatie-man-verblijfskatheter/"/>
 
-      <scene id="BGM" bundleName="bloodglucose_bundle" name="Bloedglucosewaarde meten via vingerprik en bloedglucosemeter" description="Bloedglucosewaarde meten via vingerprik en bloedglucosemeter" sceneName="Scenes_Bloodglucose_Measurement" image="icon_thermometer" />
+	  <scene id="BMVS"
+		   mainScene="Scenes_Catherisation_Male"
+           bundleName="scene/scenes_catherisation_male_in_house"
+           sceneName="Scenes_Catherisation_Male_In_House"
+           type="in_house"/>
+	  
+    <scene id="VVSO"
+           isInProducts="CathW|Katheter|Full"
+           bundleName="scene/scenes_catherisation_women"
+           name="Blaaskatheterisatie bij een vrouw, verblijfskatheter"
+           description="Blaaskatheterisatie bij vrouw, verblijfskatheter met steriele opvangzak."
+           sceneName="Scenes_Catherisation_Women"
+           image="icon_catheter"
+           validated="true"
+           totalPoints="1" 
+		   url ="https://careup.online/cursussen-zorg/blaaskatheterisatie-vrouw-verblijfskatheter/"/>
 
-      <scene id="THHS" bundleName="thhs" name="Techniek handreiniging" description="Techniek handreiniging met zeep" sceneName="Scenes_HandHygiene_Soap" image="icon_handhygiene" validated="true" totalPoints="1"/>
+	  <scene id="VVSO"
+		   mainScene="Scenes_Catherisation_Women"
+           bundleName="scene/scenes_catherisation_women_in_house"
+           sceneName="Scenes_Catherisation_Women_In_House"
+           type="in_house"/>
 
-      <scene id="ISSI" bundleName="isic" name="Inbrengen Saf-T-Intima subcutane infuuscanule" description="Inbrengen Saf-T-Intima subcutane infuuscanule." sceneName="Scenes_Saf-T-Intima_Insertion" image="icon_syringe" />
-      <scene id="MSSI" bundleName="msic" name="Toedienen medicijnen via Saf-T-Intima subcutane infuuscanule" description="Toedienen medicijnen via Saf-T-Intima subcutane infuuscanule." sceneName="Scenes_Medication_Saf-T-Intima" image="icon_pill" />
+    <scene id="CATMSO"
+           isInProducts="Spoel|Katheter|Full"
+           bundleName="scene/scenes_bladder_irrigation_through_catheter"
+           name="Blaasspoelen met spoelzakje via verblijfskatheter"
+           description="Blaasspoelen met spoelzakje via verblijfskatheter"
+           sceneName="Scenes_bladder_irrigation_through_catheter"
+           image="icon_catheter"
+           validated="true"
+           totalPoints="1"
+		   url ="https://careup.online/cursussen-zorg/blaasspoelen-spoelzakje-verblijfskatheter/"/>
 
-      <scene id="SMPA" bundleName="smpa" name="Voorbereiden medicijn injecteren ampul" description="" sceneName="Scene_Medication_Preparation_Ampoule" image="icon_syringe" />
-      <scene id="SMPD" bundleName="smpd" name="Voorbereiden medicijn injecteren oplossing" description="" sceneName="Scene_Medication_Preparation_Dissolve" image="icon_syringe" />
-      <scene id="SMPF" bundleName="smpf" name="Voorbereiden medicijn injecteren flacon" description="" sceneName="Scene_Medication_Preparation_Flacon" image="icon_syringe" />
+	  <scene id="CATMSO"
+		   mainScene="Scenes_bladder_irrigation_through_catheter"
+           bundleName="scene/scenes_bladder_irrigation_through_catheter_in_house"
+           sceneName="Scenes_bladder_irrigation_through_catheter_In_House"
+           type="in_house"/>
 
-      <scene id="IILTGF" bundleName="injintf" name="Injecteren intramusculair (loodrechttechniek)" description="" sceneName="Injection" image="icon_syringe" validated="true" totalPoints="1"/>
+    <scene id="BGM"
+           isInProducts="Blood|Full|Suiker"
+           bundleName="scene/scenes_bloodglucose_measurement"
+           name="Bloedglucosewaarde meten via vingerprik"
+           description="Bloedglucosewaarde meten via vingerprik en bloedglucosemeter"
+           sceneName="Scenes_Bloodglucose_Measurement"
+           image="icon_thermometer"
+           validated="true"
+           totalPoints="1"
+		   url ="https://careup.online/cursussen-zorg/bloedglucosewaarde-meten-vingerprikker-bloedglucosemeter/"/>
+	  
+	  <scene id="BGM"
+	       mainScene="Scenes_Bloodglucose_Measurement"
+           bundleName="scene/scenes_bloodglucose_measurement_in_house"
+           sceneName="Scenes_Bloodglucose_Measurement_In_House"
+           type="in_house"/>
 
-      <scene id="ISHTGF" bundleName="injsubf" name="Injecteren subcutaan (huidplooitechniek)" description="" sceneName="Injection Subcutaneous" image="icon_syringe" validated="true" totalPoints="1"/>
+    <scene id="INSIG"
+           demo="true"
+           isInProducts="Insul|Full|Suiker"
+           bundleName="scene/insulin_injection"
+           name="Subcutaan injecteren met insulinepen"
+           description="Plaatsen van pennaald op de navulbare insulinepen. Testen van de insulinepen. Instellen van juiste dosering. Loodrecht onderhuids inspuiten van de insuline."
+           sceneName="Insulin Injection"
+           image="icon_syringe"
+           validated="true"
+           totalPoints="1"/>
 
-      <scene id="FRAXI" bundleName="fraxiinj" name="Injecteren subcutaan (loodrechttechniek - Fraxiparine)" description="Sbcutaan injecteren met kant-en-klare fraxiparine spuit." sceneName="Fraxiparine_Injecteren" image="icon_syringe" validated="true" totalPoints="1"/>
+    <scene id="INSIG"
+           mainScene="Insulin Injection"
+           bundleName="scene/insulin_injection_in_house"
+           sceneName="Insulin Injection_In_House"
+           type="in_house"/>
 
-      <scene id="TMMW" bundleName="scenes_medicine_cheek_pouch" name="Toedienen medicijnen in wangzak" description="Toedienen medicijnen in wangzak" sceneName="Scenes_Medicine_Cheek_Pouch" image="icon_pill" />
-      <scene id="TMMT" bundleName="tmmt" name="Toedienen medicijnen onder tong" description="Toedienen medicijnen onder tong." sceneName="Scenes_medicine_mouth" image="icon_pill" />
-         </group>
+    <scene id="IILTGF"
+           demo="true"
+           isInProducts="IntraL|Inject|Full"
+           bundleName="scene/injection"
+           name="Injecteren intramusculair (loodrechttechniek)"
+           description=""
+           sceneName="Injection"
+           image="icon_syringe"
+           validated="true"
+           totalPoints="1"/>
+	  
+	  <scene id="IILTGF"
+           mainScene="Injection"
+           bundleName="scene/injection_in_house"
+           sceneName="Injection_In_House"
+           type="in_house"/>
 
-    <group name="_DEV">
-        <scene name="InjectionArt" bundleName="" description="" />
-    </group>
+    <scene id="SCII"
+           isInProducts="Infuus|Full"
+           bundleName="scene/Scene_Insert_Infusion"
+           name="Inbrengen canule perifeer infuus"
+           description=""
+           sceneName="Scene_Insert_Infusion"
+           image="icon_syringe"
+           validated="false"
+           totalPoints="0"/>
+
+    <scene id="SCII"
+		       mainScene="Scene_Insert_Infusion"
+		       bundleName="scene/scene_insert_infusion_in_house"
+		       sceneName="Scene_Insert_Infusion_In_House"
+		       type="in_house"/>
+
+    <scene id="GFTP"
+           isInProducts="Sonde|Full|SondePakket"
+           bundleName="scene/scenes_gastric_feeding_tube"
+           name="Inbrengen neusmaagsonde"
+           description=""
+           sceneName="Scenes_Gastric_Feeding_Tube"
+           image="icon_gastric_feeding_tube"
+           validated="true"
+           totalPoints="1"
+		   url ="https://careup.online/cursussen-zorg/inbrengen-neusmaagsonde/"/>
+
+	  <scene id="GFTP"
+           mainScene="Scenes_Gastric_Feeding_Tube"
+           bundleName="scene/scenes_gastric_feeding_tube_in_house"
+           sceneName="Scenes_Gastric_Feeding_Tube_In_House"
+           type="in_house"/>
+
+    <scene id="MSSI"
+           isInProducts="InbrSaf|Canule|Full"
+           bundleName="scene/scenes_saf-t-intima_insertion"
+           name="Inbrengen Saf-T-Intima subcutane infuuscanule"
+           description="Inbrengen Saf-T-Intima subcutane infuuscanule."
+           sceneName="Scenes_Saf-T-Intima_Insertion"
+           image="icon_syringe"
+           validated="true"
+           totalPoints="1"
+		   url="https://careup.online/cursussen-zorg/inbrengen-saf-t-intima-subcutane-infuuscanule/"/>
+
+	  <scene id="MSSI"
+           mainScene="Scenes_Saf-T-Intima_Insertion"
+           bundleName="scene/scenes_saf-t-intima_insertion_in_house"
+           sceneName="Scenes_Saf-T-Intima_Insertion_In_House"
+           type="in_house"/>
+
+    <scene id="ISHTGF"
+           isInProducts="SubH|Inject|Full"
+           bundleName="scene/injection_subcutaneous"
+           name="Injecteren subcutaan (huidplooitechniek)"
+           description=""
+           sceneName="Injection Subcutaneous"
+           image="icon_syringe"
+           validated="true"
+           totalPoints="1"
+		   url="https://careup.online/cursussen-zorg/injecteren-subcutaan-huidplooitechniek/"/>
+
+    <scene id="ISHTGF"
+           mainScene="Injection Subcutaneous"
+           bundleName="scene/injection_subcutaneous_in_house"
+           sceneName="Injection_Subcutaneous_In_House"
+           type="in_house"/>
+
+    <scene id="SCAED"
+           bundleName="scene/scenes_aed"
+           isInProducts="AED|Full"
+           name="Reanimatie met AED (1 persoon)"
+           description=""
+           sceneName="Scenes_AED"
+           image="icon_syringe"
+		   url="https://careup.online/cursussen-zorg/reanimatie-met-aed-1-persoon/"/>
+
+    <scene id="FRAXI"
+           isInProducts="SubL|Inject|Full"
+           bundleName="scene/fraxiparine_injecteren"
+           name="Injecteren subcutaan (loodrechttechniek - Fraxiparine)"
+           description="Sbcutaan injecteren met kant-en-klare fraxiparine spuit."
+           sceneName="Fraxiparine_Injecteren"
+           image="icon_syringe"
+           validated="true"
+           totalPoints="1"
+		   url="https://careup.online/cursussen-zorg/injecteren-subcutaan-loodrechttechniek-fraxiparine/"/>
+
+    <scene id="FRAXI"
+           mainScene="Fraxiparine_Injecteren"
+           bundleName="scene/fraxiparine_injecteren_in_house"
+           sceneName="Fraxiparine_Injecteren_In_House"
+           type="in_house"/>
+
+    <scene id="THD"
+           isInProducts="HandAlc|Full|HandClean"
+           bundleName="scene/scenes_handhygiene_alcohol"
+           name="Techniek handdesinfectie met handalcohol"
+           description="Techniek handdesinfectie"
+           sceneName="Scenes_HandHygiene_Alcohol"
+           image="icon_handhygiene"
+           validated="true"
+           totalPoints="1"
+		   url="https://careup.online/cursussen-zorg/techniek-handdesinfectie/"/>
+
+	  <scene id="THD"
+           mainScene="Scenes_HandHygiene_Alcohol"
+           bundleName="scene/scenes_handhygiene_alcohol_in_house"
+           sceneName="Scenes_HandHygiene_Alcohol_In_House"
+           type="in_house"/>
+
+    <scene id="THR"
+           isInProducts="Hand|Full|HandClean"
+           bundleName="scene/scenes_handhygiene_soap"
+           name="Techniek handen wassen met water en zeep"
+           description="Techniek handreiniging met zeep"
+           sceneName="Scenes_HandHygiene_Soap"
+           image="icon_handhygiene"
+           validated="true"
+           totalPoints="1"
+		   url="https://careup.online/cursussen-zorg/techniek-handreiniging/"/>
+
+    <scene id="TMMW"
+           isInProducts="Wang|Mond|Full"
+           bundleName="scene/scenes_medicine_cheek_pouch"
+           name="Toedienen medicijnen in wangzak"
+           description="Toedienen medicijnen in wangzak"
+           sceneName="Scenes_Medicine_Cheek_Pouch"
+           image="icon_pill"
+           validated="true"
+           totalPoints="1"
+		   url="https://careup.online/cursussen-zorg/toedienen-medicijnen-wangzak/"/>
+	  
+	  <scene id="TMMW"
+		   mainScene="Scenes_Medicine_Cheek_Pouch"
+           bundleName="scene/scenes_medicine_cheek_pouch_in_house"
+           sceneName="Scenes_Medicine_Cheek_Pouch_In_House"
+           type="in_house"/>
+
+    <scene id="ANWP"
+       isInProducts="Full|Pump|SondePakket"
+       bundleName="scene/scenes_feedingwithpump"
+       name="Toedienen voeding via neus-maagsonde met pomp"
+       description=""
+       sceneName="Scenes_FeedingWithPump"
+       image="icon_catheter"
+       validated="true"
+       totalPoints="1"
+       url="https://careup.online/cursussen-zorg/toedienen-voeding-via-neus-maagsonde-met-pomp/"/>
+
+    <scene id="ANWP"
+		   mainScene="Scenes_FeedingWithPump"
+           bundleName="scene/scenes_feedingwithpump_in_house"
+           sceneName="Scenes_FeedingWithPump_In_House"
+           type="in_house"/>
+
+    <scene id="AMVP"
+   isInProducts="Full|Peg|SondePakket"
+   bundleName="scenes/AdministerMedicineViaPEG"
+   name="Toedienen medicijnen via PEG-sonde"
+   description=""
+   sceneName="Scenes_AdministerMedicineViaPEG"
+   image="icon_catheter"
+   validated="false"
+   totalPoints="0"
+   url="https://careup.online/cursussen-zorg/toedienen-medicatie-via-peg-sonde/"/>
+    
+    <scene id="AMVP"
+		   mainScene="Scenes_AdministerMedicineViaPEG"
+           bundleName="scene/scenes/AdministerMedicineViaPEG_In_House"
+           sceneName="Scenes_AdministerMedicineViaPEG_In_House"
+           type="in_house"/>
+
+
+    <scene id="TMOT" 
+           isInProducts="Tong|Mond|Full"
+           bundleName="scene/scenes_medicine_mouth"
+           name="Toedienen medicijnen onder tong"
+           description="Toedienen medicijnen onder tong."
+           sceneName="Scenes_medicine_mouth"
+           image="icon_pill"
+           validated="true"
+           totalPoints="1" 
+		   url="https://careup.online/cursussen-zorg/toedienen-medicijnen-onder-tong/"/>
+
+	  <scene id="TMOT"
+	       mainScene="Scenes_medicine_mouth"
+           bundleName="scene/scenes_medicine_mouth_in_house"
+           sceneName="Scenes_medicine_mouth_In_House"
+           type="in_house"/>
+
+    <scene id="ISSI" 
+           isInProducts="ToeSaf|Canule|Full"
+           bundleName="scene/scenes_medication_saf-t-intima"
+           name="Toedienen medicijnen via subcutane infuuscanule bolusinjectie"
+           description="'Toedienen medicijnen via subcutane infuuscanule bolusinjectie."
+           sceneName="Scenes_Medication_Saf-T-Intima"
+           image="icon_pill"
+           validated="true"
+           totalPoints="1"
+		   url="https://careup.online/cursussen-zorg/toedienen-medicijnen-subcutane-infuuscanule-bolusinjectie/"/>
+
+	  <scene id="ISSI"
+	       mainScene="Scenes_Medication_Saf-T-Intima"
+           bundleName="scene/scenes_medication_saf-t-intima_in_house"
+           sceneName="Scenes_Medication_Saf-T-Intima_In_House"
+           type="in_house"/>
+
+    <scene id="OSTMOPS"
+           isInProducts="StoEen|Stoma|Full"
+           bundleName="scene/scenes_ostomy_care_one_part_system"
+           name="Verwisselen huidplaat en stomazakje eendelig systeem"
+           description=""
+           sceneName="Scenes_Ostomy_Care_One_Part_System"
+           image="icon_syringe"
+           validated="true"
+           totalPoints="1"
+		   url="https://careup.online/cursussen-zorg/verwisselen-huidplaat-en-stomazakje-eendelig-systeem/"/>
+
+	  <scene id="OSTMOPS"
+		  mainScene="Scenes_Ostomy_Care_One_Part_System"
+		  bundleName="scene/scenes_ostomy_care_one_part_system_in_house"
+		  sceneName="Scenes_Ostomy_Care_One_Part_System_In_House"
+		  type="in_house"/>
+	  
+    <scene id="SOC" 
+           isInProducts="StoTwee|Stoma|Full"
+           bundleName="scene/scenes_ostomy_care"
+           name="Verwisselen huidplaat en stomazakje tweedelig systeem"
+           description=""
+           sceneName="Scenes_Ostomy_Care"
+           image="icon_ostromy"
+           validated="true"
+           totalPoints="1"
+		   url="https://careup.online/cursussen-zorg/verwisselen-huidplaat-en-stomazakje-tweedelig-systeem/"/>
+
+	  <scene id="SOC"
+	       mainScene="Scenes_Ostomy_Care"
+           bundleName="scene/scenes_ostomy_care_inhouse"
+           sceneName="Scenes_Ostomy_Care_InHouse"
+           type="in_house"/>
+
+    <scene id="VSV"
+           isInProducts="CathSup|Katheter|Full"
+           bundleName="scene/scenes_catherisation_supertubular"
+           name="Verwisselen suprapubische verblijfskatheter"
+           description=""
+           sceneName="Scenes_Catherisation_Supertubular"
+           image="icon_catheter"
+           validated="true"
+           totalPoints="1"
+		   url="https://careup.online/cursussen-zorg/verwisselen-suprapubische-verblijfskatheter/"/>
+
+	  <scene id="VSV"
+		   mainScene="Scenes_Catherisation_Supertubular"
+           bundleName="scene/scenes_catherisation_supertubular_in_house"
+           sceneName="Scenes_Catherisation_Supertubular_In_House"
+           type="in_house"/>
+
+    <scene id="SMPA"
+           isInProducts="Amp|Inject|Full"
+           bundleName="scene/scene_medication_preparation_ampoule"
+           name="Voorbereiden medicijn injecteren ampul"
+           description=""
+           sceneName="Scene_Medication_Preparation_Ampoule"
+           image="icon_syringe"
+           validated="true"
+           totalPoints="1"
+		   url="https://careup.online/cursussen-zorg/voorbereiden-medicijn-injecteren-ampul/"/>
+	  
+    <scene id="SMPA"
+	       mainScene="Scene_Medication_Preparation_Ampoule"
+           bundleName="scene/scene_medication_preparation_ampoule_in_house"
+           sceneName="Scene_Medication_Preparation_Ampoule_In_House"
+           type="in_house"/>
+	  
+    <scene id="SMPF" 
+           isInProducts="Fla|Inject|Full"
+           bundleName="scene/scene_medication_preparation_flacon"
+           name="Voorbereiden medicijn injecteren flacon"
+           description=""
+           sceneName="Scene_Medication_Preparation_Flacon"
+           image="icon_syringe"
+           validated="true"
+           totalPoints="1"
+		   url="https://careup.online/cursussen-zorg/voorbereiden-medicijn-injecteren-flacon/"/>
+	  
+	  <scene id="SMPF"
+	       mainScene="Scene_Medication_Preparation_Flacon"
+           bundleName="scene/scene_medication_preparation_flacon_in_house"
+           sceneName="Scene_Medication_Preparation_Flacon_In_House"
+           type="in_house"/>
+	  
+
+    <scene id="SMPD" 
+           isInProducts="Opl|Inject|Full"
+           bundleName="scene/scene_medication_preparation_dissolve"
+           name="Voorbereiden medicijn injecteren oplossing"
+           description=""
+           sceneName="Scene_Medication_Preparation_Dissolve"
+           image="icon_syringe"
+           validated="true"
+           totalPoints="1"
+		   url="https://careup.online/cursussen-zorg/voorbereiden-medicijn-injecteren-oplossing/"/>
+	  
+	  <scene id="SMPD"
+	       mainScene="Scene_Medication_Preparation_Dissolve"
+           bundleName="scene/scene_medication_preparation_dissolve_in_house"
+           sceneName="Scene_Medication_Preparation_Dissolve_In_House"
+           type="in_house"/>
+
+    <scene id="ZOKR"
+isInProducts="Zwacht|Full"
+bundleName="scene/scenes_bandaging"
+name="Zwachtelen onderbeen met korte rek zwachtels"
+description=""
+sceneName="Scenes_Bandaging"
+image="icon_syringe"
+validated="true"
+           
+totalPoints="1"
+           url="https://careup.online/cursussen-zorg/zwachtelen-onderbeen-met-korte-rek-zwachtels/"/>
+
+    <scene id="ZOKR"
+		   mainScene="Scenes_Bandaging"
+           bundleName="scene/scenes_bandaging_in_house"
+           sceneName="Scenes_Bandaging_In_House"
+           type="in_house"/>
+
+  </group>
+
+  <group name="_DEV">
+    <scene name="InjectionArt"
+           bundleName="scene/"
+           description="" />
+  </group>
 </Scenes>

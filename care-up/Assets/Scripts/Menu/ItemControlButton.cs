@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
+
 
 public class ItemControlButton : MonoBehaviour
 {
@@ -6,15 +8,13 @@ public class ItemControlButton : MonoBehaviour
     GameUI gameUI;
     PlayerPrefsManager prefs;
 
-
     void Start()
     {
         gameUI = GameObject.FindObjectOfType<GameUI>();
         prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
-
     }
 
-    public void updateBlinkState()
+    public void UpdateBlinkState()
     {
         if (prefs != null)
             if (!prefs.practiceMode)
@@ -30,7 +30,6 @@ public class ItemControlButton : MonoBehaviour
         {
             if (gameUI.DropLeftBlink)
             {
-                //GetComponent<Animator>().SetTrigger("BlinkOn");
                 toBlink = true;
             }
         }
@@ -38,48 +37,60 @@ public class ItemControlButton : MonoBehaviour
         {
             if (gameUI.DropRightBlink)
             {
-                //GetComponent<Animator>().SetTrigger("BlinkOn");
                 toBlink = true;
             }
         }
         else if (buttonType == GameUI.ItemControlButtonType.MoveLeft || buttonType == GameUI.ItemControlButtonType.MoveRight)
         {
-            if (!gameUI.DropRightBlink && !gameUI.DropLeftBlink)
+            if (gameUI.moveButtonToBlink == buttonType)
             {
-                if (gameUI.moveButtonToBlink == buttonType)
-                {
-                    {
-                        //GetComponent<Animator>().SetTrigger("BlinkOn");
-                        toBlink = true;
-                    }
-                }
+                toBlink = true;
             }
+        }
+        else if (buttonType == GameUI.ItemControlButtonType.Records)
+        {
+            if (gameUI.recordsButtonBlink)
+                toBlink = true;
+        }
+        else if (buttonType == GameUI.ItemControlButtonType.Prescription)
+        {
+            if (gameUI.prescriptionButtonBlink)
+                toBlink = true;
+        }
+        else if (buttonType == GameUI.ItemControlButtonType.PaperAndPen)
+        {
+            if (gameUI.paperAndPenButtonblink && !gameUI.LevelEnded)
+                toBlink = true;
         }
         else if (gameUI.buttonToBlink == buttonType && !directionActive)
         {
             {
-                //GetComponent<Animator>().SetTrigger("BlinkOn");
                 toBlink = true;
             }
         }
-
-
-        if (!toBlink) 
+        if (!toBlink)
         {
-            if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ItemBlink"))
-                GetComponent<Animator>().SetTrigger("BlinkOff");
+            if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ItemBlink") 
+                || GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Blink"))
+                    GetComponent<Animator>().SetTrigger("BlinkOff");
+            //GetComponent<Button>().onClick.Invoke();
         }
-        else if (!GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ItemBlink"))
+        else if (!(GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ItemBlink") 
+            || GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Blink")))
+        {
+            //GameObject.FindObjectOfType<AnimatedFingerHint>().MoveTo(GetComponent<RectTransform>().position);
             GetComponent<Animator>().SetTrigger("BlinkOn");
+        }
+    }
 
-
-
+    public void StopBlinking()
+    {
+        GetComponent<Animator>().SetTrigger("BlinkOff");
     }
 
     private void OnEnable()
     {
         prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
-
-        updateBlinkState();
-    }   
+        UpdateBlinkState();
+    }
 }

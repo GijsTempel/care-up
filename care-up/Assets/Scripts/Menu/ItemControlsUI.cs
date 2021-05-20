@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using CareUp.Actions;
+using System;
 
-public class ItemControlsUI : MonoBehaviour {
-
+public class ItemControlsUI : MonoBehaviour
+{
     public bool oldInitDisabled = true;
 
     public GameObject initedObject;
@@ -26,6 +28,7 @@ public class ItemControlsUI : MonoBehaviour {
     private GameObject combineButton;
     private GameObject dropButton;
     private GameObject discardButton;
+    private GeneralAction generalAction;
 
     public Vector2 cursorOffset;
 
@@ -51,14 +54,14 @@ public class ItemControlsUI : MonoBehaviour {
         UIhover = false;
     }
 
-    void Awake () {
-
+    void Awake()
+    {
         controls = GameObject.Find("GameLogic").GetComponent<Controls>();
         handsInventory = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
         cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
         actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
         tutorial = GameObject.Find("GameLogic").GetComponent<TutorialManager>();
-       
+
         pickButton = transform.Find("PickButton").gameObject;
         examineButton = transform.Find("ExamineButton").gameObject;
         useButton = transform.Find("UseButton").gameObject;
@@ -78,7 +81,7 @@ public class ItemControlsUI : MonoBehaviour {
 
         useOnNTtext = useOnNTButton.transform.GetChild(0).GetComponent<Text>().text;
         useText = useButton.transform.GetChild(0).GetComponent<Text>().text;
-        
+
         //------------
 
         EventTrigger.Entry event1 = new EventTrigger.Entry();
@@ -97,12 +100,12 @@ public class ItemControlsUI : MonoBehaviour {
         closeButton.GetComponent<EventTrigger>().triggers.Add(event1);
         closeButton.GetComponent<EventTrigger>().triggers.Add(event2);
         closeButton.GetComponent<EventTrigger>().triggers.Add(event3);
-        
+
         pickButton.AddComponent<EventTrigger>();
         pickButton.GetComponent<EventTrigger>().triggers.Add(event1);
         pickButton.GetComponent<EventTrigger>().triggers.Add(event2);
         pickButton.GetComponent<EventTrigger>().triggers.Add(event3);
-        
+
         examineButton.AddComponent<EventTrigger>();
         examineButton.GetComponent<EventTrigger>().triggers.Add(event1);
         examineButton.GetComponent<EventTrigger>().triggers.Add(event2);
@@ -132,9 +135,9 @@ public class ItemControlsUI : MonoBehaviour {
         combineButton.GetComponent<EventTrigger>().triggers.Add(event1);
         combineButton.GetComponent<EventTrigger>().triggers.Add(event2);
         combineButton.GetComponent<EventTrigger>().triggers.Add(event3);
-        
+
         tutorialCombine = GameObject.FindObjectOfType<Tutorial_Combining>();
-        tutorialUseOn = GameObject.FindObjectOfType<Tutorial_UseOn> ();
+        tutorialUseOn = GameObject.FindObjectOfType<Tutorial_UseOn>();
     }
 
     public void Init(GameObject iObject)
@@ -143,7 +146,7 @@ public class ItemControlsUI : MonoBehaviour {
         {
             return;
         }
-        
+
         if (player == null)
         {
             player = GameObject.FindObjectOfType<PlayerScript>();
@@ -152,6 +155,13 @@ public class ItemControlsUI : MonoBehaviour {
         if (PlayerAnimationManager.IsLongAnimation())
             return;
         initedObject = iObject;
+        generalAction = actionManager.CheckGeneralAction();
+
+        if (generalAction != null)
+        {
+            useOnNTButton.SetActive(true);
+            useOnNTButton.transform.GetChild(0).GetComponent<Text>().text = generalAction.ButtonText;
+        }
 
         if (initedObject != null && initedObject.GetComponent<InteractableObject>() != null)
         {
@@ -199,9 +209,6 @@ public class ItemControlsUI : MonoBehaviour {
                 useOnNTButton.SetActive(false);
                 combineButton.SetActive(false);
             }
-
-            // rip close button ?
-            //closeButton.SetActive(true);
 
             //talkin removed
             if (talkButton.activeSelf)
@@ -254,17 +261,14 @@ public class ItemControlsUI : MonoBehaviour {
                 useOnNTButton.transform.GetChild(0).GetComponent<Text>().text =
                     (actionManager.CompareUseOnInfo(initedObject.name, "") ?
                     actionManager.CurrentButtonText(initedObject.name) : useOnNTtext);
-                
+
                 useButton.transform.GetChild(0).GetComponent<Text>().text =
-                    (actionManager.CompareUseObject(initedObject.name)) ? 
+                    (actionManager.CompareUseObject(initedObject.name)) ?
                     actionManager.CurrentButtonText(initedObject.name) : useText;
-                    
+
                 useOnNTButton.SetActive(actionManager.CompareUseOnInfo(initedObject.name, ""));
                 useButton.SetActive(actionManager.CompareUseObject(initedObject.name));
 
-                //bool discard = initedObject.GetComponent<PickableObject>() != null
-                //    && initedObject.GetComponent<PickableObject>().destroyOnDrop == true;
-                //discardButton.SetActive(discard);
                 discardButton.SetActive(false); // for now disable discard button
 
                 initedObject.GetComponent<InteractableObject>().Reset();
@@ -272,18 +276,18 @@ public class ItemControlsUI : MonoBehaviour {
                 instantCloseFixFlag = true;
             }
 
-            if (!pickButton.activeSelf && 
-                !examineButton.activeSelf && 
-                !useButton.activeSelf && 
-                !talkButton.activeSelf && 
-                !useOnButton.activeSelf && 
-                !useOnNTButton.activeSelf && 
+            if (!pickButton.activeSelf &&
+                !examineButton.activeSelf &&
+                !useButton.activeSelf &&
+                !talkButton.activeSelf &&
+                !useOnButton.activeSelf &&
+                !useOnNTButton.activeSelf &&
                 !combineButton.activeSelf &&
                 !discardButton.activeSelf)
             {
                 Close();
             }
-            
+
             if (oldInitDisabled)
             {
                 // must be last, after all the checks in Init and with bypass=true
@@ -294,8 +298,8 @@ public class ItemControlsUI : MonoBehaviour {
 
     public void Close(bool bypass = false)
     {
-        if (instantCloseFixFlag && !bypass) {
-            
+        if (instantCloseFixFlag && !bypass)
+        {
             instantCloseFixFlag = false;
             return;
         }
@@ -345,21 +349,16 @@ public class ItemControlsUI : MonoBehaviour {
             cameraMode.selectedObject = initedObject.GetComponent<ExaminableObject>();
             if (cameraMode.selectedObject != null) // if there is a component
             {
-                if (tutorialUseOn != null) {
+                if (tutorialUseOn != null)
+                {
                     tutorialUseOn.examined = true;
                 }
                 cameraMode.selectedObject.OnExamine();
                 controls.ResetObject();
             }
-            /*else if (initedObject.GetComponent<SystemObject>() != null)
-            {
-                cameraMode.doorSelected = controls.SelectedObject.GetComponent<SystemObject>();
-                cameraMode.doorSelected.Use();
-            }*/
         }
 
-        
-        Close ();
+        Close();
     }
 
     public void Pick()
@@ -381,10 +380,16 @@ public class ItemControlsUI : MonoBehaviour {
                             if (item.prefabInHands != "")
                             {
                                 item.SavePosition();
-                                GameObject replaced = handsInventory.CreateObjectByName(item.prefabInHands, Vector3.zero);
-                                replaced.GetComponent<PickableObject>().SavePosition(item.SavedPosition, item.SavedRotation, true);
-                                Destroy(item.gameObject);
-                                item = replaced.GetComponent<PickableObject>();
+                                GameObject replaced = null;
+                                handsInventory.CreateObjectByName(item.prefabInHands, Vector3.zero, callback => replaced = callback);
+                                if (replaced != null)
+                                {
+                                    replaced.GetComponent<PickableObject>().SavePosition(item.SavedPosition, item.SavedRotation, true);
+                                    Destroy(item.gameObject);
+                                    item = replaced.GetComponent<PickableObject>();
+                                    item.transform.position = item.SavedPosition;
+                                    item.transform.rotation = item.SavedRotation;
+                                }
                             }
 
                             if (handsInventory.PickItem(item))
@@ -407,9 +412,6 @@ public class ItemControlsUI : MonoBehaviour {
                     else
                     {
                         string message = "Volg de tips links bovenin het scherm om verder te gaan.";
-                        //RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
-                        //messageCenter.NewMessage("Volg de tips!", message, RobotUIMessageTab.Icon.Warning);
-
                         GameObject.FindObjectOfType<GameUI>().ShowBlockMessage("Volg de tips!", message);
                     }
 
@@ -447,7 +449,8 @@ public class ItemControlsUI : MonoBehaviour {
             return;
         }
 
-        if (tutorialUseOn != null && !tutorialUseOn.decombiningAllowed) {
+        if (tutorialUseOn != null && !tutorialUseOn.decombiningAllowed)
+        {
             return;
         }
 
@@ -458,7 +461,7 @@ public class ItemControlsUI : MonoBehaviour {
 
         Close();
     }
-    
+
     public void Drop(GameObject ghost = null)
     {
         if (initedObject != null)
@@ -468,7 +471,7 @@ public class ItemControlsUI : MonoBehaviour {
             tutorial.itemToDrop2 == initedObject.name)))
             {
                 PickableObject item = initedObject.GetComponent<PickableObject>();
-                
+
                 if (handsInventory.LeftHandObject == initedObject)
                 {
                     handsInventory.DropLeft(ghost);
@@ -480,7 +483,7 @@ public class ItemControlsUI : MonoBehaviour {
 
                 if (item != null)
                 {
-                    for (int i = item.ghostObjects.Count-1; i >= 0; --i)
+                    for (int i = item.ghostObjects.Count - 1; i >= 0; --i)
                     {
                         GameObject g = item.ghostObjects[i].gameObject;
                         item.ghostObjects.RemoveAt(i);
@@ -495,19 +498,18 @@ public class ItemControlsUI : MonoBehaviour {
 
     public void UseOn()
     {
-        //player.usingOnHand = initedObject == handsInventory.LeftHandObject;
-        //player.ToggleUsingOnMode(true);
         if (!(handsInventory.LeftHandEmpty() && handsInventory.RightHandEmpty()))
         {
             handsInventory.OnCombineAction();
         }
 
         Close();
-    }
+    }  
 
     public void UseOnNoTarget()
     {
-        if (tutorialUseOn != null && !tutorialUseOn.ventAllowed) {
+        if (tutorialUseOn != null && !tutorialUseOn.ventAllowed)
+        {
             return;
         }
 
@@ -515,7 +517,8 @@ public class ItemControlsUI : MonoBehaviour {
         {
             handsInventory.LeftHandObject.GetComponent<PickableObject>().Use(true, true);
 
-            if (tutorialUseOn != null) {
+            if (tutorialUseOn != null)
+            {
                 handsInventory.LeftHandObject.GetComponent<PickableObject>().tutorial_usedOn = true;
             }
         }
@@ -523,8 +526,9 @@ public class ItemControlsUI : MonoBehaviour {
         {
             handsInventory.RightHandObject.GetComponent<PickableObject>().Use(false, true);
 
-            if (tutorialUseOn != null) {
-                handsInventory.RightHandObject.GetComponent<PickableObject> ().tutorial_usedOn = true;
+            if (tutorialUseOn != null)
+            {
+                handsInventory.RightHandObject.GetComponent<PickableObject>().tutorial_usedOn = true;
             }
         }
 

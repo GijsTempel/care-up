@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-
+using UnityEngine.PostProcessing;
 public class PlayerScript : MonoBehaviour
 {
     [HideInInspector]
@@ -29,6 +29,11 @@ public class PlayerScript : MonoBehaviour
     public string itemControlsToInit = "";
 
     public Camera cam;
+    Camera currentExtraCamera;
+    GameObject flyHeloper;
+
+    WalkToGroup ImmediateWTG;
+
     public MouseLook mouseLook = new MouseLook();
     public bool freeLook = false;
     GameUI gameUI;
@@ -42,7 +47,8 @@ public class PlayerScript : MonoBehaviour
     private Quaternion savedRot;
     private List<WalkToGroup> groups;
     public WalkToGroup currentWalkPosition;
-
+    private bool AutoPlayClicked = false;
+    private GameObject AutoPlayActionObject = null;
     private ActionManager actionManager = null;
 
     RobotManager robot;
@@ -95,6 +101,9 @@ public class PlayerScript : MonoBehaviour
     float defaultInteractionDistance = -1;
     [HideInInspector]
     public GameObject joystickObject;
+    //[HideInInspector]
+
+    public WalkToGroup.GroupType momentaryJumpTo;
 
     public bool UIHover
     {
@@ -104,6 +113,38 @@ public class PlayerScript : MonoBehaviour
     public void ResetUIHover()
     {
         onButtonHover = false;
+    }
+
+    public void SwitchCamera(string cameraName)
+    {
+        if (flyHeloper == null)
+            flyHeloper = GameObject.Find("flyHeloper");
+        if (cameraName == "")
+        {
+            gameUI.GetComponent<CanvasGroup>().alpha = 1.0f;
+            gameUI.GetComponent<CanvasGroup>().interactable = true;
+
+            if (currentExtraCamera != null)
+                currentExtraCamera.enabled = false;
+            cam.enabled = true;
+            flyHeloper.SetActive(true);
+        }
+        else
+        {
+            GameObject extraCamGO = GameObject.Find(cameraName);
+            if (extraCamGO != null)
+            {
+                if (extraCamGO.GetComponent<Camera>() != null)
+                {
+                    currentExtraCamera = extraCamGO.GetComponent<Camera>();
+                    cam.enabled = false;
+                    currentExtraCamera.enabled = true;
+                    gameUI.GetComponent<CanvasGroup>().alpha = 0.0f;
+                    gameUI.GetComponent<CanvasGroup>().interactable = false;
+                    flyHeloper.SetActive(false);
+                }
+            }
+        }
     }
 
     private void Start()
@@ -208,6 +249,18 @@ public class PlayerScript : MonoBehaviour
         tutorial_theory = GameObject.FindObjectOfType<Tutorial_Theory>();
 
         GameObject.Find("GameLogic").AddComponent<GestureControls>();
+        if (momentaryJumpTo != WalkToGroup.GroupType.NotSet)
+            Invoke("MomentaryJumpToGroup", 0.01f);
+    }
+    void MomentaryJumpToGroup()
+    {
+        foreach (WalkToGroup w in GameObject.FindObjectsOfType<WalkToGroup>())
+        {
+            if (momentaryJumpTo == w.WalkToGroupType)
+            {
+                WalkToGroup_(w);
+            }
+        }
     }
 
     public void EnterHover()
@@ -241,6 +294,8 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
+
+
     public void ResetTargetRot()
     {
         mouseLook.Init(transform, Camera.main.transform);
@@ -257,6 +312,7 @@ public class PlayerScript : MonoBehaviour
 
     private void Update()
     {
+
         if (prefs != null)
         {
             if (!prefs.VR)
@@ -271,18 +327,25 @@ public class PlayerScript : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
         }
 
+        if (ImmediateWTG != null)
+        {
+            Immediate_WalkToGroup(ImmediateWTG);
+            ImmediateWTG = null;
+        }
         // OLD mouse look code, transfering to joystick
         /*if (freeLook && !robotUIopened && cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
             rotated += mouseLook.LookRotation(transform, Camera.main.transform);
         }*/
+        GameObject selectedObject = controls.SelectedObject;
+        if (AutoPlayActionObject != null)
+            selectedObject = AutoPlayActionObject;
 
         if (!freeLook && !robotUIopened &&
             ((Input.touchCount < 1 && controls.MouseClicked()) ||
-            (Input.touchCount > 0 && Controls.MouseReleased())))
+            (Input.touchCount > 0 && Controls.MouseReleased()) || AutoPlayClicked))
         {
-            if (!away && controls.SelectedObject != null
-                && controls.SelectedObject.GetComponent<InteractableObject>() != null
+            if (!away && (selectedObject != null)
                 && !itemControls.gameObject.activeSelf && !actionsLocked)
             {
                 if (usingOnMode)
@@ -302,16 +365,16 @@ public class PlayerScript : MonoBehaviour
                 }
                 else
                 {
-                    itemControls.Init(controls.SelectedObject);
+                    itemControls.Init(selectedObject);
                 }
             }
             else if (Input.touchCount > 0 && Controls.MouseReleased())
             {
                 // catch falling touch here
-                if (controls.SelectedObject != null &&
-                    controls.SelectedObject.GetComponent<WalkToGroup>() && away)
+                if (selectedObject != null &&
+                    selectedObject.GetComponent<WalkToGroup>() && away)
                 {
-                    WalkToGroup(controls.SelectedObject.GetComponent<WalkToGroup>());
+                    WalkToGroup_(selectedObject.GetComponent<WalkToGroup>());
                 }
             }
         }
@@ -321,10 +384,10 @@ public class PlayerScript : MonoBehaviour
         }
         else if (Controls.MouseReleased())// && freeLook)
         {
-            if (rotated < 3.0f && controls.SelectedObject != null &&
-                controls.SelectedObject.GetComponent<WalkToGroup>() && away)
+            if (rotated < 3.0f && selectedObject != null &&
+                selectedObject.GetComponent<WalkToGroup>() && away)
             {
-                WalkToGroup(controls.SelectedObject.GetComponent<WalkToGroup>());
+                WalkToGroup_(selectedObject.GetComponent<WalkToGroup>());
             }
             else
             {
@@ -334,10 +397,9 @@ public class PlayerScript : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            TriggerQuizQuestion();
-        }
+       
+        AutoPlayClicked = false;
+        AutoPlayActionObject = null;
     }
 
     public void ToggleUsingOnMode(bool value)
@@ -367,16 +429,37 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    public void WalkToGroup(WalkToGroup group)
+    void WalkToGroupAction(WalkToGroup fromGroup, WalkToGroup toGroup)
+    {
+        string fromName = "";
+        if (fromGroup != null)
+            fromName = fromGroup.name;
+        if (GameObject.Find("PanoFlyCamera") != null)
+        {
+            GameObject panoFlyCamera = GameObject.Find("PanoFlyCamera");
+            GameObject playerCamera = GameObject.Find("PlayerMainCamera");
+            if (playerCamera != null)
+            {
+                if (playerCamera.GetComponent<PostProcessingBehaviour>() != null)
+                {
+                    if (panoFlyCamera.GetComponent<PostProcessingBehaviour>() != null)
+                    {
+                        panoFlyCamera.GetComponent<PostProcessingBehaviour>().enabled = 
+                            playerCamera.GetComponent<PostProcessingBehaviour>().isActiveAndEnabled;
+                    }
+                }
+            }
+            if (panoFlyCamera.GetComponent<Animator>() != null)
+            {
+                panoFlyCamera.GetComponent<Animator>().SetTrigger("from_" + fromName + "_to_" + toGroup.name);
+            }
+        }
+    }
+
+    void Immediate_WalkToGroup(WalkToGroup group)
     {
         if (robotUIopened)
             return;
-
-        //if (GameObject.FindObjectOfType<ObjectsPanel>() != null)
-        //{
-        //    GameObject.FindObjectOfType<ObjectsPanel>().UpdatePanel();
-        //}
-
         ToggleAway();
         transform.position = group.Position;
         if (prefs == null || (prefs != null && !prefs.VR))
@@ -403,8 +486,10 @@ public class PlayerScript : MonoBehaviour
         }
 
         actionManager.OnMovementAction(currentWalkPosition.name);
-        gameUI.UpdateWalkToGtoupUI(true);
+        gameUI.UpdateWalkToGroupUI(true);
 
+        if (PlayerPrefsManager.simulatePlayerActions)
+            gameUI.UpdateHelpHighlight();
         if (defaultInteractionDistance <= 0f)
         {
             defaultInteractionDistance = controls.interactionDistance;
@@ -413,6 +498,12 @@ public class PlayerScript : MonoBehaviour
             controls.interactionDistance = group.interactionDistance;
         else
             controls.interactionDistance = defaultInteractionDistance;
+    }
+
+    public void WalkToGroup_(WalkToGroup group)
+    {
+        WalkToGroupAction(currentWalkPosition, group);
+        ImmediateWTG = group;
     }
 
     private void ToggleAway(bool _away = false)
@@ -442,7 +533,7 @@ public class PlayerScript : MonoBehaviour
 
     public void ResetFreeLook()
     {
-        transform.rotation = mouseLook.SavedCharRot;
+        //transform.rotation = mouseLook.SavedCharRot;
         Camera.main.transform.rotation = mouseLook.SavedCamRot;
     }
 
@@ -486,6 +577,8 @@ public class PlayerScript : MonoBehaviour
 
         robotUIopened = true;
 
+        gameUI.UpdateIpadInfo();
+
         if (devHintUI != null)
         {
             devHintActiveForIpad = devHintUI.activeSelf;
@@ -502,7 +595,7 @@ public class PlayerScript : MonoBehaviour
         {
             extraBtnActiveForIpad = extraButton.activeSelf;
             extraButton.SetActive(false);
-            gameUI.UpdateWalkToGtoupUI(false);
+            gameUI.UpdateWalkToGroupUI(false);
         }
 
         if (extraPanel == null)
@@ -518,36 +611,26 @@ public class PlayerScript : MonoBehaviour
 
         if (robotUINotOpenedYet)
         {
-            //string title = "Hygiënisch smartphone- en tabletgebruik";
-            //string message = "Telefoons en tablets bevatten erg veel micro-organismen. Bij het gebruik van een smartphone of tablet heeft handhygiëne de grootste prioriteit. Zowel voor als na het gebruiken van een mobiel communicatiemiddel moet je je handen goed reinigen. Je kunt het gebruik van een mobiel apparaat tijdens werkzaamheden zien als het beëindigen en opnieuw aangaan van handcontact met de cliënt. In CareUp is dit niet nodig omdat het de gebruikerservaring negatief beïnvloedt maar zorg in de praktijk dus voor goede hygiëne tijdens het gebruik van mobiele apparaten.";
-            //GameObject.FindObjectOfType<RobotUIMessageTab>().NewMessage(title, message, RobotUIMessageTab.Icon.MWarning);
-
             robotUINotOpenedYet = false;
         }
         if (joystickObject != null)
             joystickObject.SetActive(!robotUIopened);
 
         itemControls.Close();
+        if (PlayerPrefsManager.simulatePlayerActions)
+            Invoke("CloseRobotUI", 1f);
     }
 
     public void CloseRobotUI()
     {
-        GameObject theoryTab = GameObject.Find("PatientInfoTabs/TheoryTab");
-
-        if (theoryTab != null && (GameObject.FindObjectOfType<QuizTab>() != null))
+        if (GameObject.FindObjectOfType<QuizTab>() != null)
         {
-            if (GameObject.FindObjectOfType<QuizTab>().quiz && theoryTab.gameObject.activeSelf)
+            if (GameObject.FindObjectOfType<QuizTab>().quiz && gameUI.theoryTab.gameObject.activeSelf)
             {
-                theoryTab.gameObject.SetActive(false);
+                gameUI.HideTheoryTab();
                 return;
             }
-        }
-
-        if ((tutorial_UI != null && tutorial_UI.expectedRobotUIstate == true) ||
-            (tutorial_theory != null && tutorial_theory.expectedRobotUIstate == true))
-        {
-            return;
-        }
+        }   
 
         GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<Animator>().enabled = false;
 
@@ -571,12 +654,6 @@ public class PlayerScript : MonoBehaviour
         GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<CanvasGroup>().alpha = 0f;
         GameObject.FindObjectOfType<GameUI>().IPad.GetComponent<CanvasGroup>().blocksRaycasts = false;
 
-        if (theoryTab != null)
-        {
-            theoryTab.GetComponent<CanvasGroup>().alpha = 0f;
-            theoryTab.GetComponent<CanvasGroup>().blocksRaycasts = false;
-        }
-
         robotUIopened = false;
 
         if (GameObject.FindObjectOfType<TutorialManager>() == null
@@ -595,8 +672,7 @@ public class PlayerScript : MonoBehaviour
             if (extraButton != null)
             {
                 extraButton.SetActive(extraBtnActiveForIpad);
-                gameUI.UpdateWalkToGtoupUI(extraBtnActiveForIpad);
-
+                gameUI.UpdateWalkToGroupUI(extraBtnActiveForIpad);
             }
 
             if (extraPanel != null)
@@ -666,7 +742,7 @@ public class PlayerScript : MonoBehaviour
     /// If there is no questions left - it will do nothing.
     /// </summary>
     /// <param name="delay">Delay before opening ipad.</param>
-    public static void TriggerQuizQuestion(float delay = 0.0f)
+    public static void TriggerQuizQuestion(float delay = 0.0f, bool encounter = false)
     {
         // dont trigger quiz if a testing mode is on
 #if UNITY_EDITOR
@@ -690,12 +766,18 @@ public class PlayerScript : MonoBehaviour
             itemDescription.SetActive(false);
         }
         // trigger quiz with delay
-        instance.StartCoroutine(QuizCoroutine(delay));
+        instance.StartCoroutine(QuizCoroutine(delay, encounter));
     }
 
-    private static IEnumerator QuizCoroutine(float delay)
+    private static IEnumerator QuizCoroutine(float delay, bool encounter)
     {
         yield return new WaitForSeconds(delay);
-        quiz.NextQuizQuestion();
+        quiz.NextQuizQuestion(false, encounter);
+    }
+
+    public void AutoClick(GameObject obj)
+    {
+        AutoPlayClicked = true;
+        AutoPlayActionObject = obj;
     }
 }

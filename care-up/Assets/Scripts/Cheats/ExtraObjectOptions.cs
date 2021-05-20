@@ -7,6 +7,7 @@ public class ExtraObjectOptions : MonoBehaviour
 
     public List<GameObject> hidenObjects;
     public List<GameObject> neededObjects;
+    public WalkToGroup nearestWalkToGroup;
 
     public Dictionary<string, string> neededObjectsData = new Dictionary<string, string>();
     public Dictionary<string, string> neededObjectsArticle = new Dictionary<string, string>();
@@ -16,11 +17,17 @@ public class ExtraObjectOptions : MonoBehaviour
     {
         foreach (GameObject obj in neededObjects)
         {
-            if (obj.GetComponent<InteractableObject>() != null)
+            if(obj != null)
             {
-                neededObjectsData.Add(obj.name, obj.GetComponent<InteractableObject>().description);
-                neededObjectsArticle.Add(obj.name, obj.GetComponent<InteractableObject>().nameArticle);
+                if (obj.GetComponent<InteractableObject>() != null)
+                {
+                    if (!neededObjectsData.ContainsKey(obj.name))
+                    {
+                        neededObjectsData.Add(obj.name, obj.GetComponent<InteractableObject>().description);
+                        neededObjectsArticle.Add(obj.name, obj.GetComponent<InteractableObject>().nameArticle);
+                    }
 
+                }
             }
         }       
     }
@@ -39,7 +46,8 @@ public class ExtraObjectOptions : MonoBehaviour
         return "";
     }
 
-    public void _show(string _name, bool value)
+
+    public void _show(string _name, bool value, bool meshRenderer = false)
     {
         foreach (GameObject o in hidenObjects)
         {
@@ -47,7 +55,31 @@ public class ExtraObjectOptions : MonoBehaviour
             {
                 if (o.name == _name)
                 {
-                    o.SetActive(value);
+                    if (meshRenderer && (o.GetComponents<MeshRenderer>() != null || o.GetComponents<SkinnedMeshRenderer>() != null))
+                    {
+                        if (value)
+                        {
+                            if (o.GetComponent<MeshRenderer>()  != null)
+                                o.GetComponent<MeshRenderer>().enabled = value;
+                            else
+                                o.GetComponent<SkinnedMeshRenderer>().enabled = value;
+                        }
+                        else
+                        {
+                            foreach (MeshRenderer m in o.GetComponents<MeshRenderer>())
+                            {
+                                m.enabled = true;
+                            }
+                            foreach (SkinnedMeshRenderer m in o.GetComponents<SkinnedMeshRenderer>())
+                            {
+                                m.enabled = true;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        o.SetActive(value);
+                    }
                 }
             }
         }

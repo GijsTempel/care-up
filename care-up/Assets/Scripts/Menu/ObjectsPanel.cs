@@ -15,7 +15,7 @@ public class ObjectsPanel : MonoBehaviour {
     }
     void AddObjectButton(GameObject obj)
     {
-        GameObject button = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/UI/ObjectButton"), content.transform);
+        GameObject button = GameObject.Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/UI/ObjectButton"), content.transform);
         button.GetComponent<ObjectPanelButton>().setObject(obj);
     }
 

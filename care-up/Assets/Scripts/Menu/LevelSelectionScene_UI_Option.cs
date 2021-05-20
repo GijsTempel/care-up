@@ -11,6 +11,7 @@ public class LevelSelectionScene_UI_Option : MonoBehaviour {
     public string sceneName;
     public string description;
     public string result;
+    public string url;
     public Sprite image;
     
     public void SetSelected()
@@ -22,6 +23,7 @@ public class LevelSelectionScene_UI_Option : MonoBehaviour {
 
             levelButton.sceneName = sceneName;
             levelButton.bundleName = bundleName;
+            levelButton.url = url;
 
             LevelSelectionScene_UI_Option[] other = transform.parent.GetComponentsInChildren<LevelSelectionScene_UI_Option>();
             foreach (LevelSelectionScene_UI_Option ui in other)

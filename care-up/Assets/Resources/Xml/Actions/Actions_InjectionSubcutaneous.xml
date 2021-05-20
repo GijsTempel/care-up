@@ -2,7 +2,7 @@
 <ActionList>
   <action
     points="1"
-    description="Begroet de cliënt"
+    description="[Begroet]"
     audioHint=""
     index="0"
     type="talk"
@@ -15,17 +15,17 @@
     comment="1. Apply hand hygiene"
     index="0"
     points="3"
-    description="Pas handhygiëne toe"
+    description="[Pas handhygiëne]"
     type="use"
     value="HandCleaner"
-    extra="Pas handhygiëne toe"
+    extra="[Pas handhygiëne]"
     messageTitle="Handhygiëne"
     messageContent="Handhygiëne is het meest belangrijk om besmetting met ziektekiemen te voorkomen. Reinig je handen altijd op de juiste manier en op het juiste moment. Begin een handeling altijd met handhygiëne."
   ></action>
   
   <action
     points="1"
-    description="Maak een schoon werkveld en zet de benodigdheden binnen handbereik"
+    description="[Maak een schoon werkveld]"
     audioHint="Injection/H2-2"
     index="1"
     type="use"
@@ -43,10 +43,11 @@
 
   <action
     points="2"
-    description="Controleer de cliëntgegevens"
+    description="[Controleer cliëntgegevens]"
     audioHint="Injection/H3-2"
     index="2"
     type="examine"
+    quiz="2"
     item="PatientRecords"
     expected="good"
     extra="Controleer de cliëntgegevens. Het is belangrijk dat je de juiste persoon voor je hebt. "
@@ -80,12 +81,25 @@ Controleer het medicijn op:
     item="PrescriptionForm"
     expected="good"
     extra="Controleer de toedienlijst"
-    messageTitle="Controle toedienlijst"
-    messageContent="
-Vergelijk het medicijn met de toedieningslijst.
-- Soort
-- Dosering
-- Toedieningstijdstip"
+    messageTitle="5x juist-regel"
+    messageContent="Er zijn 5 controles die je altijd moet doen voordat je medicijnen geeft. Alleen als alle 5 punten juist zijn, mag je het medicijn toedienen.
+    
+    De vijf regels zijn:
+    
+1.  Het juiste medicijn: 
+kijk op de toedienlijst en controleer of de informatie op de medicijnverpakking of het baxterzakje hiermee overeenkomen. Kijk hierbij ook naar de vervaldatum van het medicijn.
+        
+2.  De juiste cliënt: 
+controleer of je de juiste cliënt voor je hebt.
+        
+3.  Het juiste tijdstip: 
+kijk op de toedienlijst voor het tijdstip en vergelijk dit met het tijdstip waarop je de medicijnen geeft.
+        
+4.  De juiste manier van toedienen: 
+hanteer de instructies van de toedienlijst. Je moet bekend zijn met de toedieningsvorm. Ben je hier niet mee bekent, dien dan niet toe.
+    
+5.  De juiste dosis: 
+je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toedienlijst. De verantwoordelijkheid van de juiste dosering ligt bij de arts en de apotheker."
   ></action>
 
   <action
@@ -98,9 +112,9 @@ Vergelijk het medicijn met de toedieningslijst.
     extra="Vraag aan je collega of ze een dubbele controle wil doen"
     messageTitle="Dubbele controle bij injecties en bij medicijntoediening via infuus"
     messageContent="Het verkeerd toedienen van medicijnen brengt risico’s met zich mee. Het risico op blijvend letsel bij verkeerde dosering of toediening verschilt, afhankelijk van het medicijn. Ook is de ene toedieningsweg risicovoller dan een andere. Dubbele controle van de medicatie is belangrijk voor de veiligheid, met name bij risicovolle medicatie. Laat ook je berekeningen die je hebt gemaakt checken.
-    Het maken van oplossingen die worden toegediend via injectie of infuus is foutgevoelig. Daarnaast geeft deze manier van toedienen sneller resultaten, maar ook grotere problemen bij verkeerde toediening.
-    Het ontbreken van een dubbele controle bij deze handelingen wordt gezien als hoog-risico.
-    Of en hoe controle plaatsvindt van deze voorbehouden handelingen, is een afspraak die een zorgorganisatie maakt met haar zorgmedewerkers. Als de afspraak is om een tweede controle te doen en deze vast te leggen, dan wordt daarvoor een ander formulier gebruikt dan de toedieningslijst." 
+Het maken van oplossingen die worden toegediend via injectie of infuus is foutgevoelig. Daarnaast geeft deze manier van toedienen sneller resultaten, maar ook grotere problemen bij verkeerde toediening.
+Het ontbreken van een dubbele controle bij deze handelingen wordt gezien als hoog-risico.
+Of en hoe controle plaatsvindt van deze voorbehouden handelingen, is een afspraak die een zorgorganisatie maakt met haar zorgmedewerkers. Als de afspraak is om een tweede controle te doen en deze vast te leggen, dan wordt daarvoor een ander formulier gebruikt dan de toedieningslijst." 
    />
 
   <action
@@ -134,6 +148,7 @@ Desinfecteer de huid bij cliënten met verminderde weerstand.
     item="SyringeWithInjectionNeedleCap"
     target=""
     buttonText="Start injecteren"
+    quiz="3"
     secondPlace="PatientPos" 
     extra="Start injecteren"
     blockRequired="patient show spot"
@@ -175,7 +190,7 @@ Desinfecteer de huid bij cliënten met verminderde weerstand.
   
   <action
     points="3"
-    description="Steek de naald onder een hoek van 45° à 60°, halverwege tussen het hoogste en laagste punt van de huidplooi. (Klik op de juiste optie"
+    description="Steek de naald onder een hoek van 45° à 60°, halverwege tussen het hoogste en laagste punt van de huidplooi"
     audioHint="Injection/AS1-2"
     index="9"
     type="sequenceStep"
@@ -191,6 +206,7 @@ Desinfecteer de huid bij cliënten met verminderde weerstand.
     type="sequenceStep"
     value="Release crease"
     extra="Laat de huidplooi los. Volgens protocollen wordt de huidplooi eerst losgelaten; vervolgens wordt de medicatie toegediend."
+    encounter="1"
   ></action>
   
   <action
@@ -263,10 +279,10 @@ Desinfecteer de huid bij cliënten met verminderde weerstand.
     comment="1. Apply hand hygiene"
     index="18"
     points="3"
-    description="Pas handhygiëne toe"
+    description="[Pas handhygiëne]"
     type="use"
     value="HandCleaner"
-    extra="Pas handhygiëne toe"
+    extra="[Pas handhygiëne]"
   ></action>
   
   <action

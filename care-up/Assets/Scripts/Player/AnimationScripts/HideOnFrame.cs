@@ -36,8 +36,8 @@ public class HideOnFrame : StateMachineBehaviour
         }
    
         prevFrame = frame;
-        frame += Time.deltaTime;
-   
+        frame = stateInfo.normalizedTime * stateInfo.length;
+
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

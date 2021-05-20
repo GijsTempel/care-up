@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.UI;
 
 public struct NameAndDescription
 {
@@ -10,15 +9,18 @@ public struct NameAndDescription
 /// <summary>
 /// Static object that can be used
 /// </summary>
-[RequireComponent(typeof(Renderer))]
-public class UsableObject : InteractableObject {
+/// 
 
+[RequireComponent(typeof(Renderer))]
+public class UsableObject : InteractableObject
+{
     [HideInInspector]
     public bool tutorial_used = false;
     public bool handsCleaned = false;
     public string PrefabToAppear = "";
     public List<NameAndDescription> objectsToCreate;
     protected static HandsInventory handsInventory;
+
 
     GameUI gameUI;
     public bool UseWithObjectsInHands = false;
@@ -38,7 +40,7 @@ public class UsableObject : InteractableObject {
     {
         if (objectsToCreate == null)
             return "";
-        foreach(NameAndDescription nd in objectsToCreate)
+        foreach (NameAndDescription nd in objectsToCreate)
         {
             if (nd.name == str)
             {
@@ -48,7 +50,7 @@ public class UsableObject : InteractableObject {
                 return result;
             }
         }
-        return ""; 
+        return "";
     }
 
     public virtual void Use()
@@ -66,15 +68,20 @@ public class UsableObject : InteractableObject {
                 if (tutorial == null || (tutorial != null &&
                     (PrefabToAppear == tutorial.itemToPick || PrefabToAppear == tutorial.itemToPick2)))
                 {
-                    GameObject gameObject = handsInventory.CreateObjectByName(PrefabToAppear, Vector3.zero);
-                    handsInventory.PickItem(gameObject.GetComponent<PickableObject>());
-                    gameObject.GetComponent<PickableObject>().CreateGhostObject(true);
-                    Reset();
+                    GameObject gameObject = null;
+                    handsInventory.CreateObjectByName(PrefabToAppear, Vector3.zero, callback => gameObject = callback);
+                    if (gameObject != null)
+                    {
+                        handsInventory.PickItem(gameObject.GetComponent<PickableObject>());
+                        gameObject.GetComponent<PickableObject>().CreateGhostObject(true);
+                        Reset();
+                    }
                 }
                 return;
             }
             // CHeat mode for testing the game
             bool cheat = false;
+
 #if UNITY_EDITOR
             if (GameObject.FindObjectOfType<ObjectsIDsController>() != null)
             {
@@ -83,7 +90,6 @@ public class UsableObject : InteractableObject {
 #endif
             if (actionManager.CompareUseObject(name) || cheat)
             {
-                
                 switch (name)
                 {
                     case "HandCleaner":
@@ -101,7 +107,9 @@ public class UsableObject : InteractableObject {
                             }
 
                             handsCleaned = true;
-                            string message = "Zorg voor een zorgvuldige handhygiëne. Handhygiëne is in dit protocol versneld om de gebruikerservaring te verbeteren";
+
+                            // never used
+                            //string message = "Zorg voor een zorgvuldige handhygiëne. Handhygiëne is in dit protocol versneld om de gebruikerservaring te verbeteren";
                         }
                         break;
                     case "OldBandAid":

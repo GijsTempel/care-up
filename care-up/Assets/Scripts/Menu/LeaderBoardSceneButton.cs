@@ -21,6 +21,7 @@ public class LeaderBoardSceneButton : MonoBehaviour, IPointerEnterHandler, IPoin
     {
         buttons.Add(this);
         sounds = GameObject.FindObjectOfType<Button_Functions>();
+        transform.Find("LevelPreview").gameObject.SetActive(false);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -38,6 +39,8 @@ public class LeaderBoardSceneButton : MonoBehaviour, IPointerEnterHandler, IPoin
         // loading icon is shown
         HideElements();
 
+        PlayerPrefsManager.HighscoreSceneName = Descripton;
+        
         LevelSelectionScene_UI manager = GameObject.FindObjectOfType<LevelSelectionScene_UI>();
 
         // clear variations to fill

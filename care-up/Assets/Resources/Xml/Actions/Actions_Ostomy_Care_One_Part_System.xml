@@ -44,7 +44,7 @@
 - Afvalbak
 zo nodig:
 - Wegwerpscheermesje
-- Wchaar met licht gebogen punt (nagelschaar) of stomastans
+- Schaar met licht gebogen punt (nagelschaar) of stomastans
 - huidbeschermingsmiddelen
 - Opvulmateriaal
 - Stomamaatkaart     
@@ -99,9 +99,7 @@ zo nodig:
    extra="Laat de cliënt een comfortabele houding aannemen, zodat je makkelijk bij de stoma kunt."
    blockUnlock="HorClient"
    blockRequired="SystemInClient"
-   messageTitle="Lichamelijke verzorging"
-   messageContent="Verwijder eventuele haargroei rondom de stoma met een schaartje of mesje. Scheer altijd van de stoma af. Werk hygiënisch om wondjes te voorkomen. Gebruik in geen geval ontharingscrème, vanwege kans op huidirritatie. Verzorg de huid na het scheren met een barrièrecrème."
-   ></action>
+    ></action>
 
   <action
   comment="Leg de onderlegger onder de plaats van de subcutane canule. "
@@ -116,7 +114,10 @@ zo nodig:
   blockRequired="HorClient"
   blockTitle="Houding cliënt"
   blockMessage="Laat de cliënt eerst een comfortabele houding aannemen, zodat je makkelijk bij de stoma kunt en een onderlegger kunt plaatsen rond het werkterrein."
- ></action>
+  messageTitle="Lichamelijke verzorging"
+  messageContent="Verwijder eventuele haargroei rondom de stoma met een schaartje of mesje. Scheer altijd van de stoma af. Werk hygiënisch om wondjes te voorkomen. Gebruik in geen geval ontharingscrème, vanwege kans op huidirritatie. Verzorg de huid na het scheren met een barrièrecrème."
+  
+  ></action>
 
   <action
     comment=""
@@ -136,6 +137,7 @@ zo nodig:
     type="sequenceStep"
     value="PeelTheSkinPlate"
     extra="Pel met je andere hand de huidplaat voorzichtig van de huid. Dit doe je door de huid tegen te houden met een gaasje en de plaat eraf te duwen (niet trekken)"
+    encounter="1"
     messageTitle="Droog of nat?"
     messageContent="Overleg met de cliënt of hij/zij een droog gaasje of nat gaasje wil bij het verwijderen van de huidplaat."
     ></action>
@@ -148,7 +150,7 @@ zo nodig:
     type="sequenceStep"
     value="DiscardOldSystem"
     extra="Gooi het gebruikte systeem en het gaasje weg"
-    messageTitle="Gerbruik toiletpapier"
+    messageTitle="Gebruik toiletpapier"
     messageContent="Veeg eventueel de nog aanwezige ontlasting, slijm of urine weg met toiletpapier. Gooi het toiletpapier weg."
     ></action>
 
@@ -181,7 +183,7 @@ zo nodig:
    type="sequenceStep"
    value="RemoveTheGauze"
    extra="Verwijder het gaasje van de stoma. Gooi het gaasje weg"
-   messageTitle="Ontlasting, slijn en urine tijdens de verzorging"
+   messageTitle="Ontlasting, slijm en urine tijdens de verzorging"
    messageContent="Tijdens de verzorging kan steeds opnieuw ontlasting, slijm of urine uit de stoma vloeien. Je kunt ervoor kiezen om het gaasje in de hand te houden om eventuele ontlasting, slijm of urine uit de stoma op te vangen. "
    ></action>
 
@@ -215,7 +217,7 @@ zo nodig:
    type="sequenceStep"
    value="CheckTheSkin"
    extra=""
-   messageTitle="Beschermingsmiddelen en opvulmateriaal."
+   messageTitle="Beschermingsmiddelen en opvulmateriaal"
    messageContent="Breng zo nodig huidbeschermingsmiddelen en/of opvulmateriaal aan. Wanneer de niet goed aan huidplaat sluit op de huid vanwege huidplooien, vul je de huidplooien op met opvulmateriaal (ring, pasta, strip) op voorschrift van de stomaverpleegkundige."
    ></action>
 
@@ -261,7 +263,7 @@ zo nodig:
    value="PressTheSkinPlate"
    extra="Druk de huidplaat rondom de stoma gedurende 30 seconden aan"
    messageTitle="Tijd"
-   messageContent="Het aandrukken van de huidplaat rondom de stuma is versneld in verband met de gebruiksvriendelijkheid van CareUp. Zorg er in het echt voor dat je de huidplaat 30 seconden aan drukt."
+   messageContent="Het aandrukken van de huidplaat rondom de stoma is versneld in verband met de gebruiksvriendelijkheid van CareUp. Zorg er in het echt voor dat je de huidplaat 30 seconden aan drukt."
    ></action>
 
   <action
@@ -273,7 +275,7 @@ zo nodig:
    value="AskTheClient"
    extra="Vraag de cliënt nog één minuut de hand op de huidplaat te leggen, zodat deze goed plakt"
    messageTitle="Tijd"
-   messageContent="Het aandrukken van de huidplaat rondom de stuma is versneld in verband met de gebruiksvriendelijkheid van CareUp. Zorg er in het echt voor dat de cliënt zijn of haar hand nog één minuut op de huidplaat houdt."
+   messageContent="Het aandrukken van de huidplaat rondom de stoma is versneld in verband met de gebruiksvriendelijkheid van CareUp. Zorg er in het echt voor dat de cliënt zijn of haar hand nog één minuut op de huidplaat houdt."
  
    ></action>
 
@@ -306,7 +308,7 @@ zo nodig:
     index="23"
     type="use"
     value="HandCleaner"
-    extra="Pas handhygiëne toe"/>
+    extra="[Pas handhygiëne]"/>
 
   <action
       comment="Create a clean workfield"
@@ -315,9 +317,9 @@ zo nodig:
       index="24"
       type="use"
       value="WorkField"
-      extra="Ruim de materialen op door met lege handen op het werkveld te klikken."
+      extra="[Maak een schoon werkveld end]"
       messegeTitle="Materialen opruimen"
-      MessegeContent="Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen"
+      MessegeContent="Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen."
   />
 
   <action

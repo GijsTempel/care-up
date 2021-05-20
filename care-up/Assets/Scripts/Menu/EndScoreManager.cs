@@ -1,28 +1,30 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.Networking;
+using System.IO;
+using System.Net;
 
 /// <summary>
 /// Handles EndScore scene.
 /// </summary>
 public class EndScoreManager : MonoBehaviour
 {
-
     private int points;
     private int score;
     private float time;
 
     private PlayerPrefsManager manager;
 
-    public float percent;
+    public int percent;
 
     public string completedSceneName;
     public string completedSceneBundle;
 
+    public Text reward;
+
     private List<string> steps;
-    //private List<string> stepsDescr;
     private List<int> wrongStepIndexes;
     private List<int> correctStepIndexes;
 
@@ -38,6 +40,7 @@ public class EndScoreManager : MonoBehaviour
     private Sprite fullStar;
 
     private bool emailsSent = false;
+    public static bool showReward = false;
 
     void Start()
     {
@@ -45,28 +48,27 @@ public class EndScoreManager : MonoBehaviour
 
         manager = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
         achievements = GameObject.Find("AchievementsDisplayPrefab").GetComponent<MBS.WUADisplay>();
-
         fullStar = Resources.Load<Sprite>("Sprites/Stars/star");
     }
 
+    private void InitializeObjects()
+    {
+        if (actionManager == null)
+            actionManager = GameObject.FindObjectOfType<ActionManager>();
+    }
     /// <summary>
     /// Sets object variables in scene after loading.
     /// </summary>
     private void OnLoaded(Scene s, LoadSceneMode m)
     {
-        bool actualScene = false; // for later lines
+        bool actualScene = false;
+
         if (SceneManager.GetActiveScene().name == "EndScore")
         {
             Transform uiFolder = GameObject.Find("Canvas").transform;
-
-            //uiFolder.Find("Left").Find("Score").GetComponent<Text>().text = "Score: " + score;
+            SetBasicText();
             uiFolder.Find("ScoreScreen/ScoreInfo/InfoHolder/Info/Points").GetComponent<Text>().text = "Punten: " + points;
             uiFolder.Find("ScoreScreen/ScoreInfo/InfoHolder/Info/Time").GetComponent<Text>().text = string.Format("Tijd: {0}:{1:00}", (int)time / 60, (int)time % 60);
-
-            //uiFolder.Find("ScoreScreen").Find("Points").GetComponent<Text>().text = "Punten: " + points;
-            //uiFolder.Find("ScoreScreen").Find("Time").GetComponent<Text>().text = string.Format("Tijd: {0}:{1:00}", (int)time / 60, (int)time % 60);
-
-            //uiFolder.GetChild(1).FindChild("Steps").GetComponent<Text>().text = wrongSteps;
 
             actualScene = true;
 
@@ -74,11 +76,10 @@ public class EndScoreManager : MonoBehaviour
             manager.UpdatePracticeHighscore(points, score);
 
             Transform stepParent = uiFolder.Find("PracticeStepsScreen/Image/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
-            //Transform stepParent = GameObject.Find("Interactable Objects/Canvas/PracticeStepsScreen/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
 
             for (int i = 0; i < steps.Count; ++i)
             {
-                GameObject step = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/ProtocolPracticeSteps"), stepParent);
+                GameObject step = GameObject.Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/ProtocolPracticeSteps"), stepParent);
                 step.transform.Find("Text").GetComponent<Text>().text = steps[i];
 
                 Sprite correctSprite = Resources.Load<Sprite>("Sprites/item_select_check");
@@ -95,7 +96,7 @@ public class EndScoreManager : MonoBehaviour
 
             for (int i = 0; i < steps.Count; ++i)
             {
-                GameObject step = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/ProtocolEvaluationStep"), stepParent);
+                GameObject step = GameObject.Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/ProtocolEvaluationStep"), stepParent);
                 step.transform.Find("Text").GetComponent<Text>().text = steps[i];
 
                 bool correct = correctStepIndexes.Contains(i);
@@ -103,46 +104,46 @@ public class EndScoreManager : MonoBehaviour
                 step.transform.Find("ToggleNo").GetComponent<Toggle>().isOn = !correct;
             }
 
-            percent = 1.0f *
-                (correctStepIndexes.Count + (quizQuestionsTexts.Count - quizWrongIndexes.Count))
-                / (steps.Count + quizQuestionsTexts.Count);
-
-            if (percent < 0f)
-                percent = 0f;
+            percent = CalculatePercentage();
+            ActionManager.percentage = percent;
 
             GameObject.Find("Interactable Objects/Canvas/ScoreScreen/ScoreInfo/ResultInfoHolder/Value")
-                .GetComponent<Text>().text = Mathf.FloorToInt(percent * 100f).ToString() + "%";
+                .GetComponent<Text>().text = percent.ToString() + "%";
 
             GameObject.Find("Interactable Objects/Canvas/ScoreScreen/ScoreInfo/ResultInfoHolder/Result")
-                .GetComponent<Text>().text = (percent < 0.7f) ? "Onvoldoende" : "Voldoende";
+                .GetComponent<Text>().text = (percent < 70) ? "Onvoldoende" : "Voldoende";
 
             actualScene = true;
 
             // show/hide buttons
-            bool flag = (percent > 0.7f && manager.subscribed);
+            bool subscribed = manager.subscribed;
+            if (manager.IsScenePurchasedByName(completedSceneName))
+                subscribed = true;
+            bool flag = (percent > 70 && (subscribed || HasFreeCert()));
 
             // update test highscore + save certificate date
             manager.UpdateTestHighscore(percent);
 
             if (flag)
             {
-                PlayerPrefsManager.__sendCertificateToUserMail(manager.currentSceneVisualName);
+                //PlayerPrefsManager.__sendCertificateToUserMail(manager.currentSceneVisualName);
+                //PlayerPrefsManager.__openCertificate(manager.currentSceneVisualName);
 
                 achievements.UpdateKeys("FirstPassedExam", 1);
 
                 if (manager.validatedScene)
                 {
                     EndScoreSendMailResults();
+                    AutomaticPEcourseValidation();
                 }
             }
 
             emailsSent = flag;
-
-            GameObject.Find("Interactable Objects/Canvas/ScoreScreen/ScoreScreenButtons/BackToMainMenu")
+            GameObject.Find("Interactable Objects/Canvas/ScoreScreen/ScoreScreenButtons/Panel (2)/BackToMainMenu")
                 .GetComponent<Button>().onClick.AddListener(ConditionalHomeButton);
 
             // track amount of results per scene
-            if (percent < 0.7f)
+            if (percent < 70)
             {
                 PlayerPrefsManager.AddOneToTestFails(manager.currentSceneVisualName);
             }
@@ -153,12 +154,14 @@ public class EndScoreManager : MonoBehaviour
 
         }
         if (actualScene)
-        {          
+        {
+            showReward = true;
+
             Transform quizParent = GameObject.Find("Interactable Objects/Canvas/Questionscreen/Image/QuizForm/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
 
             for (int i = 0; i < quizQuestionsTexts.Count; ++i)
             {
-                GameObject step = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/ProtocolQuestion"), quizParent);
+                GameObject step = GameObject.Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/ProtocolQuestion"), quizParent);
                 step.transform.Find("Text").GetComponent<Text>().text = quizQuestionsTexts[i];
 
                 bool wrong = quizWrongIndexes.Contains(i);
@@ -174,7 +177,7 @@ public class EndScoreManager : MonoBehaviour
                 if (score >= 2.0f)
                     starsFolder.transform.Find("Star2").GetComponent<Image>().sprite = fullStar;
                 if (score >= 3.0f)
-                    starsFolder.transform.Find("Star2").GetComponent<Image>().sprite = fullStar;
+                    starsFolder.transform.Find("Star3").GetComponent<Image>().sprite = fullStar;
             }
             else if (SceneManager.GetActiveScene().name == "EndScore_test")
             {
@@ -186,7 +189,7 @@ public class EndScoreManager : MonoBehaviour
                     GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Stars/Star3").GetComponent<Image>().sprite = fullStar;
             }
 
-                if (time >= 900.0f)
+            if (time >= 900.0f)
             {
                 achievements.UpdateKeys("MoreThan15", 1);
             }
@@ -211,6 +214,26 @@ public class EndScoreManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
+            int counter = 0;
+            // add in-game currency once 3 finishes?
+            int.TryParse(DatabaseManager.FetchField("Store", "FinishedCounter"), out counter);
+            if (++counter >= 3)
+            {
+                counter = 0;
+                PlayerPrefsManager.storeManager.ModifyCurrencyBy(5);
+            }
+            DatabaseManager.UpdateField("Store", "FinishedCounter", counter.ToString());
+
+            // add in-game store presents once 15 successful finishes?
+            int.TryParse(DatabaseManager.FetchField("Store", "SuccessCounter"), out counter);
+            if (percent >= 70) ++counter;
+            if (counter >= 15)
+            {
+                counter = 0;
+                PlayerPrefsManager.storeManager.ModifyPresentsBy(1);
+            }
+            DatabaseManager.UpdateField("Store", "SuccessCounter", counter.ToString());
+
             GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().SetSceneCompletionData(
                 completedSceneName, points, Mathf.RoundToInt(time));
         }
@@ -226,12 +249,41 @@ public class EndScoreManager : MonoBehaviour
         Transform quizForm = GameObject.Find("Interactable Objects/Canvas/Questionscreen/Image/QuizForm").transform;
         if (quizQuestionsTexts.Count == 0)
         {
-            quizForm.GetChild(2).gameObject.SetActive(false);
-            quizForm.GetChild(3).gameObject.SetActive(false);
-            quizForm.GetChild(4).gameObject.SetActive(true);
+            quizForm.Find("YesNo").gameObject.SetActive(false);
+            quizForm.Find("WrongstepScroll").gameObject.SetActive(false);
+            quizForm.Find("BasicText").gameObject.SetActive(true);
         }
         else
-            quizForm.GetChild(4).gameObject.SetActive(false);
+            quizForm.Find("BasicText").gameObject.SetActive(false);
+    }
+
+    public int CalculatePercentage()
+    {
+        //If you need to test endscore scene with hith score, uncomment this line:
+        //return 99;
+
+        InitializeObjects();
+
+        int correctSteps;
+        int totalSteps;
+
+        if (actionManager == null)
+        {
+            correctSteps = correctStepIndexes.Count;
+            totalSteps = steps.Count;
+        }
+        else
+        {
+            correctSteps = actionManager.CorrectStepIndexes.Count;
+            totalSteps = actionManager.StepsList.Count;
+        }
+
+        float result = (float)(correctSteps + quizQuestionsTexts.Count - quizWrongIndexes.Count)
+            / (totalSteps + QuizTab.totalQuizesCount);
+
+        if (result < 0f) result = 0f;
+
+        return Mathf.FloorToInt(result * 100f);
     }
 
     /// <summary>
@@ -239,7 +291,8 @@ public class EndScoreManager : MonoBehaviour
     /// </summary>
     public void LoadEndScoreScene()
     {
-        actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
+        StoreViewModel.SavedCoins = ActionManager.Points;
+        InitializeObjects();
         if (actionManager == null) Debug.LogError("No action manager found.");
 
         gameTimer = GameObject.Find("GameLogic").GetComponent<GameTimer>();
@@ -247,7 +300,7 @@ public class EndScoreManager : MonoBehaviour
 
         time = gameTimer.CurrentTime;
 
-        points = actionManager.Points;
+        points = ActionManager.Points;
         score = Mathf.FloorToInt(3.0f * points / actionManager.TotalPoints);
 
         Debug.Log("Current points: " + points);
@@ -261,7 +314,6 @@ public class EndScoreManager : MonoBehaviour
         completedSceneName = SceneManager.GetActiveScene().name;
 
         steps = actionManager.StepsList;
-        //stepsDescr = actionManager.StepsDescriptionList;
         wrongStepIndexes = actionManager.WrongStepIndexes;
         correctStepIndexes = actionManager.CorrectStepIndexes;
 
@@ -298,25 +350,28 @@ public class EndScoreManager : MonoBehaviour
 
         GameObject.Find("Interactable Objects/Canvas/NamePopUp").SetActive(false);
     }
-
-    // copied from EndScoreSendMailResults.cs
+    
     public void EndScoreSendMailResults()
     {
-        string topic = "Care Up accreditatie aanvraag";
-        string content = "Completed scene: " + manager.currentSceneVisualName + "\n";
-        content += "Username: " + MBS.WULogin.username + "\n";
-        content += "E-mail: " + MBS.WULogin.email + "\n";
-
-        content += "Big- of registratienummer:" + manager.bigNumber + "\n";
-        float percent = GameObject.FindObjectOfType<EndScoreManager>().percent;
-        content += "Percentage: " + Mathf.FloorToInt(percent * 100f).ToString() + "%\n";
-
         achievements.UpdateKeys("StudyPoints", 1);
+		
+        int percent = GameObject.FindObjectOfType<EndScoreManager>().percent;
 
-        PlayerPrefsManager.__sendMail(topic, content);
+        string link = "https://leren.careup.online/MailSceneComplStats.php";
+        link += "?name=" + MBS.WULogin.username;
+        link += "&scene=" + manager.currentSceneVisualName;
+        link += "&userMail=" + MBS.WULogin.email;
+        link += "&bigNum=" + manager.bigNumber;
+        link += "&percent=" + percent.ToString();
+
+        UnityWebRequest unityWebRequest = new UnityWebRequest(link.Replace(" ", "%20"));
+        unityWebRequest.SendWebRequest();
         Debug.Log("E-mail verzonden");
     }
-
+    bool HasFreeCert()
+    {
+        return manager.HasFreeCert(manager.currentSceneVisualName);
+    }
     /// <summary>
     /// if email was sent - opens panel
     /// if email was not sent - loads main menu
@@ -324,7 +379,10 @@ public class EndScoreManager : MonoBehaviour
     public void ConditionalHomeButton()
     {
         // special panel for demo
-        if (!manager.subscribed)
+        bool subscribed = manager.subscribed;
+        if (manager.IsScenePurchasedByName(completedSceneName))
+            subscribed = true;
+        if (!subscribed && !HasFreeCert())
         {
             GameObject.Find("Interactable Objects/Canvas/CertificateDemoPopOp").SetActive(true);
         }
@@ -333,13 +391,55 @@ public class EndScoreManager : MonoBehaviour
             GameObject.Find("Interactable Objects/Canvas/CertificatePopOp").SetActive(true);
             if (manager.validatedScene == false)
             {   // changing pop up text if scene is not validated
-                GameObject.Find("Interactable Objects/Canvas/CertificatePopOp/Certificate/InfoHolder/RegText").GetComponent<Text>().text
-                    = "Neem snel een kijkje in je mailbox! Daar vind je je certificaat.";
+                GameObject.Find("/Interactable Objects/Canvas/CertificatePopOp/Certificate/RegText").GetComponent<Text>().text
+                    = "Je kan je certificaat nu downloaden via de knop hieronder. Dit kan ook later vanuit de portal.";
             }
         }
         else // if not demo and emails not sent just load menu
         {
             bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
         }
+    }
+
+    // testing mode for now (test.pe-online)
+    // "GET" request is pretty bad practice, but this is 8th attempt and first thing that gave an actual server response
+    public void AutomaticPEcourseValidation()
+    {
+        Debug.Log("AutomaticPEcourseValidation");
+
+        if (manager.bigNumber == "")
+        {
+            Debug.LogWarning("BigNumber was empty, aborting PEcourseValidation.");
+            return;
+        }
+
+        // Create a request for the URL.
+        string _url = "https://test.pe-online.org/pe-services/pe-attendanceelearning/WriteAttendance.asmx/ProcessXML?sXML=";
+
+        // someone's BIG for testing only // insuline for testing only
+        _url += PlayerPrefsManager.GenerateAttendanceSXML(manager.bigNumber, manager.currentPEcourseID);
+        Debug.Log("Generated url: " + _url);
+
+        WebRequest request = WebRequest.Create(_url);
+        // If required by the server, set the credentials.
+        request.Credentials = CredentialCache.DefaultCredentials;
+
+        // Get the response.
+        WebResponse response = request.GetResponse();
+
+        // Get the stream containing content returned by the server.
+        // The using block ensures the stream is automatically closed.
+        using (Stream dataStream = response.GetResponseStream())
+        {
+            // Open the stream using a StreamReader for easy access.
+            StreamReader reader = new StreamReader(dataStream);
+            // Read the content.
+            string responseFromServer = reader.ReadToEnd();
+            // Display the content.
+            Debug.Log("Server response: \n" + responseFromServer);
+        }
+
+        // Close the response.
+        response.Close();
     }
 }

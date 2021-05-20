@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class InsulinPen : PickableObjectWithInfo {
+public class InsulinPen : PickableObjectWithInfo
+{
 
     public bool animateButton = false;
 
@@ -20,8 +21,6 @@ public class InsulinPen : PickableObjectWithInfo {
 
     protected override void Update()
     {
-        base.Update();
-
         if (animateButton)
         {
             button.localPosition = new Vector3(
@@ -47,7 +46,7 @@ public class InsulinPen : PickableObjectWithInfo {
                 if (actionManager.CompareUseOnInfo(name, "Patient"))
                 {
                     actionManager.OnUseOnAction(name, "Patient");
-                    if (SceneManager.GetActiveScene().name == "Insulin Injection" )
+                    if (SceneManager.GetActiveScene().name == "Insulin Injection")
                     {
                         Transform target = controls.SelectedObject.GetComponent<PersonObjectPart>().Person;
                         target.GetComponent<InteractableObject>().Reset();
@@ -84,9 +83,10 @@ public class InsulinPen : PickableObjectWithInfo {
                     return true;
                 }
             }
-            else if (!inventory.LeftHandEmpty())
+            //else if (!inventory.LeftHandEmpty())
+            if (!inventory.LeftHandEmpty())
             {
-            if (inventory.leftHandObject.name == name)
+                if (inventory.leftHandObject.name == name)
                 {
                     PlayerAnimationManager.PlayAnimation("UseLeft " + name);
                     actionManager.OnUseOnAction(name, "");

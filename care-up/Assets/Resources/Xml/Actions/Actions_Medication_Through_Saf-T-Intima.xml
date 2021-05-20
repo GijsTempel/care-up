@@ -3,7 +3,7 @@
 
   <action
     points="1"
-    description="Begroet de cliënt"
+    description="[Begroet]"
     index="0"
     type="talk"
     topic="Hello"
@@ -15,10 +15,10 @@
     comment="1. Apply hand hygiene"
     index="0"
     points="3"
-    description="Pas handhygiëne toe"
+    description="[Pas handhygiëne]"
     type="use"
     value="HandCleaner"
-    extra="Pas handhygiëne toe"
+    extra="[Pas handhygiëne]"
     messageTitle="Handhygiëne"
     messageContent="Handhygiëne is het meest belangrijk om besmetting met ziektekiemen te voorkomen. Reinig je handen altijd op de juiste manier en op het juiste moment. Begin een handeling altijd met handhygiëne."
    />
@@ -53,6 +53,7 @@
 	  index="2"
     type="examine"
     item="OmniflushSyringeBag2"
+    quiz="2"
     expected="good"
     extra="Controleer het medicijn. Controleer altijd het medicijn op vervaldatum, toedienwijze, kleur en substantie om er zeker van te zijn dat je het juiste medicijn hebt. Vergelijk de informatie van het medicijn met die van de toedienlijst."
     messageTitle="Kennis over het medicijn"
@@ -69,6 +70,25 @@
     item="PatientRecords"
     expected="good"
     extra="Controleer de cliëntgegevens. Het is belangrijk dat je de juiste persoon voor je hebt."
+    messageTitle="5x juist-regel"
+    messageContent="Er zijn 5 controles die je altijd moet doen voordat je medicijnen geeft. Alleen als alle 5 punten juist zijn, mag je het medicijn toedienen.
+    
+    De vijf regels zijn:
+    
+1.  Het juiste medicijn: 
+kijk op de toedienlijst en controleer of de informatie op de medicijnverpakking of het baxterzakje hiermee overeenkomen. Kijk hierbij ook naar de vervaldatum van het medicijn.
+        
+2.  De juiste cliënt: 
+controleer of je de juiste cliënt voor je hebt.
+        
+3.  Het juiste tijdstip: 
+kijk op de toedienlijst voor het tijdstip en vergelijk dit met het tijdstip waarop je de medicijnen geeft.
+        
+4.  De juiste manier van toedienen: 
+hanteer de instructies van de toedienlijst. Je moet bekend zijn met de toedieningsvorm. Ben je hier niet mee bekent, dien dan niet toe.
+    
+5.  De juiste dosis: 
+je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toedienlijst. De verantwoordelijkheid van de juiste dosering ligt bij de arts en de apotheker."
    ></action>
 
 
@@ -126,6 +146,7 @@
     points="2"
     description="Overgiet een gaasje met desinfectans"
     index="5"
+    quiz="3"
     type="combine"
     left="Cloth2"
     right="Alcohol2"
@@ -137,7 +158,7 @@
   <action
     comment="Put on gloves."
     points="3"
-    description="Trek de handschoenen aan"
+    description="[Trek de handschoenen aan]"
     index="6"
     type="use"
     value="gloveBox"
@@ -263,10 +284,10 @@
    comment="1. Apply hand hygiene"
    index="17"
    points="3"
-   description="Pas handhygiëne toe"
+   description="[Pas handhygiëne]"
    type="use"
    value="HandCleaner"
-   extra="Pas handhygiëne toe"
+   extra="[Pas handhygiëne]"
    />
 
   <action

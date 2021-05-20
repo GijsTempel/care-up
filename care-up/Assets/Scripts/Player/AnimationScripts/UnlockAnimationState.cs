@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class UnlockAnimationState : StateMachineBehaviour
 {
-
     public string ObjectName = "";
 
     protected float frame = 0f;
@@ -13,22 +10,18 @@ public class UnlockAnimationState : StateMachineBehaviour
     public int lock_frame;
     public bool toActivate = false;
 
-
-
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         frame = 0f;
         prevFrame = 0f;
         if (unlock_frame == 0)
         {
-            lock_function(false);
-  
+            Lock(false);  
         }
     }
 
-    void lock_function(bool value)
-    {
-       
+    void Lock(bool value)
+    {       
         if (GameObject.Find(ObjectName) != null)
         {
             foreach (GameObject gameObj in GameObject.FindObjectsOfType<GameObject>())
@@ -52,10 +45,7 @@ public class UnlockAnimationState : StateMachineBehaviour
                             if (toActivate)
                             {
                                 gameObj.GetComponent<ObjectStateManager>().isActive = !value;
-                                //Debug.Log(gameObj.GetComponent<ObjectStateManager>().isActive);
                             }
-
-
                         }
                         else if (gameObj.GetComponent<Syringe>() != null)
                         {
@@ -64,36 +54,28 @@ public class UnlockAnimationState : StateMachineBehaviour
                         }
                     }
                 }
-            }
-      
+            }      
         }
     }
-
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (animator.speed != 0)
         {
+            prevFrame = frame;
+            frame = stateInfo.normalizedTime * stateInfo.length;
+
             if (PlayerAnimationManager.CompareFrames(frame, prevFrame, unlock_frame))
             {
-                lock_function(false);
+                Lock(false);
             }
             if (lock_frame > unlock_frame)
             {
                 if (PlayerAnimationManager.CompareFrames(frame, prevFrame, lock_frame))
                 {
-                    lock_function(true);
+                    Lock(true);
                 }
-            }
-            prevFrame = frame;
-            frame += Time.deltaTime;
+            }           
         }
-    }
-
-
-    public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-
-    }
-
+    }   
 }

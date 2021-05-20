@@ -1,20 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using AssetBundles;
 using UnityEngine.UI;
 
 
 public class BundleLoader : MonoBehaviour {
-
+    /*
     string sceneAssetBundle;
     string sceneName;
+    
     
     public IEnumerator Load(string scene, string bundle)
     {
         sceneAssetBundle = bundle;
         sceneName = scene;
-
         yield return StartCoroutine(Initialize());
 
         // Load level.
@@ -40,15 +39,10 @@ public class BundleLoader : MonoBehaviour {
 		// Or customize the URL based on your deployment or configuration
 		AssetBundleManager.SetSourceAssetBundleURL("https://leren.careup.online/AssetBundles/" + Application.version + "/");
 #endif
-        if (GameObject.Find("url_test") != null)
-        {
-            if (GameObject.Find("url_test").GetComponent<InputField>().text != "")
-            {
-
-                AssetBundleManager.SetSourceAssetBundleURL(GameObject.Find("url_test").GetComponent<InputField>().text);
-                print("____++++++++++++++++++_______  " + GameObject.Find("url_test").GetComponent<InputField>().text);
-            }
-        }
+        if (PlayerPrefsManager.UseDevBundleServer)
+            AssetBundleManager.SetSourceAssetBundleURL("https://ab.3dvit.in.ua/");
+        if (PlayerPrefsManager.TestBundleIPAddr != "")
+            AssetBundleManager.SetSourceAssetBundleURL(PlayerPrefsManager.TestBundleIPAddr);
   
         // Initialize AssetBundleManifest which loads the AssetBundleManifest object.
         var request = AssetBundleManager.Initialize();
@@ -72,4 +66,5 @@ public class BundleLoader : MonoBehaviour {
         //float elapsedTime = Time.realtimeSinceStartup - startTime;
         //print(elapsedTime);
     }
+ */
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Text;
+using System.Xml;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
@@ -12,8 +14,9 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using System.Linq;
-using System.Collections;
 using SmartLookUnity;
+using CareUp.Localize;
+using System.Runtime.InteropServices;
 
 /// <summary>
 /// Handles quick access to saved data.
@@ -21,19 +24,73 @@ using SmartLookUnity;
 /// </summary>
 public class PlayerPrefsManager : MonoBehaviour
 {
-    private LocalizationManager localizationManager; // = new LocalizationManager();
+    public class CANotifications
+    {
+        public string title;
+        public string message;
+        public string author;
+        public bool isRead = false;
+        public long createdTime;
+
+        public CANotifications(string _title, string _message, string _author, bool _isRead, long _createdTime)
+        {
+            title = _title;
+            message = _message;
+            author = _author;
+            isRead = _isRead;
+            createdTime = _createdTime;
+        }
+
+        public string GetCreatedTimeString()
+        {
+            System.DateTime notifDate = UnixTimeStampToDate(createdTime);
+            string sDate = notifDate.Day.ToString() + "." + notifDate.Month.ToString() + "." + notifDate.Year.ToString();
+            return sDate;
+        }
+        public System.DateTime UnixTimeStampToDate(long unixTimeStamp)
+        {
+            // Unix timestamp is seconds past epoch
+            System.DateTime dtDateTime = new System.DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+            dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
+            return dtDateTime;
+        }
+
+    };
+
+    public static Dictionary<int, CANotifications> Notifications = new Dictionary<int, CANotifications>();
+
+    public static StoreManager storeManager = new StoreManager();
+
+    public HatsPositioningDB hatsPositioning = new HatsPositioningDB();
+    //private LocalizationManager localizationManager; // = new LocalizationManager();
+    public static bool plusCoins = false;
+    public static bool plusDiamonds = false;
+    public static bool resetPurchases = false;
+    public static string TestBundleIPAddr = "";
+    public static bool UseDevBundleServer = false;
+    public static bool editCharacterOnStart = false;
+    public static bool tutorialOnStart = false;
+    public static bool simulatePlayerActions = false;
+    List<string> scenesWithFreeCert = new List<string>();
+
     public bool VR = true;
     public bool practiceMode = true;
     public bool TextDebug = false;
+    static List<string> purchasedScenes = new List<string>();
+    static List<SceneInfo> ScenesInfo = new List<SceneInfo>();
     // store value here after getting from server
     public bool tutorialCompleted;
-
+    public static bool firstStart = true;
     private static PlayerPrefsManager instance;
+
+    public static string HighscorePlayerName = "";
+    public static string HighscoreSceneName = "";
 
     private List<string> activatedScenes = new List<string>();
 
     // sets up after selecting scene in "scene selection"
     public string currentSceneVisualName;
+    public string currentPEcourseID;
     public bool validatedScene;
 
     // post processing on camera
@@ -50,16 +107,56 @@ public class PlayerPrefsManager : MonoBehaviour
     public bool subscribed = false;
     [HideInInspector]
     public static int plays = 0;
-    
+
     public static int currentPracticeScore = 0;
     public static int currentPracticeStars = 0;
-    
+
     private UMP_Manager manager;
     private MainMenu mainMenu;
     private Scene currentScene;
-    
+
     public string fullPlayerName = "";
     public string bigNumber = "";
+
+    public bool muteMusicForEffect = false;
+    private bool muteMusic = false;
+
+    [DllImport("__Internal")]
+    private static extern string GetStringParams();
+
+    //public string currentLoginToken = "";
+    //public string currentLoginName = "";
+    //public string currentLoginPass = "";
+
+    public static CANotifications GetNotificationByID(int _id)
+    {
+        if (Notifications.ContainsKey(_id))
+        {
+            return Notifications[_id];
+        }
+        return null;
+    }
+
+    [System.Serializable]
+    public class PurchasedScetesData
+    {
+        public string product_name;
+    }
+
+
+    public void AddFreeCertScene(string sceneName)
+    {
+        if (!scenesWithFreeCert.Contains(sceneName))
+            scenesWithFreeCert.Add(sceneName);
+    }
+    public void ClearFreeCertList()
+    {
+        scenesWithFreeCert.Clear();
+    }
+    public bool HasFreeCert(string sceneName)
+    {
+        return scenesWithFreeCert.Contains(sceneName);
+    }
 
     public string ActivatedScenes
     {
@@ -72,46 +169,135 @@ public class PlayerPrefsManager : MonoBehaviour
         }
     }
 
+    static public bool IsScenePurchased(string[] SKUs)
+    {
+        foreach (string purchasedScene in purchasedScenes)
+        {
+            foreach (string sku in SKUs)
+            {
+                if (purchasedScene == sku)
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    static public void AddSKU(string sku)
+    {
+        if (purchasedScenes.IndexOf(sku) < 0)
+            purchasedScenes.Add(sku);
+    }
+
+    static public void ClearSKU()
+    {
+        purchasedScenes = new List<string>();
+    }
+
+    public void ClearScenesInfo()
+    {
+        ScenesInfo.Clear();
+    }
+
+    public void AddSceneInfo(SceneInfo sceleInfo)
+    {
+        ScenesInfo.Add(sceleInfo);
+    }
+
+    public bool IsScenePurchasedByName(string sceneName)
+    {
+        foreach(SceneInfo sceneInfo in ScenesInfo)
+        {
+            if (sceneInfo.sceneName == sceneName)
+            {
+                return IsScenePurchased(sceneInfo.isInProducts);
+            }
+        }
+        return false;
+    }
+
+    public List<string> GetScenesInProduct(string SKU)
+    {
+        List<string> _scenes = new List<string>();
+        foreach (SceneInfo sceneInfo in ScenesInfo)
+        {
+            if (sceneInfo.isInProducts != null)
+            {
+                foreach(string __sku in sceneInfo.isInProducts)
+                {
+                    if (SKU == __sku)
+                    {
+                        _scenes.Add(sceneInfo.displayName);
+                        break;
+                    }
+                }
+            }
+        }
+        return _scenes;
+    }
+
     public void Update()
     {
         SetEscapeButtonLogic();
     }
 
-    public LocalizationManager GetLocalization()
+    public void ToPlayMusic(bool value)
     {
-        return localizationManager;
+        bool toPlay = value;
+        if (muteMusicForEffect || muteMusic)
+            toPlay = false;
+
+        if (toPlay)
+        {
+            if (!GetComponent<AudioSource>().isPlaying)
+                GetComponent<AudioSource>().Play();
+        }
+        else
+        {
+            GetComponent<AudioSource>().Stop();
+        }
     }
 
     private void OnLoaded(Scene s, LoadSceneMode m)
     {
-        transform.position =
-            GameObject.FindObjectOfType<AudioListener>().transform.position;
+        transform.position = GameObject.FindObjectOfType<AudioListener>().transform.position;
 
         currentScene = s;
 
         if (!(s.name == "LoginMenu" ||
                 s.name == "MainMenu" ||
                 s.name == "SceneSelection" ||
-                s.name == "Scenes_Character_Customisation"))
+                s.name == "Scenes_Character_Customisation" ||
+                s.name == "Scenes_Tutorial"))
         {
             // game scenes
-            GetComponent<AudioSource>().Stop();
-            if (Camera.main.GetComponent<PostProcessingBehaviour>() != null)
+            muteMusic = true;
+
+            ToPlayMusic(!muteMusic);
+
+            if (Camera.main != null)
             {
-                Camera.main.GetComponent<PostProcessingBehaviour>().enabled = postProcessingEnabled;
+                if (Camera.main.GetComponent<PostProcessingBehaviour>() != null)
+                {
+                    Camera.main.GetComponent<PostProcessingBehaviour>().enabled = postProcessingEnabled;
+                }
             }
         }
 
-        if (s.name == "EndScore" ||
-            (s.name == "MainMenu" &&
-                !GetComponent<AudioSource>().isPlaying))
+        if (s.name == "EndScore" || (s.name == "MainMenu"))
         {
-            GetComponent<AudioSource>().Play();
+            muteMusic = false;
+            ToPlayMusic(!muteMusic);
+        }
+
+        if (!Convert.ToBoolean(MenuAudio))
+        {
+            muteMusic = true;
+            ToPlayMusic(!muteMusic);
         }
 
         if (s.name == "MainMenu")
         {
-            GameObject.Find("UMenuProManager/MenuCanvas/Opties/PanelUI/OptionsGrid/PostProcessingToggle").GetComponent<Toggle>().isOn = postProcessingEnabled;
+            GameObject.Find("/UMenuProManager/MenuCanvas/Opties/PanelUI/OptionsPanel/LeftSide/PostProcessingPanel/PostProcessingToggle").GetComponent<Toggle>().isOn = postProcessingEnabled;
         }
 
         // handle platform-dependant objects (deleting unnecesarry)
@@ -127,16 +313,18 @@ public class PlayerPrefsManager : MonoBehaviour
                 Destroy(GameObject.Find("UMenuProManager/MenuCanvas/VersionUpdatePanel/Panel_Version_UI" +
                     "/NewVersionButtonGreenApple"));
 
-                Destroy(GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/WUSerialScreen" +
-                    "/RegisterArea/Buttons/MoreInfo_Apple"));
-                Destroy(GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/WUSerialScreen" +
-                    "/RegisterArea/Buttons/Purchase_Apple"));
+                //Destroy(GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/WUSerialScreen" +
+                //    "/RegisterArea/Buttons/MoreInfo_Apple"));
+                //Destroy(GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/WUSerialScreen" +
+                //    "/RegisterArea/Buttons/Purchase_Apple"));
             }
 
             if (Application.platform != RuntimePlatform.Android)
             {
                 Destroy(GameObject.Find("UMenuProManager/MenuCanvas/VersionUpdatePanel/Panel_Version_UI" +
                     "/NewVersionButtonGreenAndroid"));
+                Destroy(GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/WUSerialScreen" +
+                    "/RegisterArea/Buttons/PurchaseButton_GoogleIAP"));
             }
 
             if (!windows)
@@ -147,10 +335,16 @@ public class PlayerPrefsManager : MonoBehaviour
                     "/RegisterArea/Buttons/PurchaseButton_UWP"));
             }
 
-            if ((Application.platform != RuntimePlatform.Android) && !windows)
+            if ((Application.platform != RuntimePlatform.Android))
             {
                 Destroy(GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/WUSerialScreen" +
                     "/RegisterArea/Buttons/PurchaseButton_AndroidWeb"));
+            }
+
+            if ((Application.platform != RuntimePlatform.WebGLPlayer))
+            {
+                Destroy(GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/WUSerialScreen" +
+                    "/RegisterArea/Buttons/PurchaseButton_WebGL"));
             }
         }
 
@@ -168,14 +362,15 @@ public class PlayerPrefsManager : MonoBehaviour
 
             if (Application.platform != RuntimePlatform.IPhonePlayer)
             {
-                Destroy(GameObject.Find("Canvas/WULoginPrefab/WUSerialScreen/RegisterArea/MoreInfo_Apple"));
-                Destroy(GameObject.Find("Canvas/WULoginPrefab/WUSerialScreen/RegisterArea/Purchase_Apple"));
+                //Destroy(GameObject.Find("Canvas/WULoginPrefab/WUSerialScreen/RegisterArea/MoreInfo_Apple"));
+                //Destroy(GameObject.Find("Canvas/WULoginPrefab/WUSerialScreen/RegisterArea/Purchase_Apple"));
             }
         }
     }
 
     void Awake()
     {
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
         if (!Application.isEditor)
         {
             testingMode = false;
@@ -190,22 +385,59 @@ public class PlayerPrefsManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
 
-        localizationManager = new LocalizationManager();
-        localizationManager.LoadAllDictionaries();
+        hatsPositioning.Init();
 
         // uncomment this, fill with correct info and start game
         // p.s. dont forget to comment this again and not push instead :)
         //PlayerPrefsManager.__dev__customCertificate("playerFullName", "sceneName", "06202019");
 
         SmartLook.Init("22f3cf28278dbff71183ef8e0fa90c90048b850d");
+
+#if UNITY_WEBGL || UNITY_EDITOR
+        HandleLoginToken();
+#endif
+        // stupid way to push new tokens 
+        //CMLData data = new CMLData();
+        //string testLogin = "test";
+        //string testPass = "123";
+        //byte[] encodeLogin = Encoding.UTF8.GetBytes(testLogin);
+        //byte[] encodePass = Encoding.UTF8.GetBytes(testPass);
+        //string authData = Convert.ToBase64String(encodeLogin) + " " + Convert.ToBase64String(encodePass);
+        //data.Set("abcdefg123456", authData);
+        //WUData.UpdateSharedCategory("LoginTokens", data);
+        
+    }
+
+    public static bool HasNewNorifications()
+    {
+        bool hasNew = false;
+        foreach (int _key in Notifications.Keys)
+        {
+            if (!Notifications[_key].isRead)
+            {
+                hasNew = true;
+                break;
+            }
+        }
+        return hasNew;
     }
 
     void Start()
     {
+        LocalizationManager.LoadAllDictionaries();
         SceneManager.sceneLoaded += OnLoaded;
 
         AudioListener.volume = Volume;
         //Debug.Log ("Volume is set to saved value: " + Volume);
+
+        if (Convert.ToBoolean(MenuAudio))
+        {
+            GetComponent<AudioSource>().Play();
+        }
+        else
+        {
+            GetComponent<AudioSource>().Stop();
+        }
 
         postProcessingEnabled = PlayerPrefs.GetInt("PostProcessing") == 1;
         //Debug.Log ("PostProcessing is set to saved value: " + postProcessingEnabled);
@@ -226,6 +458,36 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         get { return PlayerPrefs.HasKey("Volume") ? PlayerPrefs.GetFloat("Volume") : 1.0f; }
         set { PlayerPrefs.SetFloat("Volume", value); }
+    }
+
+    public int BundleVersion
+    {
+        get { return PlayerPrefs.HasKey("BundleVersion") ? PlayerPrefs.GetInt("BundleVersion") : 0; }
+        set { PlayerPrefs.SetInt("BundleVersion", value); }
+    }
+
+    public int MenuAudio
+    {
+        get { return PlayerPrefs.HasKey("MenuAudio") ? PlayerPrefs.GetInt("MenuAudio") : 1; }
+        set { PlayerPrefs.SetInt("MenuAudio", value); }
+    }
+
+    public int CarouselPosition
+    {
+        get { return PlayerPrefs.HasKey("CarouselPosition") ? PlayerPrefs.GetInt("CarouselPosition") : 1; }
+        set { PlayerPrefs.SetInt("CarouselPosition", value); }
+    }
+
+    public float ScroopPosition
+    {
+        get { return PlayerPrefs.HasKey("ScroopPosition") ? PlayerPrefs.GetFloat("ScroopPosition") : 0f; }
+        set { PlayerPrefs.SetFloat("ScroopPosition", value); }
+    }
+
+    public float LevelScrollPosition
+    {
+        get { return PlayerPrefs.HasKey("LevelScrollPosition") ? PlayerPrefs.GetFloat("LevelScrollPosition") : 1f; }
+        set { PlayerPrefs.SetFloat("LevelScrollPosition", value); }
     }
 
     public void SetSceneActivated(string sceneName, bool value)
@@ -342,7 +604,7 @@ public class PlayerPrefsManager : MonoBehaviour
                 tutorialCompleted = false; // store for current session
             }
 
-            PlayerPrefs.DeleteKey("TutorialCompleted"); // delete 
+            PlayerPrefs.DeleteKey("TutorialCompleted"); // delete
         }
         else // when info is deleted from PC
         {
@@ -398,17 +660,19 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         RateBox.Instance.IncrementCustomCounter();
         RateBox.Instance.Show();
-        
+
         PlayerPrefsManager.plays += 1;
 
         DatabaseManager.UpdateField("AccountStats", "Plays_Number", PlayerPrefsManager.plays.ToString());
     }
 
+    // keeping this just in case we need to send smth else
     public static void __sendMail(string topic, string message)
     {
         if (Application.platform == RuntimePlatform.WebGLPlayer)
-        { // apparently SMTP doesnt work with webgl
-            __sendMailApp(topic, message);
+        {
+            // apparently SMTP doesnt work with webgl
+            Debug.LogError("Can't send email from webGL");
             return;
         }
         else
@@ -439,13 +703,6 @@ public class PlayerPrefsManager : MonoBehaviour
 #pragma warning restore
     }
 
-    public static void __sendMailApp(string topic, string message)
-    {
-        topic = MyEscapeURL(topic);
-        message = MyEscapeURL(message);
-        Application.OpenURL("mailto:" + "info@careup.nl" + "?subject=" + topic + "&body=" + message);
-    }
-
     /// <summary>
     /// Updates % highscore on database if new one is higher then old one.
     /// Also saves certificate date if there was no such previously.
@@ -453,9 +710,9 @@ public class PlayerPrefsManager : MonoBehaviour
     /// <param name="score"></param>
     public void UpdateTestHighscore(float score)
     {
-        float currentTestScore = score * 100.0f;
+        float currentTestScore = score;
         string currentTestScene = FormatSceneName(currentSceneVisualName);
-        
+
         string highscoreStr = DatabaseManager.FetchField("TestHighscores", currentTestScene);
         float highscore = 0;
         float.TryParse(highscoreStr.Replace(",", "."), out highscore);
@@ -465,9 +722,34 @@ public class PlayerPrefsManager : MonoBehaviour
             DatabaseManager.UpdateField("TestHighscores", currentTestScene, currentTestScore.ToString());
         }
 
+        // saving average score for analyzing
+        //get current avg score
+        string avgScoreStr = DatabaseManager.FetchField("TestAvgscores", currentTestScene);
+        float avgScore = 0;
+        float.TryParse(avgScoreStr.Replace(",", "."), out avgScore);
+        //get total number of finishes
+        string avgScorePlaysStr = DatabaseManager.FetchField("TestAvgscorePlays", currentTestScene);
+        float avgScorePlays = 0;
+        float.TryParse(avgScorePlaysStr.Replace(",", "."), out avgScorePlays);
+        //new avg
+        float newAvgScore = (avgScore * avgScorePlays + currentTestScore) / (avgScorePlays + 1);
+        //push
+        DatabaseManager.UpdateField("TestAvgscores", currentTestScene, newAvgScore.ToString());
+        DatabaseManager.UpdateField("TestAvgscorePlays", currentTestScene, (avgScorePlays+1).ToString());
+
         // save certificate date here too
         string date = GetTodaysDateFormatted();
         DatabaseManager.UpdateField("CertificateDates", currentTestScene, date);
+    }
+
+    public void CreateBlankHighscore()
+    {
+        string currentTestScene = FormatSceneName(currentSceneVisualName);
+        string highscoreStr = DatabaseManager.FetchField("TestHighscores", currentTestScene);
+        if (highscoreStr == "") // returns empty string if field doesnt exist
+        {
+            DatabaseManager.UpdateField("TestHighscores", currentTestScene, (0.0f).ToString());
+        }
     }
 
     public static void AddOneToSceneInCategory(string scene, string category)
@@ -498,7 +780,7 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         AddOneToSceneInCategory(scene, "TestFails");
     }
-    
+
     public void SetTutorialCompletedWU()
     {
         tutorialCompleted = true;
@@ -568,7 +850,7 @@ public class PlayerPrefsManager : MonoBehaviour
     public void UpdatePracticeHighscore(int score, int stars)
     {
         string practiceScene = FormatSceneName(currentSceneVisualName);
-        
+
         int highscore;
         int.TryParse(DatabaseManager.FetchField("PracticeHighscores", "score_" + practiceScene), out highscore);
         if (highscore < score)
@@ -581,6 +863,25 @@ public class PlayerPrefsManager : MonoBehaviour
             DatabaseManager.UpdateCategory("PracticeHighscores", data);
         }
     }
+
+    public static void OpenUrl(string url)
+    {
+        Application.OpenURL(url);
+    }
+
+    public static void OpenUrl_NewWindow(string url)
+    {
+#if UNITY_WEBGL && !UNITY_EDITOR
+            openWindow(url);
+#else
+            OpenUrl(url);
+#endif
+    }
+
+#if UNITY_WEBGL
+    [DllImport("__Internal")]
+    private static extern void openWindow(string url);
+#endif
 
     public static void __dev__customCertificate(string playerFullName, string sceneName, string date)
     {
@@ -598,15 +899,15 @@ public class PlayerPrefsManager : MonoBehaviour
         hexKey = __trashFillString(hexKey);
 
         string link = "https://leren.careup.online/certificate.php";
-        link += "?name=" + playerFullName;
-        link += "&scene=" + sceneName;
-        link += "&date=" + date;
+        link += "?name=" + UnityWebRequest.EscapeURL(playerFullName);
+        link += "&scene=" + UnityWebRequest.EscapeURL(sceneName);
+        link += "&date=" + UnityWebRequest.EscapeURL(date);
         link += "&misc=" + hexKey;
 
         Debug.LogWarning("OPENING LINK " + link);
-        Application.OpenURL(link.Replace(" ", "%20"));
+        Application.OpenURL(link);
     }
-    
+
     public static string __getCertificateLinkParams(string scene, string date = "", bool mail = false)
     {
         PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
@@ -627,13 +928,13 @@ public class PlayerPrefsManager : MonoBehaviour
         hexKey = __trashFillString(hexKey);
 
         string link = "?";
-        link += "name=" + name;
-        link += "&scene=" + scene;
-        link += "&date=" + date;
+        link += "name=" + UnityWebRequest.EscapeURL(name);
+        link += "&scene=" + UnityWebRequest.EscapeURL(scene);
+        link += "&date=" + UnityWebRequest.EscapeURL(date);
         link += "&misc=" + hexKey;
         if (mail)
         {
-            link += "&mail=" + email;
+            link += "&mail=" + UnityWebRequest.EscapeURL(email);
         }
 
         return link;
@@ -653,14 +954,15 @@ public class PlayerPrefsManager : MonoBehaviour
         link += PlayerPrefsManager.__getCertificateLinkParams(scene, date);
 
         Debug.LogWarning("OPENING LINK " + link);
-        Application.OpenURL(link.Replace(" ", "%20"));
+        
+        OpenUrl_NewWindow(link.Replace(" ", "%20"));
     }
 
     public static void __sendCertificateToUserMail(string scene, string date = "")
     {
         string link = "https://leren.careup.online/Certificate_sendMail.php";
         link += PlayerPrefsManager.__getCertificateLinkParams(scene, date, true);
-        
+
         Debug.LogWarning("Sending email with certificate to user.");
         UnityWebRequest unityWebRequest = new UnityWebRequest(link);
         unityWebRequest.SendWebRequest();
@@ -715,13 +1017,13 @@ public class PlayerPrefsManager : MonoBehaviour
         GameObject.FindObjectOfType<PlayerPrefsManager>().bigNumber = number;
         DatabaseManager.UpdateField("AccountStats", "BIG_number", number);
     }
-    
+
     private void SetEscapeButtonLogic()
     {
         //if (startTimer)
         //{
         //    timeLeft -= Time.deltaTime;
-        //    timeOut = timeLeft > 0f ? true : false;                         
+        //    timeOut = timeLeft > 0f ? true : false;
         //}
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -852,7 +1154,122 @@ public class PlayerPrefsManager : MonoBehaviour
         link += "?u=https%3A%2F%2Fcareup.online";                         // u=link for link reference
         link += "&quote=I just passed a test for ";                  // quote=text for text quote
         link += sceneName + ". You can try it out yourself by going to https%3A%2F%2Fcareup.online";
+
+        OpenUrl_NewWindow(link.Replace(" ", "%20"));
+    }
+
+    public static string GenerateAttendanceSXML(string BIG, string course)
+    {
+        XmlDocument xmlDoc = new XmlDocument();
+        xmlDoc.CreateXmlDeclaration("1.0", "UTF-8", "yes");
+
+        XmlElement root = xmlDoc.CreateElement("Entry");
+        xmlDoc.AppendChild(root);
+
+#region Settings
+        XmlElement settings = xmlDoc.CreateElement("Settings");
+        root.AppendChild(settings);
+
+        XmlElement userID = xmlDoc.CreateElement("userID");
+        userID.InnerText = "24352";
+        settings.AppendChild(userID);
+
+        XmlElement userRole = xmlDoc.CreateElement("userRole");
+        userRole.InnerText = "EDU";
+        settings.AppendChild(userRole);
+
+        XmlElement userKey = xmlDoc.CreateElement("userKey");
+        userKey.InnerText = "2435202551361";
+        settings.AppendChild(userKey);
         
-        Application.OpenURL(link.Replace(" ", "%20"));
+        XmlElement orgID = xmlDoc.CreateElement("orgID");
+        orgID.InnerText = "52";
+        settings.AppendChild(orgID);
+
+        XmlElement settingOutput = xmlDoc.CreateElement("settingOutput");
+        settingOutput.InnerText = "1";
+        settings.AppendChild(settingOutput);
+
+        XmlElement emailOutput = xmlDoc.CreateElement("emailOutput");
+        emailOutput.InnerText = "info@careup.online";
+        settings.AppendChild(emailOutput);
+
+        XmlElement languageID = xmlDoc.CreateElement("languageID");
+        languageID.InnerText = "1";
+        settings.AppendChild(languageID);
+
+        XmlElement defaultLanguageID = xmlDoc.CreateElement("defaultLanguageID");
+        defaultLanguageID.InnerText = "1";
+        settings.AppendChild(defaultLanguageID);
+#endregion
+
+#region Attendance
+        XmlElement attendance = xmlDoc.CreateElement("Attendance");
+        root.AppendChild(attendance);
+        
+        XmlElement PECourseID = xmlDoc.CreateElement("PECourseID");
+        PECourseID.InnerText = "409087";
+        attendance.AppendChild(PECourseID);
+
+        XmlElement externalModuleID = xmlDoc.CreateElement("externalmoduleID");
+        externalModuleID.InnerText = course;
+        attendance.AppendChild(externalModuleID);
+
+        XmlElement externalPersonID = xmlDoc.CreateElement("externalPersonID");
+        externalPersonID.InnerText = BIG;
+        attendance.AppendChild(externalPersonID);
+        
+        XmlElement endDate = xmlDoc.CreateElement("endDate");
+        endDate.InnerText = DateTime.Now.AddDays(-1).ToString("yyyy-MM-ddTHH:mm:ss.fffffffK")
+            .Replace("+", "%2B"); // "+" sign is operator in url, need to replace
+        attendance.AppendChild(endDate);
+#endregion
+
+        return xmlDoc.OuterXml;
+    }
+    
+    public void HandleLoginToken()
+    {
+        // get login token
+        string currentLoginToken;
+#if UNITY_WEBGL && !UNITY_EDITOR
+        currentLoginToken = GetStringParams();
+#endif
+#if UNITY_EDITOR
+        //currentLoginToken = "token12asudh"; // let's pretend we got it
+        currentLoginToken = "abcdefg123456"; // let's pretend we got it
+#endif
+        // fetch date from db, follows into next function
+        WUData.FetchSharedField(currentLoginToken, "LoginTokens", CheckLoginToken_success, -1, CheckLoginToken_error);
+    }
+
+    public void CheckLoginToken_error(CMLData response)
+    {
+        Debug.Log(response.ToString());
+        // most likely if we're here - no token found
+    }
+
+    public void CheckLoginToken_success(CML response)
+    {
+        string tokenValue;
+        if (response.Elements.Count > 1 && response.Elements[1].Values.Length > 2)
+        {
+            tokenValue = response.Elements[1].Values[2];
+            string[] split = tokenValue.Split(' ');
+            if (split.Length > 1)
+            {
+                string base64LoginName = split[0];
+                string base64LoginPass = split[1];
+                if (base64LoginName != "" && base64LoginPass != "")
+                {
+                    byte[] loginData = Convert.FromBase64String(base64LoginName);
+                    string decodedLogin = Encoding.UTF8.GetString(loginData);
+                    byte[] passData = Convert.FromBase64String(base64LoginPass);
+                    string decodedPass = Encoding.UTF8.GetString(passData);
+
+                    GameObject.FindObjectOfType<WUUGLoginGUI>().DoAutoLogin(decodedLogin, decodedPass);
+                }
+            }
+        }
     }
 }

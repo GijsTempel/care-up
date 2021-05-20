@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SetObjectStateAnimation : StateMachineBehaviour
 {
-
     public enum Hand
     {
         No,
@@ -26,8 +23,6 @@ public class SetObjectStateAnimation : StateMachineBehaviour
         NotFallow
     };
 
-
-
     public string ObjectName = "";
     public Hand HandToSwitch;
     public AnimationType AnimationToChange;
@@ -38,43 +33,46 @@ public class SetObjectStateAnimation : StateMachineBehaviour
     protected float prevFrame = 0f;
     public int ActionFrame;
 
-
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (ActionFrame == 0)
         {
-            set_set();
+            SetState();
         }
+
         frame = 0f;
         prevFrame = 0f;
     }
-
-
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (animator.speed != 0)
         {
+            prevFrame = frame;
+            frame = stateInfo.normalizedTime * stateInfo.length;
+
             if (PlayerAnimationManager.CompareFrames(frame, prevFrame, ActionFrame))
             {
-                set_set();
-               
-            }
-
-            prevFrame = frame;
-            frame += Time.deltaTime;
+                SetState();
+            }           
         }
     }
 
-    void set_set()
+    public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        if (ActionFrame / 60f > frame)
+        {
+            SetState();
+        }
+    }
+
+    private void SetState()
     {
         if (GameObject.Find(ObjectName) != null)
         {
-           
             if (GameObject.Find(ObjectName).GetComponent<ObjectStateManager>() != null)
             {
                 ObjectStateManager obj = GameObject.Find(ObjectName).GetComponent<ObjectStateManager>();
-
 
                 if (ToFollowHoldingHand != SetObjectStateAnimation.FollowStates.None)
                 {
@@ -92,7 +90,6 @@ public class SetObjectStateAnimation : StateMachineBehaviour
 
                 if (NewAnimationName != "" && AnimationToChange != SetObjectStateAnimation.AnimationType.None)
                 {
-
                     if (AnimationToChange == SetObjectStateAnimation.AnimationType.Lie)
                     {
                         obj.SetAnimation(true, NewAnimationName);
@@ -101,16 +98,8 @@ public class SetObjectStateAnimation : StateMachineBehaviour
                     {
                         obj.SetAnimation(false, NewAnimationName);
                     }
-
                 }
             }
         }
     }
-
-
-    public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-
-    }
-
 }

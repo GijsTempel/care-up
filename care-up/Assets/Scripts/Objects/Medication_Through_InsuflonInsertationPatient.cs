@@ -19,7 +19,7 @@ public class Medication_Through_InsuflonInsertationPatient : PersonObject {
         PatientAnimator = GetComponent<Animator>();
     }
 
-    public override void Talk(string topic = "")
+    public override void Talk(string topic = "", string audio = "")
     {
         if (ViewModeActive() || topic == "CM_Leave" || topic == "")
             return;
@@ -31,12 +31,21 @@ public class Medication_Through_InsuflonInsertationPatient : PersonObject {
                 case "show injection spot":
                     PlayerAnimator.SetTrigger("BlanketEmpty");
                     PlayerAnimator.SetTrigger("S BlanketEmpty");
-                    PlayerAnimator.SetTrigger("TakeOffBlanket");
+                    //PlayerAnimator.SetTrigger("TakeOffBlanket");
+
+                    //PatientAnimator.SetTrigger("Patient_Zeker");
+                    break;
+                case "Hello":
+
+                    PlayerAnimator.SetTrigger("Player_Dialog_Greeting");
+                    PlayerAnimator.SetTrigger("S Player_Dialog_Greeting");
+
                     break;
                 default:
                     break;
             }
 
+            AttemptPlayAudioAfterTalk(audio);
             NextDialogue();
         }
 

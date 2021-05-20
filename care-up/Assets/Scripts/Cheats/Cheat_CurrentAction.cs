@@ -64,7 +64,7 @@ public class Cheat_CurrentAction : MonoBehaviour
             Debug.LogWarning("No prefs manager ( start from 1st scene? )");
         }
 
-        extraPanel = GameObject.Find("Extra").gameObject;
+        extraPanel = GameObject.Find("ExtraPanel").gameObject;
         actionManager = GameObject.Find("GameLogic").GetComponent<ActionManager>();
         if (actionManager == null) Debug.LogError("No action manager found.");
 
@@ -81,7 +81,7 @@ public class Cheat_CurrentAction : MonoBehaviour
                 extraPanel.SetActive(false);
                 if (extraButton != null)
                     extraButton.gameObject.SetActive(false);
-                gameUI.UpdateWalkToGtoupUI(false);
+                gameUI.UpdateWalkToGroupUI(false);
             }
         }
         else
@@ -104,7 +104,7 @@ public class Cheat_CurrentAction : MonoBehaviour
                     GameObject.Find("BiggerDevHint").SetActive(false);
                     extraPanel.SetActive(false);
                     extraButton.gameObject.SetActive(false);
-                    gameUI.UpdateWalkToGtoupUI(false);
+                    gameUI.UpdateWalkToGroupUI(false);
 
                 }
             }
@@ -127,22 +127,19 @@ public class Cheat_CurrentAction : MonoBehaviour
         ActionManager.UpdateRequirements();
 
         GameObject biggerDevHint = GameObject.Find("BiggerDevHint");
-        textObjectBiggerDevHint = biggerDevHint.transform.GetChild(2).GetComponent<Text>();
+        textObjectBiggerDevHint = biggerDevHint.transform.Find("Image/Text").GetComponent<Text>();
 
         biggerDevHint.SetActive(false);
 
-        extraText = extraPanel.transform.GetChild(1).GetComponent<Text>();
+        extraText = extraPanel.transform.Find("Extra/TipsText").GetComponent<Text>();
         extraPanel.SetActive(false);
         set = false;
 
-        Button extraCloseBtn = extraPanel.transform.Find("CloseExtra").GetComponent<Button>();
-        Button extra_Close_Btn = extraPanel.transform.Find("CloseExtraCheckmark").GetComponent<Button>();
+        Button extraCloseBtn = extraPanel.transform.Find("Extra/CloseExtra").GetComponent<Button>();
+        Button extra_Close_Btn = extraPanel.transform.Find("Extra/CloseExtraCheckmark").GetComponent<Button>();
         extraCloseBtn.onClick.AddListener(ToggleExtraInfoPanel);
         extra_Close_Btn.onClick.AddListener(ToggleExtraInfoPanel);
-
         hintPanelBackground = hintPanel.GetComponent<Image>();
-
-       
     }
 
     private void Update()

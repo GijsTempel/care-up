@@ -5,6 +5,8 @@ using UnityEngine;
 public class Cinematic : StateMachineBehaviour
 {
     public string target;
+    public string resetToTarget = "";
+
     public bool resetCamera = false;
     protected CameraMode mode;
 
@@ -32,7 +34,14 @@ public class Cinematic : StateMachineBehaviour
             Camera.main.transform.localRotation = PlayerAnimationManager.GetSavedCameraOrientation();
 
         mode.animationEnded = true;
-     
+        if (resetToTarget != "")
+        {
+            if (GameObject.Find(resetToTarget) != null)
+            {
+                mode.ResetPlayerToTarget(GameObject.Find(resetToTarget).transform);
+            }
+        }
+
     }
 
    

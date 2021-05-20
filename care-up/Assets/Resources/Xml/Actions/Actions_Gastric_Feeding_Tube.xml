@@ -2,7 +2,7 @@
 <ActionList>
   <action
     points="1"
-    description="Begroet de cliënt"
+    description="[Begroet]"
     fullDescription="Begroet de cliënt door op hem te klikken. Daarna klik je nogmaals op de cliënt om een gesprek aan te gaan. Klik vervolgens op de juiste optie."
     index="0"
     type="talk"
@@ -13,11 +13,11 @@
   <action
     comment="(1)Apply handhygiene"
     points="3"
-    description="Pas handhygiëne toe"
+    description="[Pas handhygiëne]"
     index="0"
     type="use"
     value="HandCleaner"
-    extra="Pas handhygiëne toe"
+    extra="[Pas handhygiëne]"
     messageTitle="Handhygiëne"
     messageContent="Handhygiëne is het meest belangrijk om besmetting met ziektekiemen te voorkomen. Reinig je handen altijd op de juiste manier en op het juiste moment. Begin een handeling altijd met handhygiëne."
 />
@@ -25,7 +25,7 @@
   <action
     comment="(2)Create a clean workfield"
     points="1"
-    description="Maak een schoon werkveld en zet de benodigdheden binnen handbereik"
+    description="[Maak een schoon werkveld]"
     fullDescription="Klik op het werkveld om deze schoon te maken."
     index="1"
     type="use"
@@ -75,6 +75,7 @@
     type="combine"
     left="MedicalTube"
     blockUnlock="block1"
+    quiz="2"
     right=""
     extra="Open de verpakking van de steriele maagsonde."/>
 
@@ -96,7 +97,6 @@
     index="4"
     type="talk"
     topic="SitInBed"
-    blockRequired="block1, block2"
     blockTitle="Deze handeling is nog niet mogelijk"
     blockMessage="Zorg ervoor dat het materiaal klaar is voor gebruik door de verpakkingen te openen."
     blockUnlock="clienInHalfSitPos"
@@ -108,12 +108,11 @@
     description="Maak met de cliënt een afspraak over een signaal wanneer het inbrengen moet stoppen"
     index="5"
     type="talk"
+    quiz="2"
     left=""
     right=""
     topic="InstructSign"
-    extra=" Maak met de cliënt een afspraak over een signaal wanneer inbrengen moet stoppen."
-    blockUnlock="clienReadyForMeasuring"
-  
+    extra=" Maak met de cliënt een afspraak over een signaal wanneer inbrengen moet stoppen."  
     />
   
   <action
@@ -124,7 +123,7 @@
     type="useOn"
     item="MedicalTube_Opened"
     target=""
-    blockRequired="clienReadyForMeasuring"
+    blockRequired="clienInHalfSitPos, block1"
     blockTitle="Signaal afspreken"
     blockMessage="Stem eerst met de cliënt af wat voor signaal er gebruikt moet worden wanner het inbrengen moet stoppen."
     buttonText="Meet in te brengen lengte"
@@ -162,42 +161,42 @@ Gebruik bij voorkeur een neus-maagsonde met centimeteraanduiding en markeer de b
     index="9"
     type="sequenceStep"
     value="mark the probe"
+    blockUnlock="clienReadyForProcedure"
     extra="Markeer de maagsonde op de afgemeten lengte."/>
 
   <action
-    comment="Make the probe wet under a tap or to immerse it under water in a bowl."
-    points="1"
-    description="Maak de maagsonde nat onder de kraan of door hem in de kom met water te dompelen"
-    index="10"
-    type="useOn"
-    item="MedicalTubeInHand"
-    target=""
-    buttonText="Plaats de sonde in het water"
-    extra="Neem de maagsonde uit de verpakking"/>
-  
-  <action
-    comment="Put the pad on the chest of the client."
-    points="2"
-    description="Leg de onderlegger op de borst van de cliënt"
-    index="11"
-    type="useOn"
-    item="cloth_02_folded"
-    target=""
-    buttonText="Onderlegger plaatsen"
-    blockRequired="clienInHalfSitPos"
-    blockUnlock="clienReadyForProcedure"
-    extra="Leg de onderlegger op de borst van de cliënt. "></action>
+  comment="Put the pad on the chest of the client."
+  points="2"
+  description="Leg de onderlegger op de borst van de cliënt"
+  index="10"
+  type="useOn"
+  item="cloth_02_folded"
+  target=""
+  buttonText="Onderlegger plaatsen"
+  blockRequired="clienInHalfSitPos"
+  extra="Leg de onderlegger op de borst van de cliënt. "></action>
 
   <action
-    comment="Put on gloves. ---Start Sequence"
-    points="1"
-    description="Trek handschoenen aan"
-    index="12"
-    type="use"
-    value="gloveBox"
-    extra="Trek handschoenen aan"
-    blockRequired="clienReadyForProcedure"
+  comment="Put on gloves. ---Start Sequence"
+  points="1"
+  description="Trek handschoenen aan"
+  index="11"
+  type="use"
+  value="gloveBox"
+  extra="Trek handschoenen aan"
+  blockRequired="clienReadyForProcedure"
+  blockTitle="Onderlegger"
+  blockMessage="Leg eerst de onderlegger op de borst van de cliënt."
 ></action>
+  
+  <action
+    comment="Make the probe wet under a tap or to immerse it under water in a bowl."
+    points="12"
+    description="Maak de maagsonde nat onder de kraan of door hem in de kom met water te dompelen"
+    index="12"
+    type="sequenceStep"
+    value="PutProbeInWater"
+    extra="Neem de maagsonde uit de verpakking"/>
   
   <action
     comment="Inspect the nose."
@@ -207,7 +206,7 @@ Gebruik bij voorkeur een neus-maagsonde met centimeteraanduiding en markeer de b
     type="sequenceStep"
     value="inspectnose"
     extra="Inspecteer de neus van de cliënt en vraag de cliënt zo nodig de neus te snuiten."
-    messageTitle=""
+    messageTitle="Controle neusgaten op doorgankelijkheid"
     messageContent="
 - Laat de cliënt de neus snuiten.
 - Laat de cliënt wisselend door het linker- en rechterneusgat uitademen om het neusgat met de beste doorgankelijkheid te selecteren.
@@ -231,6 +230,7 @@ Gebruik bij voorkeur een neus-maagsonde met centimeteraanduiding en markeer de b
     index="15"
     type="sequenceStep"
     value="shiftprobe"
+    encounter="1"
     extra="Schuif de sonde (met afsluitdopje of evt. voerdraad) langzaam via de neusbodem tot in de keelholte."/>
 
   <action
@@ -479,20 +479,21 @@ Plak het midden van een stuk pleister aan de onderkant van de sonde vast op 2 cm
     description="Ruim de materialen op door op het werkveld te klikken"
     index="39"
     type="use"
+    quiz="2"
     value="WorkField"
     extra="Ruim de materialen op door op het werkveld te klikken."
     messageTitle="Materialen opruimen"
-    messageContent="Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen"></action>
+    messageContent="Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen."></action>
 
   <action
     comment="Apply hand hygiene."
     points="1"
-    description="Pas handhygiëne toe"
+    description="[Pas handhygiëne]"
     fullDescription=""
     index="40"
     type="use"
     value="HandCleaner"
-    extra="Pas handhygiëne toe"/>
+    extra="[Pas handhygiëne]"/>
 
   <action
     comment="Write down the size and length of the inserted probe, pH determination, date of inserting the probe and any findings on the ipad."

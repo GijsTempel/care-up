@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using MBS;
 using UnityEngine.SceneManagement;
+using System;
+using System.Globalization;
 
 public class DatabaseManager : MonoBehaviour
 {
@@ -22,6 +24,9 @@ public class DatabaseManager : MonoBehaviour
     private static List<Category> database = new List<Category>();
 
     private static Coroutine sessionCheck;
+    private static Coroutine timeCheck;
+
+    private static string formattedTimeSpan = TimeSpan.Zero.ToString();
 
     private void Awake()
     {
@@ -48,6 +53,9 @@ public class DatabaseManager : MonoBehaviour
     public static void Init()
     {
         // querry all player info here?
+        // StartCoroutine(RequestPurchases(WULogin.UID));
+        WPServer._CheckBundleVersion();
+        WPServer.RequestPurchases(WULogin.UID);
         WUData.FetchUserGameInfo(WULogin.UID, FetchEverything_success, -1, PostInit);
     }
 
@@ -55,6 +63,7 @@ public class DatabaseManager : MonoBehaviour
     {
         database.Clear();
         instance.StopCoroutine(sessionCheck);
+        instance.StopCoroutine(timeCheck);
         GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed = false;
     }
 
@@ -74,10 +83,12 @@ public class DatabaseManager : MonoBehaviour
             GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed || WULogin.HasSerial;
 
         // set character info
-        CharacterInfo.sex = FetchField("AccountStats", "CharacterSex");
-        int.TryParse(FetchField("AccountStats", "CharacterHeadType"), out CharacterInfo.headType);
-        int.TryParse(FetchField("AccountStats", "CharacterBodyType"), out CharacterInfo.bodyType);
-        int.TryParse(FetchField("AccountStats", "CharacterGlassesType"), out CharacterInfo.glassesType);
+        CharacterInfo.sex = FetchField("AccountStats", "Sex");
+        int.TryParse(FetchField("AccountStats", "Head"), out CharacterInfo.headType);
+        int.TryParse(FetchField("AccountStats", "Body"), out CharacterInfo.bodyType);
+        int.TryParse(FetchField("AccountStats", "Glasses"), out CharacterInfo.glassesType);
+        int.TryParse(FetchField("AccountStats", "Index"), out CharacterInfo.index);
+        CharacterInfo.hat = FetchField("AccountStats", "Hat");
 
         // set player irl full name
         GameObject.FindObjectOfType<PlayerPrefsManager>().fullPlayerName =
@@ -87,24 +98,34 @@ public class DatabaseManager : MonoBehaviour
         GameObject.FindObjectOfType<PlayerPrefsManager>().bigNumber =
             FetchField("AccountStats", "BIG_number");
 
+        // initialize store manager, cuz we just got info about current currency etc
+        PlayerPrefsManager.storeManager.Init();
+
+
+        // fetch all messages-notifications
+        FetchCANotifications();
+
         // check if character created, load proper scene
         // load scene at the end of this function
-        if (FetchField("AccountStats", "CharacterCreated") == "true" &&
+        bool goToMainMenu = FetchField("AccountStats", "CharacterCreated") == "true" &&
              FetchField("AccountStats", "FullName") != "" &&
              (FetchField("AccountStats", "CharSceneV2") == "true" ||
-             FetchField("AccountStats", "BIG_number") != ""))
+             FetchField("AccountStats", "BIG_number") != "");
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        if (PlayerPrefsManager.editCharacterOnStart)
+            goToMainMenu = false;
+#endif
+        if (goToMainMenu)
         {
             WULogin.characterCreated = true;
-
-            //DatabaseManager.UpdateField("AccountStats", "TutorialCompleted", "false");
-
             if (FetchField("AccountStats", "TutorialCompleted") == "true")
             {
                 bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
             }
             else
             {
-                bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Tutorial");
+                bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Tutorial", "scene/scenes_tutorial");
             }
         }
         else
@@ -117,6 +138,7 @@ public class DatabaseManager : MonoBehaviour
         sessionKey = PlayerPrefsManager.RandomString(16);
         UpdateField("AccountStats", "SessionKey", sessionKey);
         sessionCheck = instance.StartCoroutine(CheckSession(60.0f));
+        timeCheck = instance.StartCoroutine(SetTime(60.0f));
     }
 
     private static void FetchEverything_success(CML response)
@@ -183,7 +205,7 @@ public class DatabaseManager : MonoBehaviour
         }
     }
 
-    private static void PrintDatabase()
+    public static void PrintDatabase()
     {
         string output = "";
         foreach (Category c in database)
@@ -265,6 +287,30 @@ public class DatabaseManager : MonoBehaviour
         }
     }
 
+    private static IEnumerator SetTime(float refreshTime)
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(refreshTime);
+
+            string format = @"dd\:hh\:mm";
+            string fetchedTimeSpan = FetchField("AccountStats", "TotalTime");
+            TimeSpan currentTimeSpan = new TimeSpan(0, 0, 1, 0, 0);
+
+            if (string.IsNullOrEmpty(fetchedTimeSpan))
+            {
+                formattedTimeSpan = currentTimeSpan.ToString(format);
+            }
+            else
+            {
+                currentTimeSpan += ConvertTimeFormat(fetchedTimeSpan, format);
+                formattedTimeSpan = currentTimeSpan.ToString(format);
+            }
+
+            UpdateField("AccountStats", "TotalTime", formattedTimeSpan);
+        }
+    }
+
     private static void OnSessionCheckResponse(CML response)
     {
         string dbSessionKey = response[1].String("SessionKey");
@@ -274,5 +320,52 @@ public class DatabaseManager : MonoBehaviour
             sessionTimeOut = true;
             WULogin.LogOut();
         }
+    }
+
+    private static TimeSpan ConvertTimeFormat(string fetchedTimeSpan, string format)
+    {
+        if (TimeSpan.TryParseExact(fetchedTimeSpan, format, null, TimeSpanStyles.None, out TimeSpan convertedTimeSpan))
+        {
+            return convertedTimeSpan;
+        }
+
+        return TimeSpan.Zero;
+    }
+
+    private static void FetchCANotifications()
+    {
+        string[][] result = FetchCategory("CANotifications");
+
+        if (result != null)
+        {
+            Debug.Log("fetching notif");
+            foreach (string[] message in result)
+            {
+                //Debug.Log(message[0] + " " + message[1]);
+
+                int id = -1;
+                if (message[0].Length > 2)
+                {
+                    int.TryParse(message[0].Remove(0, 2), out id);
+                }
+
+                if (id >= 0)
+                {
+                    PlayerPrefsManager.Notifications[id] =
+                        JsonUtility.FromJson<PlayerPrefsManager.CANotifications>(message[1]);
+
+                    // some clean-up! remove fields from DB that are marked as read
+                    if (PlayerPrefsManager.Notifications[id].isRead)
+                        WUData.RemoveField(id.ToString(), "CANotifications");
+                }
+            }
+        }
+    }
+
+    public static void PushCANotification(int id, PlayerPrefsManager.CANotifications notif)
+    {
+        string json = JsonUtility.ToJson(notif);
+        Debug.Log("push " + id.ToString() + " " + json);
+        UpdateField("CANotifications", "id"+id.ToString(), json);
     }
 }

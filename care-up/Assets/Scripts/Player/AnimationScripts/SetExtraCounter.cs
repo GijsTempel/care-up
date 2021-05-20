@@ -4,17 +4,23 @@ using UnityEngine;
 
 public class SetExtraCounter : StateMachineBehaviour {
 
+    public string valueName = "";
+    string vname = "extra";
     public int value = 0;
     public int actionFrame = 0;
     protected float frame;
     protected float prevFrame;
+    public int increase = 0;
 
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        vname = "extra";
+        if (valueName != "")
+            vname = valueName;
         if (actionFrame == 0)
         {
-            animator.SetInteger("extra", value);
+            animator.SetInteger(vname, value);
         }
     }
 
@@ -25,12 +31,18 @@ public class SetExtraCounter : StateMachineBehaviour {
         {
             if (PlayerAnimationManager.CompareFrames(frame, prevFrame, actionFrame))
             {
-                animator.SetInteger("extra", value);
+                if (increase != 0)
+                {
+                    int new_value = animator.GetInteger(vname) + increase;
+                    animator.SetInteger(vname, new_value);
+                }
+                else
+                {
+                    animator.SetInteger(vname, value);
+                }
             }
             prevFrame = frame;
-            frame += Time.deltaTime;
+            frame = stateInfo.normalizedTime * stateInfo.length;
         }
-
     }
-
 }

@@ -22,7 +22,7 @@ public class EndButtonRemover : MonoBehaviour {
     private GameObject CertificatePanel = null;
 
     public void ButtonClick () {
-        goToMenuButton.SetActive (false);
+        // goToMenuButton.SetActive (false);
     }
 
     public void OnToQuizClick () {
@@ -33,9 +33,7 @@ public class EndButtonRemover : MonoBehaviour {
         QuizPanel.GetComponent<Animator> ().SetBool ("pop", true);
     }
     public void OnToScoreClick()
-    {
-        
-        //GameObject.FindObjectOfType<EndscoreButtonManager>().
+    {        
         QuizPanel.GetComponent<Animator>().SetBool("pop", false);
         QuizPanel.SetActive(false);
 
@@ -43,15 +41,13 @@ public class EndButtonRemover : MonoBehaviour {
         ScorePanel.GetComponent<Animator>().SetBool("pop", true);
         if (endScoreShown == 0)
         {
-            float percent = GameObject.FindObjectOfType<EndScoreManager>().percent;
-            int value = Mathf.FloorToInt(percent * 100f);
+            int value = GameObject.FindObjectOfType<EndScoreManager>().percent;           
             EndScoreRadial endScoreRadial = GameObject.FindObjectOfType<EndScoreRadial>();
             if (endScoreRadial != null)
                 GameObject.FindObjectOfType<EndScoreRadial>().StartAnimation(value);
         }
         endScoreShown++;
     }
-    //----------------
 
     public void ShowResultInfoHolder()
     {

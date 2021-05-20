@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using DigitalRubyShared;
 using System.Linq;
 
 public class GestureControls : MonoBehaviour
 {
-
     private TapGestureRecognizer tapGesture;
     private TapGestureRecognizer doubleTapGesture;
     private SwipeGestureRecognizer swipeGesture;
@@ -20,7 +18,7 @@ public class GestureControls : MonoBehaviour
     private Tutorial_Combining tutorialCombine;
 
     private PlayerScript player;
-    
+
     private void DebugText(string text, params object[] format)
     {
         //bottomLabel.text = string.Format(text, format);
@@ -29,7 +27,7 @@ public class GestureControls : MonoBehaviour
 
     void DebugList(List<PickableObject> items)
     {
-        foreach(PickableObject i in items)
+        foreach (PickableObject i in items)
         {
             Debug.Log(i.name + " " + i.positionID + " " +
                 Vector3.Distance(i.transform.position, player.transform.position));
@@ -51,9 +49,9 @@ public class GestureControls : MonoBehaviour
                     player.itemControls.Close(true);
 
                     PickableObject item = initedObject.GetComponent<PickableObject>();
-                    
+
                     DebugList(item.ghostObjects);
-                    List<PickableObject> ghosts = item.ghostObjects.OrderBy(x => 
+                    List<PickableObject> ghosts = item.ghostObjects.OrderBy(x =>
                         Vector3.Distance(x.transform.position, player.transform.position)).ToList();
                     DebugList(ghosts);
 
@@ -108,7 +106,7 @@ public class GestureControls : MonoBehaviour
                 if (handsInventory.LeftHandEmpty() || handsInventory.RightHandEmpty())
                 {
                     // if we're here we're missing one object it seems, make a warning maybe somewhere?
-                    string message = "Je hebt geen object om mee te combineren. Zorg dat je een object in beide handen hebt om ze met elkaar te combineren.";        
+                    string message = "Je hebt geen object om mee te combineren. Zorg dat je een object in beide handen hebt om ze met elkaar te combineren.";
                     GameObject.FindObjectOfType<GameUI>().ShowBlockMessage("Geen tweede object", message);
 
                     player.itemControls.Close();
@@ -128,7 +126,7 @@ public class GestureControls : MonoBehaviour
                     return;
                 }
             }
-            
+
             if (tutorialCombine != null && !tutorialCombine.decombiningAllowed)
             {
                 return;
@@ -153,7 +151,7 @@ public class GestureControls : MonoBehaviour
         if (gesture.State == GestureRecognizerState.Began)
         {
             //DebugText("Long press began: {0}, {1}", gesture.FocusX, gesture.FocusY);
-            
+
             if (IsViableWithUIOpen())
             {
                 if (cameraMode.CurrentMode == CameraMode.Mode.ItemControlsUI)
@@ -232,7 +230,7 @@ public class GestureControls : MonoBehaviour
         initedObject = controls.SelectedObject;
 
         PlayerScript player = GameObject.FindObjectOfType<PlayerScript>();
-        
+
         return !player.away && controls.SelectedObject != null
                 && controls.SelectedObject.GetComponent<InteractableObject>() != null
                 && !player.itemControls.gameObject.activeSelf

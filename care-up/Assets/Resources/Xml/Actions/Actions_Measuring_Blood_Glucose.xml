@@ -3,7 +3,7 @@
   <action
       index="0"
       points="1"
-      description="Begroet de cliënt"
+      description="[Begroet]"
       type="talk"
       topic="Hello"
       extra="Het begroeten van de client en je voorstellen is niet in de werkwijze is vermeld. Het is wel netjes en logisch om contact te leggen met de cliënt."
@@ -14,17 +14,17 @@
       comment="1. Apply hand hygiene"
       index="0"
       points="3"
-      description="Pas handhygiëne toe"
+      description="[Pas handhygiëne]"
       type="use"
       value="HandCleaner"
-      extra="Pas handhygiëne toe"
+      extra="[Pas handhygiëne]"
       messageTitle="Handhygiëne"
       messageContent="Handhygiëne is het meest belangrijk om besmetting met ziektekiemen te voorkomen. Reinig je handen altijd op de juiste manier en op het juiste moment. Begin een handeling altijd met handhygiëne."
 ></action>
 
   <action
     points="1"
-    description="Maak een schoon werkveld en zet de benodigdheden binnen handbereik"
+    description="[Maak een schoon werkveld]"
     index="1"
     type="use"
     value="WorkField"
@@ -49,7 +49,10 @@
     index="2" 
     type="talk" 
     topic="WashHands" 
-    extra="Laat je cliënt zijn of haar handen wassen met warm water en zeep. Droog daarna de handen goed af. "></action>
+    extra="Laat je cliënt zijn of haar handen wassen met warm water en zeep. Droog daarna de handen goed af."
+    messageTitle="Gebruiksinstructie"
+    messageContent="Lees altijd de gebruiksinstructie van de bloedglucosemeter en van de prikpen of vingerprikker. "
+    ></action>
 
   <action
     comment="Step 4: Check expiration date of the teststrips."
@@ -109,6 +112,7 @@
     points="3"
     description="Plaats de teststrip in de bloedglucosemeter en/of maak de strip gebruiksklaar volgens de gebruiksinstructie"
     index="7"
+    quiz="2"
     type="combine"
     left="BloodGlucoseMeter"
     right="Teststrip"
@@ -166,6 +170,7 @@
     index="12" 
     type="sequenceStep" 
     value="fill in teststrip" 
+    encounter="1"
     extra="Vul het testveld van de teststrip met een bloeddruppel. Zorg ervoor dat de bloeddruppel het hele testveld bedekt. Smeer het bloed niet uit."
   ></action>
 
@@ -227,10 +232,10 @@
     comment="1. Apply hand hygiene"
     index="19"
     points="3"
-    description="Pas handhygiëne toe"
+    description="[Pas handhygiëne]"
     type="use"
     value="HandCleaner"
-    extra="Pas handhygiëne toe"
+    extra="[Pas handhygiëne]"
     messageTitle="Handhygiëne"
     messageContent="Handhygiëne is het meest belangrijk om besmetting met ziektekiemen te voorkomen. Reinig je handen altijd op de juiste manier en op het juiste moment. Begin een handeling altijd met handhygiëne."
    ></action>

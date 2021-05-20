@@ -33,7 +33,7 @@ public class CatherisationPatient : PersonObject
         }
     }
 
-    public override void Talk(string topic = "")
+    public override void Talk(string topic = "", string audio = "")
     {
         if (ViewModeActive() || topic == "CM_Leave" || topic == "")
             return;
@@ -44,13 +44,19 @@ public class CatherisationPatient : PersonObject
             switch (topic)
             {
                 case "LayOnBed":
-                    animator.SetTrigger("pants_down");
+                    //animator.SetTrigger("pants_down");
 
-                    GameObject playerPosAtPatient = GameObject.Find("PlayerPositions/PatientPos/Target");
-                    playerPosAtPatient.transform.position = playerPositionTarget.position;
-                    playerPosAtPatient.transform.rotation = playerPositionTarget.rotation;
+                    /*PlayerAnimator.SetTrigger("Player_Dialog_AskToLay");
+                    PlayerAnimator.SetTrigger("S Player_Dialog_AskToLay");*/
+                    if (playerPositionTarget != null)
+                    {
+                        GameObject playerPosAtPatient = GameObject.Find("PlayerPositions/PatientPos/Target");
+                        playerPosAtPatient.transform.position = playerPositionTarget.position;
+                        playerPosAtPatient.transform.rotation = playerPositionTarget.rotation;
+                    }
                     PlayerAnimator.SetTrigger("CloseCurtains");
                     PlayerAnimator.SetTrigger("S CloseCurtains");
+
                     break;
                 case "HelpGetUp":
                     PlayerAnimationManager.PlayAnimation("helppatientgetup");
@@ -60,14 +66,23 @@ public class CatherisationPatient : PersonObject
                     PlayerAnim.SetTrigger("MoveToSide");
                     PlayerAnim.SetTrigger("S MoveToSide");
 
-                    animator.SetTrigger("patient_standup");
+                    //animator.SetTrigger("patient_standup");
                     break;
 
-                    
+                case "Hello":
+
+                    PlayerAnimator.SetTrigger("Player_Dialog_Greeting");
+                    PlayerAnimator.SetTrigger("S Player_Dialog_Greeting");
+
+                    break;
+
+
+
                 default:
                     break;
             }
 
+            AttemptPlayAudioAfterTalk(audio);
             NextDialogue();
         }
 

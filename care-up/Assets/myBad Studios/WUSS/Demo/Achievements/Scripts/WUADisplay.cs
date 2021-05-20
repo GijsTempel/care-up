@@ -91,7 +91,8 @@ namespace MBS
             if (currentScene.name == "MainMenu")
             {
                 achievePanel = GameObject.Find("Account_Achievements");
-                content_area = GameObject.Find("LayoutGroupAchieve").GetComponent<RectTransform>();
+                content_area = 
+                    GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Account_Achievements/ContentPanel/Scenes/Account_Panel_UI/Panel/ProtocolList/ProtocolsHolder/Protocols/content").GetComponent<RectTransform>();
                 achievementButton = GameObject.Find("AchievementBTN").GetComponent<Button>();
                 achievementButton.onClick.AddListener(OnAchievementButtonClick);
 
@@ -131,9 +132,9 @@ namespace MBS
             List<CMLData> entries = all_awards.Children(0);
 
             //make sure our scroll region can handle all the entries...
-            GridLayoutGroup glg = content_area.GetComponent<GridLayoutGroup>();
-            content_area.sizeDelta = new Vector2(content_area.sizeDelta.x, entries.Count * (view_prefab.GetComponent<RectTransform>().sizeDelta.y + glg.spacing.y));
-            content_area.sizeDelta = new Vector2(content_area.sizeDelta.x, entries.Count * (glg.cellSize.y + glg.spacing.y));
+            //GridLayoutGroup glg = content_area.GetComponent<GridLayoutGroup>();
+            //content_area.sizeDelta = new Vector2(content_area.sizeDelta.x, entries.Count * (view_prefab.GetComponent<RectTransform>().sizeDelta.y + glg.spacing.y));
+            //content_area.sizeDelta = new Vector2(content_area.sizeDelta.x, entries.Count * (glg.cellSize.y + glg.spacing.y));
 
             tracked.Clear();
 
@@ -159,8 +160,8 @@ namespace MBS
                 if (GameObject.FindObjectOfType<AchievementsLoader>() != null)
                 {
                     GameObject.FindObjectOfType<AchievementsLoader>().loadingIcon.SetActive(false);
-                    GameObject.FindObjectOfType<AchievementsLoader>().backButton.transform.GetChild(0).gameObject.GetComponent<Button>().interactable = true;
-                    GameObject.FindObjectOfType<AchievementsLoader>().backButton.GetComponent<Animator>().SetTrigger("start");
+                    //GameObject.FindObjectOfType<AchievementsLoader>().backButton.transform.GetChild(0).gameObject.GetComponent<Button>().interactable = true;
+                    //GameObject.FindObjectOfType<AchievementsLoader>().backButton.GetComponent<Animator>().SetTrigger("start");
                 }
 
                 if (GameObject.Find("Achievement_Panel_UI") != null)
@@ -186,7 +187,10 @@ namespace MBS
             string[] aIDs = data.Last.String("achievements").Split(',');
             foreach(string id in aIDs)
             {
-                unlockedAIDs.Add(int.Parse(id));
+                int parsedID;
+                int.TryParse(id, out parsedID);
+                if (parsedID != 0)
+                    unlockedAIDs.Add(parsedID);
             }
 
             WUAchieve.FetchEverything(GenerateEntries);

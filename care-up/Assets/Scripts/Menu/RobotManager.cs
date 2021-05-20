@@ -8,7 +8,7 @@ public class RobotManager : MonoBehaviour
     public static bool[] UIElementsState = { false, false };
 
     private static Transform notification;
-    private static int notificationCount = 0;
+    //private static int notificationCount = 0;
 
     private static RobotManager instance;
 
@@ -56,7 +56,7 @@ public class RobotManager : MonoBehaviour
         //}
 
         // reset counter
-        notificationCount = 0;
+        //notificationCount = 0;
     }
 
     void Update()
@@ -104,7 +104,7 @@ public class RobotManager : MonoBehaviour
     public static void SetUITriggerActive(bool value)
     {
         //UI_trigger.SetActive(value);
-        GameObject.FindObjectOfType<GameUI>().UpdateWalkToGtoupUI(value);
+        GameObject.FindObjectOfType<GameUI>().UpdateWalkToGroupUI(value);
     }
 
     //public static void SetNotification(int n)

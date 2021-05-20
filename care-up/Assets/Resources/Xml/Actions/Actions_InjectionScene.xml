@@ -19,14 +19,14 @@
     description="[Pas handhygiëne]"
     type="use"
     value="HandCleaner"
-    extra="Pas handhygiëne toe"
+    extra="[Pas handhygiëne]"
     messageTitle="Handhygiëne"
     messageContent="Handhygiëne is het meest belangrijk om besmetting met ziektekiemen te voorkomen. Reinig je handen altijd op de juiste manier en op het juiste moment. Begin een handeling altijd met handhygiëne."
    ></action>
 
   <action
     points="1"
-    description="Maak een schoon werkveld en zet de benodigdheden binnen handbereik"
+    description="[Maak een schoon werkveld]"
     commentUA="Очистити та приготувати робочий стіл"
     audioHint="Injection/H2-2"
     index="1"
@@ -69,10 +69,10 @@
     messageTitle="Controle medicijn"
     messageContent="
 Controleer het medicijn op:
-- De uiterste houdbaarheidsdatum;
+- De uiterste houdbaarheidsdatum
 - kleur en substantie
 - Toedieningswijze
-- Beschadigingen op de spuit."
+- Beschadigingen op de spuit"
 ></action>
 
   <action
@@ -85,12 +85,25 @@ Controleer het medicijn op:
     item="PrescriptionForm"
     expected="good"
     extra="Controleer de toedienlijst. Controleer de toedienlijst op soort, dosering en toedientijdstip."
-    messageTitle="Controle toedienlijst"
-    messageContent="
-Vergelijk het medicijn met de toedieningslijst.
-- Soort
-- Dosering
-- Toedieningstijdstip"
+    messageTitle="5x juist-regel"
+    messageContent="Er zijn 5 controles die je altijd moet doen voordat je medicijnen geeft. Alleen als alle 5 punten juist zijn, mag je het medicijn toedienen.
+    
+    De vijf regels zijn:
+    
+1.  Het juiste medicijn: 
+kijk op de toedienlijst en controleer of de informatie op de medicijnverpakking of het baxterzakje hiermee overeenkomen. Kijk hierbij ook naar de vervaldatum van het medicijn.
+        
+2.  De juiste cliënt: 
+controleer of je de juiste cliënt voor je hebt.
+        
+3.  Het juiste tijdstip: 
+kijk op de toedienlijst voor het tijdstip en vergelijk dit met het tijdstip waarop je de medicijnen geeft.
+        
+4.  De juiste manier van toedienen: 
+hanteer de instructies van de toedienlijst. Je moet bekend zijn met de toedieningsvorm. Ben je hier niet mee bekent, dien dan niet toe.
+    
+5.  De juiste dosis: 
+je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toedienlijst. De verantwoordelijkheid van de juiste dosering ligt bij de arts en de apotheker."
 ></action>
 
   <action
@@ -103,10 +116,10 @@ Vergelijk het medicijn met de toedieningslijst.
     topic="DoubleCheck"
     extra="Vraag aan je collega of ze een dubbele controle wil doen"
     messageTitle="Dubbele controle bij injecties en bij medicijntoediening via infuus"
-    messageContent="Het verkeerd toedienen van medicijnen brengt risico’s met zich mee. Het risico op blijvend letsel bij verkeerde dosering of toediening verschilt, afhankelijk van het medicijn. Ook is de ene toedieningsweg risicovoller dan een andere. Dubbele controle van de medicatie is belangrijk voor de veiligheid, met name bij risicovolle medicatie. Laat ook je berekeningen die je hebt gemaakt checken.
-    Het maken van oplossingen die worden toegediend via injectie of infuus is foutgevoelig. Daarnaast geeft deze manier van toedienen sneller resultaten, maar ook grotere problemen bij verkeerde toediening.
-    Het ontbreken van een dubbele controle bij deze handelingen wordt gezien als hoog-risico.
-    Of en hoe controle plaatsvindt van deze voorbehouden handelingen, is een afspraak die een zorgorganisatie maakt met haar zorgmedewerkers. Als de afspraak is om een tweede controle te doen en deze vast te leggen, dan wordt daarvoor een ander formulier gebruikt dan de toedieningslijst." 
+    messageContent="Het verkeerd toedienen van medicijnen brengt risico’s met zich mee. Het risico op blijvend letsel bij verkeerde dosering of toediening verschilt, afhankelijk van het medicijn. Ook is de ene toedieningsweg risicovoller dan een andere. Dubbele controle van de medicatie is belangrijk voor de veiligheid, met name bij risicovolle medicatie. Laat ook je berekeningen die je hebt gemaakt checken. 
+Het maken van oplossingen die worden toegediend via injectie of infuus is foutgevoelig. Daarnaast geeft deze manier van toedienen sneller resultaten, maar ook grotere problemen bij verkeerde toediening.
+Het ontbreken van een dubbele controle bij deze handelingen wordt gezien als hoog-risico.
+Of en hoe controle plaatsvindt van deze voorbehouden handelingen, is een afspraak die een zorgorganisatie maakt met haar zorgmedewerkers. Als de afspraak is om een tweede controle te doen en deze vast te leggen, dan wordt daarvoor een ander formulier gebruikt dan de toedieningslijst." 
     />
 
   <action
@@ -121,11 +134,11 @@ Vergelijk het medicijn met de toedieningslijst.
     blockUnlock="patient show spot"
     messageTitle="Geschikte injectiegebieden"
     messageContent="
-Geschikte injectiegebieden voor subcutane injecties zijn:
+Geschikte injectiegebieden voor intramusculaire injecties zijn:
 
-- De boven- en buitenkant van het middelste deel van het bovenbeen (musculus lateralis, musculus rectus femoris)
-- De rug- en, bij voorkeur, buikkant van de bilspier (musculus glutaeus)
-- Het het bovenste deel van de bovenarm (musculus deltoïdeus).
+- Dijbeenspieren: brede dijbeenspier (musculus vastus lateralis) en rechte dijbeenspier (musculus rectus femoris)
+- Bilspieren: grote bilspier (musculus gluteus maximus) en middelste bilspier (musculus gluteus medius)
+- Bovenarmspier (musculus deltoïdeus).
 
 Desinfecteer de huid bij cliënten met verminderde weerstand.
     "
@@ -216,6 +229,8 @@ Desinfecteer de huid bij cliënten met verminderde weerstand.
     type="sequenceStep"
     value="Inject medicine slow and steady"
     extra="Spuit het medicijn langzaam in (ongeveer 10 sec/ml)."
+    messageTitle="Injecteren bovenarmspier"
+    messageContent="De bovenarmspier is een kleine dikke driehoekige spier. Leg twee vingers horizontaal beneden het botje (acromion) dat de punt van de schouder vormt. Je vindt de basis van de direhoek waarin je kunt injecteren."
   ></action>
 
   <action
@@ -248,6 +263,10 @@ Desinfecteer de huid bij cliënten met verminderde weerstand.
     target=""
     buttonText="Injectienaald weggooien"
     extra="Verwijder de opzuignaald en doe de naald in de naaldencontainer. Gebruik voor het injecteren spuiten en naalden voor eenmalig gebruik (dit worden ook wel eens disposables genoemd). Plaats een naald na gebruik nooit in de plastic beschermhuls terug. Werk met veilige opzuignaalden. Gebruik de inkepingen op de deksel om de naald en spuit te verwijderen of gebruik een naaldverwijderaar."
+    messageTitle="Injecteren bilspieren"
+    messageContent="Er zijn twee spieren in het bilgebied waarin je een intramusculaire injectie mag geven.
+    - In de middelste bilspier, het injectiegebied hiervan bevindt zich aan de buikzijde, 'de heupkant' van de cliënt (ventrogluteaal).
+    - In de grote bilspier, het injectiegebied hiervan bevindt zich aan de rugzijde, 'de bilkant'van de cliënt (dorsogluteaal)."
   ></action>
 
   <action
@@ -265,10 +284,10 @@ Desinfecteer de huid bij cliënten met verminderde weerstand.
     comment="1. Apply hand hygiene"
     index="17"
     points="3"
-    description="Pas handhygiëne toe"
+    description="[Pas handhygiëne]"
     type="use"
     value="HandCleaner"
-    extra="Pas handhygiëne toe"
+    extra="[Pas handhygiëne]"
   ></action>
 
   <action

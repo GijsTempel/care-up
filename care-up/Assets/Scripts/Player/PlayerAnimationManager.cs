@@ -89,7 +89,7 @@ public class PlayerAnimationManager : MonoBehaviour
 
     void Start()
     {
-        
+
         propL = GameObject.Find("prop.L").transform;
         propR = GameObject.Find("prop.R").transform;
 
@@ -105,21 +105,14 @@ public class PlayerAnimationManager : MonoBehaviour
         playerScript = GameObject.FindObjectOfType<PlayerScript>();
         if (playerScript == null) Debug.LogError("No player");
     }
-    
-	public static void PlayCombineAnimation(int leftID, int rightID, Transform target = null)
-    {
-		animationController.SetInteger("leftID", leftID);
-		animationController.SetInteger("rightID", rightID);
-		animationController.SetTrigger("Combine");
-		animationController.SetTrigger("S Combine");
 
-        //if (name != "LeftPick" && name != "RightPick" &&
-        //    name != "closeup_left" && name != "closeup_right" &&
-        //    name != "faraway_left" && name != "faraway_right")
-        //{
-        //    animationController.SetTrigger("S " + name);
-        //}
-        playerScript.ResetFreeLook();
+    public static void PlayCombineAnimation(int leftID, int rightID, Transform target = null)
+    {
+        animationController.SetInteger("leftID", leftID);
+        animationController.SetInteger("rightID", rightID);
+        animationController.SetTrigger("Combine");
+        animationController.SetTrigger("S Combine");
+        //playerScript.ResetFreeLook();
         if (target)
         {
             cameraMode.SetCinematicMode(target);
@@ -153,8 +146,6 @@ public class PlayerAnimationManager : MonoBehaviour
             && (clipTime_L > 0.35f && clipTime_L < (clipLength_L - 0.55f))))
         {
 
-            //print(((normalizedTime_L - normalizedTime_R) * clipLength_R).ToString() + "  ||  " + normalizedTime_L.ToString() + "  " + normalizedTime_R.ToString());
-
             if (Mathf.Abs(clipTime_L - clipTime_R) < syncSpeed)
             {
                 animationController.Play(LeftAnimHash, 1, normalizedTime_R + Time.deltaTime / clipLength_L);
@@ -168,16 +159,13 @@ public class PlayerAnimationManager : MonoBehaviour
                 }
                 animationController.Play(LeftAnimHash, 1, (clipTime_L + (syncStep * 2f) + Time.deltaTime) / clipLength_L);
             }
-
         }
-
-
     }
 
     public static void PlayUseAnimation(int UseObjID, int UseOnID, Transform target = null)
     {
-		animationController.SetInteger("leftID", UseObjID);
-		animationController.SetInteger("rightID", UseOnID);
+        animationController.SetInteger("leftID", UseObjID);
+        animationController.SetInteger("rightID", UseOnID);
         animationController.SetTrigger("Use");
         animationController.SetTrigger("S Use");
 
@@ -189,11 +177,8 @@ public class PlayerAnimationManager : MonoBehaviour
         InteractableObject.ResetDescription();
     }
 
-
-
     public static void PlayUseOnIDAnimation(int UseObjID, bool isLeft = false)
     {
-         print(" PlayUseOnIDAnimation(int UseObjID, bool isLeft = false)");
         if (isLeft)
         {
             animationController.SetTrigger("UseLeft");
@@ -210,7 +195,6 @@ public class PlayerAnimationManager : MonoBehaviour
         InteractableObject.ResetDescription();
     }
 
-
     public static void PlayAnimation(string name, Transform target = null)
     {
         animationController.SetTrigger(name);
@@ -221,9 +205,9 @@ public class PlayerAnimationManager : MonoBehaviour
             name != "no")
         {
             animationController.SetTrigger("S " + name);
-            playerScript.ResetFreeLook();
+            //playerScript.ResetFreeLook();
         }
-        
+
         if (target)
         {
             cameraMode.SetCinematicMode(target);
@@ -231,7 +215,6 @@ public class PlayerAnimationManager : MonoBehaviour
 
         InteractableObject.ResetDescription();
     }
-    
 
 
     /// <summary>
@@ -276,7 +259,7 @@ public class PlayerAnimationManager : MonoBehaviour
             }
         }
         else
-        { 
+        {
             animationController.speed = 1f;
         }
     }

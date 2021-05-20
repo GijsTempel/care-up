@@ -25,7 +25,8 @@ public class SetDialogueForPerson : StateMachineBehaviour {
                 }
                 else
                 {
-                    GameObject.Find(ObjectName).GetComponent<PersonObject>().SetDialogue(DialogueNum);
+                    if (DialogueNum > GameObject.Find(ObjectName).GetComponent<PersonObject>().currentDialogueIndex)
+                        GameObject.Find(ObjectName).GetComponent<PersonObject>().SetDialogue(DialogueNum);
                 }
             }
         }
@@ -47,7 +48,7 @@ public class SetDialogueForPerson : StateMachineBehaviour {
                 setDialogue();
 
             prevFrame = frame;
-            frame += Time.deltaTime;
+            frame = stateInfo.normalizedTime * stateInfo.length;
         }
     }
 

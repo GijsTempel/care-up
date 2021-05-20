@@ -70,9 +70,7 @@ public class FraxiparineSyringe : PickableObjectWithInfo
     }
 
     protected override void Update()
-    {
-        base.Update();
-
+    {     
         if (updatePlunger)
         {
             plunger.localPosition = new Vector3(
