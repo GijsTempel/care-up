@@ -27,14 +27,20 @@ public class TracheostomyPatient : PersonObject {
             switch (topic)
             {
                 case "LayInHalfPosOnBed":
-                    //animator.SetTrigger("sit_up_in_bed");
-                    PlayerAnimator.SetTrigger("AllowPatientToLay");
-                    PlayerAnimator.SetTrigger("S AllowPatientToLay");
+                    /*PlayerAnimator.SetTrigger("StartSittingInBedAnimation");
+                    PlayerAnimator.SetTrigger("S StartSittingInBedAnimation");*/
+                    animator.SetTrigger("Patient_Oke");
+                    break;
+                case "Hello":
+
+                    PlayerAnimator.SetTrigger("Player_Dialog_Greeting");
+                    PlayerAnimator.SetTrigger("S Player_Dialog_Greeting");
+
                     break;
                 default:
                     break;
             }
-
+            AttemptPlayAudioAfterTalk(audio);
             NextDialogue();
         }
 

@@ -62,13 +62,43 @@ zo nodig:
     extra="Controleer de cliëntgegevens. Het is belangrijk dat je de juiste persoon voor je hebt."
     ></action>
 
-  
+	<action
+   comment="Prepare the new cannula to be inserted before the other is removed (when the cannula must be re-inserted)"
+   points="1"
+   description="Maak de nieuw in te brengen canule gebruiksklaar voordat de andere wordt verwijderd (wanneer decanule opnieuw ingebracht moet worden)"
+   index="3"
+   type="combine"
+   left="Cannula_Packed"
+   right=""
+   extra=""></action>
 
-  <action
+	<action
+	   comment="Ask the client to take a half sitting position."
+	   points="2"
+	   description="Vraag de cliënt om een ​​half zittende houding in te nemen."
+	   fullDescription="Klik op de cliënt en kies de juiste optie."
+	   index="4"
+	   type="talk"
+	   topic="LayInHalfPosOnBed"
+	   extra=""
+	    ></action>
+
+	<action
+         comment="Leg de onderlegger onder de plaats van de canule."
+         points="1"
+         description="Leg de onderlegger onder de plaats van de canule. "
+         index="5"
+         type="useOn"
+         item="cloth_02_folded"
+         target=""
+         buttonText="Onderlegger plaatsen"
+ ></action>
+	
+	<action
     comment="Put on gloves."
     points="1"
     description="[Trek de handschoenen aan]"
-    index="4"
+    index="6"
     type="use"
     value="gloveBox"
     extra="Trek de handschoenen aan."
@@ -77,35 +107,9 @@ zo nodig:
    ></action>
 
 
-  <action
-   comment="Ask the client to take a half sitting position."
-   points="2"
-   description="[Laat de cliënt een comfortabele houding aannemen]"
-   fullDescription="Klik op de cliënt en kies de juiste optie."
-   index="5"
-   type="talk"
-   topic="LayInHalfPosOnBed"
-   extra="Laat de cliënt een comfortabele houding aannemen, zodat je makkelijk bij de stoma kunt."
-   blockUnlock="HorClient"
-   blockRequired="SystemInClient"
-   messageTitle="Lichamelijke verzorging"
-   messageContent="Verwijder eventuele haargroei rondom de stoma met een schaartje of mesje. Scheer altijd van de stoma af. Werk hygiënisch om wondjes te voorkomen. Gebruik in geen geval ontharingscrème, vanwege kans op huidirritatie. Verzorg de huid na het scheren met een barrièrecrème."
-   ></action>
+  
 
-  <action
-  comment="Leg de onderlegger onder de plaats van de subcutane canule. "
-  points="1"
-  description="[Leg een onderlegger rond het werkterrein]"
-  index="6"
-  type="useOn"
-  item="cloth_02_folded"
-  target=""
-  buttonText="Onderlegger plaatsen"
-  extra="Leg een onderlegger rond het werkterrein"
-  blockRequired="HorClient"
-  blockTitle="Houding cliënt"
-  blockMessage="Laat de cliënt eerst een comfortabele houding aannemen, zodat je makkelijk bij de stoma kunt en een onderlegger kunt plaatsen rond het werkterrein."
- ></action>
+ 
 
   <action
    comment=""
