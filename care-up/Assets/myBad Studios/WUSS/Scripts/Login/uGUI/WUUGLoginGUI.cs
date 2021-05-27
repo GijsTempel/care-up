@@ -261,6 +261,10 @@ namespace MBS
 
         void Start()
         {
+            if (GameObject.Find("VersionNumber") != null)
+            {
+                GameObject.Find("VersionNumber").GetComponent<Text>().text = "v" + Application.version;
+            }
 #if !(UNITY_EDITOR || DEVELOPMENT_BUILD)
             panels.debug_options.SetActive(false);
 #endif 
