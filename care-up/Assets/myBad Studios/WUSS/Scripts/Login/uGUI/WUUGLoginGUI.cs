@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System;
 using UnityEngine.UI;
+using BuildTimestampDisplay;
 
 namespace MBS
 {
     public class WUUGLoginGUI : WUUGLoginLocalisation
     {
+
         public enum eWULUGUIState { Inactive, Active }
 
         [Serializable]
@@ -63,6 +65,10 @@ namespace MBS
             personal_bio,
             serial_number;
         }
+
+        [SerializeField] BuildTimestamp buildTimestamp;
+        [SerializeField] string format = "yyyy/MM/dd HH:mm:ss";
+        [SerializeField] float utcOffsetHours;
 
         [SerializeField] private Image LoginUsernameField = default(Image);
         [SerializeField] private Image LoginPasswordField = default(Image);
@@ -263,7 +269,12 @@ namespace MBS
         {
             if (GameObject.Find("VersionNumber") != null)
             {
-                GameObject.Find("VersionNumber").GetComponent<Text>().text = "v" + Application.version;
+                string _sing = "";
+                if ((int)utcOffsetHours >= 0)
+                    _sing = "+";
+
+                string buildTime = buildTimestamp ? buildTimestamp.ToString(format, utcOffsetHours) : "";
+                GameObject.Find("VersionNumber").GetComponent<Text>().text = "v" + Application.version + " " + buildTime + " UTC" + _sing + ((int)utcOffsetHours).ToString();
             }
 #if !(UNITY_EDITOR || DEVELOPMENT_BUILD)
             panels.debug_options.SetActive(false);
