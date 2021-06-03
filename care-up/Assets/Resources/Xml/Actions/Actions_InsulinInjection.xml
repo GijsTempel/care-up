@@ -43,9 +43,22 @@
     ></action>
 
   <action
+  points="1"
+  description="Verwijder de beschermdop van de insulinepen"
+  index="2"
+  type="combine"
+  left="InsulinPenWithCap"
+  quiz="2"
+  right=""
+  extra="Verwijder de beschermdop van de insulinepen zodat je later de naald op de insulinepen kunt draaien."
+  messageTitle="Insulinepennen"
+  messageContent="Lees altijd de gebruiksinstructie van de insulinepen. Er zijn namelijk veel verschillende merken insulinepennen. "
+  ></action>
+  
+  <action
     points="2"
     description="[Controleer cliëntgegevens]"
-    index="2"
+    index="3"
     type="examine"
     item="PatientRecords"
     expected="good"
@@ -55,7 +68,7 @@
   <action
     points="2"
     description="Controleer de toedienlijst"
-    index="2"
+    index="3"
     type="examine"
     item="PrescriptionForm"
     expected="good"
@@ -80,19 +93,6 @@ hanteer de instructies van de toedienlijst. Je moet bekend zijn met de toedienin
 5.  De juiste dosis: 
 je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toedienlijst. De verantwoordelijkheid van de juiste dosering ligt bij de arts en de apotheker."
   ></action>
-
-  <action
-    points="1"
-    description="Verwijder de beschermdop van de insulinepen"
-    index="3"
-    type="combine"
-    left="InsulinPenWithCap"
-    quiz="2"
-    right=""
-    extra="Verwijder de beschermdop van de insulinepen zodat je later de naald op de insulinepen kunt draaien."
-    messageTitle="Insulinepennen"
-    messageContent="Lees altijd de gebruiksinstructie van de insulinepen. Er zijn namelijk veel verschillende merken insulinepennen."
-  ></action>
   
   <action
     points="2"
@@ -113,7 +113,7 @@ Wanneer er een nieuwe insulinepatroon in de pen geplaatst moet worden. Plaats de
 3. Plaats de nieuwe insulinepatroon met het smalle uiteinde in de patroonhouder.
 4. Draai de patroonhouder met de insulinepatroon vast op de insulinepen."
     ></action>
-  
+
   <action
     points="1"
     description="Meng troebele insuline door de pen voor gebruik minimaal 10x te zwenken, niet schudden"
@@ -124,7 +124,7 @@ Wanneer er een nieuwe insulinepatroon in de pen geplaatst moet worden. Plaats de
     buttonText="Zwenken"
     extra="Zwenk insulinepen met troebele insuline minstens 10 keer heen en weer, zo nodig vaker tot een volledig gemengd, egaal uitziende wittige substantie is bereikt. Dit is om afwijkingen in de samenstelling van de insuline te voorkomen. "
   ></action>
-  
+
   <action
     points="1"
     description="Verwijder de beschermlaag van de naaldverpakking"
@@ -137,7 +137,7 @@ Wanneer er een nieuwe insulinepatroon in de pen geplaatst moet worden. Plaats de
   
   <action
     points="1"
-    description="Draai de naald met de naaldverpakking op de insulinepen"
+    description="Draai de naald nog in de naaldverpakking op de insulinepen"
     index="7"
     type="combine"
     left="InsulinPen"
@@ -149,7 +149,7 @@ Wanneer er een nieuwe insulinepatroon in de pen geplaatst moet worden. Plaats de
   
   <action
     points="1"
-    description="Verwijder de naaldverpakking van de naald"
+    description="Verwijder de verpakking van de naald"
     index="8"
     type="combine"
     left="InsulinPenWithNeedlePackage"
@@ -168,11 +168,13 @@ Wanneer er een nieuwe insulinepatroon in de pen geplaatst moet worden. Plaats de
 	
 	<action
     points="1"
-    description="Druk met de duim de doseerknop in totdat er een druppel insuline op de punt van pennaald verschijnt"
+    description="Houd de insulinepen naar boven of beneden, druk met de duim de doseerknop in tot er een druppel insuline op de punt van de pennaald verschijnt."
     index="10"
     type="sequenceStep"
     value="HoldUntilDrop"
     extra=""
+    messageTitle="Onluchten"
+    messageContent="Herhaal zo nodig tot een druppel insuline op de punt van de pennaald verschijnt."
   ></action>
 	
 	<action
@@ -186,7 +188,7 @@ Wanneer er een nieuwe insulinepatroon in de pen geplaatst moet worden. Plaats de
   
   <action
     points="3"
-    description="Stel het juiste aantal eenheden insuline in. Draai de doseerdop totdat de gewenste dosering in het afleesvenster staat. (Zorg voor een vrije hand. Klik op de insulinepen en kies de optie 'Instellen')"
+    description="Stel het juiste aantal eenheden insuline in volgens de gebruiksinstructie van de insulinepen."
     index="12"
     type="useOn"
     item="InsulinPenWithNeedle"
@@ -211,6 +213,8 @@ Wanneer er een nieuwe insulinepatroon in de pen geplaatst moet worden. Plaats de
     type="talk"
     topic="DoubleCheck"
     extra="Voer dubbele controle uit. Het verkeerd toedienen van medicijnen brengt risico’s met zich mee. Het risico op blijvend letsel bij verkeerde dosering of toediening verschilt, afhankelijk van het medicijn. Ook is de ene toedieningsweg risicovoller dan een andere. Dubbele controle van de medicatie is belangrijk voor de veiligheid, met name bij risicovolle medicatie. Laat ook je berekeningen die je hebt gemaakt checken."
+    messageTitle="Dubbele controle"
+    messageContent="Voer wanneer nodig de dubbele controle uit volgens de afspraken binnen de organisatie"
   />
   
   <action
