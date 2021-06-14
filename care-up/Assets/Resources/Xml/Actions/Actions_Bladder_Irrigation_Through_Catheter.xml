@@ -155,6 +155,7 @@
         value="gloveBox"
         extra="Trek handschoenen aan"
         blockRequired="patient lay down"
+		blockUnlock="GlovesTakenOn"
         blockTitle="Deze handeling is nog niet mogelijk"
         blockMessage="Treft de juiste voorbereidingen en zorg ervoor dat de cliënt klaar is."
         messageTitle="Gebruik handschoenen"
@@ -278,22 +279,36 @@ Na afgesproken tijd:
     index="18"
     type="sequenceStep"
     value="attach urinebag"
+	blockUnlock="SequenceFinished"
     extra="Sluit de urineopvangzak aan op de katheter"
 ></action>
 
-  <action
-    comment="Pull off the gloves."
-    points="1"
-    description="Trek de handschoenen uit"
-    index="19"
-    type="sequenceStep"
-    value="pull off gloves"
-    extra="Trek de handschoenen uit"
+	<action
+	points="1"
+	description="Ruim de materialen op door met lege handen op het werkveld te klikken"
+	index="19"
+	type="use"
+	value="WorkField"
+	blockRequired="SequenceFinished"
+	blockUnlock="AllowedToTakeOffGloves"
+	extra="Ruim de materialen op door met lege handen op het werkveld te klikken"
+	messegeTitle="Materialen opruimen"
+	MessegeContent="Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen"
 ></action>
+		
+  <Action
+	  index="20"
+	  description="Trek de handschoenen uit."
+	  type="general"
+	  item=""
+	  points="1"
+	  buttonText="Trek handschoenen uit"
+	  action="TakeOffGlovesWithoutThrowing"
+	  blockRequired="GlovesTakenOn, AllowedToTakeOffGloves" />
 
   <action
         comment="46. Apply hand hygiene."
-        index="20"
+        index="21"
         points="3"
         description="[Pas handhygiëne]"
         type="use"
@@ -301,16 +316,6 @@ Na afgesproken tijd:
         extra="[Pas handhygiëne]"
 ></action>
 
-  <action
-       points="1"
-       description="Ruim de materialen op door met lege handen op het werkveld te klikken"
-       index="21"
-       type="use"
-       value="WorkField"
-       extra="Ruim de materialen op door met lege handen op het werkveld te klikken"
-       messageTitle="Materialen opruimen"
-       messageContent="Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen."
-></action>
 
   <action
       comment="last step"
