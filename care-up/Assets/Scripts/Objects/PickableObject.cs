@@ -136,6 +136,7 @@ public class PickableObject : InteractableObject
                         Destroy(gameObject);
                     }
                     break;
+                
                 case "catheter_Supertubular_InHands":
                     if (posID == 0 && actionManager.CompareDropPos(name, 0))
                     {
