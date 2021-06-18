@@ -66,12 +66,24 @@
 - Overleg met de cliënt of hij/zij het kunstgebit wil uitdoen, wanneer van toepassing."
 ></action>
 
+	<action
+  comment="Put on gloves"
+  points="1"
+  description="Trek handschoenen aan"
+  index="3"
+  type="use"
+  value="gloveBox"
+  extra="Trek handschoenen aan"
+  blockTitle="Onderlegger"
+  blockMessage="Leg eerst de onderlegger op de borst van de cliënt."
+></action>
+		
   <action
     comment="(3)Open tube package"
     points="1"
     description="Open de verpakking van de steriele maagsonde"
     fullDescription=""
-    index="2"
+    index="4"
     type="combine"
     left="MedicalTube"
     blockUnlock="block1"
@@ -83,7 +95,7 @@
     comment="(3)Open syringe"
     points="1"
     description="Open de verpakking van de 50ml spuit"
-    index="3"
+    index="5"
     type="combine"
     left="Syringe50ml_packed"
     right=""
@@ -94,7 +106,7 @@
     comment="Ask the client to take a half sitting position."
     points="2"
     description="Vraag de cliënt een (half)zittende houding aan te nemen"
-    index="4"
+    index="6"
     type="talk"
     topic="SitInBed"
     blockTitle="Deze handeling is nog niet mogelijk"
@@ -106,7 +118,7 @@
     comment="Make a signal with the client when the inserting needs to stop."
     points="1"
     description="Maak met de cliënt een afspraak over een signaal wanneer het inbrengen moet stoppen"
-    index="5"
+    index="7"
     type="talk"
     quiz="2"
     left=""
@@ -115,26 +127,50 @@
     extra=" Maak met de cliënt een afspraak over een signaal wanneer inbrengen moet stoppen."  
     />
   
+	 <action
+  comment="Put the pad on the chest of the client."
+  points="2"
+  description="Leg de onderlegger op de borst van de cliënt"
+  index="8"
+  type="useOn"
+  item="cloth_02_folded"
+  target=""
+  buttonText="Onderlegger plaatsen"
+  blockRequired="clienInHalfSitPos, block1"
+  extra="Leg de onderlegger op de borst van de cliënt. "></action>
+
+	
+	<action
+    comment="Inspect the nose."
+    points="1"
+    description="Inspecteer de neus van de cliënt en vraag de cliënt zo nodig de neus te snuiten"
+    index="9"
+    type="sequenceStep"
+    value="inspectnose"
+    extra="Inspecteer de neus van de cliënt en vraag de cliënt zo nodig de neus te snuiten."
+    messageTitle="Controle neusgaten op doorgankelijkheid"
+    messageContent="
+- Laat de cliënt de neus snuiten.
+- Laat de cliënt wisselend door het linker- en rechterneusgat uitademen om het neusgat met de beste doorgankelijkheid te selecteren.
+- Controleer de doorgankelijkheid van de neus eventueel ook met een lampje."
+/>
+	
+		
   <action
-    comment="Take the probe out of the package. ---Start Seqeunce"
+    comment="Take the probe out of the package."
     points="1"
     description="Neem de maagsonde uit de verpakking"
-    index="6"
-    type="useOn"
-    item="MedicalTube_Opened"
-    target=""
-    blockRequired="clienInHalfSitPos, block1"
-    blockTitle="Signaal afspreken"
-    blockMessage="Stem eerst met de cliënt af wat voor signaal er gebruikt moet worden wanner het inbrengen moet stoppen."
-    buttonText="Meet in te brengen lengte"
-    extra="Neem de maagsonde uit de verpakking."
+    index="10"
+    type="sequenceStep"
+	value="TakeProbeOut"
+	extra="Neem de maagsonde uit de verpakking."
     />
 
   <action
   comment="Measure the probe at the client from the point of the nose to the earlobe until the end of the breastbone (NEX.)"
   points="1"
   description="Meet bij de cliënt met de maagsonde de afstand vanaf de punt van de neus naar de oorlel tot aan uiteinde borstbeen (NEX)"
-  index="7"
+  index="11"
   type="sequenceStep"
   value="nosetoear"
   extra="Meet bij de cliënt met de maagsonde de afstand vanaf de punt van de neus naar de oorlel tot aan uiteinde borstbeen (NEX)."
@@ -149,7 +185,7 @@ Gebruik bij voorkeur een neus-maagsonde met centimeteraanduiding en markeer de b
    comment="Add 10 cm to that."
    points="1"
    description="Tel hier vervolgens 10 cm bij op"
-   index="8"
+   index="12"
    type="sequenceStep"
    value="add 10 cm"
    extra="Tel hier 10 cm bij op."/>
@@ -158,60 +194,25 @@ Gebruik bij voorkeur een neus-maagsonde met centimeteraanduiding en markeer de b
     comment="Mark the probe on the measured lenght. ---End Sequence"
     points="1"
     description="Markeer de maagsonde op de afgemeten lengte"
-    index="9"
+    index="13"
     type="sequenceStep"
     value="mark the probe"
     blockUnlock="clienReadyForProcedure"
     extra="Markeer de maagsonde op de afgemeten lengte."/>
 
-  <action
-  comment="Put the pad on the chest of the client."
-  points="2"
-  description="Leg de onderlegger op de borst van de cliënt"
-  index="10"
-  type="useOn"
-  item="cloth_02_folded"
-  target=""
-  buttonText="Onderlegger plaatsen"
-  blockRequired="clienInHalfSitPos"
-  extra="Leg de onderlegger op de borst van de cliënt. "></action>
-
-  <action
-  comment="Put on gloves. ---Start Sequence"
-  points="1"
-  description="Trek handschoenen aan"
-  index="11"
-  type="use"
-  value="gloveBox"
-  extra="Trek handschoenen aan"
-  blockRequired="clienReadyForProcedure"
-  blockTitle="Onderlegger"
-  blockMessage="Leg eerst de onderlegger op de borst van de cliënt."
-></action>
+ 
+  
   
   <action
     comment="Make the probe wet under a tap or to immerse it under water in a bowl."
     points="12"
     description="Maak de maagsonde nat onder de kraan of door hem in de kom met water te dompelen"
-    index="12"
+    index="14"
     type="sequenceStep"
     value="PutProbeInWater"
     extra="Neem de maagsonde uit de verpakking"/>
   
-  <action
-    comment="Inspect the nose."
-    points="1"
-    description="Inspecteer de neus van de cliënt en vraag de cliënt zo nodig de neus te snuiten"
-    index="13"
-    type="sequenceStep"
-    value="inspectnose"
-    extra="Inspecteer de neus van de cliënt en vraag de cliënt zo nodig de neus te snuiten."
-    messageTitle="Controle neusgaten op doorgankelijkheid"
-    messageContent="
-- Laat de cliënt de neus snuiten.
-- Laat de cliënt wisselend door het linker- en rechterneusgat uitademen om het neusgat met de beste doorgankelijkheid te selecteren.
-- Controleer de doorgankelijkheid van de neus eventueel ook met een lampje."
-/>
+  
 
 
   <action
