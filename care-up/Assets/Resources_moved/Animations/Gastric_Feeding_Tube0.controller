@@ -1914,7 +1914,7 @@ AnimatorStateMachine:
     m_Position: {x: -160, y: -360, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6465376884597351693}
-    m_Position: {x: -220, y: -240, z: 0}
+    m_Position: {x: -230, y: -250, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3505456918141705261}
     m_Position: {x: -320, y: -170, z: 0}
@@ -1929,7 +1929,7 @@ AnimatorStateMachine:
     m_Position: {x: 70, y: -270, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4013070058091516535}
-    m_Position: {x: -890, y: -840, z: 0}
+    m_Position: {x: -890, y: -850, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3130825171473469385}
     m_Position: {x: -870, y: -970, z: 0}
@@ -3764,8 +3764,10 @@ AnimatorState:
   m_Transitions:
   - {fileID: 226136726651635296}
   m_StateMachineBehaviours:
+  - {fileID: 1548193361696274774}
   - {fileID: -3633179697030479488}
   - {fileID: 8442425728913940181}
+  - {fileID: 3169576704410974764}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -5258,6 +5260,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftHand: 0
   dropFrame: 1817
+--- !u!114 &-947429550156663049
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b9c9f3106e5ff7449cd0b07126b8b77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropLeftFrame: -1
+  dropRightFrame: 696
 --- !u!114 &-939860530598806519
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -6942,6 +6958,24 @@ MonoBehaviour:
   deleteFrame: 117
   objectName: cloth_02_inHands
   hand: 0
+--- !u!114 &845559006676548387
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: 
+  showFrame: 500
+  ObjNames:
+  - MedicalTubeInHand
+  toShow: 1
+  meshRenderer: 0
 --- !u!1102 &845875539738424690
 AnimatorState:
   serializedVersion: 5
@@ -7350,6 +7384,18 @@ MonoBehaviour:
 --- !u!114 &1541399963988149671
 MonoBehaviour:
   m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9b29f5ba63bb4aa5b477b8007d77187, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1548193361696274774
+MonoBehaviour:
+  m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -8360,6 +8406,24 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &3169576704410974764
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: MedicalTube_first_sequence_Container
+  showFrame: 45
+  ObjNames:
+  - TubeLong
+  toShow: 0
+  meshRenderer: 0
 --- !u!114 &3214693057221837430
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -9131,6 +9195,10 @@ AnimatorState:
   - {fileID: -511157210316655696}
   - {fileID: 1642589801479731893}
   - {fileID: -4091048949588838488}
+  - {fileID: 7392840914411369088}
+  - {fileID: -947429550156663049}
+  - {fileID: 845559006676548387}
+  - {fileID: 4478139791423478418}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -9492,6 +9560,20 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &4478139791423478418
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93b3ffca93d7f4c4b92d9cc041168da8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hideFrame: 500
+  hideObjName: MedicalTube_Opened
 --- !u!1102 &4543997178700496964
 AnimatorState:
   serializedVersion: 5
@@ -11606,6 +11688,21 @@ MonoBehaviour:
   ToFollowHoldingHand: 0
   NewAnimationName: patSeq_part1
   ActionFrame: 0
+--- !u!114 &7392840914411369088
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a4f7766142ffc1468fdda1d3e3f1781, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickFrame: 513
+  objectName: MedicalTube_first_sequence_Container
+  hand: 0
 --- !u!114 &7411189833735018368
 MonoBehaviour:
   m_ObjectHideFlags: 3
