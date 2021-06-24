@@ -166,6 +166,40 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-8609171222483388728
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7f8245cec82648289be348a2189ab01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addFrame: 0
+  deleteFrame: 0
+  objectName: 
+  hand: 0
+--- !u!114 &-8511475047836711617
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: Syringe10ml_InjectionSQs
+  showFrame: 362
+  ObjNames:
+  - Cup
+  toShow: 0
+  meshRenderer: 0
 --- !u!114 &-8456615782067556886
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -324,6 +358,22 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-7940312317556168924
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 839bcc7f24a9c47f8af28e853187bfa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: Syringe10ml_InjectionSQs
+  unlock_frame: 1
+  lock_frame: 1950
+  toActivate: 1
 --- !u!1101 &-7925243488771543458
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -778,6 +828,22 @@ MonoBehaviour:
   deleteFrame: 2045
   objectName: ThinInfusionPlaster
   hand: 0
+--- !u!114 &-6671253866600523437
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7f8245cec82648289be348a2189ab01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addFrame: 1535
+  deleteFrame: 1778
+  objectName: Cloth
+  hand: 1
 --- !u!1101 &-6546165248517641324
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -1622,6 +1688,24 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &-4401457659970449616
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a536a9682af347488b2cfd1a613bf7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: Syringe10ml_InjectionSQs
+  HandToSwitch: 0
+  AnimationToChange: 1
+  ToFollowHoldingHand: 0
+  NewAnimationName: SQ
+  ActionFrame: 0
 --- !u!114 &-4241126512277974649
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2498,6 +2582,21 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &-1439719578993588824
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfd1d24e9f498a642b6393e37bedc9e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SequenceName: SubcutaneousInjection
+  TuggleFromCinematic: 1
+  keyFrames: 410000000c010000f60100005902000019030000ad0300001404000016050000
 --- !u!1102 &-1379238512330301097
 AnimatorState:
   serializedVersion: 5
@@ -8022,7 +8121,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4fe748babe88b6246a8de09562b51a2f, type: 3}
   m_Name: 
@@ -16407,6 +16506,18 @@ MonoBehaviour:
   hand: 0
   GhostObjectTarget: 
   destroyOnDrop: 0
+--- !u!114 &631107795127719827
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9b29f5ba63bb4aa5b477b8007d77187, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &764425112759912270
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -56631,7 +56742,8 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400162, guid: a99ed095061348f419e2c0a92e465fd2, type: 3}
+  m_Motion: {fileID: -7221045642437939088, guid: 8216a355b9a620c459c159a6820fb3d2,
+    type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -61406,10 +61518,18 @@ AnimatorState:
   - {fileID: 1101131617467436332}
   m_StateMachineBehaviours:
   - {fileID: 114270003787806316}
+  - {fileID: 631107795127719827}
   - {fileID: 114532413333628576}
   - {fileID: 114783176977751180}
   - {fileID: 114440067201886758}
   - {fileID: 114941418708260154}
+  - {fileID: -1439719578993588824}
+  - {fileID: -4401457659970449616}
+  - {fileID: -7940312317556168924}
+  - {fileID: 2859437344435453531}
+  - {fileID: -8511475047836711617}
+  - {fileID: -8609171222483388728}
+  - {fileID: -6671253866600523437}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -61418,7 +61538,8 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400162, guid: a99ed095061348f419e2c0a92e465fd2, type: 3}
+  m_Motion: {fileID: -7221045642437939088, guid: 8216a355b9a620c459c159a6820fb3d2,
+    type: 3}
   m_Tag: UI_On_Sequence
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -66589,7 +66710,7 @@ AnimatorStateMachine:
     m_Position: {x: 48, y: 468, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102784014801043740}
-    m_Position: {x: -48, y: 612, z: 0}
+    m_Position: {x: 20, y: 610, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102500488211612456}
     m_Position: {x: -144, y: 720, z: 0}
@@ -70332,6 +70453,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftHand: 0
   dropFrame: 2729
+--- !u!114 &2859437344435453531
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a4f7766142ffc1468fdda1d3e3f1781, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickFrame: 311
+  objectName: Syringe10ml_InjectionSQs
+  hand: 0
 --- !u!114 &2939837810626709977
 MonoBehaviour:
   m_ObjectHideFlags: 3
