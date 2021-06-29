@@ -462,6 +462,7 @@ public class PlayerScript : MonoBehaviour
             return;
         ToggleAway();
         transform.position = group.Position;
+        transform.Find("CinematicControl").localPosition = new Vector3();
         if (prefs == null || (prefs != null && !prefs.VR))
         {
             transform.rotation = Quaternion.Euler(0.0f, group.Rotation.y, 0.0f);
