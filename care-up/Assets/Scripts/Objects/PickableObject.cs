@@ -129,6 +129,14 @@ public class PickableObject : InteractableObject
         {
             switch (name)
             {
+                case "TrayOfWetGauzes":
+                    if (posID == 2 && actionManager.CompareDropPos(name, 2))
+                    {
+                        inventory.CreateStaticObjectByName("TrayOfWetGauzes_placed", transform.position, transform.rotation);
+                        Destroy(gameObject);
+                    }
+                    break;
+
                 case "GauzeTrayWet":
                     if (posID == 2 && actionManager.CompareDropPos(name, 2))
                     {
