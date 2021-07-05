@@ -90,10 +90,10 @@ GameObject:
   - component: {fileID: 4775507553994599866}
   - component: {fileID: 5029601234347573800}
   - component: {fileID: 5029601234347573801}
-  - component: {fileID: 5029601234347573802}
   - component: {fileID: 5029601234347573803}
+  - component: {fileID: 450157337}
   m_Layer: 0
-  m_Name: TrayOfWetGauzes
+  m_Name: TrayOfWetGauzes_placed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -170,40 +170,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &5029601234347573802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5264094973925177088}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9683ce8fd2daab5488955af11cfc9707, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PrefabName: TrayOfGauzesWet
-  ObjectID: 0
-  description: TrayOfGauzesWet
-  nameArticle: 
-  muplipleMesh: 0
-  descriptionOffset: {x: 0, y: 0, z: 0}
-  assetSource: 1
-  transparencyFix: 0
-  tutorial_usedOn: 0
-  depoistNeedle: 0
-  useOriginalParent: 0
-  leftControlBone: {fileID: 0}
-  rightControlBone: {fileID: 0}
-  holdAnimationID: 1000
-  sihlouette: 0
-  positionID: 0
-  mainObject: {fileID: 0}
-  ghostObjects: []
-  prefabInHands: 
-  prefabOutOfHands: 
-  destroyOnDrop: 0
-  customGhost: {fileID: 0}
 --- !u!65 &5029601234347573803
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -217,6 +183,30 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.34881252, y: 0.16892469, z: 0.047287196}
   m_Center: {x: -2.59039e-13, y: 0.005959101, z: 0.029186264}
+--- !u!114 &450157337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5264094973925177088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3e6a197b70106d4baa62069a18baf92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PrefabName: TrayOfWetGauzes_placed
+  ObjectID: 0
+  description: Tray
+  nameArticle: het
+  muplipleMesh: 0
+  descriptionOffset: {x: 0, y: 0, z: 0}
+  assetSource: 0
+  transparencyFix: 0
+  tutorial_used: 0
+  handsCleaned: 0
+  PrefabToAppear: GauzeFoldedTwice
+  UseWithObjectsInHands: 0
 --- !u!1 &7643509597239473662
 GameObject:
   m_ObjectHideFlags: 0
