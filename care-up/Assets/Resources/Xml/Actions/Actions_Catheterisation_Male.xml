@@ -76,14 +76,14 @@ Zorg voor een extra katheter, urineopvangzak en materialen voor het inbrengen, v
   <action
     comment="4. Pour tap water from a large tap (or sterile water) over the gauze."
     points="1"
-    description="Giet kraanwater uit een flink stromende kraan (of steriel water) over de wattenbollen"
+    description="Giet kraanwater uit een flink stromende kraan (of steriel water) over de gaasjes"
     index="4"
     type="useOn"
     item="TrayOfGauzes"
     secondPlace="SinkPos"
     target=""
-    buttonText="Wattenbollen nat maken"
-    extra="Giet kraanwater uit een flink stromende kraan (of steriel water) over de wattenbollen."
+    buttonText="Gaasjes nat maken"
+    extra="Giet kraanwater uit een flink stromende kraan (of steriel water) over de gaasjes."
     messageTitle="Gebruik kraanwater"
     messageContent="Als in een geprotocolleerde werkinstructie kraanwater als spoelvloeistof wordt gebruikt, dient dit water uit een flink stromende kraan te zijn.
 
@@ -131,13 +131,13 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
   <action
     comment="7. Place the tray with gauze on the underpad."
     points="1"
-    description="Zet het bakje met wattenbollen op de onderlegger"
+    description="Zet het bakje met gaasjes op de onderlegger"
     index="8"
     type="drop"
     item="TrayOfWetGauzes"
     secondPlace="PatientPos"
     posID="2"
-    extra="Zet het bakje met wattenbollen op de onderlegger"></action>
+    extra="Zet het bakje met gaasjes op de onderlegger"></action>
 
   <action
     comment="3. Open package of the syringe with 10 ml of sterile water. Leave the syringe in the package "
@@ -177,13 +177,13 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
   <action
     comment="Clean the glans penis with the moist gauze, place the sterile gauze under the penis and place the penis on it."
     points="3"
-    description="Reinig de glanspenis met een vochtige wattenbol, plaats een steriele wattenbol onder de penis en leg de penis hierop"
+    description="Reinig de glanspenis met een vochtige gaasje, plaats een steriel gaasje onder de penis en leg de penis hierop"
     index="12"
     type="useOn"
     item="GauzeFoldedTwice"
     target=""
     buttonText="Reinig de glanspenis"
-    extra="Reinig de glanspenis met een vochtige wattenbol, plaats een steriele wattenbol onder de penis en leg de penis hierop."
+    extra="Reinig de glanspenis met een vochtig gaasje, plaats een steriel gaasje onder de penis en leg de penis hierop."
     messageTitle="Reiniging genitaliën"
     messageContent="Voordat je een katheter inbrengt, reinig je de genitaliën van de cliënt. Bij het inbrengen van verblijfskatheters wordt glijmiddel in de urethra aangebracht. (Bij een suprapubische katheter wordt glijmiddel in de fistel aangebracht).
 
@@ -194,31 +194,31 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
 
   <action
     points="1"
-    description="Omvat met één hand de penis en schuif de voorhuid (wanneer aanwezig) terug met een wattenbol"
+    description="Omvat met één hand de penis en schuif de voorhuid (wanneer aanwezig) terug met een gaasje"
     index="13"
     type="sequenceStep"
     value="shift foreskin"
-    extra="Omvat met één hand de penis en schuif de voorhuid (wanneer aanwezig) terug met een wattenbol"></action>
+    extra="Omvat met één hand de penis en schuif de voorhuid (wanneer aanwezig) terug met een gaasje"></action>
 
   <action
     points="2"
-    description="Neem een nieuwe en schone uitgeknepen wattenbol en reinig de rand van de glanspenis"
+    description="Neem een nieuw en schoon uitgeknepen gaasje en reinig de rand van de glanspenis"
     index="14"
     type="sequenceStep"
     value="clean sides gloss penis"
-    extra="Neem een nieuwe en schone uitgeknepen wattenbol en reinig de rand van de glanspenis"></action>
+    extra="Neem een nieuwe en schone uitgeknepen gaasje en reinig de rand van de glanspenis"></action>
 
   <action 
     points="2" 
-    description="Neem een nieuwe en schone uitgeknepen wattenbol en reinig de glanspenis" 
+    description="Neem een nieuw en schoon uitgeknepen gaasje en reinig de glanspenis" 
     index="15" 
     type="sequenceStep" 
     value="clean gloss penis" 
-    extra="Neem een nieuwe en schone uitgeknepen wattenbol en reinig de glanspenis"></action>
+    extra="Neem een nieue en schone uitgeknepen gaasje en reinig de glanspenis"></action>
 
   <action 
     points="2" 
-    description="Neem een nieuwe en schone uitgeknepen wattenbol en reinig de meatus" 
+    description="Neem een nieuw en schoon uitgeknepen gaasje en reinig de meatus" 
     index="16" 
     type="sequenceStep" 
     value="clean meatus" 
@@ -226,11 +226,11 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
 
   <action 
     points="1" 
-    description="Plaats een wattenbol onder de penis en leg de penis hier op" 
+    description="Plaats een gaasje onder de penis en leg de penis hier op" 
     index="17" 
     type="sequenceStep" 
     value="lay sterile gauze" 
-    extra="Plaats een wattenbol onder de penis en leg de penis hier op"></action>
+    extra="Plaats een gaasje onder de penis en leg de penis hier op"></action>
 
   <action
     points="3"
@@ -561,27 +561,27 @@ De cliënt hoeft niet opnieuw te gaan liggen"></action>
     extra="Controleer of de urineopvangzak onder het niveau van de blaas hangt en de grond of voeten van de cliënt niet raakt"></action>
 
   <action
+  points="1"
+  description="Ruim de materialen op door met lege handen op het werkveld te klikken"
+  index="48"
+  type="use"
+  value="WorkField"
+  extra="Ruim de materialen op door met lege handen op het werkveld te klikken"
+  blockRequired="catheter fixed"
+  blockTitle="Deze handeling is nog niet mogelijk"
+  blockMessage="Zorg ervoor dat de katheter is ingebracht bij de cliënt en bevestig de urineopvangzak aan het been of ophangrekje"
+  messageTitle="Materialen opruimen"
+  messageContent="Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen"></action>
+
+  <action
     comment="46. Apply hand hygiene."
-    index="48"
+    index="49"
     points="3"
     description="[Pas handhygiëne]"
     type="use"
     value="HandCleaner"
     extra="[Pas handhygiëne]"
 ></action>
-
-  <action
-    points="1"
-    description="Ruim de materialen op door met lege handen op het werkveld te klikken"
-    index="49"
-    type="use"
-    value="WorkField"
-    extra="Ruim de materialen op door met lege handen op het werkveld te klikken"
-    blockRequired="catheter fixed"
-    blockTitle="Deze handeling is nog niet mogelijk"
-    blockMessage="Zorg ervoor dat de katheter is ingebracht bij de cliënt en bevestig de urineopvangzak aan het been of ophangrekje"
-    messageTitle="Materialen opruimen"
-    messageContent="Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen"></action>
 
   <action
     comment="last step"
