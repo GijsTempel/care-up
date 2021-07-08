@@ -250,19 +250,21 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
       value="clean meatus"
       extra="Neem een nieuw gaasje, knijp dit uit en reinig de urethra opening"
 ></action>
-  
-  <action
+
+	<action
+	comment="Keep the labia minora (labia minora) spread apart. Spray lubricant on the urethral opening"
     points="1"
-    description="Gooi de gebruikte gaasjes in het afvalbakje"
+    description="Houd de labia minora (kleine schaamlippen) gespreid. Spuit glijmiddel op de urethra openin"
     index="18"
     type="sequenceStep"
-    value="discard gauzes"
+    value="LubInfo"
     extra="Gooi de gebruikte gaasjes in de afvalbakje."
 ></action>
   
   <action
+	comment="Then insert the cone of the syringe into the urethral opening. Slowly inject approximately 6 ml of lubricant into the urethral opening"
     points="2"
-    description="Houd de labia minora nog gespreid en spuit glijmiddel op en in de meatus"
+    description="Breng daarna de conus van de spuit in de urethra opening. Spuit ongeveer 6 ml glijmiddel langzaam in de urethra opening"
     index="19"
     type="sequenceStep"
     value="apply lube"
@@ -270,11 +272,21 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
     messegeTitle="Glijmiddel met verdovend middel"
     messegeContent="Wanneer het glijmiddel een verdovend middel bevat: laat voor een verdovend effect het glijmiddel inwerken gedurende de in de bijsluiter vermelde tijd (minimaal 5 minuten). Gooi de spuit in de afvalbak."
 ></action>
-  
+
+	<action
+	  comment="Discard the syringe in the waste bin"
+      points="3"
+      description="Gooi de spuit in de afvalbak"
+      index="20"
+      type="sequenceStep"
+      value="DiscardSyringe"
+      extra="Neem een nieuw gaasje, knijp dit uit en reinig de urethra opening"
+></action>
+	
 <action
     points="3"
     description="Houd de labia nog gespreid en plaats een nieuwe en schone uitgeknepen wattenbol tussen de labia minora"
-    index="20"
+    index="21"
     type="sequenceStep"
     value="place gauze in labia"
     extra="Houd de labia nog gespreid en plaats een nieuwe en schone uitgeknepen wattenbol tussen de labia minora"
@@ -283,7 +295,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
 <action
     points="1"
     description="Trek de handschoenen uit en gooi ze in het afvalbakje."
-    index="21"
+    index="22"
     type="sequenceStep"
     value="take off gloves"
     extra="Trek de handschoenen uit en gooi ze in het afvalbakje."
@@ -292,7 +304,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
 
   <action
     comment="20. Apply hand hygiene."
-    index="22"
+    index="23"
     points="3"
     description="[Pas handhygiëne]"
     fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp."
@@ -303,7 +315,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
 
 <action
     comment="??"
-    index="23"
+    index="24"
     points="3"
     description="Open de verpakking van de urineopvangzak. Laat de steriele urineopvangzak op het steriele werkveld vallen, raak de urineopvangzak niet aan. Gooi de verpakking in de afvalbak"
     type="combine"
@@ -311,12 +323,13 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
     right=""
     extra="Open de verpakking van de urineopvangzak. Laat de steriele urineopvangzak op het steriele werkveld vallen, raak de urineopvangzak niet aan. Gooi de verpakking in de afvalbak"
     messageTitle="Dubbelverpakte katheter"
+	blockUnlock="CathBagOpened"
     messageContent="In deze geprotocolleerde werkinstructie wordt uitgegaan van een dubbelverpakte katheter."
     ></action>
 
 <action
     comment="22. Open the outer package of the catheter a few centimeters, fold the ends. Leave the inner package in the outer package and hold the outer package with the non-dominant hand on the folded ends."
-    index="24"
+    index="25"
     points="3"
     description="Open de buitenverpakking van de katheter en laat de katheter in de binnen verpakking op het steriele werkveld vallen, zonder de binnenverpakking aan te raken"
     type="combine"
@@ -324,14 +337,14 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
     left="catheter_x"
     right=""
     extra="Open de buitenverpakking van de katheter en laat de katheter in de binnen verpakking op het steriele werkveld vallen, zonder de binnenverpakking aan te raken"
-    blockRequired="block1,block2,block3,block4"
+    blockRequired="block1,GenitalsCleaned,block3,CathBagOpened"
     blockTitle="Deze handeling is nog niet mogelijk"
     blockMessage="Zorg ervoor dat de materialen op de juiste plek staan en de nodige verpakkingen geopent zijn."
 ></action>
 
     <action
     comment="29. Apply hand hygiene."
-    index="25"
+    index="26"
     points="3"
     description="Pas handhygiëne toe."
     fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp."
@@ -342,7 +355,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
   
 <action
     comment="30. Put on sterile gloves."
-    index="26"
+    index="27"
     points="3"
     description="Trek de steriele handschoenen aan"
     type="use"
@@ -355,7 +368,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
 
 <action
     comment="24. Remove the end of the inner package from the catheter so that the connection point for the urine collection bag is accessible. The catheter remains in the inner package."
-    index="27"
+    index="28"
     points="2"
     description="Open de binnenverpakking van de katheter. De katheter blijft in de binnenverpakking zitten"
     type="combine"
@@ -367,7 +380,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
 
 <action
     comment="24. With the dominant hand, grasp the tube of the urine collection bag just behind the connection point and attach it to the catheter. Continue to hold the hose."
-    index="28"
+    index="29"
     points="1"
     description="Verwijder de afsluitdop van de urineopvangzak en bevestig deze aan de katheter. De katheter blijft in binnenverpakking zitten"
     type="combine"
@@ -382,7 +395,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
 ></action>
 
   <action
-    index="29"
+    index="30"
     value="grab package"
     description="Pak met de niet-katheteriserende hand de verpakking van de katheter"
     points="1"
@@ -391,7 +404,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
 ></action>
   
 <action
-    index="30"
+    index="31"
     value="remove package"
     description="Trek de katheter met de katheteriserende hand uit de verpakking"
     points="2"
@@ -401,7 +414,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
 ></action>
   
 <action
-    index="31"
+    index="32"
     value="hold catheter loop"
     description="Houd de katheter ongeveer 5 cm van de top vast. Houd de rest van de katheter als een lus in de katheteriserende hand"
     points="2"
@@ -410,7 +423,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
 ></action>
   
 <action
-    index="32"
+    index="33"
     value="remove labia gauze"
     description="Verwijder met de vrije hand de wattenbol tussen de labia minora"
     points="1"
@@ -419,7 +432,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
 ></action>
 
   <action
-      index="33"
+      index="34"
       value="open labia minora"
       description="Houd de labia minora gespreid met de vrije hand"
       points="1"
@@ -428,7 +441,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
 ></action>
   
 <action
-    index="34"
+    index="35"
     value="insert catheter"
     description="Breng de katheterpunt in met een scheppende beweging"
     points="3"
@@ -437,7 +450,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
 ></action>
   
 <action
-    index="35"
+    index="36"
     value="slide catheter"
     description="Schuif de katheter op tot er urine verschijnt en schuif de katheter daarna nog 2 cm verder op"
     points="3" type="sequenceStep"
@@ -448,7 +461,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
 ></action>
 
 <action
-    index="36"
+    index="37"
     value="empty blather"
     description="De blaas loopt leeg in de urineopvangzak. Oefen lichte druk uit op het gebied van symfyse en schaambeen als er geen urine wordt afgevoerd"
     points="1"
@@ -457,7 +470,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
 ></action>
   
 <action
-    index="37"
+    index="38"
     value="hold catheter"
     description="Houd de katheter vast, zodat deze niet uit de blaas glijdt"
     points="2"
@@ -466,7 +479,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
 ></action>
   
 <action
-    index="38"
+    index="39"
     value="place syringe"
     description="Plaats de spuit met voorgeschreven vloeistof op het katheterballonkanaal"
     points="2"
@@ -477,7 +490,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
 ></action>
 
   <action
-    index="39"
+    index="40"
     value="inject liquid"
     description="Spuit de voorgeschreven hoeveelheid vloeistof langzaam in de katheterballon"
     points="3"
@@ -488,7 +501,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
 ></action>
 
 <action
-    index="40"
+    index="41"
     value="remove syringe"
     description="Verwijder de spuit"
     points="1"
@@ -497,7 +510,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
 ></action>
 
  <action
-    index="41"
+    index="42"
     value="pull back"
     description="Trek de katheter iets terug tot je een weerstand voelt"
     points="2"
@@ -506,7 +519,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
 ></action>
   
 <action
-    index="42"
+    index="43"
     value="wash clean"
     description="Was en droog het genitale gebied"
     points="1"
@@ -515,7 +528,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
 ></action>
   
 <action
-    index="43"
+    index="44"
     value="pull off gloves"
     description="Trek de steriele handschoenen uit"
     points="1"
@@ -527,7 +540,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
 
 <action
     comment="46. Apply hand hygiene."
-    index="44"
+    index="45"
     points="3"
     description="[Pas handhygiëne]"
     type="use"
@@ -538,7 +551,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
 ></action>
 
 <action
-    index="45"
+    index="46"
     comment=""
     points="3"
     description="Fixeer de katheter op het bovenbeen met een strook katheter fixatieband. Zorg dat de katheter en de afvoerslang nergens knikken"
@@ -557,7 +570,7 @@ Communiceer met de client en zorg ervoor dat de cliënt klaar is voor blaaskathe
 
 <action
     comment="help patient to get up"
-    index="46"
+    index="47"
     point="1"
     description="Help de cliënt in een comfortabele houding"
     type="talk"
@@ -575,7 +588,7 @@ De cliënt hoeft niet opnieuw te gaan liggen"
 
 <action
     comment="Check the cloth pad"
-    index="47"
+    index="48"
     points="1"
     description="Controleer of de cliënt en het bed droog zijn gebleven"
     type="use"
@@ -588,7 +601,7 @@ De cliënt hoeft niet opnieuw te gaan liggen"
 
 
     <action
-    index="48"
+    index="49"
     comment=""
     points="3"
     description="Bevestig de urineopvangzak aan het been of ophangrekje"
@@ -607,7 +620,7 @@ De cliënt hoeft niet opnieuw te gaan liggen"
 
   <action
     comment="Check the catheter bag"
-    index="49"
+    index="50"
     points="3"
     description="Controleer of de urineopvangzak onder het niveau van de blaas hangt en de grond of voeten van de zorgverleners niet raakt."
     fullDescription="Klik op de urineopvangzak om te controleren of deze onder het niveau van de blaas hangt."
@@ -618,7 +631,7 @@ De cliënt hoeft niet opnieuw te gaan liggen"
 
 <action
       comment="46. Apply hand hygiene."
-      index="50"
+      index="51"
       points="3"
       description="[Pas handhygiëne]"
       type="use"
@@ -629,7 +642,7 @@ De cliënt hoeft niet opnieuw te gaan liggen"
 <action
    points="1"
    description="Ruim de materialen op door met lege handen op het werkveld te klikken"
-   index="51"
+   index="52"
    type="use"
    value="WorkField"
    extra="Ruim de materialen op door met lege handen op het werkveld te klikken"
@@ -642,7 +655,7 @@ De cliënt hoeft niet opnieuw te gaan liggen"
   
 <action
     comment="last step"
-    index="52"
+    index="53"
     points="1"
     description="Noteer datum en tijdstip, reden voor katheterisatie, soort, maat en merk katheter, hoeveelheid ingebrachte vloeistof in ballon en andere bevindingen"
     type="use"
