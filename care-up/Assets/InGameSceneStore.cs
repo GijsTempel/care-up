@@ -119,6 +119,8 @@ public class InGameSceneStore : MonoBehaviour
             SSPackageItemPrefab = Resources.Load<GameObject>("NecessaryPrefabs/UI/SSPackageItem");
         //test data
         List<SSPackageData> SSPData = new List<SSPackageData>();
+        List<SSPackageData> SSSData = new List<SSPackageData>();
+
         //string URLString = "https://leren.careup.online/ScenesStore.xml";
         //XmlTextReader reader = new XmlTextReader(URLString);
         //string ss = "";
@@ -147,29 +149,43 @@ public class InGameSceneStore : MonoBehaviour
         TextAsset textAsset = (TextAsset)Resources.Load("Xml/ScenesStore");
         XmlDocument xmlFile = new XmlDocument();
         xmlFile.LoadXml(textAsset.text);
-        XmlNodeList doorNodes = xmlFile.FirstChild.NextSibling.FirstChild.ChildNodes;
-
-        foreach (XmlNode items in doorNodes)
+        //XmlNodeList doorNodes = xmlFile.FirstChild.NextSibling.FirstChild.ChildNodes;
+        foreach (XmlNode n in xmlFile.FirstChild.NextSibling.ChildNodes)
         {
-            string itemTitle = "";
-            string itemSKU = "";
-            float itemPrice = 0f;
+            if (n.Attributes["name"] == null)
+                continue;
 
-            if (items.Attributes["title"] != null)
-                itemTitle = items.Attributes["title"].Value;
-            if (items.Attributes["SKU"] != null)
-                itemSKU = items.Attributes["SKU"].Value;
-            if (items.Attributes["price"] != null)
+            print(n.Attributes["name"].Value);
+            foreach (XmlNode items in n.ChildNodes)
             {
-                float.TryParse(items.Attributes["price"].Value, out itemPrice);
+                string itemTitle = "";
+                string itemSKU = "";
+                float itemPrice = 0f;
+
+                if (items.Attributes["title"] != null)
+                    itemTitle = items.Attributes["title"].Value;
+                if (items.Attributes["SKU"] != null)
+                    itemSKU = items.Attributes["SKU"].Value;
+                if (items.Attributes["price"] != null)
+                {
+                    float.TryParse(items.Attributes["price"].Value, out itemPrice);
+                }
+                if (n.Attributes["name"].Value == "packages")
+                    SSPData.Add(new SSPackageData(itemTitle, itemSKU, itemPrice));
+                else if(n.Attributes["name"].Value == "scenes")
+                    SSSData.Add(new SSPackageData(itemTitle, itemSKU, itemPrice));
             }
-            SSPData.Add(new SSPackageData(itemTitle, itemSKU, itemPrice));
         }
         for (int i = 0; i < SSPData.Count; i++)
         {
             List<string> includedScenes = ppm.GetScenesInProduct(SSPData[i].SKU);
             GameObject packageButton = Instantiate(SSPackageItemPrefab, packageStoreContent.transform) as GameObject;
             packageButton.GetComponent<SSPackageItem>().Setup(SSPData[i].title, includedScenes, SSPData[i].SKU, SSPData[i].price, this);
+        }
+        for (int i = 0; i < SSSData.Count; i++)
+        {
+            GameObject sceneButton = Instantiate(SSPackageItemPrefab, sceneStoreContent.transform) as GameObject;
+            sceneButton.GetComponent<SSPackageItem>().Setup(SSSData[i].title, null, SSSData[i].SKU, SSSData[i].price, this);
         }
     }
     void Start()
