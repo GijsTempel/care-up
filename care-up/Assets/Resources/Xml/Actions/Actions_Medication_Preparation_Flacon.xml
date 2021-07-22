@@ -39,11 +39,23 @@
     "></action>
 
   <action
+  points="1"
+  description="Overgiet een gaasje met alcohol"
+  commentUA="Нанести спирт на гарчірку"
+  audioHint="Injection/H4-2"
+  index="2"
+  type="combine"
+  left="Cloth"
+  right="Alcohol"
+  extra="Overgiet een gaasje met alcohol. De desinfectans wordt aangebracht op een gaasje. Het is eveneens mogelijk om gebruik te maken van alcohol swabs. Alcohol 70% heeft een totaal spectrum en werkt slechts tijdelijk. Omdat bij het inbrengen van een infuus de desinfectie langer moet aanhouden, wordt gedesinfecteerd met alcohol 70% bewaard in opgelost chloorhexidine 0,5%."
+   ></action>
+
+  <action
     points="2"
     description="Controleer cliëntgegevens"
     commentUA="Перевірити медичні записи пацієнта"
     audioHint="Injection/H3-2"
-    index="2"
+    index="3"
     quiz="2"
     type="examine"
     item="PatientRecords"
@@ -56,7 +68,7 @@
     description="Controleer het medicijn"
     commentUA="Перевірити назначене лікування"
     audioHint="Injection/H3-2"
-    index="2"
+    index="3"
     type="examine"
     item="Medicine"
     expected="good"
@@ -70,7 +82,7 @@
     description="Controleer de toedienlijst"
     commentUA="Перевірити відповідність медикаментів"
     audioHint="InjectionSubcutaneous/Step 5"
-    index="2"
+    index="3"
     type="examine"
     item="PrescriptionForm"
     expected="good"
@@ -101,21 +113,21 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     description="Vraag aan je collega of ze een dubbele controle wil doen"
     commentUA="Запитати лікара про додадкову перевірку"
     audioHint=""
-    index="3"
+    index="4"
     type="talk"
     topic="DoubleCheck"
     extra="Voer een dubbele controle uit. Het verkeerd toedienen van medicijnen brengt risico’s met zich mee. Het risico op blijvend letsel bij verkeerde dosering of toediening verschilt, afhankelijk van het medicijn. Ook is de ene toedieningsweg risicovoller dan een andere. Dubbele controle van de medicatie is belangrijk voor de veiligheid, met name bij risicovolle medicatie. Laat ook je berekeningen die je hebt gemaakt checken."
    />
 
   <action
-    comment="Put on gloves."
-    points="1"
-    description="[Trek de handschoenen aan]"
-    index="4"
-    type="use"
-    value="gloveBox"
-    extra="Trek de handschoenen aan."
-   blockUnlock="GlovesTakenOn"
+  comment="Put on gloves."
+  points="1"
+  description="[Trek de handschoenen aan]"
+  index="5"
+  type="use"
+  value="gloveBox"
+  extra="Trek de handschoenen aan."
+ blockUnlock="GlovesTakenOn"
     ></action>
   
   <action
@@ -123,7 +135,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     description="Neem de opzuignaald uit de verpakking"
     commentUA="Дістаньте голку для набирання з пакета"
     audioHint="Injection/H4-2"
-    index="5"
+    index="6"
     quiz="2"
     type="combine"
     left=""
@@ -136,7 +148,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     description="Neem de injectienaald uit de verpakking"
     commentUA="Дістаньте голку для ін'єкції з пакета"
     audioHint="Injection/H4-2"
-    index="6"
+    index="7"
     quiz="2"
     type="combine"
     left=""
@@ -149,24 +161,14 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     description="Haal de spuit uit de verpakking"
     commentUA="Дістаньте шприц з пакета"
     audioHint="Injection/H4-2"
-    index="7"
+    index="8"
     type="combine"
     left=""
     right="syringe_packed"
     extra="">
   </action>
 
-  <action
-    points="1"
-    description="Overgiet een gaasje met alcohol"
-    commentUA="Нанести спирт на гарчірку"
-    audioHint="Injection/H4-2"
-    index="8"
-    type="combine"
-    left="Cloth"
-    right="Alcohol"
-    extra="Overgiet een gaasje met alcohol. De desinfectans wordt aangebracht op een gaasje. Het is eveneens mogelijk om gebruik te maken van alcohol swabs. Alcohol 70% heeft een totaal spectrum en werkt slechts tijdelijk. Omdat bij het inbrengen van een infuus de desinfectie langer moet aanhouden, wordt gedesinfecteerd met alcohol 70% bewaard in opgelost chloorhexidine 0,5%."
-   ></action>
+
 
   <action
     points="3"
