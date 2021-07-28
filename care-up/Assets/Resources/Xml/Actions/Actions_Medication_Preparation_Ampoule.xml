@@ -37,10 +37,21 @@
   ></action>
 
   <action
+  points="1"
+  description="Overgiet een gaasje met alcohol"
+  audioHint="Injection/H4-2"
+  index="2"
+  type="combine"
+  left="Cloth"
+  right="Alcohol"
+  extra="Overgiet een gaasje met alcohol. De desinfectans wordt aangebracht op een gaasje. Het is eveneens mogelijk om gebruik te maken van alcohol swaps. Alcohol 70% heeft een totaal spectrum en werkt slechts tijdelijk. Omdat bij het inbrengen van een infuus de desinfectie langer moet aanhouden, wordt gedesinfecteerd met alcohol 70% bewaard in opgelost chloorhexidine 0,5%."
+  ></action>
+
+  <action
     points="2"
     description="Controleer cliëntgegevens"
     audioHint="Injection/H3-2"
-    index="2"
+    index="3"
     type="examine"
     item="PatientRecords"
     expected="good"
@@ -52,7 +63,7 @@
     points="2"
     description="Controleer het medicijn"
     audioHint="Injection/H3-2"
-    index="2"
+    index="3"
     type="examine"
     item="Ampoule"
     expected="good"
@@ -65,7 +76,7 @@
     points="2"
     description="Controleer de toedienlijst"
     audioHint="InjectionSubcutaneous/Step 5"
-    index="2"
+    index="3"
     type="examine"
     item="PrescriptionForm"
     expected="good"
@@ -95,17 +106,19 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     points="3"
     description="Vraag aan je collega om een dubbele controle"
     audioHint=""
-    index="3"
+    index="4"
     type="talk"
     topic="DoubleCheck"
     extra="Voer dubbele controle uit. Het verkeerd toedienen van medicijnen brengt risico’s met zich mee. Het risico op blijvend letsel bij verkeerde dosering of toediening verschilt, afhankelijk van het medicijn. Ook is de ene toedieningsweg risicovoller dan een andere. Dubbele controle van de medicatie is belangrijk voor de veiligheid, met name bij risicovolle medicatie. Laat ook je berekeningen die je hebt gemaakt checken."
     />
 
+
+
   <action
     comment="Put on gloves."
     points="1"
     description="[Trek de handschoenen aan]"
-    index="4"
+    index="5"
     type="use"
     value="gloveBox"
     extra="Trek de handschoenen aan."
@@ -117,7 +130,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     description="Neem de opzuignaald uit de verpakking"
     commentUA="Дістаньте голку для набирання з пакета"
     audioHint="Injection/H4-2"
-    index="5"
+    index="6"
     type="combine"
     left=""
     right="AbsorptionNeedlePacked"
@@ -129,7 +142,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     description="Neem de injectienaald uit de verpakking."
     commentUA="Дістаньте голку для ін'єкції з пакета"
     audioHint="Injection/H4-2"
-    index="6"
+    index="7"
     type="combine"
     left=""
     right="InjectionNeedlePacked"
@@ -141,7 +154,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     description="Haal de spuit uit de verpakking."
     commentUA="Дістаньте шприц з пакета"
     audioHint="Injection/H4-2"
-    index="7"
+    index="8"
     type="combine"
     left=""
     right="syringe_packed"
@@ -149,32 +162,36 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
   </action>
 
   <action
-    points="1"
-    description="Overgiet een gaasje met alcohol"
-    audioHint="Injection/H4-2"
-    index="8"
-    type="combine"
-    left="Cloth"
-    right="Alcohol"
-    extra="Overgiet een gaasje met alcohol. De desinfectans wordt aangebracht op een gaasje. Het is eveneens mogelijk om gebruik te maken van alcohol swaps. Alcohol 70% heeft een totaal spectrum en werkt slechts tijdelijk. Omdat bij het inbrengen van een infuus de desinfectie langer moet aanhouden, wordt gedesinfecteerd met alcohol 70% bewaard in opgelost chloorhexidine 0,5%."
+  points="3"
+  description="Desinfecteer de hals van de ampul met het desinfectansgaasje. Laat de desinfectans opdrogen"
+  audioHint="Injection/H4-2"
+  index="9"
+  type="combine"
+  left="DesinfectionCloth"
+  right="Ampoule"
+  extra="Overgiet een gaasje met alcohol. De desinfectans wordt aangebracht op een gaasje. Het is eveneens mogelijk om gebruik te maken van alcohol swaps. Alcohol 70% heeft een totaal spectrum en werkt slechts tijdelijk. Omdat bij het inbrengen van een infuus de desinfectie langer moet aanhouden, wordt gedesinfecteerd met alcohol 70% bewaard in opgelost chloorhexidine 0,5%."
   ></action>
 
+
+
   <action
-    points="3"
-    description="Desinfecteer de hals van de ampul"
-    audioHint="Injection/H4-2"
-    index="9"
+    points="1"
+    description="Plaats opzuignaald op de spuit"
+    audioHint="Injection/H6-3"
+    index="10"
     type="combine"
-    left="DesinfectionCloth"
-    right="Ampoule"
-    extra="Overgiet een gaasje met alcohol. De desinfectans wordt aangebracht op een gaasje. Het is eveneens mogelijk om gebruik te maken van alcohol swaps. Alcohol 70% heeft een totaal spectrum en werkt slechts tijdelijk. Omdat bij het inbrengen van een infuus de desinfectie langer moet aanhouden, wordt gedesinfecteerd met alcohol 70% bewaard in opgelost chloorhexidine 0,5%."
+    left="Syringe"
+    right="AbsorptionNeedle"
+    extra="Zet de opzuignaald op de spuit zodat je er later een vloeistof mee kunt absorberen. Niet alle medicijnen worden geleverd in een kant-en-klare spuit. Het medicijn moet dan nog worden opgezogen met een (opzuig)naald. Uit hygiënisch oogpunt is de WIP niet voor het gebruik van een opzuignaald én een injectienaald. Het overzetten van de naald is een extra risico op besmetting."
   ></action>
+
+
 
   <action
     points="2"
-    description="Breek de ampul open met een gaasje als bescherming"
+    description="Breek de ampul open met een gaasje als bescherming tegen het glas"
     audioHint="InjectionSubcutaneous/Step 6.1"
-    index="10"
+    index="11"
     type="combine"
     left="DesinfectedAmpoule"
     right="Cloth"
@@ -185,7 +202,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     points="2"
     description="Doe het gaasje met gebroken ampul bovenkant in de naaldcontainer"
     audioHint=""
-    index="11"
+    index="12"
     type="useOn"
     item="ClothWithAmpouleTop"
     target=""
@@ -193,16 +210,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     extra="Gooi het gaasje met gebroken ampul bovenkant na gebruik in de naaldcontainer of glasbak."
   />
 
-  <action
-    points="1"
-    description="Plaats opzuignaald op de spuit"
-    audioHint="Injection/H6-3"
-    index="12"
-    type="combine"
-    left="Syringe"
-    right="AbsorptionNeedle"
-    extra="Zet de opzuignaald op de spuit zodat je er later een vloeistof mee kunt absorberen. Niet alle medicijnen worden geleverd in een kant-en-klare spuit. Het medicijn moet dan nog worden opgezogen met een (opzuig)naald. Uit hygiënisch oogpunt is de WIP niet voor het gebruik van een opzuignaald én een injectienaald. Het overzetten van de naald is een extra risico op besmetting."
-  ></action>
+
 
   <action
     points="1"
