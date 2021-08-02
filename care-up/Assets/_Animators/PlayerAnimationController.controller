@@ -17384,6 +17384,21 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &291128512056197828
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e72c07ae9fe847f19fb1b3a669e3399, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: NeedleCup
+  resetToTarget: 
+  resetCamera: 0
 --- !u!1101 &298130443024922883
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -21697,7 +21712,13 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: S Combine _ SyringeWithAbsorptionNeedle
+    m_ConditionEvent: S Combine
+    m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: rightID
+    m_EventTreshold: 52200
+  - m_ConditionMode: 6
+    m_ConditionEvent: leftID
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102324318351853524}
@@ -25604,7 +25625,13 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Combine _ SyringeWithInjectionNeedle
+    m_ConditionEvent: Combine
+    m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: rightID
+    m_EventTreshold: 52200
+  - m_ConditionMode: 6
+    m_ConditionEvent: leftID
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102562732890319256}
@@ -25629,7 +25656,13 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Combine SyringeWithInjectionNeedle _
+    m_ConditionEvent: Combine
+    m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: leftID
+    m_EventTreshold: 52200
+  - m_ConditionMode: 6
+    m_ConditionEvent: rightID
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102216844552925798}
@@ -33548,8 +33581,14 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: S Combine SyringeWithAbsorptionNeedle _
+    m_ConditionEvent: S Combine
     m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: rightID
+    m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: leftID
+    m_EventTreshold: 52200
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102199101034102990}
   m_Solo: 0
@@ -52743,6 +52782,7 @@ AnimatorState:
   - {fileID: -8046799965472396892}
   - {fileID: -855032807593776270}
   - {fileID: 4665575453453311985}
+  - {fileID: 7439285231599177487}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -58781,6 +58821,7 @@ AnimatorState:
   - {fileID: -6054719191425630902}
   - {fileID: -4328993994343206982}
   - {fileID: 2625384583004528609}
+  - {fileID: 291128512056197828}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -66409,10 +66450,10 @@ AnimatorStateMachine:
     m_Position: {x: 10, y: -160, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102562732890319256}
-    m_Position: {x: 216, y: 168, z: 0}
+    m_Position: {x: -110, y: 150, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102216844552925798}
-    m_Position: {x: 430, y: 170, z: 0}
+    m_Position: {x: -100, y: 220, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102554126286360634}
     m_Position: {x: 216, y: 216, z: 0}
@@ -67292,10 +67333,10 @@ AnimatorStateMachine:
     m_Position: {x: -100, y: -180, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102324318351853524}
-    m_Position: {x: 132, y: 132, z: 0}
+    m_Position: {x: -300, y: 140, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102199101034102990}
-    m_Position: {x: 348, y: 132, z: 0}
+    m_Position: {x: -300, y: 210, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102555642384562934}
     m_Position: {x: 132, y: 180, z: 0}
@@ -73750,6 +73791,21 @@ MonoBehaviour:
   value: 2
   actionFrame: 100
   increase: 0
+--- !u!114 &7439285231599177487
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e72c07ae9fe847f19fb1b3a669e3399, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: NeedleCup
+  resetToTarget: 
+  resetCamera: 0
 --- !u!1101 &7620242432481259445
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
