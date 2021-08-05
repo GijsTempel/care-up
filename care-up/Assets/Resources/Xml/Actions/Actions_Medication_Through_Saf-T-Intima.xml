@@ -47,10 +47,23 @@
   />
 
   <action
+  comment="(6)Combine gauze with alcohol"
+  points="2"
+  description="Overgiet een gaasje met desinfectans"
+  index="2"
+  quiz="3"
+  type="combine"
+  left="Cloth2"
+  right="Alcohol2"
+  extra="Overgiet een gaasje met desinfectans. De desinfectans wordt aangebracht op een gaasje. Het is eveneens mogelijk om gebruik te maken van alcohol swabs. Alcohol 70% heeft een totaal spectrum en werkt slechts tijdelijk. Omdat bij het inbrengen van een infuus de desinfectie langer moet aanhouden, wordt gedesinfecteerd met alcohol 70% bewaard in opgelost chloorhexidine 0,5%."
+  blockUnlock="desinfect cloth"
+    ></action>
+
+  <action
     points="2"
     description="Controleer het medicijn"
     audioHint="Injection/H3-2"
-	  index="2"
+	  index="3"
     type="examine"
     item="OmniflushSyringeBag2"
     quiz="2"
@@ -65,7 +78,7 @@
     points="2"
     description="Controleer cliëntgegevens"
     audioHint="Injection/H3-2"
-    index="2"
+    index="3"
     type="examine"
     item="PatientRecords"
     expected="good"
@@ -96,7 +109,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     points="3"
     description="Controleer de toedienlijst"
     audioHint="InjectionSubcutaneous/Step 5"
-	  index="2"
+	  index="3"
     type="examine"
     item="PrescriptionForm"
     expected="good"
@@ -109,7 +122,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     points="3"
     description="Vraag je collega om dubbele controle"
     audioHint=""
-    index="3"
+    index="4"
     type="talk"
     topic="DoubleCheck"
     extra="Voer een dubbele controle uit. Het verkeerd toedienen van medicijnen brengt risico’s met zich mee. Het risico op blijvend letsel bij verkeerde dosering of toediening verschilt, afhankelijk van het medicijn. Ook is de ene toedieningsweg risicovoller dan een andere. Dubbele controle van de medicatie is belangrijk voor de veiligheid, met name bij risicovolle medicatie. Laat ook je berekeningen die je hebt gemaakt checken."
@@ -119,7 +132,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     comment="(4)Open package of OmniflushSyringeBag"
     points="1"
     description="Open de verpakking van de Omniflush NaCl 0,9% spuit"
-    index="4"
+    index="5"
     type="combine"
     left="OmniflushSyringeBag"
     right=""
@@ -132,7 +145,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     comment="Open de verpakking van de spuit met het medicijn."
     points="1"
     description="Open de verpakking van de luerlockspuit met medicijn"
-    index="4"
+    index="6"
     type="combine"
     left="OmniflushSyringeBag2"
     right=""
@@ -142,24 +155,10 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
    />
 
   <action
-    comment="(6)Combine gauze with alcohol"
-    points="2"
-    description="Overgiet een gaasje met desinfectans"
-    index="5"
-    quiz="3"
-    type="combine"
-    left="Cloth2"
-    right="Alcohol2"
-    extra="Overgiet een gaasje met desinfectans. De desinfectans wordt aangebracht op een gaasje. Het is eveneens mogelijk om gebruik te maken van alcohol swabs. Alcohol 70% heeft een totaal spectrum en werkt slechts tijdelijk. Omdat bij het inbrengen van een infuus de desinfectie langer moet aanhouden, wordt gedesinfecteerd met alcohol 70% bewaard in opgelost chloorhexidine 0,5%."
-    blockUnlock="desinfect cloth"
-    ></action>
-
-
-  <action
     comment="Put on gloves."
     points="3"
     description="[Trek de handschoenen aan]"
-    index="6"
+    index="7"
     type="use"
     value="gloveBox"
     extra="Trek de handschoenen aan."
@@ -171,7 +170,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     comment="(5)Ask client to show injection spot."
     points="2"
     description="Vraag de cliënt de toedieningsplaats te ontbloten of maak de toedieningsplaats bereikbaar"
-    index="7"
+    index="8"
     type="talk"
     topic="show injection spot"
     extra="Vraag de cliënt de toedieningsplaats te ontbloten of maak de toedieningsplaats bereikbaar."
@@ -185,7 +184,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
    comment="Leg de onderlegger onder de plaats van de subcutane canule. ------ start sequence"
    points="2"
    description="Leg de onderlegger onder de subcutane canule"
-   index="8"
+   index="9"
    type="useOn"
    item="cloth_02_folded"
    target=""
@@ -198,8 +197,8 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
 
  <action
    points="3"
-   description="Desinfecteer met een desinfectansgaasje de connector (naaldloos afsluitdopje). Laat het drogen"
-   index="9"
+   description="Desinfecteer met een desinfectansgaasje de connector (naaldloos afsluitdopje). Laat drogen"
+   index="10"
    type="sequenceStep"
    value="desinfect connector"
    extra="Desinfecteer met een desinfectansgaasje de connector (naaldloos afsluitdopje). Laat het drogen."
@@ -210,7 +209,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
  <action
    points="1"
    description="Fixeer het aansluitpunt, van de canule met de verlengslang, met je ene hand. Draai met de andere hand de spuit met het medicijn op de connector (naadloos afsluitdopje)"
-   index="10"
+   index="11"
    type="sequenceStep"
    value="rotate medicine"
    extra="Fixeer het aansluitpunt, van de canule met de verlengslang, met je ene hand. Draai met de andere hand de spuit met het medicijn op de connector (naadloos afsluitdopje)."
@@ -221,7 +220,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
  <action
    points="2"
    description="Spuit het medicijn langzaam in. Dit is afhankelijk van het medicatievoorschrift"
-   index="11"
+   index="12"
    type="sequenceStep"
    value="inject medicine"
    extra="Spuit het medicijn langzaam in. Dit is afhankelijk van het medicatievoorschrift."
@@ -230,7 +229,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
  <action
    points="1"
    description="Verwijder de spuit en gooi hem in de afvalbak"
-   index="12"
+   index="13"
    type="sequenceStep"
    value="take off medicine"
    extra="Verwijder de spuit en gooi hem in de afvalbak."
@@ -238,8 +237,8 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
 
  <action
    points="1"
-   description="Pak de gevulde spuit met NaCl 0,9% en draai hem op de connector (naaldloos afsluitdopje)"
-   index="13"
+   description="Pak de gevulde spuit met NaCl 0,9% en draai hem op de connector"
+   index="14"
    type="sequenceStep"
    value="rotate omniflush"
    extra="Pak de gevulde spuit met NaCl 0,9% en draai hem op de connector (naaldloos afsluitdopje)."
@@ -250,7 +249,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
  <action
    points="2"
    description="Spuit NaCl 0,9% langzaam in"
-   index="14"
+   index="15"
    type="sequenceStep"
    value="inject omniflush"
    extra="Spuit NaCl 0,9% langzaam in."
@@ -261,7 +260,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
  <action
    points="1"
    description="Verwijder de spuit en gooi hem in de afvalbak"
-   index="15"
+   index="16"
    type="sequenceStep"
    value="take off omniflush"
    extra="Verwijder de spuit en gooi hem in de afvalbak."
@@ -272,7 +271,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
  <action
    points="1"
    description="Trek de handschoenen uit"
-   index="16"
+   index="17"
    type="sequenceStep"
    value="take off gloves"
    extra="Trek de handschoenen uit."
@@ -282,7 +281,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
 
   <action
    comment="1. Apply hand hygiene"
-   index="17"
+   index="18"
    points="3"
    description="[Pas handhygiëne]"
    type="use"
@@ -293,7 +292,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
   <action
      points="1"
      description="Ruim de materialen op door met lege handen op het werkveld te klikken"
-     index="18"
+     index="19"
      type="use"
      value="WorkField"
      extra="Ruim de materialen op door met lege handen op het werkveld te klikken"
@@ -303,7 +302,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
 
    <action
     comment="last step"
-    index="19"
+    index="20"
     points="3"
     description="Teken de toedienlijst af of noteer het tijdstip, het soort medicijn, de concentratie, de hoeveelheid, de wijze van toediening en de toedieningsplaats. Noteer tot slot je bevindingen"
     type="use"
