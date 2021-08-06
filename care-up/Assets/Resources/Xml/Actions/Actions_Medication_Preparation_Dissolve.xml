@@ -252,40 +252,67 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
   />
   
   <action
-    points="3"
-    description="Zuig de voorgeschreven hoeveelheid oplosmiddel op"
-    audioHint="InjectionSubcutaneous/Step 6.3"
+    comment="Inject the solvent into the vial containing the drug. (Inject medicine into the flacon)"
+    points="1"
+    description="Spuit het oplosmiddel in de flacon met het medicijn"
     index="17"
-    type="combine"
-    left="SyringeWithAbsorptionNeedle"
-    right="OpenedAmpoule"
-    extra="Zuig het oplosmiddel op in de spuit. Zorg dat dit de juiste hoeveelheid is. De hoeveelheid bepaal je door een berekening te maken. Deze berekening laat je dubbel controleren. In het spel gaat de berekening automatisch en de dubbele controle heb je al uitgevoerd in stap 4.3."
-  />
+    type="sequenceStep"
+    value="InjectSolvent"
+    extra=""
+	/>
   
-  <action
-    points="3"
-    description="Spuit het oplosmiddel in de flacon met het medicijn. Zuig daarna de voorgeschreven hoeveelheid medicatie op in de spuit"
-    audioHint="InjectionSubcutaneous/Step 6.4"
-    index="18"
-    type="combine"
-    left="SyringeWithSolvent"
-    right="Medicine"
-    blockUnlock="UnAirSyringe"
-    extra="Spuit het oplosmiddel in de flacon met het medicijn; laat de opzuignaald + spuit in de flacon zitten. Wacht tot het medicijn geheel is opgelost. Laat hierbij de zuiger van de spuit iets vieren. Zuig daarna de voorgeschreven hoeveelheid medicatie op in de spuit."
-   />
+ <action
 
-  <action
+    comment="Turn the vial upside down and withdraw the prescribed amount of medicine"
+    points="1"
+    description="Spuit het oplosmiddel in de flacon met het medicijn. Zuig daarna de voorgeschreven hoeveelheid medicatie op in de spuit"
+    index="18"
+    type="sequenceStep"
+    value="InjectSolvent"
+    extra=""
+	
+></action>
+
+<action
+	
+    comment="Turn the vial upside down and draw the prescribed amount of medicine into the syringe"
+    points="1"
+    description="Keer de flacon ondersteboven en zuig de voorgeschreven hoeveelheid medicijn op in de spuit "
+    index="19"
+    type="sequenceStep"
+    value="TurnUpside"
+    extra=""
+	
+	
+></action>
+
+<action
+
+    comment="Draw some additional air into the syringe and remove the withdrawal needle and syringe from the vial. Aspirating some extra air prevents tampering with the drug"
+    points="1"
+    description="Zuig nog wat extra lucht op in de spuit en verwijder de opzuignaald en spuit uit de flacon"
+    index="20"
+    type="sequenceStep"
+    value="DrawMoreAir"
+    extra=""
+	messageTitle="Extra lucht"
+    messageContect="Wat extra lucht opzuigen voorkomt knoeien met het medicijn"
+ 
+	></action>
+
+<action
+
+    comment="Unair the syringe and check if you have the right amount"
     points="1"
     description="Ontlucht de spuit"
-    audioHint="Injection/H8-2"
-    index="19"
-    type="useOn"
-    item="SyringeWithAbsorptionNeedle"
-    target=""
-    buttonText="Ontluchten"
-    blockRequired="UnAirSyringe"
-    extra="Ontlucht de opzuignaald tot er een druppel vloeistof aan de punt van de opzuignaald zichtbaar wordt. Ontlucht, wanneer geen opzuignaald gebruikt wordt, de injectienaald niet. De hoeveelheid lucht die ingespoten wordt (= inhoud van de injectienaald) is verwaarloosbaar klein."
-  ></action>
+    index="21"
+    type="sequenceStep"
+    value="Unair"
+    extra=""
+    blockUnlock="EndOfSQ"
+	
+ 
+	></action>
 
   <action
     points="1"
