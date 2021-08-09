@@ -1454,6 +1454,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionFrame: 1560
+--- !u!114 &-6300394449777449307
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b9c9f3106e5ff7449cd0b07126b8b77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropLeftFrame: -1
+  dropRightFrame: 1913
 --- !u!114 &-6208845376336500352
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -2180,6 +2194,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftHand: 0
   dropFrame: 220
+--- !u!114 &-4866918776502701231
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b02c1afc49c19542908cc96def0ea3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ActionFrame: 1913
+  ObjName: SyringeWithAbsorptionNeedle
+  TargetPosition: _targetSyringe
 --- !u!114 &-4836852178781399625
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2273,6 +2302,20 @@ MonoBehaviour:
   hand: 0
   GhostObjectTarget: _targetInjectionNeedle
   destroyOnDrop: 0
+--- !u!114 &-4539001043241225245
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftHand: 1
+  dropFrame: 30
 --- !u!114 &-4514351204262504941
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2323,7 +2366,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 7
+    m_ConditionEvent: sceneID
+    m_EventTreshold: 1
   m_DstStateMachine: {fileID: 1107000013396830544}
   m_DstState: {fileID: 0}
   m_Solo: 0
@@ -2703,6 +2749,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 7
     m_ConditionEvent: sceneID
     m_EventTreshold: 2
+  - m_ConditionMode: 7
+    m_ConditionEvent: sceneID
+    m_EventTreshold: 3
   m_DstStateMachine: {fileID: 1107153178216169846}
   m_DstState: {fileID: 0}
   m_Solo: 0
@@ -3083,7 +3132,9 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -6196824088451612968}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: -4539001043241225245}
+  - {fileID: 5764670280059142622}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -4287,6 +4338,21 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-824462681753497672
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfd1d24e9f498a642b6393e37bedc9e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SequenceName: AnimSeq_Medication_Preparation_Dissolve_SQ
+  TuggleFromCinematic: 1
+  keyFrames: 35000000140200006303000056040000af050000
 --- !u!114 &-690853417283170890
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -4570,6 +4636,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combineFrame: 233
+--- !u!114 &-353748573733225174
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftHand: 1
+  dropFrame: 30
 --- !u!1109 &-324828958233820279
 AnimatorTransition:
   m_ObjectHideFlags: 1
@@ -17910,7 +17990,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 7
+    m_ConditionEvent: sceneID
+    m_EventTreshold: 1
   m_DstStateMachine: {fileID: 1107153178216169846}
   m_DstState: {fileID: 0}
   m_Solo: 0
@@ -25807,6 +25890,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 7
     m_ConditionEvent: sceneID
     m_EventTreshold: 2
+  - m_ConditionMode: 7
+    m_ConditionEvent: sceneID
+    m_EventTreshold: 3
   m_DstStateMachine: {fileID: 1107000013396830544}
   m_DstState: {fileID: 0}
   m_Solo: 0
@@ -48782,6 +48868,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 7
     m_ConditionEvent: sceneID
     m_EventTreshold: 2
+  - m_ConditionMode: 7
+    m_ConditionEvent: sceneID
+    m_EventTreshold: 3
   m_DstStateMachine: {fileID: 1107000013396830544}
   m_DstState: {fileID: 0}
   m_Solo: 0
@@ -71798,6 +71887,21 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &1296881171989795829
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b02c1afc49c19542908cc96def0ea3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ActionFrame: 0
+  ObjName: 
+  TargetPosition: 
 --- !u!114 &1299971434618699504
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -71881,6 +71985,12 @@ AnimatorState:
   - {fileID: 7164358939748786645}
   - {fileID: -7381144578954650729}
   - {fileID: 934475226315439222}
+  - {fileID: -824462681753497672}
+  - {fileID: -6300394449777449307}
+  - {fileID: -4866918776502701231}
+  - {fileID: 1471303466342168471}
+  - {fileID: 7623395735547384283}
+  - {fileID: 7935142141875536545}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -71896,6 +72006,21 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &1471303466342168471
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a4f7766142ffc1468fdda1d3e3f1781, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickFrame: 1913
+  objectName: SyringeWithAbsorptionNeedle
+  hand: 0
 --- !u!1101 &1523313076444889131
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -72518,6 +72643,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 7
     m_ConditionEvent: sceneID
     m_EventTreshold: 2
+  - m_ConditionMode: 7
+    m_ConditionEvent: sceneID
+    m_EventTreshold: 3
   m_DstStateMachine: {fileID: 1107153178216169846}
   m_DstState: {fileID: 0}
   m_Solo: 0
@@ -72861,7 +72989,9 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 6980763232346402235}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: -353748573733225174}
+  - {fileID: 8001668149871419028}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -73630,7 +73760,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 7
+    m_ConditionEvent: sceneID
+    m_EventTreshold: 1
   m_DstStateMachine: {fileID: 1107153178216169846}
   m_DstState: {fileID: 0}
   m_Solo: 0
@@ -74536,6 +74669,20 @@ MonoBehaviour:
   deleteFrame: 2636
   objectName: GauzeFoldedTwice
   hand: 1
+--- !u!114 &5764670280059142622
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftHand: 0
+  dropFrame: 30
 --- !u!1101 &5774939325665048796
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -74811,7 +74958,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickFrame: 50
-  objectName: Ampoule
+  objectName: OpenedAmpoule
   hand: 1
 --- !u!1101 &6773818755441800425
 AnimatorStateTransition:
@@ -75161,6 +75308,20 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &7623395735547384283
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftHand: 0
+  dropFrame: 20
 --- !u!114 &7645125745769259850
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -75284,6 +75445,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9b29f5ba63bb4aa5b477b8007d77187, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7935142141875536545
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a4f7766142ffc1468fdda1d3e3f1781, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickFrame: 20
+  objectName: Syringe10ml_InjectionSQs
+  hand: 0
 --- !u!1102 &7935538528849200944
 AnimatorState:
   serializedVersion: 5
@@ -75336,7 +75512,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 7
+    m_ConditionEvent: sceneID
+    m_EventTreshold: 1
   m_DstStateMachine: {fileID: 1107000013396830544}
   m_DstState: {fileID: 0}
   m_Solo: 0
@@ -75351,6 +75530,20 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &8001668149871419028
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftHand: 0
+  dropFrame: 30
 --- !u!1101 &8005958451756075845
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
