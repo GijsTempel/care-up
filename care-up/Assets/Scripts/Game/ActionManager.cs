@@ -597,7 +597,7 @@ public class ActionManager : MonoBehaviour
                     }
                 }
             }
-            if (placeData != null)
+            if (!(placeData == null && secondPlaceData == null))
             {
                 if (secondPlaceData != null && correctObjectsInHands)
                 {
@@ -969,6 +969,8 @@ public class ActionManager : MonoBehaviour
                 comment = action.Attributes["comment"].Value;
             }
 
+            bool ignorePosition = action.Attributes["ignorePosition"] != null;
+
             string secondPlace = "";
             if (action.Attributes["secondPlace"] != null)
             {
@@ -1171,6 +1173,7 @@ public class ActionManager : MonoBehaviour
             actionList[actionList.Count - 1].commentUA = commentUA;
             actionList[actionList.Count - 1].secondPlaceRequirement = secondPlace;
             actionList[actionList.Count - 1].placeRequirement = place;
+            actionList[actionList.Count - 1].ignorePosition = ignorePosition;
         }
 
         actionList.Last<Action>().sceneDoneTrigger = true;
@@ -1732,6 +1735,9 @@ public class ActionManager : MonoBehaviour
             string[] ObjectNames = new string[0];
             a.ObjectNames(out ObjectNames);
 
+            if (a.ignorePosition)
+                print("DDDDD");
+
             switch (a.Type)
             {
                 case ActionType.PersonTalk:
@@ -1775,6 +1781,8 @@ public class ActionManager : MonoBehaviour
                         a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
                     break;
             }
+            if (a.ignorePosition)
+                a.placeRequirement = "";
         }
 
 #if (UNITY_EDITOR || DEVELOPMENT_BUILD)

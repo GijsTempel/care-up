@@ -1458,6 +1458,8 @@ public class GameUI : MonoBehaviour
 
             for (int y = 0; y < subTasks.Count; y++)
             {
+                if (subTasks[y] == null)
+                    continue;
                 if (subTasks[y].subindex == i)
                 {
                     if (Resources.Load<GameObject>("NecessaryPrefabs/UI/SubtaskHints") != null)
