@@ -251,11 +251,21 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     extra="De opzuignaald dop zit nog op de naald. Deze dien je te verwijderen om gebruik te maken van de spuit. Concentreer je tijdens het verwijderen van de dop om prikaccidenten te voorkomen."
   />
   
+	 <action
+    comment="Fill syringe with solvent"
+    points="1"
+    description="Spuit het oplosmiddel in de flacon met het medicijn. Zuig daarna de voorgeschreven hoeveelheid medicatie op in de spuit"
+    index="17"
+    type="sequenceStep"
+    value="FillSyringeWithSolvent"
+    extra=""
+	/>
+	
   <action
     comment="Inject the solvent into the vial containing the drug. (Inject medicine into the flacon)"
     points="1"
     description="Spuit het oplosmiddel in de flacon met het medicijn"
-    index="17"
+    index="18"
     type="sequenceStep"
     value="InjectSolvent"
     extra=""
@@ -266,25 +276,13 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     comment="Turn the vial upside down and withdraw the prescribed amount of medicine"
     points="1"
     description="Spuit het oplosmiddel in de flacon met het medicijn. Zuig daarna de voorgeschreven hoeveelheid medicatie op in de spuit"
-    index="18"
+    index="19"
     type="sequenceStep"
-    value="InjectSolvent"
+    value="TurnVial"
     extra=""
 	
 ></action>
 
-<action
-	
-    comment="Turn the vial upside down and draw the prescribed amount of medicine into the syringe"
-    points="1"
-    description="Keer de flacon ondersteboven en zuig de voorgeschreven hoeveelheid medicijn op in de spuit "
-    index="19"
-    type="sequenceStep"
-    value="TurnUpside"
-    extra=""
-	
-	
-></action>
 
 <action
 
@@ -318,11 +316,12 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     points="1"
     description="Verwijder de naald van de spuit"
     audioHint=""
-    index="20"
+    index="22"
     type="combine"
     left="SyringeWithAbsorptionNeedle"
     right=""
-    blockUnlock="PlaceInjectionNeedle"
+    blockUnlock="AneedleTakenOff"
+	blockRequired="EndOfSQ"
     extra="Klik het beschermkapje met een duimbeweging over de opzuignaald, verwijder de naald van de spuit (bij naald zonder veiligheidsysteem met een naaldverwijderaar)"
   />
   
@@ -330,10 +329,12 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     points="1"
     description="Doe de opzuignaald in de naaldcontainer"
     audioHint="Injection/H10-2"
-    index="21"
+    index="23"
     type="useOn"
     item="AbsorptionNeedleNoCap"
     target=""
+	blockRequired="AneedleTakenOff"
+	blockUnlock="PlaceInjectionNeedle"
     buttonText="Opzuignaald weggooien"
     extra="Verwijder de opzuignaald en doe de naald in de naaldencontainer. Gebruik voor injecteren spuiten en naalden voor eenmalig gebruik (disposable). Plaats een naald na gebruik nooit in de plastic beschermhuls terug. Werk met veilige opzuig injectienaalden. Gebruik de inkepingen op de deksel om de naald en spuit te scheiden of gebruik een naaldverwijderaar."
   ></action>
@@ -342,9 +343,9 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     points="1"
     description="Plaats de injectienaald op de spuit"
     audioHint="Injection/H11-2"
-    index="22"
+    index="24"
     type="combine"
-    left="Syringe"
+    left="SyringeWithAbsorptionNeedle"
     right="InjectionNeedle"
     extra="Plaats de injectienaald op de spuit. Gebruik voor intramusculaire injecties een iets dikkere en langere naald, bijvoorbeeld: 0,8 x 38 - 40 mm (diameter x lengte)."
     messageTitle="Handschoenen"
@@ -354,7 +355,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     ></action>
 
   <action
-    index="23"
+    index="26"
     points="1"
     description="Trek handschoenen uit en gooi ze in de afvalbak"
     type="general"
@@ -368,7 +369,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
   <action
      points="1"
      description="Ruim de materialen op door met lege handen op het werkveld te klikken"
-     index="24"
+     index="27"
      type="use"
      value="WorkField"
      extra="Ruim de materialen op door met lege handen op het werkveld te klikken"
@@ -379,7 +380,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
   
   <action
     comment="1. Apply hand hygiene"
-    index="25"
+    index="28"
     points="3"
     description="[Pas handhygiëne]"
     type="use"
@@ -391,7 +392,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     points="3"
     description="Teken de toedienlijst af of noteer het tijdstip, het soort medicijn, de concentratie, de hoeveelheid en de wijze van toediening. Noteer tot slot je bevindingen"
     audioHint="Injection/EAS4-2"
-    index="26"
+    index="29"
     type="use"
     value="PaperAndPen"
     extra="Teken de toedienlijst af of noteer het tijdstip, het soort medicijn, de concentratie, de hoeveelheid en de wijze van toediening. Noteer tot slot je bevindingen"

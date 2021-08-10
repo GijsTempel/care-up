@@ -110,11 +110,13 @@ namespace CareUp.ActionEditor
         public string expected = null;
         [XmlAttribute]
         public string hidden = null;
+        [XmlAttribute]
+        public string ignorePosition = null;
 
-/// <summary>
-/// Create new instance of an action with all the same data 
-/// </summary>
-/// <returns></returns>
+        /// <summary>
+        /// Create new instance of an action with all the same data 
+        /// </summary>
+        /// <returns></returns>
         public Action Copy()
         {
             Action newCopy = new Action();
@@ -151,6 +153,7 @@ namespace CareUp.ActionEditor
             newCopy.blockMessage = this.blockMessage;
             newCopy.expected = this.expected;
             newCopy.hidden = this.hidden;
+            newCopy.ignorePosition = this.ignorePosition;
             return newCopy;
         }
 
@@ -217,6 +220,8 @@ namespace CareUp.ActionEditor
                     return hidden;
                 case "description":
                     return description;
+                case "ignorePosition":
+                    return ignorePosition;
             }
             return null;
         }
@@ -310,6 +315,9 @@ namespace CareUp.ActionEditor
                 case "description":
                     description = _value;
                     break;
+                case "ignorePosition":
+                    ignorePosition = _value;
+                    break;
             }
         }
     }
@@ -375,7 +383,8 @@ namespace CareUp.ActionEditor
             "action",
             "posID",
             "audioHint",
-            "hidden"
+            "hidden",
+            "ignorePosition"
         };
 
         public Object actionsFile;
@@ -589,7 +598,8 @@ namespace CareUp.ActionEditor
                             action.hidden = xmlAction.Attributes["hidden"].Value;
                         if (xmlAction.Attributes["expected"] != null)
                             action.expected = xmlAction.Attributes["expected"].Value;
-
+                        if (xmlAction.Attributes["ignorePosition"] != null)
+                            action.ignorePosition = xmlAction.Attributes["ignorePosition"].Value;
                         actions.Add(action);
                     }
                     loadedActionFilePath = actionFilePath;
