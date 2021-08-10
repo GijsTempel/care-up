@@ -335,6 +335,24 @@ public class ActionManager : MonoBehaviour
                                 }
                             }
                         }
+                        else if(GameObject.FindObjectOfType<PrefabHolder>() != null)
+                        {
+                            PrefabHolder prefabHolder = GameObject.FindObjectOfType<PrefabHolder>();
+                            GameObject handValuePrafeb = prefabHolder.GetPrefab(hand);
+                            if (handValuePrafeb != null)
+                            {
+                                if (handValuePrafeb.GetComponent<InteractableObject>() != null)
+                            {
+                                    if (handValuePrafeb.GetComponent<InteractableObject>().description != "")
+                                    {
+                                        handValue = handValuePrafeb.GetComponent<InteractableObject>().description;
+                                        article = handValuePrafeb.GetComponent<InteractableObject>().nameArticle;
+                                        found = true;
+                                        foundDescr = true;
+                                    }
+                                }
+                            }
+                        }
                         if (GameObject.FindObjectOfType<ExtraObjectOptions>() != null && !found)
                         {
                             foreach (ExtraObjectOptions extraObject in GameObject.FindObjectsOfType<ExtraObjectOptions>())
