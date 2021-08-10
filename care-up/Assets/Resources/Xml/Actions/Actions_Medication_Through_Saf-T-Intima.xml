@@ -162,6 +162,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     type="use"
     value="gloveBox"
     extra="Trek de handschoenen aan."
+	blockUnlock="GlovesTakenOn"
     messageTitle="Gebruik handschoenen"
     messageContent="Gebruik handschoenen eenmalig en bij dezelfde cliënt. Trek ze na gebruik direct uit. Vermijd tijdens het dragen van handschoenen contact met deurknopen, telefoon, apparatuur, toetsenborden, enzovoort. Was of desinfecteer de handen na het uittrekken van de handschoenen altijd. Bij het uittrekken van de handschoenen kunnen de handen namelijk besmet zijn geraakt."
    ></action>
@@ -264,24 +265,37 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
    type="sequenceStep"
    value="take off omniflush"
    extra="Verwijder de spuit en gooi hem in de afvalbak."
+   blockUnlock="EndofSQ"
    messageTitle="Verkeerde of niet toegediende injectie"
    messageContent="Maak van een verkeerd toegediend en/of een niet gegeven injectie melding volgens de procedure van de organisatie."
   />
 
- <action
-   points="1"
-   description="Trek de handschoenen uit"
-   index="17"
-   type="sequenceStep"
-   value="take off gloves"
-   extra="Trek de handschoenen uit."
-   messageTitle="Controleren huid romdom insteekplaats"
-   messageContent="Inspecteer de huid rondom de insteekplaats dagelijks. Controleer op zwelling, roodheid, lekkage van vloeistof, bloeding, blauwe plekken of pijn. Gebruik transparante pleister om de huid om de insteekplaats goed te kunnen inspecteren."
-  />
+	<action
+     points="1"
+     description="Ruim de materialen op door met lege handen op het werkveld te klikken"
+     index="17"
+     type="use"
+     value="WorkField"
+     extra="Ruim de materialen op door met lege handen op het werkveld te klikken"
+     messegeTitle="Materialen opruimen"
+	 blockRequired="EndofSQ"
+	 blockUnlock="AllowedToTakeOffGloves"
+     MessegeContent="Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen"
+></action>
+
+	<Action
+		 index="18"
+		 description="Trek de handschoenen uit."
+		 type="general"
+		 item=""
+		 points="1"
+		 buttonText="Trek handschoenen uit"
+		 action="TakeOffGlovesWithoutThrowing"
+		 blockRequired="GlovesTakenOn, AllowedToTakeOffGloves" />
 
   <action
    comment="1. Apply hand hygiene"
-   index="18"
+   index="19"
    points="3"
    description="[Pas handhygiëne]"
    type="use"
@@ -289,16 +303,6 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
    extra="[Pas handhygiëne]"
    />
 
-  <action
-     points="1"
-     description="Ruim de materialen op door met lege handen op het werkveld te klikken"
-     index="19"
-     type="use"
-     value="WorkField"
-     extra="Ruim de materialen op door met lege handen op het werkveld te klikken"
-     messegeTitle="Materialen opruimen"
-     MessegeContent="Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen"
-></action>
 
    <action
     comment="last step"
