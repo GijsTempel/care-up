@@ -70,108 +70,34 @@ Zorg voor een extra katheter, urineopvangzak en materialen voor het inbrengen, v
     messageContent="Het gebruik van een katheterset verdient aanbeveling. Hierin bevinden zich alle benodigdheden voor het inbrengen van een katheter. Er is echter niet aangetoond dat het werken met een katheterset een meerwaarde heeft boven het verzamelen van de materialen afzonderlijk. Gazen voor het reinigen van de urethraopening hoeven niet steriel te zijn, wel schoon. Reden hiervoor is dat ze niet in aanraking komen met een steriel gebied (meatus)."></action>
 
   <action
-    comment="3. Open package of the syringe with 10 ml of sterile water. Leave the syringe in the package "
-    points="1"
-    description="Open de verpakking van de spuit met 10 ml steriel water. Laat de spuit in de verpakking"
-    index="3"
-    type="combine"
-    left="water_syringe_pack"
-    right=""
-    blockUnlock="liqsyropened"
-    extra="Open de verpakking van de spuit met 10 ml steriel water. Laat de spuit in de verpakking"></action>
-
-  <action
-   comment="8. Open the packaging of the syringe with lubricant, leave the syringe in the packaging."
-   points="1"
-   description="Open de verpakking van de spuit met glijmiddel. Laat de spuit nog in de verpakking"
-   index="4"
-   type="combine"
-   left="lube_syringe_pack"
-   quiz="2"
-   right=""
-   blockUnlock="lubsyropened"
-   extra="Open de verpakking van de spuit met glijmiddel. Laat de spuit nog in de verpakking"></action>
-
-  <action
-    comment="4. Pour tap water from a large tap (or sterile water) over the gauze."
-    points="1"
-    description="Giet kraanwater uit een flink stromende kraan (of steriel water) over de wattenbollen"
-    index="5"
-    type="useOn"
-    item="GauzeTrayFull"
-    secondPlace="SinkPos"
-    target=""
-    buttonText="Wattenbollen nat maken"
-    extra="Giet kraanwater uit een flink stromende kraan (of steriel water) over de wattenbollen."
-    messageTitle="Gebruik kraanwater"
-    messageContent="Als in een geprotocolleerde werkinstructie kraanwater als spoelvloeistof wordt gebruikt, dient dit water uit een flink stromende kraan te zijn.
+  comment="4. Pour tap water from a large tap (or sterile water) over the gauze."
+  points="1"
+  description="Giet kraanwater uit een flink stromende kraan (of steriel water) over de wattenbollen"
+  index="3"
+  type="useOn"
+  item="GauzeTrayFull"
+  secondPlace="SinkPos"
+  target=""
+  buttonText="Wattenbollen nat maken"
+  extra="Giet kraanwater uit een flink stromende kraan (of steriel water) over de wattenbollen."
+  messageTitle="Gebruik kraanwater"
+  messageContent="Als in een geprotocolleerde werkinstructie kraanwater als spoelvloeistof wordt gebruikt, dient dit water uit een flink stromende kraan te zijn.
 
 Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt voor gebruik. Gebruik voor lichaamsverzorging en spoelen van wonden lauw kraanwater."></action>
 
   <action
-    comment="5. Ask the client to uncover the lower body and lie on the back with the legs spread apart and the knees raised."
-    index="6"
-    points="1"
-    description="Vraag de cliënt het onderlichaam te ontbloten en op de rug te gaan liggen met de benen gespreid en de knieën opgetrokken"
-    type="talk"
-    topic="LayOnBed"
-    extra="Vraag de cliënt het onderlichaam te ontbloten en op de rug te gaan liggen met de benen gespreid en de knieën opgetrokken"
-    blockUnlock="patient lay down"
-    messageTitle="Privacy van de cliënt"
-    messageContent="Denk tijdens het zorg verlenen altijd aan de privacy van de cliënt. Zorg ervoor dat de cliënt zich veilig en geborgen voelt door bijvoorbeeld de gordijnen dicht te trekken."></action>
-
-  <action
-    comment="6. Place a pad under the buttocks and thighs of the cliënt."
-    points="2"
-    description="Leg een onderlegger onder de billen en dijen van de cliënt"
-    index="7"
-    type="useOn"
-    target=""
-    item="cloth_02_folded"
-    secondPlace="PatientPos"
-	blockUnlock="clothPlaced"
-    buttonText="Onderlegger plaatsen"
-	
-    extra="Leg een onderlegger onder de billen en dijen van de cliënt"></action>
-  
-  <action
-    index="8"
-     points="1"
-     description=" Klem de katheter af met de kocher, op het aansluitpunt voor de urineopvangzak. Zorg dat je het ballonvulkanaal niet afklemt met de kocher."
-     type="general"
-     item=""
-     action="CloseCatheter"
-     blockRequired="patient lay down,clothPlaced"
-     blockUnlock="kocherClosed"
-     buttonText="Klem de katheter"> </action>
-
-
-  
-  <action
-   comment="Put on gloves."
-   points="1"
-   description="[Trek de handschoenen aan]"
-   index="9"
-   type="use"
-   value="gloveBox"
-   extra="Trek de handschoenen aan."
+ comment="Put on gloves."
+ points="1"
+ description="[Trek de handschoenen aan]"
+ index="4"
+ type="use"
+ value="gloveBox"
+ extra="Trek de handschoenen aan."
     ></action>
 
   <action
-  index="10"
-   points="1"
-   description=" Verwijder het fixatie materiaal en de urineopvangzak, leg deze terug op het werkveld"
-   type="general"
-   item=""
-   action="DisconnectBag"
-   blockRequired="kocherClosed"
-   buttonText="Koppel de zak los"> </action>
-
-
-
-  <action
     comment="Open the outer package of the catheter a few centimeters, fold the ends. Leave the inner package in the outer package and hold the outer package with the non-dominant hand on the folded ends."
-    index="11"
+    index="5"
     points="1"
     description="Open de buitenverpakking van de katheter en laat de katheter in de binnenverpakking op het steriele werkveld vallen, zonder de binnenverpakking aan te raken"
     type="combine"
@@ -181,7 +107,7 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
 
   <action
      comment="Remove the end of the inner package from the catheter so that the connection point for the urine collection bag is accessible. The catheter remains in the inner package."
-     index="12"
+     index="6"
      points="2"
      description="Open de binnenverpakking van de katheter. De katheter blijft in de binnenverpakking zitten"
      type="combine"
@@ -191,7 +117,7 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
 
   <action
    comment="With the dominant hand, grasp the tube of the urine collection bag just behind the connection point and attach it to the catheter. Continue to hold the hose."
-   index="13"
+   index="7"
    points="1"
    description="Verwijder de afsluitdop van de urineopvangzak en bevestig deze aan de katheter. De katheter blijft in binnenverpakking zitten"
    type="combine"
@@ -207,7 +133,7 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
 
   <action
     comment="With the non-dominant hand, remove the outer package from the catheter. Dispose of the outer packaging in the waste bin."
-    index="14"
+    index="8"
     points="2"
     description="Verwijder met de niet-dominante hand de buitenverpakking van de katheter. Gooi de buitenverpakking in de afvalbak."
     type="combine"
@@ -219,7 +145,7 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
 
   <action
      comment="Tear open the inner package along the perforation with your free hand, without touching the insert of the catheter."
-     index="15"
+     index="9"
      points="2"
      description="Scheur met de vrije hand de binnenverpakking langs de perforatie open, zonder het in te brengen deel van de katheter aan te raken."
      type="combine"
@@ -228,20 +154,92 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
      blockUnlock="removeInnerPack"
      blockRequired="removeOuterPack,liqsyropened,lubsyropened"
      extra=""></action>
+
+  <action
+    comment="Place the insertable part of the catheter on the sterile work field."
+    index="10"
+    points="2"
+    description="Leg het in te brengen deel van de katheter op het steriele werkveld."
+    type="drop"
+    left="catheter_Supertubular_InHands"
+    posID="0"
+    item="catheter_Supertubular_InHands"
+    right=""
+    secondPlace="WorkFieldPos"
+    blockRequired="removeInnerPack"
+    extra=""></action>
   
-   <action
-     comment="Place the insertable part of the catheter on the sterile work field."
-     index="16"
-     points="2"
-     description="Leg het in te brengen deel van de katheter op het steriele werkveld."
-     type="drop"
-     left="catheter_Supertubular_InHands"
-     posID="0"
-     item="catheter_Supertubular_InHands"
-     right=""
-     secondPlace="WorkFieldPos"
-     blockRequired="removeInnerPack"
-     extra=""></action>
+  <action
+    comment="3. Open package of the syringe with 10 ml of sterile water. Leave the syringe in the package "
+    points="1"
+    description="Open de verpakking van de spuit met 10 ml steriel water. Laat de spuit in de verpakking"
+    index="11"
+    type="combine"
+    left="water_syringe_pack"
+    right=""
+    blockUnlock="liqsyropened"
+    extra="Open de verpakking van de spuit met 10 ml steriel water. Laat de spuit in de verpakking"></action>
+
+  <action
+   comment="8. Open the packaging of the syringe with lubricant, leave the syringe in the packaging."
+   points="1"
+   description="Open de verpakking van de spuit met glijmiddel. Laat de spuit nog in de verpakking"
+   index="12"
+   type="combine"
+   left="lube_syringe_pack"
+   quiz="2"
+   right=""
+   blockUnlock="lubsyropened"
+   extra="Open de verpakking van de spuit met glijmiddel. Laat de spuit nog in de verpakking"></action>
+
+
+
+  <action
+    comment="5. Ask the client to uncover the lower body and lie on the back with the legs spread apart and the knees raised."
+    index="13"
+    points="1"
+    description="Vraag de cliënt het onderlichaam te ontbloten en op de rug te gaan liggen met de benen gespreid en de knieën opgetrokken"
+    type="talk"
+    topic="LayOnBed"
+    extra="Vraag de cliënt het onderlichaam te ontbloten en op de rug te gaan liggen met de benen gespreid en de knieën opgetrokken"
+    blockUnlock="patient lay down"
+    messageTitle="Privacy van de cliënt"
+    messageContent="Denk tijdens het zorg verlenen altijd aan de privacy van de cliënt. Zorg ervoor dat de cliënt zich veilig en geborgen voelt door bijvoorbeeld de gordijnen dicht te trekken."></action>
+
+  <action
+    comment="6. Place a pad under the buttocks and thighs of the cliënt."
+    points="2"
+    description="Leg een onderlegger onder de billen en dijen van de cliënt"
+    index="14"
+    type="useOn"
+    target=""
+    item="cloth_02_folded"
+    secondPlace="PatientPos"
+	blockUnlock="clothPlaced"
+    buttonText="Onderlegger plaatsen"
+	
+    extra="Leg een onderlegger onder de billen en dijen van de cliënt"></action>
+  
+  <action
+    index="15"
+     points="1"
+     description=" Klem de katheter af met de kocher, op het aansluitpunt voor de urineopvangzak. Zorg dat je het ballonvulkanaal niet afklemt met de kocher."
+     type="general"
+     item=""
+     action="CloseCatheter"
+     blockRequired="patient lay down,clothPlaced"
+     blockUnlock="kocherClosed"
+     buttonText="Klem de katheter"> </action>
+
+  <action
+  index="16"
+   points="1"
+   description=" Verwijder het fixatie materiaal en de urineopvangzak, leg deze terug op het werkveld"
+   type="general"
+   item=""
+   action="DisconnectBag"
+   blockRequired="kocherClosed"
+   buttonText="Koppel de zak los"> </action>
 
   <action
      comment="Remove the fixation material on the abdomen"
