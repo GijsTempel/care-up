@@ -38,6 +38,9 @@ public class MenuEffects : MonoBehaviour
             case 1:
                 result = 4;
                 break;
+            case 11:
+                result = 5;
+                break;
         }
         return result;
     }

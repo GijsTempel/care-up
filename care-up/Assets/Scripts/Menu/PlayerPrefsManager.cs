@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Text;
+using System.Xml;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
@@ -15,7 +17,6 @@ using System.Linq;
 using SmartLookUnity;
 using CareUp.Localize;
 using System.Runtime.InteropServices;
-
 
 /// <summary>
 /// Handles quick access to saved data.
@@ -89,6 +90,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
     // sets up after selecting scene in "scene selection"
     public string currentSceneVisualName;
+    public string currentPEcourseID;
     public bool validatedScene;
 
     // post processing on camera
@@ -118,6 +120,13 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public bool muteMusicForEffect = false;
     private bool muteMusic = false;
+
+    [DllImport("__Internal")]
+    private static extern string GetStringParams();
+
+    //public string currentLoginToken = "";
+    //public string currentLoginName = "";
+    //public string currentLoginPass = "";
 
     public static CANotifications GetNotificationByID(int _id)
     {
@@ -204,6 +213,26 @@ public class PlayerPrefsManager : MonoBehaviour
             }
         }
         return false;
+    }
+
+    public List<string> GetScenesInProduct(string SKU)
+    {
+        List<string> _scenes = new List<string>();
+        foreach (SceneInfo sceneInfo in ScenesInfo)
+        {
+            if (sceneInfo.isInProducts != null)
+            {
+                foreach(string __sku in sceneInfo.isInProducts)
+                {
+                    if (SKU == __sku)
+                    {
+                        _scenes.Add(sceneInfo.displayName);
+                        break;
+                    }
+                }
+            }
+        }
+        return _scenes;
     }
 
     public void Update()
@@ -363,6 +392,20 @@ public class PlayerPrefsManager : MonoBehaviour
         //PlayerPrefsManager.__dev__customCertificate("playerFullName", "sceneName", "06202019");
 
         SmartLook.Init("22f3cf28278dbff71183ef8e0fa90c90048b850d");
+
+#if UNITY_WEBGL || UNITY_EDITOR
+        HandleLoginToken();
+#endif
+        // stupid way to push new tokens 
+        //CMLData data = new CMLData();
+        //string testLogin = "test";
+        //string testPass = "123";
+        //byte[] encodeLogin = Encoding.UTF8.GetBytes(testLogin);
+        //byte[] encodePass = Encoding.UTF8.GetBytes(testPass);
+        //string authData = Convert.ToBase64String(encodeLogin) + " " + Convert.ToBase64String(encodePass);
+        //data.Set("abcdefg123456", authData);
+        //WUData.UpdateSharedCategory("LoginTokens", data);
+        
     }
 
     public static bool HasNewNorifications()
@@ -828,17 +871,17 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public static void OpenUrl_NewWindow(string url)
     {
-        #if UNITY_WEBGL && ! UNITY_EDITOR
+#if UNITY_WEBGL && !UNITY_EDITOR
             openWindow(url);
-        #else
+#else
             OpenUrl(url);
-        #endif
+#endif
     }
 
-    #if UNITY_WEBGL 
+#if UNITY_WEBGL
     [DllImport("__Internal")]
     private static extern void openWindow(string url);
-    #endif
+#endif
 
     public static void __dev__customCertificate(string playerFullName, string sceneName, string date)
     {
@@ -1113,5 +1156,120 @@ public class PlayerPrefsManager : MonoBehaviour
         link += sceneName + ". You can try it out yourself by going to https%3A%2F%2Fcareup.online";
 
         OpenUrl_NewWindow(link.Replace(" ", "%20"));
+    }
+
+    public static string GenerateAttendanceSXML(string BIG, string course)
+    {
+        XmlDocument xmlDoc = new XmlDocument();
+        xmlDoc.CreateXmlDeclaration("1.0", "UTF-8", "yes");
+
+        XmlElement root = xmlDoc.CreateElement("Entry");
+        xmlDoc.AppendChild(root);
+
+#region Settings
+        XmlElement settings = xmlDoc.CreateElement("Settings");
+        root.AppendChild(settings);
+
+        XmlElement userID = xmlDoc.CreateElement("userID");
+        userID.InnerText = "24352";
+        settings.AppendChild(userID);
+
+        XmlElement userRole = xmlDoc.CreateElement("userRole");
+        userRole.InnerText = "EDU";
+        settings.AppendChild(userRole);
+
+        XmlElement userKey = xmlDoc.CreateElement("userKey");
+        userKey.InnerText = "2435202551361";
+        settings.AppendChild(userKey);
+        
+        XmlElement orgID = xmlDoc.CreateElement("orgID");
+        orgID.InnerText = "52";
+        settings.AppendChild(orgID);
+
+        XmlElement settingOutput = xmlDoc.CreateElement("settingOutput");
+        settingOutput.InnerText = "1";
+        settings.AppendChild(settingOutput);
+
+        XmlElement emailOutput = xmlDoc.CreateElement("emailOutput");
+        emailOutput.InnerText = "info@careup.online";
+        settings.AppendChild(emailOutput);
+
+        XmlElement languageID = xmlDoc.CreateElement("languageID");
+        languageID.InnerText = "1";
+        settings.AppendChild(languageID);
+
+        XmlElement defaultLanguageID = xmlDoc.CreateElement("defaultLanguageID");
+        defaultLanguageID.InnerText = "1";
+        settings.AppendChild(defaultLanguageID);
+#endregion
+
+#region Attendance
+        XmlElement attendance = xmlDoc.CreateElement("Attendance");
+        root.AppendChild(attendance);
+        
+        XmlElement PECourseID = xmlDoc.CreateElement("PECourseID");
+        PECourseID.InnerText = "409087";
+        attendance.AppendChild(PECourseID);
+
+        XmlElement externalModuleID = xmlDoc.CreateElement("externalmoduleID");
+        externalModuleID.InnerText = course;
+        attendance.AppendChild(externalModuleID);
+
+        XmlElement externalPersonID = xmlDoc.CreateElement("externalPersonID");
+        externalPersonID.InnerText = BIG;
+        attendance.AppendChild(externalPersonID);
+        
+        XmlElement endDate = xmlDoc.CreateElement("endDate");
+        endDate.InnerText = DateTime.Now.AddDays(-1).ToString("yyyy-MM-ddTHH:mm:ss.fffffffK")
+            .Replace("+", "%2B"); // "+" sign is operator in url, need to replace
+        attendance.AppendChild(endDate);
+#endregion
+
+        return xmlDoc.OuterXml;
+    }
+    
+    public void HandleLoginToken()
+    {
+        // get login token
+        string currentLoginToken;
+#if UNITY_WEBGL && !UNITY_EDITOR
+        currentLoginToken = GetStringParams();
+#endif
+#if UNITY_EDITOR
+        //currentLoginToken = "token12asudh"; // let's pretend we got it
+        currentLoginToken = "abcdefg123456"; // let's pretend we got it
+#endif
+        // fetch date from db, follows into next function
+        WUData.FetchSharedField(currentLoginToken, "LoginTokens", CheckLoginToken_success, -1, CheckLoginToken_error);
+    }
+
+    public void CheckLoginToken_error(CMLData response)
+    {
+        Debug.Log(response.ToString());
+        // most likely if we're here - no token found
+    }
+
+    public void CheckLoginToken_success(CML response)
+    {
+        string tokenValue;
+        if (response.Elements.Count > 1 && response.Elements[1].Values.Length > 2)
+        {
+            tokenValue = response.Elements[1].Values[2];
+            string[] split = tokenValue.Split(' ');
+            if (split.Length > 1)
+            {
+                string base64LoginName = split[0];
+                string base64LoginPass = split[1];
+                if (base64LoginName != "" && base64LoginPass != "")
+                {
+                    byte[] loginData = Convert.FromBase64String(base64LoginName);
+                    string decodedLogin = Encoding.UTF8.GetString(loginData);
+                    byte[] passData = Convert.FromBase64String(base64LoginPass);
+                    string decodedPass = Encoding.UTF8.GetString(passData);
+
+                    GameObject.FindObjectOfType<WUUGLoginGUI>().DoAutoLogin(decodedLogin, decodedPass);
+                }
+            }
+        }
     }
 }
