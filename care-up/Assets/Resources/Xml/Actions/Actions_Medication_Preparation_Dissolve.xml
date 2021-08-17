@@ -121,7 +121,18 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     type="talk"
     topic="DoubleCheck"
     extra="Voer dubbele controle uit. Het verkeerd toedienen van medicijnen brengt risico’s met zich mee. Het risico op blijvend letsel bij verkeerde dosering of toediening verschilt, afhankelijk van het medicijn. Ook is de ene toedieningsweg risicovoller dan een andere. Dubbele controle van de medicatie is belangrijk voor de veiligheid, met name bij risicovolle medicatie. Laat ook je berekeningen die je hebt gemaakt checken."
-  />
+    messageTitle="Vul het toedieningsetiket in"
+    messageContent="Vul onderstaande punten in op het toedieningsetiket:
+    
+- Naam en geboortedatum client
+- Naam medicijn
+- Sterkte en dosering
+- Wanneer van toepassing: Naam en hoeveelheid van oplosmiddel
+- Datum en tijd van bereiding
+- Houdbaarheid na bereiding
+- Naam bereider
+- Naam van degene die dubbele controle uitvoert"
+    />
 
   <action
     comment="Put on gloves."
@@ -259,6 +270,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     type="sequenceStep"
     value="FillSyringeWithSolvent"
     extra=""
+    
 	/>
 	
   <action
@@ -269,6 +281,8 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     type="sequenceStep"
     value="InjectSolvent"
     extra=""
+    messageTitle="Verhoogde druk"
+    messageContent="Het ingespoten oplosmiddel verhoogt de druk in de flacon. Laat de lucht die door de verhoogde druk uit de flacon wil, in de spuit. Laat de opzuignaald + met lucht gevulde spuit in de flacon zitten. Wacht tot het medicijn geheel is opgelost."
 	/>
   
  <action
@@ -280,6 +294,8 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     type="sequenceStep"
     value="TurnVial"
     extra=""
+    messageTitle="Zuig de voorgeschreven hoeveelheid medicijn op"
+    messageContent="Doe dit door geleidelijk lucht uit de spuit te wisselen met medicijn uit de flacon. Druk niet in één keer alle lucht uit de spuit in de flacon. De kans bestaat dat de spuit van de opzuignaald 'vliegt' door te hoge druk."
 	
 ></action>
 
@@ -364,6 +380,8 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     buttonText="Trek handschoenen uit "
     blockRequired="AllowTakeOffGloves, GlovesTakenOn"
     blockUnlock="CleanWorkfield"
+    messageTitle="Toedieningsetiket"
+    messageContent="Plak het ingevulde toedieningsetiket op de spuit."
   ></action>
 
   <action
