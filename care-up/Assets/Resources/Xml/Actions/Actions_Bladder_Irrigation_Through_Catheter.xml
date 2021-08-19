@@ -43,6 +43,8 @@
 - Afvalbak"
 ></action>
 
+
+
   <action
       points="2"
       description="Controleer het spoelzakje"
@@ -56,10 +58,12 @@
       messageContent="Controleer de spoelvloeistof op vervaldatum/houdbaarheid en temperatuur (lichaamstemperatuur). Het soort spoelvloeistof is op voorschrift van de arts. Raadpleeg de bijsluiter."
 ></action>
 
+
+
   <action
       points="2"
       description="Controleer de cliëntgegevens. Controleer de naam en geboortedatum van de cliënt"
-      index="2"
+      index="3"
       type="examine"
       item="PatientRecords"
       expected="good"
@@ -69,7 +73,7 @@
   <action
       points="2"
       description="Controleer de toedienlijst op soort, dosering en toedientijdstip"
-      index="2"
+      index="3"
       type="examine"
       item="PrescriptionForm"
       expected="good"
@@ -80,7 +84,7 @@
       comment="Open bladder spool bag"
       points="1"
       description="Open de verpakking van het spoelzakje"
-      index="3"
+      index="4"
       type="combine"
       quiz="4.5"
       left="BladderSpoolBagPacked"
@@ -92,13 +96,13 @@
 ></action>
 
   <action
-      points="2"
-      description="Controleer of de klem van het spoelzakje dicht is"
-      index="4"
-      type="examine"
-      item="BladderSpoolBag"
-      expected="good"
-      extra="Controleer of de klem van het spoelzakje dicht is"
+  points="2"
+  description="Controleer of de klem van het spoelzakje dicht is"
+  index="5"
+  type="examine"
+  item="BladderSpoolBag"
+  expected="good"
+  extra="Controleer of de klem van het spoelzakje dicht is"
 ></action>
 
   <action
@@ -106,7 +110,7 @@
       points="1"
       description="Vraag de cliënt het onderlichaam te ontbloten en op de rug te gaan liggen"
       audioHint=""
-      index="5"
+      index="6"
       type="talk"
       topic="LayOnBed"
       extra="Vraag de cliënt het onderlichaam te ontbloten en op de rug te gaan liggen"
@@ -121,7 +125,7 @@
       comment="Place a pad under the buttocks and thighs of the cliënt."
       points="2"
       description="Leg een onderlegger onder de katheter"
-      index="6"
+      index="7"
       type="useOn"
       item="cloth_02_folded"
       target=""
@@ -138,7 +142,7 @@
       points="1"
       description="Plaats het opvangbakje op de onderlegger, onder het aansluitpunt van katheter en urineopvangzak"
       fullDescription="Pak het plastic afvalbakje van het werkveld. Beweeg vervolgens naar de cliënt. Klik tot slot op het silhouet van het plastic afvalbakje."
-      index="7"
+      index="8"
       type="drop"
       secondPlace="PatientPos"
       item="PlasticTrashbucket"
@@ -150,7 +154,7 @@
         comment="9. Put on gloves."
         points="2"
         description="Trek handschoenen aan"
-        index="8"
+        index="9"
         type="use"
         value="gloveBox"
         extra="Trek handschoenen aan"
@@ -166,7 +170,7 @@
       comment="Clamp off the catheter at the connection between the catheter and urinebag"
       points="1"
       description="Klem de katheter af"
-      index="9"
+      index="10"
       type="sequenceStep"
       value="clamp katheter"
       extra="Klem de katheter af."
@@ -178,7 +182,7 @@
     comment="Take off the urinebag (and empty it according to the rules within the institute)"
     points="1"
     description="Ontkoppel de urineopvangzak. Voer deze af volgens de regels van de organisatie"
-    index="10"
+    index="11"
     type="sequenceStep"
     value="remove urinebag"
     extra="Ontkoppel de urineopvangzak en voer deze af. Doe dit volgens de binnen de instelling geldende regels"
@@ -190,7 +194,7 @@
       comment="Attach the bladder spool bag to the catheter."
       points="1"
       description="Sluit het spoelzakje aan op de katheter"
-      index="11"
+      index="12"
       type="sequenceStep"
       value="attach bladder spool bag"
       extra="Sluit het spoelzakje aan op de katheter"
@@ -202,7 +206,7 @@
       comment="Open the clamp of the bladder spool bag"
       points="1"
       description="Open de klem van het spoelzakje"
-      index="12"
+      index="13"
       type="sequenceStep"
       value="open clamp"
       extra="Open de klem van het spoelzakje"
@@ -212,7 +216,7 @@
       comment="Hold the bladder spool bag above bladder level and let the fluid run in the bladder. lightly squeeze the bladder spool bag if fluid does not run into the bladder by itself. "
       points="1"
       description="Houd het spoelzakje boven het niveau van de blaas en laat de spoelvloeistof inlopen. Knijp licht in het spoelzakje wanneer de vloeistof niet vanzelf inloopt"
-      index="13"
+      index="14"
       type="sequenceStep"
       value="hold bladder spool bag"
       extra="Houd het spoelzakje boven het niveau van de blaas en laat de spoelvloeistof inlopen. Knijp licht in het spoelzakje wanneer de vloeistof niet vanzelf inloopt."
@@ -222,7 +226,7 @@
       comment="Let the fluid run back int the bladder spool bag. "
       points="1"
       description="Laat de spoelvloeistof direct teruglopen in het spoelzakje"
-      index="14"
+      index="15"
       type="sequenceStep"
       value="fluid back"
       extra="Laat de vloeistof teruglopen in het spoelzakje nadat de voorgeschreven tijd is verstreken."
@@ -244,7 +248,7 @@ Na afgesproken tijd:
       comment="Close the clamp of the bladder spool bag "
       points="1"
       description="Sluit de klem van het spoelzakje"
-      index="15"
+      index="16"
       type="sequenceStep"
       value="close clamp"
       extra="Sluit de klem van het spoelzakje"
@@ -256,7 +260,7 @@ Na afgesproken tijd:
      comment="Clamp off the catheter at the connection between the catheter and urinebag"
      points="1"
      description="Klem de katheter af"
-     index="16"
+     index="17"
      type="sequenceStep"
      value="clamp katheter again"
      extra="Klem de katheter af"
@@ -266,7 +270,7 @@ Na afgesproken tijd:
       comment="Disconnect the bladder spool bag from the catheter (and throw away the bladder spool bag) "
       points="1"
       description="Ontkoppel het spoelzakje van de katheter en gooi het spoelzakje weg"
-      index="17"
+      index="18"
       type="sequenceStep"
       value="remove bladder spool bag"
       extra="Ontkoppel het spoelzakje van de katheter en gooi het spoelzakje weg"
@@ -276,7 +280,7 @@ Na afgesproken tijd:
     comment="Reconnect the urine bag to the catheter"
     points="1"
     description="Sluit de urineopvangzak aan op de katheter"
-    index="18"
+    index="19"
     type="sequenceStep"
     value="attach urinebag"
 	blockUnlock="SequenceFinished"
@@ -286,7 +290,7 @@ Na afgesproken tijd:
 	<action
 	points="1"
 	description="Ruim de materialen op door met lege handen op het werkveld te klikken"
-	index="19"
+	index="20"
 	type="use"
 	value="WorkField"
 	blockRequired="SequenceFinished"
@@ -297,7 +301,7 @@ Na afgesproken tijd:
 ></action>
 		
   <Action
-	  index="20"
+	  index="21"
 	  description="Trek de handschoenen uit."
 	  type="general"
 	  item=""
@@ -308,7 +312,7 @@ Na afgesproken tijd:
 
   <action
         comment="46. Apply hand hygiene."
-        index="21"
+        index="22"
         points="3"
         description="[Pas handhygiëne]"
         type="use"
@@ -319,7 +323,7 @@ Na afgesproken tijd:
 
   <action
       comment="last step"
-      index="22"
+      index="23"
       points="1"
       description="Teken de toedienlijst af of noteer het tijdstip, soort en hoeveelheid spoelvloeistof. Noteer tot slot je bevindingen"
       type="use"
