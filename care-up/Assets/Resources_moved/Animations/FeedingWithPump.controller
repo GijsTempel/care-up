@@ -101,28 +101,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9b29f5ba63bb4aa5b477b8007d77187, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1101 &-9116714116066325991
-AnimatorStateTransition:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_Conditions: []
-  m_DstStateMachine: {fileID: 0}
-  m_DstState: {fileID: 5543971671626175398}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 0
-  serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.9748744
-  m_HasExitTime: 1
-  m_HasFixedDuration: 1
-  m_InterruptionSource: 0
-  m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
 --- !u!1102 &-9115167908294521011
 AnimatorState:
   serializedVersion: 5
@@ -1939,7 +1917,7 @@ AnimatorStateMachine:
     m_Position: {x: 1070, y: -750, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2963503415779763637}
-    m_Position: {x: -820, y: -160, z: 0}
+    m_Position: {x: -870, y: -160, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: 594882167822013843}
@@ -2129,6 +2107,20 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &-6023367474113247934
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b9c9f3106e5ff7449cd0b07126b8b77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropLeftFrame: 392
+  dropRightFrame: -1
 --- !u!1101 &-5979059576350202242
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -3002,6 +2994,26 @@ AnimatorTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 1
+--- !u!114 &-4828258178241184679
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: TubeForPumpRigged_InHands
+  showFrame: 274
+  ObjNames:
+  - pump_cartrige.003
+  - tubeCapRigged
+  - TubeForPumpLong
+  toShow: 1
+  meshRenderer: 0
 --- !u!1102 &-4823695692511791182
 AnimatorState:
   serializedVersion: 5
@@ -4044,28 +4056,6 @@ MonoBehaviour:
   - water_flow_effect
   toShow: 1
   meshRenderer: 0
---- !u!1101 &-3355075862829447170
-AnimatorStateTransition:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_Conditions: []
-  m_DstStateMachine: {fileID: 0}
-  m_DstState: {fileID: -2963503415779763637}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 0
-  serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.9748744
-  m_HasExitTime: 1
-  m_HasFixedDuration: 1
-  m_InterruptionSource: 0
-  m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
 --- !u!114 &-3311496234413894263
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5269,6 +5259,21 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-1388807930477696218
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a4f7766142ffc1468fdda1d3e3f1781, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickFrame: 273
+  objectName: TubeForPumpRigged_InHands
+  hand: 1
 --- !u!114 &-1274566607957348605
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5982,7 +5987,7 @@ AnimatorState:
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
-  - {fileID: -9116714116066325991}
+  - {fileID: 3512925091191014467}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -7705,11 +7710,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a536a9682af347488b2cfd1a613bf7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObjectName: 
+  ObjectName: TubeForPumpRigged_InHands
   HandToSwitch: 0
   AnimationToChange: 1
   ToFollowHoldingHand: 0
-  NewAnimationName: 
+  NewAnimationName: tube_SQ8-10
   ActionFrame: 0
 --- !u!1102 &1587486837894688299
 AnimatorState:
@@ -9111,6 +9116,28 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1101 &3512925091191014467
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: -8016160054664979517}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.9748744
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1101 &3538748993282928857
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -10031,7 +10058,7 @@ AnimatorState:
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
-  - {fileID: -3355075862829447170}
+  - {fileID: 8293058754659321802}
   m_StateMachineBehaviours:
   - {fileID: -4894503068626176539}
   - {fileID: 5733515219177561860}
@@ -10040,6 +10067,9 @@ AnimatorState:
   - {fileID: 181764916657205718}
   - {fileID: -8292890544349487930}
   - {fileID: -8701914756989473218}
+  - {fileID: -1388807930477696218}
+  - {fileID: -6023367474113247934}
+  - {fileID: -4828258178241184679}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -11292,10 +11322,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 839bcc7f24a9c47f8af28e853187bfa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObjectName: 
-  unlock_frame: 0
-  lock_frame: 0
-  toActivate: 0
+  ObjectName: TubeForPumpRigged_InHands
+  unlock_frame: 1
+  lock_frame: 570
+  toActivate: 1
 --- !u!1109 &6255850365212351922
 AnimatorTransition:
   m_ObjectHideFlags: 1
@@ -12638,6 +12668,28 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1101 &8293058754659321802
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: -8391489827933031758}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.9748744
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1102 &8301711616343262339
 AnimatorState:
   serializedVersion: 5
