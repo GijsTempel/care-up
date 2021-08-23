@@ -20,6 +20,9 @@ public class PickableObject : InteractableObject
     public bool depoistNeedle = false;
     public bool useOriginalParent = false;
     Transform originalParent;
+    protected Vector3 originalPosition;
+    protected Quaternion originalRotation;
+    protected Vector3 originalScale;
     [HideInInspector]
     public Transform leftControlBone;
     [HideInInspector]
@@ -58,6 +61,9 @@ public class PickableObject : InteractableObject
         if (useOriginalParent)
         {
             originalParent = transform.parent;
+            originalPosition = transform.localPosition;
+            originalRotation = transform.localRotation;
+            originalScale = transform.localScale;
         }
         framePositions.Clear();
 
@@ -104,6 +110,13 @@ public class PickableObject : InteractableObject
 
     public override void LoadPosition()
     {
+        if (useOriginalParent)
+        {
+            transform.localPosition = originalPosition;
+            transform.localRotation = originalRotation;
+            transform.localScale = originalScale;
+            return;
+        }
         if (prefabOutOfHands != "")
         {
             GameObject replaced = null;
