@@ -29,6 +29,7 @@ public class SceneInfo
     public string inHouseSceneName = "";
     public string url = "";
     public bool freeCert = false;
+    public string nameForDatabase = "";
 }
 
 /// <summary>
@@ -196,6 +197,10 @@ public class LevelSelectionScene_UI : MonoBehaviour
             if (xmlSceneNode.Attributes["isInProducts"] != null)
             {
                 sceneInfo.isInProducts = xmlSceneNode.Attributes["isInProducts"].Value.Split('|');
+            }
+            if (xmlSceneNode.Attributes["nameForDatabase"] != null)
+            {
+                sceneInfo.nameForDatabase = xmlSceneNode.Attributes["nameForDatabase"].Value;
             }
 
             sceneInfo.bundleName = xmlSceneNode.Attributes["bundleName"].Value;
