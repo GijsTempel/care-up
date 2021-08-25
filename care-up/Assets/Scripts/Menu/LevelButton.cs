@@ -322,7 +322,7 @@ public class LevelButton : MonoBehaviour
             Button testBtn = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
             "DialogTestPractice/Panel_UI/Buttons/right/TestButton").GetComponent<Button>();
 
-            string formattedSceneName = PlayerPrefsManager.FormatSceneName(manager.currentSceneVisualName);
+            string formattedSceneName = PlayerPrefsManager.FormatSceneName(manager.GetSceneDatabaseName(manager.currentSceneVisualName));
 
             int practicePlays;
             int.TryParse(DatabaseManager.FetchField("PracticePlays", formattedSceneName), out practicePlays);
