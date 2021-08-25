@@ -203,6 +203,24 @@ public class PlayerPrefsManager : MonoBehaviour
         ScenesInfo.Add(sceleInfo);
     }
 
+    public string GetSceneDatabaseName(string sceneName)
+    {
+        string sceneDatabaseName = sceneName;
+        foreach (SceneInfo sceneInfo in ScenesInfo)
+        {
+            if (sceneInfo.displayName == sceneName)
+            {
+                if (sceneInfo.nameForDatabase != "")
+                {
+                    sceneDatabaseName = sceneInfo.nameForDatabase;
+                    break;
+                }
+            }
+        }
+        return sceneDatabaseName;
+    }
+
+
     public bool IsScenePurchasedByName(string sceneName)
     {
         foreach(SceneInfo sceneInfo in ScenesInfo)
@@ -711,7 +729,7 @@ public class PlayerPrefsManager : MonoBehaviour
     public void UpdateTestHighscore(float score)
     {
         float currentTestScore = score;
-        string currentTestScene = FormatSceneName(currentSceneVisualName);
+        string currentTestScene = FormatSceneName(GetSceneDatabaseName(currentSceneVisualName));
 
         string highscoreStr = DatabaseManager.FetchField("TestHighscores", currentTestScene);
         float highscore = 0;
@@ -744,7 +762,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public void CreateBlankHighscore()
     {
-        string currentTestScene = FormatSceneName(currentSceneVisualName);
+        string currentTestScene = FormatSceneName(GetSceneDatabaseName(currentSceneVisualName));
         string highscoreStr = DatabaseManager.FetchField("TestHighscores", currentTestScene);
         if (highscoreStr == "") // returns empty string if field doesnt exist
         {
@@ -754,7 +772,9 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public static void AddOneToSceneInCategory(string scene, string category)
     {
-        string sceneName = FormatSceneName(scene);
+        PlayerPrefsManager pp = GameObject.FindObjectOfType<PlayerPrefsManager>();
+
+        string sceneName = FormatSceneName(pp.GetSceneDatabaseName(scene));
 
         int plays;
         int.TryParse(DatabaseManager.FetchField(category, sceneName), out plays);
@@ -849,7 +869,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public void UpdatePracticeHighscore(int score, int stars)
     {
-        string practiceScene = FormatSceneName(currentSceneVisualName);
+        string practiceScene = FormatSceneName(GetSceneDatabaseName(currentSceneVisualName));
 
         int highscore;
         int.TryParse(DatabaseManager.FetchField("PracticeHighscores", "score_" + practiceScene), out highscore);
