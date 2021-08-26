@@ -360,7 +360,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
             // override image if scene is completed
             float fscore = 0.0f;
             float.TryParse(DatabaseManager.FetchField("TestHighscores",
-                PlayerPrefsManager.FormatSceneName(sceneUnit.displayName)).Replace(",", "."), out fscore);
+                PlayerPrefsManager.FormatSceneName(pp.GetSceneDatabaseName(sceneUnit.displayName))).Replace(",", "."), out fscore);
             if (Mathf.FloorToInt(fscore) >= 70)
             {
                 sceneUnit.image = completedSceneIcon;
