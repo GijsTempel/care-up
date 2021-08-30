@@ -112,6 +112,7 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
      description="Open de binnenverpakking van de katheter. De katheter blijft in de binnenverpakking zitten"
      type="combine"
      left="catheter_Supertubular_Preparation_opened_Outer"
+	 blockUnlock="RemoveInnerEnd"
      right=""
      extra="Open de binnenverpakking van de katheter. De katheter blijft in binnenverpakking zitten"></action>
 
@@ -124,7 +125,7 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
    left="catheter_Supertubular_Preparation_opened_Outer"
    right="disconnected_catheter_Supertubular"
    extra="Verwijder de afsluitdop van de urineopvangzak en bevestig deze aan de katheter. De katheter blijft in binnenverpakking zitten"
-   blockRequired="patient lay down"
+   blockRequired="RemoveInnerEnd"
    blockTitle="Deze handeling is nog niet mogelijk"
    blockMessage="Communiceer met de cliënt en zorg ervoor dat de cliënt klaar is voor blaaskatheterisatie"
    messageTitle="Desinfecteren aansluitpunt"
@@ -152,7 +153,7 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
      left="catheter_Supertubular_InHands"
      right=""
      blockUnlock="removeInnerPack"
-     blockRequired="removeOuterPack,liqsyropened,lubsyropened"
+     blockRequired="removeOuterPack"
      extra=""></action>
 
   <action
@@ -234,7 +235,7 @@ Laat de kraan eerst 30 seconden goed doorstromen voordat je het water opvangt vo
   <action
   index="16"
    points="1"
-   description=" Verwijder het fixatie materiaal en de urineopvangzak, leg deze terug op het werkveld"
+   description=" Verwijder het fixatie materiaal"
    type="general"
    item=""
    action="DisconnectBag"

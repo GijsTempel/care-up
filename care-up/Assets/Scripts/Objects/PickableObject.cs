@@ -158,7 +158,7 @@ public class PickableObject : InteractableObject
                     }
                     break;
                 
-                case "catheter_Supertubular_InHands":
+                /*case "catheter_Supertubular_InHands":
                     if (posID == 0 && actionManager.CompareDropPos(name, 0))
                     {
                         // print("posID == 0 && actionManager.CompareDropPos(name, 0)");
@@ -166,7 +166,7 @@ public class PickableObject : InteractableObject
                         // "SQ1Sequence"
                         Invoke("SQ1Sequence", 0.3f);
                     }
-                    break;
+                    break;*/
                 default:
                     break;
             }
