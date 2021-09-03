@@ -48,7 +48,7 @@ public class PickableObject : InteractableObject
     public bool destroyOnDrop = false;
     public GameObject customGhost;
     bool gravityUsed = false;
-    
+    public bool noGhost = false;
     public Transform GetOriginalParent()
     {
         return originalParent;
@@ -499,7 +499,11 @@ public class PickableObject : InteractableObject
 
     public void InstantiateGhostObject(Vector3 pos, Quaternion rot, int posID = 0)
     {
-
+        if (noGhost)
+        {
+            pos = new Vector3();
+            rot = new Quaternion();
+        }
         GameObject bundleObject = SpawnObject(name);
 
         GameObject ghost = null;
@@ -521,6 +525,7 @@ public class PickableObject : InteractableObject
             ghostObject.assetSource = InteractableObject.AssetSource.Resources;
 
             this.ghostObjects.Add(ghostObject);
+            bundleObject.SetActive(false);
         }
     }
 
