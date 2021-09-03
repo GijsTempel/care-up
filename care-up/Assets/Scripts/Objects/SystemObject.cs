@@ -73,7 +73,7 @@ public class SystemObject : InteractableObject
         }
     }
 
-    protected override void SetShaderTo(Shader shader)
+    protected override void SetShaderTo(Shader shader, bool toHide = false)
     {
         foreach (Material m in rend.materials)
         {

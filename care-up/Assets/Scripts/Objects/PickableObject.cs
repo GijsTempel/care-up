@@ -518,12 +518,11 @@ public class PickableObject : InteractableObject
             PickableObject ghostObject = ghost.GetComponent<PickableObject>();
             ghostObject.sihlouette = true;
             ghostObject.positionID = posID;
-            ghostObject.SetGhostShader();
+            ghostObject.SetGhostShader(noGhost);
             ghostObject.GetComponent<Rigidbody>().useGravity = false;
             ghostObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             ghostObject.name = this.name;
             ghostObject.assetSource = InteractableObject.AssetSource.Resources;
-
             this.ghostObjects.Add(ghostObject);
             bundleObject.SetActive(false);
         }
