@@ -9,7 +9,7 @@ public static class CAServer
     public static string Version = Application.version;
 
     //public static string BundleAddress = ReleaseBundleAddress;
-    public static string BundleAddress = DevBundleAddress;
+    public static string BundleAddress = ReleaseBundleAddress;
 
 }
 
