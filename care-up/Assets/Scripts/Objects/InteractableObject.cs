@@ -219,7 +219,7 @@ public class InteractableObject : MonoBehaviour
         outRotation = savedRotation;
     }
 
-    protected virtual void SetShaderTo(Shader shader)
+    protected virtual void SetShaderTo(Shader shader, bool toHide = false)
     {
         foreach (Material m in rend.materials)
         {
@@ -234,6 +234,10 @@ public class InteractableObject : MonoBehaviour
                 {
                     m.shader = shader;
                 }
+            }
+            if (toHide)
+            {
+                r.enabled = false;
             }
         }
 
@@ -257,10 +261,10 @@ public class InteractableObject : MonoBehaviour
         }
     }
 
-    public void SetGhostShader()
+    public void SetGhostShader(bool toHide = false)
     {
         rend = GetComponent<Renderer>();
-        SetShaderTo(ghostShader);
+        SetShaderTo(ghostShader, toHide);
     }
 
     public virtual void Highlight(bool value)

@@ -1257,10 +1257,14 @@ public class PlayerPrefsManager : MonoBehaviour
 #endif
 #if UNITY_EDITOR
         //currentLoginToken = "token12asudh"; // let's pretend we got it
-        currentLoginToken = "abcdefg123456"; // let's pretend we got it
-#endif
+        //currentLoginToken = "abcdefg123456"; // let's pretend we got it
+
         // fetch date from db, follows into next function
+#endif
+#if UNITY_WEBGL && !UNITY_EDITOR
         WUData.FetchSharedField(currentLoginToken, "LoginTokens", CheckLoginToken_success, -1, CheckLoginToken_error);
+#endif
+
     }
 
     public void CheckLoginToken_error(CMLData response)

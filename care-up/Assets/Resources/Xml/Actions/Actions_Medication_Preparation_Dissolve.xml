@@ -23,25 +23,36 @@
     extra="Maak een schoon werkveld en zet de benodigdheden binnen handbereik."
     messageTitle="Je het volgende nodig hebt?"
     messageContent="
-- Bijsluiter
-- Toedieningslijst
-- Spuit (Wanneer er geen injectiespuit met voorgeschreven medicijn aanwezig is)
-- Injectienaald (Wanneer er geen injectiespuit met voorgeschreven medicijn aanwezig is)
-- Opzuignaald (Wanneer er geen injectiespuit met voorgeschreven medicijn aanwezig is)
-- Medicijn in flacon of ampul (Wanneer er geen injectiespuit met voorgeschreven medicijn aanwezig is)
-- Oplosmiddel
-- Gaasje
-- Afvalbak
-- Handschoenen
-- Naaldenbeker en naaldverwijderaar
-- Desinfectans: chloorhexidine 0.5% in alcohol 70%, als de huid gedesinfecteerd moet worden
+- toedienlijst
+- gaasjes
+- desinfectans alcohol 70%
+- toedieningsetiket
+- flacon of ampul met voorgeschreven medicijn
+- flacon met het voorgeschreven oplosmiddel (als het medicijn moet worden verdund of opgelost)
+- steriele spuit
+- steriele opzuignaald
+- steriele injectienaald (voor injectie) of afsluitdopje (voor infuus)
+- handschoenen
+- naaldenbeker
+- afvalbak
   "></action>
+
+  <action
+  points="1"
+  description="Overgiet een gaasje met alcohol"
+  audioHint="Injection/H4-2"
+  index="2"
+  type="combine"
+  left="Cloth"
+  right="Alcohol"
+  extra="Overgiet een gaasje met alcohol. De desinfectans wordt aangebracht op een gaasje. Het is eveneens mogelijk om gebruik temaken van alcohol swaps. Alcohol 70% heeft een totaal spectrum en werkt slechts tijdelijk. Omdat bij het inbrengen van een infuus de desinfectie langer moet aanhouden, wordt gedesinfecteerd met alcohol 70% bewaard in opgelost chloorhexidine 0,5%."
+  ></action>
 
   <action
     points="2"
     description="Controleer cliëntgegevens"
     audioHint="Injection/H3-2"
-    index="2"
+    index="3"
     type="examine"
     item="PatientRecords"
     expected="good"
@@ -52,7 +63,7 @@
     points="2"
     description="Controleer het medicijn"
     audioHint="Injection/H3-2"
-    index="2"
+    index="3"
     type="examine"
     item="Medicine"
     expected="good"
@@ -65,7 +76,7 @@
     points="2"
     description="Controleer het oplosmiddel"
     audioHint="Injection/H3-2"
-    index="2"
+    index="4"
     type="examine"
     item="Ampoule"
     expected="good"
@@ -76,7 +87,7 @@
     points="2"
     description="Controleer de toedienlijst"
     audioHint="InjectionSubcutaneous/Step 5"
-    index="2"
+    index="4"
     type="examine"
     item="PrescriptionForm"
     expected="good"
@@ -106,17 +117,28 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     points="3"
     description="Vraag aan je collega om een dubbele controle"
     audioHint=""
-    index="3"
+    index="5"
     type="talk"
     topic="DoubleCheck"
     extra="Voer dubbele controle uit. Het verkeerd toedienen van medicijnen brengt risico’s met zich mee. Het risico op blijvend letsel bij verkeerde dosering of toediening verschilt, afhankelijk van het medicijn. Ook is de ene toedieningsweg risicovoller dan een andere. Dubbele controle van de medicatie is belangrijk voor de veiligheid, met name bij risicovolle medicatie. Laat ook je berekeningen die je hebt gemaakt checken."
-  />
+    messageTitle="Vul het toedieningsetiket in"
+    messageContent="Vul onderstaande punten in op het toedieningsetiket:
+    
+- Naam en geboortedatum client
+- Naam medicijn
+- Sterkte en dosering
+- Wanneer van toepassing: Naam en hoeveelheid van oplosmiddel
+- Datum en tijd van bereiding
+- Houdbaarheid na bereiding
+- Naam bereider
+- Naam van degene die dubbele controle uitvoert"
+    />
 
   <action
     comment="Put on gloves."
     points="1"
     description="[Trek de handschoenen aan]"
-    index="4"
+    index="6"
     type="use"
     value="gloveBox"
     extra="Trek de handschoenen aan."
@@ -128,7 +150,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     description="Neem de opzuignaald uit de verpakking"
     commentUA="Дістаньте голку для набирання з пакета"
     audioHint="Injection/H4-2"
-    index="5"
+    index="7"
     type="combine"
     quiz="2"
     left=""
@@ -141,7 +163,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     description="Neem de injectienaald uit de verpakking"
     commentUA="Дістаньте голку для ін'єкції з пакета"
     audioHint="Injection/H4-2"
-    index="6"
+    index="8"
     type="combine"
     left=""
     right="InjectionNeedlePacked"
@@ -153,29 +175,20 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     description="Haal de spuit uit de verpakking"
     commentUA="Дістаньте шприц з пакета"
     audioHint="Injection/H4-2"
-    index="7"
+    index="9"
     type="combine"
     left=""
     right="syringe_packed"
     extra="">
   </action>
 
-  <action
-    points="1"
-    description="Overgiet een gaasje met alcohol"
-    audioHint="Injection/H4-2"
-    index="8"
-    type="combine"
-    left="Cloth"
-    right="Alcohol"
-    extra="Overgiet een gaasje met alcohol. De desinfectans wordt aangebracht op een gaasje. Het is eveneens mogelijk om gebruik temaken van alcohol swaps. Alcohol 70% heeft een totaal spectrum en werkt slechts tijdelijk. Omdat bij het inbrengen van een infuus de desinfectie langer moet aanhouden, wordt gedesinfecteerd met alcohol 70% bewaard in opgelost chloorhexidine 0,5%."
-  ></action>
+
   
   <action
     points="2"
     description="Desinfecteer de rubberen dop van het medicijn"
     audioHint="Injection/H5-3"
-    index="9"
+    index="10"
     type="combine"
     left="DesinfectionCloth"
     right="Medicine"
@@ -186,7 +199,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     points="1"
     description="Overgiet een gaasje met alcohol"
     audioHint="Injection/H4-2"
-    index="10"
+    index="11"
     type="combine"
     left="Cloth"
     right="Alcohol"
@@ -197,7 +210,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     points="2"
     description="Desinfecteer de hals van de ampul"
     audioHint="Injection/H4-2"
-    index="11"
+    index="12"
     type="combine"
     left="DesinfectionCloth"
     right="Ampoule"
@@ -208,7 +221,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     points="2"
     description="Breek de ampul oplosmiddel open met een gaasje als bescherming"
     audioHint="InjectionSubcutaneous/Step 6.1"
-    index="12"
+    index="13"
     type="combine"
     left="DesinfectedAmpoule"
     right="Cloth"
@@ -219,7 +232,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     points="2"
     description="Doe het gaasje met gebroken ampul bovenkant in de naaldcontainer"
     audioHint=""
-    index="13"
+    index="14"
     type="useOn"
     item="ClothWithAmpouleTop"
     target=""
@@ -231,7 +244,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     points="1"
     description="Plaats opzuignaald op de spuit"
     audioHint="InjectionSubcutaneous/Step 6.2"
-    index="14"
+    index="15"
     type="combine"
     left="Syringe"
     right="AbsorptionNeedle"
@@ -242,58 +255,89 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     points="1"
     description="Verwijder de beschermhuls van de opzuignaald"
     audioHint="Injection/H6-3"
-    index="15"
+    index="16"
     type="combine"
     left="SyringeWithAbsorptionNeedleCap"
     right=""
     extra="De opzuignaald dop zit nog op de naald. Deze dien je te verwijderen om gebruik te maken van de spuit. Concentreer je tijdens het verwijderen van de dop om prikaccidenten te voorkomen."
   />
   
-  <action
-    points="3"
-    description="Trek de juiste hoeveelheid oplosmiddel op"
-    audioHint="InjectionSubcutaneous/Step 6.3"
-    index="16"
-    type="combine"
-    left="SyringeWithAbsorptionNeedle"
-    right="OpenedAmpoule"
-    extra="Zuig het oplosmiddel op in de spuit. Zorg dat dit de juiste hoeveelheid is. De hoeveelheid bepaal je door een berekening te maken. Deze berekening laat je dubbel controleren. In het spel gaat de berekening automatisch en de dubbele controle heb je al uitgevoerd in stap 4.3."
-  />
-  
-  <action
-    points="3"
+	 <action
+    comment="Fill syringe with solvent"
+    points="1"
     description="Spuit het oplosmiddel in de flacon met het medicijn. Zuig daarna de voorgeschreven hoeveelheid medicatie op in de spuit"
-    audioHint="InjectionSubcutaneous/Step 6.4"
     index="17"
-    type="combine"
-    left="SyringeWithSolvent"
-    right="Medicine"
-    blockUnlock="UnAirSyringe"
-    extra="Spuit het oplosmiddel in de flacon met het medicijn; laat de opzuignaald + spuit in de flacon zitten. Wacht tot het medicijn geheel is opgelost. Laat hierbij de zuiger van de spuit iets vieren. Zuig daarna de voorgeschreven hoeveelheid medicatie op in de spuit."
-   />
-
+    type="sequenceStep"
+    value="FillSyringeWithSolvent"
+    extra=""
+    
+	/>
+	
   <action
+    comment="Inject the solvent into the vial containing the drug. (Inject medicine into the flacon)"
+    points="1"
+    description="Spuit het oplosmiddel in de flacon met het medicijn"
+    index="18"
+    type="sequenceStep"
+    value="InjectSolvent"
+    extra=""
+    messageTitle="Verhoogde druk"
+    messageContent="Het ingespoten oplosmiddel verhoogt de druk in de flacon. Laat de lucht die door de verhoogde druk uit de flacon wil, in de spuit. Laat de opzuignaald + met lucht gevulde spuit in de flacon zitten. Wacht tot het medicijn geheel is opgelost."
+	/>
+  
+ <action
+
+    comment="Turn the vial upside down and withdraw the prescribed amount of medicine"
+    points="1"
+    description="Spuit het oplosmiddel in de flacon met het medicijn. Zuig daarna de voorgeschreven hoeveelheid medicatie op in de spuit"
+    index="19"
+    type="sequenceStep"
+    value="TurnVial"
+    extra=""
+    messageTitle="Zuig de voorgeschreven hoeveelheid medicijn op"
+    messageContent="Doe dit door geleidelijk lucht uit de spuit te wisselen met medicijn uit de flacon. Druk niet in één keer alle lucht uit de spuit in de flacon. De kans bestaat dat de spuit van de opzuignaald 'vliegt' door te hoge druk."
+	
+></action>
+
+
+<action
+
+    comment="Draw some additional air into the syringe and remove the withdrawal needle and syringe from the vial. Aspirating some extra air prevents tampering with the drug"
+    points="1"
+    description="Zuig nog wat extra lucht op in de spuit en verwijder de opzuignaald en spuit uit de flacon"
+    index="20"
+    type="sequenceStep"
+    value="DrawMoreAir"
+    extra=""
+	messageTitle="Extra lucht"
+    messageContect="Wat extra lucht opzuigen voorkomt knoeien met het medicijn"
+ 
+	></action>
+
+<action
+
+    comment="Unair the syringe and check if you have the right amount"
     points="1"
     description="Ontlucht de spuit"
-    audioHint="Injection/H8-2"
-    index="18"
-    type="useOn"
-    item="SyringeWithAbsorptionNeedle"
-    target=""
-    buttonText="Ontluchten"
-    blockRequired="UnAirSyringe"
-    extra="Ontlucht de opzuignaald tot er een druppel vloeistof aan de punt van de opzuignaald zichtbaar wordt. Ontlucht, wanneer geen opzuignaald gebruikt wordt, de injectienaald niet. De hoeveelheid lucht die ingespoten wordt (= inhoud van de injectienaald) is verwaarloosbaar klein."
-  ></action>
+    index="21"
+    type="sequenceStep"
+    value="Unair"
+    extra=""
+    blockUnlock="EndOfSQ"
+	
+ 
+	></action>
 
   <action
     points="1"
     description="Verwijder de naald van de spuit"
     audioHint=""
-    index="19"
+    index="22"
     type="combine"
     left="SyringeWithAbsorptionNeedle"
     right=""
-    blockUnlock="PlaceInjectionNeedle"
+    blockUnlock="AneedleTakenOff"
+	blockRequired="EndOfSQ"
     extra="Klik het beschermkapje met een duimbeweging over de opzuignaald, verwijder de naald van de spuit (bij naald zonder veiligheidsysteem met een naaldverwijderaar)"
   />
   
@@ -301,10 +345,12 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     points="1"
     description="Doe de opzuignaald in de naaldcontainer"
     audioHint="Injection/H10-2"
-    index="20"
+    index="23"
     type="useOn"
     item="AbsorptionNeedleNoCap"
     target=""
+	blockRequired="AneedleTakenOff"
+	blockUnlock="PlaceInjectionNeedle"
     buttonText="Opzuignaald weggooien"
     extra="Verwijder de opzuignaald en doe de naald in de naaldencontainer. Gebruik voor injecteren spuiten en naalden voor eenmalig gebruik (disposable). Plaats een naald na gebruik nooit in de plastic beschermhuls terug. Werk met veilige opzuig injectienaalden. Gebruik de inkepingen op de deksel om de naald en spuit te scheiden of gebruik een naaldverwijderaar."
   ></action>
@@ -313,9 +359,9 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     points="1"
     description="Plaats de injectienaald op de spuit"
     audioHint="Injection/H11-2"
-    index="21"
+    index="24"
     type="combine"
-    left="Syringe"
+    left="SyringeWithAbsorptionNeedle"
     right="InjectionNeedle"
     extra="Plaats de injectienaald op de spuit. Gebruik voor intramusculaire injecties een iets dikkere en langere naald, bijvoorbeeld: 0,8 x 38 - 40 mm (diameter x lengte)."
     messageTitle="Handschoenen"
@@ -325,7 +371,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     ></action>
 
   <action
-    index="22"
+    index="26"
     points="1"
     description="Trek handschoenen uit en gooi ze in de afvalbak"
     type="general"
@@ -334,12 +380,14 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     buttonText="Trek handschoenen uit "
     blockRequired="AllowTakeOffGloves, GlovesTakenOn"
     blockUnlock="CleanWorkfield"
+    messageTitle="Toedieningsetiket"
+    messageContent="Plak het ingevulde toedieningsetiket op de spuit."
   ></action>
 
   <action
      points="1"
      description="Ruim de materialen op door met lege handen op het werkveld te klikken"
-     index="23"
+     index="27"
      type="use"
      value="WorkField"
      extra="Ruim de materialen op door met lege handen op het werkveld te klikken"
@@ -350,7 +398,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
   
   <action
     comment="1. Apply hand hygiene"
-    index="24"
+    index="28"
     points="3"
     description="[Pas handhygiëne]"
     type="use"
@@ -362,7 +410,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     points="3"
     description="Teken de toedienlijst af of noteer het tijdstip, het soort medicijn, de concentratie, de hoeveelheid en de wijze van toediening. Noteer tot slot je bevindingen"
     audioHint="Injection/EAS4-2"
-    index="25"
+    index="29"
     type="use"
     value="PaperAndPen"
     extra="Teken de toedienlijst af of noteer het tijdstip, het soort medicijn, de concentratie, de hoeveelheid en de wijze van toediening. Noteer tot slot je bevindingen"

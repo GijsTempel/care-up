@@ -89,7 +89,7 @@ public class CameraMode : MonoBehaviour
 
         inventory = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
 
-        blur = Camera.main.GetComponent<UnityStandardAssets.ImageEffects.BlurOptimized>();
+        blur = playerScript.cam.GetComponent<UnityStandardAssets.ImageEffects.BlurOptimized>();
         if (blur == null) Debug.Log("No Blur Attached to main camera.");
 
         confirmUI = (GameObject)Instantiate(Resources.Load("NecessaryPrefabs/UI/ConfirmUI"), Vector3.zero, Quaternion.identity);

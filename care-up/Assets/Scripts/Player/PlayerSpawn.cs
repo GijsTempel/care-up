@@ -11,7 +11,7 @@ public class PlayerSpawn : MonoBehaviour
     public Vector3 robotPosition;
     public Vector3 robotRotation;
     public WalkToGroup.GroupType momentaryJumpTo = WalkToGroup.GroupType.NotSet;
-
+    public bool cameraOff = false;
     [System.Serializable]
     public struct InfoPair
     {
@@ -43,7 +43,10 @@ public class PlayerSpawn : MonoBehaviour
         co.x = r.x;
         camTransform.rotation = Quaternion.Euler(co);
         player.name = "Player";
-
+        if (cameraOff)
+        {
+            camTransform.GetComponent<Camera>().enabled = false;
+        }
         if (GetComponent<Animator>() != null)
         {
             if (GetComponent<Animator>().runtimeAnimatorController != null)

@@ -20,6 +20,9 @@ public class PickableObject : InteractableObject
     public bool depoistNeedle = false;
     public bool useOriginalParent = false;
     Transform originalParent;
+    protected Vector3 originalPosition;
+    protected Quaternion originalRotation;
+    protected Vector3 originalScale;
     [HideInInspector]
     public Transform leftControlBone;
     [HideInInspector]
@@ -45,7 +48,7 @@ public class PickableObject : InteractableObject
     public bool destroyOnDrop = false;
     public GameObject customGhost;
     bool gravityUsed = false;
-    
+    public bool noGhost = false;
     public Transform GetOriginalParent()
     {
         return originalParent;
@@ -58,6 +61,9 @@ public class PickableObject : InteractableObject
         if (useOriginalParent)
         {
             originalParent = transform.parent;
+            originalPosition = transform.localPosition;
+            originalRotation = transform.localRotation;
+            originalScale = transform.localScale;
         }
         framePositions.Clear();
 
@@ -104,6 +110,13 @@ public class PickableObject : InteractableObject
 
     public override void LoadPosition()
     {
+        if (useOriginalParent)
+        {
+            transform.localPosition = originalPosition;
+            transform.localRotation = originalRotation;
+            transform.localScale = originalScale;
+            return;
+        }
         if (prefabOutOfHands != "")
         {
             GameObject replaced = null;
@@ -129,6 +142,14 @@ public class PickableObject : InteractableObject
         {
             switch (name)
             {
+                case "TrayOfWetGauzes":
+                    if (posID == 2 && actionManager.CompareDropPos(name, 2))
+                    {
+                        inventory.CreateStaticObjectByName("TrayOfWetGauzes_placed", transform.position, transform.rotation);
+                        Destroy(gameObject);
+                    }
+                    break;
+
                 case "GauzeTrayWet":
                     if (posID == 2 && actionManager.CompareDropPos(name, 2))
                     {
@@ -136,7 +157,8 @@ public class PickableObject : InteractableObject
                         Destroy(gameObject);
                     }
                     break;
-                case "catheter_Supertubular_InHands":
+                
+                /*case "catheter_Supertubular_InHands":
                     if (posID == 0 && actionManager.CompareDropPos(name, 0))
                     {
                         // print("posID == 0 && actionManager.CompareDropPos(name, 0)");
@@ -144,7 +166,7 @@ public class PickableObject : InteractableObject
                         // "SQ1Sequence"
                         Invoke("SQ1Sequence", 0.3f);
                     }
-                    break;
+                    break;*/
                 default:
                     break;
             }
@@ -477,7 +499,11 @@ public class PickableObject : InteractableObject
 
     public void InstantiateGhostObject(Vector3 pos, Quaternion rot, int posID = 0)
     {
-
+        if (noGhost)
+        {
+            pos = new Vector3();
+            rot = new Quaternion();
+        }
         GameObject bundleObject = SpawnObject(name);
 
         GameObject ghost = null;
@@ -492,13 +518,13 @@ public class PickableObject : InteractableObject
             PickableObject ghostObject = ghost.GetComponent<PickableObject>();
             ghostObject.sihlouette = true;
             ghostObject.positionID = posID;
-            ghostObject.SetGhostShader();
+            ghostObject.SetGhostShader(noGhost);
             ghostObject.GetComponent<Rigidbody>().useGravity = false;
             ghostObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             ghostObject.name = this.name;
             ghostObject.assetSource = InteractableObject.AssetSource.Resources;
-
             this.ghostObjects.Add(ghostObject);
+            bundleObject.SetActive(false);
         }
     }
 

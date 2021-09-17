@@ -1090,10 +1090,10 @@ public class HandsInventory : MonoBehaviour {
 				}
 			}
             //To be removed !!!!!
-            if (leftName == "SyringeWithAbsorptionNeedle" || rightName == "SyringeWithAbsorptionNeedle")
-            {
-                idModeAllow = false;
-            }
+            //if (leftName == "SyringeWithAbsorptionNeedle" || rightName == "SyringeWithAbsorptionNeedle")
+            //{
+            //    idModeAllow = false;
+            //}
 
             if (idModeAllow)
 			{
