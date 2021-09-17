@@ -429,7 +429,7 @@ public class EndScoreManager : MonoBehaviour
 
         // Get the stream containing content returned by the server.
         // The using block ensures the stream is automatically closed.
-        using (Stream dataStream = response.GetResponseStream())
+        /*using (Stream dataStream = response.GetResponseStream())
         {
             // Open the stream using a StreamReader for easy access.
             StreamReader reader = new StreamReader(dataStream);
@@ -437,7 +437,7 @@ public class EndScoreManager : MonoBehaviour
             string responseFromServer = reader.ReadToEnd();
             // Display the content.
             Debug.Log("Server response: \n" + responseFromServer);
-        }
+        }*/
 
         // Close the response.
         response.Close();
