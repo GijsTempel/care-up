@@ -121,9 +121,10 @@ public class PlayerPrefsManager : MonoBehaviour
     public bool muteMusicForEffect = false;
     private bool muteMusic = false;
 
+#if UNITY_WEBGL && !UNITY_EDITOR
     [DllImport("__Internal")]
     private static extern string GetStringParams();
-
+#endif
     //public string currentLoginToken = "";
     //public string currentLoginName = "";
     //public string currentLoginPass = "";
