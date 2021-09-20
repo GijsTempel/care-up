@@ -350,11 +350,11 @@ public class EndScoreManager : MonoBehaviour
 
         GameObject.Find("Interactable Objects/Canvas/NamePopUp").SetActive(false);
     }
-    
+
     public void EndScoreSendMailResults()
     {
         achievements.UpdateKeys("StudyPoints", 1);
-		
+
         int percent = GameObject.FindObjectOfType<EndScoreManager>().percent;
 
         string link = "https://leren.careup.online/MailSceneComplStats.php";
@@ -425,21 +425,34 @@ public class EndScoreManager : MonoBehaviour
         request.Credentials = CredentialCache.DefaultCredentials;
 
         // Get the response.
-        WebResponse response = request.GetResponse();
-
-        // Get the stream containing content returned by the server.
-        // The using block ensures the stream is automatically closed.
-        /*using (Stream dataStream = response.GetResponseStream())
+        try
         {
-            // Open the stream using a StreamReader for easy access.
-            StreamReader reader = new StreamReader(dataStream);
-            // Read the content.
-            string responseFromServer = reader.ReadToEnd();
-            // Display the content.
-            Debug.Log("Server response: \n" + responseFromServer);
-        }*/
+            WebResponse response = request.GetResponse();
 
-        // Close the response.
-        response.Close();
+            // Get the stream containing content returned by the server.
+            // The using block ensures the stream is automatically closed.
+            using (Stream dataStream = response.GetResponseStream())
+            {
+                // Open the stream using a StreamReader for easy access.
+                StreamReader reader = new StreamReader(dataStream);
+                // Read the content.
+                string responseFromServer = reader.ReadToEnd();
+                // Display the content.
+                Debug.Log("Server response: \n" + responseFromServer);
+            }
+
+            // Close the response.
+            response.Close();
+        }
+        catch (WebException e)
+        {
+            Debug.LogError("This program is expected to throw WebException on successful run." +
+                        "\n\nException Message :" + e.Message);
+            if (e.Status == WebExceptionStatus.ProtocolError)
+            {
+                Debug.LogError("Status Code : " + ((HttpWebResponse)e.Response).StatusCode);
+                Debug.LogError("Status Description : " + ((HttpWebResponse)e.Response).StatusDescription);
+            }
+        }
     }
 }
