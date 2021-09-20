@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine.Networking;
 using System.IO;
 using System.Net;
+using System;
 
 /// <summary>
 /// Handles EndScore scene.
@@ -415,11 +416,13 @@ public class EndScoreManager : MonoBehaviour
 
         // Create a request for the URL.
         string _url = "https://www.pe-online.org/pe-services/pe-attendanceelearning/WriteAttendance.asmx/ProcessXML?sXML=";
-
+       
         // someone's BIG for testing only // insuline for testing only
         _url += PlayerPrefsManager.GenerateAttendanceSXML(manager.bigNumber, manager.currentPEcourseID);
-        Debug.Log("Generated url: " + _url);
+        Uri uri = new Uri(_url, UriKind.Absolute);
+        _url = uri.ToString();
 
+        Debug.Log("Generated url: " + _url);
         WebRequest request = WebRequest.Create(_url);
         // If required by the server, set the credentials.
         request.Credentials = CredentialCache.DefaultCredentials;
