@@ -232,11 +232,19 @@ Desinfecteer de huid bij cliënten met verminderde weerstand.
     messageTitle="Injecteren bovenarmspier"
     messageContent="De bovenarmspier is een kleine dikke driehoekige spier. Leg twee vingers horizontaal beneden het botje (acromion) dat de punt van de schouder vormt. Je vindt de basis van de direhoek waarin je kunt injecteren."
   ></action>
+	
+  <action
+   points="1"
+   description="Laat de naald gedurende 10 seconden in de spier"
+   index="13"
+   type="sequenceStep"
+   value="LeaveTheNeedle"
+  ></action>
 
   <action
     points="1"
     description="Trek na het injecteren de naald uit de huid. Hierbij kun je een gaasje gereed houden om een eventuele bloeddruppel op te vangen"
-    index="13"
+    index="14"
     type="sequenceStep"
     value="pull needle out of skin"
     extra="Trek na het injecteren de naald uit de huid. Hierbij kun je een gaasje gereed houden om een eventuele bloeddruppel op te vangen."
@@ -246,7 +254,7 @@ Desinfecteer de huid bij cliënten met verminderde weerstand.
     points="1"
     description="Verwijder de naald van de spuit"
     commentUA="Зняти гоку зі шприця"
-    index="14"
+    index="15"
     type="combine"
     left="Syringe10ml_InjectionSQs"
     right=""
@@ -258,7 +266,7 @@ Desinfecteer de huid bij cliënten met verminderde weerstand.
     points="2"
     description="Doe de injectienaald in de naaldencontainer"
     commentUA="Помістити голку в контейнер"
-    index="15"
+    index="16"
     type="useOn"
     item="InjectionNeedleNoCap"
     target=""
@@ -273,7 +281,7 @@ Desinfecteer de huid bij cliënten met verminderde weerstand.
   <action
      points="1"
      description="Ruim de materialen op door met lege handen op het werkveld te klikken"
-     index="16"
+     index="17"
      type="use"
      value="WorkField"
      extra="Ruim de materialen op door met lege handen op het werkveld te klikken"
@@ -283,7 +291,7 @@ Desinfecteer de huid bij cliënten met verminderde weerstand.
 
   <action
     comment="1. Apply hand hygiene"
-    index="17"
+    index="18"
     points="3"
     description="[Pas handhygiëne]"
     type="use"
@@ -296,7 +304,7 @@ Desinfecteer de huid bij cliënten met verminderde weerstand.
     description="Teken de toedienlijst af of noteer het tijdstip, het soort medicijn, de concentratie, de hoeveelheid en de wijze van toediening. Noteer tot slot je bevindingen"
     commentUA="Зробити запис про проведену процедуру"
     audioHint="Injection/EAS4-2"
-    index="18"
+    index="19"
     type="use"
     value="PaperAndPen"
     extra="Teken de toedienlijst af of noteer het tijdstip, het soort medicijn, de concentratie, de hoeveelheid en de wijze van toediening. Noteer tot slot je bevindingen"
