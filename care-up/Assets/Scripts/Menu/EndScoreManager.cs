@@ -418,7 +418,9 @@ public class EndScoreManager : MonoBehaviour
 
         // someone's BIG for testing only // insuline for testing only
         _url += PlayerPrefsManager.GenerateAttendanceSXML(manager.bigNumber, manager.currentPEcourseID);
-        Debug.Log("Generated url: " + _url);
+
+        _url = UnityWebRequest.EscapeURL(_url);
+        Debug.Log("Generated formatted url: " + _url);
 
         WebRequest request = WebRequest.Create(_url);
         // If required by the server, set the credentials.
