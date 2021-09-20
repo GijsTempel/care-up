@@ -414,7 +414,7 @@ public class EndScoreManager : MonoBehaviour
         }
 
         // Create a request for the URL.
-        string _url = "https://pe-online.org/pe-services/pe-attendanceelearning/WriteAttendance.asmx/ProcessXML?sXML=";
+        string _url = "https://www.pe-online.org/pe-services/pe-attendanceelearning/WriteAttendance.asmx/ProcessXML?sXML=";
 
         // someone's BIG for testing only // insuline for testing only
         _url += PlayerPrefsManager.GenerateAttendanceSXML(manager.bigNumber, manager.currentPEcourseID);
