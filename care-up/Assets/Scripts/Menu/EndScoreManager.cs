@@ -3,9 +3,9 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.Networking;
-using System.IO;
-using System.Net;
+using System.Collections;
 using System;
+
 
 /// <summary>
 /// Handles EndScore scene.
@@ -423,38 +423,28 @@ public class EndScoreManager : MonoBehaviour
         _url = uri.ToString();
 
         Debug.Log("Generated url: " + _url);
-        WebRequest request = WebRequest.Create(_url);
-        // If required by the server, set the credentials.
-        request.Credentials = CredentialCache.DefaultCredentials;
 
-        // Get the response.
-        try
+        // get request woo
+        StartCoroutine(GetRequest(_url));
+    }
+
+    IEnumerator GetRequest(string uri)
+    {
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
         {
-            WebResponse response = request.GetResponse();
+            // Request and wait for the desired page.
+            yield return webRequest.SendWebRequest();
 
-            // Get the stream containing content returned by the server.
-            // The using block ensures the stream is automatically closed.
-            using (Stream dataStream = response.GetResponseStream())
+            string[] pages = uri.Split('/');
+            int page = pages.Length - 1;
+
+            if (webRequest.isNetworkError)
             {
-                // Open the stream using a StreamReader for easy access.
-                StreamReader reader = new StreamReader(dataStream);
-                // Read the content.
-                string responseFromServer = reader.ReadToEnd();
-                // Display the content.
-                Debug.Log("Server response: \n" + responseFromServer);
+                Debug.Log(pages[page] + ": Error: " + webRequest.error);
             }
-
-            // Close the response.
-            response.Close();
-        }
-        catch (WebException e)
-        {
-            Debug.LogError("This program is expected to throw WebException on successful run." +
-                        "\n\nException Message :" + e.Message);
-            if (e.Status == WebExceptionStatus.ProtocolError)
+            else
             {
-                Debug.LogError("Status Code : " + ((HttpWebResponse)e.Response).StatusCode);
-                Debug.LogError("Status Description : " + ((HttpWebResponse)e.Response).StatusDescription);
+                Debug.Log(pages[page] + ":\nReceived: " + webRequest.downloadHandler.text);
             }
         }
     }

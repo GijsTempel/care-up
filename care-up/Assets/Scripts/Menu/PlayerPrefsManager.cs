@@ -424,7 +424,6 @@ public class PlayerPrefsManager : MonoBehaviour
         //string authData = Convert.ToBase64String(encodeLogin) + " " + Convert.ToBase64String(encodePass);
         //data.Set("abcdefg123456", authData);
         //WUData.UpdateSharedCategory("LoginTokens", data);
-        
     }
 
     public static bool HasNewNorifications()
