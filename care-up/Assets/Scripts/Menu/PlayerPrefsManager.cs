@@ -1228,7 +1228,7 @@ public class PlayerPrefsManager : MonoBehaviour
         root.AppendChild(attendance);
         
         XmlElement PECourseID = xmlDoc.CreateElement("PECourseID");
-        PECourseID.InnerText = "409087";
+        PECourseID.InnerText = GetCourseIDbyModuleID(course);
         attendance.AppendChild(PECourseID);
 
         XmlElement externalModuleID = xmlDoc.CreateElement("externalmoduleID");
@@ -1246,6 +1246,44 @@ public class PlayerPrefsManager : MonoBehaviour
 #endregion
 
         return xmlDoc.OuterXml;
+    }
+
+    static string GetCourseIDbyModuleID(string module)
+    {
+        switch(module)
+        {
+            case "471988":
+            case "471989":
+            case "471990":
+            case "471991":
+            case "471992":
+            case "471993":
+                return "426062";
+
+            case "443451":
+            case "443452":
+                return "402071";
+
+            case "452504":
+            case "452505":
+            case "452506":
+            case "452507":
+            case "452508":
+            case "452509":
+            case "452510":
+            case "452511":
+            case "452512":
+            case "452513":
+            case "452514":
+            case "452515":
+            case "452516":
+            case "452517":
+            case "452518":
+                return "409087";
+        }
+
+        // if nothing fits, GL
+        return "409087";
     }
     
     public void HandleLoginToken()
