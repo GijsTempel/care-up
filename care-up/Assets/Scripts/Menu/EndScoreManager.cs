@@ -419,6 +419,14 @@ public class EndScoreManager : MonoBehaviour
        
         // someone's BIG for testing only // insuline for testing only
         _url += PlayerPrefsManager.GenerateAttendanceSXML(manager.bigNumber, manager.currentPEcourseID);
+
+        // filter scenes that are not "connected"
+        if (_url.Contains("<externalmoduleID>X</externalmoduleID>"))
+        {
+            Debug.Log("PE course not connected. Aborting AutomaticPEcourseValidation");
+            return;
+        }
+
         Uri uri = new Uri(_url, UriKind.Absolute);
         _url = uri.ToString();
 
