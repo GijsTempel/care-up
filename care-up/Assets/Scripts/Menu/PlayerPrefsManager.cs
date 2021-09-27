@@ -1252,33 +1252,33 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         switch(module)
         {
-            case "471988":
-            case "471989":
-            case "471990":
-            case "471991":
-            case "471992":
-            case "471993":
+            case "VSV":
+            case "VVSO":
+            case "THD":
+            case "THR":
+            case "ZOKR":
+            case "TVNM":
                 return "426062";
 
-            case "443451":
-            case "443452":
+            case "BMVS":
+            case "TMOT":
                 return "402071";
 
-            case "452504":
-            case "452505":
-            case "452506":
-            case "452507":
-            case "452508":
-            case "452509":
-            case "452510":
-            case "452511":
-            case "452512":
-            case "452513":
-            case "452514":
-            case "452515":
-            case "452516":
-            case "452517":
-            case "452518":
+            case "INSIG":
+            case "FRAXI":
+            case "ISHTGF":
+            case "IILTGF":
+            case "SMPA":
+            case "SMPD":
+            case "SMPF":
+            case "TMMW":
+            case "OSTMOPS":
+            case "SOC":
+            case "GFTP":
+            case "CATMSO":
+            case "BGM":
+            case "MSSI":
+            case "ISSI":
                 return "409087";
         }
 
