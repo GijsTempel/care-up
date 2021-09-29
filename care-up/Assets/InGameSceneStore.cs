@@ -31,7 +31,7 @@ public class InGameSceneStore : MonoBehaviour
 
     Sprite openTabImage = null;
     Sprite closeTabImage = null;
-    Object SSPackageItemPrefab = Resources.Load<GameObject>("NecessaryPrefabs/UI/SSPackageItem");
+    Object SSPackageItemPrefab;// = Resources.Load<GameObject>("NecessaryPrefabs/UI/SSPackageItem");
     int currentTab = 0;
     List<SSPackageItem> SelectedItems = new List<SSPackageItem>();
 
