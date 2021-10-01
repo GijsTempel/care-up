@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.Networking;
+using System.Collections;
+using System;
 
 
 /// <summary>
@@ -115,7 +117,10 @@ public class EndScoreManager : MonoBehaviour
             actualScene = true;
 
             // show/hide buttons
-            bool flag = (percent > 70 && (manager.subscribed || HasFreeCert()));
+            bool subscribed = manager.subscribed;
+            if (manager.IsScenePurchasedByName(completedSceneName))
+                subscribed = true;
+            bool flag = (percent > 70 && (subscribed || HasFreeCert()));
 
             // update test highscore + save certificate date
             manager.UpdateTestHighscore(percent);
@@ -130,6 +135,7 @@ public class EndScoreManager : MonoBehaviour
                 if (manager.validatedScene)
                 {
                     EndScoreSendMailResults();
+                    AutomaticPEcourseValidation();
                 }
             }
 
@@ -345,11 +351,11 @@ public class EndScoreManager : MonoBehaviour
 
         GameObject.Find("Interactable Objects/Canvas/NamePopUp").SetActive(false);
     }
-    
+
     public void EndScoreSendMailResults()
     {
         achievements.UpdateKeys("StudyPoints", 1);
-		
+
         int percent = GameObject.FindObjectOfType<EndScoreManager>().percent;
 
         string link = "https://leren.careup.online/MailSceneComplStats.php";
@@ -374,7 +380,10 @@ public class EndScoreManager : MonoBehaviour
     public void ConditionalHomeButton()
     {
         // special panel for demo
-        if (!manager.subscribed && !HasFreeCert())
+        bool subscribed = manager.subscribed;
+        if (manager.IsScenePurchasedByName(completedSceneName))
+            subscribed = true;
+        if (!subscribed && !HasFreeCert())
         {
             GameObject.Find("Interactable Objects/Canvas/CertificateDemoPopOp").SetActive(true);
         }
@@ -390,6 +399,61 @@ public class EndScoreManager : MonoBehaviour
         else // if not demo and emails not sent just load menu
         {
             bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
+        }
+    }
+
+    // testing mode for now (test.pe-online)
+    // "GET" request is pretty bad practice, but this is 8th attempt and first thing that gave an actual server response
+    public void AutomaticPEcourseValidation()
+    {
+        Debug.Log("AutomaticPEcourseValidation");
+
+        if (manager.bigNumber == "")
+        {
+            Debug.LogWarning("BigNumber was empty, aborting PEcourseValidation.");
+            return;
+        }
+
+        // Create a request for the URL.
+        string _url = "https://www.pe-online.org/pe-services/pe-attendanceelearning/WriteAttendance.asmx/ProcessXML?sXML=";
+       
+        // someone's BIG for testing only // insuline for testing only
+        _url += PlayerPrefsManager.GenerateAttendanceSXML(manager.bigNumber, manager.currentPEcourseID);
+
+        // filter scenes that are not "connected"
+        if (_url.Contains("<externalmoduleID>X</externalmoduleID>"))
+        {
+            Debug.Log("PE course not connected. Aborting AutomaticPEcourseValidation");
+            return;
+        }
+
+        Uri uri = new Uri(_url, UriKind.Absolute);
+        _url = uri.ToString();
+
+        Debug.Log("Generated url: " + _url);
+
+        // get request woo
+        StartCoroutine(GetRequest(_url));
+    }
+
+    IEnumerator GetRequest(string uri)
+    {
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
+        {
+            // Request and wait for the desired page.
+            yield return webRequest.SendWebRequest();
+
+            string[] pages = uri.Split('/');
+            int page = pages.Length - 1;
+
+            if (webRequest.isNetworkError)
+            {
+                Debug.Log(pages[page] + ": Error: " + webRequest.error);
+            }
+            else
+            {
+                Debug.Log(pages[page] + ":\nReceived: " + webRequest.downloadHandler.text);
+            }
         }
     }
 }

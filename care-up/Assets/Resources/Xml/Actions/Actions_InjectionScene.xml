@@ -1,303 +1,244 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-16"?>
 <ActionList>
-  <action
-    points="1"
+  <Action
+    index="0"
     description="[Begroet]"
-    commentUA="Привітатись з пацієнтом"
-    audioHint=""
-    index="0"
     type="talk"
-    topic="Hello"
-    extra="Ondanks dat het begroeten niet in de werkwijze staat, is het wel netjes om contact te leggen met de cliënt."
+    commentUA="Привітатись з пацієнтом"
+    points="1"
     optional=""
-   />
-
-  <action
-    comment="1. Apply hand hygiene"
+    audioHint=""
+    topic="Hello" />
+  <Action
     index="0"
-    points="3"
     description="[Pas handhygiëne]"
     type="use"
-    value="HandCleaner"
-    extra="[Pas handhygiëne]"
+    comment="1. Apply hand hygiene"
+    points="3"
     messageTitle="Handhygiëne"
     messageContent="Handhygiëne is het meest belangrijk om besmetting met ziektekiemen te voorkomen. Reinig je handen altijd op de juiste manier en op het juiste moment. Begin een handeling altijd met handhygiëne."
-   ></action>
-
-  <action
-    points="1"
-    description="[Maak een schoon werkveld]"
-    commentUA="Очистити та приготувати робочий стіл"
-    audioHint="Injection/H2-2"
+    value="HandCleaner" />
+  <Action
     index="1"
+    description="[Maak een schoon werkveld]"
     type="use"
-    value="WorkField"
-    extra="Maak een schoon werkveld en zet de benodigdheden binnen handbereik."
+    commentUA="Очистити та приготувати робочий стіл"
+    points="1"
     messageTitle="Je het volgende nodig hebt?"
-    messageContent="
-- Bijsluiter
-- Toedieningslijst
-- Spuit met injectienaald (Wanneer er geen injectiespuit met voorgeschreven medicijn aanwezig is)
-- Afvalbak
-- Naaldenbeker en naaldverwijderaar
-- Desinfectans: chloorhexidine 0.5% in alcohol 70%, als de huid gedesinfecteerd moet worden
-    "></action>
-
-  <action
-    points="2"
-    description="Controleer cliëntgegevens"
-    commentUA="Перевірити медичні записи пацієнта"
+    messageContent="&#xD;
+- Bijsluiter&#xD;
+- Toedieningslijst&#xD;
+- Spuit met injectienaald (Wanneer er geen injectiespuit met voorgeschreven medicijn aanwezig is)&#xD;
+- Afvalbak&#xD;
+- Naaldenbeker en naaldverwijderaar&#xD;
+- Desinfectans: chloorhexidine 0.5% in alcohol 70%, als de huid gedesinfecteerd moet worden&#xD;
+    "
+    value="WorkField"
+    audioHint="Injection/H2-2" />
+  <Action
     index="2"
+    description="Controleer cliëntgegevens"
     type="examine"
+    commentUA="Перевірити медичні записи пацієнта"
     item="PatientRecords"
-    expected="good"
-    extra="Controleer de cliëntgegevens. Het is belangrijk dat je de juiste persoon voor je hebt. "
+    points="2"
     messageTitle="Controle cliëntgegevens."
     messageContent="Controleer de naam en geboortedatum van cliënt"
-   ></action>
-
-  <action
-    points="2"
+    expected="good" />
+  <Action
+    index="2"
     description="Controleer de spuit met medicijn"
+    type="examine"
     commentUA="Перевірити назначене лікування"
-    audioHint="Injection/H3-2"
-    index="2"
-    type="examine"
     item="SyringeWithInjectionNeedleCap"
-    expected="good"
-    extra="Controleer de spuit met medicijn"
-    messageTitle="Controle medicijn"
-    messageContent="
-Controleer het medicijn op:
-- De uiterste houdbaarheidsdatum
-- kleur en substantie
-- Toedieningswijze
-- Beschadigingen op de spuit"
-></action>
-
-  <action
     points="2"
-    description="Controleer de toedienlijst"
-    commentUA="Перевірити відповідність медикаментів"
-    audioHint="InjectionSubcutaneous/Step 5"
+    messageTitle="Controle medicijn"
+    messageContent="&#xD;
+Controleer het medicijn op:&#xD;
+- De uiterste houdbaarheidsdatum&#xD;
+- kleur en substantie&#xD;
+- Toedieningswijze&#xD;
+- Beschadigingen op de spuit"
+    audioHint="Injection/H3-2"
+    expected="good" />
+  <Action
     index="2"
+    description="Controleer de toedienlijst"
     type="examine"
+    commentUA="Перевірити відповідність медикаментів"
     item="PrescriptionForm"
-    expected="good"
-    extra="Controleer de toedienlijst. Controleer de toedienlijst op soort, dosering en toedientijdstip."
+    points="2"
     messageTitle="5x juist-regel"
-    messageContent="Er zijn 5 controles die je altijd moet doen voordat je medicijnen geeft. Alleen als alle 5 punten juist zijn, mag je het medicijn toedienen.
-    
-    De vijf regels zijn:
-    
-1.  Het juiste medicijn: 
-kijk op de toedienlijst en controleer of de informatie op de medicijnverpakking of het baxterzakje hiermee overeenkomen. Kijk hierbij ook naar de vervaldatum van het medicijn.
-        
-2.  De juiste cliënt: 
-controleer of je de juiste cliënt voor je hebt.
-        
-3.  Het juiste tijdstip: 
-kijk op de toedienlijst voor het tijdstip en vergelijk dit met het tijdstip waarop je de medicijnen geeft.
-        
-4.  De juiste manier van toedienen: 
-hanteer de instructies van de toedienlijst. Je moet bekend zijn met de toedieningsvorm. Ben je hier niet mee bekent, dien dan niet toe.
-    
-5.  De juiste dosis: 
+    messageContent="Er zijn 5 controles die je altijd moet doen voordat je medicijnen geeft. Alleen als alle 5 punten juist zijn, mag je het medicijn toedienen.&#xD;
+    &#xD;
+    De vijf regels zijn:&#xD;
+    &#xD;
+1.  Het juiste medicijn: &#xD;
+kijk op de toedienlijst en controleer of de informatie op de medicijnverpakking of het baxterzakje hiermee overeenkomen. Kijk hierbij ook naar de vervaldatum van het medicijn.&#xD;
+        &#xD;
+2.  De juiste cliënt: &#xD;
+controleer of je de juiste cliënt voor je hebt.&#xD;
+        &#xD;
+3.  Het juiste tijdstip: &#xD;
+kijk op de toedienlijst voor het tijdstip en vergelijk dit met het tijdstip waarop je de medicijnen geeft.&#xD;
+        &#xD;
+4.  De juiste manier van toedienen: &#xD;
+hanteer de instructies van de toedienlijst. Je moet bekend zijn met de toedieningsvorm. Ben je hier niet mee bekent, dien dan niet toe.&#xD;
+    &#xD;
+5.  De juiste dosis: &#xD;
 je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toedienlijst. De verantwoordelijkheid van de juiste dosering ligt bij de arts en de apotheker."
-></action>
-
-  <action
-    points="3"
-    description="Vraag aan je collega of ze een dubbele controle wil doen"
-    commentUA="Запитати лікара про додадкову перевірку"
-    audioHint=""
+    audioHint="InjectionSubcutaneous/Step 5"
+    expected="good" />
+  <Action
     index="3"
+    description="Vraag aan je collega of ze een dubbele controle wil doen"
     type="talk"
-    topic="DoubleCheck"
-    extra="Vraag aan je collega of ze een dubbele controle wil doen"
+    commentUA="Запитати лікара про додадкову перевірку"
+    points="3"
     messageTitle="Dubbele controle bij injecties en bij medicijntoediening via infuus"
-    messageContent="Het verkeerd toedienen van medicijnen brengt risico’s met zich mee. Het risico op blijvend letsel bij verkeerde dosering of toediening verschilt, afhankelijk van het medicijn. Ook is de ene toedieningsweg risicovoller dan een andere. Dubbele controle van de medicatie is belangrijk voor de veiligheid, met name bij risicovolle medicatie. Laat ook je berekeningen die je hebt gemaakt checken. 
-Het maken van oplossingen die worden toegediend via injectie of infuus is foutgevoelig. Daarnaast geeft deze manier van toedienen sneller resultaten, maar ook grotere problemen bij verkeerde toediening.
-Het ontbreken van een dubbele controle bij deze handelingen wordt gezien als hoog-risico.
-Of en hoe controle plaatsvindt van deze voorbehouden handelingen, is een afspraak die een zorgorganisatie maakt met haar zorgmedewerkers. Als de afspraak is om een tweede controle te doen en deze vast te leggen, dan wordt daarvoor een ander formulier gebruikt dan de toedieningslijst." 
-    />
-
-  <action
-    points="1"
-    description="Vraag de cliënt de injectieplaats te ontbloten"
-    commentUA="Попросити пацієнта розкрити місце для інєкції"
-    audioHint="Injection/H12-2"
+    messageContent="Het verkeerd toedienen van medicijnen brengt risico’s met zich mee. Het risico op blijvend letsel bij verkeerde dosering of toediening verschilt, afhankelijk van het medicijn. Ook is de ene toedieningsweg risicovoller dan een andere. Dubbele controle van de medicatie is belangrijk voor de veiligheid, met name bij risicovolle medicatie. Laat ook je berekeningen die je hebt gemaakt checken. &#xD;
+Het maken van oplossingen die worden toegediend via injectie of infuus is foutgevoelig. Daarnaast geeft deze manier van toedienen sneller resultaten, maar ook grotere problemen bij verkeerde toediening.&#xD;
+Het ontbreken van een dubbele controle bij deze handelingen wordt gezien als hoog-risico.&#xD;
+Of en hoe controle plaatsvindt van deze voorbehouden handelingen, is een afspraak die een zorgorganisatie maakt met haar zorgmedewerkers. Als de afspraak is om een tweede controle te doen en deze vast te leggen, dan wordt daarvoor een ander formulier gebruikt dan de toedieningslijst."
+    audioHint=""
+    topic="DoubleCheck" />
+  <Action
     index="4"
+    description="Vraag de cliënt de injectieplaats te ontbloten en zich te ontspannen"
     type="talk"
-    topic="RollUpSleeves"
-    extra="Vraag de cliënt om zijn mouw omhoog te doen en te ontspannen zodat je makkelijk bij de injectieplaats kunt."
-    blockUnlock="patient show spot"
-    messageTitle="Geschikte injectiegebieden"
-    messageContent="
-Geschikte injectiegebieden voor intramusculaire injecties zijn:
-
-- Dijbeenspieren: brede dijbeenspier (musculus vastus lateralis) en rechte dijbeenspier (musculus rectus femoris)
-- Bilspieren: grote bilspier (musculus gluteus maximus) en middelste bilspier (musculus gluteus medius)
-- Bovenarmspier (musculus deltoïdeus).
-
-Desinfecteer de huid bij cliënten met verminderde weerstand.
-    "
-   ></action>
-
-  <action
+    commentUA="Попросити пацієнта розкрити місце для інєкції"
     points="1"
-    description="Start injecteren"
-    commentUA="Розпочати інєкцію"
-    audioHint="Injection/H13-2"
+    messageTitle="Geschikte injectiegebieden"
+    messageContent="&#xD;
+Geschikte injectiegebieden voor intramusculaire injecties zijn:&#xD;
+&#xD;
+- Dijbeenspieren: brede dijbeenspier (musculus vastus lateralis) en rechte dijbeenspier (musculus rectus femoris)&#xD;
+- Bilspieren: grote bilspier (musculus gluteus maximus) en middelste bilspier (musculus gluteus medius)&#xD;
+- Bovenarmspier (musculus deltoïdeus).&#xD;
+&#xD;
+Desinfecteer de huid bij cliënten met verminderde weerstand.&#xD;
+    "
+    audioHint="Injection/H12-2"
+    topic="RollUpSleeves"
+    blockUnlock="patient show spot" />
+  <Action
     index="5"
+    description="Start injecteren"
     type="useOn"
-    item="SyringeWithInjectionNeedleCap"
+    commentUA="Розпочати інєкцію"
     secondPlace="PatientPos"
-    target=""
+    item="SyringeWithInjectionNeedleCap"
+    points="1"
     buttonText="Start injecteren"
-    extra="Start met het toedienen van de injectie. Alles is klaar voor gebruik en je kunt dus starten met injecteren."
+    audioHint="Injection/H13-2"
+    target=""
     blockRequired="patient show spot"
     blockTitle="Deze handeling is nog niet mogelijk"
-    blockMessage="Treft de juiste voorbereidingen en vraag de cliënt de injectieplaats te ontbloten."
-  ></action>
-
-  <action
-    points="1"
-    description="Palpeer de injectieplaats en controleer of de injectieplaats schoon en droog is"
-    audioHint="Injection/AS1-2"
+    blockMessage="Treft de juiste voorbereidingen en vraag de cliënt de injectieplaats te ontbloten." />
+  <Action
     index="6"
+    description="Palpeer de injectieplaats en controleer of de injectieplaats schoon en droog is"
     type="sequenceStep"
-    value="clean skin"
-    extra="Controleer of de injectieplaats schoon en droog is om besmetting van ziektekiemen te voorkomen."
-  ></action>
-
-  <action
     points="1"
-    description="Neem de spuit in de injecterende hand en verwijder de naaldhuls"
+    value="clean skin"
+    audioHint="Injection/AS1-2" />
+  <Action
     index="7"
+    description="Neem de spuit in de injecterende hand en verwijder de naaldhuls"
     type="sequenceStep"
-    value="take off cap"
-    extra="De beschermdop zit nog op de naald. Deze dien je te verwijderen om gebruik te maken van de spuit. Concentreer je tijdens het verwijderen van de dop om prikaccidenten te voorkomen."
-   />
-
-  <action
-    points="2"
-    description="Span de huid met de duim en wijsvinger van uw vrije hand"
+    points="1"
+    value="take off cap" />
+  <Action
     index="8"
+    description="Span de huid met de duim en wijsvinger van uw vrije hand"
     type="sequenceStep"
-    value="Hold skin"
-    extra="Span de huid met de duim en wijsvinger van uw vrije hand."
+    points="2"
     messageTitle="Huid spannen"
     messageContent="Neem de spier tussen duim en wijsvinger van de ene hand en trek de huid wat strakker. De spier als een dikke plooi tussen de duim en wijs- en middelvinger opnemen, voor een intramusculaire injectie wordt afgeraden (WHO). Deze techniek vergroot het risico op per ongeluk subcutaan injecteren. "
-  ></action>
-
-  <action
-    points="3"
-    description="Steek de naald met een snelle beweging loodrecht in de spier"
-    audioHint="Injection/AS3-2"
+    value="Hold skin" />
+  <Action
     index="9"
+    description="Steek de naald met een snelle beweging loodrecht in de spier"
     type="sequenceStep"
+    points="3"
     value="Stick needle in arm"
-    extra="Steek de naald met een snelle beweging loodrecht in de spier. Wissel injectieplaatsen af wanneer frequent in eenzelfde gebied geïnjecteerd moet worden."
-  ></action>
-
-  <action
-    points="1"
-    description="Laat de huid los"
-    audioHint="Injection/AS4-2"
+    audioHint="Injection/AS3-2" />
+  <Action
     index="10"
+    description="Laat de huid los"
     type="sequenceStep"
-    value="Release skin with left hand"
-    extra="Laat de huid los met je vrije hand."
-   ></action>
-
-  <action
     points="1"
-    description="Fixeer de spuit en naald met de niet injecterende hand om onverwachte bewegingen op te vangen"
+    value="Release skin with left hand"
+    audioHint="Injection/AS4-2" />
+  <Action
     index="11"
+    description="Fixeer de spuit en naald met de niet-injecterende hand om onverwachte bewegingen op te vangen"
     type="sequenceStep"
-    value="Secure the needle"
-    extra="Fixeer de spuit en naald met de niet injecterende hand om onverwachte bewegingen op te vangen."
+    points="1"
     messageTitle="Fixeren van de spuit"
     messageContent="Bij een cliënt die onrustig is of plotselinge bewegingen maakt, is het van belang dat de injectienaald en de spuit goed gefixeerd worden tijdens de injectie. Houd de naald tussen duim en wijsvinger van de vrije hand op de plaats waar de naald op de spuit zit. Zorg dat de rest van deze hand stevig op de huid rust. Als de cliënt beweegt, beweegt de hand met daarin de naald en de spuit, mee."
-  ></action>
-
-  <action
-    points="2"
-    description="Spuit de vloeistof langzaam en regelmatig in (ongeveer 10 sec/ml)"
+    value="Secure the needle" />
+  <Action
     index="12"
+    description="Spuit de vloeistof langzaam en regelmatig in (ongeveer 10 sec/ml)"
     type="sequenceStep"
-    value="Inject medicine slow and steady"
-    extra="Spuit het medicijn langzaam in (ongeveer 10 sec/ml)."
+    points="2"
     messageTitle="Injecteren bovenarmspier"
     messageContent="De bovenarmspier is een kleine dikke driehoekige spier. Leg twee vingers horizontaal beneden het botje (acromion) dat de punt van de schouder vormt. Je vindt de basis van de direhoek waarin je kunt injecteren."
-  ></action>
-
-  <action
-    points="1"
-    description="Trek na het injecteren de naald uit de huid. Hierbij kun je een gaasje gereed houden om een eventuele bloeddruppel op te vangen"
+    value="Inject medicine slow and steady" />
+  <Action
     index="13"
+    description="Laat de naald gedurende 10 seconden in de spier"
     type="sequenceStep"
-    value="pull needle out of skin"
-    extra="Trek na het injecteren de naald uit de huid. Hierbij kun je een gaasje gereed houden om een eventuele bloeddruppel op te vangen."
-  ></action>
-
-  <action
     points="1"
-    description="Verwijder de naald van de spuit"
-    commentUA="Зняти гоку зі шприця"
+    value="LeaveTheNeedle" />
+  <Action
     index="14"
+    description="Trek na het injecteren de naald uit de huid. Hierbij kun je een gaasje gereed houden om een eventuele bloeddruppel op te vangen"
+    type="sequenceStep"
+    points="1"
+    value="pull needle out of skin" />
+  <Action
+    index="15"
+    description="Verwijder de naald van de spuit"
     type="combine"
+    commentUA="Зняти гоку зі шприця"
+    points="1"
     left="SyringeWithInjectionNeedle"
     right=""
-    extra="Klik het beschermkapje met een duimbeweging over de opzuignaald, verwijder de naald van de spuit (bij naald zonder veiligheidsysteem met een naaldverwijderaar)."
-  />
-
-  <action
-    points="2"
+    ignorePosition="" />
+  <Action
+    index="16"
     description="Doe de injectienaald in de naaldencontainer"
-    commentUA="Помістити голку в контейнер"
-    index="15"
     type="useOn"
+    commentUA="Помістити голку в контейнер"
     item="InjectionNeedleNoCap"
-    target=""
+    points="2"
     buttonText="Injectienaald weggooien"
-    extra="Verwijder de opzuignaald en doe de naald in de naaldencontainer. Gebruik voor het injecteren spuiten en naalden voor eenmalig gebruik (dit worden ook wel eens disposables genoemd). Plaats een naald na gebruik nooit in de plastic beschermhuls terug. Werk met veilige opzuignaalden. Gebruik de inkepingen op de deksel om de naald en spuit te verwijderen of gebruik een naaldverwijderaar."
     messageTitle="Injecteren bilspieren"
-    messageContent="Er zijn twee spieren in het bilgebied waarin je een intramusculaire injectie mag geven.
-    - In de middelste bilspier, het injectiegebied hiervan bevindt zich aan de buikzijde, 'de heupkant' van de cliënt (ventrogluteaal).
+    messageContent="Er zijn twee spieren in het bilgebied waarin je een intramusculaire injectie mag geven.&#xD;
+    - In de middelste bilspier, het injectiegebied hiervan bevindt zich aan de buikzijde, 'de heupkant' van de cliënt (ventrogluteaal).&#xD;
     - In de grote bilspier, het injectiegebied hiervan bevindt zich aan de rugzijde, 'de bilkant'van de cliënt (dorsogluteaal)."
-  ></action>
-
-  <action
-     points="1"
-     description="Ruim de materialen op door met lege handen op het werkveld te klikken"
-     index="16"
-     type="use"
-     value="WorkField"
-     extra="Ruim de materialen op door met lege handen op het werkveld te klikken"
-     messegeTitle="Materialen opruimen"
-     MessegeContent="Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen"
-></action>
-
-  <action
-    comment="1. Apply hand hygiene"
+    target="" />
+  <Action
     index="17"
-    points="3"
+    description="Ruim de materialen op door met lege handen op het werkveld te klikken"
+    type="use"
+    points="1"
+    value="WorkField" />
+  <Action
+    index="18"
     description="[Pas handhygiëne]"
     type="use"
-    value="HandCleaner"
-    extra="[Pas handhygiëne]"
-  ></action>
-
-  <action
+    comment="1. Apply hand hygiene"
     points="3"
+    value="HandCleaner" />
+  <Action
+    index="19"
     description="Teken de toedienlijst af of noteer het tijdstip, het soort medicijn, de concentratie, de hoeveelheid en de wijze van toediening. Noteer tot slot je bevindingen"
-    commentUA="Зробити запис про проведену процедуру"
-    audioHint="Injection/EAS4-2"
-    index="18"
     type="use"
+    commentUA="Зробити запис про проведену процедуру"
+    points="3"
     value="PaperAndPen"
-    extra="Teken de toedienlijst af of noteer het tijdstip, het soort medicijn, de concentratie, de hoeveelheid en de wijze van toediening. Noteer tot slot je bevindingen"
-  ></action>
+    audioHint="Injection/EAS4-2" />
 </ActionList>

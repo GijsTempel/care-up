@@ -402,28 +402,15 @@ public class HandsInventory : MonoBehaviour {
 
         if (bundleObject != null)
         {
-            if (bundleObject == null)
-                Debug.Log("_____" + name);
-            bool from_bundle = bundleObject != null;
-            if (bundleObject == null)
-                bundleObject = Resources.Load<GameObject>("Prefabs\\" + name);
-
             GameObject newObject = Instantiate(bundleObject, position, Quaternion.identity) as GameObject;
             newObject.SetActive(true);
             newObject.name = name;
-            if (newObject != null)
-            {
-                newObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                newObject.GetComponent<Rigidbody>().useGravity = false;
-                newObject.GetComponent<Rigidbody>().isKinematic = false;
-                newObject.transform.parent = interactableObjects.transform;
-                newObject.name = name;
-                newObject.GetComponent<InteractableObject>().assetSource = InteractableObject.AssetSource.Resources;
-                if (from_bundle)
-                    newObject.GetComponent<InteractableObject>().assetSource = InteractableObject.AssetSource.Bundle;
-            }
-            else
-                print("!!!!!!! Object not available " + name);
+            newObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            newObject.GetComponent<Rigidbody>().useGravity = false;
+            newObject.GetComponent<Rigidbody>().isKinematic = false;
+            newObject.transform.parent = interactableObjects.transform;
+            newObject.GetComponent<InteractableObject>().assetSource = InteractableObject.AssetSource.Bundle;
+           
             GameObject wf = GameObject.Find("WorkField");
             if (wf != null)
             {
@@ -787,7 +774,8 @@ public class HandsInventory : MonoBehaviour {
             leftHandObject.GetComponent<Rigidbody>().isKinematic = false;
             leftHandObject.leftControlBone = leftControlBone;
             leftHandObject.rightControlBone = rightControlBone;
-            leftHandObject.SavePosition();
+            if (leftHandObject.SavedPosition == Vector3.zero)
+                leftHandObject.SavePosition();
         }
         else
         {
@@ -796,7 +784,8 @@ public class HandsInventory : MonoBehaviour {
             rightHandObject.GetComponent<Rigidbody>().isKinematic = false;
             rightHandObject.leftControlBone = leftControlBone;
             rightHandObject.rightControlBone = rightControlBone;
-            rightHandObject.SavePosition();
+            if (rightHandObject.SavedPosition == Vector3.zero)
+                rightHandObject.SavePosition();
         }
 
         if (createGhost)
@@ -989,7 +978,7 @@ public class HandsInventory : MonoBehaviour {
                     {
                         rightHandObject.SavePosition(rightSavedPos, rightSavedRot);
                     }
-                    else if (leftSavedPos != Vector3.zero)
+                    else if (leftSavedPos != Vector3.zero && leftHandObject != null)
                     {
                         rightHandObject.SavePosition(leftSavedPos + GetOffset(leftHandObject, rightHandObject, leftSavedRot), leftSavedRot);
                     }
@@ -1100,8 +1089,13 @@ public class HandsInventory : MonoBehaviour {
                     
 				}
 			}
+            //To be removed !!!!!
+            //if (leftName == "SyringeWithAbsorptionNeedle" || rightName == "SyringeWithAbsorptionNeedle")
+            //{
+            //    idModeAllow = false;
+            //}
 
-			if (idModeAllow)
+            if (idModeAllow)
 			{
 		        int leftID = ObjectsID_Controller.GetIDByName(leftName);
                 int rightID = ObjectsID_Controller.GetIDByName(rightName);

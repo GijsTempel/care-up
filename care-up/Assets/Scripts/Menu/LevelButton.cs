@@ -14,9 +14,11 @@ public class LevelButton : MonoBehaviour
     public string url;
     public GameObject IsFreeIcon;
     bool demoMark = false;
+    int demoMarkType = 0;
     bool PreviewIconChanged = false;
 
     public bool multiple;
+    public string sceneID;
     public string displayName;
     public Sprite image;
     public bool testDisabled;
@@ -58,9 +60,10 @@ public class LevelButton : MonoBehaviour
         UpdateButtonLockState();
     }
 
-    public void SetDemoMark(bool _mark)
+    public void SetDemoMark(bool _mark, int _markType)
     {
         demoMark = _mark;
+        demoMarkType = _markType;
     }
 
     public void UpdateButtonLockState()
@@ -85,7 +88,22 @@ public class LevelButton : MonoBehaviour
             if (!PreviewIconChanged)
                 LevelPreview.gameObject.SetActive(false);
         }
-        IsFreeIcon.SetActive(demoMark);
+        //IsFreeIcon.SetActive(demoMark);
+        string demoMarkElementName = "GFrame_Full";
+
+        switch (demoMarkType)
+        {
+            case 1:
+                demoMarkElementName = "GFrame_Top";
+                break;
+            case 2:
+                demoMarkElementName = "GFrame_Bot";
+                break;
+            case 3:
+                demoMarkElementName = "GFrame_Mid";
+                break;
+        }
+        transform.Find(demoMarkElementName).gameObject.SetActive(demoMark);
         //if(!demoLock)
         //{
         //    GetComponent<Image>().sprite = Resources.Load("Sprites/nUI/listElement_Base_gray", typeof(Sprite)) as Sprite;
@@ -244,6 +262,7 @@ public class LevelButton : MonoBehaviour
                 if (manager != null)
                 {
                     manager.currentSceneVisualName = displayName;
+                    manager.currentPEcourseID = sceneID;
                     manager.validatedScene = validated;
                 }
 
@@ -285,6 +304,7 @@ public class LevelButton : MonoBehaviour
                 if (manager != null)
                 {
                     manager.currentSceneVisualName = displayName;
+                    manager.currentPEcourseID = sceneID;
                     manager.validatedScene = validated;
                 }
             }
@@ -302,7 +322,7 @@ public class LevelButton : MonoBehaviour
             Button testBtn = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
             "DialogTestPractice/Panel_UI/Buttons/right/TestButton").GetComponent<Button>();
 
-            string formattedSceneName = PlayerPrefsManager.FormatSceneName(manager.currentSceneVisualName);
+            string formattedSceneName = PlayerPrefsManager.FormatSceneName(manager.GetSceneDatabaseName(manager.currentSceneVisualName));
 
             int practicePlays;
             int.TryParse(DatabaseManager.FetchField("PracticePlays", formattedSceneName), out practicePlays);

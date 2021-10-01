@@ -29,6 +29,7 @@ namespace CareUp.Actions
         public string _topic;
         public float encounter;
         public int storedIndex;
+        public bool ignorePosition = false;
 
         protected ActionManager.ActionType type;
 

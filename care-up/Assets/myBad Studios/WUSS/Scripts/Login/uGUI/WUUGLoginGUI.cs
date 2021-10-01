@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System;
 using UnityEngine.UI;
+using BuildTimestampDisplay;
 
 namespace MBS
 {
     public class WUUGLoginGUI : WUUGLoginLocalisation
     {
+
         public enum eWULUGUIState { Inactive, Active }
 
         [Serializable]
@@ -63,6 +65,10 @@ namespace MBS
             personal_bio,
             serial_number;
         }
+
+        [SerializeField] BuildTimestamp buildTimestamp;
+        [SerializeField] string format = "yyyy/MM/dd HH:mm:ss";
+        [SerializeField] float utcOffsetHours;
 
         [SerializeField] private Image LoginUsernameField = default(Image);
         [SerializeField] private Image LoginPasswordField = default(Image);
@@ -261,6 +267,15 @@ namespace MBS
 
         void Start()
         {
+            if (GameObject.Find("VersionNumber") != null)
+            {
+                string _sing = "";
+                if ((int)utcOffsetHours >= 0)
+                    _sing = "+";
+
+                string buildTime = buildTimestamp ? buildTimestamp.ToString(format, utcOffsetHours) : "";
+                GameObject.Find("VersionNumber").GetComponent<Text>().text = "v" + Application.version + " " + buildTime + " UTC" + _sing + ((int)utcOffsetHours).ToString();
+            }
 #if !(UNITY_EDITOR || DEVELOPMENT_BUILD)
             panels.debug_options.SetActive(false);
 #endif 
@@ -440,6 +455,19 @@ namespace MBS
             PlayerPrefs.SetInt("Remember Me", attempt_auto_login ? 1 : 0);
             DisplayScreen(panels.login_menu);
         }
+
+        public void DoAutoLogin(string username, string password)
+        {
+            WULogin.onLoginFailed += On_Login_Fail;
+            WULogin.on_Login_Success = true;
+            CMLData data = new CMLData();
+            data.Set("username", username);
+            data.Set("password", password);
+            WULogin.AttemptToLogin(data);
+            PlayerPrefs.SetInt("Remember Me", attempt_auto_login ? 1 : 0);
+            DisplayScreen(panels.login_menu);
+        }
+
 
         void On_Login_Fail(CMLData response) => WULogin.on_Login_Success = false;
 

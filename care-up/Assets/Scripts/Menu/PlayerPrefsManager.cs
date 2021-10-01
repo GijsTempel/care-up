@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Text;
+using System.Xml;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
@@ -15,7 +17,6 @@ using System.Linq;
 using SmartLookUnity;
 using CareUp.Localize;
 using System.Runtime.InteropServices;
-
 
 /// <summary>
 /// Handles quick access to saved data.
@@ -76,6 +77,7 @@ public class PlayerPrefsManager : MonoBehaviour
     public bool practiceMode = true;
     public bool TextDebug = false;
     static List<string> purchasedScenes = new List<string>();
+    static List<SceneInfo> ScenesInfo = new List<SceneInfo>();
     // store value here after getting from server
     public bool tutorialCompleted;
     public static bool firstStart = true;
@@ -88,6 +90,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
     // sets up after selecting scene in "scene selection"
     public string currentSceneVisualName;
+    public string currentPEcourseID;
     public bool validatedScene;
 
     // post processing on camera
@@ -117,6 +120,14 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public bool muteMusicForEffect = false;
     private bool muteMusic = false;
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+    [DllImport("__Internal")]
+    private static extern string GetStringParams();
+#endif
+    //public string currentLoginToken = "";
+    //public string currentLoginName = "";
+    //public string currentLoginPass = "";
 
     public static CANotifications GetNotificationByID(int _id)
     {
@@ -181,6 +192,66 @@ public class PlayerPrefsManager : MonoBehaviour
     static public void ClearSKU()
     {
         purchasedScenes = new List<string>();
+    }
+
+    public void ClearScenesInfo()
+    {
+        ScenesInfo.Clear();
+    }
+
+    public void AddSceneInfo(SceneInfo sceleInfo)
+    {
+        ScenesInfo.Add(sceleInfo);
+    }
+
+    public string GetSceneDatabaseName(string sceneName)
+    {
+        string sceneDatabaseName = sceneName;
+        foreach (SceneInfo sceneInfo in ScenesInfo)
+        {
+            if (sceneInfo.displayName == sceneName)
+            {
+                if (sceneInfo.nameForDatabase != "")
+                {
+                    sceneDatabaseName = sceneInfo.nameForDatabase;
+                    break;
+                }
+            }
+        }
+        return sceneDatabaseName;
+    }
+
+
+    public bool IsScenePurchasedByName(string sceneName)
+    {
+        foreach(SceneInfo sceneInfo in ScenesInfo)
+        {
+            if (sceneInfo.sceneName == sceneName)
+            {
+                return IsScenePurchased(sceneInfo.isInProducts);
+            }
+        }
+        return false;
+    }
+
+    public List<string> GetScenesInProduct(string SKU)
+    {
+        List<string> _scenes = new List<string>();
+        foreach (SceneInfo sceneInfo in ScenesInfo)
+        {
+            if (sceneInfo.isInProducts != null)
+            {
+                foreach(string __sku in sceneInfo.isInProducts)
+                {
+                    if (SKU == __sku)
+                    {
+                        _scenes.Add(sceneInfo.displayName);
+                        break;
+                    }
+                }
+            }
+        }
+        return _scenes;
     }
 
     public void Update()
@@ -340,6 +411,19 @@ public class PlayerPrefsManager : MonoBehaviour
         //PlayerPrefsManager.__dev__customCertificate("playerFullName", "sceneName", "06202019");
 
         SmartLook.Init("22f3cf28278dbff71183ef8e0fa90c90048b850d");
+
+#if UNITY_WEBGL || UNITY_EDITOR
+        HandleLoginToken();
+#endif
+        // stupid way to push new tokens 
+        //CMLData data = new CMLData();
+        //string testLogin = "test";
+        //string testPass = "123";
+        //byte[] encodeLogin = Encoding.UTF8.GetBytes(testLogin);
+        //byte[] encodePass = Encoding.UTF8.GetBytes(testPass);
+        //string authData = Convert.ToBase64String(encodeLogin) + " " + Convert.ToBase64String(encodePass);
+        //data.Set("abcdefg123456", authData);
+        //WUData.UpdateSharedCategory("LoginTokens", data);
     }
 
     public static bool HasNewNorifications()
@@ -645,7 +729,7 @@ public class PlayerPrefsManager : MonoBehaviour
     public void UpdateTestHighscore(float score)
     {
         float currentTestScore = score;
-        string currentTestScene = FormatSceneName(currentSceneVisualName);
+        string currentTestScene = FormatSceneName(GetSceneDatabaseName(currentSceneVisualName));
 
         string highscoreStr = DatabaseManager.FetchField("TestHighscores", currentTestScene);
         float highscore = 0;
@@ -656,6 +740,21 @@ public class PlayerPrefsManager : MonoBehaviour
             DatabaseManager.UpdateField("TestHighscores", currentTestScene, currentTestScore.ToString());
         }
 
+        // saving average score for analyzing
+        //get current avg score
+        string avgScoreStr = DatabaseManager.FetchField("TestAvgscores", currentTestScene);
+        float avgScore = 0;
+        float.TryParse(avgScoreStr.Replace(",", "."), out avgScore);
+        //get total number of finishes
+        string avgScorePlaysStr = DatabaseManager.FetchField("TestAvgscorePlays", currentTestScene);
+        float avgScorePlays = 0;
+        float.TryParse(avgScorePlaysStr.Replace(",", "."), out avgScorePlays);
+        //new avg
+        float newAvgScore = (avgScore * avgScorePlays + currentTestScore) / (avgScorePlays + 1);
+        //push
+        DatabaseManager.UpdateField("TestAvgscores", currentTestScene, newAvgScore.ToString());
+        DatabaseManager.UpdateField("TestAvgscorePlays", currentTestScene, (avgScorePlays+1).ToString());
+
         // save certificate date here too
         string date = GetTodaysDateFormatted();
         DatabaseManager.UpdateField("CertificateDates", currentTestScene, date);
@@ -663,7 +762,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public void CreateBlankHighscore()
     {
-        string currentTestScene = FormatSceneName(currentSceneVisualName);
+        string currentTestScene = FormatSceneName(GetSceneDatabaseName(currentSceneVisualName));
         string highscoreStr = DatabaseManager.FetchField("TestHighscores", currentTestScene);
         if (highscoreStr == "") // returns empty string if field doesnt exist
         {
@@ -673,7 +772,9 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public static void AddOneToSceneInCategory(string scene, string category)
     {
-        string sceneName = FormatSceneName(scene);
+        PlayerPrefsManager pp = GameObject.FindObjectOfType<PlayerPrefsManager>();
+
+        string sceneName = FormatSceneName(pp.GetSceneDatabaseName(scene));
 
         int plays;
         int.TryParse(DatabaseManager.FetchField(category, sceneName), out plays);
@@ -768,7 +869,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public void UpdatePracticeHighscore(int score, int stars)
     {
-        string practiceScene = FormatSceneName(currentSceneVisualName);
+        string practiceScene = FormatSceneName(GetSceneDatabaseName(currentSceneVisualName));
 
         int highscore;
         int.TryParse(DatabaseManager.FetchField("PracticeHighscores", "score_" + practiceScene), out highscore);
@@ -790,17 +891,17 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public static void OpenUrl_NewWindow(string url)
     {
-        #if UNITY_WEBGL && ! UNITY_EDITOR
+#if UNITY_WEBGL && !UNITY_EDITOR
             openWindow(url);
-        #else
+#else
             OpenUrl(url);
-        #endif
+#endif
     }
 
-    #if UNITY_WEBGL 
+#if UNITY_WEBGL
     [DllImport("__Internal")]
     private static extern void openWindow(string url);
-    #endif
+#endif
 
     public static void __dev__customCertificate(string playerFullName, string sceneName, string date)
     {
@@ -1075,5 +1176,162 @@ public class PlayerPrefsManager : MonoBehaviour
         link += sceneName + ". You can try it out yourself by going to https%3A%2F%2Fcareup.online";
 
         OpenUrl_NewWindow(link.Replace(" ", "%20"));
+    }
+
+    public static string GenerateAttendanceSXML(string BIG, string course)
+    {
+        XmlDocument xmlDoc = new XmlDocument();
+        xmlDoc.CreateXmlDeclaration("1.0", "UTF-8", "yes");
+
+        XmlElement root = xmlDoc.CreateElement("Entry");
+        xmlDoc.AppendChild(root);
+
+#region Settings
+        XmlElement settings = xmlDoc.CreateElement("Settings");
+        root.AppendChild(settings);
+
+        XmlElement userID = xmlDoc.CreateElement("userID");
+        userID.InnerText = "24352";
+        settings.AppendChild(userID);
+
+        XmlElement userRole = xmlDoc.CreateElement("userRole");
+        userRole.InnerText = "EDU";
+        settings.AppendChild(userRole);
+
+        XmlElement userKey = xmlDoc.CreateElement("userKey");
+        userKey.InnerText = "2435202551361";
+        settings.AppendChild(userKey);
+        
+        XmlElement orgID = xmlDoc.CreateElement("orgID");
+        orgID.InnerText = "52";
+        settings.AppendChild(orgID);
+
+        XmlElement settingOutput = xmlDoc.CreateElement("settingOutput");
+        settingOutput.InnerText = "1";
+        settings.AppendChild(settingOutput);
+
+        XmlElement emailOutput = xmlDoc.CreateElement("emailOutput");
+        emailOutput.InnerText = "info@careup.online";
+        settings.AppendChild(emailOutput);
+
+        XmlElement languageID = xmlDoc.CreateElement("languageID");
+        languageID.InnerText = "1";
+        settings.AppendChild(languageID);
+
+        XmlElement defaultLanguageID = xmlDoc.CreateElement("defaultLanguageID");
+        defaultLanguageID.InnerText = "1";
+        settings.AppendChild(defaultLanguageID);
+#endregion
+
+#region Attendance
+        XmlElement attendance = xmlDoc.CreateElement("Attendance");
+        root.AppendChild(attendance);
+        
+        XmlElement PECourseID = xmlDoc.CreateElement("PECourseID");
+        PECourseID.InnerText = GetCourseIDbyModuleID(course);
+        attendance.AppendChild(PECourseID);
+
+        XmlElement externalModuleID = xmlDoc.CreateElement("externalmoduleID");
+        externalModuleID.InnerText = course;
+        attendance.AppendChild(externalModuleID);
+
+        XmlElement externalPersonID = xmlDoc.CreateElement("externalPersonID");
+        externalPersonID.InnerText = BIG;
+        attendance.AppendChild(externalPersonID);
+        
+        XmlElement endDate = xmlDoc.CreateElement("endDate");
+        endDate.InnerText = DateTime.Now.AddDays(-1).ToString("yyyy-MM-ddTHH:mm:ss.fffffffK")
+            .Replace("+", "%2B"); // "+" sign is operator in url, need to replace
+        attendance.AppendChild(endDate);
+#endregion
+
+        return xmlDoc.OuterXml;
+    }
+
+    static string GetCourseIDbyModuleID(string module)
+    {
+        switch(module)
+        {
+            case "VSV":
+            case "VVSO":
+            case "THD":
+            case "THR":
+            case "ZOKR":
+            case "TVNM":
+                return "426062";
+
+            case "BMVS":
+            case "TMOT":
+                return "402071";
+
+            case "INSIG":
+            case "FRAXI":
+            case "ISHTGF":
+            case "IILTGF":
+            case "SMPA":
+            case "SMPD":
+            case "SMPF":
+            case "TMMW":
+            case "OSTMOPS":
+            case "SOC":
+            case "GFTP":
+            case "CATMSO":
+            case "BGM":
+            case "MSSI":
+            case "ISSI":
+                return "409087";
+        }
+
+        // if nothing fits, GL
+        return "409087";
+    }
+    
+    public void HandleLoginToken()
+    {
+        // get login token
+        string currentLoginToken;
+#if UNITY_WEBGL && !UNITY_EDITOR
+        currentLoginToken = GetStringParams();
+#endif
+#if UNITY_EDITOR
+        //currentLoginToken = "token12asudh"; // let's pretend we got it
+        //currentLoginToken = "abcdefg123456"; // let's pretend we got it
+
+        // fetch date from db, follows into next function
+#endif
+#if UNITY_WEBGL && !UNITY_EDITOR
+        WUData.FetchSharedField(currentLoginToken, "LoginTokens", CheckLoginToken_success, -1, CheckLoginToken_error);
+#endif
+
+    }
+
+    public void CheckLoginToken_error(CMLData response)
+    {
+        Debug.Log(response.ToString());
+        // most likely if we're here - no token found
+    }
+
+    public void CheckLoginToken_success(CML response)
+    {
+        string tokenValue;
+        if (response.Elements.Count > 1 && response.Elements[1].Values.Length > 2)
+        {
+            tokenValue = response.Elements[1].Values[2];
+            string[] split = tokenValue.Split(' ');
+            if (split.Length > 1)
+            {
+                string base64LoginName = split[0];
+                string base64LoginPass = split[1];
+                if (base64LoginName != "" && base64LoginPass != "")
+                {
+                    byte[] loginData = Convert.FromBase64String(base64LoginName);
+                    string decodedLogin = Encoding.UTF8.GetString(loginData);
+                    byte[] passData = Convert.FromBase64String(base64LoginPass);
+                    string decodedPass = Encoding.UTF8.GetString(passData);
+
+                    GameObject.FindObjectOfType<WUUGLoginGUI>().DoAutoLogin(decodedLogin, decodedPass);
+                }
+            }
+        }
     }
 }

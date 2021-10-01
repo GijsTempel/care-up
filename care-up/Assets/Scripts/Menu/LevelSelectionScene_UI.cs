@@ -7,8 +7,9 @@ using MBS;
 using CareUpAvatar;
 
 
-public class SceleInfo
+public class SceneInfo
 {
+    public string sceneID = "";
     public string sceneType = "";
     public bool activated = true;
     public bool demoLock = false;
@@ -28,6 +29,7 @@ public class SceleInfo
     public string inHouseSceneName = "";
     public string url = "";
     public bool freeCert = false;
+    public string nameForDatabase = "";
 }
 
 /// <summary>
@@ -157,15 +159,21 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
         Transform protocolsTransorm = GameObject.Find("UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Play/ContentPanel/PlayElements/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder/Protocols/content").transform;
         pp.ClearFreeCertList();
-        Dictionary<string, SceleInfo> scenesInfo = new Dictionary<string, SceleInfo>();
+        pp.ClearScenesInfo();
+        Dictionary<string, SceneInfo> scenesInfo = new Dictionary<string, SceneInfo>();
 
 
         //Load data for scenes
         foreach (XmlNode xmlSceneNode in xmlSceneList)
         {
-            SceleInfo sceneInfo = new SceleInfo();
+            SceneInfo sceneInfo = new SceneInfo();
+
             // bool activated = PlayerPrefs.GetInt(xmlSceneNode.Attributes["id"].Value + " activated") == 1;
             sceneInfo.activated = true;
+
+            if (xmlSceneNode.Attributes["id"] != null)
+                sceneInfo.sceneID = xmlSceneNode.Attributes["id"].Value;
+
             if (xmlSceneNode.Attributes["type"] != null)
                 sceneInfo.sceneType = xmlSceneNode.Attributes["type"].Value;
 
@@ -189,6 +197,10 @@ public class LevelSelectionScene_UI : MonoBehaviour
             if (xmlSceneNode.Attributes["isInProducts"] != null)
             {
                 sceneInfo.isInProducts = xmlSceneNode.Attributes["isInProducts"].Value.Split('|');
+            }
+            if (xmlSceneNode.Attributes["nameForDatabase"] != null)
+            {
+                sceneInfo.nameForDatabase = xmlSceneNode.Attributes["nameForDatabase"].Value;
             }
 
             sceneInfo.bundleName = xmlSceneNode.Attributes["bundleName"].Value;
@@ -239,13 +251,14 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
         //Creation of menu elements from loaded data
 
-        Dictionary<string, SceleInfo> scenesInfoUnlocked = new Dictionary<string, SceleInfo>();
-        Dictionary<string, SceleInfo> scenesInfoLocked = new Dictionary<string, SceleInfo>();
-        Dictionary<string, SceleInfo> scenesInfoDemo = new Dictionary<string, SceleInfo>();
+        Dictionary<string, SceneInfo> scenesInfoUnlocked = new Dictionary<string, SceneInfo>();
+        Dictionary<string, SceneInfo> scenesInfoLocked = new Dictionary<string, SceneInfo>();
+        Dictionary<string, SceneInfo> scenesInfoDemo = new Dictionary<string, SceneInfo>();
 
         foreach (string key in scenesInfo.Keys)
         {
-            SceleInfo sceneInfo = scenesInfo[key];
+            pp.AddSceneInfo(scenesInfo[key]);
+            SceneInfo sceneInfo = scenesInfo[key];
 
             if ((!sceneInfo.activated && sceneInfo.hidden) || sceneInfo.hidden)
             {
@@ -263,17 +276,18 @@ public class LevelSelectionScene_UI : MonoBehaviour
             }
         }
 
-        Dictionary<string, SceleInfo> scenesInfoSorted = new Dictionary<string, SceleInfo>();
+        Dictionary<string, SceneInfo> scenesInfoSorted = new Dictionary<string, SceneInfo>();
         foreach (string key in scenesInfoDemo.Keys)
             scenesInfoSorted.Add(key, scenesInfoDemo[key]);
 
         foreach (string key in scenesInfoLocked.Keys)
             scenesInfoSorted.Add(key, scenesInfoLocked[key]);
-
-
-        foreach (string key in scenesInfoSorted.Keys)
+        int demoIndex = 0;
+        for (int i = 0; i < scenesInfoSorted.Count; i++)
         {
-            SceleInfo sceneInfo = scenesInfoSorted[key];
+            string key = scenesInfoSorted.Keys.ElementAt(i);
+
+            SceneInfo sceneInfo = scenesInfoSorted[key];
             if ((!sceneInfo.activated && sceneInfo.hidden) || sceneInfo.hidden)
             {
                 // not activated and hidden scene should not even create a panel, so just end up here
@@ -285,7 +299,31 @@ public class LevelSelectionScene_UI : MonoBehaviour
             sceneUnitObject.name = "SceneSelectionUnit"; // i dont like that 'clone' word at the end, ugh
 
             LevelButton sceneUnit = sceneUnitObject.GetComponent<LevelButton>();
-            sceneUnit.SetDemoMark(!sceneInfo.demoLock);
+            int demoMarkType = 0;
+            bool prevDemo = false;
+            bool nextDemo = false;
+            if (i > 0)
+            {
+                string prevKey = scenesInfoSorted.Keys.ElementAt(i - 1);
+                if (!scenesInfoSorted[prevKey].demoLock)
+                    prevDemo = true;
+            }
+            if (i < (scenesInfoSorted.Count - 1))
+            {
+                string nextKey = scenesInfoSorted.Keys.ElementAt(i + 1);
+                if (!scenesInfoSorted[nextKey].demoLock)
+                    nextDemo = true;
+            }
+            if (!prevDemo && nextDemo)
+                demoMarkType = 1;
+            else if (prevDemo && !nextDemo)
+                demoMarkType = 2;
+            else if (prevDemo && nextDemo)
+                demoMarkType = 3;
+            if (!sceneInfo.demoLock)
+                demoIndex++;
+
+            sceneUnit.SetDemoMark(!sceneInfo.demoLock, demoMarkType);
             sceneUnit.inHouseBundleName = sceneInfo.inHouseBundleName;
             sceneUnit.inHouseSceneName = sceneInfo.inHouseSceneName;
 
@@ -313,12 +351,16 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 = sceneUnit.displayName = sceneInfo.displayName;
 
             ppManager.currentSceneVisualName = sceneUnit.displayName;
+            // setting id next to manager visual name
+            sceneUnit.sceneID = sceneInfo.sceneID; // yes, duping value is important
+            ppManager.currentPEcourseID = sceneUnit.sceneID;
+
             ppManager.CreateBlankHighscore(); // has a check inside for no DB info already
 
             // override image if scene is completed
             float fscore = 0.0f;
             float.TryParse(DatabaseManager.FetchField("TestHighscores",
-                PlayerPrefsManager.FormatSceneName(sceneUnit.displayName)).Replace(",", "."), out fscore);
+                PlayerPrefsManager.FormatSceneName(pp.GetSceneDatabaseName(sceneUnit.displayName))).Replace(",", "."), out fscore);
             if (Mathf.FloorToInt(fscore) >= 70)
             {
                 sceneUnit.image = completedSceneIcon;

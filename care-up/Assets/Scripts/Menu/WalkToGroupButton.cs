@@ -58,6 +58,8 @@ public class WalkToGroupButton : MonoBehaviour {
 
     public void setWalkToGroup(WalkToGroup wtg)
     {
+        if (wtg == null)
+            return;
         linkedWalkToGroup = wtg;
         GameUI gameUI = GameObject.FindObjectOfType<GameUI>();
         if (_icon == null)
