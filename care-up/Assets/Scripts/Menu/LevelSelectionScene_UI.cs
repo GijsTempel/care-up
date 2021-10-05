@@ -480,7 +480,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
         WUData.FetchUserCategory(uid, "AccountStats", RequestCharacterInfoByUID_success);
     }
 
-public void RequestCharacterInfoByUID_success(CML response)
+    public void RequestCharacterInfoByUID_success(CML response)
     {
         //loading done, stop loading animation, open UI
         string sex = response.Elements[1]["Sex"];
@@ -516,5 +516,10 @@ public void RequestCharacterInfoByUID_success(CML response)
         else
             Debug.Log("No avatar data");
         GameObject.FindObjectOfType<HighscoreCharacterPanel>().HideContent(false, toShowPlayer);
+    }
+
+    public void OnAppleScenePurchaseButtonClick()
+    {
+        GameObject.Find("Preferences").GetComponent<IAPManager>().BuyProductID(ppManager.currentPEcourseID);
     }
 }
