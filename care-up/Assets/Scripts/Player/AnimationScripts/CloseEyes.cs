@@ -13,15 +13,14 @@ public class CloseEyes : StateMachineBehaviour {
     {
         if (actionFrame == 0)
         {
-            Animator anim = GameObject.FindObjectOfType<PlayerAnimationManager>().GetComponent<Animator>();
-
             if (toClose)
             {
-                anim.SetTrigger("close_eyes");
+                animator.SetTrigger("close_eyes");
+                GameObject.FindObjectOfType<GameUI>().UpdateWalkToGroupUI(false);
             }
             else
             {
-                anim.SetTrigger("open_eyes");
+                animator.SetTrigger("open_eyes");
             }
         }
     }
@@ -37,20 +36,21 @@ public class CloseEyes : StateMachineBehaviour {
             {
                 if (GameObject.FindObjectOfType<PlayerAnimationManager>() != null)
                 {
-                    Animator anim = GameObject.FindObjectOfType<PlayerAnimationManager>().GetComponent<Animator>();
                     if (toClose)
                     {
-                        anim.SetTrigger("close_eyes");
+                        animator.SetTrigger("close_eyes");
+                        GameObject.FindObjectOfType<GameUI>().UpdateWalkToGroupUI(false);
+
                     }
                     else
                     {
-                        anim.SetTrigger("open_eyes");
+                        animator.SetTrigger("open_eyes");
                     }
                 }
 
             }
             prevFrame = frame;
-            frame += Time.deltaTime;
+            frame = stateInfo.normalizedTime * stateInfo.length;
         }
 
     }

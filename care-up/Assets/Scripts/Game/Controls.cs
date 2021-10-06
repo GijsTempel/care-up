@@ -6,24 +6,24 @@ using System.Collections.Generic;
 /// <summary>
 /// Handles controls of the player
 /// </summary>
-public class Controls : MonoBehaviour {
-    
+public class Controls : MonoBehaviour
+{
     [Serializable]
     public class KeyPreferences
     {
         // A, X
         public InputKey mouseClickKey = new InputKey(null, new ControllerKey(KeyCode.Joystick1Button0), null, true);
         // LeftTrigger
-        public InputKey LeftDropKey  = new InputKey(new KeyBoardKey(KeyCode.Q, KeyCode.LeftShift), null,
+        public InputKey LeftDropKey = new InputKey(new KeyBoardKey(KeyCode.Q, KeyCode.LeftShift), null,
                                                     new ControllerAxisKey("ControllerLeftTrigger"));
         // right trigger
         public InputKey RightDropKey = new InputKey(new KeyBoardKey(KeyCode.E, KeyCode.LeftShift), null,
                                                     new ControllerAxisKey("ControllerRightTrigger"));
         // X, square, left bumper
-        public InputKey LeftUseKey   = new InputKey(new KeyBoardKey(KeyCode.Q),
+        public InputKey LeftUseKey = new InputKey(new KeyBoardKey(KeyCode.Q),
                                                     new ControllerKey(KeyCode.Joystick1Button2, KeyCode.Joystick1Button4));
         // B, circle, right bumper
-        public InputKey RightUseKey  = new InputKey(new KeyBoardKey(KeyCode.E),
+        public InputKey RightUseKey = new InputKey(new KeyBoardKey(KeyCode.E),
                                                     new ControllerKey(KeyCode.Joystick1Button1, KeyCode.Joystick1Button5));
         // B, circle
         public InputKey closeObjectView = new InputKey(new KeyBoardKey(KeyCode.Q),
@@ -32,7 +32,7 @@ public class Controls : MonoBehaviour {
         public InputKey pickObjectView = new InputKey(new KeyBoardKey(KeyCode.E),
                                                     new ControllerKey(KeyCode.Joystick1Button2));
         // Y, triangle
-        public InputKey CombineKey   = new InputKey(new KeyBoardKey(KeyCode.R),
+        public InputKey CombineKey = new InputKey(new KeyBoardKey(KeyCode.R),
                                                     new ControllerKey(KeyCode.Joystick1Button3));
         // back, select
         //public InputKey GetHintKey   = new InputKey(new KeyBoardKey(KeyCode.Space),
@@ -60,7 +60,7 @@ public class Controls : MonoBehaviour {
         private bool toggleFlag = false;
         public void ToggleLock()
         {
-            if ( toggleFlag )
+            if (toggleFlag)
             {
                 mouseClickLocked = locks[0];
                 mouseClickKey.locked = locks[1];
@@ -97,17 +97,16 @@ public class Controls : MonoBehaviour {
     public KeyPreferences keyPreferences = new KeyPreferences();
     public float interactionDistance;
 
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
     public bool devInteractionDisplay = false;
-    #endif
+#endif
 
     static public bool keyUsed = false;
 
-    private GameObject selectedObject;
-    private bool canInteract;
+    public GameObject selectedObject;
+    public bool canInteract;
 
-    private bool clickFlag = false;
-    private bool clickBuffer = false;
+    private bool touchEnded = false;
 
     public GameObject SelectedObject
     {
@@ -139,22 +138,34 @@ public class Controls : MonoBehaviour {
     /// Sets selectedObject to an object player is aimed at atm.
     /// Sets canInteract based of distance to aimed object.
     /// </summary>
-	void LateUpdate() {
-        
+	void LateUpdate()
+    {
         // raycast only in this script
-        Vector3 screenPosition = (Input.touchCount > 0) ? 
-            new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y) : 
+        Camera cam = null;
+        foreach (Camera c in GameObject.FindObjectsOfType<Camera>())
+        {
+            if (c.transform.parent != null)
+            {
+                if (c.transform.parent.name == "Head")
+                    cam = c;
+            }
+        }
+        if (cam == null)
+            return;
+
+        Vector3 screenPosition = (Input.touchCount > 0) ?
+            new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y) :
             Input.mousePosition;
         Ray ray = ((prefs == null) ? false : prefs.VR) ?
-            new Ray(Camera.main.transform.position, Camera.main.transform.forward)
-            : Camera.main.ScreenPointToRay(screenPosition);
+            new Ray(cam.transform.position, cam.transform.forward)
+            : cam.ScreenPointToRay(screenPosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
             selectedObject = hit.transform.gameObject;
             //canInteract = (hit.distance <= interactionDistance) ? true : false;
             canInteract = (interactionDistance == 0.0f) ? true : Vector2.Distance(
-                new Vector2(Camera.main.transform.position.x, Camera.main.transform.position.z),
+                new Vector2(cam.transform.position.x, cam.transform.position.z),
                 new Vector2(hit.transform.position.x, hit.transform.position.z))
                 <= interactionDistance ? true : false;
         }
@@ -167,19 +178,28 @@ public class Controls : MonoBehaviour {
 
         keyUsed = false;
 
-        if (clickBuffer)
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
         {
-            clickBuffer = clickFlag = false;
+            touchEnded = true;
         }
-        else if (clickFlag)
+        else if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
-            clickBuffer = true;
+            touchEnded = false;
         }
-        
-        #if UNITY_EDITOR
+
+        if (touchEnded)
+        {
+            ResetObject();
+            if (GameObject.Find("ItemDescription") != null)
+            {
+                GameObject.Find("ItemDescription").SetActive(false);
+            }
+        }
+
+#if UNITY_EDITOR
         if (devInteractionDisplay)
         {
-            Vector3 origin = Camera.main.transform.position;
+            Vector3 origin = cam.transform.position;
 
             Vector3 from = new Vector3(0.0f, -1.0f, interactionDistance);
             for (float i = -1.0f; i < 1.0f; i += 0.1f)
@@ -195,16 +215,27 @@ public class Controls : MonoBehaviour {
                 }
             }
         }
-        #endif
+#endif
     }
 
     private void UpdateUIDetection()
     {
         if (UnityEngine.EventSystems.EventSystem.current != null)
         {
-            if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+            if (Input.touchCount > 0)
             {
-                ResetObject();
+                if (UnityEngine.EventSystems.EventSystem.current.
+                    IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+                {
+                    ResetObject();
+                }
+            }
+            else
+            {
+                if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+                {
+                    ResetObject();
+                }
             }
         }
     }
@@ -219,24 +250,14 @@ public class Controls : MonoBehaviour {
         {
             return false;
         }
-        
+
         bool result = (Input.touchCount > 0) ?
             Input.GetTouch(0).phase == TouchPhase.Began
             : (Input.GetMouseButtonDown(0) || keyPreferences.mouseClickKey.Pressed());
-       
-        if (result)
-        {
-            result = clickFlag;
-            clickFlag = true;
-        }
-        else
-        {
-            result = clickFlag;
-        }
 
         return result;
     }
-    
+
     /// <summary>
     /// Checks if "RightMouse" clicked, including alternatives for gamepads.
     /// </summary>
@@ -250,7 +271,7 @@ public class Controls : MonoBehaviour {
     {
         bool result = (Input.touchCount > 0) ?
             Input.GetTouch(0).phase == TouchPhase.Ended : (Input.GetMouseButtonUp(0));
-        
+
         return result;
     }
 }

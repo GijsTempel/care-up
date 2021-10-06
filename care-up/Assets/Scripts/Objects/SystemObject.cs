@@ -1,13 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 
 /// <summary>
 /// Object that loads certain scene or performs an action, not related to gameplay.
 /// </summary>
-public class SystemObject : InteractableObject {
-
+public class SystemObject : InteractableObject
+{
     public string sceneName;
 
     private LoadingScreen loadingScreen;
@@ -33,9 +30,11 @@ public class SystemObject : InteractableObject {
 
     protected override void Update()
     {
+        base.Update(); // added with override
+
         if (prefs != null && prefs.VR)
         {
-            base.Update();
+            //base.Update();
         }
     }
 
@@ -49,27 +48,9 @@ public class SystemObject : InteractableObject {
         {
             // temporary until scene selection is designed
             loadingScreen.LoadLevel("Tutorial");
-            /*
-            if (!GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().TutorialCompleted)
-            {
-                if (GameObject.Find("_SkipTutorial"))
-                {
-                    Debug.LogWarning("TutorialSkip found! => Skipping tutorial");
-                    loadingScreen.LoadLevel("SceneSelection");
-                }
-                else
-                {
-                    Debug.Log("Tutorial is not completed.");
-                    loadingScreen.LoadLevel("Tutorial");
-                }
-            }
-            else
-            {
-                Debug.Log("Tutorial is completed.");
-                loadingScreen.LoadLevel("SceneSelection");
-            }*/
         }
-        else {
+        else
+        {
             if (sceneName == "_Continue")
             {
                 GameObject.Find("Preferences").GetComponent<SaveLoadManager>().LoadLevel();
@@ -78,20 +59,21 @@ public class SystemObject : InteractableObject {
             {
                 Application.Quit();
             }
-            else {
+            else
+            {
                 if (confirmed || sceneName == "Tutorial" || sceneName == "Options")
                 {
                     loadingScreen.LoadLevel(sceneName);
-                    //SceneManager.LoadScene(sceneName);
                 }
-                else {
+                else
+                {
                     cameraMode.ToggleCameraMode(CameraMode.Mode.ConfirmUI);
                 }
             }
         }
     }
 
-    protected override void SetShaderTo(Shader shader)
+    protected override void SetShaderTo(Shader shader, bool toHide = false)
     {
         foreach (Material m in rend.materials)
         {

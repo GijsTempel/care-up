@@ -1,31 +1,38 @@
-﻿
-using UnityEngine;
-using System.Collections;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.Networking;
+using System.Collections;
+using System;
+
 
 /// <summary>
 /// Handles EndScore scene.
 /// </summary>
-public class EndScoreManager : MonoBehaviour {
-
+public class EndScoreManager : MonoBehaviour
+{
     private int points;
     private int score;
     private float time;
 
-    public float percent;
+    private PlayerPrefsManager manager;
+
+    public int percent;
 
     public string completedSceneName;
     public string completedSceneBundle;
 
+    public Text reward;
+
     private List<string> steps;
-    private List<string> stepsDescr;
     private List<int> wrongStepIndexes;
     private List<int> correctStepIndexes;
 
-    public List<string> quizQuestionsTexts = new List<string> ();
-    public List<int> quizWrongIndexes = new List<int> ();
+    private MBS.WUADisplay achievements;
+
+    public List<string> quizQuestionsTexts = new List<string>();
+    public List<int> quizWrongIndexes = new List<int>();
 
     private ActionManager actionManager;    //points, steps
     private GameTimer gameTimer; // time
@@ -33,107 +40,203 @@ public class EndScoreManager : MonoBehaviour {
     private Sprite halfStar;
     private Sprite fullStar;
 
-    void Start () {
+    private bool emailsSent = false;
+    public static bool showReward = false;
+
+    void Start()
+    {
         SceneManager.sceneLoaded += OnLoaded;
 
-        fullStar = Resources.Load<Sprite> ("Sprites/Stars/star");
+        manager = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
+        achievements = GameObject.Find("AchievementsDisplayPrefab").GetComponent<MBS.WUADisplay>();
+        fullStar = Resources.Load<Sprite>("Sprites/Stars/star");
     }
 
+    private void InitializeObjects()
+    {
+        if (actionManager == null)
+            actionManager = GameObject.FindObjectOfType<ActionManager>();
+    }
     /// <summary>
     /// Sets object variables in scene after loading.
     /// </summary>
-    private void OnLoaded (Scene s, LoadSceneMode m) {
-        bool actualScene = false; // for later lines
-        if (SceneManager.GetActiveScene ().name == "EndScore") {
-            Transform uiFolder = GameObject.Find ("Canvas").transform;
-            Transform secondScreen = GameObject.Find ("StepScreen").transform;
+    private void OnLoaded(Scene s, LoadSceneMode m)
+    {
+        bool actualScene = false;
 
-            //uiFolder.Find("Left").Find("Score").GetComponent<Text>().text = "Score: " + score;
-            uiFolder.Find ("ScoreScreen").Find ("Points").GetComponent<Text> ().text = "Punten: " + points;
-            uiFolder.Find ("ScoreScreen").Find ("Time").GetComponent<Text> ().text = string.Format ("Tijd: {0}:{1:00}", (int)time / 60, (int)time % 60);
-
-            //uiFolder.GetChild(1).FindChild("Steps").GetComponent<Text>().text = wrongSteps;
-
-            Transform layoutGroup = secondScreen.Find ("Right").Find ("WrongstepScroll").Find ("WrongstepViewport").Find ("LayoutGroup");
-            EndScoreWrongStepDescr[] stepObjects = layoutGroup.GetComponentsInChildren<EndScoreWrongStepDescr> ();
-
-            for (int i = 0; i < steps.Count && i < stepObjects.Length; ++i) {
-                stepObjects[i].GetComponent<Text> ().text = steps[i];
-                stepObjects[i].text = stepsDescr[i];
-                stepObjects[i].wrong = wrongStepIndexes.Contains (i);
-            }
-            actualScene = true;
-        } else if (SceneManager.GetActiveScene ().name == "EndScore_Test") {
-            Transform stepParent = GameObject.Find ("Interactable Objects/Canvas/StepScreen/ObservationForm/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
-
-            for (int i = 0; i < steps.Count; ++i) {
-                GameObject step = GameObject.Instantiate (Resources.Load<GameObject> ("Prefabs/ProtocolEvaluationStep"), stepParent);
-                step.transform.Find ("Text").GetComponent<Text> ().text = steps[i];
-
-                bool correct = correctStepIndexes.Contains (i);
-                step.transform.Find ("ToggleYes").GetComponent<Toggle> ().isOn = correct;
-                step.transform.Find ("ToggleNo").GetComponent<Toggle> ().isOn = !correct;
-            }
-
-            percent = 1.0f *
-                (correctStepIndexes.Count + (quizQuestionsTexts.Count - quizWrongIndexes.Count))
-                / (steps.Count + quizQuestionsTexts.Count);
-
-            GameObject.Find ("Interactable Objects/Canvas/ScoreScreen/Score_percentage/ScoreText")
-                .GetComponent<Text> ().text = Mathf.FloorToInt (percent * 100f).ToString () + "%";
-
-            GameObject.Find ("Interactable Objects/Canvas/ScoreScreen/Score_result/ResultText")
-                .GetComponent<Text> ().text = (percent < 0.7f) ? "Onvoldoende" : "Voldoende";
-
-            GameObject.Find ("Interactable Objects/Canvas/ScoreScreen/Points")
-                .GetComponent<Text> ().text = "Punten: " + points;
-            GameObject.Find ("Interactable Objects/Canvas/ScoreScreen/Time")
-                .GetComponent<Text> ().text = string.Format ("Tijd: {0}:{1:00}", (int)time / 60, (int)time % 60);
+        if (SceneManager.GetActiveScene().name == "EndScore")
+        {
+            Transform uiFolder = GameObject.Find("Canvas").transform;
+            SetBasicText();
+            uiFolder.Find("ScoreScreen/ScoreInfo/InfoHolder/Info/Points").GetComponent<Text>().text = "Punten: " + points;
+            uiFolder.Find("ScoreScreen/ScoreInfo/InfoHolder/Info/Time").GetComponent<Text>().text = string.Format("Tijd: {0}:{1:00}", (int)time / 60, (int)time % 60);
 
             actualScene = true;
-            
+
+            //update practice score & stars, update UI accordingly
+            manager.UpdatePracticeHighscore(points, score);
+
+            Transform stepParent = uiFolder.Find("PracticeStepsScreen/Image/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
+
+            for (int i = 0; i < steps.Count; ++i)
+            {
+                GameObject step = GameObject.Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/ProtocolPracticeSteps"), stepParent);
+                step.transform.Find("Text").GetComponent<Text>().text = steps[i];
+
+                Sprite correctSprite = Resources.Load<Sprite>("Sprites/item_select_check");
+                if (correctStepIndexes.Contains(i))
+                    step.transform.Find("ToggleNo").GetComponent<Image>().sprite = correctSprite;
+            }
+
+        }
+        else if (SceneManager.GetActiveScene().name == "EndScore_Test")
+        {
+            Transform stepParent = GameObject.Find("Interactable Objects/Canvas/StepScreen/Image/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
+
+            SetBasicText();
+
+            for (int i = 0; i < steps.Count; ++i)
+            {
+                GameObject step = GameObject.Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/ProtocolEvaluationStep"), stepParent);
+                step.transform.Find("Text").GetComponent<Text>().text = steps[i];
+
+                bool correct = correctStepIndexes.Contains(i);
+                step.transform.Find("ToggleYes").GetComponent<Toggle>().isOn = correct;
+                step.transform.Find("ToggleNo").GetComponent<Toggle>().isOn = !correct;
+            }
+
+            percent = CalculatePercentage();
+            ActionManager.percentage = percent;
+
+            GameObject.Find("Interactable Objects/Canvas/ScoreScreen/ScoreInfo/ResultInfoHolder/Value")
+                .GetComponent<Text>().text = percent.ToString() + "%";
+
+            GameObject.Find("Interactable Objects/Canvas/ScoreScreen/ScoreInfo/ResultInfoHolder/Result")
+                .GetComponent<Text>().text = (percent < 70) ? "Onvoldoende" : "Voldoende";
+
+            actualScene = true;
+
             // show/hide buttons
-            bool flag = (percent > 0.7f && GameObject.FindObjectOfType<PlayerPrefsManager>().subscribed);
-            GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Buttons/NextButton").SetActive(flag);
-            GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Buttons/Back to main menu").SetActive(!flag);
+            bool subscribed = manager.subscribed;
+            if (manager.IsScenePurchasedByName(completedSceneName))
+                subscribed = true;
+            bool flag = (percent > 70 && (subscribed || HasFreeCert()));
 
-            GameObject.Find("Interactable Objects/Canvas/Send_Score/Top/Scenetitle").GetComponent<Text>().text = GameObject.FindObjectOfType<PlayerPrefsManager>().currentSceneVisualName;
+            // update test highscore + save certificate date
+            manager.UpdateTestHighscore(percent);
 
-            // update test highscore
-            GameObject.FindObjectOfType<PlayerPrefsManager>().UpdateTestHighscore(percent);
+            if (flag)
+            {
+                //PlayerPrefsManager.__sendCertificateToUserMail(manager.currentSceneVisualName);
+                //PlayerPrefsManager.__openCertificate(manager.currentSceneVisualName);
+
+                achievements.UpdateKeys("FirstPassedExam", 1);
+
+                if (manager.validatedScene)
+                {
+                    EndScoreSendMailResults();
+                    AutomaticPEcourseValidation();
+                }
+            }
+
+            emailsSent = flag;
+            GameObject.Find("Interactable Objects/Canvas/ScoreScreen/ScoreScreenButtons/Panel (2)/BackToMainMenu")
+                .GetComponent<Button>().onClick.AddListener(ConditionalHomeButton);
+
+            // track amount of results per scene
+            if (percent < 70)
+            {
+                PlayerPrefsManager.AddOneToTestFails(manager.currentSceneVisualName);
+            }
+            else
+            {
+                PlayerPrefsManager.AddOneToTestPassed(manager.currentSceneVisualName);
+            }
 
         }
         if (actualScene)
         {
-            Transform quizParent = GameObject.Find("Interactable Objects/Canvas/Questionscreen/QuizForm/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
+            showReward = true;
+
+            Transform quizParent = GameObject.Find("Interactable Objects/Canvas/Questionscreen/Image/QuizForm/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
 
             for (int i = 0; i < quizQuestionsTexts.Count; ++i)
             {
-                GameObject step = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/ProtocolQuestion"), quizParent);
+                GameObject step = GameObject.Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/ProtocolQuestion"), quizParent);
                 step.transform.Find("Text").GetComponent<Text>().text = quizQuestionsTexts[i];
 
                 bool wrong = quizWrongIndexes.Contains(i);
-                step.transform.Find("ToggleYes").GetComponent<Toggle>().isOn = !wrong;
-                step.transform.Find("ToggleNo").GetComponent<Toggle>().isOn = wrong;
-            }
-            
-            if (score >= 1.0f) {
-                GameObject.Find ("Interactable Objects/Canvas/ScoreScreen/Stars/Star1").GetComponent<Image> ().sprite = fullStar;
+                step.transform.Find("Toggles/ToggleYes").GetComponent<Toggle>().isOn = !wrong;
+                step.transform.Find("Toggles/ToggleNo").GetComponent<Toggle>().isOn = wrong;
             }
 
-            if (score >= 2.0f) {
-                GameObject.Find ("Interactable Objects/Canvas/ScoreScreen/Stars/Star2").GetComponent<Image> ().sprite = fullStar;
+            if (SceneManager.GetActiveScene().name == "EndScore")
+            {
+                Transform starsFolder = GameObject.Find("Interactable Objects/Canvas/ScoreScreen/ScoreInfo/TopBar/Stars/Stars").transform;
+                if (score >= 1.0f)
+                    starsFolder.transform.Find("Star1").GetComponent<Image>().sprite = fullStar;
+                if (score >= 2.0f)
+                    starsFolder.transform.Find("Star2").GetComponent<Image>().sprite = fullStar;
+                if (score >= 3.0f)
+                    starsFolder.transform.Find("Star3").GetComponent<Image>().sprite = fullStar;
+            }
+            else if (SceneManager.GetActiveScene().name == "EndScore_test")
+            {
+                if (score >= 1.0f)
+                    GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Stars/Star1").GetComponent<Image>().sprite = fullStar;
+                if (score >= 2.0f)
+                    GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Stars/Star2").GetComponent<Image>().sprite = fullStar;
+                if (score >= 3.0f)
+                    GameObject.Find("Interactable Objects/Canvas/ScoreScreen/Stars/Star3").GetComponent<Image>().sprite = fullStar;
             }
 
-            if (score >= 3.0f) {
-                GameObject.Find ("Interactable Objects/Canvas/ScoreScreen/Stars/Star3").GetComponent<Image> ().sprite = fullStar;
+            if (time >= 900.0f)
+            {
+                achievements.UpdateKeys("MoreThan15", 1);
+            }
+            else if (time <= 300.0f)
+            {
+                achievements.UpdateKeys("within5", 1);
+            }
+
+            if (PlayerPrefsManager.plays == 1)
+            {
+                achievements.UpdateKeys("FinishedProtocol", 1);
+            }
+            else if (PlayerPrefsManager.plays == 3)
+            {
+                achievements.UpdateKeys("FinishedProtocol", 2);
+            }
+            else if (PlayerPrefsManager.plays == 5)
+            {
+                achievements.UpdateKeys("FinishedProtocol", 2);
             }
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
-            GameObject.Find ("Preferences").GetComponent<PlayerPrefsManager> ().SetSceneCompletionData (
-                completedSceneName, points, Mathf.RoundToInt (time));
+            int counter = 0;
+            // add in-game currency once 3 finishes?
+            int.TryParse(DatabaseManager.FetchField("Store", "FinishedCounter"), out counter);
+            if (++counter >= 3)
+            {
+                counter = 0;
+                PlayerPrefsManager.storeManager.ModifyCurrencyBy(5);
+            }
+            DatabaseManager.UpdateField("Store", "FinishedCounter", counter.ToString());
+
+            // add in-game store presents once 15 successful finishes?
+            int.TryParse(DatabaseManager.FetchField("Store", "SuccessCounter"), out counter);
+            if (percent >= 70) ++counter;
+            if (counter >= 15)
+            {
+                counter = 0;
+                PlayerPrefsManager.storeManager.ModifyPresentsBy(1);
+            }
+            DatabaseManager.UpdateField("Store", "SuccessCounter", counter.ToString());
+
+            GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().SetSceneCompletionData(
+                completedSceneName, points, Mathf.RoundToInt(time));
         }
         else
         {
@@ -142,43 +245,215 @@ public class EndScoreManager : MonoBehaviour {
         }
     }
 
+    public void SetBasicText()
+    {
+        Transform quizForm = GameObject.Find("Interactable Objects/Canvas/Questionscreen/Image/QuizForm").transform;
+        if (quizQuestionsTexts.Count == 0)
+        {
+            quizForm.Find("YesNo").gameObject.SetActive(false);
+            quizForm.Find("WrongstepScroll").gameObject.SetActive(false);
+            quizForm.Find("BasicText").gameObject.SetActive(true);
+        }
+        else
+            quizForm.Find("BasicText").gameObject.SetActive(false);
+    }
+
+    public int CalculatePercentage()
+    {
+        //If you need to test endscore scene with hith score, uncomment this line:
+        //return 99;
+
+        InitializeObjects();
+
+        int correctSteps;
+        int totalSteps;
+
+        if (actionManager == null)
+        {
+            correctSteps = correctStepIndexes.Count;
+            totalSteps = steps.Count;
+        }
+        else
+        {
+            correctSteps = actionManager.CorrectStepIndexes.Count;
+            totalSteps = actionManager.StepsList.Count;
+        }
+
+        float result = (float)(correctSteps + quizQuestionsTexts.Count - quizWrongIndexes.Count)
+            / (totalSteps + QuizTab.totalQuizesCount);
+
+        if (result < 0f) result = 0f;
+
+        return Mathf.FloorToInt(result * 100f);
+    }
+
     /// <summary>
     /// Gets necesarry variables and loads EndScore scene.
     /// </summary>
-    public void LoadEndScoreScene () {
-        actionManager = GameObject.Find ("GameLogic").GetComponent<ActionManager> ();
-        if (actionManager == null) Debug.LogError ("No action manager found.");
+    public void LoadEndScoreScene()
+    {
+        StoreViewModel.SavedCoins = ActionManager.Points;
+        InitializeObjects();
+        if (actionManager == null) Debug.LogError("No action manager found.");
 
-        gameTimer = GameObject.Find ("GameLogic").GetComponent<GameTimer> ();
-        if (gameTimer == null) Debug.LogError ("No timer found");
+        gameTimer = GameObject.Find("GameLogic").GetComponent<GameTimer>();
+        if (gameTimer == null) Debug.LogError("No timer found");
 
         time = gameTimer.CurrentTime;
 
-        points = actionManager.Points;
-        score = Mathf.FloorToInt (3.0f * points / actionManager.TotalPoints);
+        points = ActionManager.Points;
+        score = Mathf.FloorToInt(3.0f * points / actionManager.TotalPoints);
 
-        Debug.Log ("Current points: " + points);
-        Debug.Log ("Total available points: " + actionManager.TotalPoints);
-        Debug.Log ("Calculated stars (3 * points/total): " + score);
+        Debug.Log("Current points: " + points);
+        Debug.Log("Total available points: " + actionManager.TotalPoints);
+        Debug.Log("Calculated stars (3 * points/total): " + score);
 
         int multiplier = (time < 300.0f ? 3 : (time < 600.0f ? 2 : 1));
         points *= multiplier;
-        Debug.Log ("Multiplied final score: " + points);
+        Debug.Log("Multiplied final score: " + points);
 
-        completedSceneName = SceneManager.GetActiveScene ().name;
+        completedSceneName = SceneManager.GetActiveScene().name;
 
         steps = actionManager.StepsList;
-        stepsDescr = actionManager.StepsDescriptionList;
         wrongStepIndexes = actionManager.WrongStepIndexes;
         correctStepIndexes = actionManager.CorrectStepIndexes;
 
-        PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager> ();
-        if (manager != null && manager.practiceMode) {
-            bl_SceneLoaderUtils.GetLoader.LoadLevel ("EndScore");
-        } else {
-            bl_SceneLoaderUtils.GetLoader.LoadLevel ("EndScore_Test");
+        PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
+        if (manager != null && manager.practiceMode)
+        {
+            bl_SceneLoaderUtils.GetLoader.LoadLevel("EndScore");
+        }
+        else
+        {
+            bl_SceneLoaderUtils.GetLoader.LoadLevel("EndScore_Test");
         }
     }
 
-}
+    public void OpenCertificateBtn()
+    {
+        if (manager.fullPlayerName != "")
+        {
+            PlayerPrefsManager.__openCertificate(manager.currentSceneVisualName);
+        }
+        else
+        {
+            // open name pop up instead
+            GameObject.Find("Interactable Objects/Canvas/NamePopUp").SetActive(true);
+        }
+    }
 
+    public void SaveFullPlayerNameBtn()
+    {
+        manager.fullPlayerName = GameObject.Find("Interactable Objects/Canvas/NamePopUp/" +
+            "FullnameHolder/FullName/Text").GetComponent<Text>().text;
+
+        PlayerPrefsManager.SetFullName(manager.fullPlayerName);
+
+        GameObject.Find("Interactable Objects/Canvas/NamePopUp").SetActive(false);
+    }
+
+    public void EndScoreSendMailResults()
+    {
+        achievements.UpdateKeys("StudyPoints", 1);
+
+        int percent = GameObject.FindObjectOfType<EndScoreManager>().percent;
+
+        string link = "https://leren.careup.online/MailSceneComplStats.php";
+        link += "?name=" + MBS.WULogin.username;
+        link += "&scene=" + manager.currentSceneVisualName;
+        link += "&userMail=" + MBS.WULogin.email;
+        link += "&bigNum=" + manager.bigNumber;
+        link += "&percent=" + percent.ToString();
+
+        UnityWebRequest unityWebRequest = new UnityWebRequest(link.Replace(" ", "%20"));
+        unityWebRequest.SendWebRequest();
+        Debug.Log("E-mail verzonden");
+    }
+    bool HasFreeCert()
+    {
+        return manager.HasFreeCert(manager.currentSceneVisualName);
+    }
+    /// <summary>
+    /// if email was sent - opens panel
+    /// if email was not sent - loads main menu
+    /// </summary>
+    public void ConditionalHomeButton()
+    {
+        // special panel for demo
+        bool subscribed = manager.subscribed;
+        if (manager.IsScenePurchasedByName(completedSceneName))
+            subscribed = true;
+        if (!subscribed && !HasFreeCert())
+        {
+            GameObject.Find("Interactable Objects/Canvas/CertificateDemoPopOp").SetActive(true);
+        }
+        else if (emailsSent) // if not demo and email sent, special panel
+        {
+            GameObject.Find("Interactable Objects/Canvas/CertificatePopOp").SetActive(true);
+            if (manager.validatedScene == false)
+            {   // changing pop up text if scene is not validated
+                GameObject.Find("/Interactable Objects/Canvas/CertificatePopOp/Certificate/RegText").GetComponent<Text>().text
+                    = "Je kan je certificaat nu downloaden via de knop hieronder. Dit kan ook later vanuit de portal.";
+            }
+        }
+        else // if not demo and emails not sent just load menu
+        {
+            bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
+        }
+    }
+
+    // testing mode for now (test.pe-online)
+    // "GET" request is pretty bad practice, but this is 8th attempt and first thing that gave an actual server response
+    public void AutomaticPEcourseValidation()
+    {
+        Debug.Log("AutomaticPEcourseValidation");
+
+        if (manager.bigNumber == "")
+        {
+            Debug.LogWarning("BigNumber was empty, aborting PEcourseValidation.");
+            return;
+        }
+
+        // Create a request for the URL.
+        string _url = "https://www.pe-online.org/pe-services/pe-attendanceelearning/WriteAttendance.asmx/ProcessXML?sXML=";
+       
+        // someone's BIG for testing only // insuline for testing only
+        _url += PlayerPrefsManager.GenerateAttendanceSXML(manager.bigNumber, manager.currentPEcourseID);
+
+        // filter scenes that are not "connected"
+        if (_url.Contains("<externalmoduleID>X</externalmoduleID>"))
+        {
+            Debug.Log("PE course not connected. Aborting AutomaticPEcourseValidation");
+            return;
+        }
+
+        Uri uri = new Uri(_url, UriKind.Absolute);
+        _url = uri.ToString();
+
+        Debug.Log("Generated url: " + _url);
+
+        // get request woo
+        StartCoroutine(GetRequest(_url));
+    }
+
+    IEnumerator GetRequest(string uri)
+    {
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
+        {
+            // Request and wait for the desired page.
+            yield return webRequest.SendWebRequest();
+
+            string[] pages = uri.Split('/');
+            int page = pages.Length - 1;
+
+            if (webRequest.isNetworkError)
+            {
+                Debug.Log(pages[page] + ": Error: " + webRequest.error);
+            }
+            else
+            {
+                Debug.Log(pages[page] + ":\nReceived: " + webRequest.downloadHandler.text);
+            }
+        }
+    }
+}

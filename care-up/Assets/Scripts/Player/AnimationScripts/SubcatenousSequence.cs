@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SubcatenousSequence : AnimationSequenceState
 {
@@ -36,7 +34,8 @@ public class SubcatenousSequence : AnimationSequenceState
         {
             inv.ReplaceHandObject(false, "SyringeWithInjectionNeedle");
 
-            GameObject cap = inv.CreateObjectByName("SyringeInjectionCap", Vector3.zero);
+            GameObject cap = null;
+            inv.CreateObjectByName("SyringeInjectionCap", Vector3.zero, callback => cap = callback);
 
             syringe = inv.RightHandObject.GetComponent<Syringe>();
             syringe.updateProtector = true;
@@ -44,15 +43,17 @@ public class SubcatenousSequence : AnimationSequenceState
             Vector3 savedPos = Vector3.zero;
             Quaternion savedRot = Quaternion.identity;
             inv.RightHandObject.GetComponent<PickableObject>().GetSavesLocation(out savedPos, out savedRot);
-            float offset = inv.RightHandObject.GetComponent<MeshFilter>().mesh.bounds.size.z * inv.RightHandObject.transform.lossyScale.z +
-                            cap.GetComponent<MeshFilter>().mesh.bounds.size.z * cap.transform.lossyScale.z;
-            cap.GetComponent<PickableObject>().SavePosition(savedPos + new Vector3(0, 0, -3f * offset), savedRot);
+
+            if (cap != null) {
+                float offset = inv.RightHandObject.GetComponent<MeshFilter>().mesh.bounds.size.z * inv.RightHandObject.transform.lossyScale.z +
+                                cap.GetComponent<MeshFilter>().mesh.bounds.size.z * cap.transform.lossyScale.z;
+                cap.GetComponent<PickableObject>().SavePosition(savedPos + new Vector3(0, 0, -3f * offset), savedRot);
+            }
 
             inv.ForcePickItem("SyringeInjectionCap", true);
         }
         else if (PlayerAnimationManager.CompareFrames(frame, prevFrame, dropCapFrame))
-        {
-            //inv.DropLeftObject();
+        {            
             inv.RemoveHandObject(true); // left
         }
 
@@ -72,7 +73,7 @@ public class SubcatenousSequence : AnimationSequenceState
         if (animator.speed != 0)
         {
             prevFrame = frame;
-            frame += Time.deltaTime;
+            frame = stateInfo.normalizedTime * stateInfo.length;
         }
     }
 
@@ -116,14 +117,4 @@ public class SubcatenousSequence : AnimationSequenceState
 
         syringe.updateProtector = false;
     }
-
-    // OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here
-    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-    //
-    //}
-
-    // OnStateIK is called right after Animator.OnAnimatorIK(). Code that sets up animation IK (inverse kinematics) should be implemented here.
-    //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-    //
-    //}
 }

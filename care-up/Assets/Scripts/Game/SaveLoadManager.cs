@@ -15,13 +15,13 @@ public class SaveLoadManager : MonoBehaviour {
 
     private bool needLoad = false;
     private string needLoadName;
-    
-	void Start()
+
+    void Start()
     {
         Directory.CreateDirectory(Application.dataPath + savePath);
         SceneManager.sceneLoaded += OnLoaded;
-    }
-    
+    } 
+
     private void OnLoaded(Scene s, LoadSceneMode m)
     {
         if (needLoad)
@@ -192,7 +192,7 @@ public class SaveLoadManager : MonoBehaviour {
             scenario.Attributes.Append(currentAction);
 
             XmlAttribute pointsValue = doc.CreateAttribute("points");
-            pointsValue.Value = actionManager.Points.ToString();
+            pointsValue.Value = ActionManager.Points.ToString();
             scenario.Attributes.Append(pointsValue);
 
             save.AppendChild(scenario);
@@ -333,7 +333,7 @@ public class SaveLoadManager : MonoBehaviour {
         actionManager.SetActionStatus(statusList);
 
         actionManager.CurrentActionIndex = int.Parse(scenario.Attributes["current"].Value);
-        actionManager.Points = int.Parse(scenario.Attributes["points"].Value);
+        ActionManager.Points = int.Parse(scenario.Attributes["points"].Value);
         //end scenario
 
         //timer

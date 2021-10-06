@@ -1,14 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 using MBS;
 
 public class UMP_Options : MonoBehaviour
 {
-
     public Animator Anim;
     public string OptionAnimation;
-    //ChangeName
+
     public Animator AnimCN;
     public string CNAnimation;
     [Space(7)]
@@ -38,14 +36,7 @@ public class UMP_Options : MonoBehaviour
 
     public Toggle FullScreenToggle = null;
     public bool SaveFullcreen = true;
-    //private bool m_FullScreen = false;
-    /// <summary>
-    /// 
-    /// </summary>
-    void Awake()
-    {
-        //GetInfoOptions();
-    }
+   
     /// <summary>
     /// 
     /// </summary>
@@ -70,6 +61,7 @@ public class UMP_Options : MonoBehaviour
         QualityText.text = QualitySettings.names[CurrentQuality];
         QualitySettings.SetQualityLevel(CurrentQuality);
     }
+
     /// <summary>
     /// 
     /// </summary>
@@ -94,6 +86,7 @@ public class UMP_Options : MonoBehaviour
                 break;
         }
     }
+
     /// <summary>
     /// 
     /// </summary>
@@ -151,24 +144,23 @@ public class UMP_Options : MonoBehaviour
         switch (CurrentBW)
         {
             case 0:
-                QualitySettings.blendWeights = BlendWeights.OneBone;
-                blendWeightsText.text = BlendWeights.OneBone.ToString();
+                QualitySettings.skinWeights = SkinWeights.OneBone;
+                blendWeightsText.text = SkinWeights.OneBone.ToString();
                 break;
             case 1:
-                QualitySettings.blendWeights = BlendWeights.TwoBones;
-                blendWeightsText.text = BlendWeights.TwoBones.ToString();
+                QualitySettings.skinWeights = SkinWeights.TwoBones;
+                blendWeightsText.text = SkinWeights.TwoBones.ToString();
                 break;
             case 2:
-                QualitySettings.blendWeights = BlendWeights.FourBones;
-                blendWeightsText.text = BlendWeights.FourBones.ToString();
+                QualitySettings.skinWeights = SkinWeights.FourBones;
+                blendWeightsText.text = SkinWeights.FourBones.ToString();
                 break;
         }
     }
 
     /// <summary>
     /// Change resolution of screen
-    /// NOTE: this work only in build game, this not work in
-    /// Unity Editor.
+    /// NOTE: this works only in build, not in Unity Editor.
     /// </summary>
     /// <param name="b"></param>
     public void Resolution(bool b)
@@ -180,17 +172,19 @@ public class UMP_Options : MonoBehaviour
         ResolutionText.text = Screen.resolutions[0].width + " X " + Screen.resolutions[0].height;
 #endif
     }
-    //public void FullScreen(bool f) { m_FullScreen = f; }
+
     /// <summary>
     /// Change volumen
     /// </summary>
     /// <param name="v">volumen</param>
     public void Volumen(float v) { AudioListener.volume = v; }
+
     /// <summary>
     /// 
     /// </summary>
     /// <param name="forward"></param>
     bool mopen = false;
+
     public void WndowAnimation(bool forward)
     {
         if (forward)
@@ -206,12 +200,10 @@ public class UMP_Options : MonoBehaviour
         }
         mopen = forward;
     }
-
-    /// <summary>
-    /// 
-    /// </summary>
+   
     bool mopencn = false;
     bool cnopem = false;
+
     public void CNAnimationWindow()
     {
         cnopem = !cnopem;
@@ -230,6 +222,7 @@ public class UMP_Options : MonoBehaviour
         }
         mopencn = cnopem;
     }
+
     /// <summary>
     /// Saved Options
     /// </summary>
@@ -242,113 +235,14 @@ public class UMP_Options : MonoBehaviour
             preferences.GetComponent<PlayerPrefsManager>().postProcessingEnabled = postProcessing.isOn;
             PlayerPrefs.SetInt("PostProcessing", (postProcessing.isOn ? 1 : 0));
             Debug.Log("PostProcessing is set to " + postProcessing.isOn);
+            int QualityLevel = 6;
+            if (postProcessing.isOn)
+                QualityLevel = 7;
+            QualitySettings.SetQualityLevel(QualityLevel, true);
         }
-        StatusMessage.Message = "Aanpassingen zijn opgeslagen";
-    }
-    /*  other options that are removed ?
-        PlayerPrefs.SetInt(UMPKeys.Quality, CurrentQuality);
-        PlayerPrefs.SetInt(UMPKeys.AnisoStropic, CurrentAS);
-        PlayerPrefs.SetInt(UMPKeys.AntiAliasing, CurrentAA);
-        PlayerPrefs.SetInt(UMPKeys.VSync, CurrentVSC);
-        PlayerPrefs.SetInt(UMPKeys.BlendWeight, CurrentBW);
-        PlayerPrefs.SetInt(UMPKeys.Resolution, CurrentRS);
-        PlayerPrefs.SetFloat(UMPKeys.Volumen, AudioListener.volume);
-        if (SaveFullcreen)
-        {
-            int f = (m_FullScreen) ? 1 : 0;
-            PlayerPrefs.SetInt(UMPKeys.FullScreen, f);
-        }
-        
-        Screen.SetResolution(Screen.resolutions[CurrentRS].width, Screen.resolutions[CurrentRS].height,false);
-        Screen.fullScreen = m_FullScreen;
-    */
+        //StatusMessage.Message = "Aanpassingen zijn opgeslagen";
+    } 
 
     public void ChangeName(InputField field) { if (field == null || PlayerNameText == null) return; PlayerNameText.text = field.text; field.text = string.Empty; CNAnimationWindow(); }
-    /// <summary>
-    /// Get saved info
-    /// </summary>
-    /// 
-    /*
-    void GetInfoOptions()
-    {
-        if (PlayerPrefs.HasKey(UMPKeys.Quality)) { CurrentQuality = PlayerPrefs.GetInt(UMPKeys.Quality); } else { CurrentQuality = QualitySettings.GetQualityLevel(); }
-        if (PlayerPrefs.HasKey(UMPKeys.AnisoStropic)) { CurrentAS = PlayerPrefs.GetInt(UMPKeys.AnisoStropic); }
-        if (PlayerPrefs.HasKey(UMPKeys.AntiAliasing)) { CurrentAA = PlayerPrefs.GetInt(UMPKeys.AntiAliasing); }
-        if (PlayerPrefs.HasKey(UMPKeys.BlendWeight)) { CurrentBW = PlayerPrefs.GetInt(UMPKeys.BlendWeight); }
-        if (PlayerPrefs.HasKey(UMPKeys.VSync)) { CurrentVSC = PlayerPrefs.GetInt(UMPKeys.VSync); }
-        if (PlayerPrefs.HasKey(UMPKeys.Resolution)) { CurrentRS = PlayerPrefs.GetInt(UMPKeys.Resolution); }
-        if (PlayerPrefs.HasKey(UMPKeys.Volumen)) { AudioListener.volume = PlayerPrefs.GetFloat(UMPKeys.Volumen); }
-        if (SaveFullcreen && PlayerPrefs.HasKey(UMPKeys.FullScreen))
-        {
-            bool f = (PlayerPrefs.GetInt(UMPKeys.FullScreen) == 1) ? true : false;
-            Screen.fullScreen = f;
-            FullScreenToggle.isOn = f;
-        }
-
-        VolumenSlider.value = AudioListener.volume;
-        QualityText.text = QualitySettings.names[CurrentQuality];
-        //
-        switch (CurrentAS)
-        {
-            case 0:
-                QualitySettings.anisotropicFiltering = AnisotropicFiltering.Disable;
-                AntiStropicText.text = AnisotropicFiltering.Disable.ToString();
-                break;
-            case 1:
-                QualitySettings.anisotropicFiltering = AnisotropicFiltering.Enable;
-                AntiStropicText.text = AnisotropicFiltering.Enable.ToString();
-                break;
-            case 2:
-                QualitySettings.anisotropicFiltering = AnisotropicFiltering.ForceEnable;
-                AntiStropicText.text = AnisotropicFiltering.ForceEnable.ToString();
-                break;
-        }
-        //
-        AntiAliasingText.text = AAOptions[CurrentAA];
-        switch (CurrentAA)
-        {
-            case 0:
-                QualitySettings.antiAliasing = 0;
-                break;
-            case 1:
-                QualitySettings.antiAliasing = 2;
-                break;
-            case 2:
-                QualitySettings.antiAliasing = 4;
-                break;
-            case 3:
-                QualitySettings.antiAliasing = 8;
-                break;
-        }
-        //
-        vSyncText.text = VSCOptions[CurrentVSC];
-        switch (CurrentVSC)
-        {
-            case 0:
-                QualitySettings.vSyncCount = 0;
-                break;
-            case 1:
-                QualitySettings.vSyncCount = 1;
-                break;
-            case 2:
-                QualitySettings.vSyncCount = 2;
-                break;
-        }
-        //
-        switch (CurrentBW)
-        {
-            case 0:
-                QualitySettings.blendWeights = BlendWeights.OneBone;
-                blendWeightsText.text = BlendWeights.OneBone.ToString();
-                break;
-            case 1:
-                QualitySettings.blendWeights = BlendWeights.TwoBones;
-                blendWeightsText.text = BlendWeights.TwoBones.ToString();
-                break;
-            case 2:
-                QualitySettings.blendWeights = BlendWeights.FourBones;
-                blendWeightsText.text = BlendWeights.FourBones.ToString();
-                break;
-        }*/    
 }
    

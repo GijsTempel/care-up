@@ -164,7 +164,7 @@ public class Tutorial_Movement : TutorialManager
 						hintsN.ResetSize();
 						hintsN.SetIconPosition(1);
                         hintsN.LockTo("doc", new Vector3(0.48f, 2.43f, 1.22f));
-                        player.MoveBackButtonObject.SetActive(false);
+                        GameObject.FindObjectOfType<GameUI>().allowObjectControlUI = false;
                         player.tutorial_movedTo = false;
                         wfPos.SetActive(true);
                         particleHint.transform.position = GameObject.Find("WorkField").transform.position;

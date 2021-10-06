@@ -1,28 +1,73 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Xml;
-using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine.UI;
-using System;
 using System.Linq;
+using MBS;
+using CareUpAvatar;
+
+
+public class SceneInfo
+{
+    public string sceneID = "";
+    public string sceneType = "";
+    public bool activated = true;
+    public bool demoLock = false;
+    public bool hidden = false;
+    public string[] isInProducts = null;
+    public string bundleName = "";
+    public string displayName = "";
+    public string description = "";
+    public string sceneName = "";
+    public string image = "";
+    public bool validated = false;
+    public string totalPoints = "0";
+    public string mainScene = "";
+    public bool multiple = false;
+    public bool testDisabled = false;
+    public string inHouseBundleName = "";
+    public string inHouseSceneName = "";
+    public string url = "";
+    public bool freeCert = false;
+    public string nameForDatabase = "";
+}
 
 /// <summary>
 /// Handles Scene selection module
 /// </summary>
+/// 
 public class LevelSelectionScene_UI : MonoBehaviour
 {
+    public string debugSS;
     private PlayerPrefsManager ppManager;
+    float initTime = 0f;
+    bool sceneButtonsUpdated = false;
 
     // leaderboard stuff
     public ScoreLine[] _Scores;
+    public GameObject scoreLines;
 
     public List<Transform> variations;
 
+    private Sprite completedSceneIcon;
+
+    public void UpdateScenePurchases()
+    {
+        WPServer.RequestPurchases(WULogin.UID);
+    }
+
+    public void RefrashSceneSelectionButtons()
+    {
+        foreach(LevelButton levelButton in GameObject.FindObjectsOfType<LevelButton>())
+        {
+            levelButton.UpdateButtonLockState();
+        }
+    }
+
     private void Awake()
     {
-        Transform leaderPanel = GameObject.Find("UMenuProManager/MenuCanvas/Leaderboard/InfoBar").transform;
-        _Scores = GameObject.Find("scoreLines").GetComponentsInChildren<ScoreLine>();
+        Transform leaderPanel = GameObject.Find("UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Leaderboard").transform;
+        _Scores = scoreLines.GetComponentsInChildren<ScoreLine>();
 
         for (int i = 0; i < _Scores.Length; i++)
         {
@@ -30,16 +75,12 @@ public class LevelSelectionScene_UI : MonoBehaviour
         }
 
         // variations buttons should be disabled from the beginning
-        for (int i = 0; i < 3; ++i)
-        {
-            Transform v = leaderPanel.parent.Find("InfoBar/menu/d" + (i + 1));
-            variations.Add(v);
-            v.gameObject.SetActive(false);
-        }
-
-        // we dont have a list of activated scenes anymore i guess
-        //GameObject.Find("UMenuProManager/MenuCanvas/Home/BannerArea/RegisterProtocols/News/Text")
-        //    .GetComponent<Text>().text = GameObject.FindObjectOfType<PlayerPrefsManager>().ActivatedScenes;
+        //for (int i = 0; i < 3; ++i)
+        //{
+        //    Transform v = leaderPanel.parent.Find("InfoBar/menu/d" + (i + 1));
+        //    variations.Add(v);
+        //    v.gameObject.SetActive(false);
+        //}
     }
 
     /// <summary>
@@ -47,46 +88,65 @@ public class LevelSelectionScene_UI : MonoBehaviour
     /// </summary>
     void Start()
     {
+        initTime = Time.realtimeSinceStartup;
         ppManager = GameObject.FindObjectOfType<PlayerPrefsManager>();
+        completedSceneIcon = Resources.Load<Sprite>("Sprites/check_circle_on");
 
         UpdateSceneUI();
     }
 
+    private void Update()
+    {
+        if (!sceneButtonsUpdated)
+        {
+            if (Time.realtimeSinceStartup - initTime > 5f)
+            {
+                sceneButtonsUpdated = true;
+                RefrashSceneSelectionButtons();
+                Debug.Log("Updated menu");
+            }
+        }
+    }
+
     void ClearUI()
     {
-        Transform parent1 = GameObject.Find("UMenuProManager/MenuCanvas/Play/ProtocolList/ProtocolsHolder/Protocols/content").transform;
+        Transform parent1 = GameObject.Find("UMenuProManager/MenuCanvas/Play/InfoHolder/ProtocolList/ProtocolsHolder/Protocols/content").transform;
         for (int i = 0; i < parent1.childCount; ++i)
         {
             Destroy(parent1.GetChild(i).gameObject);
         }
 
-        Transform parent2 = GameObject.Find("UMenuProManager/MenuCanvas/Leaderboard/LeftBar/Scroll View/Viewport/Content").transform;
+        Transform parent2 = GameObject.Find("UMenuProManager/MenuCanvas/Leaderboard/InfoHolder/ProtocolsHolder/Scroll View/Viewport/Content").transform;
         for (int i = 0; i < parent1.childCount; ++i)
         {
             Destroy(parent2.GetChild(i).gameObject);
         }
     }
 
-    public void OnSceneTabSwitch()
+    void OnGUI()
     {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD 
+        GUIStyle style = new GUIStyle();
+        style.normal.textColor = new Color(0.3f, 1f, 0.3f);
+        style.fontSize = 20;
+        GUI.Label(new Rect(30, 10, 1000, 100), debugSS, style);
+#endif
+    }
+
+    public void ReinitializeUI()
+    {      
         ClearUI();
-        UpdateSceneUI();
+        UpdateSceneUI();           
     }
 
     void UpdateSceneUI()
     {
+       
         // load xml
         TextAsset textAsset;
-
         PlayerPrefsManager pp = GameObject.FindObjectOfType<PlayerPrefsManager>();
-        if (pp != null && pp.demoVersion)
-        {
-            textAsset = (TextAsset)Resources.Load("Xml/Scenes_Demo");
-        }
-        else
-        {
-            textAsset = (TextAsset)Resources.Load("Xml/Scenes");
-        }
+
+        textAsset = (TextAsset)Resources.Load("Xml/Scenes");
 
         XmlDocument xmlFile = new XmlDocument();
         xmlFile.LoadXml(textAsset.text);
@@ -95,26 +155,179 @@ public class LevelSelectionScene_UI : MonoBehaviour
         // leaderboard stuff
         bool firstScene = true;
         LeaderBoardSceneButton.buttons.Clear();
+// FindObjectOfType<PlayerPrefsManager>().demoVersion
 
+        Transform protocolsTransorm = GameObject.Find("UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Play/ContentPanel/PlayElements/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder/Protocols/content").transform;
+        pp.ClearFreeCertList();
+        pp.ClearScenesInfo();
+        Dictionary<string, SceneInfo> scenesInfo = new Dictionary<string, SceneInfo>();
+
+
+        //Load data for scenes
         foreach (XmlNode xmlSceneNode in xmlSceneList)
         {
+            SceneInfo sceneInfo = new SceneInfo();
+
             // bool activated = PlayerPrefs.GetInt(xmlSceneNode.Attributes["id"].Value + " activated") == 1;
-            bool activated = true;
-            bool hidden = xmlSceneNode.Attributes["hidden"] != null;
-            if ((!activated && hidden) || hidden)
+            sceneInfo.activated = true;
+
+            if (xmlSceneNode.Attributes["id"] != null)
+                sceneInfo.sceneID = xmlSceneNode.Attributes["id"].Value;
+
+            if (xmlSceneNode.Attributes["type"] != null)
+                sceneInfo.sceneType = xmlSceneNode.Attributes["type"].Value;
+
+            sceneInfo.freeCert = false;
+            if (xmlSceneNode.Attributes["freeCertificate"] != null)
+                sceneInfo.freeCert = (xmlSceneNode.Attributes["freeCertificate"].Value == "true");
+            if (xmlSceneNode.Attributes["name"] != null)
+            {
+                sceneInfo.displayName = xmlSceneNode.Attributes["name"].Value;
+                if (sceneInfo.freeCert)
+                    pp.AddFreeCertScene(sceneInfo.displayName);
+            }
+
+            sceneInfo.sceneName = xmlSceneNode.Attributes["sceneName"].Value;
+
+            if (xmlSceneNode.Attributes["hidden"] != null)
+                sceneInfo.hidden = xmlSceneNode.Attributes["hidden"].Value == "true";
+
+            sceneInfo.demoLock = !(xmlSceneNode.Attributes["demo"] != null);
+
+            if (xmlSceneNode.Attributes["isInProducts"] != null)
+            {
+                sceneInfo.isInProducts = xmlSceneNode.Attributes["isInProducts"].Value.Split('|');
+            }
+            if (xmlSceneNode.Attributes["nameForDatabase"] != null)
+            {
+                sceneInfo.nameForDatabase = xmlSceneNode.Attributes["nameForDatabase"].Value;
+            }
+
+            sceneInfo.bundleName = xmlSceneNode.Attributes["bundleName"].Value;
+
+            if (xmlSceneNode.Attributes["description"] != null)
+                sceneInfo.description = xmlSceneNode.Attributes["description"].Value;
+
+            /* setting image
+            if (xmlSceneNode.Attributes["image"] != null)
+            {
+                sceneUnit.image = Resources.Load<Sprite>("Sprites/ScenePreview/" + xmlSceneNode.Attributes["image"].Value);
+                sceneUnit.transform.Find("LevelPreview").GetComponent<Image>().sprite = sceneUnit.image;
+            } */
+
+            if (xmlSceneNode.Attributes["validated"] != null)
+                sceneInfo.validated = xmlSceneNode.Attributes["validated"].Value == "true";
+            if (xmlSceneNode.Attributes["totalPoints"] != null)
+                sceneInfo.totalPoints = xmlSceneNode.Attributes["totalPoints"].Value;
+
+            if (xmlSceneNode.Attributes["test"] != null)
+                sceneInfo.testDisabled = xmlSceneNode.Attributes["test"].Value == "disabled";
+
+            if (xmlSceneNode.Attributes["mainScene"] != null)
+                sceneInfo.mainScene = xmlSceneNode.Attributes["mainScene"].Value;
+            string sceneType = "";
+            if (xmlSceneNode.Attributes["type"] != null)
+                sceneType = xmlSceneNode.Attributes["type"].Value;
+
+            if (xmlSceneNode.Attributes["url"] != null)
+                sceneInfo.url = xmlSceneNode.Attributes["url"].Value;
+
+            if (!scenesInfo.ContainsKey(sceneInfo.sceneName) && sceneInfo.mainScene == "")
+                scenesInfo.Add(sceneInfo.sceneName, sceneInfo);
+
+            if (sceneInfo.mainScene != "" && sceneType != "")
+            {
+                if(scenesInfo.ContainsKey(sceneInfo.mainScene))
+                {
+                    if (sceneType == "in_house")
+                    {
+                        scenesInfo[sceneInfo.mainScene].inHouseBundleName = sceneInfo.bundleName;
+                        scenesInfo[sceneInfo.mainScene].inHouseSceneName = sceneInfo.sceneName;
+                    }
+                }
+            }
+        }
+
+
+        //Creation of menu elements from loaded data
+
+        Dictionary<string, SceneInfo> scenesInfoUnlocked = new Dictionary<string, SceneInfo>();
+        Dictionary<string, SceneInfo> scenesInfoLocked = new Dictionary<string, SceneInfo>();
+        Dictionary<string, SceneInfo> scenesInfoDemo = new Dictionary<string, SceneInfo>();
+
+        foreach (string key in scenesInfo.Keys)
+        {
+            pp.AddSceneInfo(scenesInfo[key]);
+            SceneInfo sceneInfo = scenesInfo[key];
+
+            if ((!sceneInfo.activated && sceneInfo.hidden) || sceneInfo.hidden)
             {
                 // not activated and hidden scene should not even create a panel, so just end up here
                 continue;
             }
 
-            // if we're here, then we have real scene, that is not hidden
-            // instantiating panel
-            GameObject sceneUnitObject = Instantiate(Resources.Load<GameObject>("Prefabs/UI/SceneSelectionUnit"),
-                GameObject.Find("UMenuProManager/MenuCanvas/Play/ProtocolList/ProtocolsHolder/Protocols/content").transform);
-            sceneUnitObject.name = "SceneSelectionUnit"; // i dont like that 'clone' word at the end, ugh
-            LevelButton sceneUnit = sceneUnitObject.GetComponent<LevelButton>();
+            if (!sceneInfo.demoLock)
+            {
+                scenesInfoDemo.Add(key, scenesInfo[key]);
+            }
+            else
+            {
+                scenesInfoLocked.Add(key, scenesInfo[key]);
+            }
+        }
 
-            if (!activated && !hidden)
+        Dictionary<string, SceneInfo> scenesInfoSorted = new Dictionary<string, SceneInfo>();
+        foreach (string key in scenesInfoDemo.Keys)
+            scenesInfoSorted.Add(key, scenesInfoDemo[key]);
+
+        foreach (string key in scenesInfoLocked.Keys)
+            scenesInfoSorted.Add(key, scenesInfoLocked[key]);
+        int demoIndex = 0;
+        for (int i = 0; i < scenesInfoSorted.Count; i++)
+        {
+            string key = scenesInfoSorted.Keys.ElementAt(i);
+
+            SceneInfo sceneInfo = scenesInfoSorted[key];
+            if ((!sceneInfo.activated && sceneInfo.hidden) || sceneInfo.hidden)
+            {
+                // not activated and hidden scene should not even create a panel, so just end up here
+                continue;
+            }
+        
+
+            GameObject sceneUnitObject = Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/UI/SceneSelectionUnit"), protocolsTransorm);
+            sceneUnitObject.name = "SceneSelectionUnit"; // i dont like that 'clone' word at the end, ugh
+
+            LevelButton sceneUnit = sceneUnitObject.GetComponent<LevelButton>();
+            int demoMarkType = 0;
+            bool prevDemo = false;
+            bool nextDemo = false;
+            if (i > 0)
+            {
+                string prevKey = scenesInfoSorted.Keys.ElementAt(i - 1);
+                if (!scenesInfoSorted[prevKey].demoLock)
+                    prevDemo = true;
+            }
+            if (i < (scenesInfoSorted.Count - 1))
+            {
+                string nextKey = scenesInfoSorted.Keys.ElementAt(i + 1);
+                if (!scenesInfoSorted[nextKey].demoLock)
+                    nextDemo = true;
+            }
+            if (!prevDemo && nextDemo)
+                demoMarkType = 1;
+            else if (prevDemo && !nextDemo)
+                demoMarkType = 2;
+            else if (prevDemo && nextDemo)
+                demoMarkType = 3;
+            if (!sceneInfo.demoLock)
+                demoIndex++;
+
+            sceneUnit.SetDemoMark(!sceneInfo.demoLock, demoMarkType);
+            sceneUnit.inHouseBundleName = sceneInfo.inHouseBundleName;
+            sceneUnit.inHouseSceneName = sceneInfo.inHouseSceneName;
+
+            if (!sceneInfo.activated && !sceneInfo.hidden)
             {
                 // but if scene is not activated and NOT hidden either
                 // just disable play button, but show the panel to the player
@@ -126,92 +339,55 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 colorBlock.highlightedColor = Color.grey;
                 sceneUnit.GetComponent<Button>().colors = colorBlock;
             }
+            if (sceneInfo.isInProducts != null)
+                sceneUnit.isInProducts = sceneInfo.isInProducts;
 
-            // now let's fill some actual info about the scene
-            if (xmlSceneNode.Attributes["multiple"] != null)
+            sceneUnit.sceneName = sceneInfo.sceneName;
+            sceneUnit.bundleName = sceneInfo.bundleName;
+            sceneUnit.url = sceneInfo.url;
+
+            // setting scene title
+            sceneUnit.transform.Find("Title").GetComponent<Text>().text
+                = sceneUnit.displayName = sceneInfo.displayName;
+
+            ppManager.currentSceneVisualName = sceneUnit.displayName;
+            // setting id next to manager visual name
+            sceneUnit.sceneID = sceneInfo.sceneID; // yes, duping value is important
+            ppManager.currentPEcourseID = sceneUnit.sceneID;
+
+            ppManager.CreateBlankHighscore(); // has a check inside for no DB info already
+
+            // override image if scene is completed
+            float fscore = 0.0f;
+            float.TryParse(DatabaseManager.FetchField("TestHighscores",
+                PlayerPrefsManager.FormatSceneName(pp.GetSceneDatabaseName(sceneUnit.displayName))).Replace(",", "."), out fscore);
+            if (Mathf.FloorToInt(fscore) >= 70)
             {
-                sceneUnit.multiple = true;
-
-                // so we're setting only scene title and picture 
-                // saving everything else for dialogues
-
-                // setting scene title
-                sceneUnit.transform.Find("Title").GetComponent<Text>().text
-                    = sceneUnit.displayName = xmlSceneNode.Attributes["name"].Value;
-
-                ppManager.currentSceneVisualName = sceneUnit.displayName;
-                //ppManager.UpdateTestHighscore(0.0f);
-
-                // saving bundle name for later
-                string bundleName = sceneUnit.bundleName = xmlSceneNode.Attributes["bundleName"].Value;
-
-                int i = 0;
-                foreach (XmlNode variation in xmlSceneNode.ChildNodes)
-                {
-                    LevelButton.Info info = new LevelButton.Info();
-                    // saving all the info for scene variation, use in dialogue
-                    info.bundleName = bundleName;
-                    info.sceneName = variation.Attributes["name"].Value;
-                    info.displayName = variation.Attributes["displayname"].Value;
-                    info.description = variation.Attributes["description"].Value;
-                    info.image = Resources.Load<Sprite>("Sprites/ScenePreview/" + variation.Attributes["image"].Value);
-
-                    sceneUnit.variations.Add(info);
-
-                    if (i == 0)
-                    {
-                        // set the image as main if this is 1st variation
-                        sceneUnit.image = sceneUnit.variations[i].image;
-                        sceneUnit.transform.Find("LevelPreview").GetComponent<Image>().sprite = sceneUnit.image;
-
-                        // also make 1st option 'selected'
-                        sceneUnit.sceneName = sceneUnit.variations[i].sceneName;
-                    }
-
-                    // setting max 3 for now, dont see that UI supports more
-                    if (++i > 2)
-                        break;
-                }
+                sceneUnit.image = completedSceneIcon;
+                sceneUnit.GetComponent<LevelButton>().SetLevelPreviewIcon(true, sceneUnit.image);
+                //sceneUnit.transform.Find("LevelPreview").gameObject.SetActive(true);
+                //sceneUnit.transform.Find("LevelPreview").GetComponent<Image>().sprite = sceneUnit.image;
             }
-            else
-            {
-                // saving info for loading
-                sceneUnit.multiple = false;
-                sceneUnit.sceneName = xmlSceneNode.Attributes["sceneName"].Value;
-                sceneUnit.bundleName = xmlSceneNode.Attributes["bundleName"].Value;
+            sceneUnit.validated = sceneInfo.validated;
+            sceneUnit.transform.Find("Validation").GetComponent<Text>().text =
+                sceneUnit.validated ? "Geaccrediteerd" : "";
 
-                // setting scene title
-                sceneUnit.transform.Find("Title").GetComponent<Text>().text
-                    = sceneUnit.displayName = xmlSceneNode.Attributes["name"].Value;
-
-                ppManager.currentSceneVisualName = sceneUnit.displayName;
-                //ppManager.UpdateTestHighscore(0.0f);
-
-                // setting description
-                if (xmlSceneNode.Attributes["description"].Value != "")
-                {
-                    // no description atm
-                    //  = scene.Attributes["description"].Value;
-                }
-
-                // setting image
-                if (xmlSceneNode.Attributes["image"] != null)
-                {
-                    sceneUnit.image = Resources.Load<Sprite>("Sprites/ScenePreview/" + xmlSceneNode.Attributes["image"].Value);
-                    sceneUnit.transform.Find("LevelPreview").GetComponent<Image>().sprite = sceneUnit.image;
-                }
-            }
+            sceneUnit.totalPoints = sceneInfo.totalPoints;
 
             // leaderboard stuff
-            GameObject button = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/UI/LeaderBoardSceneButton"),
-                GameObject.Find("UMenuProManager/MenuCanvas/Leaderboard/LeftBar/Scroll View/Viewport/Content").transform);
+            if (pp.subscribed)
+                sceneUnit.SetLockState(false);
+            else
+                sceneUnit.SetLockState(sceneInfo.demoLock);
+
+
+            GameObject button = Instantiate<GameObject>(Resources.Load<GameObject>("NecessaryPrefabs/UI/LeaderBoardSceneButton"),
+                GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Leaderboard/ContentPanel/Scenes/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder/Protocols/content").transform);
             LeaderBoardSceneButton buttonInfo = button.GetComponent<LeaderBoardSceneButton>();
             button.transform.Find("Text").GetComponent<Text>().text = sceneUnit.displayName;
-            button.transform.Find("LevelPreview").GetComponent<Image>().sprite = sceneUnit.image;  
 
             buttonInfo.sceneName = sceneUnit.sceneName;
             buttonInfo.multiple = sceneUnit.multiple;
-
 
             if (buttonInfo.multiple)
             {
@@ -222,17 +398,28 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 }
             }
 
-
             if (firstScene)
             {
                 firstScene = false;
                 buttonInfo.OnMainButtonClick();
             }
 
-            sceneUnit.testDisabled = (xmlSceneNode.Attributes["test"] != null
-                && xmlSceneNode.Attributes["test"].Value == "disabled");
+            sceneUnit.testDisabled = sceneInfo.testDisabled;
+            sceneUnit.UpdateAutoPlayToggle();
         }
+        ScrollRect levelScroll =  GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Play/ContentPanel/PlayElements/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder").GetComponent<ScrollRect>();
+        
+        levelScroll.verticalNormalizedPosition = ppManager.LevelScrollPosition;
     }
+
+
+    public void LevelScrollChanged()
+    {
+        ScrollRect levelScroll =  GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Play/ContentPanel/PlayElements/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder").GetComponent<ScrollRect>();
+       
+        ppManager.LevelScrollPosition = levelScroll.verticalNormalizedPosition;
+    }
+
     public void UpdateLeaderBoard(string sceneName)
     {
         //Debug.Log("UpdateLeaderBoard:::" + sceneName);
@@ -257,27 +444,82 @@ public class LevelSelectionScene_UI : MonoBehaviour
         List<MBS.CMLData> entries = cml.AllNodesOfType("person");
         List<MBS.CMLData> sortedEntries = entries.OrderByDescending(x => int.Parse(x.String("score"))).ToList();
 
+        LeaderBoard lb = GameObject.FindObjectOfType<LeaderBoard>();
         if (entries == null) return;
 
         for (int i = 0; i < 10; ++i)
         {
             string name = sortedEntries[i].String("dname");
             string score = sortedEntries[i].String("score");
+            string uid = sortedEntries[i].String("uid");
 
             if (i < _Scores.Length)
-                _Scores[i].SetScoreLine(name, score, i);
+                _Scores[i].SetScoreLine(name, score, i, uid);
         }
 
         // loading icon is shown
-        if (GameObject.FindObjectOfType<LeaderBoard>().leftBar.activeSelf)
-            GameObject.FindObjectOfType<LeaderBoard>().infoBar.SetActive(false);
+        if (lb.leftBar.activeSelf)
+            lb.infoBar.SetActive(false);
         else
-        {           
-            GameObject.FindObjectOfType<LeaderBoard>().top.SetActive(false);
-            GameObject.FindObjectOfType<LeaderBoard>().backButton.GetComponent<Button>().interactable = true;
-            GameObject.FindObjectOfType<LeaderBoard>().infoBar.SetActive(true);
-            GameObject.FindObjectOfType<LeaderBoard>().description.GetComponent<Text>().text = LeaderBoardSceneButton.Descripton;
-            GameObject.FindObjectOfType<LeaderBoard>().leaderboard.SetActive(false);
+        {
+            
+            GameObject.FindObjectOfType<UMP_Manager>().LeaderBoardSearchBar.gameObject.SetActive(false);
+            lb.top.SetActive(false);
+            lb.backButton.GetComponent<Button>().interactable = true;
+            lb.topDescription.SetActive(false);
+            lb.infoBar.SetActive(true);
+            lb.description.GetComponent<Text>().text = LeaderBoardSceneButton.Descripton;
+            lb.leaderboard.SetActive(false);
         }       
+    }
+
+    public void RequestCharacterInfoByUID(int uid)
+    {
+        // start loading animation?
+        // actual load stuff
+        WUData.FetchUserCategory(uid, "AccountStats", RequestCharacterInfoByUID_success);
+    }
+
+    public void RequestCharacterInfoByUID_success(CML response)
+    {
+        //loading done, stop loading animation, open UI
+        string sex = response.Elements[1]["Sex"];
+        string head = response.Elements[1]["Head"];
+        string body = response.Elements[1]["Body"];
+        string glasses = response.Elements[1]["Glasses"];
+        string hat = response.Elements[1]["Hat"]; // didnt find info
+        bool toShowPlayer = false;
+        if (!string.IsNullOrEmpty(head))
+        {
+            PlayerAvatar mainAvatar = GameObject.Find("MainPlayerAvatar").GetComponent<PlayerAvatar>();
+            PlayerAvatarData prevCharData = new PlayerAvatarData();
+            if (sex == "Female")
+                prevCharData.gender = Gender.Female;
+            int.TryParse(head, out prevCharData.headType);
+            if (prevCharData.headType < mainAvatar.GetMaxHeadNum(prevCharData.gender))
+            {
+                int.TryParse(body, out prevCharData.bodyType);
+               
+                int glassesType = -1;
+                int.TryParse(glasses, out glassesType);
+                if (glassesType < 3000000)
+                    glassesType += 3000000;
+                prevCharData.glassesType = glassesType;
+                prevCharData.hat = hat;
+                mainAvatar.avatarData = prevCharData;
+                mainAvatar.UpdateCharacter();
+                toShowPlayer = true;
+            }
+            else
+                Debug.Log("No correct head");
+        }
+        else
+            Debug.Log("No avatar data");
+        GameObject.FindObjectOfType<HighscoreCharacterPanel>().HideContent(false, toShowPlayer);
+    }
+
+    public void OnAppleScenePurchaseButtonClick()
+    {
+        GameObject.Find("Preferences").GetComponent<IAPManager>().BuyProductID(ppManager.currentPEcourseID);
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class LevelSelectionScene_UI_Option : MonoBehaviour {
@@ -13,6 +11,7 @@ public class LevelSelectionScene_UI_Option : MonoBehaviour {
     public string sceneName;
     public string description;
     public string result;
+    public string url;
     public Sprite image;
     
     public void SetSelected()
@@ -20,10 +19,11 @@ public class LevelSelectionScene_UI_Option : MonoBehaviour {
         // turn on
         if (!selected)
         {
-            LevelButton levelButton = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/DialogTestPractice/Panel_UI/Buttons/Start").GetComponent<LevelButton>();
+            LevelButton levelButton = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/DialogTestPractice/Panel_UI/Buttons/Start")?.GetComponent<LevelButton>();
 
             levelButton.sceneName = sceneName;
             levelButton.bundleName = bundleName;
+            levelButton.url = url;
 
             LevelSelectionScene_UI_Option[] other = transform.parent.GetComponentsInChildren<LevelSelectionScene_UI_Option>();
             foreach (LevelSelectionScene_UI_Option ui in other)
@@ -35,5 +35,5 @@ public class LevelSelectionScene_UI_Option : MonoBehaviour {
             GetComponent<Image>().color = selectedColor;
             selected = true;
         }
-    }
+    }    
 }

@@ -1,153 +1,214 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-16"?>
 <ActionList>
-  <action 
-    points="1" 
-    description="Begroet de cliënt." 
-    fullDescription="Begroet de cliënt door op hem te klikken. Daarna klik je nogmaals op de cliënt om een gesprek aan te gaan. Klik vervolgens op de juiste optie." 
+  <Action
+    index="0"
+    description="[Begroet]"
+    type="talk"
+    points="1"
+    optional=""
     audioHint=""
-    index="0" 
-    type="talk" 
-    topic="Hello" 
-    extra="Ondanks dat het begroeten niet in de werkwijze is vermeld. Is het wel netjes om contact te leggen met de cliënt." 
-    optional="" />
-  
-  <action 
-    points="3" 
-    description="Pas handhygiëne toe." 
-    fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp." 
-    audioHint="Injection/H1-2"
-		index="0" 
-    type="use" 
-    value="HandCleaner" 
-    extra="Ondanks dat het begroeten niet in de werkwijze staat, is het wel netjes om contact te leggen met de cliënt."></action>
-  
-  <action 
-    points="1" 
-    description="Maak een schoon werkveld door op het werkveld te klikken." 
-    fullDescription="Klik op het werkveld om deze schoon te maken." 
-    audioHint="Injection/H2-2"
-		index="1" 
-    type="use" 
-    value="WorkField" 
-    extra="Maak een schoon werkveld. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen."></action>
-
-  <action 
-    points="2" 
-    description="Controleer cliëntgegevens." 
-    fullDescription="Open de tablet door op het tablet icoon te drukken. Klik op de App 'Gegevens'. Kies vervolgens voor de cliëntgegevens." 
-    audioHint="Injection/H3-2"
-		index="2" 
-    type="examine" 
-    item="PatientRecords" 
-    expected="good" 
-    extra="Controleer de cliëntgegevens. Het is belangrijk dat je de juiste persoon voor je hebt."
+    topic="Hello" />
+  <Action
+    index="0"
+    description="[Pas handhygiëne]"
+    type="use"
+    comment="1. Apply hand hygiene"
+    points="3"
+    messageTitle="Handhygiëne"
+    messageContent="Handhygiëne is het meest belangrijk om besmetting met ziektekiemen te voorkomen. Reinig je handen altijd op de juiste manier en op het juiste moment. Begin een handeling altijd met handhygiëne."
+    value="HandCleaner" />
+  <Action
+    index="1"
+    description="[Maak een schoon werkveld]"
+    type="use"
+    points="1"
+    messageTitle="Je het volgende nodig hebt?"
+    messageContent="&#xD;
+- Bijsluiter&#xD;
+- Toedieningslijst&#xD;
+- Injectiespuit met voorgeschreven medicijn&#xD;
+- Afvalbak&#xD;
+- Gaasje&#xD;
+- Naaldenbeker en naaldverwijderaar&#xD;
+- Desinfectans: chloorhexidine alcohol 70%, als de huid gedesinfecteerd moet worden"
+    value="WorkField"
+    audioHint="Injection/H2-2" />
+  <Action
+    index="2"
+    description="Controleer cliëntgegevens"
+    type="examine"
+    item="PatientRecords"
+    points="2"
     messageTitle="Controle cliëntgegevens."
     messageContent="Controleer de naam en geboortedatum van cliënt"
-   ></action>
-  
-  <action 
-    points="2" 
-    description="Controleer het medicijn." 
-    fullDescription=" Klik op het medicijn om deze op te pakken. Klik hierna nogmaals op het medicijn en klik op het vergrootglas icoon." audioHint="Injection/H3-2"
-		index="2" 
-    type="examine" 
-    item="fraxi_pakage" 
-    expected="good" 
-    extra="Controleer het medicijn (Fraxiparine spuit)."
+    expected="good" />
+  <Action
+    index="2"
+    description="Controleer het medicijn"
+    type="examine"
+    item="fraxi_pakage"
+    points="2"
     messageTitle="Controle medicijn"
-    messageContent="Controleer het medicijn op 
-    - De uiterste houdbaarheidsdatum;
-    - kleur en substantie
-    - toedieningswijze
-    - Beschadigingen op de spuit."
-    ></action>
-  
-  <action 
-    points="2" 
-    description="Controleer de toedienlijst." 
-    fullDescription="Open de tablet door op het tablet icoon te drukken. Klik op de App 'Gegevens'. Kies vervolgens voor de toedienlijst." 
-    audioHint="InjectionSubcutaneous/Step 5"
-		index="2" 
-    type="examine" 
-    item="PrescriptionForm" 
-    expected="good" 
-    extra="Controleer de toedienlijst op soort, dosering en toedientijdstip. "
-    messageTitle="Controle toedienlijst"
-    messageContent="Vergelijk het medicijn met de toedieningslijst.
-      - soort
-      - dosering
-      - toedieningstijdstip"
-    ></action>
-
-  <action 
-    points="3" 
-    description="Vraag je collega om een dubbele controle te doen." 
-    fullDescription="Klik op de 'Terug naar overzicht' knop rechtsboven in het scherm om terug te gaan naar het overzicht. Klik daarna op de collega. Klik nogmaals op de collega om te praten. Klik op de optie 'Zou je mij kunnen helpen met de dubbele controle?'. " audioHint=""
-    index="3" 
-    type="talk" 
-    topic="DoubleCheck" 
-    extra="Voer een dubbele controle uit. Het verkeerd toedienen van medicijnen brengt risico’s met zich mee. Het risico op blijvend letsel bij verkeerde dosering of toediening verschilt, afhankelijk van het medicijn. Ook is de ene toedieningsweg risicovoller dan de andere. Dubbele controle van de medicatie is belangrijk voor de veiligheid, met name bij risicovolle medicatie. Laat ook je berekeningen checken."
+    messageContent="&#xD;
+Controleer het medicijn op:&#xD;
+- De uiterste houdbaarheidsdatum;&#xD;
+- kleur en substantie&#xD;
+- toedieningswijze&#xD;
+- Beschadigingen op de spuit."
+    expected="good" />
+  <Action
+    index="2"
+    description="Controleer de toedienlijst"
+    type="examine"
+    item="PrescriptionForm"
+    points="2"
+    messageTitle="5x juist-regel"
+    messageContent="Er zijn 5 controles die je altijd moet doen voordat je medicijnen geeft. Alleen als alle 5 punten juist zijn, mag je het medicijn toedienen.&#xD;
+    &#xD;
+    De vijf regels zijn:&#xD;
+    &#xD;
+1.  Het juiste medicijn: &#xD;
+kijk op de toedienlijst en controleer of de informatie op de medicijnverpakking of het baxterzakje hiermee overeenkomen. Kijk hierbij ook naar de vervaldatum van het medicijn.&#xD;
+        &#xD;
+2.  De juiste cliënt: &#xD;
+controleer of je de juiste cliënt voor je hebt.&#xD;
+        &#xD;
+3.  Het juiste tijdstip: &#xD;
+kijk op de toedienlijst voor het tijdstip en vergelijk dit met het tijdstip waarop je de medicijnen geeft.&#xD;
+        &#xD;
+4.  De juiste manier van toedienen: &#xD;
+hanteer de instructies van de toedienlijst. Je moet bekend zijn met de toedieningsvorm. Ben je hier niet mee bekent, dien dan niet toe.&#xD;
+    &#xD;
+5.  De juiste dosis: &#xD;
+je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toedienlijst. De verantwoordelijkheid van de juiste dosering ligt bij de arts en de apotheker."
+    expected="good" />
+  <Action
+    index="3"
+    description="Vraag je collega om een dubbele controle te doen"
+    type="talk"
+    points="3"
     messageTitle="Dubbele controle bij injecties en bij medicijntoediening via infuus"
-    messageContent="Het verkeerd toedienen van medicijnen brengt risico’s met zich mee. Het risico op blijvend letsel bij verkeerde dosering of toediening verschilt, afhankelijk van het medicijn. Ook is de ene toedieningsweg risicovoller dan een andere. Dubbele controle van de medicatie is belangrijk voor de veiligheid, met name bij risicovolle medicatie. Laat ook je berekeningen die je hebt gemaakt checken.
-Het maken van oplossingen die worden toegediend via injectie of infuus is foutgevoelig. Daarnaast geeft deze manier van toedienen sneller resultaten, maar ook grotere problemen bij verkeerde toediening.
-Het ontbreken van een dubbele controle bij deze handelingen wordt gezien als hoog-risico.
-Of en hoe controle plaatsvindt van deze voorbehouden handelingen, is een afspraak die een zorgorganisatie maakt met haar zorgmedewerkers. Als de afspraak is om een tweede controle te doen en deze vast te leggen, dan wordt daarvoor een ander formulier gebruikt dan de toedieningslijst."/>
-
-  <action 
-    points="1" 
-    description="Verwijder de verpakking van de spuit met Fraxiparine." 
-    fullDescription="Klik op de 'Terug naar overzicht' knop rechtsboven in het scherm om terug te gaan naar het overzicht. Klik daarna op het werkveld. Klik op de fraxiparine naaldverpakking om deze op te pakken. Klik tot slot op de fraxiparine naaldverpakking in je hand en klik op het - icoon." audioHint="Injection/H4-2"
-		index="4" 
-    type="combine" 
-    left="fraxi_pakage" 
-    right="" extra="Verwijder de verpakking van de spuit met Fraxiparine. Tijdens het verwijderen kun je nogmaals controleren of de spuit niet beschadigd of open is."
-    ></action>
-  
-  <action 
-    points="2" 
-    description="Zorg dat de luchtbel bij de zuiger zit. Ontlucht de spuit niet!" 
-    fullDescription="Druk op de fraxiparine spuit en kies voor de optie 'Controleer luchtbel'." 
-    audioHint=""
-		index="5" 
-    type="useOn" 
-    item="Frexi_with_needle_cap" 
-    target="" 
-    extra="Ontlucht een voorgevulde kant-en-klare spuit niet, tenzij de fabrikant anders adviseert. De luchtbel in de spuit zorg ervoor dat de vloeistof volledig wordt ingespoten. De luchtbel dient bij de zuiger te zitten." buttonText="Controleer luchtbel"
+    messageContent="Het verkeerd toedienen van medicijnen brengt risico’s met zich mee. Het risico op blijvend letsel bij verkeerde dosering of toediening verschilt, afhankelijk van het medicijn. Ook is de ene toedieningsweg risicovoller dan een andere. Dubbele controle van de medicatie is belangrijk voor de veiligheid, met name bij risicovolle medicatie. Laat ook je berekeningen die je hebt gemaakt checken.&#xD;
+Het maken van oplossingen die worden toegediend via injectie of infuus is foutgevoelig. Daarnaast geeft deze manier van toedienen sneller resultaten, maar ook grotere problemen bij verkeerde toediening.&#xD;
+Het ontbreken van een dubbele controle bij deze handelingen wordt gezien als hoog-risico.&#xD;
+Of en hoe controle plaatsvindt van deze voorbehouden handelingen, is een afspraak die een zorgorganisatie maakt met haar zorgmedewerkers. Als de afspraak is om een tweede controle te doen en deze vast te leggen, dan wordt daarvoor een ander formulier gebruikt dan de toedieningslijst."
+    topic="DoubleCheck" />
+  <Action
+    index="4"
+    description="Verwijder de verpakking van de spuit met Fraxiparine"
+    type="combine"
+    points="1"
+    quiz="2"
+    left="fraxi_pakage"
+    right="" />
+  <Action
+    index="5"
+    description="Zorg dat de luchtbel bij de zuiger zit. Ontlucht de spuit niet!"
+    type="useOn"
+    item="Frexi_with_needle_cap"
+    points="2"
+    buttonText="Controleer luchtbel"
     messageTitle="Luchtbel"
-    messegeContent="Voor bepaalde medicijnen in kant-en-klaarspuiten geldt dat ze precies in de voorgeschreven hoeveelheid moeten worden toegediend (zoals Clexane, Heparine enz). In deze spuiten bevindt zich een luchtbel. Tijdens het inspuiten van het medicijn moet de luchtbel zich aan de kant van de zuiger bevinden. De luchtbel vult na het toedienen van de medicatie de overgebleven dode ruimte van de injectiespuit en -naald. De WHO stelt dat hetzelfde geldt wanneer zich een luchtbel in een voorgevulde spuit met vaccin bevindt" 
-  ></action>
-  
-  <action 
-    points="1" 
-    description="Vraag de cliënt de injectieplaats te ontbloten." fullDescription="Klik op de spuit + injectienaald + beschermdop in je hand op de 'Terug naar overzich' knop rechtsboven in het scherm om terug te gaan naar het overzicht. Klik daarna op de cliënt. Klik nogmaals op de cliënt om te praten. Kies de optie 'Zou u uw mouw omhoog kunnen doen?'." audioHint="Injection/H12-2"
-		index="6" type="talk" topic="ShowBellyForInsulin" extra="Vraag de cliënt de injectieplaats te ontbloten en te ontspannen zodat je makkelijk bij de injectieplaats kunt."></action>
-
-  <action points="1" description="Start injecteren." fullDescription="Klik op de spuit + injectienaald + beschermdop en klik op het + icoon. Klik vervolgens op de cliënt."	audioHint="Injection/H13-2"
-		index="7" type="useOn" item="Frexi_with_needle_cap" target="Patient" extra="Start met het toedienen van de injectie. Alles is klaar voor gebruik en je kunt starten met injecteren."></action>
-
-  <action points="1" description="Palpeer de injectieplaats en controleer of de injectieplaats schoon en droog is." fullDescription="Klik op de juiste optie." audioHint="Injection/AS1-2"
-		index="8" type="sequenceStep" value="Check" extra="Controleer of de injectieplaats schoon en droog is om besmetting van ziektekiemen te voorkomen."></action>
-  <action points="1" description="Neem de spuit in de injecterende hand en verwijder de naaldhuls." fullDescription="Klik op de juiste optie. " audioHint="Injection/H5-3"
-    index="9" type="sequenceStep" value="RemoveCap" extra="De beschermdop zit nog op de naald. Deze dien je te verwijderen om gebruik te maken van de spuit. Concentreer je tijdens het verwijderen van de dop om prikaccidenten te voorkomen."></action>
-  <action points="1" description="Steek de naald loodrecht in het onderhuidse weefsel, minimaal 1 cm verwijderd van de vorige injectieplaats, in een roterend schema." fullDescription="Klik op de juiste optie" audioHint=""
-   	index="10" type="sequenceStep" value="Stick needle in arm" extra="De beschermdop zit nog op de naald. Deze dien je te verwijderen om gebruik te maken van de spuit. Concentreer je tijdens het verwijderen van de dop om prikaccidenten te voorkomen." />
-  <action points="1" description="Fixeer de spuit en de naald met de vrije hand om onverwachte bewegingen op te vangen. " fullDescription="Klik op de juiste optie." audioHint="Injection/AS5-2"
-		index="11" type="sequenceStep" value="Fixate needle" extra="Bij een cliënt die onrustig is of plotselinge bewegingen maakt is het van belang dat de injectienaald en spuit goed gefixeerd worden tijdens het injecteren. Houd de naald tussen duim en wijsvinger van de niet-injecterende hand, op de plaats waar de naald op de spuit zit. Zorg dat de rest van deze hand stevig op de huid rust. Bij bewegingen van de cliënt beweegt de hand met daarin de naald en de spuit mee."></action>
-  <action points="1" description="Spuit de vloeistof langzaam en regelmatig in." fullDescription="Klik op de juiste optie." audioHint="Injection/AS7-2"
-		index="12" type="sequenceStep" value="Inject medicine slow and steady" extra="Spuit het medicijn langzaam in (ongeveer 10 sec/ml)."></action>
-  <action points="1" description="Trek de naald uit de huid. Houd een gaasje voor de opvang van een eventuele bloeddruppel gereed. Masseer de huid niet!" fullDescription="Klik op de juiste optie." audioHint="Injection/AS8-2"
-		index="13" type="sequenceStep" value="Pull needle" extra="Trek na het injecteren de naald uit de huid. Hierbij kun je een gaasje gereed houden om een eventuele bloeddruppel op te vangen."></action>
-
-  <action points="2" description="Schuif het naaldkapje over de naald om de naald te beschermen." fullDescription="Klik op de 'Terug naar overzicht' knop rechts bovenin het scherm om terug te gaan naar het overzicht. Klik daarna op het werkveld. Klik tot slot op de fraxiparinespuit en kies de optie" audioHint=""
-    index="14" type="useOn" item="Frexi" target="" extra="De injectiespuit wordt geleverd met een automatisch (of een handmatig) veiligheidssysteem om
-prikaccidenten te voorkomen. Schuif het naaldkapje over de naald om de naald te beschermen." buttonText="Bescherm naald"/>
-  <action points="2" description="Doe de Fraxiparine spuit in zijn geheel in de naaldenbeker." fullDescription="Klik op de Fraxiparinespuit en klik vervolgens op het + icoon. Klik vervolgens op de naaldencontainer." audioHint="Injection/EAS2-2"
-    index="15" type="useOn" item="Frexi" target="NeedleCup" extra="Verwijder de opzuignaald en doe de naald in de naaldencontainer. Gebruik voor het injecteren spuiten en naalden voor eenmalig gebruik (dit worden ook wel eens disposables genoemd). Plaats een naald na gebruik nooit in de plastic beschermhuls terug. Werk met veilige opzuignaalden. Gebruik de inkepingen op de deksel om de naald en spuit te scheiden of gebruik een naaldverwijderaar."></action>
-  
-<action points="1" description="Ruim de materialen op door met lege handen op het werkveld te klikken." fullDescription="Leg de spuit terug op het werkveld door op het silhoutte te drukken van de spuit. Klik vervolgens op het werkveld om deze schoon te maken."  audioHint="Injection/EAS3-2"
-		index="16" type="use" value="WorkField" extra=" Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen."></action>
-  <action points="2" description="Pas handhygiëne toe." fullDescription="Klik op de hygiënepomp om deze te gebruiken." audioHint="Injection/EAS5-2"
-		index="17" type="use" value="HandCleaner" extra="Handhygiëne is het allerbelangrijkste als het gaat om voorkomen van besmetting met ziektekiemen. Dit betekent je handen reinigen op de juiste manier en op de juiste momenten. Sluit handelingen af met handhygiëne."></action>
-  <action points="2" description="Teken de toedienlijst af. " fullDescription="Open de tablet door op het tablet icoon te drukken. Klik op de App 'Gegevens'. Kies vervolgens voor de toedienlijst. Klik tot slot op de 'Aftekenen' knop." audioHint="Injection/EAS4-2"
-		index="18" type="use" value="PaperAndPen" extra="Teken de toedienlijst af en noteer het tijdstip, het soort medicijn, de concentratie, de hoeveelheid en de wijze van toediening. Noteer tot slot je bevindingen."></action>
+    target="" />
+  <Action
+    index="6"
+    description="Vraag de cliënt de injectieplaats te ontbloten"
+    type="talk"
+    points="1"
+    messageTitle="Geschikte injectiegebieden"
+    messageContent="&#xD;
+Geschikte injectiegebieden voor subcutane injecties zijn:&#xD;
+&#xD;
+- De boven/buitenkant van het bovenbeen (handbreedte boven de knie vrijlaten)&#xD;
+- Het gebied naast en onder de navel (houd minimaal 2 cm afstand van de navel)&#xD;
+- Billen (bovenste buitenste deel)&#xD;
+- De boven/buitenkant van de bovenarm&#xD;
+&#xD;
+Desinfecteer de huid bij cliënten met verminderde weerstand.&#xD;
+    "
+    topic="ShowBellyForInsulin"
+    blockUnlock="patient show spot" />
+  <Action
+    index="7"
+    description="Start injecteren"
+    type="useOn"
+    secondPlace="PatientPos"
+    item="Frexi_with_needle_cap"
+    points="1"
+    buttonText="Start injecteren"
+    target=""
+    blockRequired="patient show spot"
+    blockTitle="Deze handeling is nog niet mogelijk"
+    blockMessage="Treft de juiste voorbereidingen en vraag de cliënt de injectieplaats te ontbloten." />
+  <Action
+    index="8"
+    description="Palpeer de injectieplaats en controleer of de injectieplaats schoon en droog is"
+    type="sequenceStep"
+    points="1"
+    value="Check"
+    audioHint="Injection/AS1-2" />
+  <Action
+    index="9"
+    description="Neem de spuit in de injecterende hand en verwijder de naaldhuls"
+    type="sequenceStep"
+    points="1"
+    value="RemoveCap"
+    audioHint="Injection/H5-3" />
+  <Action
+    index="10"
+    description="Steek de naald loodrecht, onder een hoek van 90° in het onderhuidse weefsel"
+    type="sequenceStep"
+    points="1"
+    encounter="1"
+    value="Stick needle in arm"
+    audioHint="" />
+  <Action
+    index="11"
+    description="Fixeer de spuit en de naald met de vrije hand om onverwachte bewegingen op te vangen"
+    type="sequenceStep"
+    points="1"
+    value="Fixate needle"
+    audioHint="Injection/AS5-2" />
+  <Action
+    index="12"
+    description="Spuit de vloeistof langzaam en regelmatig in ongeveer 10 sec/ml)"
+    type="sequenceStep"
+    points="1"
+    value="Inject medicine slow and steady" />
+  <Action
+    index="13"
+    description="Trek de naald uit de huid en activeer het veiligheidssysteem van de naald met de duim of vinger"
+    type="sequenceStep"
+    points="1"
+    value="Pull needle" />
+  <Action
+    index="14"
+    description="Doe de Fraxiparine spuit in zijn geheel in de naaldenbeker"
+    type="useOn"
+    secondPlace="WorkFieldPos"
+    item="FraxiperineSyringe_Rigged"
+    points="2"
+    buttonText="Spuit weggooien"
+    audioHint="Injection/EAS2-2"
+    target=""
+    ignorePosition="" />
+  <Action
+    index="15"
+    description="Ruim de materialen op door met lege handen op het werkveld te klikken"
+    type="use"
+    points="1"
+    value="WorkField" />
+  <Action
+    index="16"
+    description="[Pas handhygiëne]"
+    type="use"
+    comment="1. Apply hand hygiene"
+    points="3"
+    value="HandCleaner" />
+  <Action
+    index="17"
+    description="Teken de toedienlijst af of noteer het tijdstip, het soort medicijn, de concentratie, de hoeveelheid en de wijze van toediening. Noteer tot slot je bevindingen"
+    type="use"
+    points="2"
+    value="PaperAndPen" />
 </ActionList>

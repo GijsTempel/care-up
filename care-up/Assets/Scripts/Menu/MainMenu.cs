@@ -4,17 +4,57 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using MBS;
+using System.Linq;
+using System;
+using System.Runtime.InteropServices;
 
-public class MainMenu : MonoBehaviour {
-    
+public class MainMenu : MonoBehaviour
+{
     private LoadingScreen loadingScreen;
     private PlayerPrefsManager prefs;
-	public string eMail="info@triplemotion.nl";
+    public string eMail = "info@triplemotion.nl";
+
+    public static string storeUrl;
+
+    [SerializeField]
+    private Text reward = default;
+
+    [SerializeField]
+    private GameObject rewardPanel = default;
 
     public GameObject UpdatesPanel;
 
+    [System.Serializable]
+    public class ResendingLock
+    {
+        public string sceneName;
+        public int timeRemaining;
+
+        public ResendingLock(string name, int time)
+        {
+            sceneName = name;
+            timeRemaining = time;
+        }
+    };
+
+    [UnityEngine.SerializeField]
+    public List<ResendingLock> resendingLocks = new List<ResendingLock>();
+
+
+#if UNITY_EDITOR
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F4))
+        {
+            bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Character_Editor");
+        }
+    }
+
+#endif  
+
     private void Start()
     {
+
         if (GameObject.Find("Preferences") != null)
         {
             loadingScreen = GameObject.Find("Preferences").GetComponent<LoadingScreen>();
@@ -29,19 +69,33 @@ public class MainMenu : MonoBehaviour {
 
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
-            Text text = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/DialogTestPractice/Panel_UI/FreeDemoPlayCounter")
-                .GetComponent<Text>();
+            // Text text = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/DialogTestPractice/Panel_UI/FreeDemoPlayCounter")
+            //     .GetComponent<Text>();
 
-            if (!prefs.subscribed)
+            // if (!prefs.subscribed)
+            // {
+            //     WUData.FetchField("Plays_Number", "AccountStats", GetPlaysNumber, -1, ErrorHandle);
+            //     text.text = "Je kunt nog " + (5 - prefs.plays) + " handelingen proberen.";
+            // }
+            // else
+            // {
+            //     text.text = "";
+            // }
+
+            //handle updates panel           
+
+            if (EndScoreManager.showReward)
             {
-                WUData.FetchField("Plays_Number", "AccountStats", GetPlaysNumber, -1, ErrorHandle);
-                text.text = "Je kunt nog " + (5 - prefs.plays) + " handelingen proberen.";
+                StoreViewModel.ShowRewardDialogue(reward);
+                EndScoreManager.showReward = false;
             }
-            else
+
+            if (CareUpNotification.showReward)
             {
-                text.text = "";
+                StoreViewModel.ShowRewardDialogue(reward, rewardPanel, 20);
+                CareUpNotification.showReward = false;
             }
-            //handle updates panel
+
             bool updatesSeen = PlayerPrefs.GetInt("_updatesSeen") == 1;
             string versionSeen = PlayerPrefs.GetString("__version", "");
             string currentVersion = Application.version;
@@ -57,11 +111,114 @@ public class MainMenu : MonoBehaviour {
                 UpdatesPanel.SetActive(false);
             }
 
-            GameObject.FindObjectOfType<PlayerPrefsManager>().FetchTestHighScores();
+            // set up highscores something?
+            string[][] highScores = DatabaseManager.FetchCategory("TestHighscores");
+            if (highScores != null)
+            {
+                foreach (string[] score in highScores)
+                {
+                    // fetch date before formatting scene name back
+                    string date = DatabaseManager.FetchField("CertificateDates", score[0]);
+                    date = (date == "") ? "27052019" : date;
 
-            GameObject.Find("UMenuProManager/MenuCanvas/Account/Account_Panel_UI/Account_Username")
-                .GetComponent<Text>().text = MBS.WULogin.display_name;
+                    string sceneName = score[0].Replace("_", " ");
+
+                    float fPercent = 0.0f;
+                    float.TryParse(score[1].Replace(",", "."), out fPercent);
+                    int percent = Mathf.FloorToInt(fPercent);
+
+                    bool passed = percent > 70;
+
+                    if (percent <= 0 || percent > 100)
+                        continue; // don't show 0 percent scores as they are not completed even once
+
+                    // FILTERing old scenes that should not be displayed anymore
+                    if (sceneName == "Injecteren intramusculair (loodrechttechniek) - Flacon" ||
+                       sceneName == "AED")
+                        continue;
+
+                    GameObject layoutGroup = GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Account_Scores/ContentPanel/Scenes/Account_Panel_UI/Panel/ProtocolList/ProtocolsHolder/Protocols/content");
+                    GameObject scoreObject = Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/UI/TestHighscore"), layoutGroup.transform);
+                    scoreObject.transform.Find("SceneName").GetComponent<Text>().text = sceneName;
+
+                    scoreObject.transform.Find("Percent").GetComponent<Text>().text = percent.ToString() + "%";
+                    scoreObject.transform.Find("Percent").GetComponent<Text>().color =
+                        (passed ? Color.green : Color.red);
+
+                    scoreObject.transform.Find("Button").GetComponent<Button>().interactable = passed;
+                    scoreObject.transform.Find("Button").GetComponent<Button>().onClick.AddListener
+                        (delegate { PlayerPrefsManager.__openCertificate(sceneName, date); });
+                }
+            }
+
+            // shared field, will keep it outside DatabaseManager
+            GameObject.FindObjectOfType<PlayerPrefsManager>().FetchLatestVersion();
+
+            GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Account/TitlePanel/UserNamePanel/Text").GetComponent<Text>().text = MBS.WULogin.display_name;
+
+            string bigNumber = GameObject.FindObjectOfType<PlayerPrefsManager>().bigNumber;
+            string fullName = GameObject.FindObjectOfType<PlayerPrefsManager>().fullPlayerName;
+            if (!string.IsNullOrEmpty(fullName))
+            {
+                GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Account/ContentPanel/Elements/NamePanel/NameHolder/InfoPanel/InfoHolder/UserName/Panel/Account_Username")
+               .GetComponent<Text>().text = fullName;
+            }
+
+            GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Account/ContentPanel/Elements/NamePanel/NameHolder/InfoPanel/InfoHolder/UserNumber/BigNumber")
+            .GetComponent<Text>().text = bigNumber;
         }
+    }
+
+    public void ResendCertificate(string scene, string date)
+    {
+        // check if can send
+        bool flag = (resendingLocks.Where(x => x.sceneName == scene).Count() == 0);
+
+        if (flag)
+        {
+            // send if so
+            //PlayerPrefsManager.__sendCertificateToUserMail(scene, date);
+
+            // show pop up that it's sent
+            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/CertificatePopOp").SetActive(true);
+
+            // add lock, time in seconds
+            ResendingLock rLock = new ResendingLock(scene, 300);
+            resendingLocks.Add(rLock);
+
+            // set timer to unlock
+            StartCoroutine(UnlockResending(rLock));
+        }
+        else
+        {
+            // can't send, show different pop up
+            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/CertificateBlockedPopOp").SetActive(true);
+
+            // set up time
+            int timeLeft = resendingLocks.Where(x => x.sceneName == scene).First().timeRemaining;
+            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/CertificateBlockedPopOp/Certificate/Remaining").
+                GetComponent<Text>().text = "Resterende tijd: " + (timeLeft / 60) + "m " + (timeLeft % 60) + "s";
+        }
+    }
+
+    IEnumerator UnlockResending(ResendingLock rLock)
+    {
+        while (rLock.timeRemaining > 0)
+        {
+            yield return new WaitForSeconds(1f);
+            --rLock.timeRemaining;
+        }
+
+        resendingLocks.Remove(rLock);
+        Debug.Log(rLock.sceneName + " scene certificate and be sent again.");
+    }
+
+    public void UpdateLatestVersionDev()
+    {
+        // makes current version - latest on database for further comparison
+        CMLData data = new CMLData();
+        data.Set("LatestVersion", Application.version);
+        WUData.UpdateSharedCategory("GameInfo", data);
     }
 
     public void OnStartButtonClick()
@@ -76,7 +233,7 @@ public class MainMenu : MonoBehaviour {
 
             canvas.transform.Find("MainMenu").gameObject.SetActive(false);
             //canvas.transform.Find("Logo").gameObject.SetActive(false);
-           // canvas.transform.Find("OptionsBtn").gameObject.SetActive(false);
+            // canvas.transform.Find("OptionsBtn").gameObject.SetActive(false);
 
             canvas.transform.Find("TutorialPopUp").gameObject.SetActive(true);
         }
@@ -95,11 +252,11 @@ public class MainMenu : MonoBehaviour {
 
     public void OnQuitButtonClick()
     {
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
-        #else
+#else
         Application.Quit();
-        #endif
+#endif
     }
 
     public void OnMainMenuButtonClick()
@@ -117,7 +274,7 @@ public class MainMenu : MonoBehaviour {
         GameObject canvas = GameObject.Find("Canvas");
 
         //canvas.transform.Find("MainMenu").gameObject.SetActive(false);
-		canvas.transform.Find("MainMenu").gameObject.SetActive(false);
+        canvas.transform.Find("MainMenu").gameObject.SetActive(false);
         //canvas.transform.Find("OptionsBtn").gameObject.SetActive(false);
         canvas.transform.Find("Opties").gameObject.SetActive(true);
     }
@@ -127,7 +284,7 @@ public class MainMenu : MonoBehaviour {
         GameObject canvas = GameObject.Find("Canvas");
 
         //canvas.transform.Find("MainMenu").gameObject.SetActive(true);
-		canvas.transform.Find("MainMenu").gameObject.SetActive(true);
+        canvas.transform.Find("MainMenu").gameObject.SetActive(true);
         //canvas.transform.Find("OptionsBtn").gameObject.SetActive(true);
         canvas.transform.Find("Opties").gameObject.SetActive(false);
     }
@@ -137,8 +294,8 @@ public class MainMenu : MonoBehaviour {
         GameObject canvas = GameObject.Find("Canvas");
 
         //canvas.transform.Find("MainMenu").gameObject.SetActive(false);
-		canvas.transform.Find("MainMenu").gameObject.SetActive(false);
-       // canvas.transform.Find("OptionsBtn").gameObject.SetActive(false);
+        canvas.transform.Find("MainMenu").gameObject.SetActive(false);
+        // canvas.transform.Find("OptionsBtn").gameObject.SetActive(false);
         canvas.transform.Find("ControlsUI").gameObject.SetActive(true);
     }
 
@@ -147,7 +304,7 @@ public class MainMenu : MonoBehaviour {
         GameObject canvas = GameObject.Find("Canvas");
 
         //canvas.transform.Find("MainMenu").gameObject.SetActive(true);
-		canvas.transform.Find("MainMenu").gameObject.SetActive(true);
+        canvas.transform.Find("MainMenu").gameObject.SetActive(true);
         //canvas.transform.Find("OptionsBtn").gameObject.SetActive(true);
         canvas.transform.Find("ControlsUI").gameObject.SetActive(false);
     }
@@ -157,7 +314,7 @@ public class MainMenu : MonoBehaviour {
         GameObject canvas = GameObject.Find("Canvas");
 
         //canvas.transform.Find("MainMenu").gameObject.SetActive(false);
-		canvas.transform.Find("MainMenu").gameObject.SetActive(false);
+        canvas.transform.Find("MainMenu").gameObject.SetActive(false);
         //canvas.transform.Find("OptionsBtn").gameObject.SetActive(false);
         canvas.transform.Find("BugReportUI").gameObject.SetActive(true);
     }
@@ -167,11 +324,17 @@ public class MainMenu : MonoBehaviour {
         GameObject canvas = GameObject.Find("Canvas");
 
         //canvas.transform.Find("MainMenu").gameObject.SetActive(true);
-		canvas.transform.Find("MainMenu").gameObject.SetActive(true);
+        canvas.transform.Find("MainMenu").gameObject.SetActive(true);
         //canvas.transform.Find("OptionsBtn").gameObject.SetActive(true);
         canvas.transform.Find("BugReportUI").gameObject.SetActive(false);
 
     }
+
+    public void CloseUIBtn(GameObject ui)
+    {
+        ui.SetActive(false);
+    }
+
     public void OnUpdatestCloseButtonClick()
     {
         //turning of the updates panel when button is clicked
@@ -179,17 +342,36 @@ public class MainMenu : MonoBehaviour {
     }
 
     public void OnSendEmail()
-	{
-		System.Diagnostics.Process.Start (("mailto:" + eMail + "?subject=" + "Fout melding Care-Up."
-		+ "&body="
-		));
+    {
+        System.Diagnostics.Process.Start(("mailto:" + eMail + "?subject=" + "Fout melding Care-Up."
+        + "&body="
+        ));
         GameObject.Find("MessageWindow").GetComponent<TimedPopUp>().Set("Uw mailprogramma wordt geopend.");
+    }
+
+    public void ShowReward()
+    {
+        if (!StoreViewModel.ShowRewardDialogue(reward, rewardPanel))
+        {
+            OnRetryButtonClick();
+        }
     }
 
     public void OnRetryButtonClick()
     {
         PlayerPrefsManager.AddOneToPlaysNumber();
+
         EndScoreManager manager = loadingScreen.GetComponent<EndScoreManager>();
+
+        if (prefs.practiceMode)
+        {
+            PlayerPrefsManager.AddOneToPracticePlays(prefs.currentSceneVisualName);
+        }
+        else
+        {
+            PlayerPrefsManager.AddOneToTestPlays(prefs.currentSceneVisualName);
+        }
+
         bl_SceneLoaderUtils.GetLoader.LoadLevel(manager.completedSceneName, manager.completedSceneBundle);
     }
 
@@ -202,6 +384,29 @@ public class MainMenu : MonoBehaviour {
     {
         Application.OpenURL(url);
     }
+
+    public void OpenUrl_NewWindow(string url)
+    {
+#if UNITY_WEBGL && ! UNITY_EDITOR
+        openWindow(url);
+#else
+        OpenUrl(url);
+#endif
+    }
+
+    public void OpenStoreUrl()
+    {
+        if (string.IsNullOrEmpty(storeUrl))
+            storeUrl = "https://careup.online/cursussen-zorg/";
+
+        OpenUrl_NewWindow(storeUrl);
+    }
+
+#if UNITY_WEBGL 
+
+    [DllImport("__Internal")]
+    private static extern void openWindow(string url);
+#endif
 
     public void OnTutorialButtonClick_Interface()
     {
@@ -259,35 +464,17 @@ public class MainMenu : MonoBehaviour {
         bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
     }
 
-    public void OnTutorialButtonClick_Full () {
+    public void OnTutorialButtonClick_Full()
+    {
         string sceneName = "Tutorial_Full";
         string bundleName = "tutorial_full";
-        bl_SceneLoaderUtils.GetLoader.LoadLevel (sceneName, bundleName);
+        bl_SceneLoaderUtils.GetLoader.LoadLevel(sceneName, bundleName);
     }
 
-    void GetPlaysNumber(CML response)
+    public void DownloadCertificate()
     {
-        // we're here only if we got data
-        int plays = response[1].Int("Plays_Number");
-        bool result = plays < 5 ? true : false;
-        AllowDenyContinue(result);
-    }
-
-    void ErrorHandle(CMLData response)
-    {
-        // we're here if we got error or no data which should be equal to 0 plays
-        AllowDenyContinue((response["message"] == "WPServer error: Empty response. No data found"));
-    }
-
-    void AllowDenyContinue(bool allow)
-    {
-        allow |= FindObjectOfType<PlayerPrefsManager>().demoVersion;
-        if (!allow)
-        {
-            // show pop up!
-            //StatusMessage.Message = "Je hebt geen actief product";
-            // or something more like
-            GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(5);
-        }
+        EndScoreManager endScoreManager = GameObject.FindObjectOfType<EndScoreManager>();
+        if (endScoreManager != null)
+            endScoreManager.OpenCertificateBtn();
     }
 }

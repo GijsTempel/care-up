@@ -27,6 +27,15 @@ namespace MBS
             }
         }
 
+        public void setUseOnlineURL(bool value)
+        {
+            use_online_url = value;
+            if (value)
+                WPServer.GameID = 2269;
+            else
+                WPServer.GameID = 2269;
+        }
+
         public class WPServerErrorException : Exception { public WPServerErrorException( string message ) : base( message ) { } }
 
         public enum eWussServerContactType { GET, POST }
@@ -56,15 +65,15 @@ namespace MBS
 
         static public Action<WPServerState> OnServerStateChange;
 
-        [SerializeField] eWussServerContactType post_method;
-        [SerializeField, HideInInspector, WPGameId] int game_id = 1;
+        [SerializeField] eWussServerContactType post_method = default(eWussServerContactType);
+        //[SerializeField, HideInInspector, WPGameId] int game_id = 2269;
         [SerializeField] bool use_online_url = true;
         [SerializeField]
         string
         online_url = "http://www.mysite.com",
         offline_url = "http://localhost";
 
-        static public int GameID => Instance.game_id;
+        static public int GameID = 2269;// => Instance.game_id;
 
         public eWussServerContactType PostMethod => post_method;
 
@@ -120,7 +129,113 @@ namespace MBS
             Action<CMLData> failedresponse = null
         ) => Instance.StartCoroutine( CallServer( action, filepath, wuss_kit, data, response, failedresponse ) );
 
+        
+        public class JsonHelper
+        {
+            public static T[] getJsonArray<T>(string json)
+            {
+                string newJson = "{ \"array\": " + json + "}";
+                Wrapper<T> wrapper = JsonUtility.FromJson<Wrapper<T>>(newJson);
+                return wrapper.array;
+            }
+        
+            [System.Serializable]
+            private class Wrapper<T>
+            {
+                public T[] array = default(T[]);
+            }
+        }
 
+        static public void RequestPurchases(
+            int UserID) => Instance.StartCoroutine( RequestScenePurchases( UserID ) );
+
+        static public void _CheckBundleVersion() => Instance.StartCoroutine(CheckBundleVersion());
+
+
+        static public IEnumerator CheckBundleVersion()
+        {
+            string url = CAServer.BundleAddress + "/" + Application.version + "/version.txt";
+            Debug.Log(url);
+            using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
+            {
+
+                // Request and wait for the desired page.
+                yield return webRequest.SendWebRequest();
+
+                if (webRequest.isNetworkError)
+                {
+
+                }
+                else if (webRequest.downloadHandler.text != "")
+                {
+                    int bundleVersion = 0;
+                    int.TryParse(webRequest.downloadHandler.text, out bundleVersion);
+                    if (bundleVersion != 0)
+                    {
+                        PlayerPrefsManager playerPrefsManager = GameObject.FindObjectOfType<PlayerPrefsManager>();
+                        if (playerPrefsManager != null)
+                        {
+                            if (bundleVersion != playerPrefsManager.BundleVersion)
+                            {
+                                Caching.ClearCache();
+                            }
+                            playerPrefsManager.BundleVersion = bundleVersion;
+                        }
+                    }
+                }
+                else
+                {
+
+                }
+
+            }
+        }
+
+        static public IEnumerator RequestScenePurchases(int UserID)
+        {
+            string url = Instance.SelectedURL + "/request_purchases.php?user_id=" + UserID.ToString();
+#if UNITY_WEBGL
+            url = "https://leren.careup.online/request_purchases.php?user_id=" + UserID.ToString();
+            //url = "https://careup.sharpminds.com/request_purchases.php?user_id=" + UserID.ToString();
+
+#endif
+            using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
+            {
+                // Request and wait for the desired page.
+                yield return webRequest.SendWebRequest();
+                string[] pages = url.Split('/');
+                int page = pages.Length - 1;
+
+                if (webRequest.isNetworkError)
+                {
+                    Debug.Log(pages[page] + ": Error: " + webRequest.error);
+                }
+                else if (webRequest.downloadHandler.text != "")
+                {
+                    Debug.Log(webRequest.downloadHandler.text);
+                    PlayerPrefsManager.ClearSKU();
+                    PlayerPrefsManager.PurchasedScetesData[] sceteStoreData; 
+                    sceteStoreData = JsonHelper.getJsonArray<PlayerPrefsManager.PurchasedScetesData>(webRequest.downloadHandler.text); 
+                    foreach(PlayerPrefsManager.PurchasedScetesData ssd in sceteStoreData)
+                        PlayerPrefsManager.AddSKU(ssd.product_name);
+                }
+                else
+                    PlayerPrefsManager.ClearSKU();
+
+                PlayerPrefsManager ppManager = GameObject.FindObjectOfType<PlayerPrefsManager>();
+                if (ppManager != null)
+                {
+                    List<string> IAPscenes = ppManager.GetComponent<IAPManager>().purchasedScenes;
+                    foreach (string s in IAPscenes)
+                    {
+                        PlayerPrefsManager.AddSKU(s);
+                    }
+                }
+
+                if (GameObject.FindObjectOfType<LevelSelectionScene_UI>() != null)
+                    GameObject.FindObjectOfType<LevelSelectionScene_UI>().RefrashSceneSelectionButtons();
+            }
+        }
 
         static public IEnumerator CallServer( string action, string filepath, string wuss_kit, CMLData data, Action<CML> response, Action<CMLData> failedresponse )
         {
@@ -135,8 +250,6 @@ namespace MBS
 
             string _uri = Instance.URL( filepath ) + ( Instance.post_method == eWussServerContactType.GET ? get : string.Empty );
             UnityWebRequest w = Instance.post_method == eWussServerContactType.GET ? UnityWebRequest.Get( _uri ) : UnityWebRequest.Post( _uri, f );
-
-            w.chunkedTransfer = false;
             
             switch ( Application.platform )
             {
@@ -150,7 +263,7 @@ namespace MBS
                         w.SetRequestHeader( kvp.Key, kvp.Value );
                     break;
             }
-
+            
             yield return w.SendWebRequest();
 
             SetServerState( WPServerState.None, wait_for_response );

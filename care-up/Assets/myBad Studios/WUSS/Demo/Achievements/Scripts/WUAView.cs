@@ -16,9 +16,9 @@ namespace MBS {
         string requirements //a comma delimited array of requirement strings in the format: TYPE NAME QTY
         */
 
-        [SerializeField] Image icon;
-        [SerializeField] new Text name;
-        [SerializeField] Text description;
+        [SerializeField] Image icon = default(Image);
+        [SerializeField] Text fname = default(Text);
+        [SerializeField] Text description = default(Text);
 
         Sprite
             LockedImg,
@@ -36,29 +36,39 @@ namespace MBS {
 
             initialized = true;
             Fields.obj = this;
-            name.text = Fields.String("name");
+            fname.text = Fields.String("name");
 
             //see if this sprite's image is found inside the project and if so, load that.
             //if not found locally, download it from the web
-            LockedImg = Resources.Load<Sprite>( ResourceFilename( Fields.String( "locked_url" ) ) );
-            UnlockedImg = Resources.Load<Sprite>( ResourceFilename( Fields.String( "unlocked_url" ) ) );
+            //LockedImg = Resources.Load<Sprite>( ResourceFilename( Fields.String( "locked_url" ) ) );
+            //UnlockedImg = Resources.Load<Sprite>( ResourceFilename( Fields.String( "unlocked_url" ) ) );
+
+            LockedImg = Resources.Load<Sprite>("Sprites/btn_icon_lock");
+            UnlockedImg = Resources.Load<Sprite>("Sprites/cup");
+
             DisplayRelevantVersion();
 
-            if ( null == LockedImg )
-                StartCoroutine( FetchImageOnline( Fields.String( "locked_url" ), true ) );
-            if ( null == UnlockedImg )
-                StartCoroutine( FetchImageOnline( Fields.String( "unlocked_url" ), false ) );
+            /*if (GameObject.Find("Account_Achievements"))
+            {
+                if (null == LockedImg)
+                    StartCoroutine(FetchImageOnline(Fields.String("locked_url"), true));
+                if (null == UnlockedImg)
+                    StartCoroutine(FetchImageOnline(Fields.String("unlocked_url"), false));
+            } */          
         }
 
         public void DisplayRelevantVersion()
         {
-            description.text = Unlocked ? Fields.String( "text" ) : Fields.String( "descr" );
+            //description.text = Unlocked ? Fields.String( "text" ) : Fields.String( "descr" );
+            description.text = Fields.String("text"); // just display text
             icon.sprite = Unlocked ? UnlockedImg : LockedImg;
         }
 
         IEnumerator FetchImageOnline(string url, bool locked_sprite)
         {
+#pragma warning disable
             WWW w = new WWW( url );
+#pragma warning restore
             yield return w;
             if ( string.IsNullOrEmpty( w.error ) )
             {

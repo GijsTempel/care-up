@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class AnimationCombine : StateMachineBehaviour {
-
+public class AnimationCombine : StateMachineBehaviour
+{
     public int combineFrame;
 
     protected float frame;
@@ -12,20 +10,14 @@ public class AnimationCombine : StateMachineBehaviour {
     protected HandsInventory inv;
     protected CameraMode mode;
 
-    private bool moveBackBtnState = false;
-
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
-    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-
+    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
         inv = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
         inv.ToggleControls(true);
 
         mode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
         mode.animating = true;
-
-        moveBackBtnState = GameObject.FindObjectOfType<PlayerScript>().MoveBackButtonObject.activeSelf;
-        GameObject.FindObjectOfType<PlayerScript>().MoveBackButtonObject.SetActive(false);
-        //mode.SetCameraUpdating(true);
 
         frame = 0f;
         prevFrame = 0f;
@@ -38,17 +30,19 @@ public class AnimationCombine : StateMachineBehaviour {
         RobotManager.SetUITriggerActive(false);
     }
 
-	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
+    // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
+    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
         if (animator.speed != 0)
         {
+            prevFrame = frame;
+            frame = stateInfo.normalizedTime * stateInfo.length;
+
             if (PlayerAnimationManager.CompareFrames(frame, prevFrame, combineFrame))
             {
                 inv.ExecuteDelayedCombination();
             }
-
-            prevFrame = frame;
-            frame += Time.deltaTime;
+          
             inv.ToggleControls(true);
         }
     }
@@ -56,6 +50,10 @@ public class AnimationCombine : StateMachineBehaviour {
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        if (combineFrame / 60f > frame)
+        {
+            inv.ExecuteDelayedCombination();
+        }
 
         inv.ToggleControls(false);
         mode.animating = false;
@@ -67,17 +65,5 @@ public class AnimationCombine : StateMachineBehaviour {
         {
             RobotManager.SetUITriggerActive(true);
         }
-
-        GameObject.FindObjectOfType<PlayerScript>().MoveBackButtonObject.SetActive(moveBackBtnState);
     }
-
-	// OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here
-	//override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-	//
-	//}
-
-	// OnStateIK is called right after Animator.OnAnimatorIK(). Code that sets up animation IK (inverse kinematics) should be implemented here.
-	//override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-	//
-	//}
 }

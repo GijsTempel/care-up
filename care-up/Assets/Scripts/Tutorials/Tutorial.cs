@@ -81,7 +81,7 @@ public class Tutorial : TutorialManager {
     private GameObject wfPos;
     private GameObject docPos;
     private GameObject cliëntPos;
-    [SerializeField]private GameObject robotUI;
+    [SerializeField]private GameObject robotUI = null;
 
     private UsableObject handCleaner;
     private WorkField workfield;
@@ -536,30 +536,6 @@ public class Tutorial : TutorialManager {
                     RobotUITabs.tutorial_back = false;
                 }
                 break;
-                case TutorialStep.GeneralBack:
-                if (RobotUITabs.tutorial_back) {
-                    audioSource.PlayOneShot (Popup, 0.1F);
-                    audioSource.PlayOneShot (RobotShort1, 0.1F);
-                    closeTab = RobotUITabs.tutorial_back = false;
-                    currentStep = TutorialStep.PressChecklist;
-
-                    hintsN.LockTo ("RobotUI", new Vector3 (153.20f, 22.10f, 0.00f));
-                    UItext.DOText ("Open de checklist door op de checklist te klikken.", 0.5f, true, ScrambleMode.All).SetEase (Ease.Linear);
-                    RobotUITabs.tutorial_checkListOpened = false;
-                    tabToOpen = "CheckListTab";
-                }
-                break;
-                case TutorialStep.PressChecklist:
-                if (RobotUITabs.tutorial_checkListOpened) {
-                    audioSource.PlayOneShot (Popup, 0.1F);
-                    audioSource.PlayOneShot (Robot2, 0.1F);
-                    currentStep = TutorialStep.ChecklistExpl;
-                    hintsN.SetSize (788f, 524.9f);
-                    hintsN.LockTo ("RobotUI", new Vector3 (-1568.20f, 958.30f, 0.00f));
-                    UItext.DOText ("Tijdens het oefenen van een handeling kun je in de checklist zien welke stappen je hebt doorlopen.Ook zie je welke stappen je nog moet uitvoeren om het handeling af te ronden.", 1, true, ScrambleMode.All).SetEase (Ease.Linear);
-                    SetUpTutorialNextButton ();
-                }
-                break;
                 case TutorialStep.ChecklistExpl:
                 if (nextButtonClicked) {
                     audioSource.PlayOneShot (Popup, 0.1F);
@@ -580,10 +556,7 @@ public class Tutorial : TutorialManager {
                     UItext.DOText ("Je hebt een bericht! Klik op ‘Berichten’ om het bericht te openen. ", 0.5f, true, ScrambleMode.All).SetEase (Ease.Linear);
                     hintsN.LockTo ("RobotUI", new Vector3 (849.00f, -244.00f, -34.70f));
                     hintsN.SetSize (452f, 164.8f);
-                    hintsN.SetIconPosition (1);
-                    GameObject.FindObjectOfType<RobotUIMessageTab> ().NewMessage ("Leren Spelen",
-                        "De inhoud van de berichten verschijnt in dit venster. Klik op het pijltje linksboven in je scherm om terug te gaan. ",
-                        RobotUIMessageTab.Icon.Info);
+                    hintsN.SetIconPosition (1);                 
                     RobotUITabs.tutorial_messageCenterOpened = false;
                     tabToOpen = "MessageCenter";
                 }

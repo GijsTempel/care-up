@@ -10,22 +10,30 @@ public class PlayAudioOnFrame : StateMachineBehaviour {
 
     protected float frame = 0f;
     protected float prevFrame = 0f;
-
+    public bool moveWithCamera = false;
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-     
+    {     
         if (PlayerAnimationManager.CompareFrames(frame, prevFrame, audioFrame))
         {
             AudioClip clip = Resources.Load<AudioClip>("Audio/" + audioFileName);
- 
-            AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position, volume);
+            if (moveWithCamera)
+            {
+                GameObject Narrator = GameObject.FindObjectOfType<Narrator>().gameObject;
+                AudioSource audioSource = Narrator.AddComponent<AudioSource>();
+                audioSource.clip = clip;
+                audioSource.Play();
+            }
+            else
+            {
+                AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position, volume);
+            }
         }
 
         if (animator.speed != 0)
         {
             prevFrame = frame;
-            frame += Time.deltaTime;
+            frame = stateInfo.normalizedTime * stateInfo.length;
         }
     }
 

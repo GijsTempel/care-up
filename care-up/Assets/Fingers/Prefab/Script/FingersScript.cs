@@ -365,6 +365,12 @@ namespace DigitalRubyShared
 
         private void FingersProcessTouch(ref GestureTouch g)
         {
+            //-------------------------------------------------------------
+            if (EventSystem.current.IsPointerOverGameObject())
+                return;
+            //-------------------------------------------------------------
+
+
             currentTouches.Add(g);
 
             // do our own touch up / down tracking, the user can reset touch state so that touches can begin again without a finger being lifted
@@ -782,7 +788,7 @@ namespace DigitalRubyShared
             {
                 // pick a sensible dpi since we don't know the actual DPI
                 DeviceInfo.UnitMultiplier = DeviceInfo.PixelsPerInch = DefaultDPI;
-                Debug.LogError("Unable to determine DPI, using default DPI of " + DefaultDPI);
+                // Debug.LogError("Unable to determine DPI, using default DPI of " + DefaultDPI);
             }
 
             // set the main thread callback so gestures can callback after a delay
@@ -817,6 +823,7 @@ namespace DigitalRubyShared
 
         private void Update()
         {
+          
             // turn on the canvas to see touches - don't do this unless you are debugging as it can mess up other canvases
             if (gameObject.transform.childCount > 0 && gameObject.transform.GetChild(0).GetComponent<Canvas>() != null)
             {

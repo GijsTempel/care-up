@@ -11,6 +11,21 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1688322448502558}
   m_IsPrefabParent: 1
+--- !u!1 &1200963724860804
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4966800949168798}
+  m_Layer: 0
+  m_Name: CinematicTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1688322448502558
 GameObject:
   m_ObjectHideFlags: 0
@@ -22,9 +37,25 @@ GameObject:
   - component: {fileID: 33541573171433106}
   - component: {fileID: 23841192218498344}
   - component: {fileID: 114311253489601890}
-  - component: {fileID: 65489407173360254}
+  - component: {fileID: 65795844392405890}
   m_Layer: 0
   m_Name: BaxterRoll
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1965684744805534
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4657386824336184}
+  - component: {fileID: 114831271213647508}
+  m_Layer: 0
+  m_Name: hl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53,11 +84,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1688322448502558}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 9.593, y: 1.182, z: 12.084}
-  m_LocalScale: {x: 48.652992, y: 48.652992, z: 48.652992}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
+  m_LocalPosition: {x: 9.593, y: 1.182, z: 12.0953}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4634878162739428}
+  - {fileID: 4966800949168798}
+  - {fileID: 4657386824336184}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -68,12 +101,38 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1992077950971830}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0015954277, y: 0.0000052892083, z: 0.0012355263}
-  m_LocalScale: {x: 0.10212452, y: 0.10212453, z: 0.10212453}
+  m_LocalPosition: {x: -0.0693, y: 0, z: 0.0618}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4175872788388286}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4657386824336184
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1965684744805534}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4175872788388286}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4966800949168798
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1200963724860804}
+  m_LocalRotation: {x: -0.5028321, y: -0.5619832, z: -0.48133793, w: -0.44682062}
+  m_LocalPosition: {x: -0.753, y: -0.053, z: -0.465}
+  m_LocalScale: {x: 0.020553736, y: 0.020553727, z: 0.02055373}
+  m_Children: []
+  m_Father: {fileID: 4175872788388286}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 172.107, y: -84.69098, z: -181.05}
 --- !u!23 &23841192218498344
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -158,7 +217,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1992077950971830}
   m_Mesh: {fileID: 4300000, guid: 3623db967d0a99b43a9c07d02a51bf4c, type: 3}
---- !u!65 &65489407173360254
+--- !u!65 &65795844392405890
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -168,8 +227,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.0041684546, y: 0.0034548882, z: 0.0036175102}
-  m_Center: {x: 0, y: 0, z: 0.000017652577}
+  m_Size: {x: 0.2252523, y: 0.17733206, z: 0.19119734}
+  m_Center: {x: -0.0010977536, y: -1.96995e-17, z: 0.0008979479}
 --- !u!114 &114311253489601890
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -182,10 +241,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectID: 0
-  description: Medicine dispenser
+  description: baxterrol
+  nameArticle: de
   muplipleMesh: 0
   descriptionOffset: {x: 0, y: 0, z: 0}
   transparencyFix: 0
   tutorial_used: 0
   handsCleaned: 0
   PrefabToAppear: 
+  UseWithObjectsInHands: 0
+--- !u!114 &114831271213647508
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1965684744805534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c34eecdde24d47db816fe0faca03a6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hl_type: 2

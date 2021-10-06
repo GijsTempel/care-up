@@ -18,6 +18,7 @@ public class PlayerAnimationManager : MonoBehaviour
     public int rightModifier01 = 0;
     public float leftModifier02 = 0f;
     public float rightModifier02 = 0f;
+    public static Quaternion SavedCameraOrientation = new Quaternion();
     public Transform propL;
     Transform propR;
     float syncSpeed = 0.01f;
@@ -36,10 +37,59 @@ public class PlayerAnimationManager : MonoBehaviour
     private static PlayerScript playerScript;
 
     private static AnimationSequence animationSequence;
+    public static float animTimeout = 0;
+
+    public static Quaternion GetSavedCameraOrientation()
+    {
+        return SavedCameraOrientation;
+    }
+
+    public static void SetSavedCameraOrientation(Quaternion value)
+    {
+        SavedCameraOrientation = value;
+    }
+
+    public static bool IsLongAnimation()
+    {
+        bool isLognAnim = false;
+        for (int i = 0; i < 3; i++)
+        {
+            if (animationController.GetCurrentAnimatorStateInfo(i).length > 0.2f && animationController.GetCurrentAnimatorStateInfo(i).normalizedTime < 1f)
+                isLognAnim = true;
+            if (animationController.GetNextAnimatorStateInfo(i).length > 0.2f && animationController.GetAnimatorTransitionInfo(i).normalizedTime < 0.01)
+                isLognAnim = true;
+            if (i < 2)
+            {
+                if (animationController.GetCurrentAnimatorStateInfo(i).length > 0.2f &&
+                    animationController.GetAnimatorTransitionInfo(i).normalizedTime < 0.01 &&
+                    animationController.GetNextAnimatorStateInfo(i).length < 0.2f)
+                    isLognAnim = true;
+            }
+            if (animationController.GetCurrentAnimatorStateInfo(i).IsName("Armature|021_pickUpRight_L_Lib"))
+            {
+                isLognAnim = true;
+            }
+            if (animationController.GetCurrentAnimatorStateInfo(i).IsName("Armature|020_pickUpLeft_L_Lib"))
+            {
+                isLognAnim = true;
+            }
+        }
+
+        if (isLognAnim && animTimeout < 0.03f)
+            animTimeout = 0.15f;
+        if (animTimeout > 0)
+            return true;
+        return isLognAnim;
+    }
+
+    public static bool EyesAreClosed()
+    {
+        return animationController.GetCurrentAnimatorStateInfo(2).IsName("closed");
+    }
 
     void Start()
     {
-        
+
         propL = GameObject.Find("prop.L").transform;
         propR = GameObject.Find("prop.R").transform;
 
@@ -55,21 +105,14 @@ public class PlayerAnimationManager : MonoBehaviour
         playerScript = GameObject.FindObjectOfType<PlayerScript>();
         if (playerScript == null) Debug.LogError("No player");
     }
-    
-	public static void PlayCombineAnimation(int leftID, int rightID, Transform target = null)
-    {
-		animationController.SetInteger("leftID", leftID);
-		animationController.SetInteger("rightID", rightID);
-		animationController.SetTrigger("Combine");
-		animationController.SetTrigger("S Combine");
 
-        //if (name != "LeftPick" && name != "RightPick" &&
-        //    name != "closeup_left" && name != "closeup_right" &&
-        //    name != "faraway_left" && name != "faraway_right")
-        //{
-        //    animationController.SetTrigger("S " + name);
-        //}
-        playerScript.ResetFreeLook();
+    public static void PlayCombineAnimation(int leftID, int rightID, Transform target = null)
+    {
+        animationController.SetInteger("leftID", leftID);
+        animationController.SetInteger("rightID", rightID);
+        animationController.SetTrigger("Combine");
+        animationController.SetTrigger("S Combine");
+        //playerScript.ResetFreeLook();
         if (target)
         {
             cameraMode.SetCinematicMode(target);
@@ -78,8 +121,12 @@ public class PlayerAnimationManager : MonoBehaviour
         InteractableObject.ResetDescription();
     }
 
+
     void Update()
     {
+        if (animTimeout > 0)
+            animTimeout -= Time.deltaTime;
+
         leftModifier02 = propL.localPosition.y;
         rightModifier02 = propR.localPosition.y;
 
@@ -99,8 +146,6 @@ public class PlayerAnimationManager : MonoBehaviour
             && (clipTime_L > 0.35f && clipTime_L < (clipLength_L - 0.55f))))
         {
 
-            //print(((normalizedTime_L - normalizedTime_R) * clipLength_R).ToString() + "  ||  " + normalizedTime_L.ToString() + "  " + normalizedTime_R.ToString());
-
             if (Mathf.Abs(clipTime_L - clipTime_R) < syncSpeed)
             {
                 animationController.Play(LeftAnimHash, 1, normalizedTime_R + Time.deltaTime / clipLength_L);
@@ -114,16 +159,13 @@ public class PlayerAnimationManager : MonoBehaviour
                 }
                 animationController.Play(LeftAnimHash, 1, (clipTime_L + (syncStep * 2f) + Time.deltaTime) / clipLength_L);
             }
-
         }
-
-
     }
 
     public static void PlayUseAnimation(int UseObjID, int UseOnID, Transform target = null)
     {
-		animationController.SetInteger("leftID", UseObjID);
-		animationController.SetInteger("rightID", UseOnID);
+        animationController.SetInteger("leftID", UseObjID);
+        animationController.SetInteger("rightID", UseOnID);
         animationController.SetTrigger("Use");
         animationController.SetTrigger("S Use");
 
@@ -135,8 +177,23 @@ public class PlayerAnimationManager : MonoBehaviour
         InteractableObject.ResetDescription();
     }
 
+    public static void PlayUseOnIDAnimation(int UseObjID, bool isLeft = false)
+    {
+        if (isLeft)
+        {
+            animationController.SetTrigger("UseLeft");
+            animationController.SetTrigger("S UseLeft");
+            animationController.SetInteger("leftID", UseObjID);
+        }
+        else
+        {
+            animationController.SetTrigger("UseRight");
+            animationController.SetTrigger("S UseRight");
+            animationController.SetInteger("rightID", UseObjID);
+        }
 
-
+        InteractableObject.ResetDescription();
+    }
 
     public static void PlayAnimation(string name, Transform target = null)
     {
@@ -148,9 +205,9 @@ public class PlayerAnimationManager : MonoBehaviour
             name != "no")
         {
             animationController.SetTrigger("S " + name);
-            playerScript.ResetFreeLook();
+            //playerScript.ResetFreeLook();
         }
-        
+
         if (target)
         {
             cameraMode.SetCinematicMode(target);
@@ -158,7 +215,6 @@ public class PlayerAnimationManager : MonoBehaviour
 
         InteractableObject.ResetDescription();
     }
-    
 
 
     /// <summary>
@@ -203,7 +259,7 @@ public class PlayerAnimationManager : MonoBehaviour
             }
         }
         else
-        { 
+        {
             animationController.speed = 1f;
         }
     }
@@ -238,6 +294,10 @@ public class PlayerAnimationManager : MonoBehaviour
     {
         float targetFrame = compareFrame / 60f; // 60fps
         return (currentFrame >= targetFrame && previousFrame < targetFrame);
+    }
 
+    public static void SetTrigger(string trigger)
+    {
+        animationController.SetTrigger(trigger);
     }
 }

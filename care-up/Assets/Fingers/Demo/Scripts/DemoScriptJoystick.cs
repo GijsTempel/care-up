@@ -6,8 +6,6 @@
 // Source code may NOT be redistributed or sold.
 // 
 
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace DigitalRubyShared
@@ -16,7 +14,7 @@ namespace DigitalRubyShared
     {
         [Tooltip("Fingers Joystick Script")]
         public FingersJoystickScript JoystickScript;
-        
+
         [Tooltip("Whether joystick moves to touch location")]
         public bool MoveJoystickToGestureStartLocation;
 
@@ -29,17 +27,19 @@ namespace DigitalRubyShared
 
         private void Awake()
         {
-            JoystickScript.JoystickExecuted = JoystickExecuted;
-            JoystickScript.MoveJoystickToGestureStartLocation = MoveJoystickToGestureStartLocation;
-        }
+            //JoystickScript.JoystickExecuted = JoystickExecuted;
+            //JoystickScript.MoveJoystickToGestureStartLocation = MoveJoystickToGestureStartLocation;
+            Destroy(this.gameObject);
+        } 
 
-        private void JoystickExecuted(FingersJoystickScript script, Vector2 amount)
+         private void JoystickExecuted(FingersJoystickScript script, Vector2 amount)
         {
             //Debug.LogFormat("Joystick: {0}", amount);
- 
-            player.freeLook = true;
-            player.LookRotationUpdate(amount);
 
+            player.freeLook = true;
+
+            player.LookRotationUpdate(amount);
+            
             if (player.itemControls.gameObject.activeSelf)
             {
                 player.itemControls.Close();

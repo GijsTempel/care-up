@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class InsulinPen : PickableObjectWithInfo {
+public class InsulinPen : PickableObjectWithInfo
+{
 
     public bool animateButton = false;
 
@@ -20,8 +21,6 @@ public class InsulinPen : PickableObjectWithInfo {
 
     protected override void Update()
     {
-        base.Update();
-
         if (animateButton)
         {
             button.localPosition = new Vector3(
@@ -47,7 +46,7 @@ public class InsulinPen : PickableObjectWithInfo {
                 if (actionManager.CompareUseOnInfo(name, "Patient"))
                 {
                     actionManager.OnUseOnAction(name, "Patient");
-                    if (SceneManager.GetActiveScene().name == "Insulin Injection" )
+                    if (SceneManager.GetActiveScene().name == "Insulin Injection")
                     {
                         Transform target = controls.SelectedObject.GetComponent<PersonObjectPart>().Person;
                         target.GetComponent<InteractableObject>().Reset();
@@ -74,19 +73,26 @@ public class InsulinPen : PickableObjectWithInfo {
         if (actionManager.CompareUseOnInfo("InsulinPenWithNeedle", "") && noTarget
             && name == "InsulinPenWithNeedle")
         {
-            if (inventory.LeftHandEmpty())
+            if (!inventory.RightHandEmpty())
             {
-                PlayerAnimationManager.PlayAnimation("UseRight " + name);
-                actionManager.OnUseOnAction(name, "");
-                name = "VentedInsulinPenWithNeedle";
-                return true;
+                if (inventory.rightHandObject.name == name)
+                {
+                    PlayerAnimationManager.PlayAnimation("UseRight " + name);
+                    actionManager.OnUseOnAction(name, "");
+                    //name = "VentedInsulinPenWithNeedle";
+                    return true;
+                }
             }
-            else if (inventory.RightHandEmpty())
+            //else if (!inventory.LeftHandEmpty())
+            if (!inventory.LeftHandEmpty())
             {
-                PlayerAnimationManager.PlayAnimation("UseLeft " + name);
-                actionManager.OnUseOnAction(name, "");
-                name = "VentedInsulinPenWithNeedle";
-                return true;
+                if (inventory.leftHandObject.name == name)
+                {
+                    PlayerAnimationManager.PlayAnimation("UseLeft " + name);
+                    actionManager.OnUseOnAction(name, "");
+                    //name = "VentedInsulinPenWithNeedle";
+                    return true;
+                }
             }
             else
             {
@@ -101,14 +107,14 @@ public class InsulinPen : PickableObjectWithInfo {
             {
                 PlayerAnimationManager.PlayAnimation("UseRight " + name);
                 actionManager.OnUseOnAction(name, "");
-                name = "InsulinPenWithNeedle";
+                //name = "InsulinPenWithNeedle";
                 return true;
             }
             else if (inventory.RightHandEmpty())
             {
                 PlayerAnimationManager.PlayAnimation("UseLeft " + name);
                 actionManager.OnUseOnAction(name, "");
-                name = "InsulinPenWithNeedle";
+                //name = "InsulinPenWithNeedle";
                 return true;
             }
             else
@@ -120,23 +126,28 @@ public class InsulinPen : PickableObjectWithInfo {
         else if (actionManager.CompareUseOnInfo("InsulinPen", "") && noTarget
             && name == "InsulinPen")
         {
-            if (inventory.LeftHandEmpty())
+            if (!inventory.RightHandEmpty())
             {
-                PlayerAnimationManager.PlayAnimation("UseRight " + name);
-                actionManager.OnUseOnAction(name, "");
-                return true;
+                if (inventory.rightHandObject.name == name)
+                {
+                    PlayerAnimationManager.PlayAnimation("UseRight " + name);
+                    actionManager.OnUseOnAction(name, "");
+                    return true;
+                }
             }
-            else if (inventory.RightHandEmpty())
+
+            if (!inventory.LeftHandEmpty())
             {
-                PlayerAnimationManager.PlayAnimation("UseLeft " + name);
-                actionManager.OnUseOnAction(name, "");
-                return true;
+                if (inventory.leftHandObject.name == name)
+                {
+                    PlayerAnimationManager.PlayAnimation("UseLeft " + name);
+                    actionManager.OnUseOnAction(name, "");
+                    return true;
+                }
             }
-            else
-            {
-                EmptyHandsWarning();
-                return false;
-            }
+
+            EmptyHandsWarning();
+            return false;
         }
 
         actionManager.OnUseOnAction(name, controls.SelectedObject != null ? controls.SelectedObject.name : "");

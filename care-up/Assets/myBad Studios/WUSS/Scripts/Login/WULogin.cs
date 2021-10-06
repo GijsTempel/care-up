@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System;
+using UnityEngine.Networking;
 
 namespace MBS
 {
@@ -20,10 +21,12 @@ namespace MBS
         static public bool UsernameNotValid = false;
         static public bool UserNotWithEmail = false;
         static public bool UserNotFound = false;
-        static public bool FirstLoginAchievment = false;
-        
+        static public bool characterCreated = false;
+
+        static public bool justLoggedOff = false;
+
         //static private int FirstLogin = 1;
-        static private int SecondLogin = 2;
+        //static private int SecondLogin = 2;
 
         #region RESPONSE DELEGATES
         static public Action<CML>
@@ -67,40 +70,40 @@ namespace MBS
         static public CMLData fetched_info = null;
         static public Texture2D user_gravatar;
         static public Sprite user_gravatar_sprite;
-        static public int UID { get { return ( null == fetched_info ) ? 0 : fetched_info.Int( "uid" ); } set { if ( null == fetched_info ) return; fetched_info.Seti( "uid", value ); } }
-        static public string display_name { get { return ( null == fetched_info ) ? "" : fetched_info.String( "display_name" ); } set { if ( null == fetched_info ) return; fetched_info.Set( "display_name", value ); } }
-        static public string nickname { get { return ( null == fetched_info ) ? "" : fetched_info.String( "nickname" ); } set { if ( null == fetched_info ) return; fetched_info.Set( "nickname", value ); } }
-        static public string username { get { return ( null == fetched_info ) ? "" : fetched_info.String( "user_login" ); } set { if ( null == fetched_info ) return; fetched_info.Set( "user_login", value ); } }
-        static public string email { get { return ( null == fetched_info ) ? "" : fetched_info.String( "user_email" ); } set { if ( null == fetched_info ) return; fetched_info.Set( "user_email", value ); } }
-        static public string website { get { return ( null == fetched_info ) ? "" : fetched_info.String( "user_url" ); } set { if ( null == fetched_info ) return; fetched_info.Set( "user_url", value ); } }
-        static public string registration_date { get { return ( null == fetched_info ) ? "" : fetched_info.String( "user_registered" ); } set { if ( null == fetched_info ) return; fetched_info.Set( "user_registered", value ); } }
-        static public string roles { get { return ( null == fetched_info ) ? "" : fetched_info.String( "roles" ); } set { if ( null == fetched_info ) return; fetched_info.Set( "roles", value ); } }
-        static public bool   logged_in = false;
+        static public int UID { get { return (null == fetched_info) ? 0 : fetched_info.Int("uid"); } set { if (null == fetched_info) return; fetched_info.Seti("uid", value); } }
+        static public string display_name { get { return (null == fetched_info) ? "" : fetched_info.String("display_name"); } set { if (null == fetched_info) return; fetched_info.Set("display_name", value); } }
+        static public string nickname { get { return (null == fetched_info) ? "" : fetched_info.String("nickname"); } set { if (null == fetched_info) return; fetched_info.Set("nickname", value); } }
+        static public string username { get { return (null == fetched_info) ? "" : fetched_info.String("user_login"); } set { if (null == fetched_info) return; fetched_info.Set("user_login", value); } }
+        static public string email { get { return (null == fetched_info) ? "" : fetched_info.String("user_email"); } set { if (null == fetched_info) return; fetched_info.Set("user_email", value); } }
+        static public string website { get { return (null == fetched_info) ? "" : fetched_info.String("user_url"); } set { if (null == fetched_info) return; fetched_info.Set("user_url", value); } }
+        static public string registration_date { get { return (null == fetched_info) ? "" : fetched_info.String("user_registered"); } set { if (null == fetched_info) return; fetched_info.Set("user_registered", value); } }
+        static public string roles { get { return (null == fetched_info) ? "" : fetched_info.String("roles"); } set { if (null == fetched_info) return; fetched_info.Set("roles", value); } }
+        static public bool logged_in = false;
 
         public const string GamesListPrefName = "WUSSGAMESLIST";
         static public CML AvailableGames;
 
 #if WUSKU
         static public bool RequireSerialForLogin { get; private set; }
-        static public bool HasSerial { get { return ( null == fetched_info ) ? false : fetched_info.Bool( "registered" ); } set { fetched_info?.Seti( "registered", value ? 1 : 0 ); } }
-        static public string SerialNumber { get { return ( null == fetched_info ) ? "" : fetched_info.String( "serial" ); } set { fetched_info?.Set( "serial", value ); } }
+        static public bool HasSerial { get { return (null == fetched_info) ? false : fetched_info.Bool("registered"); } set { fetched_info?.Seti("registered", value ? 1 : 0); } }
+        static public string SerialNumber { get { return (null == fetched_info) ? "" : fetched_info.String("serial"); } set { fetched_info?.Set("serial", value); } }
 #endif
 
 #if WUS
-        static public int highscore { get { return ( null == fetched_info ) ? 0 : fetched_info.Int( HighScoresField ); } set { if ( null == fetched_info ) return; fetched_info.Seti( HighScoresField, value ); } }
+        static public int highscore { get { return (null == fetched_info) ? 0 : fetched_info.Int(HighScoresField); } set { if (null == fetched_info) return; fetched_info.Seti(HighScoresField, value); } }
         static string HighScoresField => $"{WPServer.GameID}_HighScore";
 #endif
 
 #if WUM
-        static public string [] CurrencyNames { get; private set; }
-        static public string CurrencyString( string currency_name ) => $"{WPServer.GameID}_currency_{currency_name}";
-        static public string CurrencyString( int index ) => index < __data.Currencies.Length ? __data.Currencies [index] : string.Empty;
+        static public string[] CurrencyNames { get; private set; }
+        static public string CurrencyString(string currency_name) => $"{WPServer.GameID}_currency_{currency_name}";
+        static public string CurrencyString(int index) => index < __data.Currencies.Length ? __data.Currencies[index] : string.Empty;
 
-        static public int Cash( int index ) => Cash( index >= CurrencyNames.Length ? string.Empty : CurrencyNames [index] );
-        static public int Cash( string currency_name )
+        static public int Cash(int index) => Cash(index >= CurrencyNames.Length ? string.Empty : CurrencyNames[index]);
+        static public int Cash(string currency_name)
         {
             currency_name = currency_name.ToLower().Trim();
-            return fetched_info?.Int( CurrencyString( currency_name ) ) ?? 0;
+            return fetched_info?.Int(CurrencyString(currency_name)) ?? 0;
         }
 #endif
 
@@ -114,41 +117,41 @@ namespace MBS
             get
             {
                 string result = "";
-                if ( null == __data )
+                if (null == __data)
                     return "user_id,user_email";
 
-                foreach ( string meta in __data.MetaInfo )
-                    if ( meta.Trim() != string.Empty )
+                foreach (string meta in __data.MetaInfo)
+                    if (meta.Trim() != string.Empty)
                         result += $",{meta}";
 
 #if WUM
                 List<string> cur = new List<string>();
-                for ( int i = 0; i < __data.Currencies.Length; i++ )
+                for (int i = 0; i < __data.Currencies.Length; i++)
                 {
-                    __data.Currencies [i] = __data.Currencies [i].ToLower().Trim();
-                    if ( !cur.Contains( __data.Currencies [i] ) )
+                    __data.Currencies[i] = __data.Currencies[i].ToLower().Trim();
+                    if (!cur.Contains(__data.Currencies[i]))
                     {
-                        cur.Add( __data.Currencies [i] );
-                        result += $",{CurrencyString( __data.Currencies [i] )}";
+                        cur.Add(__data.Currencies[i]);
+                        result += $",{CurrencyString(__data.Currencies[i])}";
                     }
                 }
-                if ( !cur.Contains( "points" ) )
+                if (!cur.Contains("points"))
                 {
                     result += $",{WPServer.GameID}_currency_points";
-                    cur.Insert( 0, CurrencyString( "points" ) );
+                    cur.Insert(0, CurrencyString("points"));
                 }
                 CurrencyNames = cur.ToArray();
 #endif
 
 #if WUS
-                if ( __data.FetchHighscore && result.IndexOf( HighScoresField ) < 0 )
+                if (__data.FetchHighscore && result.IndexOf(HighScoresField) < 0)
                     result += $",{HighScoresField}";
 #endif
 
 #if WUSKU
-                if ( __data.CheckForSerial )
+                if (__data.CheckForSerial)
                     result += $",SERIALCHECK";
-                if ( __data.FetchSerial )
+                if (__data.FetchSerial)
                     result += $",SERIALFETCH";
                 RequireSerialForLogin = __data.RequireSerial;
                 SerialNumber = string.Empty;
@@ -156,33 +159,37 @@ namespace MBS
 
                 result += ",user_id";
                 result += ",user_email";
-                if ( __data.FetchUsername )
+                if (__data.FetchUsername)
                     result += ",user_login";
-                if ( __data.FetchDisplayName )
+                if (__data.FetchDisplayName)
                     result += ",display_name";
-                if ( __data.FetchURL )
+                if (__data.FetchURL)
                     result += ",user_url";
-                if ( __data.FetchRegistration )
+                if (__data.FetchRegistration)
                     result += ",user_registered";
-                if ( __data.FetchRoles )
+                if (__data.FetchRoles)
                     result += ",roles";
-                if ( result [0] == ',' )
-                    result = result.Substring( 1 );
+                if (result[0] == ',')
+                    result = result.Substring(1);
                 return result;
             }
         }
 
         #endregion
 
-        static public void RegisterAccount( CMLData fields ) => WPServer.ContactServer( WULActions.SubmitRegistration, filepath, LOGINConstant, fields, onRegistered, onRegistrationFailed );
-        static public void ResetPassword( CMLData fields ) => WPServer.ContactServer( WULActions.PasswordReset, filepath, LOGINConstant, fields, onReset, onResetFailed );
-        static public void ChangePassword( CMLData fields ) => WPServer.ContactServer( WULActions.PasswordChange, filepath, LOGINConstant, fields, onPasswordChanged, onPasswordChangeFail );
-        static public void LogOut() => WPServer.ContactServer( WULActions.Logout, filepath, LOGINConstant, null, __onLogOutSuccess, onLogoutFailed );
+        static public void RegisterAccount(CMLData fields) => WPServer.ContactServer(WULActions.SubmitRegistration, filepath, LOGINConstant, fields, onRegistered, onRegistrationFailed);
+        static public void ResetPassword(CMLData fields) => WPServer.ContactServer(WULActions.PasswordReset, filepath, LOGINConstant, fields, onReset, onResetFailed);
+        static public void ChangePassword(CMLData fields) => WPServer.ContactServer(WULActions.PasswordChange, filepath, LOGINConstant, fields, onPasswordChanged, onPasswordChangeFail);
+        static public void LogOut() { justLoggedOff = true; WPServer.ContactServer(WULActions.Logout, filepath, LOGINConstant, null, __onLogOutSuccess, onLogoutFailed ); }
         static public void FetchPersonalInfo() => WPServer.ContactServer( WULActions.FetchAccountDetails, filepath, LOGINConstant, null, onAccountInfoReceived, onAccountInfoFetchFailed );
         static public void FetchAvailableGameInfo() => WPServer.ContactServer( WULActions.FetchAvailableGameInfo, filepath, LOGINConstant, null, __onGameListFetched, __onGameListFetchFailed );
 
         static public void AttemptAutoLogin()
         {
+            // stop goddamn autologging after recent logOff
+            if (justLoggedOff)
+                return;
+
             CMLData data = new CMLData();
             data.Set( "wul_fields", FieldsToFetch );
             WPServer.ContactServer( WULActions.VerifyLogin, filepath, LOGINConstant, data, __onLoginSuccess );
@@ -190,6 +197,9 @@ namespace MBS
 
         static public void AttemptToLogin( CMLData fields )
         {
+            // WTF UNITY
+            UnityWebRequest.ClearCookieCache();
+
             WUCookie.ClearCookie();
             WUCookie.StoreCookie();
             fields.Set( "wul_fields", FieldsToFetch );
@@ -244,19 +254,6 @@ namespace MBS
             onLoggedIn?.Invoke( data );
             if ( email != string.Empty && null != __data && __data.FetchGravatar )
                 FetchProfileImage( __SetProfileImage, __data.GravatarType );
-
-            //When trying to test the tutorials with the first time logging make the if under this comment a comment.
-            //And uncomment the comment under this one one then start the scene log in the stop the scene and change the comments back to normal and BOOM! next time you login it will be your first.
-            //PlayerPrefs.SetInt ("FirstLogin", FirstLogin);
-
-            if (PlayerPrefs.GetInt ("FirstLogin") <= 1) {
-
-                FirstLoginAchievment = true;
-                PlayerPrefs.SetInt ("FirstLogin", SecondLogin);
-                string sceneName = "Tutorial_UI";
-                string bundleName = "tutorial_ui";
-                bl_SceneLoaderUtils.GetLoader.LoadLevel (sceneName, bundleName);
-            }
         }
 
         static void __SetProfileImage( Texture2D image )

@@ -1,9 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+#if UNITY_5_3 || UNITY_5_3_OR_NEWER
+using UnityEngine.SceneManagement;
+#endif
 
-public class LeaderBoardSceneButton : MonoBehaviour
+public class LeaderBoardSceneButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler
 {
     public string sceneName;
     public bool multiple;
@@ -12,10 +15,23 @@ public class LeaderBoardSceneButton : MonoBehaviour
    
     public static List<LeaderBoardSceneButton> buttons = new List<LeaderBoardSceneButton>();
     public static string Descripton { get; set; }
+    static Button_Functions sounds;
 
     private void Start()
     {
         buttons.Add(this);
+        sounds = GameObject.FindObjectOfType<Button_Functions>();
+        transform.Find("LevelPreview").gameObject.SetActive(false);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        sounds.OnButtonHover();
+    }  
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        sounds.OnButtonClick();
     }
 
     public void OnMainButtonClick()
@@ -23,6 +39,8 @@ public class LeaderBoardSceneButton : MonoBehaviour
         // loading icon is shown
         HideElements();
 
+        PlayerPrefsManager.HighscoreSceneName = Descripton;
+        
         LevelSelectionScene_UI manager = GameObject.FindObjectOfType<LevelSelectionScene_UI>();
 
         // clear variations to fill
@@ -61,16 +79,10 @@ public class LeaderBoardSceneButton : MonoBehaviour
         GameObject.Find("ButtonClickSound").GetComponent<AudioSource>().Play();
         Descripton = transform.Find("Text").GetComponent<Text>().text;
 
+        GameObject.FindObjectOfType<UMP_Manager>().LeaderBoardSearchBar.gameObject.SetActive(false);
         GameObject.FindObjectOfType<LeaderBoard>().topDescription.SetActive(false);
-        GameObject.FindObjectOfType<LeaderBoard>().separator.SetActive(false);
         GameObject.FindObjectOfType<LeaderBoard>().leftBar.SetActive(false);
         GameObject.FindObjectOfType<LeaderBoard>().infoBar.SetActive(false);
         GameObject.FindObjectOfType<LeaderBoard>().leaderboard.SetActive(true);
-
-        if (GameObject.FindObjectOfType<LeaderBoard>().leaderboard.activeSelf)
-        {
-            GameObject.FindObjectOfType<LeaderBoard>().button.GetComponent<Button>().interactable = true;
-            GameObject.FindObjectOfType<LeaderBoard>().button.GetComponent<Image>().sprite = FindObjectOfType<LeaderBoard>().buttonBackground;
-        }
     }
 }

@@ -1,11 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System.Xml;
 using UnityEngine.UI;
 
-public class QuizTab : RobotUITabs {
-
+public class QuizTab : MonoBehaviour
+{
+    GameUI gameUI;
     public struct Question
     {
         public string text;
@@ -18,35 +18,57 @@ public class QuizTab : RobotUITabs {
     {
         public string text;
         public string descr;
+        public bool isCorrect;
     }
-
-    private List<List<Question>> questionList = new List<List<Question>>();
-    private int currentStep = 0;
-    private int currentQuestionID = 0;
-
-    private List<Button> buttons = new List<Button>();
-    private bool[] buttonsActive = new bool[4];
-
-    private Text descriptionText;
-    private Button continueButton;
-    private Button switchToInfoButton;
 
     public bool continueBtn = false;
 
-    EndScoreManager endScoreManager;
+    [HideInInspector]
+    public bool quiz = false;
+
+    public List<List<Question>> questionList = new List<List<Question>>();
+    private List<List<Question>> encounterList = new List<List<Question>>();
+
+    private int currentStep = 0;
+    private int currentEncounter = 0;
+    private int currentQuestionID = 0;
+    int correctAnswerButton = -1;
+    public List<Button> buttons = new List<Button>();
+    private bool[] buttonsActive = new bool[4];
+
+    public Text descriptionText;
+    public Button continueButton;
+    public Button backToOptionsButton;
+    public Text answeredTitleText;
+
+    public Text quastionTitle;
+
+    public GameObject answerPanel;
+    public GameObject questionsPanel;
+    public GameObject w_descriptionPanel;
+
+    private PlayerPrefsManager pref;
+    private EndScoreManager endScoreManager;
+
+    private ActionManager manager;
+
+    public static float encounterDelay = -1f;
+    public static int totalQuizesCount;
 
     public void Init(string name)
     {
+        manager = GameObject.FindObjectOfType<ActionManager>();
+
         TextAsset textAsset = (TextAsset)Resources.Load("Xml/Quiz/" + name);
         XmlDocument xmlFile = new XmlDocument();
         xmlFile.LoadXml(textAsset.text);
+        RandomQuiz.randomQuestionsList = new List<Question>();
 
         XmlNodeList steps = xmlFile.FirstChild.NextSibling.ChildNodes;
-
         foreach (XmlNode s in steps)
         {
             List<Question> step = new List<Question>();
-
+            List<Question> encounter = new List<Question>();
             XmlNodeList questions = s.ChildNodes;
 
             foreach (XmlNode q in questions)
@@ -69,89 +91,132 @@ public class QuizTab : RobotUITabs {
                 --question.answerID; // let ppl write 1-4, but we need 0-3 as indexes
 
                 XmlNodeList answers = q.ChildNodes;
+                int j = 0;
                 foreach (XmlNode a in answers)
                 {
                     Answer t = new Answer();
                     t.text = a.Attributes["text"].Value;
-                    t.descr = a.Attributes["descr"].Value;
+                    t.descr = (a.Attributes["descr"] != null) ? a.Attributes["descr"].Value : "";
+                    t.isCorrect = question.answerID == j;
                     question.answers.Add(t);
+                    j++;
                 }
-
-                step.Add(question);
+                if (s.Name == "encounter")
+                    encounter.Add(question);
+                else if (s.Name == "random")
+                    RandomQuiz.randomQuestionsList.Add(question);
+                else
+                    step.Add(question);
             }
-
-            questionList.Add(step);
+            if (step.Count > 0)
+                questionList.Add(step);
+            if (encounter.Count > 0)
+                encounterList.Add(encounter);
         }
-
-        descriptionText = transform.GetChild(1).Find("Description").GetComponent<Text>();
-        continueButton = transform.GetChild(1).Find("Continue").GetComponent<Button>();
-        switchToInfoButton = transform.GetChild(1).Find("SwitchToInfo").GetComponent<Button>();
-
-        continueButton.gameObject.SetActive(continueBtn);
+    
+        continueBtn = false;
+        continueButton.gameObject.SetActive(false);
+        backToOptionsButton.gameObject.SetActive(false);
+        answerPanel.SetActive(false);
         descriptionText.text = "";
+        totalQuizesCount = questionList.Count;
     }
 
-    protected override void Start()
+    private void Start()
     {
-        base.Start();
-
         PlayerScript.quiz = this;
         gameObject.SetActive(false);
+        gameUI = GameObject.FindObjectOfType<GameUI>();
 
-        buttons.Add(transform.GetChild(1).Find("Answer1").GetComponent<Button>());
-        buttons.Add(transform.GetChild(1).Find("Answer2").GetComponent<Button>());
-        buttons.Add(transform.GetChild(1).Find("Answer3").GetComponent<Button>());
-        buttons.Add(transform.GetChild(1).Find("Answer4").GetComponent<Button>());
-
+        if (buttons.Count == 0)
+        {
+            buttons.Add(transform.GetChild(0).Find("Answer1").GetComponent<Button>());
+            buttons.Add(transform.GetChild(0).Find("Answer2").GetComponent<Button>());
+            buttons.Add(transform.GetChild(0).Find("Answer3").GetComponent<Button>());
+            buttons.Add(transform.GetChild(0).Find("Answer4").GetComponent<Button>());
+        }
         if (continueButton == null)
         {
             continueButton = transform.GetChild(1).Find("Continue").GetComponent<Button>();
         }
+
         continueButton.onClick.AddListener(OnContinueButton);
 
-        if (switchToInfoButton == null)
+        if (backToOptionsButton == null)
         {
-            switchToInfoButton = transform.GetChild(1).Find("SwitchToInfo").GetComponent<Button>();
+            backToOptionsButton = transform.GetChild(1).Find("Continue").GetComponent<Button>();
         }
-        switchToInfoButton.onClick.AddListener(OnSwitchToInfoTabButton);
 
-        tabTrigger.SetActive(false);
-
+        backToOptionsButton.onClick.AddListener(OnBackToOptionsButton);
         endScoreManager = GameObject.FindObjectOfType<EndScoreManager>();
     }
 
-    public void NextQuizQuestion()
+    public void NextQuizQuestion(bool random = false, bool encounter = false)
     {
-        if (currentStep >= questionList.Count)
-            return;
+        quiz = true;
+        if (random == false)
+        {
+            if (encounter == false)
+            {
+                if (currentStep >= questionList.Count)
+                {
+                    PlayerScript.actionsLocked = false;
+                    return;
+                }
+            }
+            else if (currentEncounter >= encounterList.Count)
+            {
+                PlayerScript.actionsLocked = false;
+                return;
+            }
+        }
 
         // open UI
         GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
-        // disable close button
-        GameObject.FindObjectOfType<RobotManager>().ToggleCloseBtn(false);
-        // enable quiz icon
-        icons.Find("QuizTab").gameObject.SetActive(true);
 
         gameObject.SetActive(true);
-        OnTabSwitch();
 
-        int currentQuestionID = Random.Range(0, questionList[currentStep].Count);
+        int currentQuestionID;
+        Question current;
 
-        Question current = questionList[currentStep][currentQuestionID];
-        transform.GetChild(1).Find("QuestionText").GetComponent<Text>().text = current.text;
+        if (random)
+        {
+            currentQuestionID = Random.Range(0, RandomQuiz.randomQuestionsList.Count);
+            current = RandomQuiz.randomQuestionsList[currentQuestionID];
+        }
+        else if (encounter)
+        {
+            encounterDelay = -1f;
+            GameUI.encounterStarted = false;
+            currentQuestionID = Random.Range(0, encounterList[currentEncounter].Count);
+            current = encounterList[currentEncounter][currentQuestionID];
+        }
+        else
+        {
+            currentQuestionID = Random.Range(0, questionList[currentStep].Count);
+            current = questionList[currentStep][currentQuestionID];
+        }
+
+        quastionTitle.text = current.text;
 
         for (int i = 0; i < current.answers.Count; i++)
         {
             buttons[i].transform.GetChild(0).GetComponent<Text>().text = current.answers[i].text;
+            if (gameUI.AllowAutoPlay(false))
+                if (current.answers[i].isCorrect)
+                {
+                    correctAnswerButton = i;
+                    Invoke("AutoPlay", 1.5f);
+                }
         }
 
-        buttons[current.answerID].onClick.AddListener(delegate { CorrectAnswer(current.answers[current.answerID].descr); });
+        buttons[current.answerID].onClick.AddListener(delegate { CorrectAnswer(current.answers[current.answerID].descr, random, encounter); });
         for (int i = 0; i < current.answers.Count; i++)
         {
             if (i != current.answerID)
             {
                 string descr = current.answers[i].descr;
-                buttons[i].onClick.AddListener(delegate { WrongAnswer(descr); });
+                buttons[i].onClick.AddListener(delegate { WrongAnswer(descr, random, encounter); });
             }
 
             buttons[i].gameObject.SetActive(true);
@@ -164,103 +229,167 @@ public class QuizTab : RobotUITabs {
             buttonsActive[i] = false;
         }
 
+        if (random)
+            RandomQuiz.randomQuestionsList.RemoveAt(currentQuestionID);
+
         descriptionText.text = "";
 
-        if (endScoreManager != null)
+        if ((random == false) && (encounter == false))
         {
-            endScoreManager.quizQuestionsTexts.Add(current.text);
-        }
-        else
-        {
-            Debug.LogWarning("No EndScoreManager found. Start from 1st scene.");
+            if (endScoreManager != null)
+            {
+                endScoreManager.quizQuestionsTexts.Add(current.text);
+            }
+            else
+            {
+                Debug.LogWarning("No EndScoreManager found. Start from 1st scene.");
+            }
         }
     }
 
-    public void CorrectAnswer(string description)
+    void AutoPlay()
     {
-        GameObject.Find("GameLogic").GetComponent<ActionManager>().UpdatePointsDirectly(questionList[currentStep][currentQuestionID].points);
+        if (correctAnswerButton >= 0)
+        {
+            if (buttons[correctAnswerButton].gameObject.activeSelf)
+            {
+                buttons[correctAnswerButton].onClick.Invoke();
+                Invoke("AutoContinue", 1f);
+            }
+        }
+    }
+
+    public void CorrectAnswer(string description, bool random = false, bool encounter = false)
+    {
+        questionsPanel.SetActive(false);
+        answerPanel.SetActive(true);
+
+        if ((encounter == false) && (random == false))
+        {
+            GameObject.Find("GameLogic").GetComponent<ActionManager>().UpdatePointsDirectly(
+                questionList[currentStep][currentQuestionID].points);
+        }
+
         ActionManager.CorrectAction();
 
+        answeredTitleText.text = "Heel goed!";
+        w_descriptionPanel.SetActive(description != "");
         descriptionText.text = description;
 
-        ++currentStep;
+        if (random == false)
+        {
+            ++currentStep;
+        }
+        if (encounter)
+        {
+            ++currentEncounter;
+        }
 
         foreach (Button b in buttons)
         {
             b.onClick.RemoveAllListeners();
         }
-
+        gameObject.SetActive(true);
         continueBtn = true;
-        continueButton.gameObject.SetActive(continueBtn);
-
-        GameObject.FindObjectOfType<RobotManager>().ToggleCloseBtn(true); // enable close btn
+        continueButton.gameObject.SetActive(true);
+        backToOptionsButton.gameObject.SetActive(false);
     }
 
-    public void WrongAnswer(string description)
+    private void ChangeButtonPosition()
     {
-        descriptionText.text = description;
-        GameObject.Find("GameLogic").GetComponent<ActionManager>().ActivatePenalty();
-        ActionManager.WrongAction();
+        if (transform.GetChild(1).Find("ScrollViewDescription/Scrollbar Vertical") != null)
+        {
+            Vector3 pos = transform.position;
+            pos.y = -100;
+            pos.x = +70;
 
+            backToOptionsButton.transform.position = pos;
+            continueButton.transform.position = pos;
+        }
+    }
+
+    public void WrongAnswer(string description, bool random = false, bool encounter = false)
+    {
+//#if UNITY_EDITOR
+//        PlayerPrefsManager prefsManager = FindObjectOfType<PlayerPrefsManager>();
+//        if (prefsManager != null)
+//            if (prefsManager.testingMode)
+//            {
+//                CorrectAnswer(description);
+//                return;
+//            }
+//#endif
+
+        gameObject.SetActive(true);
+        questionsPanel.SetActive(false);
+        answerPanel.SetActive(true);
+
+
+        if ((random == false) && (encounter == false))
+        {
+            GameObject.Find("GameLogic").GetComponent<ActionManager>().ActivatePenalty();
+        }
+        ActionManager.WrongAction(false);
+
+        answeredTitleText.text = "Helaas, dit antwoord is niet goed";
+        descriptionText.text = description;
+        w_descriptionPanel.SetActive(description != "");
+        continueBtn = false;
+        continueButton.gameObject.SetActive(false);
+        backToOptionsButton.gameObject.SetActive(true);
+        gameObject.SetActive(true);
         if (endScoreManager != null)
         {
-            endScoreManager.quizWrongIndexes.Add(currentStep);
+            if ((random == false) && (encounter == false))
+            {
+                endScoreManager.quizWrongIndexes.Add(currentStep);
+            }
         }
         else
         {
             Debug.LogWarning("No EndScoreManager found. Start from 1st scene.");
         }
     }
-
-public void OnContinueButton()
+    void AutoContinue()
     {
+        OnContinueButton();
+    }
+
+    public void OnContinueButton()
+    {
+        GameObject.FindObjectOfType<PatientInfoManager>().SetInteractability(true);
+        GameObject.FindObjectOfType<RobotManager>().ToggleCloseBtn(true);
+
+        Transform scrollbar = transform.Find("QuizTab/QuizAnsweredDynamicCanvas/ScrollViewDescription/Scrollbar Vertical");
+        if (scrollbar != null)
+            scrollbar.GetComponent<Scrollbar>().value = 1;
+
         Continue();
 
+        questionsPanel.SetActive(true);
+        answerPanel.SetActive(false);
+
         // disable quiz icon
-        icons.Find("QuizTab").gameObject.SetActive(false);
-        // close tab
-        BackButton();
+        quiz = false;
         // close UI 
         GameObject.FindObjectOfType<PlayerScript>().CloseRobotUI();
         // enable player if needed
         PlayerScript.actionsLocked = false;
+        //if (QuizTab.encounterDelay > 0)
+        //    QuizTab.encounterDelay = -1;
     }
 
     public void Continue()
     {
         continueBtn = false;
-        continueButton.gameObject.SetActive(continueBtn);
+        continueButton.gameObject.SetActive(false);
         gameObject.SetActive(false);
     }
 
-    public void OnSwitchToInfoTabButton()
+    public void OnBackToOptionsButton()
     {
-        RobotUITabs infoTab = tabs.Find(x => x.name == "InfoTab");
-        if (infoTab != null)
-            infoTab.OnTabSwitch();
-    }
-
-    protected override void SetTabActive(bool value)
-    {
-        base.SetTabActive(value);
-
-        if (!value)
-        {
-            if (continueButton != null)
-            {
-                continueButton.gameObject.SetActive(continueBtn);
-            }
-            else
-            {
-                transform.GetChild(1).Find("Continue").gameObject.SetActive(continueBtn);
-            }
-        }
-        else
-        {
-            for (int i = 0; i < buttons.Count; i++)
-            {
-                buttons[i].gameObject.SetActive(buttonsActive[i]);
-            }
-        }
+        questionsPanel.SetActive(true);
+        answerPanel.SetActive(false);      
     }
 }
+

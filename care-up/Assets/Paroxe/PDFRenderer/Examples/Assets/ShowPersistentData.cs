@@ -7,7 +7,7 @@ namespace Paroxe.PdfRenderer.Examples
     public class ShowPersistentData : UIBehaviour
     {
         [SerializeField]
-        private Text m_Notice;
+        private Text m_Notice = default(Text);
 
         protected override void Start()
         {

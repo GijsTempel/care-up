@@ -40,7 +40,9 @@ public class WUDataImagesDemo : MonoBehaviour {
     IEnumerator FetchSplashScreen(CMLData data)
     {
         Debug.LogWarning( data.ToString() );
+#pragma warning disable
         WWW w = new WWW( data.String( "splash_screen" ) );
+#pragma warning restore
         yield return w;
         Sprite s = Sprite.Create( w.texture, new Rect( 0, 0, w.texture.width, w.texture.height ), new Vector2( 0.5f, 0.5f ) );
         result.sprite = s;

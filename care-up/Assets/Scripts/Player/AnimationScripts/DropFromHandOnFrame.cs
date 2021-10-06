@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class DropFromHandOnFrame : StateMachineBehaviour
 {
@@ -18,7 +16,7 @@ public class DropFromHandOnFrame : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         inv = GameObject.Find("GameLogic").GetComponent<HandsInventory>();
-	
+
         if (dropLeftFrame == 0)
         {
             inv.DropLeftObject();
@@ -28,14 +26,15 @@ public class DropFromHandOnFrame : StateMachineBehaviour
         {
             inv.DropRightObject();
         }
-
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-
         if (animator.speed != 0)
         {
+            prevFrame = frame;
+            frame = stateInfo.normalizedTime * stateInfo.length;
+
             if (PlayerAnimationManager.CompareFrames(frame, prevFrame, dropLeftFrame))
             {
                 inv.DropLeftObject();
@@ -44,11 +43,19 @@ public class DropFromHandOnFrame : StateMachineBehaviour
             if (PlayerAnimationManager.CompareFrames(frame, prevFrame, dropRightFrame))
             {
                 inv.DropRightObject();
-            }
-
-            prevFrame = frame;
-            frame += Time.deltaTime;
+            }          
         }
     }
 
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        if (dropLeftFrame / 60f > frame)
+        {
+            inv.DropLeftObject();
+        }
+        if (dropRightFrame / 60f > frame)
+        {
+            inv.DropLeftObject();
+        }
+    }
 }

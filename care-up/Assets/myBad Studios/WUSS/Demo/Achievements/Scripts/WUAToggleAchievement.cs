@@ -17,7 +17,7 @@ public class WUAToggleAchievement : MonoBehaviour, IPointerClickHandler {
         return result;
     }
 
-    [SerializeField] Image icon;
+    [SerializeField] Image icon = default(Image);
     WUADisplay panel_prefab;
     int aid;
 

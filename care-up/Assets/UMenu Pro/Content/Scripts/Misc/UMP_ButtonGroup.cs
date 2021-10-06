@@ -2,10 +2,12 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class UMP_ButtonGroup : MonoBehaviour, IPointerClickHandler {
-
+public class UMP_ButtonGroup : MonoBehaviour, IPointerClickHandler
+{
     public int GroupID = 0;
     public bool Select = false;
+
+    private Button button;
 
     void Start()
     {
@@ -15,7 +17,7 @@ public class UMP_ButtonGroup : MonoBehaviour, IPointerClickHandler {
         }
     }
 
-	public void OnPointerClick(PointerEventData e)
+    public void OnPointerClick(PointerEventData e)
     {
         OnSelect();
     }
@@ -25,32 +27,29 @@ public class UMP_ButtonGroup : MonoBehaviour, IPointerClickHandler {
         UMP_ButtonGroup[] all = FindObjectsOfType<UMP_ButtonGroup>();
         foreach (UMP_ButtonGroup b in all)
         {
-            if (b.GroupID == this.GroupID)
+            if (b.GroupID == GroupID)
             {
                 b.UnSelect();
             }
         }
-        button.interactable = false;
-
-        GameObject.FindObjectOfType<LeaderBoard>().button.GetComponent<Image>().sprite = FindObjectOfType<LeaderBoard>().universalBackground;
+        //if (Button.name != "ScoresBTN" && Button.name != "AchievementBTN")
+        //    Button.interactable = false;
     }
 
     public void UnSelect()
     {
-
-        button.interactable = true;
+        Button.interactable = true;
     }
 
-    private Button _button;
-    private Button button
+    private Button Button
     {
         get
         {
-            if(_button == null)
+            if (button == null)
             {
-                _button = GetComponent<Button>();
+                button = GetComponent<Button>();
             }
-            return _button;
-        }       
+            return button;
+        }
     }
 }

@@ -285,10 +285,7 @@ public class Tutorial_UI : TutorialManager
                         hintsN.LockTo("RobotUI", new Vector3(849.00f, -244.00f, -34.70f));
                         hintsN.SetSize(452f, 164.8f);
                         hintsN.SetIconPosition(1);
-                        GameObject.FindObjectOfType<ButtonBlinkingOptions>().MessageTabBlink.SetTrigger("BlinkStart");
-                        GameObject.FindObjectOfType<RobotUIMessageTab>().NewMessage("Leren Spelen",
-                            "De inhoud van de berichten verschijnt in dit venster. Klik op het pijltje linksboven in je scherm om terug te gaan. ",
-                             RobotUIMessageTab.Icon.Info);
+                        GameObject.FindObjectOfType<ButtonBlinkingOptions>().MessageTabBlink.SetTrigger("BlinkStart");                    
                         RobotUITabs.tutorial_messageCenterOpened = false;
                         tabToOpen = "MessageCenter";
                     }

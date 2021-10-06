@@ -21,7 +21,6 @@ public class VentingInsulinPen : AnimationUseOn
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
-
         pen = hand ? inv.LeftHandObject.GetComponent<InsulinPen>() : inv.RightHandObject.GetComponent<InsulinPen>();
 
         frame = 0f;
@@ -54,7 +53,7 @@ public class VentingInsulinPen : AnimationUseOn
         if (animator.speed != 0)
         {
             prevFrame = frame;
-            frame += Time.deltaTime;
+            frame = stateInfo.normalizedTime * stateInfo.length;
         }
 
         base.OnStateUpdate(animator, stateInfo, layerIndex);

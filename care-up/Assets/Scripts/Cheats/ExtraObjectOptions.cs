@@ -1,17 +1,53 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class ExtraObjectOptions : MonoBehaviour {
-	public string TrashBin = "";
+public class ExtraObjectOptions : MonoBehaviour
+{
+    public string TrashBin = "";
+
     public List<GameObject> hidenObjects;
+    public List<GameObject> neededObjects;
+    public WalkToGroup nearestWalkToGroup;
 
-    void Start () {
-		
-	}
+    public Dictionary<string, string> neededObjectsData = new Dictionary<string, string>();
+    public Dictionary<string, string> neededObjectsArticle = new Dictionary<string, string>();
 
 
-    public void _show(string _name, bool value)
+    void Start()
+    {
+        foreach (GameObject obj in neededObjects)
+        {
+            if(obj != null)
+            {
+                if (obj.GetComponent<InteractableObject>() != null)
+                {
+                    if (!neededObjectsData.ContainsKey(obj.name))
+                    {
+                        neededObjectsData.Add(obj.name, obj.GetComponent<InteractableObject>().description);
+                        neededObjectsArticle.Add(obj.name, obj.GetComponent<InteractableObject>().nameArticle);
+                    }
+
+                }
+            }
+        }       
+    }
+
+    public string HasNeeded(string str)
+    {
+        if (neededObjectsData.ContainsKey(str))
+            return neededObjectsData[str];
+        return "";
+    }
+
+    public string HasNeededArticle(string str)
+    {
+        if (neededObjectsArticle.ContainsKey(str))
+            return neededObjectsArticle[str];
+        return "";
+    }
+
+
+    public void _show(string _name, bool value, bool meshRenderer = false)
     {
         foreach (GameObject o in hidenObjects)
         {
@@ -19,7 +55,31 @@ public class ExtraObjectOptions : MonoBehaviour {
             {
                 if (o.name == _name)
                 {
-                    o.SetActive(value);
+                    if (meshRenderer && (o.GetComponents<MeshRenderer>() != null || o.GetComponents<SkinnedMeshRenderer>() != null))
+                    {
+                        if (value)
+                        {
+                            if (o.GetComponent<MeshRenderer>()  != null)
+                                o.GetComponent<MeshRenderer>().enabled = value;
+                            else
+                                o.GetComponent<SkinnedMeshRenderer>().enabled = value;
+                        }
+                        else
+                        {
+                            foreach (MeshRenderer m in o.GetComponents<MeshRenderer>())
+                            {
+                                m.enabled = true;
+                            }
+                            foreach (SkinnedMeshRenderer m in o.GetComponents<SkinnedMeshRenderer>())
+                            {
+                                m.enabled = true;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        o.SetActive(value);
+                    }
                 }
             }
         }

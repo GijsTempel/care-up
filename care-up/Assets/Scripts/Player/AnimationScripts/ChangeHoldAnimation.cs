@@ -29,13 +29,23 @@ public class ChangeHoldAnimation : StateMachineBehaviour
                 {
                     if (GameObject.Find(ObjectName).GetComponent<PickableObject>() != null)
                     {
-                        GameObject.Find(ObjectName).GetComponent<PickableObject>().holdAnimationID = HoldAnimationID;
+                        GameObject obj = GameObject.Find(ObjectName).gameObject;
+                        obj.GetComponent<PickableObject>().holdAnimationID = HoldAnimationID;
+                        if (obj.transform.parent.name == "toolHolder.L")
+                        {
+                            animator.SetInteger("LeftHandState", HoldAnimationID);
+                        }
+                        else if (obj.transform.parent.name == "toolHolder.R")
+                        {
+                            animator.SetInteger("RightHandState", HoldAnimationID);
+                        }
                     }
                 }
             }
 
             prevFrame = frame;
-            frame += Time.deltaTime;
+            frame = stateInfo.normalizedTime * stateInfo.length;
         }
     }
+
 }
