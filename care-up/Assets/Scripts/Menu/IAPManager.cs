@@ -31,6 +31,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
 
     void Start()
     {
+        Debug.Log("IAP start");
         // If we haven't set up the Unity Purchasing reference
         if (m_StoreController == null)
         {
@@ -224,6 +225,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
     /// </summary>
     public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
     {
+        Debug.Log("IAP OnInitialized");
         m_StoreController = controller;
         m_StoreExtensionProvider = extensions;
         m_AppleExtensions = extensions.GetExtension<IAppleExtensions>();
