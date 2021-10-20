@@ -33,24 +33,14 @@ public class IAPManager : MonoBehaviour, IStoreListener
     {
         Debug.Log("IAP start");
         // If we haven't set up the Unity Purchasing reference
-        if (m_StoreController == null)
-        {
-            purchasedScenes.Clear();
+        
+        purchasedScenes.Clear();
 
-            // Begin to configure our connection to Purchasing
-            InitializePurchasing();
-        }
+        InitializePurchasing();
     }
 
     public void InitializePurchasing()
     {
-        // If we have already connected to Purchasing ...
-        if (IsInitialized())
-        {
-            // ... we are done here.
-            return;
-        }
-
         // Create a builder, first passing in a suite of Unity provided stores.
         var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
 
@@ -59,6 +49,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
         // if the Product ID was configured differently between Apple and Google stores. Also note that
         // one uses the general kProductIDSubscription handle inside the game - the store-specific IDs 
         // must only be referenced here. 
+        { // Product List
         builder.AddProduct("BMVS", ProductType.Subscription, new IDs(){
                 { "1575230619", AppleAppStore.Name },
             });
@@ -137,6 +128,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
         builder.AddProduct("ZOKR", ProductType.Subscription, new IDs(){
                 { "1576202605", AppleAppStore.Name },
             });
+        }
 
         // Kick off the remainder of the set-up with an asynchrounous call, passing the configuration 
         // and this class' instance. Expect a response either in OnInitialized or OnInitializeFailed.
@@ -146,13 +138,14 @@ public class IAPManager : MonoBehaviour, IStoreListener
     private bool IsInitialized()
     {
         // Only say we are initialized if both the Purchasing references are set.
+        Debug.Log("IsInitialized? " + (m_StoreController != null) + " " + (m_StoreExtensionProvider != null));
         return m_StoreController != null && m_StoreExtensionProvider != null;
     }
-    
+
     public void BuyProductID(string productId)
     {
         // If Purchasing has been initialized ...
-        if (IsInitialized())
+        if (IsInitialized() || true)
         {
             // ... look up the Product reference with the general product identifier and the Purchasing 
             // system's products collection.
