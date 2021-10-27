@@ -336,6 +336,10 @@ public class PlayerPrefsManager : MonoBehaviour
                 //    "/RegisterArea/Buttons/MoreInfo_Apple"));
                 //Destroy(GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/WUSerialScreen" +
                 //    "/RegisterArea/Buttons/Purchase_Apple"));
+
+
+                Destroy(GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/WUSerialScreen" +
+                    "/RegisterArea/Buttons/PurchaseButton_Apple"));
             }
 
             if (Application.platform != RuntimePlatform.Android)

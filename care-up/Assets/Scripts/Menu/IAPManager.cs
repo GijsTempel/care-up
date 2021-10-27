@@ -10,6 +10,8 @@ public class IAPManager : MonoBehaviour, IStoreListener
     private static IExtensionProvider m_StoreExtensionProvider; // The store-specific Purchasing subsystems.
     private static IAppleExtensions m_AppleExtensions;
 
+    public List<string> purchasedScenes = new List<string>();
+
     // Product identifiers for all products capable of being purchased: 
     // "convenience" general identifiers for use with Purchasing, and their store-specific identifier 
     // counterparts for use with and outside of Unity Purchasing. Define store-specific identifiers 
@@ -29,23 +31,16 @@ public class IAPManager : MonoBehaviour, IStoreListener
 
     void Start()
     {
+        Debug.Log("IAP start");
         // If we haven't set up the Unity Purchasing reference
-        if (m_StoreController == null)
-        {
-            // Begin to configure our connection to Purchasing
-            InitializePurchasing();
-        }
+        
+        purchasedScenes.Clear();
+
+        InitializePurchasing();
     }
 
     public void InitializePurchasing()
     {
-        // If we have already connected to Purchasing ...
-        if (IsInitialized())
-        {
-            // ... we are done here.
-            return;
-        }
-
         // Create a builder, first passing in a suite of Unity provided stores.
         var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
 
@@ -54,6 +49,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
         // if the Product ID was configured differently between Apple and Google stores. Also note that
         // one uses the general kProductIDSubscription handle inside the game - the store-specific IDs 
         // must only be referenced here. 
+        { // Product List
         builder.AddProduct("BMVS", ProductType.Subscription, new IDs(){
                 { "1575230619", AppleAppStore.Name },
             });
@@ -132,6 +128,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
         builder.AddProduct("ZOKR", ProductType.Subscription, new IDs(){
                 { "1576202605", AppleAppStore.Name },
             });
+        }
 
         // Kick off the remainder of the set-up with an asynchrounous call, passing the configuration 
         // and this class' instance. Expect a response either in OnInitialized or OnInitializeFailed.
@@ -141,13 +138,14 @@ public class IAPManager : MonoBehaviour, IStoreListener
     private bool IsInitialized()
     {
         // Only say we are initialized if both the Purchasing references are set.
+        Debug.Log("IsInitialized? " + (m_StoreController != null) + " " + (m_StoreExtensionProvider != null));
         return m_StoreController != null && m_StoreExtensionProvider != null;
     }
-    
-    void BuyProductID(string productId)
+
+    public void BuyProductID(string productId)
     {
         // If Purchasing has been initialized ...
-        if (IsInitialized())
+        if (IsInitialized() || true)
         {
             // ... look up the Product reference with the general product identifier and the Purchasing 
             // system's products collection.
@@ -220,6 +218,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
     /// </summary>
     public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
     {
+        Debug.Log("IAP OnInitialized");
         m_StoreController = controller;
         m_StoreExtensionProvider = extensions;
         m_AppleExtensions = extensions.GetExtension<IAppleExtensions>();
@@ -259,8 +258,8 @@ public class IAPManager : MonoBehaviour, IStoreListener
                             
                             if (info.isSubscribed() == Result.True)
                             {
-                                Debug.Log("Apple active subscription: " + info.getProductId());
-                                PlayerPrefsManager.AddSKU(info.getProductId());
+                                Debug.Log("Product purchased detected: " + info.getProductId());
+                                AddSceneToPurchased(info.getProductId());
                             }
 
                             //Debug.Log("product id is: " + info.getProductId());
@@ -391,8 +390,9 @@ public class IAPManager : MonoBehaviour, IStoreListener
             Debug.Log(string.Format("ProcessPurchase: FAIL. Unrecognized product: '{0}'", args.purchasedProduct.definition.id));
         }
         */
+
         Debug.Log(string.Format("ProcessPurchase: PASS. Product: '{0}'", args.purchasedProduct.definition.id));
-        PlayerPrefsManager.AddSKU(args.purchasedProduct.definition.id);
+        AddSceneToPurchased(args.purchasedProduct.definition.id);
 
         // Return a flag indicating whether this product has completely been received, or if the application needs 
         // to be reminded of this purchase at next app launch. Use PurchaseProcessingResult.Pending when still 
@@ -406,5 +406,13 @@ public class IAPManager : MonoBehaviour, IStoreListener
         // A product purchase attempt did not succeed. Check failureReason for more detail. Consider sharing 
         // this reason with the user to guide their troubleshooting actions.
         Debug.Log(string.Format("OnPurchaseFailed: FAIL. Product: '{0}', PurchaseFailureReason: {1}", product.definition.storeSpecificId, failureReason));
+    }
+
+    void AddSceneToPurchased(string id)
+    {
+        if (purchasedScenes.IndexOf(id) < 0)
+            purchasedScenes.Add(id);
+
+        PlayerPrefsManager.AddSKU(id);
     }
 }

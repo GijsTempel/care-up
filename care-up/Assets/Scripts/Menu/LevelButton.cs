@@ -247,6 +247,12 @@ public class LevelButton : MonoBehaviour
         {
             // show dialogue now instead
             GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(5);
+
+            // for apple, if scene is locked, setup the purchase panel to trigger the shop with correct scene ID
+            if (manager != null)
+            {
+                manager.currentPEcourseID = sceneID;
+            }
         }
         else
         {

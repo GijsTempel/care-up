@@ -222,6 +222,16 @@ namespace MBS
                 else
                     PlayerPrefsManager.ClearSKU();
 
+                PlayerPrefsManager ppManager = GameObject.FindObjectOfType<PlayerPrefsManager>();
+                if (ppManager != null)
+                {
+                    List<string> IAPscenes = ppManager.GetComponent<IAPManager>().purchasedScenes;
+                    foreach (string s in IAPscenes)
+                    {
+                        PlayerPrefsManager.AddSKU(s);
+                    }
+                }
+
                 if (GameObject.FindObjectOfType<LevelSelectionScene_UI>() != null)
                     GameObject.FindObjectOfType<LevelSelectionScene_UI>().RefrashSceneSelectionButtons();
             }
