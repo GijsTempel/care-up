@@ -268,11 +268,51 @@ zo nodig:
     messageContent="Bij aanbrengen van stomamateriaal hoeven volgens de LCHV-richtlijn geen handschoenen te worden gedragen als deze blijven kleven aan huidplaat of plakranden. Beoordeel per situatie in hoeverre er risico is op contact met excreta en overweeg als alternatief een strak passende maat handschoenen. Het zelfde geldt voor een schort."
    ></action>
 
+	<action
+	 comment="Fix the outer cannula with one hand and replace the inner cannula with the other hand in one smooth movement."
+	 points="1"
+	 description="Fixeer de buitencanule met één hand en plaats met de andere hand de binnencanule in één vloeiende beweging terug"
+	 index="22"
+	 type="sequenceStep"
+	 value="3SQ_FixOuterCannula"
+	 extra=""
+   ></action>
+	
+	<action
+	 comment="Tighten the inner cannula (1/4 turn clockwise) while the outer cannula remains fixed"
+	 points="1"
+	 description="Draai de binnencanule vast (een kwart slag rechtsom) terwijl de buitencanule gefixeerd blijft"
+	 index="23"
+	 type="sequenceStep"
+	 value="3SQ_TightenInnerCannule"
+	 extra=""
+   ></action>
+	
+	<action
+	 comment="Check the position of the inner cannula"
+	 points="1"
+	 description="Controleer of de binnencanule goed op zijn plaats zit"
+	 index="24"
+	 type="sequenceStep"
+	 value="3SQ_CheckCannulaPos"
+	 extra=""
+   ></action>
+	
+	<action
+	 comment="Inspect the stoma and surrounding skin for irritation, damage and signs of inflammation"
+	 points="1"
+	 description="Inspecteer de stoma en de omringende huid op irritatie, beschadiging en ontstekingsverschijnselen"
+	 index="25"
+	 type="sequenceStep"
+	 value="3SQ_InspectSkin"
+	 extra=""
+   ></action>
+		
   <action
       comment="Create a clean workfield"
       points="1"
       description="[Maak een schoon werkveld end]"
-      index="22"
+      index="26"
       type="use"
       value="WorkField"
       extra="Ruim de materialen op door met lege handen op het werkveld te klikken."
@@ -282,7 +322,7 @@ zo nodig:
 
   <action
     comment="Write down the size and length of the inserted probe, pH determination, date of inserting the probe and any findings on the ipad."
-    index="23"
+    index="27"
     points="1"
     description="[Noteer de handeling]"
     type="use"
