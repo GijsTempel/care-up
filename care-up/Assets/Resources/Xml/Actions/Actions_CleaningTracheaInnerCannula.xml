@@ -84,6 +84,7 @@ zo nodig:
     item=""
     points="1"
     buttonText="Remove filter"
+	blockUnlock="FilterRemoved"
     action="RemoveFilter" />
 
 	<action
@@ -251,6 +252,17 @@ zo nodig:
     target=""
     blockRequired="CannulaDried"
     buttonText="Meet in te brengen lengte" />
+
+	<action
+    comment="Clean the filter with a damp gauze. Place the filter in the clean cardboard tray"
+    points="1"
+    description="Reinig het filter met een vochtig gaasje. Leg het filter in het schone kartonnen bakje."
+    index="20"
+    type="useOn"
+    item="Cloth2"
+    target=""
+	blockRequired="FilterRemoved"
+    buttonText="Clean Filter" />
 
 	<Action
     index="21"
