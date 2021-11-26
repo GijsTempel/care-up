@@ -74,6 +74,7 @@ zo nodig:
 	   index="3"
 	   type="talk"
 	   topic="LayInHalfPosOnBed"
+	   blockUnlock="PatientIsLaying"
 	   extra=""
 	    ></action>
 
@@ -84,6 +85,7 @@ zo nodig:
     item=""
     points="1"
     buttonText="Remove filter"
+	blockRequired="PatientIsLaying"
 	blockUnlock="FilterRemoved"
     action="RemoveFilter" />
 
@@ -257,7 +259,7 @@ zo nodig:
     comment="Clean the filter with a damp gauze. Place the filter in the clean cardboard tray"
     points="1"
     description="Reinig het filter met een vochtig gaasje. Leg het filter in het schone kartonnen bakje."
-    index="20"
+    index="21"
     type="useOn"
     item="Cloth2"
     target=""
@@ -265,7 +267,7 @@ zo nodig:
     buttonText="Clean Filter" />
 
 	<Action
-    index="21"
+    index="22"
     description="Trek de handschoenen uit"
     type="general"
     item=""
@@ -280,7 +282,7 @@ zo nodig:
     points="1"
     description="[Pas handhygiëne]"
     fullDescription=""
-    index="22"
+    index="23"
     type="use"
     value="HandCleaner"
     extra="Pas handhygiëne toe"/>
@@ -289,7 +291,7 @@ zo nodig:
     comment="Put on gloves second time"
     points="1"
     description="Trek het tweede paar handschoenen aan"
-    index="23"
+    index="24"
     type="use"
     value="gloveBox"
 	blockRequired="GlovesTakenOff"
@@ -302,7 +304,7 @@ zo nodig:
 	 comment="Fix the outer cannula with one hand and replace the inner cannula with the other hand in one smooth movement."
 	 points="1"
 	 description="Fixeer de buitencanule met één hand en plaats met de andere hand de binnencanule in één vloeiende beweging terug"
-	 index="24"
+	 index="25"
 	 type="sequenceStep"
 	 value="3SQ_FixOuterCannula"
 	 extra=""
@@ -312,7 +314,7 @@ zo nodig:
 	 comment="Tighten the inner cannula (1/4 turn clockwise) while the outer cannula remains fixed"
 	 points="1"
 	 description="Draai de binnencanule vast (een kwart slag rechtsom) terwijl de buitencanule gefixeerd blijft"
-	 index="25"
+	 index="26"
 	 type="sequenceStep"
 	 value="3SQ_TightenInnerCannule"
 	 extra=""
@@ -322,7 +324,7 @@ zo nodig:
 	 comment="Check the position of the inner cannula"
 	 points="1"
 	 description="Controleer of de binnencanule goed op zijn plaats zit"
-	 index="26"
+	 index="27"
 	 type="sequenceStep"
 	 value="3SQ_CheckCannulaPos"
 	 extra=""
@@ -332,7 +334,7 @@ zo nodig:
 	 comment="Inspect the stoma and surrounding skin for irritation, damage and signs of inflammation"
 	 points="1"
 	 description="Inspecteer de stoma en de omringende huid op irritatie, beschadiging en ontstekingsverschijnselen"
-	 index="27"
+	 index="28"
 	 type="sequenceStep"
 	 value="3SQ_InspectSkin"
 	 extra=""
@@ -342,7 +344,7 @@ zo nodig:
       comment="Create a clean workfield"
       points="1"
       description="[Maak een schoon werkveld end]"
-      index="28"
+      index="29"
       type="use"
       value="WorkField"
       extra="Ruim de materialen op door met lege handen op het werkveld te klikken."
@@ -352,7 +354,7 @@ zo nodig:
 
   <action
     comment="Write down the size and length of the inserted probe, pH determination, date of inserting the probe and any findings on the ipad."
-    index="29"
+    index="30"
     points="1"
     description="[Noteer de handeling]"
     type="use"
