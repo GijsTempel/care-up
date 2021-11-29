@@ -1009,6 +1009,14 @@ public class ActionManager : MonoBehaviour
                 int.TryParse(action.Attributes["points"].Value, out pointsValue);
             }
 
+            float UITimeout = 0f;
+            if (action.Attributes["ui_timeout"] != null)
+            {
+                int intUITimeout = 0;
+                int.TryParse(action.Attributes["ui_timeout"].Value, out intUITimeout);
+                UITimeout = intUITimeout;
+            }
+
             bool notNeeded = action.Attributes["optional"] != null;
 
             // try making all steps optional for test
@@ -1171,6 +1179,7 @@ public class ActionManager : MonoBehaviour
             actionList[actionList.Count - 1].commentUA = commentUA;
             actionList[actionList.Count - 1].secondPlaceRequirement = secondPlace;
             actionList[actionList.Count - 1].placeRequirement = place;
+            actionList[actionList.Count - 1].UITimeout = UITimeout;
         }
 
         actionList.Last<Action>().sceneDoneTrigger = true;
@@ -1443,7 +1452,10 @@ public class ActionManager : MonoBehaviour
                 {
                     matched = true;
                     action.matched = true;
-
+                    if (action.UITimeout > 0f)
+                    {
+                        GameObject.FindObjectOfType<GameUI>().UITimeout(action.UITimeout);
+                    }
                     int index = actionList.IndexOf(action);
 
                     if (action.blockUnlock.Count() > 0)
