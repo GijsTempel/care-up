@@ -1073,6 +1073,13 @@ public class GameUI : MonoBehaviour
         }
     }
 
+
+    public void UITimeout(float waitTime = 0.5f)
+    {
+        timeOutEnded = false;
+        startTimeOut = waitTime;
+    }
+
     void Update()
     {
 #if (UNITY_EDITOR || DEVELOPMENT_BUILD)
@@ -1114,6 +1121,10 @@ public class GameUI : MonoBehaviour
                     UpdateHelpHighlight();
 
                 UpdateWalkToGroupUI(true);
+            }
+            else
+            {
+                return;
             }
         }
         if (toDelayUpdateHint)
