@@ -33,22 +33,22 @@
     extra="Maak een schoon werkveld. "
     messageTitle="Je het volgende nodig hebt."
     messageContent="
-- Handschoenen
-- Schort
-- Toilet, zo nodig po
-- Onderlegger
-- Warm water
-- Zacht toiletpapier
-- 5-10 gaasjes
-- Stoma-opvangmateriaal
-- Afvalbak
-zo nodig:
-- Wegwerpscheermesje
-- Wchaar met licht gebogen punt (nagelschaar) of stomastans
-- huidbeschermingsmiddelen
-- Opvulmateriaal
-- Stomamaatkaart     
-    "
+- reservebinnencanule
+- gaasjes
+- bakje water uit stromende kraan
+- 2 paar handschoenen
+- onderlegger
+- metaline splitgaas
+- kunststof of kniepincet
+- niet pluizende wattenstokjes
+- handalcohol
+- 2 wegwerpbakjes
+- canule(klitten)band
+- handalcohol
+- afvalbak
+- canuleborstel, 1 in de maat van de binnencanule en 1 een maat kleiner
+- niet-irriterende wateroplosbare gelei
+- filter, wanneer die vervangen moet worden"
     ></action>
 
 
@@ -61,7 +61,7 @@ zo nodig:
     type="use"
     value="gloveBox"
     extra="Trek de handschoenen aan."
-	blockUnlock="GlovesTakenOn"
+	  blockUnlock="GlovesTakenOn"
     messageTitle="Gebruik handschoenen en schort"
     messageContent="Bij aanbrengen van stomamateriaal hoeven volgens de LCHV-richtlijn geen handschoenen te worden gedragen als deze blijven kleven aan huidplaat of plakranden. Beoordeel per situatie in hoeverre er risico is op contact met excreta en overweeg als alternatief een strak passende maat handschoenen. Het zelfde geldt voor een schort."
    ></action>
@@ -85,7 +85,7 @@ zo nodig:
     type="general"
     item=""
     points="1"
-    buttonText="Remove filter"
+    buttonText="Verwijder het filter"
 	blockRequired="PatientIsLaying"
 	blockUnlock="FilterRemoved"
     action="RemoveFilter" />
@@ -256,7 +256,7 @@ zo nodig:
     item="CottonSwabStick"
     target=""
     blockRequired="CannulaDried"
-    buttonText="Meet in te brengen lengte" />
+    buttonText="Reinig het halsplaatje" />
 
 	<action
     comment="Clean the filter with a damp gauze. Place the filter in the clean cardboard tray"
@@ -266,8 +266,8 @@ zo nodig:
     type="useOn"
     item="Cloth2"
     target=""
-	blockRequired="FilterRemoved"
-    buttonText="Clean Filter" />
+	  blockRequired="FilterRemoved"
+    buttonText="Reinig het filter" />
 
 	<Action
     index="22"
