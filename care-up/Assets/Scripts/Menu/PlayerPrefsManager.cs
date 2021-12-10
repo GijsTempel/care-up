@@ -852,7 +852,9 @@ public class PlayerPrefsManager : MonoBehaviour
         }
         else
         {
-            GameObject.Find("UMenuProManager/MenuCanvas/VersionUpdatePanel").SetActive(false);
+            GameObject versionUpdatePanel = GameObject.Find("UMenuProManager/MenuCanvas/VersionUpdatePanel");
+            if (versionUpdatePanel != null)
+                versionUpdatePanel.SetActive(false);
         }
     }
 

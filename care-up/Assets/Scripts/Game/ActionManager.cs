@@ -639,7 +639,7 @@ public class ActionManager : MonoBehaviour
             if (objectsData.Count > 0)
                 noObjectActions = false;
 
-            gameUI.moveButtonToBlink = GameUI.ItemControlButtonType.None;
+            gameUI.moveButtonToBlink = GameUI.MoveControlButtonType.None;
 
             if (uncomplitedSecondPlace != "")
             {
@@ -656,28 +656,36 @@ public class ActionManager : MonoBehaviour
 
             if ((!anyCorrectPlace || uncomplitedSecondPlace != "") && !playerScript.away && placesReqList.Count > 0)
             {
+
                 WalkToGroup currentWTG = playerScript.currentWalkPosition;
 
                 foreach (string s in placesReqList)
                 {
-                    int dir = gameUI.FindDirection(s, playerScript.currentWalkPosition, 0);
-                    if (dir == -1)
+                    WalkToGroupButton b = gameUI.FindMovementButton(s, playerScript.currentWalkPosition);
+                    if (b != null)
                     {
-                        gameUI.moveButtonToBlink = GameUI.ItemControlButtonType.MoveLeft;
+                        gameUI.moveButtonToBlink = b.moveControlButtonType;
                         break;
                     }
-                    else if (dir == 1)
-                    {
-                        gameUI.moveButtonToBlink = GameUI.ItemControlButtonType.MoveRight;
-                        break;
-                    }
+
+                    //int dir = gameUI.FindDirection(s, playerScript.currentWalkPosition, 0);
+                    //if (dir == -1)
+                    //{
+                    //    gameUI.moveButtonToBlink = GameUI.ItemControlButtonType.MoveLeft;
+                    //    break;
+                    //}
+                    //else if (dir == 1)
+                    //{
+                    //    gameUI.moveButtonToBlink = GameUI.ItemControlButtonType.MoveRight;
+                    //    break;
+                    //}
                 }
             }
 
             i++;
         }
 
-        if (gameUI.moveButtonToBlink != GameUI.ItemControlButtonType.None)
+        if (gameUI.moveButtonToBlink != GameUI.MoveControlButtonType.None)
         {
             gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
             gameUI.DropRightBlink = false;

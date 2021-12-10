@@ -68,7 +68,7 @@ public class GameUI : MonoBehaviour
     public GameObject decombineButton;
     public GameObject decombineButton_right;
     public GameUI.ItemControlButtonType buttonToBlink;
-    public GameUI.ItemControlButtonType moveButtonToBlink;
+    public GameUI.MoveControlButtonType moveButtonToBlink;
     public bool prescriptionButtonBlink;
     public bool recordsButtonBlink;
     public bool paperAndPenButtonblink;
@@ -129,7 +129,7 @@ public class GameUI : MonoBehaviour
     {
         bool result = PlayerPrefsManager.simulatePlayerActions;
         if (result && forActions)
-            result = !ps.away && !DropLeftBlink && !DropRightBlink && moveButtonToBlink == ItemControlButtonType.None;
+            result = !ps.away && !DropLeftBlink && !DropRightBlink && moveButtonToBlink == MoveControlButtonType.None;
         result = result && (stopAutoPlayOnStep <= 0 || stopAutoPlayOnStep > (actionManager.currentActionIndex));
         return result;
     }
@@ -158,7 +158,16 @@ public class GameUI : MonoBehaviour
         PrescriptionBack,
         MessageTabBack,
         Close,
-        TalkBubble
+        TalkBubble,
+    }
+
+    public enum MoveControlButtonType
+    {
+        None,
+        MoveA,
+        MoveB,
+        MoveC,
+        MoveD
     }
 
     public void TestOutput()
@@ -456,10 +465,10 @@ public class GameUI : MonoBehaviour
         }
     }
 
-    void ShowWalkToGroupPanel()
-    {
-        WalkToGroupPanel.SetActive(ps.away);
-    }
+    //void ShowWalkToGroupPanel()
+    //{
+    //    WalkToGroupPanel.SetActive(ps.away);
+    //}
 
     public void HideTheoryTab()
     {
@@ -573,7 +582,7 @@ public class GameUI : MonoBehaviour
             o.assetSource = InteractableObject.AssetSource.Included;
         }
         WalkToGroupPanel.SetActive(false);
-        Invoke("ShowWalkToGroupPanel", 0.5f);
+        //Invoke("ShowWalkToGroupPanel", 0.5f);
     }
 
     public HighlightObject AddHighlight(Transform target, string prefix, HighlightObject.type hl_type = HighlightObject.type.NoChange, float startDelay = 0, float LifeTime = float.PositiveInfinity)
@@ -904,6 +913,29 @@ public class GameUI : MonoBehaviour
         {
             b.UpdateButtonState();
         }
+    }
+
+    public GameObject GetMovementButtonByType(GameUI.MoveControlButtonType buttonType)
+    {
+        if (buttonType == GameUI.MoveControlButtonType.None)
+            return null;
+        foreach (WalkToGroupButton b in WalkToGroupPanel.GetComponentsInChildren<WalkToGroupButton>())
+        {
+            if (b.moveControlButtonType == buttonType)
+                return b.gameObject;
+        }
+        return null;
+    }
+
+    public WalkToGroupButton FindMovementButton(string neededWalkToGroup, WalkToGroup startWalkToGtoup)
+    {
+        //WalkToGroupPanel
+        foreach(WalkToGroupButton b in WalkToGroupPanel.GetComponentsInChildren<WalkToGroupButton>())
+        {
+            if (b.GetLinkedWalkToGroup().name == neededWalkToGroup)
+                return b;
+        }
+        return null;
     }
 
     public int FindDirection(string neededWalkToGroup, WalkToGroup startWalkToGtoup, int direction)
@@ -1310,7 +1342,8 @@ public class GameUI : MonoBehaviour
 
             ItemControlPanel.SetActive(showItemControlPanel);
             patientInfo.SetActive(showItemControlPanel);
-            MovementSideButtons.SetActive(showItemControlPanel);
+            //MovementSideButtons.SetActive(showItemControlPanel);
+            WalkToGroupPanel.SetActive(showItemControlPanel);
             animatedFinger.gameObject.SetActive(showItemControlPanel && !theoryTab.gameObject.activeSelf);
             ICPCurrentState = ItemControlPanel.activeSelf;
         }
@@ -1342,6 +1375,7 @@ public class GameUI : MonoBehaviour
         if (!value)
             cooldownTime = 1.0f;
         MovementSideButtons.SetActive(false);
+        WalkToGroupPanel.SetActive(false); //-------------------
         animatedFinger.gameObject.SetActive(false);
         if (!allowObjectControlUI && !LeftSideButton.gameObject.activeSelf && !RightSideButton.gameObject.activeSelf &&
             !WalkToGroupPanel.activeSelf && !ItemControlPanel.activeSelf)
@@ -1357,13 +1391,13 @@ public class GameUI : MonoBehaviour
         {
             LeftSideButton.gameObject.SetActive(false);
             RightSideButton.gameObject.SetActive(false);
-            WalkToGroupPanel.SetActive(false);
+            //WalkToGroupPanel.SetActive(false);
             ItemControlPanel.SetActive(false);
             patientInfo.SetActive(false);
         }
         else
         {
-            WalkToGroupPanel.SetActive(ps.away);
+            //WalkToGroupPanel.SetActive(ps.away);
             if (!ps.away)
             {
                 LeftSideButton.gameObject.SetActive(ps.currentWalkPosition.LeftWalkToGroup != null);
