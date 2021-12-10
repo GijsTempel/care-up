@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using System.Runtime.InteropServices;
 
 public class LoginMenuDebugPanel : MonoBehaviour
 {
+
+    public Text TestOutputComponentText;
     bool _visible = false;
     public void Toggle()
     {
@@ -14,5 +16,6 @@ public class LoginMenuDebugPanel : MonoBehaviour
             GetComponent<Animator>().SetTrigger("show");
         else
             GetComponent<Animator>().SetTrigger("hide");
+
     }
 }

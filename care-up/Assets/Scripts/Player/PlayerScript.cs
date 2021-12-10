@@ -238,8 +238,8 @@ public class PlayerScript : MonoBehaviour
 
         savedPos = transform.position;
         savedRot = transform.rotation;
-
-        mouseLook.SaveRot(transform, Camera.main.transform);
+        
+        mouseLook.SaveRot(transform, cam.transform);
 
         robot = GameObject.FindObjectOfType<RobotManager>();
         savedRobotPos = robot.transform.position;
@@ -278,7 +278,7 @@ public class PlayerScript : MonoBehaviour
         freeLook = !freeLook;
         rotated = 0.0f;
 
-        mouseLook.Init(transform, Camera.main.transform);
+        mouseLook.Init(transform, cam.transform);
 
         if (freeLook)
         {
@@ -298,7 +298,7 @@ public class PlayerScript : MonoBehaviour
 
     public void ResetTargetRot()
     {
-        mouseLook.Init(transform, Camera.main.transform);
+        mouseLook.Init(transform, cam.transform);
     }
 
     public void LookRotationUpdate(Vector2 amount)
@@ -306,7 +306,7 @@ public class PlayerScript : MonoBehaviour
         // OLD mouse look code, transfering to joystick
         if (freeLook && !robotUIopened && cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
-            rotated += mouseLook.LookRotation(transform, Camera.main.transform, amount);
+            rotated += mouseLook.LookRotation(transform, cam.transform, amount);
         }
     }
 
@@ -465,8 +465,8 @@ public class PlayerScript : MonoBehaviour
         if (prefs == null || (prefs != null && !prefs.VR))
         {
             transform.rotation = Quaternion.Euler(0.0f, group.Rotation.y, 0.0f);
-            Camera.main.transform.localRotation = Quaternion.Euler(group.Rotation.x, 0.0f, 0.0f);
-            mouseLook.SaveRot(transform, Camera.main.transform);
+            cam.transform.localRotation = Quaternion.Euler(group.Rotation.x, 0.0f, 0.0f);
+            mouseLook.SaveRot(transform, cam.transform);
         }
         currentWalkPosition = group;
 
@@ -534,7 +534,7 @@ public class PlayerScript : MonoBehaviour
     public void ResetFreeLook()
     {
         //transform.rotation = mouseLook.SavedCharRot;
-        Camera.main.transform.rotation = mouseLook.SavedCamRot;
+        cam.transform.rotation = mouseLook.SavedCamRot;
     }
 
     private void OnGUI()

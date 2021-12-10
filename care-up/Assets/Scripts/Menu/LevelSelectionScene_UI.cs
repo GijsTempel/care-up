@@ -9,6 +9,7 @@ using CareUpAvatar;
 
 public class SceneInfo
 {
+    public string sceneID = "";
     public string sceneType = "";
     public bool activated = true;
     public bool demoLock = false;
@@ -28,6 +29,7 @@ public class SceneInfo
     public string inHouseSceneName = "";
     public string url = "";
     public bool freeCert = false;
+    public string nameForDatabase = "";
 }
 
 /// <summary>
@@ -165,8 +167,13 @@ public class LevelSelectionScene_UI : MonoBehaviour
         foreach (XmlNode xmlSceneNode in xmlSceneList)
         {
             SceneInfo sceneInfo = new SceneInfo();
+
             // bool activated = PlayerPrefs.GetInt(xmlSceneNode.Attributes["id"].Value + " activated") == 1;
             sceneInfo.activated = true;
+
+            if (xmlSceneNode.Attributes["id"] != null)
+                sceneInfo.sceneID = xmlSceneNode.Attributes["id"].Value;
+
             if (xmlSceneNode.Attributes["type"] != null)
                 sceneInfo.sceneType = xmlSceneNode.Attributes["type"].Value;
 
@@ -190,6 +197,10 @@ public class LevelSelectionScene_UI : MonoBehaviour
             if (xmlSceneNode.Attributes["isInProducts"] != null)
             {
                 sceneInfo.isInProducts = xmlSceneNode.Attributes["isInProducts"].Value.Split('|');
+            }
+            if (xmlSceneNode.Attributes["nameForDatabase"] != null)
+            {
+                sceneInfo.nameForDatabase = xmlSceneNode.Attributes["nameForDatabase"].Value;
             }
 
             sceneInfo.bundleName = xmlSceneNode.Attributes["bundleName"].Value;
@@ -340,12 +351,16 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 = sceneUnit.displayName = sceneInfo.displayName;
 
             ppManager.currentSceneVisualName = sceneUnit.displayName;
+            // setting id next to manager visual name
+            sceneUnit.sceneID = sceneInfo.sceneID; // yes, duping value is important
+            ppManager.currentPEcourseID = sceneUnit.sceneID;
+
             ppManager.CreateBlankHighscore(); // has a check inside for no DB info already
 
             // override image if scene is completed
             float fscore = 0.0f;
             float.TryParse(DatabaseManager.FetchField("TestHighscores",
-                PlayerPrefsManager.FormatSceneName(sceneUnit.displayName)).Replace(",", "."), out fscore);
+                PlayerPrefsManager.FormatSceneName(pp.GetSceneDatabaseName(sceneUnit.displayName))).Replace(",", "."), out fscore);
             if (Mathf.FloorToInt(fscore) >= 70)
             {
                 sceneUnit.image = completedSceneIcon;
@@ -465,7 +480,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
         WUData.FetchUserCategory(uid, "AccountStats", RequestCharacterInfoByUID_success);
     }
 
-public void RequestCharacterInfoByUID_success(CML response)
+    public void RequestCharacterInfoByUID_success(CML response)
     {
         //loading done, stop loading animation, open UI
         string sex = response.Elements[1]["Sex"];
@@ -501,5 +516,10 @@ public void RequestCharacterInfoByUID_success(CML response)
         else
             Debug.Log("No avatar data");
         GameObject.FindObjectOfType<HighscoreCharacterPanel>().HideContent(false, toShowPlayer);
+    }
+
+    public void OnAppleScenePurchaseButtonClick()
+    {
+        GameObject.Find("Preferences").GetComponent<IAPManager>().BuyProductID(ppManager.currentPEcourseID);
     }
 }

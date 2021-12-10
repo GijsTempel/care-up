@@ -196,6 +196,8 @@ namespace MBS
             string url = Instance.SelectedURL + "/request_purchases.php?user_id=" + UserID.ToString();
 #if UNITY_WEBGL
             url = "https://leren.careup.online/request_purchases.php?user_id=" + UserID.ToString();
+            //url = "https://careup.sharpminds.com/request_purchases.php?user_id=" + UserID.ToString();
+
 #endif
             using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
             {
@@ -219,6 +221,16 @@ namespace MBS
                 }
                 else
                     PlayerPrefsManager.ClearSKU();
+
+                PlayerPrefsManager ppManager = GameObject.FindObjectOfType<PlayerPrefsManager>();
+                if (ppManager != null)
+                {
+                    List<string> IAPscenes = ppManager.GetComponent<IAPManager>().purchasedScenes;
+                    foreach (string s in IAPscenes)
+                    {
+                        PlayerPrefsManager.AddSKU(s);
+                    }
+                }
 
                 if (GameObject.FindObjectOfType<LevelSelectionScene_UI>() != null)
                     GameObject.FindObjectOfType<LevelSelectionScene_UI>().RefrashSceneSelectionButtons();

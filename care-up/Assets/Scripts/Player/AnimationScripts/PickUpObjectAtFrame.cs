@@ -34,6 +34,10 @@ public class PickUpObjectAtFrame : StateMachineBehaviour
                     inventory.ForcePickItem(obj, hand, true);
                     PlayerAnimationManager.SetHandItem(hand == PlayerAnimationManager.Hand.Left, obj);
                 }
+                else
+                {
+                    Debug.LogError(obj + " can not be found");
+                }
             }
         }
     }

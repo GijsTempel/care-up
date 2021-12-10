@@ -18,6 +18,7 @@ public class LevelButton : MonoBehaviour
     bool PreviewIconChanged = false;
 
     public bool multiple;
+    public string sceneID;
     public string displayName;
     public Sprite image;
     public bool testDisabled;
@@ -246,6 +247,12 @@ public class LevelButton : MonoBehaviour
         {
             // show dialogue now instead
             GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(5);
+
+            // for apple, if scene is locked, setup the purchase panel to trigger the shop with correct scene ID
+            if (manager != null)
+            {
+                manager.currentPEcourseID = sceneID;
+            }
         }
         else
         {
@@ -261,6 +268,7 @@ public class LevelButton : MonoBehaviour
                 if (manager != null)
                 {
                     manager.currentSceneVisualName = displayName;
+                    manager.currentPEcourseID = sceneID;
                     manager.validatedScene = validated;
                 }
 
@@ -302,6 +310,7 @@ public class LevelButton : MonoBehaviour
                 if (manager != null)
                 {
                     manager.currentSceneVisualName = displayName;
+                    manager.currentPEcourseID = sceneID;
                     manager.validatedScene = validated;
                 }
             }
@@ -319,7 +328,7 @@ public class LevelButton : MonoBehaviour
             Button testBtn = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
             "DialogTestPractice/Panel_UI/Buttons/right/TestButton").GetComponent<Button>();
 
-            string formattedSceneName = PlayerPrefsManager.FormatSceneName(manager.currentSceneVisualName);
+            string formattedSceneName = PlayerPrefsManager.FormatSceneName(manager.GetSceneDatabaseName(manager.currentSceneVisualName));
 
             int practicePlays;
             int.TryParse(DatabaseManager.FetchField("PracticePlays", formattedSceneName), out practicePlays);
