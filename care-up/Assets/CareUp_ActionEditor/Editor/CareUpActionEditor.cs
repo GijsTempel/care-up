@@ -319,14 +319,15 @@ namespace CareUp.ActionEditor
                 case "description":
                     description = _value;
                     break;
-                case "ignorePosition":
-                    ignorePosition = _value;
                 case "ui_timeout":
                     ui_timeout = _value;
                     break;
+                case "ignorePosition":
+                    ignorePosition = _value;
+                    break;
             }
         }
-    }
+    }                
 
 /// <summary>
 /// Action editor window
@@ -390,7 +391,7 @@ namespace CareUp.ActionEditor
             "posID",
             "audioHint",
             "hidden",
-            "ignorePosition"
+            "ignorePosition",
             "ui_timeout"
         };
 
