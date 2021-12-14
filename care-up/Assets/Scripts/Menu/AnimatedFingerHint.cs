@@ -78,12 +78,13 @@ public class AnimatedFingerHint : MonoBehaviour
                 bType = GameUI.ItemControlButtonType.PaperAndPen;
             MoveToControlButton(bType);
         }
-        else if (gameUI.moveButtonToBlink != GameUI.ItemControlButtonType.None)
+        else if (gameUI.moveButtonToBlink != GameUI.MoveControlButtonType.None)
         {
-            GameUI.ItemControlButtonType bType = GameUI.ItemControlButtonType.MoveLeft;
-            if (gameUI.moveButtonToBlink == GameUI.ItemControlButtonType.MoveRight)
-                bType = GameUI.ItemControlButtonType.MoveRight;
-            MoveToControlButton(bType);
+            MoveToMovementButton(gameUI.moveButtonToBlink);
+            //GameUI.ItemControlButtonType bType = GameUI.ItemControlButtonType.MoveLeft;
+            //if (gameUI.moveButtonToBlink == GameUI.ItemControlButtonType.MoveRight)
+            //    bType = GameUI.ItemControlButtonType.MoveRight;
+            //MoveToControlButton(bType);
         }
         else if (gameUI.buttonToBlink == GameUI.ItemControlButtonType.ZoomLeft || gameUI.buttonToBlink == GameUI.ItemControlButtonType.ZoomRight)
         {
@@ -104,6 +105,21 @@ public class AnimatedFingerHint : MonoBehaviour
         }
     }
 
+    void MoveToMovementButton(GameUI.MoveControlButtonType buttonType)
+    {
+        RectTransform point = null;
+        GameObject movementButtonToMove = gameUI.GetMovementButtonByType(buttonType);
+        point = movementButtonToMove.GetComponent<RectTransform>();
+        if (movementButtonToMove.transform.Find("fingerPosition"))
+        {
+            if (gameUI.AllowAutoPlay(false))
+                Invoke("AutoClickButton", 1.5f);
+            ButtonToAutoClick = movementButtonToMove.GetComponent<Button>();
+            point = movementButtonToMove.transform.Find("fingerPosition").GetComponent<RectTransform>();
+        }
+
+        MoveTo(point.position);
+    }
     void MoveToControlButton(GameUI.ItemControlButtonType buttonType)
     {
         RectTransform point = null;

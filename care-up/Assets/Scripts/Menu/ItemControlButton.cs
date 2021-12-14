@@ -24,7 +24,7 @@ public class ItemControlButton : MonoBehaviour
         bool toBlink = false;
         if (gameUI == null)
             gameUI = GameObject.FindObjectOfType<GameUI>();
-        bool directionActive = gameUI.moveButtonToBlink != GameUI.ItemControlButtonType.None;
+        bool directionActive = gameUI.moveButtonToBlink != GameUI.MoveControlButtonType.None;
 
         if (buttonType == GameUI.ItemControlButtonType.DropLeft)
         {
@@ -40,13 +40,13 @@ public class ItemControlButton : MonoBehaviour
                 toBlink = true;
             }
         }
-        else if (buttonType == GameUI.ItemControlButtonType.MoveLeft || buttonType == GameUI.ItemControlButtonType.MoveRight)
-        {
-            if (gameUI.moveButtonToBlink == buttonType)
-            {
-                toBlink = true;
-            }
-        }
+        //else if (buttonType == GameUI.ItemControlButtonType.MoveLeft || buttonType == GameUI.ItemControlButtonType.MoveRight)
+        //{
+        //    if (gameUI.moveButtonToBlink == buttonType)
+        //    {
+        //        toBlink = true;
+        //    }
+        //}
         else if (buttonType == GameUI.ItemControlButtonType.Records)
         {
             if (gameUI.recordsButtonBlink)
