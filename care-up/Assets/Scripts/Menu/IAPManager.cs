@@ -32,23 +32,28 @@ public class IAPManager : MonoBehaviour, IStoreListener
     void Start()
     {
         Debug.Log("IAP start");
-        // If we haven't set up the Unity Purchasing reference
         
         purchasedScenes.Clear();
 
-        InitializePurchasing();
+        // If we haven't set up the Unity Purchasing reference
+        if (m_StoreController == null)
+        {
+            // Begin to configure our connection to Purchasing
+            InitializePurchasing();
+        }
     }
 
     public void InitializePurchasing()
     {
         // Create a builder, first passing in a suite of Unity provided stores.
         var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
-
+        
         // Add a product to sell / restore by way of its identifier, associating the general identifier
         // And finish adding the subscription product. Notice this uses store-specific IDs, illustrating
         // if the Product ID was configured differently between Apple and Google stores. Also note that
         // one uses the general kProductIDSubscription handle inside the game - the store-specific IDs 
         // must only be referenced here. 
+
         { // Product List
         builder.AddProduct("BMVS", ProductType.Subscription, new IDs(){
                 { "1575230619", AppleAppStore.Name },
@@ -145,7 +150,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
     public void BuyProductID(string productId)
     {
         // If Purchasing has been initialized ...
-        if (IsInitialized() || true)
+        if (IsInitialized())
         {
             // ... look up the Product reference with the general product identifier and the Purchasing 
             // system's products collection.
@@ -154,7 +159,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
             // If the look up found a product for this device's store and that product is ready to be sold ... 
             if (product != null && product.availableToPurchase)
             {
-                Debug.Log(string.Format("Purchasing product asychronously: '{0}'", product.definition.id));
+                Debug.Log(string.Format("Purchasing product:" + product.definition.id.ToString()));
                 // ... buy the product. Expect a response either through ProcessPurchase or OnPurchaseFailed 
                 // asynchronously.
                 m_StoreController.InitiatePurchase(product);
