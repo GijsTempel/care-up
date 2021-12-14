@@ -112,6 +112,7 @@ namespace CareUp.ActionEditor
         public string hidden = null;
         [XmlAttribute]
         public string ignorePosition = null;
+        public string ui_timeout = null;
 
         /// <summary>
         /// Create new instance of an action with all the same data 
@@ -154,6 +155,7 @@ namespace CareUp.ActionEditor
             newCopy.expected = this.expected;
             newCopy.hidden = this.hidden;
             newCopy.ignorePosition = this.ignorePosition;
+            newCopy.ui_timeout = this.ui_timeout;
             return newCopy;
         }
 
@@ -222,6 +224,8 @@ namespace CareUp.ActionEditor
                     return description;
                 case "ignorePosition":
                     return ignorePosition;
+                case "ui_timeout":
+                    return ui_timeout;
             }
             return null;
         }
@@ -315,12 +319,15 @@ namespace CareUp.ActionEditor
                 case "description":
                     description = _value;
                     break;
+                case "ui_timeout":
+                    ui_timeout = _value;
+                    break;
                 case "ignorePosition":
                     ignorePosition = _value;
                     break;
             }
         }
-    }
+    }                
 
 /// <summary>
 /// Action editor window
@@ -384,7 +391,8 @@ namespace CareUp.ActionEditor
             "posID",
             "audioHint",
             "hidden",
-            "ignorePosition"
+            "ignorePosition",
+            "ui_timeout"
         };
 
         public Object actionsFile;
@@ -600,6 +608,8 @@ namespace CareUp.ActionEditor
                             action.expected = xmlAction.Attributes["expected"].Value;
                         if (xmlAction.Attributes["ignorePosition"] != null)
                             action.ignorePosition = xmlAction.Attributes["ignorePosition"].Value;
+                        if (xmlAction.Attributes["ui_timeout"] != null)
+                            action.ui_timeout = xmlAction.Attributes["ui_timeout"].Value;
                         actions.Add(action);
                     }
                     loadedActionFilePath = actionFilePath;
