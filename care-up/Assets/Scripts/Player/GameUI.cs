@@ -125,6 +125,16 @@ public class GameUI : MonoBehaviour
         stopAutoPlayOnStep = int.Parse(AutoplayStopInput.text);
     }
 
+
+
+    public void UpdateMovementButtons(WalkToGroup currentWTG)
+    {
+        foreach (WalkToGroupButton b in WalkToGroupPanel.GetComponentsInChildren<WalkToGroupButton>())
+        {
+            b.GetComponent<Button>().interactable = b.GetLinkedWalkToGroup() != currentWTG;
+        }
+    }
+
     public bool AllowAutoPlay(bool forActions = true)
     {
         bool result = PlayerPrefsManager.simulatePlayerActions;

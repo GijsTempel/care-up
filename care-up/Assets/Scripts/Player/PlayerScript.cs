@@ -504,6 +504,7 @@ public class PlayerScript : MonoBehaviour
     {
         WalkToGroupAction(currentWalkPosition, group);
         ImmediateWTG = group;
+        gameUI.UpdateMovementButtons(group);
     }
 
     private void ToggleAway(bool _away = false)
