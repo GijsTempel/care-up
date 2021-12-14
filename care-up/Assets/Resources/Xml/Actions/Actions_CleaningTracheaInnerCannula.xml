@@ -63,7 +63,7 @@
     extra="Trek de handschoenen aan."
 	  blockUnlock="GlovesTakenOn"
     messageTitle="Gebruik handschoenen en schort"
-    messageContent="Bij aanbrengen van stomamateriaal hoeven volgens de LCHV-richtlijn geen handschoenen te worden gedragen als deze blijven kleven aan huidplaat of plakranden. Beoordeel per situatie in hoeverre er risico is op contact met excreta en overweeg als alternatief een strak passende maat handschoenen. Het zelfde geldt voor een schort."
+    messageContent="Draag tijdens de verzorging een overschort, handschoenen, een bril of een face-shield en een mondneusmasker bij risico op contact met excreta."
    ></action>
 
 	
@@ -77,6 +77,7 @@
 	   blockUnlock="PatientIsLaying"
 	   extra=""
 	   ui_timeout="5"
+     
 	    ></action>
 
 	<Action
@@ -88,7 +89,8 @@
     buttonText="Verwijder het filter"
 	blockRequired="PatientIsLaying"
 	blockUnlock="FilterRemoved"
-    action="RemoveFilter" />
+    action="RemoveFilter" 
+/>
 
 	<action
          comment="Place the underpad on the patient's chest, just below the cannula."
@@ -131,6 +133,8 @@
 	 type="sequenceStep"
 	 value="RemoveCannula"
 	 extra=""
+   messageTitle="Beademing cliënt"
+   messageContent="Bij een cliënt die beademd wordt, moet je tijdens het reinigen van de binnencanule een reservebinnencanule plaatsen. Hierdoor kan de beademing doorgaan."
    ></action>
 
 	<action
@@ -301,7 +305,7 @@
 	blockRequired="GlovesTakenOff"
     extra="Trek de handschoenen aan"
     messageTitle="Gebruik handschoenen en schort"
-    messageContent="Bij aanbrengen van stomamateriaal hoeven volgens de LCHV-richtlijn geen handschoenen te worden gedragen als deze blijven kleven aan huidplaat of plakranden. Beoordeel per situatie in hoeverre er risico is op contact met excreta en overweeg als alternatief een strak passende maat handschoenen. Het zelfde geldt voor een schort."
+    messageContent="Draag tijdens de verzorging een overschort, handschoenen, een bril of een face-shield en een mondneusmasker bij risico op contact met excreta."
    ></action>
 
 	<action
@@ -322,6 +326,8 @@
 	 type="sequenceStep"
 	 value="3SQ_TightenInnerCannule"
 	 extra=""
+   messageTitle="Inbregen binnencanule"
+   messageContent="Gebruik zo nodig water of een niet-irriterende wateroplosbare gelei om het inbrengen van de binnencanule makkelijker te maken."
    ></action>
 	
 	<action
@@ -372,6 +378,7 @@
 	 type="sequenceStep"
 	 value="CleanNeck"
 	 extra=""
+   encounter="2"
    ></action>
 	
 	<action
@@ -384,6 +391,8 @@
 	 extra=""
    MessageTitle="Vervang zo nodig het canule bandje"
    MessageContent="
+   Vervang het canulebandje één keer per week of als het vochtig en/of zichtbaar vervuild is.
+   
 - Fixeer de buitencanule met één hand.
 - Haal het ene uiteinde van het schone canulebandje door de linkerkant van het plaatje van de buitencanule. Het andere uiteinde door de rechterkant.
 - Maak de uiteinden vast met een platte knoop aan de zijkant van de nek, zodat de cliënt niet op de knoop ligt. Of sluit het klittenband.
