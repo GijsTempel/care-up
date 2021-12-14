@@ -16,6 +16,7 @@ public class WalkToGroupButton : MonoBehaviour {
     GameUI gameUI;
     PlayerScript ps;
     public bool SideButton = false;
+    public GameUI.MoveControlButtonType moveControlButtonType = GameUI.MoveControlButtonType.None;
 
     void Start()
     {
@@ -115,6 +116,11 @@ public class WalkToGroupButton : MonoBehaviour {
                     HighlightButton(true);
             }
         }
+    }
+
+    public WalkToGroup GetLinkedWalkToGroup()
+    {
+        return linkedWalkToGroup;
     }
 
     public void MoveToGroup()
