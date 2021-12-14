@@ -1268,6 +1268,11 @@ public class PlayerPrefsManager : MonoBehaviour
             case "TMOT":
                 return "402071";
 
+            case "SCII":
+            case "AMVP":
+            case "SCAED":
+                return "451003";
+
             case "INSIG":
             case "FRAXI":
             case "ISHTGF":
