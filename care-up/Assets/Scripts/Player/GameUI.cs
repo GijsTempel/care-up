@@ -131,7 +131,10 @@ public class GameUI : MonoBehaviour
     {
         foreach (WalkToGroupButton b in WalkToGroupPanel.GetComponentsInChildren<WalkToGroupButton>())
         {
-            b.GetComponent<Button>().interactable = b.GetLinkedWalkToGroup() != currentWTG;
+            if (currentWTG != null)
+                b.GetComponent<Button>().interactable = b.GetLinkedWalkToGroup() != currentWTG;
+            else
+                b.GetComponent<Button>().interactable = true;
         }
     }
 
@@ -473,6 +476,7 @@ public class GameUI : MonoBehaviour
             WTGButtons[buttonNames[i]].setWalkToGroup(WTGInOrder[i]);
             WTGButtons[buttonNames[i]].gameObject.SetActive(true);
         }
+        UpdateMovementButtons(null);
     }
 
     //void ShowWalkToGroupPanel()
