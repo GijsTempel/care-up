@@ -477,6 +477,7 @@ public class GameUI : MonoBehaviour
             WTGButtons[buttonNames[i]].gameObject.SetActive(true);
         }
         UpdateMovementButtons(null);
+
     }
 
     //void ShowWalkToGroupPanel()
