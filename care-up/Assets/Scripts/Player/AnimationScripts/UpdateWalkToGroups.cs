@@ -13,7 +13,7 @@ public class UpdateWalkToGroups : StateMachineBehaviour
 
         if (actionFrame == 0)
         {
-            gameUI.UpdateWalkToGroupButtons();
+            _Action();
         }
     }
 
@@ -26,7 +26,7 @@ public class UpdateWalkToGroups : StateMachineBehaviour
 
             if (PlayerAnimationManager.CompareFrames(frame, prevFrame, actionFrame))
             {
-                gameUI.UpdateWalkToGroupButtons();
+                _Action();
             }
         }
     }
@@ -35,7 +35,17 @@ public class UpdateWalkToGroups : StateMachineBehaviour
     {
         if (actionFrame / 60f > frame)
         {
-            gameUI.UpdateWalkToGroupButtons();
+            _Action();
+        }
+    }
+
+    void _Action()
+    {
+        gameUI.UpdateWalkToGroupButtons();
+        ActionManager.UpdateRequirements();
+        if (GameObject.FindObjectOfType<AnimatedFingerHint>() != null)
+        {
+            GameObject.FindObjectOfType<AnimatedFingerHint>().DelayedAction(1f);
         }
     }
 }

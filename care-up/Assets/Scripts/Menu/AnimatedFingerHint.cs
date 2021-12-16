@@ -22,9 +22,15 @@ public class AnimatedFingerHint : MonoBehaviour
     Camera cam;
     // Start is called before the first frame update
 
-    private void OnEnable()
+    public void OnEnable()
     {
         Invoke("FindTarget", 0.3f);
+    }
+
+    public void DelayedAction(float _delay = 2.0f)
+    {
+        CancelInvoke();
+        Invoke("FindTarget", _delay);
     }
 
     void AutoClickButton()
@@ -49,7 +55,8 @@ public class AnimatedFingerHint : MonoBehaviour
                 toTalk = true;
             }
         }
-        if (waveHi) 
+        
+        if (waveHi && !PlayerPrefsManager.simulatePlayerActions) 
         {
             waveHi = false;
             transform.Find("FingerHolder/animFinger/show_sound").GetComponent<AudioSource>().Play();
