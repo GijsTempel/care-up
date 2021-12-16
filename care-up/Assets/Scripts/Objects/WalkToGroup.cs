@@ -131,6 +131,20 @@ public class WalkToGroup : MonoBehaviour
 
     public void FindNeighbors()
     {
+        if (ManualNeighborhood)
+        {
+            if (LeftWalkToGroup != null)
+            {
+                if (!LeftWalkToGroup.gameObject.activeSelf)
+                    LeftWalkToGroup = null;
+            }
+            if (RightWalkToGroup != null)
+            {
+                if (!RightWalkToGroup.gameObject.activeSelf)
+                    RightWalkToGroup = null;
+            }
+            return;
+        }
         Vector3 tVec = transform.forward;
         WalkToGroup closestLeft = null;
         WalkToGroup closestRight = null;
