@@ -365,10 +365,16 @@ public class EndScoreManager : MonoBehaviour
         link += "&bigNum=" + manager.bigNumber;
         link += "&percent=" + percent.ToString();
 
+        link += "&courseID=" + manager.currentPEcourseID;
+        link += "&moduleID=" + PlayerPrefsManager.GetCourseIDbyModuleID(manager.currentPEcourseID);
+        link += "&datetime=" + DateTime.Now.AddDays(-1).ToString("yyyy-MM-ddTHH:mm:ss.fffffffK")
+                    .Replace("+", "%2B"); // "+" sign is operator in url, need to replace
+
         UnityWebRequest unityWebRequest = new UnityWebRequest(link.Replace(" ", "%20"));
         unityWebRequest.SendWebRequest();
         Debug.Log("E-mail verzonden");
     }
+    
     bool HasFreeCert()
     {
         return manager.HasFreeCert(manager.currentSceneVisualName);
