@@ -1254,7 +1254,7 @@ public class PlayerPrefsManager : MonoBehaviour
         return xmlDoc.OuterXml;
     }
 
-    static string GetCourseIDbyModuleID(string module)
+    static public string GetCourseIDbyModuleID(string module)
     {
         switch(module)
         {
