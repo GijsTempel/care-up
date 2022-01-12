@@ -158,6 +158,28 @@ public class UMP_Manager : MonoBehaviour {
         }
     }
 
+
+    public void ShowDialogByName(string dialogName)
+    {
+        int dialogIndex = -1;
+        for (int i = 0; i < Dialogs.Count; i++)
+        {
+            if (Dialogs[i].name == dialogName)
+            {
+                dialogIndex = i;
+                break;
+            }
+        }
+        if (dialogIndex != -1)
+        {
+            ShowDialog(dialogIndex);
+        }
+        else
+        {
+            Debug.Log(string.Format("Does't exits a dialog with name " + dialogName));
+        }
+    }
+
     public void TestDialiog()
     {
         int value = 0;

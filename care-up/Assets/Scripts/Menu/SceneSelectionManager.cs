@@ -12,6 +12,7 @@ public class SceneSelectionManager : MonoBehaviour {
 
     private PlayerPrefsManager manager;
     public LevelButton startButton;
+    int selectedDificultateLevel = -1;
     int SceneLocation = 0;
     
     //private string practiceText = "Kies je voor oefenen, dan zie je bovenin het scherm elke stap van de werkwijze. ";
@@ -59,12 +60,40 @@ public class SceneSelectionManager : MonoBehaviour {
         }
     }
 
+    public void OnDificultateLevelButtonClicked(int dificultateLevel)
+    {
+        selectedDificultateLevel = dificultateLevel;
+        if (dificultateLevel == 0)
+        {
+            Debug.Log("Video tutorial mode");
+        }
+        else if (dificultateLevel == 1 || dificultateLevel == 4)
+        {
+            Debug.Log("Standard mode");
+            if (startButton.inHouseBundleName != "")
+                GameObject.FindObjectOfType<UMP_Manager>().ShowDialogByName("DialogLocationSelect");
+            else
+            {
+                LoadSelectedLevel();
+            }
+            //OnPracticeButtonClick();
+
+        }
+        else if (dificultateLevel == 2)
+        {
+            Debug.Log("Dificultate Level 2 mode");
+        }
+        else if (dificultateLevel == 3)
+        {
+            Debug.Log("Dificultate Level 3 mode");
+        }
+
+    }
+
     public void OnPracticeButtonClick() 
     {
         //practiceButton.color = Color.green;
         //testButton.color = Color.white;
-
-        
 
         if (manager)
         {
@@ -90,7 +119,35 @@ public class SceneSelectionManager : MonoBehaviour {
         {
             startButton.toLoadInhouse = true;
         }
+        LoadSelectedLevel();
     }
+
+
+    public void LoadSelectedLevel()
+    {
+        //practiceButton.color = Color.green;
+        //testButton.color = Color.white;
+        if (manager == null)
+            manager = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
+
+        manager.practiceMode = true;
+        if (selectedDificultateLevel == 4)
+            manager.practiceMode = false;
+
+
+        if (selectedDificultateLevel == 1 || selectedDificultateLevel == 4)
+        {
+            // imitate pressing start
+            if (startButton != null)
+            {
+            
+                startButton.OnStartButtonClick();
+            }
+        }
+        // imitate closing dialogue
+        //GameObject.Find("DialogTestPractice").SetActive(false);
+    }
+
 
     public void OnTestButtonClick() 
     {

@@ -17,6 +17,7 @@ public class LevelButton : MonoBehaviour
     int demoMarkType = 0;
     bool PreviewIconChanged = false;
 
+    public int dificultateLevel = -1; // 0 = Video; 1 = with hints; 2 = no hints; 3 = no hints + complications; 4 = test mode
     public bool multiple;
     public string sceneID;
     public string displayName;
@@ -256,9 +257,11 @@ public class LevelButton : MonoBehaviour
         }
         else
         {
+
+
             LevelButton mainBtn = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/DialogTestPractice/Panel_UI/Buttons/Start").GetComponent<LevelButton>();
 
-            if (multiple)
+            if (multiple)//??????????????????????????????????
             {
                 // we need to fill info in the dialogue
                 GameObject dialogue = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/Dialog 1");
@@ -300,12 +303,13 @@ public class LevelButton : MonoBehaviour
                 mainBtn.inHouseBundleName = inHouseBundleName;
                 mainBtn.inHouseSceneName = inHouseSceneName;
                 mainBtn.toLoadInhouse = false;
-
+                mainBtn.dificultateLevel = -1;
                 // for single variation we can skip into practice/test dialogue
-                if (inHouseSceneName != "")
-                    GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(11);
-                else
-                    GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(3);
+                //if (inHouseSceneName != "")
+                //    GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(11);
+                //else
+                //GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(3);
+                GameObject.FindObjectOfType<UMP_Manager>().ShowDialogByName("DialogLevelSelect");
 
                 if (manager != null)
                 {
@@ -379,6 +383,9 @@ public class LevelButton : MonoBehaviour
 
             SetPointsAmount();
         }
+    
+    
+    
     }
 
     public void OnStartButtonClick()
@@ -422,7 +429,7 @@ public class LevelButton : MonoBehaviour
 
     public void SetPointsAmount()
     {
-        Text points = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/DialogTestPractice/Panel_UI/PointsAmount").transform.GetChild(0).GetComponent<Text>();
+        Text points = GameObject.Find("/UMenuProManager/MenuCanvas/Dialogs/DialogLevelSelect/Panel_UI/PointsAmount/Text").GetComponent<Text>();
         points.text = validated ? "Te behalen accreditatiepunten: " + totalPoints : "";
     }
 }
