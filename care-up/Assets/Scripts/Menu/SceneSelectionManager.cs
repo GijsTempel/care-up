@@ -62,7 +62,7 @@ public class SceneSelectionManager : MonoBehaviour {
 
     public void OnDificultateLevelButtonClicked(int dificultateLevel)
     {
-        selectedDificultateLevel = dificultateLevel;
+        manager.currentDifficultyLevel = selectedDificultateLevel = dificultateLevel;
         if (dificultateLevel == 0)
         {
             Debug.Log("Video tutorial mode");
