@@ -12,7 +12,6 @@ public class SceneSelectionManager : MonoBehaviour {
 
     private PlayerPrefsManager manager;
     public LevelButton startButton;
-    int selectedDificultateLevel = -1;
     int SceneLocation = 0;
     
     //private string practiceText = "Kies je voor oefenen, dan zie je bovenin het scherm elke stap van de werkwijze. ";
@@ -62,7 +61,7 @@ public class SceneSelectionManager : MonoBehaviour {
 
     public void OnDificultateLevelButtonClicked(int dificultateLevel)
     {
-        manager.currentDifficultyLevel = selectedDificultateLevel = dificultateLevel;
+        manager.currentDifficultyLevel = dificultateLevel;
         if (dificultateLevel == 0)
         {
             Debug.Log("Video tutorial mode");
@@ -132,11 +131,11 @@ public class SceneSelectionManager : MonoBehaviour {
             manager = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
 
         manager.practiceMode = true;
-        if (selectedDificultateLevel == 4)
+        if (manager.currentDifficultyLevel == 4)
             manager.practiceMode = false;
 
 
-        if (selectedDificultateLevel == 1 || selectedDificultateLevel == 4)
+        if (manager.currentDifficultyLevel == 1 || manager.currentDifficultyLevel == 4)
         {
             // imitate pressing start
             if (startButton != null)
