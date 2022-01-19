@@ -67,7 +67,8 @@ namespace CareUp.Localize
             bool debugMode = false;
             if (gameLogic != null)
             {
-                debugMode = gameLogic.GetComponent<ActionManager>().TextDebug;
+                if (gameLogic.GetComponent<ActionManager>() != null)
+                    debugMode = gameLogic.GetComponent<ActionManager>().TextDebug;
             }
 
             if (key[0] == '[')

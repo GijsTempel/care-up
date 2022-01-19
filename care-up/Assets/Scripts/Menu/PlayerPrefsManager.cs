@@ -286,7 +286,7 @@ public class PlayerPrefsManager : MonoBehaviour
                 s.name == "MainMenu" ||
                 s.name == "SceneSelection" ||
                 s.name == "Scenes_Character_Customisation" ||
-                s.name == "Scenes_Tutorial"))
+                s.name == "Scenes_Tutorial" ))
         {
             // game scenes
             muteMusic = true;

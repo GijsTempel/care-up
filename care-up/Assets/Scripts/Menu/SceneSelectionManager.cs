@@ -66,6 +66,7 @@ public class SceneSelectionManager : MonoBehaviour {
         if (dificultateLevel == 0)
         {
             Debug.Log("Video tutorial mode");
+            bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Video_Player", "scene/scenes_video_player");
         }
         else if (dificultateLevel == 1 || dificultateLevel == 4)
         {

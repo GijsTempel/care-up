@@ -2,10 +2,25 @@
 
 namespace CareUp.Actions
 {
-    /// <summary>
-    /// Abstract class Action. Inherit every time of action from this one.
-    /// </summary>
-    public abstract class Action
+    public class VideoAction
+    {
+        public string title = "";
+        public string description = "";
+        public int startFrame = 0;
+
+        public VideoAction(string _title = "", string _description = "", int _frame = 0)
+        {
+            title = _title;
+            description = _description;
+            startFrame = _frame;
+        }
+    }
+
+
+        /// <summary>
+        /// Abstract class Action. Inherit every time of action from this one.
+        /// </summary>
+        public abstract class Action
     {
         public bool matched = false;
         public string shortDescr;
