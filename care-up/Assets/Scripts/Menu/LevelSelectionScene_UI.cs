@@ -30,6 +30,8 @@ public class SceneInfo
     public string url = "";
     public bool freeCert = false;
     public string nameForDatabase = "";
+    public bool hasVideoMode = false;
+    public string videoURL = "";
 }
 
 /// <summary>
@@ -170,6 +172,12 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
             // bool activated = PlayerPrefs.GetInt(xmlSceneNode.Attributes["id"].Value + " activated") == 1;
             sceneInfo.activated = true;
+
+            if (xmlSceneNode.Attributes["hasVideoMode"] != null)
+                sceneInfo.hasVideoMode = xmlSceneNode.Attributes["hasVideoMode"].Value == "true";
+
+            if (xmlSceneNode.Attributes["videoURL"] != null)
+                sceneInfo.videoURL = xmlSceneNode.Attributes["videoURL"].Value;
 
             if (xmlSceneNode.Attributes["id"] != null)
                 sceneInfo.sceneID = xmlSceneNode.Attributes["id"].Value;

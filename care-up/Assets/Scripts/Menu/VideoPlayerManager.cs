@@ -8,7 +8,6 @@ public class VideoPlayerManager : MonoBehaviour
 {
     public Text TextFrameText;
     public Text TitleText;
-
     public Animator VideoPanelsAnimator;
     bool playState = false;
     bool fullScreenMode = false;
@@ -24,9 +23,19 @@ public class VideoPlayerManager : MonoBehaviour
     List<VideoActionUnit> videoActionUnits = new List<VideoActionUnit>();
     VideoActionManager videoActionManager;
     bool isFirstPlay = true;
+    PlayerPrefsManager manager;
     // Start is called before the first frame update
     void Start()
     {
+        if (manager == null)
+            manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
+        if (manager != null)
+        {
+            string videoURL = videoActionManager.baseURL + manager.videoSceneName + "/video.mp4";
+            videoPlayer.source = UnityEngine.Video.VideoSource.Url;
+            videoPlayer.url = videoURL;
+        }
+        videoPlayer.Prepare();
         videoPlayer.Play();
     }
 
@@ -152,6 +161,11 @@ public class VideoPlayerManager : MonoBehaviour
         videoPlayer.frame = videoActionManager.videoActions[_segment].startFrame;
         videoSegment = _segment;
         HighlightCurrentUnit();
+        if (videoPlayer.isPaused)
+        {
+            isFirstPlay = true;
+            videoPlayer.Play();
+        }
     }   
 
     public void BuildVideoActionsPanel(VideoActionManager _videoActionManager)

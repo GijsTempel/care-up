@@ -56,7 +56,7 @@ public class PlayerPrefsManager : MonoBehaviour
         }
 
     };
-
+    public string videoSceneName = "";
     public static Dictionary<int, CANotifications> Notifications = new Dictionary<int, CANotifications>();
 
     public static StoreManager storeManager = new StoreManager();
@@ -203,6 +203,18 @@ public class PlayerPrefsManager : MonoBehaviour
     public void AddSceneInfo(SceneInfo sceleInfo)
     {
         ScenesInfo.Add(sceleInfo);
+    }
+
+    public SceneInfo GetSceneInfoByName(string sceneName)
+    {
+        foreach (SceneInfo sceneInfo in ScenesInfo)
+        {
+            if (sceneInfo.sceneName == sceneName)
+            {
+                return sceneInfo;
+            }
+        }
+        return null;
     }
 
     public string GetSceneDatabaseName(string sceneName)
