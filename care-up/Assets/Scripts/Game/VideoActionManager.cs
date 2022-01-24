@@ -5,71 +5,90 @@ using System.Xml;
 using CareUp.Localize;
 using CareUp.Actions;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
 public class VideoActionManager : MonoBehaviour
 {
-    public string baseURL = "https://leren.careup.online/Video/001/";
+    public static string baseURL = "https://leren.careup.online/Video/001/";
+    string actionDataText = "";
     public VideoPlayerManager videoPlayerManager;
     private PlayerPrefsManager manager;
     public List<VideoAction> videoActions = new List<VideoAction>();
     public TextAsset textAsset;
     bool actionDataWasLoaded = false;
+    public bool initialized = false;
+    private IEnumerator coroutine;
 
     void Awake()
     {
+
         videoActions.Clear();
         VideoAction startAction = new VideoAction("Begining", "", 0);
         videoActions.Add(startAction);
         manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
-        if (manager != null)
-        {
-            string actionsURL = baseURL + manager.videoSceneName + "/videoActions.xml";
-            ReadActionsFromURL(actionsURL);
+        if (manager == null)
+        { 
+            ReadActionsFromAsset();
+            videoPlayerManager.BuildVideoActionsPanel(this);
+            initialized = true;
         }
         else
         {
-            ReadActionsFromAsset();
-        }    
-
-        videoPlayerManager.BuildVideoActionsPanel(this);
+            coroutine = LoadActions();
+            StartCoroutine(coroutine);
+        }
     }
 
-    void ReadActionsFromURL(string actionsURL)
+    private void Update()
     {
-        XmlTextReader reader = new XmlTextReader(actionsURL);
-        while (reader.Read())
+        if (!initialized)
         {
-            // Do some work here on the data.
-            if (reader.Name == "action")
+            if (actionDataWasLoaded)
             {
-                VideoAction videoAction = new VideoAction();
-                if (reader.NodeType == XmlNodeType.Element)
-                {
-                    while (reader.MoveToNextAttribute()) // Read the attributes.
-                        switch (reader.Name)
-                        {
-                            case "title":
-                                videoAction.title = LocalizationManager.GetValueIfKey(reader.Value);
-                                break;
-                            case "description":
-                                videoAction.description = LocalizationManager.GetValueIfKey(reader.Value);
-                                break;
-                            case "frame":
-                                int.TryParse(reader.Value, out videoAction.startFrame);
-                                videoAction.startFrame = videoAction.startFrame + 5;
-                                break;
-                        }
-                    Debug.Log(" " + reader.Name + "=='" + reader.Value + "'");
-                    videoActions.Add(videoAction);
-                }
+                initialized = true;
+                enabled = false;
+                ReadActions(actionDataText);
+                videoPlayerManager.BuildVideoActionsPanel(this);
+            }
+        }
+    }
+  
+    static public IEnumerator LoadActions()
+    {
+        PlayerPrefsManager _manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
+
+        string actionsURL = baseURL + _manager.videoSceneName + "/videoActions.xml";
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(actionsURL))
+        {
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.isNetworkError)
+            {
+                Debug.Log("NetworkError");
+            }
+            else if (webRequest.downloadHandler.text != "")
+            {
+                VideoActionManager _videoActionManager = GameObject.FindObjectOfType<VideoActionManager>();
+                _videoActionManager.actionDataText = webRequest.downloadHandler.text;
+                _videoActionManager.actionDataWasLoaded = true;
+            }
+            else
+            {
 
             }
         }
     }
+
+
     void ReadActionsFromAsset()
     {
+        ReadActions(textAsset.text);
+    }
+
+    void ReadActions(string _actionsText)
+    {
         XmlDocument xmlFile = new XmlDocument();
-        xmlFile.LoadXml(textAsset.text);
+        xmlFile.LoadXml(_actionsText);
         XmlNodeList actions = xmlFile.FirstChild.NextSibling.ChildNodes;
         foreach (XmlNode action in actions)
         {
@@ -79,10 +98,6 @@ public class VideoActionManager : MonoBehaviour
             int.TryParse(action.Attributes["frame"].Value, out videoAction.startFrame);
             videoActions.Add(videoAction);
         }
+    }
 
-    }
-    void Start()
-    {
-        
-    }
 }

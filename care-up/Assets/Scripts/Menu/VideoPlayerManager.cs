@@ -22,6 +22,7 @@ public class VideoPlayerManager : MonoBehaviour
     int videoSegment = 0;
     List<VideoActionUnit> videoActionUnits = new List<VideoActionUnit>();
     VideoActionManager videoActionManager;
+    bool initialized = false;
     bool isFirstPlay = true;
     PlayerPrefsManager manager;
     // Start is called before the first frame update
@@ -31,7 +32,7 @@ public class VideoPlayerManager : MonoBehaviour
             manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
         if (manager != null)
         {
-            string videoURL = videoActionManager.baseURL + manager.videoSceneName + "/video.mp4";
+            string videoURL = VideoActionManager.baseURL + manager.videoSceneName + "/video.mp4";
             videoPlayer.source = UnityEngine.Video.VideoSource.Url;
             videoPlayer.url = videoURL;
         }
@@ -57,21 +58,23 @@ public class VideoPlayerManager : MonoBehaviour
             currentFrame = (int)(videoPlayer.clockTime / videoPlayer.length * videoPlayer.frameCount);
         }
         
-        //Debug.Log(videoPlayer.clockTime / videoPlayer.length);
-        string segmentValueStr = "  0";
-        int currentSegment = GetCurrentSegment(currentFrame);
-        segmentValueStr = "  " + currentSegment.ToString();
-        if (videoPlayer.isPlaying)
+        if (initialized)
         {
-
-            if (currentSegment != videoSegment)
+            string segmentValueStr = "  0";
+            int currentSegment = GetCurrentSegment(currentFrame);
+            segmentValueStr = "  " + currentSegment.ToString();
+            if (videoPlayer.isPlaying)
             {
-                videoSegment = currentSegment;
-                HighlightCurrentUnit();
+
+                if (currentSegment != videoSegment)
+                {
+                    videoSegment = currentSegment;
+                    HighlightCurrentUnit();
+                }
             }
-            
+            TextFrameText.text = currentFrame.ToString() + segmentValueStr;
         }
-        TextFrameText.text = currentFrame.ToString() + segmentValueStr;
+
     }
 
     int GetCurrentSegment(int currentFrame)
@@ -183,6 +186,7 @@ public class VideoPlayerManager : MonoBehaviour
             actionID++;
         }
         HighlightCurrentUnit();
+        initialized = true;
     }
 
 }
