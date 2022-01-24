@@ -7,7 +7,7 @@ using CareUp.Actions;
 public class VideoPlayerManager : MonoBehaviour
 {
     public Text TextFrameText;
-    public Text TitleText;
+    public GameObject titlePanel;
     public Animator VideoPanelsAnimator;
     bool playState = false;
     bool fullScreenMode = false;
@@ -18,12 +18,14 @@ public class VideoPlayerManager : MonoBehaviour
     public UnityEngine.Video.VideoPlayer videoPlayer;
     bool sidePanelIsOpen = false;
     bool actionDataLoaded = false;
-    public Transform videoActionPanelContent;
+    Transform videoActionPanelContent;
+    public ScrollRect videoActionPanelScrollRect;
     int videoSegment = 0;
     List<VideoActionUnit> videoActionUnits = new List<VideoActionUnit>();
     VideoActionManager videoActionManager;
     bool initialized = false;
     bool isFirstPlay = true;
+    public GameObject infoEffectPanel;
     PlayerPrefsManager manager;
     // Start is called before the first frame update
     void Start()
@@ -138,15 +140,28 @@ public class VideoPlayerManager : MonoBehaviour
 
     void HighlightCurrentUnit()
     {
+
         for (int i = 0; i < videoActionUnits.Count; i++)
         {
             videoActionUnits[i].HighlightUnit(i == videoSegment);
             if (i == videoSegment)
             {
-                TitleText.text = videoActionUnits[i].GetTitle();
-                TitleText.transform.parent.GetComponent<Animation>().Play();
+                titlePanel.transform.Find("TitleText").GetComponent<Text>().text = videoActionUnits[i].GetTitle();
+                titlePanel.transform.Find("Desc").GetComponent<Text>().text = videoActionUnits[i].GetDescription();
+
+                //infoEffectPanel.transform.Find("VideoActionUnit/Title").GetComponent<Text>().text = videoActionUnits[i].GetTitle();
+                //infoEffectPanel.transform.Find("VideoActionUnit/Desc").GetComponent<Text>().text = videoActionUnits[i].GetDescription();
+                if (videoSegment != 0)
+                {
+                    titlePanel.GetComponent<Animation>().Stop();
+                    titlePanel.GetComponent<Animation>().Play();
+                    //infoEffectPanel.GetComponent<Animation>().Play();
+                }
             }
         }
+        float scrollPos = 1f - ((float)videoSegment / (float)(videoActionUnits.Count - 1));
+        videoActionPanelScrollRect.verticalNormalizedPosition = scrollPos;
+
     }
     
     public void NextPrevSegment(int segmentDirection = 1)
@@ -174,7 +189,7 @@ public class VideoPlayerManager : MonoBehaviour
     public void BuildVideoActionsPanel(VideoActionManager _videoActionManager)
     {
         videoActionManager = _videoActionManager;
-
+        videoActionPanelContent = videoActionPanelScrollRect.transform.Find("Protocols/content");
         int actionID = 0;
         foreach (VideoAction videoAction in videoActionManager.videoActions)
         {
