@@ -319,7 +319,7 @@ public class EndScoreManager : MonoBehaviour
         correctStepIndexes = actionManager.CorrectStepIndexes;
 
         PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
-        if (manager != null && manager.practiceMode)
+        if (manager.practiceMode || manager.currentDifficultyLevel == 2)
         {
             bl_SceneLoaderUtils.GetLoader.LoadLevel("EndScore");
         }

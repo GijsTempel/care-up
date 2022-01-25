@@ -76,7 +76,7 @@ public class SceneSelectionManager : MonoBehaviour {
             }
             bl_SceneLoaderUtils.GetLoader.LoadLevel("Scenes_Video_Player", "scene/scenes_video_player");
         }
-        else if (dificultateLevel == 1 || dificultateLevel == 4)
+        else if (dificultateLevel == 1 || dificultateLevel == 4 || dificultateLevel == 2)
         {
             Debug.Log("Standard mode");
             if (startButton.inHouseBundleName != "")
@@ -88,10 +88,7 @@ public class SceneSelectionManager : MonoBehaviour {
             //OnPracticeButtonClick();
 
         }
-        else if (dificultateLevel == 2)
-        {
-            Debug.Log("Dificultate Level 2 mode");
-        }
+       
         else if (dificultateLevel == 3)
         {
             Debug.Log("Dificultate Level 3 mode");
@@ -140,11 +137,11 @@ public class SceneSelectionManager : MonoBehaviour {
             manager = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
 
         manager.practiceMode = true;
-        if (manager.currentDifficultyLevel == 4)
+        if (manager.currentDifficultyLevel == 4 || manager.currentDifficultyLevel == 2)
             manager.practiceMode = false;
 
 
-        if (manager.currentDifficultyLevel == 1 || manager.currentDifficultyLevel == 4)
+        if (manager.currentDifficultyLevel == 1 || manager.currentDifficultyLevel == 4 || manager.currentDifficultyLevel == 2)
         {
             // imitate pressing start
             if (startButton != null)
