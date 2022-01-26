@@ -7,6 +7,8 @@ using CareUp.Actions;
 public class VideoPlayerManager : MonoBehaviour
 {
     public GameObject loadingScreenPanel;
+    public GameObject InPlayButtonIcon;
+
     public Text extraText;
     public Text TextFrameText;
     public GameObject titlePanel;
@@ -128,6 +130,7 @@ public class VideoPlayerManager : MonoBehaviour
             videoPlayer.Pause();
             playButton.GetComponent<Image>().sprite = playSprite;
         }
+        InPlayButtonIcon.SetActive(!playState);
     }
 
     public void ToggleSidePanel()
