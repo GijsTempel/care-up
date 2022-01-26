@@ -495,6 +495,18 @@ public class GameUI : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        DetailedHintPanel = GameObject.Find("DetailedHintPanel");
+
+        if (PlayerPrefsManager.videoRecordingMode)
+        {
+            autoplayPanel.GetComponent<CanvasGroup>().alpha = 0f;
+            if (GameObject.Find("ActionsPanel") != null)
+                GameObject.Find("ActionsPanel").GetComponent<CanvasGroup>().alpha = 0f;
+            if (GameObject.Find("AssetDebugPanel") != null)
+                GameObject.Find("AssetDebugPanel").GetComponent<CanvasGroup>().alpha = 0f;
+            DetailedHintPanel.GetComponent<CanvasGroup>().alpha = 0f;
+        }
+
         gameLogic = GameObject.Find("GameLogic");
         autoPlayer = GameObject.FindObjectOfType<AutoPlayer>();
         theoryTab = GameObject.FindObjectOfType<TheoryTab>();
@@ -518,7 +530,7 @@ public class GameUI : MonoBehaviour
         prefs = GameObject.FindObjectOfType<PlayerPrefsManager>();
         if (prefs != null)
             practiceMode = prefs.practiceMode;
-        DetailedHintPanel = GameObject.Find("DetailedHintPanel");
+
         useOnNTtext = noTargetButton.transform.GetChild(0).GetComponent<Text>().text;
         ps = GameObject.FindObjectOfType<PlayerScript>();
         controller = GameObject.FindObjectOfType<PlayerAnimationManager>().GetComponent<Animator>();
@@ -993,8 +1005,11 @@ public class GameUI : MonoBehaviour
 
     public void ShowIpad(bool isSequence = false)
     {
+        
         void ShowTheoryTab()
         {
+            if (PlayerPrefsManager.videoRecordingMode)
+                return;
             if (!GameObject.FindObjectOfType<QuizTab>())
             {
                 if (!string.IsNullOrEmpty(actionManager.Message))
@@ -1210,7 +1225,8 @@ public class GameUI : MonoBehaviour
         //if some object was added or removed to hands
         if (showItemControlPanel)
         {
-            ShowIpad();
+            if (!PlayerPrefsManager.videoRecordingMode)
+                ShowIpad();
 
             int lHash = 0;
             if (handsInventory.leftHandObject != null)

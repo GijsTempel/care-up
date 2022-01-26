@@ -65,6 +65,8 @@ public class SelectDialogue : MonoBehaviour
 
     void Start()
     {
+        if (PlayerPrefsManager.videoRecordingMode)
+            GetComponent<CanvasGroup>().alpha = 0f;
         if (cameraMode == null)
         {
             cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();

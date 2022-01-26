@@ -71,6 +71,8 @@ public class PlayerPrefsManager : MonoBehaviour
     public static bool editCharacterOnStart = false;
     public static bool tutorialOnStart = false;
     public static bool simulatePlayerActions = false;
+    public static bool videoRecordingMode = false;
+
     List<string> scenesWithFreeCert = new List<string>();
 
     public bool VR = true;

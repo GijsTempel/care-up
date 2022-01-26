@@ -124,6 +124,14 @@ public class QuizTab : MonoBehaviour
 
     private void Start()
     {
+        if (PlayerPrefsManager.videoRecordingMode)
+        {
+            GetComponent<CanvasGroup>().alpha = 0f;
+            foreach(AudioSource a in GetComponentsInChildren<AudioSource>())
+            {
+                a.enabled = false;
+            }
+        }
         PlayerScript.quiz = this;
         gameObject.SetActive(false);
         gameUI = GameObject.FindObjectOfType<GameUI>();
@@ -153,6 +161,7 @@ public class QuizTab : MonoBehaviour
 
     public void NextQuizQuestion(bool random = false, bool encounter = false)
     {
+
         quiz = true;
         if (random == false)
         {
@@ -172,7 +181,7 @@ public class QuizTab : MonoBehaviour
         }
 
         // open UI
-        GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
+        //GameObject.FindObjectOfType<PlayerScript>().OpenRobotUI();
 
         gameObject.SetActive(true);
 

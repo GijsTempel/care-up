@@ -13,7 +13,7 @@ public class TheoryTab : MonoBehaviour
     {
         gameObject.SetActive(value);
         if (value && PlayerPrefsManager.simulatePlayerActions)
-            Invoke("AutoContinue", 1f);
+            Invoke("AutoContinue", 5f);
     }
 
     public void ShowTheory(string title_text, string descr_text, string buttonText = "")

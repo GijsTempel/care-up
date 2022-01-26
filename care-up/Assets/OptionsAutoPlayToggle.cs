@@ -4,14 +4,18 @@ using UnityEngine.UI;
 
 public class OptionsAutoPlayToggle : MonoBehaviour
 {
-    Toggle toggle;
+    public Toggle toggle;
+    public Toggle recordingToggle;
+
     // Start is called before the first frame update
     void Start()
     {
-        toggle = transform.Find("AutoPlayToggle2").GetComponent<Toggle>();
         toggle.isOn = PlayerPrefsManager.simulatePlayerActions;
+        recordingToggle.isOn = PlayerPrefsManager.videoRecordingMode;
+
 
 #if !(UNITY_EDITOR || DEVELOPMENT_BUILD)
+        recordingToggle.transform.parent.gameObject.SetActive(false);
         gameObject.SetActive(false);
 #endif
     }
@@ -19,5 +23,10 @@ public class OptionsAutoPlayToggle : MonoBehaviour
     public void ValueChanged()
     {
         PlayerPrefsManager.simulatePlayerActions = toggle.isOn;
+    }
+
+    public void RecordingModeChanged()
+    {
+        PlayerPrefsManager.videoRecordingMode = recordingToggle;
     }
 }

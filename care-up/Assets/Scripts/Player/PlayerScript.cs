@@ -619,7 +619,7 @@ public class PlayerScript : MonoBehaviour
 
         itemControls.Close();
         if (PlayerPrefsManager.simulatePlayerActions)
-            Invoke("CloseRobotUI", 1f);
+            Invoke("CloseRobotUI", 5f);
     }
 
     public void CloseRobotUI()

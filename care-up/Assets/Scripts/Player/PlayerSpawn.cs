@@ -68,7 +68,10 @@ public class PlayerSpawn : MonoBehaviour
         GameObject itemDescription = Instantiate(Resources.Load("NecessaryPrefabs/UI/ItemDescription") as GameObject,
             transform.position, transform.rotation);
         itemDescription.name = "ItemDescription";
-
+        if (PlayerPrefsManager.videoRecordingMode)
+        {
+            itemDescription.GetComponent<CanvasGroup>().alpha = 0f;
+        }
         GameObject iPad = UIPrefab.transform.Find("IpadPanel/PatientInfoTabs").gameObject;
         IpadLoadXmlInfo(iPad.transform);
 

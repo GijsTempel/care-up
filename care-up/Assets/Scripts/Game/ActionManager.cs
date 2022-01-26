@@ -1719,7 +1719,8 @@ public class ActionManager : MonoBehaviour
 
     public static void PlayAddPointSound()
     {
-        Narrator.PlaySound("PointScored", 0.1f);
+        if (!PlayerPrefsManager.videoRecordingMode)
+            Narrator.PlaySound("PointScored", 0.1f);
         // todo move somewhere else
         if (GameObject.Find("_Dev") != null)
         {
