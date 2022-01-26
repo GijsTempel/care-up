@@ -140,17 +140,20 @@ public class VideoPlayerManager : MonoBehaviour
         {
             OpenSIdePanel();
         }
-        sidePanelIsOpen = !sidePanelIsOpen;
+        
     }
 
     public void OpenSIdePanel()
     {
         VideoPanelsAnimator.SetTrigger("OpenVideoSidePanel");
+        sidePanelIsOpen = true;
     }
 
     public void CloseSidePanel()
     {
         VideoPanelsAnimator.SetTrigger("CloseVideoSidePanel");
+        sidePanelIsOpen = false;
+
     }
     public void LoadMainMenu()
     {
@@ -171,7 +174,7 @@ public class VideoPlayerManager : MonoBehaviour
 
                 //infoEffectPanel.transform.Find("VideoActionUnit/Title").GetComponent<Text>().text = videoActionUnits[i].GetTitle();
                 //infoEffectPanel.transform.Find("VideoActionUnit/Desc").GetComponent<Text>().text = videoActionUnits[i].GetDescription();
-                if (videoSegment != 0)
+                if (videoSegment != 0 && !sidePanelIsOpen)
                 {
                     titlePanel.GetComponent<Animation>().Stop();
                     titlePanel.GetComponent<Animation>().Play();
@@ -181,9 +184,7 @@ public class VideoPlayerManager : MonoBehaviour
         }
         float scrollPos = 1f - ((float)videoSegment / (float)(videoActionUnits.Count - 1));
         videoActionPanelScrollRect.verticalNormalizedPosition = scrollPos;
-
     }
-    
     public void NextPrevSegment(int segmentDirection = 1)
     {
         JumpToSegment(videoSegment + segmentDirection);
