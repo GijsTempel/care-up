@@ -235,10 +235,11 @@ public class UMP_Options : MonoBehaviour
             preferences.GetComponent<PlayerPrefsManager>().postProcessingEnabled = postProcessing.isOn;
             PlayerPrefs.SetInt("PostProcessing", (postProcessing.isOn ? 1 : 0));
             Debug.Log("PostProcessing is set to " + postProcessing.isOn);
-            int QualityLevel = 6;
+            int QualityLevel = 0;
             if (postProcessing.isOn)
-                QualityLevel = 7;
+                QualityLevel = 5;
             QualitySettings.SetQualityLevel(QualityLevel, true);
+            Debug.Log("Current Quality level: "+CurrentQuality.ToString());
         }
         //StatusMessage.Message = "Aanpassingen zijn opgeslagen";
     } 
