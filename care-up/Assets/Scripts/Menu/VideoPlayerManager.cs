@@ -6,6 +6,8 @@ using CareUp.Actions;
 
 public class VideoPlayerManager : MonoBehaviour
 {
+    public GameObject loadingScreenPanel;
+    public Text extraText;
     public Text TextFrameText;
     public GameObject titlePanel;
     public Animator VideoPanelsAnimator;
@@ -25,7 +27,6 @@ public class VideoPlayerManager : MonoBehaviour
     VideoActionManager videoActionManager;
     bool initialized = false;
     bool isFirstPlay = true;
-    public GameObject infoEffectPanel;
     PlayerPrefsManager manager;
     // Start is called before the first frame update
     void Start()
@@ -40,6 +41,7 @@ public class VideoPlayerManager : MonoBehaviour
         }
         videoPlayer.Prepare();
         videoPlayer.Play();
+        ShowLoadingScreen();
     }
 
     // Update is called once per frame
@@ -51,15 +53,29 @@ public class VideoPlayerManager : MonoBehaviour
             {
                 isFirstPlay = false;
                 videoPlayer.Pause();
+                ShowLoadingScreen(false);
             }
         }
         int currentFrame = 0;
         if (videoPlayer.length > 0)
         {
             videoScrollbar.fillAmount = (float)(videoPlayer.clockTime / videoPlayer.length);
-            currentFrame = (int)(videoPlayer.clockTime / videoPlayer.length * videoPlayer.frameCount);
+            currentFrame = (int)(videoPlayer.clockTime * 24);
         }
-        
+        string ss = "";
+        ss += "videoPlayer.clockTime = " + videoPlayer.clockTime.ToString() + "\n";
+        ss += "videoPlayer.length = " + videoPlayer.length.ToString() + "\n";
+        ss += "videoPlayer.frameCount = " + videoPlayer.frameCount.ToString() + "\n";
+        ss += "currentFrame = " + currentFrame.ToString() + "\n";
+        if (videoActionManager != null)
+        {
+            foreach (VideoAction videoAction in videoActionManager.videoActions)
+            {
+                ss += videoAction.startFrame.ToString() + " | ";
+            }
+
+        }
+        extraText.text = ss;
         if (initialized)
         {
             string segmentValueStr = "  0";
@@ -77,6 +93,10 @@ public class VideoPlayerManager : MonoBehaviour
             TextFrameText.text = currentFrame.ToString() + segmentValueStr;
         }
 
+    }
+    void ShowLoadingScreen(bool toShow = true)
+    {
+        loadingScreenPanel.SetActive(toShow);
     }
 
     int GetCurrentSegment(int currentFrame)
