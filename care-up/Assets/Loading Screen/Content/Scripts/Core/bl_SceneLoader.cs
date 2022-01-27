@@ -123,7 +123,7 @@ public class bl_SceneLoader : MonoBehaviour
 
     void Update()
     {
-        LoadingRotator();
+        LoadingRotator(Time.deltaTime);
 
         //if (!isOperationStarted)
         //    return;
@@ -185,12 +185,12 @@ public class bl_SceneLoader : MonoBehaviour
         }
     }
 
-    void LoadingRotator()
+    void LoadingRotator(float deltaTime)
     {
         if (LoadingCircle == null)
             return;
 
-        LoadingCircle.Rotate(-Vector3.forward * 0.01f * LoadingCircleSpeed);
+        LoadingCircle.Rotate(-Vector3.forward * deltaTime * LoadingCircleSpeed);
     }
 
     void OnFinish()
