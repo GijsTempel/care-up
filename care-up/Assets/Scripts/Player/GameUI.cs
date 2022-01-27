@@ -878,8 +878,8 @@ public class GameUI : MonoBehaviour
 
         //debugSS = PlayerAnimationManager.animTimeout.ToString();
         GUI.Label(new Rect(0, 30, 1000, 100), debugSS, style);
-#endif
-  */  }
+#endif*/
+   }
     
     public void DropFromHand(bool leftHand = true)
     {
