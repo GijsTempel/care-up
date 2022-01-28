@@ -6,6 +6,7 @@ public class OptionsAutoPlayToggle : MonoBehaviour
 {
     public Toggle toggle;
     public Toggle recordingToggle;
+    public Toggle recordingWithTextToggle;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +28,10 @@ public class OptionsAutoPlayToggle : MonoBehaviour
 
     public void RecordingModeChanged()
     {
-        PlayerPrefsManager.videoRecordingMode = recordingToggle;
+        PlayerPrefsManager.videoRecordingMode = recordingToggle.isOn;
+    }
+    public void RecordingWithTextModeChanged()
+    {
+        PlayerPrefsManager.videoRecordingWithTextMode = recordingWithTextToggle.isOn;
     }
 }

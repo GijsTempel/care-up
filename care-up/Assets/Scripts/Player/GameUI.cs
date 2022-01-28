@@ -505,7 +505,8 @@ public class GameUI : MonoBehaviour
                 GameObject.Find("ActionsPanel").GetComponent<CanvasGroup>().alpha = 0f;
             if (GameObject.Find("AssetDebugPanel") != null)
                 GameObject.Find("AssetDebugPanel").GetComponent<CanvasGroup>().alpha = 0f;
-            DetailedHintPanel.GetComponent<CanvasGroup>().alpha = 0f;
+            if (!PlayerPrefsManager.videoRecordingWithTextMode)
+                DetailedHintPanel.GetComponent<CanvasGroup>().alpha = 0f;
         }
 
         gameLogic = GameObject.Find("GameLogic");
@@ -1159,8 +1160,8 @@ public class GameUI : MonoBehaviour
 
     void Update()
     {
-        
-        //DetailedHintPanel.SetActive(true);      //to remove
+        if (!PlayerPrefsManager.videoRecordingWithTextMode)
+            DetailedHintPanel.SetActive(true);      //to remove
 #if (UNITY_EDITOR || DEVELOPMENT_BUILD)
         if (PlayerPrefsManager.simulatePlayerActions)
         {
