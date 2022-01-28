@@ -120,7 +120,7 @@ public class AnimatedFingerHint : MonoBehaviour
         if (movementButtonToMove.transform.Find("fingerPosition"))
         {
             if (gameUI.AllowAutoPlay(false))
-                Invoke("AutoClickButton", 1.5f);
+                Invoke("AutoClickButton", 5f);
             ButtonToAutoClick = movementButtonToMove.GetComponent<Button>();
             point = movementButtonToMove.transform.Find("fingerPosition").GetComponent<RectTransform>();
         }
@@ -138,7 +138,7 @@ public class AnimatedFingerHint : MonoBehaviour
                 if (b.transform.Find("fingerPosition"))
                 {
                     if (gameUI.AllowAutoPlay(false))
-                        Invoke("AutoClickButton", 1.5f);
+                        Invoke("AutoClickButton", 5f);
                     ButtonToAutoClick = b.GetComponent<Button>();
                     point =  b.transform.Find("fingerPosition").GetComponent<RectTransform>();
                 }

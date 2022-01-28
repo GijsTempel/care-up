@@ -21,7 +21,7 @@ public class ObjectViewButtons : MonoBehaviour {
     {
         if (GameObject.FindObjectOfType<GameUI>().AllowAutoPlay(false))
         {
-            Invoke("AutoClose", 1f);
+            Invoke("AutoClose", 4f);
 
         }
     }

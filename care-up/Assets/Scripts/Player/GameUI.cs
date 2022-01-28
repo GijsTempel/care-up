@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class GameUI : MonoBehaviour
 {
+    string autoPlayMoveWTGName = "";
     public AnimatedFingerHint animatedFinger;
     GameObject Player;
     public Animator Blink;
@@ -720,7 +721,7 @@ public class GameUI : MonoBehaviour
                             {
                                 AutoActionObject = po.gameObject.GetComponentInChildren<PersonObjectPart>().gameObject;
                                 autoObjectSelected = true;
-                                Invoke("AutoPlay", 1f);
+                                Invoke("AutoPlay", 4f);
                             }
                         }
                     }
@@ -753,7 +754,7 @@ public class GameUI : MonoBehaviour
                         {
                             AutoActionObject = GameObject.Find(objectToUse);
                             autoObjectSelected = true;
-                            Invoke("AutoPlay", 1f);
+                            Invoke("AutoPlay", 4f);
                         }
                     }
                     HighlightObject.type hl_type = HighlightObject.type.NoChange;
@@ -799,7 +800,7 @@ public class GameUI : MonoBehaviour
                                 {
                                     AutoActionObject = p.gameObject;
                                     autoObjectSelected = true;
-                                    Invoke("AutoPlay", 1f);
+                                    Invoke("AutoPlay", 4f);
                                 }
                                 HighlightObject h = AddHighlight(p.transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f, 0.5f));
                                 if (h != null)
@@ -816,7 +817,7 @@ public class GameUI : MonoBehaviour
                         {
                             AutoActionObject = usableHL;
                             autoObjectSelected = true;
-                            Invoke("AutoPlay", 1f);
+                            Invoke("AutoPlay", 4f);
                         }
                         HighlightObject h = AddHighlight(usableHL.transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f, 0.5f));
                         if (h != null)
@@ -830,7 +831,10 @@ public class GameUI : MonoBehaviour
         }
         if (PlayerPrefsManager.simulatePlayerActions && ps.away)
             if (AutoMoveTo != "")
-                ps.WalkToGroup_(GameObject.Find(AutoMoveTo).GetComponent<WalkToGroup>());
+            {
+                autoPlayMoveWTGName = AutoMoveTo;
+                Invoke("AutoPlayMove", 5f);
+            }
 
         //clear highlights
         for (int i = 0; i < activeHighlighted.Count; i++)
@@ -847,16 +851,27 @@ public class GameUI : MonoBehaviour
         }
     }
 
+    void AutoPlayMove()
+    {
+        ps.WalkToGroup_(GameObject.Find(autoPlayMoveWTGName).GetComponent<WalkToGroup>());
+    }
+
     public void ShowDonePanel(bool value)
     {
         if (PlayerPrefsManager.simulatePlayerActions)
         {
             if (GameObject.FindObjectOfType<AutoPlayer>() != null)
                 if (GameObject.FindObjectOfType<AutoPlayer>().toStartAutoplaySession)
-                    CloseGame();
+                    Invoke("AutoplayCloseGame", 5f);
         }
         donePanel.SetActive(value);
         LevelEnded = value;
+    }
+
+
+    void AutoplayCloseGame()
+    {
+        CloseGame();
     }
 
     public void EndScene()
@@ -1144,6 +1159,8 @@ public class GameUI : MonoBehaviour
 
     void Update()
     {
+        
+        //DetailedHintPanel.SetActive(true);      //to remove
 #if (UNITY_EDITOR || DEVELOPMENT_BUILD)
         if (PlayerPrefsManager.simulatePlayerActions)
         {

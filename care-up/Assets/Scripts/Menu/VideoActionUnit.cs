@@ -10,6 +10,7 @@ public class VideoActionUnit : MonoBehaviour
     public GameObject highlight;
     public Text description;
     public Text title;
+    public Text title2;
     VideoPlayerManager videoPlayerManager;
     void Start()
     {
@@ -19,6 +20,7 @@ public class VideoActionUnit : MonoBehaviour
     public void SetTitle(string _title)
     {
         title.text = _title;
+        title2.text = _title;
     }
 
     public void SetVideoPlayerManager(VideoPlayerManager _videoPlayerManager)
@@ -34,8 +36,15 @@ public class VideoActionUnit : MonoBehaviour
     public void SetValues(int _index, string _title, string _description)
     {
         title.text = _title;
+        title2.text = _title;
         description.text = _description;
         index = _index;
+        if (_description == "")
+        {
+            title.gameObject.SetActive(false);
+            description.gameObject.SetActive(false);
+            title2.gameObject.SetActive(true);
+        }
     }
 
 

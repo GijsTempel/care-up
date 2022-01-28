@@ -112,7 +112,7 @@ public class SelectDialogue : MonoBehaviour
                     if (options[i].attribute != "" && options[i].attribute != "CM_Leave")
                     {
                         correctAnswerID = i;
-                        Invoke("AutoPlay", 1f);
+                        Invoke("AutoPlay", 3f);
                     }
             }
             else

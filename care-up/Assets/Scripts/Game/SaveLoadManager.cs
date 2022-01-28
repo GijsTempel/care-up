@@ -20,7 +20,15 @@ public class SaveLoadManager : MonoBehaviour {
     {
         Directory.CreateDirectory(Application.dataPath + savePath);
         SceneManager.sceneLoaded += OnLoaded;
-    } 
+    }
+
+
+    private void Update()
+    {
+        //disable debug consol to record video
+        if (PlayerPrefsManager.videoRecordingMode)
+            Debug.developerConsoleVisible = false;
+    }
 
     private void OnLoaded(Scene s, LoadSceneMode m)
     {

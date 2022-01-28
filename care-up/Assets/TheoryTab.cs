@@ -12,6 +12,8 @@ public class TheoryTab : MonoBehaviour
     public void Show(bool value)
     {
         gameObject.SetActive(value);
+
+        //autoplay action
         if (value && PlayerPrefsManager.simulatePlayerActions)
             Invoke("AutoContinue", 5f);
     }
