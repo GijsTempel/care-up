@@ -55,6 +55,8 @@ public class ActionManager : MonoBehaviour
     public RandomQuiz randomQuiz = new RandomQuiz();
 
     private List<Action> incompletedActions;
+    private List<Action> completedActions;
+
     private List<Action> unlockedIncompletedActions;
     private List<string> unlockedBlocks = new List<string>();
 
@@ -130,6 +132,18 @@ public class ActionManager : MonoBehaviour
         }
     }
 
+    public List<Action> CompletedActions
+    {
+        get
+        {
+            completedActions = actionList.Where(action => action.matched == true).ToList();
+            return completedActions;
+        }
+        set
+        {
+            completedActions = value;
+        }
+    }
     /// <summary>
     /// A list of not completed actions of current action index only, that are not blocked by other steps
     /// </summary>

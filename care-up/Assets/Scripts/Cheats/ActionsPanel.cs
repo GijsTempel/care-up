@@ -7,7 +7,10 @@ using CareUp.Actions;
 public class ActionsPanel : MonoBehaviour {
     bool slideState = false;
     int lastStepId = -1;
-
+    int lastComplitedActionsNum = -1;
+    float startTime;
+    List<ActionStepButton> ActionStepButtons = new List<ActionStepButton>();
+    List<ActionStepButton> complitedActionButtons = new List<ActionStepButton>();
     public enum Mode
     {
         ShortDescr,
@@ -26,6 +29,7 @@ public class ActionsPanel : MonoBehaviour {
     ActionManager am;
 	// Use this for initialization
 	void Start () {
+        startTime = Time.time;
         if (GameObject.FindObjectOfType<ActionManager>() != null)
         {
             am = GameObject.FindObjectOfType<ActionManager>();
@@ -48,11 +52,23 @@ public class ActionsPanel : MonoBehaviour {
         {
             if (lastStepId != am.CurrentActionIndex)
             {
-                Transform content = transform.Find("ActionsList/Viewport/Content").transform;
-                foreach (ActionStepButton ab in content.GetComponentsInChildren<ActionStepButton>())
+                int numberOfCompletedActions = am.CompletedActions.Count;
+
+                foreach (ActionStepButton ab in ActionStepButtons)
                 {
+                    Action buttonAction = ab.getAction();
+                    if (numberOfCompletedActions > 0)
+                    {
+                        foreach(Action ca in am.CompletedActions)
+                        {
+                            if (ca.compareActions(buttonAction) && ab.getComplitTime() < 0f)
+                            {
+                                ab.setCheckmark();
+                                ab.setCompliteTime(Time.time - startTime);
+                            }
+                        }
+                    }
                     ab.updateLook(am.CurrentActionIndex);
-                    //print(am.CurrentActionIndex);
                     lastStepId = am.CurrentActionIndex;
                 }
             }
@@ -73,7 +89,7 @@ public class ActionsPanel : MonoBehaviour {
             {
                 GameObject ActionStep = GameObject.Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/UI/ActionStepButton"), content);
                 ActionStep.GetComponent<ActionStepButton>().setAction(a);
-              
+                ActionStepButtons.Add(ActionStep.GetComponent<ActionStepButton>());
             }
         }
     }

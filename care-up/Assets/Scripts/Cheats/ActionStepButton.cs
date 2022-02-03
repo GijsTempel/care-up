@@ -9,10 +9,24 @@ public class ActionStepButton : MonoBehaviour
     public Text main_text;
     public GameObject icons;
     ActionsPanel actionsPanel;
-
+    public InputField frameInput;
+    public Text actionFrameText;
+    public GameObject checkMarkImage;
+    float compliteTime = -1f;
     void Start()
     {
         actionsPanel = GameObject.FindObjectOfType<ActionsPanel>();
+    }
+
+
+    public void setCompliteTime(float _time)
+    {
+        compliteTime = _time;
+        actionFrameText.text = ((int)(_time * 24)).ToString();
+    }
+    public float getComplitTime()
+    {
+        return compliteTime;
     }
 
     public void setAction(Action a)
@@ -20,6 +34,16 @@ public class ActionStepButton : MonoBehaviour
         action = a;
         if (main_text != null)
             main_text.text = action.SubIndex.ToString() + " " + action.shortDescr;
+    }
+
+    public Action getAction()
+    {
+        return action;
+    }
+
+    public void setCheckmark(bool toSet = true)
+    {
+        checkMarkImage.SetActive(toSet);
     }
 
     public void updateLook(int currentIndex)

@@ -50,7 +50,14 @@ namespace CareUp.Actions
         protected ActionManager.ActionType type;
 
         private int subindex = 0;
-
+        public bool compareActions(Action actionB)
+        {
+            bool result = false;
+            if (type == actionB.type && shortDescr == actionB.shortDescr && messageTitle == actionB.messageTitle
+                && messageContent == actionB.messageContent && storedIndex == actionB.storedIndex)
+                result = true;
+            return result;
+        }
         public ActionManager.ActionType Type
         {
             get { return type; }
