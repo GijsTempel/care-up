@@ -1026,6 +1026,7 @@ namespace CareUp.ActionEditor
                     Texture groupTexture = Resources.Load("CareUp_ActionEditor_Icons/group") as Texture;
                     GUIContent groupIco = new GUIContent(groupTexture);
                     Texture hiddenTexture = Resources.Load("CareUp_ActionEditor_Icons/hidden") as Texture;
+                    int sequentialNumber = 0;
                     foreach (Action a in currentActions)
                     {
                         if (a.selected)
@@ -1047,8 +1048,8 @@ namespace CareUp.ActionEditor
 
                         Texture texture = Resources.Load("CareUp_ActionEditor_Icons/" + a.type.ToString()) as Texture;
                         GUIContent iconGUIContent = new GUIContent(texture);
-
                         GUIStyle labelStyle = new GUIStyle();
+                        EditorGUILayout.LabelField(sequentialNumber.ToString(), GUILayout.Width(25));
                         if (a.hidden != null)
                         {
                             labelStyle.normal.textColor = Color.gray;
@@ -1276,6 +1277,7 @@ namespace CareUp.ActionEditor
                             EditorGUILayout.EndHorizontal();
                         }
                         EditorGUILayout.Space();
+                        sequentialNumber++;
                     }
                     if (toInsertAction)
                     {
