@@ -22,6 +22,7 @@ namespace CareUp.Actions
         /// </summary>
         public abstract class Action
     {
+        public int sequentialNumber = -1;
         public bool matched = false;
         public string shortDescr;
         public int pointValue;

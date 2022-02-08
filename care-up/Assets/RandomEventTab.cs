@@ -1,0 +1,294 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using System.Xml;
+
+public class RandomEventTab : MonoBehaviour
+{
+
+    public class RandomEventData
+    {
+        public string idName = "";
+        public List<string> groups = new List<string>();
+        public string infoTitle = "";
+        public string infoText = "";
+        public QuizTab.Question quastion;
+    }
+
+    List<RandomEventData> randomEventsData = new List<RandomEventData>();
+    QuizTab.Question currentQuastion;
+
+    public GameObject infoPanel;
+    public Text infoPanelTitle;
+    public Text infoPanelText;
+
+    public GameObject quastionPanel;
+    Text quastionTitle;
+    Text quastionDesc;
+
+    public GameObject wrongAnswerPanel;
+    Text wrongAnswerPanelTitle;
+    Text wrongAnswerPanelText;
+
+    List<GameObject> panels = new List<GameObject>();
+
+    int currentRandomEventIndex = -1;
+    int currentAnswer = -1;
+    public GameObject answerPanel;
+    List<Button> answerButtons = new List<Button>();
+    List<int> shuffledIndexes;
+    Animation redPop;
+    Animation greenPop;
+
+    GameUI gameUI;
+    ActionManager actionManager;
+    // Start is called before the first frame update
+    void Start()
+    {
+        PlayerScript.randomEventTab = this;
+        actionManager = GameObject.FindObjectOfType<ActionManager>();
+        gameObject.SetActive(false);
+        gameUI = GameObject.FindObjectOfType<GameUI>();
+        gameUI.SetRandomEventTab(this);
+        for(int i = 0; i < answerPanel.transform.GetChildCount(); i++)
+        {
+            answerButtons.Add(answerPanel.transform.GetChild(i).GetComponent<Button>());
+        }
+        quastionTitle = quastionPanel.transform.Find("quizElements/Title/title").GetComponent<Text>();
+        quastionDesc = quastionPanel.transform.Find("quizElements/answerPanel/descriptionText").GetComponent<Text>();
+        wrongAnswerPanelTitle = wrongAnswerPanel.transform.Find("infoElements/infoPanel/Panel/infoTitleText").GetComponent<Text>();
+        wrongAnswerPanelText = wrongAnswerPanel.transform.Find("infoElements/infoPanel/Panel/infoTextPanel/ScrollViewDescription/Viewport/Content/Description").GetComponent<Text>();
+        redPop = transform.Find("PopAnimation/RedPop").GetComponent<Animation>();
+        greenPop = transform.Find("PopAnimation/GreenPop").GetComponent<Animation>();
+
+        panels.Add(infoPanel);
+        panels.Add(quastionPanel);
+        panels.Add(wrongAnswerPanel);
+    }
+
+
+    public void AnswerButtonClicked(int value)
+    {
+        currentAnswer = value;
+        if (IsAnswerCorrect(value))
+        {
+            CorrectAnswer(value);
+        }
+        else
+        {
+            WrongAnswer(value);
+        }
+    }
+
+    bool IsAnswerCorrect(int value)
+    {
+        bool result = false;
+        if (shuffledIndexes[value] == randomEventsData[currentRandomEventIndex].quastion.answerID)
+        {
+            result = true;
+        }
+
+        return result;
+    }
+
+    public void FinishEvent()
+    {
+        if (IsAnswerCorrect(currentAnswer))
+        {
+            actionManager.RemoveRandomEventIndex(0);
+            randomEventsData.Remove(randomEventsData[currentRandomEventIndex]);
+            currentRandomEventIndex = -1;
+            if (actionManager.currentRandomEventIndices.Count > 0)
+            {
+                NextRandomEvent();
+            }
+            else
+            {
+                gameObject.SetActive(false);
+                PlayerScript.actionsLocked = false;
+            }
+        }
+        else
+        {
+            SwitchScreen(1);
+        }
+    }
+
+    List<int> BuildShuffledList(int numberOfElements)
+    {
+        List<int> _list = new List<int>();
+        for (int i = 0; i < numberOfElements; i++)
+        {
+            _list.Add(i);
+        }
+
+        for (int i = 0; i < _list.Count; i++)
+        {
+            int temp = _list[i];
+            int randomIndex = Random.Range(i, _list.Count);
+            _list[i] = _list[randomIndex];
+            _list[randomIndex] = temp;
+        }
+
+        return _list;
+    }
+
+    int SelectRandomEvent()
+    {
+        int result = -1;
+        List<string> currentEventGroups = ActionManager.randomEventBookmaks[actionManager.currentRandomEventIndices[0]].GetEventGroups();
+        List<int> acceptableEventsIndices = new List<int>();
+        for (int i = 0; i < currentEventGroups.Count; i++)
+        {
+            for(int j = 0; j < randomEventsData.Count; j++)
+            {
+                if((randomEventsData[j].idName == currentEventGroups[i]) || (randomEventsData[j].groups.Contains(currentEventGroups[i])))
+                {
+                    acceptableEventsIndices.Add(j);
+                    continue;
+                }
+            }
+        }
+        if (acceptableEventsIndices.Count > 0)
+        {
+            result = acceptableEventsIndices[Random.Range(0, acceptableEventsIndices.Count)];
+        }
+        return result;
+    }
+
+    public void NextRandomEvent()
+    {
+        if (randomEventsData.Count == 0)
+        {
+            actionManager.RemoveRandomEventIndex(-1);
+            return;
+        }
+        if (actionManager.currentRandomEventIndices.Count == 0)
+            return;
+
+        currentRandomEventIndex = SelectRandomEvent();
+        if (currentRandomEventIndex == -1)
+        {
+            actionManager.RemoveRandomEventIndex(-1);
+            return;
+        }
+
+        PlayerScript.actionsLocked = true;
+        gameObject.SetActive(true);
+        shuffledIndexes = BuildShuffledList(randomEventsData[currentRandomEventIndex].quastion.answers.Count);
+
+        infoPanelTitle.text = randomEventsData[currentRandomEventIndex].infoTitle;
+        infoPanelText.text = randomEventsData[currentRandomEventIndex].infoText;
+        BuildQuastionsPanel();
+        SwitchScreen(0);
+    }
+
+    public void CorrectAnswer(int value)
+    {
+        wrongAnswerPanelTitle.text = "Heel goed!";
+        wrongAnswerPanelText.text = randomEventsData[currentRandomEventIndex].quastion.answers[shuffledIndexes[value]].descr;
+        ActionManager.CorrectAction();
+        SwitchScreen(2);
+        greenPop.Play();
+    }
+
+    public void WrongAnswer(int value)
+    {
+        wrongAnswerPanelTitle.text = "Helaas, dit antwoord is niet goed";
+        wrongAnswerPanelText.text = randomEventsData[currentRandomEventIndex].quastion.answers[shuffledIndexes[value]].descr;
+        ActionManager.WrongAction(false);
+        SwitchScreen(2);
+        redPop.Play();
+
+    }
+
+    void BuildQuastionsPanel()
+    {
+        quastionDesc.text = "";
+        quastionTitle.text = randomEventsData[currentRandomEventIndex].quastion.text;
+        QuizTab.Question currentQuestion = randomEventsData[currentRandomEventIndex].quastion;
+        for (int i = 0; i < answerButtons.Count; i++)
+        {
+            if (currentQuestion.answers.Count > i)
+            {
+                answerButtons[i].gameObject.SetActive(true);
+                string buttonText = currentQuestion.answers[shuffledIndexes[i]].text;
+                answerButtons[i].gameObject.GetComponentInChildren<Text>().text = buttonText;
+            }
+            else
+            {
+                answerButtons[i].gameObject.SetActive(false);
+            }
+        }
+
+    }
+    public void SwitchScreen(int value)
+    {
+        for(int i = 0; i < panels.Count; i++)
+        {
+            panels[i].SetActive(i == value);
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+    public void Init(List<string> eventFileNames)
+    {
+        List<string> _names = new List<string>();
+        _names.Add("RandomEvent");
+        for (int i = 0; i < eventFileNames.Count; i++)
+        {
+            if (eventFileNames[i] != "")
+                _names.Add(eventFileNames[i]);
+        }
+        foreach (string n in _names)
+        {
+            TextAsset textAsset = (TextAsset)Resources.Load("Xml/RandomEvent/" + n);
+            XmlDocument xmlFile = new XmlDocument();
+            xmlFile.LoadXml(textAsset.text);
+            XmlNodeList _events = xmlFile.FirstChild.NextSibling.ChildNodes;
+            foreach (XmlNode s in _events)
+            {
+                RandomEventData eventData = new RandomEventData();
+
+                eventData.idName = s.Attributes["id_name"].Value;
+                eventData.groups.AddRange(s.Attributes["group"].Value.Split('|'));
+
+                XmlNode infoNode = s.SelectSingleNode("info");
+                eventData.infoTitle = infoNode.Attributes["title"].Value;
+                eventData.infoText = infoNode.Attributes["text"].Value;
+
+                XmlNode q = s.SelectSingleNode("question");
+                QuizTab.Question question = new QuizTab.Question();
+                question.answers = new List<QuizTab.Answer>();
+                question.text = q.Attributes["text"].Value;
+                int.TryParse(q.Attributes["answer"].Value, out question.answerID);
+
+                if (q.Attributes["points"] != null)
+                    int.TryParse(q.Attributes["points"].Value, out question.points);
+                else
+                    question.points = 1;
+                --question.answerID;
+
+                XmlNodeList answers = q.ChildNodes;
+                int j = 0;
+                foreach (XmlNode a in answers)
+                {
+                    QuizTab.Answer t = new QuizTab.Answer();
+                    t.text = a.Attributes["text"].Value;
+                    t.descr = (a.Attributes["descr"] != null) ? a.Attributes["descr"].Value : "";
+                    t.isCorrect = question.answerID == j;
+                    question.answers.Add(t);
+                    j++;
+                }
+                eventData.quastion = question;
+                randomEventsData.Add(eventData);
+                Debug.Log("aa");
+            }
+        }
+    }
+}

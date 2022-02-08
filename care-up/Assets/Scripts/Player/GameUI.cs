@@ -39,6 +39,8 @@ public class GameUI : MonoBehaviour
     ObjectsIDsController objectsIDsController;
     bool practiceMode = true;
     public QuizTab quiz_tab;
+    public RandomEventTab randomEventTab;
+
     public bool DropLeftBlink = false;
     public bool DropRightBlink = false;
     //bool generalButtonActive = false;
@@ -114,19 +116,25 @@ public class GameUI : MonoBehaviour
     public static bool encounterStarted = false;
     InputField AutoplayStopInput;
     public GameObject PointToObject = null;
-
     public void ChangeAutoStopValue(int value)
     {
         stopAutoPlayOnStep += value;
         AutoplayStopInput.text = stopAutoPlayOnStep.ToString();
     }
-
+    public void SetRandomEventTab(RandomEventTab _randomEventTab)
+    {
+        randomEventTab = _randomEventTab;
+    }
     public void AutoStopValueChanged()
     {
         stopAutoPlayOnStep = int.Parse(AutoplayStopInput.text);
     }
 
-
+    public void TriggerRandomEvent()
+    {
+        PlayerScript.TriggerRandomEvent(0.1f);
+        //randomEventTab.NextRandomEvent();
+    }
 
     public void UpdateMovementButtons(WalkToGroup currentWTG)
     {
@@ -1071,7 +1079,7 @@ public class GameUI : MonoBehaviour
             targetTime = time;
         }
 
-        if (actionManager.ShowTheory || RandomQuiz.showQuestion || (QuizTab.encounterDelay >= 0))
+        if (actionManager.currentRandomEventIndices.Count > 0 || actionManager.ShowTheory || RandomQuiz.showQuestion || (QuizTab.encounterDelay >= 0))
         {
             startTimer = true;
         }
@@ -1099,6 +1107,11 @@ public class GameUI : MonoBehaviour
             else if (RandomQuiz.showQuestion)
             {
                 ShowRandomQuizTab();
+                SetTargetTime(0.4f);
+            }
+            else if (actionManager.currentRandomEventIndices.Count > 0 && !PlayerScript.actionsLocked)
+            {
+                randomEventTab.NextRandomEvent();
                 SetTargetTime(0.4f);
             }
         }

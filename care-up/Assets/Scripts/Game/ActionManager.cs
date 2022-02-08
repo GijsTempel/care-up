@@ -13,6 +13,44 @@ using System.Collections;
 /// </summary>
 public class ActionManager : MonoBehaviour
 {
+    public class RandomEventBookmak
+    {
+        public int actionIndex;
+        public List<string> randomEventGroups;
+        public bool complited = false;
+
+        public RandomEventBookmak(int _actionIndex, List<string> _randomEventGroups)
+        {
+            actionIndex = _actionIndex;
+            randomEventGroups = _randomEventGroups;
+        }
+        
+        public int GetActionIndex()
+        {
+            return actionIndex;
+        }
+        public void SetActionIndex(int value)
+        {
+            actionIndex = value;
+        }
+        public List<string> GetEventGroups()
+        {
+            return randomEventGroups;
+        }
+
+        public bool IsComplited()
+        {
+            return complited;
+        }
+
+        public void Complite()
+        {
+            complited = true;
+        }
+    }
+
+    public static List<RandomEventBookmak> randomEventBookmaks = new List<RandomEventBookmak>();
+
     public static bool practiceMode = true;
     public static bool personClicked = false;
 
@@ -63,8 +101,30 @@ public class ActionManager : MonoBehaviour
     public string Message { get; set; } = null;
     public string MessageTitle { get; set; } = null;
     public bool ShowTheory { get; set; } = false;
+    public bool ShowRandomEvent { get; set; } = false;
+    public List<int> currentRandomEventIndices = new List<int>();
 
     public static int percentage;
+
+    public static void AddRandomEventData(int actionIndex, List<string> randomEventGroup)
+    {
+        randomEventBookmaks.Add(new RandomEventBookmak(actionIndex, randomEventGroup));
+    }
+
+    public static void FinalizeRandomEventData()
+    {
+        int numberOfActions = GameObject.FindObjectOfType<ActionManager>().actionList.Count;
+        for (int i = 0; i < randomEventBookmaks.Count; i++)
+        {
+            if (randomEventBookmaks[i].GetActionIndex() == -1)
+            {
+                int newActionIndex = Random.Range(0, numberOfActions - 2);
+                randomEventBookmaks[i].SetActionIndex(newActionIndex);
+            }
+        }
+    }
+
+
     public List<Action> ActionList
     {
         get { return actionList; }
@@ -1223,6 +1283,8 @@ public class ActionManager : MonoBehaviour
             actionList[actionList.Count - 1].placeRequirement = place;
             actionList[actionList.Count - 1].ignorePosition = ignorePosition;
             actionList[actionList.Count - 1].UITimeout = UITimeout;
+            actionList[actionList.Count - 1].sequentialNumber = actionList.Count - 1;
+
         }
 
         actionList.Last<Action>().sceneDoneTrigger = true;
@@ -1493,6 +1555,7 @@ public class ActionManager : MonoBehaviour
             {
                 if (action.Compare(info) || (action.Type == ActionType.General))
                 {
+                    Debug.Log(action.sequentialNumber);
                     matched = true;
                     action.matched = true;
                     if (action.UITimeout > 0f)
@@ -1522,6 +1585,13 @@ public class ActionManager : MonoBehaviour
                     {
                         PlayerScript.TriggerQuizQuestion(action.quizTriggerTime);
                     }
+
+                    //if (action.SubIndex == 1)
+                    //{
+                    //    ShowRandomEvent = true;
+                    //}
+                    BuildRandomEventList(action.sequentialNumber);
+                    //--------------------------------------------------------------
 
                     if (action.encounter >= 0.0f)
                     {
@@ -1661,6 +1731,33 @@ public class ActionManager : MonoBehaviour
         return matched;
     }
 
+    public void RemoveRandomEventIndex(int index)
+    {
+        if (index == -1)
+        {
+            for (int i = 0; i < currentRandomEventIndices.Count; i++)
+            {
+                randomEventBookmaks[i].Complite();
+            }
+            currentRandomEventIndices.Clear();
+        }
+        else
+        {
+            randomEventBookmaks[index].Complite();
+            currentRandomEventIndices.Remove(currentRandomEventIndices[index]);
+        }
+    }
+
+    void BuildRandomEventList(int actionSequentialNumber)
+    {
+        for(int i = 0; i < randomEventBookmaks.Count; i++)
+        {
+            if (randomEventBookmaks[i].GetActionIndex() == actionSequentialNumber && !randomEventBookmaks[i].IsComplited())
+            {
+                currentRandomEventIndices.Add(i);
+            }
+        }
+    }
     /// <summary>
     /// Check if every action from action list is done and scene is completed.
     /// If yes - go to EndScore scene.
@@ -1763,6 +1860,7 @@ public class ActionManager : MonoBehaviour
             PlayerAnimationManager.PlayAnimation("no");
         }
     }
+
 
     public static void CorrectAction()
     {

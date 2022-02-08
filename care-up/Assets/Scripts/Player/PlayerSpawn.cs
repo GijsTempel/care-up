@@ -7,6 +7,7 @@ public class PlayerSpawn : MonoBehaviour
 {
     public int sceneID = 0;
     public string quizName;
+
     public GameObject playerPrefab;
     public Vector3 robotPosition;
     public Vector3 robotRotation;
@@ -19,10 +20,21 @@ public class PlayerSpawn : MonoBehaviour
         public string prefabName;
     };
 
+    [System.Serializable]
+    public struct RandomEventSetup
+    {
+        public string eventGroups;
+        public string actionRange;
+    };
+
     public string prescriptionXml;
     public string patientRecordsXml;
 
     public List<InfoPair> infoList = new List<InfoPair>();
+
+    public List<string> randomEventFiles = new List<string>();
+
+    public List<RandomEventSetup> randomEventSetup = new List<RandomEventSetup>();
 
     void Awake()
     {
@@ -87,6 +99,7 @@ public class PlayerSpawn : MonoBehaviour
         {
             Debug.LogWarning("Quiz file name is blank.");
         }
+        GameObject.FindObjectOfType<RandomEventTab>().Init(randomEventFiles);
 
         iPad.transform.GetChild(1).Find("CloseBtn").GetComponent<Button>().onClick.AddListener(
             player.GetComponent<PlayerScript>().CloseRobotUI);
@@ -96,8 +109,72 @@ public class PlayerSpawn : MonoBehaviour
             .Find("Timer").Find("Time").GetComponent<Text>());     
 
         player.GetComponent<PlayerScript>().joystickObject = GameObject.Find("FingersJoystickPrefab");
+        for (int i = 0; i < randomEventSetup.Count; i++)
+        {
+            List<string> eventGroups = new List<string>();
+            List<int> actionsRange = new List<int>();
+            if (randomEventSetup[i].eventGroups == "")
+            {
+                eventGroups.Add("");
+            }
+            else
+            {
+                eventGroups.AddRange(randomEventSetup[i].eventGroups.Split('|'));
+            }
+
+            if (randomEventSetup[i].actionRange == "")
+            {
+                ActionManager.AddRandomEventData(-1, eventGroups);
+            }
+            else
+            {
+                List<string> rangeSections = new List<string>();
+                rangeSections.AddRange(randomEventSetup[i].actionRange.Split('|'));
+                foreach(string rangeSection in rangeSections)
+                {
+                    if (rangeSection.Contains(":"))
+                    {
+                        int a = 0;
+                        int b = 0;
+                        string[] rangeStringValues = rangeSection.Split(':');
+                        int.TryParse(rangeStringValues[0], out a);
+                        int.TryParse(rangeStringValues[1], out b);
+                        for (int j = a; j < b; j++)
+                            actionsRange.Add(j);
+                    }
+                    else
+                    {
+                        int _value = -1;
+                        int.TryParse(rangeSection, out _value);
+                        if (_value != -1)
+                        {
+                            actionsRange.Add(_value);
+                        }
+                    }
+                }
+            }
+            if (actionsRange.Count > 0)
+            {
+                ActionManager.AddRandomEventData(actionsRange[Random.Range(0, actionsRange.Count)], eventGroups);
+            }
+
+        }
+        ActionManager.FinalizeRandomEventData();
 
         Destroy(gameObject);
+    }
+
+
+    List<int> RangeFromString(string rangeData)
+    {
+        List<int> currentRange = new List<int>();
+        if (rangeData == "")
+        {
+            currentRange.Add(-1);
+        }
+
+
+        return currentRange;
     }
 
     public void IpadLoadXmlInfo(Transform ipad)

@@ -75,6 +75,9 @@ public class PlayerScript : MonoBehaviour
 
     [HideInInspector]
     public static QuizTab quiz;
+    public static RandomEventTab randomEvent;
+
+    public static RandomEventTab randomEventTab;
     private static PlayerScript instance; // fix for coroutines
 
     public bool robotUIopened = false;
@@ -188,6 +191,7 @@ public class PlayerScript : MonoBehaviour
         usingOnText.SetActive(false);
 
         quiz = gameUI.quiz_tab;
+        randomEvent = gameUI.randomEventTab;
 
         EventTrigger.Entry event1 = new EventTrigger.Entry();
         event1.eventID = EventTriggerType.PointerEnter;
@@ -251,6 +255,7 @@ public class PlayerScript : MonoBehaviour
         GameObject.Find("GameLogic").AddComponent<GestureControls>();
         if (momentaryJumpTo != WalkToGroup.GroupType.NotSet)
             Invoke("MomentaryJumpToGroup", 0.01f);
+
     }
     void MomentaryJumpToGroup()
     {
@@ -775,6 +780,28 @@ public class PlayerScript : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         quiz.NextQuizQuestion(false, encounter);
+    }
+
+
+    public static void TriggerRandomEvent(float delay = 0.0f)
+    {
+        if (GameObject.FindObjectOfType<TutorialManager>() != null)
+            return;
+
+        // lock actions so player does nothing to break until quiz triggers
+        // close itemDescription if active, cuz we locked actions, so it's not updating
+        GameObject itemDescription = GameObject.Find("ItemDescription");
+        if (itemDescription)
+        {
+            itemDescription.SetActive(false);
+        }
+        // trigger quiz with delay
+        instance.StartCoroutine(RandomEventCoroutine(delay));
+    }
+    private static IEnumerator RandomEventCoroutine(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        randomEvent.NextRandomEvent();
     }
 
     public void AutoClick(GameObject obj)
