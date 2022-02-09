@@ -256,7 +256,7 @@ public class RandomEventTab : MonoBehaviour
                 RandomEventData eventData = new RandomEventData();
 
                 eventData.idName = s.Attributes["id_name"].Value;
-                eventData.groups.AddRange(s.Attributes["group"].Value.Split('|'));
+                eventData.groups.AddRange(s.Attributes["group"].Value.Split(','));
 
                 XmlNode infoNode = s.SelectSingleNode("info");
                 eventData.infoTitle = infoNode.Attributes["title"].Value;
@@ -287,7 +287,6 @@ public class RandomEventTab : MonoBehaviour
                 }
                 eventData.quastion = question;
                 randomEventsData.Add(eventData);
-                Debug.Log("aa");
             }
         }
     }

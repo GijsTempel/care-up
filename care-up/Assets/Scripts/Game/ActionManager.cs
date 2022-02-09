@@ -51,6 +51,7 @@ public class ActionManager : MonoBehaviour
 
     public static List<RandomEventBookmak> randomEventBookmaks = new List<RandomEventBookmak>();
 
+    bool complitedSequenceStep = false;
     public static bool practiceMode = true;
     public static bool personClicked = false;
 
@@ -113,6 +114,7 @@ public class ActionManager : MonoBehaviour
 
     public static void FinalizeRandomEventData()
     {
+        string ss = "Random event actions: ";
         int numberOfActions = GameObject.FindObjectOfType<ActionManager>().actionList.Count;
         for (int i = 0; i < randomEventBookmaks.Count; i++)
         {
@@ -121,7 +123,9 @@ public class ActionManager : MonoBehaviour
                 int newActionIndex = Random.Range(0, numberOfActions - 2);
                 randomEventBookmaks[i].SetActionIndex(newActionIndex);
             }
+            ss += randomEventBookmaks[i].GetActionIndex().ToString() + ", ";
         }
+        Debug.Log(ss);
     }
 
 
@@ -1737,13 +1741,13 @@ public class ActionManager : MonoBehaviour
         {
             for (int i = 0; i < currentRandomEventIndices.Count; i++)
             {
-                randomEventBookmaks[i].Complite();
+                randomEventBookmaks[currentRandomEventIndices[i]].Complite();
             }
             currentRandomEventIndices.Clear();
         }
         else
         {
-            randomEventBookmaks[index].Complite();
+            randomEventBookmaks[currentRandomEventIndices[index]].Complite();
             currentRandomEventIndices.Remove(currentRandomEventIndices[index]);
         }
     }

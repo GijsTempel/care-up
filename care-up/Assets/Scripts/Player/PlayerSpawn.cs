@@ -119,7 +119,7 @@ public class PlayerSpawn : MonoBehaviour
             }
             else
             {
-                eventGroups.AddRange(randomEventSetup[i].eventGroups.Split('|'));
+                eventGroups.AddRange(randomEventSetup[i].eventGroups.Split(','));
             }
 
             if (randomEventSetup[i].actionRange == "")
@@ -129,7 +129,7 @@ public class PlayerSpawn : MonoBehaviour
             else
             {
                 List<string> rangeSections = new List<string>();
-                rangeSections.AddRange(randomEventSetup[i].actionRange.Split('|'));
+                rangeSections.AddRange(randomEventSetup[i].actionRange.Split(','));
                 foreach(string rangeSection in rangeSections)
                 {
                     if (rangeSection.Contains(":"))
@@ -139,7 +139,7 @@ public class PlayerSpawn : MonoBehaviour
                         string[] rangeStringValues = rangeSection.Split(':');
                         int.TryParse(rangeStringValues[0], out a);
                         int.TryParse(rangeStringValues[1], out b);
-                        for (int j = a; j < b; j++)
+                        for (int j = a; j <= b; j++)
                             actionsRange.Add(j);
                     }
                     else

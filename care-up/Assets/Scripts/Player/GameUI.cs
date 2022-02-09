@@ -1081,7 +1081,11 @@ public class GameUI : MonoBehaviour
 
         if (actionManager.currentRandomEventIndices.Count > 0 || actionManager.ShowTheory || RandomQuiz.showQuestion || (QuizTab.encounterDelay >= 0))
         {
-            startTimer = true;
+            if (actionManager.currentRandomEventIndices.Count > 0 && actionManager.CurrentActionType == ActionManager.ActionType.SequenceStep)
+                PlayerScript.TriggerRandomEvent();
+            else
+                startTimer = true;
+
         }
 
         if (startTimer)
