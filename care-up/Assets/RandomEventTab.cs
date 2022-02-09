@@ -19,7 +19,7 @@ public class RandomEventTab : MonoBehaviour
     List<RandomEventData> randomEventsData = new List<RandomEventData>();
     QuizTab.Question currentQuastion;
     private EndScoreManager endScoreManager;
-
+    private PlayerPrefsManager manager;
     public GameObject infoPanel;
     public Text infoPanelTitle;
     public Text infoPanelText;
@@ -48,7 +48,7 @@ public class RandomEventTab : MonoBehaviour
     void Start()
     {
         endScoreManager = GameObject.FindObjectOfType<EndScoreManager>();
-
+        manager = GameObject.FindObjectOfType<PlayerPrefsManager>(); 
         PlayerScript.randomEventTab = this;
         actionManager = GameObject.FindObjectOfType<ActionManager>();
         gameObject.SetActive(false);
@@ -87,35 +87,39 @@ public class RandomEventTab : MonoBehaviour
     bool IsAnswerCorrect(int value)
     {
         bool result = false;
+
         if (shuffledIndexes[value] == randomEventsData[currentRandomEventIndex].quastion.answerID)
         {
             result = true;
         }
-
         return result;
     }
 
     public void FinishEvent()
     {
-        if (IsAnswerCorrect(currentAnswer))
+        if (currentRandomEventIndex != -1)
         {
-            actionManager.RemoveRandomEventIndex(0);
-            randomEventsData.Remove(randomEventsData[currentRandomEventIndex]);
-            currentRandomEventIndex = -1;
-            if (actionManager.currentRandomEventIndices.Count > 0)
+            if (IsAnswerCorrect(currentAnswer))
             {
-                NextRandomEvent();
+                actionManager.RemoveRandomEventIndex(0);
+                randomEventsData.Remove(randomEventsData[currentRandomEventIndex]);
+                currentRandomEventIndex = -1;
+                if (actionManager.currentRandomEventIndices.Count > 0)
+                {
+                    NextRandomEvent();
+                }
+                else
+                {
+                    gameObject.SetActive(false);
+                    PlayerScript.actionsLocked = false;
+                }
             }
             else
             {
-                gameObject.SetActive(false);
-                PlayerScript.actionsLocked = false;
+                SwitchScreen(1);
             }
         }
-        else
-        {
-            SwitchScreen(1);
-        }
+
     }
 
     List<int> BuildShuffledList(int numberOfElements)
@@ -162,6 +166,7 @@ public class RandomEventTab : MonoBehaviour
 
     public void NextRandomEvent()
     {
+
         madeWrongAnswer = false;
         if (randomEventsData.Count == 0)
         {
