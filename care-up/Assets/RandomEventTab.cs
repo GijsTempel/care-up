@@ -18,6 +18,7 @@ public class RandomEventTab : MonoBehaviour
 
     List<RandomEventData> randomEventsData = new List<RandomEventData>();
     QuizTab.Question currentQuastion;
+    private EndScoreManager endScoreManager;
 
     public GameObject infoPanel;
     public Text infoPanelTitle;
@@ -40,12 +41,14 @@ public class RandomEventTab : MonoBehaviour
     List<int> shuffledIndexes;
     Animation redPop;
     Animation greenPop;
-
+    bool madeWrongAnswer = false;
     GameUI gameUI;
     ActionManager actionManager;
     // Start is called before the first frame update
     void Start()
     {
+        endScoreManager = GameObject.FindObjectOfType<EndScoreManager>();
+
         PlayerScript.randomEventTab = this;
         actionManager = GameObject.FindObjectOfType<ActionManager>();
         gameObject.SetActive(false);
@@ -159,6 +162,7 @@ public class RandomEventTab : MonoBehaviour
 
     public void NextRandomEvent()
     {
+        madeWrongAnswer = false;
         if (randomEventsData.Count == 0)
         {
             actionManager.RemoveRandomEventIndex(-1);
@@ -182,6 +186,14 @@ public class RandomEventTab : MonoBehaviour
         infoPanelText.text = randomEventsData[currentRandomEventIndex].infoText;
         BuildQuastionsPanel();
         SwitchScreen(0);
+        if (endScoreManager != null)
+        {
+            endScoreManager.quizQuestionsTexts.Add(randomEventsData[currentRandomEventIndex].infoTitle);
+        }
+        else
+        {
+            Debug.LogWarning("No EndScoreManager found. Start from 1st scene.");
+        }
     }
 
     public void CorrectAnswer(int value)
@@ -191,13 +203,40 @@ public class RandomEventTab : MonoBehaviour
         ActionManager.CorrectAction();
         SwitchScreen(2);
         greenPop.Play();
+        
+        if (!madeWrongAnswer)
+        {
+            GameObject.Find("GameLogic").GetComponent<ActionManager>().UpdatePointsDirectly(
+                randomEventsData[currentRandomEventIndex].quastion.points);
+        }
     }
 
     public void WrongAnswer(int value)
     {
+        if (!madeWrongAnswer)
+        {
+            GameObject.Find("GameLogic").GetComponent<ActionManager>().ActivatePenalty();
+            if (endScoreManager != null)
+            {
+                int currentquizWrongIndexes = -1;
+                for(int i = 0; i < endScoreManager.quizQuestionsTexts.Count; i++)
+                {
+                    if (endScoreManager.quizQuestionsTexts[i] == randomEventsData[currentRandomEventIndex].infoTitle)
+                    {
+                        currentquizWrongIndexes = i;
+                    }
+                }
+                endScoreManager.quizWrongIndexes.Add(currentquizWrongIndexes);
+            }
+            else
+            {
+                Debug.LogWarning("No EndScoreManager found. Start from 1st scene.");
+            }
+        }
         wrongAnswerPanelTitle.text = "Helaas, dit antwoord is niet goed";
         wrongAnswerPanelText.text = randomEventsData[currentRandomEventIndex].quastion.answers[shuffledIndexes[value]].descr;
         ActionManager.WrongAction(false);
+        madeWrongAnswer = true;
         SwitchScreen(2);
         redPop.Play();
 

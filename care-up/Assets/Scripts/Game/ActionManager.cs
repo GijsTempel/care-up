@@ -1559,7 +1559,6 @@ public class ActionManager : MonoBehaviour
             {
                 if (action.Compare(info) || (action.Type == ActionType.General))
                 {
-                    Debug.Log(action.sequentialNumber);
                     matched = true;
                     action.matched = true;
                     if (action.UITimeout > 0f)
