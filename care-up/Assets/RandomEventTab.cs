@@ -54,7 +54,7 @@ public class RandomEventTab : MonoBehaviour
         gameObject.SetActive(false);
         gameUI = GameObject.FindObjectOfType<GameUI>();
         gameUI.SetRandomEventTab(this);
-        for(int i = 0; i < answerPanel.transform.GetChildCount(); i++)
+        for(int i = 0; i < answerPanel.transform.childCount; i++)
         {
             answerButtons.Add(answerPanel.transform.GetChild(i).GetComponent<Button>());
         }
@@ -119,7 +119,6 @@ public class RandomEventTab : MonoBehaviour
                 SwitchScreen(1);
             }
         }
-
     }
 
     List<int> BuildShuffledList(int numberOfElements)
