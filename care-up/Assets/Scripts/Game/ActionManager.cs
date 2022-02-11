@@ -1753,8 +1753,11 @@ public class ActionManager : MonoBehaviour
 
     void BuildRandomEventList(int actionSequentialNumber)
     {
-        if (manager.currentDifficultyLevel != 3)
-            return;
+        if (manager != null)
+        { 
+            if (manager.currentDifficultyLevel != 3)
+                return;
+        }
         for(int i = 0; i < randomEventBookmaks.Count; i++)
         {
             if (randomEventBookmaks[i].GetActionIndex() == actionSequentialNumber && !randomEventBookmaks[i].IsComplited())

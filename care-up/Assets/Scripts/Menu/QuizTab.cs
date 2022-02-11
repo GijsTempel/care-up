@@ -54,6 +54,7 @@ public class QuizTab : MonoBehaviour
 
     public static float encounterDelay = -1f;
     public static int totalQuizesCount;
+    Question current;
 
     public void Init(string name)
     {
@@ -186,7 +187,6 @@ public class QuizTab : MonoBehaviour
         gameObject.SetActive(true);
 
         int currentQuestionID;
-        Question current;
 
         if (random)
         {
@@ -351,7 +351,17 @@ public class QuizTab : MonoBehaviour
         {
             if ((random == false) && (encounter == false))
             {
-                endScoreManager.quizWrongIndexes.Add(currentStep);
+                int currentquizWrongIndexes = -1;
+                for (int i = 0; i < endScoreManager.quizQuestionsTexts.Count; i++)
+                {
+                    string currentQuestionTest = current.text;
+                    if (endScoreManager.quizQuestionsTexts[i] == currentQuestionTest)
+                    {
+                        currentquizWrongIndexes = i;
+                    }
+                }
+                endScoreManager.quizWrongIndexes.Add(currentquizWrongIndexes);
+                
             }
         }
         else
