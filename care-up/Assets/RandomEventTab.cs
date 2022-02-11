@@ -71,7 +71,6 @@ public class RandomEventTab : MonoBehaviour
         panels.Add(wrongAnswerPanel);
     }
 
-
     public void AnswerButtonClicked(int value)
     {
         currentAnswer = value;
@@ -238,18 +237,10 @@ public class RandomEventTab : MonoBehaviour
             GameObject.Find("GameLogic").GetComponent<ActionManager>().ActivatePenalty();
             if (endScoreManager != null)
             {
-                int currentquizWrongIndexes = -1;
-                string quastionText = randomEventsData[currentRandomEventIndex].infoText + ". " +
-                    randomEventsData[currentRandomEventIndex].quastions[currentQuastionIndex];
-                for (int i = 0; i < endScoreManager.quizQuestionsTexts.Count; i++)
-                {
-
-                    if (endScoreManager.quizQuestionsTexts[i] == quastionText)
-                    {
-                        currentquizWrongIndexes = i;
-                    }
-                }
-                endScoreManager.quizWrongIndexes.Add(currentquizWrongIndexes);
+                int wrongIndex = endScoreManager.GetQuizWrongIndexe(randomEventsData[currentRandomEventIndex].infoText + ". " +
+                    randomEventsData[currentRandomEventIndex].quastions[currentQuastionIndex]);
+                if (wrongIndex != -1)
+                    endScoreManager.quizWrongIndexes.Add(wrongIndex);
             }
             else
             {

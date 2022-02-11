@@ -52,6 +52,19 @@ public class EndScoreManager : MonoBehaviour
         fullStar = Resources.Load<Sprite>("Sprites/Stars/star");
     }
 
+    public int GetQuizWrongIndexe(string quizText)
+    {
+        int result = -1;
+        for (int i = 0; i < quizQuestionsTexts.Count; i++)
+        {
+
+            if (quizQuestionsTexts[i] == quizText)
+            {
+                result = i;
+            }
+        }
+        return result;
+    }
     private void InitializeObjects()
     {
         if (actionManager == null)

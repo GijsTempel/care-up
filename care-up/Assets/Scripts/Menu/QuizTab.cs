@@ -351,17 +351,9 @@ public class QuizTab : MonoBehaviour
         {
             if ((random == false) && (encounter == false))
             {
-                int currentquizWrongIndexes = -1;
-                for (int i = 0; i < endScoreManager.quizQuestionsTexts.Count; i++)
-                {
-                    string currentQuestionTest = current.text;
-                    if (endScoreManager.quizQuestionsTexts[i] == currentQuestionTest)
-                    {
-                        currentquizWrongIndexes = i;
-                    }
-                }
-                endScoreManager.quizWrongIndexes.Add(currentquizWrongIndexes);
-                
+                int wrongIndex = endScoreManager.GetQuizWrongIndexe(current.text);
+                if (wrongIndex != -1)
+                    endScoreManager.quizWrongIndexes.Add(wrongIndex);
             }
         }
         else
