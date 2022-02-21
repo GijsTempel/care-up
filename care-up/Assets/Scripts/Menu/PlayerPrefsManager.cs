@@ -317,6 +317,23 @@ public class PlayerPrefsManager : MonoBehaviour
                     Camera.main.GetComponent<PostProcessingBehaviour>().enabled = postProcessingEnabled;
                 }
             }
+            GameObject panoFlyCamera = GameObject.Find("PanoFlyCamera");
+            if (panoFlyCamera != null)
+            {
+                if (panoFlyCamera.GetComponent<PostProcessingBehaviour>() != null)
+                {
+                    panoFlyCamera.GetComponent<PostProcessingBehaviour>().enabled = postProcessingEnabled;
+                }
+            }
+            GameObject playerMainCamera = GameObject.Find("PlayerMainCamera");
+            if (playerMainCamera != null)
+            {
+                if (playerMainCamera.GetComponent<PostProcessingBehaviour>() != null)
+                {
+                    playerMainCamera.GetComponent<PostProcessingBehaviour>().enabled = postProcessingEnabled;
+                }
+            }
+            
         }
 
         if (s.name == "EndScore" || (s.name == "MainMenu"))
@@ -479,6 +496,10 @@ public class PlayerPrefsManager : MonoBehaviour
         }
 
         postProcessingEnabled = PlayerPrefs.GetInt("PostProcessing") == 1;
+        int QualityLevel = 0;
+        if (postProcessingEnabled)
+            QualityLevel = 5;
+        QualitySettings.SetQualityLevel(QualityLevel, true);
         //Debug.Log ("PostProcessing is set to saved value: " + postProcessingEnabled);
 
         // OnLoaded doesnt launch on initial scene? so force it in start function separately
