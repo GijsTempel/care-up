@@ -6,7 +6,6 @@ public class InjectionPatient : PersonObject {
 
     [HideInInspector]
     public bool tutorial_greetingEnded = false;
-    private Animator PlayerAnimator;
 
     private AudioClip[] audioClips;
     private Animator animator;
@@ -16,7 +15,7 @@ public class InjectionPatient : PersonObject {
     protected override void Start()
     {
         base.Start();
-        PlayerAnimator = GameObject.FindObjectOfType<PlayerAnimationManager>().GetComponent<Animator>();
+        
         audioClips = new AudioClip[17];
 
         for (int i = 0; i < 17; ++i)
@@ -26,12 +25,8 @@ public class InjectionPatient : PersonObject {
         }
 
         animator = GetComponent<Animator>();
-       
     }
-    public  void PullSheevesUp()
-    {
-        animator.SetTrigger("ShowArm");
-    }
+
     public override void Talk(string topic = "", string audio = "")
     {
         if (ViewModeActive() || topic == "CM_Leave" || topic == "")
@@ -44,25 +39,20 @@ public class InjectionPatient : PersonObject {
             switch (topic)
             {
                 case "Hello":
-                    //GreetDialogue();
-                    //animator.SetTrigger("goedemorgen");
-                    PlayerAnimator.SetTrigger("Player_Dialog_Greeting");
-                    PlayerAnimator.SetTrigger("S Player_Dialog_Greeting");
+                    GreetDialogue();
                     break;
                 case "RollUpSleeves":
                 case "ExtendArmMakeFist":
                     if (GetComponent<InjectionPatient>() != null)
                     {
                         // also launches animation after dialogue
-                        //GetComponent<InjectionPatient>().RollUpSleevesDialogue();
-                        Invoke("PullSheevesUp", 3.0f);
-                        
+                        GetComponent<InjectionPatient>().RollUpSleevesDialogue();
                         // lock actions so player does nothing to break until quiz triggers
-                       /* if (GameObject.FindObjectOfType<TutorialManager>() == null)
+                        if (GameObject.FindObjectOfType<TutorialManager>() == null)
                         {
                             // in tutorials quiz are disabled
                             PlayerScript.actionsLocked = true;
-                        }*/
+                        }
                     }
                     pulledUp = true;
                     break;
@@ -211,11 +201,10 @@ public class InjectionPatient : PersonObject {
     private IEnumerator InjectNeedleInArmDialogueCoroutine()
     {
         Narrator.PlayDialogueSound(audioClips[11]);
-        //yield return new WaitForSeconds(audioClips[11].length);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(audioClips[11].length);
         animator.SetTrigger("oke");
-       /* audioSource.PlayOneShot(audioClips[12]);
-        yield return new WaitForSeconds(audioClips[12].length);*/
+        audioSource.PlayOneShot(audioClips[12]);
+        yield return new WaitForSeconds(audioClips[12].length);
         PlayerAnimationManager.NextSequenceStep(false);
     }
 
@@ -230,10 +219,9 @@ public class InjectionPatient : PersonObject {
     private IEnumerator InjectMedicineSlowlyDialogueCoroutine()
     {
         Narrator.PlayDialogueSound(audioClips[13]);
-        // yield return new WaitForSeconds(audioClips[13].length);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(audioClips[13].length);
         animator.SetTrigger("ja_hoor");
-       // audioSource.PlayOneShot(audioClips[14]);
+        audioSource.PlayOneShot(audioClips[14]);
     }
 
     public void AfterSequenceDialogue()
