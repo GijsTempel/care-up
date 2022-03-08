@@ -73,7 +73,7 @@ public class PlayerPrefsManager : MonoBehaviour
     public static bool simulatePlayerActions = false;
     public static bool videoRecordingMode = false;
     public static bool videoRecordingWithTextMode = false;
-
+    public int currentPracticePlays = -1;
 
     List<string> scenesWithFreeCert = new List<string>();
 
@@ -810,6 +810,15 @@ public class PlayerPrefsManager : MonoBehaviour
         {
             DatabaseManager.UpdateField("TestHighscores", currentTestScene, (0.0f).ToString());
         }
+    }
+
+    public static void SetValueToSceneInCategory(string scene, string category, int value)
+    {
+        PlayerPrefsManager pp = GameObject.FindObjectOfType<PlayerPrefsManager>();
+        string sceneName = FormatSceneName(pp.GetSceneDatabaseName(scene));
+        int plays;
+        int.TryParse(DatabaseManager.FetchField(category, sceneName), out plays);
+        DatabaseManager.UpdateField(category, sceneName, (value).ToString());
     }
 
     public static void AddOneToSceneInCategory(string scene, string category)

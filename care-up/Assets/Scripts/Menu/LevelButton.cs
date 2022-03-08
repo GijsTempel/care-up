@@ -336,12 +336,17 @@ public class LevelButton : MonoBehaviour
 
             int practicePlays;
             int.TryParse(DatabaseManager.FetchField("PracticePlays", formattedSceneName), out practicePlays);
+            manager.currentPracticePlays = practicePlays;
+            DialogLevelSelect dls = GameObject.FindObjectOfType<DialogLevelSelect>();
+            if (dls != null)
+            {
+                dls.timeoutValue = 0.5f;
+            }
+            //testBtn.interactable = practicePlays >= 1;
 
-            testBtn.interactable = practicePlays >= 1;
-
-            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-                    "DialogTestPractice/Panel_UI/Buttons/right/TestButton/contentlocked/practiceamount")
-                .GetComponent<Text>().text = (1 - practicePlays).ToString() + " keer";
+            //GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
+            //        "DialogTestPractice/Panel_UI/Buttons/right/TestButton/contentlocked/practiceamount")
+            //    .GetComponent<Text>().text = (1 - practicePlays).ToString() + " keer";
 
             if (testBtn.interactable)
             {
@@ -392,14 +397,14 @@ public class LevelButton : MonoBehaviour
     {
         PlayerPrefsManager.AddOneToPlaysNumber();
 
-        if (manager.practiceMode)
-        {
-            PlayerPrefsManager.AddOneToPracticePlays(manager.currentSceneVisualName);
-        }
-        else
-        {
-            PlayerPrefsManager.AddOneToTestPlays(manager.currentSceneVisualName);
-        }
+        //if (manager.practiceMode)
+        //{
+        //    PlayerPrefsManager.AddOneToPracticePlays(manager.currentSceneVisualName);
+        //}
+        //else
+        //{
+        //    PlayerPrefsManager.AddOneToTestPlays(manager.currentSceneVisualName);
+        //}
         if (toLoadInhouse)
             bl_SceneLoaderUtils.GetLoader.LoadLevel(inHouseSceneName, inHouseBundleName);
         else
@@ -430,6 +435,7 @@ public class LevelButton : MonoBehaviour
     public void SetPointsAmount()
     {
         Text points = GameObject.Find("/UMenuProManager/MenuCanvas/Dialogs/DialogLevelSelect/Panel_UI/PointsAmount/Text").GetComponent<Text>();
-        points.text = validated ? "Te behalen accreditatiepunten: " + totalPoints : "";
+        points.text = "   ";
+        //points.text = validated ? "Te behalen accreditatiepunten: " + totalPoints : "";
     }
 }

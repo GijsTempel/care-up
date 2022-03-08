@@ -55,8 +55,13 @@ public class StoreViewModel : MonoBehaviour
 
         if (SavedCoins <= 0)
             SavedCoins = ActionManager.Points;
-
-        if (SavedCoins > 0 && (ActionManager.percentage > 30))
+        PlayerPrefsManager pp = GameObject.FindObjectOfType<PlayerPrefsManager>();
+        bool test_mode = false;
+        if (pp != null)
+        {
+            test_mode = pp.currentDifficultyLevel == 4;
+        } 
+        if (SavedCoins > 0 && (ActionManager.percentage > 30) && test_mode)
         {
             if (panelText != null)
             {
