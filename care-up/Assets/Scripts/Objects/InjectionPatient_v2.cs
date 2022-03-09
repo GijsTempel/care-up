@@ -50,6 +50,8 @@ public class InjectionPatient_v2 : PersonObject {
                     PlayerAnimator.SetTrigger("S Player_Dialog_Greeting");
                     break;
                 case "RollUpSleeves":
+                    Invoke("PullSheevesUp", 3.0f);
+                    break;
                 case "ExtendArmMakeFist":
                     if (GetComponent<InjectionPatient>() != null)
                     {
