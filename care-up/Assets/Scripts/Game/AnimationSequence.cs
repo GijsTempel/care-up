@@ -239,7 +239,15 @@ public class AnimationSequence
 
                     if (animation == "Inject medicine slow and steady")
                     {
-                        GameObject.FindObjectOfType<InjectionPatient>().InjectMedicineSlowlyDialogue();
+                        if (GameObject.FindObjectOfType<InjectionPatient>())
+                        {
+                            GameObject.FindObjectOfType<InjectionPatient>().InjectMedicineSlowlyDialogue();
+                        }
+                        if (GameObject.FindObjectOfType<InjectionPatient_v2>())
+                        {
+                            GameObject.FindObjectOfType<InjectionPatient_v2>().InjectMedicineSlowlyDialogue();
+                        }
+
                     }
 
                     if (animation == "Inject Pricking pen" || animation == "ThrowSyringe")
