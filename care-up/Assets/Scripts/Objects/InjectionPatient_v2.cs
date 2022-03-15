@@ -32,6 +32,12 @@ public class InjectionPatient_v2 : PersonObject {
     {
         animator.SetTrigger("ShowArm");
     }
+
+    public void PullShirtUp()
+    {
+        animator.SetTrigger("ShowBellyForInsulin");
+    }
+
     public override void Talk(string topic = "", string audio = "")
     {
         if (ViewModeActive() || topic == "CM_Leave" || topic == "")
@@ -72,7 +78,9 @@ public class InjectionPatient_v2 : PersonObject {
                     //inhaling = true;
                     break;
                 case "ShowBellyForInsulin":
-                    GetComponent<InjectionPatient>().ShowBellyDialogue();
+                    /* GetComponent<InjectionPatient>().ShowBellyDialogue();*/
+                    //animator.SetTrigger("ShowBellyForInsulin");
+                    Invoke("PullShirtUp", 3.0f);
                     //animator.SetTrigger("ShowBellyForInsulin");
                     pulledUp = true;
                     //PlayerScript.TriggerQuizQuestion(3.3f);
