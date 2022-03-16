@@ -127,6 +127,7 @@ public class RandomEventTab : MonoBehaviour
             }
             else
             {
+                BuildQuastionsPanel();
                 SwitchScreen(1);
             }
         }
