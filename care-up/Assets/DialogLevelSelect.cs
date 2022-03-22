@@ -48,7 +48,7 @@ public class DialogLevelSelect : MonoBehaviour
         LevelInfoIcon = LevelInfoPanel.transform.Find("InfoPanel2/InfoIconPanel/Icon").GetComponent<Image>();
         LevelInfoNameText = LevelInfoPanel.transform.Find("InfoPanel2/InfoIconPanel/Icon/LevelLabel").GetComponent<Text>();
         LevelInfoTextText = LevelInfoPanel.transform.Find("InfoPanel2/InfoTextPanel/Text").GetComponent<Text>();
-        TextAsset textAsset = (TextAsset)Resources.Load("Xml/LefelInfo");
+        TextAsset textAsset = (TextAsset)Resources.Load("Xml/LevelInfo");
         XmlDocument xmlFile = new XmlDocument();
         xmlFile.LoadXml(textAsset.text);
         XmlNodeList _levelsInfo = xmlFile.FirstChild.NextSibling.ChildNodes;
