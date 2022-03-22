@@ -795,6 +795,8 @@ public class PlayerPrefsManager : MonoBehaviour
         float newAvgScore = (avgScore * avgScorePlays + currentTestScore) / (avgScorePlays + 1);
         //push
         DatabaseManager.UpdateField("TestAvgscores", currentTestScene, newAvgScore.ToString());
+
+
         DatabaseManager.UpdateField("TestAvgscorePlays", currentTestScene, (avgScorePlays+1).ToString());
 
         // save certificate date here too

@@ -6,7 +6,6 @@ using System.Xml;
 
 public class RandomEventTab : MonoBehaviour
 {
-
     public class RandomEventData
     {
         public string idName = "";
@@ -23,6 +22,8 @@ public class RandomEventTab : MonoBehaviour
     public GameObject infoPanel;
     public Text infoPanelTitle;
     public Text infoPanelText;
+    public GameObject aPanelBackButton;
+
 
     public GameObject quastionPanel;
     Text quastionTitle;
@@ -279,6 +280,7 @@ public class RandomEventTab : MonoBehaviour
     }
     public void SwitchScreen(int value)
     {
+        aPanelBackButton.SetActive(value == 1);
         for(int i = 0; i < panels.Count; i++)
         {
             panels[i].SetActive(i == value);
