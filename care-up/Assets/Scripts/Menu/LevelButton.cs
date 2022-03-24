@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class LevelButton : MonoBehaviour
 {
     private static LoadingScreen loadingScreen;
-
+    public List<string> inGroups = new List<string>();
     public string bundleName;
     public string sceneName;
     public string inHouseBundleName = "";

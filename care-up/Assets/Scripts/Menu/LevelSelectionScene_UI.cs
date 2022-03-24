@@ -32,6 +32,7 @@ public class SceneInfo
     public string nameForDatabase = "";
     public bool hasVideoMode = false;
     public string videoURL = "";
+    public List<string> inGroups = new List<string>();
 }
 
 /// <summary>
@@ -159,7 +160,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
         LeaderBoardSceneButton.buttons.Clear();
 // FindObjectOfType<PlayerPrefsManager>().demoVersion
 
-        Transform protocolsTransorm = GameObject.Find("UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Play/ContentPanel/PlayElements/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder/Protocols/content").transform;
+        Transform protocolsTransorm = GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/PlayGroups/ContentPanel/Scenes/ContentPanel/PlayElements/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder/Protocols/content").transform;
         pp.ClearFreeCertList();
         pp.ClearScenesInfo();
         Dictionary<string, SceneInfo> scenesInfo = new Dictionary<string, SceneInfo>();
@@ -178,6 +179,20 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
             if (xmlSceneNode.Attributes["videoURL"] != null)
                 sceneInfo.videoURL = xmlSceneNode.Attributes["videoURL"].Value;
+
+            if (xmlSceneNode.Attributes["inGroups"] != null)
+            {
+                string[] _groups = xmlSceneNode.Attributes["inGroups"].Value.Split(',');
+                if (_groups.Length > 0)
+                {
+                    foreach(string g in _groups)
+                        sceneInfo.inGroups.Add(g);
+                }
+            }
+            else
+            {
+                sceneInfo.inGroups.Add("o");
+            }
 
             if (xmlSceneNode.Attributes["id"] != null)
                 sceneInfo.sceneID = xmlSceneNode.Attributes["id"].Value;
@@ -334,7 +349,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
             sceneUnit.SetDemoMark(!sceneInfo.demoLock, demoMarkType);
             sceneUnit.inHouseBundleName = sceneInfo.inHouseBundleName;
             sceneUnit.inHouseSceneName = sceneInfo.inHouseSceneName;
-
+            sceneUnit.inGroups = sceneInfo.inGroups;
             if (!sceneInfo.activated && !sceneInfo.hidden)
             {
                 // but if scene is not activated and NOT hidden either
