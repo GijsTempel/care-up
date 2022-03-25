@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Collections.Generic;
+
 #if UNITY_5_3 || UNITY_5_3_OR_NEWER
 using UnityEngine.SceneManagement;
 #endif
@@ -11,13 +13,26 @@ public class UMP_LevelInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public Text Description;
     public Text PlayText;
     public Image Preview;
+    public GameObject MarksPanel;
     //Name of scene of build setting
     private string LevelName;
     static Button_Functions sounds;
-
+    List<List<GameObject>> marks = new List<List<GameObject>>();
     private void Start()
     {
         sounds = GameObject.FindObjectOfType<Button_Functions>();
+        for(int i = 0; i < MarksPanel.transform.GetChildCount(); i++)
+        {
+            List<GameObject> currentMarks = new List<GameObject>();
+            currentMarks.Add(MarksPanel.transform.GetChild(i).GetChild(0).gameObject);
+            currentMarks.Add(MarksPanel.transform.GetChild(i).GetChild(1).gameObject);
+            marks.Add(currentMarks);
+        }
+        foreach (List<GameObject> m in marks)
+        {
+            m[0].SetActive(false);
+            //m[1].SetActive(false);
+        }
     }
 
     /// <summary>

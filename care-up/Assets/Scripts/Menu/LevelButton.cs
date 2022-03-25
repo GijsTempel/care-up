@@ -104,7 +104,9 @@ public class LevelButton : MonoBehaviour
                 demoMarkElementName = "GFrame_Mid";
                 break;
         }
-        transform.Find(demoMarkElementName).gameObject.SetActive(demoMark);
+        //transform.Find(demoMarkElementName).gameObject.SetActive(demoMark);
+
+
         //if(!demoLock)
         //{
         //    GetComponent<Image>().sprite = Resources.Load("Sprites/nUI/listElement_Base_gray", typeof(Sprite)) as Sprite;

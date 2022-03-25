@@ -13,6 +13,7 @@ public class SceneGroupMenu : MonoBehaviour
         public string id;
         public string name;
         public string icon;
+        public int num;
     }
     public SearchBar searchBar;
     public GameObject sceneList;
@@ -25,6 +26,8 @@ public class SceneGroupMenu : MonoBehaviour
     public List<GameObject> SceneGroupButtonPanes = new List<GameObject>();
     List<SceneGroupButton> SceneGroupButtons = new List<SceneGroupButton>();
     float SceneListShowTimeout = 0f;
+    float dataLoadTimeout = 1f;
+    float switchPageTimeout = 0f;
     public void SwitchPage(int nextPage)
     {
         Debug.Log(nextPage);
@@ -39,7 +42,8 @@ public class SceneGroupMenu : MonoBehaviour
             SGPagePanelAnimation.Play("SceneGroupRight");
         }
         currentPage = nextPage;
-        UpdatePage();
+        switchPageTimeout = 0.12f;
+        //UpdatePage();
     }
 
     public void ShowSceneList(bool toShow)
@@ -56,9 +60,31 @@ public class SceneGroupMenu : MonoBehaviour
         }
     }
 
-
     private void Update()
     {
+        if (switchPageTimeout > 0)
+        {
+            switchPageTimeout -= Time.deltaTime;
+            if (switchPageTimeout < 0)
+            {
+                UpdatePage();
+            }
+        }
+        if (dataLoadTimeout > 0)
+        {
+            dataLoadTimeout -= Time.deltaTime;
+            if (dataLoadTimeout <= 0)
+            {
+                LevelSelectionScene_UI levelSelectionScene_UI = GameObject.FindObjectOfType<LevelSelectionScene_UI>();
+                for (int i = 0; i < sceneGroupsData.Count; i++)
+                {
+                    SceneGroupDataStruct s = sceneGroupsData[i];
+                    s.num = levelSelectionScene_UI.GetSceneGroupNum(sceneGroupsData[i].id);
+                    sceneGroupsData[i] = s;
+                }
+                UpdatePage();
+            }
+        }
         if (SceneListShowTimeout > 0)
         {
             SceneListShowTimeout -= Time.deltaTime;
@@ -75,7 +101,8 @@ public class SceneGroupMenu : MonoBehaviour
             int currentGroup = currentPage * 3 + i;
             SceneGroupButtonPanes[i].SetActive(currentGroup < sceneGroupsData.Count);
             if (currentGroup < sceneGroupsData.Count)
-                SceneGroupButtons[i].SetButtonData(currentGroup, sceneGroupsData[currentGroup].name, "", 0);
+                SceneGroupButtons[i].SetButtonData(currentGroup, sceneGroupsData[currentGroup].name, "", 
+                    sceneGroupsData[currentGroup].num);
         }
     }
 

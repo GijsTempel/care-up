@@ -24,7 +24,12 @@ public class SceneGroupButton : MonoBehaviour
     public void SetButtonData(int _id, string _title, string _iconName, int _num)
     {
         sceneGroupTitle.text = _title;
+        _numberOfScenes = _num;
         groupID = _id;
+        string numStr = "";
+        if (_num > 0)
+            numStr = _num.ToString();
+        numText.text = numStr;
     }
 
     public void ButtonClicked()

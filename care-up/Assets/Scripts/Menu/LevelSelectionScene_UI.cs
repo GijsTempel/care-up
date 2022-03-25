@@ -45,7 +45,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
     private PlayerPrefsManager ppManager;
     float initTime = 0f;
     bool sceneButtonsUpdated = false;
-
+    Dictionary<string, int> sceneGroupNum = new Dictionary<string, int>();
     // leaderboard stuff
     public ScoreLine[] _Scores;
     public GameObject scoreLines;
@@ -65,6 +65,15 @@ public class LevelSelectionScene_UI : MonoBehaviour
         {
             levelButton.UpdateButtonLockState();
         }
+    }
+
+
+    public int GetSceneGroupNum(string _groupID)
+    {
+        int value = 0;
+        if (sceneGroupNum.ContainsKey(_groupID))
+            value = sceneGroupNum[_groupID];
+        return value;
     }
 
     private void Awake()
@@ -194,6 +203,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 sceneInfo.inGroups.Add("o");
             }
 
+
             if (xmlSceneNode.Attributes["id"] != null)
                 sceneInfo.sceneID = xmlSceneNode.Attributes["id"].Value;
 
@@ -216,6 +226,10 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 sceneInfo.hidden = xmlSceneNode.Attributes["hidden"].Value == "true";
 
             sceneInfo.demoLock = !(xmlSceneNode.Attributes["demo"] != null);
+            if (!sceneInfo.demoLock)
+            {
+                sceneInfo.inGroups.Add("f");
+            }
 
             if (xmlSceneNode.Attributes["isInProducts"] != null)
             {
@@ -256,7 +270,23 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 sceneInfo.url = xmlSceneNode.Attributes["url"].Value;
 
             if (!scenesInfo.ContainsKey(sceneInfo.sceneName) && sceneInfo.mainScene == "")
+            {
+
                 scenesInfo.Add(sceneInfo.sceneName, sceneInfo);
+                foreach(string g in sceneInfo.inGroups)
+                {
+                    if (sceneGroupNum.ContainsKey(g))
+                    {
+                        sceneGroupNum[g] += 1;
+                    }
+                    else
+                    {
+                        sceneGroupNum[g] = 1;
+                    }
+
+                }
+                Debug.Log(sceneGroupNum);
+            }
 
             if (sceneInfo.mainScene != "" && sceneType != "")
             {
@@ -387,7 +417,8 @@ public class LevelSelectionScene_UI : MonoBehaviour
             if (Mathf.FloorToInt(fscore) >= 70)
             {
                 sceneUnit.image = completedSceneIcon;
-                sceneUnit.GetComponent<LevelButton>().SetLevelPreviewIcon(true, sceneUnit.image);
+                //----------------------------
+                //sceneUnit.GetComponent<LevelButton>().SetLevelPreviewIcon(true, sceneUnit.image);
                 //sceneUnit.transform.Find("LevelPreview").gameObject.SetActive(true);
                 //sceneUnit.transform.Find("LevelPreview").GetComponent<Image>().sprite = sceneUnit.image;
             }
