@@ -6,26 +6,40 @@ public class LevelButton : MonoBehaviour
 {
     private static LoadingScreen loadingScreen;
     public List<string> inGroups = new List<string>();
+    [HideInInspector]
     public string bundleName;
+    [HideInInspector]
     public string sceneName;
+    [HideInInspector]
     public string inHouseBundleName = "";
+    [HideInInspector]
     public string inHouseSceneName = "";
+    [HideInInspector]
     public bool toLoadInhouse = false;
+    [HideInInspector]
     public string url;
     public GameObject IsFreeIcon;
     bool demoMark = false;
     int demoMarkType = 0;
     bool PreviewIconChanged = false;
+    public GameObject MarksPanel;
 
+    List<List<GameObject>> marks = new List<List<GameObject>>();
+
+    [HideInInspector]
     public int dificultateLevel = -1; // 0 = Video; 1 = with hints; 2 = no hints; 3 = no hints + complications; 4 = test mode
+    [HideInInspector]
     public bool multiple;
+    [HideInInspector]
     public string sceneID;
+    [HideInInspector]
     public string displayName;
     public Sprite image;
     public bool testDisabled;
     public bool validated;
     public string totalPoints;
     bool started = false;
+    [HideInInspector]
     public string[] isInProducts = new string[0];
     Image LevelPreview;
     private static Transform sceneInfoPanel = default(Transform);
@@ -129,6 +143,19 @@ public class LevelButton : MonoBehaviour
 
     private void Start()
     {
+        for (int i = 0; i < MarksPanel.transform.childCount; i++)
+        {
+            List<GameObject> currentMarks = new List<GameObject>();
+            currentMarks.Add(MarksPanel.transform.GetChild(i).GetChild(0).gameObject);
+            currentMarks.Add(MarksPanel.transform.GetChild(i).GetChild(1).gameObject);
+            marks.Add(currentMarks);
+        }
+        foreach (List<GameObject> m in marks)
+        {
+            m[0].SetActive(false);
+            //m[1].SetActive(false);
+        }
+
         LevelPreview = transform.Find("LevelPreview").GetComponent<Image>();
         if (!PlayerPrefsManager.simulatePlayerActions)
         {

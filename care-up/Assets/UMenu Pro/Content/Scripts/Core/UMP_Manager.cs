@@ -90,7 +90,7 @@ public class UMP_Manager : MonoBehaviour {
 
     void Awake()
     {
-        InstanceLevels();
+        //InstanceLevels();
         GameObject.Find("Leaderboard").SetActive(false);
         GameObject.Find("Opties").SetActive(false);
         GameObject.Find("Store").SetActive(false);
@@ -104,18 +104,18 @@ public class UMP_Manager : MonoBehaviour {
         ShowNotificationWindow(PlayerPrefsManager.HasNewNorifications());
     }
 
-    void InstanceLevels()
-    {
-        for (int i = 0; i < Levels.Count; i++)
-        {
-            GameObject l = Instantiate(LevelPrefab) as GameObject;
+    //void InstanceLevels()
+    //{
+    //    for (int i = 0; i < Levels.Count; i++)
+    //    {
+    //        GameObject l = Instantiate(LevelPrefab) as GameObject;
 
-            UMP_LevelInfo li = l.GetComponent<UMP_LevelInfo>();
-            li.GetInfo(Levels[i].Title, Levels[i].Description, Levels[i].Preview, Levels[i].LevelName,PlayButtonName);
+    //        UMP_LevelInfo li = l.GetComponent<UMP_LevelInfo>();
+    //        li.GetInfo(Levels[i].Title, Levels[i].Description, Levels[i].Preview, Levels[i].LevelName,PlayButtonName);
 
-            l.transform.SetParent(LevelPanel, false);
-        }
-    }
+    //        l.transform.SetParent(LevelPanel, false);
+    //    }
+    //}
    
     /// <param name="id">window to active</param>
     /// <param name="disable">disabled currents window?</param>
