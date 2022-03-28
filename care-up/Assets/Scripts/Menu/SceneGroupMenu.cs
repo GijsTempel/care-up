@@ -26,7 +26,7 @@ public class SceneGroupMenu : MonoBehaviour
     public List<GameObject> SceneGroupButtonPanes = new List<GameObject>();
     List<SceneGroupButton> SceneGroupButtons = new List<SceneGroupButton>();
     float SceneListShowTimeout = 0f;
-    float dataLoadTimeout = 1f;
+    float dataLoadTimeout = 0.5f;
     float switchPageTimeout = 0f;
     public void SwitchPage(int nextPage)
     {
@@ -44,6 +44,19 @@ public class SceneGroupMenu : MonoBehaviour
         currentPage = nextPage;
         switchPageTimeout = 0.12f;
         //UpdatePage();
+    }
+
+    void CleanGroupData()
+    {
+        for (int i = (sceneGroupsData.Count - 1); i >= 0; i--)
+        {
+            if (sceneGroupsData[i].num == 0)
+            {
+                sceneGroupsData.RemoveAt(i);
+            }
+        }
+        numberOfPages = sceneGroupsData.Count / 3 + ((sceneGroupsData.Count % 3 > 0) ? 1 : 0);
+
     }
 
     public void ShowSceneList(bool toShow)
@@ -82,6 +95,7 @@ public class SceneGroupMenu : MonoBehaviour
                     s.num = levelSelectionScene_UI.GetSceneGroupNum(sceneGroupsData[i].id);
                     sceneGroupsData[i] = s;
                 }
+                CleanGroupData();
                 UpdatePage();
             }
         }
