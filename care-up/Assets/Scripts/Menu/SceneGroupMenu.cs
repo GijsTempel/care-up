@@ -28,6 +28,7 @@ public class SceneGroupMenu : MonoBehaviour
     float SceneListShowTimeout = 0f;
     float dataLoadTimeout = 0.5f;
     float switchPageTimeout = 0f;
+    PlayerPrefsManager ppManager;
     public void SwitchPage(int nextPage)
     {
         Debug.Log(nextPage);
@@ -43,6 +44,7 @@ public class SceneGroupMenu : MonoBehaviour
         }
         currentPage = nextPage;
         switchPageTimeout = 0.12f;
+        ppManager.LevelPagePosition = currentPage;
         //UpdatePage();
     }
 
@@ -115,7 +117,8 @@ public class SceneGroupMenu : MonoBehaviour
             int currentGroup = currentPage * 3 + i;
             SceneGroupButtonPanes[i].SetActive(currentGroup < sceneGroupsData.Count);
             if (currentGroup < sceneGroupsData.Count)
-                SceneGroupButtons[i].SetButtonData(currentGroup, sceneGroupsData[currentGroup].name, "", 
+                SceneGroupButtons[i].SetButtonData(currentGroup, sceneGroupsData[currentGroup].name,
+                    sceneGroupsData[currentGroup].icon, 
                     sceneGroupsData[currentGroup].num);
         }
     }
@@ -158,6 +161,8 @@ public class SceneGroupMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (ppManager == null)
+            ppManager = GameObject.FindObjectOfType<PlayerPrefsManager>();
         LoadGroupData();
         Object SGPageButtonPrefab = Resources.Load<GameObject>("NecessaryPrefabs/UI/SGPageButton");
         for (int i = 0; i < numberOfPages; i++)
@@ -171,7 +176,8 @@ public class SceneGroupMenu : MonoBehaviour
         {
             SceneGroupButtons.Add(p.transform.GetChild(0).GetComponent<SceneGroupButton>());
         }
-        SwitchPage(0);
+        currentPage = ppManager.LevelPagePosition;
+        SwitchPage(currentPage);
     }
 
     public void NextPage(int _dir)

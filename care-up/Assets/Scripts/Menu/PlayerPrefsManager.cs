@@ -550,6 +550,12 @@ public class PlayerPrefsManager : MonoBehaviour
         set { PlayerPrefs.SetFloat("LevelScrollPosition", value); }
     }
 
+    public int LevelPagePosition
+    {
+        get { return PlayerPrefs.HasKey("LevelPagePosition") ? PlayerPrefs.GetInt("LevelPagePosition") : 0; }
+        set { PlayerPrefs.SetInt("LevelPagePosition", value); }
+    }
+
     public void SetSceneActivated(string sceneName, bool value)
     {
         if (value) Debug.Log(sceneName + " activated");

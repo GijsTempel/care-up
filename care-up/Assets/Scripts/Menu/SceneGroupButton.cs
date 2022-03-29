@@ -30,6 +30,14 @@ public class SceneGroupButton : MonoBehaviour
         if (_num > 0)
             numStr = _num.ToString();
         numText.text = numStr;
+        if (_iconName != "")
+        {
+            iconImage.sprite = Resources.Load("Sprites/nUI/groupIcons/" + _iconName, typeof(Sprite)) as Sprite;
+        }
+        else
+        {
+            iconImage.sprite = Resources.Load("Sprites/nUI/groupIcons/empty", typeof(Sprite)) as Sprite;
+        }
     }
 
     public void ButtonClicked()
