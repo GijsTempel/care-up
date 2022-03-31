@@ -335,7 +335,6 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
         foreach (string key in scenesInfoLocked.Keys)
             scenesInfoSorted.Add(key, scenesInfoLocked[key]);
-        int demoIndex = 0;
         for (int i = 0; i < scenesInfoSorted.Count; i++)
         {
             string key = scenesInfoSorted.Keys.ElementAt(i);
@@ -352,31 +351,8 @@ public class LevelSelectionScene_UI : MonoBehaviour
             sceneUnitObject.name = "SceneSelectionUnit"; // i dont like that 'clone' word at the end, ugh
 
             LevelButton sceneUnit = sceneUnitObject.GetComponent<LevelButton>();
-            int demoMarkType = 0;
-            bool prevDemo = false;
-            bool nextDemo = false;
-            if (i > 0)
-            {
-                string prevKey = scenesInfoSorted.Keys.ElementAt(i - 1);
-                if (!scenesInfoSorted[prevKey].demoLock)
-                    prevDemo = true;
-            }
-            if (i < (scenesInfoSorted.Count - 1))
-            {
-                string nextKey = scenesInfoSorted.Keys.ElementAt(i + 1);
-                if (!scenesInfoSorted[nextKey].demoLock)
-                    nextDemo = true;
-            }
-            if (!prevDemo && nextDemo)
-                demoMarkType = 1;
-            else if (prevDemo && !nextDemo)
-                demoMarkType = 2;
-            else if (prevDemo && nextDemo)
-                demoMarkType = 3;
-            if (!sceneInfo.demoLock)
-                demoIndex++;
-
-            sceneUnit.SetDemoMark(!sceneInfo.demoLock, demoMarkType);
+            sceneUnit.isFree = sceneInfo.demoLock;
+            sceneUnit.SetDemoMark(!sceneInfo.demoLock);
             sceneUnit.inHouseBundleName = sceneInfo.inHouseBundleName;
             sceneUnit.inHouseSceneName = sceneInfo.inHouseSceneName;
             sceneUnit.inGroups = sceneInfo.inGroups;

@@ -23,6 +23,7 @@ public class LevelButton : MonoBehaviour
     int demoMarkType = 0;
     bool PreviewIconChanged = false;
     public GameObject MarksPanel;
+    public bool isFree = false;
 
     List<List<GameObject>> marks = new List<List<GameObject>>();
 
@@ -54,6 +55,8 @@ public class LevelButton : MonoBehaviour
     public Text AutoPlayNum;
     public Text AutoPlayNum2;
 
+    List<GameObject> frameElements = new List<GameObject>();
+
     // saving info
     public struct Info
     {
@@ -67,7 +70,7 @@ public class LevelButton : MonoBehaviour
         public bool validated;
         public string totalPoints;
     };
-
+    
     //--------------------------
     public void SetLockState(bool _lock)
     {
@@ -75,10 +78,9 @@ public class LevelButton : MonoBehaviour
         UpdateButtonLockState();
     }
 
-    public void SetDemoMark(bool _mark, int _markType)
+    public void SetDemoMark(bool _mark)
     {
         demoMark = _mark;
-        demoMarkType = _markType;
     }
 
     public void UpdateButtonLockState()
@@ -103,29 +105,17 @@ public class LevelButton : MonoBehaviour
             if (!PreviewIconChanged)
                 LevelPreview.gameObject.SetActive(false);
         }
-        //IsFreeIcon.SetActive(demoMark);
-        string demoMarkElementName = "GFrame_Full";
+     
+    }
 
-        switch (demoMarkType)
+    public void ShowDemoMarks(int demoMarkType)
+    {
+        if (frameElements.Count == 0)
+            ListFrameElements();
+        for (int i = 0; i < frameElements.Count; i++)
         {
-            case 1:
-                demoMarkElementName = "GFrame_Top";
-                break;
-            case 2:
-                demoMarkElementName = "GFrame_Bot";
-                break;
-            case 3:
-                demoMarkElementName = "GFrame_Mid";
-                break;
+            frameElements[i].SetActive(demoMarkType == i);
         }
-        //transform.Find(demoMarkElementName).gameObject.SetActive(demoMark);
-
-
-        //if(!demoLock)
-        //{
-        //    GetComponent<Image>().sprite = Resources.Load("Sprites/nUI/listElement_Base_gray", typeof(Sprite)) as Sprite;
-        //    GetComponent<Image>().color = new Color(0f, 0.85f, 0.6f);
-        //}
     }
 
     public void SetLevelPreviewIcon(bool iconToShow, Sprite newIcon)
@@ -141,8 +131,21 @@ public class LevelButton : MonoBehaviour
 
     public bool buy = false;
 
+
+    void ListFrameElements()
+    {
+        frameElements.Add(transform.Find("GFrame_Full").gameObject);
+        frameElements.Add(transform.Find("GFrame_Top").gameObject);
+        frameElements.Add(transform.Find("GFrame_Mid").gameObject);
+        frameElements.Add(transform.Find("GFrame_Bot").gameObject);
+    }
+
+
+
     private void Start()
     {
+        ListFrameElements();
+
         for (int i = 0; i < MarksPanel.transform.childCount; i++)
         {
             List<GameObject> currentMarks = new List<GameObject>();
@@ -161,7 +164,6 @@ public class LevelButton : MonoBehaviour
         {
             AutoPlayToggle.gameObject.SetActive(false);
             AutoPlayToggle2.gameObject.SetActive(false);
-
         }
         else
         {
