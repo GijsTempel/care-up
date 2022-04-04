@@ -298,6 +298,15 @@ public class PlayerPrefsManager : MonoBehaviour
                 if (Camera.main.GetComponent<PostProcessingBehaviour>() != null)
                 {
                     Camera.main.GetComponent<PostProcessingBehaviour>().enabled = postProcessingEnabled;
+
+                    if (postProcessingEnabled && Application.platform != RuntimePlatform.WebGLPlayer)
+                    { 
+                        Camera.main.GetComponent<PostProcessingBehaviour>().profile = Resources.Load("PostProcessing/Care_Up_PPS_Mobile") as PostProcessingProfile;
+                    }
+                    else
+                    {
+                        Camera.main.GetComponent<PostProcessingBehaviour>().profile = Resources.Load("PostProcessing/Care_Up_PPS") as PostProcessingProfile;
+                    }
                 }
             }
             GameObject panoFlyCamera = GameObject.Find("PanoFlyCamera");
@@ -306,6 +315,14 @@ public class PlayerPrefsManager : MonoBehaviour
                 if (panoFlyCamera.GetComponent<PostProcessingBehaviour>() != null)
                 {
                     panoFlyCamera.GetComponent<PostProcessingBehaviour>().enabled = postProcessingEnabled;
+                    if (postProcessingEnabled && Application.platform != RuntimePlatform.WebGLPlayer)
+                    {
+                        panoFlyCamera.GetComponent<PostProcessingBehaviour>().profile = Resources.Load("PostProcessing/Care_Up_PPS_Mobile") as PostProcessingProfile;
+                    }
+                    else
+                    {
+                        panoFlyCamera.GetComponent<PostProcessingBehaviour>().profile = Resources.Load("PostProcessing/Care_Up_PPS") as PostProcessingProfile;
+                    }
                 }
             }
             GameObject playerMainCamera = GameObject.Find("PlayerMainCamera");
@@ -314,6 +331,14 @@ public class PlayerPrefsManager : MonoBehaviour
                 if (playerMainCamera.GetComponent<PostProcessingBehaviour>() != null)
                 {
                     playerMainCamera.GetComponent<PostProcessingBehaviour>().enabled = postProcessingEnabled;
+                    if (postProcessingEnabled && Application.platform != RuntimePlatform.WebGLPlayer)
+                    {
+                        playerMainCamera.GetComponent<PostProcessingBehaviour>().profile = Resources.Load("PostProcessing/Care_Up_PPS_Mobile") as PostProcessingProfile;
+                    }
+                    else
+                    {
+                        playerMainCamera.GetComponent<PostProcessingBehaviour>().profile = Resources.Load("PostProcessing/Care_Up_PPS") as PostProcessingProfile;
+                    }
                 }
             }
             
