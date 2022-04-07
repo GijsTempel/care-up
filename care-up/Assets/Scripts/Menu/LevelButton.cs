@@ -11,6 +11,8 @@ public class LevelButton : MonoBehaviour
     [HideInInspector]
     public string sceneName;
     [HideInInspector]
+    public string sceneDescription;
+    [HideInInspector]
     public string inHouseBundleName = "";
     [HideInInspector]
     public string inHouseSceneName = "";
@@ -55,6 +57,8 @@ public class LevelButton : MonoBehaviour
     public Text AutoPlayNum;
     public Text AutoPlayNum2;
 
+
+    Text descriptionText;
     List<GameObject> frameElements = new List<GameObject>();
 
     // saving info
@@ -140,10 +144,14 @@ public class LevelButton : MonoBehaviour
         frameElements.Add(transform.Find("GFrame_Bot").gameObject);
     }
 
-
+    void Initialize()
+    {
+        descriptionText = transform.Find("Description").GetComponent<Text>();
+    }
 
     private void Start()
     {
+        Initialize();
         ListFrameElements();
 
         for (int i = 0; i < MarksPanel.transform.childCount; i++)
@@ -194,6 +202,9 @@ public class LevelButton : MonoBehaviour
                 Debug.LogWarning("No prefs manager ( start from 1st scene? )");
             }
         }
+
+        descriptionText.text = sceneDescription;
+
         started = true;
     }
 

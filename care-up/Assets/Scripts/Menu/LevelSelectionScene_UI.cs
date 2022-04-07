@@ -352,6 +352,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
             LevelButton sceneUnit = sceneUnitObject.GetComponent<LevelButton>();
             sceneUnit.isFree = sceneInfo.demoLock;
+            sceneUnit.sceneDescription = sceneInfo.description;
             sceneUnit.SetDemoMark(!sceneInfo.demoLock);
             sceneUnit.inHouseBundleName = sceneInfo.inHouseBundleName;
             sceneUnit.inHouseSceneName = sceneInfo.inHouseSceneName;
