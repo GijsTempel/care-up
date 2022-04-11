@@ -58,7 +58,7 @@ public class LevelButton : MonoBehaviour
     public Text AutoPlayNum2;
 
     float scoreTimeout = 0.0f;
-    Text descriptionText;
+    public Text descriptionText;
     List<GameObject> frameElements = new List<GameObject>();
 
     // saving info
@@ -144,11 +144,6 @@ public class LevelButton : MonoBehaviour
         frameElements.Add(transform.Find("GFrame_Bot").gameObject);
     }
 
-    void Initialize()
-    {
-        descriptionText = transform.Find("Description").GetComponent<Text>();
-    }
-
     void OnEnable()
     {
         UpdateAutoPlayToggle();
@@ -170,7 +165,6 @@ public class LevelButton : MonoBehaviour
 
     private void Start()
     {
-        Initialize();
         ListFrameElements();
         
         for (int i = 0; i < MarksPanel.transform.childCount; i++)
