@@ -27,7 +27,7 @@ public class LevelButton : MonoBehaviour
     public GameObject MarksPanel;
     public bool isFree = false;
 
-    List<List<GameObject>> marks = new List<List<GameObject>>();
+    List<Animation> marksAnimations = new List<Animation>();
 
     [HideInInspector]
     public int dificultateLevel = -1; // 0 = Video; 1 = with hints; 2 = no hints; 3 = no hints + complications; 4 = test mode
@@ -57,7 +57,7 @@ public class LevelButton : MonoBehaviour
     public Text AutoPlayNum;
     public Text AutoPlayNum2;
 
-
+    float scoreTimeout = 0.0f;
     Text descriptionText;
     List<GameObject> frameElements = new List<GameObject>();
 
@@ -149,23 +149,35 @@ public class LevelButton : MonoBehaviour
         descriptionText = transform.Find("Description").GetComponent<Text>();
     }
 
+    void OnEnable()
+    {
+        UpdateAutoPlayToggle();
+        UpdateScoreMarks();
+    }
+
+    void UpdateScoreMarks()
+    {
+        if (marksAnimations.Count < 0)
+        {
+            scoreTimeout = 0.2f;
+            return;
+        }
+        foreach (Animation m in marksAnimations)
+        {
+            m.Play("twistOff");
+        }
+    }
+
     private void Start()
     {
         Initialize();
         ListFrameElements();
-
+        
         for (int i = 0; i < MarksPanel.transform.childCount; i++)
         {
-            List<GameObject> currentMarks = new List<GameObject>();
-            currentMarks.Add(MarksPanel.transform.GetChild(i).GetChild(0).gameObject);
-            currentMarks.Add(MarksPanel.transform.GetChild(i).GetChild(1).gameObject);
-            marks.Add(currentMarks);
+            marksAnimations.Add(MarksPanel.transform.GetChild(i).GetComponent<Animation>());
         }
-        foreach (List<GameObject> m in marks)
-        {
-            m[0].SetActive(false);
-            //m[1].SetActive(false);
-        }
+        scoreTimeout = 0.2f;
 
         LevelPreview = transform.Find("LevelPreview").GetComponent<Image>();
         if (!PlayerPrefsManager.simulatePlayerActions)
@@ -273,10 +285,6 @@ public class LevelButton : MonoBehaviour
         }
     }
 
-    void OnEnable()
-    {
-        UpdateAutoPlayToggle();
-    }
 
     public void OnLevelButtonClick()
     {
@@ -479,5 +487,17 @@ public class LevelButton : MonoBehaviour
         Text points = GameObject.Find("/UMenuProManager/MenuCanvas/Dialogs/DialogLevelSelect/Panel_UI/PointsAmount/Text").GetComponent<Text>();
         points.text = "   ";
         //points.text = validated ? "Te behalen accreditatiepunten: " + totalPoints : "";
+    }
+
+    private void Update()
+    {
+        if (scoreTimeout > 0f)
+        {
+            scoreTimeout -= Time.deltaTime;
+            if (scoreTimeout <= 0f)
+            {
+                UpdateScoreMarks();
+            }
+        }
     }
 }
