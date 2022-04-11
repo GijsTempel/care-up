@@ -5,27 +5,44 @@ using UnityEngine.UI;
 public class LevelButton : MonoBehaviour
 {
     private static LoadingScreen loadingScreen;
-
+    public List<string> inGroups = new List<string>();
+    [HideInInspector]
     public string bundleName;
+    [HideInInspector]
     public string sceneName;
+    [HideInInspector]
+    public string sceneDescription;
+    [HideInInspector]
     public string inHouseBundleName = "";
+    [HideInInspector]
     public string inHouseSceneName = "";
+    [HideInInspector]
     public bool toLoadInhouse = false;
+    [HideInInspector]
     public string url;
     public GameObject IsFreeIcon;
     bool demoMark = false;
     int demoMarkType = 0;
     bool PreviewIconChanged = false;
+    public GameObject MarksPanel;
+    public bool isFree = false;
 
+    List<Animation> marksAnimations = new List<Animation>();
+
+    [HideInInspector]
     public int dificultateLevel = -1; // 0 = Video; 1 = with hints; 2 = no hints; 3 = no hints + complications; 4 = test mode
+    [HideInInspector]
     public bool multiple;
+    [HideInInspector]
     public string sceneID;
+    [HideInInspector]
     public string displayName;
     public Sprite image;
     public bool testDisabled;
     public bool validated;
     public string totalPoints;
     bool started = false;
+    [HideInInspector]
     public string[] isInProducts = new string[0];
     Image LevelPreview;
     private static Transform sceneInfoPanel = default(Transform);
@@ -40,6 +57,10 @@ public class LevelButton : MonoBehaviour
     public Text AutoPlayNum;
     public Text AutoPlayNum2;
 
+    float scoreTimeout = 0.0f;
+    Text descriptionText;
+    List<GameObject> frameElements = new List<GameObject>();
+
     // saving info
     public struct Info
     {
@@ -53,7 +74,7 @@ public class LevelButton : MonoBehaviour
         public bool validated;
         public string totalPoints;
     };
-
+    
     //--------------------------
     public void SetLockState(bool _lock)
     {
@@ -61,10 +82,9 @@ public class LevelButton : MonoBehaviour
         UpdateButtonLockState();
     }
 
-    public void SetDemoMark(bool _mark, int _markType)
+    public void SetDemoMark(bool _mark)
     {
         demoMark = _mark;
-        demoMarkType = _markType;
     }
 
     public void UpdateButtonLockState()
@@ -89,27 +109,17 @@ public class LevelButton : MonoBehaviour
             if (!PreviewIconChanged)
                 LevelPreview.gameObject.SetActive(false);
         }
-        //IsFreeIcon.SetActive(demoMark);
-        string demoMarkElementName = "GFrame_Full";
+     
+    }
 
-        switch (demoMarkType)
+    public void ShowDemoMarks(int demoMarkType)
+    {
+        if (frameElements.Count == 0)
+            ListFrameElements();
+        for (int i = 0; i < frameElements.Count; i++)
         {
-            case 1:
-                demoMarkElementName = "GFrame_Top";
-                break;
-            case 2:
-                demoMarkElementName = "GFrame_Bot";
-                break;
-            case 3:
-                demoMarkElementName = "GFrame_Mid";
-                break;
+            frameElements[i].SetActive(demoMarkType == i);
         }
-        transform.Find(demoMarkElementName).gameObject.SetActive(demoMark);
-        //if(!demoLock)
-        //{
-        //    GetComponent<Image>().sprite = Resources.Load("Sprites/nUI/listElement_Base_gray", typeof(Sprite)) as Sprite;
-        //    GetComponent<Image>().color = new Color(0f, 0.85f, 0.6f);
-        //}
     }
 
     public void SetLevelPreviewIcon(bool iconToShow, Sprite newIcon)
@@ -125,14 +135,55 @@ public class LevelButton : MonoBehaviour
 
     public bool buy = false;
 
+
+    void ListFrameElements()
+    {
+        frameElements.Add(transform.Find("GFrame_Full").gameObject);
+        frameElements.Add(transform.Find("GFrame_Top").gameObject);
+        frameElements.Add(transform.Find("GFrame_Mid").gameObject);
+        frameElements.Add(transform.Find("GFrame_Bot").gameObject);
+    }
+
+    void Initialize()
+    {
+        descriptionText = transform.Find("Description").GetComponent<Text>();
+    }
+
+    void OnEnable()
+    {
+        UpdateAutoPlayToggle();
+        UpdateScoreMarks();
+    }
+
+    void UpdateScoreMarks()
+    {
+        if (marksAnimations.Count < 0)
+        {
+            scoreTimeout = 0.2f;
+            return;
+        }
+        foreach (Animation m in marksAnimations)
+        {
+            m.Play("twistOff");
+        }
+    }
+
     private void Start()
     {
+        Initialize();
+        ListFrameElements();
+        
+        for (int i = 0; i < MarksPanel.transform.childCount; i++)
+        {
+            marksAnimations.Add(MarksPanel.transform.GetChild(i).GetComponent<Animation>());
+        }
+        scoreTimeout = 0.2f;
+
         LevelPreview = transform.Find("LevelPreview").GetComponent<Image>();
         if (!PlayerPrefsManager.simulatePlayerActions)
         {
             AutoPlayToggle.gameObject.SetActive(false);
             AutoPlayToggle2.gameObject.SetActive(false);
-
         }
         else
         {
@@ -163,6 +214,9 @@ public class LevelButton : MonoBehaviour
                 Debug.LogWarning("No prefs manager ( start from 1st scene? )");
             }
         }
+
+        descriptionText.text = sceneDescription;
+
         started = true;
     }
 
@@ -231,10 +285,6 @@ public class LevelButton : MonoBehaviour
         }
     }
 
-    void OnEnable()
-    {
-        UpdateAutoPlayToggle();
-    }
 
     public void OnLevelButtonClick()
     {
@@ -336,12 +386,17 @@ public class LevelButton : MonoBehaviour
 
             int practicePlays;
             int.TryParse(DatabaseManager.FetchField("PracticePlays", formattedSceneName), out practicePlays);
+            manager.currentPracticePlays = practicePlays;
+            DialogLevelSelect dls = GameObject.FindObjectOfType<DialogLevelSelect>();
+            if (dls != null)
+            {
+                dls.timeoutValue = 0.5f;
+            }
+            //testBtn.interactable = practicePlays >= 1;
 
-            testBtn.interactable = practicePlays >= 1;
-
-            GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
-                    "DialogTestPractice/Panel_UI/Buttons/right/TestButton/contentlocked/practiceamount")
-                .GetComponent<Text>().text = (1 - practicePlays).ToString() + " keer";
+            //GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/" +
+            //        "DialogTestPractice/Panel_UI/Buttons/right/TestButton/contentlocked/practiceamount")
+            //    .GetComponent<Text>().text = (1 - practicePlays).ToString() + " keer";
 
             if (testBtn.interactable)
             {
@@ -392,14 +447,14 @@ public class LevelButton : MonoBehaviour
     {
         PlayerPrefsManager.AddOneToPlaysNumber();
 
-        if (manager.practiceMode)
-        {
-            PlayerPrefsManager.AddOneToPracticePlays(manager.currentSceneVisualName);
-        }
-        else
-        {
-            PlayerPrefsManager.AddOneToTestPlays(manager.currentSceneVisualName);
-        }
+        //if (manager.practiceMode)
+        //{
+        //    PlayerPrefsManager.AddOneToPracticePlays(manager.currentSceneVisualName);
+        //}
+        //else
+        //{
+        //    PlayerPrefsManager.AddOneToTestPlays(manager.currentSceneVisualName);
+        //}
         if (toLoadInhouse)
             bl_SceneLoaderUtils.GetLoader.LoadLevel(inHouseSceneName, inHouseBundleName);
         else
@@ -430,6 +485,19 @@ public class LevelButton : MonoBehaviour
     public void SetPointsAmount()
     {
         Text points = GameObject.Find("/UMenuProManager/MenuCanvas/Dialogs/DialogLevelSelect/Panel_UI/PointsAmount/Text").GetComponent<Text>();
-        points.text = validated ? "Te behalen accreditatiepunten: " + totalPoints : "";
+        points.text = "   ";
+        //points.text = validated ? "Te behalen accreditatiepunten: " + totalPoints : "";
+    }
+
+    private void Update()
+    {
+        if (scoreTimeout > 0f)
+        {
+            scoreTimeout -= Time.deltaTime;
+            if (scoreTimeout <= 0f)
+            {
+                UpdateScoreMarks();
+            }
+        }
     }
 }

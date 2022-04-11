@@ -104,6 +104,18 @@ public class EndScoreManager : MonoBehaviour
         }
         else if (SceneManager.GetActiveScene().name == "EndScore_Test")
         {
+            if (manager.currentPracticePlays < manager.currentDifficultyLevel)
+            {
+                if (manager.currentDifficultyLevel < 4)
+                {
+                    // PlayerPrefsManager.AddOneToPracticePlays(manager.currentSceneVisualName);
+                    PlayerPrefsManager.SetValueToSceneInCategory(manager.currentSceneVisualName, "PracticePlays", manager.currentDifficultyLevel);
+                }
+                else
+                {
+                    PlayerPrefsManager.AddOneToPracticePlays(manager.currentSceneVisualName);
+                }
+            }
             Transform stepParent = GameObject.Find("Interactable Objects/Canvas/StepScreen/Image/WrongstepScroll/WrongstepViewport/LayoutGroup").transform;
 
             SetBasicText();
@@ -136,36 +148,42 @@ public class EndScoreManager : MonoBehaviour
             bool flag = (percent > 70 && (subscribed || HasFreeCert()));
 
             // update test highscore + save certificate date
-            manager.UpdateTestHighscore(percent);
-
-            if (flag)
+            if (manager.currentDifficultyLevel >= 4)
             {
-                //PlayerPrefsManager.__sendCertificateToUserMail(manager.currentSceneVisualName);
-                //PlayerPrefsManager.__openCertificate(manager.currentSceneVisualName);
+                manager.UpdateTestHighscore(percent);
 
-                achievements.UpdateKeys("FirstPassedExam", 1);
-
-                if (manager.validatedScene)
+                if (flag)
                 {
-                    EndScoreSendMailResults();
-                    AutomaticPEcourseValidation();
+                    //PlayerPrefsManager.__sendCertificateToUserMail(manager.currentSceneVisualName);
+                    //PlayerPrefsManager.__openCertificate(manager.currentSceneVisualName);
+
+                    achievements.UpdateKeys("FirstPassedExam", 1);
+
+                    if (manager.validatedScene)
+                    {
+                        EndScoreSendMailResults();
+                        AutomaticPEcourseValidation();
+                    }
                 }
-            }
+                emailsSent = flag;
+                // track amount of results per scene
+                if (percent < 70)
+                {
+                    PlayerPrefsManager.AddOneToTestFails(manager.currentSceneVisualName);
+                }
+                else
+                {
+                    PlayerPrefsManager.AddOneToTestPassed(manager.currentSceneVisualName);
+                }
 
-            emailsSent = flag;
-            GameObject.Find("Interactable Objects/Canvas/ScoreScreen/ScoreScreenButtons/Panel (2)/BackToMainMenu")
-                .GetComponent<Button>().onClick.AddListener(ConditionalHomeButton);
-
-            // track amount of results per scene
-            if (percent < 70)
-            {
-                PlayerPrefsManager.AddOneToTestFails(manager.currentSceneVisualName);
             }
             else
             {
-                PlayerPrefsManager.AddOneToTestPassed(manager.currentSceneVisualName);
+                manager.UpdatePracticeHighscore(points, score);
             }
 
+            GameObject.Find("Interactable Objects/Canvas/ScoreScreen/ScoreScreenButtons/Panel (2)/BackToMainMenu")
+                .GetComponent<Button>().onClick.AddListener(ConditionalHomeButton);
         }
         if (actualScene)
         {
@@ -332,14 +350,14 @@ public class EndScoreManager : MonoBehaviour
         correctStepIndexes = actionManager.CorrectStepIndexes;
 
         PlayerPrefsManager manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
-        if (manager.practiceMode || manager.currentDifficultyLevel == 2)
-        {
-            bl_SceneLoaderUtils.GetLoader.LoadLevel("EndScore");
-        }
-        else
-        {
-            bl_SceneLoaderUtils.GetLoader.LoadLevel("EndScore_Test");
-        }
+        //if (manager.practiceMode || manager.currentDifficultyLevel == 2)
+        //{
+        //bl_SceneLoaderUtils.GetLoader.LoadLevel("EndScore");
+        //}
+        //else
+        //{
+        bl_SceneLoaderUtils.GetLoader.LoadLevel("EndScore_Test");
+        //}
     }
 
     public void OpenCertificateBtn()

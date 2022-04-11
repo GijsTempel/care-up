@@ -32,6 +32,7 @@ public class SceneInfo
     public string nameForDatabase = "";
     public bool hasVideoMode = false;
     public string videoURL = "";
+    public List<string> inGroups = new List<string>();
 }
 
 /// <summary>
@@ -44,7 +45,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
     private PlayerPrefsManager ppManager;
     float initTime = 0f;
     bool sceneButtonsUpdated = false;
-
+    Dictionary<string, int> sceneGroupNum = new Dictionary<string, int>();
     // leaderboard stuff
     public ScoreLine[] _Scores;
     public GameObject scoreLines;
@@ -64,6 +65,15 @@ public class LevelSelectionScene_UI : MonoBehaviour
         {
             levelButton.UpdateButtonLockState();
         }
+    }
+
+
+    public int GetSceneGroupNum(string _groupID)
+    {
+        int value = 0;
+        if (sceneGroupNum.ContainsKey(_groupID))
+            value = sceneGroupNum[_groupID];
+        return value;
     }
 
     private void Awake()
@@ -159,7 +169,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
         LeaderBoardSceneButton.buttons.Clear();
 // FindObjectOfType<PlayerPrefsManager>().demoVersion
 
-        Transform protocolsTransorm = GameObject.Find("UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Play/ContentPanel/PlayElements/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder/Protocols/content").transform;
+        Transform protocolsTransorm = GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/PlayGroups/ContentPanel/Scenes/ContentPanel/PlayElements/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder/Protocols/content").transform;
         pp.ClearFreeCertList();
         pp.ClearScenesInfo();
         Dictionary<string, SceneInfo> scenesInfo = new Dictionary<string, SceneInfo>();
@@ -178,6 +188,21 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
             if (xmlSceneNode.Attributes["videoURL"] != null)
                 sceneInfo.videoURL = xmlSceneNode.Attributes["videoURL"].Value;
+
+            if (xmlSceneNode.Attributes["inGroups"] != null)
+            {
+                string[] _groups = xmlSceneNode.Attributes["inGroups"].Value.Split(',');
+                if (_groups.Length > 0)
+                {
+                    foreach(string g in _groups)
+                        sceneInfo.inGroups.Add(g);
+                }
+            }
+            else
+            {
+                sceneInfo.inGroups.Add("o");
+            }
+
 
             if (xmlSceneNode.Attributes["id"] != null)
                 sceneInfo.sceneID = xmlSceneNode.Attributes["id"].Value;
@@ -201,6 +226,10 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 sceneInfo.hidden = xmlSceneNode.Attributes["hidden"].Value == "true";
 
             sceneInfo.demoLock = !(xmlSceneNode.Attributes["demo"] != null);
+            if (!sceneInfo.demoLock)
+            {
+                sceneInfo.inGroups.Add("f");
+            }
 
             if (xmlSceneNode.Attributes["isInProducts"] != null)
             {
@@ -241,7 +270,23 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 sceneInfo.url = xmlSceneNode.Attributes["url"].Value;
 
             if (!scenesInfo.ContainsKey(sceneInfo.sceneName) && sceneInfo.mainScene == "")
+            {
+
                 scenesInfo.Add(sceneInfo.sceneName, sceneInfo);
+                foreach(string g in sceneInfo.inGroups)
+                {
+                    if (sceneGroupNum.ContainsKey(g))
+                    {
+                        sceneGroupNum[g] += 1;
+                    }
+                    else
+                    {
+                        sceneGroupNum[g] = 1;
+                    }
+
+                }
+                Debug.Log(sceneGroupNum);
+            }
 
             if (sceneInfo.mainScene != "" && sceneType != "")
             {
@@ -290,7 +335,6 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
         foreach (string key in scenesInfoLocked.Keys)
             scenesInfoSorted.Add(key, scenesInfoLocked[key]);
-        int demoIndex = 0;
         for (int i = 0; i < scenesInfoSorted.Count; i++)
         {
             string key = scenesInfoSorted.Keys.ElementAt(i);
@@ -307,34 +351,12 @@ public class LevelSelectionScene_UI : MonoBehaviour
             sceneUnitObject.name = "SceneSelectionUnit"; // i dont like that 'clone' word at the end, ugh
 
             LevelButton sceneUnit = sceneUnitObject.GetComponent<LevelButton>();
-            int demoMarkType = 0;
-            bool prevDemo = false;
-            bool nextDemo = false;
-            if (i > 0)
-            {
-                string prevKey = scenesInfoSorted.Keys.ElementAt(i - 1);
-                if (!scenesInfoSorted[prevKey].demoLock)
-                    prevDemo = true;
-            }
-            if (i < (scenesInfoSorted.Count - 1))
-            {
-                string nextKey = scenesInfoSorted.Keys.ElementAt(i + 1);
-                if (!scenesInfoSorted[nextKey].demoLock)
-                    nextDemo = true;
-            }
-            if (!prevDemo && nextDemo)
-                demoMarkType = 1;
-            else if (prevDemo && !nextDemo)
-                demoMarkType = 2;
-            else if (prevDemo && nextDemo)
-                demoMarkType = 3;
-            if (!sceneInfo.demoLock)
-                demoIndex++;
-
-            sceneUnit.SetDemoMark(!sceneInfo.demoLock, demoMarkType);
+            sceneUnit.isFree = sceneInfo.demoLock;
+            sceneUnit.sceneDescription = sceneInfo.description;
+            sceneUnit.SetDemoMark(!sceneInfo.demoLock);
             sceneUnit.inHouseBundleName = sceneInfo.inHouseBundleName;
             sceneUnit.inHouseSceneName = sceneInfo.inHouseSceneName;
-
+            sceneUnit.inGroups = sceneInfo.inGroups;
             if (!sceneInfo.activated && !sceneInfo.hidden)
             {
                 // but if scene is not activated and NOT hidden either
@@ -372,7 +394,8 @@ public class LevelSelectionScene_UI : MonoBehaviour
             if (Mathf.FloorToInt(fscore) >= 70)
             {
                 sceneUnit.image = completedSceneIcon;
-                sceneUnit.GetComponent<LevelButton>().SetLevelPreviewIcon(true, sceneUnit.image);
+                //----------------------------
+                //sceneUnit.GetComponent<LevelButton>().SetLevelPreviewIcon(true, sceneUnit.image);
                 //sceneUnit.transform.Find("LevelPreview").gameObject.SetActive(true);
                 //sceneUnit.transform.Find("LevelPreview").GetComponent<Image>().sprite = sceneUnit.image;
             }

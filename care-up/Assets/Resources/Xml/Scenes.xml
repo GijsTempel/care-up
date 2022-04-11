@@ -14,6 +14,7 @@
        freeCertificate="true"
        hasVideoMode="true"
        videoURL =""
+       inGroups="inj"
        totalPoints="0"/>
 
     <scene id="VACMOD"
@@ -26,6 +27,7 @@
       validated="false"
       demo="true"
       freeCertificate="true"
+      inGroups="inj"
       totalPoints="0"/>
 
 	  <scene id="BCTCR"
@@ -38,6 +40,7 @@
 		  image="icon_catheter"
 		  validated="false"
 		  totalPoints="0"
+      inGroups="stomazorg"
 		  url=""/>
 
 	  <scene id="BCTCR"
@@ -54,6 +57,7 @@
            description="Blaaskatheterisatie bij man, verblijfskatheter met steriele opvangzak."
            sceneName="Scenes_Catherisation_Male"
            image="icon_catheter"
+           inGroups="kath"
            validated="true"
            totalPoints="2"
 		   url="https://careup.online/cursussen-zorg/blaaskatheterisatie-man-verblijfskatheter/"/>
@@ -74,6 +78,7 @@
            description="Blaaskatheterisatie bij vrouw, verblijfskatheter met steriele opvangzak."
            sceneName="Scenes_Catherisation_Women"
            image="icon_catheter"
+           inGroups="kath"
            validated="true"
            totalPoints="1" 
 		   url ="https://careup.online/cursussen-zorg/blaaskatheterisatie-vrouw-verblijfskatheter/"/>
@@ -92,6 +97,7 @@
            description="Blaasspoelen met spoelzakje via verblijfskatheter"
            sceneName="Scenes_bladder_irrigation_through_catheter"
            image="icon_catheter"
+           inGroups="kath"
            validated="true"
            totalPoints="1"
 		   url ="https://careup.online/cursussen-zorg/blaasspoelen-spoelzakje-verblijfskatheter/"/>
@@ -110,6 +116,7 @@
            description="Bloedglucosewaarde meten via vingerprik en bloedglucosemeter"
            sceneName="Scenes_Bloodglucose_Measurement"
            image="icon_thermometer"
+           inGroups="bloed"
            validated="true"
            totalPoints="1"
 		   url ="https://careup.online/cursussen-zorg/bloedglucosewaarde-meten-vingerprikker-bloedglucosemeter/"/>
@@ -128,6 +135,7 @@
            nameForDatabase="Subcutaan injecteren met insulinepen"
            description="Plaatsen van pennaald op de navulbare insulinepen. Testen van de insulinepen. Instellen van juiste dosering. Loodrecht onderhuids inspuiten van de insuline."
            sceneName="Insulin Injection"
+           inGroups="inj,bloed"
            image="icon_syringe"
            validated="true"
            totalPoints="1"/>
@@ -146,20 +154,22 @@
            nameForDatabase="Injecteren intramusculair (loodrechttechniek)"
            description=""
            sceneName="Injection"
+           inGroups="inj"
            image="icon_syringe"
            validated="true"
            totalPoints="1"/>
 
     <scene id="OSTMOPS"
-       isInProducts="OSTMOPS|StoEen|Stoma|Full|subscriptionmonthly"
-       bundleName="scene/scenes_ostomy_care_one_part_system"
-       name="Huidplaat en stomazakje verwisselen eendelig systeem"
-       nameForDatabase="Verwisselen huidplaat en stomazakje eendelig systeem"
-       description=""
-       sceneName="Scenes_Ostomy_Care_One_Part_System"
-       image="icon_syringe"
-       validated="true"
-       totalPoints="1"
+          isInProducts="OSTMOPS|StoEen|Stoma|Full"
+          bundleName="scene/scenes_ostomy_care_one_part_system"
+          name="Huidplaat en stomazakje verwisselen eendelig systeem"
+          nameForDatabase="Verwisselen huidplaat en stomazakje eendelig systeem"
+          description=""
+          inGroups="stomazorg"
+          sceneName="Scenes_Ostomy_Care_One_Part_System"
+          image="icon_syringe"
+          validated="true"
+          totalPoints="1"
    url="https://careup.online/cursussen-zorg/verwisselen-huidplaat-en-stomazakje-eendelig-systeem/"/>
 
     <scene id="OSTMOPS"
@@ -176,6 +186,7 @@
            description=""
            sceneName="Scenes_Ostomy_Care"
            image="icon_ostromy"
+           inGroups="stomazorg"
            validated="true"
            totalPoints="1"
 		   url="https://careup.online/cursussen-zorg/verwisselen-huidplaat-en-stomazakje-tweedelig-systeem/"/>
@@ -187,16 +198,17 @@
            type="in_house"/>
 
     <scene id="AMVP"
-   isInProducts="AMVP|Peg|SondePakket|Full|subscriptionmonthly"
-   bundleName="scenes/AdministerMedicineViaPEG"
-   name="Medicijnen toedienen door PEG-sonde"
-   nameForDatabase="Toedienen medicijnen via PEG-sonde"
-   description=""
-   sceneName="Scenes_AdministerMedicineViaPEG"
-   image="icon_catheter"
-   validated="true"
-   totalPoints="1"
-   url="https://careup.online/cursussen-zorg/toedienen-medicatie-via-peg-sonde/"/>
+           isInProducts="AMVP|Peg|SondePakket|Full"
+           bundleName="scenes/AdministerMedicineViaPEG"
+           name="Medicijnen toedienen door PEG-sonde"
+           nameForDatabase="Toedienen medicijnen via PEG-sonde"
+           description=""
+           sceneName="Scenes_AdministerMedicineViaPEG"
+           image="icon_catheter"
+           validated="true"
+           inGroups="medtoe"
+           totalPoints="1"
+           url="https://careup.online/cursussen-zorg/toedienen-medicatie-via-peg-sonde/"/>
 
     <scene id="AMVP"
 		   mainScene="Scenes_AdministerMedicineViaPEG"
@@ -205,16 +217,17 @@
            type="in_house"/>
 
     <scene id="TMMW"
-   isInProducts="TMMW|Wang|Mond|Full|subscriptionmonthly"
-   bundleName="scene/scenes_medicine_cheek_pouch"
-   name="Medicijnen toedienen in wangzak"
-   nameForDatabase="Toedienen medicijnen in wangzak"
-   description="Medicijnen toedienen in wangzak"
-   sceneName="Scenes_Medicine_Cheek_Pouch"
-   image="icon_pill"
-   validated="true"
-   totalPoints="1"
-   url="https://careup.online/cursussen-zorg/toedienen-medicijnen-wangzak/"/>
+          isInProducts="TMMW|Wang|Mond|Full"
+          bundleName="scene/scenes_medicine_cheek_pouch"
+          name="Medicijnen toedienen in wangzak"
+          nameForDatabase="Toedienen medicijnen in wangzak"
+          description="Medicijnen toedienen in wangzak"
+          sceneName="Scenes_Medicine_Cheek_Pouch"
+          inGroups="medtoe"
+          image="icon_pill"
+          validated="true"
+          totalPoints="1"
+          url="https://careup.online/cursussen-zorg/toedienen-medicijnen-wangzak/"/>
 
     <scene id="TMMW"
 		   mainScene="Scenes_Medicine_Cheek_Pouch"
@@ -223,15 +236,16 @@
            type="in_house"/>
 
     <scene id="TMOT"
-       isInProducts="TMOT|Tong|Mond|Full|subscriptionmonthly"
-       bundleName="scene/scenes_medicine_mouth"
-       name="Medicijnen toedienen onder tong"
-       nameForDatabase="Toedienen medicijnen onder tong"
-       description="Toedienen medicijnen onder tong."
-       sceneName="Scenes_medicine_mouth"
-       image="icon_pill"
-       validated="true"
-       totalPoints="1"
+          isInProducts="TMOT|Tong|Mond|Full"
+          bundleName="scene/scenes_medicine_mouth"
+          name="Medicijnen toedienen onder tong"
+          nameForDatabase="Toedienen medicijnen onder tong"
+          description="Toedienen medicijnen onder tong."
+          sceneName="Scenes_medicine_mouth"
+          inGroups="medtoe"
+          image="icon_pill"
+          validated="true"
+          totalPoints="1"
    url="https://careup.online/cursussen-zorg/toedienen-medicijnen-onder-tong/"/>
 
     <scene id="TMOT"
@@ -241,15 +255,16 @@
            type="in_house"/>
 
     <scene id="MSSI"
-       isInProducts="MSSI|ToeSaf|Canule|Full|subscriptionmonthly"
-       bundleName="scene/scenes_medication_saf-t-intima"
-       name="Medicijnen toedienen via subcutane canule - bolus"
-       nameForDatabase="Toedienen medicijnen via subcutane infuuscanule bolusinjectie"
-       description="'Toedienen medicijnen via subcutane infuuscanule bolusinjectie."
-       sceneName="Scenes_Medication_Saf-T-Intima"
-       image="icon_pill"
-       validated="true"
-       totalPoints="1"
+        isInProducts="MSSI|ToeSaf|Canule|Full"
+        bundleName="scene/scenes_medication_saf-t-intima"
+        name="Medicijnen toedienen via subcutane canule - bolus"
+        nameForDatabase="Toedienen medicijnen via subcutane infuuscanule bolusinjectie"
+        description="'Toedienen medicijnen via subcutane infuuscanule bolusinjectie."
+        sceneName="Scenes_Medication_Saf-T-Intima"
+        image="icon_pill"
+        inGroups="medtoe"
+        validated="true"
+        totalPoints="1"
    url="https://careup.online/cursussen-zorg/toedienen-medicijnen-subcutane-infuuscanule-bolusinjectie/"/>
 
     <scene id="MSSI"
@@ -261,15 +276,16 @@
 
 
     <scene id="SMPA"
-       isInProducts="SMPA|Amp|Inject|Full|subscriptionmonthly"
-       bundleName="scene/scene_medication_preparation_ampoule"
-       name="Medicijnspuit klaarmaken (ampul)"
-       nameForDatabase="Voorbereiden medicijn injecteren ampul"
-       description=""
-       sceneName="Scene_Medication_Preparation_Ampoule"
-       image="icon_syringe"
-       validated="true"
-       totalPoints="1"
+        isInProducts="SMPA|Amp|Inject|Full"
+        bundleName="scene/scene_medication_preparation_ampoule"
+        name="Medicijnspuit klaarmaken (ampul)"
+        nameForDatabase="Voorbereiden medicijn injecteren ampul"
+        description=""
+        sceneName="Scene_Medication_Preparation_Ampoule"
+        image="icon_syringe"
+        inGroups="inj"
+        validated="true"
+        totalPoints="1"
    url="https://careup.online/cursussen-zorg/voorbereiden-medicijn-injecteren-ampul/"/>
 
     <scene id="SMPA"
@@ -286,6 +302,7 @@
            description=""
            sceneName="Scene_Medication_Preparation_Flacon"
            image="icon_syringe"
+           inGroups="inj"
            validated="true"
            totalPoints="1"
 		   url="https://careup.online/cursussen-zorg/voorbereiden-medicijn-injecteren-flacon/"/>
@@ -305,6 +322,7 @@
            description=""
            sceneName="Scene_Medication_Preparation_Dissolve"
            image="icon_syringe"
+           inGroups="inj"
            validated="true"
            totalPoints="1"
 		   url="https://careup.online/cursussen-zorg/voorbereiden-medicijn-injecteren-oplossing/"/>
@@ -324,6 +342,7 @@
           sceneName="Scenes_Gastric_Feeding_Tube"
           image="icon_gastric_feeding_tube"
           validated="true"
+          inGroups="sondev"
           totalPoints="1"
           url ="https://careup.online/cursussen-zorg/inbrengen-neusmaagsonde/"/>
 
@@ -346,6 +365,7 @@
            nameForDatabase="Inbrengen canule perifeer infuus"
            description=""
            sceneName="Scene_Insert_Infusion"
+           inGroups="subcut"
            image="icon_syringe"
            validated="true"
            totalPoints="1"/>
@@ -375,6 +395,7 @@
            description="Inbrengen Saf-T-Intima subcutane infuuscanule."
            nameForDatabase="Inbrengen Saf-T-Intima subcutane infuuscanule"
            sceneName="Scenes_Saf-T-Intima_Insertion"
+           inGroups="subcut"
            image="icon_syringe"
            validated="true"
            totalPoints="1"
@@ -387,15 +408,16 @@
            type="in_house"/>
 
     <scene id="TVNM"
-      isInProducts="TVNM|Pump|SondePakket|Full|subscriptionmonthly"
-      bundleName="scene/scenes_feedingwithpump"
-      name="Sondevoeding met pomp via neus-maagsonde"
-      nameForDatabase="Toedienen voeding via neus-maagsonde met pomp"
-      description=""
-      sceneName="Scenes_FeedingWithPump"
-      image="icon_catheter"
-      validated="true"
-      totalPoints="1"
+          isInProducts="TVNM|Pump|SondePakket|Full"
+          bundleName="scene/scenes_feedingwithpump"
+          name="Sondevoeding met pomp via neus-maagsonde"
+          nameForDatabase="Toedienen voeding via neus-maagsonde met pomp"
+          description=""
+          sceneName="Scenes_FeedingWithPump"
+          image="icon_catheter"
+          inGroups="sondev"
+          validated="true"
+          totalPoints="1"
       url="https://careup.online/cursussen-zorg/toedienen-voeding-via-neus-maagsonde-met-pomp/"/>
 
     <scene id="TVNM"
@@ -410,6 +432,7 @@
            name="Subcutaan injecteren (huidplooitechniek)"
            nameForDatabase="Injecteren subcutaan (huidplooitechniek)"
            description=""
+           inGroups="inj"
            sceneName="Injection Subcutaneous"
            image="icon_syringe"
            validated="true"
@@ -430,6 +453,7 @@
         description="Sbcutaan injecteren met kant-en-klare fraxiparine spuit."
         sceneName="Fraxiparine_Injecteren"
         image="icon_syringe"
+        inGroups="inj"
         validated="true"
         totalPoints="1"
     url="https://careup.online/cursussen-zorg/injecteren-subcutaan-loodrechttechniek-fraxiparine/"/>
@@ -448,6 +472,7 @@
            description=""
            sceneName="Scenes_Catherisation_Supertubular"
            image="icon_catheter"
+           inGroups="kath"
            validated="true"
            totalPoints="1"
 		   url="https://careup.online/cursussen-zorg/verwisselen-suprapubische-verblijfskatheter/"/>
@@ -468,6 +493,7 @@
            nameForDatabase="Techniek handdesinfectie met handalcohol"
            sceneName="Scenes_HandHygiene_Alcohol"
            image="icon_handhygiene"
+           inGroups="hand"
            validated="true"
            totalPoints="1"
 		   url="https://careup.online/cursussen-zorg/techniek-handdesinfectie/"/>
@@ -486,6 +512,7 @@
            nameForDatabase="Techniek handen wassen met water en zeep"
            sceneName="Scenes_HandHygiene_Soap"
            image="icon_handhygiene"
+           inGroups="hand"
            validated="true"
            totalPoints="1"
 		   url="https://careup.online/cursussen-zorg/techniek-handreiniging/"/>
@@ -509,8 +536,6 @@ totalPoints="1"
            bundleName="scene/scenes_bandaging_in_house"
            sceneName="Scenes_Bandaging_In_House"
            type="in_house"/>
-
-
   </group>
 
   <group name="_DEV">

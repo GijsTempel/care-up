@@ -73,7 +73,7 @@ public class PlayerPrefsManager : MonoBehaviour
     public static bool simulatePlayerActions = false;
     public static bool videoRecordingMode = false;
     public static bool videoRecordingWithTextMode = false;
-
+    public int currentPracticePlays = -1;
 
     List<string> scenesWithFreeCert = new List<string>();
 
@@ -583,6 +583,12 @@ public class PlayerPrefsManager : MonoBehaviour
         set { PlayerPrefs.SetFloat("LevelScrollPosition", value); }
     }
 
+    public int LevelPagePosition
+    {
+        get { return PlayerPrefs.HasKey("LevelPagePosition") ? PlayerPrefs.GetInt("LevelPagePosition") : 0; }
+        set { PlayerPrefs.SetInt("LevelPagePosition", value); }
+    }
+
     public void SetSceneActivated(string sceneName, bool value)
     {
         if (value) Debug.Log(sceneName + " activated");
@@ -828,6 +834,8 @@ public class PlayerPrefsManager : MonoBehaviour
         float newAvgScore = (avgScore * avgScorePlays + currentTestScore) / (avgScorePlays + 1);
         //push
         DatabaseManager.UpdateField("TestAvgscores", currentTestScene, newAvgScore.ToString());
+
+
         DatabaseManager.UpdateField("TestAvgscorePlays", currentTestScene, (avgScorePlays+1).ToString());
 
         // save certificate date here too
@@ -843,6 +851,15 @@ public class PlayerPrefsManager : MonoBehaviour
         {
             DatabaseManager.UpdateField("TestHighscores", currentTestScene, (0.0f).ToString());
         }
+    }
+
+    public static void SetValueToSceneInCategory(string scene, string category, int value)
+    {
+        PlayerPrefsManager pp = GameObject.FindObjectOfType<PlayerPrefsManager>();
+        string sceneName = FormatSceneName(pp.GetSceneDatabaseName(scene));
+        int plays;
+        int.TryParse(DatabaseManager.FetchField(category, sceneName), out plays);
+        DatabaseManager.UpdateField(category, sceneName, (value).ToString());
     }
 
     public static void AddOneToSceneInCategory(string scene, string category)
