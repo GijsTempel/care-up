@@ -315,6 +315,15 @@ public class PlayerPrefsManager : MonoBehaviour
                 if (Camera.main.GetComponent<PostProcessingBehaviour>() != null)
                 {
                     Camera.main.GetComponent<PostProcessingBehaviour>().enabled = postProcessingEnabled;
+
+                    if (postProcessingEnabled && Application.platform != RuntimePlatform.WebGLPlayer)
+                    { 
+                        Camera.main.GetComponent<PostProcessingBehaviour>().profile = Resources.Load("PostProcessing/Care_Up_PPS_Mobile") as PostProcessingProfile;
+                    }
+                    else
+                    {
+                        Camera.main.GetComponent<PostProcessingBehaviour>().profile = Resources.Load("PostProcessing/Care_Up_PPS") as PostProcessingProfile;
+                    }
                 }
             }
             GameObject panoFlyCamera = GameObject.Find("PanoFlyCamera");
@@ -323,6 +332,14 @@ public class PlayerPrefsManager : MonoBehaviour
                 if (panoFlyCamera.GetComponent<PostProcessingBehaviour>() != null)
                 {
                     panoFlyCamera.GetComponent<PostProcessingBehaviour>().enabled = postProcessingEnabled;
+                    if (postProcessingEnabled && Application.platform != RuntimePlatform.WebGLPlayer)
+                    {
+                        panoFlyCamera.GetComponent<PostProcessingBehaviour>().profile = Resources.Load("PostProcessing/Care_Up_PPS_Mobile") as PostProcessingProfile;
+                    }
+                    else
+                    {
+                        panoFlyCamera.GetComponent<PostProcessingBehaviour>().profile = Resources.Load("PostProcessing/Care_Up_PPS") as PostProcessingProfile;
+                    }
                 }
             }
             GameObject playerMainCamera = GameObject.Find("PlayerMainCamera");
@@ -331,6 +348,14 @@ public class PlayerPrefsManager : MonoBehaviour
                 if (playerMainCamera.GetComponent<PostProcessingBehaviour>() != null)
                 {
                     playerMainCamera.GetComponent<PostProcessingBehaviour>().enabled = postProcessingEnabled;
+                    if (postProcessingEnabled && Application.platform != RuntimePlatform.WebGLPlayer)
+                    {
+                        playerMainCamera.GetComponent<PostProcessingBehaviour>().profile = Resources.Load("PostProcessing/Care_Up_PPS_Mobile") as PostProcessingProfile;
+                    }
+                    else
+                    {
+                        playerMainCamera.GetComponent<PostProcessingBehaviour>().profile = Resources.Load("PostProcessing/Care_Up_PPS") as PostProcessingProfile;
+                    }
                 }
             }
             
@@ -478,6 +503,19 @@ public class PlayerPrefsManager : MonoBehaviour
         return hasNew;
     }
 
+    public void SerGraphicsLevel()
+    {
+        postProcessingEnabled = PlayerPrefs.GetInt("PostProcessing") == 1;
+        int QualityLevel = 0;
+        if (postProcessingEnabled && Application.platform == RuntimePlatform.WebGLPlayer)
+            QualityLevel = 5;//Set High Quality for WebGl 
+        else if (postProcessingEnabled)
+            QualityLevel = 7;//Set High Quality for mobile devices
+
+        QualitySettings.SetQualityLevel(QualityLevel, true);
+        //Debug.Log ("PostProcessing is set to saved value: " + postProcessingEnabled);
+    }
+
     void Start()
     {
         LocalizationManager.LoadAllDictionaries();
@@ -495,12 +533,7 @@ public class PlayerPrefsManager : MonoBehaviour
             GetComponent<AudioSource>().Stop();
         }
 
-        postProcessingEnabled = PlayerPrefs.GetInt("PostProcessing") == 1;
-        int QualityLevel = 0;
-        if (postProcessingEnabled)
-            QualityLevel = 5;
-        QualitySettings.SetQualityLevel(QualityLevel, true);
-        //Debug.Log ("PostProcessing is set to saved value: " + postProcessingEnabled);
+        SerGraphicsLevel();
 
         // OnLoaded doesnt launch on initial scene? so force it in start function separately
         OnLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);

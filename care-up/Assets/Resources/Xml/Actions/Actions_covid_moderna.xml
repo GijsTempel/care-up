@@ -147,6 +147,8 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     index="5"
     type="sequenceStep"
     value="clean skin"
+    messageTitle="Injecteren bovenarmspier"
+    messageContent="De bovenarmspier is een kleine dikke driehoekige spier. Leg twee vingers horizontaal beneden het botje (acromion) dat de punt van de schouder vormt. Je vindt de basis van de driehoek waarin je kunt injecteren."
     extra="Controleer of de injectieplaats schoon en droog is om besmetting van ziektekiemen te voorkomen."
   ></action>
 
@@ -161,18 +163,23 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
 
   <action
     points="2"
-    description="Span de huid met de duim en wijsvinger van uw vrije hand"
+    description="Trek met de ring- en middelvinger de huid en het subcutane weefsel van de injectieplaats 2-3 cm zijwaarts"
     index="7"
     type="sequenceStep"
     value="Hold skin"
     extra="Span de huid met de duim en wijsvinger van uw vrije hand."
-    messageTitle="Huid spannen"
-    messageContent="Neem de spier tussen duim en wijsvinger van de ene hand en trek de huid wat strakker. De spier als een dikke plooi tussen de duim en wijs- en middelvinger opnemen, voor een intramusculaire injectie wordt afgeraden (WHO). Deze techniek vergroot het risico op per ongeluk subcutaan injecteren. "
+    messageTitle="Rangeertechniek"
+    messageContent="Hoe doe je de rangeertechniek?
+Verschuif de huid eerst zijwaarts met je ring- en middelvinger. Fixeer de spuit met wijsvinger en duim en injecteer het medicijn. Laat daarna de huid weer los. De vloeistof blijft geblokkeerd in de spier.
+    
+De rangeer-, Z- of zigzagtechniek is een techniek om loodrecht intramusculair te injecteren. Deze techniek voorkomt terugvloeien en/of irritatie van geïnjecteerde vloeistof in het onderhuidse bindweefsel.
+
+Terugvloeien van vloeistof kan pijn en beschadiging veroorzaken, vooral bij olieachtige of irriterende vloeistoffen. Er bestaat geen lijst van dergelijke vloeistoffen, maar voorbeelden zijn: cytostatica, sommige antibiotica, ijzer (CosmoFer), fenytoine, theophylline en goudinjecties bij reuma (tauredon) en het hepatitis B-vaccin."
   ></action>
 
   <action
     points="3"
-    description="Steek de naald met een snelle beweging loodrecht in de spier"
+    description="Steek de naald met een snelle loodrechte beweging in de spier"
     audioHint="Injection/AS3-2"
     index="8"
     type="sequenceStep"
@@ -180,20 +187,10 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     extra="Steek de naald met een snelle beweging loodrecht in de spier. Wissel injectieplaatsen af wanneer frequent in eenzelfde gebied geïnjecteerd moet worden."
   ></action>
 
-  <action
+   <action
     points="1"
-    description="Laat de huid los"
-    audioHint="Injection/AS4-2"
+    description="Fixeer de spuit en naald met de niet-injecterende hand"
     index="9"
-    type="sequenceStep"
-    value="Release skin with left hand"
-    extra="Laat de huid los met je vrije hand."
-   ></action>
-
-  <action
-    points="1"
-    description="Fixeer de spuit en naald met de niet injecterende hand om onverwachte bewegingen op te vangen"
-    index="10"
     type="sequenceStep"
     value="Secure the needle"
     extra="Fixeer de spuit en naald met de niet injecterende hand om onverwachte bewegingen op te vangen."
@@ -204,17 +201,28 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
   <action
     points="2"
     description="Spuit de vloeistof langzaam en regelmatig in (ongeveer 10 sec/ml)"
-    index="11"
+    index="10"
     type="sequenceStep"
     value="Inject medicine slow and steady"
     extra="Spuit het medicijn langzaam in (ongeveer 10 sec/ml)."
     messageTitle="Injecteren bovenarmspier"
     messageContent="De bovenarmspier is een kleine dikke driehoekige spier. Leg twee vingers horizontaal beneden het botje (acromion) dat de punt van de schouder vormt. Je vindt de basis van de driehoek waarin je kunt injecteren."
   ></action>
+	
+	<action
+   points="1"
+   description="Laat de naald gedurende 10 seconden in de spier"
+   audioHint="Injection/AS4-2"
+   index="11"
+   type="sequenceStep"
+   value="LeaveNeedleFor10Sec"
+   extra="Laat de huid los met je vrije hand."
+   ></action>
 
-  <action
+
+	<action
     points="1"
-    description="Trek na het injecteren de naald uit de huid. Hierbij kun je een gaasje gereed houden om een eventuele bloeddruppel op te vangen"
+    description="Trek de naald uit de huid en activeer het veiligheidssysteem"
     index="12"
     type="sequenceStep"
     value="pull needle out of skin"
