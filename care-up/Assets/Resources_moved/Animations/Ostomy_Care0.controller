@@ -143,6 +143,7 @@ MonoBehaviour:
   ObjNames:
   - GauzeOnStoma2
   toShow: 1
+  meshRenderer: 0
 --- !u!114 &-8574794493035008385
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -156,6 +157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: cloth_target
+  resetToTarget: 
   resetCamera: 0
 --- !u!1102 &-8445514359926051867
 AnimatorState:
@@ -268,6 +270,7 @@ AnimatorState:
   - {fileID: 5573084609671985626}
   - {fileID: -5855642250403930636}
   - {fileID: 8386059692230157091}
+  - {fileID: 2329354702785827567}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -615,6 +618,7 @@ MonoBehaviour:
   ObjNames:
   - cloth_02_onpatient_os_care
   toShow: 1
+  meshRenderer: 0
 --- !u!114 &-7434629721056796511
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1220,6 +1224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: cloth_target
+  resetToTarget: 
   resetCamera: 0
 --- !u!1101 &-6154228655664135511
 AnimatorStateTransition:
@@ -1277,6 +1282,7 @@ MonoBehaviour:
   ObjNames:
   - cloth_02_onpatient_os_care
   toShow: 1
+  meshRenderer: 0
 --- !u!114 &-5949187116979609795
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1551,6 +1557,7 @@ MonoBehaviour:
   ObjNames:
   - OstomyBagOnBody
   toShow: 0
+  meshRenderer: 0
 --- !u!1101 &-5469733481789869606
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -2072,6 +2079,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: 2st_sequence_target
+  resetToTarget: 
   resetCamera: 0
 --- !u!1101 &-4518244890627116411
 AnimatorStateTransition:
@@ -2150,6 +2158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: 1st_sequence_target
+  resetToTarget: 
   resetCamera: 0
 --- !u!1102 &-4248394019864362015
 AnimatorState:
@@ -2386,6 +2395,7 @@ MonoBehaviour:
   ObjNames:
   - OstomyBag
   toShow: 0
+  meshRenderer: 0
 --- !u!114 &-3768534631476044142
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -2675,6 +2685,7 @@ MonoBehaviour:
   ObjNames:
   - SkinPlateBPants
   toShow: 0
+  meshRenderer: 0
 --- !u!1102 &-3193022625321229590
 AnimatorState:
   serializedVersion: 5
@@ -2878,6 +2889,7 @@ MonoBehaviour:
   ObjNames:
   - SkinPlateOnBody
   toShow: 1
+  meshRenderer: 0
 --- !u!1101 &-2828342555644533754
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -3032,6 +3044,7 @@ MonoBehaviour:
   ObjNames:
   - OstomyBagOnBody
   toShow: 0
+  meshRenderer: 0
 --- !u!114 &-2397164638586214511
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -3337,6 +3350,7 @@ MonoBehaviour:
   ObjNames:
   - SkinPlateBPants
   toShow: 1
+  meshRenderer: 0
 --- !u!1101 &-1612482390520431670
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -3391,6 +3405,7 @@ MonoBehaviour:
   ObjNames:
   - OstomyBagOnBody
   toShow: 1
+  meshRenderer: 0
 --- !u!114 &-1563773056969669488
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -3535,6 +3550,7 @@ MonoBehaviour:
   ObjNames:
   - cloth_02_onpatient_os_care
   toShow: 0
+  meshRenderer: 0
 --- !u!114 &-1264143319800199186
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -3657,6 +3673,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: 1st_sequence_target
+  resetToTarget: 
   resetCamera: 0
 --- !u!114 &-902104284038571886
 MonoBehaviour:
@@ -3811,6 +3828,7 @@ MonoBehaviour:
   ObjNames:
   - OstomyBag
   toShow: 0
+  meshRenderer: 0
 --- !u!1102 &-263036007442479220
 AnimatorState:
   serializedVersion: 5
@@ -3909,6 +3927,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dropLeftFrame: 2350
   dropRightFrame: -1
+--- !u!114 &-154788700375080259
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: 
+  showFrame: 15
+  ObjNames:
+  - Shoes_L_Low
+  - Shoes_R_Low
+  toShow: 0
+  meshRenderer: 0
 --- !u!1109 &-114122791146631280
 AnimatorTransition:
   m_ObjectHideFlags: 3
@@ -4477,6 +4514,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: 2st_sequence_target
+  resetToTarget: 
   resetCamera: 0
 --- !u!114 &437387614716421745
 MonoBehaviour:
@@ -4671,6 +4709,7 @@ MonoBehaviour:
   ObjNames:
   - cloth_02_onpatient_os_care
   toShow: 1
+  meshRenderer: 0
 --- !u!1102 &845875539738424690
 AnimatorState:
   serializedVersion: 5
@@ -4797,6 +4836,7 @@ MonoBehaviour:
   ObjNames:
   - SkinPlateInHand
   toShow: 1
+  meshRenderer: 0
 --- !u!114 &1216786620913589697
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -4810,6 +4850,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: cloth_target
+  resetToTarget: 
   resetCamera: 0
 --- !u!1101 &1304724433410790898
 AnimatorStateTransition:
@@ -4899,6 +4940,7 @@ MonoBehaviour:
   ObjNames:
   - water_flow_effect
   toShow: 0
+  meshRenderer: 0
 --- !u!1101 &1623024615482149773
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -5129,6 +5171,19 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &2329354702785827567
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39579d8139b58744f99daf988f89bcb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionFrame: 180
 --- !u!1101 &2347189085040403793
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -5233,6 +5288,7 @@ MonoBehaviour:
   ObjNames:
   - cloth_02_onpatient_os_care
   toShow: 0
+  meshRenderer: 0
 --- !u!114 &2427136721768063698
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -5321,6 +5377,7 @@ MonoBehaviour:
   ObjNames:
   - GauzeOnStoma2
   toShow: 0
+  meshRenderer: 0
 --- !u!1102 &2546852581428473180
 AnimatorState:
   serializedVersion: 5
@@ -5452,6 +5509,7 @@ MonoBehaviour:
   ObjNames:
   - water_flow_effect
   toShow: 1
+  meshRenderer: 0
 --- !u!1102 &2838247942610594456
 AnimatorState:
   serializedVersion: 5
@@ -5636,6 +5694,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: Sink_active
+  resetToTarget: 
   resetCamera: 0
 --- !u!1102 &3291470091796722108
 AnimatorState:
@@ -5793,6 +5852,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: GivingSkinPlate_target
+  resetToTarget: 
   resetCamera: 0
 --- !u!1102 &3692966592069962536
 AnimatorState:
@@ -5855,6 +5915,7 @@ MonoBehaviour:
   ObjNames:
   - SkinPlateOnBody
   toShow: 1
+  meshRenderer: 0
 --- !u!1101 &3755798183473672846
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -5921,6 +5982,7 @@ AnimatorState:
   - {fileID: -3240784865354527749}
   - {fileID: -7675469917593642269}
   - {fileID: -7546777130120749521}
+  - {fileID: -154788700375080259}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -5967,6 +6029,7 @@ MonoBehaviour:
   ObjNames:
   - OstomyBagOnBody
   toShow: 1
+  meshRenderer: 0
 --- !u!1101 &3879101760317871588
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -6923,6 +6986,7 @@ MonoBehaviour:
   ObjNames:
   - GauzeOnStoma2
   toShow: 0
+  meshRenderer: 0
 --- !u!114 &5707323691995499016
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7147,6 +7211,7 @@ MonoBehaviour:
   ObjNames:
   - SkinPlateInHand
   toShow: 0
+  meshRenderer: 0
 --- !u!1101 &6416309066841062073
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -7310,6 +7375,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: Sink_active
+  resetToTarget: 
   resetCamera: 0
 --- !u!114 &6917360171445252315
 MonoBehaviour:
@@ -7668,6 +7734,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: cloth_target
+  resetToTarget: 
   resetCamera: 0
 --- !u!114 &7797261501803334754
 MonoBehaviour:
@@ -7995,6 +8062,7 @@ MonoBehaviour:
   ObjNames:
   - GauzeOnStoma2
   toShow: 1
+  meshRenderer: 0
 --- !u!114 &8776070355624000522
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -8260,6 +8328,7 @@ MonoBehaviour:
   ObjNames:
   - cloth_02_onpatient_os_care
   toShow: 1
+  meshRenderer: 0
 --- !u!114 &9185821662759553129
 MonoBehaviour:
   m_ObjectHideFlags: 3
