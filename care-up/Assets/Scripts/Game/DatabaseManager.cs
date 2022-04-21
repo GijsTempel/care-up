@@ -28,6 +28,8 @@ public class DatabaseManager : MonoBehaviour
 
     private static string formattedTimeSpan = TimeSpan.Zero.ToString();
 
+    private static LeaderboardDB leaderboardDB;
+
     private void Awake()
     {
         if (instance)
@@ -57,6 +59,9 @@ public class DatabaseManager : MonoBehaviour
         WPServer._CheckBundleVersion();
         WPServer.RequestPurchases(WULogin.UID);
         WUData.FetchUserGameInfo(WULogin.UID, FetchEverything_success, -1, PostInit);
+
+        leaderboardDB = FindObjectOfType<LeaderboardDB>().GetComponent<LeaderboardDB>();
+        leaderboardDB.Init();
     }
 
     public static void Clean()

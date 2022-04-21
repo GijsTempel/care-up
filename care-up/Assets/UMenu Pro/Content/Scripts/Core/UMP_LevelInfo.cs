@@ -21,7 +21,7 @@ public class UMP_LevelInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     private void Start()
     {
         sounds = GameObject.FindObjectOfType<Button_Functions>();
-        for(int i = 0; i < MarksPanel.transform.GetChildCount(); i++)
+        for(int i = 0; i < MarksPanel.transform.childCount; i++)
         {
             List<GameObject> currentMarks = new List<GameObject>();
             currentMarks.Add(MarksPanel.transform.GetChild(i).GetChild(0).gameObject);
