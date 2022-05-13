@@ -17,7 +17,7 @@ public class LeaderboardDB : MonoBehaviour
         public int Points;
     }
 
-    public static bool isInTheBoard;
+    public bool isInTheBoard;
     public static int currentRank;
     public static List<LeaderboardLine> board; // <===== this is your main list of current league leaderboard 
 

@@ -41,6 +41,7 @@ public class LevelButton : MonoBehaviour
     public bool testDisabled;
     public bool validated;
     public string totalPoints;
+    public string xPoints;
     bool started = false;
     [HideInInspector]
     public string[] isInProducts = new string[0];
@@ -317,6 +318,7 @@ public class LevelButton : MonoBehaviour
                     manager.currentSceneVisualName = displayName;
                     manager.currentPEcourseID = sceneID;
                     manager.validatedScene = validated;
+                    manager.currentSceneXPoints = xPoints;
                 }
 
                 // filling up options
@@ -360,6 +362,7 @@ public class LevelButton : MonoBehaviour
                     manager.currentSceneVisualName = displayName;
                     manager.currentPEcourseID = sceneID;
                     manager.validatedScene = validated;
+                    manager.currentSceneXPoints = xPoints;
                 }
             }
 
