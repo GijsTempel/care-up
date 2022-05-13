@@ -5,6 +5,7 @@ using MBS;
 using UnityEngine.SceneManagement;
 using System;
 using System.Globalization;
+using System.Text;
 
 public class DatabaseManager : MonoBehaviour
 {
@@ -372,5 +373,40 @@ public class DatabaseManager : MonoBehaviour
         string json = JsonUtility.ToJson(notif);
         Debug.Log("push " + id.ToString() + " " + json);
         UpdateField("CANotifications", "id"+id.ToString(), json);
+    }
+
+    // difficulty: 1-5
+    public static bool GetSceneCompletion(string scene, int difficulty)
+    {
+        PlayerPrefsManager manager = FindObjectOfType<PlayerPrefsManager>();
+        string dbName = manager.GetSceneDatabaseName(scene);
+
+        string result = FetchField("SceneCompletions", dbName);
+        string[] array = result.Split(' ');
+        if (array.Length >= difficulty)
+        {
+            return array[difficulty-1] == "1";
+        }
+
+        return false;
+    }
+
+    // difficulty: 1-5
+    public static void UpdateSceneCompletion(string scene, int difficulty, bool completed = true)
+    {
+        PlayerPrefsManager manager = FindObjectOfType<PlayerPrefsManager>();
+        string dbName = manager.GetSceneDatabaseName(scene);
+
+        string result = FetchField("SceneCompletions", dbName);
+
+        StringBuilder sb = new StringBuilder(result);
+		
+		if (result.Length == 0) 
+		{
+			sb.AppendLine("0 0 0 0 0");
+		}
+		
+        sb[(difficulty-1)*2] = '1';
+		UpdateField("SceneCompletions", dbName, sb.ToString());
     }
 }

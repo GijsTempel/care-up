@@ -280,6 +280,8 @@ public class EndScoreManager : MonoBehaviour
             else {
                 DatabaseManager.leaderboardDB.PushToLeaderboard(WULogin.UID, WULogin.display_name, total_xp);
             }
+
+            DatabaseManager.UpdateSceneCompletion(manager.currentSceneVisualName, manager.currentDifficultyLevel);
         }
         else
         {
