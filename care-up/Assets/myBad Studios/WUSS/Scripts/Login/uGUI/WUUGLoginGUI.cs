@@ -2,14 +2,14 @@
 using System;
 using UnityEngine.UI;
 using BuildTimestampDisplay;
+using UnityEngine.EventSystems;
 
 namespace MBS
 {
     public class WUUGLoginGUI : WUUGLoginLocalisation
     {
-
+        public Button passVisibilityToggle;
         public enum eWULUGUIState { Inactive, Active }
-
         [Serializable]
         public struct WUPanels
         {
@@ -35,7 +35,8 @@ namespace MBS
             custom_1,
             SessionTimeOutPanel,
             start_menu,
-            debug_options;
+            debug_options,
+            inputPopPanel;
         }
 
         [Serializable]
@@ -88,8 +89,48 @@ namespace MBS
         private bool removeText = false;
         private bool passwordVisible = false;
 
+
+        void ShowLoginPasswordInput(bool showLogin = true)
+        {
+            panels.inputPopPanel.SetActive(true);
+            InputField inputPop = panels.inputPopPanel.transform.Find("IP1/IP2/IP3/InputPop").GetComponent<InputField>();
+            Text inputTitle = panels.inputPopPanel.transform.Find("IP1/IP2/InputTitle").GetComponent<Text>();
+        
+            if (showLogin)
+            {
+                inputTitle.text = "Gebruikersnaam";
+                inputPop.contentType = InputField.ContentType.Standard;
+                inputPop.lineType = InputField.LineType.SingleLine;
+                inputPop.text = fields.login_username.text;
+                passVisibilityToggle.gameObject.SetActive(false);
+            }
+            else
+            {
+                inputTitle.text = "Wachtwoord";
+                inputPop.contentType = InputField.ContentType.Password;
+                inputPop.lineType = InputField.LineType.SingleLine;
+                inputPop.text = fields.login_password.text;
+                passVisibilityToggle.gameObject.SetActive(true);
+            }
+
+            EventSystem.current.SetSelectedGameObject(inputPop.gameObject);
+
+        }
+
+        public void HideLoginPasswordInput()
+        {
+            panels.inputPopPanel.SetActive(false);
+        }
         void Update()
         {
+            if (fields.login_username.isFocused)
+            {
+                ShowLoginPasswordInput();
+            }
+            else if (fields.login_password.isFocused)
+            {
+                ShowLoginPasswordInput(false);
+            }
             if (WULogin.UserNotWithEmail == true)
             {
                 DisplayScreen(panels.error_login_pop_up);
