@@ -95,6 +95,7 @@ public class PlayerPrefsManager : MonoBehaviour
     // sets up after selecting scene in "scene selection"
     public string currentSceneVisualName;
     public string currentPEcourseID;
+    public string currentSceneXPoints;
     public int currentDifficultyLevel;
     public bool validatedScene;
 

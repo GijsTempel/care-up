@@ -28,7 +28,7 @@ public class DatabaseManager : MonoBehaviour
 
     private static string formattedTimeSpan = TimeSpan.Zero.ToString();
 
-    private static LeaderboardDB leaderboardDB;
+    public static LeaderboardDB leaderboardDB;
 
     private void Awake()
     {
