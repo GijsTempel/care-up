@@ -1152,17 +1152,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 1356706976}
-          m_MethodName: onClickChangeColor
-          m_Mode: 2
-          m_Arguments:
-            m_ObjectArgument: {fileID: 93757324}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!114 &93757323
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1187,7 +1176,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.3019608, g: 0.88235295, b: 0.8784314, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.3019608, g: 0.88235295, b: 0.8784314, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -1219,10 +1208,21 @@ MonoBehaviour:
       m_Calls: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1356706976}
+        m_MethodName: PipupInputChanged
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
-  m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
+  m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 1}
   m_Text: 
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 5
@@ -3872,7 +3872,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.039215688, g: 0.5372549, b: 0.6392157, a: 0.9019608}
+  m_Color: {r: 0.06460997, g: 0.5690331, b: 0.71, a: 0.9098039}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -6871,8 +6871,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 400.44592, y: -173.68802}
-  m_SizeDelta: {x: 800.89185, y: 107.85867}
+  m_AnchoredPosition: {x: 400.21313, y: -173.58878}
+  m_SizeDelta: {x: 800.4263, y: 107.79251}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &454620573
 MonoBehaviour:
@@ -9284,7 +9284,7 @@ PrefabInstance:
     - target: {fileID: 224843258814635222, guid: 0b991aadbf8286f42b66d02864ebc431,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 19751784
+      value: 19882592
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b991aadbf8286f42b66d02864ebc431, type: 3}
@@ -11675,7 +11675,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 757137049}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1356706976}
+        m_MethodName: OnTogglePasswordVisibility
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &757137048
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13005,8 +13016,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 400.44592, y: -53.929337}
-  m_SizeDelta: {x: 800.89185, y: 107.85867}
+  m_AnchoredPosition: {x: 400.21313, y: -53.896255}
+  m_SizeDelta: {x: 800.4263, y: 107.79251}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &835760731
 MonoBehaviour:
@@ -17036,7 +17047,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1067670568}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1356706976}
+        m_MethodName: OnTogglePasswordVisibility
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &1067670570
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -19295,7 +19317,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.11544463}
   m_AnchorMax: {x: 1, y: 0.91662955}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -923.9521, y: 0}
+  m_SizeDelta: {x: -925.6466, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1244161528
 Animator:
@@ -21209,6 +21231,8 @@ MonoBehaviour:
   LoginPasswordField: {fileID: 454620575}
   loginPasswordVisibilityOn: {fileID: 876099358}
   loginPasswordVisibilityOff: {fileID: 1715987198}
+  popupLoginPasswordVisibilityOn: {fileID: 1410848785}
+  popupLoginPasswordVisibilityOff: {fileID: 2082174449}
   loginPasswordVisibility: {fileID: 757137047}
   RegUsernameField: {fileID: 1859842708}
   RegEmailField: {fileID: 1511844671}
@@ -21240,6 +21264,7 @@ MonoBehaviour:
     personal_url: {fileID: 0}
     personal_bio: {fileID: 0}
     serial_number: {fileID: 0}
+    popup_input: {fileID: 93757323}
   panels:
     login_menu: {fileID: 223340621}
     login_screen: {fileID: 46638763}
@@ -22075,7 +22100,7 @@ RectTransform:
   m_AnchorMin: {x: 0.24800001, y: 0.0667783}
   m_AnchorMax: {x: 0.75200003, y: 0.21237737}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: -15.717965}
+  m_SizeDelta: {x: 0, y: -15.708826}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1407933897
 MonoBehaviour:
@@ -23020,7 +23045,7 @@ RectTransform:
   m_AnchorMin: {x: 0.24800001, y: 0.25386795}
   m_AnchorMax: {x: 0.75200003, y: 0.37439594}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 5.986781}
+  m_SizeDelta: {x: 0, y: 5.9833097}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1494346821
 MonoBehaviour:
