@@ -32,6 +32,7 @@ public class SceneInfo
     public string nameForDatabase = "";
     public bool hasVideoMode = false;
     public string videoURL = "";
+    public string xPoints = "1";
     public List<string> inGroups = new List<string>();
 }
 
@@ -299,6 +300,9 @@ public class LevelSelectionScene_UI : MonoBehaviour
                     }
                 }
             }
+
+            if (xmlSceneNode.Attributes["xPoints"] != null)
+                sceneInfo.xPoints = xmlSceneNode.Attributes["xPoints"].Value;
         }
 
 
@@ -404,6 +408,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 sceneUnit.validated ? "Geaccrediteerd" : "";
 
             sceneUnit.totalPoints = sceneInfo.totalPoints;
+            sceneUnit.xPoints = sceneInfo.xPoints;
 
             // leaderboard stuff
             if (pp.subscribed)
