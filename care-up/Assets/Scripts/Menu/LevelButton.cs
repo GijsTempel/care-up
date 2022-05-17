@@ -62,6 +62,7 @@ public class LevelButton : MonoBehaviour
     public Text descriptionText;
     List<GameObject> frameElements = new List<GameObject>();
 
+    List<bool> levelComplitionList = new List<bool>();
     // saving info
     public struct Info
     {
@@ -153,14 +154,30 @@ public class LevelButton : MonoBehaviour
 
     void UpdateScoreMarks()
     {
-        if (marksAnimations.Count < 0)
+        if (marksAnimations.Count <= 0)
         {
-            scoreTimeout = 0.2f;
+            scoreTimeout = 0.3f;
             return;
         }
-        foreach (Animation m in marksAnimations)
-        {
-            m.Play("twistOff");
+        levelComplitionList.Clear();
+        for (int i = 0; i < 5; i++)
+            levelComplitionList.Add(DatabaseManager.GetSceneCompletion(displayName, i));
+
+        for (int i = 0; i < marksAnimations.Count; i++)
+        { 
+            Animation m = marksAnimations[i];
+            
+            if (levelComplitionList.Count > i)
+            {
+                if (levelComplitionList[i])
+                    m.Play("twistOn");
+                else
+                    m.Play("twistOff");
+            }
+            else
+            {
+                m.Play("twistOff");
+            }
         }
     }
 

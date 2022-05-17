@@ -382,10 +382,13 @@ public class DatabaseManager : MonoBehaviour
         string dbName = manager.GetSceneDatabaseName(scene);
 
         string result = FetchField("SceneCompletions", dbName);
-        string[] array = result.Split(' ');
-        if (array.Length >= difficulty)
+        if (result != "")
         {
-            return array[difficulty-1] == "1";
+            string[] array = result.Split(' ');
+            if (array.Length > difficulty)
+            {
+                return array[difficulty] == "1";
+            }
         }
 
         return false;
@@ -403,10 +406,10 @@ public class DatabaseManager : MonoBehaviour
 		
 		if (result.Length == 0) 
 		{
-			sb.AppendLine("0 0 0 0 0");
+			sb.AppendLine("0 0 0 0 0 ");
 		}
 		
-        sb[(difficulty-1)*2] = '1';
+        sb[(difficulty)*2] = '1';
 		UpdateField("SceneCompletions", dbName, sb.ToString());
     }
 }
