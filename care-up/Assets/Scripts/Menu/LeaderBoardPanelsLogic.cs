@@ -10,7 +10,7 @@ public class LeaderBoardPanelsLogic : MonoBehaviour
         GameObject.FindObjectOfType<LeaderBoard>().leaderboard.SetActive(false);
         GameObject.FindObjectOfType<LeaderBoard>().infoBar.SetActive(false);
         GameObject.FindObjectOfType<LeaderBoard>().leftBar.SetActive(true);
-        GameObject.FindObjectOfType<UMP_Manager>().LeaderBoardSearchBar.gameObject.SetActive(true);
-        GameObject.FindObjectOfType<UMP_Manager>().LeaderBoardSearchBar.text = "";
+        //GameObject.FindObjectOfType<UMP_Manager>().LeaderBoardSearchBar.gameObject.SetActive(true);
+        //GameObject.FindObjectOfType<UMP_Manager>().LeaderBoardSearchBar.text = "";
     }
 }
