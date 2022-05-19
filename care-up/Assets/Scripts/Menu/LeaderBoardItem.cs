@@ -10,7 +10,8 @@ public class LeaderBoardItem : MonoBehaviour
 {
     public Text userNameText;
     public Text userPositionText;
-
+    public Text userXPText;
+    public List<GameObject> medals;
     string userName;
     int userRank;
     int userPoints;
@@ -25,8 +26,14 @@ public class LeaderBoardItem : MonoBehaviour
         userRank = rank;
         userPoints = points;
         userPos = _pos;
-        userNameText.text = userName + " " + userRank.ToString() + " " + userPoints.ToString();
+        userNameText.text = userName;
+        userXPText.text = userPoints.ToString() + " xp";
         userPositionText.text = userPos.ToString();
+        for (int i = 0; i < medals.Count; i++)
+        {
+            medals[i].SetActive(i == _pos-1);
+        }
+        userPositionText.gameObject.SetActive(_pos > 3);
     }
    
 }
