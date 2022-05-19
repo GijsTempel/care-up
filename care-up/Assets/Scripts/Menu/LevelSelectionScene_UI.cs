@@ -34,6 +34,7 @@ public class SceneInfo
     public string videoURL = "";
     public string xPoints = "1";
     public List<string> inGroups = new List<string>();
+    
 }
 
 /// <summary>
@@ -43,6 +44,7 @@ public class SceneInfo
 public class LevelSelectionScene_UI : MonoBehaviour
 {
     public string debugSS;
+    public List<GameObject> rankButtons;
     private PlayerPrefsManager ppManager;
     float initTime = 0f;
     bool sceneButtonsUpdated = false;
@@ -68,7 +70,14 @@ public class LevelSelectionScene_UI : MonoBehaviour
         }
     }
 
-
+    public void SelectRank(int r)
+    {
+        for (int i = 0; i < rankButtons.Count; i++)
+        {
+            rankButtons[i].transform.Find("Button").GetComponent<Button>().interactable = i != r;
+            rankButtons[i].transform.Find("WCircle").GetComponent<Image>().enabled = i == r;
+        }
+    }
     public int GetSceneGroupNum(string _groupID)
     {
         int value = 0;
@@ -451,17 +460,20 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
     public void UpdateLeaderBoard()
     {
+        int rank = 0;
         if (LeaderboardDB.board.Count > 0)
         {
-            for(int i = 0; i < LeaderboardDB.board.Count; i++)
+            rank = LeaderboardDB.board[0].Rank;
+            for (int i = 0; i < LeaderboardDB.board.Count; i++)
             {
                 GameObject leaderboardItem = Instantiate<GameObject>(Resources.Load<GameObject>("NecessaryPrefabs/UI/LeaderBoardItem"),
                     GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Leaderboard/ContentPanel/Scenes/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder/Protocols/content").transform);
                 LeaderBoardItem leaderboardItemInfo = leaderboardItem.GetComponent<LeaderBoardItem>();
                 LeaderboardDB.LeaderboardLine lbLine = LeaderboardDB.board[i];
-                leaderboardItemInfo.SetValues(lbLine.Name, lbLine.Rank, lbLine.Points, i+1);
+                leaderboardItemInfo.SetValues(lbLine.Name, lbLine.Rank, lbLine.Points, lbLine.UserID, i+1);
             }
         }
+        SelectRank(rank);
     }
     public void LevelScrollChanged()
     {
