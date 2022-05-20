@@ -228,7 +228,12 @@ public class LevelButton : MonoBehaviour
         }
 
         descriptionText.text = sceneDescription;
-
+        transform.Find("Points").GetComponent<Text>().text = xPoints;
+        Text pointsLabel = transform.Find("PointsLabel").GetComponent<Text>();
+        if (xPoints == "1")
+            pointsLabel.text = "Point";
+        else
+            pointsLabel.text = "Points";
         started = true;
     }
 
@@ -337,6 +342,7 @@ public class LevelButton : MonoBehaviour
                     manager.validatedScene = validated;
                     manager.currentSceneXPoints = xPoints;
                 }
+
 
                 // filling up options
                 for (int i = 0; i < variations.Count; ++i)
