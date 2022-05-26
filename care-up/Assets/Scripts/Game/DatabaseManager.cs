@@ -379,7 +379,7 @@ public class DatabaseManager : MonoBehaviour
     public static bool GetSceneCompletion(string scene, int difficulty)
     {
         PlayerPrefsManager manager = FindObjectOfType<PlayerPrefsManager>();
-        string dbName = manager.GetSceneDatabaseName(scene);
+        string dbName = manager.GetSceneDatabaseName(scene).Replace(" ", "_");
 
         string result = FetchField("SceneCompletions", dbName);
         if (result != "")
@@ -398,7 +398,7 @@ public class DatabaseManager : MonoBehaviour
     public static void UpdateSceneCompletion(string scene, int difficulty, bool completed = true)
     {
         PlayerPrefsManager manager = FindObjectOfType<PlayerPrefsManager>();
-        string dbName = manager.GetSceneDatabaseName(scene);
+        string dbName = manager.GetSceneDatabaseName(scene).Replace(" ", "_");
 
         string result = FetchField("SceneCompletions", dbName);
 
