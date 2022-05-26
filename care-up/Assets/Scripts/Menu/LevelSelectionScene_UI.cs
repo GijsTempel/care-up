@@ -32,7 +32,9 @@ public class SceneInfo
     public string nameForDatabase = "";
     public bool hasVideoMode = false;
     public string videoURL = "";
+    public string xPoints = "1";
     public List<string> inGroups = new List<string>();
+    
 }
 
 /// <summary>
@@ -42,6 +44,7 @@ public class SceneInfo
 public class LevelSelectionScene_UI : MonoBehaviour
 {
     public string debugSS;
+    public List<GameObject> rankButtons;
     private PlayerPrefsManager ppManager;
     float initTime = 0f;
     bool sceneButtonsUpdated = false;
@@ -67,7 +70,14 @@ public class LevelSelectionScene_UI : MonoBehaviour
         }
     }
 
-
+    public void SelectRank(int r)
+    {
+        for (int i = 0; i < rankButtons.Count; i++)
+        {
+            rankButtons[i].transform.Find("Button").GetComponent<Button>().interactable = i != r;
+            rankButtons[i].transform.Find("WCircle").GetComponent<Image>().enabled = i == r;
+        }
+    }
     public int GetSceneGroupNum(string _groupID)
     {
         int value = 0;
@@ -299,6 +309,9 @@ public class LevelSelectionScene_UI : MonoBehaviour
                     }
                 }
             }
+
+            if (xmlSceneNode.Attributes["xPoints"] != null)
+                sceneInfo.xPoints = xmlSceneNode.Attributes["xPoints"].Value;
         }
 
 
@@ -404,6 +417,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 sceneUnit.validated ? "Geaccrediteerd" : "";
 
             sceneUnit.totalPoints = sceneInfo.totalPoints;
+            sceneUnit.xPoints = sceneInfo.xPoints;
 
             // leaderboard stuff
             if (pp.subscribed)
@@ -412,28 +426,28 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 sceneUnit.SetLockState(sceneInfo.demoLock);
 
 
-            GameObject button = Instantiate<GameObject>(Resources.Load<GameObject>("NecessaryPrefabs/UI/LeaderBoardSceneButton"),
-                GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Leaderboard/ContentPanel/Scenes/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder/Protocols/content").transform);
-            LeaderBoardSceneButton buttonInfo = button.GetComponent<LeaderBoardSceneButton>();
-            button.transform.Find("Text").GetComponent<Text>().text = sceneUnit.displayName;
+            //GameObject button = Instantiate<GameObject>(Resources.Load<GameObject>("NecessaryPrefabs/UI/LeaderBoardItem"),
+            //    GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Leaderboard/ContentPanel/Scenes/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder/Protocols/content").transform);
+            //LeaderBoardSceneButton buttonInfo = button.GetComponent<LeaderBoardSceneButton>();
+            //button.transform.Find("Text").GetComponent<Text>().text = sceneUnit.displayName;
 
-            buttonInfo.sceneName = sceneUnit.sceneName;
-            buttonInfo.multiple = sceneUnit.multiple;
+            //buttonInfo.sceneName = sceneUnit.sceneName;
+            //buttonInfo.multiple = sceneUnit.multiple;
 
-            if (buttonInfo.multiple)
-            {
-                foreach (LevelButton.Info v in sceneUnit.variations)
-                {
-                    buttonInfo.sceneNames.Add(v.sceneName);
-                    buttonInfo.buttonNames.Add(v.displayName);
-                }
-            }
+            //if (buttonInfo.multiple)
+            //{
+            //    foreach (LevelButton.Info v in sceneUnit.variations)
+            //    {
+            //        buttonInfo.sceneNames.Add(v.sceneName);
+            //        buttonInfo.buttonNames.Add(v.displayName);
+            //    }
+            //}
 
-            if (firstScene)
-            {
-                firstScene = false;
-                buttonInfo.OnMainButtonClick();
-            }
+            //if (firstScene)
+            //{
+            //    firstScene = false;
+            //    buttonInfo.OnMainButtonClick();
+            //}
 
             sceneUnit.testDisabled = sceneInfo.testDisabled;
             sceneUnit.UpdateAutoPlayToggle();
@@ -441,9 +455,26 @@ public class LevelSelectionScene_UI : MonoBehaviour
         ScrollRect levelScroll =  GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Play/ContentPanel/PlayElements/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder").GetComponent<ScrollRect>();
         
         levelScroll.verticalNormalizedPosition = ppManager.LevelScrollPosition;
+        UpdateLeaderBoard();
     }
 
-
+    public void UpdateLeaderBoard()
+    {
+        int rank = 0;
+        if (LeaderboardDB.board.Count > 0)
+        {
+            rank = LeaderboardDB.board[0].Rank;
+            for (int i = 0; i < LeaderboardDB.board.Count; i++)
+            {
+                GameObject leaderboardItem = Instantiate<GameObject>(Resources.Load<GameObject>("NecessaryPrefabs/UI/LeaderBoardItem"),
+                    GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Leaderboard/ContentPanel/Scenes/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder/Protocols/content").transform);
+                LeaderBoardItem leaderboardItemInfo = leaderboardItem.GetComponent<LeaderBoardItem>();
+                LeaderboardDB.LeaderboardLine lbLine = LeaderboardDB.board[i];
+                leaderboardItemInfo.SetValues(lbLine.Name, lbLine.Rank, lbLine.Points, lbLine.UserID, i+1);
+            }
+        }
+        SelectRank(rank);
+    }
     public void LevelScrollChanged()
     {
         ScrollRect levelScroll =  GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Play/ContentPanel/PlayElements/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder").GetComponent<ScrollRect>();
@@ -494,7 +525,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
         else
         {
             
-            GameObject.FindObjectOfType<UMP_Manager>().LeaderBoardSearchBar.gameObject.SetActive(false);
+            //GameObject.FindObjectOfType<UMP_Manager>().LeaderBoardSearchBar.gameObject.SetActive(false);
             lb.top.SetActive(false);
             lb.backButton.GetComponent<Button>().interactable = true;
             lb.topDescription.SetActive(false);
