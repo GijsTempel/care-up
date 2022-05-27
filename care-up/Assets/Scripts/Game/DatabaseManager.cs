@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MBS;
@@ -375,11 +375,11 @@ public class DatabaseManager : MonoBehaviour
         UpdateField("CANotifications", "id"+id.ToString(), json);
     }
 
-    // difficulty: 1-5
+    // difficulty: 0-4
     public static bool GetSceneCompletion(string scene, int difficulty)
     {
         PlayerPrefsManager manager = FindObjectOfType<PlayerPrefsManager>();
-        string dbName = manager.GetSceneDatabaseName(scene);
+        string dbName = PlayerPrefsManager.FormatSceneName(manager.GetSceneDatabaseName(scene));
 
         string result = FetchField("SceneCompletions", dbName);
         if (result != "")
@@ -394,11 +394,11 @@ public class DatabaseManager : MonoBehaviour
         return false;
     }
 
-    // difficulty: 1-5
+    // difficulty: 0-4
     public static void UpdateSceneCompletion(string scene, int difficulty, bool completed = true)
     {
         PlayerPrefsManager manager = FindObjectOfType<PlayerPrefsManager>();
-        string dbName = manager.GetSceneDatabaseName(scene);
+        string dbName = PlayerPrefsManager.FormatSceneName(manager.GetSceneDatabaseName(scene));
 
         string result = FetchField("SceneCompletions", dbName);
 
@@ -411,5 +411,49 @@ public class DatabaseManager : MonoBehaviour
 		
         sb[(difficulty)*2] = '1';
 		UpdateField("SceneCompletions", dbName, sb.ToString());
+    }
+
+    // difficulty: 0-4
+    public static int GetCompletedSceneScore(string scene, int difficulty)
+    {
+        PlayerPrefsManager manager = FindObjectOfType<PlayerPrefsManager>();
+        string dbName = PlayerPrefsManager.FormatSceneName(manager.GetSceneDatabaseName(scene));
+
+        string result = FetchField("SceneCompletedScores", dbName);
+        if (result != "")
+        {
+            string[] array = result.Split(' ');
+            if (array.Length > difficulty)
+            {
+                int r = 0;
+                int.TryParse(array[difficulty], out r);
+                return r;
+            }
+        }
+
+        return 0;
+    }
+    
+    // difficulty: 0-4
+    public static void UpdateCompletedSceneScore(string scene, int difficulty, int score)
+    {
+        PlayerPrefsManager manager = FindObjectOfType<PlayerPrefsManager>();
+        string dbName = PlayerPrefsManager.FormatSceneName(manager.GetSceneDatabaseName(scene));
+
+        string result = FetchField("SceneCompletedScores", dbName);
+        if (result != "")
+        {
+            string[] array = result.Split(' ');
+            if (array.Length > difficulty)
+            {
+                array[difficulty] = score.ToString();
+
+                StringBuilder sb = new StringBuilder();
+                foreach (string s in array) {
+                    sb.Append(s + ' ');
+                }
+                UpdateField("SceneCompletedScores", dbName, sb.ToString());
+            }
+        }
     }
 }
