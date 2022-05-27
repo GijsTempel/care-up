@@ -446,13 +446,17 @@ public class DatabaseManager : MonoBehaviour
             string[] array = result.Split(' ');
             if (array.Length > difficulty)
             {
-                array[difficulty] = score.ToString();
+                int currentScore = 0;
+                int.TryParse(array[difficulty], out currentScore);
+                if (score > currentScore) {
+                    array[difficulty] = score.ToString();
 
-                StringBuilder sb = new StringBuilder();
-                foreach (string s in array) {
-                    sb.Append(s + ' ');
+                    StringBuilder sb = new StringBuilder();
+                    foreach (string s in array) {
+                        sb.Append(s + ' ');
+                    }
+                    UpdateField("SceneCompletedScores", dbName, sb.ToString());
                 }
-                UpdateField("SceneCompletedScores", dbName, sb.ToString());
             }
         }
     }

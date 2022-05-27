@@ -282,6 +282,7 @@ public class EndScoreManager : MonoBehaviour
             }
 
             DatabaseManager.UpdateSceneCompletion(manager.currentSceneVisualName, manager.currentDifficultyLevel);
+            DatabaseManager.UpdateCompletedSceneScore(manager.currentSceneVisualName, manager.currentDifficultyLevel, percent);
         }
         else
         {
