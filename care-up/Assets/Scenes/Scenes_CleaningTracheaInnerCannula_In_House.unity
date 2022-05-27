@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 8900000, guid: 988a89118e40395439d75859c8c0de64, type: 3}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.8062155, g: 0.89956886, b: 0.9582524, a: 1}
+  m_IndirectSpecularColor: {r: 0.8065561, g: 0.900335, b: 0.95654315, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -67,7 +67,7 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 15200, guid: 0000000000000000f000000000000000,
       type: 0}
     m_LightmapsBakeMode: 0
-    m_TextureCompression: 1
+    m_TextureCompression: 0
     m_FinalGather: 0
     m_FinalGatherFiltering: 1
     m_FinalGatherRayCount: 512
@@ -414,6 +414,7 @@ MonoBehaviour:
   TextDebug: 0
   currentActionIndex: 0
   actionListName: Actions_CleaningTracheaInnerCannula
+  currentRandomEventIndices: 
 --- !u!114 &251147194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4156,6 +4157,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114608312466246624, guid: deadb39decb974c49ba8895129d7e82f,
         type: 3}
+      propertyPath: randomEventFiles.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114608312466246624, guid: deadb39decb974c49ba8895129d7e82f,
+        type: 3}
+      propertyPath: randomEventSetup.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114608312466246624, guid: deadb39decb974c49ba8895129d7e82f,
+        type: 3}
+      propertyPath: randomEventFiles.Array.data[0]
+      value: Stoma
+      objectReference: {fileID: 0}
+    - target: {fileID: 114608312466246624, guid: deadb39decb974c49ba8895129d7e82f,
+        type: 3}
       propertyPath: infoList.Array.data[0].prefabName
       value: Intramusculair Injecteren
       objectReference: {fileID: 0}
@@ -4308,6 +4324,16 @@ PrefabInstance:
         type: 3}
       propertyPath: infoList.Array.data[15].prefabName
       value: Huid bouw functie huidflora
+      objectReference: {fileID: 0}
+    - target: {fileID: 114608312466246624, guid: deadb39decb974c49ba8895129d7e82f,
+        type: 3}
+      propertyPath: randomEventSetup.Array.data[0].actionRange
+      value: 2 - 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114608312466246624, guid: deadb39decb974c49ba8895129d7e82f,
+        type: 3}
+      propertyPath: randomEventSetup.Array.data[0].eventGroups
+      value: Trach
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: deadb39decb974c49ba8895129d7e82f, type: 3}
@@ -7962,7 +7988,7 @@ PrefabInstance:
     - target: {fileID: 1975813588396021828, guid: 0afb95351771d054683b5bf7c7f2f2bd,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1975813588396021829, guid: 0afb95351771d054683b5bf7c7f2f2bd,
         type: 3}

@@ -226,13 +226,28 @@ public class AnimationSequence
                         actionManager.OnSequenceStepAction(animation);
                         pointsEarned++;
                         Object.Destroy(GameObject.Find("SelectionDialogue"));
-                        GameObject.FindObjectOfType<InjectionPatient>().InjectNeedleInArmDialogue();
-                        return;
+                        if (GameObject.FindObjectOfType<InjectionPatient>())
+                        {
+                            GameObject.FindObjectOfType<InjectionPatient>().InjectNeedleInArmDialogue();
+                        }
+                        if (GameObject.FindObjectOfType<InjectionPatient_v2>())
+                        {
+                            GameObject.FindObjectOfType<InjectionPatient_v2>().InjectNeedleInArmDialogue();
+                        }
+                            return;
                     }
 
                     if (animation == "Inject medicine slow and steady")
                     {
-                        GameObject.FindObjectOfType<InjectionPatient>().InjectMedicineSlowlyDialogue();
+                        if (GameObject.FindObjectOfType<InjectionPatient>())
+                        {
+                            GameObject.FindObjectOfType<InjectionPatient>().InjectMedicineSlowlyDialogue();
+                        }
+                        if (GameObject.FindObjectOfType<InjectionPatient_v2>())
+                        {
+                            GameObject.FindObjectOfType<InjectionPatient_v2>().InjectMedicineSlowlyDialogue();
+                        }
+
                     }
 
                     if (animation == "Inject Pricking pen" || animation == "ThrowSyringe")
