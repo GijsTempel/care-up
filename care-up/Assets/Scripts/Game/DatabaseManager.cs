@@ -441,22 +441,24 @@ public class DatabaseManager : MonoBehaviour
         string dbName = PlayerPrefsManager.FormatSceneName(manager.GetSceneDatabaseName(scene));
 
         string result = FetchField("SceneCompletedScores", dbName);
-        if (result != "")
-        {
-            string[] array = result.Split(' ');
-            if (array.Length > difficulty)
-            {
-                int currentScore = 0;
-                int.TryParse(array[difficulty], out currentScore);
-                if (score > currentScore) {
-                    array[difficulty] = score.ToString();
 
-                    StringBuilder sb = new StringBuilder();
-                    foreach (string s in array) {
-                        sb.Append(s + ' ');
-                    }
-                    UpdateField("SceneCompletedScores", dbName, sb.ToString());
+        if (result == "")
+        {
+            result = "0 0 0 0 0 \n";
+        }
+        string[] array = result.Split(' ');
+        if (array.Length > difficulty)
+        {
+            int currentScore = 0;
+            int.TryParse(array[difficulty], out currentScore);
+            if (score > currentScore) {
+                array[difficulty] = score.ToString();
+
+                StringBuilder sb = new StringBuilder();
+                foreach (string s in array) {
+                    sb.Append(s + ' ');
                 }
+                UpdateField("SceneCompletedScores", dbName, sb.ToString());
             }
         }
     }

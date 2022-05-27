@@ -20,7 +20,7 @@ public class DialogLevelSelect : MonoBehaviour
     public Button ButtonLevel4;
     public Button ButtonLevel5;
     public GameObject WaitPanel;
-    List<Button> LevelScoreButtons = new List<Button>();
+    List<GameObject> LevelScoreProgressItems = new List<GameObject>();
     List<Button> LevelInfoButtons = new List<Button>();
 
     List<LevelInfoDataStruct> levelInfoData = new List<LevelInfoDataStruct>();
@@ -106,6 +106,7 @@ public class DialogLevelSelect : MonoBehaviour
             if (timeoutValue <= 0)
             {
                 UnlockLevelButtons();
+                UpdateLevelScores();
             }
         }
     }
@@ -114,6 +115,15 @@ public class DialogLevelSelect : MonoBehaviour
         PlayerPrefsManager.SetValueToSceneInCategory(manager.currentSceneVisualName, "PracticePlays", 0);
     }
 
+    public void UpdateLevelScores()
+    {
+        for(int i = 1; i < 5; i++)
+        {
+            int scoreProc = DatabaseManager.GetCompletedSceneScore(manager.currentSceneVisualName, i);
+            LevelScoreProgressItems[i].transform.Find("Progress").GetComponent<Image>().fillAmount = (float)scoreProc / 100f;
+            LevelScoreProgressItems[i].transform.Find("Text").GetComponent<Text>().text = scoreProc.ToString() + " %";
+        }
+    }
     public void SetupButtons()
     {
         List<Button> buttons = new List<Button> { VideoLevelSelectButton, ButtonLevel2, ButtonLevel3, ButtonLevel4, ButtonLevel5 };
@@ -134,7 +144,7 @@ public class DialogLevelSelect : MonoBehaviour
                 }
             }
         }
-        if (LevelScoreButtons.Count == 0)
+        if (LevelScoreProgressItems.Count == 0)
         {
             foreach (Button b in buttons)
             {
@@ -142,21 +152,20 @@ public class DialogLevelSelect : MonoBehaviour
                 Transform levelScoreButtonTrans = p.transform.Find("LevelScoreButton");
                 if (levelScoreButtonTrans != null)
                 {
-                    LevelScoreButtons.Add(levelScoreButtonTrans.GetComponent<Button>());
+                    LevelScoreProgressItems.Add(levelScoreButtonTrans.gameObject);
                 }
                 else
                 {
-                    LevelScoreButtons.Add(null);
+                    LevelScoreProgressItems.Add(null);
                 }
             }
         }
-        LevelScoreButtons[0].gameObject.SetActive(false);
+        LevelScoreProgressItems[0].gameObject.SetActive(false);
     }
 
     void UnlockLevelButtons()
     {
         WaitPanel.SetActive(false);
-        Debug.Log(manager.currentPracticePlays);
         SceneInfo selectedSceneInfo = manager.GetSceneInfoByName(mainBtn.sceneName);
         if (selectedSceneInfo != null)
         {
