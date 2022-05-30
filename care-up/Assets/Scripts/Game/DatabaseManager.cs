@@ -379,7 +379,7 @@ public class DatabaseManager : MonoBehaviour
     public static bool GetSceneCompletion(string scene, int difficulty)
     {
         int completedSceneScore = GetCompletedSceneScore(scene, difficulty);
-        return completedSceneScore > 30;
+        return completedSceneScore > 70;
        
     }
 
@@ -400,7 +400,6 @@ public class DatabaseManager : MonoBehaviour
                 return r;
             }
         }
-
         return 0;
     }
     

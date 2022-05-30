@@ -281,7 +281,6 @@ public class EndScoreManager : MonoBehaviour
                 DatabaseManager.leaderboardDB.PushToLeaderboard(WULogin.UID, WULogin.display_name, total_xp);
             }
 
-            //DatabaseManager.UpdateSceneCompletion(manager.currentSceneVisualName, manager.currentDifficultyLevel);
             DatabaseManager.UpdateCompletedSceneScore(manager.currentSceneVisualName, manager.currentDifficultyLevel, percent);
         }
         else
