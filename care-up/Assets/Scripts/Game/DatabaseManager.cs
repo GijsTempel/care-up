@@ -378,39 +378,9 @@ public class DatabaseManager : MonoBehaviour
     // difficulty: 0-4
     public static bool GetSceneCompletion(string scene, int difficulty)
     {
-        PlayerPrefsManager manager = FindObjectOfType<PlayerPrefsManager>();
-        string dbName = PlayerPrefsManager.FormatSceneName(manager.GetSceneDatabaseName(scene));
-
-        string result = FetchField("SceneCompletions", dbName);
-        if (result != "")
-        {
-            string[] array = result.Split(' ');
-            if (array.Length > difficulty)
-            {
-                return array[difficulty] == "1";
-            }
-        }
-
-        return false;
-    }
-
-    // difficulty: 0-4
-    public static void UpdateSceneCompletion(string scene, int difficulty, bool completed = true)
-    {
-        PlayerPrefsManager manager = FindObjectOfType<PlayerPrefsManager>();
-        string dbName = PlayerPrefsManager.FormatSceneName(manager.GetSceneDatabaseName(scene));
-
-        string result = FetchField("SceneCompletions", dbName);
-
-        StringBuilder sb = new StringBuilder(result);
-		
-		if (result.Length == 0) 
-		{
-			sb.AppendLine("0 0 0 0 0 ");
-		}
-		
-        sb[(difficulty)*2] = '1';
-		UpdateField("SceneCompletions", dbName, sb.ToString());
+        int completedSceneScore = GetCompletedSceneScore(scene, difficulty);
+        return completedSceneScore > 30;
+       
     }
 
     // difficulty: 0-4
