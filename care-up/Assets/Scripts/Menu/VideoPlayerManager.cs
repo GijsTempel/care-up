@@ -29,6 +29,7 @@ public class VideoPlayerManager : MonoBehaviour
     VideoActionManager videoActionManager;
     bool initialized = false;
     bool isFirstPlay = true;
+    int sceneComplition = 0;
     PlayerPrefsManager manager;
     // Start is called before the first frame update
     void Start()
@@ -63,6 +64,8 @@ public class VideoPlayerManager : MonoBehaviour
         {
             videoScrollbar.fillAmount = (float)(videoPlayer.clockTime / videoPlayer.length);
             currentFrame = (int)(videoPlayer.clockTime * 24);
+            if (((float)sceneComplition / 100f) < videoScrollbar.fillAmount)
+                sceneComplition = (int)(videoScrollbar.fillAmount * 100f);
         }
         string ss = "";
         ss += "videoPlayer.clockTime = " + videoPlayer.clockTime.ToString() + "\n";
@@ -95,6 +98,11 @@ public class VideoPlayerManager : MonoBehaviour
             TextFrameText.text = currentFrame.ToString() + segmentValueStr;
         }
 
+    }
+
+    public void SaveComplitionValue()
+    {
+        DatabaseManager.UpdateCompletedSceneScore(manager.currentSceneVisualName, 0, sceneComplition);
     }
     void ShowLoadingScreen(bool toShow = true)
     {
