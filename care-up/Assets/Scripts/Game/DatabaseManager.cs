@@ -372,10 +372,20 @@ public class DatabaseManager : MonoBehaviour
     {
         string json = JsonUtility.ToJson(notif);
         Debug.Log("push " + id.ToString() + " " + json);
-        UpdateField("CANotifications", "id"+id.ToString(), json);
+        UpdateField("CANotifications", "id" + id.ToString(), json);
     }
 
     // difficulty: 0-4
+    public static int GetTestFailureStreak(string scene)
+    {
+        int streak = GetCompletedSceneScore(scene, 5);
+        return streak;
+    }    
+
+    public static void SetTestFailureStrike(string scene, int streak)
+    {
+        UpdateCompletedSceneScore(scene, 5, streak);
+    }
     public static bool GetSceneCompletion(string scene, int difficulty)
     {
         int completedSceneScore = GetCompletedSceneScore(scene, difficulty);
@@ -412,23 +422,44 @@ public class DatabaseManager : MonoBehaviour
         string result = FetchField("SceneCompletedScores", dbName);
 
         if (result == "")
-        {
-            result = "0 0 0 0 0 \n";
-        }
+            result = "0 0 0 0 0 0 \n";
         string[] array = result.Split(' ');
-        if (array.Length > difficulty)
-        {
-            int currentScore = 0;
-            int.TryParse(array[difficulty], out currentScore);
-            if (score > currentScore) {
-                array[difficulty] = score.ToString();
+        if (array.Length < 6)
+            array = "0 0 0 0 0 0 \n".Split(' ');
 
-                StringBuilder sb = new StringBuilder();
-                foreach (string s in array) {
-                    sb.Append(s + ' ');
-                }
-                UpdateField("SceneCompletedScores", dbName, sb.ToString());
+        bool toUpdate = false;
+        int currentScore = 0;
+        int failureStrike = 0;
+
+        int.TryParse(array[difficulty], out currentScore);
+        if (difficulty == 4)
+        {
+            int.TryParse(array[5], out failureStrike);
+            if (score < 70)
+                failureStrike++;
+            else
+                failureStrike = 0;
+            array[5] = failureStrike.ToString();
+            toUpdate = true;
+        }
+        if (difficulty == 3 && score >= 70)
+        {
+            failureStrike = 0;
+            array[5] = failureStrike.ToString();
+            toUpdate = true;
+        }
+        if (score > currentScore) {
+            array[difficulty] = score.ToString();
+            toUpdate = true;
+        }
+        if (toUpdate)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (string s in array)
+            {
+                sb.Append(s + ' ');
             }
+            UpdateField("SceneCompletedScores", dbName, sb.ToString());
         }
     }
 }

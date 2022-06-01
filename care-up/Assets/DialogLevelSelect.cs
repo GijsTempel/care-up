@@ -27,7 +27,7 @@ public class DialogLevelSelect : MonoBehaviour
     Image LevelInfoIcon;
     Text LevelInfoNameText;
     Text LevelInfoTextText;
-
+    bool failedLock = true;
     public GameObject LevelInfoPanel;
 
     PlayerPrefsManager manager;
@@ -70,12 +70,8 @@ public class DialogLevelSelect : MonoBehaviour
         for (int i = 0; i < buttons.Count; i++ )
         {
             buttons[i].interactable = false;
-            //if (LevelScoreButtons.Count > i)
-            //{
-            //    if (LevelScoreButtons[i] != null)
-            //        LevelScoreButtons[i].interactable = false;
-            //}
         }
+        
     }
 
     public void ShowLevelInfo(int levelID)
@@ -163,6 +159,19 @@ public class DialogLevelSelect : MonoBehaviour
         LevelScoreProgressItems[0].gameObject.SetActive(false);
     }
 
+    public void OnDificultateLevelButtonClicked(int difLevel)
+    {
+        if (difLevel == 4 && !failedLock)
+        {
+            GameObject.FindObjectOfType<SceneSelectionManager>().OnDificultateLevelButtonClicked(difLevel);
+            GetComponent<UMP_DialogUI>().Close();
+        }
+        else
+        {
+            ShowLevelInfo(5);
+        }
+    }
+
     void UnlockLevelButtons()
     {
         WaitPanel.SetActive(false);
@@ -184,6 +193,11 @@ public class DialogLevelSelect : MonoBehaviour
         {
             buttons[4].interactable = true;
         }
+
+        failedLock = DatabaseManager.GetTestFailureStreak(manager.currentSceneVisualName) >= 2;
+        buttons[4].transform.parent.Find("Red").GetComponent<Image>().enabled = buttons[4].interactable && failedLock;
+        buttons[4].transform.parent.Find("RedMark").GetComponent<Image>().enabled = buttons[4].interactable && failedLock;
+        buttons[4].transform.parent.Find("LevelScoreButton/Red").GetComponent<Image>().enabled = buttons[4].interactable && failedLock;
     }
 }
 
