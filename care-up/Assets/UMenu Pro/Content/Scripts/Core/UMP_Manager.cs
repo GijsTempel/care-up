@@ -122,7 +122,7 @@ public class UMP_Manager : MonoBehaviour {
     public void ChangeWindow(int id)
     {
         SceneSearchBar.text = "";
-        LeaderBoardSearchBar.text = "";
+        //LeaderBoardSearchBar.text = "";
 
         if (CurrentWindow == id)
             return;

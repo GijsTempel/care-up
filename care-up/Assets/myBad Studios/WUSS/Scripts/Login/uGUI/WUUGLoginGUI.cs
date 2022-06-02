@@ -2,14 +2,15 @@
 using System;
 using UnityEngine.UI;
 using BuildTimestampDisplay;
+using UnityEngine.EventSystems;
 
 namespace MBS
 {
     public class WUUGLoginGUI : WUUGLoginLocalisation
     {
-
+        bool popupCahngeIsLogin = true;
+        public Button passVisibilityToggle;
         public enum eWULUGUIState { Inactive, Active }
-
         [Serializable]
         public struct WUPanels
         {
@@ -35,7 +36,8 @@ namespace MBS
             custom_1,
             SessionTimeOutPanel,
             start_menu,
-            debug_options;
+            debug_options,
+            inputPopPanel;
         }
 
         [Serializable]
@@ -63,7 +65,8 @@ namespace MBS
             personal_email,
             personal_url,
             personal_bio,
-            serial_number;
+            serial_number,
+            popup_input;
         }
 
         [SerializeField] BuildTimestamp buildTimestamp;
@@ -74,6 +77,8 @@ namespace MBS
         [SerializeField] private Image LoginPasswordField = default(Image);
         [SerializeField] private GameObject loginPasswordVisibilityOn = default;
         [SerializeField] private GameObject loginPasswordVisibilityOff = default;
+        [SerializeField] private GameObject popupLoginPasswordVisibilityOn = default;
+        [SerializeField] private GameObject popupLoginPasswordVisibilityOff = default;
         [SerializeField] private Button loginPasswordVisibility = default;
 
         [SerializeField] private Image RegUsernameField = default(Image);
@@ -88,8 +93,61 @@ namespace MBS
         private bool removeText = false;
         private bool passwordVisible = false;
 
+
+        void ShowLoginPasswordInput(bool showLogin = true)
+        {
+            popupCahngeIsLogin = showLogin;
+            panels.inputPopPanel.SetActive(true);
+            Text inputTitle = panels.inputPopPanel.transform.Find("IP1/IP2/InputTitle").GetComponent<Text>();
+        
+            if (showLogin)
+            {
+                inputTitle.text = "Gebruikersnaam";
+                fields.popup_input.contentType = InputField.ContentType.Standard;
+                fields.popup_input.lineType = InputField.LineType.SingleLine;
+                fields.popup_input.text = fields.login_username.text;
+                passVisibilityToggle.gameObject.SetActive(false);
+                
+            }
+            else
+            {
+                inputTitle.text = "Wachtwoord";
+                fields.popup_input.lineType = InputField.LineType.SingleLine;
+                fields.popup_input.text = fields.login_password.text;
+                fields.popup_input.contentType = passwordVisible ? InputField.ContentType.Standard : InputField.ContentType.Password;
+                passVisibilityToggle.gameObject.SetActive(true);
+            }
+            fields.popup_input.ForceLabelUpdate();
+            EventSystem.current.SetSelectedGameObject(fields.popup_input.gameObject);
+
+        }
+
+        public void HideLoginPasswordInput()
+        {
+            panels.inputPopPanel.SetActive(false);
+        }
+        public void PipupInputChanged()
+        {
+            if (popupCahngeIsLogin)
+            {
+                fields.login_username.text = fields.popup_input.text;
+            }
+            else
+            {
+                fields.login_password.text = fields.popup_input.text;
+            }
+        }
+
         void Update()
         {
+            if (fields.login_username.isFocused)
+            {
+                ShowLoginPasswordInput();
+            }
+            else if (fields.login_password.isFocused)
+            {
+                ShowLoginPasswordInput(false);
+            }
             if (WULogin.UserNotWithEmail == true)
             {
                 DisplayScreen(panels.error_login_pop_up);
@@ -390,10 +448,10 @@ namespace MBS
             if (attempt_auto_login && !WULogin.logged_in)
                 WULogin.AttemptAutoLogin();
 
-            if (loginPasswordVisibility != null)
-            {
-                loginPasswordVisibility.onClick.AddListener(OnTogglePasswordVisibility);
-            }
+            //if (loginPasswordVisibility != null)
+            //{
+            //    loginPasswordVisibility.onClick.AddListener(OnTogglePasswordVisibility);
+            //}
             if (fields.login_password != null)
             {
                 fields.login_password.onValueChanged.AddListener(delegate { EnablePasswordVisibilityIcon(); });
@@ -966,9 +1024,11 @@ namespace MBS
             passwordVisible = !passwordVisible;
 
             fields.login_password.contentType = passwordVisible ? InputField.ContentType.Standard : InputField.ContentType.Password;
+            fields.popup_input.contentType = passwordVisible ? InputField.ContentType.Standard : InputField.ContentType.Password;
             loginPasswordVisibilityOn.SetActive(!passwordVisible);
             loginPasswordVisibilityOff.SetActive(passwordVisible);
             fields.login_password.ForceLabelUpdate();
+            fields.popup_input.ForceLabelUpdate();
         }
 
         public void EnablePasswordVisibilityIcon()

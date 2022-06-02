@@ -41,6 +41,7 @@ public class LevelButton : MonoBehaviour
     public bool testDisabled;
     public bool validated;
     public string totalPoints;
+    public string xPoints;
     bool started = false;
     [HideInInspector]
     public string[] isInProducts = new string[0];
@@ -61,6 +62,7 @@ public class LevelButton : MonoBehaviour
     public Text descriptionText;
     List<GameObject> frameElements = new List<GameObject>();
 
+    List<bool> levelComplitionList = new List<bool>();
     // saving info
     public struct Info
     {
@@ -152,14 +154,30 @@ public class LevelButton : MonoBehaviour
 
     void UpdateScoreMarks()
     {
-        if (marksAnimations.Count < 0)
+        if (marksAnimations.Count <= 0)
         {
-            scoreTimeout = 0.2f;
+            scoreTimeout = 0.3f;
             return;
         }
-        foreach (Animation m in marksAnimations)
-        {
-            m.Play("twistOff");
+        levelComplitionList.Clear();
+        for (int i = 0; i < 5; i++)
+            levelComplitionList.Add(DatabaseManager.GetSceneCompletion(displayName, i));
+
+        for (int i = 0; i < marksAnimations.Count; i++)
+        { 
+            Animation m = marksAnimations[i];
+            
+            if (levelComplitionList.Count > i)
+            {
+                if (levelComplitionList[i])
+                    m.Play("twistOn");
+                else
+                    m.Play("twistOff");
+            }
+            else
+            {
+                m.Play("twistOff");
+            }
         }
     }
 
@@ -210,7 +228,12 @@ public class LevelButton : MonoBehaviour
         }
 
         descriptionText.text = sceneDescription;
-
+        transform.Find("Points").GetComponent<Text>().text = xPoints;
+        Text pointsLabel = transform.Find("PointsLabel").GetComponent<Text>();
+        if (xPoints == "1")
+            pointsLabel.text = "Point";
+        else
+            pointsLabel.text = "Points";
         started = true;
     }
 
@@ -317,7 +340,9 @@ public class LevelButton : MonoBehaviour
                     manager.currentSceneVisualName = displayName;
                     manager.currentPEcourseID = sceneID;
                     manager.validatedScene = validated;
+                    manager.currentSceneXPoints = xPoints;
                 }
+
 
                 // filling up options
                 for (int i = 0; i < variations.Count; ++i)
@@ -360,6 +385,7 @@ public class LevelButton : MonoBehaviour
                     manager.currentSceneVisualName = displayName;
                     manager.currentPEcourseID = sceneID;
                     manager.validatedScene = validated;
+                    manager.currentSceneXPoints = xPoints;
                 }
             }
 

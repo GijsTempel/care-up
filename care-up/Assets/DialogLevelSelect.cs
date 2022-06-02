@@ -20,14 +20,14 @@ public class DialogLevelSelect : MonoBehaviour
     public Button ButtonLevel4;
     public Button ButtonLevel5;
     public GameObject WaitPanel;
-    List<Button> LevelScoreButtons = new List<Button>();
+    List<GameObject> LevelScoreProgressItems = new List<GameObject>();
     List<Button> LevelInfoButtons = new List<Button>();
 
     List<LevelInfoDataStruct> levelInfoData = new List<LevelInfoDataStruct>();
     Image LevelInfoIcon;
     Text LevelInfoNameText;
     Text LevelInfoTextText;
-
+    bool failedLock = true;
     public GameObject LevelInfoPanel;
 
     PlayerPrefsManager manager;
@@ -70,12 +70,8 @@ public class DialogLevelSelect : MonoBehaviour
         for (int i = 0; i < buttons.Count; i++ )
         {
             buttons[i].interactable = false;
-            //if (LevelScoreButtons.Count > i)
-            //{
-            //    if (LevelScoreButtons[i] != null)
-            //        LevelScoreButtons[i].interactable = false;
-            //}
         }
+        
     }
 
     public void ShowLevelInfo(int levelID)
@@ -106,6 +102,7 @@ public class DialogLevelSelect : MonoBehaviour
             if (timeoutValue <= 0)
             {
                 UnlockLevelButtons();
+                UpdateLevelScores();
             }
         }
     }
@@ -114,6 +111,15 @@ public class DialogLevelSelect : MonoBehaviour
         PlayerPrefsManager.SetValueToSceneInCategory(manager.currentSceneVisualName, "PracticePlays", 0);
     }
 
+    public void UpdateLevelScores()
+    {
+        for(int i = 1; i < 5; i++)
+        {
+            int scoreProc = DatabaseManager.GetCompletedSceneScore(manager.currentSceneVisualName, i);
+            LevelScoreProgressItems[i].transform.Find("Progress").GetComponent<Image>().fillAmount = (float)scoreProc / 100f;
+            LevelScoreProgressItems[i].transform.Find("Text").GetComponent<Text>().text = scoreProc.ToString() + " %";
+        }
+    }
     public void SetupButtons()
     {
         List<Button> buttons = new List<Button> { VideoLevelSelectButton, ButtonLevel2, ButtonLevel3, ButtonLevel4, ButtonLevel5 };
@@ -134,7 +140,7 @@ public class DialogLevelSelect : MonoBehaviour
                 }
             }
         }
-        if (LevelScoreButtons.Count == 0)
+        if (LevelScoreProgressItems.Count == 0)
         {
             foreach (Button b in buttons)
             {
@@ -142,21 +148,33 @@ public class DialogLevelSelect : MonoBehaviour
                 Transform levelScoreButtonTrans = p.transform.Find("LevelScoreButton");
                 if (levelScoreButtonTrans != null)
                 {
-                    LevelScoreButtons.Add(levelScoreButtonTrans.GetComponent<Button>());
+                    LevelScoreProgressItems.Add(levelScoreButtonTrans.gameObject);
                 }
                 else
                 {
-                    LevelScoreButtons.Add(null);
+                    LevelScoreProgressItems.Add(null);
                 }
             }
         }
-        LevelScoreButtons[0].gameObject.SetActive(false);
+        LevelScoreProgressItems[0].gameObject.SetActive(false);
+    }
+
+    public void OnDificultateLevelButtonClicked(int difLevel)
+    {
+        if (difLevel == 4 && !failedLock)
+        {
+            GameObject.FindObjectOfType<SceneSelectionManager>().OnDificultateLevelButtonClicked(difLevel);
+            GetComponent<UMP_DialogUI>().Close();
+        }
+        else
+        {
+            ShowLevelInfo(5);
+        }
     }
 
     void UnlockLevelButtons()
     {
         WaitPanel.SetActive(false);
-        Debug.Log(manager.currentPracticePlays);
         SceneInfo selectedSceneInfo = manager.GetSceneInfoByName(mainBtn.sceneName);
         if (selectedSceneInfo != null)
         {
@@ -175,6 +193,11 @@ public class DialogLevelSelect : MonoBehaviour
         {
             buttons[4].interactable = true;
         }
+
+        failedLock = DatabaseManager.GetTestFailureStreak(manager.currentSceneVisualName) >= 2;
+        buttons[4].transform.parent.Find("Red").GetComponent<Image>().enabled = buttons[4].interactable && failedLock;
+        buttons[4].transform.parent.Find("RedMark").GetComponent<Image>().enabled = buttons[4].interactable && failedLock;
+        buttons[4].transform.parent.Find("LevelScoreButton/Red").GetComponent<Image>().enabled = buttons[4].interactable && failedLock;
     }
 }
 

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine.Networking;
 using System.Collections;
 using System;
-
+using MBS;
 
 /// <summary>
 /// Handles EndScore scene.
@@ -268,6 +268,20 @@ public class EndScoreManager : MonoBehaviour
 
             GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>().SetSceneCompletionData(
                 completedSceneName, points, Mathf.RoundToInt(time));
+
+            // calculate xPoints added
+            int xp = 1;
+            int.TryParse(manager.currentSceneXPoints, out xp);
+            int total_xp = xp * manager.currentDifficultyLevel; // testing needed
+            if (DatabaseManager.leaderboardDB.isInTheBoard)
+            {
+                DatabaseManager.leaderboardDB.AddPointsToCurrent(WULogin.UID, total_xp);
+            }
+            else {
+                DatabaseManager.leaderboardDB.PushToLeaderboard(WULogin.UID, WULogin.display_name, total_xp);
+            }
+
+            DatabaseManager.UpdateCompletedSceneScore(manager.currentSceneVisualName, manager.currentDifficultyLevel, percent);
         }
         else
         {

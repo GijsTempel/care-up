@@ -1,10 +1,11 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MBS;
 using UnityEngine.SceneManagement;
 using System;
 using System.Globalization;
+using System.Text;
 
 public class DatabaseManager : MonoBehaviour
 {
@@ -27,6 +28,8 @@ public class DatabaseManager : MonoBehaviour
     private static Coroutine timeCheck;
 
     private static string formattedTimeSpan = TimeSpan.Zero.ToString();
+
+    public static LeaderboardDB leaderboardDB;
 
     private void Awake()
     {
@@ -57,6 +60,9 @@ public class DatabaseManager : MonoBehaviour
         WPServer._CheckBundleVersion();
         WPServer.RequestPurchases(WULogin.UID);
         WUData.FetchUserGameInfo(WULogin.UID, FetchEverything_success, -1, PostInit);
+
+        leaderboardDB = FindObjectOfType<LeaderboardDB>().GetComponent<LeaderboardDB>();
+        leaderboardDB.Init();
     }
 
     public static void Clean()
@@ -366,6 +372,94 @@ public class DatabaseManager : MonoBehaviour
     {
         string json = JsonUtility.ToJson(notif);
         Debug.Log("push " + id.ToString() + " " + json);
-        UpdateField("CANotifications", "id"+id.ToString(), json);
+        UpdateField("CANotifications", "id" + id.ToString(), json);
+    }
+
+    // difficulty: 0-4
+    public static int GetTestFailureStreak(string scene)
+    {
+        int streak = GetCompletedSceneScore(scene, 5);
+        return streak;
+    }    
+
+    public static void SetTestFailureStrike(string scene, int streak)
+    {
+        UpdateCompletedSceneScore(scene, 5, streak);
+    }
+    public static bool GetSceneCompletion(string scene, int difficulty)
+    {
+        int completedSceneScore = GetCompletedSceneScore(scene, difficulty);
+        return completedSceneScore > 70;
+       
+    }
+
+    // difficulty: 0-4
+    public static int GetCompletedSceneScore(string scene, int difficulty)
+    {
+        PlayerPrefsManager manager = FindObjectOfType<PlayerPrefsManager>();
+        string dbName = PlayerPrefsManager.FormatSceneName(manager.GetSceneDatabaseName(scene));
+
+        string result = FetchField("SceneCompletedScores", dbName);
+        if (result != "")
+        {
+            string[] array = result.Split(' ');
+            if (array.Length > difficulty)
+            {
+                int r = 0;
+                int.TryParse(array[difficulty], out r);
+                return r;
+            }
+        }
+        return 0;
+    }
+    
+    // difficulty: 0-4
+    public static void UpdateCompletedSceneScore(string scene, int difficulty, int score)
+    {
+        PlayerPrefsManager manager = FindObjectOfType<PlayerPrefsManager>();
+        string dbName = PlayerPrefsManager.FormatSceneName(manager.GetSceneDatabaseName(scene));
+
+        string result = FetchField("SceneCompletedScores", dbName);
+
+        if (result == "")
+            result = "0 0 0 0 0 0 \n";
+        string[] array = result.Split(' ');
+        if (array.Length < 6)
+            array = "0 0 0 0 0 0 \n".Split(' ');
+
+        bool toUpdate = false;
+        int currentScore = 0;
+        int failureStrike = 0;
+
+        int.TryParse(array[difficulty], out currentScore);
+        if (difficulty == 4)
+        {
+            int.TryParse(array[5], out failureStrike);
+            if (score < 70)
+                failureStrike++;
+            else
+                failureStrike = 0;
+            array[5] = failureStrike.ToString();
+            toUpdate = true;
+        }
+        if (difficulty == 3 && score >= 70)
+        {
+            failureStrike = 0;
+            array[5] = failureStrike.ToString();
+            toUpdate = true;
+        }
+        if (score > currentScore) {
+            array[difficulty] = score.ToString();
+            toUpdate = true;
+        }
+        if (toUpdate)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (string s in array)
+            {
+                sb.Append(s + ' ');
+            }
+            UpdateField("SceneCompletedScores", dbName, sb.ToString());
+        }
     }
 }
