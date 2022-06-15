@@ -22,7 +22,6 @@ public class EndScoreManager : MonoBehaviour
 
     public string completedSceneName;
     public string completedSceneBundle;
-
     public Text reward;
 
     private List<string> steps;
@@ -42,7 +41,7 @@ public class EndScoreManager : MonoBehaviour
 
     private bool emailsSent = false;
     public static bool showReward = false;
-
+    ActionsPanel actionsPanel;
     void Start()
     {
         SceneManager.sceneLoaded += OnLoaded;
@@ -52,6 +51,7 @@ public class EndScoreManager : MonoBehaviour
         fullStar = Resources.Load<Sprite>("Sprites/Stars/star");
     }
 
+  
     public int GetQuizWrongIndexe(string quizText)
     {
         int result = -1;
@@ -69,6 +69,8 @@ public class EndScoreManager : MonoBehaviour
     {
         if (actionManager == null)
             actionManager = GameObject.FindObjectOfType<ActionManager>();
+        if (actionsPanel == null)
+            actionsPanel = GameObject.FindObjectOfType<ActionsPanel>();
     }
     /// <summary>
     /// Sets object variables in scene after loading.
@@ -326,7 +328,20 @@ public class EndScoreManager : MonoBehaviour
 
         float result = (float)(correctSteps + quizQuestionsTexts.Count - quizWrongIndexes.Count)
             / (totalSteps + QuizTab.totalQuizesCount);
-
+        if (actionsPanel != null)
+        {
+            if (actionsPanel.mode == ActionsPanel.Mode.Score)
+            {
+                actionsPanel.SetScore((int)(result * 100f));
+                string ss = "totalSteps: " + totalSteps.ToString() + "\n";
+                ss += "correctSteps: " + correctSteps.ToString() + "\n";
+                ss += "quizQuestionsTexts: " + quizQuestionsTexts.Count.ToString() + "\n";
+                ss += "quizWrongIndexes: " + quizWrongIndexes.Count.ToString() + "\n";
+                ss += "totalQuizesCount: " + QuizTab.totalQuizesCount.ToString() + "\n";
+                ss += "randomEventBookmaks: " + ActionManager.randomEventBookmaks.Count.ToString() + "\n";
+                actionsPanel.SetScoreDataText(ss);
+            }
+        }
         if (result < 0f) result = 0f;
 
         return Mathf.FloorToInt(result * 100f);

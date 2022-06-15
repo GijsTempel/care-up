@@ -48,6 +48,7 @@ public class ActionManager : MonoBehaviour
             complited = true;
         }
     }
+    public static int complitedRandomEvents = 0;
 
     public static List<RandomEventBookmak> randomEventBookmaks = new List<RandomEventBookmak>();
 
@@ -1734,6 +1735,17 @@ public class ActionManager : MonoBehaviour
         return matched;
     }
 
+    public int GetComplitedRandomEventsCount()
+    {
+        int ev = 0;
+        for (int i = 0; i < currentRandomEventIndices.Count; i++)
+        {
+            if (randomEventBookmaks[currentRandomEventIndices[i]].complited)
+                ev++;
+        }
+        return ev;
+    }
+
     public void RemoveRandomEventIndex(int index)
     {
         if (index == -1)
@@ -1867,6 +1879,12 @@ public class ActionManager : MonoBehaviour
         {
             PlayerAnimationManager.PlayAnimation("no");
         }
+#if (UNITY_EDITOR || DEVELOPMENT_BUILD)
+
+        EndScoreManager endScoreManager = GameObject.FindObjectOfType<EndScoreManager>();
+        if (endScoreManager != null)
+            endScoreManager.CalculatePercentage();
+#endif
     }
 
 
@@ -1879,6 +1897,12 @@ public class ActionManager : MonoBehaviour
         ActionManager.BuildRequirements();
         ActionManager.UpdateRequirements(1.5f);
         GameObject.FindObjectOfType<ActionManager>().randomQuiz.NextRandomQuiz();
+#if (UNITY_EDITOR || DEVELOPMENT_BUILD)
+
+        EndScoreManager endScoreManager = GameObject.FindObjectOfType<EndScoreManager>();
+        if (endScoreManager != null)
+            endScoreManager.CalculatePercentage();
+#endif
     }
 
     public static void BuildRequirements()

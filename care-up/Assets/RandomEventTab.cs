@@ -132,6 +132,11 @@ public class RandomEventTab : MonoBehaviour
                 SwitchScreen(1);
             }
         }
+        else
+        {
+            gameObject.SetActive(false);
+            PlayerScript.actionsLocked = false;
+        }
     }
 
     List<int> BuildShuffledList(int numberOfElements)
