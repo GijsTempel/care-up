@@ -9,6 +9,11 @@ public class ActionsPanel : MonoBehaviour {
     int lastStepId = -1;
     int lastComplitedActionsNum = -1;
     float startTime;
+    public Text ScoreValueText;
+    public GameObject ActionListPanel;
+    public GameObject ScoreListPanel;
+    public Text ScoreDataText;
+
     List<ActionStepButton> ActionStepButtons = new List<ActionStepButton>();
     List<ActionStepButton> complitedActionButtons = new List<ActionStepButton>();
     public enum Mode
@@ -18,17 +23,32 @@ public class ActionsPanel : MonoBehaviour {
         Comment,
         CommentUA,
         Icons,
-        Requirements
+        Requirements,
+        Score
     };
     public void UpdatePanel()
     {
         lastStepId = -1;
+        if (mode == ActionsPanel.Mode.Score)
+        {
+
+        }
+    }
+    public void SetScore(float _score)
+    {
+        ScoreValueText.text = "Score: " + _score.ToString() + "%";
+    }
+
+    public void SetScoreDataText(string dataText)
+    {
+        ScoreDataText.text = dataText;
     }
 
     public ActionsPanel.Mode mode;
     ActionManager am;
 	// Use this for initialization
 	void Start () {
+        SetMode((int)mode);
         startTime = Time.time;
         if (GameObject.FindObjectOfType<ActionManager>() != null)
         {
@@ -43,11 +63,15 @@ public class ActionsPanel : MonoBehaviour {
         mode = (ActionsPanel.Mode)_mode;
         lastStepId = -1;
         print(mode.ToString());
+        bool isScoreMode = mode == ActionsPanel.Mode.Score;
+        ActionListPanel.GetComponent<CanvasGroup>().alpha = 1f - (isScoreMode ? 1f : 0f);
+        ScoreListPanel.GetComponent<CanvasGroup>().alpha =(isScoreMode ? 1f : 0f);
+
     }
 
 
-	// Update is called once per frame
-	void Update () {
+    // Update is called once per frame
+    void Update () {
         if (am != null)
         {
             if (lastStepId != am.CurrentActionIndex)
