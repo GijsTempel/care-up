@@ -27,7 +27,7 @@ public class EndScoreManager : MonoBehaviour
     private List<string> steps;
     private List<int> wrongStepIndexes;
     private List<int> correctStepIndexes;
-
+    public int randomEventQuestionsCount = 0;
     private MBS.WUADisplay achievements;
 
     public List<string> quizQuestionsTexts = new List<string>();
@@ -327,7 +327,7 @@ public class EndScoreManager : MonoBehaviour
         }
 
         float result = (float)(correctSteps + quizQuestionsTexts.Count - quizWrongIndexes.Count)
-            / (totalSteps + QuizTab.totalQuizesCount);
+            / (totalSteps + QuizTab.totalQuizesCount + randomEventQuestionsCount);
         if (actionsPanel != null)
         {
             if (actionsPanel.mode == ActionsPanel.Mode.Score)
@@ -339,6 +339,7 @@ public class EndScoreManager : MonoBehaviour
                 ss += "quizWrongIndexes: " + quizWrongIndexes.Count.ToString() + "\n";
                 ss += "totalQuizesCount: " + QuizTab.totalQuizesCount.ToString() + "\n";
                 ss += "randomEventBookmaks: " + ActionManager.randomEventBookmaks.Count.ToString() + "\n";
+                ss += "randomEventQuestionsCount: " + randomEventQuestionsCount.ToString() + "\n";
                 actionsPanel.SetScoreDataText(ss);
             }
         }

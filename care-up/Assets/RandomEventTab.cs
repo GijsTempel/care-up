@@ -213,6 +213,7 @@ public class RandomEventTab : MonoBehaviour
             {
                 endScoreManager.quizQuestionsTexts.Add(randomEventsData[currentRandomEventIndex].infoText + ". " +
                     randomEventsData[currentRandomEventIndex].quastions[currentQuastionIndex]);
+                endScoreManager.randomEventQuestionsCount++;
             }
         }
         else
