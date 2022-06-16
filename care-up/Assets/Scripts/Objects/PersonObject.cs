@@ -13,10 +13,10 @@ public class PersonObject : InteractableObject
     [HideInInspector]
     public bool tutorial_used = false;
     public bool allowToTalk = true;
-
+    public GameObject facingBone;
     public List<string> dialogueXmls;
     public int currentDialogueIndex = 0;
-
+    GameObject _PlayerLookAtPoint;
     private List<SelectDialogue.DialogueOption> optionsList;
 
     private List<GameObject> callers;
@@ -27,14 +27,14 @@ public class PersonObject : InteractableObject
 
     protected AudioSource audioSource;
 
-    protected bool lookAtCamera;
+    public bool lookAtCamera;
 
     public GameObject TalkBubbleAnchor = null;
 
     protected override void Start()
     {
         base.Start();
-
+        _PlayerLookAtPoint = GameObject.Find("PlayerLookAtPoint");
         callers = new List<GameObject>();
         optionsList = new List<SelectDialogue.DialogueOption>();
 
@@ -67,6 +67,15 @@ public class PersonObject : InteractableObject
                     return true;
             }
         return false;
+    }
+
+    protected void LateUpdate()
+    {
+        if (facingBone != null && lookAtCamera && _PlayerLookAtPoint != null && player.currentWalkPosition != null)
+        {
+            if (player.currentWalkPosition.WalkToGroupType == WalkToGroup.GroupType.Patient)
+                facingBone.transform.LookAt(_PlayerLookAtPoint.transform);
+        }
     }
 
     protected override void Update()
