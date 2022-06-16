@@ -338,7 +338,6 @@ public class QuizTab : MonoBehaviour
         {
             GameObject.Find("GameLogic").GetComponent<ActionManager>().ActivatePenalty();
         }
-        ActionManager.WrongAction(false);
 
         answeredTitleText.text = "Helaas, dit antwoord is niet goed";
         descriptionText.text = description;
@@ -353,13 +352,18 @@ public class QuizTab : MonoBehaviour
             {
                 int wrongIndex = endScoreManager.GetQuizWrongIndexe(current.text);
                 if (wrongIndex != -1)
-                    endScoreManager.quizWrongIndexes.Add(wrongIndex);
+                {
+                    if (!endScoreManager.quizWrongIndexes.Contains(wrongIndex))
+                        endScoreManager.quizWrongIndexes.Add(wrongIndex);
+                }
             }
         }
         else
         {
             Debug.LogWarning("No EndScoreManager found. Start from 1st scene.");
         }
+        ActionManager.WrongAction(false);
+
     }
     void AutoContinue()
     {
