@@ -65,15 +65,96 @@
     messageTitle="Gebruik handschoenen en schort"
     messageContent="Draag tijdens de verzorging een overschort, handschoenen, een bril of een face-shield en een mondneusmasker bij risico op contact met excreta."
    ></action>
+	
+	<action
+	 comment="Cover three gauze pads with 70% alcohol."
+	 points="1"
+	 description="Overgiet drie gaasjes met alcohol 70%"
+	 index="3"
+	 type="sequenceStep"
+	 value="Cover3Gauzes"
+	 extra=""
+   ></action>
+	
+	<action
+	 comment="Hold the scissors by one eye and disinfect both blades with an alcohol swab."
+	 points="1"
+	 description="Houd de schaar bij een oog vast en desinfecteer de beide bladen met een alcoholgaasje."
+	 index="4"
+	 type="sequenceStep"
+	 value="HoldScissors"
+	 extra=""
+   ></action>
+	
+	<action
+	 comment="Hold the scissors with the used gauze by a blade. Disinfect the rest of the scissors with a second alcohol swab"
+	 points="1"
+	 description="Houd de schaar met het gebruikte gaasje bij een blad vast. Desinfecteer de rest van de schaar met een tweede alcoholgaasje."
+	 index="5"
+	 type="sequenceStep"
+	 value="CleanScissorsWithSecondGauze"
+	 extra=""
+   ></action>
+	
+	<action
+	 comment="Place the scissors on the work field on a third alcohol gauze"
+	 points="1"
+	 description="Leg de schaar op het werkveld op een derde alcoholgaasje"
+	 index="6"
+	 type="sequenceStep"
+	 value="PlaceScissorsOnTable"
+	 extra=""
+   ></action>
+	
+	<action
+	 comment="Cover three gauze pads with 70% alcohol"
+	 points="1"
+	 description="Overgiet drie gaasjes met alcohol 70%"
+	 index="7"
+	 type="sequenceStep"
+	 value="Cover3Gauzes2Time"
+	 extra=""
+   ></action>
+	
+	<action
+	 comment="Hold the tweezers by the handle and disinfect both blades with an alcohol swab"
+	 points="1"
+	 description="Houd het pincet bij het handvat vast en desinfecteer beide bladen met een alcoholgaasje"
+	 index="8"
+	 type="sequenceStep"
+	 value="DesinfectTweezersBlades"
+	 extra=""
+   ></action>
+	
+	<action
+	 comment="Hold the tweezers with the used gauze by a leaf. Disinfect the rest of the tweezers with a second alcohol swab"
+	 points="1"
+	 description="Houd het pincet met het gebruikte gaasje bij een blad vast. Desinfecteer de rest van het pincet met een tweede alcoholgaasje"
+	 index="9"
+	 type="sequenceStep"
+	 value="DesinfectRestOfTweezers"
+	 extra=""
+   ></action>
+	
+	<action
+	 comment="Place the tweezers on the work area on a third alcohol gauze"
+	 points="1"
+	 description="Leg het pincet op het werkveld op een derde alcoholgaasje"
+	 index="10"
+	 type="sequenceStep"
+	 value="PlaceTweezersOnTable"
+	 extra=""
+	 blockUnlock="EndOfSq1"
+   ></action>
 		
   <action
       comment="Create a clean workfield"
       points="1"
       description="[Maak een schoon werkveld end]"
-      index="3"
+      index="11"
       type="use"
       value="WorkField"
-	  blockRequired="EndOfSq4"
+	  blockRequired="EndOfSq1"
       extra="Ruim de materialen op door met lege handen op het werkveld te klikken."
       messegeTitle="Materialen opruimen"
       MessegeContent="Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen"
@@ -84,14 +165,14 @@
     points="3"
     description="[Pas handhygiëne]"
     fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp."
-    index="4"
+    index="12"
     type="use"
     value="HandCleaner">
 	</action>
 
   <action
     comment="Write down the size and length of the inserted probe, pH determination, date of inserting the probe and any findings on the ipad."
-    index="5"
+    index="13"
     points="1"
     description="[Noteer de handeling]"
     type="use"
