@@ -1026,6 +1026,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114608312466246624, guid: deadb39decb974c49ba8895129d7e82f,
         type: 3}
+      propertyPath: randomEventFiles.Array.data[1]
+      value: Inject
+      objectReference: {fileID: 0}
+    - target: {fileID: 114608312466246624, guid: deadb39decb974c49ba8895129d7e82f,
+        type: 3}
       propertyPath: infoList.Array.data[0].prefabName
       value: insuline injecteren navulbarepen
       objectReference: {fileID: 0}
@@ -1182,12 +1187,22 @@ PrefabInstance:
     - target: {fileID: 114608312466246624, guid: deadb39decb974c49ba8895129d7e82f,
         type: 3}
       propertyPath: randomEventSetup.Array.data[0].actionRange
-      value: 2
+      value: 5:10
       objectReference: {fileID: 0}
     - target: {fileID: 114608312466246624, guid: deadb39decb974c49ba8895129d7e82f,
         type: 3}
       propertyPath: randomEventSetup.Array.data[0].eventGroups
       value: INS
+      objectReference: {fileID: 0}
+    - target: {fileID: 114608312466246624, guid: deadb39decb974c49ba8895129d7e82f,
+        type: 3}
+      propertyPath: randomEventSetup.Array.data[1].actionRange
+      value: 6:10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114608312466246624, guid: deadb39decb974c49ba8895129d7e82f,
+        type: 3}
+      propertyPath: randomEventSetup.Array.data[1].eventGroups
+      value: INS2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: deadb39decb974c49ba8895129d7e82f, type: 3}
@@ -8674,10 +8689,12 @@ MonoBehaviour:
   tutorial_talked: 0
   tutorial_used: 0
   allowToTalk: 1
+  facingBone: {fileID: 0}
   dialogueXmls:
   - Greeting
   - InsulinPatient
   currentDialogueIndex: 0
+  lookAtCamera: 0
   TalkBubbleAnchor: {fileID: 155751601}
   tutorial_greetingEnded: 0
   pulledUp: 0
