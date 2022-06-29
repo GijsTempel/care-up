@@ -211,7 +211,7 @@ public class RandomEventTab : MonoBehaviour
         {
             for(int k = 0; k < randomEventsData[currentRandomEventIndex].quastions.Count; k++)
             {
-                endScoreManager.quizQuestionsTexts.Add(randomEventsData[currentRandomEventIndex].infoText + ". " +
+                endScoreManager.randQuestionsTexts.Add(randomEventsData[currentRandomEventIndex].infoText + ". " +
                     randomEventsData[currentRandomEventIndex].quastions[currentQuastionIndex]);
                 endScoreManager.randomEventQuestionsCount++;
             }
@@ -245,10 +245,10 @@ public class RandomEventTab : MonoBehaviour
             GameObject.Find("GameLogic").GetComponent<ActionManager>().ActivatePenalty();
             if (endScoreManager != null)
             {
-                int wrongIndex = endScoreManager.GetQuizWrongIndexe(randomEventsData[currentRandomEventIndex].infoText + ". " +
+                int wrongIndex = endScoreManager.GetRandWrongIndexe(randomEventsData[currentRandomEventIndex].infoText + ". " +
                     randomEventsData[currentRandomEventIndex].quastions[currentQuastionIndex]);
                 if (wrongIndex != -1)
-                    endScoreManager.quizWrongIndexes.Add(wrongIndex);
+                    endScoreManager.randomWrongIndexes.Add(wrongIndex);
             }
             else
             {
