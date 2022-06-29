@@ -365,7 +365,7 @@ public class EndScoreManager : MonoBehaviour
                     + "-" + quizWrongIndexes.Count.ToString() + ")+("
                     + randQuestionsTexts.Count.ToString() + "-" + randomWrongIndexes.Count.ToString()
                     + "))/(" + totalSteps.ToString() + "+" + QuizTab.totalQuizesCount.ToString()
-                    + "+" + randomEventQuestionsCount.ToString() + "\n= " + result.ToString();
+                    + "+" + randomEventQuestionsCount.ToString() + ")\n= " + result.ToString();
                 actionsPanel.SetScoreDataText(ss);
             }
         }
