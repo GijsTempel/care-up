@@ -2717,10 +2717,12 @@ MonoBehaviour:
   tutorial_talked: 0
   tutorial_used: 0
   allowToTalk: 1
+  facingBone: {fileID: 0}
   dialogueXmls:
   - Greeting Visser
   - Dialog_InsertInfusion
   currentDialogueIndex: 0
+  lookAtCamera: 0
   TalkBubbleAnchor: {fileID: 1886198784}
   playerPosition: {x: 0, y: 0, z: 0}
   playerRotation: {x: 0, y: 0, z: 0}
@@ -4980,6 +4982,7 @@ MonoBehaviour:
   TextDebug: 0
   currentActionIndex: 0
   actionListName: Actions_Insert_Infusion
+  currentRandomEventIndices: 
 --- !u!114 &1194345165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8588,6 +8591,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114608312466246624, guid: deadb39decb974c49ba8895129d7e82f,
         type: 3}
+      propertyPath: randomEventFiles.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114608312466246624, guid: deadb39decb974c49ba8895129d7e82f,
+        type: 3}
+      propertyPath: randomEventSetup.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114608312466246624, guid: deadb39decb974c49ba8895129d7e82f,
+        type: 3}
+      propertyPath: randomEventFiles.Array.data[0]
+      value: Generic
+      objectReference: {fileID: 0}
+    - target: {fileID: 114608312466246624, guid: deadb39decb974c49ba8895129d7e82f,
+        type: 3}
       propertyPath: infoList.Array.data[0].prefabName
       value: Intramusculair Injecteren
       objectReference: {fileID: 0}
@@ -8740,6 +8758,16 @@ PrefabInstance:
         type: 3}
       propertyPath: infoList.Array.data[15].prefabName
       value: Huid bouw functie huidflora
+      objectReference: {fileID: 0}
+    - target: {fileID: 114608312466246624, guid: deadb39decb974c49ba8895129d7e82f,
+        type: 3}
+      propertyPath: randomEventSetup.Array.data[0].actionRange
+      value: 5:20
+      objectReference: {fileID: 0}
+    - target: {fileID: 114608312466246624, guid: deadb39decb974c49ba8895129d7e82f,
+        type: 3}
+      propertyPath: randomEventSetup.Array.data[0].eventGroups
+      value: Generic
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: deadb39decb974c49ba8895129d7e82f, type: 3}
