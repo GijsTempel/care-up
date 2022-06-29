@@ -31,7 +31,11 @@ public class EndScoreManager : MonoBehaviour
     private MBS.WUADisplay achievements;
 
     public List<string> quizQuestionsTexts = new List<string>();
+    public List<string> randQuestionsTexts = new List<string>();
+
     public List<int> quizWrongIndexes = new List<int>();
+    public List<int> randomWrongIndexes = new List<int>();
+
 
     private ActionManager actionManager;    //points, steps
     private GameTimer gameTimer; // time
@@ -51,7 +55,20 @@ public class EndScoreManager : MonoBehaviour
         fullStar = Resources.Load<Sprite>("Sprites/Stars/star");
     }
 
-  
+    public int GetRandWrongIndexe(string eventText)
+    {
+        int result = -1;
+        for (int i = 0; i < randQuestionsTexts.Count; i++)
+        {
+
+            if (randQuestionsTexts[i] == eventText)
+            {
+                result = i;
+            }
+        }
+        return result;
+    }
+
     public int GetQuizWrongIndexe(string quizText)
     {
         int result = -1;
@@ -326,7 +343,8 @@ public class EndScoreManager : MonoBehaviour
             totalSteps = actionManager.StepsList.Count;
         }
 
-        float result = (float)(correctSteps + quizQuestionsTexts.Count - quizWrongIndexes.Count)
+        float result = (float)(correctSteps + (quizQuestionsTexts.Count - quizWrongIndexes.Count) 
+            + (randQuestionsTexts.Count - randomWrongIndexes.Count))
             / (totalSteps + QuizTab.totalQuizesCount + randomEventQuestionsCount);
         if (actionsPanel != null)
         {
@@ -338,8 +356,16 @@ public class EndScoreManager : MonoBehaviour
                 ss += "quizQuestionsTexts: " + quizQuestionsTexts.Count.ToString() + "\n";
                 ss += "quizWrongIndexes: " + quizWrongIndexes.Count.ToString() + "\n";
                 ss += "totalQuizesCount: " + QuizTab.totalQuizesCount.ToString() + "\n";
-                ss += "randomEventBookmaks: " + ActionManager.randomEventBookmaks.Count.ToString() + "\n";
+
                 ss += "randomEventQuestionsCount: " + randomEventQuestionsCount.ToString() + "\n";
+                ss += "randQuestionsTexts.Count: " + randQuestionsTexts.Count.ToString() + "\n";
+                ss += "randomWrongIndexes.Count: " + randomWrongIndexes.Count.ToString() + "\n";
+                ss += "randomEventBookmaks: " + ActionManager.randomEventBookmaks.Count.ToString() + "\n";
+                ss += "(" + correctSteps.ToString() + " + (" + quizQuestionsTexts.Count.ToString()
+                    + "-" + quizWrongIndexes.Count.ToString() + ")+("
+                    + randQuestionsTexts.Count.ToString() + "-" + randomWrongIndexes.Count.ToString()
+                    + "))/(" + totalSteps.ToString() + "+" + QuizTab.totalQuizesCount.ToString()
+                    + "+" + randomEventQuestionsCount.ToString() + ")\n= " + result.ToString();
                 actionsPanel.SetScoreDataText(ss);
             }
         }

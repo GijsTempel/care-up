@@ -473,6 +473,10 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 leaderboardItemInfo.SetValues(lbLine.Name, lbLine.Rank, lbLine.Points, lbLine.UserID, i+1);
             }
         }
+        float CSAlpha = 1.0f;
+        if (LeaderboardDB.board.Count != 0)
+            CSAlpha = 0.0f;
+        GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Leaderboard/ContentPanel/Scenes/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder/Protocols/CSPanel").GetComponent<CanvasGroup>().alpha = CSAlpha;
         SelectRank(rank);
     }
     public void LevelScrollChanged()
