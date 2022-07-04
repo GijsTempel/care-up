@@ -26,7 +26,7 @@ public class WoundCarePatient : PersonObject {
         {
             switch (topic)
             {
-                case "LayInHalfPosOnBed":
+                case "LayOnSide":
                     //animator.SetTrigger("sit_up_in_bed");
                     /* PlayerAnimator.SetTrigger("AllowPatientToLay");
                      PlayerAnimator.SetTrigger("S AllowPatientToLay");*/

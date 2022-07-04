@@ -146,12 +146,41 @@
 	 extra=""
 	 blockUnlock="EndOfSq1"
    ></action>
-		
-  <action
+
+	<action
+   comment="Ask the client to lay on side"
+   points="2"
+   description="Could you lie on your side?"
+   fullDescription=""
+   index="11"
+   type="talk"
+   topic="LayOnSide"
+   extra="Extra"
+   blockUnlock="HorClient"
+   messageTitle="Message"
+   messageContent="Message content"
+   ></action>
+
+	<action
+ comment="Place a mat around the work area."
+ points="1"
+ description="[Leg een onderlegger rond het werkterrein]"
+ index="12"
+ type="useOn"
+ item="cloth_02_folded"
+ target=""
+ buttonText="Onderlegger plaatsen"
+ extra="Leg een onderlegger rond het werkterrein"
+ blockRequired="HorClient"
+ blockTitle=""
+ blockMessage=""
+ ></action>
+
+	<action
       comment="Create a clean workfield"
       points="1"
       description="[Maak een schoon werkveld end]"
-      index="11"
+      index="13"
       type="use"
       value="WorkField"
 	  blockRequired="EndOfSq1"
@@ -165,14 +194,14 @@
     points="3"
     description="[Pas handhygiëne]"
     fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp."
-    index="12"
+    index="14"
     type="use"
     value="HandCleaner">
 	</action>
 
   <action
     comment="Write down the size and length of the inserted probe, pH determination, date of inserting the probe and any findings on the ipad."
-    index="13"
+    index="15"
     points="1"
     description="[Noteer de handeling]"
     type="use"
