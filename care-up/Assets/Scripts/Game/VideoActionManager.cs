@@ -23,7 +23,7 @@ public class VideoActionManager : MonoBehaviour
     {
 
         videoActions.Clear();
-        VideoAction startAction = new VideoAction("Begining", "", 0);
+        VideoAction startAction = new VideoAction("Begin", "", 0);
         videoActions.Add(startAction);
         manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
         if (manager == null)
