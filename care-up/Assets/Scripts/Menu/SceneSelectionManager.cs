@@ -115,8 +115,8 @@ public class SceneSelectionManager : MonoBehaviour {
     public void SceneLocationSelected(int value)
     {
         SceneLocation = value;
-        GameObject.Find("DialogLocationSelect").SetActive(false);
-        GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(3);
+        //GameObject.Find("DialogLocationSelect").SetActive(false);
+        //GameObject.FindObjectOfType<UMP_Manager>().ShowDialog(3);
         if (value == 1 && startButton != null)
         {
             startButton.toLoadInhouse = true;
