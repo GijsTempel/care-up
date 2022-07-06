@@ -1765,6 +1765,10 @@ public class ActionManager : MonoBehaviour
 
     void BuildRandomEventList(int actionSequentialNumber)
     {
+//for testing random events without starting from main menu, comment those two lines
+        if (manager == null)
+            return;
+
         if (manager != null)
         { 
             if (manager.currentDifficultyLevel != 3)
