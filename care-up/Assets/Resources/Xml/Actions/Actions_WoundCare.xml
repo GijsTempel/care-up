@@ -161,26 +161,40 @@
    messageContent="Message content"
    ></action>
 
+	
+	<Action
+    index="12"
+    description="Help patient to remove underwear"
+    type="general"
+    item=""
+    points="1"
+    buttonText="Remove underwear"
+	blockRequired="HorClient"
+    action="HelpPatientToRemoveUnderwear"
+	blockUnlock="UnderwearIsOff"/>	
+	
 	<action
  comment="Place a mat around the work area."
  points="1"
  description="[Leg een onderlegger rond het werkterrein]"
- index="12"
+ index="13"
  type="useOn"
  item="cloth_02_folded"
  target=""
  buttonText="Onderlegger plaatsen"
  extra="Leg een onderlegger rond het werkterrein"
- blockRequired="HorClient"
+ blockRequired="HorClient, UnderwearIsOff"
  blockTitle=""
  blockMessage=""
  ></action>
+	
+	
 
 	<action
       comment="Create a clean workfield"
       points="1"
       description="[Maak een schoon werkveld end]"
-      index="13"
+      index="14"
       type="use"
       value="WorkField"
 	  blockRequired="EndOfSq1"
@@ -194,14 +208,14 @@
     points="3"
     description="[Pas handhygiëne]"
     fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp."
-    index="14"
+    index="15"
     type="use"
     value="HandCleaner">
 	</action>
 
   <action
     comment="Write down the size and length of the inserted probe, pH determination, date of inserting the probe and any findings on the ipad."
-    index="15"
+    index="16"
     points="1"
     description="[Noteer de handeling]"
     type="use"
