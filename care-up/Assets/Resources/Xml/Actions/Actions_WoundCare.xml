@@ -186,7 +186,32 @@
  blockRequired="HorClient, UnderwearIsOff"
  blockTitle=""
  blockMessage=""
+ blockUnlock="PadOnPatient"
  ></action>
+	
+	<Action
+	comment="Remove old plaster"
+    index="14"
+    description="Verwijder het verbandmateriaal en gooi het in de afvalbak."
+    type="general"
+    item=""
+    points="1"
+    buttonText="Remove plaster"
+	blockRequired="PadOnPatient"
+    action="RemoveOldPlaster"
+	blockUnlock="PlasterIsRemoved"/>	
+	
+	<Action
+	comment="Inspect wound"
+    index="15"
+    description="Inspecteer de wond."
+    type="general"
+    item=""
+    points="1"
+    buttonText="Inspecteer de wond."
+	blockRequired="PlasterIsRemoved"
+    action="InspectWound."
+	blockUnlock="WoundIsInspected"/>	
 	
 	
 
@@ -194,7 +219,7 @@
       comment="Create a clean workfield"
       points="1"
       description="[Maak een schoon werkveld end]"
-      index="14"
+      index="16"
       type="use"
       value="WorkField"
 	  blockRequired="EndOfSq1"
@@ -208,14 +233,14 @@
     points="3"
     description="[Pas handhygiëne]"
     fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp."
-    index="15"
+    index="17"
     type="use"
     value="HandCleaner">
 	</action>
 
   <action
     comment="Write down the size and length of the inserted probe, pH determination, date of inserting the probe and any findings on the ipad."
-    index="16"
+    index="18"
     points="1"
     description="[Noteer de handeling]"
     type="use"
