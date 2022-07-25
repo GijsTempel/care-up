@@ -292,7 +292,7 @@ public class EndScoreManager : MonoBehaviour
             int xp = 1;
             int.TryParse(manager.currentSceneXPoints, out xp);
             int total_xp = xp * manager.currentDifficultyLevel; // testing needed
-            total_xp *= (percent / 100f);
+            total_xp = Mathf.FloorToInt(total_xp * (percent / 100f));
             if (DatabaseManager.leaderboardDB.isInTheBoard)
             {
                 DatabaseManager.leaderboardDB.AddPointsToCurrent(WULogin.UID, total_xp);
