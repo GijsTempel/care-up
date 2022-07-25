@@ -291,8 +291,18 @@ public class EndScoreManager : MonoBehaviour
             // calculate xPoints added
             int xp = 1;
             int.TryParse(manager.currentSceneXPoints, out xp);
-            int total_xp = xp * manager.currentDifficultyLevel; // testing needed
-            total_xp = Mathf.FloorToInt(total_xp * (percent / 100f));
+            int total_xp = xp * manager.currentDifficultyLevel; // 0,1,2,3,4 - difficulties
+
+            // if totalxp = 0, then it's the 0 difficulty aka "watch the video" so we award 5points
+            if (total_xp == 0) 
+            {
+                total_xp = 5;
+            }
+            else // if not it's juts normal scene, we multiply by percentage to reduce xp for barely completed scenes
+            {   
+                total_xp = Mathf.FloorToInt(total_xp * (percent / 100f));
+            }
+
             if (DatabaseManager.leaderboardDB.isInTheBoard)
             {
                 DatabaseManager.leaderboardDB.AddPointsToCurrent(WULogin.UID, total_xp);
