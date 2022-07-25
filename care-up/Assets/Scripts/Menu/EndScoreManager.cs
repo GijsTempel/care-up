@@ -291,7 +291,22 @@ public class EndScoreManager : MonoBehaviour
             // calculate xPoints added
             int xp = 1;
             int.TryParse(manager.currentSceneXPoints, out xp);
-            int total_xp = xp * manager.currentDifficultyLevel; // 0,1,2,3,4 - difficulties
+
+            // difficulty multipliers : 0/1/1.5/2/2
+            // difficulties :  0/1/2/3/4
+            int total_xp = xp;
+            switch (manager.currentDifficultyLevel)
+            {
+                case 2:
+                    xp *= 1.5;
+                    break;
+                case 3:
+                case 4:
+                    xp *= 2;
+                    break;
+                default:
+                    break;
+            }
 
             // if totalxp = 0, then it's the 0 difficulty aka "watch the video" so we award 5points
             if (total_xp == 0) 
