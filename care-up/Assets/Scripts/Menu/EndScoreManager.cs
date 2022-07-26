@@ -298,7 +298,7 @@ public class EndScoreManager : MonoBehaviour
             switch (manager.currentDifficultyLevel)
             {
                 case 2:
-                    xp *= 1.5;
+                    xp = xp + xp/2;
                     break;
                 case 3:
                 case 4:
