@@ -168,6 +168,7 @@ public class VideoPlayerManager : MonoBehaviour
     }
     public void LoadMainMenu()
     {
+        GameObject.FindObjectOfType<MainMenuAutomationData>().toAutomate = true;
         DatabaseManager.UpdateField("AccountStats", "TutorialCompleted", "true");
         bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
     }

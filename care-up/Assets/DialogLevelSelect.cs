@@ -34,11 +34,11 @@ public class DialogLevelSelect : MonoBehaviour
     public float timeoutValue = 3f;
     private void OnEnable()
     {
+        if (manager == null)
+            manager = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
         SetupButtons();
         timeoutValue = 3f;
         WaitPanel.SetActive(true);
-        if (manager == null)
-            manager = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
         VideoLevelSelectButton.interactable = false;
         LockAllButtons();
     }
@@ -123,7 +123,9 @@ public class DialogLevelSelect : MonoBehaviour
     public void SetupButtons()
     {
         List<Button> buttons = new List<Button> { VideoLevelSelectButton, ButtonLevel2, ButtonLevel3, ButtonLevel4, ButtonLevel5 };
-
+        SceneInfo sceneInfo = manager.GetSceneInfoByName(mainBtn.sceneName);
+        Text descText = transform.Find("Panel_UI/Top/Description").GetComponent<Text>();
+        descText.text = sceneInfo.displayName;
         if (LevelInfoButtons.Count == 0)
         {
             foreach(Button b in buttons)

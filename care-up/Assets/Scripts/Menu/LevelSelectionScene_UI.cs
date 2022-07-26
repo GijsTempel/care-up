@@ -348,6 +348,9 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
         foreach (string key in scenesInfoLocked.Keys)
             scenesInfoSorted.Add(key, scenesInfoLocked[key]);
+
+        MainMenuAutomation mainMenuAutomation = GameObject.FindObjectOfType<MainMenuAutomation>();
+        mainMenuAutomation.levelButtons.Clear();
         for (int i = 0; i < scenesInfoSorted.Count; i++)
         {
             string key = scenesInfoSorted.Keys.ElementAt(i);
@@ -370,6 +373,8 @@ public class LevelSelectionScene_UI : MonoBehaviour
             sceneUnit.inHouseBundleName = sceneInfo.inHouseBundleName;
             sceneUnit.inHouseSceneName = sceneInfo.inHouseSceneName;
             sceneUnit.inGroups = sceneInfo.inGroups;
+            sceneUnit.buttonIndex = i;
+            mainMenuAutomation.levelButtons.Add(sceneUnit);
             if (!sceneInfo.activated && !sceneInfo.hidden)
             {
                 // but if scene is not activated and NOT hidden either

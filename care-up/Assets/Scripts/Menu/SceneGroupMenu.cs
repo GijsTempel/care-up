@@ -31,6 +31,7 @@ public class SceneGroupMenu : MonoBehaviour
     PlayerPrefsManager ppManager;
     public void SwitchPage(int nextPage)
     {
+        GameObject.FindObjectOfType<MainMenuAutomationData>().SetCurrentSGPage(nextPage);
         Debug.Log(nextPage);
         SetActivePageButton(nextPage);
         
@@ -165,11 +166,14 @@ public class SceneGroupMenu : MonoBehaviour
             ppManager = GameObject.FindObjectOfType<PlayerPrefsManager>();
         LoadGroupData();
         Object SGPageButtonPrefab = Resources.Load<GameObject>("NecessaryPrefabs/UI/SGPageButton");
+        MainMenuAutomation mainMenuAutomation = GameObject.FindObjectOfType<MainMenuAutomation>();
+        mainMenuAutomation.sceneGroupPageButtons.Clear();
         for (int i = 0; i < numberOfPages; i++)
         {
             GameObject packageButton = Instantiate(SGPageButtonPrefab, sceneGroupPagePanel.transform) as GameObject;
             packageButton.GetComponent<SceneGroupPageButton>().pageID = i;
             sceneGroupPageButtons.Add(packageButton.GetComponent<SceneGroupPageButton>());
+            mainMenuAutomation.sceneGroupPageButtons.Add(packageButton.GetComponent<SceneGroupPageButton>());
         }
         SetActivePageButton(0);
         foreach(GameObject p in SceneGroupButtonPanes)
