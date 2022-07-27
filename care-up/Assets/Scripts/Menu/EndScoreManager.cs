@@ -297,26 +297,23 @@ public class EndScoreManager : MonoBehaviour
             int total_xp = xp;
             switch (manager.currentDifficultyLevel)
             {
-                case 2:
-                    xp = xp + xp/2;
+                case 0:
+                    // watching video xp
+                    total_xp = 5;
+                    break;
+                case 2: 
+                    total_xp = xp + xp/2;
                     break;
                 case 3:
                 case 4:
-                    xp *= 2;
+                    total_xp = xp * 2;
                     break;
                 default:
                     break;
             }
 
-            // if totalxp = 0, then it's the 0 difficulty aka "watch the video" so we award 5points
-            if (total_xp == 0) 
-            {
-                total_xp = 5;
-            }
-            else // if not it's juts normal scene, we multiply by percentage to reduce xp for barely completed scenes
-            {   
-                total_xp = Mathf.FloorToInt(total_xp * (percent / 100f));
-            }
+            // multiply by percentage to reduce xp for barely completed scenes
+            total_xp = Mathf.FloorToInt(total_xp * (percent / 100f));
 
             if (DatabaseManager.leaderboardDB.isInTheBoard)
             {
