@@ -105,6 +105,7 @@ public class LeaderboardDB : MonoBehaviour
             else if (webRequest.downloadHandler.text != "")
             {
                 Debug.Log(webRequest.downloadHandler.text);
+                isInTheBoard = true;
             }
         }
     }

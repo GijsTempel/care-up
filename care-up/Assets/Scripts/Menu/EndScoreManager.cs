@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections.Generic;
@@ -291,7 +291,30 @@ public class EndScoreManager : MonoBehaviour
             // calculate xPoints added
             int xp = 1;
             int.TryParse(manager.currentSceneXPoints, out xp);
-            int total_xp = xp * manager.currentDifficultyLevel; // testing needed
+
+            // difficulty multipliers : 0/1/1.5/2/2
+            // difficulties :  0/1/2/3/4
+            int total_xp = xp;
+            switch (manager.currentDifficultyLevel)
+            {
+                case 0:
+                    // watching video xp
+                    total_xp = 5;
+                    break;
+                case 2: 
+                    total_xp = xp + xp/2;
+                    break;
+                case 3:
+                case 4:
+                    total_xp = xp * 2;
+                    break;
+                default:
+                    break;
+            }
+
+            // multiply by percentage to reduce xp for barely completed scenes
+            total_xp = Mathf.FloorToInt(total_xp * (percent / 100f));
+
             if (DatabaseManager.leaderboardDB.isInTheBoard)
             {
                 DatabaseManager.leaderboardDB.AddPointsToCurrent(WULogin.UID, total_xp);

@@ -6,11 +6,13 @@ public class CharacterFirstSetup : MonoBehaviour
 {
     public InputField BigNumberHolder;
     public InputField FullName;
+    public InputField FullName2;
+    private InputField FullName_saved;
     public List<GameObject> tabs;
     public Button NextButton;
     public PlayerAvatar Avatar;
     private int currentChar = 0;
-    private int currentTab = 0;
+    private int currentTab = 3;
     public GameObject NoBigPopUp;
     private bool DontHaveBIG = false;
 
@@ -18,6 +20,7 @@ public class CharacterFirstSetup : MonoBehaviour
     
     void Start()
     {
+        FullName_saved = FullName;
         pref = GameObject.FindObjectOfType<PlayerPrefsManager>();
 
         if (pref != null)
@@ -40,6 +43,37 @@ public class CharacterFirstSetup : MonoBehaviour
         SetCharacter(0);
     }
 
+    public void OpenUrl_NewWindow(string url)
+    {
+#if UNITY_WEBGL && ! UNITY_EDITOR
+        openWindow(url);
+#else
+        OpenUrl(url);
+#endif
+    }
+    public void OpenUrl(string url)
+    {
+        Application.OpenURL(url);
+    }
+
+    public void BIGYesClicked()
+    {
+        FullName = FullName_saved;
+        SetTab(0);
+    }    
+
+    public void BIGNoClicked()
+    {
+        FullName = FullName2;
+        SetTab(2);
+    }
+
+    public void OpenBIGInfo()
+    {
+        string url = "https://www.bigregister.nl/";
+        OpenUrl_NewWindow(url);
+    }
+
     public void SetCharacter(int n)
     {
         if (pref != null)
@@ -57,7 +91,13 @@ public class CharacterFirstSetup : MonoBehaviour
         NoBigPopUp.SetActive(value);
     }
   
-
+    public void GoBackFromCharacterSelection()
+    {
+        if (FullName == FullName2)
+            SetTab(2);
+        else
+            SetTab(0);
+    }
     public void IDontHaveBIG()
     {
         DontHaveBIG = true;
@@ -67,17 +107,19 @@ public class CharacterFirstSetup : MonoBehaviour
         PlayerPrefsManager.SetBIGNumber(BigNumberHolder.text);
     }
 
-    bool CheckFirstTab()
+    bool CheckFirstTab(bool checkBIG = true)
     {
         bool check = true;
-        if (BigNumberHolder.text == "")
+        if (checkBIG)
         {
-            if (!DontHaveBIG)
+            if (BigNumberHolder.text == "")
             {
-                ShowNoBigNum(true);
-                return false;
+                if (!DontHaveBIG)
+                {
+                    ShowNoBigNum(true);
+                    return false;
+                }
             }
-            //check = false;
         }
 
         if (FullName.text == "")
@@ -96,11 +138,15 @@ public class CharacterFirstSetup : MonoBehaviour
         {
             check = CheckFirstTab();
         }
+        if (currentTab == 2)
+        {
+            check = CheckFirstTab(false);
+        }
 
         if (check)
         {
-            print(PlayerPrefsManager.firstStart);
-            if (!PlayerPrefsManager.firstStart && currentTab == 0)
+            bool isPlayerInfoTab = currentTab == 0 || currentTab == 2;
+            if (!PlayerPrefsManager.firstStart && isPlayerInfoTab)
             {
                 tab = -1;
             }

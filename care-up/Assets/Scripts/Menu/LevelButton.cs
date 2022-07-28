@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class LevelButton : MonoBehaviour
 {
+    public int buttonIndex = -1;
     private static LoadingScreen loadingScreen;
     public List<string> inGroups = new List<string>();
     [HideInInspector]
@@ -306,7 +307,7 @@ public class LevelButton : MonoBehaviour
     public void OnLevelButtonClick()
     {
         MainMenu.storeUrl = url;
-
+        GameObject.FindObjectOfType<MainMenuAutomationData>().SetCurrentLevelButtonID(buttonIndex);
         bool locked = (buy || demoLock);
         if (locked && isInProducts.Length > 0)
             if (PlayerPrefsManager.IsScenePurchased(isInProducts))

@@ -10,6 +10,7 @@ public class SceneGroupButton : MonoBehaviour
     public Image iconImage;
     public Text numText;
     int groupID;
+    public int buttonID = 0;
     string groupTitle;
     string groupIconName;
     int _numberOfScenes = 0;
@@ -46,6 +47,7 @@ public class SceneGroupButton : MonoBehaviour
         {
             sceneGroupMenu = GameObject.FindObjectOfType<SceneGroupMenu>();
         }
+        GameObject.FindObjectOfType<MainMenuAutomationData>().SetCurrentSceneGroup(buttonID);
         sceneGroupMenu.OpenGroup(groupID);
     }
 }

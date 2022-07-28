@@ -341,8 +341,14 @@ public class GameUI : MonoBehaviour
         }
     }
 
+    public void CloseGameLevelSelection()
+    {
+        GameObject.FindObjectOfType<MainMenuAutomationData>().toAutomate = true;
+        bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
+    }
     public void CloseGame()
     {
+        GameObject.FindObjectOfType<MainMenuAutomationData>().toAutomate = false;
         bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
     }
 

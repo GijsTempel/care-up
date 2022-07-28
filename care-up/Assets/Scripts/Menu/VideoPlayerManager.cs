@@ -18,7 +18,7 @@ public class VideoPlayerManager : MonoBehaviour
     public Sprite playSprite;
     public Sprite pauseSprite;
     public Button playButton;
-    public Image videoScrollbar;
+    //public Image videoScrollbar;
     public UnityEngine.Video.VideoPlayer videoPlayer;
     bool sidePanelIsOpen = false;
     bool actionDataLoaded = false;
@@ -62,16 +62,16 @@ public class VideoPlayerManager : MonoBehaviour
         int currentFrame = 0;
         if (videoPlayer.length > 0)
         {
-            videoScrollbar.fillAmount = (float)(videoPlayer.clockTime / videoPlayer.length);
+            float fillAmount = (float)(videoPlayer.clockTime / videoPlayer.length);
             currentFrame = (int)(videoPlayer.clockTime * 24);
-            if (((float)sceneComplition / 100f) < videoScrollbar.fillAmount)
-                sceneComplition = (int)(videoScrollbar.fillAmount * 100f);
+            if (((float)sceneComplition / 100f) < fillAmount)
+                sceneComplition = (int)(fillAmount * 100f);
         }
         string ss = "";
         ss += "videoPlayer.clockTime = " + videoPlayer.clockTime.ToString() + "\n";
         ss += "videoPlayer.length = " + videoPlayer.length.ToString() + "\n";
         ss += "videoPlayer.frameCount = " + videoPlayer.frameCount.ToString() + "\n";
-        ss += "currentFrame = " + currentFrame.ToString() + "\n";
+        //ss += "currentFrame = " + currentFrame.ToString() + "\n";
         if (videoActionManager != null)
         {
             foreach (VideoAction videoAction in videoActionManager.videoActions)
@@ -168,6 +168,7 @@ public class VideoPlayerManager : MonoBehaviour
     }
     public void LoadMainMenu()
     {
+        GameObject.FindObjectOfType<MainMenuAutomationData>().toAutomate = true;
         DatabaseManager.UpdateField("AccountStats", "TutorialCompleted", "true");
         bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
     }

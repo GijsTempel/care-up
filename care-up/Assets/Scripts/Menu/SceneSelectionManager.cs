@@ -61,6 +61,7 @@ public class SceneSelectionManager : MonoBehaviour {
 
     public void OnDificultateLevelButtonClicked(int dificultateLevel)
     {
+        GameObject.FindObjectOfType<MainMenuAutomationData>().toAutomate = false;
         manager.currentDifficultyLevel = dificultateLevel;
         if (dificultateLevel == 0)
         {
