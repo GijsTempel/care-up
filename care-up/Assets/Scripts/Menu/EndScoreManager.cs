@@ -302,10 +302,10 @@ public class EndScoreManager : MonoBehaviour
                     total_xp = 5;
                     break;
                 case 2: 
+                case 4:
                     total_xp = xp + xp/2;
                     break;
                 case 3:
-                case 4:
                     total_xp = xp * 2;
                     break;
                 default:
