@@ -188,38 +188,66 @@
  blockMessage=""
  blockUnlock="PadOnPatient"
  ></action>
-	
-	<Action
-	comment="Remove old plaster"
-    index="14"
-    description="Verwijder het verbandmateriaal en gooi het in de afvalbak."
-    type="general"
-    item=""
+
+	<action
+	 comment="Remove old plaster"
+	 points="1"
+	 description="Verwijder het verbandmateriaal en gooi het in de afvalbak"
+	 index="14"
+	 type="sequenceStep"
+	 value="RemoveOldPlaster"
+	 extra=""
+   ></action>
+
+	<action
+	 comment="Inspect the wound"
+	 points="1"
+	 description="Inspecteer de wond"
+	 index="15"
+	 type="sequenceStep"
+	 value="InspectTheWound"
+	 extra=""
+   ></action>
+
+	<action
+	 comment="Remove gloves"
+	 points="1"
+	 description="Trek de handschoenen uit en gooi ze in de afvalbak"
+	 index="16"
+	 type="sequenceStep"
+	 value="TakeGlovesOff"
+	 blockUnlock="EndOf2SQ"
+	 extra=""
+   ></action>
+
+	<action
+   comment="(1)Apply handhygiene"
+   points="3"
+   description="[Pas handhygiëne]"
+   fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp."
+   index="17"
+   type="use"
+   value="HandCleaner"
+   blockRequired="EndOf2SQ"
+   extra="Pas handhygiëne toe. "
+    ></action>
+
+	<action
+    comment="Put on gloves."
     points="1"
-    buttonText="Remove plaster"
-	blockRequired="PadOnPatient"
-    action="RemoveOldPlaster"
-	blockUnlock="PlasterIsRemoved"/>	
-	
-	<Action
-	comment="Inspect wound"
-    index="15"
-    description="Inspecteer de wond."
-    type="general"
-    item=""
-    points="1"
-    buttonText="Inspecteer de wond."
-	blockRequired="PlasterIsRemoved"
-    action="InspectWound."
-	blockUnlock="WoundIsInspected"/>	
-	
-	
+    description="[Trek de handschoenen aan]"
+    index="18"
+    type="use"
+    value="gloveBox"
+    extra="Trek de handschoenen aan."
+	blockRequired="EndOf2SQ"
+   ></action>
 
 	<action
       comment="Create a clean workfield"
       points="1"
       description="[Maak een schoon werkveld end]"
-      index="16"
+      index="19"
       type="use"
       value="WorkField"
 	  blockRequired="EndOfSq1"
@@ -233,14 +261,14 @@
     points="3"
     description="[Pas handhygiëne]"
     fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp."
-    index="17"
+    index="20"
     type="use"
     value="HandCleaner">
 	</action>
 
   <action
     comment="Write down the size and length of the inserted probe, pH determination, date of inserting the probe and any findings on the ipad."
-    index="18"
+    index="21"
     points="1"
     description="[Noteer de handeling]"
     type="use"
