@@ -241,13 +241,57 @@
     value="gloveBox"
     extra="Trek de handschoenen aan."
 	blockRequired="EndOf2SQ"
+	blockUnlock="SecondPairOfGlovesOn"
    ></action>
 
+	<Action
+    index="19"
+    description="Make gauzes wet"
+    type="useOn"
+    comment="Make gauzes wet"
+    secondPlace="SinkPos"
+    item="TrayOfGauzes"
+    points="1"
+    buttonText="Gaasjes nat maken"
+	blockRequired="EndOf2SQ"
+    target="" />
+
+	<action
+	 comment="Clean the wound with a wet gauze in a clockwise direction"
+	 points="1"
+	 description="Clean the wound with a wet gauze in a clockwise direction"
+	 index="20"
+	 type="sequenceStep"
+	 value="CleanClocjwise"
+	 extra=""
+   ></action>
+
+	<action
+	 comment="Clean the wound with a wet gauze in a counter clockwise direction"
+	 points="1"
+	 description="Clean the wound with a wet gauze in a counter clockwise direction"
+	 index="21"
+	 type="sequenceStep"
+	 value="CleanCounterClockwise"
+	 extra=""
+   ></action>
+
+	<action
+	 comment="Clean the wound with a wet gauze through the middle part of the wound"
+	 points="1"
+	 description="Clean the wound with a wet gauze through the middle part of the wound"
+	 index="22"
+	 type="sequenceStep"
+	 value="CleanMiddle"
+	 extra=""
+   ></action>
+	
+	
 	<action
       comment="Create a clean workfield"
       points="1"
       description="[Maak een schoon werkveld end]"
-      index="19"
+      index="23"
       type="use"
       value="WorkField"
 	  blockRequired="EndOfSq1"
@@ -261,14 +305,14 @@
     points="3"
     description="[Pas handhygiëne]"
     fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp."
-    index="20"
+    index="24"
     type="use"
     value="HandCleaner">
 	</action>
 
   <action
     comment="Write down the size and length of the inserted probe, pH determination, date of inserting the probe and any findings on the ipad."
-    index="21"
+    index="25"
     points="1"
     description="[Noteer de handeling]"
     type="use"
