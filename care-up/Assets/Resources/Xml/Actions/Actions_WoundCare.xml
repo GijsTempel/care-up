@@ -283,18 +283,80 @@
 	 index="22"
 	 type="sequenceStep"
 	 value="CleanMiddle"
+	 blockUnlock="WoudIsCleaned"
 	 extra=""
    ></action>
-	
+
+	<Action
+    index="23"
+    description="Breng nieuw verbandmateriaal aan volgens afspraak"
+    type="useOn"
+    comment="Apply new dressing material as agreed"
+    item="BedsorePlaster_OnTable"
+    points="1"
+    buttonText="Apply new dressing material"
+	blockRequired="WoudIsCleaned"
+    target="" />
+
+	<action
+	 comment="Cut the plaster"
+	 points="1"
+	 description="Cut the plaster"
+	 index="24"
+	 type="sequenceStep"
+	 value="CutPlaster"
+	 extra=""
+   ></action>
+
+	<action
+	 comment="Remove middle cover"
+	 points="1"
+	 description="Remove middle cover"
+	 index="25"
+	 type="sequenceStep"
+	 value="RemoveMidCover"
+	 extra=""
+   ></action>
+
+	<action
+	 comment="Attach plaster to patient"
+	 points="1"
+	 description="Attach plaster to patient"
+	 index="26"
+	 type="sequenceStep"
+	 value="AttachPlaster"
+	 extra=""
+   ></action>
+
+	<action
+	 comment="Remove left side cover"
+	 points="1"
+	 description="Remove left side cover"
+	 index="27"
+	 type="sequenceStep"
+	 value="RemoveLeftCover"
+	 extra=""
+   ></action>
+
+	<action
+	 comment="Remove right side cover"
+	 points="1"
+	 description="Remove right side cover"
+	 index="28"
+	 type="sequenceStep"
+	 value="RemoveRightCover"
+	 blockUnlock="EndOfSq4"
+	 extra=""
+   ></action>
 	
 	<action
       comment="Create a clean workfield"
       points="1"
       description="[Maak een schoon werkveld end]"
-      index="23"
+      index="29"
       type="use"
       value="WorkField"
-	  blockRequired="EndOfSq1"
+	  blockRequired="EndOfSq4"
       extra="Ruim de materialen op door met lege handen op het werkveld te klikken."
       messegeTitle="Materialen opruimen"
       MessegeContent="Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen"
@@ -305,14 +367,14 @@
     points="3"
     description="[Pas handhygiëne]"
     fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp."
-    index="24"
+    index="30"
     type="use"
     value="HandCleaner">
 	</action>
 
   <action
     comment="Write down the size and length of the inserted probe, pH determination, date of inserting the probe and any findings on the ipad."
-    index="25"
+    index="31"
     points="1"
     description="[Noteer de handeling]"
     type="use"
