@@ -358,23 +358,34 @@
       value="WorkField"
 	  blockRequired="EndOfSq4"
       extra="Ruim de materialen op door met lege handen op het werkveld te klikken."
+	  blockUnlock="TableCleaned"
       messegeTitle="Materialen opruimen"
       MessegeContent="Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen"
   ></action>
 	
+	<Action
+    index="30"
+    description="Trek de handschoenen uit."
+    type="general"
+    item=""
+    points="1"
+    buttonText="Trek handschoenen uit"
+    action="TakeOffGlovesWithoutThrowing"
+    blockRequired="TableCleaned" />
+		
 	<action
     comment="(1)Apply handhygiene"
     points="3"
     description="[Pas handhygiëne]"
     fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp."
-    index="30"
+    index="31"
     type="use"
     value="HandCleaner">
 	</action>
 
   <action
     comment="Write down the size and length of the inserted probe, pH determination, date of inserting the probe and any findings on the ipad."
-    index="31"
+    index="32"
     points="1"
     description="[Noteer de handeling]"
     type="use"
