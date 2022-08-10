@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Runtime.InteropServices;
 
 public class CharacterFirstSetup : MonoBehaviour
 {
@@ -37,6 +38,13 @@ public class CharacterFirstSetup : MonoBehaviour
             }
         }
     }
+
+
+#if UNITY_WEBGL
+
+    [DllImport("__Internal")]
+    private static extern void openWindow(string url);
+#endif
 
     void Initialize()
     {
