@@ -30,6 +30,7 @@ public class VideoPlayerManager : MonoBehaviour
     bool initialized = false;
     bool isFirstPlay = true;
     int sceneComplition = 0;
+    bool[] complitedSegments = new bool[1000];
     PlayerPrefsManager manager;
     // Start is called before the first frame update
     void Start()
@@ -47,6 +48,23 @@ public class VideoPlayerManager : MonoBehaviour
         ShowLoadingScreen();
     }
 
+    int ProgressToSegment(float progressPos)
+    {
+        int seg = Mathf.RoundToInt((complitedSegments.Length * progressPos));
+        return seg;
+    }
+
+    int GetSceneComplition()
+    {
+        float compValue = 0;
+        for (int i = 0; i < complitedSegments.Length; i++)
+        {
+            if (complitedSegments[i])
+                compValue += 1f;
+        }
+        int complitedValue = Mathf.RoundToInt(compValue / complitedSegments.Length * 100);
+        return complitedValue;
+    }    
     // Update is called once per frame
     void Update()
     {
@@ -64,8 +82,8 @@ public class VideoPlayerManager : MonoBehaviour
         {
             float fillAmount = (float)(videoPlayer.clockTime / videoPlayer.length);
             currentFrame = (int)(videoPlayer.clockTime * 24);
-            if (((float)sceneComplition / 100f) < fillAmount)
-                sceneComplition = (int)(fillAmount * 100f);
+            complitedSegments[ProgressToSegment(fillAmount)] = true;
+            //Debug.Log(GetSceneComplition());
         }
         string ss = "";
         ss += "videoPlayer.clockTime = " + videoPlayer.clockTime.ToString() + "\n";
@@ -97,12 +115,11 @@ public class VideoPlayerManager : MonoBehaviour
             }
             TextFrameText.text = currentFrame.ToString() + segmentValueStr;
         }
-
     }
 
     public void SaveComplitionValue()
     {
-        DatabaseManager.UpdateCompletedSceneScore(manager.currentSceneVisualName, 0, sceneComplition);
+        DatabaseManager.UpdateCompletedSceneScore(manager.currentSceneVisualName, 0, GetSceneComplition());
     }
     void ShowLoadingScreen(bool toShow = true)
     {
