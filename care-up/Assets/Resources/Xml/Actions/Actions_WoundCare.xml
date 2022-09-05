@@ -35,22 +35,20 @@
     extra="Maak een schoon werkveld. "
     messageTitle="Je het volgende nodig hebt."
     messageContent="
-- reservebinnencanule
-- gaasjes
-- bakje water uit stromende kraan
 - 2 paar handschoenen
 - onderlegger
-- metaline splitgaas
-- kunststof of kniepincet
-- niet pluizende wattenstokjes
-- handalcohol
-- 2 wegwerpbakjes
-- canule(klitten)band
-- handalcohol
+- bij kans op spatten: plastic schort, bril
+- 4 gazen voor reinigen wondomgeving
+- verbandmateriaal passend bij soort wond
+- zo nodig zalf of crème om wondrand mee te beschermen
 - afvalbak
-- canuleborstel, 1 in de maat van de binnencanule en 1 een maat kleiner
-- niet-irriterende wateroplosbare gelei
-- filter, wanneer die vervangen moet worden"
+
+bij gebruik schaar en pincet:
+
+- schaar
+- pincet
+- 6 gaasjes
+- alcohol 70%"
     ></action>
 
 <action
@@ -62,8 +60,6 @@
     value="gloveBox"
     extra="Trek de handschoenen aan."
 	  blockUnlock="GlovesTakenOn"
-    messageTitle="Gebruik handschoenen en schort"
-    messageContent="Draag tijdens de verzorging een overschort, handschoenen, een bril of een face-shield en een mondneusmasker bij risico op contact met excreta."
    ></action>
 	
 	<action
@@ -150,21 +146,19 @@
 	<action
    comment="Ask the client to lay on side"
    points="2"
-   description="Ask the patient if he can lie on his side"
+   description="Vraag de cliënt een comfortabele houding aan te nemen, waarbij de wond goed bereikbaar is"
    fullDescription=""
    index="11"
    type="talk"
    topic="LayOnSide"
    extra="Extra"
    blockUnlock="HorClient"
-   messageTitle="Message"
-   messageContent="Message content"
    ></action>
 
 	
 	<Action
     index="12"
-    description="Help patient to remove underwear"
+    description="Help de cliënt met het uittrekken van de onderbroek"
     type="general"
     item=""
     points="1"
@@ -207,6 +201,17 @@
 	 type="sequenceStep"
 	 value="InspectTheWound"
 	 extra=""
+   messageTitle="Inspecteer de wond"
+   messageContent="
+Inspecteer de wond op:
+
+ - grootte
+ - diepte
+ - geur
+ - kleur
+ - wondranden
+ - exsudaat (wondvocht)
+"
    ></action>
 
 	<action
@@ -246,7 +251,7 @@
 
 	<Action
     index="19"
-    description="Make gauzes wet"
+    description="Maak de gaasjes nat"
     type="useOn"
     comment="Make gauzes wet"
     secondPlace="SinkPos"
