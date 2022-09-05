@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using CareUp.Actions;
+using MBS;
 
 public class VideoPlayerManager : MonoBehaviour
 {
@@ -188,6 +189,19 @@ public class VideoPlayerManager : MonoBehaviour
         GameObject.FindObjectOfType<MainMenuAutomationData>().toAutomate = true;
         DatabaseManager.UpdateField("AccountStats", "TutorialCompleted", "true");
         bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
+
+        Debug.Log(GetSceneComplition());
+        if (GetSceneComplition() > 8) { // more then 80% of the video?
+            // warning: rapidly skipping parts counts as watching
+            // award 5pts for watching video
+            if (DatabaseManager.leaderboardDB.isInTheBoard)
+            {
+                DatabaseManager.leaderboardDB.AddPointsToCurrent(WULogin.UID, 5);
+            }
+            else {
+                DatabaseManager.leaderboardDB.PushToLeaderboard(WULogin.UID, WULogin.display_name, 5);
+            }
+        }
     }
 
     void HighlightCurrentUnit()
