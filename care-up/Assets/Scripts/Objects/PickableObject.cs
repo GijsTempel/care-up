@@ -54,6 +54,17 @@ public class PickableObject : InteractableObject
         return originalParent;
     }
 
+    public void SetShadowOn(bool toEnable = true)
+    {
+        foreach (Renderer r in GetComponentsInChildren<Renderer>())
+        {
+            if (toEnable)
+                r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+            else
+                r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        }
+    }
+
     protected override void Start()
     {
         base.Start();
@@ -77,6 +88,7 @@ public class PickableObject : InteractableObject
     /// <param name="force">If true - forces load position instead of free dropping</param>
     public virtual bool Drop(bool force = false)
     {
+        SetShadowOn(true);
         if (destroyOnDrop)
         {
             Destroy(gameObject);
@@ -419,6 +431,7 @@ public class PickableObject : InteractableObject
 
     public virtual void Pick()
     {
+        SetShadowOn(false);
         // callback for handling different OnPick mechanics
         gameObject.layer = 9; // no collisions
         if (GetComponent<Rigidbody>() != null)
