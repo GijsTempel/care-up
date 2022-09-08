@@ -30,6 +30,12 @@ public class DatabaseManager : MonoBehaviour
     private static string formattedTimeSpan = TimeSpan.Zero.ToString();
 
     public static LeaderboardDB leaderboardDB;
+    public static string LeaderboardName {
+        get { return FetchField("AccountStats", "Leaderboard_Name"); }
+    }
+    public static bool IsEligibleForLeaderboard {
+        get { return LeaderboardName != ""; }
+    }
 
     private void Awake()
     {
@@ -461,5 +467,10 @@ public class DatabaseManager : MonoBehaviour
             }
             UpdateField("SceneCompletedScores", dbName, sb.ToString());
         }
+    }
+
+    public static void SetLeaderboardName(string name)
+    {
+        DatabaseManager.UpdateField("AccountStats", "Leaderboard_Name", name);
     }
 }

@@ -320,7 +320,7 @@ public class EndScoreManager : MonoBehaviour
                 DatabaseManager.leaderboardDB.AddPointsToCurrent(WULogin.UID, total_xp);
             }
             else {
-                DatabaseManager.leaderboardDB.PushToLeaderboard(WULogin.UID, WULogin.display_name, total_xp);
+                DatabaseManager.leaderboardDB.PushToLeaderboard(WULogin.UID, total_xp);
             }
 
             DatabaseManager.UpdateCompletedSceneScore(manager.currentSceneVisualName, manager.currentDifficultyLevel, percent);

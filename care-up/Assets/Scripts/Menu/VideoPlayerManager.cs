@@ -190,7 +190,6 @@ public class VideoPlayerManager : MonoBehaviour
         DatabaseManager.UpdateField("AccountStats", "TutorialCompleted", "true");
         bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
 
-        Debug.Log(GetSceneComplition());
         if (GetSceneComplition() > 8) { // more then 80% of the video?
             // warning: rapidly skipping parts counts as watching
             // award 5pts for watching video
@@ -199,7 +198,7 @@ public class VideoPlayerManager : MonoBehaviour
                 DatabaseManager.leaderboardDB.AddPointsToCurrent(WULogin.UID, 5);
             }
             else {
-                DatabaseManager.leaderboardDB.PushToLeaderboard(WULogin.UID, WULogin.display_name, 5);
+                DatabaseManager.leaderboardDB.PushToLeaderboard(WULogin.UID, 5);
             }
         }
     }

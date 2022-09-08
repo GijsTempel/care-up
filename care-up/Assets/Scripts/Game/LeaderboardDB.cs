@@ -23,9 +23,13 @@ public class LeaderboardDB : MonoBehaviour
 
     public void Init()
     {
+        if (DatabaseManager.IsEligibleForLeaderboard == false)
+            return;
+
         board = new List<LeaderboardLine>();
         isInTheBoard = false;
         currentRank = -1;
+
         //StartCoroutine(FetchDB(31)); // testing with custom ID
         StartCoroutine(FetchDB(WULogin.UID));
     }
@@ -72,10 +76,13 @@ public class LeaderboardDB : MonoBehaviour
     }
 
     // if we were not in the board yet, we need to push ourselves
-    public void PushToLeaderboard(int uID, string name, int pts)
+    public void PushToLeaderboard(int uID, int pts)
     {
+        if (DatabaseManager.IsEligibleForLeaderboard == false)
+            return;
+
         if (!isInTheBoard) {
-            StartCoroutine(PushToLeaderboardWeb(uID, name, pts));
+            StartCoroutine(PushToLeaderboardWeb(uID, DatabaseManager.LeaderboardName, pts));
         } 
         else 
         {
@@ -113,6 +120,9 @@ public class LeaderboardDB : MonoBehaviour
     // if we are in current board, we'll just add points
     public void AddPointsToCurrent(int uID, int pts)
     {
+        if (DatabaseManager.IsEligibleForLeaderboard == false)
+            return;
+
         if (isInTheBoard) {
             StartCoroutine(AddPtsWeb(uID, pts));
         }
