@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Xml;
-
-
-
 public class SceneGroupMenu : MonoBehaviour
 {
     private struct SceneGroupDataStruct
@@ -32,7 +29,6 @@ public class SceneGroupMenu : MonoBehaviour
     public void SwitchPage(int nextPage)
     {
         GameObject.FindObjectOfType<MainMenuAutomationData>().SetCurrentSGPage(nextPage);
-        Debug.Log(nextPage);
         SetActivePageButton(nextPage);
         
         if (nextPage > currentPage)
@@ -59,6 +55,9 @@ public class SceneGroupMenu : MonoBehaviour
             }
         }
         numberOfPages = sceneGroupsData.Count / 3 + ((sceneGroupsData.Count % 3 > 0) ? 1 : 0);
+        if (sceneGroupPageButtons.Count > numberOfPages)
+            sceneGroupPageButtons[sceneGroupPageButtons.Count - 1].gameObject.SetActive(false);
+        
 
     }
 
