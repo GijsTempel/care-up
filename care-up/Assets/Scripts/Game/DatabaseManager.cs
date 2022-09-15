@@ -448,7 +448,7 @@ public class DatabaseManager : MonoBehaviour
             array[5] = failureStrike.ToString();
             toUpdate = true;
         }
-        if (difficulty == 3 && score >= 70)
+        if ((difficulty == 3 || difficulty == 2 || difficulty == 1)  && score >= 70)
         {
             failureStrike = 0;
             array[5] = failureStrike.ToString();
