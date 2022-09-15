@@ -135,6 +135,10 @@ public class UMP_Manager : MonoBehaviour {
         
         CurrentWindow = id;
         Windows[id].SetActive(true);
+        if (Windows[id].name == "Leaderboard")
+        {
+            GameObject.FindObjectOfType<LevelSelectionScene_UI>().CheckAndShowLBParticipation();
+        }
         menuEffects.ApplyMenuEffect();            
     }
 

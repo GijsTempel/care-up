@@ -34,7 +34,6 @@ public class SceneInfo
     public string videoURL = "";
     public string xPoints = "1";
     public List<string> inGroups = new List<string>();
-    
 }
 
 /// <summary>
@@ -45,6 +44,10 @@ public class LevelSelectionScene_UI : MonoBehaviour
 {
     public string debugSS;
     public List<GameObject> rankButtons;
+    public GameObject leaderBoardParticipatePanel;
+    public GameObject leaderBoardChangeNamePanel;
+    public InputField leaderBoardNameInput;
+    public GameObject leaderBoardChangeNameButton;
     private PlayerPrefsManager ppManager;
     float initTime = 0f;
     bool sceneButtonsUpdated = false;
@@ -463,6 +466,33 @@ public class LevelSelectionScene_UI : MonoBehaviour
         //UpdateLeaderBoard();
     }
 
+    public void LeaderBoardNewName()
+    {
+        string newName = leaderBoardNameInput.text;
+        DatabaseManager.SetLeaderboardName(newName);
+        ShowLeaderBoardPopUp(0);
+    }
+    public void ShowLeaderBoardPopUp(int index)
+    {
+        leaderBoardParticipatePanel.SetActive(index == 1);
+        leaderBoardChangeNamePanel.SetActive(index == 2);
+        leaderBoardChangeNameButton.SetActive(index == 0);
+        leaderBoardNameInput.text = DatabaseManager.LeaderboardName;
+    }
+
+    public void CheckAndShowLBParticipation()
+    {
+        Debug.Log(DatabaseManager.LeaderboardName);
+        if (CheckLeaderBoardParticipation())
+            ShowLeaderBoardPopUp(1);
+        else
+            ShowLeaderBoardPopUp(0);
+    }
+
+    public bool CheckLeaderBoardParticipation()
+    {
+        return (DatabaseManager.LeaderboardName == "");
+    }
     public void UpdateLeaderBoard()
     {
         int rank = 0;
