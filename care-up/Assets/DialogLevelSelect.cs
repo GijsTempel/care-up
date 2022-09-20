@@ -187,11 +187,8 @@ public class DialogLevelSelect : MonoBehaviour
         buttons[1].interactable = true;
         buttons[2].interactable = true;
            
+        buttons[3].interactable = true;
         if (manager.currentPracticePlays >= 1)
-        {
-            buttons[3].interactable = true;
-        }
-        if (manager.currentPracticePlays >= 3)
         {
             buttons[4].interactable = true;
         }
