@@ -59,6 +59,8 @@ public class LevelSelectionScene_UI : MonoBehaviour
     public List<Transform> variations;
 
     private Sprite completedSceneIcon;
+    public List<GameObject> LBInfoTabs;
+    public List<Button> LBInfoTabButtons;
 
     public void UpdateScenePurchases()
     {
@@ -89,6 +91,14 @@ public class LevelSelectionScene_UI : MonoBehaviour
         return value;
     }
 
+    public void SwitchLBTab(int tabID)
+    {
+        for(int i = 0; i < LBInfoTabs.Count(); i++)
+        {
+            LBInfoTabs[i].SetActive(tabID == i);
+            LBInfoTabButtons[i].interactable = tabID != i;
+        }
+    }
     private void Awake()
     {
         Transform leaderPanel = GameObject.Find("UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Leaderboard").transform;
@@ -482,7 +492,6 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
     public void CheckAndShowLBParticipation()
     {
-        Debug.Log(DatabaseManager.LeaderboardName);
         if (CheckLeaderBoardParticipation())
             ShowLeaderBoardPopUp(1);
         else
