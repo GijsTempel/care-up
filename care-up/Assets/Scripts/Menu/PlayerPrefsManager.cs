@@ -1372,14 +1372,17 @@ public class PlayerPrefsManager : MonoBehaviour
             case "SMPD":
             case "SMPF":
             case "TMMW":
-            case "OSTMOPS":
-            case "SOC":
             case "GFTP":
             case "CATMSO":
             case "BGM":
             case "MSSI":
             case "ISSI":
                 return "409087";
+
+            case "OSTMOPS":
+            case "SOC":
+            case "BCTCR":
+                return "481520";
         }
 
         // if nothing fits, GL
