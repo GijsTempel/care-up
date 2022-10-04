@@ -484,6 +484,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
     }
     public void ShowLeaderBoardPopUp(int index)
     {
+        return;
         leaderBoardParticipatePanel.SetActive(index == 1);
         leaderBoardChangeNamePanel.SetActive(index == 2);
         leaderBoardChangeNameButton.SetActive(index == 0);
