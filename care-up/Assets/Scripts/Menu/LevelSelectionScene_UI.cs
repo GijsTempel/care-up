@@ -45,10 +45,11 @@ public class LevelSelectionScene_UI : MonoBehaviour
     public string debugSS;
     public List<GameObject> rankButtons;
     public GameObject leaderBoardParticipatePanel;
-    public GameObject leaderBoardChangeNamePanel;
     public InputField leaderBoardNameInput;
     public GameObject leaderBoardChangeNameButton;
+    public GameObject leaderBoardNewNamePanel;
     private PlayerPrefsManager ppManager;
+    public GameObject LeaderBoardInfoTabPanel;
     float initTime = 0f;
     bool sceneButtonsUpdated = false;
     Dictionary<string, int> sceneGroupNum = new Dictionary<string, int>();
@@ -93,6 +94,13 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
     public void SwitchLBTab(int tabID)
     {
+        if (tabID == -2)
+        {
+            LeaderBoardInfoTabPanel.SetActive(false);
+            return;
+        }
+
+        LeaderBoardInfoTabPanel.SetActive(true);
         for(int i = 0; i < LBInfoTabs.Count(); i++)
         {
             LBInfoTabs[i].SetActive(tabID == i);
@@ -484,12 +492,16 @@ public class LevelSelectionScene_UI : MonoBehaviour
     }
     public void ShowLeaderBoardPopUp(int index)
     {
-        return;
         leaderBoardParticipatePanel.SetActive(index == 1);
-        leaderBoardChangeNamePanel.SetActive(index == 2);
+        if (index == 2)
+        {
+            SwitchLBTab(2);
+        }
+        leaderBoardNewNamePanel.SetActive(index == 2);
         leaderBoardChangeNameButton.SetActive(index == 0);
         leaderBoardNameInput.text = DatabaseManager.LeaderboardName;
     }
+
 
     public void CheckAndShowLBParticipation()
     {
