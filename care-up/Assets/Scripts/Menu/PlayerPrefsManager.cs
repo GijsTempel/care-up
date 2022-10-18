@@ -1347,46 +1347,58 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         switch(module)
         {
-            case "VSV":
-            case "VVSO":
             case "THD":
             case "THR":
-            case "ZOKR":
-            case "TVNM":
                 return "426062";
 
-            case "BMVS":
-            case "TMOT":
-                return "402071";
-
-            case "SCII":
-            case "AMVP":
             case "SCAED":
                 return "451003";
 
-            case "INSIG":
-            case "FRAXI":
-            case "ISHTGF":
-            case "IILTGF":
             case "SMPA":
             case "SMPD":
             case "SMPF":
-            case "TMMW":
-            case "GFTP":
-            case "CATMSO":
-            case "BGM":
-            case "MSSI":
-            case "ISSI":
                 return "409087";
 
             case "OSTMOPS":
             case "SOC":
             case "BCTCR":
                 return "481520";
+
+            case "INSIG":
+            case "IILTGF":
+            case "ISHTGF":
+            case "FRAXI":
+                return "479264";
+
+            case "VSV":
+            case "VVSO":
+            case "BMVS":
+            case "CATMSO":
+                return "481516";
+
+            case "TMOT":
+            case "TMMW":
+            case "AMVP":
+            case "MSSI":
+                return "485190";
+
+            case "SCII":
+            case "ISSI":
+                return "485220";
+
+            case "TVNM":
+            case "GFTP":
+                return "485238";
+
+            case "BGM":
+                return "483837";
+
+            case "ZOKR":
+                return "485312";
         }
 
         // if nothing fits, GL
-        return "409087";
+        return "-1";
     }
     
     public void HandleLoginToken()
