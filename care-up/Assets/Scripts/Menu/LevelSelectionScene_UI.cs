@@ -46,7 +46,9 @@ public class LevelSelectionScene_UI : MonoBehaviour
     public List<GameObject> rankButtons;
     public GameObject leaderBoardParticipatePanel;
     public InputField leaderBoardNameInput;
-    public GameObject leaderBoardChangeNameButton;
+    public InputField leaderBoardNameInput2;
+
+    public GameObject leaderBoardInfoButton;
     public GameObject leaderBoardNewNamePanel;
     private PlayerPrefsManager ppManager;
     public GameObject LeaderBoardInfoTabPanel;
@@ -92,6 +94,18 @@ public class LevelSelectionScene_UI : MonoBehaviour
         return value;
     }
 
+    public void ToggleLBTabs()
+    {
+        if (LeaderBoardInfoTabPanel.gameObject.activeSelf)
+        {
+            SwitchLBTab(-2);
+        }
+        else
+        {
+            SwitchLBTab(0);
+        }
+    }
+
     public void SwitchLBTab(int tabID)
     {
         if (tabID == -2)
@@ -101,11 +115,16 @@ public class LevelSelectionScene_UI : MonoBehaviour
         }
 
         LeaderBoardInfoTabPanel.SetActive(true);
-        for(int i = 0; i < LBInfoTabs.Count(); i++)
+        for (int i = 0; i < LBInfoTabs.Count(); i++)
         {
             LBInfoTabs[i].SetActive(tabID == i);
             LBInfoTabButtons[i].interactable = tabID != i;
         }
+        if (tabID == 2)
+        {
+            leaderBoardNameInput2.text = leaderBoardNameInput.text = DatabaseManager.LeaderboardName;
+        }
+
     }
     private void Awake()
     {
@@ -484,22 +503,35 @@ public class LevelSelectionScene_UI : MonoBehaviour
         //UpdateLeaderBoard();
     }
 
-    public void LeaderBoardNewName()
+    public void LeaderBoardNewName(int nameScreenID = 0)
     {
         string newName = leaderBoardNameInput.text;
-        DatabaseManager.SetLeaderboardName(newName);
-        ShowLeaderBoardPopUp(0);
+        if (nameScreenID == 1)
+            newName = leaderBoardNameInput2.text;
+        if (nameScreenID == 2)
+            newName = "";
+        if (newName != "" || nameScreenID >= 2)
+        {
+            DatabaseManager.SetLeaderboardName(newName);
+            ShowLeaderBoardPopUp(0);
+        }
+        else
+        {
+            leaderBoardNameInput.GetComponent<Animation>().Play();
+            leaderBoardNameInput2.GetComponent<Animation>().Play();
+        }
     }
     public void ShowLeaderBoardPopUp(int index)
     {
         leaderBoardParticipatePanel.SetActive(index == 1);
-        if (index == 2)
-        {
-            SwitchLBTab(2);
-        }
+        //if (index == 2)
+        //{
+        //    SwitchLBTab(2);
+        //}
         leaderBoardNewNamePanel.SetActive(index == 2);
-        leaderBoardChangeNameButton.SetActive(index == 0);
+        leaderBoardInfoButton.SetActive(index == 0);
         leaderBoardNameInput.text = DatabaseManager.LeaderboardName;
+        LeaderBoardInfoTabPanel.SetActive(false);
     }
 
 
