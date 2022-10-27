@@ -25,8 +25,8 @@ public class LeaderboardDB : MonoBehaviour
 
     public void Init()
     {
-        if (DatabaseManager.IsEligibleForLeaderboard == false)
-            return;
+        //if (DatabaseManager.IsEligibleForLeaderboard == false)
+        //    return;
 
         board = new List<LeaderboardLine>();
         isInTheBoard = false;
