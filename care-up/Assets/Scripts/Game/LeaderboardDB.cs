@@ -7,6 +7,8 @@ using MBS;
 public class LeaderboardDB : MonoBehaviour
 {
     public const int LeagueLimit = 30;
+    public readonly float[] PromotionZone = { .5f, .5f, .33f, .16f, 0 };
+    public readonly float[] DemotionZone = { 1f, .75f, .75f, .5f, .5f };
 
     [System.Serializable]
     public class LeaderboardLine {
