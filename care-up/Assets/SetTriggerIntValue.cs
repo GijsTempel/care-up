@@ -9,6 +9,7 @@ public class SetTriggerIntValue : StateMachineBehaviour
     public int actionFrame = 0;
     protected float frame;
     protected float prevFrame;
+    public string ObjectName = "";
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -27,16 +28,41 @@ public class SetTriggerIntValue : StateMachineBehaviour
 
             if (PlayerAnimationManager.CompareFrames(frame, prevFrame, actionFrame))
             {
-                animator.SetInteger(TriggerName, value);
+                if (ObjectName == "")
+                {
+                    animator.SetInteger(TriggerName, value);
+                }
+                else
+                {
+                    if (GameObject.Find(ObjectName) != null)
+                    {
+                        if (GameObject.Find(ObjectName).GetComponent<Animator>() != null)
+                            GameObject.Find(ObjectName).GetComponent<Animator>().SetInteger(TriggerName, value);
+                    }
+                }
             }
         }
     }
+
 
     public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (actionFrame / 60f > frame)
         {
-            animator.SetInteger(TriggerName, value);
+            if (ObjectName == "")
+            {
+                animator.SetInteger(TriggerName, value);
+            }
+            else
+            {
+                if (GameObject.Find(ObjectName) != null)
+                {
+                    if (GameObject.Find(ObjectName).GetComponent<Animator>() != null)
+                        GameObject.Find(ObjectName).GetComponent<Animator>().SetInteger(TriggerName, value);
+                }
+            }
         }
     }
+
+
 }
