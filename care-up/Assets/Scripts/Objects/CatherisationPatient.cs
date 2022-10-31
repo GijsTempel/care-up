@@ -69,7 +69,12 @@ public class CatherisationPatient : PersonObject
                             PlayerAnimator.SetTrigger("CloseCurtains");
                             PlayerAnimator.SetTrigger("S CloseCurtains");
                         }
-                        
+
+                        if (w4_Animator.GetInteger("GreetingIsDone") == 0)
+                        {
+                            animator.SetTrigger("RemovingCardiganStarter");
+                        }
+
 
                     }
 
