@@ -54,7 +54,7 @@ public class CatherisationPatient : PersonObject
                         playerPosAtPatient.transform.position = playerPositionTarget.position;
                         playerPosAtPatient.transform.rotation = playerPositionTarget.rotation;
                     }
-
+                    
                     if (GameObject.Find("w4_Empty") == null)
                     {
                         PlayerAnimator.SetTrigger("CloseCurtains");
@@ -62,8 +62,9 @@ public class CatherisationPatient : PersonObject
                     }
                     if (GameObject.Find("w4_Empty") != null)
                     {
-                        Animator w4_Animator = GetComponent<Animator>();
-                        if(w4_Animator.GetInteger("GreetingIsDone") == 1)
+                        Animator w4_Animator = GameObject.Find("w4_Empty").GetComponent<Animator>();
+                        int u = w4_Animator.GetInteger("GreetingIsDone");
+                        if (w4_Animator.GetInteger("GreetingIsDone") == 1)
                         {
                             PlayerAnimator.SetTrigger("CloseCurtains");
                             PlayerAnimator.SetTrigger("S CloseCurtains");
