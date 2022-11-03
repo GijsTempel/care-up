@@ -505,6 +505,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
     public void LeaderBoardNewName(int nameScreenID = 0)
     {
+
         string newName = leaderBoardNameInput.text;
         if (nameScreenID == 1)
             newName = leaderBoardNameInput2.text;
@@ -523,6 +524,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
     }
     public void ShowLeaderBoardPopUp(int index)
     {
+        return;
         leaderBoardParticipatePanel.SetActive(index == 1);
         //if (index == 2)
         //{
