@@ -500,7 +500,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
         ScrollRect levelScroll =  GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Play/ContentPanel/PlayElements/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder").GetComponent<ScrollRect>();
         
         levelScroll.verticalNormalizedPosition = ppManager.LevelScrollPosition;
-        UpdateLeaderBoard();
+        // UpdateLeaderBoard();
     }
 
     public void LeaderBoardNewName(int nameScreenID = 0)
