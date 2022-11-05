@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Networking;
 using MBS;
+using System.Linq;
 
 public class LeaderboardDB : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class LeaderboardDB : MonoBehaviour
     }
 
     public bool isInTheBoard;
+    public int playerIndex;
     public static int currentRank;
     public static List<LeaderboardLine> board; // <===== this is your main list of current league leaderboard 
 
@@ -65,6 +67,11 @@ public class LeaderboardDB : MonoBehaviour
                     LeaderboardLine nl = new LeaderboardLine();
                     nl = JsonUtility.FromJson<LeaderboardLine>(L);
                     board.Add(nl);
+
+                    if (nl.UserID == WULogin.UID)
+                    {
+                        playerIndex = board.IndexOf(nl);
+                    }
 
                     if (currentRank < 0)
                     {
@@ -115,6 +122,9 @@ public class LeaderboardDB : MonoBehaviour
             {
                 Debug.Log(webRequest.downloadHandler.text);
                 isInTheBoard = true;
+
+                // fetch leaderboard if success
+                StartCoroutine(FetchDB(UserID));
             }
         }
     }
@@ -156,5 +166,8 @@ public class LeaderboardDB : MonoBehaviour
                 Debug.Log(webRequest.downloadHandler.text);
             }
         }
+
+        // also add locally for instant changes
+        board.ElementAt<LeaderboardLine>(playerIndex).Points += Pts;
     }
 }
