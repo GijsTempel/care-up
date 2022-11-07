@@ -132,6 +132,22 @@ MonoBehaviour:
   ToFollowHoldingHand: 0
   NewAnimationName: Pen_SQ1
   ActionFrame: 2
+--- !u!114 &-8950041134011706235
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7f8245cec82648289be348a2189ab01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addFrame: 1463
+  deleteFrame: 1791
+  objectName: GauzeFoldedTwice
+  hand: 1
 --- !u!1102 &-8929758436849173185
 AnimatorState:
   serializedVersion: 5
@@ -315,9 +331,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 6
     m_ConditionEvent: rightID
     m_EventTreshold: 0
-  - m_ConditionMode: 6
-    m_ConditionEvent: sceneID
-    m_EventTreshold: 26
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -3459554789373443527}
   m_Solo: 0
@@ -1150,9 +1163,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 6
     m_ConditionEvent: rightID
     m_EventTreshold: 4400
-  - m_ConditionMode: 6
-    m_ConditionEvent: sceneID
-    m_EventTreshold: 26
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1363369379441418666}
   m_Solo: 0
@@ -1189,6 +1199,51 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!1102 &-7467757297583193960
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Armature|x0230_cleaning_genitals_sq_BKP
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours:
+  - {fileID: -2294673907355114180}
+  - {fileID: 3307136610777660813}
+  - {fileID: -3507175409762218845}
+  - {fileID: 6389572693723969858}
+  - {fileID: -6180927182761212104}
+  - {fileID: -3880349777741873507}
+  - {fileID: -7217756396972562512}
+  - {fileID: 6725249392708733339}
+  - {fileID: 3908587871337822218}
+  - {fileID: 704126822036171938}
+  - {fileID: -7362433025852702063}
+  - {fileID: -1961780573775585296}
+  - {fileID: 469313121493919587}
+  - {fileID: 2538847380805103559}
+  - {fileID: -8950041134011706235}
+  - {fileID: -2547762539949900865}
+  - {fileID: 4705247129106257100}
+  - {fileID: 5983310320598141236}
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 1005727339240390463, guid: 81969ce5579fb2b45a23efbba7d44efd,
+    type: 3}
+  m_Tag: UI_On_Sequence
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1101 &-7464257537275812429
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -1258,6 +1313,20 @@ MonoBehaviour:
   angle: {x: 35, y: 0.2, z: 0}
   saveCameraOrientation: 1
   restoreCameraOrientation: 1
+--- !u!114 &-7362433025852702063
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftHand: 1
+  dropFrame: 3245
 --- !u!1101 &-7348207236439947217
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1299,6 +1368,20 @@ MonoBehaviour:
   audioFrame: 0
   volume: 1
   moveWithCamera: 0
+--- !u!114 &-7217756396972562512
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b9c9f3106e5ff7449cd0b07126b8b77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropLeftFrame: 2
+  dropRightFrame: 2
 --- !u!1101 &-7204483161524145516
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1362,6 +1445,28 @@ MonoBehaviour:
   actionFrame: 0
   ObjectName: m1_A
   DialogueNum: 1
+--- !u!1101 &-7087761653652875679
+AnimatorStateTransition:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 1107000013396830544}
+  m_DstState: {fileID: 0}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.9940665
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1101 &-7004295963363767022
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -2076,6 +2181,20 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &-6180927182761212104
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75d5649a1875edf478a49f715e29c332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showFrame: 3660
+  toPickup: 0
 --- !u!1101 &-6117991366325401165
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -3790,6 +3909,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toClose: 0
   actionFrame: 60
+--- !u!114 &-3880349777741873507
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 839bcc7f24a9c47f8af28e853187bfa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: lube_syringe_noCup
+  unlock_frame: 2700
+  lock_frame: 3243
+  toActivate: 0
 --- !u!1102 &-3871123859885696984
 AnimatorState:
   serializedVersion: 5
@@ -4054,6 +4189,22 @@ MonoBehaviour:
   audioFrame: 1
   volume: 0.09
   moveWithCamera: 0
+--- !u!114 &-3507175409762218845
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7f8245cec82648289be348a2189ab01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addFrame: 3660
+  deleteFrame: 3723
+  objectName: gloves_folded
+  hand: 0
 --- !u!114 &-3492572197526672677
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4081,7 +4232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leftHand: 1
-  dropFrame: 3245
+  dropFrame: 3390
 --- !u!114 &-3472136791009630503
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4617,9 +4768,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 6
     m_ConditionEvent: rightID
     m_EventTreshold: 0
-  - m_ConditionMode: 6
-    m_ConditionEvent: sceneID
-    m_EventTreshold: 26
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1026099610822446833}
   m_Solo: 0
@@ -4847,6 +4995,22 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-2547762539949900865
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7f8245cec82648289be348a2189ab01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addFrame: 1874
+  deleteFrame: 2208
+  objectName: GauzeFoldedTwice
+  hand: 1
 --- !u!114 &-2536250387600179144
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4962,6 +5126,23 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-2294673907355114180
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1d577ba52e334ef39dfa878ef5c62b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addFrame: 2700
+  objectName: lube_syringe_noCup
+  hand: 1
+  GhostObjectTarget: 
+  destroyOnDrop: 0
 --- !u!114 &-2285235302185059384
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -5048,6 +5229,22 @@ MonoBehaviour:
   - Cup
   toShow: 0
   meshRenderer: 0
+--- !u!114 &-1961780573775585296
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7f8245cec82648289be348a2189ab01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addFrame: 26
+  deleteFrame: 444
+  objectName: GauzeFoldedTwice
+  hand: 1
 --- !u!1101 &-1947597057378174360
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -6038,9 +6235,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 6
     m_ConditionEvent: rightID
     m_EventTreshold: 0
-  - m_ConditionMode: 6
-    m_ConditionEvent: sceneID
-    m_EventTreshold: 26
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 182787480962539931}
   m_Solo: 0
@@ -8974,7 +9168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControlObjectName: w0_A
-  showFrame: 3459
+  showFrame: 3600
   ObjNames:
   - placed_GauzeFoldedTwice
   toShow: 1
@@ -12764,7 +12958,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75d5649a1875edf478a49f715e29c332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showFrame: 3660
+  showFrame: 3800
   toPickup: 0
 --- !u!114 &114382149409143236
 MonoBehaviour:
@@ -17410,8 +17604,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7f8245cec82648289be348a2189ab01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addFrame: 3660
-  deleteFrame: 3723
+  addFrame: 3800
+  deleteFrame: 3861
   objectName: gloves_folded
   hand: 0
 --- !u!114 &114802844604338252
@@ -18027,7 +18221,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SequenceName: CatherisationWoman
   TuggleFromCinematic: 1
-  keyFrames: 28000000cb010000fa0400007505000094080000e20800004a0a0000900a0000640c0000b50c0000830d0000
+  keyFrames: 28000000cb010000fa0400007505000094080000e20800004a0a0000840b0000f10c0000530d0000190e0000
 --- !u!114 &114864291804587606
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -18964,7 +19158,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectName: lube_syringe_noCup
   unlock_frame: 2700
-  lock_frame: 3243
+  lock_frame: 3262
   toActivate: 0
 --- !u!114 &114949533974641700
 MonoBehaviour:
@@ -19884,9 +20078,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 6
     m_ConditionEvent: rightID
     m_EventTreshold: 4400
-  - m_ConditionMode: 6
-    m_ConditionEvent: sceneID
-    m_EventTreshold: 26
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -3871123859885696984}
   m_Solo: 0
@@ -19915,6 +20106,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftHand: 1
   dropFrame: 44
+--- !u!114 &469313121493919587
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7f8245cec82648289be348a2189ab01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addFrame: 519
+  deleteFrame: 862
+  objectName: GauzeFoldedTwice
+  hand: 1
 --- !u!114 &499306955019825000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -20063,6 +20270,21 @@ MonoBehaviour:
   deleteFrame: 3367
   objectName: GauzeFoldedTwiceForEnclose
   hand: 0
+--- !u!114 &704126822036171938
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e72c07ae9fe847f19fb1b3a669e3399, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: w_sq_target
+  resetToTarget: 
+  resetCamera: 0
 --- !u!114 &751260700224360337
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -20202,9 +20424,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 6
     m_ConditionEvent: rightID
     m_EventTreshold: 4600
-  - m_ConditionMode: 6
-    m_ConditionEvent: sceneID
-    m_EventTreshold: 26
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 3822183087651500029}
   m_Solo: 0
@@ -24660,7 +24879,7 @@ AnimatorStateTransition:
     m_EventTreshold: 4400
   - m_ConditionMode: 6
     m_ConditionEvent: sceneID
-    m_EventTreshold: 25
+    m_EventTreshold: 999
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102288859368316330}
   m_Solo: 0
@@ -24963,7 +25182,7 @@ AnimatorStateTransition:
     m_EventTreshold: 4400
   - m_ConditionMode: 6
     m_ConditionEvent: sceneID
-    m_EventTreshold: 25
+    m_EventTreshold: 999
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102352406105708738}
   m_Solo: 0
@@ -40916,7 +41135,7 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 6
     m_ConditionEvent: sceneID
-    m_EventTreshold: 25
+    m_EventTreshold: 999
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102224541326421344}
   m_Solo: 0
@@ -41621,7 +41840,7 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 6
     m_ConditionEvent: sceneID
-    m_EventTreshold: 25
+    m_EventTreshold: 999
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102301900919115100}
   m_Solo: 0
@@ -61000,7 +61219,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 1005727339240390463, guid: 81969ce5579fb2b45a23efbba7d44efd,
+  m_Motion: {fileID: -534140352477019779, guid: 81969ce5579fb2b45a23efbba7d44efd,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -63368,7 +63587,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 1005727339240390463, guid: 81969ce5579fb2b45a23efbba7d44efd,
+  m_Motion: {fileID: -534140352477019779, guid: 81969ce5579fb2b45a23efbba7d44efd,
     type: 3}
   m_Tag: UI_On_Sequence
   m_SpeedParameter: 
@@ -68468,7 +68687,7 @@ AnimatorStateMachine:
   m_ChildStateMachines:
   - serializedVersion: 1
     m_StateMachine: {fileID: 1107007893727009562}
-    m_Position: {x: -1128, y: -444, z: 0}
+    m_Position: {x: -1130, y: -450, z: 0}
   - serializedVersion: 1
     m_StateMachine: {fileID: 1107318750950033510}
     m_Position: {x: -1130, y: -400, z: 0}
@@ -68751,7 +68970,7 @@ AnimatorStateMachine:
     m_Position: {x: 160, y: 80, z: 0}
   - serializedVersion: 1
     m_StateMachine: {fileID: 1107385945565493220}
-    m_Position: {x: 150, y: 150, z: 0}
+    m_Position: {x: 150, y: 170, z: 0}
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions:
@@ -69619,7 +69838,7 @@ AnimatorStateMachine:
     m_Position: {x: 756, y: 588, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102532761003833354}
-    m_Position: {x: 288, y: 420, z: 0}
+    m_Position: {x: 300, y: 410, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102476791265558622}
     m_Position: {x: 288, y: 708, z: 0}
@@ -70467,10 +70686,10 @@ AnimatorStateMachine:
     m_Position: {x: 252, y: 564, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102301900919115100}
-    m_Position: {x: -20, y: 640, z: 0}
+    m_Position: {x: -30, y: 640, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102288859368316330}
-    m_Position: {x: 260, y: 640, z: 0}
+    m_Position: {x: 270, y: 640, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102378931290078124}
     m_Position: {x: 252, y: 720, z: 0}
@@ -70757,7 +70976,7 @@ AnimatorStateMachine:
     m_Position: {x: -312, y: 828, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102677250961698428}
-    m_Position: {x: 280, y: 520, z: 0}
+    m_Position: {x: 290, y: 510, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102758399487672160}
     m_Position: {x: 288, y: 804, z: 0}
@@ -70779,6 +70998,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 1102758298980392206}
     m_Position: {x: 810, y: 870, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -7467757297583193960}
+    m_Position: {x: 360, y: 600, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -72041,7 +72263,7 @@ AnimatorStateMachine:
     m_Position: {x: 636, y: 252, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102224541326421344}
-    m_Position: {x: 150, y: 590, z: 0}
+    m_Position: {x: 160, y: 600, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102352406105708738}
     m_Position: {x: 400, y: 590, z: 0}
@@ -74167,9 +74389,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 6
     m_ConditionEvent: rightID
     m_EventTreshold: 4600
-  - m_ConditionMode: 6
-    m_ConditionEvent: sceneID
-    m_EventTreshold: 26
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1116709525066425568}
   m_Solo: 0
@@ -75098,6 +75317,22 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &2538847380805103559
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7f8245cec82648289be348a2189ab01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addFrame: 946
+  deleteFrame: 1267
+  objectName: GauzeFoldedTwice
+  hand: 1
 --- !u!1101 &2544013851894477358
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -75695,6 +75930,24 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &3307136610777660813
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: w0_A
+  showFrame: 3459
+  ObjNames:
+  - placed_GauzeFoldedTwice
+  toShow: 1
+  meshRenderer: 0
 --- !u!1101 &3315105644118983407
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -76437,6 +76690,18 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &3908587871337822218
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9b29f5ba63bb4aa5b477b8007d77187, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3994530712677967700
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -76967,6 +77232,22 @@ MonoBehaviour:
   ToFollowHoldingHand: 0
   NewAnimationName: InsertInfusion_Syringe_SQ
   ActionFrame: 0
+--- !u!114 &4705247129106257100
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7f8245cec82648289be348a2189ab01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addFrame: 2277
+  deleteFrame: 2636
+  objectName: GauzeFoldedTwice
+  hand: 1
 --- !u!1101 &4714675620029531671
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -78082,6 +78363,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftHand: 0
   dropFrame: 2
+--- !u!114 &5983310320598141236
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7f8245cec82648289be348a2189ab01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addFrame: 3318
+  deleteFrame: 3459
+  objectName: GauzeFoldedTwice
+  hand: 1
 --- !u!1101 &5995855012392986092
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -78253,6 +78550,21 @@ MonoBehaviour:
   audioFrame: 65
   volume: 0.2
   moveWithCamera: 0
+--- !u!114 &6389572693723969858
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfd1d24e9f498a642b6393e37bedc9e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SequenceName: CatherisationWoman
+  TuggleFromCinematic: 1
+  keyFrames: 28000000cb010000fa0400007505000094080000e20800004a0a0000900a0000640c0000b50c0000830d0000
 --- !u!114 &6398570639363512062
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -78430,6 +78742,24 @@ MonoBehaviour:
   pickFrame: 50
   objectName: OpenedAmpoule
   hand: 1
+--- !u!114 &6725249392708733339
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: '-'
+  showFrame: 2700
+  ObjNames:
+  - lube_syringe_pack_noCover
+  toShow: 0
+  meshRenderer: 0
 --- !u!1101 &6773818755441800425
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -78986,8 +79316,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7f8245cec82648289be348a2189ab01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addFrame: 3318
-  deleteFrame: 3459
+  addFrame: 3458
+  deleteFrame: 3600
   objectName: GauzeFoldedTwice
   hand: 1
 --- !u!1101 &7765057283678319675
@@ -79660,9 +79990,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 6
     m_ConditionEvent: rightID
     m_EventTreshold: 0
-  - m_ConditionMode: 6
-    m_ConditionEvent: sceneID
-    m_EventTreshold: 26
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -4813440543633265285}
   m_Solo: 0
