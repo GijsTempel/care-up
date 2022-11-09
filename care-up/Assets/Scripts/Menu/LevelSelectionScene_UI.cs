@@ -500,11 +500,12 @@ public class LevelSelectionScene_UI : MonoBehaviour
         ScrollRect levelScroll =  GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Play/ContentPanel/PlayElements/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder").GetComponent<ScrollRect>();
         
         levelScroll.verticalNormalizedPosition = ppManager.LevelScrollPosition;
-        UpdateLeaderBoard();
+        // UpdateLeaderBoard();
     }
 
     public void LeaderBoardNewName(int nameScreenID = 0)
     {
+
         string newName = leaderBoardNameInput.text;
         if (nameScreenID == 1)
             newName = leaderBoardNameInput2.text;
@@ -523,6 +524,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
     }
     public void ShowLeaderBoardPopUp(int index)
     {
+        return;
         leaderBoardParticipatePanel.SetActive(index == 1);
         //if (index == 2)
         //{
