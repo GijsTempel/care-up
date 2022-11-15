@@ -54,8 +54,30 @@ public class CatherisationPatient_InHouse : PersonObject
                         playerPosAtPatient.transform.position = playerPositionTarget.position;
                         playerPosAtPatient.transform.rotation = playerPositionTarget.rotation;
                     }
-                    PlayerAnimator.SetTrigger("CloseCurtainsInHouse");
-                    PlayerAnimator.SetTrigger("S CloseCurtainsInHouse");
+                    /*PlayerAnimator.SetTrigger("CloseCurtainsInHouse");
+                    PlayerAnimator.SetTrigger("S CloseCurtainsInHouse");*/
+                    if (GameObject.Find("w4_Empty") == null)
+                    {
+                        PlayerAnimator.SetTrigger("CloseCurtainsInHouse");
+                        PlayerAnimator.SetTrigger("S CloseCurtainsInHouse");
+                    }
+                    if (GameObject.Find("w4_Empty") != null)
+                    {
+                        Animator w4_Animator = GameObject.Find("w4_Empty").GetComponent<Animator>();
+                        int u = w4_Animator.GetInteger("GreetingIsDone");
+                        if (w4_Animator.GetInteger("GreetingIsDone") == 1)
+                        {
+                            PlayerAnimator.SetTrigger("CloseCurtainsInHouse");
+                            PlayerAnimator.SetTrigger("S CloseCurtainsInHouse");
+                        }
+
+                        if (w4_Animator.GetInteger("GreetingIsDone") == 0)
+                        {
+                            animator.SetTrigger("RemovingCardiganStarter");
+                        }
+
+
+                    }
 
                     break;
                 case "HelpGetUp":
