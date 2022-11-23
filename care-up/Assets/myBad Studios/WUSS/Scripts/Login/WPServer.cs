@@ -274,6 +274,7 @@ namespace MBS
                     throw new WPServerErrorException( w.error );
 
                 HandleResponse( action, data, w, error, response, failedresponse );
+                w.Dispose();
             }
             catch ( WPServerErrorException e )
             {
