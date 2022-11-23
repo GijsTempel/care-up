@@ -170,4 +170,46 @@ public class LeaderboardDB : MonoBehaviour
         // also add locally for instant changes
         board.ElementAt<LeaderboardLine>(playerIndex).Points += Pts;
     }
+
+    public void UpdateLeaderboardName(string name)
+    {
+        if (DatabaseManager.IsEligibleForLeaderboard == false)
+            return;
+
+        if (isInTheBoard)
+        {
+            StartCoroutine(UpdateLeaderboardNameWeb(name));
+        }
+        else
+        {
+            Debug.LogWarning("User is not in current leagues, push to league instead?");
+        }
+
+        // also locally for instant changes
+        board.ElementAt<LeaderboardLine>(playerIndex).Name = name;
+        DatabaseManager.UpdateField("AccountStats", "Leaderboard_Name", name);
+    }
+
+    IEnumerator UpdateLeaderboardNameWeb(string name)
+    {
+        string url = "https://leren.careup.online/Leaderboard/leaderboard_update_name.php";
+        url += "?name=" + name;
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
+        {
+            // Request and wait for the desired page.
+            yield return webRequest.SendWebRequest();
+            string[] pages = url.Split('/');
+            int page = pages.Length - 1;
+
+            if (webRequest.isNetworkError)
+            {
+                Debug.Log(pages[page] + ": Error: " + webRequest.error);
+            }
+            else if (webRequest.downloadHandler.text != "")
+            {
+                Debug.Log(webRequest.downloadHandler.text);
+            }
+        }
+    }
 }

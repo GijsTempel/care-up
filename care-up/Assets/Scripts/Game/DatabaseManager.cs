@@ -471,6 +471,6 @@ public class DatabaseManager : MonoBehaviour
 
     public static void SetLeaderboardName(string name)
     {
-        DatabaseManager.UpdateField("AccountStats", "Leaderboard_Name", name);
+        DatabaseManager.leaderboardDB.UpdateLeaderboardName(name);
     }
 }
