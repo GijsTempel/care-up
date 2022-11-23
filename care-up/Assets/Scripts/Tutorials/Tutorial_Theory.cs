@@ -33,7 +33,7 @@ public class Tutorial_Theory : TutorialManager
     public bool expectedRobotUIstate = false;
 
     private RobotUITabInfo infoTab;
-    private PDFFullScreenViewer pdfViewer;
+    //private PDFFullScreenViewer pdfViewer;
 
     protected override void Update()
     {
@@ -120,16 +120,23 @@ public class Tutorial_Theory : TutorialManager
                     if (nextButtonClicked)
                     {
                         audioSource.PlayOneShot (Popup, 0.1F);
-                        infoTab.tutorial_changedPDF = false;
+
+                        /*infoTab.tutorial_changedPDF = false;
                         hintsN.SetIconPosition(1);
                         hintsN.LockTo("FullScreenPDFButton", new Vector3(-295.90f, -356.40f, 0.00f));
                         currentStep = TutorialStep.FullScrOn;
                         UItext.text = "Je kunt overschakelen naar een volledige scherm weergave om de theorie beter te kunnen lezen. Probeer dit nu door op de knop met de twee pijlen te drukken.";
 
-                        infoTab.tutorial_fullscreen = false;
+                        infoTab.tutorial_fullscreen = false;*/
+                        currentStep = TutorialStep.TheoryBack;
+                        hintsN.SetIconPosition(0);
+                        hintsN.LockTo("RobotUI", new Vector3(-1631.30f, 936.80f, -99.80f));
+                        UItext.text = "Dat was alles over de theorie app. Laten we de apps sluiten door op de knop te drukken met het pijltje naar links. ";
+
+                        closeTab = true;
                     }
                     break;
-                case TutorialStep.FullScrOn:
+                /*case TutorialStep.FullScrOn:
                     if (infoTab.tutorial_fullscreen)
                     {
                         audioSource.PlayOneShot (Popup, 0.1F);
@@ -153,7 +160,7 @@ public class Tutorial_Theory : TutorialManager
 
                         closeTab = true;
                     }
-                    break;
+                    break; */
                 case TutorialStep.TheoryBack:
                     if (RobotUITabs.tutorial_back)
                     {

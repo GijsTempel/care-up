@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PDFFullScreenViewer : MonoBehaviour
+/*public class PDFFullScreenViewer : MonoBehaviour
 {
     [HideInInspector]
     public bool tutorial_closedFullScrPDF = false;
@@ -34,4 +34,4 @@ public class PDFFullScreenViewer : MonoBehaviour
 		float ScrollPos = IPad_PDF.gameObject.transform.Find("_Internal/VerticalScrollbar").GetComponent<Scrollbar>().value;
         FS_PDF.gameObject.transform.Find("_Internal/VerticalScrollbar").GetComponent<Scrollbar>().value = ScrollPos;
 	}
-}
+}*/
