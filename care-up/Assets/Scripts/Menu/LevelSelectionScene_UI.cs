@@ -500,7 +500,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
         ScrollRect levelScroll =  GameObject.Find("/UMenuProManager/MenuCanvas/LayoutPanel/Tabs/Play/ContentPanel/PlayElements/ProtocolPanel/Panel/ProtocolList/ProtocolsHolder").GetComponent<ScrollRect>();
         
         levelScroll.verticalNormalizedPosition = ppManager.LevelScrollPosition;
-        // UpdateLeaderBoard();
+        UpdateLeaderBoard();
     }
 
     public void LeaderBoardNewName(int nameScreenID = 0)
@@ -524,7 +524,6 @@ public class LevelSelectionScene_UI : MonoBehaviour
     }
     public void ShowLeaderBoardPopUp(int index)
     {
-        return;
         leaderBoardParticipatePanel.SetActive(index == 1);
         //if (index == 2)
         //{
@@ -579,7 +578,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
     public void UpdateLeaderBoard(string sceneName)
     {
-        //Debug.Log("UpdateLeaderBoard:::" + sceneName);
+        // Debug.Log("UpdateLeaderBoard:::" + sceneName);
         // let's clear current UI first, it might have some editor text or info from other scene we loaded before
         for (int i = 0; i < _Scores.Length; i++)
         {

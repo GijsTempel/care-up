@@ -173,8 +173,8 @@ public class LeaderboardDB : MonoBehaviour
 
     public void UpdateLeaderboardName(string name)
     {
-        if (DatabaseManager.IsEligibleForLeaderboard == false)
-            return;
+        //if (DatabaseManager.IsEligibleForLeaderboard == false)
+        //    return;
 
         if (isInTheBoard)
         {
