@@ -27,15 +27,14 @@ public class LeaderboardDB : MonoBehaviour
 
     public void Init()
     {
-        //if (DatabaseManager.IsEligibleForLeaderboard == false)
-        //    return;
-
         board = new List<LeaderboardLine>();
         isInTheBoard = false;
         currentRank = -1;
-
-        //StartCoroutine(FetchDB(31)); // testing with custom ID
-        StartCoroutine(FetchDB(WULogin.UID));
+        
+        if (DatabaseManager.IsEligibleForLeaderboard) {
+            //StartCoroutine(FetchDB(31)); // testing with custom ID
+            StartCoroutine(FetchDB(WULogin.UID));
+        }
     }
 
     IEnumerator FetchDB(int UserID)
@@ -173,21 +172,20 @@ public class LeaderboardDB : MonoBehaviour
 
     public void UpdateLeaderboardName(string name)
     {
-        //if (DatabaseManager.IsEligibleForLeaderboard == false)
-        //    return;
+        // local to be Eligible now
+        DatabaseManager.UpdateField("AccountStats", "Leaderboard_Name", name);
 
         if (isInTheBoard)
         {
             StartCoroutine(UpdateLeaderboardNameWeb(name));
+
+            // also locally for instant changes
+            board.ElementAt<LeaderboardLine>(playerIndex).Name = name;
         }
         else
         {
-            Debug.LogWarning("User is not in current leagues, push to league instead?");
+            Debug.LogWarning("Cannot update name on DB, user is not on DB yet.");
         }
-
-        // also locally for instant changes
-        board.ElementAt<LeaderboardLine>(playerIndex).Name = name;
-        DatabaseManager.UpdateField("AccountStats", "Leaderboard_Name", name);
     }
 
     IEnumerator UpdateLeaderboardNameWeb(string name)
