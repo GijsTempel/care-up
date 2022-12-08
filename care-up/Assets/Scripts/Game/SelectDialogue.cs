@@ -11,6 +11,10 @@ public class SelectDialogue : MonoBehaviour
     public bool cheated = false;
     int correctAnswerID = -1;
     GameUI gameUI;
+    public GameObject selectionDialogueElements;
+    public GameObject prevStepInfoElements;
+    public Button prevStepInfoButton;
+    DialogueOption prevStepInfo = null;
 
     public class DialogueOption
     {
@@ -35,6 +39,11 @@ public class SelectDialogue : MonoBehaviour
         }
     };
 
+    public void ShowPrevStepInfo(bool toShow = true)
+    {
+        selectionDialogueElements.SetActive(!toShow);
+        prevStepInfoElements.SetActive(toShow);
+    }
     public enum OptionSide
     {
         None,
@@ -45,7 +54,6 @@ public class SelectDialogue : MonoBehaviour
     };
 
     private List<DialogueOption> options = new List<DialogueOption>();
-
     //private OptionSide currentOption = OptionSide.None;
     private Color currentMaterial;
 
@@ -77,6 +85,25 @@ public class SelectDialogue : MonoBehaviour
             controls = GameObject.Find("GameLogic").GetComponent<Controls>();
             if (controls == null) Debug.LogError("No controls found.");
         }
+    }
+
+    public void AddPrevStepInfo(List<DialogueOption> list)
+    {
+        foreach (DialogueOption o in list)
+        {
+            if (o.attribute != "" && o.attribute != "CM_Leave")
+            {
+                prevStepInfo = o;
+            }
+        }
+        if (prevStepInfo != null)
+        {
+            prevStepInfoElements.transform.Find("Buttons/b0/Text").GetComponent<Text>().text = prevStepInfo.text;
+            prevStepInfoButton.gameObject.SetActive(true);
+        }
+        else
+            prevStepInfoButton.gameObject.SetActive(false);
+
     }
 
     public void AddOptions(List<DialogueOption> list, bool cheat = false)
