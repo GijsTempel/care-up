@@ -313,9 +313,13 @@ public class AnimationSequence
 
                 if (currentStep > 0 )
                 {
-                    PlayerPrefsManager manager = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
-                    if (manager.practiceMode)
-                        dialogue.AddPrevStepInfo(steps.ElementAt(currentStep - 1).options);
+                    if (GameObject.Find("Preferences") != null)
+                    {
+                        PlayerPrefsManager manager = GameObject.Find("Preferences").GetComponent<PlayerPrefsManager>();
+                    
+                        if (manager.practiceMode)
+                            dialogue.AddPrevStepInfo(steps.ElementAt(currentStep - 1).options);
+                    }
                 }
             }
 
