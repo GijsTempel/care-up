@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine.Networking;
 
+
 namespace MBS
 {
     public enum WPServerState { None, Contacting }
@@ -162,31 +163,31 @@ namespace MBS
                 // Request and wait for the desired page.
                 yield return webRequest.SendWebRequest();
 
-                if (webRequest.isNetworkError)
-                {
+                //if (webRequest.isNetworkError)
+                //{
 
-                }
-                else if (webRequest.downloadHandler.text != "")
-                {
-                    int bundleVersion = 0;
-                    int.TryParse(webRequest.downloadHandler.text, out bundleVersion);
-                    if (bundleVersion != 0)
-                    {
-                        PlayerPrefsManager playerPrefsManager = GameObject.FindObjectOfType<PlayerPrefsManager>();
-                        if (playerPrefsManager != null)
-                        {
-                            if (bundleVersion != playerPrefsManager.BundleVersion)
-                            {
-                                Caching.ClearCache();
-                            }
-                            playerPrefsManager.BundleVersion = bundleVersion;
-                        }
-                    }
-                }
-                else
-                {
+                //}
+                //else if (webRequest.downloadHandler.text != "")
+                //{
+                //    int bundleVersion = 0;
+                //    int.TryParse(webRequest.downloadHandler.text, out bundleVersion);
+                //    if (bundleVersion != 0)
+                //    {
+                //        PlayerPrefsManager playerPrefsManager = GameObject.FindObjectOfType<PlayerPrefsManager>();
+                //        if (playerPrefsManager != null)
+                //        {
+                //            if (bundleVersion != playerPrefsManager.BundleVersion)
+                //            {
+                //                Caching.ClearCache();
+                //            }
+                //            playerPrefsManager.BundleVersion = bundleVersion;
+                //        }
+                //    }
+                //}
+                //else
+                //{
 
-                }
+                //}
 
             }
         }
