@@ -5618,7 +5618,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 171.05, y: -12.5}
+  m_AnchoredPosition: {x: 171.04999, y: -12.5}
   m_SizeDelta: {x: 336, y: 615}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &391230846
@@ -9602,7 +9602,7 @@ PrefabInstance:
     - target: {fileID: 224843258814635222, guid: 0b991aadbf8286f42b66d02864ebc431,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 20069914
+      value: 20189744
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b991aadbf8286f42b66d02864ebc431, type: 3}
@@ -15230,8 +15230,10 @@ GameObject:
   - component: {fileID: 939975587}
   - component: {fileID: 939975585}
   - component: {fileID: 939975584}
-  - component: {fileID: 939975586}
   - component: {fileID: 939975588}
+  - component: {fileID: 939975591}
+  - component: {fileID: 939975589}
+  - component: {fileID: 939975590}
   m_Layer: 0
   m_Name: Preferences
   m_TagString: Untagged
@@ -15505,19 +15507,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mode: 7
   autoBadging: 0
---- !u!114 &939975586
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 939975574}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 809248b1a0cbc5c489703f1b5390e10b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  purchasedScenes: []
 --- !u!114 &939975587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15545,6 +15534,57 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toAutomate: 0
+--- !u!114 &939975589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 939975574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98e401cc5a2ed4a7ba02f2e6ef35c6f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useRuntimeSetup: 0
+  revenueCatAPIKeyApple: 
+  revenueCatAPIKeyGoogle: 
+  revenueCatAPIKeyAmazon: 
+  useAmazon: 0
+  autoSyncPurchases: 1
+  appUserID: 
+  productIdentifiers:
+  - INSIG
+  listener: {fileID: 939975590}
+  observerMode: 0
+  usesStoreKit2IfAvailable: 0
+  userDefaultsSuiteName: 
+  proxyURL: 
+--- !u!114 &939975590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 939975574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfca75f078a02b7688d57ad2fb2c8e89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &939975591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 939975574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 809248b1a0cbc5c489703f1b5390e10b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  purchasedScenes: []
 --- !u!1 &950682364
 GameObject:
   m_ObjectHideFlags: 0
