@@ -31,7 +31,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
 
     void Start()
     {
-        Debug.Log("IAP start");
+        //Debug.Log("IAP start");
         
         purchasedScenes.Clear();
 
@@ -143,7 +143,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
     private bool IsInitialized()
     {
         // Only say we are initialized if both the Purchasing references are set.
-        Debug.Log("IsInitialized? " + (m_StoreController != null) + " " + (m_StoreExtensionProvider != null));
+        //Debug.Log("IsInitialized? " + (m_StoreController != null) + " " + (m_StoreExtensionProvider != null));
         return m_StoreController != null && m_StoreExtensionProvider != null;
     }
 
@@ -223,7 +223,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
     /// </summary>
     public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
     {
-        Debug.Log("IAP OnInitialized");
+        //Debug.Log("IAP OnInitialized");
         m_StoreController = controller;
         m_StoreExtensionProvider = extensions;
         m_AppleExtensions = extensions.GetExtension<IAppleExtensions>();

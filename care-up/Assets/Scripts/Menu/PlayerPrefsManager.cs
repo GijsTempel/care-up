@@ -186,6 +186,13 @@ public class PlayerPrefsManager : MonoBehaviour
                     return true;
             }
         }
+
+        // master Key
+        if (purchasedScenes.Contains("__ALL"))
+        {
+            return true;
+        }
+
         return false;
     }
 

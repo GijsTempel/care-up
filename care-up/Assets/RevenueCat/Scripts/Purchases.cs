@@ -89,9 +89,8 @@ public partial class Purchases : MonoBehaviour
 
     private IPurchasesWrapper _wrapper;
 
-    private void Awake()
+    public void Init()
     {
-        Debug.Log("purchases _ start");
 #if UNITY_ANDROID && !UNITY_EDITOR
         _wrapper = new PurchasesWrapperAndroid();
 #elif UNITY_IPHONE && !UNITY_EDITOR
@@ -108,6 +107,9 @@ public partial class Purchases : MonoBehaviour
 
         Configure(string.IsNullOrEmpty(appUserID) ? null : appUserID);
         GetProducts(productIdentifiers, null);
+
+        // now we can init Listener
+        GameObject.FindObjectOfType<PurchasesListener>().Init();
     }
 
     private void Configure(string newUserId)

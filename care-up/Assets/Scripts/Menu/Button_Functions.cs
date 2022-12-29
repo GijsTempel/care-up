@@ -33,4 +33,10 @@ public class Button_Functions : MonoBehaviour {
             Application.OpenURL(link);
         }
     }
+
+	public void RevenueCatTestingPurchase()
+	{
+		Debug.Log("testing purchase pressed");
+		GameObject.FindObjectOfType<PurchasesListener>().BeginPurchase();
+	}
 }

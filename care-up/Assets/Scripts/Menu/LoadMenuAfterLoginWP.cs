@@ -21,6 +21,11 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
     public void InitDatabase(CML ignore)
     {
         DatabaseManager.Init();
+
+        //Also init new IAP manager aka RevenueCat
+        GameObject.FindObjectOfType<Purchases>().appUserID = WULogin.UID.ToString();
+        GameObject.FindObjectOfType<Purchases>().Init();
+
         WULogin.justLoggedOff = false;
     }
 
