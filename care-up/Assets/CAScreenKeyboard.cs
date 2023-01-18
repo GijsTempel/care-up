@@ -10,6 +10,7 @@ public class CAScreenKeyboard : MonoBehaviour
     public InputField SKBInput;
     public Text descrTest;
     public GameObject visibilityToggle;
+    public int keyboardMode = 0;
     [SerializeField] private GameObject loginPasswordVisibilityOn = default;
 
     [SerializeField] private GameObject loginPasswordVisibilityOff = default;
@@ -22,6 +23,11 @@ public class CAScreenKeyboard : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void UpdateKeyboardMode(int _mode = 0)
+    {
+
     }
 
     public void InputChanged()
