@@ -440,10 +440,10 @@ namespace MBS
             //{
             //    loginPasswordVisibility.onClick.AddListener(OnTogglePasswordVisibility);
             //}
-            if (fields.login_password != null)
-            {
-                fields.login_password.onValueChanged.AddListener(delegate { EnablePasswordVisibilityIcon(); });
-            }
+            //if (fields.login_password != null)
+            //{
+            //    fields.login_password.onValueChanged.AddListener(delegate { EnablePasswordVisibilityIcon(); });
+            //}
         }
 
         void SetupResponders()
@@ -1019,13 +1019,13 @@ namespace MBS
             fields.popup_input.ForceLabelUpdate();
         }
 
-        public void EnablePasswordVisibilityIcon()
-        {
-            if (!string.IsNullOrEmpty(fields.login_password.text))
-                loginPasswordVisibility.gameObject.SetActive(true);
-            else
-                loginPasswordVisibility.gameObject.SetActive(false);
-        }
+        //public void EnablePasswordVisibilityIcon()
+        //{
+        //    if (!string.IsNullOrEmpty(fields.login_password.text))
+        //        loginPasswordVisibility.gameObject.SetActive(true);
+        //    else
+        //        loginPasswordVisibility.gameObject.SetActive(false);
+        //}
 
         #endregion
     }

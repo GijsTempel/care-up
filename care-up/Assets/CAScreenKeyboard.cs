@@ -102,7 +102,7 @@ public class CAScreenKeyboard : MonoBehaviour
     string EraseSelectedSegment()
     {
         int rng = 1;
-        if (selectionAPoint != selectionBPoint)
+        if (selectionAPoint != selectionBPoint && SKBInput.text.Length > 0)
         {
             int a = selectionAPoint + 1;
             if (selectionBPoint < a)
@@ -124,7 +124,7 @@ public class CAScreenKeyboard : MonoBehaviour
         {
             if (true)//caretposition > 0 && caretposition <= SKBInput.text.Length)
             {
-                if (EraseSelectedSegment() == null)
+                if (EraseSelectedSegment() == null && SKBInput.text.Length > 0 && caretposition > 0)
                     SKBInput.text = SKBInput.text.Remove(caretposition - 1, 1);
                 caretposition -= 1;
                 if (caretposition < 0)
