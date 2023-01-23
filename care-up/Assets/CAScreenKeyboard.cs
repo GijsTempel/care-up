@@ -10,7 +10,11 @@ public class CAScreenKeyboard : MonoBehaviour
     public InputField SKBInput;
     public Text descrTest;
     public GameObject visibilityToggle;
+    public Button ShowKeyboardButton;
+
     public int keyboardMode = 0;
+    public Sprite CAKeyboardOpenIcon;
+    public Sprite CAKeyboardCloseIcon;
 
     CAKeyboard_Key shiftButtonA = null;
     CAKeyboard_Key shiftButtonB = null;
@@ -53,8 +57,32 @@ public class CAScreenKeyboard : MonoBehaviour
             }
         }
         CA_SKBPanel.SetActive(false);
+        if (PlayerPrefsManager.CAKeyboardVisible)
+        {
+            ShowCAKeyboard(true);
+        }
     }
 
+    void ShowCAKeyboard(bool toShow)
+    {
+        if (toShow)
+        {
+            GetComponent<Animator>().SetTrigger("Open");
+            ShowKeyboardButton.GetComponent<Image>().sprite = CAKeyboardCloseIcon;
+            PlayerPrefsManager.CAKeyboardVisible = true;
+        }
+        else
+        {
+            GetComponent<Animator>().SetTrigger("Close");
+            ShowKeyboardButton.GetComponent<Image>().sprite = CAKeyboardOpenIcon;
+            PlayerPrefsManager.CAKeyboardVisible = false;
+
+        }
+    }
+    public void ShowCAKeyboardButtonClicked()
+    {
+        ShowCAKeyboard(!PlayerPrefsManager.CAKeyboardVisible);
+    }
 
     void Update()
     {
