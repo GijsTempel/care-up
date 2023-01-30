@@ -74,7 +74,7 @@ public class PlayerPrefsManager : MonoBehaviour
     public static bool videoRecordingMode = false;
     public static bool videoRecordingWithTextMode = false;
     public int currentPracticePlays = -1;
-
+    public static bool CAKeyboardVisible = false;
     List<string> scenesWithFreeCert = new List<string>();
 
     public bool VR = true;

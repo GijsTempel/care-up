@@ -8,7 +8,6 @@ namespace MBS
 {
     public class WUUGLoginGUI : WUUGLoginLocalisation
     {
-        bool popupCahngeIsLogin = true;
         public Button passVisibilityToggle;
         public enum eWULUGUIState { Inactive, Active }
         [Serializable]
@@ -94,60 +93,49 @@ namespace MBS
         private bool passwordVisible = false;
 
 
-        void ShowLoginPasswordInput(bool showLogin = true)
-        {
-            popupCahngeIsLogin = showLogin;
-            panels.inputPopPanel.SetActive(true);
-            Text inputTitle = panels.inputPopPanel.transform.Find("IP1/IP2/InputTitle").GetComponent<Text>();
+        //void ShowLoginPasswordInput(bool showLogin = true)
+        //{
+        //    popupCahngeIsLogin = showLogin;
+        //    panels.inputPopPanel.SetActive(true);
+        //    Text inputTitle = panels.inputPopPanel.transform.Find("IP1/IP2/InputTitle").GetComponent<Text>();
         
-            if (showLogin)
-            {
-                inputTitle.text = "Gebruikersnaam";
-                fields.popup_input.contentType = InputField.ContentType.Standard;
-                fields.popup_input.lineType = InputField.LineType.SingleLine;
-                fields.popup_input.text = fields.login_username.text;
-                passVisibilityToggle.gameObject.SetActive(false);
+        //    if (showLogin)
+        //    {
+        //        inputTitle.text = "Gebruikersnaam";
+        //        fields.popup_input.contentType = InputField.ContentType.Standard;
+        //        fields.popup_input.lineType = InputField.LineType.SingleLine;
+        //        fields.popup_input.text = fields.login_username.text;
+        //        passVisibilityToggle.gameObject.SetActive(false);
                 
-            }
-            else
-            {
-                inputTitle.text = "Wachtwoord";
-                fields.popup_input.lineType = InputField.LineType.SingleLine;
-                fields.popup_input.text = fields.login_password.text;
-                fields.popup_input.contentType = passwordVisible ? InputField.ContentType.Standard : InputField.ContentType.Password;
-                passVisibilityToggle.gameObject.SetActive(true);
-            }
-            fields.popup_input.ForceLabelUpdate();
-            EventSystem.current.SetSelectedGameObject(fields.popup_input.gameObject);
+        //    }
+        //    else
+        //    {
+        //        inputTitle.text = "Wachtwoord";
+        //        fields.popup_input.lineType = InputField.LineType.SingleLine;
+        //        fields.popup_input.text = fields.login_password.text;
+        //        fields.popup_input.contentType = passwordVisible ? InputField.ContentType.Standard : InputField.ContentType.Password;
+        //        passVisibilityToggle.gameObject.SetActive(true);
+        //    }
+        //    fields.popup_input.ForceLabelUpdate();
+        //    EventSystem.current.SetSelectedGameObject(fields.popup_input.gameObject);
 
-        }
+        //}
 
         public void HideLoginPasswordInput()
         {
             panels.inputPopPanel.SetActive(false);
         }
-        public void PipupInputChanged()
-        {
-            if (popupCahngeIsLogin)
-            {
-                fields.login_username.text = fields.popup_input.text;
-            }
-            else
-            {
-                fields.login_password.text = fields.popup_input.text;
-            }
-        }
 
         void Update()
         {
-            if (fields.login_username.isFocused)
-            {
-                ShowLoginPasswordInput();
-            }
-            else if (fields.login_password.isFocused)
-            {
-                ShowLoginPasswordInput(false);
-            }
+            //if (fields.login_username.isFocused)
+            //{
+            //    ShowLoginPasswordInput();
+            //}
+            //else if (fields.login_password.isFocused)
+            //{
+            //    ShowLoginPasswordInput(false);
+            //}
             if (WULogin.UserNotWithEmail == true)
             {
                 DisplayScreen(panels.error_login_pop_up);
@@ -452,10 +440,10 @@ namespace MBS
             //{
             //    loginPasswordVisibility.onClick.AddListener(OnTogglePasswordVisibility);
             //}
-            if (fields.login_password != null)
-            {
-                fields.login_password.onValueChanged.AddListener(delegate { EnablePasswordVisibilityIcon(); });
-            }
+            //if (fields.login_password != null)
+            //{
+            //    fields.login_password.onValueChanged.AddListener(delegate { EnablePasswordVisibilityIcon(); });
+            //}
         }
 
         void SetupResponders()
@@ -1031,13 +1019,13 @@ namespace MBS
             fields.popup_input.ForceLabelUpdate();
         }
 
-        public void EnablePasswordVisibilityIcon()
-        {
-            if (!string.IsNullOrEmpty(fields.login_password.text))
-                loginPasswordVisibility.gameObject.SetActive(true);
-            else
-                loginPasswordVisibility.gameObject.SetActive(false);
-        }
+        //public void EnablePasswordVisibilityIcon()
+        //{
+        //    if (!string.IsNullOrEmpty(fields.login_password.text))
+        //        loginPasswordVisibility.gameObject.SetActive(true);
+        //    else
+        //        loginPasswordVisibility.gameObject.SetActive(false);
+        //}
 
         #endregion
     }

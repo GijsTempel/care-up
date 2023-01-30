@@ -5,8 +5,10 @@ using UnityEditor;
 using System.IO;
 using UnityEditor.AddressableAssets;
 using UnityEditor.SceneManagement;
+using System.Text;
 
-    public class CareUpAssetOrganizer : EditorWindow
+
+public class CareUpAssetOrganizer : EditorWindow
 {
     public static int itemsToProcess = 1;
     public static int itemsProcessed = 1;
@@ -73,6 +75,7 @@ using UnityEditor.SceneManagement;
         }
         if (GUILayout.Button("++Start Creating Addressable Groups++"))
         {
+            List<string> __paths = new List<string>();
             itemsToProcess = 1;
             itemsProcessed = 0;
 
@@ -99,7 +102,7 @@ using UnityEditor.SceneManagement;
                 //AssetImporter.GetAtPath(scenePath).assetBundleName = "scene/" + scene.ToLower().Replace(' ', '_');
 
                 AddAssetToGroup(scenePath, "scene-" + scene.ToLower().Replace(' ', '_'));
-
+                __paths.Add(scenePath);
                 string[] dep = AssetDatabase.GetDependencies(scenePath);
                 foreach (string d in dep)
                 {
@@ -128,10 +131,13 @@ using UnityEditor.SceneManagement;
                 _resCont.Add(res, resContainerName);
                 string groupName = "asset-" + (Mathf.Abs(resContainerName.GetHashCode())).ToString();
                 AddAssetToGroup(res, groupName);
+                if (!__paths.Contains(res))
+                    __paths.Add(res);
                 itemsProcessed++;
                 string titleMessage = "Progressed " + itemsProcessed.ToString() + " of " + itemsToProcess.ToString();
                 EditorUtility.DisplayProgressBar(titleMessage, "Processing assets | " + res, (float)itemsProcessed / (float)itemsToProcess);
             }
+            LogFilePaths(__paths);
             Debug.Log("Finished");
         }
         EditorUtility.ClearProgressBar();
@@ -157,6 +163,17 @@ using UnityEditor.SceneManagement;
     void OnInspectorUpdate()
     {
         Repaint();
+    }
+
+    void LogFilePaths(List<string> __paths)
+    {
+        var stringBuilder = new StringBuilder();
+        foreach(string p in __paths)
+        {
+            stringBuilder.Append(" 0 kb	 0.0% " + p + "\n");
+        }
+        using (StreamWriter swriter = new StreamWriter("organizer_files_log.txt"))
+            swriter.Write(stringBuilder.ToString());
     }
 
     public static void AddAssetToGroup(string path, string groupName)
