@@ -75,7 +75,16 @@ for item in list(dir_path.rglob("*")):
                 continue
             if "CareUp_ShapesToAnimation" in str(item):
                 continue
-            
+            if "CustomShaders\Standard Two Sided Soft Blend.shader" in str(item):
+                continue
+            if "CustomShaders\TwoSided.shader" in str(item):
+                continue
+            if "Scenes_AEDSettings.lighting" in str(item):
+                continue
+            if "Scenes_Catherisation_WomenSettings.lighting" in str(item):
+                continue
+            if "Injection_Subcutaneous_In_HouseSettings.lighting" in str(item):
+                continue
             print(str(item))
             files_to_remove.append(str(item))
             counter += 1
