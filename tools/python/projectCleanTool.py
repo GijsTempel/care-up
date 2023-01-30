@@ -39,10 +39,49 @@ print(len(log_files))
 
 dir_path = pathlib.Path(base_dir_fixed + "Assets//")
 counter = 0
+files_to_remove = []
+
+
 for item in list(dir_path.rglob("*")):
     if item.is_file():
         if not str(item).replace(".meta", "") in log_files:
+            if ".meta" in str(item):
+                continue
+            if "Audio\Dialogue" in str(item):
+                continue
+            if "AddressableAssetsData" in str(item):
+                continue
+            if "editor" in str(item):
+                continue
+            if "SmartlookUnity" in str(item):
+                continue
+            if "MobileDependencyResolver" in str(item):
+                continue
+            if "ListOfActions" in str(item):
+                continue
+            if "WebGLTemplates\Better2020" in str(item):
+                continue
+            if "Plugins\WebGL" in str(item):
+                continue
+            if "IngameDebugConsole" in str(item):
+                continue
+            if "BuildTimestampDisplay" in str(item):
+                continue
+            if "CareUp_ActionEditor" in str(item):
+                continue
+            if "CareUp_AssetOrganizer" in str(item):
+                continue
+            if "CareUp_DictionaryEditor" in str(item):
+                continue
+            if "CareUp_ShapesToAnimation" in str(item):
+                continue
             
             print(str(item))
+            files_to_remove.append(str(item))
             counter += 1
 print(counter)
+
+
+with open('files_to_delete.txt', "w", encoding="utf-8") as f:
+    for p in files_to_remove:
+        f.write(p + "\n")
