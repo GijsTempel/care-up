@@ -2,10 +2,35 @@ import os.path
 import pathlib
 import platform
 separator = "\\"
-
+ignore_list = [
+	".meta",
+	"Audio\Dialogue",
+	"AddressableAssetsData",
+	"editor",
+	"SmartlookUnity",
+	"MobileDependencyResolver",
+	"ListOfActions",
+	"WebGLTemplates\Better2020",
+	"Plugins\WebGL",
+	"IngameDebugConsole",
+	"BuildTimestampDisplay",
+	"CareUp_ActionEditor",
+	"CareUp_AssetOrganizer",
+	"CareUp_DictionaryEditor",
+	"CareUp_ShapesToAnimation",
+	"CustomShaders\Standard Two Sided Soft Blend.shader",
+	"CustomShaders\TwoSided.shader",
+	"Scenes_AEDSettings.lighting",
+	"Scenes_Catherisation_WomenSettings.lighting",
+	"Injection_Subcutaneous_In_HouseSettings.lighting",
+	"Spatializer\Plugins",
+	"Care_Up_PPS",
+	"Care_Up_PPS_Mobile",
+	"PostProcessing"
+]
 if platform.system() == "Linux":
 	separator = "/"
-	
+
 	
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 log_files = []
