@@ -14,6 +14,8 @@ public class CareUpAssetOrganizer : EditorWindow
     public static int itemsProcessed = 1;
 
     static string ListOfScenes = "BundleBuilderScenes";
+    static string ListOfExtraScenes = "BundleBuilderExtraScenes";
+    
     static Dictionary<string, List<string>> scenesData = new Dictionary<string, List<string>>();
 
     [MenuItem("Tools/Organize Assets in Bundles")]
