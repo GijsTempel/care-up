@@ -96,6 +96,8 @@ for item in list(dir_path.rglob("*")):
 				continue
 			if "Injection_Subcutaneous_In_HouseSettings.lighting" in str(item):
 				continue
+			if "Spatializer\Plugins" in str(item):
+				continue
 			print(str(item))
 			files_to_remove.append(str(item))
 			counter += 1
