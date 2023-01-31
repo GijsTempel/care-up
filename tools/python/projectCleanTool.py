@@ -98,6 +98,13 @@ for item in list(dir_path.rglob("*")):
 				continue
 			if "Spatializer\Plugins" in str(item):
 				continue
+			if "Care_Up_PPS" in str(item):
+				continue
+			if "Care_Up_PPS_Mobile" in str(item):
+				continue
+			if "PostProcessing" in str(item):
+				continue
+
 			print(str(item))
 			files_to_remove.append(str(item))
 			counter += 1
