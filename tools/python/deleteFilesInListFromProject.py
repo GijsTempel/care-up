@@ -6,5 +6,7 @@ for line in Lines:
 	path = line[:-1]
 	if os.path.exists(path):
 		print(path)
-		#os.remove("demofile.txt")
-
+		#os.remove(path)
+	if os.path.exists(path + ".meta"):
+		pass
+		#os.remove(path + ".meta")
