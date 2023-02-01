@@ -27,7 +27,6 @@ ignore_list = [
 	"Care_Up_PPS",
 	"Care_Up_PPS_Mobile",
 	"PostProcessing",
-	"Standard Assets",
 ]
 if platform.system() == "Linux" or platform.system() == "Darwin":
 	separator = "/"
