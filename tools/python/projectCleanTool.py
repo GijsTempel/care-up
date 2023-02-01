@@ -28,9 +28,19 @@ ignore_list = [
 	"Care_Up_PPS_Mobile",
 	"PostProcessing"
 ]
-if platform.system() == "Linux":
+if platform.system() == "Linux" or platform.system() == "Darwin":
 	separator = "/"
 
+
+for i in range(len(ignore_list)):
+	ignore_list[i] = ignore_list[i].replace("\\", separator)
+
+
+def is_in_white_list(file_path):
+	for t in ignore_list:
+		if t in str(file_path):
+			return False
+	return True
 	
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 log_files = []
@@ -81,55 +91,8 @@ files_to_remove = []
 for item in list(dir_path.rglob("*")):
 	if item.is_file():
 		if not str(item).replace(".meta", "") in log_files:
-			if ".meta" in str(item):
+			if not is_in_white_list(item):
 				continue
-			if "Audio\Dialogue" in str(item):
-				continue
-			if "AddressableAssetsData" in str(item):
-				continue
-			if "editor" in str(item):
-				continue
-			if "SmartlookUnity" in str(item):
-				continue
-			if "MobileDependencyResolver" in str(item):
-				continue
-			if "ListOfActions" in str(item):
-				continue
-			if "WebGLTemplates\Better2020" in str(item):
-				continue
-			if "Plugins\WebGL" in str(item):
-				continue
-			if "IngameDebugConsole" in str(item):
-				continue
-			if "BuildTimestampDisplay" in str(item):
-				continue
-			if "CareUp_ActionEditor" in str(item):
-				continue
-			if "CareUp_AssetOrganizer" in str(item):
-				continue
-			if "CareUp_DictionaryEditor" in str(item):
-				continue
-			if "CareUp_ShapesToAnimation" in str(item):
-				continue
-			if "CustomShaders\Standard Two Sided Soft Blend.shader" in str(item):
-				continue
-			if "CustomShaders\TwoSided.shader" in str(item):
-				continue
-			if "Scenes_AEDSettings.lighting" in str(item):
-				continue
-			if "Scenes_Catherisation_WomenSettings.lighting" in str(item):
-				continue
-			if "Injection_Subcutaneous_In_HouseSettings.lighting" in str(item):
-				continue
-			if "Spatializer\Plugins" in str(item):
-				continue
-			if "Care_Up_PPS" in str(item):
-				continue
-			if "Care_Up_PPS_Mobile" in str(item):
-				continue
-			if "PostProcessing" in str(item):
-				continue
-
 			print(str(item))
 			files_to_remove.append(str(item))
 			counter += 1
