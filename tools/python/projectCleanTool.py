@@ -26,7 +26,8 @@ ignore_list = [
 	"Spatializer\Plugins",
 	"Care_Up_PPS",
 	"Care_Up_PPS_Mobile",
-	"PostProcessing"
+	"PostProcessing",
+	"Standard Assets",
 ]
 if platform.system() == "Linux" or platform.system() == "Darwin":
 	separator = "/"
