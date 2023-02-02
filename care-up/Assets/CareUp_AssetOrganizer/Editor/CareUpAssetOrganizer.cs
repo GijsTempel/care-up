@@ -96,25 +96,31 @@ public class CareUpAssetOrganizer : EditorWindow
             itemsToProcess = scenes.Count;
             foreach (string scene in scenes)
             {
-                string scenePath = scenesFolder + scene + ".unity";
-                string sceneNameForAddr = scene;
+                string scenePath = scenesFolder + scene.Split('@')[0] + ".unity";
+                string sceneNameForAddr = scene.Split('@')[0];
+                string scenePathForAddr = scenePath;
                 if (scene.Contains('/'))
                 {
-                    scenePath = scene;
-                    string[] ssplit = scene.Split("/");
+                    scenePath = scene.Split('@')[0];
+                    scenePathForAddr = scenePath;
+
+                    string[] ssplit = scene.Split('@')[0].Split("/");
                     sceneNameForAddr = ssplit[ssplit.Length - 1];
+                }
+
+                if (scene.Contains('@'))
+                {
+                    scenePathForAddr = scene.Split('@')[1];
                 }
 
                 Object sceneObject = AssetDatabase.LoadAssetAtPath(scenePath, typeof(SceneAsset));
                 if (sceneObject == null)
                     continue;
-                if (!scenesData.ContainsKey(scene))
-                    scenesData.Add(scene, new List<string>());
+                if (!scenesData.ContainsKey(scene.Split('@')[0]))
+                    scenesData.Add(scene.Split('@')[0], new List<string>());
 
 
-                //AssetImporter.GetAtPath(scenePath).assetBundleName = "scene/" + scene.ToLower().Replace(' ', '_');
-
-                AddAssetToGroup(scenePath, "scene-" + sceneNameForAddr.ToLower().Replace(' ', '_'));
+                AddAssetToGroup(scenePath, "scene-" + sceneNameForAddr.ToLower().Replace(' ', '_'), scenePathForAddr);
                 __paths.Add(scenePath);
                 extraPaths.Add(scenePath);
                 string[] dep = AssetDatabase.GetDependencies(scenePath);
@@ -125,7 +131,7 @@ public class CareUpAssetOrganizer : EditorWindow
                         if (!_resources.Contains(d))
                             _resources.Add(d);
 
-                        scenesData[scene].Add(d);
+                        scenesData[scene.Split('@')[0]].Add(d);
                     }
                     if (!full_resources.Contains(d))
                         full_resources.Add(d);
@@ -146,7 +152,7 @@ public class CareUpAssetOrganizer : EditorWindow
                     bundleNames.Add(resContainerName);
                 _resCont.Add(res, resContainerName);
                 string groupName = "asset-" + (Mathf.Abs(resContainerName.GetHashCode())).ToString();
-                AddAssetToGroup(res, groupName);
+                AddAssetToGroup(res, groupName, res);
                 if (!__paths.Contains(res))
                 {
                     __paths.Add(res);
@@ -215,7 +221,7 @@ public class CareUpAssetOrganizer : EditorWindow
             swriter.Write(stringBuilder.ToString());
     }
 
-    static void AddAssetToGroup(string path, string groupName)
+    static void AddAssetToGroup(string path, string groupName, string pathForAddr)
     {
         var settings = AddressableAssetSettingsDefaultObject.Settings;
         var group = settings.FindGroup(groupName);
@@ -234,11 +240,11 @@ public class CareUpAssetOrganizer : EditorWindow
         {
             if (groupName.Substring(0, 5) == "scene")
             {
-                entry.address = path;
+                entry.address = pathForAddr;
             }
             else
             {
-                entry.address = path.ToLower().Replace("resources_moved", "resources");
+                entry.address = pathForAddr.ToLower().Replace("resources_moved", "resources");
             }
         }
     }
