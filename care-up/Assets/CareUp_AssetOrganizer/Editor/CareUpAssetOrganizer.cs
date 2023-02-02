@@ -97,6 +97,13 @@ public class CareUpAssetOrganizer : EditorWindow
             foreach (string scene in scenes)
             {
                 string scenePath = scenesFolder + scene + ".unity";
+                string sceneNameForAddr = scene;
+                if (scene.Contains('/'))
+                {
+                    scenePath = scene;
+                    string[] ssplit = scene.Split("/");
+                    sceneNameForAddr = ssplit[ssplit.Length - 1];
+                }
 
                 Object sceneObject = AssetDatabase.LoadAssetAtPath(scenePath, typeof(SceneAsset));
                 if (sceneObject == null)
@@ -107,7 +114,7 @@ public class CareUpAssetOrganizer : EditorWindow
 
                 //AssetImporter.GetAtPath(scenePath).assetBundleName = "scene/" + scene.ToLower().Replace(' ', '_');
 
-                AddAssetToGroup(scenePath, "scene-" + scene.ToLower().Replace(' ', '_'));
+                AddAssetToGroup(scenePath, "scene-" + sceneNameForAddr.ToLower().Replace(' ', '_'));
                 __paths.Add(scenePath);
                 extraPaths.Add(scenePath);
                 string[] dep = AssetDatabase.GetDependencies(scenePath);
