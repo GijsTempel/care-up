@@ -14,6 +14,8 @@ public class CareUpAssetOrganizer : EditorWindow
     public static int itemsProcessed = 1;
 
     static string ListOfScenes = "BundleBuilderScenes";
+    static string ListOfExtraScenes = "BundleBuilderExtraScenes";
+
     static Dictionary<string, List<string>> scenesData = new Dictionary<string, List<string>>();
 
     [MenuItem("Tools/Organize Assets in Bundles")]
@@ -28,7 +30,7 @@ public class CareUpAssetOrganizer : EditorWindow
         if (GUILayout.Button("Set prefabs to Object Layer"))
         {
             string[] __prefabs = Directory.GetFiles("Assets/Resources_moved/Prefabs/");
-            foreach(string p in __prefabs)
+            foreach (string p in __prefabs)
             {
                 if (Path.GetExtension(p.ToLower()) == ".prefab")
                 {
@@ -76,12 +78,16 @@ public class CareUpAssetOrganizer : EditorWindow
         if (GUILayout.Button("++Start Creating Addressable Groups++"))
         {
             List<string> __paths = new List<string>();
+            List<string> extraPaths = new List<string>();
+
             itemsToProcess = 1;
             itemsProcessed = 0;
 
             List<string> _resources = new List<string>();
+            List<string> full_resources = new List<string>();
+
             scenesData.Clear();
-            List<string> scenes = LoadScenesList();
+            List<string> scenes = LoadScenesList(ListOfScenes);
             var scenesFolder = "Assets/Scenes/";
             List<string> matExt = new List<string> { ".mat", ".jpg", ".fbx", ".png", ".exr", ".ogg", ".prefab", ".ttf",
                 ".wav", ".controller", ".anim", ".otf", ".mask", ".shader", ".psd", ".mp3", ".asset", ".tif", ".tga", ".tiff", ".jpeg",
@@ -103,6 +109,7 @@ public class CareUpAssetOrganizer : EditorWindow
 
                 AddAssetToGroup(scenePath, "scene-" + scene.ToLower().Replace(' ', '_'));
                 __paths.Add(scenePath);
+                extraPaths.Add(scenePath);
                 string[] dep = AssetDatabase.GetDependencies(scenePath);
                 foreach (string d in dep)
                 {
@@ -113,6 +120,8 @@ public class CareUpAssetOrganizer : EditorWindow
 
                         scenesData[scene].Add(d);
                     }
+                    if (!full_resources.Contains(d))
+                        full_resources.Add(d);
                 }
 
                 i++;
@@ -132,28 +141,51 @@ public class CareUpAssetOrganizer : EditorWindow
                 string groupName = "asset-" + (Mathf.Abs(resContainerName.GetHashCode())).ToString();
                 AddAssetToGroup(res, groupName);
                 if (!__paths.Contains(res))
+                {
                     __paths.Add(res);
+                    extraPaths.Add(res);
+                }
                 itemsProcessed++;
                 string titleMessage = "Progressed " + itemsProcessed.ToString() + " of " + itemsToProcess.ToString();
                 EditorUtility.DisplayProgressBar(titleMessage, "Processing assets | " + res, (float)itemsProcessed / (float)itemsToProcess);
             }
-            LogFilePaths(__paths);
+
+            // Build list of files that are not part of addressables but are important
+            List<string> extraScenes = LoadScenesList(ListOfExtraScenes);
+            foreach (string scene in extraScenes)
+            {
+                string scenePath = scene;
+
+                Object sceneObject = AssetDatabase.LoadAssetAtPath(scenePath, typeof(SceneAsset));
+                if (sceneObject == null)
+                    continue;
+                extraPaths.Add(scenePath);
+                string[] dep = AssetDatabase.GetDependencies(scenePath);
+                foreach (string d in dep)
+                {
+                    extraPaths.Add(d);
+                }
+                // --------------------------------
+            }
+            LogFilePaths(extraPaths);
             Debug.Log("Finished");
         }
+
         EditorUtility.ClearProgressBar();
+
         if (GUILayout.Button("Remove Empty Addressable Groups"))
         {
             var settings = AddressableAssetSettingsDefaultObject.Settings;
             var groups = settings.groups;
-            List<UnityEditor.AddressableAssets.Settings.AddressableAssetGroup> groupsToDelete = 
+            List<UnityEditor.AddressableAssets.Settings.AddressableAssetGroup> groupsToDelete =
                 new List<UnityEditor.AddressableAssets.Settings.AddressableAssetGroup>();
-            foreach(var g in groups)
+            foreach (var g in groups)
             {
                 Debug.Log(g.name + " " + g.entries.Count.ToString());
                 if (g.entries.Count == 0)
                     groupsToDelete.Add(g);
             }
-            foreach(var g in groupsToDelete)
+            foreach (var g in groupsToDelete)
             {
                 settings.RemoveGroup(g);
             }
@@ -168,7 +200,7 @@ public class CareUpAssetOrganizer : EditorWindow
     void LogFilePaths(List<string> __paths)
     {
         var stringBuilder = new StringBuilder();
-        foreach(string p in __paths)
+        foreach (string p in __paths)
         {
             stringBuilder.Append(" 0 kb	 0.0% " + p + "\n");
         }
@@ -176,7 +208,7 @@ public class CareUpAssetOrganizer : EditorWindow
             swriter.Write(stringBuilder.ToString());
     }
 
-    public static void AddAssetToGroup(string path, string groupName)
+    static void AddAssetToGroup(string path, string groupName)
     {
         var settings = AddressableAssetSettingsDefaultObject.Settings;
         var group = settings.FindGroup(groupName);
@@ -218,7 +250,7 @@ public class CareUpAssetOrganizer : EditorWindow
     {
         string containerName = "";
         int i = 0;
-        foreach(string scene in scenesData.Keys)
+        foreach (string scene in scenesData.Keys)
         {
             if (scenesData[scene].Contains(resourcePath))
             {
@@ -230,10 +262,10 @@ public class CareUpAssetOrganizer : EditorWindow
         return containerName;
     }
 
-    static List<string> LoadScenesList()
+    static List<string> LoadScenesList(string listOfScenesFilePath)
     {
         List<string> scenes = new List<string>();
-        TextAsset dictListData = (TextAsset)Resources.Load(ListOfScenes);
+        TextAsset dictListData = (TextAsset)Resources.Load(listOfScenesFilePath);
         foreach (string dictName in dictListData.text.Split('\n'))
         {
             if (!string.IsNullOrEmpty(dictName))
@@ -246,4 +278,5 @@ public class CareUpAssetOrganizer : EditorWindow
         }
         return scenes;
     }
+
 }
