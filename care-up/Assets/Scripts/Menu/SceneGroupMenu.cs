@@ -23,21 +23,25 @@ public class SceneGroupMenu : MonoBehaviour
     public List<GameObject> SceneGroupButtonPanes = new List<GameObject>();
     List<SceneGroupButton> SceneGroupButtons = new List<SceneGroupButton>();
     float SceneListShowTimeout = 0f;
-    float dataLoadTimeout = 0.5f;
+    float dataLoadTimeout = 0.1f;
     float switchPageTimeout = 0f;
     PlayerPrefsManager ppManager;
-    public void SwitchPage(int nextPage)
+    public void SwitchPage(int nextPage, bool is_animated = true)
     {
+        if (nextPage > numberOfPages)
+            nextPage = 0;
         GameObject.FindObjectOfType<MainMenuAutomationData>().SetCurrentSGPage(nextPage);
         SetActivePageButton(nextPage);
-        
-        if (nextPage > currentPage)
+        if (is_animated)
         {
-            SGPagePanelAnimation.Play("SceneGroupLeft");
-        }
-        else if (nextPage < currentPage)
-        {
-            SGPagePanelAnimation.Play("SceneGroupRight");
+            if (nextPage > currentPage)
+            {
+                SGPagePanelAnimation.Play("SceneGroupLeft");
+            }
+            else if (nextPage < currentPage)
+            {
+                SGPagePanelAnimation.Play("SceneGroupRight");
+            }
         }
         currentPage = nextPage;
         switchPageTimeout = 0.12f;
@@ -58,7 +62,10 @@ public class SceneGroupMenu : MonoBehaviour
         if (sceneGroupPageButtons.Count > numberOfPages)
             sceneGroupPageButtons[sceneGroupPageButtons.Count - 1].gameObject.SetActive(false);
         
-
+        for (int i = 0; i < sceneGroupPageButtons.Count; i++)
+        {
+            sceneGroupPageButtons[i].gameObject.SetActive(i < numberOfPages);
+        }
     }
 
     public void ShowSceneList(bool toShow)
@@ -99,6 +106,7 @@ public class SceneGroupMenu : MonoBehaviour
                 }
                 CleanGroupData();
                 UpdatePage();
+                SwitchPage(ppManager.LevelPagePosition, false);
             }
         }
         if (SceneListShowTimeout > 0)
@@ -179,8 +187,6 @@ public class SceneGroupMenu : MonoBehaviour
         {
             SceneGroupButtons.Add(p.transform.GetChild(0).GetComponent<SceneGroupButton>());
         }
-        currentPage = ppManager.LevelPagePosition;
-        SwitchPage(currentPage);
     }
 
     public void NextPage(int _dir)

@@ -16,7 +16,13 @@ public class MainMenuAutomation : MonoBehaviour
     void SwitchToCurrentSGPage()
     {
         int currentSGPage = mainMenuAutomationData.GetCurrentSGPage();
-        if (currentSGPage >= 0 && currentSGPage < sceneGroupPageButtons.Count)
+        int sceneGroupPageButtonsVisible = 0;
+        for (int i = 0; i < sceneGroupPageButtons.Count; i++)
+        {
+            if (sceneGroupPageButtons[0].gameObject.activeSelf)
+                sceneGroupPageButtonsVisible += 1;
+        }
+        if (currentSGPage >= 0 && currentSGPage < sceneGroupPageButtonsVisible)
             sceneGroupPageButtons[currentSGPage].ButtonClicked();
         else
             currentStep = -1;

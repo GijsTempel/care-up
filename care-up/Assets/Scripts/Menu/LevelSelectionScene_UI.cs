@@ -321,8 +321,14 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
             if (!scenesInfo.ContainsKey(sceneInfo.sceneName) && sceneInfo.mainScene == "")
             {
+                //Show only scenes and scene groups, that are available for current player
+#if UNITY_IOS || UNITY_STANDALONE_OSX
+                if (!(pp.subscribed || !sceneInfo.demoLock))
+                    continue;
+#endif
 
                 scenesInfo.Add(sceneInfo.sceneName, sceneInfo);
+                
                 foreach(string g in sceneInfo.inGroups)
                 {
                     if (sceneGroupNum.ContainsKey(g))
@@ -363,6 +369,12 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
         foreach (string key in scenesInfo.Keys)
         {
+            //Show only scenes and scene groups, that are available for current player
+#if UNITY_IOS || UNITY_STANDALONE_OSX
+            if (!(pp.subscribed || !scenesInfo[key].demoLock))
+                continue;
+#endif
+
             pp.AddSceneInfo(scenesInfo[key]);
             SceneInfo sceneInfo = scenesInfo[key];
 
@@ -396,6 +408,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
             string key = scenesInfoSorted.Keys.ElementAt(i);
 
             SceneInfo sceneInfo = scenesInfoSorted[key];
+
             if ((!sceneInfo.activated && sceneInfo.hidden) || sceneInfo.hidden)
             {
                 // not activated and hidden scene should not even create a panel, so just end up here
