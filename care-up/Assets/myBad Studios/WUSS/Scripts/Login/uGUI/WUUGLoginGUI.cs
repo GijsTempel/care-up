@@ -8,6 +8,7 @@ namespace MBS
 {
     public class WUUGLoginGUI : WUUGLoginLocalisation
     {
+        double startTime;
         public Button passVisibilityToggle;
         public enum eWULUGUIState { Inactive, Active }
         [Serializable]
@@ -128,6 +129,13 @@ namespace MBS
 
         void Update()
         {
+#if UNITY_IOS || UNITY_STANDALONE_OSX
+            if (startTime >= 0 && Time.time - startTime > 0.1)
+            {
+                DisplayScreen(panels.login_screen);
+                startTime = -1;
+            }
+#endif
             //if (fields.login_username.isFocused)
             //{
             //    ShowLoginPasswordInput();
@@ -313,6 +321,8 @@ namespace MBS
 
         void Start()
         {
+            startTime = Time.time;
+
             if (GameObject.Find("VersionNumber") != null)
             {
                 string _sing = "";
