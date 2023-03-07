@@ -856,7 +856,7 @@ namespace MBS
         public void ShowPostLoginScreen() => DisplayScreen(panels.post_login_menu_screen);
         public void ShowPasswordResetScreen() //=> DisplayScreen( panels.password_reset_screen );
         {
-            PlayerPrefsManager.OpenUrl_NewWindow("https://careup.online/culogin/?action=lostpassword&error=expiredkey");
+            PlayerPrefsManager.OpenUrl_NewWindow("https://careup.online/culogin/?action=lostpassword");
             //Application.OpenURL("https://careup.online/culogin/?action=lostpassword&error=expiredkey");
         }
         public void ShowPasswordChangeScreen() => DisplayScreen(panels.password_change_screen);
