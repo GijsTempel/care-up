@@ -16,4 +16,5 @@ public class LeaderBoard : MonoBehaviour
     public GameObject separator;
     public GameObject animator;
     public GameObject backButton;
+    public GameObject CompelteAtLeastOneText;
 }

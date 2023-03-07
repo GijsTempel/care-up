@@ -564,6 +564,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
     public void UpdateLeaderBoard()
     {
         int rank = 0;
+        GameObject.FindObjectOfType<LeaderBoard>().CompelteAtLeastOneText.SetActive(LeaderboardDB.board.Count <= 0);
         if (LeaderboardDB.board.Count > 0)
         {
             rank = LeaderboardDB.board[0].Rank;
