@@ -61,8 +61,8 @@ public class AnimatedFingerHint : MonoBehaviour
             waveHi = false;
             transform.Find("FingerHolder/animFinger/show_sound").GetComponent<AudioSource>().Play();
 
-            fingerAnimator.SetTrigger("show");
-            fingerAnimator.SetTrigger("hi");
+            //fingerAnimator.SetTrigger("show");
+            //fingerAnimator.SetTrigger("hi");
         }
         else if (toTalk)
         {
@@ -186,8 +186,8 @@ public class AnimatedFingerHint : MonoBehaviour
             {
                 toMove = false;
                 fingerAnimator.SetTrigger("show");
-                if (_toWave)
-                    fingerAnimator.SetTrigger("hi");
+                //if (_toWave)
+                //    fingerAnimator.SetTrigger("hi");
             }
         }
         else
