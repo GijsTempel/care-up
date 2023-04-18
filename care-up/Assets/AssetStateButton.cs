@@ -13,4 +13,5 @@ public class AssetStateButton : MonoBehaviour
         textEditor.SelectAll();
         textEditor.Copy();
     }
+    
 }

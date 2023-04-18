@@ -352,6 +352,12 @@ public class IAPManager : MonoBehaviour, IStoreListener
         // Purchasing set-up has not succeeded. Check error for reason. Consider sharing this reason with the user.
         Debug.Log("OnInitializeFailed InitializationFailureReason:" + error);
     }
+    public void OnInitializeFailed(InitializationFailureReason error, string? message)
+    {
+        // Purchasing set-up has not succeeded. Check error for reason. Consider sharing this reason with the user.
+        Debug.Log("OnInitializeFailed InitializationFailureReason:" + error);
+    }
+
 
     /// <summary>
     /// iOS Specific.
