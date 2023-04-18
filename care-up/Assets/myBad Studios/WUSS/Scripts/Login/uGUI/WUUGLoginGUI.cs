@@ -10,6 +10,8 @@ namespace MBS
     {
         double startTime;
         public Button passVisibilityToggle;
+        public GameObject LoginGUIBackButton;
+        public GameObject LoginGUIText;
         public enum eWULUGUIState { Inactive, Active }
         [Serializable]
         public struct WUPanels
@@ -130,6 +132,8 @@ namespace MBS
         void Update()
         {
 #if UNITY_IOS || UNITY_STANDALONE_OSX
+            LoginGUIBackButton.SetActive(false);
+            LoginGUIText.SetActive(false);
             if (startTime >= 0 && Time.time - startTime > 0.1)
             {
                 DisplayScreen(panels.login_screen);
