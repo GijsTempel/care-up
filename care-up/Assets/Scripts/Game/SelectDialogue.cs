@@ -112,8 +112,8 @@ public class SelectDialogue : MonoBehaviour
         {
             options.Add(item);
         }
-        cheated = cheat;
         InitOptions();
+        cheated = cheat;
     }
 
     /// <summary>
@@ -134,7 +134,16 @@ public class SelectDialogue : MonoBehaviour
             if (i < options.Count)
             {
                 sqButtons[i].gameObject.SetActive(true);
-                sqButtons[i].transform.Find("Text").GetComponent<Text>().text = options[i].text;
+                string cheatSimbol = "";
+#if UNITY_EDITOR
+                ObjectsIDsController objectsIDsController = GameObject.FindAnyObjectByType<ObjectsIDsController>();
+                if (objectsIDsController != null && objectsIDsController.cheat)
+                {
+                    if (options[i].attribute != "" && options[i].attribute != "CM_Leave")
+                        cheatSimbol = "@";
+                }
+#endif
+                sqButtons[i].transform.Find("Text").GetComponent<Text>().text = cheatSimbol + options[i].text;
                 if (gameUI.AllowAutoPlay(false))
                     if (options[i].attribute != "" && options[i].attribute != "CM_Leave")
                     {

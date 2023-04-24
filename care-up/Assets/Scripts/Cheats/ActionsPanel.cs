@@ -13,7 +13,8 @@ public class ActionsPanel : MonoBehaviour {
     public GameObject ActionListPanel;
     public GameObject ScoreListPanel;
     public Text ScoreDataText;
-
+    public Toggle cheatToggle;
+    private ObjectsIDsController objectsIDsController;
     List<ActionStepButton> ActionStepButtons = new List<ActionStepButton>();
     List<ActionStepButton> complitedActionButtons = new List<ActionStepButton>();
     public enum Mode
@@ -48,6 +49,7 @@ public class ActionsPanel : MonoBehaviour {
     ActionManager am;
 	// Use this for initialization
 	void Start () {
+        objectsIDsController = GameObject.FindAnyObjectByType<ObjectsIDsController>();
         SetMode((int)mode);
         startTime = Time.time;
         if (GameObject.FindObjectOfType<ActionManager>() != null)
@@ -55,8 +57,16 @@ public class ActionsPanel : MonoBehaviour {
             am = GameObject.FindObjectOfType<ActionManager>();
         }
         buildActionsList();
+        cheatToggle.isOn = objectsIDsController != null && objectsIDsController.cheat;
     }
 
+    public void CheatToggleChanged()
+    {
+        if (objectsIDsController != null)
+        {
+            objectsIDsController.cheat = cheatToggle.isOn;
+        }
+    }
 
     public void SetMode(int _mode) 
     {
