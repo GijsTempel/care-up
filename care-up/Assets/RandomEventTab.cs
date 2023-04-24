@@ -275,7 +275,16 @@ public class RandomEventTab : MonoBehaviour
             {
                 answerButtons[i].gameObject.SetActive(true);
                 string buttonText = currentQuestion.answers[shuffledIndexes[i]].text;
-                answerButtons[i].gameObject.GetComponentInChildren<Text>().text = buttonText;
+                string cheatSimbol = "";
+#if UNITY_EDITOR
+                ObjectsIDsController objectsIDsController = GameObject.FindAnyObjectByType<ObjectsIDsController>();
+                if (objectsIDsController != null && objectsIDsController.cheat)
+                {
+                    if (IsAnswerCorrect(i))
+                        cheatSimbol = "@";
+                }
+#endif
+                answerButtons[i].gameObject.GetComponentInChildren<Text>().text = cheatSimbol + buttonText;
             }
             else
             {
