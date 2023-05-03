@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Runtime.InteropServices;
+using System.Collections.Generic;
 using UnityEngine;
 using System.Xml;
 using UnityEngine.UI;
@@ -20,6 +21,7 @@ public class QuizTab : MonoBehaviour
         public string descr;
         public bool isCorrect;
     }
+    private List<int> randomIndexList = new List<int>(){1,2,3,4};
 
     public bool continueBtn = false;
 
@@ -35,7 +37,8 @@ public class QuizTab : MonoBehaviour
     int correctAnswerButton = -1;
     public List<Button> buttons = new List<Button>();
     private bool[] buttonsActive = new bool[4];
-
+    private bool quizRandomParam = false;
+    private bool quizEncounterParam = false;
     public Text descriptionText;
     public Button continueButton;
     public Button backToOptionsButton;
@@ -137,6 +140,7 @@ public class QuizTab : MonoBehaviour
         gameObject.SetActive(false);
         gameUI = GameObject.FindObjectOfType<GameUI>();
 
+// Adding quiz buttons to the list
         if (buttons.Count == 0)
         {
             buttons.Add(transform.GetChild(0).Find("Answer1").GetComponent<Button>());
@@ -160,10 +164,62 @@ public class QuizTab : MonoBehaviour
         endScoreManager = GameObject.FindObjectOfType<EndScoreManager>();
     }
 
+
+    void OrganizeButtons()
+    {
+        foreach (Button b in buttons)
+            b.onClick.RemoveAllListeners();
+        randomIndexList = RandomEventTab.BuildShuffledList(current.answers.Count);
+
+        for (int i = 0; i < current.answers.Count; i++)
+        {
+            string cheatSimbol = "";
+#if UNITY_EDITOR
+                ObjectsIDsController objectsIDsController = GameObject.FindAnyObjectByType<ObjectsIDsController>();
+                if (objectsIDsController != null && objectsIDsController.cheat)
+                {
+                    if (current.answers[randomIndexList[i]].isCorrect)
+                        cheatSimbol = "@";
+                }
+#endif
+            buttons[i].transform.GetChild(0).GetComponent<Text>().text = cheatSimbol + current.answers[randomIndexList[i]].text;
+            if (gameUI.AllowAutoPlay(false))
+            if (current.answers[randomIndexList[i]].isCorrect)
+            {
+                correctAnswerButton = i;
+                Invoke("AutoPlay", 1.5f);
+            }
+        }
+
+        for (int i = 0; i < current.answers.Count; i++)
+        {
+            if (randomIndexList[i] != current.answerID)
+            {
+                string descr = current.answers[i].descr;
+                buttons[i].onClick.AddListener(delegate { WrongAnswer(descr, quizRandomParam, quizEncounterParam); });
+            }
+            else
+            {
+                buttons[i].onClick.AddListener(delegate { CorrectAnswer(current.answers[current.answerID].descr, quizRandomParam, quizEncounterParam); });
+            }
+
+            buttons[i].gameObject.SetActive(true);
+            buttonsActive[i] = true;
+        }
+
+        for (int i = current.answers.Count; i < buttons.Count; i++)
+        {
+            buttons[i].gameObject.SetActive(false);
+            buttonsActive[i] = false;
+        }
+    }
+
     public void NextQuizQuestion(bool random = false, bool encounter = false)
     {
 
         quiz = true;
+        quizRandomParam = random;
+        quizEncounterParam = enabled;
         if (random == false)
         {
             if (encounter == false)
@@ -207,45 +263,7 @@ public class QuizTab : MonoBehaviour
         }
 
         quastionTitle.text = current.text;
-
-        for (int i = 0; i < current.answers.Count; i++)
-        {
-            string cheatSimbol = "";
-#if UNITY_EDITOR
-                ObjectsIDsController objectsIDsController = GameObject.FindAnyObjectByType<ObjectsIDsController>();
-                if (objectsIDsController != null && objectsIDsController.cheat)
-                {
-                    if (current.answers[i].isCorrect)
-                        cheatSimbol = "@";
-                }
-#endif
-            buttons[i].transform.GetChild(0).GetComponent<Text>().text = cheatSimbol + current.answers[i].text;
-            if (gameUI.AllowAutoPlay(false))
-                if (current.answers[i].isCorrect)
-                {
-                    correctAnswerButton = i;
-                    Invoke("AutoPlay", 1.5f);
-                }
-        }
-
-        buttons[current.answerID].onClick.AddListener(delegate { CorrectAnswer(current.answers[current.answerID].descr, random, encounter); });
-        for (int i = 0; i < current.answers.Count; i++)
-        {
-            if (i != current.answerID)
-            {
-                string descr = current.answers[i].descr;
-                buttons[i].onClick.AddListener(delegate { WrongAnswer(descr, random, encounter); });
-            }
-
-            buttons[i].gameObject.SetActive(true);
-            buttonsActive[i] = true;
-        }
-
-        for (int i = current.answers.Count; i < buttons.Count; i++)
-        {
-            buttons[i].gameObject.SetActive(false);
-            buttonsActive[i] = false;
-        }
+        OrganizeButtons();
 
         if (random)
             RandomQuiz.randomQuestionsList.RemoveAt(currentQuestionID);
@@ -303,10 +321,7 @@ public class QuizTab : MonoBehaviour
             ++currentEncounter;
         }
 
-        foreach (Button b in buttons)
-        {
-            b.onClick.RemoveAllListeners();
-        }
+
         gameObject.SetActive(true);
         continueBtn = true;
         continueButton.gameObject.SetActive(true);
@@ -413,6 +428,7 @@ public class QuizTab : MonoBehaviour
     public void OnBackToOptionsButton()
     {
         questionsPanel.SetActive(true);
+        OrganizeButtons();
         answerPanel.SetActive(false);      
     }
 }

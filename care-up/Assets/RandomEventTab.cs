@@ -139,7 +139,7 @@ public class RandomEventTab : MonoBehaviour
         }
     }
 
-    List<int> BuildShuffledList(int numberOfElements)
+    public static List<int> BuildShuffledList(int numberOfElements)
     {
         List<int> _list = new List<int>();
         for (int i = 0; i < numberOfElements; i++)
