@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-16"?>
+<ActionList>
+  <Action
+    index="0"
+    description="[Pas handhygiëne]"
+    type="use"
+    comment="1. Apply hand hygiene"
+    points="3"
+    messageTitle="Handhygiëne"
+    messageContent="De handeling voor de handhygiëne is versneld in verband met de gebruiksvriendelijkheid van CareUp. Zorg er in het echt voor dat je alle stappen van de handhygiëne doet. Selecteer het protocol, Techniek handdesinfectie met handalcohol, in het hoofdmenu om deze te oefenen en te toetsen. Handhygiëne is het meest belangrijk om besmetting met ziektekiemen te voorkomen. Reinig je handen altijd op de juiste manier en op het juiste moment. Begin een handeling altijd met handhygiëne."
+    value="HandCleaner" />
+  <Action
+    index="1"
+    description="Maak een schoon werkveld en zet de benodigdheden binnen handbereik"
+    type="use"
+    points="1"
+    messageTitle="Je het volgende nodig hebt?"
+    messageContent="
+- toedienlijst
+- gaasjes
+- desinfectans alcohol 70%
+- toedieningsetiket
+- flacon of ampul met voorgeschreven medicijn
+- flacon met het voorgeschreven oplosmiddel (als het medicijn moet worden verdund of opgelost)
+- steriele spuit
+- steriele opzuignaald
+- steriele injectienaald (voor injectie) of afsluitdopje (voor infuus)
+- handschoenen
+- naaldenbeker
+- afvalbak
+  "
+    value="WorkField"
+    audioHint="Injection/H2-2" />
+  <Action
+    index="2"
+    description="Overgiet een gaasje met alcohol"
+    type="combine"
+    points="1"
+    left="Cloth"
+    right="Alcohol"
+    audioHint="Injection/H4-2" />
+  <Action
+    index="3"
+    description="Controleer cliëntgegevens"
+    type="examine"
+    item="PatientRecords"
+    points="2"
+    audioHint="Injection/H3-2"
+    expected="good" />
+  <Action
+    index="3"
+    description="Controleer het medicijn"
+    type="examine"
+    item="Medicine"
+    points="2"
+    messageTitle="Kennis en veiligheid"
+    messageContent="Neem kennis van de informatie op de bijsluiter en gebruik veilige naalden"
+    audioHint="Injection/H3-2"
+    expected="good"
+    hidden="True" />
+  <Action
+    index="4"
+    description="Controleer het oplosmiddel"
+    type="examine"
+    item="Ampoule"
+    points="2"
+    audioHint="Injection/H3-2"
+    expected="good"
+    hidden="True" />
+  <Action
+    index="4"
+    description="Controleer de toedienlijst"
+    type="examine"
+    item="PrescriptionForm"
+    points="2"
+    messageTitle="5x juist-regel"
+    messageContent="Er zijn 5 controles die je altijd moet doen voordat je medicijnen geeft. Alleen als alle 5 punten juist zijn, mag je het medicijn toedienen.
+    
+    De vijf regels zijn:
+    
+1.  Het juiste medicijn: 
+kijk op de toedienlijst en controleer of de informatie op de medicijnverpakking of het baxterzakje hiermee overeenkomen. Kijk hierbij ook naar de vervaldatum van het medicijn.
+        
+2.  De juiste cliënt: 
+controleer of je de juiste cliënt voor je hebt.
+        
+3.  Het juiste tijdstip: 
+kijk op de toedienlijst voor het tijdstip en vergelijk dit met het tijdstip waarop je de medicijnen geeft.
+        
+4.  De juiste manier van toedienen: 
+hanteer de instructies van de toedienlijst. Je moet bekend zijn met de toedieningsvorm. Ben je hier niet mee bekent, dien dan niet toe.
+    
+5.  De juiste dosis: 
+je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toedienlijst. De verantwoordelijkheid van de juiste dosering ligt bij de arts en de apotheker."
+    audioHint="InjectionSubcutaneous/Step 5"
+    expected="good"
+    hidden="True" />
+  <Action
+    index="5"
+    description="Vraag aan je collega om een dubbele controle"
+    type="talk"
+    points="3"
+    messageTitle="Vul het toedieningsetiket in"
+    messageContent="Vul onderstaande punten in op het toedieningsetiket:
+    
+- Naam en geboortedatum client
+- Naam medicijn
+- Sterkte en dosering
+- Wanneer van toepassing: Naam en hoeveelheid van oplosmiddel
+- Datum en tijd van bereiding
+- Houdbaarheid na bereiding
+- Naam bereider
+- Naam van degene die dubbele controle uitvoert"
+    audioHint=""
+    topic="DoubleCheck"
+    hidden="True" />
+  <Action
+    index="6"
+    description="[Trek de handschoenen aan]"
+    type="use"
+    comment="Put on gloves."
+    points="1"
+    value="gloveBox"
+    blockUnlock="GlovesTakenOn"
+    hidden="True" />
+  <Action
+    index="7"
+    description="Neem de opzuignaald uit de verpakking"
+    type="combine"
+    commentUA="Дістаньте голку для набирання з пакета"
+    points="1"
+    quiz="2"
+    left=""
+    right="AbsorptionNeedlePacked"
+    audioHint="Injection/H4-2"
+    hidden="True" />
+  <Action
+    index="8"
+    description="Neem de injectienaald uit de verpakking"
+    type="combine"
+    commentUA="Дістаньте голку для ін'єкції з пакета"
+    points="1"
+    left=""
+    right="InjectionNeedlePacked"
+    audioHint="Injection/H4-2"
+    hidden="True" />
+  <Action
+    index="9"
+    description="Haal de spuit uit de verpakking"
+    type="combine"
+    commentUA="Дістаньте шприц з пакета"
+    points="1"
+    left=""
+    right="syringe_packed"
+    audioHint="Injection/H4-2"
+    hidden="True" />
+  <Action
+    index="10"
+    description="Desinfecteer de rubberen dop van het medicijn"
+    type="combine"
+    points="2"
+    left="DesinfectionCloth"
+    right="Medicine"
+    audioHint="Injection/H5-3"
+    hidden="True" />
+  <Action
+    index="11"
+    description="Overgiet een gaasje met alcohol"
+    type="combine"
+    points="1"
+    left="Cloth"
+    right="Alcohol"
+    audioHint="Injection/H4-2"
+    hidden="True" />
+  <Action
+    index="12"
+    description="Desinfecteer de hals van de ampul"
+    type="combine"
+    points="2"
+    left="DesinfectionCloth"
+    right="Ampoule"
+    audioHint="Injection/H4-2"
+    hidden="True" />
+  <Action
+    index="13"
+    description="Breek de ampul oplosmiddel open met een gaasje als bescherming"
+    type="combine"
+    points="2"
+    left="DesinfectedAmpoule"
+    right="Cloth"
+    audioHint="InjectionSubcutaneous/Step 6.1"
+    hidden="True" />
+  <Action
+    index="14"
+    description="Doe het gaasje met gebroken ampul bovenkant in de naaldcontainer"
+    type="useOn"
+    item="ClothWithAmpouleTop"
+    points="2"
+    buttonText="Gebroken ampul weggooien"
+    audioHint=""
+    target=""
+    hidden="True" />
+  <Action
+    index="15"
+    description="Plaats opzuignaald op de spuit"
+    type="combine"
+    points="1"
+    left="Syringe"
+    right="AbsorptionNeedle"
+    audioHint="InjectionSubcutaneous/Step 6.2"
+    hidden="True" />
+  <Action
+    index="16"
+    description="Verwijder de beschermhuls van de opzuignaald"
+    type="combine"
+    points="1"
+    left="SyringeWithAbsorptionNeedleCap"
+    right=""
+    audioHint="Injection/H6-3"
+    hidden="True" />
+  <Action
+    index="17"
+    description="Spuit het oplosmiddel in de flacon met het medicijn. Zuig daarna de voorgeschreven hoeveelheid medicatie op in de spuit"
+    type="sequenceStep"
+    comment="Fill syringe with solvent"
+    points="1"
+    value="FillSyringeWithSolvent"
+    hidden="True" />
+  <Action
+    index="18"
+    description="Spuit het oplosmiddel in de flacon met het medicijn"
+    type="sequenceStep"
+    comment="Inject the solvent into the vial containing the drug. (Inject medicine into the flacon)"
+    points="1"
+    messageTitle="Verhoogde druk"
+    messageContent="Het ingespoten oplosmiddel verhoogt de druk in de flacon. Laat de lucht die door de verhoogde druk uit de flacon wil, in de spuit. Laat de opzuignaald + met lucht gevulde spuit in de flacon zitten. Wacht tot het medicijn geheel is opgelost."
+    value="InjectSolvent"
+    hidden="True" />
+  <Action
+    index="19"
+    description="Spuit het oplosmiddel in de flacon met het medicijn. Zuig daarna de voorgeschreven hoeveelheid medicatie op in de spuit"
+    type="sequenceStep"
+    comment="Turn the vial upside down and withdraw the prescribed amount of medicine"
+    points="1"
+    messageTitle="Zuig de voorgeschreven hoeveelheid medicijn op"
+    messageContent="Doe dit door geleidelijk lucht uit de spuit te wisselen met medicijn uit de flacon. Druk niet in één keer alle lucht uit de spuit in de flacon. De kans bestaat dat de spuit van de opzuignaald 'vliegt' door te hoge druk."
+    value="TurnVial"
+    hidden="True" />
+  <Action
+    index="20"
+    description="Zuig nog wat extra lucht op in de spuit en verwijder de opzuignaald en spuit uit de flacon"
+    type="sequenceStep"
+    comment="Draw some additional air into the syringe and remove the withdrawal needle and syringe from the vial. Aspirating some extra air prevents tampering with the drug"
+    points="1"
+    messageTitle="Extra lucht"
+    value="DrawMoreAir"
+    hidden="True" />
+  <Action
+    index="21"
+    description="Ontlucht de spuit"
+    type="sequenceStep"
+    comment="Unair the syringe and check if you have the right amount"
+    points="1"
+    value="Unair"
+    blockUnlock="EndOfSQ"
+    hidden="True" />
+  <Action
+    index="22"
+    description="Verwijder de naald van de spuit"
+    type="combine"
+    points="1"
+    left="SyringeWithAbsorptionNeedle"
+    right=""
+    audioHint=""
+    blockUnlock="AneedleTakenOff"
+    blockRequired="EndOfSQ"
+    hidden="True" />
+  <Action
+    index="23"
+    description="Doe de opzuignaald in de naaldcontainer"
+    type="useOn"
+    item="AbsorptionNeedleNoCap"
+    points="1"
+    buttonText="Opzuignaald weggooien"
+    audioHint="Injection/H10-2"
+    target=""
+    blockUnlock="PlaceInjectionNeedle"
+    blockRequired="AneedleTakenOff"
+    hidden="True" />
+  <Action
+    index="24"
+    description="Plaats de injectienaald op de spuit"
+    type="combine"
+    points="1"
+    messageTitle="Handschoenen"
+    messageContent="Als tijdens de injectie geen bloedcontact te verwachten is hoeven er geen handschoenen gedragen te worden."
+    left="SyringeWithAbsorptionNeedle"
+    right="InjectionNeedle"
+    audioHint="Injection/H11-2"
+    blockUnlock="AllowTakeOffGloves"
+    blockRequired="PlaceInjectionNeedle"
+    hidden="True" />
+  <Action
+    index="26"
+    description="Trek handschoenen uit en gooi ze in de afvalbak"
+    type="general"
+    item=""
+    points="1"
+    buttonText="Trek handschoenen uit "
+    messageTitle="Toedieningsetiket"
+    messageContent="Plak het ingevulde toedieningsetiket op de spuit."
+    action="TakeOffGloves"
+    blockUnlock="CleanWorkfield"
+    blockRequired="AllowTakeOffGloves, GlovesTakenOn"
+    hidden="True" />
+  <Action
+    index="27"
+    description="Ruim de materialen op door met lege handen op het werkveld te klikken"
+    type="use"
+    points="1"
+    value="WorkField"
+    blockRequired="CleanWorkfield"
+    hidden="True" />
+  <Action
+    index="28"
+    description="[Pas handhygiëne]"
+    type="use"
+    comment="1. Apply hand hygiene"
+    points="3"
+    value="HandCleaner"
+    hidden="True" />
+  <Action
+    index="29"
+    description="Teken de toedienlijst af of noteer het tijdstip, het soort medicijn, de concentratie, de hoeveelheid en de wijze van toediening. Noteer tot slot je bevindingen"
+    type="use"
+    points="3"
+    value="PaperAndPen"
+    audioHint="Injection/EAS4-2" />
+</ActionList>
