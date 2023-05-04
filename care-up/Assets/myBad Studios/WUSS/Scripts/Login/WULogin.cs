@@ -196,7 +196,7 @@ namespace MBS
         }
 
         static public void AttemptToLogin( CMLData fields )
-        {
+        { 
             // WTF UNITY
             UnityWebRequest.ClearCookieCache();
 
