@@ -331,6 +331,13 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 
                 foreach(string g in sceneInfo.inGroups)
                 {
+
+// Hide dev group of scenes, if not in editor
+#if !UNITY_EDITOR
+
+                    if (g == "dev")
+                        continue;
+#endif
                     if (sceneGroupNum.ContainsKey(g))
                     {
                         sceneGroupNum[g] += 1;
@@ -414,7 +421,13 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 // not activated and hidden scene should not even create a panel, so just end up here
                 continue;
             }
-        
+
+//If scene is in group dev, it is shown only in editor
+#if !UNITY_EDITOR
+
+            if (sceneInfo.inGroups.Contains("dev"))
+                continue;
+#endif
 
             GameObject sceneUnitObject = Instantiate(Resources.Load<GameObject>("NecessaryPrefabs/UI/SceneSelectionUnit"), protocolsTransorm);
             sceneUnitObject.name = "SceneSelectionUnit"; // i dont like that 'clone' word at the end, ugh
