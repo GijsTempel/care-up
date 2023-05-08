@@ -1628,6 +1628,7 @@ public class ActionManager : MonoBehaviour
             }
         }
 
+        Debug.Log(matched);
         if (matched)
         {
             //currentStepHintUsed = false;

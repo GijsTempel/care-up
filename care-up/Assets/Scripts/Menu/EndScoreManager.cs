@@ -268,10 +268,15 @@ public class EndScoreManager : MonoBehaviour
             int counter = 0;
             // add in-game currency once 3 finishes?
             int.TryParse(DatabaseManager.FetchField("Store", "FinishedCounter"), out counter);
+
+            if (percent >= 70)
+            {
+                PlayerPrefsManager.storeManager.ModifyCurrencyBy(manager.currentDifficultyLevel + 1);
+            }
             if (++counter >= 3)
             {
                 counter = 0;
-                PlayerPrefsManager.storeManager.ModifyCurrencyBy(5);
+                // PlayerPrefsManager.storeManager.ModifyCurrencyBy(5);
             }
             DatabaseManager.UpdateField("Store", "FinishedCounter", counter.ToString());
 
