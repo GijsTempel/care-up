@@ -293,7 +293,10 @@ public class bl_SceneLoader : MonoBehaviour
 
         CurrentLoadLevel = Manager.GetSceneInfo(level);
         if (CurrentLoadLevel == null)
+        {
+            NewSceneLoadNoAddressables(level);
             return;
+        }
 
         SetupUI(CurrentLoadLevel);
 
@@ -305,6 +308,14 @@ public class bl_SceneLoader : MonoBehaviour
             StartCoroutine(StartFakeLoading());
         }
     }
+
+    void NewSceneLoadNoAddressables(string name)
+    {
+        name = "Scenes/" +  name;
+        SceneManager.LoadSceneAsync(name);
+
+    }
+
 
     IEnumerator NewSceneLoad(string name)
     {
