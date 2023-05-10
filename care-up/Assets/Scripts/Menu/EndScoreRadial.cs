@@ -5,6 +5,8 @@ public class EndScoreRadial : MonoBehaviour
 {
     public GameObject ovation;
     public GameObject sadMusic;
+    public Animation coinEffectAnimation;
+    public Text coinEffectText;
 
     Text ScoreProgressNum;
     Image ScoreProgressImage;
@@ -12,6 +14,7 @@ public class EndScoreRadial : MonoBehaviour
     float animationTime = 3.0f;
     public bool animationFinished = false;
     Animator animator;
+    int rewardCoins = 0;
 
     public float score = 70f;
     float lastScore ;
@@ -24,11 +27,12 @@ public class EndScoreRadial : MonoBehaviour
         //StartAnimation(70f);
     }
 
-    public void StartAnimation(float value)
+    public void StartAnimation(float value, int coins = 0)
     {
         animationFinished = false;
         animStartTime = Time.time;
         score = value;
+        rewardCoins = coins;
         animator.SetTrigger("pop");
     }
 
@@ -47,6 +51,14 @@ public class EndScoreRadial : MonoBehaviour
                 ScoreProgressNum.text = ((int)score).ToString();
                 ScoreProgressImage.fillAmount = score * 0.01f;
                 animationFinished = true;
+                if (rewardCoins > 0)
+                {
+                    coinEffectText.text = "+" + rewardCoins.ToString();
+                    coinEffectAnimation.Play();
+
+
+                }
+                Debug.Log("______Coins += " + rewardCoins.ToString());
                 animator.SetTrigger("finished");
                 GameObject.FindObjectOfType<EndButtonRemover>().ShowResultInfoHolder();
                 string trigger = "dance";

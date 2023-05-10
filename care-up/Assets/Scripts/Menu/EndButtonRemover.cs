@@ -41,10 +41,11 @@ public class EndButtonRemover : MonoBehaviour {
         ScorePanel.GetComponent<Animator>().SetBool("pop", true);
         if (endScoreShown == 0)
         {
-            int value = GameObject.FindObjectOfType<EndScoreManager>().percent;           
+            int value = GameObject.FindObjectOfType<EndScoreManager>().percent;   
+            int coins = GameObject.FindObjectOfType<EndScoreManager>().rewardCoins;         
             EndScoreRadial endScoreRadial = GameObject.FindObjectOfType<EndScoreRadial>();
             if (endScoreRadial != null)
-                GameObject.FindObjectOfType<EndScoreRadial>().StartAnimation(value);
+                GameObject.FindObjectOfType<EndScoreRadial>().StartAnimation(value, coins);
         }
         endScoreShown++;
     }

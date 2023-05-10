@@ -23,6 +23,7 @@ public class EndScoreManager : MonoBehaviour
     public string completedSceneName;
     public string completedSceneBundle;
     public Text reward;
+    public int rewardCoins = 0;
 
     private List<string> steps;
     private List<int> wrongStepIndexes;
@@ -271,7 +272,8 @@ public class EndScoreManager : MonoBehaviour
 
             if (percent >= 70)
             {
-                PlayerPrefsManager.storeManager.ModifyCurrencyBy(manager.currentDifficultyLevel + 1);
+                rewardCoins = manager.currentDifficultyLevel + 1;
+                PlayerPrefsManager.storeManager.ModifyCurrencyBy(rewardCoins);
             }
             if (++counter >= 3)
             {
