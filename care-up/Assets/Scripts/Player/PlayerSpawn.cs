@@ -7,7 +7,7 @@ public class PlayerSpawn : MonoBehaviour
 {
     public int sceneID = 0;
     public string quizName;
-
+    public float playerCameraFOV = -1f;
     public GameObject playerPrefab;
     public Vector3 robotPosition;
     public Vector3 robotRotation;
@@ -52,6 +52,8 @@ public class PlayerSpawn : MonoBehaviour
         GameObject player = Instantiate(playerPrefab, transform.position, Quaternion.Euler(0, r.y, r.z));
         Transform camTransform = player.transform.Find("CinematicControl/Arms/Armature/Hips/Spine/Spine1/Spine2/Neck/Head/PlayerMainCamera");
         Vector3 co = camTransform.rotation.eulerAngles;
+        if (playerCameraFOV > 0)
+            camTransform.GetComponent<Camera>().fieldOfView = playerCameraFOV;
         co.x = r.x;
         camTransform.rotation = Quaternion.Euler(co);
         player.name = "Player";
