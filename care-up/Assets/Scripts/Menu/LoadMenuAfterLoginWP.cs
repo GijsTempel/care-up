@@ -49,7 +49,6 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
 
     public void SetProperCookiesWebGLWrap(CML ignore)
     {
-        Debug.Log("Cookie::SetProperCookiesWebGLWrap()");
         // why webgl? because webGL doesnt allow to set custom cookies from client
         // so we're doing this hack to pass the data we need and set cookie on server side
         StartCoroutine(SetProperCookiesWebGL());
@@ -57,7 +56,6 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
 
     public IEnumerator SetProperCookiesWebGL()
     {
-        Debug.Log("Cookie::SetProperCookiesWebGL()");
         //prep data
         int equalsIndex = WUCookie.CookieVal.IndexOf('=');
         int semicolonIndex = WUCookie.CookieVal.IndexOf(';');
@@ -85,6 +83,6 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
             {
                 Debug.LogError("Cookie Network Error: " + w.error);
             }
-        } else Debug.Log("Cookie Set Success");
+        }
     }
 }
