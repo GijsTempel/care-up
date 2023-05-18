@@ -41,6 +41,10 @@ public class VideoPlayerManager : MonoBehaviour
         if (manager != null)
         {
             string videoURL = VideoActionManager.baseURL + manager.videoSceneName + "/video.mp4";
+#if UNITY_EDITOR_LINUX || UNITY_STANDALONE_LINUX
+            videoURL = VideoActionManager.baseURL + manager.videoSceneName + "/video.webm";
+
+#endif
             videoPlayer.source = UnityEngine.Video.VideoSource.Url;
             videoPlayer.url = videoURL;
         }
