@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.Purchasing;
+using UnityEngine.Purchasing.Extension;
 
-public class IAPManager : MonoBehaviour, IStoreListener
+public class IAPManager : MonoBehaviour, IDetailedStoreListener
 {
     private static IStoreController m_StoreController;          // The Unity Purchasing system.
     private static IExtensionProvider m_StoreExtensionProvider; // The store-specific Purchasing subsystems.
@@ -31,7 +32,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
 
     void Start()
     {
-        Debug.Log("IAP start");
+        //Debug.Log("IAP start");
         
         purchasedScenes.Clear();
 
@@ -204,7 +205,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
             var apple = m_StoreExtensionProvider.GetExtension<IAppleExtensions>();
             // Begin the asynchronous process of restoring purchases. Expect a confirmation response in 
             // the Action<bool> below, and ProcessPurchase if there are previously purchased products to restore.
-            apple.RestoreTransactions((result) => {
+            apple.RestoreTransactions((result, str) => {
                 // The first phase of restoration. If no more responses are received on ProcessPurchase then 
                 // no purchases are available to be restored.
                 Debug.Log("RestorePurchases continuing: " + result + ". If no further messages, no purchases available to restore.");
@@ -223,7 +224,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
     /// </summary>
     public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
     {
-        Debug.Log("IAP OnInitialized");
+        //Debug.Log("IAP OnInitialized");
         m_StoreController = controller;
         m_StoreExtensionProvider = extensions;
         m_AppleExtensions = extensions.GetExtension<IAppleExtensions>();
@@ -288,7 +289,8 @@ public class IAPManager : MonoBehaviour, IStoreListener
                         Debug.Log("the product is not a subscription product");
                     }
                 } else {
-                    Debug.Log("the product should have a valid receipt");
+                    // obsolete until IAP starts actually working properly
+                    //Debug.Log("the product should have a valid receipt");
                 } 
             }
         }
@@ -428,5 +430,10 @@ public class IAPManager : MonoBehaviour, IStoreListener
             purchasedScenes.Add(id);
 
         PlayerPrefsManager.AddSKU(id);
+    }
+
+    public void OnPurchaseFailed(Product product, PurchaseFailureDescription failureDescription)
+    {
+        throw new NotImplementedException();
     }
 }
