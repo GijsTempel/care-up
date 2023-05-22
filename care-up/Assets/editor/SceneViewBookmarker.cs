@@ -80,6 +80,10 @@ namespace SceneViewBookmarker
         [MenuItem("Window/Scene View Bookmarks/Bookmark Scene View &1", false, 100)]
         static void BookmarkSceneView1() { BookmarkSceneView(1); }
 
+        [MenuItem("Window/Scene View Bookmarks/Move Scene View To Bookmark #1", false, 200)]
+        static void MoveSceneViewToBookmark1() { MoveSceneViewToBookmark(1); }
+
+        /*
         [MenuItem("Window/Scene View Bookmarks/Bookmark Scene View &2", false, 100)]
         static void BookmarkSceneView2() { BookmarkSceneView(2); }
 
@@ -103,9 +107,6 @@ namespace SceneViewBookmarker
 
         [MenuItem("Window/Scene View Bookmarks/Bookmark Scene View &9", false, 100)]
         static void BookmarkSceneView9() { BookmarkSceneView(9); }
-
-        [MenuItem("Window/Scene View Bookmarks/Move Scene View To Bookmark #1", false, 200)]
-        static void MoveSceneViewToBookmark1() { MoveSceneViewToBookmark(1); }
 
         [MenuItem("Window/Scene View Bookmarks/Move Scene View To Bookmark #2", false, 200)]
         static void MoveSceneViewToBookmark2() { MoveSceneViewToBookmark(2); }
@@ -133,7 +134,7 @@ namespace SceneViewBookmarker
 
         [MenuItem("Window/Scene View Bookmarks/Return To Previous Scene View #0", false, 300)]
         static void ReturnToPreviousSceneView() { MoveSceneViewToBookmark(undoSlot); }
-
+        */
         #endregion
 
         #region Menu Item Validation
