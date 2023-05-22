@@ -62,7 +62,7 @@ public class VideoActionManager : MonoBehaviour
         {
             yield return webRequest.SendWebRequest();
 
-            if (webRequest.isNetworkError)
+            if (webRequest.result == UnityWebRequest.Result.ConnectionError)
             {
                 Debug.Log("NetworkError");
             }

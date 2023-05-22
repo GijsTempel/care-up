@@ -15,14 +15,14 @@ public class VideoPlayerManager : MonoBehaviour
     public GameObject titlePanel;
     public Animator VideoPanelsAnimator;
     bool playState = false;
-    bool fullScreenMode = false;
+    //bool fullScreenMode = false; value never used
     public Sprite playSprite;
     public Sprite pauseSprite;
     public Button playButton;
     //public Image videoScrollbar;
     public UnityEngine.Video.VideoPlayer videoPlayer;
     bool sidePanelIsOpen = false;
-    bool actionDataLoaded = false;
+    //bool actionDataLoaded = false; value never used
     Transform videoActionPanelContent;
     public ScrollRect videoActionPanelScrollRect;
     int videoSegment = 0;
@@ -30,7 +30,7 @@ public class VideoPlayerManager : MonoBehaviour
     VideoActionManager videoActionManager;
     bool initialized = false;
     bool isFirstPlay = true;
-    int sceneComplition = 0;
+    //int sceneComplition = 0; value never used
     bool[] complitedSegments = new bool[1000];
     PlayerPrefsManager manager;
     // Start is called before the first frame update

@@ -161,10 +161,12 @@ namespace MBS
 
                 // Request and wait for the desired page.
                 yield return webRequest.SendWebRequest();
+                string[] pages = url.Split('/');
+                int page = pages.Length - 1;
 
-                if (webRequest.isNetworkError)
+                if (webRequest.result == UnityWebRequest.Result.ConnectionError)
                 {
-
+                    Debug.Log(pages[page] + ": Error: " + webRequest.error);
                 }
                 else if (webRequest.downloadHandler.text != "")
                 {
@@ -206,7 +208,7 @@ namespace MBS
                 string[] pages = url.Split('/');
                 int page = pages.Length - 1;
 
-                if (webRequest.isNetworkError)
+                if (webRequest.result == UnityWebRequest.Result.ConnectionError)
                 {
                     Debug.Log(pages[page] + ": Error: " + webRequest.error);
                 }

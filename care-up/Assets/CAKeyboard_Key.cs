@@ -9,7 +9,7 @@ public class CAKeyboard_Key : MonoBehaviour
     public string fnChar;
     Color baseColor;
     Color hlColor = Color.yellow;
-    int mode = 0;
+    //int mode = 0; value never used
     CAScreenKeyboard _CAScreenKeyboard;
     Text _text;
     public enum ButtonType

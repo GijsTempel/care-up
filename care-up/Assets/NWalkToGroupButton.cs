@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class NWalkToGroupButton : MonoBehaviour
 {
-    WalkToGroup linkedWalkToGroup = null;
+    //WalkToGroup linkedWalkToGroup = null; value never used
     Color ButtonColor = Color.white;
-    bool mouse_over = false;
+    //bool mouse_over = false; value never used
     GameUI gameUI;
     List<GameObject> icons = new List<GameObject>();
     PlayerScript ps;

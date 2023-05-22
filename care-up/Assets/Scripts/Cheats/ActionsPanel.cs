@@ -7,7 +7,7 @@ using CareUp.Actions;
 public class ActionsPanel : MonoBehaviour {
     bool slideState = false;
     int lastStepId = -1;
-    int lastComplitedActionsNum = -1;
+    //int lastComplitedActionsNum = -1; value never used
     float startTime;
     public Text ScoreValueText;
     public GameObject ActionListPanel;

@@ -1404,9 +1404,9 @@ public class PlayerPrefsManager : MonoBehaviour
     public void HandleLoginToken()
     {
         // get login token
-        string currentLoginToken;
+        //string currentLoginToken; value never used 
 #if UNITY_WEBGL && !UNITY_EDITOR
-        currentLoginToken = GetStringParams();
+        //currentLoginToken = GetStringParams();
 #endif
 #if UNITY_EDITOR
         //currentLoginToken = "token12asudh"; // let's pretend we got it

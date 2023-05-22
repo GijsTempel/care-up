@@ -79,9 +79,9 @@ namespace MBS
         [SerializeField] private Image LoginPasswordField = default(Image);
         [SerializeField] private GameObject loginPasswordVisibilityOn = default;
         [SerializeField] private GameObject loginPasswordVisibilityOff = default;
-        [SerializeField] private GameObject popupLoginPasswordVisibilityOn = default;
-        [SerializeField] private GameObject popupLoginPasswordVisibilityOff = default;
-        [SerializeField] private Button loginPasswordVisibility = default;
+        //[SerializeField] private GameObject popupLoginPasswordVisibilityOn = default; value never used
+        //[SerializeField] private GameObject popupLoginPasswordVisibilityOff = default; value never used
+        //[SerializeField] private Button loginPasswordVisibility = default; value never used
 
         [SerializeField] private Image RegUsernameField = default(Image);
         [SerializeField] private Image RegEmailField = default(Image);

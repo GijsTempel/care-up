@@ -52,7 +52,7 @@ public class ActionManager : MonoBehaviour
 
     public static List<RandomEventBookmak> randomEventBookmaks = new List<RandomEventBookmak>();
 
-    bool complitedSequenceStep = false;
+    //bool complitedSequenceStep = false; value never used
     public static bool practiceMode = true;
     public static bool personClicked = false;
 

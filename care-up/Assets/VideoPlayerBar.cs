@@ -10,7 +10,7 @@ public class VideoPlayerBar : MonoBehaviour, IDragHandler, IPointerDownHandler
     [SerializeField]
     private VideoPlayer videoPlayer;
     [SerializeField]
-    private Camera camera;
+    private Camera _camera;
     [SerializeField]
     private Image circle;
     [SerializeField]
@@ -46,7 +46,7 @@ public class VideoPlayerBar : MonoBehaviour, IDragHandler, IPointerDownHandler
     {
         Vector2 localPoint;
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(progress.rectTransform, 
-            eventData.position, camera, out localPoint))
+            eventData.position, _camera, out localPoint))
         {
             float pct = Mathf.InverseLerp(progress.rectTransform.rect.xMin, 
                 progress.rectTransform.rect.xMax, localPoint.x);

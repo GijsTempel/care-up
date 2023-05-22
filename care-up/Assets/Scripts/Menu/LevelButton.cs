@@ -23,7 +23,7 @@ public class LevelButton : MonoBehaviour
     public string url;
     public GameObject IsFreeIcon;
     bool demoMark = false;
-    int demoMarkType = 0;
+    //int demoMarkType = 0; value never used
     bool PreviewIconChanged = false;
     public GameObject MarksPanel;
     public bool isFree = false;

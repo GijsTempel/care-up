@@ -215,7 +215,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
         XmlNodeList xmlSceneList = xmlFile.FirstChild.NextSibling.FirstChild.ChildNodes;
 
         // leaderboard stuff
-        bool firstScene = true;
+        //bool firstScene = true; value never used
         LeaderBoardSceneButton.buttons.Clear();
 // FindObjectOfType<PlayerPrefsManager>().demoVersion
 

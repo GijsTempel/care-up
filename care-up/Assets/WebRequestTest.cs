@@ -43,7 +43,7 @@ public class WebRequestTest : MonoBehaviour
             string[] pages = uri.Split('/');
             int page = pages.Length - 1;
 
-            if (webRequest.isNetworkError)
+            if (webRequest.result == UnityWebRequest.Result.ConnectionError)
             {
                 Debug.Log(pages[page] + ": Error: " + webRequest.error);
             }
