@@ -13,7 +13,6 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
         if (!done)
         {
             WULogin.onLoggedIn += InitDatabase;
-            WULogin.onLoggedIn += SetProperCookiesWebGLWrap;
             WULogin.onLoggedOut += CleanDatabase;
             WULogin.onLoggedOut += LoadStartScene;
             done = true;
@@ -45,44 +44,5 @@ public class LoadMenuAfterLoginWP : MonoBehaviour {
     void ClearFields(CML ignore)
     {
         WUData.RemoveCategory("AccountStats");
-    }
-
-    public void SetProperCookiesWebGLWrap(CML ignore)
-    {
-        // why webgl? because webGL doesnt allow to set custom cookies from client
-        // so we're doing this hack to pass the data we need and set cookie on server side
-        StartCoroutine(SetProperCookiesWebGL());
-    }
-
-    public IEnumerator SetProperCookiesWebGL()
-    {
-        //prep data
-        int equalsIndex = WUCookie.CookieVal.IndexOf('=');
-        int semicolonIndex = WUCookie.CookieVal.IndexOf(';');
-
-        string cookie_name = WUCookie.CookieVal.Substring(0, equalsIndex);
-        string cookie_value = WUCookie.CookieVal.Substring(equalsIndex + 1, semicolonIndex - equalsIndex - 1);
-
-        string data = string.Format("{{\"cookie_name\":\"{0}\",\"cookie_value\":\"{1}\"}}", cookie_name, cookie_value);
-
-        // send data
-        string _uri = "https://careup.online/wp-json/cookies/set";
-        UnityWebRequest w = UnityWebRequest.Put(_uri, data);
-
-        w.SetRequestHeader("Content-Type", "application/json");
-
-        yield return w.SendWebRequest();
-
-        if (w.result != UnityWebRequest.Result.Success)
-        {
-            if (w.result == UnityWebRequest.Result.ProtocolError)
-            {
-                Debug.LogError("Cookie HTTP Error: " + w.responseCode);
-            }
-            else if (w.result == UnityWebRequest.Result.ConnectionError)
-            {
-                Debug.LogError("Cookie Network Error: " + w.error);
-            }
-        }
     }
 }
