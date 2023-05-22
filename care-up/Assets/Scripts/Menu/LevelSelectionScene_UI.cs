@@ -341,7 +341,8 @@ public class LevelSelectionScene_UI : MonoBehaviour
                     }
 
                 }
-                Debug.Log(sceneGroupNum);
+                // useless and spams the hell out of console
+                //Debug.Log(sceneGroupNum);
             }
 
             if (sceneInfo.mainScene != "" && sceneType != "")
