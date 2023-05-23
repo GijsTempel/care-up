@@ -322,8 +322,8 @@ public class LevelSelectionScene_UI : MonoBehaviour
             if (!scenesInfo.ContainsKey(sceneInfo.sceneName) && sceneInfo.mainScene == "")
             {
                 //Show only scenes and scene groups, that are available for current player
-#if UNITY_IOS || UNITY_STANDALONE_OSX
-                if (!(pp.subscribed || !sceneInfo.demoLock))
+#if UNITY_IOS || UNITY_STANDALONE_OSX || UNITY_EDITOR_LINUX
+                if (!(pp.subscribed || !sceneInfo.demoLock || PlayerPrefsManager.NumberOfPurchasedGroups() > 0))
                     continue;
 #endif
 
@@ -370,8 +370,8 @@ public class LevelSelectionScene_UI : MonoBehaviour
         foreach (string key in scenesInfo.Keys)
         {
             //Show only scenes and scene groups, that are available for current player
-#if UNITY_IOS || UNITY_STANDALONE_OSX
-            if (!(pp.subscribed || !scenesInfo[key].demoLock))
+#if UNITY_IOS || UNITY_STANDALONE_OSX || UNITY_EDITOR_LINUX
+            if (!(pp.subscribed || !scenesInfo[key].demoLock || PlayerPrefsManager.NumberOfPurchasedGroups() > 0))
                 continue;
 #endif
 

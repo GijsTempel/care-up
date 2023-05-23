@@ -200,6 +200,11 @@ public class PlayerPrefsManager : MonoBehaviour
         purchasedScenes = new List<string>();
     }
 
+    static public int NumberOfPurchasedGroups()
+    {
+        return purchasedScenes.Count();
+    }
+
     public void ClearScenesInfo()
     {
         ScenesInfo.Clear();

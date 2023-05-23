@@ -131,7 +131,7 @@ namespace MBS
 
         void Update()
         {
-#if UNITY_IOS || UNITY_STANDALONE_OSX
+#if UNITY_IOS || UNITY_STANDALONE_OSX || UNITY_EDITOR_LINUX
             LoginGUIBackButton.SetActive(false);
             LoginGUIText.SetActive(false);
             if (startTime >= 0 && Time.time - startTime > 0.1)
