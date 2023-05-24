@@ -66,7 +66,10 @@ namespace MBS
         static public Action<WPServerState> OnServerStateChange;
 
         [SerializeField] eWussServerContactType post_method = default(eWussServerContactType);
-        //[SerializeField, HideInInspector, WPGameId] int game_id = 2269;
+#pragma warning disable
+        // disable "not used" warning, as this is used in WPServerEditor.cs
+        [SerializeField, HideInInspector, WPGameId] int game_id = 2269;
+#pragma warning enable
         [SerializeField] bool use_online_url = true;
         [SerializeField]
         string
