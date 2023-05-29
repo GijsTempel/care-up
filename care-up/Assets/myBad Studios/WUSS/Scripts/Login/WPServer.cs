@@ -248,14 +248,14 @@ namespace MBS
             bool wait_for_response = !( null == response && null == failedresponse );
 
             data = _prepareData( data, action, wuss_kit );
-            WWWForm f = _prepareForm( data );
+            WWWForm f = (action == WULActions.VerifyLogin.ToString()) ? _prepareFormToVerifyLogin(data) : _prepareForm(data);
             string get = _GET_Url( data );
 
             SetServerState( WPServerState.Contacting, wait_for_response );
 
             string _uri = Instance.URL( filepath ) + ( Instance.post_method == eWussServerContactType.GET ? get : string.Empty );
-            UnityWebRequest w = Instance.post_method == eWussServerContactType.GET ? UnityWebRequest.Get( _uri ) : UnityWebRequest.Post( _uri, f );
-            
+            UnityWebRequest w = Instance.post_method == eWussServerContactType.GET ? UnityWebRequest.Get( _uri ) : UnityWebRequest.Post( _uri, f);
+
             switch ( Application.platform )
             {
                 case RuntimePlatform.IPhonePlayer:
@@ -362,6 +362,22 @@ namespace MBS
             return f;
         }
 
+        static WWWForm _prepareFormToVerifyLogin(CMLData data)
+        {
+            WWWForm f = new WWWForm();
+
+            if (Instance.post_method == eWussServerContactType.POST)
+            {
+                foreach (string s in data.Keys)
+                    f.AddField(s, data.String(s));
+#if UNITY_WEBGL && !UNITY_EDITOR
+                f.AddField("auth_cookies", WUCookie.CookieValWebGL);
+#endif
+            }
+
+            return f;
+        }
+
         static string _GET_Url( CMLData data )
         {
             string get = string.Empty;
@@ -386,7 +402,6 @@ namespace MBS
                 throw new WPServerErrorException( "No data returned from the server" );
 
             result_string = w.downloadHandler.text.Substring( datastart, dataend - datastart );
-
             int warning_index = result_string.IndexOf( "<br />" );
             if ( warning_index > 0 )
                 throw new WPServerErrorException( $"Excessive server response: {result_string.Substring( warning_index + 6 )}" );
@@ -406,6 +421,9 @@ namespace MBS
             if ( action == WULActions.DoLogin.ToString() || action == WULActions.VerifyLogin.ToString() || action == WULActions.TrustedLogin.ToString() )
             {
                 WUCookie.ExtractCookie( w );
+#if UNITY_WEBGL && !UNITY_EDITOR
+                WUCookie.ExtractWebGLCookie(results);
+#endif
             }
             else
             {
