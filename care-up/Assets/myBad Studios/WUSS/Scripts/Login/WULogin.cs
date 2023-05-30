@@ -202,7 +202,10 @@ namespace MBS
 
             WUCookie.ClearCookie();
             WUCookie.StoreCookie();
-            fields.Set( "wul_fields", FieldsToFetch );
+
+            // manually adding one custom field
+            string ftf = FieldsToFetch + ",auth_cookies";
+            fields.Set( "wul_fields", ftf );
             WPServer.ContactServer( WULActions.DoLogin, filepath, LOGINConstant, fields, __onLoginSuccess, onLoginFailed );
         }
         
