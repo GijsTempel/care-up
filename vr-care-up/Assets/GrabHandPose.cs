@@ -6,8 +6,10 @@ using UnityEngine.XR.Interaction.Toolkit ;
 
 public class GrabHandPose : MonoBehaviour
 {
+    
     public float poseTransitionDuration = 0.2f;
     public HandPoseControl righHandPose;
+    public HandPoseControl leftHandPose;
     private Vector3 startingHandPosition;
     private Vector3 finalHandPosition;
     private Quaternion startingHandRotation;
@@ -22,7 +24,11 @@ public class GrabHandPose : MonoBehaviour
         XRGrabInteractable grabInteractable = GetComponent<XRGrabInteractable>();
         grabInteractable.selectEntered.AddListener(SetupPose);
         grabInteractable.selectExited.AddListener(UnSetPose);
-        righHandPose.gameObject.SetActive(false);
+        if (righHandPose != null)
+            righHandPose.gameObject.SetActive(false);
+        if (leftHandPose != null)
+            leftHandPose.gameObject.SetActive(false);
+
     }
 
     public void SetupPose(BaseInteractionEventArgs arg)
@@ -33,7 +39,14 @@ public class GrabHandPose : MonoBehaviour
 
             HandPoseControl handData = arg.interactorObject.transform.GetComponentInChildren<HandPoseControl>();
             handData.animator.enabled = false;
-            SetHandDataValues(handData, righHandPose);
+            if (handData.handType == HandPoseControl.HandModelType.Right)
+            {
+                SetHandDataValues(handData, righHandPose);
+            }
+            else
+            {
+                SetHandDataValues(handData, leftHandPose);
+            }
             StartCoroutine(SetHandDataRoutine(handData, finalHandPosition, finalHandRotation, finalFingerRotations, startingHandPosition, startingHandRotation, startingFingerRotations));
 
         }
