@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit ;
-
+using UnityEngine.XR.Interaction.Toolkit;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class GrabHandPose : MonoBehaviour
 {
@@ -120,5 +122,39 @@ public class GrabHandPose : MonoBehaviour
             StartCoroutine(SetHandDataRoutine(handData, startingHandPosition, startingHandRotation, startingFingerRotations, finalHandPosition, finalHandRotation, finalFingerRotations));
 
         }
+    }
+
+#if UNITY_EDITOR
+
+    [MenuItem("Tool/R Mirror Selected Right Grab Pose")]
+    public static void MirrorRightPose()
+    {
+        GrabHandPose handPose = Selection.activeGameObject.GetComponent<GrabHandPose>();
+        if (handPose != null)
+            handPose.MirrorPose(handPose.leftHandPose, handPose.righHandPose);
+    }
+    [MenuItem("Tool/L Mirror Selected Left Grab Pose")]
+    public static void MirrorLefttPose()
+    {
+        GrabHandPose handPose = Selection.activeGameObject.GetComponent<GrabHandPose>();
+        if (handPose != null)
+            handPose.MirrorPose(handPose.righHandPose, handPose.leftHandPose);
+    }
+#endif
+    public void MirrorPose(HandPoseControl poseToMirror, HandPoseControl poseUsedToMirror)
+    {
+        Vector3 mirroredPosition = poseUsedToMirror.root.localPosition;
+        mirroredPosition.x *= -1;
+        Quaternion mirroredRotation = poseUsedToMirror.root.localRotation;
+        mirroredRotation.y *= -1;
+        mirroredRotation.z *= -1;
+
+        poseToMirror.root.localPosition = mirroredPosition;
+        poseToMirror.root.localRotation = mirroredRotation;
+        for (int i = 0; i < poseUsedToMirror.fingerBones.Length; i++)
+        {
+            poseToMirror.fingerBones[i].localRotation = poseUsedToMirror.fingerBones[i].localRotation;
+        }
+
     }
 }
