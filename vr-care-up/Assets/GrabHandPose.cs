@@ -6,14 +6,15 @@ using UnityEngine.XR.Interaction.Toolkit ;
 
 public class GrabHandPose : MonoBehaviour
 {
+    public float poseTransitionDuration = 0.2f;
     public HandPoseControl righHandPose;
     private Vector3 startingHandPosition;
     private Vector3 finalHandPosition;
     private Quaternion startingHandRotation;
     private Quaternion finalHandRotation;
 
-    private Quaternion[] startingFingerRotation;
-    private Quaternion[] finalFingerRotation;
+    private Quaternion[] startingFingerRotations;
+    private Quaternion[] finalFingerRotations;
 
 
     private void Start()
@@ -33,7 +34,7 @@ public class GrabHandPose : MonoBehaviour
             HandPoseControl handData = arg.interactorObject.transform.GetComponentInChildren<HandPoseControl>();
             handData.animator.enabled = false;
             SetHandDataValues(handData, righHandPose);
-            SetHandData(handData, finalHandPosition, finalHandRotation, finalFingerRotation);
+            StartCoroutine(SetHandDataRoutine(handData, finalHandPosition, finalHandRotation, finalFingerRotations, startingHandPosition, startingHandRotation, startingFingerRotations));
 
         }
 
@@ -54,13 +55,13 @@ public class GrabHandPose : MonoBehaviour
         startingHandRotation = h1.root.localRotation;
         finalHandRotation = h2.root.localRotation;
 
-        startingFingerRotation = new Quaternion[h1.fingerBones.Length];
-        finalFingerRotation = new Quaternion[h1.fingerBones.Length];
+        startingFingerRotations = new Quaternion[h1.fingerBones.Length];
+        finalFingerRotations = new Quaternion[h1.fingerBones.Length];
 
         for (int i = 0; i < h1.fingerBones.Length; i++)
         {
-            startingFingerRotation[i] = h1.fingerBones[i].localRotation;
-            finalFingerRotation[i] = h2.fingerBones[i].localRotation;
+            startingFingerRotations[i] = h1.fingerBones[i].localRotation;
+            finalFingerRotations[i] = h2.fingerBones[i].localRotation;
         }
     }
 
@@ -76,7 +77,26 @@ public class GrabHandPose : MonoBehaviour
         }
     }
 
+    public IEnumerator SetHandDataRoutine(HandPoseControl h, Vector3 newPosition, Quaternion newRotation, Quaternion[] newBonesRotation, 
+        Vector3 startingPosition, Quaternion startingRotation, Quaternion[] startingBonesRotation)
+    {
+        float timer = 0;
+        while(timer < poseTransitionDuration)
+        {
+            Vector3 p = Vector3.Lerp(startingPosition, newPosition, timer / poseTransitionDuration);
+            Quaternion r = Quaternion.Lerp(startingRotation, newRotation, timer / poseTransitionDuration);
 
+            h.root.localPosition = p;
+            h.root.localRotation = r;
+            for (int i = 0; i < newBonesRotation.Length; i++)
+            {
+                h.fingerBones[i].localRotation = Quaternion.Lerp(startingBonesRotation[i], newBonesRotation[i], timer / poseTransitionDuration);
+            }
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+    }
 
     public void UnSetPose(BaseInteractionEventArgs arg)
     {
@@ -84,7 +104,7 @@ public class GrabHandPose : MonoBehaviour
         {
             HandPoseControl handData = arg.interactorObject.transform.GetComponentInChildren<HandPoseControl>();
             handData.animator.enabled = true;
-            SetHandData(handData, startingHandPosition, startingHandRotation, startingFingerRotation);
+            StartCoroutine(SetHandDataRoutine(handData, startingHandPosition, startingHandRotation, startingFingerRotations, finalHandPosition, finalHandRotation, finalFingerRotations));
 
         }
     }
