@@ -35,7 +35,6 @@ public class GrabHandPose : MonoBehaviour
 
     public void SetupPose(BaseInteractionEventArgs arg)
     {
-        Debug.Log(arg.interactorObject.transform.gameObject.name);
         if (arg.interactorObject is XRDirectInteractor)
         {
 
@@ -57,15 +56,12 @@ public class GrabHandPose : MonoBehaviour
 
     public void SetHandDataValues(HandPoseControl h1, HandPoseControl h2)
     {
-        //Debug.Log(h1.transform.parent.name);
-        //Debug.Log(h2.transform.parent.name);
-
         startingHandPosition = h1.root.localPosition;
         finalHandPosition = h2.root.localPosition;
-        finalHandPosition.x *= h2.root.transform.parent.localScale.x;
-        finalHandPosition.y *= h2.root.transform.parent.localScale.y;
-        finalHandPosition.z *= h2.root.transform.parent.localScale.z;
-
+        Vector3 parentOffset = h1.GetParentOffset();
+        finalHandPosition.x = (finalHandPosition.x * h2.root.transform.parent.localScale.x) - parentOffset.x;
+        finalHandPosition.y = (finalHandPosition.y * h2.root.transform.parent.localScale.y) - parentOffset.y;
+        finalHandPosition.z = (finalHandPosition.z * h2.root.transform.parent.localScale.z) - parentOffset.z;
 
         startingHandRotation = h1.root.localRotation;
         finalHandRotation = h2.root.localRotation;
@@ -82,8 +78,6 @@ public class GrabHandPose : MonoBehaviour
 
     public void SetHandData(HandPoseControl h, Vector3 newPosition, Quaternion newRotation, Quaternion[] newBonesRotation)
     {
-        Debug.Log(h.transform.parent.name);
-
         h.root.localPosition = newPosition;
         h.root.localRotation = newRotation;
         for (int i = 0; i < newBonesRotation.Length; i++)

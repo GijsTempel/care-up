@@ -27,12 +27,12 @@ public class HandPresence : MonoBehaviour
         handName = transform.parent.name.Split(" ")[0];
         foreach (var item in devices)
         {
-            Debug.Log(handName + ":" + item.name + item.characteristics);
+            // Debug.Log(handName + ":" + item.name + item.characteristics);
         }
         if (devices.Count > 0)
         {
             targetDevice = devices[0];
-            Debug.Log(targetDevice.name);
+            // Debug.Log(targetDevice.name);
             GameObject prefab = controllerPrefabs.Find(controller => controller.name == targetDevice.name);
             if (prefab)
             {
