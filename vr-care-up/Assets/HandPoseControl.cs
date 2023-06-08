@@ -12,8 +12,6 @@ public class HandPoseControl : MonoBehaviour
 
     public Vector3 GetParentOffset()
     {
-        Debug.Log(gameObject.name + ":" + transform.parent.parent.localPosition.ToString());
-
         return transform.parent.parent.localPosition;
     }
      
