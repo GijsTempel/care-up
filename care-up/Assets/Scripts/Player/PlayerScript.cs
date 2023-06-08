@@ -29,6 +29,7 @@ public class PlayerScript : MonoBehaviour
     public string itemControlsToInit = "";
 
     public Camera cam;
+    private float defaultFOV = 60f;
     Camera currentExtraCamera;
     GameObject flyHeloper;
 
@@ -507,6 +508,10 @@ public class PlayerScript : MonoBehaviour
 
     public void WalkToGroup_(WalkToGroup group)
     {
+        if (group.playerCameraFOV > 0)
+            cam.fieldOfView = group.playerCameraFOV;
+        else
+            cam.fieldOfView = defaultFOV;
         WalkToGroupAction(currentWalkPosition, group);
         ImmediateWTG = group;
         gameUI.UpdateMovementButtons(group);

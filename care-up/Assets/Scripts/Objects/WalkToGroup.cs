@@ -7,6 +7,7 @@ public class WalkToGroup : MonoBehaviour
 {
     public Vector3 position;
     public Vector3 rotation;
+    public float playerCameraFOV = -1f;
     
     public Vector3 robotPosition;
     public Vector3 robotRotation;

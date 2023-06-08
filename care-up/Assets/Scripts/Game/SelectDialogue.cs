@@ -56,12 +56,6 @@ public class SelectDialogue : MonoBehaviour
     private List<DialogueOption> options = new List<DialogueOption>();
     //private OptionSide currentOption = OptionSide.None;
     private Color currentMaterial;
-
-    private Button first;
-    private Button second;
-    private Button third;
-    private Button fourth;
-
     public List<Button> sqButtons;
     private string text;
     private static CameraMode cameraMode;
@@ -199,6 +193,10 @@ public class SelectDialogue : MonoBehaviour
         }
         else
         {
+            ColorBlock newColorBlock = sqButtons[num].colors;
+            newColorBlock.disabledColor = new Color(1f,0f,0f, 0.4f);
+            sqButtons[num].colors = newColorBlock;
+
             GameObject.FindObjectOfType<ActionManager>().OnSequenceStepAction("");
             GameObject currentHintPanel = GameObject.Find("HintPanel");
 

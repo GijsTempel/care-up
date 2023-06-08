@@ -254,7 +254,7 @@ namespace MBS
             switch ( Application.platform )
             {
                 case RuntimePlatform.IPhonePlayer:
-                //case RuntimePlatform.WebGLPlayer: // we set cookie for webgl aswell
+                case RuntimePlatform.WebGLPlayer:
                     break;
 
                 default:
