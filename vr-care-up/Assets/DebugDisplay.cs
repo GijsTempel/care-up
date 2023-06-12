@@ -9,6 +9,7 @@ public class DebugDisplay : MonoBehaviour
 
 
     public Text display;
+    public string marker = "";
 
     void OnEnable()
     {
@@ -22,6 +23,10 @@ public class DebugDisplay : MonoBehaviour
 
     void HandleLog (string logString, string stackTrace, LogType type)
     {
+        if (marker != ""){
+            if (!logString.Contains(marker))
+                return;
+        }
         if (type == LogType.Log) 
         {
             string[] splitString = logString.Split(char.Parse(":"));
