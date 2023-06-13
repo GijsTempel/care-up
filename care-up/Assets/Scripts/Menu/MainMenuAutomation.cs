@@ -23,9 +23,11 @@ public class MainMenuAutomation : MonoBehaviour
                 sceneGroupPageButtonsVisible += 1;
         }
         if (currentSGPage >= 0 && currentSGPage < sceneGroupPageButtonsVisible)
+        {
             sceneGroupPageButtons[currentSGPage].ButtonClicked();
+        }
         else
-            currentStep = -1;
+            currentStep = 99;
     }
     void SelectCurrentSceneGroup()
     {
@@ -33,7 +35,7 @@ public class MainMenuAutomation : MonoBehaviour
         if (currentSceneGroup >= 0)
             sceneGroupButtons[currentSceneGroup].ButtonClicked();
         else
-            currentStep = -1;
+            currentStep = 999;
     }
 
     void SelectCurrentScene()
@@ -42,7 +44,7 @@ public class MainMenuAutomation : MonoBehaviour
         if (currentSceneButtonID >= 0)
             levelButtons[currentSceneButtonID].OnLevelButtonClick();
         else
-            currentStep = -1;
+            currentStep = 99;
     }
     // Start is called before the first frame update
     void Start()
@@ -52,6 +54,7 @@ public class MainMenuAutomation : MonoBehaviour
         sceneCover.SetActive(mainMenuAutomationData.GetCurrentSGPage() != -1);
         if (mainMenuAutomationData.GetCurrentSGPage() == -1)
             currentStep = -1;
+        Debug.Log(mainMenuAutomationData.GetCurrentSGPage());
     }
 
     void AutomationStep()
@@ -73,6 +76,11 @@ public class MainMenuAutomation : MonoBehaviour
                 break;
         }
         currentStep++;
+        if (currentStep > 4)
+        {
+            sceneCover.SetActive(false);
+            enabled = false;
+        }
         stepTimeout = STEP_TIMEOUT_VALUE;
     }
     private void Update()
