@@ -9,6 +9,28 @@ public class HandPoseData : MonoBehaviour
     public Transform root;
     public Animator animator;
     public Transform[] fingerBones; 
+    public Transform rootBone;
+
+    private Vector3 baseRootBonePosition;
+    private Quaternion baseRootBoneRotation;
+
+    private void Start()
+    {
+        baseRootBonePosition = rootBone.localPosition;
+        baseRootBoneRotation = rootBone.localRotation;
+    }
+
+    public Vector3 GetBaseRootBonePosition()
+    {
+        return baseRootBonePosition;
+    }
+
+    public Quaternion GetBaseRootBoneRotation()
+    {
+        return baseRootBoneRotation;
+
+    }
+    
 
     public Vector3 GetParentOffset()
     {
