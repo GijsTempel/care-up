@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HandPoseControl : MonoBehaviour
+public class HandPoseData : MonoBehaviour
 {
     public enum HandModelType {  Left, Right}
     public HandModelType handType;

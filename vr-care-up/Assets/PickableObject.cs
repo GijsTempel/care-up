@@ -22,8 +22,8 @@ public class PickableObject : MonoBehaviour
             return;
         if (arg.interactorObject is XRDirectInteractor)
         {
-            HandPoseControl handData = arg.interactorObject.transform.GetComponentInChildren<HandPoseControl>();
-            bool isRightHand = (handData.handType == HandPoseControl.HandModelType.Right);
+            HandPoseData handData = arg.interactorObject.transform.GetComponentInChildren<HandPoseData>();
+            bool isRightHand = (handData.handType == HandPoseData.HandModelType.Right);
             player.SetObjectInHand(gameObject, isRightHand);
         }
     }
@@ -34,8 +34,8 @@ public class PickableObject : MonoBehaviour
             return;
         if (arg.interactorObject is XRDirectInteractor)
         {
-            HandPoseControl handData = arg.interactorObject.transform.GetComponentInChildren<HandPoseControl>();
-            bool isRightHand = (handData.handType == HandPoseControl.HandModelType.Right);
+            HandPoseData handData = arg.interactorObject.transform.GetComponentInChildren<HandPoseData>();
+            bool isRightHand = (handData.handType == HandPoseData.HandModelType.Right);
             player.SetObjectInHand(gameObject, isRightHand, false);
         }
     }

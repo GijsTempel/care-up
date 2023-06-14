@@ -10,8 +10,8 @@ public class GrabHandPose : MonoBehaviour
 {
     
     public float poseTransitionDuration = 0.2f;
-    public HandPoseControl righHandPose;
-    public HandPoseControl leftHandPose;
+    public HandPoseData righHandPose;
+    public HandPoseData leftHandPose;
     private Vector3 startingHandPosition;
     private Vector3 finalHandPosition;
     private Quaternion startingHandRotation;
@@ -30,7 +30,6 @@ public class GrabHandPose : MonoBehaviour
             righHandPose.gameObject.SetActive(false);
         if (leftHandPose != null)
             leftHandPose.gameObject.SetActive(false);
-
     }
 
     public void SetupPose(BaseInteractionEventArgs arg)
@@ -38,9 +37,9 @@ public class GrabHandPose : MonoBehaviour
         if (arg.interactorObject is XRDirectInteractor)
         {
 
-            HandPoseControl handData = arg.interactorObject.transform.GetComponentInChildren<HandPoseControl>();
+            HandPoseData handData = arg.interactorObject.transform.GetComponentInChildren<HandPoseData>();
             handData.animator.enabled = false;
-            if (handData.handType == HandPoseControl.HandModelType.Right)
+            if (handData.handType == HandPoseData.HandModelType.Right)
             {
                 SetHandDataValues(handData, righHandPose);
             }
@@ -54,7 +53,7 @@ public class GrabHandPose : MonoBehaviour
 
     }
 
-    public void SetHandDataValues(HandPoseControl h1, HandPoseControl h2)
+    public void SetHandDataValues(HandPoseData h1, HandPoseData h2)
     {
         startingHandPosition = h1.root.localPosition;
         finalHandPosition = h2.root.localPosition;
@@ -76,7 +75,7 @@ public class GrabHandPose : MonoBehaviour
         }
     }
 
-    public void SetHandData(HandPoseControl h, Vector3 newPosition, Quaternion newRotation, Quaternion[] newBonesRotation)
+    public void SetHandData(HandPoseData h, Vector3 newPosition, Quaternion newRotation, Quaternion[] newBonesRotation)
     {
         h.root.localPosition = newPosition;
         h.root.localRotation = newRotation;
@@ -86,7 +85,7 @@ public class GrabHandPose : MonoBehaviour
         }
     }
 
-    public IEnumerator SetHandDataRoutine(HandPoseControl h, Vector3 newPosition, Quaternion newRotation, Quaternion[] newBonesRotation, 
+    public IEnumerator SetHandDataRoutine(HandPoseData h, Vector3 newPosition, Quaternion newRotation, Quaternion[] newBonesRotation, 
         Vector3 startingPosition, Quaternion startingRotation, Quaternion[] startingBonesRotation)
     {
         float timer = 0;
@@ -111,7 +110,7 @@ public class GrabHandPose : MonoBehaviour
     {
         if (arg.interactorObject is XRDirectInteractor)
         {
-            HandPoseControl handData = arg.interactorObject.transform.GetComponentInChildren<HandPoseControl>();
+            HandPoseData handData = arg.interactorObject.transform.GetComponentInChildren<HandPoseData>();
             handData.animator.enabled = true;
             StartCoroutine(SetHandDataRoutine(handData, startingHandPosition, startingHandRotation, startingFingerRotations, finalHandPosition, finalHandRotation, finalFingerRotations));
 
@@ -135,7 +134,7 @@ public class GrabHandPose : MonoBehaviour
             handPose.MirrorPose(handPose.righHandPose, handPose.leftHandPose);
     }
 #endif
-    public void MirrorPose(HandPoseControl poseToMirror, HandPoseControl poseUsedToMirror)
+    public void MirrorPose(HandPoseData poseToMirror, HandPoseData poseUsedToMirror)
     {
         Vector3 mirroredPosition = poseUsedToMirror.root.localPosition;
         mirroredPosition.x *= -1;

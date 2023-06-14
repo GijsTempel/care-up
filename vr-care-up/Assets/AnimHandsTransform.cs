@@ -5,13 +5,14 @@ using UnityEngine;
 public class AnimHandsTransform : MonoBehaviour
 {
     public Transform targetVRCamera;
-    // Start is called before the first frame update
+    public GameObject RightHandRootBone;
+    public GameObject LeftHandRootBone;
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         float x = targetVRCamera.position.x;
