@@ -17,6 +17,9 @@ public class HandPoseControl : MonoBehaviour
     private Quaternion finalHandRotation;
     private Quaternion[] startingFingerRotations;
     private Quaternion[] finalFingerRotations;
+
+    private Vector3 finalRootBonePosition;
+    private Quaternion finalRootBoneRotation;
     private float handDataRoutineTime = float.PositiveInfinity;
     private void Start()
     {
@@ -25,29 +28,79 @@ public class HandPoseControl : MonoBehaviour
 
     void Update()
     {
-        if (handPoseMode != HandPoseMode.Default)
+        if (handPoseMode != HandPoseMode.Default && handDataRoutineTime < float.PositiveInfinity)
         {
+            if (handPoseMode == HandPoseMode.CopyAnimIn)
+                UpdateCopyAnimationData();
             SetHandDataRoutine();
         }
-        if (copyAnimation && animHandsTransform != null)
+        if (copyAnimation)
         {
-            GameObject animHandRootBone = animHandsTransform.rightHandRootBone;
-            Transform[] targetFingers = animHandsTransform.rightFingerBones;
-            if (handPose.handType == HandPoseData.HandModelType.Left)
+            if (handPoseMode != HandPoseMode.CopyAnimIn)
             {
-                animHandRootBone = animHandsTransform.leftHandRootBone;
-                targetFingers = animHandsTransform.leftFingerBones;
+                SetupCopyAnimationData();
             }
-            if (animHandRootBone != null)
+            else
             {
-                handPose.rootBone.position = animHandRootBone.transform.position;
-                handPose.rootBone.rotation = animHandRootBone.transform.rotation;
-                for (int i = 0; i < handPose.fingerBones.Length; i++)
+                handPoseMode = HandPoseMode.CopyAnimOut;
+                handPose.animator.enabled = true;
+                handDataRoutineTime = 0f;
+
+            }
+                copyAnimation = false;
+        }
+    }
+
+    public void SetupCopyAnimationData()
+    {
+        handPose.animator.enabled = false;
+        handPoseMode = HandPoseMode.CopyAnimIn;
+        handDataRoutineTime = 0f;
+        poseTransitionDuration = 0.5f;
+
+        startingHandPosition = handPose.root.localPosition;
+
+        startingHandRotation = handPose.root.localRotation;
+        finalHandRotation = startingHandRotation;
+
+        startingFingerRotations = new Quaternion[handPose.fingerBones.Length];
+        finalFingerRotations = new Quaternion[handPose.fingerBones.Length];
+
+        for (int i = 0; i < handPose.fingerBones.Length; i++)
+        {
+            startingFingerRotations[i] = handPose.fingerBones[i].localRotation;
+        }
+    }
+
+    public void UpdateCopyAnimationData()
+    {
+        
+        GameObject animHandRootBone = animHandsTransform.rightHandRootBone;
+        Transform[] targetFingers = animHandsTransform.rightFingerBones;
+        if (handPose.handType == HandPoseData.HandModelType.Left)
+        {
+            animHandRootBone = animHandsTransform.leftHandRootBone;
+            targetFingers = animHandsTransform.leftFingerBones;
+        }
+        if (animHandRootBone != null)
+        {
+            finalRootBonePosition = animHandRootBone.transform.position;;
+            finalRootBoneRotation = animHandRootBone.transform.rotation;
+            finalHandPosition = startingHandPosition;
+            startingHandRotation = handPose.root.localRotation;
+            finalHandRotation = startingHandRotation;
+            for (int i = 0; i < handPose.fingerBones.Length; i++)
+            {
+                Quaternion rot = targetFingers[i].localRotation;
+                if (handPose.handType == HandPoseData.HandModelType.Left)
                 {
-                    handPose.fingerBones[i].localRotation = targetFingers[i].localRotation;
+                    rot.y *= -1;
+                    rot.z *= -1;
                 }
+                finalFingerRotations[i] = rot;
             }
         }
+
     }
 
     public void SetupPose(HandPoseData newHandPoseData, float newPoseTransitionDuration = 0.2f)
@@ -56,6 +109,7 @@ public class HandPoseControl : MonoBehaviour
         handPose.animator.enabled = false;
         SetHandDataValues(newHandPoseData);
         handDataRoutineTime = 0f;
+        
         handPoseMode = HandPoseMode.TransitIn;
     }
 
@@ -90,27 +144,42 @@ public class HandPoseControl : MonoBehaviour
 
     private void SetHandDataRoutine()
     {
-        Debug.Log("@" + name + "_ttime:" + (handDataRoutineTime / poseTransitionDuration).ToString());
-
-        Vector3 p = Vector3.Lerp(startingHandPosition, finalHandPosition, handDataRoutineTime / poseTransitionDuration);
-        Quaternion r = Quaternion.Lerp(startingHandRotation, finalHandRotation, handDataRoutineTime / poseTransitionDuration);
-        if (handPoseMode == HandPoseMode.TransitOut)
+        float lerpValue = handDataRoutineTime / poseTransitionDuration;
+        
+        Vector3 p = Vector3.Lerp(startingHandPosition, finalHandPosition, lerpValue);
+        Quaternion r = Quaternion.Lerp(startingHandRotation, finalHandRotation, lerpValue);
+        if (handPoseMode == HandPoseMode.TransitOut || handPoseMode == HandPoseMode.CopyAnimOut)
         {
-            p = Vector3.Lerp(finalHandPosition, startingHandPosition, handDataRoutineTime / poseTransitionDuration);
-            r = Quaternion.Lerp(finalHandRotation, startingHandRotation, handDataRoutineTime / poseTransitionDuration);
+            p = Vector3.Lerp(finalHandPosition, startingHandPosition, lerpValue);
+            r = Quaternion.Lerp(finalHandRotation, startingHandRotation, lerpValue);
         }
 
         handPose.root.localPosition = p;
         handPose.root.localRotation = r;
         for (int i = 0; i < finalFingerRotations.Length; i++)
         {
-            if (handPoseMode == HandPoseMode.TransitIn)
-                handPose.fingerBones[i].localRotation = Quaternion.Lerp(startingFingerRotations[i], finalFingerRotations[i], handDataRoutineTime / poseTransitionDuration);
-            else
-                handPose.fingerBones[i].localRotation = Quaternion.Lerp(finalFingerRotations[i], startingFingerRotations[i],  handDataRoutineTime / poseTransitionDuration);
+            if (handPoseMode == HandPoseMode.TransitIn || handPoseMode == HandPoseMode.CopyAnimIn)
+                handPose.fingerBones[i].localRotation = Quaternion.Lerp(startingFingerRotations[i], finalFingerRotations[i], lerpValue);
+            if (handPoseMode == HandPoseMode.TransitOut || handPoseMode == HandPoseMode.CopyAnimOut)
+                handPose.fingerBones[i].localRotation = Quaternion.Lerp(finalFingerRotations[i], startingFingerRotations[i],  lerpValue);
         }
+        if (handPoseMode == HandPoseMode.CopyAnimIn)
+        {
+            handPose.rootBone.position = Vector3.Lerp(handPose.rootBone.position, finalRootBonePosition, lerpValue);
+            handPose.rootBone.rotation = Quaternion.Lerp(handPose.rootBone.rotation, finalRootBoneRotation, lerpValue);
+        }
+        if (handPoseMode == HandPoseMode.CopyAnimOut)
+        {
+            handPose.rootBone.localPosition = Vector3.Lerp(handPose.rootBone.localPosition, handPose.GetBaseRootBonePosition(), lerpValue);
+            handPose.rootBone.localRotation = Quaternion.Lerp(handPose.rootBone.localRotation, handPose.GetBaseRootBoneRotation(), lerpValue);
+        }
+
+
         handDataRoutineTime += Time.deltaTime;
-        if (handDataRoutineTime > poseTransitionDuration)
-            handPoseMode = HandPoseMode.Default;
+        if (handDataRoutineTime > poseTransitionDuration && 
+            (handPoseMode == HandPoseMode.TransitIn || handPoseMode == HandPoseMode.TransitOut || handPoseMode == HandPoseMode.CopyAnimOut))
+            {
+                handPoseMode = HandPoseMode.Default;
+            }
 }
 }
