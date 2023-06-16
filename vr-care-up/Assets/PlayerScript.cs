@@ -4,10 +4,32 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
+    public AnimHandsTransform animHandsTransform;
+    private Animator animHandsAnimator;
     public string currentWTGName = "";
     private GameObject leftHandObject;
     private GameObject rightHandObject;
+    private HandPoseControl leftHandPoseControl;
+    private HandPoseControl rightHandPoseControl;
+
     
+    public void AddHandPoseControl(HandPoseControl control, bool isRightHand)
+    {
+        if (isRightHand)
+            rightHandPoseControl = control;
+        else
+            leftHandPoseControl = control;
+        string sideName = "Left:";
+        if (isRightHand)
+            sideName = "Right:";
+        Debug.Log("@HandModel_" + sideName + control.gameObject.name);
+    }
+
+    private void Start()
+    {
+        animHandsAnimator = animHandsTransform.transform.GetComponentInChildren<Animator>();
+    }
+
     public void SetObjectInHand(GameObject obj, bool isRightHand = true, bool isPickUp = true)
     {
         string objName = "";

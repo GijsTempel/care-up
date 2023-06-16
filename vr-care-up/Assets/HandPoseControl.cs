@@ -74,6 +74,10 @@ public class HandPoseControl : MonoBehaviour
 
     public void UpdateCopyAnimationData()
     {
+        if (animHandsTransform == null)
+        {
+            return;
+        }
         
         GameObject animHandRootBone = animHandsTransform.rightHandRootBone;
         Transform[] targetFingers = animHandsTransform.rightFingerBones;
@@ -100,7 +104,6 @@ public class HandPoseControl : MonoBehaviour
                 finalFingerRotations[i] = rot;
             }
         }
-
     }
 
     public void SetupPose(HandPoseData newHandPoseData, float newPoseTransitionDuration = 0.2f)
@@ -181,5 +184,5 @@ public class HandPoseControl : MonoBehaviour
             {
                 handPoseMode = HandPoseMode.Default;
             }
-}
+    }
 }

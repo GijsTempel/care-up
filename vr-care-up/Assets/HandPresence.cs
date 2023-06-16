@@ -13,6 +13,7 @@ public class HandPresence : MonoBehaviour
     private InputDevice targetDevice;
     private GameObject spawnController;
     private GameObject spawnHandModel;
+    private PlayerScript player;
     private string handName = "Hand";
     // Start is called before the first frame update
     void Start()
@@ -32,7 +33,6 @@ public class HandPresence : MonoBehaviour
         if (devices.Count > 0)
         {
             targetDevice = devices[0];
-            // Debug.Log(targetDevice.name);
             GameObject prefab = controllerPrefabs.Find(controller => controller.name == targetDevice.name);
             if (prefab)
             {
@@ -41,9 +41,18 @@ public class HandPresence : MonoBehaviour
             spawnHandModel = Instantiate(handModelPrefab, transform);
             handAnimator = spawnHandModel.transform.Find("Hand").GetComponent<Animator>();
         }
+        if (spawnHandModel != null)
+        {
+            player = GameObject.FindObjectOfType<PlayerScript>();
+            Debug.Log(spawnHandModel.name);
+            if (player != null)
+            {
+                bool isRightHand = spawnHandModel.GetComponent<HandPoseData>().handType == HandPoseData.HandModelType.Right;
+                player.AddHandPoseControl(spawnHandModel.GetComponent<HandPoseControl>(), isRightHand);
+            }
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!targetDevice.isValid)
@@ -57,22 +66,8 @@ public class HandPresence : MonoBehaviour
 
             if (targetDevice.TryGetFeatureValue(CommonUsages.grip, out float gripValue))
                 handAnimator.SetFloat("Grip", gripValue);
-
-            // targetDevice.TryGetFeatureValue(CommonUsages.primaryButton, out bool primaryButtonValue);
-            // Debug.Log(handName + " PrimPress:" + primaryButtonValue.ToString());
-            // targetDevice.TryGetFeatureValue(CommonUsages.trigger, out float triggerValue);
-            // if (triggerValue > 0.1f)
-            // {
-            //     Debug.Log(handName + " triggerValue:" + triggerValue.ToString());
-            // }
-            // targetDevice.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 primary2DAxisValue);
-            // if (primary2DAxisValue != Vector2.zero)
-            // {
-            //     Debug.Log(handName + " primary2DAxisValue:" + primary2DAxisValue.ToString());
-            // }
             spawnController.SetActive(showController);
             spawnHandModel.SetActive(!showController);
-
         }
     }
 }

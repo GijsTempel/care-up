@@ -9,7 +9,8 @@ public class AnimHandsTransform : MonoBehaviour
     public GameObject leftHandRootBone;
     public Transform[] rightFingerBones; 
     public Transform[] leftFingerBones; 
-
+    
+    public Animator animator;
     void Start()
     {
         
