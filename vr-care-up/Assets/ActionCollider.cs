@@ -7,6 +7,7 @@ public class ActionCollider : MonoBehaviour
     public ActionTrigger.TriggerHand triggerHand;
     public ActionTrigger.TriggerHandAction triggerHandAction;
     List<GameObject> handsInArea = new List<GameObject>();
+    private ActionTrigger actionTrigger;
 
     void AddHandToArea(GameObject hand)
     {
@@ -16,6 +17,11 @@ public class ActionCollider : MonoBehaviour
         }
     }
 
+    public bool CheckConformity()
+    {
+        return true;
+    }
+
     void RemoveHandFromArea(GameObject hand)
     {
         handsInArea.Remove(hand);
@@ -23,6 +29,7 @@ public class ActionCollider : MonoBehaviour
 
     void Start()
     {
+        actionTrigger = transform.parent.GetComponent<ActionTrigger>();
 
     }
 
@@ -35,6 +42,7 @@ public class ActionCollider : MonoBehaviour
     {
         AddHandToArea(collision.gameObject);
         DebugTrigger();
+        actionTrigger.AttemptTrigger();
     }
 
     private void OnTriggerExit(Collider collision)
