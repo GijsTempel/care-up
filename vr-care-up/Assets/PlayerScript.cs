@@ -23,6 +23,14 @@ public class PlayerScript : MonoBehaviour
         animHandsAnimator.SetTrigger(triggerName);
 
     }
+
+    public void ExitCopyAnimationState()
+    {
+    if (leftHandPoseControl == null || rightHandPoseControl == null)
+            return;
+        leftHandPoseControl.ExitCopyAnimationState();
+        rightHandPoseControl.ExitCopyAnimationState();      
+    }
     public void AddHandPoseControl(HandPoseControl control, bool isRightHand)
     {
         if (isRightHand)

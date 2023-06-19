@@ -17,38 +17,47 @@ public class HandPoseControl : MonoBehaviour
     private Quaternion finalHandRotation;
     private Quaternion[] startingFingerRotations;
     private Quaternion[] finalFingerRotations;
-
+    private PlayerScript player;
     private Vector3 finalRootBonePosition;
     private Quaternion finalRootBoneRotation;
     private float handDataRoutineTime = float.PositiveInfinity;
     private void Start()
     {
+        player = GameObject.FindObjectOfType<PlayerScript>();
         handPose = GetComponent<HandPoseData>();
     }
 
     void Update()
     {
+        // Debug.Log("@" + name + "_timer:" + handDataRoutineTime.ToString());
+
+        // Debug.Log("@" + name + "_handMode:" + handPoseMode.ToString());
         if (handPoseMode != HandPoseMode.Default && handDataRoutineTime < float.PositiveInfinity)
         {
             if (handPoseMode == HandPoseMode.CopyAnimIn)
                 UpdateCopyAnimationData();
             SetHandDataRoutine();
         }
-        if (copyAnimation)
-        {
-            if (handPoseMode != HandPoseMode.CopyAnimIn)
-            {
-                SetupCopyAnimationData();
-            }
-            else
-            {
-                handPoseMode = HandPoseMode.CopyAnimOut;
-                handPose.animator.enabled = true;
-                handDataRoutineTime = 0f;
 
-            }
-                copyAnimation = false;
-        }
+        // if (copyAnimation)
+        // {
+        //     if (handPoseMode != HandPoseMode.CopyAnimIn)
+        //     {
+        //         SetupCopyAnimationData();
+        //     }
+        //     else
+        //     {
+        //         ExitCopyAnimationState();
+        //     }
+        //         copyAnimation = false;
+        // }
+    }
+
+    public void ExitCopyAnimationState()
+    {
+        handPoseMode = HandPoseMode.CopyAnimOut;
+        handPose.animator.enabled = true;
+        handDataRoutineTime = 0f;
     }
 
     public void SetupCopyAnimationData()
@@ -78,7 +87,7 @@ public class HandPoseControl : MonoBehaviour
         {
             return;
         }
-        
+
         GameObject animHandRootBone = animHandsTransform.rightHandRootBone;
         Transform[] targetFingers = animHandsTransform.rightFingerBones;
         if (handPose.handType == HandPoseData.HandModelType.Left)
@@ -88,6 +97,8 @@ public class HandPoseControl : MonoBehaviour
         }
         if (animHandRootBone != null)
         {
+
+            Debug.Log("@" + name + "_rand:" + Random.RandomRange(0, 9999).ToString());
             finalRootBonePosition = animHandRootBone.transform.position;;
             finalRootBoneRotation = animHandRootBone.transform.rotation;
             finalHandPosition = startingHandPosition;

@@ -49,6 +49,7 @@ public class HandPresence : MonoBehaviour
             {
                 bool isRightHand = spawnHandModel.GetComponent<HandPoseData>().handType == HandPoseData.HandModelType.Right;
                 player.AddHandPoseControl(spawnHandModel.GetComponent<HandPoseControl>(), isRightHand);
+                spawnHandModel.GetComponent<HandPoseControl>().animHandsTransform = player.animHandsTransform;
             }
         }
     }
