@@ -8,8 +8,9 @@ public class AnimHandsTransform : MonoBehaviour
     public GameObject rightHandRootBone;
     public GameObject leftHandRootBone;
     public Transform[] rightFingerBones; 
-    public Transform[] leftFingerBones; 
-    
+    public Transform[] leftFingerBones;
+    public bool fallowVRCamera = true;
+
     public Animator animator;
     void Start()
     {
@@ -18,7 +19,7 @@ public class AnimHandsTransform : MonoBehaviour
 
     void Update()
     {
-        if (targetVRCamera != null)
+        if (targetVRCamera != null && fallowVRCamera)
         {
             float x = targetVRCamera.position.x;
             float y = targetVRCamera.position.y;

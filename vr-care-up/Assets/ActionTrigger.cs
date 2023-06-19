@@ -36,7 +36,9 @@ public class ActionTrigger : MonoBehaviour
             }
             if (isActionConfirmed)
             {
-                player.TriggerAction(triggerName);
+                GameObject target = transform.Find("CinematicTarget").gameObject;
+                
+                player.TriggerAction(triggerName, target);
             }
         }
     }

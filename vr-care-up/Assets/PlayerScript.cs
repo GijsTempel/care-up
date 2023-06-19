@@ -11,12 +11,34 @@ public class PlayerScript : MonoBehaviour
     private GameObject rightHandObject;
     private HandPoseControl leftHandPoseControl;
     private HandPoseControl rightHandPoseControl;
+    private Transform mainCameraTransform;
 
-    
-    public void TriggerAction(string triggerName)
+
+    public void TriggerAction(string triggerName, GameObject cinematicTarget = null)
     {
         if (leftHandPoseControl == null || rightHandPoseControl == null)
             return;
+        if (leftHandPoseControl.handPoseMode != HandPoseControl.HandPoseMode.Default ||
+            rightHandPoseControl.handPoseMode != HandPoseControl.HandPoseMode.Default )
+            return;
+        if (cinematicTarget != null)
+        {
+            Vector3 zVec = new Vector3(1f, 0f, 1f);
+            animHandsTransform.fallowVRCamera = false;
+            animHandsTransform.transform.position = cinematicTarget.transform.position;
+            animHandsTransform.transform.rotation = cinematicTarget.transform.rotation;
+            Vector3 cinPos = cinematicTarget.transform.position;
+            Vector3 camPos = mainCameraTransform.position;
+            Vector3 pos = transform.position;
+            Vector3 newPos = cinPos - (camPos - pos);
+            newPos.y = transform.position.y;
+            transform.position = newPos;
+
+            Vector3 cinForward = cinematicTarget.transform.forward;
+            Vector3 camForward = Vector3.Scale(mainCameraTransform.forward, zVec).normalized;
+            float rotAngle = Vector3.Angle(cinForward, camForward);
+            transform.RotateAround(transform.position, Vector3.up, rotAngle);
+        }
         leftHandPoseControl.SetupCopyAnimationData();
         rightHandPoseControl.SetupCopyAnimationData();
         animHandsAnimator = animHandsTransform.animator;
@@ -29,7 +51,9 @@ public class PlayerScript : MonoBehaviour
     if (leftHandPoseControl == null || rightHandPoseControl == null)
             return;
         leftHandPoseControl.ExitCopyAnimationState();
-        rightHandPoseControl.ExitCopyAnimationState();      
+        rightHandPoseControl.ExitCopyAnimationState();     
+        animHandsTransform.fallowVRCamera = true;
+
     }
     public void AddHandPoseControl(HandPoseControl control, bool isRightHand)
     {
@@ -45,6 +69,7 @@ public class PlayerScript : MonoBehaviour
 
     private void Start()
     {
+        mainCameraTransform = transform.Find("Camera Offset/Main Camera");
         animHandsAnimator = animHandsTransform.transform.GetComponentInChildren<Animator>();
     }
 
@@ -87,6 +112,14 @@ public class PlayerScript : MonoBehaviour
 
             Debug.Log("@LeftHandObj:" + objName);
         }
+    }
+    private void Update()
+    {
+        Debug.Log("@" + name + "_pos:" + transform.position.ToString());
+        Debug.Log("@" + name + "_rot:" + transform.rotation.eulerAngles.ToString());
+        Debug.Log("@Camera" + "_Lpos:" + transform.Find("Camera Offset/Main Camera").localPosition.ToString());
+        Debug.Log("@Camera" + "_Lrot:" + transform.Find("Camera Offset/Main Camera").localRotation.eulerAngles.ToString());
+
     }
 
     public void UpdateWalkToGroup(string WTGName)

@@ -6,7 +6,7 @@ public class HandPoseControl : MonoBehaviour
 {
     public enum HandPoseMode { Default, TransitIn, TransitOut, CopyAnimIn, CopyAnimOut}
 
-    private HandPoseMode handPoseMode = HandPoseMode.Default;
+    public HandPoseMode handPoseMode = HandPoseMode.Default;
     public bool copyAnimation = false;
     public AnimHandsTransform animHandsTransform;
     private float poseTransitionDuration = 0.2f;
