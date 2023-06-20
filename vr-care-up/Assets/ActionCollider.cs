@@ -43,9 +43,9 @@ public class ActionCollider : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (triggerHand == ActionTrigger.TriggerHand.Left && collision.name != "LeftActionTriggerCollider")
+        if (triggerHand == ActionTrigger.TriggerHand.Left && collision.gameObject.tag != "LeftHand")
             return;
-        if (triggerHand == ActionTrigger.TriggerHand.Right && collision.name != "RightActionTriggerCollider")
+        if (triggerHand == ActionTrigger.TriggerHand.Right && collision.gameObject.tag != "RightHand")
             return;
         AddHandToArea(collision.gameObject);
         DebugTrigger();
