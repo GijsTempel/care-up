@@ -62,7 +62,8 @@ public class HandPresence : MonoBehaviour
         Debug.Log("@" + name + "tAction:" + triggerAction.ToString());
         foreach(ActionTrigger a in GameObject.FindObjectsOfType<ActionTrigger>())
         {
-
+            a.ReceveTriggerAction(handModelPrefab.GetComponent<HandPoseData>().handType ==
+                HandPoseData.HandModelType.Left, triggerAction);
         }
     }
 

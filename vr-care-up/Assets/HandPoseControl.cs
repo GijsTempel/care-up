@@ -98,7 +98,7 @@ public class HandPoseControl : MonoBehaviour
         if (animHandRootBone != null)
         {
 
-            Debug.Log("@" + name + "_rand:" + Random.RandomRange(0, 9999).ToString());
+            // Debug.Log("@" + name + "_rand:" + Random.RandomRange(0, 9999).ToString());
             finalRootBonePosition = animHandRootBone.transform.position;;
             finalRootBoneRotation = animHandRootBone.transform.rotation;
             finalHandPosition = startingHandPosition;

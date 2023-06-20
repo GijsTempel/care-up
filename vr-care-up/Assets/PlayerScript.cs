@@ -65,7 +65,6 @@ public class PlayerScript : MonoBehaviour
         string sideName = "Left:";
         if (isRightHand)
             sideName = "Right:";
-        Debug.Log("@HandModel_" + sideName + control.gameObject.name);
     }
 
     private void Start()
@@ -94,7 +93,6 @@ public class PlayerScript : MonoBehaviour
                     objName = "";
                 }
             }
-            Debug.Log("@RightHandObj:" + objName);
         }
         else
         {
@@ -110,17 +108,10 @@ public class PlayerScript : MonoBehaviour
                     objName = "";
                 }
             }
-
-            Debug.Log("@LeftHandObj:" + objName);
         }
     }
     private void Update()
     {
-        Debug.Log("@" + name + "_pos:" + transform.position.ToString());
-        Debug.Log("@" + name + "_rot:" + transform.rotation.eulerAngles.ToString());
-        Debug.Log("@Camera" + "_Lpos:" + transform.Find("Camera Offset/Main Camera").localPosition.ToString());
-        Debug.Log("@Camera" + "_Lrot:" + transform.Find("Camera Offset/Main Camera").localRotation.eulerAngles.ToString());
-
     }
 
     public void UpdateWalkToGroup(string WTGName)

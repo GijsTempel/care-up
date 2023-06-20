@@ -25,7 +25,8 @@ public class ActionTrigger : MonoBehaviour
         TriggerHand currentTriggerHand = TriggerHand.Right;
         if (isLeftHand)
             currentTriggerHand = TriggerHand.Left;
-        CheckTriggerConfirmation(currentTriggerHand, tAction);
+        if (CheckTriggerConfirmation(currentTriggerHand, tAction))
+            EmitTrigger();
     }
 
     private bool CheckTriggerConfirmation(TriggerHand currentTriggerHand = TriggerHand.None, TriggerHandAction currentTriggerHandAction = TriggerHandAction.None)
@@ -43,18 +44,20 @@ public class ActionTrigger : MonoBehaviour
         return isActionConfirmed;
     }
 
+    private void EmitTrigger()
+    {
+        GameObject target = transform.Find("CinematicTarget").gameObject;
+        player.TriggerAction(triggerName, target);
+    }
+
     public void AttemptTrigger()
     {
         if (player == null || triggerName == "")
             return;
         
-
-        
         if (CheckTriggerConfirmation())
         {
-            GameObject target = transform.Find("CinematicTarget").gameObject;
-            
-            player.TriggerAction(triggerName, target);
+            EmitTrigger();
         }
     }
   

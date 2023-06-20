@@ -17,13 +17,45 @@ public class ActionCollider : MonoBehaviour
         }
     }
 
-    public bool CheckConformity(ActionTrigger.TriggerHand currentTriggerHand = ActionTrigger.TriggerHand.None,
+    private bool CheckIfActionFromHandInArea(bool isLeftHand)
     {
-        bool confirmed = true;
+        bool actionHandIsInArea = false;
+
+        foreach(GameObject h in handsInArea)
+        {
+            if (isLeftHand && h.tag == "LeftHand")
+            {
+                actionHandIsInArea = true;
+                break;
+            }
+            if (!isLeftHand && h.tag == "RightHand")
+            {
+                actionHandIsInArea = true;
+                break;
+            }
+
+        }
+        return actionHandIsInArea;
+    }
+
+    public bool CheckConformity(ActionTrigger.TriggerHand currentTriggerHand = ActionTrigger.TriggerHand.None,
+            ActionTrigger.TriggerHandAction currentTriggerHandAction = ActionTrigger.TriggerHandAction.None)
+    {
         if (handsInArea.Count == 0)
-            confirmed = false;
-        //if (triggerHandAction != ActionTrigger.TriggerHandAction.None)
-        return confirmed;
+            return false;
+        if (triggerHandAction != ActionTrigger.TriggerHandAction.None)
+        {
+            if (currentTriggerHand == ActionTrigger.TriggerHand.None || 
+                currentTriggerHandAction == ActionTrigger.TriggerHandAction.None)
+                return false;
+            
+            if (currentTriggerHandAction != triggerHandAction)
+                return false;
+            
+            if (!CheckIfActionFromHandInArea(currentTriggerHand == ActionTrigger.TriggerHand.Left))
+                return false;
+        }
+        return true;
     }
 
     void RemoveHandFromArea(GameObject hand)
@@ -34,7 +66,6 @@ public class ActionCollider : MonoBehaviour
     void Start()
     {
         actionTrigger = transform.parent.GetComponent<ActionTrigger>();
-
     }
 
     void Update()
@@ -66,7 +97,7 @@ public class ActionCollider : MonoBehaviour
         {
             ss += h.name + " ";
         }
-        Debug.Log("@" + transform.parent.name + "_detected:" + ss);
+        Debug.Log("@" + name + "_detected:" + ss);
 
     }
 
