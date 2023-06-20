@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ActionTrigger : MonoBehaviour
 {
-    public enum TriggerHand {Any, Left, Right }
+    public enum TriggerHand {None, Any, Left, Right}
     public enum TriggerHandAction {None, Pinch, Grip}
     PlayerScript player;
     public string triggerName = "";
@@ -20,19 +20,29 @@ public class ActionTrigger : MonoBehaviour
         }
     }
 
-    private bool CheckTriggerConfirmation()
+    public void ReceveTriggerAction(bool isLeftHand, TriggerHandAction tAction)
+    {
+        TriggerHand currentTriggerHand = TriggerHand.Right;
+        if (isLeftHand)
+            currentTriggerHand = TriggerHand.Left;
+        CheckTriggerConfirmation(currentTriggerHand, tAction);
+    }
+
+    private bool CheckTriggerConfirmation(TriggerHand currentTriggerHand = TriggerHand.None, TriggerHandAction currentTriggerHandAction = TriggerHandAction.None)
     {
         bool isActionConfirmed = true;
         foreach(ActionCollider c in actionColliders)
         {
-            if (!c.CheckConformity())
+            if (!c.CheckConformity(currentTriggerHand, currentTriggerHandAction))
             {
                 isActionConfirmed = false;
                 break;
             }
+          
         }
         return isActionConfirmed;
     }
+
     public void AttemptTrigger()
     {
         if (player == null || triggerName == "")

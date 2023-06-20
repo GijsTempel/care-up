@@ -17,11 +17,12 @@ public class ActionCollider : MonoBehaviour
         }
     }
 
-    public bool CheckConformity()
+    public bool CheckConformity(ActionTrigger.TriggerHand currentTriggerHand = ActionTrigger.TriggerHand.None,
     {
         bool confirmed = true;
         if (handsInArea.Count == 0)
             confirmed = false;
+        //if (triggerHandAction != ActionTrigger.TriggerHandAction.None)
         return confirmed;
     }
 
