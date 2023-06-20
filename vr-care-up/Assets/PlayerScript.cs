@@ -12,7 +12,7 @@ public class PlayerScript : MonoBehaviour
     private HandPoseControl leftHandPoseControl;
     private HandPoseControl rightHandPoseControl;
     private Transform mainCameraTransform;
-
+    public Animation fadeAnimation;
 
     public void TriggerAction(string triggerName, GameObject cinematicTarget = null)
     {
@@ -23,6 +23,7 @@ public class PlayerScript : MonoBehaviour
             return;
         if (cinematicTarget != null)
         {
+            fadeAnimation.Play();
             Vector3 zVec = new Vector3(1f, 0f, 1f);
             animHandsTransform.fallowVRCamera = false;
             animHandsTransform.transform.position = cinematicTarget.transform.position;
@@ -37,7 +38,7 @@ public class PlayerScript : MonoBehaviour
             Vector3 cinForward = cinematicTarget.transform.forward;
             Vector3 camForward = Vector3.Scale(mainCameraTransform.forward, zVec).normalized;
             float rotAngle = Vector3.Angle(cinForward, camForward);
-            transform.RotateAround(transform.position, Vector3.up, rotAngle);
+            // transform.RotateAround(transform.position, Vector3.up, rotAngle);
         }
         leftHandPoseControl.SetupCopyAnimationData();
         rightHandPoseControl.SetupCopyAnimationData();

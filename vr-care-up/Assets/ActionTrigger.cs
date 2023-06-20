@@ -20,26 +20,31 @@ public class ActionTrigger : MonoBehaviour
         }
     }
 
+    private bool CheckTriggerConfirmation()
+    {
+        bool isActionConfirmed = true;
+        foreach(ActionCollider c in actionColliders)
+        {
+            if (!c.CheckConformity())
+            {
+                isActionConfirmed = false;
+                break;
+            }
+        }
+        return isActionConfirmed;
+    }
     public void AttemptTrigger()
     {
-        if (player != null && triggerName != "")
-        {
-            bool isActionConfirmed = true;
-            foreach(ActionCollider c in actionColliders)
-            {
-                if (!c.CheckConformity())
-                {
-                    isActionConfirmed = false;
-                    break;
-                }
+        if (player == null || triggerName == "")
+            return;
+        
 
-            }
-            if (isActionConfirmed)
-            {
-                GameObject target = transform.Find("CinematicTarget").gameObject;
-                
-                player.TriggerAction(triggerName, target);
-            }
+        
+        if (CheckTriggerConfirmation())
+        {
+            GameObject target = transform.Find("CinematicTarget").gameObject;
+            
+            player.TriggerAction(triggerName, target);
         }
     }
   

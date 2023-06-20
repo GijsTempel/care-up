@@ -19,7 +19,10 @@ public class ActionCollider : MonoBehaviour
 
     public bool CheckConformity()
     {
-        return true;
+        bool confirmed = true;
+        if (handsInArea.Count == 0)
+            confirmed = false;
+        return confirmed;
     }
 
     void RemoveHandFromArea(GameObject hand)
@@ -40,6 +43,10 @@ public class ActionCollider : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
+        if (triggerHand == ActionTrigger.TriggerHand.Left && collision.name != "LeftActionTriggerCollider")
+            return;
+        if (triggerHand == ActionTrigger.TriggerHand.Right && collision.name != "RightActionTriggerCollider")
+            return;
         AddHandToArea(collision.gameObject);
         DebugTrigger();
         actionTrigger.AttemptTrigger();
