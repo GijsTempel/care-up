@@ -47,7 +47,7 @@ public class PlayerScript : MonoBehaviour
             return false;
         if (cinematicTarget != null)
         {
-            fadeAnimation.Play();
+            // fadeAnimation.Play();
             Vector3 zVec = new Vector3(1f, 0f, 1f);
             animHandsTransform.fallowVRCamera = false;
             animHandsTransform.transform.position = cinematicTarget.transform.position;
