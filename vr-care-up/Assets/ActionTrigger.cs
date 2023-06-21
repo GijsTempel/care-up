@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ActionTrigger : MonoBehaviour
 {
+    public int actionNumberLimit = -1;
     public enum TriggerHand {None, Any, Left, Right}
     public enum TriggerHandAction {None, Pinch, Grip}
     PlayerScript player;
@@ -46,8 +47,12 @@ public class ActionTrigger : MonoBehaviour
 
     private void EmitTrigger()
     {
+        if (actionNumberLimit == 0)
+            return;
         GameObject target = transform.Find("CinematicTarget").gameObject;
-        player.TriggerAction(triggerName, target);
+        bool actionAccepted = player.TriggerAction(triggerName, target);
+        if (actionAccepted && actionNumberLimit > 0)
+            actionNumberLimit--;
     }
 
     public void AttemptTrigger()

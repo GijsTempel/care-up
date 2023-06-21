@@ -14,13 +14,13 @@ public class PlayerScript : MonoBehaviour
     private Transform mainCameraTransform;
     public Animation fadeAnimation;
 
-    public void TriggerAction(string triggerName, GameObject cinematicTarget = null)
+    public bool TriggerAction(string triggerName, GameObject cinematicTarget = null)
     {
         if (leftHandPoseControl == null || rightHandPoseControl == null)
-            return;
+            return false;
         if (leftHandPoseControl.handPoseMode != HandPoseControl.HandPoseMode.Default ||
             rightHandPoseControl.handPoseMode != HandPoseControl.HandPoseMode.Default )
-            return;
+            return false;
         if (cinematicTarget != null)
         {
             fadeAnimation.Play();
@@ -44,7 +44,7 @@ public class PlayerScript : MonoBehaviour
         rightHandPoseControl.SetupCopyAnimationData();
         animHandsAnimator = animHandsTransform.animator;
         animHandsAnimator.SetTrigger(triggerName);
-
+        return true;
     }
 
     public void ExitCopyAnimationState()

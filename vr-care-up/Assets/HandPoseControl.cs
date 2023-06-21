@@ -56,13 +56,15 @@ public class HandPoseControl : MonoBehaviour
     public void ExitCopyAnimationState()
     {
         handPoseMode = HandPoseMode.CopyAnimOut;
-        handPose.animator.enabled = true;
+        if (handPose.animator != null)
+            handPose.animator.enabled = true;
         handDataRoutineTime = 0f;
     }
 
     public void SetupCopyAnimationData()
     {
-        handPose.animator.enabled = false;
+        if (handPose.animator != null)
+            handPose.animator.enabled = false;
         handPoseMode = HandPoseMode.CopyAnimIn;
         handDataRoutineTime = 0f;
         poseTransitionDuration = 0.5f;
@@ -120,7 +122,8 @@ public class HandPoseControl : MonoBehaviour
     public void SetupPose(HandPoseData newHandPoseData, float newPoseTransitionDuration = 0.2f)
     {
         poseTransitionDuration = newPoseTransitionDuration;
-        handPose.animator.enabled = false;
+        if (handPose.animator != null)
+            handPose.animator.enabled = false;
         SetHandDataValues(newHandPoseData);
         handDataRoutineTime = 0f;
         
@@ -129,7 +132,8 @@ public class HandPoseControl : MonoBehaviour
 
     public void UnSetPose()
     {
-        handPose.animator.enabled = true;
+        if (handPose.animator != null)
+            handPose.animator.enabled = true;
         handDataRoutineTime = 0f;
         handPoseMode = HandPoseMode.TransitOut;
     }

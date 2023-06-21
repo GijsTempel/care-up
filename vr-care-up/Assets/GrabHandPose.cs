@@ -8,7 +8,6 @@ using UnityEditor;
 
 public class GrabHandPose : MonoBehaviour
 {
-    
     public float poseTransitionDuration = 0.2f;
     public HandPoseData righHandPose;
     public HandPoseData leftHandPose;
@@ -22,6 +21,7 @@ public class GrabHandPose : MonoBehaviour
             righHandPose.gameObject.SetActive(false);
         if (leftHandPose != null)
             leftHandPose.gameObject.SetActive(false);
+        
     }
 
     public void SetupPose(BaseInteractionEventArgs arg)
