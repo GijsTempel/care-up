@@ -59,9 +59,9 @@ public class ActionTrigger : MonoBehaviour
     {
         if (player == null || triggerName == "")
             return;
-        
         if (CheckTriggerConfirmation())
         {
+            Debug.Log("@" + name + "aTrigger:" + triggerName);
             EmitTrigger();
         }
     }

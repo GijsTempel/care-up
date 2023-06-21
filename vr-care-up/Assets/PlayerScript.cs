@@ -14,9 +14,33 @@ public class PlayerScript : MonoBehaviour
     private Transform mainCameraTransform;
     public Animation fadeAnimation;
 
+    private HandPresence leftHandPresence;
+    private HandPresence rightHandPresence;
+
+
+    public void AddHandPresence(bool isLeft, HandPresence hp)
+    {
+        if (isLeft)
+            leftHandPresence = hp;
+        else
+            rightHandPresence = hp;
+    }
+
+    public ActionTrigger.TriggerHandAction GetCurrentHandPose(bool isLeftHand)
+    {
+        if (isLeftHand && leftHandPresence != null)
+            return leftHandPresence.GetCurrentHandPose();
+        if (!isLeftHand && rightHandPresence != null)
+            return rightHandPresence.GetCurrentHandPose();
+        return ActionTrigger.TriggerHandAction.None;
+    }
     public bool TriggerAction(string triggerName, GameObject cinematicTarget = null)
     {
+        Debug.Log("@" + name + "TriggerAction:" + triggerName);
+
         if (leftHandPoseControl == null || rightHandPoseControl == null)
+            return false;
+        if (IsInCopyAnimationState())
             return false;
         if (leftHandPoseControl.handPoseMode != HandPoseControl.HandPoseMode.Default ||
             rightHandPoseControl.handPoseMode != HandPoseControl.HandPoseMode.Default )
@@ -47,6 +71,24 @@ public class PlayerScript : MonoBehaviour
         return true;
     }
 
+    public bool IsInCopyAnimationState()
+    {
+        if (leftHandPoseControl != null)
+        {
+            if (leftHandPoseControl.handPoseMode == HandPoseControl.HandPoseMode.CopyAnimIn ||
+                leftHandPoseControl.handPoseMode == HandPoseControl.HandPoseMode.CopyAnimOut)
+                return true;
+        }
+        if (rightHandPoseControl != null)
+        {
+            if (rightHandPoseControl.handPoseMode == HandPoseControl.HandPoseMode.CopyAnimIn ||
+                rightHandPoseControl.handPoseMode == HandPoseControl.HandPoseMode.CopyAnimOut)
+                return true;
+        }
+
+        return false;
+    }
+
     public void ExitCopyAnimationState()
     {
     if (leftHandPoseControl == null || rightHandPoseControl == null)
@@ -56,15 +98,12 @@ public class PlayerScript : MonoBehaviour
         animHandsTransform.fallowVRCamera = true;
 
     }
-    public void AddHandPoseControl(HandPoseControl control, bool isRightHand)
+    public void AddHandPoseControl(HandPoseControl control, bool isLeftHand)
     {
-        if (isRightHand)
+        if (!isLeftHand)
             rightHandPoseControl = control;
         else
             leftHandPoseControl = control;
-        string sideName = "Left:";
-        if (isRightHand)
-            sideName = "Right:";
     }
 
     private void Start()

@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class ActionCollider : MonoBehaviour
 {
+    private PlayerScript player;
     public ActionTrigger.TriggerHand triggerHand;
     public ActionTrigger.TriggerHandAction triggerHandAction;
+
+    public ActionTrigger.TriggerHandAction requiredHandPose = ActionTrigger.TriggerHandAction.None;
     List<GameObject> handsInArea = new List<GameObject>();
     private ActionTrigger actionTrigger;
 
@@ -37,6 +40,40 @@ public class ActionCollider : MonoBehaviour
         }
         return actionHandIsInArea;
     }
+    // Check if any of the hands in area of the collider, or hand that is specified to this area and is in area
+    // has needed hand pose to activate the trigger
+    private bool CheckIfPoseFromHandInArea()
+    {
+        if (requiredHandPose == ActionTrigger.TriggerHandAction.None)
+            return true;
+        if (player == null)
+            return false;
+        ActionTrigger.TriggerHandAction lPose = player.GetCurrentHandPose(true);
+        ActionTrigger.TriggerHandAction rPose = player.GetCurrentHandPose(false);
+        Debug.Log("@RR_" + name + ":" + Random.RandomRange(0, 9999).ToString());
+        if (!(lPose == requiredHandPose || rPose == requiredHandPose))
+            return false;
+        foreach(GameObject h in handsInArea)
+        {
+            if (triggerHand != ActionTrigger.TriggerHand.None || triggerHand != ActionTrigger.TriggerHand.Any)
+            {
+                if (h.tag == "LeftHand" || lPose == requiredHandPose)
+                    return true;
+                if (h.tag == "RightHand" || rPose == requiredHandPose)
+                    return true;
+            }
+            else
+            {
+                if (triggerHand != ActionTrigger.TriggerHand.Left &&
+                    h.tag == "LeftHand" || lPose == requiredHandPose)
+                    return true;
+                else if (triggerHand != ActionTrigger.TriggerHand.Right &&
+                    h.tag == "RightHand" || rPose == requiredHandPose)
+                    return true;
+            }
+        }
+        return false;
+    }
 
     public bool CheckConformity(ActionTrigger.TriggerHand currentTriggerHand = ActionTrigger.TriggerHand.None,
             ActionTrigger.TriggerHandAction currentTriggerHandAction = ActionTrigger.TriggerHandAction.None)
@@ -55,6 +92,11 @@ public class ActionCollider : MonoBehaviour
             if (!CheckIfActionFromHandInArea(currentTriggerHand == ActionTrigger.TriggerHand.Left))
                 return false;
         }
+        if (requiredHandPose != ActionTrigger.TriggerHandAction.None)
+        {
+            if (!CheckIfPoseFromHandInArea())
+                return false;
+        }
         return true;
     }
 
@@ -65,6 +107,7 @@ public class ActionCollider : MonoBehaviour
 
     void Start()
     {
+        player = GameObject.FindObjectOfType<PlayerScript>();
         actionTrigger = transform.parent.GetComponent<ActionTrigger>();
     }
 

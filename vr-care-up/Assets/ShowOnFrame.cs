@@ -90,16 +90,16 @@ public class ShowOnFrame : StateMachineBehaviour
             prevFrame = frame;
             frame = stateInfo.normalizedTime * stateInfo.length;
 
-            // if (PlayerAnimationManager.CompareFrames(frame, prevFrame, showFrame))
-            // {
-            //     SetObject();
-            // }
+            if (PlayerAnimationManager.CompareFrames(frame, prevFrame, showFrame))
+            {
+                SetObject();
+            }
         }
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (showFrame < 0)
+        if (showFrame < 0 || (showFrame / 60f > frame))
         {
             SetObject();
         }
