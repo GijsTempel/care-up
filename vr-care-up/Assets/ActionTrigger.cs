@@ -9,6 +9,7 @@ public class ActionTrigger : MonoBehaviour
     public enum TriggerHandAction {None, Pinch, Grip}
     PlayerScript player;
     public string triggerName = "";
+    public PickableObject pickable;
 
     List<ActionCollider> actionColliders = new List<ActionCollider>();
     // Start is called before the first frame update
@@ -35,6 +36,7 @@ public class ActionTrigger : MonoBehaviour
         bool isActionConfirmed = true;
         foreach(ActionCollider c in actionColliders)
         {
+
             if (!c.CheckConformity(currentTriggerHand, currentTriggerHandAction))
             {
                 isActionConfirmed = false;
@@ -47,9 +49,12 @@ public class ActionTrigger : MonoBehaviour
 
     private void EmitTrigger()
     {
+
         if (actionNumberLimit == 0)
             return;
-        GameObject target = transform.Find("CinematicTarget").gameObject;
+        GameObject target = null;
+        if (transform.Find("CinematicTarget") != null)
+            target = transform.Find("CinematicTarget").gameObject;
         bool actionAccepted = player.TriggerAction(triggerName, target);
         if (actionAccepted && actionNumberLimit > 0)
             actionNumberLimit--;
@@ -61,7 +66,6 @@ public class ActionTrigger : MonoBehaviour
             return;
         if (CheckTriggerConfirmation())
         {
-            Debug.Log("@" + name + "aTrigger:" + triggerName);
             EmitTrigger();
         }
     }

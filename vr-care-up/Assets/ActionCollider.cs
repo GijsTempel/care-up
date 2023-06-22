@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ActionCollider : MonoBehaviour
 {
+    [Tooltip("Comma separated names. Use 'none' if empty hand required")]
+    public string triggerObjectNames = "";
     private PlayerScript player;
     public ActionTrigger.TriggerHand triggerHand;
     public ActionTrigger.TriggerHandAction triggerHandAction;
@@ -23,7 +25,7 @@ public class ActionCollider : MonoBehaviour
     private bool CheckIfActionFromHandInArea(bool isLeftHand)
     {
         bool actionHandIsInArea = false;
-
+        CleanUpHandsInArea();
         foreach(GameObject h in handsInArea)
         {
             if (isLeftHand && h.tag == "LeftHand")
@@ -44,6 +46,7 @@ public class ActionCollider : MonoBehaviour
     // has needed hand pose to activate the trigger
     private bool CheckIfPoseFromHandInArea()
     {
+        CleanUpHandsInArea();
         if (requiredHandPose == ActionTrigger.TriggerHandAction.None)
             return true;
         if (player == null)
@@ -115,14 +118,84 @@ public class ActionCollider : MonoBehaviour
     {
         
     }
+    private void CleanUpHandsInArea()
+    {
+        if (actionTrigger.pickable != null && actionTrigger.pickable.pickedBy != null)
+        {
+            bool isLeft = actionTrigger.pickable.pickedBy.handType == HandPoseData.HandModelType.Left;
+            foreach(GameObject h in handsInArea)
+            {
+                if (isLeft && h.tag == "LeftHand")
+                    RemoveHandFromArea(h);
+                if (!isLeft && h.tag == "RightHand")
+                    RemoveHandFromArea(h);
+            }
+        }
+        DebugTrigger();
+    }
 
     private void OnTriggerEnter(Collider collision)
     {
+//If object with this action collider must to be in hand to trigger action
+        if (actionTrigger.pickable != null)
+        {
+//if object is NOT in hand
+            if (actionTrigger.pickable.pickedBy == null)
+            {
+                return;
+            }
+// if object IS in hand
+            else
+            {
+                bool isLeft = actionTrigger.pickable.pickedBy.handType == HandPoseData.HandModelType.Left;
+                
+                if (isLeft && collision.gameObject.tag == "LeftHand")
+                    return;
+                if (!isLeft && collision.gameObject.tag == "RightHand")
+                    return;
+            }
+        }
+
+        if (triggerObjectNames != "")
+        {
+//if hand has to be empty to trigger
+            if (triggerObjectNames == "none")
+            {
+                if (player.GetObjectInHand(collision.gameObject.tag == "LeftHand") != null)
+                {
+                    return;
+                }
+            }
+//if object in hand requred to trigger the action
+            else
+            {
+                GameObject objectInCollisionHand = player.GetObjectInHand(collision.gameObject.tag == "LeftHand");
+                if (objectInCollisionHand == null)
+                {
+                    return;
+                }
+                string[] triggerObjects = triggerObjectNames.Split(',');
+                bool containsNeededObject = false;
+                foreach(string oName in triggerObjects)
+                {
+                    if (oName == objectInCollisionHand.name)
+                    {
+                        containsNeededObject = true;
+                        break;
+                    }
+                }
+                if (!containsNeededObject)
+                    return;
+            }
+        }
+
         if (triggerHand == ActionTrigger.TriggerHand.Left && collision.gameObject.tag != "LeftHand")
             return;
         if (triggerHand == ActionTrigger.TriggerHand.Right && collision.gameObject.tag != "RightHand")
             return;
         AddHandToArea(collision.gameObject);
+        CleanUpHandsInArea();
+
         DebugTrigger();
         actionTrigger.AttemptTrigger();
     }
@@ -141,7 +214,6 @@ public class ActionCollider : MonoBehaviour
             ss += h.name + " ";
         }
         Debug.Log("@" + name + "_detected:" + ss);
-
     }
 
 }

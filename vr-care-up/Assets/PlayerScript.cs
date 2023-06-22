@@ -17,6 +17,12 @@ public class PlayerScript : MonoBehaviour
     private HandPresence leftHandPresence;
     private HandPresence rightHandPresence;
 
+    public GameObject GetObjectInHand(bool isLeft)
+    {
+        if (isLeft)
+            return leftHandObject;
+        return rightHandObject;
+    }
 
     public void AddHandPresence(bool isLeft, HandPresence hp)
     {
@@ -36,8 +42,7 @@ public class PlayerScript : MonoBehaviour
     }
     public bool TriggerAction(string triggerName, GameObject cinematicTarget = null)
     {
-        Debug.Log("@" + name + "TriggerAction:" + triggerName);
-
+        Debug.Log("@$$$" + name + "TriggerAction:" + triggerName + Random.Range(0, 9999).ToString());
         if (leftHandPoseControl == null || rightHandPoseControl == null)
             return false;
         if (IsInCopyAnimationState())
@@ -45,6 +50,7 @@ public class PlayerScript : MonoBehaviour
         if (leftHandPoseControl.handPoseMode != HandPoseControl.HandPoseMode.Default ||
             rightHandPoseControl.handPoseMode != HandPoseControl.HandPoseMode.Default )
             return false;
+
         if (cinematicTarget != null)
         {
             // fadeAnimation.Play();

@@ -7,6 +7,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class PickableObject : MonoBehaviour
 {
     private PlayerScript player;
+    public HandPoseData pickedBy = null;
     private void Start()
     {
         player = GameObject.FindObjectOfType<PlayerScript>();
@@ -25,6 +26,7 @@ public class PickableObject : MonoBehaviour
             HandPoseData handData = arg.interactorObject.transform.GetComponentInChildren<HandPoseData>();
             bool isRightHand = (handData.handType == HandPoseData.HandModelType.Right);
             player.SetObjectInHand(gameObject, isRightHand);
+            pickedBy = handData;
         }
     }
 
@@ -37,6 +39,7 @@ public class PickableObject : MonoBehaviour
             HandPoseData handData = arg.interactorObject.transform.GetComponentInChildren<HandPoseData>();
             bool isRightHand = (handData.handType == HandPoseData.HandModelType.Right);
             player.SetObjectInHand(gameObject, isRightHand, false);
+            pickedBy = null;
         }
     }
 
