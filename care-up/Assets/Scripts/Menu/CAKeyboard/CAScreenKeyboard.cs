@@ -92,6 +92,12 @@ public class CAScreenKeyboard : MonoBehaviour
             selectionAPoint = SKBInput.selectionAnchorPosition;
             selectionBPoint = SKBInput.selectionFocusPosition;
         }
+
+        // force read input key Enter into this CAScreenKeyboard script
+        if (CA_SKBPanel.activeSelf && Input.GetKeyDown(KeyCode.Return))
+        {
+            FunctionKeyPressed(CAKeyboard_Key.ButtonType.enter);
+        }
     }
 
     public void KeyPressed(string _character)
