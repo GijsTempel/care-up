@@ -13,10 +13,14 @@ public class AnimHandsTransform : MonoBehaviour
     public Transform[] leftFingerBones;
     public bool fallowVRCamera = true;
 
+    private Transform toolHoldBoneLeft;
+    private Transform toolHoldBoneRight;
+
     public Animator animator;
     void Start()
     {
-        
+        toolHoldBoneRight = rightHandRootBone.transform.Find("toolHolder.R");
+        toolHoldBoneLeft = leftHandRootBone.transform.Find("toolHolder.L");
     }
 
     void Update()
