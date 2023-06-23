@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class AnimHandsTransform : MonoBehaviour
 {
-    public Transform targetVRCamera;
+    public Transform targetVRObject;
+    public Transform targetRightHand;
+    public Transform targetLeftHand;
     public GameObject rightHandRootBone;
     public GameObject leftHandRootBone;
     public Transform[] rightFingerBones; 
@@ -19,16 +21,20 @@ public class AnimHandsTransform : MonoBehaviour
 
     void Update()
     {
-        if (targetVRCamera != null && fallowVRCamera)
+        if (targetVRObject != null)
         {
-            float x = targetVRCamera.position.x;
-            float y = targetVRCamera.position.y;
-            float z = targetVRCamera.position.z;
-            
-            transform.position = new Vector3(x, y, z);
-            Vector3 newRotation = new Vector3(transform.eulerAngles.x, targetVRCamera.eulerAngles.y, transform.eulerAngles.z);
-            
-            transform.eulerAngles = newRotation;
+            if (fallowVRCamera)
+            {
+                // transform.position = targetVRObject.position;
+                Vector3 VRHandsMidPoint = targetRightHand.position - (targetRightHand.position - targetLeftHand.position) * 0.5f;
+                Vector3 boneHandsMidPoint = rightHandRootBone.transform.position -
+                    (rightHandRootBone.transform.position - leftHandRootBone.transform.position) * 0.5f;
+                transform.position = transform.position + (VRHandsMidPoint - boneHandsMidPoint);
+
+                Vector3 newRotation = new Vector3(transform.eulerAngles.x, targetVRObject.eulerAngles.y, transform.eulerAngles.z);
+                
+                transform.eulerAngles = newRotation;
+            }
         }
 
     }
