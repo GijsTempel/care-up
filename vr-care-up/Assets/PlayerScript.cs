@@ -15,6 +15,14 @@ public class PlayerScript : MonoBehaviour
     private HandPresence leftHandPresence;
     private HandPresence rightHandPresence;
 
+
+    public void DropFromHand(bool leftHand)
+    {
+        if (leftHand && leftHandPresence != null)
+            leftHandPresence.DropObjectFromHand();
+        else if (!leftHand && rightHandPresence != null)
+            rightHandPresence.DropObjectFromHand();
+    }
     public GameObject GetObjectInHand(bool isLeft)
     {
         if (isLeft && leftHandPresence != null)

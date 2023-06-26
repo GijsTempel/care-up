@@ -20,7 +20,6 @@ public class HandPresence : MonoBehaviour
     private float gripSavedValue = 0f;
     private const float ACTION_TRESHOULD_UP = 0.9f;
     private const float ACTION_TRESHOULD_DOWN = 0.8f;
-
     private string handName = "Hand";
     PickableObject objectInHand;
 
@@ -28,6 +27,7 @@ public class HandPresence : MonoBehaviour
     public GameObject GetObjectInHand()
     {
         if (objectInHand != null)
+
             return objectInHand.gameObject;
         return null;
     }
@@ -127,8 +127,17 @@ public class HandPresence : MonoBehaviour
         return false;
     }
 
-    private bool PickUpObject(PickableObject objToPickup)
+    public bool PickUpObject(PickableObject objToPickup)
     {
+        if (spawnHandModel == null)
+            return false;
+
+        bool isThisLeftHand = spawnHandModel.GetComponent<HandPoseData>().handType == HandPoseData.HandModelType.Left;
+
+        if (objToPickup.gameObject == player.GetObjectInHand(!isThisLeftHand))
+        {
+            player.DropFromHand(!isThisLeftHand);
+        }
         bool isPickedUp = objToPickup.PickUp(transform);
 
         if (isPickedUp)
@@ -142,7 +151,7 @@ public class HandPresence : MonoBehaviour
         return false;
     }
 
-    private void DropObjectFromHand()
+    public void DropObjectFromHand()
     {
         if (objectInHand == null)
             return;
@@ -184,7 +193,7 @@ public class HandPresence : MonoBehaviour
                     if (!TryToPickUp())
                         CastAction(ActionTrigger.TriggerHandAction.Grip);
                 }
-                else if (gripValue < ACTION_TRESHOULD_DOWN && gripSavedValue >= ACTION_TRESHOULD_UP)
+                else if (gripValue < ACTION_TRESHOULD_UP && gripSavedValue >= ACTION_TRESHOULD_UP)
                 {
                     DropObjectFromHand();
                 }

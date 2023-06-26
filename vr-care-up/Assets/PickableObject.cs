@@ -20,13 +20,17 @@ public class PickableObject : MonoBehaviour
     
     public bool PickUp(Transform handTransform)
     {
-        transformToFallow = handTransform;
+        FallowTransform(handTransform);
         Debug.Log("@ ## " + name + ":" + Random.Range(0, 9999).ToString());
         if (gameObject.GetComponent<Rigidbody>() != null)
             gameObject.GetComponent<Rigidbody>().isKinematic = true;
         return true;
     }
 
+    public void FallowTransform(Transform trans)
+    {
+        transformToFallow = trans;
+    }
 
     private void Update()
     {
