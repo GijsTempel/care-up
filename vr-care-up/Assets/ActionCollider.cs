@@ -120,15 +120,19 @@ public class ActionCollider : MonoBehaviour
     }
     private void CleanUpHandsInArea()
     {
-        if (actionTrigger.pickable != null && actionTrigger.pickable.pickedBy != null)
+        if (actionTrigger.pickable != null)
         {
-            bool isLeft = actionTrigger.pickable.pickedBy.handType == HandPoseData.HandModelType.Left;
-            foreach(GameObject h in handsInArea)
+            HandPresence objectInThisHand = player.GetHandWithThisObject(actionTrigger.pickable.gameObject);
+            if (objectInThisHand != null)
             {
-                if (isLeft && h.tag == "LeftHand")
-                    RemoveHandFromArea(h);
-                if (!isLeft && h.tag == "RightHand")
-                    RemoveHandFromArea(h);
+                bool isLeft = objectInThisHand.IsLeftHand();
+                foreach(GameObject h in handsInArea)
+                {
+                    if (isLeft && h.tag == "LeftHand")
+                        RemoveHandFromArea(h);
+                    if (!isLeft && h.tag == "RightHand")
+                        RemoveHandFromArea(h);
+                }
             }
         }
         DebugTrigger();
@@ -140,14 +144,15 @@ public class ActionCollider : MonoBehaviour
         if (actionTrigger.pickable != null)
         {
 //if object is NOT in hand
-            if (actionTrigger.pickable.pickedBy == null)
+            HandPresence objectInThisHand = player.GetHandWithThisObject(actionTrigger.pickable.gameObject);
+            if (objectInThisHand == null)
             {
                 return;
             }
 // if object IS in hand
             else
             {
-                bool isLeft = actionTrigger.pickable.pickedBy.handType == HandPoseData.HandModelType.Left;
+                bool isLeft = objectInThisHand.IsLeftHand();
                 
                 if (isLeft && collision.gameObject.tag == "LeftHand")
                     return;

@@ -33,6 +33,11 @@ public class HandPresence : MonoBehaviour
         return null;
     }
 
+    public bool IsLeftHand()
+    {
+        return spawnHandModel.GetComponent<HandPoseData>().handType == HandPoseData.HandModelType.Left;
+    }
+
     private ActionTrigger.TriggerHandAction currentHandPose = ActionTrigger.TriggerHandAction.None;
     // Start is called before the first frame update
     void Start()
@@ -66,10 +71,9 @@ public class HandPresence : MonoBehaviour
             Debug.Log(spawnHandModel.name);
             if (player != null)
             {
-                bool isLeftHand = spawnHandModel.GetComponent<HandPoseData>().handType == HandPoseData.HandModelType.Left;
-                player.AddHandPoseControl(spawnHandModel.GetComponent<HandPoseControl>(), isLeftHand);
+                player.AddHandPoseControl(spawnHandModel.GetComponent<HandPoseControl>(), IsLeftHand());
                 spawnHandModel.GetComponent<HandPoseControl>().animHandsTransform = player.animHandsTransform;
-                player.AddHandPresence(isLeftHand, this);
+                player.AddHandPresence(IsLeftHand(), this);
                 handPoseControl = spawnHandModel.GetComponent<HandPoseControl>();
             }
         }
@@ -139,11 +143,9 @@ public class HandPresence : MonoBehaviour
         if (spawnHandModel == null)
             return false;
 
-        bool isThisLeftHand = spawnHandModel.GetComponent<HandPoseData>().handType == HandPoseData.HandModelType.Left;
-
-        if (objToPickup.gameObject == player.GetObjectInHand(!isThisLeftHand))
+        if (objToPickup.gameObject == player.GetObjectInHand(!IsLeftHand()))
         {
-            player.DropFromHand(!isThisLeftHand);
+            player.DropFromHand(!IsLeftHand());
         }
         bool isPickedUp = objToPickup.PickUp(transform);
 

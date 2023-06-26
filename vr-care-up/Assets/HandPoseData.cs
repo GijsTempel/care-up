@@ -10,7 +10,6 @@ public class HandPoseData : MonoBehaviour
     public Animator animator;
     public Transform[] fingerBones; 
     public Transform rootBone;
-
     private Vector3 baseRootBonePosition;
     private Quaternion baseRootBoneRotation;
 

@@ -15,6 +15,15 @@ public class PlayerScript : MonoBehaviour
     private HandPresence leftHandPresence;
     private HandPresence rightHandPresence;
 
+    public HandPresence GetHandWithThisObject(GameObject obj)
+    {
+        if (GetObjectInHand(true) == obj)
+            return leftHandPresence;
+        if (GetObjectInHand(false) == obj)
+            return rightHandPresence;
+        return null;
+    }
+
     public void DropFromHand(bool leftHand)
     {
         if (leftHand && leftHandPresence != null)
@@ -79,6 +88,21 @@ public class PlayerScript : MonoBehaviour
         }
         leftHandPoseControl.SetupCopyAnimationData();
         rightHandPoseControl.SetupCopyAnimationData();
+        GameObject objectInLeft = GetObjectInHand(true);
+        if (objectInLeft != null)
+        {
+            Transform leftToolTransform = animHandsTransform.GetToolHoldBoneTransform(true);
+            if (leftToolTransform != null)
+                objectInLeft.GetComponent<PickableObject>().FallowTransform(leftToolTransform);
+        }
+        GameObject objectInRight = GetObjectInHand(false);
+        if (objectInRight != null)
+        {
+            Transform rightToolTransform = animHandsTransform.GetToolHoldBoneTransform(false);
+            if (rightToolTransform != null)
+                objectInRight.GetComponent<PickableObject>().FallowTransform(rightToolTransform);
+        }
+
         animHandsAnimator = animHandsTransform.animator;
         animHandsAnimator.SetTrigger(triggerName);
         return true;
@@ -109,6 +133,16 @@ public class PlayerScript : MonoBehaviour
         leftHandPoseControl.ExitCopyAnimationState();
         rightHandPoseControl.ExitCopyAnimationState();     
         animHandsTransform.fallowVRCamera = true;
+        GameObject objectInLeft = GetObjectInHand(true);
+        if (objectInLeft != null)
+        {
+            objectInLeft.GetComponent<PickableObject>().FallowTransform(leftHandPresence.transform);
+        }
+        GameObject objectInRight = GetObjectInHand(false);
+        if (objectInRight != null)
+        {
+            objectInRight.GetComponent<PickableObject>().FallowTransform(rightHandPresence.transform);
+        }
 
     }
     public void AddHandPoseControl(HandPoseControl control, bool isLeftHand)

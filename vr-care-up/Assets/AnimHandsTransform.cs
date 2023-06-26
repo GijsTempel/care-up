@@ -23,6 +23,13 @@ public class AnimHandsTransform : MonoBehaviour
         toolHoldBoneLeft = leftHandRootBone.transform.Find("toolHolder.L");
     }
 
+    public Transform GetToolHoldBoneTransform(bool leftBone)
+    {
+        if (leftBone)
+            return toolHoldBoneLeft;
+        return toolHoldBoneRight;
+    }
+
     void Update()
     {
         if (targetVRObject != null)

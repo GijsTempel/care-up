@@ -29,9 +29,6 @@ public class HandPoseControl : MonoBehaviour
 
     void Update()
     {
-        // Debug.Log("@" + name + "_timer:" + handDataRoutineTime.ToString());
-
-        // Debug.Log("@" + name + "_handMode:" + handPoseMode.ToString());
         if (handPoseMode != HandPoseMode.Default && handDataRoutineTime < float.PositiveInfinity)
         {
             if (handPoseMode == HandPoseMode.CopyAnimIn)
@@ -39,18 +36,6 @@ public class HandPoseControl : MonoBehaviour
             SetHandDataRoutine();
         }
 
-        // if (copyAnimation)
-        // {
-        //     if (handPoseMode != HandPoseMode.CopyAnimIn)
-        //     {
-        //         SetupCopyAnimationData();
-        //     }
-        //     else
-        //     {
-        //         ExitCopyAnimationState();
-        //     }
-        //         copyAnimation = false;
-        // }
     }
 
     public void ExitCopyAnimationState()

@@ -8,7 +8,6 @@ public class PickableObject : MonoBehaviour
 {
     bool isKinematic = false;
     private PlayerScript player;
-    public HandPoseData pickedBy = null;
     private Transform transformToFallow;
 
     public void Drop()
