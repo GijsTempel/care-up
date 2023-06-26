@@ -27,6 +27,7 @@ public class PickableObject : MonoBehaviour
         return true;
     }
 
+
     private void Update()
     {
         if (transformToFallow != null)
@@ -41,37 +42,5 @@ public class PickableObject : MonoBehaviour
         if (gameObject.GetComponent<Rigidbody>() != null)
             isKinematic = gameObject.GetComponent<Rigidbody>().isKinematic;
         player = GameObject.FindObjectOfType<PlayerScript>();
-        XRGrabInteractable grabInteractable = GetComponent<XRGrabInteractable>();
-        grabInteractable.selectEntered.AddListener(PickupAction);
-        grabInteractable.selectExited.AddListener(DropAction);
     }
-
-    private void PickupAction(BaseInteractionEventArgs arg)
-    {
-        if (player == null)
-            return;
-        if (arg.interactorObject is XRDirectInteractor)
-        {
-            HandPoseData handData = arg.interactorObject.transform.GetComponentInChildren<HandPoseData>();
-            bool isRightHand = (handData.handType == HandPoseData.HandModelType.Right);
-            player.SetObjectInHand(gameObject, isRightHand);
-            pickedBy = handData;
-
-        }
-    }
-
-    private void DropAction(BaseInteractionEventArgs arg)
-    {
-        if (player == null)
-            return;
-        if (arg.interactorObject is XRDirectInteractor)
-        {
-            HandPoseData handData = arg.interactorObject.transform.GetComponentInChildren<HandPoseData>();
-            bool isRightHand = (handData.handType == HandPoseData.HandModelType.Right);
-            player.SetObjectInHand(gameObject, isRightHand, false);
-            pickedBy = null;
-
-        }
-    }
-
 }

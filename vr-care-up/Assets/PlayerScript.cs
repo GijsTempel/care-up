@@ -7,8 +7,6 @@ public class PlayerScript : MonoBehaviour
     public AnimHandsTransform animHandsTransform;
     private Animator animHandsAnimator;
     public string currentWTGName = "";
-    private GameObject leftHandObject;
-    private GameObject rightHandObject;
     private HandPoseControl leftHandPoseControl;
     private HandPoseControl rightHandPoseControl;
     private Transform mainCameraTransform;
@@ -19,9 +17,11 @@ public class PlayerScript : MonoBehaviour
 
     public GameObject GetObjectInHand(bool isLeft)
     {
-        if (isLeft)
-            return leftHandObject;
-        return rightHandObject;
+        if (isLeft && leftHandPresence != null)
+            return leftHandPresence.GetObjectInHand();
+        if (!isLeft && rightHandPresence != null)
+            return rightHandPresence.GetObjectInHand();
+        return null;
     }
 
     public void AddHandPresence(bool isLeft, HandPresence hp)
@@ -117,44 +117,7 @@ public class PlayerScript : MonoBehaviour
         mainCameraTransform = transform.Find("Camera Offset/Main Camera");
         animHandsAnimator = animHandsTransform.transform.GetComponentInChildren<Animator>();
     }
-
-    public void SetObjectInHand(GameObject obj, bool isRightHand = true, bool isPickUp = true)
-    {
-        string objName = "";
-        if (obj != null)
-            objName = obj.name;
-
-        if (isRightHand)
-        {
-            if (isPickUp)
-            {
-                rightHandObject = obj;
-            }
-            else
-            {
-                if (rightHandObject == obj)
-                {
-                    rightHandObject = null;
-                    objName = "";
-                }
-            }
-        }
-        else
-        {
-            if (isPickUp)
-            {
-                leftHandObject = obj;
-            }
-            else
-            {
-                if (leftHandObject == obj)
-                {
-                    leftHandObject = null;
-                    objName = "";
-                }
-            }
-        }
-    }
+    
     private void Update()
     {
     }

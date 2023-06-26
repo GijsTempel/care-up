@@ -14,32 +14,31 @@ public class GrabHandPose : MonoBehaviour
 
     private void Start()
     {
-        XRGrabInteractable grabInteractable = GetComponent<XRGrabInteractable>();
-        grabInteractable.selectEntered.AddListener(SetupPose);
-        grabInteractable.selectExited.AddListener(UnSetPose);
+        // XRGrabInteractable grabInteractable = GetComponent<XRGrabInteractable>();
+        // grabInteractable.selectEntered.AddListener(SetupPose);
+        // grabInteractable.selectExited.AddListener(UnSetPose);
         if (righHandPose != null)
             righHandPose.gameObject.SetActive(false);
         if (leftHandPose != null)
             leftHandPose.gameObject.SetActive(false);
     }
 
-    public void SetupPose(BaseInteractionEventArgs arg)
+    public void SetupPose(HandPoseData handPoseData)
     {
-        if (arg.interactorObject is XRDirectInteractor)
+        if (handPoseData != null)
         {
-            HandPoseData handData = arg.interactorObject.transform.GetComponentInChildren<HandPoseData>();
-            if (handData.handType == HandPoseData.HandModelType.Right)
-                handData.GetComponent<HandPoseControl>().SetupPose(righHandPose, poseTransitionDuration);
+            if (handPoseData.handType == HandPoseData.HandModelType.Right)
+                handPoseData.GetComponent<HandPoseControl>().SetupPose(righHandPose, poseTransitionDuration);
             else
-                handData.GetComponent<HandPoseControl>().SetupPose(leftHandPose, poseTransitionDuration);
+                handPoseData.GetComponent<HandPoseControl>().SetupPose(leftHandPose, poseTransitionDuration);
         }
     }
 
-    public void UnSetPose(BaseInteractionEventArgs arg)
+    public void UnSetPose(HandPoseData handPoseData)
     {
-        if (arg.interactorObject is XRDirectInteractor)
+        if (handPoseData != null)
         {
-            HandPoseControl handPoseControl = arg.interactorObject.transform.GetComponentInChildren<HandPoseControl>();
+            HandPoseControl handPoseControl = handPoseData.GetComponentInChildren<HandPoseControl>();
             if (handPoseControl != null)
                 handPoseControl.UnSetPose();
 

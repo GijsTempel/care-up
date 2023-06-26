@@ -25,6 +25,13 @@ public class HandPresence : MonoBehaviour
     PickableObject objectInHand;
 
 
+    public GameObject GetObjectInHand()
+    {
+        if (objectInHand != null)
+            return objectInHand.gameObject;
+        return null;
+    }
+
     private ActionTrigger.TriggerHandAction currentHandPose = ActionTrigger.TriggerHandAction.None;
     // Start is called before the first frame update
     void Start()
@@ -113,7 +120,9 @@ public class HandPresence : MonoBehaviour
         if (closestPickable == null)
             return false;
         if (PickUpObject(closestPickable))
+        {
             return true;
+        }
 
         return false;
     }
@@ -125,6 +134,9 @@ public class HandPresence : MonoBehaviour
         if (isPickedUp)
         {
             objectInHand = objToPickup;
+            GrabHandPose grabHandPose = objectInHand.GetComponent<GrabHandPose>();
+            if (grabHandPose != null && spawnHandModel != null)
+                grabHandPose.SetupPose(spawnHandModel.GetComponent<HandPoseData>());
             return true;
         }
         return false;
@@ -134,7 +146,11 @@ public class HandPresence : MonoBehaviour
     {
         if (objectInHand == null)
             return;
+        GrabHandPose grabHandPose = objectInHand.GetComponent<GrabHandPose>();
+        if (grabHandPose != null && spawnHandModel != null)
+            grabHandPose.UnSetPose(spawnHandModel.GetComponent<HandPoseData>());
         objectInHand.Drop();
+
         objectInHand = null;
     }
 
