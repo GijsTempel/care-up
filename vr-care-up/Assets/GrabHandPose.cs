@@ -21,7 +21,6 @@ public class GrabHandPose : MonoBehaviour
             righHandPose.gameObject.SetActive(false);
         if (leftHandPose != null)
             leftHandPose.gameObject.SetActive(false);
-        
     }
 
     public void SetupPose(BaseInteractionEventArgs arg)

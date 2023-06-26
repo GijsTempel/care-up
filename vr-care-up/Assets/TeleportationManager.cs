@@ -5,11 +5,9 @@ using UnityEngine.Events;
 
 public class TeleportationManager : MonoBehaviour
 {
-    public GameObject baseControllerGameObject;
     public GameObject teleportationGameObject;
     public InputActionReference teleportActivationReference;
 
-    [Space]
     public UnityEvent onTeleportActivate;
     public UnityEvent onTeleportCancel;
 

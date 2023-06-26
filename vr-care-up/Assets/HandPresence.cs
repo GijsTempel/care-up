@@ -5,6 +5,8 @@ using UnityEngine.XR;
 
 public class HandPresence : MonoBehaviour
 {
+    List<PickableObject> pickablesInArea = new List<PickableObject>();
+
     private Animator handAnimator;
     public bool showController = false;
     public GameObject handModelPrefab;
@@ -16,8 +18,12 @@ public class HandPresence : MonoBehaviour
     private PlayerScript player;
     private float triggerSavedValue = 0f;
     private float gripSavedValue = 0f;
-    private const float ACTION_TRESHOULD = 0.9f;
+    private const float ACTION_TRESHOULD_UP = 0.9f;
+    private const float ACTION_TRESHOULD_DOWN = 0.8f;
+
     private string handName = "Hand";
+    PickableObject objectInHand;
+
 
     private ActionTrigger.TriggerHandAction currentHandPose = ActionTrigger.TriggerHandAction.None;
     // Start is called before the first frame update
@@ -60,6 +66,79 @@ public class HandPresence : MonoBehaviour
         }
     }
 
+    private PickableObject FindClosestPickableInArea()
+    {
+        float dist = float.PositiveInfinity;
+        PickableObject closest = null;
+        foreach(PickableObject p in pickablesInArea)
+        {
+            if (p != null)
+            {
+                float nextDist = Vector3.Distance(transform.position, p.transform.position);
+                if (nextDist < dist)
+                {
+                    dist = nextDist;
+                    closest = p;
+                }
+            }
+        }
+        return closest;
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        Debug.Log("@ % " + name + ":" + collision.name);
+        PickableObject pickableObject = collision.GetComponent<PickableObject>();
+        if (pickableObject != null && !(pickablesInArea.Contains(pickableObject)))
+        {
+            pickablesInArea.Add(pickableObject);
+        }
+    }
+
+    private void OnTriggerExit(Collider collision)
+    {
+        PickableObject pickableObject = collision.GetComponent<PickableObject>();
+        if (pickableObject != null && (pickablesInArea.Contains(pickableObject)))
+        {
+            pickablesInArea.Remove(pickableObject);
+        }
+    }
+
+    private bool TryToPickUp()
+    {
+        if (objectInHand != null)
+            return false;
+
+        PickableObject closestPickable = FindClosestPickableInArea();
+        if (closestPickable == null)
+            return false;
+        if (PickUpObject(closestPickable))
+            return true;
+
+        return false;
+    }
+
+    private bool PickUpObject(PickableObject objToPickup)
+    {
+        bool isPickedUp = objToPickup.PickUp(transform);
+
+        if (isPickedUp)
+        {
+            objectInHand = objToPickup;
+            return true;
+        }
+        return false;
+    }
+
+    private void DropObjectFromHand()
+    {
+        if (objectInHand == null)
+            return;
+        objectInHand.Drop();
+        objectInHand = null;
+    }
+
+
     private void CastAction(ActionTrigger.TriggerHandAction triggerAction)
     {
         foreach(ActionTrigger a in GameObject.FindObjectsOfType<ActionTrigger>())
@@ -84,28 +163,36 @@ public class HandPresence : MonoBehaviour
         {
             if (targetDevice.TryGetFeatureValue(CommonUsages.grip, out float gripValue))
             {
-                if (gripValue > ACTION_TRESHOULD && gripSavedValue <= ACTION_TRESHOULD)
+                if (gripValue > ACTION_TRESHOULD_UP && gripSavedValue <= ACTION_TRESHOULD_UP)
                 {
-                    CastAction(ActionTrigger.TriggerHandAction.Grip);
+                    if (!TryToPickUp())
+                        CastAction(ActionTrigger.TriggerHandAction.Grip);
                 }
 
-                if (gripValue > ACTION_TRESHOULD)
+                if (gripValue > ACTION_TRESHOULD_UP)
                     currentHandPose = ActionTrigger.TriggerHandAction.Grip;
                 else
                     currentHandPose = ActionTrigger.TriggerHandAction.None;
 
                 gripSavedValue = gripValue;
-                handAnimator.SetFloat("Grip", gripValue);
+                if (objectInHand != null)
+                {
+                    handAnimator.SetFloat("Grip", 1f);
+                }
+                else
+                {
+                    handAnimator.SetFloat("Grip", gripValue);
+                }
             }
 
             if (targetDevice.TryGetFeatureValue(CommonUsages.trigger, out float triggerValue))
             {
                 handAnimator.SetFloat("Trigger", triggerValue);
-                if (triggerValue > ACTION_TRESHOULD && triggerSavedValue <= ACTION_TRESHOULD)
+                if (triggerValue > ACTION_TRESHOULD_UP && triggerSavedValue <= ACTION_TRESHOULD_UP)
                 {
                     CastAction(ActionTrigger.TriggerHandAction.Pinch);
                 }
-                if (triggerValue > ACTION_TRESHOULD && currentHandPose != ActionTrigger.TriggerHandAction.Grip)
+                if (triggerValue > ACTION_TRESHOULD_UP && currentHandPose != ActionTrigger.TriggerHandAction.Grip)
                     currentHandPose = ActionTrigger.TriggerHandAction.Pinch;
 
                 triggerSavedValue = triggerValue;
@@ -114,9 +201,6 @@ public class HandPresence : MonoBehaviour
 
             spawnController.SetActive(showController);
             spawnHandModel.SetActive(!showController);
-
-            //Check trigger actions
-            
         }
     }
 }
