@@ -6,6 +6,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class PickableObject : MonoBehaviour
 {
+    bool isKinematic = false;
     private PlayerScript player;
     public HandPoseData pickedBy = null;
     private Transform transformToFallow;
@@ -13,12 +14,16 @@ public class PickableObject : MonoBehaviour
     public void Drop()
     {
         transformToFallow = null;
-    }
+        if (gameObject.GetComponent<Rigidbody>() != null)
+            gameObject.GetComponent<Rigidbody>().isKinematic = isKinematic;
+}
     
     public bool PickUp(Transform handTransform)
     {
         transformToFallow = handTransform;
         Debug.Log("@ ## " + name + ":" + Random.Range(0, 9999).ToString());
+        if (gameObject.GetComponent<Rigidbody>() != null)
+            gameObject.GetComponent<Rigidbody>().isKinematic = true;
         return true;
     }
 
@@ -33,6 +38,8 @@ public class PickableObject : MonoBehaviour
     }
     private void Start()
     {
+        if (gameObject.GetComponent<Rigidbody>() != null)
+            isKinematic = gameObject.GetComponent<Rigidbody>().isKinematic;
         player = GameObject.FindObjectOfType<PlayerScript>();
         XRGrabInteractable grabInteractable = GetComponent<XRGrabInteractable>();
         grabInteractable.selectEntered.AddListener(PickupAction);
@@ -49,6 +56,7 @@ public class PickableObject : MonoBehaviour
             bool isRightHand = (handData.handType == HandPoseData.HandModelType.Right);
             player.SetObjectInHand(gameObject, isRightHand);
             pickedBy = handData;
+
         }
     }
 
@@ -62,6 +70,7 @@ public class PickableObject : MonoBehaviour
             bool isRightHand = (handData.handType == HandPoseData.HandModelType.Right);
             player.SetObjectInHand(gameObject, isRightHand, false);
             pickedBy = null;
+
         }
     }
 

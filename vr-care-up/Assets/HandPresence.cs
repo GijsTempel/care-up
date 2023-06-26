@@ -168,6 +168,10 @@ public class HandPresence : MonoBehaviour
                     if (!TryToPickUp())
                         CastAction(ActionTrigger.TriggerHandAction.Grip);
                 }
+                else if (gripValue < ACTION_TRESHOULD_DOWN && gripSavedValue >= ACTION_TRESHOULD_UP)
+                {
+                    DropObjectFromHand();
+                }
 
                 if (gripValue > ACTION_TRESHOULD_UP)
                     currentHandPose = ActionTrigger.TriggerHandAction.Grip;
