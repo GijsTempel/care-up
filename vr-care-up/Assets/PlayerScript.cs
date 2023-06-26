@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
+    const float OBJ_TRANS_DURATION = 0.2f;
     public AnimHandsTransform animHandsTransform;
     private Animator animHandsAnimator;
     public string currentWTGName = "";
@@ -93,14 +94,14 @@ public class PlayerScript : MonoBehaviour
         {
             Transform leftToolTransform = animHandsTransform.GetToolHoldBoneTransform(true);
             if (leftToolTransform != null)
-                objectInLeft.GetComponent<PickableObject>().FallowTransform(leftToolTransform);
+                objectInLeft.GetComponent<PickableObject>().FallowTransform(leftToolTransform, OBJ_TRANS_DURATION);
         }
         GameObject objectInRight = GetObjectInHand(false);
         if (objectInRight != null)
         {
             Transform rightToolTransform = animHandsTransform.GetToolHoldBoneTransform(false);
             if (rightToolTransform != null)
-                objectInRight.GetComponent<PickableObject>().FallowTransform(rightToolTransform);
+                objectInRight.GetComponent<PickableObject>().FallowTransform(rightToolTransform, OBJ_TRANS_DURATION);
         }
 
         animHandsAnimator = animHandsTransform.animator;
@@ -136,12 +137,12 @@ public class PlayerScript : MonoBehaviour
         GameObject objectInLeft = GetObjectInHand(true);
         if (objectInLeft != null)
         {
-            objectInLeft.GetComponent<PickableObject>().FallowTransform(leftHandPresence.transform);
+            objectInLeft.GetComponent<PickableObject>().FallowTransform(leftHandPresence.transform, OBJ_TRANS_DURATION);
         }
         GameObject objectInRight = GetObjectInHand(false);
         if (objectInRight != null)
         {
-            objectInRight.GetComponent<PickableObject>().FallowTransform(rightHandPresence.transform);
+            objectInRight.GetComponent<PickableObject>().FallowTransform(rightHandPresence.transform, OBJ_TRANS_DURATION);
         }
 
     }

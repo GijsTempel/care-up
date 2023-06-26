@@ -35,7 +35,6 @@ public class HandPoseControl : MonoBehaviour
                 UpdateCopyAnimationData();
             SetHandDataRoutine();
         }
-
     }
 
     public void ExitCopyAnimationState()

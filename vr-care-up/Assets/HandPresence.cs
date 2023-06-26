@@ -147,7 +147,7 @@ public class HandPresence : MonoBehaviour
         {
             player.DropFromHand(!IsLeftHand());
         }
-        bool isPickedUp = objToPickup.PickUp(transform);
+        bool isPickedUp = objToPickup.PickUp(transform, 0.02f);
 
         if (isPickedUp)
         {
