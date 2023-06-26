@@ -135,7 +135,11 @@ public class HandPoseControl : MonoBehaviour
         if (handPose.animator != null)
             handPose.animator.enabled = true;
         handDataRoutineTime = 0f;
+        startingHandPosition = new Vector3();
+        startingHandRotation = new Quaternion();
+
         handPoseMode = HandPoseMode.TransitOut;
+
     }
 
     public void SetHandDataValues(HandPoseData h2)

@@ -18,6 +18,7 @@ public class HandPresence : MonoBehaviour
     private PlayerScript player;
     private float triggerSavedValue = 0f;
     private float gripSavedValue = 0f;
+    private HandPoseControl handPoseControl;
     private const float ACTION_TRESHOULD_UP = 0.9f;
     private const float ACTION_TRESHOULD_DOWN = 0.8f;
     private string handName = "Hand";
@@ -69,6 +70,7 @@ public class HandPresence : MonoBehaviour
                 player.AddHandPoseControl(spawnHandModel.GetComponent<HandPoseControl>(), isLeftHand);
                 spawnHandModel.GetComponent<HandPoseControl>().animHandsTransform = player.animHandsTransform;
                 player.AddHandPresence(isLeftHand, this);
+                handPoseControl = spawnHandModel.GetComponent<HandPoseControl>();
             }
         }
     }
@@ -115,7 +117,12 @@ public class HandPresence : MonoBehaviour
     {
         if (objectInHand != null)
             return false;
-
+        if (player == null)
+            return false;
+        if (handPoseControl == null)
+            return false;
+        if (handPoseControl.handPoseMode != HandPoseControl.HandPoseMode.Default)
+            return false;
         PickableObject closestPickable = FindClosestPickableInArea();
         if (closestPickable == null)
             return false;
@@ -155,6 +162,10 @@ public class HandPresence : MonoBehaviour
     {
         if (objectInHand == null)
             return;
+        if (handPoseControl == null)
+            return;
+        // if (handPoseControl.handPoseMode != HandPoseControl.HandPoseMode.TransitIn)
+        //     return;
         GrabHandPose grabHandPose = objectInHand.GetComponent<GrabHandPose>();
         if (grabHandPose != null && spawnHandModel != null)
             grabHandPose.UnSetPose(spawnHandModel.GetComponent<HandPoseData>());

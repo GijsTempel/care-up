@@ -15,7 +15,6 @@ public class PlayerScript : MonoBehaviour
     private HandPresence leftHandPresence;
     private HandPresence rightHandPresence;
 
-
     public void DropFromHand(bool leftHand)
     {
         if (leftHand && leftHandPresence != null)
