@@ -5,9 +5,18 @@ using UnityEngine;
 public class PrefabHolder : MonoBehaviour
 {
     Dictionary<string, GameObject> Prefabs = new Dictionary<string, GameObject>();
-    public Transform SpawnObjectHolder;
+    public Transform spawnObjectHolder;
+    public Transform testSpawnTransform;
 
-    GameObject SpawnObject(string _name)
+    public GameObject SpawnObject(string _name, Transform positionTransform)
+    {
+        GameObject newInstance = SpawnObject(_name);
+        newInstance.transform.position = positionTransform.position;
+        newInstance.transform.rotation = positionTransform.rotation;
+        return newInstance;
+    }
+
+    public GameObject SpawnObject(string _name)
     {
         GameObject baseObj = null;
         baseObj = GetPrefab(_name);
@@ -15,8 +24,11 @@ public class PrefabHolder : MonoBehaviour
         if (baseObj != null)
         {
             newInstance = Instantiate(baseObj, Vector3.zero, Quaternion.identity) as GameObject;
-            if (SpawnObjectHolder != null)
-                newInstance.transform.SetParent(SpawnObjectHolder);
+            if (spawnObjectHolder != null)
+                newInstance.transform.SetParent(spawnObjectHolder);
+            newInstance.transform.position = testSpawnTransform.position;
+            newInstance.name = _name;
+            newInstance.SetActive(true);
         }
         return newInstance;
     }

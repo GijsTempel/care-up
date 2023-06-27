@@ -68,7 +68,6 @@ public class HandPresence : MonoBehaviour
         if (spawnHandModel != null)
         {
             player = GameObject.FindObjectOfType<PlayerScript>();
-            Debug.Log(spawnHandModel.name);
             if (player != null)
             {
                 player.AddHandPoseControl(spawnHandModel.GetComponent<HandPoseControl>(), IsLeftHand());

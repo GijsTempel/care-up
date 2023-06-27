@@ -53,7 +53,6 @@ public class ActionCollider : MonoBehaviour
             return false;
         ActionTrigger.TriggerHandAction lPose = player.GetCurrentHandPose(true);
         ActionTrigger.TriggerHandAction rPose = player.GetCurrentHandPose(false);
-        Debug.Log("@RR_" + name + ":" + Random.RandomRange(0, 9999).ToString());
         if (!(lPose == requiredHandPose || rPose == requiredHandPose))
             return false;
         foreach(GameObject h in handsInArea)
@@ -218,7 +217,6 @@ public class ActionCollider : MonoBehaviour
         {
             ss += h.name + " ";
         }
-        Debug.Log("@" + name + "_detected:" + ss);
     }
 
 }
