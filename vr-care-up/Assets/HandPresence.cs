@@ -137,6 +137,23 @@ public class HandPresence : MonoBehaviour
         return false;
     }
 
+    public bool PickUpObject()
+    {
+        if (spawnHandModel == null)
+            return false;
+
+        bool isPickedUp = objectInHand.PickUp(transform, 0.02f);
+
+        if (isPickedUp)
+        {
+            GrabHandPose grabHandPose = objectInHand.GetComponent<GrabHandPose>();
+            if (grabHandPose != null && spawnHandModel != null)
+                grabHandPose.SetupPose(spawnHandModel.GetComponent<HandPoseData>());
+            return true;
+        }
+        return false;
+    }
+
     public bool PickUpObject(PickableObject objToPickup, bool toForce = false)
     {
         if (spawnHandModel == null)

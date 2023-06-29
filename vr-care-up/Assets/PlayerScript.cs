@@ -180,20 +180,26 @@ public class PlayerScript : MonoBehaviour
     {
     if (leftHandPoseControl == null || rightHandPoseControl == null)
             return;
-        leftHandPoseControl.ExitCopyAnimationState();
-        rightHandPoseControl.ExitCopyAnimationState();     
-        animHandsTransform.fallowVRCamera = true;
+        
         GameObject objectInLeft = GetObjectInHand(true);
         if (objectInLeft != null)
-        {
             objectInLeft.GetComponent<PickableObject>().FallowTransform(leftHandPresence.transform, OBJ_TRANS_DURATION);
-        }
         GameObject objectInRight = GetObjectInHand(false);
         if (objectInRight != null)
-        {
             objectInRight.GetComponent<PickableObject>().FallowTransform(rightHandPresence.transform, OBJ_TRANS_DURATION);
-        }
 
+        if (objectInLeft != null && objectInLeft.GetComponent<GrabHandPose>() != null &&
+            objectInLeft.GetComponent<GrabHandPose>().leftHandPose != null)
+            leftHandPoseControl.ExitCopyAnimationState(objectInLeft.GetComponent<GrabHandPose>().leftHandPose, 0.5f);
+        else
+            leftHandPoseControl.ExitCopyAnimationState();
+        
+        if (objectInRight != null && objectInRight.GetComponent<GrabHandPose>() != null &&
+            objectInRight.GetComponent<GrabHandPose>().righHandPose != null)
+            rightHandPoseControl.ExitCopyAnimationState(objectInRight.GetComponent<GrabHandPose>().righHandPose, 0.5f);     
+        else
+            rightHandPoseControl.ExitCopyAnimationState();     
+        animHandsTransform.fallowVRCamera = true;
     }
     public void AddHandPoseControl(HandPoseControl control, bool isLeftHand)
     {

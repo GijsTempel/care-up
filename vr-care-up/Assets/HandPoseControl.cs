@@ -20,6 +20,9 @@ public class HandPoseControl : MonoBehaviour
     private PlayerScript player;
     private Vector3 finalRootBonePosition;
     private Quaternion finalRootBoneRotation;
+
+    private HandPoseData savedH2;
+
     private float handDataRoutineTime = float.PositiveInfinity;
     private void Start()
     {
@@ -37,12 +40,15 @@ public class HandPoseControl : MonoBehaviour
         }
     }
 
-    public void ExitCopyAnimationState()
+    public void ExitCopyAnimationState(HandPoseData h2 = null, float newPoseTransitionDuration = 0.2f)
     {
         handPoseMode = HandPoseMode.CopyAnimOut;
         if (handPose.animator != null)
             handPose.animator.enabled = true;
         handDataRoutineTime = 0f;
+        if (h2 != null)
+            SetupPose(h2, newPoseTransitionDuration);
+
     }
 
     public void SetupCopyAnimationData()
@@ -73,7 +79,6 @@ public class HandPoseControl : MonoBehaviour
         {
             return;
         }
-
         GameObject animHandRootBone = animHandsTransform.rightHandRootBone;
         Transform[] targetFingers = animHandsTransform.rightFingerBones;
         if (handPose.handType == HandPoseData.HandModelType.Left)
@@ -105,10 +110,11 @@ public class HandPoseControl : MonoBehaviour
 
     public void SetupPose(HandPoseData newHandPoseData, float newPoseTransitionDuration = 0.2f)
     {
+        savedH2 = newHandPoseData;
         poseTransitionDuration = newPoseTransitionDuration;
         if (handPose.animator != null)
             handPose.animator.enabled = false;
-        SetHandDataValues(newHandPoseData);
+        // SetHandDataValues(newHandPoseData);
         handDataRoutineTime = 0f;
         
         handPoseMode = HandPoseMode.TransitIn;
@@ -121,7 +127,7 @@ public class HandPoseControl : MonoBehaviour
         handDataRoutineTime = 0f;
         startingHandPosition = new Vector3();
         startingHandRotation = new Quaternion();
-
+        savedH2 = null;
         handPoseMode = HandPoseMode.TransitOut;
 
     }
@@ -150,7 +156,13 @@ public class HandPoseControl : MonoBehaviour
 
     private void SetHandDataRoutine()
     {
+        // if (handPoseMode == HandPoseMode.CopyAnimOut && )
         float lerpValue = handDataRoutineTime / poseTransitionDuration;
+        if (savedH2 != null)
+        {
+            SetHandDataValues(savedH2);
+            Debug.Log("@% % " + name + ":" + finalHandPosition.ToString());
+        }
         
         Vector3 p = Vector3.Lerp(startingHandPosition, finalHandPosition, lerpValue);
         Quaternion r = Quaternion.Lerp(startingHandRotation, finalHandRotation, lerpValue);
@@ -174,18 +186,18 @@ public class HandPoseControl : MonoBehaviour
             handPose.rootBone.position = Vector3.Lerp(handPose.rootBone.position, finalRootBonePosition, lerpValue);
             handPose.rootBone.rotation = Quaternion.Lerp(handPose.rootBone.rotation, finalRootBoneRotation, lerpValue);
         }
-        if (handPoseMode == HandPoseMode.CopyAnimOut)
+        else
         {
             handPose.rootBone.localPosition = Vector3.Lerp(handPose.rootBone.localPosition, handPose.GetBaseRootBonePosition(), lerpValue);
             handPose.rootBone.localRotation = Quaternion.Lerp(handPose.rootBone.localRotation, handPose.GetBaseRootBoneRotation(), lerpValue);
         }
 
-
         handDataRoutineTime += Time.deltaTime;
-        if (handDataRoutineTime > poseTransitionDuration && 
+        if (handDataRoutineTime > poseTransitionDuration &&
             (handPoseMode == HandPoseMode.TransitIn || handPoseMode == HandPoseMode.TransitOut || handPoseMode == HandPoseMode.CopyAnimOut))
-            {
-                handPoseMode = HandPoseMode.Default;
-            }
+        {
+            handPoseMode = HandPoseMode.Default;
+            savedH2 = null;
+        }
     }
 }
