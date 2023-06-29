@@ -57,10 +57,14 @@ public class PickableObject : MonoBehaviour
         routineTime += Time.deltaTime;
 
     }
-    private void Start()
-    {
+
+   void Awake()
+   {
         if (gameObject.GetComponent<Rigidbody>() != null)
             isKinematic = gameObject.GetComponent<Rigidbody>().isKinematic;
+   }
+    private void Start()
+    {
         player = GameObject.FindObjectOfType<PlayerScript>();
     }
 }

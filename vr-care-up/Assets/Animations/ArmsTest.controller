@@ -146,14 +146,29 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6d30dcf00f2bb5428654e902e9bbb73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   showFrame: 0
   objectName: insuline
-  positionTransform: {fileID: 0}
+  positionTransformName: TestSpawnPos
+--- !u!114 &-3458991866570287112
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2b53f1540523e844a9744ed18bbf04e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showFrame: 70
+  objectName: insuline
+  toLeftHand: 0
 --- !u!1101 &-1356698524488619182
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -262,6 +277,20 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
+--- !u!114 &40173920083782343
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c74db531fddecb7969d19fd3d472951f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deleteFrame: 30
+  isLeftHand: 0
 --- !u!114 &440338929870094496
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -340,6 +369,9 @@ AnimatorState:
   m_StateMachineBehaviours:
   - {fileID: -5294710944036998215}
   - {fileID: 6953382203951355584}
+  - {fileID: 40173920083782343}
+  - {fileID: 4011097633275883264}
+  - {fileID: -3458991866570287112}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -372,6 +404,21 @@ MonoBehaviour:
   - all
   toShow: 1
   meshRenderer: 0
+--- !u!114 &4011097633275883264
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6d30dcf00f2bb5428654e902e9bbb73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showFrame: 70
+  objectName: insuline
+  positionTransformName: TestSpawnPos
 --- !u!1107 &4028780193862941220
 AnimatorStateMachine:
   serializedVersion: 6
@@ -545,7 +592,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 499205302ad2f1a678fc71a913692a95, type: 3}
   m_Name: 
@@ -571,3 +618,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showFrame: 0
   objectName: insuline
+  toLeftHand: 0

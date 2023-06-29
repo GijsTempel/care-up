@@ -57,6 +57,44 @@ public class PlayerScript : MonoBehaviour
             return rightHandPresence.GetCurrentHandPose();
         return ActionTrigger.TriggerHandAction.None;
     }
+
+    public void ForcePickUpObject(PickableObject pObject, bool isLeftHand)
+    {
+        if (pObject == null)
+            return;
+        HandPresence currentHand = rightHandPresence;
+        if (isLeftHand)
+            currentHand = leftHandPresence;
+
+        currentHand.PickUpObject(pObject, true);
+        if (leftHandPoseControl.handPoseMode == HandPoseControl.HandPoseMode.CopyAnimIn)
+        {
+            ObjectsInHandsFallowAnimation(true);
+        }
+    }
+
+
+
+    public void ForceDeleteObjectFromHand(bool isLeftHand)
+    {
+        GameObject objInHand = null;
+        HandPresence currentHand = rightHandPresence;
+        if (isLeftHand && leftHandPresence != null)
+        {
+            objInHand = leftHandPresence.GetObjectInHand();
+            currentHand = rightHandPresence;
+        }
+        else if (!isLeftHand && rightHandPresence != null)
+        {
+            objInHand = rightHandPresence.GetObjectInHand();
+            currentHand = rightHandPresence;
+        }
+        if (objInHand == null)
+            return;
+        currentHand.DropObjectFromHand(true);
+        Destroy(objInHand);
+
+    }
     public bool TriggerAction(string triggerName, GameObject cinematicTarget = null)
     {
         Debug.Log("@$$$" + name + "TriggerAction:" + triggerName + Random.Range(0, 9999).ToString());
@@ -89,25 +127,36 @@ public class PlayerScript : MonoBehaviour
         }
         leftHandPoseControl.SetupCopyAnimationData();
         rightHandPoseControl.SetupCopyAnimationData();
+
+        ObjectsInHandsFallowAnimation();
+
+        animHandsAnimator = animHandsTransform.animator;
+        animHandsAnimator.SetTrigger(triggerName);
+        return true;
+    }
+
+    private void ObjectsInHandsFallowAnimation(bool noTransition = false)
+    {
+        float transuitionDuration = OBJ_TRANS_DURATION;
+        if (noTransition)
+            transuitionDuration = 0.001f;
+
         GameObject objectInLeft = GetObjectInHand(true);
         if (objectInLeft != null)
         {
             Transform leftToolTransform = animHandsTransform.GetToolHoldBoneTransform(true);
             if (leftToolTransform != null)
-                objectInLeft.GetComponent<PickableObject>().FallowTransform(leftToolTransform, OBJ_TRANS_DURATION);
+                objectInLeft.GetComponent<PickableObject>().FallowTransform(leftToolTransform, transuitionDuration);
         }
         GameObject objectInRight = GetObjectInHand(false);
         if (objectInRight != null)
         {
             Transform rightToolTransform = animHandsTransform.GetToolHoldBoneTransform(false);
             if (rightToolTransform != null)
-                objectInRight.GetComponent<PickableObject>().FallowTransform(rightToolTransform, OBJ_TRANS_DURATION);
+                objectInRight.GetComponent<PickableObject>().FallowTransform(rightToolTransform, transuitionDuration);
         }
-
-        animHandsAnimator = animHandsTransform.animator;
-        animHandsAnimator.SetTrigger(triggerName);
-        return true;
     }
+
 
     public bool IsInCopyAnimationState()
     {

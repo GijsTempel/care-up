@@ -6,6 +6,7 @@ public class AddObjectToHandAtFrame : StateMachineBehaviour
 {
     public int showFrame;
     public string objectName;
+    public bool toLeftHand;
 
     protected float frame;
     protected float prevFrame;
@@ -45,9 +46,11 @@ public class AddObjectToHandAtFrame : StateMachineBehaviour
     private void AddObject()
     {
         PrefabHolder prefabHolder = GameObject.FindObjectOfType<PrefabHolder>();
-        if (prefabHolder != null)
+        PlayerScript player = GameObject.FindObjectOfType<PlayerScript>();
+
+        if (prefabHolder != null && player != null)
         {
-            prefabHolder.SpawnObject(objectName);
+            player.ForcePickUpObject(prefabHolder.SpawnObject(objectName).GetComponent<PickableObject>(), toLeftHand);
         }
         else
         {

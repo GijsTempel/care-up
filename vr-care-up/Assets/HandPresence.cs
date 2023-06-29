@@ -137,7 +137,7 @@ public class HandPresence : MonoBehaviour
         return false;
     }
 
-    public bool PickUpObject(PickableObject objToPickup)
+    public bool PickUpObject(PickableObject objToPickup, bool toForce = false)
     {
         if (spawnHandModel == null)
             return false;
@@ -151,25 +151,29 @@ public class HandPresence : MonoBehaviour
         if (isPickedUp)
         {
             objectInHand = objToPickup;
-            GrabHandPose grabHandPose = objectInHand.GetComponent<GrabHandPose>();
-            if (grabHandPose != null && spawnHandModel != null)
-                grabHandPose.SetupPose(spawnHandModel.GetComponent<HandPoseData>());
+            if (!toForce)
+            {
+                GrabHandPose grabHandPose = objectInHand.GetComponent<GrabHandPose>();
+                if (grabHandPose != null && spawnHandModel != null)
+                    grabHandPose.SetupPose(spawnHandModel.GetComponent<HandPoseData>());
+            }
             return true;
         }
         return false;
     }
 
-    public void DropObjectFromHand()
+    public void DropObjectFromHand(bool noPoseChange = false)
     {
         if (objectInHand == null)
             return;
         if (handPoseControl == null)
             return;
-        // if (handPoseControl.handPoseMode != HandPoseControl.HandPoseMode.TransitIn)
-        //     return;
-        GrabHandPose grabHandPose = objectInHand.GetComponent<GrabHandPose>();
-        if (grabHandPose != null && spawnHandModel != null)
-            grabHandPose.UnSetPose(spawnHandModel.GetComponent<HandPoseData>());
+        if (!noPoseChange)
+        {
+            GrabHandPose grabHandPose = objectInHand.GetComponent<GrabHandPose>();
+            if (grabHandPose != null && spawnHandModel != null)
+                grabHandPose.UnSetPose(spawnHandModel.GetComponent<HandPoseData>());
+        }
         objectInHand.Drop();
 
         objectInHand = null;

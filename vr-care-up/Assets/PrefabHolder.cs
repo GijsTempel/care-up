@@ -6,7 +6,6 @@ public class PrefabHolder : MonoBehaviour
 {
     Dictionary<string, GameObject> Prefabs = new Dictionary<string, GameObject>();
     public Transform spawnObjectHolder;
-    public Transform testSpawnTransform;
 
     public GameObject SpawnObject(string _name, Transform positionTransform)
     {
@@ -26,7 +25,7 @@ public class PrefabHolder : MonoBehaviour
             newInstance = Instantiate(baseObj, Vector3.zero, Quaternion.identity) as GameObject;
             if (spawnObjectHolder != null)
                 newInstance.transform.SetParent(spawnObjectHolder);
-            newInstance.transform.position = testSpawnTransform.position;
+            newInstance.transform.position = spawnObjectHolder.position;
             newInstance.name = _name;
             newInstance.SetActive(true);
         }
