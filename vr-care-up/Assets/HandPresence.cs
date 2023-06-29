@@ -185,6 +185,8 @@ public class HandPresence : MonoBehaviour
             return;
         if (handPoseControl == null)
             return;
+        if (handPoseControl.handPoseMode == HandPoseControl.HandPoseMode.CopyAnimIn)
+            return;
         if (!noPoseChange)
         {
             GrabHandPose grabHandPose = objectInHand.GetComponent<GrabHandPose>();
