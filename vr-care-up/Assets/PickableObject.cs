@@ -13,7 +13,7 @@ public class PickableObject : MonoBehaviour
     private Quaternion startRotation;
 
 
-    bool isKinematic = true;
+    bool isKinematic = false;
     private PlayerScript player;
     private Transform transformToFallow;
 

@@ -69,6 +69,18 @@ public class ShowOnFrame : StateMachineBehaviour
         else
         {
             GameObject controlObject = GameObject.Find(ControlObjectName);
+            PlayerScript player = GameObject.FindObjectOfType<PlayerScript>();
+            if (player != null)
+            {
+                GameObject leftObj = player.GetObjectInHand(true);
+                GameObject rightObj = player.GetObjectInHand(false);
+
+                if (leftObj != null && leftObj.name == ControlObjectName && leftObj.GetComponent<ShowHideObjects>() != null)
+                    controlObject = leftObj;
+                else if (rightObj != null && rightObj.name == ControlObjectName && rightObj.GetComponent<ShowHideObjects>() != null)
+                    controlObject = rightObj;
+                
+            }
             if (controlObject != null && ObjNames.Count != 0)
             {
                 if (controlObject.GetComponent<ShowHideObjects>() != null)
