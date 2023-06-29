@@ -244,7 +244,10 @@ public class HandPresence : MonoBehaviour
             }
             Debug.Log("@HandPose_" + name + ":" + currentHandPose.ToString());
 
-            spawnController.SetActive(showController);
+            if (spawnController != null)
+            {
+                spawnController.SetActive(showController);
+            }
             spawnHandModel.SetActive(!showController);
         }
     }
