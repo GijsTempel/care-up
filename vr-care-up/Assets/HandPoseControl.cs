@@ -20,6 +20,7 @@ public class HandPoseControl : MonoBehaviour
     private PlayerScript player;
     private Vector3 finalRootBonePosition;
     private Quaternion finalRootBoneRotation;
+    private Quaternion baseHandRotation;
 
     private HandPoseData savedH2;
 
@@ -28,6 +29,7 @@ public class HandPoseControl : MonoBehaviour
     {
         player = GameObject.FindObjectOfType<PlayerScript>();
         handPose = GetComponent<HandPoseData>();
+        baseHandRotation = handPose.root.localRotation;;
     }
 
     void Update()
@@ -126,7 +128,9 @@ public class HandPoseControl : MonoBehaviour
             handPose.animator.enabled = true;
         handDataRoutineTime = 0f;
         startingHandPosition = new Vector3();
-        startingHandRotation = new Quaternion();
+        startingHandRotation = baseHandRotation;
+        // finalHandPosition = new Vector3();
+        // finalHandRotation = baseHandRotation;
         savedH2 = null;
         handPoseMode = HandPoseMode.TransitOut;
 
