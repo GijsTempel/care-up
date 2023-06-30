@@ -5,7 +5,7 @@ using UnityEngine;
 public class HandPoseControl : MonoBehaviour
 {
     public enum HandPoseMode { Default, TransitIn, TransitOut, CopyAnimIn, CopyAnimOut}
-
+    public Transform objectHolder;
     public HandPoseMode handPoseMode = HandPoseMode.Default;
     public bool copyAnimation = false;
     public AnimHandsTransform animHandsTransform;
@@ -176,8 +176,8 @@ public class HandPoseControl : MonoBehaviour
             r = Quaternion.Lerp(finalHandRotation, startingHandRotation, lerpValue);
         }
 
-        handPose.root.localPosition = p;
-        handPose.root.localRotation = r;
+        // handPose.root.localPosition = p;
+        // handPose.root.localRotation = r;
         for (int i = 0; i < finalFingerRotations.Length; i++)
         {
             if (handPoseMode == HandPoseMode.TransitIn || handPoseMode == HandPoseMode.CopyAnimIn)
