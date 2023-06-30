@@ -11,16 +11,13 @@ public class HandPoseControl : MonoBehaviour
     public AnimHandsTransform animHandsTransform;
     private float poseTransitionDuration = 0.2f;
     private HandPoseData handPose;
-    private Vector3 startingHandPosition;
     private Vector3 finalHandPosition;
-    private Quaternion startingHandRotation;
     private Quaternion finalHandRotation;
     private Quaternion[] startingFingerRotations;
     private Quaternion[] finalFingerRotations;
     private PlayerScript player;
     private Vector3 finalRootBonePosition;
     private Quaternion finalRootBoneRotation;
-    private Quaternion baseHandRotation;
 
     private HandPoseData savedH2;
 
@@ -29,7 +26,6 @@ public class HandPoseControl : MonoBehaviour
     {
         player = GameObject.FindObjectOfType<PlayerScript>();
         handPose = GetComponent<HandPoseData>();
-        baseHandRotation = handPose.root.localRotation;;
     }
 
     void Update()
@@ -61,10 +57,10 @@ public class HandPoseControl : MonoBehaviour
         handDataRoutineTime = 0f;
         poseTransitionDuration = 0.5f;
 
-        startingHandPosition = handPose.root.localPosition;
+        // startingHandPosition = handPose.root.localPosition;
 
-        startingHandRotation = handPose.root.localRotation;
-        finalHandRotation = startingHandRotation;
+        // startingHandRotation = handPose.root.localRotation;
+        // finalHandRotation = startingHandRotation;
 
         startingFingerRotations = new Quaternion[handPose.fingerBones.Length];
         finalFingerRotations = new Quaternion[handPose.fingerBones.Length];
@@ -94,9 +90,9 @@ public class HandPoseControl : MonoBehaviour
             // Debug.Log("@" + name + "_rand:" + Random.RandomRange(0, 9999).ToString());
             finalRootBonePosition = animHandRootBone.transform.position;;
             finalRootBoneRotation = animHandRootBone.transform.rotation;
-            finalHandPosition = startingHandPosition;
-            startingHandRotation = handPose.root.localRotation;
-            finalHandRotation = startingHandRotation;
+            // finalHandPosition = startingHandPosition;
+            // startingHandRotation = handPose.root.localRotation;
+            // finalHandRotation = startingHandRotation;
             for (int i = 0; i < handPose.fingerBones.Length; i++)
             {
                 Quaternion rot = targetFingers[i].localRotation;
@@ -116,7 +112,6 @@ public class HandPoseControl : MonoBehaviour
         poseTransitionDuration = newPoseTransitionDuration;
         if (handPose.animator != null)
             handPose.animator.enabled = false;
-        // SetHandDataValues(newHandPoseData);
         handDataRoutineTime = 0f;
         
         handPoseMode = HandPoseMode.TransitIn;
@@ -127,10 +122,8 @@ public class HandPoseControl : MonoBehaviour
         if (handPose.animator != null)
             handPose.animator.enabled = true;
         handDataRoutineTime = 0f;
-        startingHandPosition = new Vector3();
-        startingHandRotation = baseHandRotation;
-        // finalHandPosition = new Vector3();
-        // finalHandRotation = baseHandRotation;
+        // startingHandPosition = new Vector3();
+        // startingHandRotation = baseHandRotation;
         savedH2 = null;
         handPoseMode = HandPoseMode.TransitOut;
 
@@ -138,15 +131,11 @@ public class HandPoseControl : MonoBehaviour
 
     public void SetHandDataValues(HandPoseData h2)
     {
-        startingHandPosition = handPose.root.localPosition;
-        finalHandPosition = h2.root.localPosition;
-        Vector3 parentOffset = handPose.GetParentOffset();
-        finalHandPosition.x = (finalHandPosition.x * h2.root.transform.parent.localScale.x) - parentOffset.x;
-        finalHandPosition.y = (finalHandPosition.y * h2.root.transform.parent.localScale.y) - parentOffset.y;
-        finalHandPosition.z = (finalHandPosition.z * h2.root.transform.parent.localScale.z) - parentOffset.z;
+        // startingHandPosition = handPose.root.localPosition;
+        // startingHandRotation = handPose.root.localRotation;
 
-        startingHandRotation = handPose.root.localRotation;
-        finalHandRotation = h2.root.localRotation;
+        finalHandRotation = Quaternion.Inverse(h2.root.localRotation);
+        finalHandPosition = finalHandRotation * -h2.root.localPosition;
 
         startingFingerRotations = new Quaternion[handPose.fingerBones.Length];
         finalFingerRotations = new Quaternion[handPose.fingerBones.Length];
@@ -168,16 +157,9 @@ public class HandPoseControl : MonoBehaviour
             Debug.Log("@% % " + name + ":" + finalHandPosition.ToString());
         }
         
-        Vector3 p = Vector3.Lerp(startingHandPosition, finalHandPosition, lerpValue);
-        Quaternion r = Quaternion.Lerp(startingHandRotation, finalHandRotation, lerpValue);
-        if (handPoseMode == HandPoseMode.TransitOut || handPoseMode == HandPoseMode.CopyAnimOut)
-        {
-            p = Vector3.Lerp(finalHandPosition, startingHandPosition, lerpValue);
-            r = Quaternion.Lerp(finalHandRotation, startingHandRotation, lerpValue);
-        }
+        objectHolder.localPosition = finalHandPosition;
+        objectHolder.localRotation = finalHandRotation;
 
-        // handPose.root.localPosition = p;
-        // handPose.root.localRotation = r;
         for (int i = 0; i < finalFingerRotations.Length; i++)
         {
             if (handPoseMode == HandPoseMode.TransitIn || handPoseMode == HandPoseMode.CopyAnimIn)

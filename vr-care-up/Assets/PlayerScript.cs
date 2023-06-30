@@ -183,10 +183,14 @@ public class PlayerScript : MonoBehaviour
         
         GameObject objectInLeft = GetObjectInHand(true);
         if (objectInLeft != null)
-            objectInLeft.GetComponent<PickableObject>().FallowTransform(leftHandPresence.transform, OBJ_TRANS_DURATION);
+            objectInLeft.GetComponent<PickableObject>().FallowTransform(
+                leftHandPresence.GetHandPoseControl().objectHolder, 
+                OBJ_TRANS_DURATION);
         GameObject objectInRight = GetObjectInHand(false);
         if (objectInRight != null)
-            objectInRight.GetComponent<PickableObject>().FallowTransform(rightHandPresence.transform, OBJ_TRANS_DURATION);
+            objectInRight.GetComponent<PickableObject>().FallowTransform(
+                rightHandPresence.GetHandPoseControl().objectHolder, 
+                OBJ_TRANS_DURATION);
 
         if (objectInLeft != null && objectInLeft.GetComponent<GrabHandPose>() != null &&
             objectInLeft.GetComponent<GrabHandPose>().leftHandPose != null)

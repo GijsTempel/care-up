@@ -25,6 +25,11 @@ public class HandPresence : MonoBehaviour
     PickableObject objectInHand;
 
 
+    public HandPoseControl GetHandPoseControl()
+    {
+        return handPoseControl;
+    }
+
     public GameObject GetObjectInHand()
     {
         if (objectInHand != null)
