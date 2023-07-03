@@ -57,7 +57,7 @@ public class ActionCollider : MonoBehaviour
             return false;
         foreach(GameObject h in handsInArea)
         {
-            if (triggerHand != ActionTrigger.TriggerHand.None || triggerHand != ActionTrigger.TriggerHand.Any)
+            if (triggerHand == ActionTrigger.TriggerHand.None || triggerHand == ActionTrigger.TriggerHand.Any)
             {
                 if (h.tag == "LeftHand" || lPose == requiredHandPose)
                     return true;
@@ -66,10 +66,10 @@ public class ActionCollider : MonoBehaviour
             }
             else
             {
-                if (triggerHand != ActionTrigger.TriggerHand.Left &&
+                if (triggerHand == ActionTrigger.TriggerHand.Left &&
                     h.tag == "LeftHand" || lPose == requiredHandPose)
                     return true;
-                else if (triggerHand != ActionTrigger.TriggerHand.Right &&
+                else if (triggerHand == ActionTrigger.TriggerHand.Right &&
                     h.tag == "RightHand" || rPose == requiredHandPose)
                     return true;
             }
