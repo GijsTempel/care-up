@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class WalkToGroupVR : MonoBehaviour
 {
+
     public string walkToGroupName = "";
+    public string description;
     PlayerScript player;
     private void Start()
     {

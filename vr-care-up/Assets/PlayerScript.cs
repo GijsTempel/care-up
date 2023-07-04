@@ -25,6 +25,11 @@ public class PlayerScript : MonoBehaviour
         return null;
     }
 
+    public bool Away()
+    {
+        return currentWTGName == "";
+    }
+
     public void DropFromHand(bool leftHand)
     {
         if (leftHand && leftHandPresence != null)
