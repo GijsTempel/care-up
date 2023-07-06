@@ -30,6 +30,12 @@ public class HandPoseControl : MonoBehaviour
 
     void Update()
     {
+        if (copyAnimation)
+        {
+            copyAnimation = false;
+            handPoseMode = HandPoseMode.CopyAnimIn;
+            handDataRoutineTime = 0f;
+        }
         if (handPoseMode != HandPoseMode.Default && handDataRoutineTime < float.PositiveInfinity)
         {
             if (handPoseMode == HandPoseMode.CopyAnimIn)
