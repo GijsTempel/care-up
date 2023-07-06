@@ -10,6 +10,7 @@ public class ActionTrigger : MonoBehaviour
     PlayerScript player;
     public string triggerName = "";
     public PickableObject pickable;
+    public bool mirrorAnimation = false;
 
     List<ActionCollider> actionColliders = new List<ActionCollider>();
     // Start is called before the first frame update
@@ -55,7 +56,7 @@ public class ActionTrigger : MonoBehaviour
         GameObject target = null;
         if (transform.Find("CinematicTarget") != null)
             target = transform.Find("CinematicTarget").gameObject;
-        bool actionAccepted = player.TriggerAction(triggerName, target);
+        bool actionAccepted = player.TriggerAction(triggerName, target, mirrorAnimation);
         if (actionAccepted && actionNumberLimit > 0)
             actionNumberLimit--;
     }

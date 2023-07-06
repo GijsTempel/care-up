@@ -100,7 +100,7 @@ public class PlayerScript : MonoBehaviour
         Destroy(objInHand);
 
     }
-    public bool TriggerAction(string triggerName, GameObject cinematicTarget = null)
+    public bool TriggerAction(string triggerName, GameObject cinematicTarget = null, bool mirrorAnimation = false)
     {
         Debug.Log("@$$$" + name + "TriggerAction:" + triggerName + Random.Range(0, 9999).ToString());
         if (leftHandPoseControl == null || rightHandPoseControl == null)
@@ -130,8 +130,8 @@ public class PlayerScript : MonoBehaviour
             float rotAngle = Vector3.Angle(cinForward, camForward);
             // transform.RotateAround(transform.position, Vector3.up, rotAngle);
         }
-        leftHandPoseControl.SetupCopyAnimationData();
-        rightHandPoseControl.SetupCopyAnimationData();
+        leftHandPoseControl.SetupCopyAnimationData(mirrorAnimation);
+        rightHandPoseControl.SetupCopyAnimationData(mirrorAnimation);
 
         ObjectsInHandsFallowAnimation();
 
