@@ -18,7 +18,7 @@ public class HandPoseControl : MonoBehaviour
     private PlayerScript player;
     private Vector3 finalRootBonePosition;
     private Quaternion finalRootBoneRotation;
-
+    private bool mirroredAnimation = false;
     private HandPoseData savedH2;
 
     private float handDataRoutineTime = float.PositiveInfinity;
@@ -33,8 +33,7 @@ public class HandPoseControl : MonoBehaviour
         if (copyAnimation)
         {
             copyAnimation = false;
-            handPoseMode = HandPoseMode.CopyAnimIn;
-            handDataRoutineTime = 0f;
+            SetupCopyAnimationData(true);
         }
         if (handPoseMode != HandPoseMode.Default && handDataRoutineTime < float.PositiveInfinity)
         {
@@ -55,7 +54,7 @@ public class HandPoseControl : MonoBehaviour
 
     }
 
-    public void SetupCopyAnimationData()
+    public void SetupCopyAnimationData(bool mirrored = false)
     {
         if (handPose.animator != null)
             handPose.animator.enabled = false;
@@ -64,7 +63,7 @@ public class HandPoseControl : MonoBehaviour
         poseTransitionDuration = 0.5f;
         startingFingerRotations = new Quaternion[handPose.fingerBones.Length];
         finalFingerRotations = new Quaternion[handPose.fingerBones.Length];
-
+        mirroredAnimation = mirrored;
         for (int i = 0; i < handPose.fingerBones.Length; i++)
         {
             startingFingerRotations[i] = handPose.fingerBones[i].localRotation;
@@ -74,24 +73,32 @@ public class HandPoseControl : MonoBehaviour
     public void UpdateCopyAnimationData()
     {
         if (animHandsTransform == null)
-        {
             return;
-        }
+
         GameObject animHandRootBone = animHandsTransform.rightHandRootBone;
         Transform[] targetFingers = animHandsTransform.rightFingerBones;
-        if (handPose.handType == HandPoseData.HandModelType.Left)
+        if ((handPose.handType == HandPoseData.HandModelType.Left && !mirroredAnimation) ||
+            (handPose.handType == HandPoseData.HandModelType.Right && mirroredAnimation))
         {
             animHandRootBone = animHandsTransform.leftHandRootBone;
             targetFingers = animHandsTransform.leftFingerBones;
         }
         if (animHandRootBone != null)
         {
-            finalRootBonePosition = animHandRootBone.transform.position;;
+            finalRootBonePosition = animHandRootBone.transform.position;
             finalRootBoneRotation = animHandRootBone.transform.rotation;
+            if (mirroredAnimation)
+            {
+                //finalRootBonePosition = -Vector3.Reflect(finalRootBonePosition, animHandsTransform.transform.forward);
+                finalRootBonePosition.x *= -1;
+                finalRootBoneRotation.y *= -1;
+                finalRootBoneRotation.z *= -1;
+            }
             for (int i = 0; i < handPose.fingerBones.Length; i++)
             {
                 Quaternion rot = targetFingers[i].localRotation;
-                if (handPose.handType == HandPoseData.HandModelType.Left)
+                if (handPose.handType == HandPoseData.HandModelType.Left && !mirroredAnimation ||
+                    handPose.handType == HandPoseData.HandModelType.Right && mirroredAnimation)
                 {
                     rot.y *= -1;
                     rot.z *= -1;
