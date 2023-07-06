@@ -89,10 +89,14 @@ public class HandPoseControl : MonoBehaviour
             finalRootBoneRotation = animHandRootBone.transform.rotation;
             if (mirroredAnimation)
             {
-                //finalRootBonePosition = -Vector3.Reflect(finalRootBonePosition, animHandsTransform.transform.forward);
-                finalRootBonePosition.x *= -1;
-                finalRootBoneRotation.y *= -1;
-                finalRootBoneRotation.z *= -1;
+                finalRootBonePosition = Vector3.Scale(Vector3.Reflect(finalRootBonePosition, animHandsTransform.transform.forward),
+                    new Vector3(-1f, 1f, -1f));
+                //finalRootBonePosition.x *= -1;
+
+
+                finalRootBoneRotation = Quaternion.LookRotation(Vector3.Reflect(finalRootBoneRotation * Vector3.forward, animHandsTransform.transform.right),
+                    Vector3.Reflect(finalRootBoneRotation * Vector3.up, animHandsTransform.transform.right));
+
             }
             for (int i = 0; i < handPose.fingerBones.Length; i++)
             {
@@ -106,6 +110,10 @@ public class HandPoseControl : MonoBehaviour
                 finalFingerRotations[i] = rot;
             }
         }
+    }
+    private Quaternion ReflectRotation(Quaternion source, Vector3 normal)
+    {
+        return Quaternion.LookRotation(Vector3.Reflect(source * Vector3.forward, normal), Vector3.Reflect(source * Vector3.up, normal));
     }
 
     public void SetupPose(HandPoseData newHandPoseData, float newPoseTransitionDuration = 0.2f)
