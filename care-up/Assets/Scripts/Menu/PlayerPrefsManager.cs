@@ -195,6 +195,11 @@ public class PlayerPrefsManager : MonoBehaviour
             purchasedScenes.Add(sku);
     }
 
+    static public bool HasPurchasedScenes()
+    {
+        return purchasedScenes.Count > 0;
+    }
+
     static public void ClearSKU()
     {
         purchasedScenes = new List<string>();

@@ -323,7 +323,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
             {
                 //Show only scenes and scene groups, that are available for current player
 #if UNITY_IOS || UNITY_STANDALONE_OSX
-                if (!(pp.subscribed || !sceneInfo.demoLock))
+                if (!(pp.subscribed || !sceneInfo.demoLock || PlayerPrefsManager.HasPurchasedScenes()))
                     continue;
 #endif
 
@@ -372,7 +372,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
         {
             //Show only scenes and scene groups, that are available for current player
 #if UNITY_IOS || UNITY_STANDALONE_OSX
-            if (!(pp.subscribed || !scenesInfo[key].demoLock))
+            if (!(pp.subscribed || !scenesInfo[key].demoLock || PlayerPrefsManager.HasPurchasedScenes()))
                 continue;
 #endif
 
