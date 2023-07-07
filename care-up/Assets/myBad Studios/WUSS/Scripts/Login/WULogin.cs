@@ -207,8 +207,9 @@ namespace MBS
             string ftf = FieldsToFetch + ",auth_cookies";
             fields.Set( "wul_fields", ftf );
             WPServer.ContactServer( WULActions.DoLogin, filepath, LOGINConstant, fields, __onLoginSuccess, onLoginFailed );
+
         }
-        
+
 
 
         static public void AttemptTrustedLogin( CMLData fields )
@@ -257,6 +258,7 @@ namespace MBS
             onLoggedIn?.Invoke( data );
             if ( email != string.Empty && null != __data && __data.FetchGravatar )
                 FetchProfileImage( __SetProfileImage, __data.GravatarType );
+
         }
 
         static void __SetProfileImage( Texture2D image )
