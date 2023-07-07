@@ -11,11 +11,32 @@ public class ActionHandler : MonoBehaviour
             actionManager = GameObject.FindObjectOfType<ActionManager>();
         if (actionManager == null)
             return;
-        if (actionType == ActionManager.ActionType.ObjectUse)
-        {
-            actionManager.OnUseAction(leftHandObjectName);
-        }
 
+        switch (actionType)
+        {
+            case ActionManager.ActionType.PersonTalk:
+                actionManager.OnTalkAction(leftHandObjectName);
+                break;
+            case ActionManager.ActionType.ObjectUse:
+                actionManager.OnUseAction(leftHandObjectName);
+                break;
+            case ActionManager.ActionType.ObjectCombine:
+                actionManager.OnCombineAction(leftHandObjectName, rightHandObjectName);
+                break;
+            case ActionManager.ActionType.ObjectExamine:
+                string expected = (rightHandObjectName == "") ? "good" : rightHandObjectName;
+                actionManager.OnExamineAction(leftHandObjectName, expected);
+                break;
+            case ActionManager.ActionType.ObjectUseOn:
+                actionManager.OnUseOnAction(leftHandObjectName, rightHandObjectName);
+                break;
+            case ActionManager.ActionType.SequenceStep:
+                actionManager.OnSequenceStepAction(leftHandObjectName);
+                break;
+            default:
+                Debug.LogWarning(actionType + " is not supported yet in ActionHandler. TODO");
+                break;
+        }
     }
     
 }

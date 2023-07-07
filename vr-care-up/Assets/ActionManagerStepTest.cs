@@ -8,10 +8,18 @@ public class ActionManagerStepTest : MonoBehaviour
     public string leftObj;
     public string rightObj;
 
+    private static ActionHandler actionHandle = null;
+
+    public void Start()
+    {
+        if (actionHandle == null)
+        {
+            actionHandle = GameObject.FindObjectOfType<ActionHandler>();
+        }
+    }
 
     public void ActionButtonClicked()
     {
-        ActionHandler actionHandle = GameObject.FindObjectOfType<ActionHandler>();
         if (actionHandle != null)
         {
             actionHandle.TryExecuteAction(actionType, leftObj, rightObj);
