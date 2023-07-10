@@ -9,11 +9,11 @@ public class ActionCollider : MonoBehaviour
     private PlayerScript player;
     public ActionTrigger.TriggerHand triggerHand;
     public ActionTrigger.TriggerHandAction triggerHandAction;
-
     public ActionTrigger.TriggerHandAction requiredHandPose = ActionTrigger.TriggerHandAction.None;
     List<GameObject> handsInArea = new List<GameObject>();
     private ActionTrigger actionTrigger;
-
+    public bool isRayTrigger = false;
+    bool isRayTriggered = false;
     void AddHandToArea(GameObject hand)
     {
         if (!handsInArea.Contains(hand))
@@ -80,6 +80,11 @@ public class ActionCollider : MonoBehaviour
     public bool CheckConformity(ActionTrigger.TriggerHand currentTriggerHand = ActionTrigger.TriggerHand.None,
             ActionTrigger.TriggerHandAction currentTriggerHandAction = ActionTrigger.TriggerHandAction.None)
     {
+        Debug.Log("@)))) isRayTrigger:" + isRayTriggered);
+        if (isRayTrigger)
+        {
+            return isRayTriggered;
+        }
         if (handsInArea.Count == 0)
             return false;
         if (triggerHandAction != ActionTrigger.TriggerHandAction.None)
@@ -217,6 +222,13 @@ public class ActionCollider : MonoBehaviour
         {
             ss += h.name + " ";
         }
+    }
+
+    public void RayTriggerAction()
+    {
+        isRayTriggered = true;
+        actionTrigger.AttemptTrigger();
+        isRayTriggered = false;
     }
 
 }

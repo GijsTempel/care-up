@@ -48,6 +48,11 @@ MonoBehaviour:
   actionNumberLimit: -1
   triggerName: Combine InsulinOpenedNeedlePackage InsulinPen
   pickable: {fileID: 3782183951739515774}
+  mirrorAnimation: 0
+  actionType: 0
+  LeftActionManagerObject: InsulinPen
+  RightActionManagerObject: InsulinOpenedNeedlePackage
+  checkBeforeAct: 0
 --- !u!1 &1060461049
 GameObject:
   m_ObjectHideFlags: 0
@@ -97,6 +102,7 @@ MonoBehaviour:
   triggerHand: 2
   triggerHandAction: 0
   requiredHandPose: 0
+  isRayTrigger: 0
 --- !u!65 &1060461051
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -158,6 +164,11 @@ MonoBehaviour:
   actionNumberLimit: -1
   triggerName: Combine InsulinPen InsulinOpenedNeedlePackage
   pickable: {fileID: 3782183951739515774}
+  mirrorAnimation: 0
+  actionType: 0
+  LeftActionManagerObject: InsulinPen
+  RightActionManagerObject: InsulinOpenedNeedlePackage
+  checkBeforeAct: 0
 --- !u!1 &1461436174
 GameObject:
   m_ObjectHideFlags: 0
@@ -189,7 +200,7 @@ Transform:
   - {fileID: 1123339321}
   - {fileID: 492777146}
   m_Father: {fileID: 3782183951404581209}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1804274710
 GameObject:
@@ -240,6 +251,7 @@ MonoBehaviour:
   triggerHand: 3
   triggerHandAction: 0
   requiredHandPose: 0
+  isRayTrigger: 0
 --- !u!65 &1804274712
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -302,6 +314,7 @@ MonoBehaviour:
   triggerHand: 2
   triggerHandAction: 1
   requiredHandPose: 0
+  isRayTrigger: 0
 --- !u!65 &8311484003485246032
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -363,6 +376,11 @@ MonoBehaviour:
   actionNumberLimit: -1
   triggerName: UseLeft InsulinPen
   pickable: {fileID: 3782183951739515774}
+  mirrorAnimation: 0
+  actionType: 3
+  LeftActionManagerObject: InsulinPen
+  RightActionManagerObject: 
+  checkBeforeAct: 0
 --- !u!1 &3782183950132539068
 GameObject:
   m_ObjectHideFlags: 0
@@ -411,6 +429,11 @@ MonoBehaviour:
   actionNumberLimit: -1
   triggerName: InsulinPenRemoveCap
   pickable: {fileID: 3782183951739515774}
+  mirrorAnimation: 0
+  actionType: 0
+  LeftActionManagerObject: InsulinPenWithCap
+  RightActionManagerObject: 
+  checkBeforeAct: 0
 --- !u!1 &3782183950907204441
 GameObject:
   m_ObjectHideFlags: 0
@@ -459,6 +482,11 @@ MonoBehaviour:
   actionNumberLimit: -1
   triggerName: LeftInsulinPenRemoveCap
   pickable: {fileID: 3782183951739515774}
+  mirrorAnimation: 0
+  actionType: 0
+  LeftActionManagerObject: InsulinPenWithCap
+  RightActionManagerObject: 
+  checkBeforeAct: 0
 --- !u!1 &3782183951031067061
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,6 +536,7 @@ MonoBehaviour:
   triggerHand: 2
   triggerHandAction: 1
   requiredHandPose: 0
+  isRayTrigger: 0
 --- !u!65 &3782183951031067051
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -550,6 +579,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3782183951810340461}
+  - {fileID: 6726318228812091365}
   - {fileID: 3635775228395571937}
   - {fileID: 1461436175}
   m_Father: {fileID: 3782183951739515762}
@@ -604,6 +634,7 @@ MonoBehaviour:
   triggerHand: 3
   triggerHandAction: 1
   requiredHandPose: 0
+  isRayTrigger: 0
 --- !u!65 &3782183951454912611
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -668,7 +699,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.036568224, y: 0.041437574, z: 0.2443178}
+  m_Size: {x: 0.028366633, y: 0.027040888, z: 0.2443178}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &3782183951739515772
 Rigidbody:
@@ -766,6 +797,38 @@ Transform:
   m_Father: {fileID: 3782183951404581209}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3786787192954180355
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6726318228812091365}
+  m_Layer: 3
+  m_Name: 02 examine
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6726318228812091365
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3786787192954180355}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2472604445880085612}
+  m_Father: {fileID: 3782183951404581209}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4597033973478960418
 GameObject:
   m_ObjectHideFlags: 0
@@ -814,6 +877,11 @@ MonoBehaviour:
   actionNumberLimit: -1
   triggerName: UseRight InsulinPen
   pickable: {fileID: 3782183951739515774}
+  mirrorAnimation: 0
+  actionType: 3
+  LeftActionManagerObject: InsulinPen
+  RightActionManagerObject: 
+  checkBeforeAct: 0
 --- !u!1 &7848949996144986694
 GameObject:
   m_ObjectHideFlags: 0
@@ -845,7 +913,7 @@ Transform:
   - {fileID: 2574403752877236678}
   - {fileID: 4902149522500389641}
   m_Father: {fileID: 3782183951404581209}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8270913010346201089
 GameObject:
@@ -896,6 +964,7 @@ MonoBehaviour:
   triggerHand: 3
   triggerHandAction: 1
   requiredHandPose: 0
+  isRayTrigger: 0
 --- !u!65 &3724692287504895954
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -909,6 +978,122 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.028652411, y: 0.040240213, z: 0.0673869}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &8317898783275505234
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3963521861807940573}
+  - component: {fileID: 3714565857232838930}
+  - component: {fileID: 5910181243883421521}
+  m_Layer: 6
+  m_Name: InsulinActionCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3963521861807940573
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8317898783275505234}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0.0133, z: -0.0613}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2472604445880085612}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3714565857232838930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8317898783275505234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0df15f8df556f3a9898e126af677a063, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerObjectNames: none
+  triggerHand: 0
+  triggerHandAction: 0
+  requiredHandPose: 0
+  isRayTrigger: 1
+--- !u!65 &5910181243883421521
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8317898783275505234}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.039266884, y: 0.01380229, z: 0.049269438}
+  m_Center: {x: 0.0002041161, y: 0.004084289, z: -0.018556714}
+--- !u!1 &8984794584599405516
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2472604445880085612}
+  - component: {fileID: 6722897734845310840}
+  m_Layer: 0
+  m_Name: insExActionTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2472604445880085612
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8984794584599405516}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3963521861807940573}
+  m_Father: {fileID: 6726318228812091365}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6722897734845310840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8984794584599405516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7b86b1118ea4582e930aa4cef899841, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionNumberLimit: 1
+  triggerName: 
+  pickable: {fileID: 0}
+  mirrorAnimation: 0
+  actionType: 4
+  LeftActionManagerObject: InsulinPen
+  RightActionManagerObject: 
+  checkBeforeAct: 0
 --- !u!1001 &3782183951116383785
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -919,6 +1104,10 @@ PrefabInstance:
     - target: {fileID: 1432269102178614022, guid: efb9253513b9920a2a5089723efb7068, type: 3}
       propertyPath: m_Name
       value: RightHandPose
+      objectReference: {fileID: 0}
+    - target: {fileID: 1432269102178614022, guid: efb9253513b9920a2a5089723efb7068, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1784353513506436698, guid: efb9253513b9920a2a5089723efb7068, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1082,43 +1271,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5904010767013122668, guid: efb9253513b9920a2a5089723efb7068, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.015200019
+      value: -0.0244
       objectReference: {fileID: 0}
     - target: {fileID: 5904010767013122668, guid: efb9253513b9920a2a5089723efb7068, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.014999986
+      value: -0.0085
       objectReference: {fileID: 0}
     - target: {fileID: 5904010767013122668, guid: efb9253513b9920a2a5089723efb7068, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.010299922
+      value: -0.0035
       objectReference: {fileID: 0}
     - target: {fileID: 5904010767013122668, guid: efb9253513b9920a2a5089723efb7068, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.94041526
+      value: 0.87792104
       objectReference: {fileID: 0}
     - target: {fileID: 5904010767013122668, guid: efb9253513b9920a2a5089723efb7068, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.3134648
+      value: 0.26689655
       objectReference: {fileID: 0}
     - target: {fileID: 5904010767013122668, guid: efb9253513b9920a2a5089723efb7068, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.111077905
+      value: -0.19840562
       objectReference: {fileID: 0}
     - target: {fileID: 5904010767013122668, guid: efb9253513b9920a2a5089723efb7068, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.07085761
+      value: -0.34446505
       objectReference: {fileID: 0}
     - target: {fileID: 5904010767013122668, guid: efb9253513b9920a2a5089723efb7068, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 35.018
+      value: 19.387
       objectReference: {fileID: 0}
     - target: {fileID: 5904010767013122668, guid: efb9253513b9920a2a5089723efb7068, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -18.019
+      value: -34.349
       objectReference: {fileID: 0}
     - target: {fileID: 5904010767013122668, guid: efb9253513b9920a2a5089723efb7068, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -14.345
+      value: -48.89
       objectReference: {fileID: 0}
     - target: {fileID: 5954730510957921128, guid: efb9253513b9920a2a5089723efb7068, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1351,31 +1540,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3440246261666051443, guid: 0df04af19f9991dbdb5b5d687cc166ff, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.015200019
+      value: 0.0244
       objectReference: {fileID: 0}
     - target: {fileID: 3440246261666051443, guid: 0df04af19f9991dbdb5b5d687cc166ff, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.014999986
+      value: -0.0085
       objectReference: {fileID: 0}
     - target: {fileID: 3440246261666051443, guid: 0df04af19f9991dbdb5b5d687cc166ff, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.010299922
+      value: -0.0035
       objectReference: {fileID: 0}
     - target: {fileID: 3440246261666051443, guid: 0df04af19f9991dbdb5b5d687cc166ff, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.94041526
+      value: 0.87792104
       objectReference: {fileID: 0}
     - target: {fileID: 3440246261666051443, guid: 0df04af19f9991dbdb5b5d687cc166ff, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.3134648
+      value: 0.26689655
       objectReference: {fileID: 0}
     - target: {fileID: 3440246261666051443, guid: 0df04af19f9991dbdb5b5d687cc166ff, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.111077905
+      value: 0.19840562
       objectReference: {fileID: 0}
     - target: {fileID: 3440246261666051443, guid: 0df04af19f9991dbdb5b5d687cc166ff, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.07085761
+      value: 0.34446505
       objectReference: {fileID: 0}
     - target: {fileID: 3440246261666051443, guid: 0df04af19f9991dbdb5b5d687cc166ff, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

@@ -18,6 +18,8 @@ public class ActionTrigger : MonoBehaviour
     public ActionManager.ActionType actionType = ActionManager.ActionType.None;
     public string LeftActionManagerObject = "";
     public string RightActionManagerObject = "";
+    [Tooltip("Check if action is correct, before executing")]
+    public bool checkBeforeAct = false;
     List<ActionCollider> actionColliders = new List<ActionCollider>();
     // Start is called before the first frame update
     void Start()
@@ -32,6 +34,8 @@ public class ActionTrigger : MonoBehaviour
 
     public void ReceveTriggerAction(bool isLeftHand, TriggerHandAction tAction)
     {
+        Debug.Log("@ReceveTriggerAction:" + name);
+
         TriggerHand currentTriggerHand = TriggerHand.Right;
         if (isLeftHand)
             currentTriggerHand = TriggerHand.Left;
@@ -44,17 +48,21 @@ public class ActionTrigger : MonoBehaviour
         bool isActionConfirmed = true;
         foreach(ActionCollider c in actionColliders)
         {
-
             if (!c.CheckConformity(currentTriggerHand, currentTriggerHandAction))
             {
                 isActionConfirmed = false;
                 break;
             }
-          
         }
         if (isActionConfirmed && actionHandler != null && actionType != ActionManager.ActionType.None)
         {
-            isActionConfirmed = actionHandler.TryExecuteAction(actionType, LeftActionManagerObject, RightActionManagerObject);
+            if (checkBeforeAct)
+            {
+                if (actionHandler.CheckAction(actionType, LeftActionManagerObject, RightActionManagerObject))
+                    isActionConfirmed = actionHandler.TryExecuteAction(actionType, LeftActionManagerObject, RightActionManagerObject);
+            }
+            else
+                isActionConfirmed = actionHandler.TryExecuteAction(actionType, LeftActionManagerObject, RightActionManagerObject);
         }
         return isActionConfirmed;
     }
@@ -63,6 +71,8 @@ public class ActionTrigger : MonoBehaviour
     {
 
         if (actionNumberLimit == 0)
+            return;
+        if (triggerName == "")
             return;
         GameObject target = null;
         if (transform.Find("CinematicTarget") != null)
@@ -74,10 +84,13 @@ public class ActionTrigger : MonoBehaviour
 
     public void AttemptTrigger()
     {
-        if (player == null || triggerName == "")
+        if (actionNumberLimit == 0)
+            return;
+        if (player == null)
             return;
         if (CheckTriggerConfirmation())
         {
+            Debug.Log("@AttemptTrigger:" + name);
             EmitTrigger();
         }
     }

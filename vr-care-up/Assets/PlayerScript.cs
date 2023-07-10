@@ -79,7 +79,6 @@ public class PlayerScript : MonoBehaviour
     }
 
 
-
     public void ForceDeleteObjectFromHand(bool isLeftHand)
     {
         GameObject objInHand = null;

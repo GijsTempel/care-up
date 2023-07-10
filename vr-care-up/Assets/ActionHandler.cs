@@ -7,6 +7,7 @@ public class ActionHandler : MonoBehaviour
     ActionManager actionManager;
     public bool TryExecuteAction(ActionManager.ActionType actionType, string leftHandObjectName, string rightHandObjectName)
     {
+        Debug.Log("@_tryAction:" + actionType.ToString() + " L " + leftHandObjectName + " R " + rightHandObjectName);
         if (actionManager == null)
             actionManager = GameObject.FindObjectOfType<ActionManager>();
         if (actionManager == null)
@@ -37,8 +38,13 @@ public class ActionHandler : MonoBehaviour
                 Debug.LogWarning(actionType + " is not supported yet in ActionHandler. TODO");
                 break;
         }
-
         return result;
+    }
+
+    public bool CheckAction(ActionManager.ActionType actionType, string leftHandObjectName, string rightHandObjectName)
+    {
+        string[] info = { leftHandObjectName, rightHandObjectName };
+        return actionManager.Check(info, actionType);
     }
     
 }
