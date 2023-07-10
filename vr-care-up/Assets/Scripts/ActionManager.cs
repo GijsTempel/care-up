@@ -237,7 +237,8 @@ public class ActionManager : MonoBehaviour
         SequenceStep,
         ObjectDrop,
         Movement,
-        General
+        General,
+        None
     };
 
     // Will be refactored, someday
@@ -1333,7 +1334,7 @@ public class ActionManager : MonoBehaviour
     /// </summary>
     /// <param name="leftHand">Name of the object in left hand.</param>
     /// <param name="rightHand">Name of the object in right hand.</param>
-    public void OnCombineAction(string leftHand, string rightHand, bool notWrongAction = false)
+    public bool OnCombineAction(string leftHand, string rightHand, bool notWrongAction = false)
     {
         string[] info = { leftHand, rightHand };
         bool occured = Check(info, ActionType.ObjectCombine, notWrongAction);
@@ -1343,13 +1344,14 @@ public class ActionManager : MonoBehaviour
 
         if (!CheckScenarioCompleted() && occured)
             ActionManager.CorrectAction();
+        return occured;
     }
 
     /// <summary>
     /// Handle (trigger) UseAction.
     /// </summary>
     /// <param name="useObject">Name of the used object.</param>
-    public void OnUseAction(string useObject)
+    public bool OnUseAction(string useObject)
     {
         string[] info = { useObject };
         bool occured = Check(info, ActionType.ObjectUse);
@@ -1359,13 +1361,15 @@ public class ActionManager : MonoBehaviour
 
         if (!CheckScenarioCompleted() && occured)
             ActionManager.CorrectAction();
+
+        return occured;
     }
 
     /// <summary>
     /// Handle (trigger) Talk action.
     /// </summary>
     /// <param name="topic">Chosen topic</param>
-    public void OnTalkAction(string topic)
+    public bool OnTalkAction(string topic)
     {
         string[] info = { topic };
         bool occured = Check(info, ActionType.PersonTalk);
@@ -1375,6 +1379,8 @@ public class ActionManager : MonoBehaviour
 
         if (!CheckScenarioCompleted() && occured)
             ActionManager.CorrectAction();
+        return occured;
+
     }
 
     /// <summary>
@@ -1382,7 +1388,7 @@ public class ActionManager : MonoBehaviour
     /// </summary>
     /// <param name="item">Item that is used on target</param>
     /// <param name="target">Item that was targeted</param>
-    public void OnUseOnAction(string item, string target)
+    public bool OnUseOnAction(string item, string target)
     {
         string[] info = { item, target };
         bool occured = Check(info, ActionType.ObjectUseOn);
@@ -1392,6 +1398,7 @@ public class ActionManager : MonoBehaviour
 
         if (!CheckScenarioCompleted() && occured)
             ActionManager.CorrectAction();
+        return occured;
     }
 
     /// <summary>
@@ -1399,7 +1406,7 @@ public class ActionManager : MonoBehaviour
     /// </summary>
     /// <param name="item">Name of the examined item</param>
     /// <param name="expected">State of the examined item</param>
-    public void OnExamineAction(string item, string expected)
+    public bool OnExamineAction(string item, string expected)
     {
         string[] info = { item, expected };
         bool occured = Check(info, ActionType.ObjectExamine);
@@ -1409,6 +1416,8 @@ public class ActionManager : MonoBehaviour
 
         if (!CheckScenarioCompleted() && occured)
             ActionManager.CorrectAction();
+
+        return occured;
     }
 
     /// <summary>
@@ -1416,7 +1425,7 @@ public class ActionManager : MonoBehaviour
     /// Is not penalised, but needs to be checked.
     /// </summary>
     /// <param name="item">Name of the picked item</param>
-    public void OnPickUpAction(string item)
+    public bool OnPickUpAction(string item)
     {
         string[] info = { item };
         bool occured = Check(info, ActionType.PickUp);
@@ -1432,9 +1441,10 @@ public class ActionManager : MonoBehaviour
 
         // ActionManager.BuildRequirements();
         // ActionManager.UpdateRequirements();
+        return occured;
     }
 
-    public void OnSequenceStepAction(string stepName)
+    public bool OnSequenceStepAction(string stepName)
     {
         string[] info = { stepName };
         bool occured = Check(info, ActionType.SequenceStep);
@@ -1444,9 +1454,10 @@ public class ActionManager : MonoBehaviour
 
         if (!CheckScenarioCompleted() && occured)
             ActionManager.CorrectAction();
+        return occured;
     }
 
-    public void OnDropDownAction(string item, int posId)
+    public bool OnDropDownAction(string item, int posId)
     {
         string[] info = { item, posId.ToString() };
         bool occured = Check(info, ActionType.ObjectDrop);
@@ -1459,9 +1470,10 @@ public class ActionManager : MonoBehaviour
 
         if (!CheckScenarioCompleted() && occured)
             ActionManager.CorrectAction();
+        return occured;
     }
 
-    public void OnMovementAction(string position)
+    public bool OnMovementAction(string position)
     {
         string[] info = { position };
         bool occured = Check(info, ActionType.Movement);
@@ -1472,6 +1484,7 @@ public class ActionManager : MonoBehaviour
             ActionManager.CorrectAction();
 
         // UpdateRequirements();
+        return occured;
     }
 
     public void OnGeneralAction()
@@ -1815,7 +1828,7 @@ public class ActionManager : MonoBehaviour
 
     private void SceneCompletedRoutine()
     {
-        // Narrator.PlaySound("LevelComplete", 0.1f);
+        Narrator.PlaySound("LevelComplete", 0.1f);
         // GameObject.FindObjectOfType<GameUI>().ShowDonePanel(true);
     }
 
@@ -1854,7 +1867,7 @@ public class ActionManager : MonoBehaviour
     public static void PlayAddPointSound()
     {
         // if (!PlayerPrefsManager.videoRecordingMode)
-        //     Narrator.PlaySound("PointScored", 0.1f);
+        Narrator.PlaySound("PointScored", 0.1f);
         // // todo move somewhere else
         // if (GameObject.Find("_Dev") != null)
         // {
@@ -1876,7 +1889,7 @@ public class ActionManager : MonoBehaviour
     public static void WrongAction(bool headAnimation = true)
     {
         // RobotManager.RobotWrongAction();
-        // Narrator.PlaySound("WrongAction");
+        Narrator.PlaySound("WrongAction");
 
         if (headAnimation)
         {

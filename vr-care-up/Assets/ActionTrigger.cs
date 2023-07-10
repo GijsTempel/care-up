@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ActionTrigger : MonoBehaviour
 {
+    private ActionHandler actionHandler;
     public int actionNumberLimit = -1;
     public enum TriggerHand {None, Any, Left, Right}
     public enum TriggerHandAction {None, Pinch, Grip}
@@ -12,10 +13,16 @@ public class ActionTrigger : MonoBehaviour
     public PickableObject pickable;
     public bool mirrorAnimation = false;
 
+    
+    [Header("Action Manager Data")]
+    public ActionManager.ActionType actionType = ActionManager.ActionType.None;
+    public string LeftActionManagerObject = "";
+    public string RightActionManagerObject = "";
     List<ActionCollider> actionColliders = new List<ActionCollider>();
     // Start is called before the first frame update
     void Start()
     {
+        actionHandler = GameObject.FindObjectOfType<ActionHandler>();
         player = GameObject.FindObjectOfType<PlayerScript>();
         foreach(ActionCollider a in transform.GetComponentsInChildren<ActionCollider>())
         {
@@ -44,6 +51,10 @@ public class ActionTrigger : MonoBehaviour
                 break;
             }
           
+        }
+        if (isActionConfirmed && actionHandler != null && actionType != ActionManager.ActionType.None)
+        {
+            isActionConfirmed = actionHandler.TryExecuteAction(actionType, LeftActionManagerObject, RightActionManagerObject);
         }
         return isActionConfirmed;
     }
