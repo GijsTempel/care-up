@@ -15,6 +15,16 @@ public class PrefabHolder : MonoBehaviour
         return newInstance;
     }
 
+    public List<GameObject> GetObjects()
+    {
+        List<GameObject> _objects = new List<GameObject>();
+        foreach(string key in Prefabs.Keys)
+        {
+            _objects.Add(Prefabs[key]);
+        }
+        return _objects;
+    }
+
     public GameObject SpawnObject(string _name)
     {
         GameObject baseObj = null;

@@ -15,7 +15,6 @@ public class HeadTriggerRaycast : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("@^^^^:" + lookAtTimer.ToString());
         CheckForCollisions();
     }
 
@@ -50,6 +49,5 @@ public class HeadTriggerRaycast : MonoBehaviour
         {
             lookAtTimer = 0f;
         }
-        Debug.Log("@ **Ray:" + ditObjName);
     }
 }
