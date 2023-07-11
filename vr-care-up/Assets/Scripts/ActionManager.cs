@@ -278,6 +278,7 @@ public class ActionManager : MonoBehaviour
 //----------------------------------------------------------------------------------------------------------------
     public static void UpdateRequirements(float showDelay = 0f)
     {
+        Debug.Log("UpdateRequirements(float showDelay = 0f)");
         ActionManager actManager = GameObject.FindObjectOfType<ActionManager>();
         if (playerScript == null)
             playerScript = GameObject.FindObjectOfType<PlayerScript>();
@@ -300,8 +301,8 @@ public class ActionManager : MonoBehaviour
         int i = 0;
         bool foundComplitedAction = false;
         gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
-        // gameUI.DropLeftBlink = false;
-        // gameUI.DropRightBlink = false;
+        gameUI.dropLeftBlink = false;
+        gameUI.dropRightBlink = false;
         // gameUI.reqPlaces.Clear();
         bool leftIncorrect = true;
         bool rightIncorrect = true;
@@ -389,7 +390,7 @@ public class ActionManager : MonoBehaviour
             {
                 objectsData.Add(new StepData(false, $"- Klik op de '{actManager.CurrentButtonText()}' knop.", i));
                 actManager.NotTriggeredAction();
-                // gameUI.buttonToBlink = GameUI.ItemControlButtonType.NoTargetRight;
+                gameUI.buttonToBlink = GameUI.ItemControlButtonType.NoTargetRight;
                 foundComplitedAction = true;
             }
 
@@ -455,21 +456,21 @@ public class ActionManager : MonoBehaviour
                                 }
                             }
                         }
-                        // if (GameObject.FindObjectOfType<ExtraObjectOptions>() != null && !found)
-                        // {
-                        //     foreach (ExtraObjectOptions extraObject in GameObject.FindObjectsOfType<ExtraObjectOptions>())
-                        //     {
-                        //         string desc = extraObject.HasNeeded(hand);
-                        //         if (desc != "")
-                        //         {
-                        //             article = extraObject.HasNeededArticle(hand);
-                        //             handValue = desc;
-                        //             found = true;
-                        //             foundDescr = true;
-                        //         }
-                        //     }
-                        // }
-
+                        if (GameObject.FindObjectOfType<ExtraObjectOptions>() != null && !found)
+                        {
+                            foreach (ExtraObjectOptions extraObject in GameObject.FindObjectsOfType<ExtraObjectOptions>())
+                            {
+                                string desc = extraObject.HasNeeded(hand);
+                                if (desc != "")
+                                {
+                                    article = extraObject.HasNeededArticle(hand);
+                                    handValue = desc;
+                                    found = true;
+                                    foundDescr = true;
+                                }
+                            }
+                        }
+                        
                         // if (GameObject.FindObjectOfType<WorkField>() != null && !found)
                         // {
                         //     foreach (WorkField w in GameObject.FindObjectsOfType<WorkField>())
